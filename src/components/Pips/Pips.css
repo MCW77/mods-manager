@@ -1,0 +1,15 @@
+.pips {
+  font-size: 0;
+  padding: 1px;
+  margin: 5px 0;
+  text-align: left;
+}
+
+.pip {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background-color: #fae8da;
+  border-radius: 3px;
+  margin: 2px 1.6px;
+}

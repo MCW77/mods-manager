@@ -1,0 +1,180 @@
+.top-block {
+  height: 1.83em;
+  margin: 0;
+  padding: 0;
+}
+
+.top-block.drop-character {
+  box-shadow: -3px 2px 3px darkred;
+}
+
+.character-block-wrapper {
+  padding: .25em 0;
+  margin: 0;
+}
+
+.character-block-wrapper.drop-character * {
+  pointer-events: none;
+}
+
+.character-block {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: fit-content(1em) auto;
+  grid-column-gap: .5em;
+  width: 19.5em;
+  min-height: 4em;
+  border: 1px solid dodgerblue;
+  background-color: rgba(0, 0, 96, .5);
+  padding: .25em;
+  text-align: left;
+  max-width: 100%;
+}
+
+.character-block-wrapper.drop-character .character-block,
+.character-list.drop-character .character-block-wrapper:last-child .character-block {
+  box-shadow: 0 2px 3px 0 darkred;
+}
+
+.character-block .character-icons {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.character-block .character-icons .icon {
+  font-size: .75em;
+  background-image: url('../../img/character_icons.png');
+  background-size: 15em 3em;
+  background-position-y: -1.5em;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  margin: 0 .2em;
+  padding: 0;
+}
+
+.character-block .character-icons .icon.active {
+  background-position-y: 0;
+}
+
+.icon.level {
+  cursor: pointer;
+}
+
+.icon.slice {
+  background-position-x: -1.5em;
+  cursor: pointer;
+}
+
+.icon.restrictions {
+  background-position-x: -3em;
+}
+
+.icon.target {
+  background-position-x: -4.5em;
+}
+
+.icon.duplicate {
+  background-position-x: -6em;
+}
+
+.icon.negative {
+  background-position-x: -7.5em;
+}
+
+.icon.changed-target {
+  background-position-x: -9em;
+}
+
+.icon.blank-target {
+  background-position-x: -10.5em;
+}
+
+.icon.locked {
+  background-position-x: -12em;
+  cursor: pointer;
+}
+
+.icon.minimum-dots {
+  background-position-x: -13.5em;
+  position: relative;
+}
+
+.icon.minimum-dots select {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  /* select boxes are stupid */
+  text-align-last: center;
+  margin: 0;
+}
+
+.icon.minimum-dots select:focus {
+  color: white;
+}
+
+.icon.minimum-dots span {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  text-align: center;
+}
+
+.character-block.locked {
+  border-color: darkred;
+  opacity: .75;
+}
+
+.character-block .avatar {
+  grid-row: 1 / span 3;
+  grid-column: 1;
+  font-size: .8em;
+}
+
+.character-block .character-name {
+  grid-row: 1;
+  grid-column: 2;
+  display: inline-block;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.character-block .target {
+  grid-row: 3;
+  grid-column: 2;
+}
+
+.character-block label {
+  font-weight: 300;
+  font-size: 90%;
+  vertical-align: middle;
+  pointer-events: none;
+}
+
+.character-block select {
+  display: inline-block;
+  width: 7.8em;
+  vertical-align: middle;
+  color: rgb(28, 169, 212);
+  background-color: rgb(30, 47, 70);
+}
+
+.character-block button {
+  font-size: 1em;
+}

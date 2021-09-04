@@ -1,0 +1,15 @@
+{
+  "header": {
+    "NavExploreMods": "Erkunde Mods",
+    "NavOptimizeMods": "Optimiere Mods",
+    "SubtitleFor": "für",
+    "ProfileSelectionPlayer": "Spieler",
+    "ProfileSelectionAllycode": "Bündniscode",
+    "Fetch": "Hole meine Mods",
+    "FetchHot": "Hole mit HotUtils",
+    "RememberExisting": "Behalte existierende Mods",
+    "Restore": "Fortschritt laden",
+    "Save": "Fortschritt speichern",
+    "Reset": "Neustart"
+  }
+}

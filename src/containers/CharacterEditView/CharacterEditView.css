@@ -1,0 +1,221 @@
+.character-edit {
+  flex-grow: 1;
+  display: flex;
+  overflow: hidden;
+  text-align: center;
+}
+
+.character-edit .selected-characters {
+  max-width: calc(33% - 7em);
+  margin: 0 0 0 1em;
+  flex-grow: 0;
+}
+
+.character-edit.sort-view .selected-characters {
+  flex-grow: 1;
+  max-width: initial;
+}
+
+.character-edit .available-characters {
+  overflow-y: auto;
+  flex-grow: 1;
+  width: auto;
+}
+
+.character-edit.sort-view .available-characters {
+  flex-grow: 0;
+  width: 0;
+}
+
+.character-edit .available-characters .character {
+  display: inline-block;
+  vertical-align: top;
+  margin: .5em 1em;
+  width: 8em;
+  position: relative;
+  border: 1px solid transparent;
+}
+
+.character-edit .available-characters .character.locked {
+  border-color: darkred;
+  opacity: .75;
+}
+
+.character-edit .available-characters .character .icon.locked {
+  position: absolute;
+  top: .2em;
+  right: .2em;
+  background-image: url('../../img/character_icons.png');
+  background-size: 12em 2.4em;
+  background-position-x: -9.6em;
+  background-position-y: -1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  line-height: 1.2em;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.character-edit .available-characters .character .icon.active {
+  background-position-y: 0;
+}
+
+.character-edit .available-characters .character .avatar {
+  font-size: 1.2em;
+}
+
+.character-edit .available-characters .character.inactive {
+  opacity: .25;
+}
+
+.character-edit .character-list {
+  height: calc(100% - 6.8em);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.character-edit.sort-view .character-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.character-edit.sort-view .character-list .top-block {
+  width: 100%;
+  height: 1em;
+}
+
+.character-edit.sort-view .character-list .character-block-wrapper {
+  margin-right: 1em;
+}
+
+.character-edit.sort-view .character-list .character-block-wrapper.drop-character .character-block {
+  box-shadow: 2px 0 3px darkred;
+}
+
+.character-edit .selected-characters h4 {
+  margin-bottom: 0;
+}
+
+.character-edit .selected-characters h5 {
+  margin: .25em 0 0;
+}
+
+.character-edit .selected-characters .template-buttons {
+  font-size: .83em;
+}
+
+.character-edit .selected-characters .template-buttons button,
+.character-edit .selected-characters .template-buttons .button {
+  margin: .2em;
+}
+
+.character-edit .selected-characters .template-buttons form.file-input {
+  display: inline-block;
+}
+
+.character-edit .selected-characters .character-list {
+  padding-right: 1em;
+}
+
+.global-settings h3 .icon {
+  font-size: .83em;
+}
+
+.global-settings input[type=range] {
+  vertical-align: middle;
+}
+
+.global-settings .form-row {
+  padding: .5em 0;
+  border-bottom: 1px solid white;
+}
+
+.modal.instructions {
+  height: auto;
+  width: 50em;
+  text-align: left;
+}
+
+.modal.instructions h2,
+.modal.instructions h3 {
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+
+.modal.instructions .actions {
+  text-align: right;
+}
+
+.modal.save-template input {
+  font-size: 1.5em;
+}
+
+.modal p.error {
+  color: #dd1111;
+  visibility: hidden;
+  margin: 0 0 .5em;
+}
+
+.modal form select {
+  margin-bottom: 0;
+}
+
+.modal input.invalid + p.error {
+  visibility: visible;
+}
+
+.modal.template-targets {
+  max-width: 40em;
+}
+
+.modal .help {
+  max-width: 40em;
+}
+
+.modal .help ul li {
+  list-style: none;
+}
+
+.modal.optimizer-progress h3 {
+  color: #a35ef9;
+}
+
+.modal.generate-character-list {
+  max-width: 40em;
+}
+
+.modal.generate-character-list span.purple {
+  font-weight: bold;
+}
+
+.modal.generate-character-list form {
+  display: inline-block;
+}
+
+.modal.generate-character-list label {
+  display: block;
+}
+
+.modal.generate-character-list .toggle-wrapper {
+  margin-top: 1em;
+}
+
+.modal.generate-character-list .form-row {
+  margin-bottom: .25em;
+}
+.modal.generate-character-list .form-row label {
+  display: inline;
+  vertical-align: middle;
+}
+
+@keyframes Progress {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 2.828em 0;
+  }
+}

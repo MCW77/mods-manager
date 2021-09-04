@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"search.exclude": {
+			"**/dist": true
+		},
+		"typescript.implementationsCodeLens.enabled": true,
+		"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+		"typescript.referencesCodeLens.enabled": true,
+		"typescript.referencesCodeLens.showOnAllFunctions": true,
+		"typescript.suggest.completeFunctionCalls": true,
+		"typescript.suggest.jsdoc.generateReturns": false,
+		"typescript.suggest.completeJSDocs": false
+	}
+}

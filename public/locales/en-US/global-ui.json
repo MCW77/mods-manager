@@ -1,0 +1,15 @@
+{
+  "header": {
+    "NavExploreMods": "Explore my mods",
+    "NavOptimizeMods": "Optimize my mods",
+    "SubtitleFor": "for",
+    "ProfileSelectionPlayer": "Player",
+    "ProfileSelectionAllycode": "Ally code",
+    "Fetch": "Fetch my data",
+    "FetchHot": "Fetch with HotUtils",
+    "RememberExisting": "Remember existing mods",
+    "Restore": "Restore my progress",
+    "Save": "Save my progress",
+    "Reset": "Reset Mods Optimizer"
+  }
+}
