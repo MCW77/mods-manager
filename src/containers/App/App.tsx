@@ -30,7 +30,7 @@ import { IAppState } from 'state/storage';
 import { PlayerProfile } from '../../domain/PlayerProfile';
 import { ThunkDispatch } from 'state/reducers/modsOptimizer';
 import { IUserData } from 'state/storage/Database';
-import { withTranslation, WithTranslation } from 'react-i18next'
+import { withTranslation, WithTranslation } from 'react-i18next';
 
 class App extends PureComponent<Props> {
 
