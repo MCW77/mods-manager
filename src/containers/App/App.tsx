@@ -150,11 +150,6 @@ class App extends PureComponent<Props> {
                   onClick={() => this.props.changeSection('optimize')}>
             {this.props.t('header.NavOptimizeMods')}
           </button>
-{/*
-        <button className={'add' === this.props.section ? 'active' : ''}
-            onClick={() => this.props.changeSection('add')}>Add mods manually
-        </button>
-*/}
         </nav>
       }
       <div className={'actions'}>
