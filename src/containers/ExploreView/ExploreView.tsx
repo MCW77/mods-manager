@@ -722,14 +722,7 @@ const mapStateToProps = (state: IAppState) => {
         
     let modsFilter = new ModsFilter(state.modsFilter);
     const [mods, shownMods] = modsFilter.applyFilterSettings(profile.mods);
-    /*
-    const [mods, shownMods] = getFilteredMods(
-      profile.mods,
-      state.modsFilter,
-      profile.characters,
-      modAssignments
-    );
-    */
+
     return {
       characters: profile.characters,
       displayedMods: mods,
