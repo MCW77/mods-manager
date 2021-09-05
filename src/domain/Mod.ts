@@ -335,7 +335,7 @@ export class Mod {
     type secondaryPos = 1 | 2 | 3 | 4;
     const secondaryStats: SecondaryStats.SecondaryStat[] = [];
     ([1, 2, 3, 4] as secondaryPos[]).forEach((pos) => {
-      if (flatMod[`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer] !== null) {
+      if (flatMod[`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer] !== undefined) {
         secondaryStats.push(SecondaryStats.SecondaryStat.fromHotUtils(
           flatMod[`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer]!,
           flatMod[`secondaryValue_${pos}` as keyof ModTypes.FlatModValueIndexer],
