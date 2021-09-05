@@ -103,7 +103,7 @@ class App extends PureComponent<Props> {
   }
 
   render() {
-    const instructionsScreen = !this.props.profile;
+    const instructionsScreen = this.props.profile === PlayerProfile.Default;
 
     return <Suspense fallback= "loading"><div className={'App'} onKeyPress={this.escapeListener}>
       {this.header(!instructionsScreen)}
