@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
     "@types/node": "^16.4.13",
     "@types/react-redux": "^7.1.18",
     "big.js": "^6.1.1",
