@@ -19,6 +19,8 @@ modScores.push(new ModScore(
   `,
   "IsPercentage",
   (mod: Mod) => {
+    if (mod.secondaryStats.length === 0)
+      return 0;
     return mod.secondaryStats.reduce((acc, stat) => acc.plus(stat.score.value), Big(0)).div(mod.secondaryStats.length).toNumber();
   })
 )
@@ -37,6 +39,8 @@ modScores.push(new ModScore(
   `,
   "IsPercentage",
   (mod: Mod) => {
+    if (mod.totalRolls === 0)
+      return 0;
     return mod.secondaryStats.reduce((acc, stat) => acc.plus(stat.score.value.mul(stat.rolls)), Big(0)).div(mod.totalRolls).toNumber();
   })
 )
@@ -115,10 +119,10 @@ modScores.push(new ModScore(
   "IsPercentage",
   (mod: Mod) => {
     const isOffenseSecondary = (statType: SecondaryStats.GIMOStatNames) => {
-      return ['Offense %', 'Crit Chance %'].includes(statType);
+      return ['Offense %', 'Critical Chance %'].includes(statType);
     }
 
-    if (!['Offense %', 'Crit Chance %', 'Crit Damage %'].includes(mod.set))
+    if (!['Offense %', 'Critical Chance %', 'Critical Damage %'].includes(mod.set))
       return 0;
     if (['arrow', 'triangle', 'cross'].includes(mod.slot) &&
         (['Defense %',
@@ -133,7 +137,7 @@ modScores.push(new ModScore(
         if (isOffenseSecondary(stat.type))
           return acc;
         return acc+stat.rolls
-      }, -2);
+      }, -2 + (4 - mod.secondaryStats.length));
       const offenseRolls = mod.secondaryStats.reduce((acc, stat) => {
         if (isOffenseSecondary(stat.type))
           return acc+stat.rolls;
@@ -169,7 +173,7 @@ modScores.push(new ModScore(
         if (isDefenseSecondary(stat.type))
           return acc;
         return acc+stat.rolls
-      }, -2);
+      }, -1 + (4 - mod.secondaryStats.length));
       const defenseRolls = mod.secondaryStats.reduce((acc, stat) => {
         if (isDefenseSecondary(stat.type))
           return acc+stat.rolls;
