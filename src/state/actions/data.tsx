@@ -18,7 +18,7 @@ import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 import { changeOptimizerView } from "./review";
 import { AppState, IAppState } from "../storage";
 import { ExpandRecursively } from 'utils/typeHelper';
-import { FlatMod } from 'domain/types/ModTypes';
+import { HUFlatMod } from 'domain/types/ModTypes';
 import { filterObject } from '../../utils/filterObject';
 import { Dictionary } from "lodash";
 
@@ -531,7 +531,7 @@ function fetchProfile(allyCode: string, sessionId: string | null) {
     allycode: number,
     name: string,
     guild: string,
-    mods: FlatMod[],
+    mods: HUFlatMod[],
     characters: any,
     updated?: boolean,
   }
