@@ -243,8 +243,8 @@ class ExploreView extends React.PureComponent<Props> {
 
     const modElements = (mods: Mod[]) => {
       return mods.map((mod) => {
-        const assignedCharacter = this.props.modAssignments[mod.id]
-          ? this.props.characters[this.props.modAssignments[mod.id]]
+        const assignedCharacter = this.props.assignedMods[mod.id]
+          ? this.props.characters[this.props.assignedMods[mod.id]]
           : null;
         return (
           <ModDetail
@@ -379,6 +379,10 @@ class ExploreView extends React.PureComponent<Props> {
       </div>
     );
   }
+}
+
+type AssignedMods = {
+  [key: string]: CharacterNames
 }
 type FilterOptions = {
   [key in keyof FilterSettings]: any[]
@@ -709,7 +713,7 @@ const getFilteredMods = memoizeOne(
 const mapStateToProps = (state: IAppState) => {
   const profile = state.profile;
   if (profile) {
-    const modAssignments: IModSuggestion[] =
+    const assignedMods: AssignedMods =
       profile.modAssignments && profile.modAssignments.filter
         ? profile.modAssignments
             .filter((x) => null !== x)
@@ -717,16 +721,23 @@ const mapStateToProps = (state: IAppState) => {
               const updatedAssignments = { ...acc };
               modIds.forEach((id) => (updatedAssignments[id] = characterID));
               return updatedAssignments;
-            }, {} as IModSuggestion)
-        : [{} as IModSuggestion];
+            }, {} as AssignedMods)
+        : {} as AssignedMods;
         
     let modsFilter = new ModsFilter(state.modsFilter);
     const [mods, shownMods] = modsFilter.applyFilterSettings(profile.mods);
-
+    /*
+    const [mods, shownMods] = getFilteredMods(
+      profile.mods,
+      state.modsFilter,
+      profile.characters,
+      modAssignments
+    );
+    */
     return {
       characters: profile.characters,
       displayedMods: mods,
-      modAssignments: modAssignments,
+      assignedMods: assignedMods,
       modCount: profile.mods.length,
       displayedModsCount: shownMods,
     };
@@ -734,7 +745,7 @@ const mapStateToProps = (state: IAppState) => {
     return {
       characters: {} as Characters,
       displayedMods: {},
-      modAssignments: {} as IModSuggestion[],
+      assignedMods: {} as AssignedMods,
       modCount: 0,
       displayedModsCount: 0,
     };
