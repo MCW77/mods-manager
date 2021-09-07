@@ -464,6 +464,7 @@ class CharacterEditView extends PureComponent<Props> {
 
   generateCharacterListModal() {
     let form: HTMLFormElement | null;
+    let overwrite: Toggle | null;
 
     return <div>
       <h3 className={'gold'}>Auto-generate Character List</h3>
