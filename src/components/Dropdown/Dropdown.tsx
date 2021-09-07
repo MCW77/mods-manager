@@ -7,7 +7,7 @@ type SelectProps = React.HTMLProps<HTMLSelectElement>
 type DropdownProps = {
     name?: string,
     defaultValue?: string | number,
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 } & SelectProps;
 
 export const Dropdown = React.forwardRef<HTMLSelectElement, DropdownProps>(
