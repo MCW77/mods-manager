@@ -1,23 +1,26 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from "react-redux";
+import { configureStore } from '@reduxjs/toolkit'
+
 import './i18n.ts';
 import './index.css';
-import App from './containers/App/App';
+
 import registerServiceWorker from './registerServiceWorker';
-import { applyMiddleware, createStore } from "redux";
-import thunkMiddleware from "redux-thunk";
-import { Provider } from "react-redux";
-import modsOptimizer from "./state/reducers/modsOptimizer";
+
 import getDatabase from "./state/storage/Database";
+
+import modsOptimizer from "./state/reducers/modsOptimizer";
+
 import { showError } from "./state/actions/app";
 import { databaseReady } from "./state/actions/storage";
 
-const store = createStore(
-  modsOptimizer,
-  applyMiddleware(
-    thunkMiddleware
-  )
-);
+import App from './containers/App/App';
+
+
+const store = configureStore({
+  reducer: modsOptimizer
+});
 
 // Instantiate the database
 getDatabase(
