@@ -463,7 +463,7 @@ export class Database {
    * @param onsuccess {function(Array<string>)}
    * @param onerror {function(error)}
    */
-  saveBaseCharacter(flatBaseCharacters: IFlatBaseCharacter[], onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+  saveBaseCharacter(flatBaseCharacters: IFlatBaseCharacter[], onsuccess: (keys: string[]) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
     this.database.then(db => {
       const saveBaseCharacterRequest = db.transaction(['gameSettings'], 'readwrite');
       const keys: string[] = [];
@@ -483,7 +483,7 @@ export class Database {
         );
 
         singleRequest.onsuccess = function (event: Event) {
-          keys.push(event.target!.result);
+          keys.push((event.target as IDBRequest).result);
         };
       });
     })
