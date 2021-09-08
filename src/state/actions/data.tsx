@@ -1,7 +1,7 @@
 import React from "react";
 import { Mod } from "../../domain/Mod";
 import { BaseCharacter, BaseCharacters, FlatBaseCharacterAlignments, IFlatBaseCharacter } from "../../domain/BaseCharacter";
-import { PlayerValues, PlayerValuesByCharacter } from "../../domain/PlayerValues";
+import { IHUPlayerValues, PlayerValues, PlayerValuesByCharacter } from "../../domain/PlayerValues";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import cleanAllyCode from "../../utils/cleanAllyCode";
 import { hideFlash, setIsBusy, showError, showFlash, hideModal, showModal, updateProfile } from "./app";
@@ -450,7 +450,8 @@ export function fetchCharacterList(
   mode: UseCaseModes,
   overwrite: boolean,
   allyCode: string,
-  parameters): ThunkResult<void> {
+  parameters: CharacterListGenerationParameters,
+): ThunkResult<void> {
   return function (dispatch) {
     dispatch(setIsBusy(true))
 
@@ -462,7 +463,7 @@ export function fetchCharacterList(
         parameters: filterObject(parameters, (key, value) => !!value || value === 0),        
       }
     )
-      .then(characterList => dispatch(applyCharacterList(overwrite, characterList)))
+      .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
       .catch(error => {
         dispatch(showError(error.message))
       })
@@ -470,7 +471,7 @@ export function fetchCharacterList(
   }
 }
 
-function applyCharacterList(overwrite: boolean, characterList) {
+function applyCharacterList(overwrite: boolean, characterList: CharacterNames[]) {
   return updateProfile(profile => {
     const startingList = overwrite ? [] : profile!.selectedCharacters;
     const startingCharacterIDs = startingList.map(selectedCharacter => selectedCharacter.id)
@@ -483,7 +484,10 @@ function applyCharacterList(overwrite: boolean, characterList) {
         return character ?
           { id: characterID, target: character.defaultTarget() } :
           null
-      }).filter(x => null !== x)
+      }).filter(x => null !== x) as {
+        id: CharacterNames,
+        target: OptimizationPlan  
+      }[]
     )
 
     return profile.withSelectedCharacters(newSelectedCharacters)
@@ -556,7 +560,7 @@ function fetchProfile(allyCode: string, sessionId: string | null) {
     const profileMods = playerProfile.mods.map(Mod.fromHotUtils);
 
     // Convert each character to a PlayerValues object
-    const profileValues = playerProfile.characters.reduce((characters, character) => {
+    const profileValues: PlayerValuesByCharacter = playerProfile.characters.reduce((characters: PlayerValuesByCharacter, character: IHUPlayerValues) => {
       characters[character.baseId] = PlayerValues.fromHotUtils(character);
       return characters;
     }, {} as PlayerValuesByCharacter);
@@ -687,7 +691,7 @@ export function moveModsWithHotUtils(profile: PlayerProfile, sessionId: string):
   }
 }
 
-function pollForModMoveStatus(taskId, sessionId: string, dispatch) {
+function pollForModMoveStatus(taskId: number, sessionId: string, dispatch: ThunkDispatch) {
   return new Promise((resolve, reject) => {
     post(
       'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
@@ -746,7 +750,7 @@ function pollForModMoveStatus(taskId, sessionId: string, dispatch) {
   });
 }
 
-function cancelModMove(taskId, sessionId: string):ThunkResult<void> {
+function cancelModMove(taskId: number, sessionId: string):ThunkResult<void> {
   return function (dispatch) {
     return post(
       'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
@@ -784,7 +788,7 @@ function cancelModMove(taskId, sessionId: string):ThunkResult<void> {
   }
 }
 
-function modProgressModal(taskId, sessionId: string, progress, dispatch) {
+function modProgressModal(taskId: number, sessionId: string, progress: number, dispatch: ThunkDispatch) {
   return <div>
     <h3>Moving Your Mods...</h3>
     <div className={'progress'}>
