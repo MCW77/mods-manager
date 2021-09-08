@@ -12,18 +12,19 @@ export interface IPlayerValues {
   relicTier: number;
 }
 
-interface IHUPlayerValues {
-  level: number;
-  rarity: number;
-  gearLevel: number;
+export interface IHUPlayerValues {
+  baseId: CharacterNames;
   equipment: string[];
+  gearLevel: number;
+  id: string;
+  level: number;
   power: number;
+  rarity: number;
+  relicTier: number;
   stats: {
     base: IHUCharacterStats;
     gear?: IHUCharacterStats;
   }
-  relicTier: number;
-
 }
 
 export class PlayerValues implements IPlayerValues {
