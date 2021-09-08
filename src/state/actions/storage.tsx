@@ -1,18 +1,22 @@
 import React from "react";
 import { ThunkDispatchNoParam, ThunkResult } from "../reducers/modsOptimizer";
-import getDatabase, { IUserData } from "../storage/Database";
-import { mapObject } from "../../utils/mapObject";
-import OptimizerRun from "../../domain/OptimizerRun";
-import nothing from "../../utils/nothing";
+
 import { showError, showFlash, updateProfile } from "./app";
-import groupByKey from "../../utils/groupByKey";
-import { Mod } from '../../domain/Mod';
 import { fetchHotUtilsStatus } from './data';
-import { BaseCharacters, IFlatBaseCharacter } from 'domain/BaseCharacter';
+
+import getDatabase, { IUserData } from "../storage/Database";
+
+import groupByKey from "../../utils/groupByKey";
+import { mapObject } from "../../utils/mapObject";
+import nothing from "../../utils/nothing";
+
 import { IAppState } from 'state/storage';
-import { PlayerProfile } from 'domain/PlayerProfile';
+import { BaseCharacters, IFlatBaseCharacter } from 'domain/BaseCharacter';
 import { Character, Characters } from 'domain/Character';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
+import { Mod } from '../../domain/Mod';
+import OptimizerRun from "../../domain/OptimizerRun";
+import { PlayerProfile } from 'domain/PlayerProfile';
 import { SelectedCharacters } from "domain/SelectedCharacters";
 
 
