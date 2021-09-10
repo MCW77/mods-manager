@@ -1,6 +1,6 @@
 import {PlayerProfile, IFlatPlayerProfile} from "../../domain/PlayerProfile";
 import nothing from "../../utils/nothing";
-import { BaseCharacter, IFlatBaseCharacter } from "../../domain/BaseCharacter";
+import { BaseCharacter } from "../../domain/BaseCharacter";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import OptimizerRun from "domain/OptimizerRun";
 import { defer } from "../../utils/defer";
@@ -36,7 +36,7 @@ export interface IUserData extends IFlatPlayerProfiles{
   allyCode: string;
   version: string;
 //  profiles: IFlatPlayerProfile[];
-  gameSettings: IFlatBaseCharacter[];
+  gameSettings: BaseCharacter[];
   lastRuns: any;
   characterTemplates: any; // IFlatCharacterTemplate[];
 }
@@ -241,22 +241,22 @@ export class Database {
    * @param onsuccess {function(Array<BaseCharacter>)}
    * @param onerror {function(error)}
    */
-  getBaseCharacter(onsuccess: (gs: BaseCharacter[]) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+  getBaseCharacters(onsuccess: (baseCharacters: BaseCharacter[]) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
     this.database.then(db => {
-      const getBaseCharacterRequest =
+      const getBaseCharactersRequest =
         db
           .transaction('gameSettings', 'readwrite')
           .objectStore('gameSettings')
           .getAll();
 
-      getBaseCharacterRequest.onerror = function (event: Event) {
+      getBaseCharactersRequest.onerror = function (event: Event) {
         if (event !== null && event.target instanceof IDBRequest)
           onerror(event.target.error);
       };
 
-      getBaseCharacterRequest.onsuccess = function (event) {
-        const gameSettings: BaseCharacter[] = ((event.target as IDBRequest).result as IFlatBaseCharacter[]).map(gameSetting => BaseCharacter.deserialize(gameSetting)!);
-        onsuccess(gameSettings);
+      getBaseCharactersRequest.onsuccess = function (event) {
+        const baseCharacters: BaseCharacter[] = ((event.target as IDBRequest).result as BaseCharacter[]);
+        onsuccess(baseCharacters);
       };
     })  
   }
@@ -459,28 +459,26 @@ export class Database {
 
   /**
    * Add new gameSettings to the database, or update existing ones
-   * @param flatBaseCharacters {Array<IFlatBaseCharacter>}
+   * @param baseCharacters {Array<BaseCharacter>}
    * @param onsuccess {function(Array<string>)}
    * @param onerror {function(error)}
    */
-  saveBaseCharacter(flatBaseCharacters: IFlatBaseCharacter[], onsuccess: (keys: string[]) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+  saveBaseCharacters(baseCharacters: BaseCharacter[], onsuccess: (keys: string[]) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
     this.database.then(db => {
-      const saveBaseCharacterRequest = db.transaction(['gameSettings'], 'readwrite');
+      const saveBaseCharactersRequest = db.transaction(['gameSettings'], 'readwrite');
       const keys: string[] = [];
 
-      saveBaseCharacterRequest.onerror = function (event: Event) {
+      saveBaseCharactersRequest.onerror = function (event: Event) {
         if (event !== null && event.target instanceof IDBRequest)
           onerror(event.target.error);
       };
 
-      saveBaseCharacterRequest.oncomplete = function (event) {
+      saveBaseCharactersRequest.oncomplete = function (event) {
         onsuccess(keys);
       };
 
-      flatBaseCharacters.forEach(flatBaseChar => {
-        const singleRequest = saveBaseCharacterRequest.objectStore('gameSettings').put(
-          'function' === typeof flatBaseChar.serialize ? flatBaseChar.serialize() : flatBaseChar
-        );
+      baseCharacters.forEach(baseChar => {
+        const singleRequest = saveBaseCharactersRequest.objectStore('gameSettings').put(baseChar);
 
         singleRequest.onsuccess = function (event: Event) {
           keys.push((event.target as IDBRequest).result);

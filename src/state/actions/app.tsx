@@ -4,7 +4,7 @@ import { saveTemplates } from "./characterEdit"
 import {
   loadProfile,
   loadProfiles,
-  saveBaseCharacter,
+  saveBaseCharacters,
   saveLastRuns,
   saveProfiles,
   replaceModsForProfiles,
@@ -139,7 +139,7 @@ export function restoreProgress(progressData: string): ThunkResult<void> {
             dispatch(saveProfiles((stateObj as IUserData).profiles, (stateObj as IUserData).allyCode))
         );
 
-        dispatch(saveBaseCharacter((stateObj as IUserData).gameSettings));
+        dispatch(saveBaseCharacters((stateObj as IUserData).gameSettings));
         dispatch(saveLastRuns((stateObj as IUserData).lastRuns));
         if ((stateObj as IUserData).characterTemplates) {
           dispatch(saveTemplates((stateObj as IUserData).characterTemplates))

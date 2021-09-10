@@ -40,7 +40,7 @@ import collectByKey from "../../utils/collectByKey";
 import keysWhere from "../../utils/keysWhere";
 import { saveAs } from "file-saver";
 
-import { BaseCharacter } from "../../domain/BaseCharacter";
+import { defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
 
 import { Character } from "domain/Character";
@@ -926,15 +926,13 @@ const mapStateToProps = (state: IAppState) => {
    * @returns boolean
    */
   const characterFilter = (character: Character) => {
-    const baseCharacters = state.baseCharacters[character.baseID] ?
-      state.baseCharacters[character.baseID] :
-      new BaseCharacter(character.baseID, character.baseID);
+    const baseCharacter = state.baseCharacters[character.baseID] ?? {...defaultBaseCharacter, baseID: character.baseID, name: character.baseID}
 
     return '' === state.characterFilter ||
-      baseCharacters.name.toLowerCase().includes(state.characterFilter) ||
+      baseCharacter.name.toLowerCase().includes(state.characterFilter) ||
       (['lock', 'locked'].includes(state.characterFilter) && character.optimizerSettings.isLocked) ||
       (['unlock', 'unlocked'].includes(state.characterFilter) && !character.optimizerSettings.isLocked) ||
-      baseCharacters.tags
+      baseCharacter.categories
         .concat(characterSettings[character.baseID] ? characterSettings[character.baseID].extraTags : [])
         .some(tag => tag.toLowerCase().includes(state.characterFilter));
   };

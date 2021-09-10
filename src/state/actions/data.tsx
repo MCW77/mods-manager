@@ -1,6 +1,6 @@
 import React from "react";
 import { Mod } from "../../domain/Mod";
-import { BaseCharacter, BaseCharacters, FlatBaseCharacterAlignments, IFlatBaseCharacter } from "../../domain/BaseCharacter";
+import { BaseCharactersById, APIBaseCharacter, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
 import { IHUPlayerValues, PlayerValues, PlayerValuesByCharacter } from "../../domain/PlayerValues";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import cleanAllyCode from "../../utils/cleanAllyCode";
@@ -44,18 +44,8 @@ interface FetchedProfile {
 }
 
 interface FetchedPlayerData {
-  baseCharacters: BaseCharacters;
+  baseCharacters: BaseCharactersById;
   profile: PlayerProfile;
-}
-export interface IFlatGIMOAPIBaseCharacter {
-  base_id: CharacterNames;
-  name: string;
-  image: string;
-  categories: string[];
-  description: string;
-  alignment: FlatBaseCharacterAlignments;
-  role: string;
-  ship_slot: number;
 }
 export const TOGGLE_KEEP_OLD_MODS = 'TOGGLE_KEEP_OLD_MODS';
 
@@ -148,7 +138,7 @@ export function refreshPlayerData(
 ): ThunkResult<void> {
   const cleanedAllyCode = cleanAllyCode(allyCode);
   let data: FetchedPlayerData = {
-    baseCharacters: {} as BaseCharacters,
+    baseCharacters: {} as BaseCharactersById,
     profile: {} as PlayerProfile
   };
 
@@ -194,7 +184,7 @@ export function refreshPlayerData(
 
         if (data.baseCharacters) {
           dispatch(setBaseCharacters(data.baseCharacters));
-          db.saveBaseCharacter(
+          db.saveBaseCharacters(
             Object.values(data.baseCharacters),
             nothing,
             error => dispatch(showFlash(
@@ -233,26 +223,14 @@ export function refreshPlayerData(
 
 /**
  * Fetch base character data from the swgoh.gg API
- * @returns {Promise<BaseCharacters>}
+ * @returns {Promise<BaseCharactersById>}
  */
-function fetchCharacters(): Promise<BaseCharacters> {
+function fetchCharacters(): Promise<BaseCharactersById> {
   return fetch('https://api.mods-optimizer.swgoh.grandivory.com/characters/')
     .then(response => response.json())
-    .then((characters: IFlatGIMOAPIBaseCharacter[]) => {
-      const baseChars = characters.map(flatChar => {
-        return new BaseCharacter(
-          flatChar.base_id,
-          flatChar.name,
-          flatChar.image,
-          flatChar.categories
-            .concat([flatChar.alignment, flatChar.role])
-            .concat(null !== flatChar.ship_slot ? ['Crew Member'] : []),
-          flatChar.description,
-          flatChar.alignment
-        );
-      });
-      
-      return groupByKey(baseChars, (bc: BaseCharacter) => bc.baseID) as BaseCharacters
+    .then((baseCharacters: APIBaseCharacter[]) => {
+     
+      return mapAPI2BaseCharactersById(baseCharacters)
     }).catch();
 }
 
@@ -328,7 +306,7 @@ function updatePlayerData(
               new OptimizerSettings(
                 characterSettings[id] ? characterSettings[id].targets[0] : new OptimizationPlan(),
                 [],
-                fetchData.baseCharacters[id] && fetchData.baseCharacters[id].tags.includes('Crew Member') ? 5 : 1,
+                fetchData.baseCharacters[id] && fetchData.baseCharacters[id].categories.includes('Crew Member') ? 5 : 1,
                 false,
                 false
               )

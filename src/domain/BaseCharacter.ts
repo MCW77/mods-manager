@@ -1,94 +1,59 @@
 /**
- * A class to hold static settings for each character that the optimizer knows about.
+ * interface to hold static settings for each character that the optimizer knows about.
  */
+import groupByKey from "../utils/groupByKey";
 import type { CharacterNames } from "../constants/characterSettings";
 
-const alignments = new Map<AnyAlignments, BaseCharacterAlignments>(
-  [
-    ['light', 'light'],
-    ['dark', 'dark'],
-    ['Light Side', 'light'],
-    ['Dark Side', 'dark'],
-    ['', '']
-  ]
-);
+export type BaseCharacterAlignments = 'Dark Side' | 'Light Side';
 
-type BaseCharacterAlignments = 'light' | 'dark' | '';
-export type FlatBaseCharacterAlignments = 'Dark Side' | 'Light Side' | '';
-type AnyAlignments = BaseCharacterAlignments | FlatBaseCharacterAlignments;
-
-export interface IFlatBaseCharacter {
-  baseID: CharacterNames;
+export interface APIBaseCharacter {
+  base_id: CharacterNames;
   name: string;
-  avatarUrl: string;
-  tags: string[];
-  description: string;
-  alignment: FlatBaseCharacterAlignments;
-}
-
-export type FlatBaseCharacters = {
-  [characterID in CharacterNames]: IFlatBaseCharacter
-}
-
-export type BaseCharacters = {
-  [characterID in CharacterNames]: BaseCharacter
-}
-
-/**
- * Class to hold Character information that doesn't change, except with a game update.
- */
-export class BaseCharacter {
-  baseID: CharacterNames;
-  name: string;
-  avatarUrl: string;
-  tags: string[];
+  image: string;
+  categories: string[];
   description: string;
   alignment: BaseCharacterAlignments;
-
-  static defaultAvatarUrl: string = '//swgoh.gg/static/img/assets/blank-character.png';
-
-  constructor(
-    baseID: CharacterNames,
-    name: string,
-    avatarUrl = 'https://swgoh.gg/static/img/assets/blank-character.png',
-    tags = [] as string[],
-    description = '',
-    alignment = '' as AnyAlignments
-  ) {
-    this.baseID = baseID;
-    this.name = name;
-    if (avatarUrl.startsWith('/')) {
-      this.avatarUrl = `https://swgoh.gg${avatarUrl}`;
-    } else {
-      this.avatarUrl = avatarUrl;
-    }
-    this.tags = tags;
-    this.description = description;    
-    this.alignment = alignments.get(alignment)!;
-
-    Object.freeze(this);
-  }
-
-  getDisplayName() {
-    return this.name || this.baseID;
-  }
-
-  serialize() {
-    return this;
-  }
-
-  static deserialize(flatBaseChar: IFlatBaseCharacter | null): BaseCharacter | null {
-    if (flatBaseChar) {
-      return new BaseCharacter(
-        flatBaseChar.baseID,
-        flatBaseChar.name,
-        flatBaseChar.avatarUrl,
-        flatBaseChar.tags,
-        flatBaseChar.description,
-        flatBaseChar.alignment
-      );
-    } else {
-      return null;
-    }
-  }
+  role: string;
+  ship_slot: number;
 }
+
+export interface BaseCharacter {
+  baseID: CharacterNames;
+  name: string;
+  avatarUrl: string;
+  categories: string[];
+  description: string;
+  alignment: BaseCharacterAlignments;
+}
+
+export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
+  return groupByKey(
+    baseCharacters.map(bc => {
+      return {
+        baseID: bc.base_id,
+        name: bc.name,
+        avatarUrl: bc.image,
+        categories: bc.categories
+          .concat([bc.alignment])
+          .concat(null !== bc.ship_slot ? ['Crew Member'] : []),
+        description: bc.description,
+        alignment: bc.alignment, 
+      } as BaseCharacter
+    })
+    , (bc: BaseCharacter) => bc.baseID) as BaseCharactersById
+}
+
+export type BaseCharactersById = {
+  [characterId in CharacterNames]: BaseCharacter;
+}
+
+export type BaseCharacters = BaseCharacter[];
+
+export const defaultBaseCharacter = {
+  baseID: 'FINN',
+  name: '',
+  avatarUrl: 'https://swgoh.gg/static/img/assets/blank-character.png',
+  categories: [],
+  description: '',
+  alignment: 'Light Side',
+} as BaseCharacter;

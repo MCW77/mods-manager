@@ -319,7 +319,7 @@ class CharacterEditForm extends React.Component<Props> {
    */
   targetStatForm(targetStats: TargetStats) {
     const baseCharacters = Object.values(this.props.baseCharacters).slice(0) as BaseCharacter[];
-    baseCharacters.sort((a, b) => a.getDisplayName().localeCompare(b.getDisplayName()))
+    baseCharacters.sort((a, b) => a.name.localeCompare(b.name))
 
     const targetStatRows = targetStats.map((targetStat: TargetStatEntry, index: number) => {
       this.targetStatIndex = index;
@@ -369,7 +369,7 @@ class CharacterEditForm extends React.Component<Props> {
           <select name={'target-stat-relative-character[]'} defaultValue={targetStat.target.relativeCharacterId || ''}>
             <option value={''}>No one</option>
             {baseCharacters.map(
-              gs => <option key={gs.baseID} value={gs.baseID}>{gs.getDisplayName()}</option>
+              gs => <option key={gs.baseID} value={gs.baseID}>{gs.name}</option>
             )}
           </select>
         </span>

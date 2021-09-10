@@ -296,14 +296,14 @@ class Review extends React.PureComponent<Props> {
           if (mod.characterID === 'null') {
             tags = [];
           } else {
-            tags = this.props.baseCharacters[mod.characterID].tags;
+            tags = this.props.baseCharacters[mod.characterID].categories;
           }
           return tags.includes(this.props.filter.tag ?? '');
         });
       }
     } else if (this.props.filter.tag) {
       individualMods = individualMods.filter(({ id, mod }) => {
-        const tags = this.props.baseCharacters[id] ? this.props.baseCharacters[id].tags : [];
+        const tags = this.props.baseCharacters[id] ? this.props.baseCharacters[id].categories : [];
         return tags.includes(this.props.filter.tag ?? '');
       });
     }
@@ -806,12 +806,12 @@ const mapStateToProps = (state: IAppState) => {
 
         tags = uniq(flatten(
           (Object.keys(removedMods) as CharacterNames[]).map(
-            id => id in state.baseCharacters ? state.baseCharacters[id].tags : []
+            id => id in state.baseCharacters ? state.baseCharacters[id].categories : []
           ) as string[][] 
         ));
       } else {
         tags = uniq(flatten(
-          displayedMods.map(({ id }) => id in state.baseCharacters ? state.baseCharacters[id].tags : [])
+          displayedMods.map(({ id }) => id in state.baseCharacters ? state.baseCharacters[id].categories : [])
         ));
       }
       break;
@@ -834,13 +834,13 @@ const mapStateToProps = (state: IAppState) => {
 
       // Set up the available tags for the sidebar
       tags = Array.from(new Set(flatten(
-        displayedMods.map(({ id }) => state.baseCharacters[id] ? state.baseCharacters[id].tags : [])
+        displayedMods.map(({ id }) => state.baseCharacters[id] ? state.baseCharacters[id].categories : [])
       )));
 
       // Filter out any characters that we're not going to display based on the selected tag
       if (filter.tag) {
         displayedMods = displayedMods.filter(({ id }) => {
-          const tags = state.baseCharacters[id] ? state.baseCharacters[id].tags : [];
+          const tags = state.baseCharacters[id] ? state.baseCharacters[id].categories : [];
           return tags.includes(filter.tag);
         });
       }

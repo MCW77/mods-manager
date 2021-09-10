@@ -9,9 +9,8 @@ import ModStats from '../ModStats/ModStats';
 import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
 import SellModButton from "../SellModButton/SellModButton";
 import { PlayerProfile } from '../../domain/PlayerProfile';
-import { BaseCharacter, BaseCharacters } from "../../domain/BaseCharacter";
+import { BaseCharactersById } from "../../domain/BaseCharacter";
 import { Character }  from "../../domain/Character";
-import { CharacterNames } from '../../constants/characterSettings';
 import { Mod } from '../../domain/Mod';
 
 class ModDetail extends React.PureComponent<Props> {
@@ -61,7 +60,7 @@ type ComponentProps = {
 }
 
 interface RootState {
-  baseCharacters: BaseCharacters;
+  baseCharacters: BaseCharactersById;
   profile: PlayerProfile;
 }
 
