@@ -17,7 +17,7 @@ import { FilterSettings, defaultSettings } from "../domain/modules/FilterSetting
 import { ElementType } from "utils/typeHelper";
 import * as UITypes from "components/types";
 import { Characters } from "domain/Character";
-import { BaseCharacters } from "domain/BaseCharacter";
+import { BaseCharactersById } from "domain/BaseCharacter";
 import { TargetStats } from "domain/TargetStat";
 import { CharacterEditMode } from "containers/CharacterEditForm/CharacterEditForm";
 import { SetStats } from "domain/Stats";
@@ -49,7 +49,7 @@ export interface IAppState {
     heading: UITypes.DOMContent,
     content: UITypes.DOMContent
   } | null,
-  baseCharacters: BaseCharacters,
+  baseCharacters: BaseCharactersById,
   hideSelectedCharacters: boolean,
   hotUtilsSubscription: boolean,
   isBusy: boolean,
@@ -105,7 +105,7 @@ export class AppState {
     characterTemplates: {} as CharacterTemplatesByName,
     error: null,
     flashMessage: null,
-    baseCharacters: {} as BaseCharacters,
+    baseCharacters: {} as BaseCharactersById,
     hideSelectedCharacters: true,
     hotUtilsSubscription: false,
     isBusy: false,

@@ -11,7 +11,7 @@ import { mapObject } from "../../utils/mapObject";
 import nothing from "../../utils/nothing";
 
 import { IAppState } from 'state/storage';
-import { BaseCharacters, IFlatBaseCharacter } from 'domain/BaseCharacter';
+import { BaseCharactersById, BaseCharacter } from 'domain/BaseCharacter';
 import { Character, Characters } from 'domain/Character';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
@@ -99,7 +99,7 @@ export function populateDatabase(state: IAppState): ThunkResult<void> {
         .map(character => character.gameSettings)
         .filter(x => null !== x);
 
-      db.saveBaseCharacter(baseCharacters, nothing, error =>
+      db.saveBaseCharacters(baseCharacters, nothing, error =>
         dispatch(showFlash(
           'Storage Error',
           'Error saving base character settings: ' +
@@ -118,7 +118,7 @@ export function populateDatabase(state: IAppState): ThunkResult<void> {
  */
 export function loadFromDb(allyCode: string): ThunkResult<void> {
   return function (dispatch) {
-    dispatch(loadBaseCharacter());
+    dispatch(loadBaseCharacters());
     dispatch(loadProfiles(allyCode));
     dispatch(loadCharacterTemplates());
   };
@@ -128,14 +128,14 @@ export function loadFromDb(allyCode: string): ThunkResult<void> {
  * Load game settings from the database and store them in the state
  * @returns {Function}
  */
-function loadBaseCharacter() {
+function loadBaseCharacters(): ThunkResult<void> {
   return function (dispatch) {
     const db = getDatabase();
 
     try {
-      db.getBaseCharacter(
+      db.getBaseCharacters(
         baseCharacters => {
-          const baseCharsObject: BaseCharacters = groupByKey(baseCharacters, baseChar => baseChar.baseID) as BaseCharacters;
+          const baseCharsObject: BaseCharactersById = groupByKey(baseCharacters, baseChar => baseChar.baseID) as BaseCharactersById;
           dispatch(setBaseCharacters(baseCharsObject));
         },
         error =>
@@ -321,14 +321,14 @@ export function exportCharacterTemplates(callback): ThunkResult<void> {
 
 /**
  * Add new BaseCharacter objects to the database, or update existing ones
- * @param flatBaseCharacters {Array<IFlatBaseCharacter>}
+ * @param baseCharacters {Array<BaseCharacter>}
  */
-export function saveBaseCharacter(flatBaseCharacters: IFlatBaseCharacter[]): ThunkResult<void> {
+export function saveBaseCharacters(baseCharacters: BaseCharacter[]): ThunkResult<void> {
   return function (dispatch) {
     const db = getDatabase();
-    db.saveBaseCharacter(
-      flatBaseCharacters,
-      () => dispatch(loadBaseCharacter()),
+    db.saveBaseCharacters(
+      baseCharacters,
+      () => dispatch(loadBaseCharacters()),
       error => dispatch(showFlash(
         'Storage Error',
         'Error saving basic character settings: ' +
@@ -525,7 +525,7 @@ export function saveLastRuns(lastRuns: OptimizerRun[]): ThunkResult<void> {
   };
 }
 
-export function setBaseCharacters(baseCharacters: BaseCharacters) {
+export function setBaseCharacters(baseCharacters: BaseCharactersById) {
   return {
     type: SET_BASE_CHARACTERS,
     baseCharacters: baseCharacters

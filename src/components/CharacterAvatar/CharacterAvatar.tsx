@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from "react-redux";
 
 import './CharacterAvatar.css';
 
-import { BaseCharacter } from "../../domain/BaseCharacter";
+import { BaseCharacter, BaseCharactersById, defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
 import { CharacterNames } from '../../constants/characterSettings';
 
@@ -15,9 +15,7 @@ class CharacterAvatar extends React.PureComponent<Props> {
       return null;
     }
 
-    const baseCharacter: BaseCharacter = this.props.baseCharacters[character.baseID] ?
-      this.props.baseCharacters[character.baseID] :
-      new BaseCharacter(character.baseID, character.baseID);
+    const baseCharacter: BaseCharacter = this.props.baseCharacters[character.baseID] ?? {...defaultBaseCharacter, baseID: character.baseID, name: character.baseID};
 
     const displayStars = this.props.displayStars ?? true;
     const displayGear = this.props.displayGear ?? true;
@@ -25,7 +23,7 @@ class CharacterAvatar extends React.PureComponent<Props> {
     const id = this.props.id ?? undefined; 
     const className = `avatar gear-${displayGear ?
       character!.playerValues.gearLevel :
-      0} star-${character!.playerValues.stars} align-${baseCharacter.alignment}`;
+      0} star-${character!.playerValues.stars} align-${baseCharacter.alignment === 'Dark Side' ? 'dark' : 'light'}`;
 
     const star: (position: number) => React.ReactNode = position => {
       const isActive = position <= character!.playerValues.stars;
@@ -64,7 +62,7 @@ type OwnProps = {
   id?: string
 }
 interface RootState {
-  baseCharacters: {[key in CharacterNames]: BaseCharacter}
+  baseCharacters: BaseCharactersById;
 }
 const mapStateToProps = (state: RootState, ownProps: OwnProps) => ({
   baseCharacters: state.baseCharacters
