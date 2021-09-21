@@ -270,10 +270,10 @@ class ModsFilter {
     .forEach(([type, values]) => {
       selectedOptions[type] = Object.entries(values)
         .filter(([option, value]) => 1 === value)
-        .map(([option]) => (isNaN(option) ? option : +option));
+        .map(([option]) => (isNaN(Number(option)) ? option : +option));
       unselectedOptions[type] = Object.entries(values)
         .filter(([option, value]) => -1 === value)
-        .map(([option]) => (isNaN(option) ? option : +option));
+        .map(([option]) => (isNaN(Number(option)) ? option : +option));
     });
   
     return [selectedOptions, unselectedOptions];
