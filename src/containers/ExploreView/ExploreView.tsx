@@ -18,7 +18,7 @@ import { SecondaryStats } from "../../domain/Stats";
 import { orderBy, groupBy, mapValues, forEach } from "lodash-es";
 import { Dictionary } from "lodash";
 import { IAppState } from "state/storage";
-import { IFlatBaseCharacter } from "../../domain/BaseCharacter";
+import { BaseCharacter } from "../../domain/BaseCharacter";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import { modScores } from "../../domain/constants/ModScoresConsts";
 import {
