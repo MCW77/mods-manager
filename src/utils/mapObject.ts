@@ -12,19 +12,6 @@ export function mapObject(object: Object, mapFunction) {
 }
 
 /**
- * Map over all of an object's keys, applying the mapFunction to each and returning a new object with the result
- *
- * @param object Object
- * @param mapFunction Function object.key => Any
- */
-export function mapObjectByKey(object, mapFunction) {
-  return Object.keys(object).reduce((result, key) => {
-    result[key] = mapFunction(key);
-    return result;
-  }, {});
-}
-
-/**
  * Map over all of an object's key/value pairs, applying the mapFunction to each and returning
  * a new object with the result
  * @param object Object
