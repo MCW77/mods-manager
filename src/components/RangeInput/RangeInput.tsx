@@ -7,6 +7,17 @@ import { IAppState } from 'state/storage';
 import { ThunkDispatch } from 'state/reducers/modsOptimizer';
 
 class RangeInput extends React.PureComponent<Props> {
+  slider: React.RefObject<HTMLInputElement>;
+  textfield: React.RefObject<HTMLInputElement>;
+  output: React.RefObject<HTMLOutputElement>;
+  
+  constructor(props: Props) {
+    super(props);
+    this.slider = React.createRef<HTMLInputElement>();
+    this.textfield = React.createRef<HTMLInputElement>();
+    this.output = React.createRef<HTMLOutputElement>();
+  }
+
   render() {
     const id = this.props.id;
     const name = this.props.name;
@@ -17,9 +28,7 @@ class RangeInput extends React.PureComponent<Props> {
     const isPercent = this.props.isPercent || false;
     const editable = this.props.editable || false;
     const onChange = this.props.onChange || function () { };
-
-    let slider: HTMLInputElement | null, textField: HTMLInputElement | null, output: HTMLOutputElement;
-
+    
     if (editable) {
       return [
         <input
@@ -30,11 +39,13 @@ class RangeInput extends React.PureComponent<Props> {
           max={max}
           step={step}
           onChange={(e) => {
-            textField.value = +e.target.value;
-            onChange(+e.target.value);
+            if (this.textfield.current !== null) {
+              this.textfield.current.value = e.target.value;
+              onChange(+e.target.value);
+            }
           }}
           key={name + 'slider'}
-          ref={input => slider = input}
+          ref={this.slider}
         />,
         <input
           type={'number'}
@@ -46,11 +57,13 @@ class RangeInput extends React.PureComponent<Props> {
           max={max}
           step={step}
           onChange={(e) => {
-            slider.value = e.target.value;
-            onChange(+e.target.value);
+            if (this.slider.current !== null) {
+              this.slider.current.value = e.target.value;
+              onChange(+e.target.value);
+            }
           }}
           key={name + 'input'}
-          ref={input => textField = input}
+          ref={this.textfield}
         />,
         <span key={'percent'}>{isPercent && '%'}</span>
       ];
@@ -65,12 +78,14 @@ class RangeInput extends React.PureComponent<Props> {
           max={max}
           step={step}
           onChange={(e) => {
-            output.value = e.target.value + (isPercent ? '%' : '');
-            onChange(+e.target.value);
+            if (this.output.current !== null) {
+              this.output.current.value = e.target.value + (isPercent ? '%' : '');
+              onChange(+e.target.value);
+            }
           }}
           key={name + 'input'}
         />,
-        <output id={name && name + '-display'} htmlFor={id} key={name + 'output'} ref={element => output = element as HTMLOutputElement}>
+        <output id={name && name + '-display'} htmlFor={id} key={name + 'output'} ref={this.output}>
           {defaultValue}{isPercent && '%'}
         </output>
       ];
@@ -80,7 +95,6 @@ class RangeInput extends React.PureComponent<Props> {
 
 type Props = PropsFromRedux & ComponentProps;
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type onChangeEventHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
 
 type ComponentProps = {
   id: string;
