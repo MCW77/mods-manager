@@ -652,7 +652,7 @@ function flattenStatValues(stat, character) {
   if (cacheHit) {
     return cacheHit;
   }
-  console.log(`Stat Displaytype: ${stat.displayType}`);
+  //console.log(`Stat Displaytype: ${stat.displayType}`);
   const statPropertyNames = statTypeMap[stat.displayType];
 
   const flattenedStats = statPropertyNames.map(statName => {
@@ -737,10 +737,10 @@ function modSetFulfillsFullSetRestriction(modSet) {
     })
   }, {});
 
-  console.log(`setCounts: ${JSON.stringify(setCounts)}`);
+  //console.log(`setCounts: ${JSON.stringify(setCounts)}`);
   return Object.entries(setCounts).every(
     ([setName, count]) => {
-      console.log(`741: setName: ${setName}`);
+      //console.log(`741: setName: ${setName}`);
       return 0 === count % setBonuses[setName].numberOfModsRequired
     }
   );
@@ -954,9 +954,9 @@ function modSort(character) {
 function scoreStat(stat, target) {
   // Because Optimization Plans treat all critical chance the same, we can't break it into physical and special crit
   // chance for scoring. Catch this edge case so that we can properly value crit chance
-  console.log(`951: stat.displayType: ${stat.displayType}`);
+  //console.log(`951: stat.displayType: ${stat.displayType}`);
   const targetProperties = ['Critical Chance', 'Physical Critical Chance'].includes(stat.displayType) ? ['critChance'] : statTypeMap[stat.displayType];
-  console.log(`953: targetProperties: ${targetProperties}`);
+  //console.log(`953: targetProperties: ${targetProperties}`);
   return targetProperties.reduce((acc, targetProperty) =>
     target[targetProperty] ? acc + target[targetProperty] * stat.value : acc
     , 0);
