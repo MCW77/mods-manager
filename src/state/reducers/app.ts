@@ -19,7 +19,7 @@ export function showModal(state: IAppState, action: ReturnType<typeof Actions.sh
 
 export function hideModal(state: IAppState): IAppState {
   return Object.assign({}, state, {
-    setRestrictions: null,
+    setRestrictions: {},
     modal: null
   });
 }
