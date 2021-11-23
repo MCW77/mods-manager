@@ -347,7 +347,6 @@ class CharacterEditForm extends React.Component<Props> {
               }
             }}
           >
-            <option value={''}>No Target</option>
             {TargetStat.possibleTargetStats.map(stat => <option key={stat} value={stat}>{stat}</option>)}
           </select>
         </span>
@@ -395,7 +394,7 @@ class CharacterEditForm extends React.Component<Props> {
         <button
           type={'button'}
           className={'small new-target-stat-button'}
-          onClick={() => this.props.addTargetStat(new TargetStat())}
+          onClick={() => this.props.addTargetStat(new TargetStat('Speed'))}
         >
           +
         </button>
@@ -785,12 +784,11 @@ class CharacterEditForm extends React.Component<Props> {
         const type = targetStatTypes[i].value || null;
         const shouldOptimize = Boolean(targetStatsShouldOptimize[i]?.value) ?? false;
 
-        if (name) {
-          if (minimum < maximum) {
-            targetStats.push(new TargetStat(name, type, minimum, maximum, relativeCharacter, shouldOptimize));
-          } else {
-            targetStats.push(new TargetStat(name, type, maximum, minimum, relativeCharacter, shouldOptimize));
-          }
+
+        if (minimum < maximum) {
+          targetStats.push(new TargetStat(name, type, minimum, maximum, relativeCharacter, shouldOptimize));
+        } else {
+          targetStats.push(new TargetStat(name, type, maximum, minimum, relativeCharacter, shouldOptimize));
         }
       }
     }
