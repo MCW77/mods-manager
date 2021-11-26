@@ -7,12 +7,6 @@ export function changeOptimizerView(state: IAppState, action: ReturnType<typeof 
   });
 }
 
-export function changeModSetFilter(state: IAppState, action: ReturnType<typeof ReviewActions.changeModSetFilter>): IAppState {
-  return Object.assign({}, state, {
-    modSetsFilter: action.filter
-  });
-}
-
 export function changeModListFilter(state: IAppState, action: ReturnType<typeof ReviewActions.changeModListFilter>): IAppState {
   return Object.assign({}, state, {
     modListFilter: action.filter

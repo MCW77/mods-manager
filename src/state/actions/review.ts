@@ -4,25 +4,12 @@ import { CharacterNames } from "constants/characterSettings";
 import { Mod } from "domain/Mod";
 
 export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW';
-export const CHANGE_MOD_SET_FILTER = 'CHANGE_MOD_SET_FILTER';
 export const CHANGE_MODLIST_FILTER = 'CHANGE_MODLIST_FILTER';
 
 export function changeOptimizerView(newView: string) {
   return {
     type: CHANGE_OPTIMIZER_VIEW,
     view: newView
-  } as const;
-}
-
-/**
- * Update the filter that is used to limit which mod sets are shown after optimizing mods
- * @param newFilter string
- * @returns {{type: string, filter: *}}
- */
-export function changeModSetFilter(newFilter) {
-  return {
-    type: CHANGE_MOD_SET_FILTER,
-    filter: newFilter
   } as const;
 }
 
