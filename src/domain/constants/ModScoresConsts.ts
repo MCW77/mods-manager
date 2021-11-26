@@ -53,11 +53,11 @@ modScores.push(new ModScore(
   All sets and stats not listed below are scored 0 points.
 
   set:
-    offense:    50
-    critdamage: 30
-    speed:      22.5
-    critchance: 20
-    potency:    20
+    Offense %:         50
+    Critical Damage %: 30
+    Speed %:           22.5
+    Critical Chance %: 20
+    Potency %:         20
 
   stat:
     Speed:             6

@@ -225,24 +225,7 @@ export class Mod {
       'Accuracy %': new CSStat('Accuracy %', '0'),
       'Critical Avoidance %': new CSStat('Critical Avoidance %', '0')
     };
-/*     
-    const summary = {
-      'health': new CSStat('Health', '0'),
-      'protection': new CSStat('Protection', '0'),
-      'speed': new CSStat('Speed', '0'),
-      'critDamageP': new CSStat('Crit Damage %', '0'),
-      'potencyP': new CSStat('Potency %', '0'),
-      'tenacityP': new CSStat('Tenacity %', '0'),
-      'physDamage': new CSStat('Physical Damage', '0'),
-      'physCritChanceP': new CSStat('Physical Crit Chance %', '0'),
-      'armorP': new CSStat('Armor %', '0'),
-      'specDamage': new CSStat('Special Damage', '0'),
-      'specCritChanceP': new CSStat('Special Crit Chance %', '0'),
-      'resistanceP': new CSStat('Resistance %', '0'),
-      'accuracyP': new CSStat('Accuracy %', '0'),
-      'critAvoidP': new CSStat('Crit Avoid %', '0')
-    };
-*/
+
     if (withUpgrades) {
       // Upgrade or slice each mod as necessary based on the optimizer settings and level of the mod
       if (15 > workingMod.level && target.upgradeMods) {
