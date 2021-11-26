@@ -57,7 +57,6 @@ export interface IAppState {
   modal: ModalProps | null,
   modsFilter: FilterSettings,
 //  modOptions: ModOptions,
-  modSetsFilter: 'all',
   modListFilter: {
     view: 'sets',
     show: 'all',
@@ -89,7 +88,6 @@ export class AppState {
     'hideSelectedCharacters',
     'keepOldMods',
     'modsFilter',
-    'modSetsFilter',
     'modListFilter',
     'optimizerView',
     'section',
@@ -113,7 +111,6 @@ export class AppState {
     modal: null,
     modsFilter: defaultSettings,
 //    modOptions: defaultOptions,
-    modSetsFilter: 'all',
     modListFilter: {
       view: 'sets',
       show: 'all',
@@ -205,7 +202,6 @@ export function deserializeState(state: IAppState): IAppState {
     keepOldMods: state.keepOldMods,
     modsFilter: Object.assign({}, AppState.Default.modsFilter, state.modsFilter),
     modListFilter: state.modListFilter || AppState.Default.modListFilter,
-    modSetsFilter: state.modSetsFilter || AppState.Default.modSetsFilter,
     optimizerView: state.optimizerView || AppState.Default.optimizerView,
     previousVersion: state.version,
     section: state.section,
