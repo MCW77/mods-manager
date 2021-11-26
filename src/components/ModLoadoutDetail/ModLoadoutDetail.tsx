@@ -5,7 +5,6 @@ import './ModLoadoutDetail.css';
 import { mapObject } from "../../utils/mapObject";
 import { mapValues } from "lodash-es";
 
-import { Stats } from "../../domain/Stats"
 import { Character } from "../../domain/Character";
 import { CharacterSummaryStats as CSStats } from "../../domain/Stats";
 import ModLoadout from "../../domain/ModLoadout";
@@ -16,7 +15,7 @@ import { MissedGoals } from "domain/PlayerProfile";
 import { TargetStat } from "domain/TargetStat";
 
 interface PlayerStat {
-  name: Stats.DisplayStatNames,
+  name: CSStats.DisplayStatNames,
   displayModifier: string,
   currentValue: number,
   currentStat: CSStats.CharacterSummaryStat,

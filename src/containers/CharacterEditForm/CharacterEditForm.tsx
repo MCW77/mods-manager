@@ -36,7 +36,7 @@ import type * as ModTypes from "../../domain/types/ModTypes";
 import { OptimizationPlan, PrimaryStatRestrictions } from "../../domain/OptimizationPlan";
 import SetBonus from "../../domain/SetBonus";
 import setBonuses from "../../constants/setbonuses";
-import { PrimaryStats, SetStats } from "../../domain/Stats";
+import { SetStats } from "../../domain/Stats";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
@@ -268,8 +268,9 @@ class CharacterEditForm extends React.Component<Props> {
 
     const setBonusToFormDisplay = (setBonus: SetBonus, index: number) => {
       const className = setBonus.numberOfModsRequired > (2 * emptySlots) ? 'disabled' : ''
+      const setBonusName = setBonus.name.replace(/\s|%/g, '').toLowerCase()
       return <img
-        src={`/img/icon_buff_${setBonus.name}.png`}
+        src={`/img/icon_buff_${setBonusName}.png`}
         alt={setBonus.name}
         key={index}
         className={className}
@@ -298,7 +299,7 @@ class CharacterEditForm extends React.Component<Props> {
         <p>Selected Sets:</p>
         {selectedSets.map((setName, index) =>
           <img
-            src={`/img/icon_buff_${setName}.png`}
+            src={`/img/icon_buff_${setName.replace(/\s|%/g, '').toLowerCase()}.png`}
             alt={setName}
             key={index}
             onClick={() => this.props.removeSetBonus(setName)}

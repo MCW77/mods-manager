@@ -158,10 +158,10 @@
 .mod-image.speed .mod-slot-image::after {
   background-position-x: -3em;
 }
-.mod-image.critChance .mod-slot-image::after {
+.mod-image.criticalChance .mod-slot-image::after {
   background-position-x: -4em;
 }
-.mod-image.critDamage .mod-slot-image::after {
+.mod-image.criticalDamage .mod-slot-image::after {
   background-position-x: -5em;
 }
 .mod-image.potency .mod-slot-image::after {

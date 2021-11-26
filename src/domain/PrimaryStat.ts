@@ -132,7 +132,7 @@ export class PrimaryStat extends Stats.Stat {
       [5, "12"],
       [6, "30"]
     ]),
-    'Crit Avoid %': new Map<ModTypes.Pips, string>([
+    'Critical Avoidance %': new Map<ModTypes.Pips, string>([
       [1, "15"],
       [2, "16"],
       [3, "18"],
@@ -140,7 +140,7 @@ export class PrimaryStat extends Stats.Stat {
       [5, "24"],
       [6, "35"]
     ]),
-    'Crit Chance %': new Map<ModTypes.Pips, string>([
+    'Critical Chance %': new Map<ModTypes.Pips, string>([
       [1, "7.50"],
       [2, "8"],
       [3, "8.75"],
@@ -148,7 +148,7 @@ export class PrimaryStat extends Stats.Stat {
       [5, "12"],
       [6, "20"]
     ]),
-    'Crit Damage %': new Map<ModTypes.Pips, string>([
+    'Critical Damage %': new Map<ModTypes.Pips, string>([
       [1, "22.50"],
       [2, "24"],
       [3, "27"],
