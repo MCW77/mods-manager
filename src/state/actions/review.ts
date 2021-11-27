@@ -94,39 +94,6 @@ export function reassignMods(modIDs: string[], characterID: CharacterNames) {
 }
 
 /**
- * Given a full optimizer recommendation, reassign all mods to all characters at once
- * @param {Array<Object>} modAssignments An array of objects including `id` and `assignedMods` keys
- */
-export function reassignAllMods(modAssignments) {
-  return updateProfile(profile => {
-    const characterByMod = modAssignments
-      .reduce(
-        (modMap, { id: charId, assignedMods: mods }) => {
-
-          const newMapEntries = mods.reduce((map, modId) => Object.assign(map, { [modId]: charId }), {});
-
-          return Object.assign(modMap, newMapEntries);
-        },
-        {}
-      );
-
-    const modsById = groupByKey(profile.mods, mod => mod.id);
-    const oldMods = Object.keys(characterByMod).map(modID => modsById[modID]);
-    const currentlyEquippedMods =
-      (oldMods.map(oldMod =>
-        profile.mods.find(mod => mod.slot === oldMod.slot && mod.characterID === characterByMod[oldMod.id])
-      ).filter(mod => mod)) as Mod[];
-
-    const modsUpdate = groupByKey(
-      currentlyEquippedMods.map(mod => mod.unequip()).concat(oldMods.map(mod => mod.equip(characterByMod[mod.id]))),
-      mod => mod.id
-    );
-
-    return profile.withMods(Object.values(Object.assign({}, modsById, modsUpdate)));
-  })
-}
-
-/**
  * Update the filter for the mod list view
  * @param newFilter {{view: string, sort: string, tag: string}}
  * @returns {{type: string, filter: *}}

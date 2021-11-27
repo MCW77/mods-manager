@@ -34,80 +34,9 @@ export type PlayerProfiles = {[key: string]: string};
  * @returns {Function}
  */
 export function databaseReady(state: IAppState): ThunkResult<void> {
-  return function (dispatch): void {
-    // Save the state into the database
-    dispatch(populateDatabase(state));
-
+  return function (dispatch, getState): void {
     // Load the data from the database and store it in the state
     dispatch(loadFromDb(state.allyCode));
-  };
-}
-
-/**
- * If the "profiles" key exists in the state, then populate the database with anything in it.
- * If the "characters" key exists in the state, populate baseCharacters for each character that has one.
- * @param state {Object}
- */
-export function populateDatabase(state: IAppState): ThunkResult<void> {
-  return function (dispatch) {
-    const db = getDatabase();
-
-    // First, check to see if there's anything in the state that we need to load into the database
-    if (state.profiles) {
-      const profiles = Object.values(state.profiles).map(profile => {
-        const characters: Characters = mapObject(profile.characters, (character: Character) => {
-          const storedCharacter = Object.assign({}, character.serialize());
-          return storedCharacter;
-        }) as Characters;
-// REMPS        
-        return profile/*.resetPreviousSettings()*/.withCharacters(characters)
-      });
-// REMPS
-/*      
-      const lastRuns = Object.values(state.profiles)
-        .filter((profile: PlayerProfile) => Object.values(profile.previousSettings).length > 0)
-        .map(profile => new OptimizerRun(
-          profile.allyCode,
-          profile.previousSettings.characters,
-          profile.previousSettings.mods,
-          profile.previousSettings.selectedCharacters,
-          profile.previousSettings.modChangeThreshold
-        ));
-*/
-
-      db.saveProfiles(profiles, nothing, error =>
-        dispatch(showFlash(
-          'Storage Error',
-          'Error saving your profile: ' + error?.message
-        ))
-      );
-// REMPS      
-/*
-      db.saveLastRuns(lastRuns, nothing, (error: DOMException | null) =>
-        dispatch(showFlash(
-          'Storage Error',
-          'Error saving previous runs: ' +
-          error?.message +
-          ' The optimizer will need to recalculate optimized values on the next run.'
-        ))
-      );
-*/
-    }
-
-    if (state.characters) {
-      const baseCharacters = Object.values(state.characters)
-        .map(character => character.gameSettings)
-        .filter(x => null !== x);
-
-      db.saveBaseCharacters(baseCharacters, nothing, error =>
-        dispatch(showFlash(
-          'Storage Error',
-          'Error saving base character settings: ' +
-          error?.message +
-          ' The optimizer may not function properly for all characters'
-        ))
-      );
-    }
   };
 }
 
