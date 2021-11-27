@@ -8,25 +8,8 @@ export type StrPips = '1' | '2' | '3' | '4' | '5' | '6';
 export type GIMOSlots = 'square' | 'arrow' | 'diamond' | 'triangle' | 'circle' | 'cross';
 export type HUSlots = 'Transmitter' | 'Receiver' | 'Processor' | 'Holo-Array' | 'Data-Bus' | 'Multiplexer';
 export type VariablePrimarySlots = 'arrow' | 'triangle' | 'circle' | 'cross';
-export type Tiers = 1 | 2 | 3 | 4 | 5;
-export type StrTiers = '1' | '2' | '3' | '4' | '5';
 
-// #region Sets
-export type Sets =
-  'health' |
-  'offense' |
-  'defense' |
-  'speed' |
-  'critchance' |
-  'critdamage' |
-  'potency' |
-  'tenacity'
-;
-// #endregion
-
-type t1 = 'Type' | 'Value' | 'Roll';
 type t2 = 1 | 2 | 3 | 4;
-type t3 = `secondary${t1}_${t2}`;
 type t4 = `secondaryType_${t2}`;
 type t5 = `secondaryValue_${t2}`;
 type t6 = `secondaryRoll_${t2}`;
@@ -42,11 +25,6 @@ export type FlatModValueIndexer = {
 };
 export type FlatModRollIndexer = {
   [key in t6]: SecondaryStats.StrRolls | null;
-};
-
-
-export type FlatModIndexer = {
-  [key in t3]: string;
 };
 
 export type HUFlatMod = {
