@@ -45,7 +45,7 @@ interface FetchedProfile {
 
 interface FetchedPlayerData {
   baseCharacters: BaseCharactersById;
-  profile: PlayerProfile;
+  profile: FetchedProfile;
 }
 export const TOGGLE_KEEP_OLD_MODS = 'TOGGLE_KEEP_OLD_MODS';
 
@@ -139,7 +139,7 @@ export function refreshPlayerData(
   const cleanedAllyCode = cleanAllyCode(allyCode);
   let data: FetchedPlayerData = {
     baseCharacters: {} as BaseCharactersById,
-    profile: {} as PlayerProfile
+    profile: {} as FetchedProfile
   };
 
   const messages: string[] = [];
@@ -168,13 +168,7 @@ export function refreshPlayerData(
       .then(
         (profile: FetchedProfile) => {
           profile.sessionId = sessionId ?? '';
-          data.profile = new PlayerProfile(
-            '',
-            profile.name,
-            profile.playerValues,
-            {} as Characters,
-            profile.mods
-          );
+          data.profile = profile;
           return profile.playerValues;
         }
       )
@@ -285,11 +279,11 @@ function updatePlayerData(
       allyCode,
       dbProfile => {
         const baseProfile = dbProfile ?
-          dbProfile.withPlayerName(fetchData.profile.playerName) :
-          new PlayerProfile(allyCode, fetchData.profile.playerName);
+          dbProfile.withPlayerName(fetchData.profile.name) :
+          new PlayerProfile(allyCode, fetchData.profile.name);
         baseProfile.allyCode = allyCode;      
 
-        const sessionId = fetchData.profile.hotUtilsSessionId  ?? baseProfile.hotUtilsSessionId;
+        const sessionId = fetchData.profile.sessionId  ?? baseProfile.hotUtilsSessionId;
         const oldProfile = baseProfile.withHotUtilsSessionId(sessionId);
 
         // Collect the new character objects by combining the default characters with the player values
@@ -383,7 +377,7 @@ function showFetchResult(fetchData: FetchedPlayerData, errorMessages: string[], 
 
     fetchResults.push(
       <p key={100}>
-        Successfully pulled data for <span className={'gold'}>{Object.keys(fetchData.profile.characters).length}
+        Successfully pulled data for <span className={'gold'}>{Object.keys(fetchData.profile.playerValues).length}
         </span> characters and <span className={'gold'}>{fetchData.profile.mods.length}</span> mods.
       </p>
     );
