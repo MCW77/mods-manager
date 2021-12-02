@@ -676,7 +676,7 @@ export function appendTemplate(name: string): ThunkResult<void> {
   return function (dispatch, getState) {
     if (Object.keys(defaultTemplates).includes(name)) {
       const template: CharacterTemplate = {
-        name: defaultTemplates[name],
+        name: defaultTemplates[name].name,
         selectedCharacters: defaultTemplates[name].selectedCharacters.map(
           ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
         )
@@ -739,7 +739,7 @@ export function replaceTemplate(templateName: string): ThunkResult<void> {
   return function (dispatch, getState) {
     if (Object.keys(defaultTemplates).includes(templateName)) {
       const template: CharacterTemplate = {
-        name: defaultTemplates[templateName],
+        name: defaultTemplates[templateName].name,
         selectedCharacters: defaultTemplates[templateName].selectedCharacters.map(
           ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
         )
@@ -813,7 +813,7 @@ export function applyTemplateTargets(name: string) :ThunkResult<void> {
   return function (dispatch, getState) {
     if (Object.keys(defaultTemplates).includes(name)) {
       const template: CharacterTemplate = {
-        name: defaultTemplates[name],
+        name: defaultTemplates[name].name,
         selectedCharacters: defaultTemplates[name].selectedCharacters.map(
           ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
         )
