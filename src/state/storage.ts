@@ -21,6 +21,7 @@ import { BaseCharactersById } from "domain/BaseCharacter";
 import { TargetStats } from "domain/TargetStat";
 import { CharacterEditMode } from "containers/CharacterEditForm/CharacterEditForm";
 import { SetStats } from "domain/Stats";
+import { ModListFilter } from "./actions/review";
 
 export type SetRestrictions = {
   [key in SetStats.GIMOStatNames]: number
@@ -29,7 +30,7 @@ export type SetRestrictions = {
 export interface IncrementalOptimizationProgress {
   character: Character | null;
   progress: number;
-  step: number;
+  step: string;
 }
 
 interface ModalProps {
@@ -55,14 +56,10 @@ export interface IAppState {
   isBusy: boolean,
   keepOldMods: boolean,
   modal: ModalProps | null,
+  modListFilter: ModListFilter,
   modsFilter: FilterSettings,
 //  modOptions: ModOptions,
-  modListFilter: {
-    view: 'sets',
-    show: 'all',
-    sort: 'assignedCharacter',
-    tag: null
-  },
+
   optimizerView: 'edit' | 'review',
   playerProfiles: {
     [key: string]: string
@@ -115,7 +112,7 @@ export class AppState {
       view: 'sets',
       show: 'all',
       sort: 'assignedCharacter',
-      tag: null
+      tag: ''
     },
     optimizerView: 'edit',
     playerProfiles: {}, // A simple map from ally codes to player names for all available profiles
@@ -124,7 +121,7 @@ export class AppState {
     progress: {
       character: null,
       progress: 0,
-      step: 1,
+      step: '1',
     },
     section: 'optimize',
     showSidebar: true,

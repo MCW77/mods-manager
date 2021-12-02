@@ -14,6 +14,7 @@ import { mapObjectByKeyAndValue } from "../../utils/mapObject";
 import {
   changeModListFilter,
   changeOptimizerView,
+  ModListFilter,
   reassignMod,
   reassignMods,
   unequipMod,
@@ -29,6 +30,7 @@ import { IAppState } from 'state/storage';
 import { MissedGoals } from 'domain/PlayerProfile';
 import { Mod } from 'domain/Mod';
 import ModLoadout from "../../domain/ModLoadout";
+import type * as ModTypes from "../../domain/types/ModTypes";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 
 
@@ -43,7 +45,24 @@ import ModLoadoutView from "../../components/ModLoadoutView/ModLoadoutView";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Toggle from "../../components/Toggle/Toggle";
 
+interface HUModsProfile {
+  id: CharacterNames,
+  modIds: string[],
+  target: string,
+}
 
+type HUModsProfiles = HUModsProfile[];
+export interface HUModsMoveProfile {
+  units: HUModsProfiles;
+}
+
+export interface HUProfileCreationData {
+  set: {
+    category: string,
+    name: string,
+    units: HUModsProfiles,
+  }  
+}
 type ModAssignments = ModAssignment[];
 interface ModAssignment {
   id: CharacterNames;
@@ -87,7 +106,28 @@ const modRemovalCosts = {
 };
 
 // A map from number of pips to a map from current mod level to the total cost to upgrade the mod to level 15
-const modUpgradeCosts = {
+const modUpgradeCosts: {
+  [key in ModTypes.Pips]: {
+    [key2 in ModTypes.Levels]: number
+  }
+} = {
+  6: {
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+    6: 0,
+    7: 0,
+    8: 0,
+    9: 0,
+    10: 0,
+    11: 0,
+    12: 0,
+    13: 0,
+    14: 0,
+    15: 0
+  },
   5: {
     1: 248400,
     2: 244950,
@@ -290,7 +330,7 @@ class Review extends React.PureComponent<Props> {
         }
       });
 
-      if (this.props.filter.tag) {
+      if (this.props.filter.tag !== '') {
         individualMods = individualMods.filter(({ mod }) => {
           let tags: string[];
           if (mod.characterID === 'null') {
@@ -298,13 +338,13 @@ class Review extends React.PureComponent<Props> {
           } else {
             tags = this.props.baseCharacters[mod.characterID].categories;
           }
-          return tags.includes(this.props.filter.tag ?? '');
+          return tags.includes(this.props.filter.tag);
         });
       }
-    } else if (this.props.filter.tag) {
+    } else if (this.props.filter.tag !== '') {
       individualMods = individualMods.filter(({ id, mod }) => {
         const tags = this.props.baseCharacters[id] ? this.props.baseCharacters[id].categories : [];
-        return tags.includes(this.props.filter.tag ?? '');
+        return tags.includes(this.props.filter.tag);
       });
     }
 
@@ -426,7 +466,7 @@ class Review extends React.PureComponent<Props> {
       </Dropdown>
       <label htmlFor={'tag'}>Show characters by tag:</label>
       <Dropdown id={'tag'}
-        value={filter.tag || ''}
+        value={filter.tag}
         onChange={e => this.props.changeFilter(Object.assign({}, filter, { tag: (e.target as HTMLSelectElement).value }))}
       >
         <option value={''}>All</option>
@@ -593,7 +633,7 @@ class Review extends React.PureComponent<Props> {
         if (error !== null)
           error.textContent = '';
 
-        const profile =  {
+        const profile: HUProfileCreationData = {
           set: {
             category: categoryInput?.value ?? '',
             name: profileNameInput?.value ?? '',
@@ -690,7 +730,7 @@ class Review extends React.PureComponent<Props> {
       <div className={'actions'}>
         <button type={'button'} className={'red'} onClick={this.props.hideModal}>Cancel</button>
         <button type={'button'} onClick={() => {
-          const profile = {
+          const profile: HUModsMoveProfile = {
             units: this.generateHotUtilsProfile()
           };
 
@@ -705,7 +745,7 @@ class Review extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: IAppState) => {
 
-  const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments) {
+  const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments): DisplayedMods {
     let tempAssignments = modAssignments;
 
     // If we're only showing upgrades, then filter out any mod that isn't being upgraded
@@ -737,7 +777,7 @@ const mapStateToProps = (state: IAppState) => {
     let result = Object.values(mapObjectByKeyAndValue(
       modsByCharacterId,
       (id: CharacterNames, mods: Mod[]) => ({ id: id, assignedMods: mods })
-    ));
+    )) as DisplayedMods;
     let result2 = toPairs(modsByCharacterId);
     return result;
   }
@@ -838,7 +878,7 @@ const mapStateToProps = (state: IAppState) => {
       )));
 
       // Filter out any characters that we're not going to display based on the selected tag
-      if (filter.tag) {
+      if (filter.tag !== '') {
         displayedMods = displayedMods.filter(({ id }) => {
           const tags = state.baseCharacters[id] ? state.baseCharacters[id].categories : [];
           return tags.includes(filter.tag);
@@ -908,15 +948,15 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   edit: () => dispatch(changeOptimizerView('edit')),
-  changeFilter: (filter) => dispatch(changeModListFilter(filter)),
-  unequipMod: (modID) => dispatch(unequipMod(modID)),
-  reassignMod: (modID, characterID) => dispatch(reassignMod(modID, characterID)),
-  unequipMods: (modIDs) => dispatch(unequipMods(modIDs)),
-  reassignMods: (modIDs, characterID) => dispatch(reassignMods(modIDs, characterID)),
+  changeFilter: (filter: ModListFilter) => dispatch(changeModListFilter(filter)),
+  unequipMod: (modID: string) => dispatch(unequipMod(modID)),
+  reassignMod: (modID: string, characterID: CharacterNames) => dispatch(reassignMod(modID, characterID)),
+  unequipMods: (modIDs: string[]) => dispatch(unequipMods(modIDs)),
+  reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(reassignMods(modIDs, characterID)),
   showModal: (clazz: string, content: DOMContent) => dispatch(showModal(clazz, content)),
   hideModal: () => dispatch(hideModal()),
-  createHotUtilsProfile: (profile, sessionId: string) => dispatch(createHotUtilsProfile(profile, sessionId)),
-  moveModsWithHotUtils: (profile, sessionId: string) => dispatch(moveModsWithHotUtils(profile, sessionId))
+  createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(createHotUtilsProfile(profile, sessionId)),
+  moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(moveModsWithHotUtils(profile, sessionId))
 });
 
 type Props = PropsFromRedux & OwnProps;

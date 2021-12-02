@@ -278,8 +278,9 @@ function updatePlayerData(
     db.getProfile(
       allyCode,
       dbProfile => {
-        const baseProfile = dbProfile ?
-          dbProfile.withPlayerName(fetchData.profile.name) :
+        const baseProfile = dbProfile !== PlayerProfile.Default ?
+          dbProfile.withPlayerName(fetchData.profile.name)
+        :
           new PlayerProfile(allyCode, fetchData.profile.name);
         baseProfile.allyCode = allyCode;      
 
@@ -298,7 +299,7 @@ function updatePlayerData(
               id,
               playerValues,
               new OptimizerSettings(
-                characterSettings[id] ? characterSettings[id].targets[0] : new OptimizationPlan(),
+                characterSettings[id] ? characterSettings[id].targets[0] : new OptimizationPlan('xyz'),
                 [],
                 fetchData.baseCharacters[id] && fetchData.baseCharacters[id].categories.includes('Crew Member') ? 5 : 1,
                 false,
@@ -349,7 +350,8 @@ function updatePlayerData(
         dispatch(fetchHotUtilsStatus(newProfile.allyCode));
       },
       error => {
-        dispatch(showError('Error fetching your profile: ' + error?.message + ' Please try again'));
+        const errorMessage = error instanceof DOMException ? error.message : '';
+        dispatch(showError(`Error fetching your profile: ${errorMessage} Please try again`));
       }
     )
   }

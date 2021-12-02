@@ -2,9 +2,23 @@ import { updateProfile } from "./app";
 import groupByKey from "../../utils/groupByKey";
 import { CharacterNames } from "constants/characterSettings";
 import { Mod } from "domain/Mod";
+import { ThunkResult } from "state/reducers/modsOptimizer";
+
 
 export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW';
 export const CHANGE_MODLIST_FILTER = 'CHANGE_MODLIST_FILTER';
+
+type ViewOptions = 'list' | 'sets';
+type SortOptions = 'currentCharacter' | 'assignedCharacter';
+
+type ShowOptions = 'upgrades'| 'change' | 'all';
+
+export interface ModListFilter {
+  view: ViewOptions;
+  show: ShowOptions;
+  sort: SortOptions;
+  tag: string;
+}
 
 export function changeOptimizerView(newView: string) {
   return {
@@ -98,7 +112,7 @@ export function reassignMods(modIDs: string[], characterID: CharacterNames) {
  * @param newFilter {{view: string, sort: string, tag: string}}
  * @returns {{type: string, filter: *}}
  */
-export function changeModListFilter(newFilter) {
+export function changeModListFilter(newFilter: ModListFilter) {
   return {
     type: CHANGE_MODLIST_FILTER,
     filter: newFilter
@@ -110,7 +124,7 @@ export function changeModListFilter(newFilter) {
  * @param newFilter {Object}
  * @returns {Function}
  */
-export function updateModListFilter(newFilter) {
+export function updateModListFilter(newFilter: Partial<ModListFilter>): ThunkResult<void> {
   return function (dispatch, getState) {
     const state = getState();
 

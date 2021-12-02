@@ -1,5 +1,8 @@
+type ResolveHandler = (value: IDBDatabase | PromiseLike<IDBDatabase>) => void;
+type RejectHandler = (reason?: any) => void;
 export function defer() {
-  var res, rej;
+  let res: ResolveHandler = (value: IDBDatabase | PromiseLike<IDBDatabase>) => {};
+  let rej: RejectHandler = () => {};
 
   interface DBPromise extends Promise<IDBDatabase> 
     {
@@ -7,10 +10,16 @@ export function defer() {
       reject: (reason?: any) => void 
     };
 
-  var promise: DBPromise = new Promise<IDBDatabase>((resolve, reject) => {
+  let promise: DBPromise = Object.assign(
+    new Promise<IDBDatabase>((resolve: ResolveHandler, reject: RejectHandler) => {
       res = resolve;
       rej = reject;
-  });
+    }),
+    {
+      resolve: (value: IDBDatabase | PromiseLike<IDBDatabase>) => {},
+      reject: () => {}
+    }
+  );
 
   promise.resolve = res;
   promise.reject = rej;

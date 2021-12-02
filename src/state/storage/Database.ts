@@ -4,7 +4,8 @@ import { BaseCharacter } from "../../domain/BaseCharacter";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import OptimizerRun from "domain/OptimizerRun";
 import { defer } from "../../utils/defer";
-import { CharacterTemplates, FlatCharacterTemplates } from "domain/CharacterTemplates";
+import { CharacterTemplate, CharacterTemplates, FlatCharacterTemplate, FlatCharacterTemplates } from "domain/CharacterTemplates";
+import { SelectedCharacters } from "domain/SelectedCharacters";
 
 type DBError = DOMException | null;
 
@@ -342,20 +343,20 @@ export class Database {
    * @param onsuccess {function(Object)}
    * @param onerror {function(error)}
    */
-  getCharacterTemplate(name: string, onsuccess: ({}) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+  getCharacterTemplate(name: string, onsuccess: (template: CharacterTemplate) => void = nothing, onerror: DBErrorFunc = dbErrorFunc) {
     this.database.then(db => {
       const templateRequest = db.transaction('characterTemplates', 'readwrite')
         .objectStore('characterTemplates').get(name);
 
       templateRequest.onsuccess = function (event) {
         if  (event !== null && event.target instanceof IDBRequest) {
-          const template = event.target.result;
+          const template: FlatCharacterTemplate = event.target.result;
           onsuccess({
             name: template.name,
             selectedCharacters: template.selectedCharacters.map(({ id, target }) =>
               ({ id: id, target: OptimizationPlan.deserialize(target) })
             )
-          });
+          } as CharacterTemplate);
         }
       };
 
@@ -527,7 +528,7 @@ export class Database {
     })  
   }
 
-  saveCharacterTemplate(name: string, selectedCharacters, onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+  saveCharacterTemplate(name: string, selectedCharacters: SelectedCharacters, onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
     this.database.then(db => {
       const templateObject = {
         name: name,
@@ -548,15 +549,15 @@ export class Database {
 
       saveTemplateRequest.onsuccess = function (event) {
         if (event !== null && event.target instanceof IDBRequest)
-          onsuccess(event.target.result);
+          onsuccess();
       }
     })
   }
 
-  saveCharacterTemplates(templates, onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+  saveCharacterTemplates(templates: CharacterTemplates, onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
     this.database.then(db => {
       const saveTemplatesRequest = db.transaction(['characterTemplates'], 'readwrite');
-      const keys = [];
+      const keys: String[] = [];
 
       saveTemplatesRequest.onerror = function (event: Event) {
         if (event !== null && event.target instanceof IDBRequest)
@@ -564,7 +565,7 @@ export class Database {
       };
 
       saveTemplatesRequest.oncomplete = function (event) {
-        onsuccess(keys);
+        onsuccess();
       };
 
       templates.forEach(template => {

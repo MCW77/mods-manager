@@ -4,7 +4,7 @@ import './FileInput.css';
 
 type Props = {
   className?: string,
-  label?: string,
+  label: string,
   handler: (f: File) => void
 };
 

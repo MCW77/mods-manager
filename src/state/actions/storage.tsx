@@ -1,5 +1,5 @@
 import React from "react";
-import { ThunkDispatchNoParam, ThunkResult } from "../reducers/modsOptimizer";
+import { ThunkResult } from "../reducers/modsOptimizer";
 
 import { showError, showFlash, updateProfile } from "./app";
 import { fetchHotUtilsStatus } from './data';
@@ -12,12 +12,13 @@ import nothing from "../../utils/nothing";
 
 import { IAppState } from 'state/storage';
 import { BaseCharactersById, BaseCharacter } from 'domain/BaseCharacter';
-import { Character, Characters } from 'domain/Character';
+import { Character, Characters, FlatCharacters } from 'domain/Character';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
 import OptimizerRun from "../../domain/OptimizerRun";
-import { PlayerProfile } from 'domain/PlayerProfile';
-import { SelectedCharacters } from "domain/SelectedCharacters";
+import { IFlatPlayerProfile, PlayerProfile } from 'domain/PlayerProfile';
+import { SelectedCharacters, SelectedCharactersByTemplateName } from "domain/SelectedCharacters";
+
 
 
 export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS';
@@ -79,7 +80,7 @@ function loadBaseCharacters(): ThunkResult<void> {
       dispatch(showError(
         [
           <p key={1}>
-            Unable to load database: {e.message} Please fix the problem and try again, or ask for help in the
+            Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
             discord server below.
           </p>,
           <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
@@ -113,10 +114,12 @@ export function loadProfiles(allyCode: string | null): ThunkResult<void> {
 
           // Set the active profile
           const profile = allyCode ?
-            cleanedProfiles.find(profile => profile.allyCode === allyCode) :
+            cleanedProfiles.find(profile => profile.allyCode === allyCode)
+          :
             cleanedProfiles.find((profile, index) => index === 0);
-          dispatch(setProfile(profile));
+          
           if (profile) {
+            dispatch(setProfile(profile));
             dispatch(fetchHotUtilsStatus(profile.allyCode));
           }
 
@@ -135,7 +138,7 @@ export function loadProfiles(allyCode: string | null): ThunkResult<void> {
       dispatch(showError(
         [
           <p key={1}>
-            Unable to load database: {e.message} Please fix the problem and try again, or ask for help in the
+            Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
             discord server below.
           </p>,
           <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
@@ -158,10 +161,11 @@ export function loadCharacterTemplates(): ThunkResult<void> {
     try {
       db.getCharacterTemplates(
         (characterTemplates: CharacterTemplates) => {
-          const templatesObject: CharacterTemplatesByName = mapObject(
+          const templatesObject: SelectedCharactersByTemplateName = mapObject(
             groupByKey(characterTemplates, template => template.name) as CharacterTemplatesByName,
             ({ selectedCharacters }: CharacterTemplate) => selectedCharacters
           );
+          
           dispatch(setCharacterTemplates(templatesObject));
         },
         error => dispatch(showFlash(
@@ -173,7 +177,7 @@ export function loadCharacterTemplates(): ThunkResult<void> {
       dispatch(showError(
         [
           <p key={1}>
-            Unable to load database: {e.message} Please fix the problem and try again, or ask for help in the
+            Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
             discord server below.
           </p>,
           <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
@@ -228,7 +232,7 @@ export function exportDatabase(callback: (ud: IUserData) => void):ThunkResult<vo
   };
 }
 
-export function exportCharacterTemplate(name: string, callback): ThunkResult<void> {
+export function exportCharacterTemplate(name: string, callback: (template: CharacterTemplate) => void): ThunkResult<void> {
   return function (dispatch) {
     const db = getDatabase();
     db.getCharacterTemplate(name,
@@ -238,7 +242,7 @@ export function exportCharacterTemplate(name: string, callback): ThunkResult<voi
   }
 }
 
-export function exportCharacterTemplates(callback): ThunkResult<void> {
+export function exportCharacterTemplates(callback: (templates: CharacterTemplates) => void): ThunkResult<void> {
   return function (dispatch) {
     const db = getDatabase();
     db.getCharacterTemplates(
@@ -274,7 +278,7 @@ export function saveBaseCharacters(baseCharacters: BaseCharacter[]): ThunkResult
  * @param allyCode {string}
  * @returns {Function}
  */
-export function saveProfiles(profiles, allyCode: string): ThunkResult<void> {
+export function saveProfiles(profiles: PlayerProfile[], allyCode: string): ThunkResult<void> {
   return function (dispatch) {
     const db = getDatabase();
     db.saveProfiles(
@@ -333,7 +337,7 @@ export function addModsToProfiles(newProfiles) {
 }
 */
 
-export function replaceModsForProfiles(newProfiles) {
+export function replaceModsForProfiles(newProfiles: IFlatPlayerProfile[]): ThunkResult<void> {
   const newProfilesObject = groupByKey(newProfiles, profile => profile.allyCode);
 
   return function (dispatch, getState) {
@@ -381,7 +385,7 @@ export function replaceModsForProfiles(newProfiles) {
  * @param mod {Mod}
  * @returns {Function}
  */
-export function deleteMod(mod) {
+export function deleteMod(mod: Mod) {
   return updateProfile(
     profile => {
       const oldMods = profile.mods;
@@ -468,7 +472,7 @@ export function setProfile(profile: PlayerProfile) {
   } as const;
 }
 
-export function setCharacterTemplates(templates: CharacterTemplatesByName) {
+export function setCharacterTemplates(templates: SelectedCharactersByTemplateName) {
   return {
     type: SET_CHARACTER_TEMPLATES,
     templates: templates
