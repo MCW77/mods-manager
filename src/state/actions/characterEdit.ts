@@ -654,7 +654,7 @@ export function appendTemplate(name: string): ThunkResult<void> {
         const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
           .includes(id));
 
-        const newProfile = profile.withCharacters(mapObject(profile.characters, character => {
+        const newProfile = profile.withCharacters(mapObject(profile.characters, (character: Character) => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
               character.optimizerSettings.withTargetOverrides(templateTargetsById[character.baseID])
@@ -714,7 +714,7 @@ export function replaceTemplate(templateName: string): ThunkResult<void> {
         const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
           .includes(id));
 
-        const newProfile = profile.withCharacters(mapObject(profile.characters, character => {
+        const newProfile = profile.withCharacters(mapObject(profile.characters, (character: Character) => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
               character.optimizerSettings.withTargetOverrides(templateTargetsById[character.baseID])
@@ -774,7 +774,7 @@ export function applyTemplateTargets(name: string) :ThunkResult<void> {
     return updateProfile(
       profile => {
         const templateTargetsById: OptimizationPlansById = getTargetsById(template);
-        const newProfile = profile.withCharacters(mapObject(profile.characters, character => {
+        const newProfile = profile.withCharacters(mapObject(profile.characters, (character: Character) => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
               character.optimizerSettings.withTargetOverrides(templateTargetsById[character.baseID])
