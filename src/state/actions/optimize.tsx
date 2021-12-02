@@ -2,12 +2,13 @@ import React from "react";
 import { ThunkResult } from "../reducers/modsOptimizer";
 
 import getDatabase from "../storage/Database";
-import nothing from "../../utils/nothing";
+import { IncrementalOptimizationProgress } from "state/storage";
 
 import { hideModal, setIsBusy, showError, showFlash, updateProfile } from "./app";
 import { changeOptimizerView, updateModListFilter } from "./review";
 
 import { Character } from "../../domain/Character";
+import OptimizerRun from "domain/OptimizerRun";
 import { IModSuggestion } from "domain/PlayerProfile";
 
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
@@ -23,7 +24,7 @@ export function startModOptimization() {
   } as const;
 }
 
-export function updateProgress(progress) {
+export function updateProgress(progress: IncrementalOptimizationProgress) {
   return {
     type: UPDATE_PROGRESS,
     progress: progress
@@ -36,7 +37,7 @@ export function updateProgress(progress) {
  * @param settings {OptimizerRun} The previous settings that were used to get this result
  * @returns {*}
  */
-export function finishModOptimization(result: IModSuggestion[], settings):ThunkResult<void> {
+export function finishModOptimization(result: IModSuggestion[], settings: OptimizerRun):ThunkResult<void> {
   return updateProfile(
     profile => profile.withModAssignments(result),
     (dispatch, getState, newProfile) => {
@@ -52,7 +53,7 @@ export function finishModOptimization(result: IModSuggestion[], settings):ThunkR
       );
      
       dispatch(setIsBusy(false));
-      dispatch(updateProgress({}));
+      dispatch(updateProgress({} as IncrementalOptimizationProgress));
 
       // If this was an incremental optimization, leave the user on their current page
       if (newProfile.incrementalOptimizeIndex !== null) {
@@ -96,7 +97,7 @@ export function finishModOptimization(result: IModSuggestion[], settings):ThunkR
                     <td>
                       <h4>{target.name}:</h4>
                       <ul>
-                        {messages.map((message, index) => <li key={index}>{message}</li>)}
+                        {messages!.map((message, index) => <li key={index}>{message}</li>)}
                       </ul>
                       <ul className={'missed-goals'}>
                         {missedGoals.map(([missedGoal, value], index) =>
@@ -188,6 +189,6 @@ export function optimizeMods(): ThunkResult<void> {
 export function cancelOptimizer():ThunkResult<void> {
   return function (dispatch) {
     optimizationWorker?.terminate();
-    dispatch(updateProgress({}));
+    dispatch(updateProgress({} as IncrementalOptimizationProgress));
   };
 }

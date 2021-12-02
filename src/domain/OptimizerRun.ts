@@ -1,13 +1,20 @@
-import { mapObject } from "../utils/mapObject";
-import { FlatCharacters, ICharacter } from "./Character";
-import { IGlobalSettings, PlayerProfile } from "./PlayerProfile";
+import { FlatCharacters } from "./Character";
+import { GIMOFlatMod } from "./types/ModTypes";
+import { IGlobalSettings } from "./PlayerProfile";
 import { SelectedCharacters } from "./SelectedCharacters";
-import { FlatMod } from "./types/ModTypes";
+
+interface FlatOptimizerRun {
+  allyCode: string;
+  characters: FlatCharacters;
+  mods: GIMOFlatMod[];
+  selectedCharacters: SelectedCharacters;
+  globalSettings: IGlobalSettings;
+}
 
 export default class OptimizerRun {
   allyCode: string;
   characters: FlatCharacters;
-  mods: FlatMod[];
+  mods: GIMOFlatMod[];
   selectedCharacters: SelectedCharacters;
   globalSettings: IGlobalSettings;
 
@@ -25,16 +32,11 @@ export default class OptimizerRun {
   constructor(
     allyCode: string,
     characters: FlatCharacters,
-    mods: FlatMod[],
+    mods: GIMOFlatMod[],
     selectedCharacters: SelectedCharacters,
     globalSettings: IGlobalSettings
   ) {
     this.allyCode = allyCode;
-    // We care about everything stored for the character except the default settings
-    mapObject(characters, (character: ICharacter) => {
-      delete character.defaultSettings;
-      delete character.gameSettings;
-    });
     this.characters = characters;
     this.mods = mods;
     this.selectedCharacters = selectedCharacters;
@@ -51,30 +53,14 @@ export default class OptimizerRun {
     };
   }
 
-  deserialize(runJson) {
-    if (runJson.globalSettings) {
-      return new OptimizerRun(
-        runJson.allyCode,
-        runJson.characters,
-        runJson.mods,
-        runJson.selectedCharacters,
-        runJson.globalSettings
-      );  
-    } else {
-      return this.deserializeVersionOneFive(runJson);
-    }
+  deserialize(flatRun: FlatOptimizerRun) {
+    return new OptimizerRun(
+      flatRun.allyCode,
+      flatRun.characters,
+      flatRun.mods,
+      flatRun.selectedCharacters,
+      flatRun.globalSettings
+    );  
   }
 
-  deserializeVersionOneFive(runJson) {
-    return new OptimizerRun(
-      runJson.allyCode,
-      runJson.characters,
-      runJson.mods,
-      runJson.selectedCharacters,
-      Object.assign({}, PlayerProfile.defaultGlobalSettings, {
-        modChangeThreshold: runJson.modChangeThreshold,
-        lockUnselectedCharacters: runJson.lockUnselectedCharacters
-      })
-    );
-  }
 }

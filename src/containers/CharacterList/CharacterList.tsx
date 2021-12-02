@@ -21,6 +21,7 @@ import { OptimizationPlan } from "domain/OptimizationPlan";
 import { Character } from "domain/Character";
 import { IAppState } from "state/storage";
 import { DOMContent } from "components/types";
+import { ThunkDispatch } from "state/reducers/modsOptimizer";
 
 class CharacterList extends PureComponent<Props> {
   characterBlockDragStart(index: number) {
@@ -58,10 +59,10 @@ class CharacterList extends PureComponent<Props> {
   }
 
   /**
-   * @param dropCharacterIndex string The index of the character on which the drop is occurring
+   * @param dropCharacterIndex The index of the character on which the drop is occurring or null (No characters in the list)
    * @returns {Function}
    */
-  characterBlockDrop(dropCharacterIndex: number) {
+  characterBlockDrop(dropCharacterIndex: number | null) {
     const selectCharacter = this.props.selectCharacter;
     const moveCharacter = this.props.moveCharacter;
     const characters = this.props.characters;
@@ -185,16 +186,19 @@ class CharacterList extends PureComponent<Props> {
     const blankTargetActive = target.isBlank() ? 'active' : '';
     const lockedActive = character.optimizerSettings.isLocked ? 'active' : '';
 
+    let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      this.props.changeMinimumModDots(character.baseID, Number(event.target.value));
+      (document?.activeElement as HTMLSelectElement)?.blur();
+    }
+    handleChange = handleChange.bind(this);
+
     return <div className={'character-icons'}>
 
       <span className={`icon minimum-dots`}
         title={`This character will only use mods with at least ${minimumDots} ${1 === minimumDots ? 'dot' : 'dots'}`} >
         <select
           value={minimumDots}
-          onChange={(event) => {
-            this.props.changeMinimumModDots(character.baseID, event.target.value)
-            document?.activeElement?.blur()
-          }}
+          onChange={handleChange}
         >
           {[1, 2, 3, 4, 5, 6].map(dots => <option key={dots} value={dots}>{dots}</option>)}
         </select>
@@ -270,7 +274,7 @@ class CharacterList extends PureComponent<Props> {
     )
   }
 
-  showEditCharacterModal(character, index, target) {
+  showEditCharacterModal(character: Character, index: number, target: OptimizationPlan) {
     this.props.setOptimizeIndex(index);
     this.props.showModal(
       '',
@@ -294,18 +298,18 @@ const mapStateToProps = (state: IAppState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   showModal: (clazz: string, content: DOMContent) => dispatch(showModal(clazz, content)),
-  selectCharacter: (characterID: CharacterNames, target: OptimizationPlan, prevIndex: number) => dispatch(selectCharacter(characterID, target, prevIndex)),
+  selectCharacter: (characterID: CharacterNames, target: OptimizationPlan, prevIndex: number | null) => dispatch(selectCharacter(characterID, target, prevIndex)),
   unselectCharacter: (characterIndex: number) => dispatch(unselectCharacter(characterIndex)),
-  moveCharacter: (fromIndex: number, toIndex: number) => dispatch(moveSelectedCharacter(fromIndex, toIndex)),
+  moveCharacter: (fromIndex: number, toIndex: number | null) => dispatch(moveSelectedCharacter(fromIndex, toIndex)),
   changeCharacterTarget: (characterIndex: number, target: OptimizationPlan) => dispatch(changeCharacterTarget(characterIndex, target)),
   lockCharacter: (characterID: CharacterNames) => dispatch(lockCharacter(characterID)),
   toggleCharacterLock: (characterID: CharacterNames) => dispatch(toggleCharacterLock(characterID)),
   toggleSliceMods: (characterID: CharacterNames) => dispatch(toggleSliceMods(characterID)),
   toggleUpgradeMods: (characterIndex: number) => dispatch(toggleUpgradeMods(characterIndex)),
   changeMinimumModDots: (characterID: CharacterNames, newMinimum: number) => dispatch(changeMinimumModDots(characterID, newMinimum)),
-  setOptimizeIndex: (index) => dispatch(setOptimizeIndex(index)),
+  setOptimizeIndex: (index: number) => dispatch(setOptimizeIndex(index)),
 });
 
 type Props = PropsFromRedux & OwnProps;

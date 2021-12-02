@@ -2,7 +2,7 @@ import { hideModal, showFlash, updateProfile } from "./app";
 import { mapObject } from "../../utils/mapObject";
 import groupByKey from "../../utils/groupByKey";
 import collectByKey from "../../utils/collectByKey";
-import { OptimizationPlan} from "../../domain/OptimizationPlan";
+import { OptimizationPlan, OptimizationPlansById } from "../../domain/OptimizationPlan";
 import getDatabase from "../storage/Database";
 import { loadCharacterTemplates } from "./storage";
 import { TargetStat } from "domain/TargetStat";
@@ -10,9 +10,12 @@ import { ThunkResult } from "state/reducers/modsOptimizer";
 import { CharacterNames } from "constants/characterSettings";
 import { PlayerProfile } from "domain/PlayerProfile";
 import { Character, Characters } from "domain/Character";
+import { CharacterTemplate, CharacterTemplates } from "domain/CharacterTemplates";
+import { SelectedCharacters } from "domain/SelectedCharacters";
 import { SetStats } from "domain/Stats";
 import { SetRestrictions } from "state/storage";
 import templatesJSON from "../../constants/characterTemplates.json";
+
 const defaultTemplates = groupByKey(templatesJSON, ({ name }) => name);
 
 export const CHANGE_CHARACTER_EDIT_MODE = 'CHANGE_CHARACTER_EDIT_MODE';
@@ -66,7 +69,7 @@ export function selectCharacter(
  * @param toIndex {Number}
  * @returns {Function}
  */
-export function moveSelectedCharacter(fromIndex: number, toIndex: number) {
+export function moveSelectedCharacter(fromIndex: number, toIndex: number | null) {
   return updateProfile(profile => {
     if (fromIndex === toIndex) {
       return profile;
@@ -322,11 +325,11 @@ export function finishEditCharacterTarget(
   );
 }
 
-export function closeEditCharacterForm() {
+export function closeEditCharacterForm(): ThunkResult<void> {
   return function (dispatch) {
     dispatch(hideModal());
-    dispatch(changeSetRestrictions(null));
-    dispatch(changeTargetStats(null));
+    dispatch(changeSetRestrictions({} as SetRestrictions));
+    dispatch(changeTargetStats([]));
     dispatch(setOptimizeIndex(null));
   }
 }
@@ -354,7 +357,7 @@ export function resetCharacterTargetToDefault(characterID: CharacterNames, targe
     },
     dispatch => {
       dispatch(hideModal());
-      dispatch(changeSetRestrictions({}));
+      dispatch(changeSetRestrictions({} as SetRestrictions));
     }
   );
 }
@@ -414,7 +417,7 @@ export function deleteTarget(characterID: CharacterNames, targetName: string) {
     },
     dispatch => {
       dispatch(hideModal());
-      dispatch(changeSetRestrictions({}));
+      dispatch(changeSetRestrictions({} as SetRestrictions));
     }
   );
 }
@@ -611,7 +614,7 @@ export function saveTemplate(templateName: string): ThunkResult<void> {
   };
 }
 
-export function saveTemplates(templates): ThunkResult<void> {
+export function saveTemplates(templates: CharacterTemplates): ThunkResult<void> {
   const db = getDatabase();
 
   return function (dispatch) {
@@ -623,7 +626,7 @@ export function saveTemplates(templates): ThunkResult<void> {
       },
       error => dispatch(showFlash(
         'Storage Error',
-        'Error saving the character templates: ' + error.message + '.'
+        'Error saving the character templates: ' + (error as Error).message + '.'
       ))
     );
   };
@@ -632,7 +635,7 @@ export function saveTemplates(templates): ThunkResult<void> {
 export function appendTemplate(name: string): ThunkResult<void> {
   const db = getDatabase();
 
-  function updateFunction(template) {
+  function updateFunction(template: CharacterTemplate) {
     return updateProfile(
       profile => {
         const templateTargetsById = mapObject(
@@ -672,20 +675,20 @@ export function appendTemplate(name: string): ThunkResult<void> {
 
   return function (dispatch, getState) {
     if (Object.keys(defaultTemplates).includes(name)) {
-      const template = {
+      const template: CharacterTemplate = {
         name: defaultTemplates[name],
         selectedCharacters: defaultTemplates[name].selectedCharacters.map(
           ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
         )
       };
-      updateFunction(template)(dispatch, getState);
+      updateFunction(template)(dispatch, getState, null);
     } else {
       db.getCharacterTemplate(
         name,
-        template => updateFunction(template)(dispatch, getState),
+        template => updateFunction(template)(dispatch, getState, null),
         error => dispatch(showFlash(
           'Storage Error',
-          `Error retrieving your template from the database: ${error.message}.`
+          `Error retrieving your template from the database: ${(error as Error).message}.`
         ))
       );
     }
@@ -695,7 +698,7 @@ export function appendTemplate(name: string): ThunkResult<void> {
 export function replaceTemplate(templateName: string): ThunkResult<void> {
   const db = getDatabase();
 
-  function updateFunction(template) {
+  function updateFunction(template: CharacterTemplate) {
     return updateProfile(
       profile => {
         const templateTargetsById = mapObject(
@@ -735,17 +738,17 @@ export function replaceTemplate(templateName: string): ThunkResult<void> {
 
   return function (dispatch, getState) {
     if (Object.keys(defaultTemplates).includes(templateName)) {
-      const template = {
+      const template: CharacterTemplate = {
         name: defaultTemplates[templateName],
         selectedCharacters: defaultTemplates[templateName].selectedCharacters.map(
           ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
         )
       };
-      updateFunction(template)(dispatch, getState);
+      updateFunction(template)(dispatch, getState, null);
     } else {
       db.getCharacterTemplate(
         templateName,
-        template => updateFunction(template)(dispatch, getState),
+        template => updateFunction(template)(dispatch, getState, null),
         error => dispatch(showFlash(
           'Storage Error',
           `Error retrieving your template from the database: ${(error as Error).message}.`
@@ -762,10 +765,10 @@ export function setOptimizeIndex(index: number | null): ThunkResult<void> {
 export function applyTemplateTargets(name: string) :ThunkResult<void> {
   const db = getDatabase();
 
-  function updateFunction(template) {
+  function updateFunction(template: CharacterTemplate) {
     return updateProfile(
       profile => {
-        const templateTargetsById = mapObject(
+        const templateTargetsById: OptimizationPlansById = mapObject(
           collectByKey(template.selectedCharacters, ({ id }) => id),
           entries => entries.map(({ target }) => target)
         );
@@ -809,20 +812,20 @@ export function applyTemplateTargets(name: string) :ThunkResult<void> {
 
   return function (dispatch, getState) {
     if (Object.keys(defaultTemplates).includes(name)) {
-      const template = {
+      const template: CharacterTemplate = {
         name: defaultTemplates[name],
         selectedCharacters: defaultTemplates[name].selectedCharacters.map(
           ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
         )
       };
-      updateFunction(template)(dispatch, getState);
+      updateFunction(template)(dispatch, getState, null);
     } else {
       db.getCharacterTemplate(
         name,
-        template => updateFunction(template)(dispatch, getState),
+        template => updateFunction(template)(dispatch, getState, null),
         error => dispatch(showFlash(
           'Storage Error',
-          `Error retrieving your template from the database: ${error.message}.`
+          `Error retrieving your template from the database: ${(error as Error).message}.`
         ))
       );
     }
