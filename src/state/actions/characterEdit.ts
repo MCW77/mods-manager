@@ -29,6 +29,17 @@ export const CHANGE_TARGET_STATS = 'CHANGE_TARGET_STATS';
 export const ADD_TARGET_STAT = 'ADD_TARGET_STAT';
 export const REMOVE_TARGET_STAT = 'REMOVE_TARGET_STAT';
 
+function getTargetsById(template: CharacterTemplate): OptimizationPlansById {
+  return mapObject(
+    collectByKey(
+      template.selectedCharacters,
+      ({ id }: {id: CharacterNames}) => id
+    ) as {[id in CharacterNames]: SelectedCharacters},
+    (entries: SelectedCharacters) => entries.map(
+      ({ target }: { target: OptimizationPlan}) => target
+    )
+  );
+}
 /**
  * Action to move a character from the "available characters" pool to the "selected characters" pool, moving the
  * character in order just underneath prevIndex, if it's supplied
@@ -638,10 +649,7 @@ export function appendTemplate(name: string): ThunkResult<void> {
   function updateFunction(template: CharacterTemplate) {
     return updateProfile(
       profile => {
-        const templateTargetsById = mapObject(
-          collectByKey(template.selectedCharacters, ({ id }) => id),
-          entries => entries.map(({ target }) => target)
-        );
+        const templateTargetsById = getTargetsById(template);
 
         const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
           .includes(id));
@@ -701,10 +709,7 @@ export function replaceTemplate(templateName: string): ThunkResult<void> {
   function updateFunction(template: CharacterTemplate) {
     return updateProfile(
       profile => {
-        const templateTargetsById = mapObject(
-          collectByKey(template.selectedCharacters, ({ id }) => id),
-          entries => entries.map(({ target }) => target)
-        );
+        const templateTargetsById = getTargetsById(template);
 
         const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
           .includes(id));
@@ -768,11 +773,7 @@ export function applyTemplateTargets(name: string) :ThunkResult<void> {
   function updateFunction(template: CharacterTemplate) {
     return updateProfile(
       profile => {
-        const templateTargetsById: OptimizationPlansById = mapObject(
-          collectByKey(template.selectedCharacters, ({ id }) => id),
-          entries => entries.map(({ target }) => target)
-        );
-
+        const templateTargetsById: OptimizationPlansById = getTargetsById(template);
         const newProfile = profile.withCharacters(mapObject(profile.characters, character => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
