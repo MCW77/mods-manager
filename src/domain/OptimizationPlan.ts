@@ -3,6 +3,7 @@ import { TargetStat } from "./TargetStat";
 
 import type * as StatTypes from "./types/StatTypes";
 import type * as ModTypes from "./types/ModTypes";
+import { CharacterNames } from "constants/characterSettings";
 
 import { PrimaryStats } from "./Stats";
 import { SetRestrictions } from "state/storage";
@@ -59,8 +60,12 @@ interface OldFlatOptimizationPlan extends BaseFlatOptimizationPlan {
   targetStat: TargetStat;
 }
 
-export interface FlatOptimizationPlan extends BaseFlatOptimizationPlan{
+export interface FlatOptimizationPlan extends BaseFlatOptimizationPlan {
   targetStats: TargetStat[];
+}
+
+export type OptimizationPlansById = {
+  [id in CharacterNames]: OptimizationPlan[]
 }
 
 /**

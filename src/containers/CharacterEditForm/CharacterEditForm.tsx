@@ -44,6 +44,7 @@ import { Dropdown } from "../../components/Dropdown/Dropdown";
 import RangeInput from "../../components/RangeInput/RangeInput";
 import Toggle from "../../components/Toggle/Toggle";
 import OptimizerProgress from '../../components/OptimizerProgress/OptimizerProgress';
+import { IModSuggestion } from "domain/PlayerProfile";
 
 export type CharacterEditMode = 'basic' | 'advanced';
 
@@ -685,7 +686,7 @@ class CharacterEditForm extends React.Component<Props> {
     </div>;
   }
 
-  missedGoalsSection(modAssignments) {
+  missedGoalsSection(modAssignments: IModSuggestion | null) {
     if ((this.props.targetStats || []).length === 0) {
       return;
     }
