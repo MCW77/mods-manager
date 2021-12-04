@@ -2,7 +2,6 @@ import React from "react";
 
 import './ModLoadoutDetail.css';
 
-import { mapObject } from "../../utils/mapObject";
 import { mapValues } from "lodash-es";
 
 import { Character } from "../../domain/Character";

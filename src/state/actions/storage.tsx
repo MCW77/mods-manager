@@ -1,25 +1,23 @@
 import React from "react";
 import { ThunkResult } from "../reducers/modsOptimizer";
 
+import groupByKey from "../../utils/groupByKey";
+import { mapValues } from "lodash-es";
+import nothing from "../../utils/nothing";
+
 import { showError, showFlash, updateProfile } from "./app";
 import { fetchHotUtilsStatus } from './data';
 
 import getDatabase, { IUserData } from "../storage/Database";
 
-import groupByKey from "../../utils/groupByKey";
-import { mapObject } from "../../utils/mapObject";
-import nothing from "../../utils/nothing";
 
 import { IAppState } from 'state/storage';
 import { BaseCharactersById, BaseCharacter } from 'domain/BaseCharacter';
-import { Character, Characters, FlatCharacters } from 'domain/Character';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
 import OptimizerRun from "../../domain/OptimizerRun";
 import { IFlatPlayerProfile, PlayerProfile } from 'domain/PlayerProfile';
 import { SelectedCharacters, SelectedCharactersByTemplateName } from "domain/SelectedCharacters";
-
-
 
 export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS';
 export const SET_PROFILE = 'SET_PROFILE';
@@ -161,7 +159,7 @@ export function loadCharacterTemplates(): ThunkResult<void> {
     try {
       db.getCharacterTemplates(
         (characterTemplates: CharacterTemplates) => {
-          const templatesObject: SelectedCharactersByTemplateName = mapObject(
+          const templatesObject: SelectedCharactersByTemplateName = mapValues(
             groupByKey(characterTemplates, template => template.name) as CharacterTemplatesByName,
             ({ selectedCharacters }: CharacterTemplate) => selectedCharacters
           );

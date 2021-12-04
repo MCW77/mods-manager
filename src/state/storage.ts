@@ -2,7 +2,8 @@
  * Save the state of the application to localStorage
  * @param state Object
  */
-import { mapObject, mapObjectByKeyAndValue, pick } from "../utils/mapObject";
+import { pick } from "../utils/mapObject";
+import { mapValues } from "lodash-es";
 import { Character } from "../domain/Character";
 import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
 /*
@@ -173,7 +174,7 @@ export class AppState {
     } else if (state instanceof Array) {
       return state.map(item => AppState.serialize(item));
     } else if (state instanceof Object) {
-      return mapObject(
+      return mapValues(
         state,
         (stateValue: any) => AppState.serialize(stateValue)
       );
@@ -207,17 +208,19 @@ export function deserializeState(state: IAppState): IAppState {
   },
     state.profiles ?
       {
-        profiles: mapObjectByKeyAndValue(state.profiles, (allyCode: string, profile: IFlatPlayerProfile) => {
+        profiles: mapValues(state.profiles, (profile: IFlatPlayerProfile, allyCode: string) => {
           profile.allyCode = allyCode;
           profile.playerName = formatAllyCode(allyCode);
           return PlayerProfile.deserialize(profile);
         })
-      } :
+      }
+    :
       null,
     state.characters ?
       {
-        characters: mapObject(state.characters, (character: Character) => Character.deserialize(character))
-      } :
+        characters: mapValues(state.characters, (character: Character) => Character.deserialize(character))
+      }
+    :
       null
   );
 }

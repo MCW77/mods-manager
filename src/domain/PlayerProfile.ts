@@ -1,10 +1,11 @@
 /**
  * Class to hold information about how a particular player is using the optimizer - their character setup and mods
  */
+import { mapValues } from "lodash-es";
+
 import { Character, FlatCharacters, ICharacter } from "./Character";
 import * as ModTypes from "./types/ModTypes";
 import { Mod } from "./Mod";
-import { mapObject } from "../utils/mapObject";
 import OptimizerRun from "./OptimizerRun";
 import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
 import { CharacterNames } from "constants/characterSettings";
@@ -324,7 +325,7 @@ export class PlayerProfile {
   toOptimizerRun() {
     return new OptimizerRun(
       this.allyCode,
-      mapObject(this.characters, (character: Character) => character.serialize()) as FlatCharacters,
+      mapValues(this.characters, (character: Character) => character.serialize()) as FlatCharacters,
       this.mods.map(mod => mod.serialize()),
       this.selectedCharacters,
       this.globalSettings,
@@ -335,7 +336,7 @@ export class PlayerProfile {
     return {
       allyCode: this.allyCode,
       playerName: this.playerName,
-      characters: mapObject(this.characters, (character: Character) =>
+      characters: mapValues(this.characters, (character: Character) =>
         'function' === typeof character.serialize ? character.serialize() : character
       ),
       mods: this.mods.map(mod => mod.serialize()),
@@ -355,7 +356,7 @@ export class PlayerProfile {
         flatPlayerProfile.allyCode,
         flatPlayerProfile.playerName,
         {} as PlayerValuesByCharacter,
-        mapObject(flatPlayerProfile.characters, Character.deserialize) as Characters,
+        mapValues(flatPlayerProfile.characters, Character.deserialize) as Characters,
         flatPlayerProfile.mods.map(Mod.deserialize),
         flatPlayerProfile.selectedCharacters.map(({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })),
         
