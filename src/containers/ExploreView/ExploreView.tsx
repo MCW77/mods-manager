@@ -294,7 +294,7 @@ class ModsFilter {
       return false;
     if (this.selectedOptions.primary.length > 0 && !this.selectedOptions.primary.every(primary => mod.primaryStat.type === primary))
       return false;
-    if (this.selectedOptions.secondary.length > 0 && !this.selectedOptions.secondary.every(secondary => mod.secondaryStats.some(modSecondary => modSecondary === secondary)))
+    if (this.selectedOptions.secondary.length > 0 && !this.selectedOptions.secondary.every(secondary => mod.secondaryStats.some(modSecondary => modSecondary.type === secondary)))
       return false;
     if (this.selectedOptions.optimizer.length > 0 && !mod.isAssigned())
       return false;
@@ -316,7 +316,7 @@ class ModsFilter {
       return false;
     if (this.unselectedOptions.primary.length > 0 && !this.unselectedOptions.primary.every(primary => mod.primaryStat.type !== primary))
       return false;
-    if (this.unselectedOptions.secondary.length > 0 && !this.unselectedOptions.secondary.every(secondary => mod.secondaryStats.some(modSecondary => modSecondary !== secondary)))
+    if (this.unselectedOptions.secondary.length > 0 && !this.unselectedOptions.secondary.every(secondary => mod.secondaryStats.every(modSecondary => modSecondary.type !== secondary)))
       return false;
     if (this.unselectedOptions.optimizer.length > 0 && mod.isAssigned())
       return false;
