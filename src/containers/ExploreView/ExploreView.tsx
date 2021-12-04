@@ -327,10 +327,10 @@ class ModsFilter {
     return mods.filter(this.selectedOptionsFilter).filter(this.unselectedOptionsFilter)
   }
 
-  filterGroupedMods(groupedMods: Dictionary<Mod[]>) {
-    let filteredMods = mapValues(groupedMods, (mods: Mod[]) => 
+  filterGroupedMods(groupedMods: Dictionary<Mod[]>): Dictionary<Mod[]> {
+    let filteredMods: Dictionary<Mod[]> = mapValues(groupedMods, (mods: Mod[]) => 
       this.filterMods(mods)
-    ) as Dictionary<Mod[]>;
+    );
     for (let group in filteredMods) {
       if (filteredMods[group].length === 0)
       delete filteredMods[group]  
@@ -358,14 +358,14 @@ class ModsFilter {
       return ungroupedMods(mods); 
   }
 
-  sortGroupedMods(groupedMods: Dictionary<Mod[]>) {
+  sortGroupedMods(groupedMods: Dictionary<Mod[]>): Dictionary<Mod[]> {
     return mapValues(groupedMods, (mods: Mod[]) => 
       orderBy(
         mods,
         this.sortOptions,
         this.sortOptions.map((opt) => "desc")
       )
-    ) as Dictionary<Mod[]>
+    )
   }
 
   getGroupedModsCount(groupedMods: Dictionary<Mod[]>) {

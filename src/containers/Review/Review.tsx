@@ -7,9 +7,8 @@ import './Review.css';
 import { groupBy, flatten, uniq, toPairs } from "lodash-es";
 import collectByKey from "../../utils/collectByKey";
 import copyToClipboard from "../../utils/clipboard"
-// import flatten from "../../utils/flatten";
 import groupByKey from "../../utils/groupByKey";
-import { mapObjectByKeyAndValue } from "../../utils/mapObject";
+import { mapValues } from "lodash-es";
 
 import {
   changeModListFilter,
@@ -44,6 +43,7 @@ import ModLoadoutDetail from "../../components/ModLoadoutDetail/ModLoadoutDetail
 import ModLoadoutView from "../../components/ModLoadoutView/ModLoadoutView";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Toggle from "../../components/Toggle/Toggle";
+import { ExpandRecursively } from 'utils/typeHelper';
 
 interface HUModsProfile {
   id: CharacterNames,
@@ -768,17 +768,21 @@ const mapStateToProps = (state: IAppState) => {
     }
     // Filter out any mods that aren't moving
     const mods = tempAssignments.map(({ id, assignedMods }) => assignedMods.filter(mod => mod.characterID !== id));
-    const modsByCharacterId = groupBy(
+    type ModsByCharacterNames = {
+      [key in CharacterNames]: Mod[]
+    };
+
+    const modsByCharacterNames: ModsByCharacterNames = groupBy(
       flatten(mods),
       'characterID'
-    ) as {[key in CharacterNames]: Mod[]};
+    ) as ModsByCharacterNames;
 
     // Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
-    let result = Object.values(mapObjectByKeyAndValue(
-      modsByCharacterId,
-      (id: CharacterNames, mods: Mod[]) => ({ id: id, assignedMods: mods })
-    )) as DisplayedMods;
-    let result2 = toPairs(modsByCharacterId);
+    let result: DisplayedMods = Object.values(mapValues<ModsByCharacterNames, DisplayedMod>(
+      modsByCharacterNames,
+      (mods: Mod[], id: string): DisplayedMod => ({ id: id as CharacterNames, assignedMods: mods, target: new OptimizationPlan('xyz') })
+    ));
+
     return result;
   }
   

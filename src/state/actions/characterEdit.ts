@@ -1,22 +1,27 @@
+import { ThunkResult } from "state/reducers/modsOptimizer";
+
 import { hideModal, showFlash, updateProfile } from "./app";
-import { mapObject } from "../../utils/mapObject";
-import groupByKey from "../../utils/groupByKey";
+
 import collectByKey from "../../utils/collectByKey";
-import { OptimizationPlan, OptimizationPlansById } from "../../domain/OptimizationPlan";
+import groupByKey from "../../utils/groupByKey";
+import { mapValues } from "lodash-es";
+
+import { SetRestrictions } from "state/storage";
 import getDatabase from "../storage/Database";
 import { loadCharacterTemplates } from "./storage";
-import { TargetStat } from "domain/TargetStat";
-import { ThunkResult } from "state/reducers/modsOptimizer";
+
 import { CharacterNames } from "constants/characterSettings";
-import { PlayerProfile } from "domain/PlayerProfile";
-import { Character, Characters } from "domain/Character";
-import { CharacterTemplate, CharacterTemplates } from "domain/CharacterTemplates";
-import { SelectedCharacters } from "domain/SelectedCharacters";
-import { SetStats } from "domain/Stats";
-import { SetRestrictions } from "state/storage";
 import templatesJSON from "../../constants/characterTemplates.json";
 
-const defaultTemplates = groupByKey(templatesJSON, ({ name }) => name);
+import { Character, Characters } from "domain/Character";
+import { CharacterTemplate, CharacterTemplates } from "domain/CharacterTemplates";
+import { OptimizationPlan, OptimizationPlansById } from "../../domain/OptimizationPlan";
+import { PlayerProfile } from "domain/PlayerProfile";
+import { SelectedCharacters } from "domain/SelectedCharacters";
+import { SetStats } from "domain/Stats";
+import { TargetStat } from "domain/TargetStat";
+
+const defaultTemplates = groupByKey(templatesJSON as CharacterTemplates, ({ name }) => name);
 
 export const CHANGE_CHARACTER_EDIT_MODE = 'CHANGE_CHARACTER_EDIT_MODE';
 export const CHANGE_CHARACTER_FILTER = 'CHANGE_CHARACTER_FILTER';
@@ -30,7 +35,7 @@ export const ADD_TARGET_STAT = 'ADD_TARGET_STAT';
 export const REMOVE_TARGET_STAT = 'REMOVE_TARGET_STAT';
 
 function getTargetsById(template: CharacterTemplate): OptimizationPlansById {
-  return mapObject(
+  return mapValues(
     collectByKey(
       template.selectedCharacters,
       ({ id }: {id: CharacterNames}) => id
@@ -136,7 +141,7 @@ export function lockSelectedCharacters() {
     const selectedCharacterIDs: CharacterNames[] = Object.keys(groupByKey(profile.selectedCharacters, ({ id }) => id)) as CharacterNames[];
 
     return profile.withCharacters(
-      mapObject(
+      mapValues(
         profile.characters,
         (character: Character) => selectedCharacterIDs.includes(character.baseID) ?
           character.withOptimizerSettings(character.optimizerSettings.lock()) :
@@ -155,7 +160,7 @@ export function unlockSelectedCharacters() {
     const selectedCharacterIDs = Object.keys(groupByKey(profile.selectedCharacters, ({ id }) => id));
 
     return profile.withCharacters(
-      mapObject(
+      mapValues(
         profile.characters,
         (character: Character) => selectedCharacterIDs.includes(character.baseID) ?
           character.withOptimizerSettings(character.optimizerSettings.unlock()) :
@@ -169,7 +174,7 @@ export function lockAllCharacters() {
   return updateProfile(
     (profile: PlayerProfile) =>
     profile.withCharacters(
-      mapObject(
+      mapValues(
         profile.characters,
         (character: Character) =>
         character.withOptimizerSettings(character.optimizerSettings.lock())
@@ -182,7 +187,7 @@ export function unlockAllCharacters() {
   return updateProfile(
     (profile: PlayerProfile) =>
     profile.withCharacters(
-      mapObject(
+      mapValues(
         profile.characters,
         (character: Character) =>
         character.withOptimizerSettings(character.optimizerSettings.unlock())
@@ -380,7 +385,7 @@ export function resetCharacterTargetToDefault(characterID: CharacterNames, targe
 export function resetAllCharacterTargets() {
   return updateProfile(
     (profile: PlayerProfile) => {
-      const newCharacters: Characters = mapObject(
+      const newCharacters: Characters = mapValues(
         profile.characters,
         (character: Character) => character.withResetTargets()
       ) as Characters;
@@ -654,7 +659,7 @@ export function appendTemplate(name: string): ThunkResult<void> {
         const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
           .includes(id));
 
-        const newProfile = profile.withCharacters(mapObject(profile.characters, (character: Character) => {
+        const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
               character.optimizerSettings.withTargetOverrides(templateTargetsById[character.baseID])
@@ -714,7 +719,7 @@ export function replaceTemplate(templateName: string): ThunkResult<void> {
         const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
           .includes(id));
 
-        const newProfile = profile.withCharacters(mapObject(profile.characters, (character: Character) => {
+        const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
               character.optimizerSettings.withTargetOverrides(templateTargetsById[character.baseID])
@@ -774,7 +779,7 @@ export function applyTemplateTargets(name: string) :ThunkResult<void> {
     return updateProfile(
       profile => {
         const templateTargetsById: OptimizationPlansById = getTargetsById(template);
-        const newProfile = profile.withCharacters(mapObject(profile.characters, (character: Character) => {
+        const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
           if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
             return character.withOptimizerSettings(
               character.optimizerSettings.withTargetOverrides(templateTargetsById[character.baseID])

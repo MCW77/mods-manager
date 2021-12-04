@@ -1,4 +1,7 @@
 import React from "react";
+
+import { mapValues } from "lodash-es";
+
 import { Mod } from "../../domain/Mod";
 import { BaseCharactersById, APIBaseCharacter, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
 import { IHUPlayerValues, PlayerValues, PlayerValuesByCharacter } from "../../domain/PlayerValues";
@@ -8,7 +11,6 @@ import { hideFlash, setIsBusy, showError, showFlash, hideModal, showModal, updat
 import getDatabase, { Database } from "../storage/Database";
 import nothing from "../../utils/nothing";
 import { PlayerProfile } from "../../domain/PlayerProfile";
-import { mapObjectByKeyAndValue } from "../../utils/mapObject";
 import { Character, Characters } from "../../domain/Character";
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
@@ -289,25 +291,26 @@ function updatePlayerData(
 
         // Collect the new character objects by combining the default characters with the player values
         // and the optimizer settings from the current profile.
-        const newCharacters = mapObjectByKeyAndValue(fetchData.profile.playerValues, (id: CharacterNames, playerValues: PlayerValues) => {
-          if (oldProfile.characters.hasOwnProperty(id)) {
-            return oldProfile.characters[id]
+        const newCharacters = mapValues<PlayerValuesByCharacter, Character>(fetchData.profile.playerValues, (playerValues: PlayerValues, id: string):Character => {
+          const Id: CharacterNames = id as CharacterNames;
+          if (oldProfile.characters.hasOwnProperty(Id)) {
+            return oldProfile.characters[Id]
               .withPlayerValues(playerValues)
-              .withOptimizerSettings(oldProfile.characters[id].optimizerSettings);
+              .withOptimizerSettings(oldProfile.characters[Id].optimizerSettings);
           } else {
             return (new Character(
-              id,
+              Id,
               playerValues,
               new OptimizerSettings(
-                characterSettings[id] ? characterSettings[id].targets[0] : new OptimizationPlan('xyz'),
+                characterSettings[Id] ? characterSettings[Id].targets[0] : new OptimizationPlan('xyz'),
                 [],
-                fetchData.baseCharacters[id] && fetchData.baseCharacters[id].categories.includes('Crew Member') ? 5 : 1,
+                fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
                 false,
                 false
               )
             ))
           }
-        }) as Characters;
+        });
 
         const newMods = groupByKey(fetchData.profile.mods, mod => mod.id);
 
