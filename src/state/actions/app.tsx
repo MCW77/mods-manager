@@ -7,7 +7,6 @@ import {
   saveBaseCharacters,
   saveLastRuns,
   saveProfiles,
-  replaceModsForProfiles,
   setProfile,
 } from "./storage";
 
@@ -15,7 +14,7 @@ import { IAppState } from "../storage";
 import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
 import type * as UITypes from "../../components/types";
 
-import getDatabase, { IFlatPlayerProfiles, IUserData } from "../storage/Database";
+import getDatabase, { IUserData } from "../storage/Database";
 import groupByKey from "../../utils/groupByKey";
 
 export const CHANGE_SECTION = 'CHANGE_SECTION' as const;
@@ -107,13 +106,9 @@ export function resetState() {
 export function restoreProgress(progressData: string): ThunkResult<void> {
   return function (dispatch) {
     try {
-      const stateObj: IUserData | IFlatPlayerProfiles = JSON.parse(progressData);
+      const stateObj: IUserData = JSON.parse(progressData);
 
-      // If the progress data has only a profiles section, then it's an export from HotUtils.
-      // Add the mods to any existing profile
-      if (!('version' in stateObj) && 'profiles' in stateObj && !('gameSettings' in stateObj)) {
-        dispatch(replaceModsForProfiles((stateObj as IFlatPlayerProfiles).profiles));
-      } else if (stateObj.version > '1.4' && stateObj.version !== 'develop') {
+      if (stateObj.version > '1.4' && stateObj.version !== 'develop') {
 
         // Get all of the current profiles from the database - if any have HotUtils session IDs, we'll keep those,
         // overwriting anything stored in the file
@@ -131,22 +126,22 @@ export function restoreProgress(progressData: string): ThunkResult<void> {
               }
             });
 
-            dispatch(saveProfiles(updatedProfiles, (stateObj as IUserData).allyCode));
+            dispatch(saveProfiles(updatedProfiles, stateObj.allyCode));
 
           },
           error =>
             // On error, just save the profiles directly from the file
-            dispatch(saveProfiles((stateObj as IUserData).profiles, (stateObj as IUserData).allyCode))
+            dispatch(saveProfiles(stateObj.profiles, stateObj.allyCode))
         );
 
-        dispatch(saveBaseCharacters((stateObj as IUserData).gameSettings));
-        dispatch(saveLastRuns((stateObj as IUserData).lastRuns));
-        if ((stateObj as IUserData).characterTemplates) {
-          dispatch(saveTemplates((stateObj as IUserData).characterTemplates))
+        dispatch(saveBaseCharacters(stateObj.gameSettings));
+        dispatch(saveLastRuns(stateObj.lastRuns));
+        if (stateObj.characterTemplates) {
+          dispatch(saveTemplates(stateObj.characterTemplates))
         }
-        dispatch(loadProfile((stateObj as IUserData).allyCode));
+        dispatch(loadProfile(stateObj.allyCode));
       }
-    } catch (e: unknown) {
+    } catch (e) {
       throw new Error(
         'Unable to process progress file. Is this a template file? If so, use the "load" button below. Error message: ' +
         (e as Error).message
