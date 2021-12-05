@@ -288,6 +288,7 @@ export function saveProfiles(profiles: PlayerProfile[], allyCode: string): Thunk
     );
   };
 }
+
 /*
 export function addModsToProfiles(newProfiles) {
   const newProfilesObject = groupByKey(newProfiles, profile => profile.allyCode);
@@ -334,49 +335,6 @@ export function addModsToProfiles(newProfiles) {
   }
 }
 */
-
-export function replaceModsForProfiles(newProfiles: IFlatPlayerProfile[]): ThunkResult<void> {
-  const newProfilesObject = groupByKey(newProfiles, profile => profile.allyCode);
-
-  return function (dispatch, getState) {
-    const state = getState();
-    const db = getDatabase();
-    db.getProfiles(
-      profiles => {
-        const updatedProfiles = profiles.map(profile => {
-          if (!newProfilesObject.hasOwnProperty(profile.allyCode)) {
-            return profile;
-          }
-
-          const newProfileMods = newProfilesObject[profile.allyCode].mods.map(mod => Mod.fromHotUtils(mod));
-          return profile.withMods(newProfileMods);
-        });
-
-        const totalMods = newProfiles.reduce((sum, profile) => sum + profile.mods.length, 0);
-
-        db.saveProfiles(
-          updatedProfiles,
-          () => {
-            dispatch(loadProfiles(state.allyCode));
-            dispatch(showFlash(
-              'Success!',
-              <p>
-                Successfully imported  data for <span className={'gold'}>{newProfiles.length}</span> profile(s)
-                containing <span className={'gold'}>{totalMods}</span> mods.
-              </p>,
-            ));
-          },
-          error => dispatch(showError(
-            'Error saving player profiles: ' + error?.message
-          ))
-        );
-      },
-      error => dispatch(showError(
-        'Error reading profiles: ' + error?.message
-      ))
-    );
-  }
-}
 
 /**
  * Remove a mod from a player's profile
