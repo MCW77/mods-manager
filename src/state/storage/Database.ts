@@ -30,13 +30,10 @@ type DBRequestSuccess<T> = ((this: IDBRequest<T>, ev: Event) => any) | null;
 type DBTransactionError = ((this: IDBTransaction, ev: Event) => any) | null; 
 type DBTransactionComplete = ((this: IDBTransaction, ev: Event) => any) | null;
 
-export interface IFlatPlayerProfiles {
-  profiles: IFlatPlayerProfile[];
-}
-export interface IUserData extends IFlatPlayerProfiles{
+export interface IUserData {
   allyCode: string;
   version: string;
-//  profiles: IFlatPlayerProfile[];
+  profiles: IFlatPlayerProfile[];
   gameSettings: BaseCharacter[];
   lastRuns: any;
   characterTemplates: any; // IFlatCharacterTemplate[];
