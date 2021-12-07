@@ -169,7 +169,9 @@ class ExploreView extends React.PureComponent<Props> {
           <button
             type={"button"}
             onClick={() => {
-              this.props.deleteMods(this.props.displayedMods);
+              for (let [key, mods] of Object.entries(this.props.displayedMods)) {
+                this.props.deleteMods(mods);
+              }
             }}
             className={"red"}
           >
