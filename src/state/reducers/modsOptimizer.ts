@@ -20,7 +20,7 @@ import {
 import { TOGGLE_KEEP_OLD_MODS } from "../actions/data";
 import { CHANGE_MODS_FILTER } from "../actions/explore";
 import { CANCEL_OPTIMIZE_MODS, OPTIMIZE_MODS, UPDATE_PROGRESS } from "../actions/optimize";
-import { CHANGE_MOD_SET_FILTER, CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
+import { CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
 import {
   ADD_PLAYER_PROFILE,
   SET_CHARACTER_TEMPLATES,
@@ -37,7 +37,7 @@ import * as CharacterEditReducers from "./characterEdit";
 import * as DataReducers from "./data";
 import * as ExploreReducers from "./explore";
 import * as OptimizeReducers from "./optimize";
-import { changeModListFilter, changeModSetFilter, changeOptimizerView, } from "./review";
+import { changeModListFilter, changeOptimizerView, } from "./review";
 import * as StorageReducers from "./storage";
 // #endregion
 
@@ -95,7 +95,6 @@ type AppActions =
   | ReturnType<typeof OptimizeActions.updateProgress>
   | ReturnType<typeof ReviewActions.changeOptimizerView>
   | ReturnType<typeof ReviewActions.changeModListFilter>
-  | ReturnType<typeof ReviewActions.changeModSetFilter>  
 ;
 // #endregion
 
@@ -182,8 +181,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
 
     case CHANGE_OPTIMIZER_VIEW:
       return AppState.save(changeOptimizerView(state, action));
-    case CHANGE_MOD_SET_FILTER:
-      return AppState.save(changeModSetFilter(state, action));
     case CHANGE_MODLIST_FILTER:
       return AppState.save(changeModListFilter(state, action));
 
