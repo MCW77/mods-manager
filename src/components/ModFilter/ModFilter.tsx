@@ -512,10 +512,8 @@ class ModFilter extends React.PureComponent<Props> {
   groupOption() {
     const inputName = `group-option`;
     const isGroupingEnabled = this.props.filterSettings.isGroupingEnabled;
-    const value: string = String(isGroupingEnabled);
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//      e.preventDefault();
       this.props.updateFilter(this.collectFilters(e.target.form as HTMLFormElement))
     };    
     
@@ -525,7 +523,7 @@ class ModFilter extends React.PureComponent<Props> {
         <input type={'checkbox'}
           id={inputName}
           name={inputName}
-          defaultValue={value}
+          defaultChecked={isGroupingEnabled}
           onChange={onChange} />
       </label>
     ;
