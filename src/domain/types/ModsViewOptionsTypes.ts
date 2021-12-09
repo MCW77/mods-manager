@@ -17,8 +17,8 @@ export interface SetSettings {
   'Speed %': TriState,
   'Offense %': TriState,
   'Defense %': TriState,
-  'Crit Chance %': TriState,
-  'Crit Damage %': TriState,
+  'Critical Chance %': TriState,
+  'Critical Damage %': TriState,
   'Health %': TriState
 }
 
@@ -76,9 +76,9 @@ export interface EquippedSettings {
 
 export interface IPrimarySettings {
   'Accuracy %': TriState,
-  'Crit Avoid %': TriState,
-  'Crit Chance %': TriState,
-  'Crit Damage %': TriState,
+  'Critical Avoidance %': TriState,
+  'Critical Chance %': TriState,
+  'Critical Damage %': TriState,
   'Defense %': TriState,
   'Health %': TriState,
   'Offense %': TriState,
@@ -90,7 +90,7 @@ export interface IPrimarySettings {
 export type PrimarySettings = UtilityTypes.Indexed<IPrimarySettings>;
 
 export interface SecondarySettings {
-  'Crit Chance %': TriState,
+  'Critical Chance %': TriState,
   'Defense %': TriState,
   'Defense': TriState,
   'Offense %': TriState,
@@ -124,7 +124,7 @@ export const availableFilters = [
 
 export type FilterKeys = UtilityTypes.ElementType<typeof availableFilters>;
 
-export type FilterSettings = {
+export interface FilterOptions {
   slot: SlotSettings;
   set: SetSettings;
   rarity: RaritySettings;
@@ -135,6 +135,17 @@ export type FilterSettings = {
   secondary: SecondarySettings;
   optimizer: OptimizerSettings;
   secondariesscoretier: SecondariesScoreTierSettings;
+}
+
+export interface GroupOptions {
+  isGroupingEnabled: boolean;
+}
+
+export interface SortOptions {
+
+}
+export interface ModsViewOptions {
+  filtering: FilterOptions;
   sort: string[];
   isGroupingEnabled: boolean;
   modScore: string;

@@ -5,11 +5,11 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 
 import './ModFilter.css';
 
-import { changeModsFilter } from "../../state/actions/explore";
+import { changeModsViewOptions } from "../../state/actions/explore";
 
 import { IAppState } from '../../state/storage';
-import { FilterSettings, defaultSettings } from "../../domain/modules/FilterSettings";
-import { EquippedSettings, OptimizerSettings, LevelSettings, RaritySettings, SecondarySettings, SetSettings, SlotSettings, TierSettings, SecondariesScoreTierSettings, PrimarySettings } from 'domain/types/FilterSettingsTypes';
+import { defaultOptions } from "../../domain/modules/ModsViewOptions";
+import { EquippedSettings, OptimizerSettings, LevelSettings, RaritySettings, SecondarySettings, SetSettings, SlotSettings, TierSettings, SecondariesScoreTierSettings, PrimarySettings, ModsViewOptions, FilterOptions } from 'domain/types/ModsViewOptionsTypes';
 import { Mod } from "../../domain/Mod";
 import * as ModConsts from "../../domain/constants/ModConsts";
 import * as ModScoresConsts from "../../domain/constants/ModScoresConsts";
@@ -86,7 +86,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const slotElements = ModConsts.gimoSlots.map(slot1 => {
       const inputName = `slot-filter-${slot1}`;
-      const slots: SlotSettings = this.props.filterSettings['slot'];
+      const slots: SlotSettings = this.props.modsViewOptions.filtering['slot'];
       const value = slots[slot1 as keyof SlotSettings] || 0;
 
       return <label htmlFor={inputName} key={slot1}>
@@ -131,7 +131,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const sets = SetStats.SetStat.statNames.map(set => {
       const inputName = `set-filter-${SetStats.SetStat.getClassName(set)}`;
-      const sets: SetSettings = this.props.filterSettings['set'];
+      const sets: SetSettings = this.props.modsViewOptions.filtering['set'];
       const value = sets[set as SetStats.GIMOStatNames] || 0;
 
       return <label htmlFor={inputName} key={set}>
@@ -163,7 +163,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const pips = [6, 5].map(rarity => {
       const inputName = `rarity-filter-${rarity}`;
-      const rarities: RaritySettings = this.props.filterSettings.rarity;
+      const rarities: RaritySettings = this.props.modsViewOptions.filtering.rarity;
       const value = rarities[rarity as keyof RaritySettings] || 0;
 
       return <label htmlFor={inputName} key={inputName}>
@@ -217,7 +217,7 @@ class ModFilter extends React.PureComponent<Props> {
       });
     };
     
-    const tierSettings: TierSettings = this.props.filterSettings.tier;
+    const tierSettings: TierSettings = this.props.modsViewOptions.filtering.tier;
     const tierButtons = [... ModConsts.tiersMap.entries()].map(([tier, displayTier]) => {
       const inputName = `tier-filter-${tier}`;
       const value = tierSettings[String(tier) as keyof TierSettings] ?? 0;
@@ -267,7 +267,7 @@ class ModFilter extends React.PureComponent<Props> {
       });
     };
     
-    const tierSettings: SecondariesScoreTierSettings = this.props.filterSettings.secondariesscoretier;
+    const tierSettings: SecondariesScoreTierSettings = this.props.modsViewOptions.filtering.secondariesscoretier;
     const tierButtons = [... ModConsts.secondaryScoresTiersMap.entries()].map(([tier, displayTier]) => {
       const inputName = `secondariesscore-tier-filter-${displayTier}`;
       const value = tierSettings[String(tier) as keyof SecondariesScoreTierSettings] ?? 0;
@@ -313,7 +313,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const levelButtons = [15, 12, 9, 6, 3, 1].map(level => {
       const inputName = `level-filter-${level}`;
-      const levels: LevelSettings = this.props.filterSettings.level; 
+      const levels: LevelSettings = this.props.modsViewOptions.filtering.level; 
       const value = levels[level as keyof LevelSettings] || 0;
 
       return <label htmlFor={inputName} key={inputName}>
@@ -344,7 +344,7 @@ class ModFilter extends React.PureComponent<Props> {
   equippedFilter(cycleState: (e: React.MouseEvent<HTMLInputElement>) => void) {
     const equipedFilter: HTMLInputElement = document.getElementById(`equipped-filter-equipped`)! as HTMLInputElement;
     const inputName = `equipped-filter-equipped`;
-    const equippeds: EquippedSettings = this.props.filterSettings.equipped;
+    const equippeds: EquippedSettings = this.props.modsViewOptions.filtering.equipped;
     const value = equippeds['equipped' as keyof EquippedSettings] || 0;
   
     const equippedButton = 
@@ -383,7 +383,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const primaries = PrimaryStats.PrimaryStat.statNames.map((stat) => {
       const inputName = `primary-filter-${stat}`;
-      const value = this.props.filterSettings.primary[stat] || 0;
+      const value = this.props.modsViewOptions.filtering.primary[stat] || 0;
 
       return <label htmlFor={inputName} key={stat}>
         <input type={'number'}
@@ -422,7 +422,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const secondaries = SecondaryStats.SecondaryStat.statNames.map((stat) => {
       const inputName = `secondary-filter-${stat}`;
-      const secondaries: SecondarySettings = this.props.filterSettings.secondary;
+      const secondaries: SecondarySettings = this.props.modsViewOptions.filtering.secondary;
       const value = secondaries[stat] || 0;
 
       return <label htmlFor={inputName} key={stat}>
@@ -448,18 +448,14 @@ class ModFilter extends React.PureComponent<Props> {
     </div>;
   }
 
-  secondaryStatFilter2(mods: Mod[], cycleState: (e: React.MouseEvent<HTMLInputElement>) => void) {
-    const secondaryStats: SecondaryStats.GIMOStatNames[] = mods.map(mod => mod.secondaryStats)
-      .reduce((acc, stats) => acc.concat(stats), [])
-      .map((stat: SecondaryStats.SecondaryStat) => stat.type as keyof SecondarySettings)
-      .reduce((acc: (keyof SecondarySettings)[], statType: keyof SecondarySettings) => acc.includes(statType) ? acc : acc.concat([statType]), [])
-      .sort();
-    const secondaryStatsFilters: HTMLInputElement[] = secondaryStats
+  secondaryStatFilter2(cycleState: (e: React.MouseEvent<HTMLInputElement>) => void) {
+
+    const secondaryStatsFilters: HTMLInputElement[] = SecondaryStats.SecondaryStat.statNames
       .map((stat: keyof SecondarySettings) => document.getElementById(`secondary-filter-${stat}`)! as HTMLInputElement);
 
     const secondaries = SecondaryStats.SecondaryStat.statNames.map((stat: keyof SecondarySettings) => {
       const inputName = `secondary-filter-${stat}`;
-      const secondaries: SecondarySettings = this.props.filterSettings.secondary;
+      const secondaries: SecondarySettings = this.props.modsViewOptions.filtering.secondary;
       const value = secondaries[stat as keyof SecondarySettings] || 0;
 
       return <label htmlFor={inputName} key={stat}>
@@ -484,7 +480,7 @@ class ModFilter extends React.PureComponent<Props> {
       document.getElementById(`optimizer-filter-assigned`)! as HTMLInputElement;
 
     const inputName = `optimizer-filter-assigned`;
-    const optimizer: OptimizerSettings = this.props.filterSettings.optimizer;
+    const optimizer: OptimizerSettings = this.props.modsViewOptions.filtering.optimizer;
     const value = optimizer['assigned' as keyof OptimizerSettings] || 0;
 
     const optimizerButton = 
@@ -511,7 +507,7 @@ class ModFilter extends React.PureComponent<Props> {
 
   groupOption() {
     const inputName = `group-option`;
-    const isGroupingEnabled = this.props.filterSettings.isGroupingEnabled;
+    const isGroupingEnabled = this.props.modsViewOptions.isGroupingEnabled;
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       this.props.updateFilter(this.collectFilters(e.target.form as HTMLFormElement))
@@ -553,7 +549,7 @@ class ModFilter extends React.PureComponent<Props> {
     };    
 
     const sortSelects = [1,2,3,4].map((number: number) => {
-      return <Dropdown name={'sort-option-' + number} key={`sort-option-${number}`} defaultValue={this.props.filterSettings.sort[number-1]} onChange={onChange}>
+      return <Dropdown name={'sort-option-' + number} key={`sort-option-${number}`} defaultValue={this.props.modsViewOptions.sort[number-1]} onChange={onChange}>
           <optgroup>
             <option value={''}>default</option>
             <option key={`sort-option-${number}-slot`} value={'slot'}>Slot</option>
@@ -622,36 +618,35 @@ class ModFilter extends React.PureComponent<Props> {
   }
 
   collectFilters(form: HTMLFormElement) {
-    const filters: FilterSettings = defaultSettings;
+    const viewOptions: ModsViewOptions = {...defaultOptions};
     
     [...form.elements].filter(element => (element as (HTMLInputElement | HTMLButtonElement)).name.includes('-filter-')).forEach(element => {
       const [fT, fK] = (element as HTMLInputElement).name.split('-filter-');
-      let filterType: keyof FilterSettings = fT as keyof FilterSettings;
-      type filterKeyType = FilterSettings[typeof filterType];
+      let filterType: keyof FilterOptions = fT as keyof FilterOptions;
+      type filterKeyType = FilterOptions[typeof filterType];
       let filterKey: keyof filterKeyType = fK as keyof filterKeyType;
 
-      if (!filters[filterType]) {
-        (filters[filterType] as any) = {};
+      if (!viewOptions.filtering[filterType]) {
+        (viewOptions.filtering[filterType] as any) = {};
       }
 
-      (filters[filterType][filterKey] as any) = (element as HTMLInputElement).valueAsNumber;
+      (viewOptions.filtering[filterType][filterKey] as any) = (element as HTMLInputElement).valueAsNumber;
     });
 
-    filters.sort = [
+    viewOptions.sort = [
       form['sort-option-1'].value,
       form['sort-option-2'].value,
       form['sort-option-3'].value,
       form['sort-option-4'].value,
     ];
 
-    filters.isGroupingEnabled = form['group-option'].checked;
-    filters.modScore = form['score-option'].value;
+    viewOptions.isGroupingEnabled = form['group-option'].checked;
+    viewOptions.modScore = form['score-option'].value;
 
-    return filters;
+    return viewOptions;
   }
 
   render() {
-    const mods = this.props.mods;
     const onSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
       e.preventDefault();
       this.props.updateFilter(this.collectFilters(e.target as HTMLFormElement))
@@ -706,12 +701,11 @@ type OwnProps = {
 }
 
 const mapStateToProps = (state: IAppState) => ({
-  filterSettings: state.modsFilter,
-  mods: state.profile?.mods ?? []
+  modsViewOptions: state.modsViewOptions,
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
-  updateFilter: (filterSettings: FilterSettings) => dispatch(changeModsFilter(filterSettings))
+  updateFilter: (modsViewOptions: ModsViewOptions) => dispatch(changeModsViewOptions(modsViewOptions))
 });
 
 let connector = connect(mapStateToProps, mapDispatchToProps);

@@ -13,7 +13,7 @@ import cleanAllyCode from "../utils/cleanAllyCode";
 */
 import formatAllyCode from "../utils/formatAllyCode";
 import { CharacterTemplatesByName } from "../domain/CharacterTemplates";
-import { FilterSettings, defaultSettings } from "../domain/modules/FilterSettings";
+import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 
 import { ElementType } from "utils/typeHelper";
 import * as UITypes from "components/types";
@@ -58,7 +58,7 @@ export interface IAppState {
   keepOldMods: boolean,
   modal: ModalProps | null,
   modListFilter: ModListFilter,
-  modsFilter: FilterSettings,
+  modsViewOptions: ModsViewOptions,
 //  modOptions: ModOptions,
 
   optimizerView: 'edit' | 'review',
@@ -85,7 +85,7 @@ export class AppState {
     'characterEditSortView',
     'hideSelectedCharacters',
     'keepOldMods',
-    'modsFilter',
+    'modsViewOptions',
     'modListFilter',
     'optimizerView',
     'section',
@@ -107,7 +107,7 @@ export class AppState {
     isBusy: false,
     keepOldMods: true,
     modal: null,
-    modsFilter: defaultSettings,
+    modsViewOptions: defaultOptions,
 //    modOptions: defaultOptions,
     modListFilter: {
       view: 'sets',
@@ -198,7 +198,7 @@ export function deserializeState(state: IAppState): IAppState {
     characterFilter: state.characterFilter || AppState.Default.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
     keepOldMods: state.keepOldMods,
-    modsFilter: Object.assign({}, AppState.Default.modsFilter, state.modsFilter),
+    modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
     modListFilter: state.modListFilter || AppState.Default.modListFilter,
     optimizerView: state.optimizerView || AppState.Default.optimizerView,
     previousVersion: state.version,

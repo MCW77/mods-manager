@@ -18,7 +18,7 @@ import {
   TOGGLE_CHARACTER_EDIT_SORT_VIEW,
 } from "../actions/characterEdit";
 import { TOGGLE_KEEP_OLD_MODS } from "../actions/data";
-import { CHANGE_MODS_FILTER } from "../actions/explore";
+import { CHANGE_MODS_VIEW_OPTIONS } from "../actions/explore";
 import { CANCEL_OPTIMIZE_MODS, OPTIMIZE_MODS, UPDATE_PROGRESS } from "../actions/optimize";
 import { CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
 import {
@@ -89,7 +89,7 @@ type AppActions =
   | ReturnType<typeof App.Actions.RESET_STATE>
   | ReturnType<typeof App.Actions.TOGGLE_SIDEBAR>
   | ReturnType<typeof DataActions.toggleKeepOldMods>
-  | ReturnType<typeof ExploreActions.changeModsFilter>
+  | ReturnType<typeof ExploreActions.changeModsViewOptions>
   | ReturnType<typeof OptimizeActions.cancelOptimizeMods>
   | ReturnType<typeof OptimizeActions.startModOptimization>
   | ReturnType<typeof OptimizeActions.updateProgress>
@@ -169,8 +169,8 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case TOGGLE_KEEP_OLD_MODS:
       return AppState.save(DataReducers.toggleKeepOldMods(state));
 
-    case CHANGE_MODS_FILTER:
-      return AppState.save(ExploreReducers.changeModsFilter(state, action));
+    case CHANGE_MODS_VIEW_OPTIONS:
+      return AppState.save(ExploreReducers.changeModsViewOptions(state, action));
 
     case OPTIMIZE_MODS:
       return OptimizeReducers.optimizeMods(state);

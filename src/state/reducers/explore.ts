@@ -1,8 +1,8 @@
 import { IAppState } from "state/storage";
 import * as Actions from "../actions/explore";
 
-export function changeModsFilter(state: IAppState, action: ReturnType<typeof Actions.changeModsFilter>): IAppState {
+export function changeModsViewOptions(state: IAppState, action: ReturnType<typeof Actions.changeModsViewOptions>): IAppState {
   return Object.assign({}, state, {
-    modsFilter: action.filter
+    modsViewOptions: action.options
   });
 }
