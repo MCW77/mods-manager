@@ -1,15 +1,15 @@
-import { FilterSettings } from "domain/modules/FilterSettings";
+import { ModsViewOptions } from "domain/modules/ModsViewOptions";
 
-export const CHANGE_MODS_FILTER = 'CHANGE_MODS_FILTER';
+export const CHANGE_MODS_VIEW_OPTIONS = 'CHANGE_MODS_VIEW_OPTIONS';
 
 /**
- * Update the filter for the explore view
- * @param newFilter
- * @returns {{type: 'CHANGE_MODS_FILTER', filter: *}}
+ * Update the view options for the explore view
+ * @param newOptions
+ * @returns {{type: 'CHANGE_MODS_VIEW_OPTIONS', options: *}}
  */
-export function changeModsFilter(newFilter: FilterSettings) {
+export function changeModsViewOptions(newOptions: ModsViewOptions) {
   return {
-    type: CHANGE_MODS_FILTER,
-    filter: newFilter
+    type: CHANGE_MODS_VIEW_OPTIONS,
+    options: newOptions
   } as const;
 }
