@@ -16,7 +16,7 @@ import { BaseCharactersById, BaseCharacter } from 'domain/BaseCharacter';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
 import OptimizerRun from "../../domain/OptimizerRun";
-import { IFlatPlayerProfile, PlayerProfile } from 'domain/PlayerProfile';
+import { PlayerProfile } from 'domain/PlayerProfile';
 import { SelectedCharacters, SelectedCharactersByTemplateName } from "domain/SelectedCharacters";
 
 export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS';
@@ -193,25 +193,22 @@ export function loadCharacterTemplates(): ThunkResult<void> {
  * @param allyCode {string}
  * @returns {*}
  */
-export function loadProfile(allyCode: string | null): ThunkResult<void> {
-  if (!allyCode) {
-    return nothing;
-  }
+export function loadProfile(allyCode: string): ThunkResult<Promise<void>> {
+  return async function (dispatch) {
+    try {
+      const db = getDatabase();
+      const profile: PlayerProfile = await db.getProfile(allyCode);
+      const cleanedSelectedCharacters = profile.selectedCharacters.filter(
+        ({ id }) => Object.keys(profile.characters).includes(id)
+      );
+      const cleanedProfile = profile.withSelectedCharacters(cleanedSelectedCharacters);
 
-  return function (dispatch) {
-    const db = getDatabase();
-    db.getProfile(
-      allyCode,
-      profile => {
-        const cleanedSelectedCharacters =
-          profile.selectedCharacters.filter(({ id }) => Object.keys(profile.characters).includes(id));
-        const cleanedProfile = profile.withSelectedCharacters(cleanedSelectedCharacters);
-
-        dispatch(setProfile(cleanedProfile));
-        dispatch(fetchHotUtilsStatus(allyCode));
-      },
-      error => dispatch(showError('Error loading your profile from the database: ' + error?.message))
-    );
+      dispatch(setProfile(cleanedProfile));
+      dispatch(fetchHotUtilsStatus(allyCode));
+    }
+    catch (error) {
+      dispatch(showError('Error loading your profile from the database: ' + (error as DOMException).message))
+    }
   };
 }
 
