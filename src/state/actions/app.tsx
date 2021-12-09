@@ -139,7 +139,10 @@ export function restoreProgress(progressData: string): ThunkResult<void> {
         if (stateObj.characterTemplates) {
           dispatch(saveTemplates(stateObj.characterTemplates))
         }
-        dispatch(loadProfile(stateObj.allyCode));
+        if (stateObj.allyCode !== '') {
+          dispatch(loadProfile(stateObj.allyCode));
+        }
+        
       }
     } catch (e) {
       throw new Error(

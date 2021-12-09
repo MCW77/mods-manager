@@ -258,32 +258,37 @@ export class Database {
       };
     })  
   }
-
+  
   /**
    * Get a single profile. If no allyCode is given, the first profile in the database will be returned.
    * @param allyCode {string}
-   * @param onsuccess {function(PlayerProfile)}
-   * @param onerror {function(error)}
    */
-  getProfile(allyCode: string, onsuccess: ((p: PlayerProfile) => void) = nothing, onerror: DBErrorFunc = dbErrorFunc) {
-    this.database.then(db => {
-      if (allyCode) {
+  async getProfile(allyCode: string) {
+  
+    let db = await this.database;
+    
+    if (allyCode !== '') {
+
+      return new Promise((successCallback: (profile: PlayerProfile) => void, errorCallback: (error: DOMException | null) => void) => {
         const getProfileRequest =
-          // Using a read/write transaction forces the database to finish loading profiles before reading from here
-          db.transaction('profiles', 'readwrite').objectStore('profiles').get(allyCode);
+        // Using a read/write transaction forces the database to finish loading profiles before reading from here
+        db.transaction('profiles', 'readwrite').objectStore('profiles').get(allyCode);
 
-        getProfileRequest.onsuccess = function (event) {
-          if  (event !== null && event.target instanceof IDBRequest) {
-            const profile = PlayerProfile.deserialize(event.target.result);
-            onsuccess(profile);
-          }
-        };
+      getProfileRequest.onsuccess = function (event) {
+        if  (event !== null && event.target instanceof IDBRequest) {
+          const profile = PlayerProfile.deserialize(event.target.result);
+          successCallback(profile);
+        }
+      };
 
-        getProfileRequest.onerror = function (event: Event) {
-          if (event !== null && event.target instanceof IDBRequest)
-            onerror(event.target.error);
-        };
-      } else {
+      getProfileRequest.onerror = function (event: Event) {
+        if (event !== null && event.target instanceof IDBRequest)
+          errorCallback(event.target.error);
+      };
+
+      })
+    } else {
+      return new Promise((successCallback: (profile: PlayerProfile) => void, errorCallback: (error: DOMException | null) => void) => {
         const getProfileRequest =
           db.transaction('profiles', 'readwrite').objectStore('profiles').openCursor();
 
@@ -293,19 +298,19 @@ export class Database {
 
             if (cursor) {
               const profile = PlayerProfile.deserialize(cursor.value);
-              onsuccess(profile);
+              successCallback(profile);
             } else {
-              onsuccess(PlayerProfile.Default);
+              successCallback(PlayerProfile.Default);
             }
           }
         };
 
         getProfileRequest.onerror = function (event: Event) {
           if (event !== null && event.target instanceof IDBRequest)
-            onerror(event.target.error);
+            errorCallback(event.target.error);
         };
-      }
-    })
+      })
+    }
   }
 
   /**
