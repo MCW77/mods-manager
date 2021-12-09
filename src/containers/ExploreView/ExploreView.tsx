@@ -11,7 +11,6 @@ import { connect, ConnectedProps } from "react-redux";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
 import { Mod } from "../../domain/Mod";
-import { FilterSettings } from "../../domain/modules/FilterSettings";
 import { Characters } from "../../domain/Character";
 import { IModSuggestion } from "../../domain/PlayerProfile";
 import { SecondaryStats } from "../../domain/Stats";
@@ -24,7 +23,9 @@ import { modScores } from "../../domain/constants/ModScoresConsts";
 import {
   EquippedSettings,
   FilterKeys,
+  FilterOptions,
   LevelSettings,
+  ModsViewOptions,
   PrimarySettings,
   RaritySettings,
   SecondariesScoreTierSettings,
@@ -32,7 +33,7 @@ import {
   SetSettings,
   SlotSettings,
   TierSettings,
-} from "domain/types/FilterSettingsTypes";
+} from "domain/types/ModsViewOptionsTypes";
 import { CharacterNames } from "constants/characterSettings";
 import { DOMContent } from "components/types";
 import { ThunkDispatch } from "state/reducers/modsOptimizer";
@@ -198,25 +199,25 @@ class ExploreView extends React.PureComponent<Props> {
 type AssignedMods = {
   [key: string]: CharacterNames
 }
-type FilterOptions = {
-  [key in keyof FilterSettings]: any[]
+type AnyFilterOptions = {
+  [key in keyof FilterOptions]: any[]
 };
 
 class ModsFilter {
 
-  selectedOptions: FilterOptions;
-  unselectedOptions: FilterOptions;
+  selectedOptions: AnyFilterOptions;
+  unselectedOptions: AnyFilterOptions;
 
   sortOptions: string[];
   isGroupingEnabled: boolean;
 
-  constructor(filterSettings: FilterSettings) {
+  constructor(modsViewOptions: ModsViewOptions) {
     Mod.setupAccessors();
-    [this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(filterSettings);    
+    [this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(modsViewOptions.filtering);    
     
-    this.isGroupingEnabled = filterSettings.isGroupingEnabled;
+    this.isGroupingEnabled = modsViewOptions.isGroupingEnabled;
 
-    this.sortOptions = filterSettings.sort;
+    this.sortOptions = modsViewOptions.sort;
     this.sortOptions = this.sortOptions.filter((option) => option !== '');
     
     if (!this.sortOptions.includes("character")) {
@@ -225,7 +226,7 @@ class ModsFilter {
     }
   }
 
-  extractSelectedAndUnselectedOptions(filters: FilterSettings)
+  extractSelectedAndUnselectedOptions(filters: FilterOptions)
   {
     const selectedOptions: { [key in FilterKeys]: any[] } = {
       slot: [],
@@ -376,7 +377,7 @@ class ModsFilter {
     }, 0)
   }
 
-  applyFilterSettings(mods: Mod[]): [Dictionary<Mod[]>, number] {
+  applyModsViewOptions(mods: Mod[]): [Dictionary<Mod[]>, number] {
     let groupedMods = this.groupMods(mods);
     groupedMods = this.filterGroupedMods(groupedMods);
     groupedMods = this.sortGroupedMods(groupedMods);
@@ -398,8 +399,8 @@ const mapStateToProps = (state: IAppState) => {
             }, {} as AssignedMods)
         : {} as AssignedMods;
         
-    let modsFilter = new ModsFilter(state.modsFilter);
-    const [mods, shownMods] = modsFilter.applyFilterSettings(profile.mods);
+    let modsFilter = new ModsFilter(state.modsViewOptions);
+    const [mods, shownMods] = modsFilter.applyModsViewOptions(profile.mods);
 
     return {
       characters: profile.characters,

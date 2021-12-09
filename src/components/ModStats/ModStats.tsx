@@ -144,7 +144,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 const mapStateToProps = (state: IAppState) => ({
   characters: state.profile?.characters as Characters,
   baseCharacters: state.baseCharacters,
-  scoreName: state.modsFilter.modScore,
+  scoreName: state.modsViewOptions.modScore,
 });
 
 const mapDispatchToProps = () => ({});
