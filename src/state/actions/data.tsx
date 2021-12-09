@@ -18,11 +18,10 @@ import groupByKey from "../../utils/groupByKey";
 import { addPlayerProfile, setBaseCharacters, setProfile, setHotUtilsSubscription } from "./storage";
 import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 import { changeOptimizerView } from "./review";
-import { AppState, IAppState } from "../storage";
-import { ExpandRecursively } from 'utils/typeHelper';
 import { HUFlatMod } from 'domain/types/ModTypes';
 import { filterObject } from '../../utils/filterObject';
 import { Dictionary } from "lodash";
+import { HUModsMoveProfile, HUProfileCreationData } from "containers/Review/Review";
 
 const UseCaseModesObj = {
   GAAndTW: '',
@@ -572,7 +571,7 @@ export function fetchHotUtilsStatus(allyCode: string):ThunkResult<void> {
   }
 }
 
-export function createHotUtilsProfile(profile: PlayerProfile, sessionId: string):ThunkResult<void> {
+export function createHotUtilsProfile(profile: HUProfileCreationData, sessionId: string):ThunkResult<void> {
   return function (dispatch) {
     dispatch(setIsBusy(true));
     return post(
@@ -615,7 +614,7 @@ export function createHotUtilsProfile(profile: PlayerProfile, sessionId: string)
 
 var modMoveActive = false;
 
-export function moveModsWithHotUtils(profile: PlayerProfile, sessionId: string):ThunkResult<void> {
+export function moveModsWithHotUtils(profile: HUModsMoveProfile, sessionId: string):ThunkResult<void> {
   return function (dispatch) {
     dispatch(setIsBusy(true));
     return post(
