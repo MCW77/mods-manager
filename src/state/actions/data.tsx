@@ -174,7 +174,7 @@ export function refreshPlayerData(
         }
       )
       // Process all of the data that's been collected
-      .then(() => {
+      .then(async () => {
         const db = getDatabase();
 
         if (data.baseCharacters) {
@@ -193,7 +193,7 @@ export function refreshPlayerData(
 
         // If we used a HotUtils session, then the mods returned are all the mods a player has.
         // In this case, don't keep old mods around, even if the box is checked.
-        dispatch(updatePlayerData(cleanedAllyCode, data, db, keepOldMods && !(useSession && sessionId)))
+        await dispatch(updatePlayerData(cleanedAllyCode, data, db, keepOldMods && !(useSession && sessionId)));
 
         // Show the success and/or error messages
         dispatch(showFetchResult(data, messages, !!sessionId && useSession));
@@ -274,88 +274,91 @@ function updatePlayerData(
   fetchData: FetchedPlayerData,
   db: Database,
   keepOldMods: boolean
-): ThunkResult<void> {
-  return function (dispatch) {
-    db.getProfile(
-      allyCode,
-      dbProfile => {
-        const baseProfile = dbProfile !== PlayerProfile.Default ?
-          dbProfile.withPlayerName(fetchData.profile.name)
-        :
-          new PlayerProfile(allyCode, fetchData.profile.name);
-        baseProfile.allyCode = allyCode;      
+): ThunkResult<Promise<void>> {
+  return async function (dispatch) {
+    try {
+      let dbProfile = await db.getProfile(allyCode);
 
-        const sessionId = fetchData.profile.sessionId  ?? baseProfile.hotUtilsSessionId;
-        const oldProfile = baseProfile.withHotUtilsSessionId(sessionId);
+      const baseProfile = dbProfile !== PlayerProfile.Default ?
+        dbProfile.withPlayerName(fetchData.profile.name)
+      :
+        new PlayerProfile(allyCode, fetchData.profile.name);
+      baseProfile.allyCode = allyCode;      
 
-        // Collect the new character objects by combining the default characters with the player values
-        // and the optimizer settings from the current profile.
-        const newCharacters = mapValues<PlayerValuesByCharacter, Character>(fetchData.profile.playerValues, (playerValues: PlayerValues, id: string):Character => {
-          const Id: CharacterNames = id as CharacterNames;
-          if (oldProfile.characters.hasOwnProperty(Id)) {
-            return oldProfile.characters[Id]
-              .withPlayerValues(playerValues)
-              .withOptimizerSettings(oldProfile.characters[Id].optimizerSettings);
-          } else {
-            return (new Character(
-              Id,
-              playerValues,
-              new OptimizerSettings(
-                characterSettings[Id] ? characterSettings[Id].targets[0] : new OptimizationPlan('xyz'),
-                [],
-                fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
-                false,
-                false
-              )
-            ))
-          }
-        });
+      const sessionId = fetchData.profile.sessionId  ?? baseProfile.hotUtilsSessionId;
+      const oldProfile = baseProfile.withHotUtilsSessionId(sessionId);
 
-        const newMods = groupByKey(fetchData.profile.mods, mod => mod.id);
-
-        // If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
-        let finalMods;
-
-        if (keepOldMods) {
-          // If we're keeping the old mods, that means that any mod we don't see must be unequipped
-          const oldMods = oldProfile.mods.reduce((mods: Dictionary<Mod>, mod) => {
-            mods[mod.id] = mod.unequip();
-            return mods;
-          }, {});
-
-          finalMods = Object.values(Object.assign({}, oldMods, newMods));
+      // Collect the new character objects by combining the default characters with the player values
+      // and the optimizer settings from the current profile.
+      const newCharacters = mapValues<PlayerValuesByCharacter, Character>(fetchData.profile.playerValues, (playerValues: PlayerValues, id: string):Character => {
+        const Id: CharacterNames = id as CharacterNames;
+        if (oldProfile.characters.hasOwnProperty(Id)) {
+          return oldProfile.characters[Id]
+            .withPlayerValues(playerValues)
+            .withOptimizerSettings(oldProfile.characters[Id].optimizerSettings);
         } else {
-          finalMods = Object.values(newMods);
+          return (new Character(
+            Id,
+            playerValues,
+            new OptimizerSettings(
+              characterSettings[Id] ? characterSettings[Id].targets[0] : new OptimizationPlan('xyz'),
+              [],
+              fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
+              false,
+              false
+            )
+          ))
         }
+      });
 
-        const newProfile = oldProfile.withCharacters(newCharacters).withMods(finalMods);
-        db.saveProfile(
-          newProfile,
-          () => {},
-          error => dispatch(showFlash(
-            'Storage Error',
-            'Error saving your profile: ' + error!.message + ' Your data may be lost on page refresh.'
-          ))
-        );
-        db.deleteLastRun(
-          newProfile.allyCode,
-          nothing,
-          error => dispatch(showFlash(
-            'Storage Error',
-            'Error updating your data: ' +
-            error!.message +
-            ' The optimizer may not recalculate correctly until you fetch again'
-          ))
-        );
-        dispatch(addPlayerProfile(newProfile));
-        dispatch(setProfile(newProfile));
-        dispatch(fetchHotUtilsStatus(newProfile.allyCode));
-      },
-      error => {
-        const errorMessage = error instanceof DOMException ? error.message : '';
-        dispatch(showError(`Error fetching your profile: ${errorMessage} Please try again`));
+      const newMods = groupByKey(fetchData.profile.mods, mod => mod.id);
+
+      // If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
+      let finalMods;
+
+      if (keepOldMods) {
+        // If we're keeping the old mods, that means that any mod we don't see must be unequipped
+        const oldMods = oldProfile.mods.reduce((mods: Dictionary<Mod>, mod) => {
+          mods[mod.id] = mod.unequip();
+          return mods;
+        }, {});
+
+        finalMods = Object.values(Object.assign({}, oldMods, newMods));
+      } else {
+        finalMods = Object.values(newMods);
       }
-    )
+
+      const newProfile = oldProfile.withCharacters(newCharacters).withMods(finalMods);
+      db.saveProfile(
+        newProfile,
+        () => {},
+        error => dispatch(showFlash(
+          'Storage Error',
+          'Error saving your profile: ' + error!.message + ' Your data may be lost on page refresh.'
+        ))
+      );
+      db.deleteLastRun(
+        newProfile.allyCode,
+        nothing,
+        error => dispatch(showFlash(
+          'Storage Error',
+          'Error updating your data: ' +
+          error!.message +
+          ' The optimizer may not recalculate correctly until you fetch again'
+        ))
+      );
+      dispatch(addPlayerProfile(newProfile));
+      dispatch(setProfile(newProfile));
+      dispatch(fetchHotUtilsStatus(newProfile.allyCode));
+
+    } 
+    catch(error)
+    {
+      const errorMessage = error instanceof DOMException ? error.message : '';
+      dispatch(showError(`Error fetching your profile: ${errorMessage} Please try again`));
+    }
+
+    return;
   }
 }
 
@@ -474,30 +477,29 @@ function applyCharacterList(overwrite: boolean, characterList: CharacterNames[])
 // HotUtils Integration */
 //***********************/
 
-export function setHotUtilsSessionId(allyCode: string, sessionId: string): ThunkResult<void> {
-  return function (dispatch) {
+export function setHotUtilsSessionId(allyCode: string, sessionId: string): ThunkResult<Promise<void>> {
+  return async function (dispatch) {
     const db = getDatabase();
-
-    db.getProfile(
-      allyCode,
-      profile => {
-        if (!profile) {
-          // If there's no profile to put the Session ID into, then do a pull of data and pass in the session ID
-          dispatch(refreshPlayerData(allyCode, false, sessionId, false));
-        } else {
-          const newProfile = profile.withHotUtilsSessionId(sessionId);
-          db.saveProfile(
-            newProfile,
-            () => dispatch(setProfile(newProfile)),
-            error => dispatch(showFlash(
-              'Storage Error',
-              'Error applying HotUtils session ID to your profile. Please try again.'
-            ))
-          )
-        }
-      },
-      error => dispatch(showError(error!.message))
-    )
+    try {
+      const profile: PlayerProfile = await db.getProfile(allyCode);
+      if (!profile) {
+        // If there's no profile to put the Session ID into, then do a pull of data and pass in the session ID
+        dispatch(refreshPlayerData(allyCode, false, sessionId, false));
+      } else {
+        const newProfile = profile.withHotUtilsSessionId(sessionId);
+        db.saveProfile(
+          newProfile,
+          () => dispatch(setProfile(newProfile)),
+          error => dispatch(showFlash(
+            'Storage Error',
+            'Error applying HotUtils session ID to your profile. Please try again.'
+          ))
+        )
+      }
+    }
+    catch (error) {
+      dispatch(showError((error as DOMException).message));
+    }
   };
 }
 
