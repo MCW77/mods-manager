@@ -182,10 +182,11 @@ class App extends PureComponent<Props> {
             name={'ally-code'}
             value={this.props.allyCode}
             onChange={e => {
-              if ('' === (e.target as HTMLSelectElement).value) {
+              const selectedAllyCode = (e.target as HTMLSelectElement).value;
+              if (selectedAllyCode === '') {
                 this.props.showModal('', this.addAllyCodeModal());
               } else {
-                this.props.switchProfile((e.target as HTMLSelectElement).value);
+                this.props.switchProfile(selectedAllyCode);
               }
             }}>
             {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) =>
