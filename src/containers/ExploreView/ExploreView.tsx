@@ -1,25 +1,19 @@
 import React from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from "state/reducers/modsOptimizer";
+import { withTranslation, WithTranslation } from "react-i18next";
+
+import { Dictionary } from "lodash";
+import memoizeOne from "memoize-one";
+import { orderBy, groupBy, mapValues, forEach } from "lodash-es";
+
+import "./ExploreView.css";
 
 import { hideModal, showModal } from "../../state/actions/app";
 import { deleteMods } from "../../state/actions/storage";
-import memoizeOne from "memoize-one";
-import ModDetail from "../../components/ModDetail/ModDetail";
-import ModFilter from "../../components/ModFilter/ModFilter";
 
-import "./ExploreView.css";
-import { connect, ConnectedProps } from "react-redux";
-import Sidebar from "../../components/Sidebar/Sidebar";
-
-import { Mod } from "../../domain/Mod";
-import { Characters } from "../../domain/Character";
-import { IModSuggestion } from "../../domain/PlayerProfile";
-import { SecondaryStats } from "../../domain/Stats";
-import { orderBy, groupBy, mapValues, forEach } from "lodash-es";
-import { Dictionary } from "lodash";
 import { IAppState } from "state/storage";
-import { BaseCharacter } from "../../domain/BaseCharacter";
-import { OptimizerSettings } from "../../domain/OptimizerSettings";
-import { modScores } from "../../domain/constants/ModScoresConsts";
+import { CharacterNames } from "constants/characterSettings";
 import {
   EquippedSettings,
   FilterKeys,
@@ -34,10 +28,15 @@ import {
   SlotSettings,
   TierSettings,
 } from "domain/types/ModsViewOptionsTypes";
-import { CharacterNames } from "constants/characterSettings";
+import { Characters } from "../../domain/Character";
+import { Mod } from "../../domain/Mod";
+import { OptimizerSettings } from "../../domain/OptimizerSettings";
+
 import { DOMContent } from "components/types";
-import { ThunkDispatch } from "state/reducers/modsOptimizer";
-import { withTranslation, WithTranslation } from "react-i18next";
+import ModDetail from "../../components/ModDetail/ModDetail";
+import ModFilter from "../../components/ModFilter/ModFilter";
+import Sidebar from "../../components/Sidebar/Sidebar";
+
 
 class ExploreView extends React.PureComponent<Props> {
   modGroupToggle = (e: React.MouseEvent<HTMLDivElement>) => {

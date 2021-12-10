@@ -1,5 +1,6 @@
-import { FlatCharacters } from "./Character";
 import { GIMOFlatMod } from "./types/ModTypes";
+
+import { FlatCharacters } from "./Character";
 import { IGlobalSettings } from "./PlayerProfile";
 import { SelectedCharacters } from "./SelectedCharacters";
 
