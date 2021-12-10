@@ -3,15 +3,15 @@
  */
 import { mapValues } from "lodash-es";
 
-import { Character, FlatCharacters, ICharacter } from "./Character";
 import * as ModTypes from "./types/ModTypes";
-import { Mod } from "./Mod";
-import OptimizerRun from "./OptimizerRun";
-import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
 import { CharacterNames } from "constants/characterSettings";
-import { Characters } from "./Character";
-import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
+
+import { Character, Characters, FlatCharacters, ICharacter } from "./Character";
+import { Mod } from "./Mod";
+import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
+import OptimizerRun from "./OptimizerRun";
 import { PlayerValues, PlayerValuesByCharacter } from "./PlayerValues";
+import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
 import { TargetStat, FlatTargetStat } from "./TargetStat";
 
 
