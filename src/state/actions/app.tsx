@@ -1,4 +1,4 @@
-import { ThunkResult } from "../reducers/modsOptimizer";
+import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 
 import { saveTemplates } from "./characterEdit"
 import {
@@ -191,7 +191,7 @@ function noop (a: any, b: any, c: any) {
 }
 
 type UpdateFunc = (a: PlayerProfile) => PlayerProfile;
-type AuxiliaryChangesFunc = (a: any, b: any, c: PlayerProfile | null) => void;
+type AuxiliaryChangesFunc = (dispatch: ThunkDispatch, getState: () => IAppState, c: PlayerProfile) => void;
 /**
  * Update the currently-selected character profile by calling an update function on the existing profile. Optionally
  * update the base state with other auxiliary changes as well.
