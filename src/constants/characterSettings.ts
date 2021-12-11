@@ -32,6 +32,7 @@ export const characterNames = [
   'BISTAN',
   'BOBAFETT',
   'BODHIROOK',
+  'BOKATAN',
   'BOSSK',
   'C3POCHEWBACCA',
   'C3POLEGENDARY',
@@ -139,12 +140,14 @@ export const characterNames = [
   'L3_37',
   'LOBOT',
   'LOGRAY',
+  'LORDVADER',
   'LUKESKYWALKER',
   'LUMINARAUNDULI',
   'MACEWINDU',
   'MAGMATROOPER',
   'MAGNAGUARD',
   'MAUL',
+  'MAULS7',
   'MISSIONVAO',
   'MOFFGIDEONS1',
   'MONMOTHMA',
@@ -338,7 +341,7 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'BB8': new CharacterSettings(
     [
-      new OptimizationPlan('PvP', 5, 5, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('PvP', 5, 5, 100, 0, 0, 10, 0, 0, 50, 0, 0, 0, 0, true),
       new OptimizationPlan('hSTR Phase 1', 10, -5, 100, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, true),
       optimizationStrategy.Speed,
       new OptimizationPlan('Tanky', 5, 25, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, true)
@@ -366,6 +369,9 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('PvP', 10, 10, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, true)],
     ['Rogue 1']
   ),
+  'BOKATAN': new CharacterSettings(
+    [new OptimizationPlan('PvP', 0, 0, 100, 100, 10, 0, 10, 0, 50, 0, 0, 0, 0, true)]
+  ),  
   'BOSSK': new CharacterSettings(
     [
       new OptimizationPlan('Leader', 10, 10, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0, true),
@@ -457,6 +463,7 @@ const characterSettings: CharacterSettingsIndexer = {
   'COMMANDERLUKESKYWALKER': new CharacterSettings(
     [
       new OptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 25, 0, 50, 0, 0, 0, 0, true),
+      new OptimizationPlan('Threepio', 10, 10, 100, 0, 10, 50, 50, 0, 0, 0, 0, 0, 0, true),
       optimizationStrategy["Speedy Chex Mix"].rename('Chex Mix'),
       new OptimizationPlan('Raids', 0, 0, 100, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('Slow and Strong', 0, 0, 0, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0, true)
@@ -850,6 +857,7 @@ const characterSettings: CharacterSettingsIndexer = {
   ),  
   'JOLEEBINDO': new CharacterSettings(
     [
+      new OptimizationPlan('PvP', 50, 0, 75, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100, true),
       new OptimizationPlan('Health and Speed', 100, 0, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('Healer', 30, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, true)
     ]
@@ -912,6 +920,9 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Murderbears']
   ),
+  'LORDVADER': new CharacterSettings(
+    [new OptimizationPlan('PvP', 0, 15, 100, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, true)]
+  ),  
   'LUKESKYWALKER': new CharacterSettings(
     [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE')],
     ['farmboi']
@@ -935,6 +946,9 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'MAUL': new CharacterSettings(
     [optimizationStrategy["Special Damage with Potency"].rename('PvP')]
+  ),
+  'MAULS7': new CharacterSettings(
+    [new OptimizationPlan('PvP', 25, 25, 100, 0, 15, 0, 50, 0, 0, 0, 0, 0, 0, true)]
   ),
   'MISSIONVAO': new CharacterSettings(
     [new OptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 75, 0, 50, 0, 0, 0, 0, true)]
@@ -1094,7 +1108,10 @@ const characterSettings: CharacterSettingsIndexer = {
     DamageType.mixed
   ),
   'ROYALGUARD': new CharacterSettings(
-    [new OptimizationPlan('Tanky', 50, 50, 25, 0, 0, 25, 0, 0, 0, 5, 5, 0, 0, true)],
+    [
+      new OptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('Tanky', 50, 50, 25, 0, 0, 25, 0, 0, 0, 5, 5, 0, 0, true)
+    ],
     ['RG', 'Red Guard']
   ),
   'SABINEWRENS3': new CharacterSettings(
@@ -1121,7 +1138,10 @@ const characterSettings: CharacterSettingsIndexer = {
     ]
   ),
   'SHORETROOPER': new CharacterSettings(
-    [new OptimizationPlan('Speedy Tank', 50, 50, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, true)],
+    [
+      new OptimizationPlan('Speedy Tank', 50, 50, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)
+    ],
     ['ShT', 'Troopers', 'Imperial Grancor Maneuver']
   ),
   'SITHASSASSIN': new CharacterSettings(
@@ -1167,7 +1187,10 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Troopers']
   ),
   'STORMTROOPER': new CharacterSettings(
-    [new OptimizationPlan('Speedy Tank', 25, 25, 50, 0, 0, 25, 0, 0, 0, 25, 25, 0, 0, true)],
+    [
+      new OptimizationPlan('Speedy Tank', 25, 25, 50, 0, 0, 25, 0, 0, 0, 25, 25, 0, 0, true),
+      new OptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)
+    ],
     ['Troopers']
   ),
   'STORMTROOPERHAN': new CharacterSettings(
@@ -1181,7 +1204,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('Tanky', 40, 40, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0, true)]
   ),
   'SUPREMELEADERKYLOREN': new CharacterSettings(
-    [new OptimizationPlan('PvP', 25, 0, 80, 100, 0, 0, 100, 0, 0, 0, 0, 0, 0, true)]
+    [new OptimizationPlan('PvP', 5, 0, 100, 100, 0, 0, 40, 0, 0, 0, 0, 0, 0, true)]
   ),
   'T3_M4': new CharacterSettings(
     [
