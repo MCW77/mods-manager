@@ -323,7 +323,7 @@ class CharacterEditView extends PureComponent<Props> {
 
             const invalidTargets = this.props.selectedCharacters.filter(
               ({ target }, index) =>
-                target.targetStats.find(targetStat => targetStat.relativeCharacterId && minCharacterIndices[targetStat.relativeCharacterId] > index)
+                target.targetStats.find(targetStat => targetStat.relativeCharacterId !== 'null' && minCharacterIndices[targetStat.relativeCharacterId] > index)
             ).map(({ id }) => id)
   
             if (invalidTargets.length > 0) {

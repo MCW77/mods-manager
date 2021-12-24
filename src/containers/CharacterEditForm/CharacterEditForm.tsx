@@ -367,7 +367,7 @@ class CharacterEditForm extends React.Component<Props> {
         <br />
           compared to &nbsp;
         <span className={'dropdown'}>
-          <select name={'target-stat-relative-character[]'} defaultValue={targetStat.target.relativeCharacterId || ''}>
+          <select name={'target-stat-relative-character[]'} defaultValue={targetStat.target.relativeCharacterId !== 'null' ? targetStat.target.relativeCharacterId : ''}>
             <option value={''}>No one</option>
             {baseCharacters.map(
               gs => <option key={gs.baseID} value={gs.baseID}>{gs.name}</option>
