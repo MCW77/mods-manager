@@ -435,7 +435,7 @@ export class OptimizationPlan {
         targetStat.type || '+',
         targetStat.minimum,
         targetStat.maximum,
-        targetStat.relativeCharacterId || null,
+        targetStat.relativeCharacterId,
         targetStat.optimizeForTarget
       )
     );
