@@ -801,7 +801,7 @@ const mapStateToProps = (state: IAppState) => {
   const currentModsByCharacter: {
     [key in CharacterNames]: Mod[]
   } = collectByKey(
-    profile.mods.filter(mod => null !== mod.characterID && undefined !== mod.characterID),
+    profile.mods.filter(mod => mod.characterID !== 'null'),
     (mod: Mod) => mod.characterID
   );
   const numMovingMods = modAssignments.reduce((count, { id, assignedMods }) =>

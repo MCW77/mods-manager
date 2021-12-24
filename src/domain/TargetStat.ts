@@ -36,7 +36,7 @@ export interface FlatTargetStat {
   type?: string
   minimum?: number
   maximum?: number
-  relativeCharacterId: CharacterNames | null
+  relativeCharacterId: CharacterNames | 'null'
   optimizeForTarget: boolean
 }
 
@@ -45,7 +45,7 @@ export class TargetStat {
   type; // {String} The operation to apply to the min and max (* or +)
   minimum; // {TargetValue} The minimum value for the stat
   maximum; // {TargetValue} The maximum value for the stat
-  relativeCharacterId: CharacterNames | null; // {String} A character to use as a basis for this target
+  relativeCharacterId: CharacterNames | 'null'; // {String} A character to use as a basis for this target
 
   /**
    * {Boolean} Whether to run the optimization against this target (true) or
@@ -77,7 +77,7 @@ export class TargetStat {
     type?: string,
     minimum?: number,
     maximum?: number,
-    relativeCharacterId: CharacterNames | null = null,
+    relativeCharacterId: CharacterNames | 'null' = 'null',
     optimizeForTarget = true,
   ) {
     this.stat = stat;

@@ -933,9 +933,9 @@ function modSort(character) {
   return (left, right) => {
     if (cache.modScores[right.id] === cache.modScores[left.id]) {
       // If mods have equal value, then favor the one that's already equipped
-      if (left.characterID && character.baseID === left.characterID) {
+      if (left.characterID !== 'null' && character.baseID === left.characterID) {
         return -1;
-      } else if (right.characterID && character.baseID === right.characterID) {
+      } else if (right.characterID !== 'null' && character.baseID === right.characterID) {
         return 1;
       } else {
         return 0;
@@ -1152,11 +1152,14 @@ function optimizeMods(availableMods, characters, order, incrementalOptimizeIndex
 
   // Filter out any mods that are on locked characters, including if all unselected characters are locked
   let usableMods = availableMods.filter(mod =>
-    !mod.characterID || !characters[mod.characterID].optimizerSettings.isLocked);
+    mod.characterID === 'null' || !characters[mod.characterID].optimizerSettings.isLocked
+  );
 
   if (globalSettings.lockUnselectedCharacters) {
     const selectedCharacterIds = order.map(({ id }) => id);
-    usableMods = usableMods.filter(mod => !mod.characterID || selectedCharacterIds.includes(mod.characterID))
+    usableMods = usableMods.filter(mod =>
+      mod.characterID === 'null' || selectedCharacterIds.includes(mod.characterID)
+    )
   }
 
   const unselectedCharacters =
@@ -1328,7 +1331,7 @@ function changeRelativeTargetStatsToAbsolute(modSuggestions, characters, lockedC
   return {
     ...target,
     targetStats: oldTargetStats.map(targetStat => {
-      if (!targetStat.relativeCharacterId) {
+      if (targetStat.relativeCharacterId === 'null') {
         return targetStat;
       }
 
@@ -1379,7 +1382,7 @@ function changeRelativeTargetStatsToAbsolute(modSuggestions, characters, lockedC
         minimum: minimum,
         maximum: maximum,
         stat: targetStat.stat,
-        relativeCharacterId: null,
+        relativeCharacterId: 'null',
         type: null,
         optimizeForTarget: targetStat.optimizeForTarget
       };
