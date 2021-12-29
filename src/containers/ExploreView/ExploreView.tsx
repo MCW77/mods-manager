@@ -351,7 +351,7 @@ class ModsFilter {
       return groupBy(
         mods,
         (mod: Mod) => mod.slot + "-" + mod["set"] + "-" + mod.primaryStat.type
-      );
+      ) as Dictionary<Mod[]>;
     });
 
     if (this.isGroupingEnabled)
