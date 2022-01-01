@@ -201,7 +201,7 @@ class App extends PureComponent<Props> {
             onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
           >
             X
-        </button>
+          </button>
         }
         <div className="fetch-actions">
           <button type={'button'}
@@ -213,7 +213,7 @@ class App extends PureComponent<Props> {
               );
             }}>
             {`${this.props.t('global-ui:header.Fetch')}!`}
-        </button>
+          </button>
           <button
             type={'button'}
             disabled={!(
@@ -227,31 +227,36 @@ class App extends PureComponent<Props> {
               }
             }}>
             {this.props.t('global-ui:header.FetchHot')}
-        </button>
+          </button>
           <Help header={'How do I pull unequipped mods?'}>{this.unequippedModsHelp()}</Help>
-
         </div>
         <div className="state-actions">
           <FileInput label={this.props.t('global-ui:header.Restore')} handler={(file) => this.readFile(file, this.props.restoreProgress)} />
           {showActions &&
-            <button type={'button'} onClick={() => {
-              this.props.exportDatabase((progressData: IUserData) => {
-                progressData.version = this.props.version;
-                progressData.allyCode = this.props.allyCode;
-                progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
-                const progressDataSerialized = JSON.stringify(progressData);
-                const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
-                saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
-              });
-            }}>
+            <button
+              type={'button'}
+              onClick={() => {
+                this.props.exportDatabase((progressData: IUserData) => {
+                  progressData.version = this.props.version;
+                  progressData.allyCode = this.props.allyCode;
+                  progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
+                  const progressDataSerialized = JSON.stringify(progressData);
+                  const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
+                  saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
+                });
+              }}
+            >
               {this.props.t('global-ui:header.Save')}
-        </button>
+            </button>
           }
           {showActions &&
-            <button type={'button'} className={'red'}
-              onClick={() => this.props.showModal('reset-modal', this.resetModal())}>
+            <button
+              type={'button'}
+              className={'red'}
+              onClick={() => this.props.showModal('reset-modal', this.resetModal())}
+            >
               {this.props.t('global-ui:header.Reset')}
-        </button>
+            </button>
           }
         </div>
       </div>
