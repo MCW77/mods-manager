@@ -20,7 +20,7 @@ import {
   showError,
   showModal
 } from "../../state/actions/app";
-import { checkVersion, refreshPlayerData, toggleKeepOldMods, setHotUtilsSessionId } from "../../state/actions/data";
+import { checkVersion, refreshPlayerData, setHotUtilsSessionId } from "../../state/actions/data";
 import FlashMessage from "../../components/Modal/FlashMessage";
 import { saveAs } from 'file-saver';
 import { exportDatabase, loadProfile } from "../../state/actions/storage";
@@ -159,7 +159,7 @@ class App extends PureComponent<Props> {
           <input id={'ally-code'} type={'text'} inputMode={'numeric'} size={12} ref={input => allyCodyInput = input}
             onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if (e.key === 'Enter') {
-                this.props.refreshPlayerData((e.target as HTMLInputElement).value, this.props.keepOldMods, null);
+                this.props.refreshPlayerData((e.target as HTMLInputElement).value, true, null);
               }
               // Don't change the input if the user is trying to select something
               if (window.getSelection() && window.getSelection()!.toString() !== '') {
@@ -208,7 +208,7 @@ class App extends PureComponent<Props> {
             onClick={() => {
               this.props.refreshPlayerData(
                 this.props.allyCode || (allyCodyInput?.value ?? ''),
-                this.props.keepOldMods,
+                true,
                 null
               );
             }}>
@@ -229,16 +229,7 @@ class App extends PureComponent<Props> {
             {this.props.t('global-ui:header.FetchHot')}
         </button>
           <Help header={'How do I pull unequipped mods?'}>{this.unequippedModsHelp()}</Help>
-          <div className="form-item">
-            <input id={'keep-old-mods'}
-              name={'keep-old-mods'}
-              type={'checkbox'}
-              value={'keep-old-mods'}
-              checked={this.props.keepOldMods}
-              onChange={() => this.props.toggleKeepOldMods()}
-            />
-            <label htmlFor={'keep-old-mods'}>{this.props.t('global-ui:header.RememberExisting')}</label>
-          </div>
+
         </div>
         <div className="state-actions">
           <FileInput label={this.props.t('global-ui:header.Restore')} handler={(file) => this.readFile(file, this.props.restoreProgress)} />
@@ -446,7 +437,7 @@ class App extends PureComponent<Props> {
           this.props.hideModal();
           this.props.refreshPlayerData(
             this.props.allyCode,
-            this.props.keepOldMods,
+            true,
             this.props.profile?.hotUtilsSessionId ?? null
           );
         }}>
@@ -483,7 +474,6 @@ interface ReduxProps {
   allyCode: string,
   error: UITypes.DOMContent | null,
   isBusy: boolean,
-  keepOldMods: boolean,
   displayModal: boolean,
   modalClass: string,
   modalContent: UITypes.DOMContent,
@@ -509,7 +499,6 @@ const mapStateToProps = (state: IAppState) => {
     allyCode: state.allyCode,
     error: state.error,
     isBusy: state.isBusy,
-    keepOldMods: state.keepOldMods,
     displayModal: !!state.modal,
     modalClass: state?.modal?.class ?? '',
     modalContent: state?.modal?.content ?? '',
@@ -535,7 +524,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   showModal: (clazz: string, content: UITypes.DOMContent) => dispatch(showModal(clazz, content)),
   hideModal: () => dispatch(hideModal()),
   showError: (message: UITypes.DOMContent) => dispatch(showError(message)),
-  toggleKeepOldMods: () => dispatch(toggleKeepOldMods()),
   reset: () => dispatch(reset()),
   restoreProgress: (progressData: string) => dispatch(restoreProgress(progressData)),
   switchProfile: (allyCode: string) => dispatch(loadProfile(allyCode)),

@@ -88,7 +88,6 @@ type AppActions =
   | ReturnType<typeof App.Actions.SET_STATE>
   | ReturnType<typeof App.Actions.RESET_STATE>
   | ReturnType<typeof App.Actions.TOGGLE_SIDEBAR>
-  | ReturnType<typeof DataActions.toggleKeepOldMods>
   | ReturnType<typeof ExploreActions.changeModsViewOptions>
   | ReturnType<typeof OptimizeActions.cancelOptimizeMods>
   | ReturnType<typeof OptimizeActions.startModOptimization>
@@ -165,9 +164,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return CharacterEditReducers.changeTargetStats(state, action);
     case REMOVE_TARGET_STAT:
       return CharacterEditReducers.removeTargetStat(state, action);
-
-    case TOGGLE_KEEP_OLD_MODS:
-      return AppState.save(DataReducers.toggleKeepOldMods(state));
 
     case CHANGE_MODS_VIEW_OPTIONS:
       return AppState.save(ExploreReducers.changeModsViewOptions(state, action));
