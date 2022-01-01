@@ -55,12 +55,10 @@ export interface IAppState {
   hideSelectedCharacters: boolean,
   hotUtilsSubscription: boolean,
   isBusy: boolean,
-  keepOldMods: boolean,
   modal: ModalProps | null,
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
 //  modOptions: ModOptions,
-
   optimizerView: 'edit' | 'review',
   playerProfiles: {
     [key: string]: string
@@ -84,7 +82,6 @@ export class AppState {
     'characterEditMode',
     'characterEditSortView',
     'hideSelectedCharacters',
-    'keepOldMods',
     'modsViewOptions',
     'modListFilter',
     'optimizerView',
@@ -105,7 +102,6 @@ export class AppState {
     hideSelectedCharacters: true,
     hotUtilsSubscription: false,
     isBusy: false,
-    keepOldMods: true,
     modal: null,
     modsViewOptions: defaultOptions,
 //    modOptions: defaultOptions,
@@ -197,7 +193,6 @@ export function deserializeState(state: IAppState): IAppState {
     characterEditSortView: state.characterEditSortView || AppState.Default.characterEditSortView,
     characterFilter: state.characterFilter || AppState.Default.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
-    keepOldMods: state.keepOldMods,
     modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
     modListFilter: state.modListFilter || AppState.Default.modListFilter,
     optimizerView: state.optimizerView || AppState.Default.optimizerView,
