@@ -48,13 +48,6 @@ interface FetchedPlayerData {
   baseCharacters: BaseCharactersById;
   profile: FetchedProfile;
 }
-export const TOGGLE_KEEP_OLD_MODS = 'TOGGLE_KEEP_OLD_MODS';
-
-export function toggleKeepOldMods() {
-  return {
-    type: TOGGLE_KEEP_OLD_MODS,
-  } as const;
-}
 
 export function checkVersion() {
   return function (dispatch: ThunkDispatch) {
