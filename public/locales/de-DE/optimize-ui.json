@@ -1,0 +1,62 @@
+{
+  "main": {
+    "Instructions": "Doppelklicke oder ziehe Charakter in die rechte Spalte, um ihn für die Modoptimierung auszuwählen.",    
+    "ShowInstructions": "Zeige volle Instruktionrn",
+    "InstructionsTitle": "Wie nutzt man den Mod Optimierer",
+    "InstructionsSubtitle1": "Charactere für die Optimierung auswählen",
+    "InstructionsSubtitle2": "Die richtigen Zielwerte auswählen",
+    "InstructionsPart1": "Willkommen beim Mod Optimierer für Star Wars: Galaxy of Heroes! Dieses Programm arbeitet nach einem einfachen Prinzip: Jeder Stat hat für einen Charakter einen Wert und all diese Werte kennend, Können wir für ein Mod oder auch ein ganzes Modloadout berechnen, wie sich der Gesamtwert für den Charakter ändert. From there, the tool knows how to find the set of mods that give the highest possible overall value for each of your characters without you needing to look through the hundreds of mods in your inventory!",
+    "InstructionsPart2": "The mods optimizer will start out by considering all mods equipped on any character other than those that are \"Locked\". Then, it will go down the list of selected characters, one by one, choosing the best mods it can find for each character, based on the selected target. As it finishes each character, it removes those mods from its consideration set. Therefore, the character that you want to have your absolute best mods should always be first among your selected characters. Usually, this means that you want the character who needs the most speed to be first.",
+    "InstructionsPart3": "I suggest optimizing your arena team first, in order of required speed, then characters you use for raids, then characters for other game modes, like Territory Battles, Territory Wars, and events.",
+    "InstructionsPart4": "Every character in the game has been given starting values for all stats that can be used by the optimizer to pick the best mods. These values have been named for their general purpose - hSTR Phase 1, PvP, and PvE, for example. Some characters have multiple different targets that you can select from. ",
+    "InstructionsPart5": "These targets, while directionally good for characters, are only a base suggestion! ",
+    "InstructionsPart6": "There are many reasons that you might want to pick different values than those listed by default in the optimizer: you might want to optimize for a different purpose (such as a phase 3 Sith Triumvirate Raid team, where speed can be detrimental), you might want to choose something different to optimize against, or you might simply have a better set of values that you want to employ.",
+    "InstructionsPart7": "Am einfachsten fängt man mit einer der vorinstallierten Charaktervorlagen an. These are set up with sets of characters and targets that should fit various game modes. If there's no template to fit your exact needs, you can use one as a starting point or create one from scratch. For each individual character, if no target exists that matches what you want, you can select \"Custom\", or simply hit the \"Edit\" button to bring up the character edit modal. Most characters will have the \"basic\" mode selected by default. In basic mode, you select a value for all stats that is between -100 and 100. These values are weights that are assigned to each stat to determine its value for that character. Setting two values as equal means that those stats are about equally important for that character. In basic mode, the optimizer will automatically adjust the weights to fit the range of values seen in-game for that stat. For example, giving speed and protection both a value of 100 means that 1 speed is about equivalent to 200 protection (since you find much more protection on mods than you do speed).",
+    "InstructionsPart8": "Für eine bessere Kontrolle über die Zielwerte gibt es den  \"fortgeschritten\" Modus. In advanced mode, the values given are the value for each point of the listed stat. In advanced mode, if speed and protection are both given a value of 100, then the tool will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works.",
+    "InstructionsPart9": "Ich hoffe euch gefällt dieses Werkzeug! Fröhliches Modden!"
+  },
+  "sidebar": {
+    "Search": "Filtere nach Charaktername, Tag oder Kürzel",
+    "Show": "Charakteranzeige",
+    "ShowAll": "Zeige alle",
+    "ShowUnselected": "Verberge ausgewählte",
+    "global": {
+      "Threshold": "Schwellwert für Modtausch:",
+      "Lock": "Sperre nicht selektierte Charaktäre:",
+      "Break": "Erzwinge Modsets:"      
+    },
+    "actions": {
+      "Optimize": "Optimimire meine Mods!",
+      "Review": "Empfehlungen prüfen",
+      "Lock": "Alle Charaktere Sperren",
+      "Unlock": "Alle Charaktere Entsperren",
+      "Reset": "Zielwerte zurücksetzen"
+    }
+  },
+  "selected": {
+    "Title": "Gewählte Charactere",
+    "Clear": "Entfernen",
+    "Lock": "Sperren",
+    "Unlock": "Entsperren",
+    "Expand": "Vollansicht",
+    "Auto": "Auto generate list",
+    "Target": "Ziel:",
+    "Edit": "Ändern",
+    "Templates": {
+      "Title": "Charakter Vorlagen",
+      "manage": {
+        "Text": "Verwalten",
+        "Save": "Speichern",
+        "Export": "Export",
+        "Load": "Laden",
+        "Delete": "Löschen"
+      },
+      "apply": {
+        "Text": "Anwenden",
+        "Append": "Anhängen",
+        "Replace": "Ersetzen",
+        "TargetsOnly": "Wende nur Ziele an"
+      }
+    }
+  }
+}
