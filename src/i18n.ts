@@ -11,11 +11,20 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
+    supportedLngs: [
+      'en-US'
+      , 'de-DE'
+    ],
     fallbackLng: 'en-US',
-    supportedLngs: ['en-US', 'de-DE'],
+    ns: [
+      'domain'
+      , 'explore-ui'
+      , 'global-ui'
+      , 'optimize-ui'
+    ],
     defaultNS: 'domain',
+    load: 'currentOnly',
     debug: false,
-
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
