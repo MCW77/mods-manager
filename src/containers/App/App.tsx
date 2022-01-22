@@ -15,6 +15,7 @@ import {
   changeSection,
   deleteProfile,
   hideModal,
+  importC3POProfile,
   reset,
   restoreProgress,
   showError,
@@ -231,6 +232,7 @@ class App extends PureComponent<Props> {
           <Help header={'How do I pull unequipped mods?'}>{this.unequippedModsHelp()}</Help>
         </div>
         <div className="state-actions">
+          <FileInput label={'Import'} handler={(file) => this.readFile(file, this.props.importC3POProfile)} />
           <FileInput label={this.props.t('global-ui:header.Restore')} handler={(file) => this.readFile(file, this.props.restoreProgress)} />
           {showActions &&
             <button
@@ -530,6 +532,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   hideModal: () => dispatch(hideModal()),
   showError: (message: UITypes.DOMContent) => dispatch(showError(message)),
   reset: () => dispatch(reset()),
+  importC3POProfile: (profile: string) => dispatch(importC3POProfile(profile)),
   restoreProgress: (progressData: string) => dispatch(restoreProgress(progressData)),
   switchProfile: (allyCode: string) => dispatch(loadProfile(allyCode)),
   deleteProfile: (allyCode: string) => dispatch(deleteProfile(allyCode)),
