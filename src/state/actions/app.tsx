@@ -129,7 +129,11 @@ export function replaceModsForCurrentProfile(mods: C3POMods.C3POModDTO[]): Thunk
     let profile = await db.getProfile(state.allyCode);
     mods = mods.filter(mod => mod.equippedUnit === 'none');
     const mapper = new C3POMappers.ModMapper();
-    const newMods: Mod[] = mods.map(mod => mapper.fromC3PO(mod)).concat(profile.mods);
+    const newMods: Mod[] = mods.map(
+      mod => mapper.fromC3PO(mod)
+    ).concat(profile.mods.filter(
+      mod => mod.characterID !== 'null'
+    ));
 
     profile = profile.withMods(newMods);
     const totalMods = mods.length;
