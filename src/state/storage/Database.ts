@@ -410,6 +410,10 @@ export class Database {
         .put(profile instanceof PlayerProfile ? profile.serialize() : profile);
       let requestError: DBError = null; 
 
+      saveProfileRequest.onsuccess = function (event: Event) {
+        onsuccess()
+      }
+
       saveProfileRequest.onerror = function (event: Event) {
         if (event !== null && event.target instanceof IDBRequest)
           requestError = event.target.error;
