@@ -1,3 +1,4 @@
+import React from 'react';
 import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 
 import { saveTemplates } from "./characterEdit"
@@ -16,6 +17,9 @@ import type * as UITypes from "../../components/types";
 
 import getDatabase, { IUserData } from "../storage/Database";
 import groupByKey from "../../utils/groupByKey";
+import { Mod } from "../../domain/Mod";
+import * as C3POMods from "../../modules/profilesManagement/dtos/c3po";
+import * as C3POMappers from "../../modules/profilesManagement/mappers/c3po";
 
 export const CHANGE_SECTION = 'CHANGE_SECTION' as const;
 export const SHOW_MODAL = 'SHOW_MODAL' as const;
@@ -25,6 +29,7 @@ export const HIDE_ERROR = 'HIDE_ERROR' as const;
 export const SHOW_FLASH = 'SHOW_FLASH' as const;
 export const HIDE_FLASH = 'HIDE_FLASH' as const;
 export const RESET_STATE = 'RESET_STATE' as const;
+export const IMPORT_C3POPROFILE = 'IMPORT_C3POPROFILE' as const;
 export const RESTORE_PROGRESS = 'RESTORE_PROGRESS' as const;
 export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR' as const;
 export const DELETE_PROFILE = 'DELETE_PROFILE' as const;
@@ -101,6 +106,50 @@ export function resetState() {
   return {
     type: RESET_STATE
   } as const;
+}
+
+export function importC3POProfile(profileJSON: string): ThunkResult<void> {
+  return function (dispatch) {
+    try {
+      const mods: C3POMods.C3POModDTO[] = JSON.parse(profileJSON);
+      dispatch(replaceModsForCurrentProfile(mods));
+    } catch (e) {
+      throw new Error(
+        `Unable to process the file. Error message: ${(e as Error).message}`       
+      );
+    }
+  }
+}
+
+export function replaceModsForCurrentProfile(mods: C3POMods.C3POModDTO[]): ThunkResult<Promise<void>> {
+
+  return async function (dispatch, getState) {
+    const state = getState();
+    const db = getDatabase();
+    let profile = await db.getProfile(state.allyCode);
+    mods = mods.filter(mod => mod.equippedUnit === 'none');
+    const mapper = new C3POMappers.ModMapper();
+    const newMods: Mod[] = mods.map(mod => mapper.fromC3PO(mod)).concat(profile.mods);
+
+    profile = profile.withMods(newMods);
+    const totalMods = mods.length;
+
+    db.saveProfile(
+      profile,
+      () => {
+        dispatch(loadProfile(state.allyCode));
+        dispatch(showFlash(
+          'Success!',
+          <p>
+            Successfully imported <span className={'gold'}>{totalMods}</span> mods for player <span className={'gold'}>{state.profile.playerName}</span>
+          </p>,
+        ));
+      },
+      error => dispatch(showError(
+        'Error saving player profiles: ' + error?.message
+      ))
+    );
+  }
 }
 
 export function restoreProgress(progressData: string): ThunkResult<void> {
