@@ -126,7 +126,7 @@ export class AppState {
     setRestrictions: {} as SetRestrictions,
     targetStats: [] as TargetStats
   };
-  
+
   /**
  * Save the state of the application to localStorage, then return it so it can be chained
  * @param state {IAppState}
@@ -138,7 +138,7 @@ export class AppState {
     const storedState = AppState.serialize(reducedState);
     window.localStorage.setItem('optimizer.state', JSON.stringify(storedState));
     return state;
-  }  
+  }
 
 /**
  * Restore the application from localStorage
@@ -146,7 +146,7 @@ export class AppState {
  */
   static restore(): IAppState {
     let state: string | null = null;
-    
+
     try {
       state = window.localStorage.getItem('optimizer.state');
     } catch {
