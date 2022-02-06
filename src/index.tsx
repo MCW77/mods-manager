@@ -19,7 +19,12 @@ import App from './containers/App/App';
 
 
 const store = configureStore({
-  reducer: modsOptimizer
+  reducer: modsOptimizer,
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    })
 });
 
 // Instantiate the database
