@@ -18,7 +18,10 @@
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "noErrorTruncation": true,
-    
   },
-  "include": ["./src", "src/domain/types"]
+  "include": ["src/**/*"],
+  "exclude": [
+     "node_modules/**/*",
+     "dist/**/*",
+  ],
 }
