@@ -261,10 +261,11 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       new OptimizationPlan('PvP', 0, 0, 100, 75, 25, 0, 25, 0, 80, 0, 0, 0, 0, true),
       new OptimizationPlan('Padme Lead', 10, 0, 80, 100, 25, 0, 25, 0, 40, 0, 0, 0, 0, true),
+      new OptimizationPlan('oQGJ Lead', 0, 0, 100, 100, 10, 0, 25, 0, 50, 0, 0, 0, 0, true),      
       new OptimizationPlan('Chex Mix', 0, 0, 50, 0, 0, 0, 100, 0, 25, 0, 0, 0, 0, true),
       new OptimizationPlan('hSTR P1 Jedi', 0, -5, 20, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, true),
       new OptimizationPlan('Slow Damage', 25, 0, 0, 100, 25, 0, 25, 0, 40, 0, 0, 0, 0, true),
-      new OptimizationPlan('Nuke', 0, 0, 0, 100, 20, 0, 40, 0, 25, 0, 0, 0, 0, true)
+      new OptimizationPlan('Nuke', 0, 0, 0, 100, 20, 0, 40, 0, 25, 0, 0, 0, 0, true),
     ],
     ['JKA']
   ),
@@ -525,8 +526,10 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('PvP', 10, 10, 50, 0, 0, 5, 60, 0, 0, 2.5, 2.5, 0, 0, true)]
   ),  
   'DARTHMALAK': new CharacterSettings(
-    [new OptimizationPlan('PvP', 10, 50, 100, 0, 10, 0, 10, 0, 0, 10, 0, 0, 0, true)],
-  ),
+    [
+      new OptimizationPlan('PvP', 10, 50, 100, 0, 10, 0, 10, 0, 0, 10, 0, 0, 0, true),
+      new OptimizationPlan('Tenacity', 0, 50, 100, 0, 10, 100, 10, 0, 0, 10, 0, 0, 0, true),
+    ]  ),
   'DARTHNIHILUS': new CharacterSettings(
     [new OptimizationPlan('PvP', 10, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)],
     ['Nightmare'],
@@ -602,10 +605,11 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'ENFYSNEST': new CharacterSettings(
     [
+      new OptimizationPlan('PvP', 10, 0, 100, 50, 25, 100, 10, 0, 0, 0, 0, 0, 0, true),      
       new OptimizationPlan('Speedy', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, true),
       optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('Offense'),
       new OptimizationPlan('Tenacity', 10, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, true),
-      new OptimizationPlan('hSTR Phase 3', 25, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, true)
+      new OptimizationPlan('hSTR Phase 3', 25, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, true),
     ],
     ['Nesty', 'Baby Wampa', 'solo']
   ),
@@ -695,7 +699,8 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('Balanced', 50, 100, 50, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0, true),
       new OptimizationPlan('Slow Tank', 50, 100, 0, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0, true),
       new OptimizationPlan('Padme Lead', 100, 0, 50, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0, true),
-      new OptimizationPlan('hSTR P2 Jedi', 0, 100, 50, 0, 0, 0, 10, 0, 25, 100, 0, 0, 0, true)
+      new OptimizationPlan('JMK Lead', 100, 0, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0, true),      
+      new OptimizationPlan('hSTR P2 Jedi', 0, 100, 50, 0, 0, 0, 10, 0, 25, 100, 0, 0, 0, true),
     ],
     ['GK', 'Titans']
   ),
@@ -731,7 +736,7 @@ const characterSettings: CharacterSettingsIndexer = {
     DamageType.special
   ),
   'GRANDMASTERLUKE': new CharacterSettings(
-    [new OptimizationPlan('PvP', 5, 20, 100, 25, 15, 0, 0, 10, 0, 0, 0, 0, 0, true)],
+    [new OptimizationPlan('PvP', 0, 25, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)],
     ['GMLS', 'JMLS', 'GLLS'],
     DamageType.special
   ),  
@@ -961,7 +966,10 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('PvE', 40, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)]
   ),
   'MACEWINDU': new CharacterSettings(
-    [optimizationStrategy["Speed, Crit, and Physical Damage"].rename('PvE')],
+    [
+      optimizationStrategy["Speed, Crit, and Physical Damage"].rename('PvE'),
+      new OptimizationPlan('JMK Lead', 100, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
+    ],
     [],
     DamageType.mixed
   ),
@@ -1090,7 +1098,8 @@ const characterSettings: CharacterSettingsIndexer = {
   'QUIGONJINN': new CharacterSettings(
     [
       optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP'),
-      new OptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 25, 25, 50, 0, 0, 0, 0, true)
+      new OptimizationPlan('Omicron', 5, 0, 100, 0, 5, 0, 50, 0, 0, 0, 0, 0, 0, true),      
+      new OptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 25, 25, 50, 0, 0, 0, 0, true),
     ],
     ['QGJ'],
     DamageType.mixed
