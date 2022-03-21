@@ -5,38 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Chrome",
-      "request": "launch",
+      "name": "Debug in Chrome",
       "type": "pwa-chrome",
-      "url": "http://localhost:5000",
-      "webRoot": "${workspaceFolder}/build",
-      "sourceMaps": true
-    },
-/*    {
-//      "cwd": "${workspaceFolder}/build",
-      "name": "Debug in chrome",
-//      "port": 3000,
-      "request": "launch",
-      "sourceMaps": true,
-      "type": "chrome",
-      "url": "//localhost:3000",
-
-      "trace": true,
-      "webRoot": "C:\\Users\\ElZoido\\Documents\\Programming\\Projects\\GitHub\\mods-optimizer\\build"
-    }
-*/    
-    {
-      "name": "Chrome",
-      "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceRoot}/src",
-//      "userDataDir": "${workspaceRoot}/.vscode/chrome",
+      "webRoot": "${workspaceFolder/src}",
       "sourceMaps": true,
-//      "trace": true,
-//      "sourceMapPathOverrides": {
-//        "webpack:///src/*": "${webRoot}/*"
-//      } 
-    }     
+    }
   ]
 }
