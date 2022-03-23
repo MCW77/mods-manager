@@ -4,17 +4,30 @@
 import groupByKey from "../utils/groupByKey";
 import type { CharacterNames } from "../constants/characterSettings";
 
-export type BaseCharacterAlignments = 'Dark Side' | 'Light Side';
+export type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
+export type BaseCharacterAlignments =
+  'noforce'
+  | 'neutral'
+  | 'light'
+  | 'dark'
+;
 
+export interface APIBaseCharacterCategory {
+  display: string;
+  key: string;
+}
 export interface APIBaseCharacter {
-  base_id: CharacterNames;
+  baseId: CharacterNames;
   name: string;
-  image: string;
+  baseImage: string;
   categories: string[];
   description: string;
-  alignment: BaseCharacterAlignments;
-  role: string;
-  ship_slot: number;
+  alignment: APIBaseCharacterAlignments;
+  role: APIBaseCharacterCategory[];
+  shipSlot: number;
+  affiliation: APIBaseCharacterCategory[];
+  species: APIBaseCharacterCategory[];
+  profession: APIBaseCharacterCategory[];
 }
 
 export interface BaseCharacter {
@@ -26,18 +39,30 @@ export interface BaseCharacter {
   alignment: BaseCharacterAlignments;
 }
 
+const API2BaseCharacterAlignment = {
+  0: 'noforce',
+  1: 'neutral',
+  2: 'light',
+  3: 'dark',  
+}
+
 export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
   return groupByKey(
     baseCharacters.map(bc => {
+      const categories = bc.affiliation
+        .concat(bc.profession)
+        .concat(bc.role)
+        .concat(bc.species)
+        .map(category => category.display)
+        .concat(bc.shipSlot !== 0 ? ['Crew Member'] : [])
+      ;
       return {
-        baseID: bc.base_id,
+        baseID: bc.baseId,
         name: bc.name,
-        avatarUrl: bc.image,
-        categories: bc.categories
-          .concat([bc.alignment])
-          .concat(null !== bc.ship_slot ? ['Crew Member'] : []),
+        avatarUrl: `https://api.hotutils.com/images${bc.baseImage}`,
+        categories: categories,
         description: bc.description,
-        alignment: bc.alignment, 
+        alignment: API2BaseCharacterAlignment[bc.alignment],
       } as BaseCharacter
     })
     , (bc: BaseCharacter) => bc.baseID) as BaseCharactersById
@@ -55,5 +80,5 @@ export const defaultBaseCharacter = {
   avatarUrl: 'https://swgoh.gg/static/img/assets/blank-character.png',
   categories: [],
   description: '',
-  alignment: 'Light Side',
+  alignment: 'light',
 } as BaseCharacter;

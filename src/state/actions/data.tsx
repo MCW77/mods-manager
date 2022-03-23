@@ -146,10 +146,10 @@ export function refreshPlayerData(
     // First, fetch character definitions from swgoh.gg
     fetchCharacters()
       .catch(() => {
-        messages.push('Error when fetching character definitions from swgoh.gg. ' +
+        messages.push('Error when fetching character definitions from HotUtils. ' +
           'Some characters may not optimize properly until you fetch again.'
         );
-        messages.push('This is an error with an API that the optimizer uses (swgoh.gg) and NOT ' +
+        messages.push('This is an error with an API that the optimizer uses (HotUtils) and NOT ' +
           'an error in the optimizer itself. Feel free to discuss it on the ' +
           'optimizer\'s discord server, but know that there are no changes that ' +
           'can be made to the optimizer to fix this issue.'
@@ -218,9 +218,9 @@ export function refreshPlayerData(
 function fetchCharacters(): Promise<BaseCharactersById> {
   return fetch('https://api.mods-optimizer.swgoh.grandivory.com/characters/')
     .then(response => response.json())
-    .then((baseCharacters: APIBaseCharacter[]) => {
+    .then((response) => {
      
-      return mapAPI2BaseCharactersById(baseCharacters)
+      return mapAPI2BaseCharactersById(response.units)
     }).catch();
 }
 
