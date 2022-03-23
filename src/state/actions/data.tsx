@@ -29,13 +29,16 @@ const UseCaseModesObj = {
   DSTB: '2',
   Arena: '3',
 } as const;
+
 export type UseCaseModes = typeof UseCaseModesObj[keyof typeof UseCaseModesObj];
+
 export interface CharacterListGenerationParameters {
-  'alignmentFilter': number,
-  'minimumGearLevel': number,
-  'ignoreArena': boolean,
-  'top': number,
+  'alignmentFilter'?: number,
+  'ignoreArena': true,
+  'minimumGearLevel'?: number,
+  'top'?: number, 
 }
+
 interface FetchedProfile {
   name: string,
   mods: Mod[],
@@ -432,7 +435,7 @@ export function fetchCharacterList(
       {
         allyCode: allyCode,
         mode: mode,
-        parameters: filterObject(parameters, (key, value) => !!value || value === 0),        
+        parameters: parameters,
       }
     )
       .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
