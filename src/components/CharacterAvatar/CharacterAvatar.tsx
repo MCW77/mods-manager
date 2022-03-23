@@ -23,7 +23,7 @@ class CharacterAvatar extends React.PureComponent<Props> {
     const id = this.props.id ?? undefined; 
     const className = `avatar gear-${displayGear ?
       character!.playerValues.gearLevel :
-      0} star-${character!.playerValues.stars} align-${baseCharacter.alignment === 'Dark Side' ? 'dark' : 'light'}`;
+      0} star-${character!.playerValues.stars} align-${baseCharacter.alignment}`;
 
     const star: (position: number) => React.ReactNode = position => {
       const isActive = position <= character!.playerValues.stars;
