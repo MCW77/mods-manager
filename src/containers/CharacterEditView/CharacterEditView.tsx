@@ -480,14 +480,13 @@ class CharacterEditView extends PureComponent<Props> {
         ordered or what targets should be chosen.
       </p>
       <p>
-        <span className={'purple'}>Note:</span> unless you specify otherwise in "Advanced Settings" below, your current
-        arena team will always be placed at the top of the list.
+        <span className={'blue'}>
+          Provided by&nbsp;
+          <a href={'https://swgoh.spineless.net/'} target={'_blank'} rel={'noopener noreferrer'}>
+            https://swgoh.spineless.net/
+          </a>
+        </span>
       </p>
-      <p><span className={'blue'}>Provided by&nbsp;
-        <a href={'https://swgoh.spineless.net/'} target={'_blank'} rel={'noopener noreferrer'}>
-          https://swgoh.spineless.net/
-        </a>
-      </span></p>
       <hr />
       <form ref={(element) => form = element}>
         <label htmlFor={'use-case'}>Select your use case:</label>
@@ -553,10 +552,6 @@ class CharacterEditView extends PureComponent<Props> {
             </Dropdown>
           </div> */}
           <div className={'form-row'}>
-            <label htmlFor={'ignore-arena'}>Ignore arena teams:</label>
-            <input name={'ignore-arena'} type={'checkbox'} defaultChecked={false} />
-          </div>
-          <div className={'form-row'}>
             <label htmlFor={'max-list-size'}>Maximum list size:&nbsp;</label>
             <input name={'max-list-size'} type={'text'} inputMode={'numeric'} size={3} />
           </div>
@@ -569,12 +564,15 @@ class CharacterEditView extends PureComponent<Props> {
           type={'button'}
           onClick={() => {
             if (form !== null) {
-              const parameters = {
-                'alignmentFilter': form['alignment-filter'].value,
-                'minimumGearLevel': form['minimum-gear-level'].value,
-                'ignoreArena': form['ignore-arena'].checked,
-                'top': form['max-list-size'].value
-              }
+              const parameters: CharacterListGenerationParameters = {
+                ignoreArena: true
+              };
+              if (form['alignment-filter'].value != "0")
+                parameters.alignmentFilter = form['alignment-filter'].value;
+              if (form['minimum-gear-level'].value != "1")
+                parameters.minimumGearLevel = form['minimum-gear-level'].value;
+              if (form['max-list-size'].value != "")
+                parameters.top = form['max-list-size'].value;
 
               this.props.generateCharacterList(
                 form['use-case'].value,
