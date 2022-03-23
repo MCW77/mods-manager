@@ -121,7 +121,7 @@ class CharacterListModal extends React.PureComponent<Props> {
             const parameters: CharacterListGenerationParameters = {
               'alignmentFilter': Number(inputValue('alignment-filter')),
               'minimumGearLevel': Number(inputValue('minimum-gear-level')),
-              'ignoreArena': (formElements.namedItem('ignore-arena') as HTMLInputElement).checked,
+              'ignoreArena': true,
               'top': Number(inputValue('max-list-size')),
             }
 
