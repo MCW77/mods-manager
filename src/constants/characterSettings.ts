@@ -66,6 +66,7 @@ export const characterNames = [
   'DARTHSIDIOUS',
   'DARTHSION',
   'DARTHTRAYA',
+  'DASHRENDAR',
   'DATHCHA',
   'DEATHTROOPER',
   'DENGAR',
@@ -137,6 +138,7 @@ export const characterNames = [
   'KIADIMUNDI',
   'KITFISTO',
   'KUIIL',
+  'KYLEKATARN',
   'KYLOREN',
   'KYLORENUNMASKED',
   'L3_37',
@@ -148,6 +150,7 @@ export const characterNames = [
   'MACEWINDU',
   'MAGMATROOPER',
   'MAGNAGUARD',
+  'MARAJADE',
   'MAUL',
   'MAULS7',
   'MISSIONVAO',
@@ -317,9 +320,9 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'BARRISSOFFEE': new CharacterSettings(
     [
-      new OptimizationPlan('PvP', 50, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
-      new OptimizationPlan('hSTR P1 Jedi', 75, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)
-    ]
+      new OptimizationPlan('PvP', 70, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('hSTR P1 Jedi', 75, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
+    ],
   ),
   'BASTILASHAN': new CharacterSettings(
     [
@@ -382,7 +385,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Rogue 1']
   ),
   'BOKATAN': new CharacterSettings(
-    [new OptimizationPlan('PvP', 0, 0, 100, 100, 10, 0, 10, 0, 50, 0, 0, 0, 0, true)]
+    [new OptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 10, 0, 50, 0, 0, 0, 0, true)],
   ),  
   'BOSSK': new CharacterSettings(
     [
@@ -405,7 +408,10 @@ const characterSettings: CharacterSettingsIndexer = {
     [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP')]
   ),
   'CANDEROUSORDO': new CharacterSettings(
-    [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE')]
+    [
+      optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE'),
+      new OptimizationPlan('Maul Lead', 0, 0, 0, 50, 75, 0, 100, 0, 25, 0, 0, 0, 0, true),
+    ],
   ),
   'CARADUNE': new CharacterSettings(
     [
@@ -536,7 +542,7 @@ const characterSettings: CharacterSettingsIndexer = {
     DamageType.special
   ),
   'DARTHREVAN': new CharacterSettings(
-    [new OptimizationPlan('PvP', 3, 0, 100, 50, 5, 0, 0, 10, 5, 0, 0, 0, 0, true)],
+    [new OptimizationPlan('PvP', 5, 0, 100, 50, 5, 0, 0, 10, 5, 0, 0, 0, 0, true)],
     [],
     DamageType.special
   ),
@@ -559,6 +565,9 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
+  'DASHRENDAR': new CharacterSettings(
+    [new OptimizationPlan('Leader', 10, 0, 100, 0, 15, 0, 0, 0, 50, 0, 0, 0, 0, true)],
+  ),  
   'DATHCHA': new CharacterSettings(
     [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE')],
     [],
@@ -731,7 +740,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ]
   ),
   'GRANDADMIRALTHRAWN': new CharacterSettings(
-    [optimizationStrategy["Speed with survivability"].rename('PvP')],
+    [new OptimizationPlan('PvP', 10, 20, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, true)],
     ['GAT', 'Imperial Grancor Maneuver', 'Wampanader', 'ABC', 'Titans'],
     DamageType.special
   ),
@@ -925,7 +934,10 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('PvP', 10, 10, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, true)],
     [],
     DamageType.special
-  ),  
+  ),
+  'KYLEKATARN': new CharacterSettings(
+    [new OptimizationPlan('Mothma Lead', 5, 0, 100, 0, 5, 5, 50, 0, 0, 5, 0, 0, 0, true)],
+  ),
   'KYLOREN': new CharacterSettings(
     [new OptimizationPlan('PvP', 0, 0, 100, 50, 0, 0, 25, 0, 25, 0, 0, 0, 0, true)],
     ['Old Kylo', 'zylo', 'FO']
@@ -981,6 +993,12 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'MAGNAGUARD': new CharacterSettings(
     [new OptimizationPlan('Balanced', 20, 20, 100, 25, 50, 25, 25, 0, 25, 12.5, 12.5, 0, 0, true)]
+  ),
+  'MARAJADE': new CharacterSettings(
+    [
+      new OptimizationPlan('PvP', 0, 10, 100, 25, 25, 0, 0, 25, 10, 0, 0, 0, 0, true),
+      new OptimizationPlan('Survivability', 0, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true),
+    ],
   ),
   'MAUL': new CharacterSettings(
     [optimizationStrategy["Special Damage with Potency"].rename('PvP')]
@@ -1092,8 +1110,8 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Machine Gun']
   ),
   'QIRA': new CharacterSettings(
-    [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP')],
-    ['solo']
+    [new OptimizationPlan('PvP', 0, 0, 100, 50, 10, 0, 50, 0, 25, 0, 0, 0, 0, true)],
+    ['solo'],
   ),
   'QUIGONJINN': new CharacterSettings(
     [
@@ -1333,15 +1351,18 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Murderbears']
   ),
   'YOUNGCHEWBACCA': new CharacterSettings(
-    [new OptimizationPlan('PvE', 50, 0, 100, 50, 0, 0, 25, 0, 50, 0, 0, 0, 0, true)],
-    ['Dwight', 'solo']
+    [
+      new OptimizationPlan('PvE', 50, 0, 100, 50, 0, 0, 25, 0, 50, 0, 0, 0, 0, true),
+      new OptimizationPlan('Tanky', 60, 0, 100, 0, 0, 10, 0, 0, 0, 5, 0, 0, 0, true),
+    ],
+    ['Dwight', 'solo'],
   ),
   'YOUNGHAN': new CharacterSettings(
     [
-      optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE'),
-      new OptimizationPlan('HAAT', 0, 0, 80, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, true)
+      new OptimizationPlan('PvP', 10, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0, true),
+      new OptimizationPlan('HAAT', 0, 0, 80, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, true),
     ],
-    ['YOLO', 'solo', 'Jim']
+    ['YOLO', 'solo', 'Jim'],
   ),
   'YOUNGLANDO': new CharacterSettings(
     [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE')],
