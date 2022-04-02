@@ -17,7 +17,6 @@ import {
   CHANGE_TARGET_STATS,
   TOGGLE_CHARACTER_EDIT_SORT_VIEW,
 } from "../actions/characterEdit";
-import { TOGGLE_KEEP_OLD_MODS } from "../actions/data";
 import { CHANGE_MODS_VIEW_OPTIONS } from "../actions/explore";
 import { CANCEL_OPTIMIZE_MODS, OPTIMIZE_MODS, UPDATE_PROGRESS } from "../actions/optimize";
 import { CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
@@ -34,7 +33,6 @@ import {
 // #region Reducera
 import * as AppReducers from "./app";
 import * as CharacterEditReducers from "./characterEdit";
-import * as DataReducers from "./data";
 import * as ExploreReducers from "./explore";
 import * as OptimizeReducers from "./optimize";
 import { changeModListFilter, changeOptimizerView, } from "./review";
@@ -46,7 +44,6 @@ import * as ReviewActions from "../actions/review";
 import * as StorageActions from "../actions/storage";
 import * as CharacterEditActions from "../actions/characterEdit";
 import * as ExploreActions from "../actions/explore";
-import * as DataActions from "../actions/data";
 import * as OptimizeActions from "../actions/optimize";
 // #endregion
 
