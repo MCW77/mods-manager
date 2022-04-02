@@ -6,7 +6,7 @@ import type { CharacterNames } from "../constants/characterSettings";
 
 export type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
 export type BaseCharacterAlignments =
-  'noforce'
+  | 'noforce'
   | 'neutral'
   | 'light'
   | 'dark'
@@ -28,6 +28,7 @@ export interface APIBaseCharacter {
   affiliation: APIBaseCharacterCategory[];
   species: APIBaseCharacterCategory[];
   profession: APIBaseCharacterCategory[];
+  other: APIBaseCharacterCategory[];
 }
 
 export interface BaseCharacter {
@@ -49,13 +50,27 @@ const API2BaseCharacterAlignment = {
 export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
   return groupByKey(
     baseCharacters.map(bc => {
-      const categories = bc.affiliation
+      let categories = bc.affiliation
         .concat(bc.profession)
         .concat(bc.role)
         .concat(bc.species)
+        .concat(bc.other ? bc.other : [])
         .map(category => category.display)
         .concat(bc.shipSlot !== 0 ? ['Crew Member'] : [])
       ;
+      let alignments: string[] = [];
+      if (bc.alignment === 2) {
+       alignments = ['light', 'lightside', 'ls'];
+       if (bc.other && bc.other.some(entry => entry.key === 'unaligned_force_user'))
+         alignments = alignments.concat(['lsufu'])
+      }
+      if (bc.alignment === 3){
+        alignments = ['dark', 'darkside', 'ds'];
+        if (bc.other && bc.other.some(entry => entry.key === 'unaligned_force_user'))
+          alignments = alignments.concat(['dsufu']);
+      }
+      categories = categories.concat(alignments);
+
       return {
         baseID: bc.baseId,
         name: bc.name,
