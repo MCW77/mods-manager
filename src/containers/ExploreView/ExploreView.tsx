@@ -4,8 +4,9 @@ import { ThunkDispatch } from "state/reducers/modsOptimizer";
 import { withTranslation, WithTranslation } from "react-i18next";
 
 import { Dictionary } from "lodash";
+import { groupBy } from "../../utils/groupBy"
 import memoizeOne from "memoize-one";
-import { orderBy, groupBy, mapValues, forEach } from "lodash-es";
+import { orderBy, mapValues, forEach } from "lodash-es";
 
 import "./ExploreView.css";
 
@@ -351,7 +352,7 @@ class ModsFilter {
       return groupBy(
         mods,
         (mod: Mod) => mod.slot + "-" + mod["set"] + "-" + mod.primaryStat.type
-      ) as Dictionary<Mod[]>;
+      );
     });
 
     if (this.isGroupingEnabled)
