@@ -4,11 +4,11 @@ import { ThunkDispatch } from 'state/reducers/modsOptimizer';
 
 import './Review.css';
 
-import { groupBy, flatten, uniq, toPairs } from "lodash-es";
+import { groupBy } from "../../utils/groupBy"
+import { flatten, mapValues, uniq } from "lodash-es";
 import collectByKey from "../../utils/collectByKey";
 import copyToClipboard from "../../utils/clipboard"
 import groupByKey from "../../utils/groupByKey";
-import { mapValues } from "lodash-es";
 
 import {
   changeModListFilter,
@@ -50,6 +50,8 @@ interface HUModsProfile {
   modIds: string[],
   target: string,
 }
+
+type ModsByCharacterNames = Record<CharacterNames, Mod[]>;
 
 type HUModsProfiles = HUModsProfile[];
 export interface HUModsMoveProfile {
@@ -768,14 +770,11 @@ const mapStateToProps = (state: IAppState) => {
     }
     // Filter out any mods that aren't moving
     const mods = tempAssignments.map(({ id, assignedMods }) => assignedMods.filter(mod => mod.characterID !== id));
-    type ModsByCharacterNames = {
-      [key in CharacterNames]: Mod[]
-    };
 
     const modsByCharacterNames: ModsByCharacterNames = groupBy(
       flatten(mods),
-      'characterID'
-    ) as ModsByCharacterNames;
+      (mod: Mod) => mod.characterID
+    );
 
     // Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
     let result: DisplayedMods = Object.values(mapValues<ModsByCharacterNames, DisplayedMod>(
@@ -843,10 +842,12 @@ const mapStateToProps = (state: IAppState) => {
 
       if (sortOptions.currentCharacter === filter.sort) {
         // collectByKey
-        const removedMods: {[key in CharacterNames]: Mod[]} = groupBy(
-          flatten(displayedMods.map(({ id, assignedMods }) => assignedMods.filter(mod => mod.characterID !== id))),
+        const removedMods: ModsByCharacterNames = groupBy(
+          flatten(displayedMods.map(
+            ({ id, assignedMods }) => assignedMods.filter(mod => mod.characterID !== id)
+          )),
           (mod: Mod) => mod.characterID
-        ) as {[key in CharacterNames]: Mod[]};
+        );
 
         tags = uniq(flatten(
           (Object.keys(removedMods) as CharacterNames[]).map(
