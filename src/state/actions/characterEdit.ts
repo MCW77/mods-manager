@@ -21,7 +21,7 @@ import { SelectedCharacters } from "domain/SelectedCharacters";
 import { SetStats } from "domain/Stats";
 import { TargetStat } from "domain/TargetStat";
 
-const defaultTemplates = groupByKey(templatesJSON as CharacterTemplates, ({ name }) => name);
+const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ name }) => name);
 
 export const CHANGE_CHARACTER_EDIT_MODE = 'CHANGE_CHARACTER_EDIT_MODE';
 export const CHANGE_CHARACTER_FILTER = 'CHANGE_CHARACTER_FILTER';
