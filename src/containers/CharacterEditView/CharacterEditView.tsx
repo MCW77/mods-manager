@@ -77,6 +77,7 @@ import defaultTemplates from "../../constants/characterTemplates.json";
 import {
   CharacterTemplate,
   CharacterTemplates,
+  FlatCharacterTemplate,
 } from "domain/CharacterTemplates";
 import { SelectedCharacters } from "domain/SelectedCharacters";
 
@@ -272,7 +273,7 @@ class CharacterEditView extends PureComponent<Props> {
                     try {
                       const templatesObject = JSON.parse(templates);
                       const templatesDeserialized = templatesObject.map(
-                        (t) => ({
+                        (t: FlatCharacterTemplate) => ({
                           name: t.name,
                           selectedCharacters: t.selectedCharacters.map(
                             ({

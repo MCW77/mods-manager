@@ -1,4 +1,4 @@
-import { IOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
+import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
 
 export const DamageType = {
   'physical': 1,
@@ -7,7 +7,7 @@ export const DamageType = {
 } as const;
 
 export interface ICharacterSettings {
-  targets: IOptimizationPlan[];
+  targets: FlatOptimizationPlan[];
   extraTags: string[];
   damageType: number;
 }
@@ -44,7 +44,7 @@ export class CharacterSettings implements ICharacterSettings {
   static deserialize(flatSettings: ICharacterSettings) {
     if (flatSettings) {
       return new CharacterSettings(
-        flatSettings.targets.map(target => OptimizationPlan.deserialize(target, flatSettings.damageType)),
+        flatSettings.targets.map(target => OptimizationPlan.deserialize(target)),
         flatSettings.extraTags,
         flatSettings.damageType
       );
