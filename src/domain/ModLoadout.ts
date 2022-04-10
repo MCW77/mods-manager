@@ -250,4 +250,4 @@ class ModLoadout implements SlotIndexer{
 
 }
 
-export default ModLoadout;
+export { ModLoadout };

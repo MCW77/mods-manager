@@ -28,7 +28,7 @@ import { DOMContent } from 'components/types';
 import { IAppState } from 'state/storage';
 import { MissedGoals } from 'domain/PlayerProfile';
 import { Mod } from 'domain/Mod';
-import ModLoadout from "../../domain/ModLoadout";
+import { ModLoadout } from "../../domain/ModLoadout";
 import type * as ModTypes from "../../domain/types/ModTypes";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 
