@@ -5,7 +5,7 @@ import "./ModLoadoutView.css";
 import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { Character } from "domain/Character";
-import ModLoadout from "domain/ModLoadout";
+import { ModLoadout } from "domain/ModLoadout";
 import { OptimizationPlan } from "domain/OptimizationPlan";
 
 import ModImage from "../ModImage/ModImage";

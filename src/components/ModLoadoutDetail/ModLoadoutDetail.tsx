@@ -6,7 +6,7 @@ import { mapValues } from "lodash-es";
 
 import { Character } from "../../domain/Character";
 import { CharacterSummaryStats as CSStats } from "../../domain/Stats";
-import ModLoadout from "../../domain/ModLoadout";
+import { ModLoadout } from "../../domain/ModLoadout";
 import { OptimizationPlan} from "../../domain/OptimizationPlan";
 
 import ModLoadoutView from "../ModLoadoutView/ModLoadoutView";
