@@ -805,14 +805,14 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'HANSOLO': new CharacterSettings(
     [
-      new OptimizationPlan('Fast Han', 0, 0, 100, 100, 25, 0, 50, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('Fast Han', 0, 0, 100, 100, 10, 0, 25, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('Slow Han', 0, 0, 0, 100, 25, 0, 50, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('Non-relic', 0, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0, true),
       new OptimizationPlan('Chex Mix', 0, 0, 0, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, true, {}, {},
-        [new TargetStat('Speed', undefined, 170, 174)]
-      )
+        [new TargetStat('Speed', undefined, 170, 174)],
+      ),
     ],
-    ['Raid Han', 'rHan', 'OG Han', 'Zolo', 'Chex Mix', 'Titans']
+    ['Raid Han', 'rHan', 'OG Han', 'Zolo', 'Chex Mix', 'Titans'],
   ),
   'HERASYNDULLAS3': new CharacterSettings(
     [optimizationStrategy["Speedy debuffer"].rename('Speed')]
@@ -1234,7 +1234,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['SM']
   ),
   'SITHPALPATINE': new CharacterSettings(
-    [new OptimizationPlan('PvP', 20, 5, 100, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, true)],
+    [new OptimizationPlan('PvP', 40, 5, 100, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, true)],
     ['SEE'],
     DamageType.special
   ),  
