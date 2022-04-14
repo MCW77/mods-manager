@@ -49,6 +49,7 @@ type GIMO2DisplayStatNamesMap = Readonly<{
 
 
 export abstract class Stat {
+
   static display2CSGIMOStatNamesMap: Display2CSBasicStatNamesMap = Object.freeze({
     'Health': ['Health'],
     'Protection': ['Protection'],
@@ -116,12 +117,9 @@ export abstract class Stat {
   ];
 
   #displayValue: string = '0';
-//  displayModifier: StatTypes.Modifier;
   abstract type: AllGIMOStatNames;
-//  displayType: StatTypes.AnyStat;
   protected stringValue: string = '0';
   private _value: Big = Big(0);
-
   displayModifier: '' | '%' = '';
   public get bigValue(): Big {
     return this._value;
@@ -134,7 +132,7 @@ export abstract class Stat {
     this.stringValue = this._value.toString();
     this.updateDisplayValue();
   }
-  isPercentVersion: boolean = false;  
+  isPercentVersion: boolean = false;
 
   constructor(value: string) {
     this.value = Number(value);
@@ -216,7 +214,6 @@ export abstract class Stat {
       return 0;
     }
 
-    
     type OptStats = Readonly<CharacterStatNames.WithoutCC[]> | Readonly<"Critical Chance"[]>;
 
     const statTypes: OptStats = 'Physical Critical Chance' === this.getDisplayType()
@@ -240,30 +237,4 @@ export abstract class Stat {
       ).reduce((a, b) => a + b, 0);
     }
   }
-
-  /**
-   * Extract the type and value of this stat for serialization
-   */
-
-/*
-  abstract serialize():
-   [PrimaryStats.GIMOStatNames, string] |
-   [SecondaryStats.GIMOStatNames, string, SecondaryStats.Rolls] |
-   [SetStats.GIMOStatNames, string]
-*/   
-/*
-  serialize(): [T, string, StatTypes.Rolls] {
-    const percent = (
-        this.isPercent || !Stat.mixedTypes.includes(this.displayType)
-      ) &&
-        !this.type.includes('%')
-      ?
-        '%'
-      :
-        '';
-
-    return [this.type, `+${this.rawValue}${percent}`, this.rolls];
-  }
-*/    
-
 }

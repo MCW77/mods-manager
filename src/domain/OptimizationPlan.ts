@@ -8,13 +8,6 @@ import { CharacterNames } from "constants/characterSettings";
 import { PrimaryStats } from "./Stats";
 import { SetRestrictions } from "state/storage";
 
-type IGIMOStatTypesValues = {
-  [key in StatTypes.GIMOStatType]: number;
-}
-
-interface ggg extends IGIMOStatTypesValues {
-};
-
 export type PrimaryStatRestrictions = {
   [key in ModTypes.VariablePrimarySlots]: PrimaryStats.GIMOStatNames 
 }
@@ -360,36 +353,6 @@ export class OptimizationPlan {
   hasRestrictions() {
     return Object.values(this.primaryStatRestrictions).filter(primary => !!primary).length ||
       !areObjectsEquivalent({}, this.setRestrictions);
-  }
-
-  /**
-   * Returns true if every raw value in this plan is an integer between -100 and 100. Otherwise, returns false
-   *
-   * @returns boolean
-   */
-  isBasic() {
-    return OptimizationPlan.valueIsBasic(this.rawHealth) &&
-      OptimizationPlan.valueIsBasic(this.rawProtection) &&
-      OptimizationPlan.valueIsBasic(this.rawSpeed) &&
-      OptimizationPlan.valueIsBasic(this.rawCritDmg) &&
-      OptimizationPlan.valueIsBasic(this.rawPotency) &&
-      OptimizationPlan.valueIsBasic(this.rawTenacity) &&
-      OptimizationPlan.valueIsBasic(this.rawPhysDmg) &&
-      OptimizationPlan.valueIsBasic(this.rawSpecDmg) &&
-      OptimizationPlan.valueIsBasic(this.rawCritChance) &&
-      OptimizationPlan.valueIsBasic(this.rawArmor + this.rawResistance) &&
-      this.rawArmor === this.rawResistance &&
-      OptimizationPlan.valueIsBasic(this.rawAccuracy) &&
-      OptimizationPlan.valueIsBasic(this.rawCritAvoid);
-  }
-
-  /**
-   * Checks whether a value is an integer between -100 and 100.
-   *
-   * @returns boolean
-   */
-  static valueIsBasic(val: number) {
-    return val >= -100 && val <= 100 && Number.isInteger(val);
   }
 
   static shouldUpgradeMods(target: OptimizationPlan) {

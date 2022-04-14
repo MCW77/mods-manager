@@ -56,21 +56,6 @@ export class SecondaryStat extends Stats.Stat {
     'Speed': 'Speed',
   }
 
-  static GIMO2HUStatNamesMap: {[key in GIMOStatNames]: HUStatNames} = {
-    'Critical Chance %': 'Crit Chance %',
-    'Defense': 'Defense',
-    'Defense %': 'Defense %',
-    'Health': 'Health',
-    'Health %': 'Health %',
-    'Offense': 'Offense',
-    'Offense %': 'Offense %',
-    'Potency %': 'Potency %',
-    'Protection': 'Protection',
-    'Protection %': 'Protection %',
-    'Tenacity %': 'Resistance %',
-    'Speed': 'Speed',
-  }
-
   static upgradeFactors: {[key in GIMOStatNames]: number} = {
     'Critical Chance %': 1.045,
     'Defense': 1.63,

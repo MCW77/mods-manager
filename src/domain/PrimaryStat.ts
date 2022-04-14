@@ -54,20 +54,6 @@ export class PrimaryStat extends Stats.Stat {
     'Speed': 'Speed',
   }
 
-  static GIMO2HUStatNamesMap: {[key in GIMOStatNames]: HUStatNames} = {
-    'Accuracy %': 'Accuracy %',
-    'Critical Avoidance %': 'Crit Avoidance %',
-    'Critical Chance %': 'Crit Chance %',
-    'Critical Damage %': 'Crit Damage %',
-    'Defense %': 'Defense %',
-    'Health %': 'Health %',
-    'Offense %': 'Offense %',
-    'Potency %': 'Potency %',
-    'Protection %': 'Protection %',
-    'Tenacity %': 'Resistance %',
-    'Speed': 'Speed',
-  }
-
   static GIMO2DisplayStatNamesMap: {[key in GIMOStatNames]: StatTypes.DisplayStatNames} = {
     'Accuracy %': 'Accuracy',
     'Critical Avoidance %': 'Critical Avoidance',

@@ -5,7 +5,6 @@ import './CharacterAvatar.css';
 
 import { BaseCharacter, BaseCharactersById, defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
-import { CharacterNames } from '../../constants/characterSettings';
 
 class CharacterAvatar extends React.PureComponent<Props> {
   render(): React.ReactNode {
