@@ -1,4 +1,3 @@
-import { Character } from "./Character";
 import { Stats } from "./Stats";
 
 // #region GIMOStatNames
@@ -50,28 +49,6 @@ export class SetStat extends Stats.Stat {
     'Speedpercentadditive': 'Speed %',
   }
 
-  static GIMO2HUStatNamesMap: {[key in GIMOStatNames]: HUStatNames} = {
-    'Critical Chance %': 'Crit Chance',
-    'Critical Damage %': 'Crit Damage',
-    'Defense %': 'Defense',
-    'Health %': 'Health',
-    'Offense %': 'Offense',
-    'Potency %': 'Potency',
-    'Tenacity %': 'Resistance',
-    'Speed %': 'Speedpercentadditive',
-  }
-
-  static HU2DisplayStatNamesMap: {[key in HUStatNames]: string} = {
-    'Crit Chance': 'CritChance',
-    'Crit Damage': 'CritDamage',
-    'Defense': 'Defense',
-    'Health': 'Health',
-    'Offense': 'Offense',
-    'Potency': 'Potency',
-    'Resistance': 'Tenacity',
-    'Speedpercentadditive': 'Speed',
-  }
-  
   type: GIMOStatNames;
 
   constructor(type: GIMOStatNames, value: string) {

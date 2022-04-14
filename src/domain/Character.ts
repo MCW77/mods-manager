@@ -42,17 +42,6 @@ export class Character implements ICharacter {
   }
 
   /**
-   * Return a shallow copy of this character
-   */
-  clone() {
-    return new Character(
-      this.baseID,
-      Object.assign({}, this.playerValues),
-      Object.assign({}, this.optimizerSettings)
-    );
-  }
-
-  /**
    * Create a new Character object that matches this one, but with playerValues overridden
    * @param playerValues
    */
