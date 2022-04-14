@@ -137,45 +137,50 @@ function progressMessage(character, step, progress = 100) {
  * The reason I need to do this here is because Web Workers exist in a totally separate context - I can't load the   *
  * files that were organized in the build step, and can't load anything not accessible via the domain.               *
  ********************************************************************************************************************/
+
 const statTypeMap = Object.freeze({
-  'Health': ['health'],
-  'Protection': ['protection'],
-  'Speed': ['speed'],
-  'Critical Damage': ['critDmg'],
-  'Potency': ['potency'],
-  'Tenacity': ['tenacity'],
-  'Offense': ['physDmg', 'specDmg'],
-  'Physical Damage': ['physDmg'],
-  'Special Damage': ['specDmg'],
-  'Critical Chance': ['physCritChance', 'specCritChance'],
-  'Physical Critical Chance': ['physCritChance'],
-  'Special Critical Chance': ['specCritChance'],
-  'Defense': ['armor', 'resistance'],
-  'Armor': ['armor'],
-  'Resistance': ['resistance'],
-  'Accuracy': ['accuracy'],
-  'Critical Avoidance': ['critAvoid']
+  'Health': ['Health'],
+  'Protection': ['Protection'],
+  'Speed': ['Speed'],
+  'Critical Damage': ['Critical Damage %'],
+  'Potency': ['Potency %'],
+  'Tenacity': ['Tenacity %'],
+  'Offense': ['Physical Damage', 'Special Damage'],
+  'Physical Damage': ['Physical Damage'],
+  'Special Damage': ['Special Damage'],
+  'Critical Chance': ['Physical Critical Chance %', 'Special Critical Chance %'],
+  'Physical Critical Chance': ['Physical Critical Chance %'],
+  'Special Critical Chance': ['Special Critical Chance %'],
+  'Defense': ['Armor', 'Resistance'],
+  'Armor': ['Armor'],
+  'Resistance': ['Resistance'],
+  'Accuracy': ['Accuracy %'],
+  'Critical Avoidance': ['Critical Avoidance %'],
+  'Effective Health (physical)': [],
+  'Effective Health (special)': [],
+  'Average Damage (physical)': [],
+  'Average Damage (special)': [],
 });
 
 const statDisplayNames = Object.freeze({
-  'health': 'Health',
-  'protection': 'Protection',
-  'speed': 'Speed',
-  'critDmg': 'Critical Damage',
-  'potency': 'Potency',
-  'tenacity': 'Tenacity',
-  'physDmg': 'Physical Damage',
-  'specDmg': 'Special Damage',
-  'critChance': 'Critical Chance',
-  'physCritChance': 'Physical Critical Chance',
-  'specCritChance': 'Special Critical Chance',
-  'defense': 'Defense',
-  'armor': 'Armor',
-  'resistance': 'Resistance',
-  'accuracy': 'Accuracy',
-  'critAvoid': 'Critical Avoidance',
-  'physCritAvoid': 'Physical Critical Avoidance',
-  'specCritAvoid': 'Special Critical Avoidance'
+  'Health': 'Health',
+  'Protection': 'Protection',
+  'Speed': 'Speed',
+  'Critical Damage %': 'Critical Damage',
+  'Potency %': 'Potency',
+  'Tenacity %': 'Tenacity',
+  'Physical Damage': 'Physical Damage',
+  'Special Damage': 'Special Damage',
+  'Critical Chance': 'Critical Chance',
+  'Physical Critical Chance %': 'Physical Critical Chance',
+  'Special Critical Chance %': 'Special Critical Chance',
+  'Defense': 'Defense',
+  'Armor': 'Armor',
+  'Resistance': 'Resistance',
+  'Accuracy %': 'Accuracy',
+  'Critical Avoidance %': 'Critical Avoidance',
+  'Physical Critical Avoidance': 'Physical Critical Avoidance',
+  'Special Critical Avoidance': 'Special Critical Avoidance'
 });
 
 const wholeStatTypes = Object.freeze(['Health',
@@ -348,20 +353,20 @@ const statSlicingUpgradeFactors = Object.freeze({
 });
 
 const statWeights = Object.freeze({
-  health: 2000,
-  protection: 4000,
-  speed: 20,
-  critDmg: 30,
-  potency: 15,
-  tenacity: 15,
-  physDmg: 225,
-  specDmg: 450,
-  offense: 225,
-  critChance: 10,
-  armor: 33,
-  resistance: 33,
-  accuracy: 10,
-  critAvoid: 10
+  Health: 2000,
+  Protection: 4000,
+  Speed: 20,
+  'Critical Damage %': 30,
+  'Potency %': 15,
+  'Tenacity %': 15,
+  'Physical Damage': 225,
+  'Special Damage': 450,
+  'Offense': 225,
+  'Critical Chance': 10,
+  Armor: 33,
+  Resistance: 33,
+  'Accuracy %': 10,
+  'Critical Avoidance %': 10
 });
 
 /**
@@ -955,7 +960,7 @@ function scoreStat(stat, target) {
   // Because Optimization Plans treat all critical chance the same, we can't break it into physical and special crit
   // chance for scoring. Catch this edge case so that we can properly value crit chance
   //console.log(`951: stat.displayType: ${stat.displayType}`);
-  const targetProperties = ['Critical Chance', 'Physical Critical Chance'].includes(stat.displayType) ? ['critChance'] : statTypeMap[stat.displayType];
+  const targetProperties = ['Critical Chance', 'Physical Critical Chance'].includes(stat.displayType) ? ['Critical Chance'] : statTypeMap[stat.displayType];
   //console.log(`953: targetProperties: ${targetProperties}`);
   return targetProperties.reduce((acc, targetProperty) =>
     target[targetProperty] ? acc + target[targetProperty] * stat.value : acc

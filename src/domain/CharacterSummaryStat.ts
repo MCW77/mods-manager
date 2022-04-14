@@ -1,28 +1,8 @@
 import { Stats } from "./Stats";
+import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
+export type GIMOStatNames =  CharacterStatNames.All | CalculatedStatNames;
 
-export type GIMONeutralStats = 'Speed' | 'Potency %' | 'Tenacity %';
-// #region GIMOOffensiveStats
-export type GIMOOffensiveStats =
-  | 'Accuracy %'
-  | 'Critical Damage %'
-  | 'Physical Damage'
-  | 'Special Damage'
-  | 'Physical Critical Chance %'
-  | 'Special Critical Chance %'
-;
-// #endregion
-
-// #region GIMODefensiveStats
-export type GIMODefensiveStats =
-  | 'Critical Avoidance %'
-  | 'Health'
-  | 'Protection'
-  | 'Armor'
-  | 'Resistance'
-;
-// #endregion
-export type GIMOStatNames = GIMONeutralStats | GIMOOffensiveStats | GIMODefensiveStats;
 // #region DisplayStatNames
 export type DisplayStatNames = 
   | 'Speed'
@@ -46,89 +26,16 @@ export type DisplayStatNames =
 ;
 // #endregion
 
-// #region InternalStatNames
-type InternalStatNames =
-  | 'speed'
-  | 'potency'
-  | 'tenacity'
-  | 'accuracy'
-  | 'critDmg'
-  | 'physDmg'
-  | 'specDmg' 
-  | 'physCritChance'
-  | 'specCritChance' 
-  | 'critAvoid'
-  | 'health'
-  | 'protection'
-  | 'armor'
-  | 'resistance'
-  | 'physEffectiveHealth'
-  | 'specEffectiveHealth'
-  | 'physAverageDamage'
-  | 'specAverageDamage'
-
+// #region CalculatedStatNames
+export type CalculatedStatNames =
+  | 'Effective Health (physical)'
+  | 'Effective Health (special)'
+  | 'Average Damage (physical)'
+  | 'Average Damage (special)'
 ;  
 //#endregion
 
-type StatTypeMap = {
-  [stat in Stats.NonCalculatedGIMOStatNames]: GIMOStatNames[]
-}
-
-type Display2InternalStatNamesMap = Readonly<{
-  [key in DisplayStatNames]: Readonly<InternalStatNames[]>;
-}>
-
 export class CharacterSummaryStat extends Stats.Stat {
-
-
-  static statTypeMap: Readonly<StatTypeMap> = {
-    'Health': ['Health'],
-    'Health %': ['Health'],
-    'Protection': ['Protection'],
-    'Protection %': ['Protection'],
-    'Speed': ['Speed'],
-    'Speed %': ['Speed'],
-    'Critical Damage %': ['Critical Damage %'],
-    'Potency %': ['Potency %'],
-    'Tenacity %': ['Tenacity %'],
-    'Offense': ['Physical Damage', 'Special Damage'],
-    'Offense %': ['Physical Damage', 'Special Damage'],
-//    'physDamage': ['physDamage'],
-//    'specDamage': ['specDamage'],
-    'Critical Chance %': ['Physical Critical Chance %', 'Special Critical Chance %'],
-//    'physCritChanceP': ['physCritChanceP'],
-//    'specCritChanceP': ['specCritChanceP'],
-    'Defense': ['Armor', 'Resistance'],
-    'Defense %': ['Armor', 'Resistance'],
-//    'armorP': ['armor'],
-//    'resistanceP': ['resistanceP'],
-    'Accuracy %': ['Accuracy %'],
-    'Critical Avoidance %': ['Critical Avoidance %']
-  };
-
-  static csDisplay2InternalStatNamesMap: Display2InternalStatNamesMap = Object.freeze({
-    'Health': ['health'],
-    'Protection': ['protection'],
-    'Speed': ['speed'],
-    'Critical Damage': ['critDmg'],
-    'Potency': ['potency'],
-    'Tenacity': ['tenacity'],
-    'Offense': ['physDmg', 'specDmg'],
-    'Physical Damage': ['physDmg'],
-    'Special Damage': ['specDmg'],
-    'Critical Chance': ['physCritChance', 'specCritChance'],
-    'Physical Critical Chance': ['physCritChance'],
-    'Special Critical Chance': ['specCritChance'],
-    'Defense': ['armor', 'resistance'],
-    'Armor': ['armor'],
-    'Resistance': ['resistance'],
-    'Accuracy': ['accuracy'],
-    'Critical Avoidance': ['critAvoid'],
-    'Effective Health (physical)': ['physEffectiveHealth'],
-    'Effective Health (special)': ['specEffectiveHealth'],
-    'Average Damage (physical)': ['physAverageDamage'],
-    'Average Damage (special)': ['specAverageDamage'],
-  } as const);
 
   static csGIMO2DisplayStatNamesMap: {[key in GIMOStatNames]: DisplayStatNames} = {
     'Health': 'Health',
@@ -144,7 +51,11 @@ export class CharacterSummaryStat extends Stats.Stat {
     'Armor': 'Armor',
     'Resistance': 'Resistance',
     'Accuracy %': 'Accuracy',
-    'Critical Avoidance %': 'Critical Avoidance'
+    'Critical Avoidance %': 'Critical Avoidance',
+    'Effective Health (physical)': 'Effective Health (physical)',
+    'Effective Health (special)': 'Effective Health (special)',
+    'Average Damage (physical)': 'Average Damage (physical)',
+    'Average Damage (special)': 'Average Damage (special)',
   };
 
   type: GIMOStatNames;

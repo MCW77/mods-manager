@@ -1,8 +1,7 @@
-import type * as StatTypes from "./types/StatTypes";
-import * as StatConsts from "./constants/StatConsts";
+import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 import { CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats} from "./Stats";
 import { Character } from "./Character";
-import { OptimizationPlan} from "./OptimizationPlan";
+import { OptimizationPlan } from "./OptimizationPlan";
 
 import Big from "big.js";
 
@@ -32,85 +31,48 @@ export type DisplayStatNames =
   'Armor' |
   'Resistance' |
   'Accuracy' |
-  'Critical Avoidance'
+  'Critical Avoidance' |
+  'Effective Health (physical)' |
+  'Effective Health (special)' |
+  'Average Damage (physical)' |
+  'Average Damage (special)'
 ;
 // #endregion
 
-// #region InternalStatNamesWithoutCC
-type InternalStatNamesWithoutCC =
-'health' |
-'protection' |
-'speed' |
-'critDmg' |
-'potency' |
-'tenacity' |
-'physDmg' |
-'specDmg' |
-'defense' |
-'armor' |
-'resistance' |
-'accuracy' |
-'critAvoid'
-;
-//#endregion
-
-export type InternalStatNames = InternalStatNamesWithoutCC | 'specCritChance' | 'physCritChance';
-
-type Display2InternalStatNamesMap = Readonly<{
-  [key in DisplayStatNames]: Readonly<InternalStatNames[]>;
-}>
-
-type Internal2DisplayStatNamesMap = Readonly<{
-  [key in InternalStatNames]: DisplayStatNames;
+type Display2CSBasicStatNamesMap = Readonly<{
+  [key in DisplayStatNames]: Readonly<CharacterStatNames.All[]>;
 }>
 
 type GIMO2DisplayStatNamesMap = Readonly<{
   [key in AllGIMOStatNames]: DisplayStatNames;
 }>
 
-type Display2GIMOStatNamesMap = Readonly<{
-  [key in DisplayStatNames]: AllGIMOStatNames;
-}>
 
 export abstract class Stat {
-  static display2InternalStatNamesMap: Display2InternalStatNamesMap = Object.freeze({
-    'Health': ['health'],
-    'Protection': ['protection'],
-    'Speed': ['speed'],
-    'Critical Damage': ['critDmg'],
-    'Potency': ['potency'],
-    'Tenacity': ['tenacity'],
-    'Offense': ['physDmg', 'specDmg'],
-    'Physical Damage': ['physDmg'],
-    'Special Damage': ['specDmg'],
-    'Critical Chance': ['physCritChance', 'specCritChance'],
-    'Physical Critical Chance': ['physCritChance'],
-    'Special Critical Chance': ['specCritChance'],
-    'Defense': ['armor', 'resistance'],
-    'Armor': ['armor'],
-    'Resistance': ['resistance'],
-    'Accuracy': ['accuracy'],
-    'Critical Avoidance': ['critAvoid']
+  static display2CSGIMOStatNamesMap: Display2CSBasicStatNamesMap = Object.freeze({
+    'Health': ['Health'],
+    'Protection': ['Protection'],
+    'Speed': ['Speed'],
+    'Critical Damage': ['Critical Damage %'],
+    'Potency': ['Potency %'],
+    'Tenacity': ['Tenacity %'],
+    'Offense': ['Physical Damage', 'Special Damage'],
+    'Physical Damage': ['Physical Damage'],
+    'Special Damage': ['Special Damage'],
+    'Critical Chance': ['Physical Critical Chance %', 'Special Critical Chance %'],
+    'Physical Critical Chance': ['Physical Critical Chance %'],
+    'Special Critical Chance': ['Special Critical Chance %'],
+    'Defense': ['Armor', 'Resistance'],
+    'Armor': ['Armor'],
+    'Resistance': ['Resistance'],
+    'Accuracy': ['Accuracy %'],
+    'Critical Avoidance': ['Critical Avoidance %'],
+    'Effective Health (physical)': [],
+    'Effective Health (special)': [],
+    'Average Damage (physical)': [],
+    'Average Damage (special)': [],
   } as const);
-  
-  static internal2DisplayStatNamesMap: Internal2DisplayStatNamesMap = {
-    'health': 'Health',
-    'protection': 'Protection',
-    'speed': 'Speed',
-    'critDmg': 'Critical Damage',
-    'potency': 'Potency',
-    'tenacity': 'Tenacity',
-    'physDmg': 'Physical Damage',
-    'specDmg': 'Special Damage',
-    'physCritChance': 'Physical Critical Chance',
-    'specCritChance': 'Special Critical Chance',
-    'defense': 'Defense',
-    'armor': 'Armor',
-    'resistance': 'Resistance',
-    'accuracy': 'Accuracy',
-    'critAvoid': 'Critical Avoidance',
-  };
-  // A map from the internal name to a more human-friendly name for each stat type
+
   static gimo2DisplayStatNamesMap: GIMO2DisplayStatNamesMap = {
     'Health': 'Health',
     'Health %': 'Health',
@@ -130,30 +92,14 @@ export abstract class Stat {
     'Defense %': 'Defense',
     'Offense': 'Offense',
     'Offense %': 'Offense',
-    'Armor %': 'Armor',
-    'Resistance %': 'Resistance',
+    'Armor': 'Armor',
+    'Resistance': 'Resistance',
     'Accuracy %': 'Accuracy',
-    'Critical Avoidance %': 'Critical Avoidance'
-  };
-
-  static display2GIMOStatNamesMap: Display2GIMOStatNamesMap = {
-    'Health': 'Health',
-    'Protection': 'Protection',
-    'Speed': 'Speed',
-    'Critical Damage': 'Critical Damage %',
-    'Potency': 'Potency %',
-    'Tenacity': 'Tenacity %',
-    'Physical Damage': 'Physical Damage',
-    'Special Damage': 'Special Damage',
-    'Critical Chance': 'Critical Chance %',
-    'Physical Critical Chance': 'Physical Critical Chance %',
-    'Special Critical Chance': 'Special Critical Chance %',
-    'Defense': 'Defense',
-    'Offense': 'Offense',
-    'Armor': 'Armor %',
-    'Resistance': 'Resistance %',
-    'Accuracy': 'Accuracy %',
-    'Critical Avoidance': 'Critical Avoidance %',
+    'Critical Avoidance %': 'Critical Avoidance',
+    'Effective Health (physical)': 'Effective Health (physical)',
+    'Effective Health (special)': 'Effective Health (special)',
+    'Average Damage (physical)': 'Average Damage (physical)',
+    'Average Damage (special)': 'Average Damage (special)',    
   };
 
   // A list of stat types that can be either a flat value or a percent
@@ -191,13 +137,7 @@ export abstract class Stat {
   isPercentVersion: boolean = false;  
 
   constructor(value: string) {
-//    this.displayModifier = this.type.endsWith('%') || value.endsWith('%') ? '%' : '';
-//    this.displayType = <StatTypes.AnyStat>(type.endsWith('%') ? type.substr(0, type.length - 1).trim() : type);
-//    this.rawValue = value.replace(/[+%]/g, '');
-//    this.rawValue = value;
     this.value = Number(value);
-//    this.isPercent = '%' === this.displayModifier && Stat.mixedTypes.includes(this.displayType);
-
   }
 
   abstract clone(): this;
@@ -244,11 +184,11 @@ export abstract class Stat {
    * @returns {Array<Stat>}
    */
   getFlatValuesForCharacter(character: Character) {
-    const statPropertyNames = Stat.display2InternalStatNamesMap[this.getDisplayType()];
+    const statPropertyNames = Stat.display2CSGIMOStatNamesMap[this.getDisplayType()];
 
     return statPropertyNames.map((statName) => {
-      const displayName = Stat.internal2DisplayStatNamesMap[statName];
-      const statType: AllGIMOStatNames = (Stat.mixedTypes.includes(displayName) ? displayName : `${displayName} %`) as AllGIMOStatNames;
+      const displayName = Stat.gimo2DisplayStatNamesMap[statName];
+      const statType: CharacterStatNames.All = (Stat.mixedTypes.includes(displayName) ? displayName : `${displayName} %`) as CharacterStatNames.All;
 
       
       if (this.isPercentVersion && character.playerValues?.baseStats) {
@@ -277,25 +217,25 @@ export abstract class Stat {
     }
 
     
-    type OptStats = Readonly<StatTypes.GIMOStatTypeWithoutCC[]> | Readonly<"critChance"[]>;
+    type OptStats = Readonly<CharacterStatNames.WithoutCC[]> | Readonly<"Critical Chance"[]>;
 
     const statTypes: OptStats = 'Physical Critical Chance' === this.getDisplayType()
     ?
-      ['critChance'] 
+      ['Critical Chance'] 
     :
-      StatConsts.statTypeMap[this.getDisplayType()] as StatTypes.GIMOStatTypeWithoutCC[];
+      Stat.display2CSGIMOStatNamesMap[this.getDisplayType()] as CharacterStatNames.WithoutCC[];
 
     if (!statTypes) {
       return 0;
     }
 
     if (this.isPercentVersion) {
-      return statTypes.map((statType: StatTypes.GIMOStatTypeWithoutCC | 'critChance') =>
+      return statTypes.map((statType: CharacterStatNames.WithoutCC | 'Critical Chance') =>
         target[statType] *
-        Math.floor(character!.playerValues.baseStats![statType as StatTypes.GIMOStatTypeWithoutCC] * this.value / 100)
+        Math.floor(character!.playerValues.baseStats![statType as CharacterStatNames.All] * this.value / 100)
       ).reduce((a, b) => a + b, 0);
     } else {
-      return statTypes.map((statType: StatTypes.GIMOStatTypeWithoutCC | 'critChance')  =>
+      return statTypes.map((statType: CharacterStatNames.WithoutCC | 'Critical Chance')  =>
         this._value.mul(target[statType]).toNumber()
       ).reduce((a, b) => a + b, 0);
     }

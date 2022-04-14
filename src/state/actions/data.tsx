@@ -4,7 +4,6 @@ import { mapValues } from "lodash-es";
 
 import { Mod } from "../../domain/Mod";
 import { BaseCharactersById, APIBaseCharacter, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
-import { IHUPlayerValues, PlayerValues, PlayerValuesByCharacter } from "../../domain/PlayerValues";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import cleanAllyCode from "../../utils/cleanAllyCode";
 import { hideFlash, setIsBusy, showError, showFlash, hideModal, showModal, updateProfile } from "./app";
@@ -21,6 +20,9 @@ import { changeOptimizerView } from "./review";
 import { HUFlatMod } from 'domain/types/ModTypes';
 import { Dictionary } from "lodash";
 import { HUModsMoveProfile, HUProfileCreationData } from "containers/Review/Review";
+import * as DTOs from "../../modules/profilesManagement/dtos";
+import * as Mappers from "../../modules/profilesManagement/mappers";
+import { PlayerValuesByCharacter } from "../../modules/profilesManagement/domain/PlayerValues";
 
 const UseCaseModesObj = {
   GAAndTW: '',
@@ -285,7 +287,7 @@ function updatePlayerData(
 
       // Collect the new character objects by combining the default characters with the player values
       // and the optimizer settings from the current profile.
-      const newCharacters = mapValues<PlayerValuesByCharacter, Character>(fetchData.profile.playerValues, (playerValues: PlayerValues, id: string):Character => {
+      const newCharacters = mapValues<PlayerValuesByCharacter, Character>(fetchData.profile.playerValues, (playerValues: DTOs.GIMO.PlayerValuesDTO, id: string):Character => {
         const Id: CharacterNames = id as CharacterNames;
         if (oldProfile.characters.hasOwnProperty(Id)) {
           return oldProfile.characters[Id]
@@ -533,8 +535,8 @@ function fetchProfile(allyCode: string, sessionId: string | null) {
     const profileMods = playerProfile.mods.map(Mod.fromHotUtils);
 
     // Convert each character to a PlayerValues object
-    const profileValues: PlayerValuesByCharacter = playerProfile.characters.reduce((characters: PlayerValuesByCharacter, character: IHUPlayerValues) => {
-      characters[character.baseId] = PlayerValues.fromHotUtils(character);
+    const profileValues: PlayerValuesByCharacter = playerProfile.characters.reduce((characters: PlayerValuesByCharacter, character: DTOs.HU.HUPlayerValuesDTO) => {
+      characters[character.baseId] = Mappers.HU.HUPlayerValuesMapper.fromHU(character);
       return characters;
     }, {} as PlayerValuesByCharacter);
 
