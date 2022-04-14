@@ -6,6 +6,7 @@ import * as ModTypes from "./types/ModTypes";
 import * as ModConsts from "./constants/ModConsts";
 import SetBonus from "./SetBonus";
 import { Stats, CharacterSummaryStats as CSStats, SetStats } from "./Stats";
+import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
 type SlotIndexer = {
   [key in ModTypes.GIMOSlots]: Mod | null;
@@ -128,7 +129,7 @@ class ModLoadout implements SlotIndexer{
    */
   getSummary(character: Character, target: OptimizationPlan, withUpgrades: boolean) {
     let loadoutSummary: {
-      [key in CSStats.GIMOStatNames]: CSStats.CharacterSummaryStat
+      [key in CharacterStatNames.All]: CSStats.CharacterSummaryStat
     } = {
       'Health': new CSStats.CharacterSummaryStat('Health', '0'),
       'Protection': new CSStats.CharacterSummaryStat('Protection', '0'),
@@ -143,7 +144,7 @@ class ModLoadout implements SlotIndexer{
       'Special Critical Chance %': new CSStats.CharacterSummaryStat('Special Critical Chance %', '0'),
       'Resistance': new CSStats.CharacterSummaryStat('Resistance', '0'),
       'Accuracy %': new CSStats.CharacterSummaryStat('Accuracy %', '0'),
-      'Critical Avoidance %': new CSStats.CharacterSummaryStat('Critical Avoidance %', '0')
+      'Critical Avoidance %': new CSStats.CharacterSummaryStat('Critical Avoidance %', '0'),
     };
 
     // Holds the number of mods in each set
@@ -159,7 +160,7 @@ class ModLoadout implements SlotIndexer{
       const set: SetBonus = setBonuses[mod.set];
 
       const modStats = mod.getStatSummaryForCharacter(character, target, withUpgrades);
-      let stat: CSStats.GIMOStatNames;
+      let stat: CharacterStatNames.All;
       for (stat in modStats) {
         loadoutSummary[stat] = loadoutSummary[stat] ? loadoutSummary[stat].plus(modStats[stat]) : modStats[stat];
       }
@@ -193,14 +194,14 @@ class ModLoadout implements SlotIndexer{
       const maxSetStats = setDescription.maxBonus.getFlatValuesForCharacter(character);
       maxSetStats.forEach(stat => {
         for (let i = 0; i < maxSetMultiplier; i++) {
-          loadoutSummary[stat.type] = loadoutSummary[stat.type].plus(stat);
+          loadoutSummary[stat.type as CharacterStatNames.All] = loadoutSummary[stat.type as CharacterStatNames.All].plus(stat);
         }
       });
 
       const smallSetStats = setDescription.smallBonus.getFlatValuesForCharacter(character);
       smallSetStats.forEach(stat => {
         for (let i = 0; i < smallSetMultiplier; i++) {
-          loadoutSummary[stat.type] = loadoutSummary[stat.type].plus(stat);
+          loadoutSummary[stat.type as CharacterStatNames.All] = loadoutSummary[stat.type as CharacterStatNames.All].plus(stat);
         }
       });
     }

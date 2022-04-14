@@ -1,12 +1,12 @@
 import { OptimizationPlan} from "./OptimizationPlan";
 import { characterSettings, CharacterNames } from "../constants/characterSettings";
-import { IPlayerValues, PlayerValues } from "./PlayerValues";
+import * as DTOs from "../modules/profilesManagement/dtos";
 import { IOptimizerSettings, OptimizerSettings } from "./OptimizerSettings";
 import groupByKey from "../utils/groupByKey";
 
 export interface ICharacter {
   baseID: CharacterNames;
-  playerValues: IPlayerValues;
+  playerValues: DTOs.GIMO.PlayerValuesDTO;
   optimizerSettings: IOptimizerSettings;
 };
 
@@ -20,7 +20,7 @@ export type Characters = {
 
 export class Character implements ICharacter {
   baseID: CharacterNames;
-  playerValues: PlayerValues;
+  playerValues: DTOs.GIMO.PlayerValuesDTO;
   optimizerSettings: OptimizerSettings;
 
   /**
@@ -29,9 +29,10 @@ export class Character implements ICharacter {
    * @param optimizerSettings {OptimizerSettings} Settings specific to the optimizer,
    *                                            such as what target to use, and whether to lock mods
    */
-  constructor(baseID: CharacterNames,
-              playerValues: PlayerValues,
-              optimizerSettings: OptimizerSettings,
+  constructor(
+    baseID: CharacterNames,
+    playerValues: DTOs.GIMO.PlayerValuesDTO,
+    optimizerSettings: OptimizerSettings,
   ) {
     this.baseID = baseID;
     this.playerValues = playerValues;
@@ -55,7 +56,7 @@ export class Character implements ICharacter {
    * Create a new Character object that matches this one, but with playerValues overridden
    * @param playerValues
    */
-  withPlayerValues(playerValues: PlayerValues) {
+  withPlayerValues(playerValues: DTOs.GIMO.PlayerValuesDTO) {
     if (playerValues) {
       return new Character(
         this.baseID,
@@ -154,7 +155,7 @@ export class Character implements ICharacter {
   serialize() {
     return {
       baseID: this.baseID,
-      playerValues: this.playerValues.serialize(),
+      playerValues: this.playerValues,
       optimizerSettings: this.optimizerSettings.serialize()
     } as ICharacter;
 
@@ -164,7 +165,7 @@ export class Character implements ICharacter {
   static deserialize(character: ICharacter) {
     return new Character(
       character.baseID,
-      PlayerValues.deserialize(character.playerValues),
+      character.playerValues,
       OptimizerSettings.deserialize(character.optimizerSettings) ?? OptimizerSettings.Default
     );
   }

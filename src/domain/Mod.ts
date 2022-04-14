@@ -3,12 +3,13 @@ import type * as ModTypes from "./types/ModTypes";
 import { OptimizationPlan} from "./OptimizationPlan";
 import { Character } from "./Character";
 import { modScores } from "./constants/ModScoresConsts";
-import { Stats, CharacterSummaryStats, PrimaryStats, SecondaryStats, SetStats } from "./Stats";
+import { Stats, CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats } from "./Stats";
 import { CharacterNames } from "constants/characterSettings";
-import Big from "big.js"
+import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import Big from "big.js";
 
-let CSStat = CharacterSummaryStats.CharacterSummaryStat;
-type CSStat = CharacterSummaryStats.CharacterSummaryStat;
+const CSStat = CSStats.CharacterSummaryStat;
+type CSStat = CSStats.CharacterSummaryStat;
 
 const HU2GIMOSlotsMap: {
   [key in ModTypes.HUSlots]: ModTypes.GIMOSlots
@@ -208,7 +209,7 @@ export class Mod {
     let workingMod: Mod = this;
 
     const summary: {
-      [key in CharacterSummaryStats.GIMOStatNames]: CharacterSummaryStats.CharacterSummaryStat
+      [key in CharacterStatNames.All]: CSStats.CharacterSummaryStat
     } = {
       'Health': new CSStat('Health', '0'),
       'Protection': new CSStat('Protection', '0'),
@@ -238,7 +239,7 @@ export class Mod {
 
     for (let modStat of [workingMod.primaryStat as Stats.Stat].concat(workingMod.secondaryStats)) {
       const flatStats = modStat.getFlatValuesForCharacter(character);
-      flatStats.forEach(stat => summary[stat.type] = summary[stat.type].plus(stat));
+      flatStats.forEach(stat => summary[stat.type as CharacterStatNames.All] = summary[stat.type as CharacterStatNames.All].plus(stat));
     }
 
     return summary;

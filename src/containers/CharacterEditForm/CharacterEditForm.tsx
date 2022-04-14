@@ -560,7 +560,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'health-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.health}
+          defaultValue={optimizationPlan.Health}
         />
       </div>
       <div className={'form-row'}>
@@ -570,7 +570,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'protection-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.protection}
+          defaultValue={optimizationPlan.Protection}
         />
       </div>
       <div className={'form-row'}>
@@ -580,7 +580,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'speed-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.speed}
+          defaultValue={optimizationPlan.Speed}
         />
       </div>
       <div className={'form-row'}>
@@ -590,7 +590,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'critChance-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.critChance}
+          defaultValue={optimizationPlan['Critical Chance']}
         />
       </div>
       <div className={'form-row'}>
@@ -600,7 +600,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'critDmg-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.critDmg}
+          defaultValue={optimizationPlan['Critical Damage %']}
         />
       </div>
       <div className={'form-row'}>
@@ -610,7 +610,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'potency-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.potency}
+          defaultValue={optimizationPlan['Potency %']}
         />
       </div>
       <div className={'form-row'}>
@@ -620,7 +620,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'tenacity-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.tenacity}
+          defaultValue={optimizationPlan['Tenacity %']}
         />
       </div>
       <div className={'form-row'}>
@@ -630,7 +630,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'physDmg-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.physDmg}
+          defaultValue={optimizationPlan['Physical Damage']}
         />
       </div>
       <div className={'form-row'}>
@@ -640,7 +640,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'specDmg-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.specDmg}
+          defaultValue={optimizationPlan['Special Damage']}
         />
       </div>
       <div className={'form-row'}>
@@ -650,7 +650,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'armor-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.armor}
+          defaultValue={optimizationPlan.Armor}
         />
       </div>
       <div className={'form-row'}>
@@ -660,7 +660,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'resistance-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.resistance}
+          defaultValue={optimizationPlan.Resistance}
         />
       </div>
       <div className={'form-row'}>
@@ -670,7 +670,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'accuracy-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.accuracy}
+          defaultValue={optimizationPlan['Accuracy %']}
         />
       </div>
       <div className={'form-row'}>
@@ -680,7 +680,7 @@ class CharacterEditForm extends React.Component<Props> {
           name={'critAvoid-stat-advanced'}
           type={'number'}
           step={.01}
-          defaultValue={optimizationPlan.critAvoid}
+          defaultValue={optimizationPlan['Critical Avoidance %']}
         />
       </div>
     </div>;
@@ -805,19 +805,19 @@ class CharacterEditForm extends React.Component<Props> {
       // Advanced form
       newTarget = new OptimizationPlan(
         planName,
-        form['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.health,
-        form['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.protection,
-        form['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.speed,
-        form['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.critDmg,
-        form['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.potency,
-        form['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.tenacity,
-        form['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.physDmg,
-        form['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.specDmg,
-        form['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.critChance,
-        form['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.armor,
-        form['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.resistance,
-        form['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.accuracy,
-        form['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.critAvoid,
+        form['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Health,
+        form['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Protection,
+        form['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Speed,
+        form['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Damage %'],
+        form['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Potency %'],
+        form['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Tenacity %'],
+        form['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Physical Damage'],
+        form['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Special Damage'],
+        form['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Chance'],
+        form['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Armor,
+        form['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Resistance,
+        form['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Accuracy %'],
+        form['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Avoidance %'],
         form['upgrade-mods'].checked || targetStats.length > 0,
         primaryStatRestrictions,
         this.props.setRestrictions,

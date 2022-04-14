@@ -10,9 +10,10 @@ import { Character, Characters, FlatCharacters, ICharacter } from "./Character";
 import { Mod } from "./Mod";
 import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
 import OptimizerRun from "./OptimizerRun";
-import { PlayerValues, PlayerValuesByCharacter } from "./PlayerValues";
+
 import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
 import { TargetStat, FlatTargetStat } from "./TargetStat";
+import { PlayerValuesByCharacter } from "modules/profilesManagement/domain/PlayerValues";
 
 
 type FlatMissedGoals = [FlatTargetStat, number][];
@@ -59,7 +60,7 @@ export class PlayerProfile {
   allyCode: string;
   playerName: string;
   characters: Characters;
-  playerValues: {[char in CharacterNames]: PlayerValues}
+  playerValues: PlayerValuesByCharacter
   mods: Mod[];
   selectedCharacters: SelectedCharacters;
   modAssignments: IModSuggestion[];

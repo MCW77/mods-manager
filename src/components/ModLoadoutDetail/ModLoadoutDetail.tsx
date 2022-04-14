@@ -2,9 +2,8 @@ import React from "react";
 
 import './ModLoadoutDetail.css';
 
-import { mapValues } from "lodash-es";
-
 import { Character } from "../../domain/Character";
+import * as CharacterStatNames from "../../modules/profilesManagement/domain/CharacterStatNames";
 import { CharacterSummaryStats as CSStats } from "../../domain/Stats";
 import { ModLoadout } from "../../domain/ModLoadout";
 import { OptimizationPlan} from "../../domain/OptimizationPlan";
@@ -17,34 +16,34 @@ interface PlayerStat {
   name: CSStats.DisplayStatNames,
   displayModifier: string,
   currentValue: number,
-  currentStat: CSStats.CharacterSummaryStat,
+  currentStat: CSStats.CharacterSummaryStat | null,
   recommendedValue: number,
   optimizationValue: number,
-  recommendedStat: CSStats.CharacterSummaryStat,
-  diffStat: CSStats.CharacterSummaryStat,
+  recommendedStat: CSStats.CharacterSummaryStat | null,
+  diffStat: CSStats.CharacterSummaryStat | null,
   missedGoal: [TargetStat, number] | undefined
 }
 
 type PlayerStats = {
-  [key in CSStats.GIMOStatNames]: PlayerStat
+  [key in CSStats.GIMOStatNames | CSStats.CalculatedStatNames]: PlayerStat
 };
 
 class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
   render() {
-    const modLoadout = this.props.loadout;
-    const diffLoadout = this.props.diffLoadout;
+    const oldLoadout = this.props.oldLoadout;
+    const newLoadout = this.props.newLoadout;
     const character = this.props.character;
     const target = this.props.target;
     const showAvatars = 'undefined' !== typeof this.props.showAvatars ? this.props.showAvatars : false;
     const useUpgrades = this.props.useUpgrades;
     const missedGoals = this.props.missedGoals || [];
 
-    const statSummary = modLoadout.getSummary(character, target, useUpgrades);
-    const diffSummary = diffLoadout.getSummary(character, target, false);
-
+    const newSummary = newLoadout.getSummary(character, target, useUpgrades);
+    const oldSummary = oldLoadout.getSummary(character, target, false);
+    
     // Pull all the player's stats into an object that can be displayed without further calculation.
-    const playerStats: PlayerStats = mapValues(statSummary, (stat: CSStats.CharacterSummaryStat) => {
-      const diffStat = stat.minus(diffSummary[stat.type]);
+    const playerStats: PlayerStat[] = Object.values(newSummary).map( (stat: CSStats.CharacterSummaryStat) => {
+      const diffStat = stat.minus(oldSummary[stat.type as CharacterStatNames.All]);
 /*
       if (!character.playerValues.equippedStats || !stat) {
         return {
@@ -54,23 +53,23 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
         };
       }
 */
-      const statProperty = CSStats.CharacterSummaryStat.csDisplay2InternalStatNamesMap[stat.getDisplayType()][0];
-      let statValue = character.playerValues.equippedStats[statProperty] + stat.value;
+      const statName: CharacterStatNames.All = stat.type as CharacterStatNames.All;
+      let statValue = character.playerValues.equippedStats[statName] + stat.value;
 
-      let originalStat = diffSummary[stat.type];
-      let originalStatValue = character.playerValues.equippedStats[statProperty] + originalStat.value;
+      let originalStat = oldSummary[stat.type as CharacterStatNames.All];
+      let originalStatValue = character.playerValues.equippedStats[statName] + originalStat.value;
       const optimizationValue = stat.getOptimizationValue(character, target);
 
-      if (['armor', 'resistance'].includes(statProperty)) {
+      if (['Armor', 'Resistance'].includes(statName)) {
         // Convert armor and resistance to percent stats
-        const baseStat = character.playerValues.equippedStats[statProperty];
+        const baseStat = character.playerValues.equippedStats[statName];
         const baseStatValue = 100 * baseStat / (character.playerValues.level * 7.5 + baseStat);
 
         statValue = 100 * statValue / (character.playerValues.level * 7.5 + statValue);
 
         const statIncrease = statValue - baseStatValue;
         stat = new CSStats.CharacterSummaryStat(
-          `${stat.getDisplayType()} %`,
+          statName,
           `${statIncrease % 1 ? Math.round(statIncrease * 100) / 100 : statIncrease}`
         );
 
@@ -78,7 +77,7 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
           originalStatValue = 100 * originalStatValue / (character.playerValues.level * 7.5 + originalStatValue);
           const originalStatIncrease = originalStatValue - baseStatValue;
           originalStat = new CSStats.CharacterSummaryStat(
-            `${stat.getDisplayType()} %`,
+            statName,
             `${originalStatIncrease % 1 ? Math.round(originalStatIncrease * 100) / 100 : originalStatIncrease}`
           );
         }
@@ -98,9 +97,9 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
     });
 
     // Add effective health and average damage to the stats display
-    this.addCalculatedStatsToPlayerValues(playerStats);
+    this.addCalculatedStatsToPlayerValues(playerStats, missedGoals);
 
-    const statsDisplay = Object.values(playerStats).map((stat, index) => {
+    const statsDisplay = playerStats.map((stat, index) => {
       if (stat.recommendedValue == null) {
         return <tr key={index}>
           <td className={'stat-type'}>{stat.name}</td>
@@ -155,19 +154,22 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
       </tr>;
     });
 
-    const diffSetValue = diffLoadout ? diffLoadout.getOptimizationValue(character, target, false) : null;
-    const setValue = modLoadout.getOptimizationValue(character, target, useUpgrades);
-    const valueChange = ((100 * setValue / diffSetValue) - 100).toFixed(2);
+    const oldValue = oldLoadout.getOptimizationValue(character, target, false);
+    const newValue = newLoadout.getOptimizationValue(character, target, useUpgrades);
+    const valueChange = oldValue === 0 ?
+        Number.POSITIVE_INFINITY
+      :
+        ((100 * newValue / oldValue) - 100);
 
     return (
       <div className={'mod-set-detail'}>
-        <ModLoadoutView modLoadout={modLoadout} showAvatars={showAvatars} assignedCharacter={this.props.assignedCharacter}
+        <ModLoadoutView modLoadout={newLoadout} showAvatars={showAvatars} assignedCharacter={this.props.assignedCharacter}
           assignedTarget={this.props.assignedTarget} />
         <div className={'summary'}>
           <table>
             <thead>
               <tr>
-                <th colSpan={diffLoadout ? 5 : 4}>Stats Summary</th>
+                <th colSpan={oldLoadout ? 5 : 4}>Stats Summary</th>
               </tr>
               <tr>
                 <th></th>
@@ -183,14 +185,14 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
           </table>
         </div>
         <div className={'set-value'}>
-          {diffLoadout && <div>Previous Set Value: {diffSetValue.toFixed(2)}</div>}
+          {oldLoadout && <div>Previous Set Value: {oldValue.toFixed(2)}</div>}
           <div>
-            Total Value of Set: {modLoadout.getOptimizationValue(character, target, useUpgrades).toFixed(2)}
+            Total Value of Set: {newValue.toFixed(2)}
           </div>
-          {diffLoadout &&
+          {oldLoadout &&
             <div>Value Change:&nbsp;
             <span className={valueChange > 0 ? 'increase' : valueChange < 0 ? 'decrease' : ''}>
-                {valueChange}%
+                {valueChange.toFixed(2)}%
             </span>
             </div>}
         </div>
@@ -198,7 +200,7 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
     );
   }
 
-  addCalculatedStatsToPlayerValues(playerStats: PlayerStats) {
+  addCalculatedStatsToPlayerValues(playerStats: PlayerStat[], missedGoals: MissedGoals) {
     const currentStats = {
       health: 0,
       protection: 0,
@@ -222,7 +224,7 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
       critDamage: 0,
     };
 
-    Object.values(playerStats).forEach(stat => {
+    playerStats.forEach(stat => {
       switch (stat.name) {
         case 'Health':
           currentStats['health'] = stat.currentValue;
@@ -290,42 +292,44 @@ class ModLoadoutDetail extends React.PureComponent<ComponentProps> {
         (recommendedStats.critDamage / 100) * (recommendedStats.specCritChance / 100)
       );
 
-    const statObject = (name: CSStats.DisplayStatNames, currentValue: number, recommendedValue: number) => ({
+    const statObject = (name: CSStats.CalculatedStatNames, currentValue: number, recommendedValue: number): PlayerStat => ({
       name: name,
       displayModifier: '',
       currentValue: Math.floor(currentValue),
       currentStat: null,
       recommendedValue: Math.floor(recommendedValue),
+      optimizationValue: 0,
       recommendedStat: null,
-      diffStat: new CSStats.CharacterSummaryStat(name, `${Math.floor(recommendedValue - currentValue)}`)
+      diffStat: new CSStats.CharacterSummaryStat(name, `${Math.floor(recommendedValue - currentValue)}`),
+      missedGoal: undefined,
     });
 
-    playerStats['Effective Health (physical)'] = statObject(
+    playerStats.push(statObject(
       'Effective Health (physical)',
       currentEffectiveHealthPhysical,
       recommendedEffectiveHealthPhysical
-    );
-    playerStats['Effective Health (special)'] = statObject(
+    ));
+    playerStats.push(statObject(
       'Effective Health (special)',
       currentEffectiveHealthSpecial,
       recommendedEffectiveHealthSpecial
-    );
-    playerStats['Average Damage (physical)'] = statObject(
+    ));
+    playerStats.push(statObject(
       'Average Damage (physical)',
       currentAverageDamagePhysical,
       recommendedAverageDamagePhysical
-    );
-    playerStats['Average Damage (special)'] = statObject(
+    ));
+    playerStats.push(statObject(
       'Average Damage (special)',
       currentAverageDamageSpecial,
       recommendedAverageDamageSpecial
-    );
+    ));
   }
 }
 
 type ComponentProps = {
-  loadout: ModLoadout,
-  diffLoadout: ModLoadout,
+  oldLoadout: ModLoadout,
+  newLoadout: ModLoadout,
   showAvatars: boolean,
   character: Character,
   target: OptimizationPlan,

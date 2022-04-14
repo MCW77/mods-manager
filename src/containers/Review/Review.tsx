@@ -409,8 +409,8 @@ class Review extends React.PureComponent<Props> {
         </div>
         {sortOptions.assignedCharacter === this.props.filter.sort &&
           <ModLoadoutDetail
-            loadout={new ModLoadout(mods)}
-            diffLoadout={new ModLoadout(this.props.currentModsByCharacter[characterID] || [])}
+            newLoadout={new ModLoadout(mods)}
+            oldLoadout={new ModLoadout(this.props.currentModsByCharacter[characterID] || [])}
             showAvatars={sortOptions.currentCharacter !== this.props.filter.sort}
             character={character}
             target={target}

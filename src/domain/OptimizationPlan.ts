@@ -21,20 +21,20 @@ export type PrimaryStatRestrictions = {
 
 interface BaseFlatOptimizationPlan {
   name: string;
-  
-  health: number;
-  protection: number;
-  speed: number;
-  critDmg: number;
-  potency: number;
-  tenacity: number;
-  physDmg: number;
-  specDmg: number;
-  critChance: number;
-  armor: number;
-  resistance: number;
-  accuracy: number;
-  critAvoid: number;
+
+  Health: number;
+  Protection: number;
+  Speed: number;
+  'Critical Damage %': number;
+  'Potency %': number;
+  'Tenacity %': number;
+  'Physical Damage': number;
+  'Special Damage': number;
+  'Critical Chance': number;
+  Armor: number;
+  Resistance: number;
+  'Accuracy %': number;
+  'Critical Avoidance %': number;
 
   rawHealth: number;
   rawProtection: number;
@@ -74,37 +74,37 @@ export type OptimizationPlansById = {
  */
 export class OptimizationPlan {
   static statWeight = {
-    'health': 2000,
-    'protection': 4000,
-    'speed': 20,
-    'critDmg': 30,
-    'potency': 15,
-    'tenacity': 15,
-    'physDmg': 300,
-    'specDmg': 600,
-    'offense': 300,
-    'critChance': 10,
-    'armor': 33,
-    'resistance': 33,
-    'accuracy': 10,
-    'critAvoid': 10
+    'Health': 2000,
+    'Protection': 4000,
+    'Speed': 20,
+    'Critical Damage %': 30,
+    'Potency %': 15,
+    'Tenacity %': 15,
+    'Physical Damage': 300,
+    'Special Damage': 600,
+    'Offense': 300,
+    'Critical Chance': 10,
+    'Armor': 33,
+    'Resistance': 33,
+    'Accuracy %': 10,
+    'Critical Avoidance %': 10
   };
 
   name: string;
 
-  health: number;
-  protection: number;
-  speed: number;
-  critDmg: number;
-  potency: number;
-  tenacity: number;
-  physDmg: number;
-  specDmg: number;
-  critChance: number;
-  armor: number;
-  resistance: number;
-  accuracy: number;
-  critAvoid: number;
+  Health: number;
+  Protection: number;
+  Speed: number;
+  'Critical Damage %': number;
+  'Potency %': number;
+  'Tenacity %': number;
+  'Physical Damage': number;
+  'Special Damage': number;
+  'Critical Chance': number;
+  Armor: number;
+  Resistance: number;
+  'Accuracy %': number;
+  'Critical Avoidance %': number;
 
   rawHealth: number;
   rawProtection: number;
@@ -167,19 +167,19 @@ export class OptimizationPlan {
     this.upgradeMods = upgradeMods;
 
     // Set the values that will actually be used for scoring based on the weights of each stat
-    this.health = this.rawHealth / OptimizationPlan.statWeight.health;
-    this.protection = this.rawProtection / OptimizationPlan.statWeight.protection;
-    this.speed = this.rawSpeed / OptimizationPlan.statWeight.speed;
-    this.critDmg = this.rawCritDmg / OptimizationPlan.statWeight.critDmg;
-    this.potency = this.rawPotency / OptimizationPlan.statWeight.potency;
-    this.tenacity = this.rawTenacity / OptimizationPlan.statWeight.tenacity;
-    this.physDmg = this.rawPhysDmg / OptimizationPlan.statWeight.physDmg;
-    this.specDmg = this.rawSpecDmg / OptimizationPlan.statWeight.specDmg;
-    this.critChance = this.rawCritChance / OptimizationPlan.statWeight.critChance;
-    this.armor = this.rawArmor / OptimizationPlan.statWeight.armor;
-    this.resistance = this.rawResistance / OptimizationPlan.statWeight.resistance;
-    this.accuracy = this.rawAccuracy / OptimizationPlan.statWeight.accuracy;
-    this.critAvoid = this.rawCritAvoid / OptimizationPlan.statWeight.critAvoid;
+    this.Health = this.rawHealth / OptimizationPlan.statWeight.Health;
+    this.Protection = this.rawProtection / OptimizationPlan.statWeight.Protection;
+    this.Speed = this.rawSpeed / OptimizationPlan.statWeight.Speed;
+    this['Critical Damage %'] = this.rawCritDmg / OptimizationPlan.statWeight['Critical Damage %'];
+    this['Potency %'] = this.rawPotency / OptimizationPlan.statWeight['Potency %'];
+    this['Tenacity %'] = this.rawTenacity / OptimizationPlan.statWeight['Tenacity %'];
+    this['Physical Damage'] = this.rawPhysDmg / OptimizationPlan.statWeight['Physical Damage'];
+    this['Special Damage'] = this.rawSpecDmg / OptimizationPlan.statWeight['Special Damage'];
+    this['Critical Chance'] = this.rawCritChance / OptimizationPlan.statWeight['Critical Chance'];
+    this.Armor = this.rawArmor / OptimizationPlan.statWeight.Armor;
+    this.Resistance = this.rawResistance / OptimizationPlan.statWeight.Resistance;
+    this['Accuracy %'] = this.rawAccuracy / OptimizationPlan.statWeight['Accuracy %'];
+    this['Critical Avoidance %'] = this.rawCritAvoid / OptimizationPlan.statWeight['Critical Avoidance %'];
 
     this.primaryStatRestrictions = primaryStatRestrictions as PrimaryStatRestrictions;
     this.setRestrictions = setRestrictions as SetRestrictions;
@@ -290,19 +290,19 @@ export class OptimizationPlan {
   equals(that: OptimizationPlan) {
     return that instanceof OptimizationPlan &&
       this.name === that.name &&
-      this.health === that.health &&
-      this.protection === that.protection &&
-      this.speed === that.speed &&
-      this.critDmg === that.critDmg &&
-      this.potency === that.potency &&
-      this.tenacity === that.tenacity &&
-      this.physDmg === that.physDmg &&
-      this.specDmg === that.specDmg &&
-      this.critChance === that.critChance &&
-      this.armor === that.armor &&
-      this.resistance === that.resistance &&
-      this.accuracy === that.accuracy &&
-      this.critAvoid === that.critAvoid &&
+      this.Health === that.Health &&
+      this.Protection === that.Protection &&
+      this.Speed === that.Speed &&
+      this['Critical Damage %'] === that['Critical Damage %'] &&
+      this['Potency %'] === that['Potency %'] &&
+      this['Tenacity %'] === that['Tenacity %'] &&
+      this['Physical Damage'] === that['Physical Damage'] &&
+      this['Special Damage'] === that['Special Damage'] &&
+      this['Critical Chance'] === that['Critical Chance'] &&
+      this.Armor === that.Armor &&
+      this.Resistance === that.Resistance &&
+      this['Accuracy %'] === that['Accuracy %'] &&
+      this['Critical Avoidance %'] === that['Critical Avoidance %'] &&
       this.upgradeMods === that.upgradeMods &&
       areObjectsEquivalent(this.primaryStatRestrictions, that.primaryStatRestrictions) &&
       areObjectsEquivalent(this.setRestrictions, that.setRestrictions) &&
@@ -316,19 +316,19 @@ export class OptimizationPlan {
    * @returns {boolean}
    */
   hasNegativeWeights() {
-    return this.health < 0 ||
-      this.protection < 0 ||
-      this.speed < 0 ||
-      this.critDmg < 0 ||
-      this.potency < 0 ||
-      this.tenacity < 0 ||
-      this.physDmg < 0 ||
-      this.specDmg < 0 ||
-      this.critChance < 0 ||
-      this.armor < 0 ||
-      this.resistance < 0 ||
-      this.accuracy < 0 ||
-      this.critAvoid < 0;
+    return this.Health < 0 ||
+      this.Protection < 0 ||
+      this.Speed < 0 ||
+      this['Critical Damage %'] < 0 ||
+      this['Potency %'] < 0 ||
+      this['Tenacity %'] < 0 ||
+      this['Physical Damage'] < 0 ||
+      this['Special Damage'] < 0 ||
+      this['Critical Chance'] < 0 ||
+      this.Armor < 0 ||
+      this.Resistance < 0 ||
+      this['Accuracy %'] < 0 ||
+      this['Critical Avoidance %'] < 0;
   }
 
   /**
@@ -337,19 +337,19 @@ export class OptimizationPlan {
    * @returns {boolean}
    */
   isBlank() {
-    return this.health === 0 &&
-      this.protection === 0 &&
-      this.speed === 0 &&
-      this.critDmg === 0 &&
-      this.potency === 0 &&
-      this.tenacity === 0 &&
-      this.physDmg === 0 &&
-      this.specDmg === 0 &&
-      this.critChance === 0 &&
-      this.armor === 0 &&
-      this.resistance === 0 &&
-      this.accuracy === 0 &&
-      this.critAvoid === 0;
+    return this.Health === 0 &&
+      this.Protection === 0 &&
+      this.Speed === 0 &&
+      this['Critical Damage %'] === 0 &&
+      this['Potency %'] === 0 &&
+      this['Tenacity %'] === 0 &&
+      this['Physical Damage'] === 0 &&
+      this['Special Damage'] === 0 &&
+      this['Critical Chance'] === 0 &&
+      this.Armor === 0 &&
+      this.Resistance === 0 &&
+      this['Accuracy %'] === 0 &&
+      this['Critical Avoidance %'] === 0;
   }
 
   /**
@@ -400,19 +400,19 @@ export class OptimizationPlan {
     let planObject = {} as FlatOptimizationPlan;
 
     planObject.name = this.name;
-    planObject.health = this.rawHealth;
-    planObject.protection = this.rawProtection;
-    planObject.speed = this.rawSpeed;
-    planObject.critDmg = this.rawCritDmg;
-    planObject.potency = this.rawPotency;
-    planObject.tenacity = this.rawTenacity;
-    planObject.physDmg = this.rawPhysDmg;
-    planObject.specDmg = this.rawSpecDmg;
-    planObject.critChance = this.rawCritChance;
-    planObject.armor = this.rawArmor;
-    planObject.resistance = this.rawResistance;
-    planObject.accuracy = this.rawAccuracy;
-    planObject.critAvoid = this.rawCritAvoid;
+    planObject.Health = this.rawHealth;
+    planObject.Protection = this.rawProtection;
+    planObject.Speed = this.rawSpeed;
+    planObject['Critical Damage %'] = this.rawCritDmg;
+    planObject['Potency %'] = this.rawPotency;
+    planObject['Tenacity %'] = this.rawTenacity;
+    planObject['Physical Damage'] = this.rawPhysDmg;
+    planObject['Special Damage'] = this.rawSpecDmg;
+    planObject['Critical Chance'] = this.rawCritChance;
+    planObject.Armor = this.rawArmor;
+    planObject.Resistance = this.rawResistance;
+    planObject['Accuracy %'] = this.rawAccuracy;
+    planObject['Critical Avoidance %'] = this.rawCritAvoid;
     planObject.upgradeMods = this.upgradeMods;
     planObject.primaryStatRestrictions = this.primaryStatRestrictions;
     planObject.setRestrictions = this.setRestrictions;
@@ -442,19 +442,19 @@ export class OptimizationPlan {
 
     return new OptimizationPlan(
       plan.name || 'unnamed',
-      plan.health,
-      plan.protection,
-      plan.speed,
-      plan.critDmg,
-      plan.potency,
-      plan.tenacity,
-      plan.physDmg,
-      plan.specDmg,
-      plan.critChance,
-      plan.armor,
-      plan.resistance,
-      plan.accuracy,
-      plan.critAvoid,
+      plan.Health,
+      plan.Protection,
+      plan.Speed,
+      plan['Critical Damage %'],
+      plan['Potency %'],
+      plan['Tenacity %'],
+      plan['Physical Damage'],
+      plan['Special Damage'],
+      plan['Critical Chance'],
+      plan.Armor,
+      plan.Resistance,
+      plan['Accuracy %'],
+      plan['Critical Avoidance %'],
       'undefined' !== typeof plan.upgradeMods ? plan.upgradeMods : true,
       plan.primaryStatRestrictions || {},
       plan.setRestrictions || {},
