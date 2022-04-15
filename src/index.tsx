@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -59,12 +59,12 @@ getDatabase(
   }
 );
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!);
+root.render(
   <Provider store={store}>
     <Suspense fallback="loading">
       <App />
     </Suspense>
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 );
 registerServiceWorker();
