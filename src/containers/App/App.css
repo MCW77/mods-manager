@@ -110,36 +110,40 @@ html, body {
 }
 
 .App-header {
-  flex: 0 1 auto;
-  display: grid;
-  grid-template-areas: auto 1fr / auto auto;
   background-color: #222;
   padding: 0;
   color: white;
   border-bottom: 1px solid gray;
 }
 
-.App-title {
-  grid-row: 1;
-  grid-column: 1;
+.App-header .top-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.App-header .state-actions {
+  display: flex;
+}
+
+.App-header .App-title {
   font-size: 1.5em;
   margin: .5em;
-  background-image: url('../../img/gold-crit-dmg-arrow-mod-cropped.png');
-  background-position: 0 50%;
-  background-repeat: no-repeat;
-  background-size: 2em 2em;
-  padding-left: 2.5em;
+  padding-left: 0.5em;
+  position: absolute;
+  height: 2em;
 }
 
 .App-title .subtitle {
   display: block;
   font-size: .5em;
 }
+.App-header .sizer {
+  width: 10%;
+}
 
 .App-header nav {
-  grid-row: 2;
-  grid-column: 1;
   display: flex;
+  justify-content: space-around;
   align-items: flex-end;
   position: relative;
   bottom: -1px;
@@ -155,12 +159,6 @@ html, body {
 
 .App-header nav button:hover, .App-header nav button:focus {
   color: white;
-}
-
-.App-header .actions {
-  grid-row: 1 / span 2;
-  grid-column: 2;
-  text-align: right;
 }
 
 .App-header .actions label:not(.button),

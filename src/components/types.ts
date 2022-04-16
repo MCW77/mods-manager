@@ -1,3 +1,13 @@
-export type Sections = 'explore' | 'optimize' | 'add';
+export type Sections = 
+  | 'explore'
+  | 'optimize'
+  | 'settings'
+  | 'help'
+  | 'about'
+;
 
-export type DOMContent = string | JSX.Element | JSX.Element[];
+export type DOMContent =
+  | string
+  | JSX.Element
+  | JSX.Element[]
+;

@@ -1,0 +1,24 @@
+.About-page {
+  width: 100%;
+  text-align: center;
+}
+
+.About-page .version {
+  font-size: 1.3em;
+  margin: 1em;
+}
+
+.About-title {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 0.5em;
+  padding-left: 2.5em;  
+}
+.About-title img {
+  padding: 1em;
+}
+.About-title .subtitle {
+  display: block;
+  font-size: 0.5em;
+}
