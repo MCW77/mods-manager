@@ -16,11 +16,11 @@
 .modgroupheader {
   display: flex;
   border-bottom: 1px solid lightsteelblue;
+  font-size: x-small;
 }
 
 .modgroupheader span {
   margin: 1em;
-  font-size: larger;
 }
 
 .modgroupheader span:nth-child(1) {
@@ -49,8 +49,13 @@
 #modsheader {
   display: flex;
   justify-content: space-between;
+  font-size: small;
+}
+
+#modsheader div {
+  padding-left: 1em;
 }
 
 #modgroupsactions {
-  display: inline-grid;
+  padding-right: 1em;
 }

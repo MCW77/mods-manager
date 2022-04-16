@@ -32,6 +32,23 @@ import { PlayerProfile } from '../../domain/PlayerProfile';
 import { ThunkDispatch } from 'state/reducers/modsOptimizer';
 import { IUserData } from 'state/storage/Database';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import AboutView from '../../containers/AboutView/AboutView';
+import HelpView from '../../containers/HelpView/HelpView';
+import SettingsView from '../../containers/SettingsView/SettingsView';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowsRotate,
+  faFile,
+  faFileImport,
+  faFire,
+  faSave,
+  faGear,
+  faInfo,
+  faMagnifyingGlass,
+  faPowerOff,
+  faQuestion,
+  faWrench,
+} from '@fortawesome/free-solid-svg-icons'
 
 class App extends PureComponent<Props> {
 
@@ -116,6 +133,15 @@ class App extends PureComponent<Props> {
         {!instructionsScreen && 'optimize' === this.props.section &&
           <OptimizerView />
         }
+        {!instructionsScreen && 'settings' === this.props.section &&
+          <SettingsView />
+        }
+        {!instructionsScreen && 'help' === this.props.section &&
+          <HelpView />
+        }
+        {!instructionsScreen && 'about' === this.props.section &&
+          <AboutView />
+        }
         <FlashMessage />
         <ErrorModal />
         <Modal show={this.props.displayModal}
@@ -124,7 +150,6 @@ class App extends PureComponent<Props> {
           cancelable={this.props.isModalCancelable} />
         <Spinner show={this.props.isBusy} />
       </div>
-      {this.footer()}
     </div></Suspense>;
   }
 
@@ -138,161 +163,155 @@ class App extends PureComponent<Props> {
     let allyCodyInput: HTMLInputElement | null;
 
     return <header className={'App-header'}>
-      <h1 className={'App-title'}>
-        Grandivory's Mods Optimizer <span className="subtitle">{this.props.t('header.SubtitleFor')} Star Wars: Galaxy of Heroes™</span>
-      </h1>
+      <div className={'top-row'}>
+        <img className={'App-title'} src={'../../img/gold-crit-dmg-arrow-mod-cropped.png'}>
+        </img>
+        <div className={'sizer'}></div>
+        <div className={'actions'}>
+          <label htmlFor={'ally-code'}>{this.props.allyCode ? this.props.t('header.ProfileSelectionPlayer') : this.props.t('header.ProfileSelectionAllycode')}:</label>
+          {/* If there is no active ally code, then show the regular input field */}
+          {!this.props.allyCode &&
+            <input id={'ally-code'} type={'text'} inputMode={'numeric'} size={12} ref={input => allyCodyInput = input}
+              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                if (e.key === 'Enter') {
+                  this.props.refreshPlayerData((e.target as HTMLInputElement).value, true, null);
+                }
+                // Don't change the input if the user is trying to select something
+                if (window.getSelection() && window.getSelection()!.toString() !== '') {
+                  return;
+                }
+                // Don't change the input if the user is hitting the arrow keys
+                if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+                  return;
+                }
+
+                // Format the input field
+                (e.target as HTMLInputElement).value = formatAllyCode((e.target as HTMLInputElement).value);
+              }}
+            />
+          }
+          {/* If there is an active ally code, show a dropdown */}
+          {this.props.allyCode &&
+            <Dropdown
+              id={'ally-code'}
+              name={'ally-code'}
+              value={this.props.allyCode}
+              onChange={e => {
+                const selectedAllyCode = (e.target as HTMLSelectElement).value;
+                if (selectedAllyCode === '') {
+                  this.props.showModal('', this.addAllyCodeModal());
+                } else {
+                  this.props.switchProfile(selectedAllyCode);
+                }
+              }}>
+              {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) =>
+                <option key={allyCode} value={allyCode}>{playerName}</option>
+              )}
+              <option key={'new'} value={''}>New Code...</option>
+            </Dropdown>
+          }
+          <div className="fetch-actions">
+            <button type={'button'}
+              onClick={() => {
+                this.props.refreshPlayerData(
+                  this.props.allyCode || (allyCodyInput?.value ?? ''),
+                  true,
+                  null
+                );
+              }}>
+              <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.Fetch')}`}/>
+            </button>
+            <button
+              type={'button'}
+              disabled={!(
+                this.props.hotUtilsSubscription &&
+                this.props.profile &&
+                this.props.profile.hotUtilsSessionId
+              )}
+              onClick={() => {
+                if (this.props.hotUtilsSubscription && this.props.profile?.hotUtilsSessionId) {
+                  this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal())
+                }
+              }}>
+              <span className="fa-layers fa-fw fa-lg">  
+                <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.FetchHot')}`}/>
+                <FontAwesomeIcon icon={faFire} size="xs" transform="shrink-6 right-12 down-10" color="Red"/>
+              </span>
+            </button>
+            <FileInput
+              label={'Import'}
+              icon={faFileImport}
+              handler={(file) => this.readFile(file, this.props.importC3POProfile)}
+            />
+          </div>
+          {this.props.allyCode &&
+            <button type={'button'}
+              className={'red'}
+              onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
+            >
+              X
+            </button>
+          }
+        </div>
+        <div className="state-actions">
+            <FileInput 
+              label={this.props.t('global-ui:header.Restore')}
+              icon={faFile}
+              handler={(file) => this.readFile(file, this.props.restoreProgress)}
+            />
+            {showActions &&
+              <button
+                type={'button'}
+                onClick={() => {
+                  this.props.exportDatabase((progressData: IUserData) => {
+                    progressData.version = this.props.version;
+                    progressData.allyCode = this.props.allyCode;
+                    progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
+                    const progressDataSerialized = JSON.stringify(progressData);
+                    const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
+                    saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
+                  });
+                }}
+              >
+                <FontAwesomeIcon icon={faSave} title={this.props.t('global-ui:header.Save')}/>
+              </button>
+            }
+            {showActions &&
+              <button
+                type={'button'}
+                className={'red'}
+                onClick={() => this.props.showModal('reset-modal', this.resetModal())}
+              >
+                <FontAwesomeIcon icon={faPowerOff} title={this.props.t('global-ui:header.Reset')}/>
+              </button>
+            }
+          </div>
+      </div>
       {showActions &&
         <nav>
           <button className={'explore' === this.props.section ? 'active' : ''}
                   onClick={() => this.props.changeSection('explore')}>
-            {this.props.t('header.NavExploreMods')}
+            <FontAwesomeIcon icon={faMagnifyingGlass} title={this.props.t('header.NavExploreMods')}/>
           </button>
           <button className={'optimize' === this.props.section ? 'active' : ''}
                   onClick={() => this.props.changeSection('optimize')}>
-            {this.props.t('header.NavOptimizeMods')}
+            <FontAwesomeIcon icon={faWrench} title={this.props.t('header.NavOptimizeMods')}/>
+          </button>
+          <button className={'settings' === this.props.section ? 'active' : ''}
+                  onClick={() => this.props.changeSection('settings')}>
+            <FontAwesomeIcon icon={faGear} title={this.props.t('header.NavSettings')}/>
+          </button>
+          <button className={'help' === this.props.section ? 'active' : ''}
+                  onClick={() => this.props.changeSection('help')}>
+            <FontAwesomeIcon icon={faQuestion} title={this.props.t('header.NavHelp')}/>
+          </button>
+          <button className={'about' === this.props.section ? 'active' : ''}
+                  onClick={() => this.props.changeSection('about')}>
+              <FontAwesomeIcon icon={faInfo} title={this.props.t('header.NavAbout')}/>
           </button>
         </nav>
       }
-      <div className={'actions'}>
-        <label htmlFor={'ally-code'}>{this.props.allyCode ? this.props.t('header.ProfileSelectionPlayer') : this.props.t('header.ProfileSelectionAllycode')}:</label>
-        {/* If there is no active ally code, then show the regular input field */}
-        {!this.props.allyCode &&
-          <input id={'ally-code'} type={'text'} inputMode={'numeric'} size={12} ref={input => allyCodyInput = input}
-            onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
-              if (e.key === 'Enter') {
-                this.props.refreshPlayerData((e.target as HTMLInputElement).value, true, null);
-              }
-              // Don't change the input if the user is trying to select something
-              if (window.getSelection() && window.getSelection()!.toString() !== '') {
-                return;
-              }
-              // Don't change the input if the user is hitting the arrow keys
-              if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
-                return;
-              }
-
-              // Format the input field
-              (e.target as HTMLInputElement).value = formatAllyCode((e.target as HTMLInputElement).value);
-            }}
-          />
-        }
-        {/* If there is an active ally code, show a dropdown */}
-        {this.props.allyCode &&
-          <Dropdown
-            id={'ally-code'}
-            name={'ally-code'}
-            value={this.props.allyCode}
-            onChange={e => {
-              const selectedAllyCode = (e.target as HTMLSelectElement).value;
-              if (selectedAllyCode === '') {
-                this.props.showModal('', this.addAllyCodeModal());
-              } else {
-                this.props.switchProfile(selectedAllyCode);
-              }
-            }}>
-            {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) =>
-              <option key={allyCode} value={allyCode}>{playerName}</option>
-            )}
-            <option key={'new'} value={''}>New Code...</option>
-          </Dropdown>
-        }
-        {this.props.allyCode &&
-          <button type={'button'}
-            className={'red'}
-            onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
-          >
-            X
-          </button>
-        }
-        <div className="fetch-actions">
-          <button type={'button'}
-            onClick={() => {
-              this.props.refreshPlayerData(
-                this.props.allyCode || (allyCodyInput?.value ?? ''),
-                true,
-                null
-              );
-            }}>
-            {`${this.props.t('global-ui:header.Fetch')}!`}
-          </button>
-          <button
-            type={'button'}
-            disabled={!(
-              this.props.hotUtilsSubscription &&
-              this.props.profile &&
-              this.props.profile.hotUtilsSessionId
-            )}
-            onClick={() => {
-              if (this.props.hotUtilsSubscription && this.props.profile?.hotUtilsSessionId) {
-                this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal())
-              }
-            }}>
-            {this.props.t('global-ui:header.FetchHot')}
-          </button>
-          <Help header={'How do I pull unequipped mods?'}>{this.unequippedModsHelp()}</Help>
-        </div>
-        <div className="state-actions">
-          <FileInput label={'Import'} handler={(file) => this.readFile(file, this.props.importC3POProfile)} />
-          <FileInput label={this.props.t('global-ui:header.Restore')} handler={(file) => this.readFile(file, this.props.restoreProgress)} />
-          {showActions &&
-            <button
-              type={'button'}
-              onClick={() => {
-                this.props.exportDatabase((progressData: IUserData) => {
-                  progressData.version = this.props.version;
-                  progressData.allyCode = this.props.allyCode;
-                  progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
-                  const progressDataSerialized = JSON.stringify(progressData);
-                  const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
-                  saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
-                });
-              }}
-            >
-              {this.props.t('global-ui:header.Save')}
-            </button>
-          }
-          {showActions &&
-            <button
-              type={'button'}
-              className={'red'}
-              onClick={() => this.props.showModal('reset-modal', this.resetModal())}
-            >
-              {this.props.t('global-ui:header.Reset')}
-            </button>
-          }
-        </div>
-      </div>
     </header>;
-  }
-
-  /**
-   * Renders the footer for the application
-   * @returns JSX Element
-   */
-  footer() {
-    return <footer className={'App-footer'}>
-      Star Wars: Galaxy of Heroes™ is owned by EA and Capital Games. This site is not affiliated with them.<br />
-      <a href={'https://github.com/grandivory/mods-optimizer'} target={'_blank'} rel={'noopener noreferrer'}>
-        Contribute
-      </a>
-      &nbsp;|&nbsp;
-      Ask for help or give feedback on <a href={'https://discord.gg/WFKycSm'} target={'_blank'} rel={'noopener noreferrer'}>
-        Discord
-      </a>
-      &nbsp;| Like the tool? Consider donating to support the developer!&nbsp;
-      <a href={'https://paypal.me/grandivory'} target={'_blank'} rel={'noopener noreferrer'} className={'gold'}>
-        Paypal
-      </a>
-      &nbsp;or&nbsp;
-      <a href={'https://www.patreon.com/grandivory'} target={'_blank'} rel={'noopener noreferrer'} className={'gold'}>
-        Patreon
-      </a>
-      <div className={'version'}>
-        <button className={'link'} onClick={() => this.props.showModal('changelog-modal', this.changeLogModal())}>
-          version {this.props.version}
-        </button>
-      </div>
-    </footer>;
   }
 
   /**
@@ -309,8 +328,7 @@ class App extends PureComponent<Props> {
         time, until your list is exhausted.
       </p>
       <p>
-        To get started, enter your ally code in the box in the header and click "Get my mods!". Note that your mods
-        will only be updated a maximum of once per hour.
+        To get started, enter your ally code in the box in the header and click "Get my mods!".
       </p>
     </div>;
   }
@@ -489,7 +507,7 @@ interface ReduxProps {
     [key: string]: string
   },
   previousVersion: string,
-  section: string,
+  section: UITypes.Sections,
   version: string,
   hotUtilsSubscription: boolean,
   profile: PlayerProfile

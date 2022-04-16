@@ -3,6 +3,18 @@ import { connect, ConnectedProps } from "react-redux";
 import { withTranslation, WithTranslation } from "react-i18next";
 
 import "./CharacterEditView.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBan,
+  faCompress,
+  faExpand,
+  faFile,
+  faFileExport,
+  faLock,
+  faSave,
+  faTrashCan,
+  faUnlock,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { hideModal, showError, showModal } from "../../state/actions/app";
 import {
@@ -196,25 +208,29 @@ class CharacterEditView extends PureComponent<Props> {
                 className={"small"}
                 onClick={this.props.clearSelectedCharacters}
               >
-                Clear
+                <FontAwesomeIcon icon={faBan} title={`Clear`}/>
               </button>
               <button
                 className={"small"}
                 onClick={this.props.lockSelectedCharacters}
               >
-                Lock All
+                <FontAwesomeIcon icon={faLock} title={`Lock All`}/>
               </button>
               <button
                 className={"small"}
                 onClick={this.props.unlockSelectedCharacters}
               >
-                Unlock All
+                <FontAwesomeIcon icon={faUnlock} title={`Unlock All`}/>
               </button>
               <button
                 className={"small"}
                 onClick={this.props.toggleCharacterEditSortView}
               >
-                {this.props.sortView ? "Normal" : "Expand"} View
+                {this.props.sortView ?
+                   <FontAwesomeIcon icon={faCompress} title={`Normal View`}/>
+                 :
+                   <FontAwesomeIcon icon={faExpand} title={`Expand View`}/>
+                }
               </button>
               <button
                 className={"small"}
@@ -250,7 +266,7 @@ class CharacterEditView extends PureComponent<Props> {
                   )
                 }
               >
-                Save
+                <FontAwesomeIcon icon={faSave} title={`Save`}/>
               </button>
               <button
                 className={"small"}
@@ -263,11 +279,12 @@ class CharacterEditView extends PureComponent<Props> {
                   )
                 }
               >
-                Export
+                <FontAwesomeIcon icon={faFileExport} title={`Export`}/>
               </button>
               <FileInput
                 label={"Load"}
                 className={"small"}
+                icon={faFile}
                 handler={(file) =>
                   this.readFile(file, (templates) => {
                     try {
@@ -309,7 +326,7 @@ class CharacterEditView extends PureComponent<Props> {
                   )
                 }
               >
-                Delete
+                <FontAwesomeIcon icon={faTrashCan} title={`Delete`}/>
               </button>
             </div>
             <div className={"row"}>

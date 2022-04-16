@@ -9,6 +9,9 @@ import memoizeOne from "memoize-one";
 import { orderBy, mapValues, forEach } from "lodash-es";
 
 import "./ExploreView.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAnglesDown, faAnglesUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
 
 import { hideModal, showModal } from "../../state/actions/app";
 import { deleteMods } from "../../state/actions/storage";
@@ -98,18 +101,16 @@ class ExploreView extends React.PureComponent<Props> {
       <div id="mods" key={"mods"}>
         <div id="modsheader">
           <div>
-            <h3>
-              {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
-              &nbsp;
-              <button
-                className={"small red"}
-                onClick={() => {
-                  this.props.showModal(this.deleteModsModal());
-                }}
-              >
-                {this.props.t(`explore-ui:DeleteButton`)}
-              </button>
-            </h3>
+            {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
+            &nbsp;
+            <button
+              className={"small red"}
+              onClick={() => {
+                this.props.showModal(this.deleteModsModal());
+              }}
+            >
+              <FontAwesomeIcon icon={faTrashCan} title={this.props.t(`explore-ui:DeleteButton`)}/>
+            </button>
           </div>
           <div id="modgroupsactions">
             <button
@@ -123,7 +124,7 @@ class ExploreView extends React.PureComponent<Props> {
                 );
               }}
             >
-              {this.props.t('explore-ui:Expand')}
+              <FontAwesomeIcon icon={faAnglesDown} title={this.props.t('explore-ui:Expand')}/>
             </button>
             <button
               className="small"
@@ -136,7 +137,7 @@ class ExploreView extends React.PureComponent<Props> {
                 );
               }}
             >
-              {this.props.t('explore-ui:Collapse')}
+              <FontAwesomeIcon icon={faAnglesUp} title={this.props.t('explore-ui:Collapse')}/>
             </button>
           </div>
         </div>

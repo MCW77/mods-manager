@@ -1,7 +1,10 @@
 {
   "header": {
+    "NavAbout": "Über",
+    "NavHelp": "Hilfe",
     "NavExploreMods": "Erkunde Mods",
     "NavOptimizeMods": "Optimiere Mods",
+    "NavSettings": "Einstellungen",
     "SubtitleFor": "für",
     "ProfileSelectionPlayer": "Spieler",
     "ProfileSelectionAllycode": "Bündniscode",
