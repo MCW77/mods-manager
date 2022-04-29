@@ -42,7 +42,7 @@
     "Auto": "Auto generate list",
     "Target": "Ziel:",
     "Edit": "Ändern",
-    "Templates": {
+    "templates": {
       "Title": "Charakter Vorlagen",
       "manage": {
         "Text": "Verwalten",
