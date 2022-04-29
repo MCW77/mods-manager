@@ -42,7 +42,7 @@
     "Auto": "Auto generate list",
     "Target": "Target:",
     "Edit": "Edit",
-    "Templates": {
+    "templates": {
       "Title": "Character Templates",
       "manage": {
         "Text": "Manage",
