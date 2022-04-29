@@ -179,35 +179,6 @@ html, body {
   display: inline-block;
 }
 
-.App-footer {
-  flex: 0 1 auto;
-  background-color: #222;
-  padding: 0;
-  color: lightgray;
-  font-size: .75em;
-  border-top: 1px solid gray;
-  text-align: center;
-  position: relative;
-}
-
-.App-footer a {
-  color: lightgray;
-  text-decoration: underline;
-}
-
-.App-footer #donate-button {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.App-footer .version {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  font-size: .75em;
-  margin: .5em;
-}
-
 .app-body {
   flex: 1 1 auto;
   display: flex;
@@ -227,19 +198,6 @@ html, body {
 .app-body a.call-out {
   font-weight: bold;
   color: #eeca44;
-}
-
-nav.sub-nav {
-  border-bottom: 1px solid dodgerblue;
-  position: relative;
-}
-
-nav.sub-nav button {
-  border-radius: 5px 5px 0 0;
-  border: 1px solid dodgerblue;
-  background-color: #202020;
-  margin-bottom: -1px;
-  color: lightgray;
 }
 
 button, .button {
@@ -322,12 +280,6 @@ nav button.active {
   width: 1em;
   margin: 0 .25em;
   vertical-align: middle;
-}
-
-.welcome {
-  text-align: center;
-  margin: 0 auto;
-  max-width: 45em;
 }
 
 .modal.reset-modal {

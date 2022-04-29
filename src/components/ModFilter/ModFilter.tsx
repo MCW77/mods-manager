@@ -10,7 +10,6 @@ import { changeModsViewOptions } from "../../state/actions/explore";
 import { IAppState } from '../../state/storage';
 import { defaultOptions } from "../../domain/modules/ModsViewOptions";
 import { EquippedSettings, OptimizerSettings, LevelSettings, RaritySettings, SecondarySettings, SetSettings, SlotSettings, TierSettings, SecondariesScoreTierSettings, PrimarySettings, ModsViewOptions, FilterOptions } from 'domain/types/ModsViewOptionsTypes';
-import { Mod } from "../../domain/Mod";
 import * as ModConsts from "../../domain/constants/ModConsts";
 import * as ModScoresConsts from "../../domain/constants/ModScoresConsts";
 import { PrimaryStats, SecondaryStats, SetStats } from "../../domain/Stats";
