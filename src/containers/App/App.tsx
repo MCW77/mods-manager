@@ -41,12 +41,14 @@ import {
   faFile,
   faFileImport,
   faFire,
-  faSave,
   faGear,
   faInfo,
   faMagnifyingGlass,
   faPowerOff,
   faQuestion,
+  faSave,
+  faTrashCan,
+  faUser,
   faWrench,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -136,10 +138,10 @@ class App extends PureComponent<Props> {
         {!instructionsScreen && 'settings' === this.props.section &&
           <SettingsView />
         }
-        {!instructionsScreen && 'help' === this.props.section &&
+        {'help' === this.props.section &&
           <HelpView />
         }
-        {!instructionsScreen && 'about' === this.props.section &&
+        {'about' === this.props.section &&
           <AboutView />
         }
         <FlashMessage />
@@ -163,154 +165,189 @@ class App extends PureComponent<Props> {
     let allyCodyInput: HTMLInputElement | null;
 
     return <header className={'App-header'}>
-      <div className={'top-row'}>
-        <img className={'App-title'} src={'../../img/gold-crit-dmg-arrow-mod-cropped.png'}>
-        </img>
-        <div className={'sizer'}></div>
-        <div className={'actions'}>
-          <label htmlFor={'ally-code'}>{this.props.allyCode ? this.props.t('header.ProfileSelectionPlayer') : this.props.t('header.ProfileSelectionAllycode')}:</label>
-          {/* If there is no active ally code, then show the regular input field */}
-          {!this.props.allyCode &&
-            <input id={'ally-code'} type={'text'} inputMode={'numeric'} size={12} ref={input => allyCodyInput = input}
-              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                if (e.key === 'Enter') {
-                  this.props.refreshPlayerData((e.target as HTMLInputElement).value, true, null);
-                }
-                // Don't change the input if the user is trying to select something
-                if (window.getSelection() && window.getSelection()!.toString() !== '') {
-                  return;
-                }
-                // Don't change the input if the user is hitting the arrow keys
-                if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
-                  return;
-                }
+      <img className={'App-title'} src={'../../img/gold-crit-dmg-arrow-mod-cropped.png'}>
+      </img>
+      <div className="rows">
+        <div className={'top-row'}>
+          <div className={'actions'}>
+            <div>
+            <FontAwesomeIcon icon={faUser} title={`${this.props.t('global-ui:header.Fetch')}`}/>
+            {/* If there is no active ally code, then show the regular input field */}
+            {!this.props.allyCode &&
+              <input
+                id={'ally-code'}
+                type={'text'}
+                inputMode={'numeric'}
+                placeholder={this.props.t('header.ProfileSelectionPlaceholder')}
+                size={20}
+                ref={input => allyCodyInput = input}
+                onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                  if (e.key === 'Enter') {
+                    this.props.refreshPlayerData((e.target as HTMLInputElement).value, true, null);
+                  }
+                  // Don't change the input if the user is trying to select something
+                  if (window.getSelection() && window.getSelection()!.toString() !== '') {
+                    return;
+                  }
+                  // Don't change the input if the user is hitting the arrow keys
+                  if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+                    return;
+                  }
 
-                // Format the input field
-                (e.target as HTMLInputElement).value = formatAllyCode((e.target as HTMLInputElement).value);
-              }}
-            />
-          }
-          {/* If there is an active ally code, show a dropdown */}
-          {this.props.allyCode &&
-            <Dropdown
-              id={'ally-code'}
-              name={'ally-code'}
-              value={this.props.allyCode}
-              onChange={e => {
-                const selectedAllyCode = (e.target as HTMLSelectElement).value;
-                if (selectedAllyCode === '') {
-                  this.props.showModal('', this.addAllyCodeModal());
-                } else {
-                  this.props.switchProfile(selectedAllyCode);
-                }
-              }}>
-              {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) =>
-                <option key={allyCode} value={allyCode}>{playerName}</option>
-              )}
-              <option key={'new'} value={''}>New Code...</option>
-            </Dropdown>
-          }
-          <div className="fetch-actions">
-            <button type={'button'}
-              onClick={() => {
-                this.props.refreshPlayerData(
-                  this.props.allyCode || (allyCodyInput?.value ?? ''),
-                  true,
-                  null
-                );
-              }}>
-              <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.Fetch')}`}/>
-            </button>
-            <button
-              type={'button'}
-              disabled={!(
-                this.props.hotUtilsSubscription &&
-                this.props.profile &&
-                this.props.profile.hotUtilsSessionId
-              )}
-              onClick={() => {
-                if (this.props.hotUtilsSubscription && this.props.profile?.hotUtilsSessionId) {
-                  this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal())
-                }
-              }}>
-              <span className="fa-layers fa-fw fa-lg">  
-                <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.FetchHot')}`}/>
-                <FontAwesomeIcon icon={faFire} size="xs" transform="shrink-6 right-12 down-10" color="Red"/>
-              </span>
-            </button>
-            <FileInput
-              label={'Import'}
-              icon={faFileImport}
-              handler={(file) => this.readFile(file, this.props.importC3POProfile)}
-            />
-          </div>
-          {this.props.allyCode &&
-            <button type={'button'}
-              className={'red'}
-              onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
-            >
-              X
-            </button>
-          }
-        </div>
-        <div className="state-actions">
-            <FileInput 
-              label={this.props.t('global-ui:header.Restore')}
-              icon={faFile}
-              handler={(file) => this.readFile(file, this.props.restoreProgress)}
-            />
-            {showActions &&
-              <button
-                type={'button'}
-                onClick={() => {
-                  this.props.exportDatabase((progressData: IUserData) => {
-                    progressData.version = this.props.version;
-                    progressData.allyCode = this.props.allyCode;
-                    progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
-                    const progressDataSerialized = JSON.stringify(progressData);
-                    const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
-                    saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
-                  });
+                  // Format the input field
+                  (e.target as HTMLInputElement).value = formatAllyCode((e.target as HTMLInputElement).value);
                 }}
-              >
-                <FontAwesomeIcon icon={faSave} title={this.props.t('global-ui:header.Save')}/>
-              </button>
+              />
             }
-            {showActions &&
+            {/* If there is an active ally code, show a dropdown */}
+            {this.props.allyCode &&
+              <Dropdown
+                id={'ally-code'}
+                name={'ally-code'}
+                value={this.props.allyCode}
+                onChange={e => {
+                  const selectedAllyCode = (e.target as HTMLSelectElement).value;
+                  if (selectedAllyCode === '') {
+                    this.props.showModal('', this.addAllyCodeModal());
+                  } else {
+                    this.props.switchProfile(selectedAllyCode);
+                  }
+                }}>
+                {
+                  Object.entries(this.props.playerProfiles)
+                    .map(([allyCode, playerName]) =>
+                      <option key={allyCode} value={allyCode}>{playerName}</option>
+                    )
+                }
+                <option key={'new'} value={''}>New Code...</option>
+              </Dropdown>
+            }
+            {this.props.allyCode &&
               <button
                 type={'button'}
                 className={'red'}
-                onClick={() => this.props.showModal('reset-modal', this.resetModal())}
+                onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
               >
-                <FontAwesomeIcon icon={faPowerOff} title={this.props.t('global-ui:header.Reset')}/>
+                <FontAwesomeIcon icon={faTrashCan} title={`${this.props.t('global-ui:header.ProfileDelete')}`}/>
               </button>
             }
+            {
+              this.props.allyCode &&
+              <div className="fetch-actions">
+                <button
+                  type={'button'}
+                  onClick={() => {
+                    this.props.refreshPlayerData(
+                      this.props.allyCode || (allyCodyInput?.value ?? ''),
+                      true,
+                      null
+                    );
+                  }}
+                >
+                  <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.Fetch')}`}/>
+                </button>
+                {
+                  this.props.hotUtilsSubscription &&
+                  this.props.profile &&
+                  this.props.profile.hotUtilsSessionId &&
+
+                  <button
+                    type={'button'}
+                    disabled={!(
+                      this.props.hotUtilsSubscription &&
+                      this.props.profile &&
+                      this.props.profile.hotUtilsSessionId
+                    )}
+                    onClick={() => {
+                      if (this.props.hotUtilsSubscription && this.props.profile?.hotUtilsSessionId) {
+                        this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal())
+                      }
+                    }}
+                  >
+                    <span className="fa-layers">
+                      <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.FetchHot')}`}/>
+                      <FontAwesomeIcon icon={faFire} size="xs" transform="shrink-6 right-8 down-10" color="Red"/>
+                    </span>
+                  </button>
+                }
+                <FileInput
+                  label={'Import'}
+                  icon={faFileImport}
+                  handler={(file) => this.readFile(file, this.props.importC3POProfile)}
+                />
+              </div>
+            }
+            </div>
           </div>
+          <div className="state-actions">
+              <FileInput 
+                label={this.props.t('global-ui:header.Restore')}
+                icon={faFile}
+                handler={(file) => this.readFile(file, this.props.restoreProgress)}
+              />
+              {showActions &&
+                <button
+                  type={'button'}
+                  onClick={() => {
+                    this.props.exportDatabase((progressData: IUserData) => {
+                      progressData.version = this.props.version;
+                      progressData.allyCode = this.props.allyCode;
+                      progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
+                      const progressDataSerialized = JSON.stringify(progressData);
+                      const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
+                      saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon icon={faSave} title={this.props.t('global-ui:header.Save')}/>
+                </button>
+              }
+              {showActions &&
+                <button
+                  type={'button'}
+                  className={'red'}
+                  onClick={() => this.props.showModal('reset-modal', this.resetModal())}
+                >
+                  <FontAwesomeIcon icon={faPowerOff} title={this.props.t('global-ui:header.Reset')}/>
+                </button>
+              }
+            </div>
+        </div>
+        {showActions &&
+          <nav>
+            <button
+              className={'explore' === this.props.section ? 'active' : ''}
+              onClick={() => this.props.changeSection('explore')}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} title={this.props.t('header.NavExploreMods')}/>
+            </button>
+            <button
+              className={'optimize' === this.props.section ? 'active' : ''}
+              onClick={() => this.props.changeSection('optimize')}
+            >
+              <FontAwesomeIcon icon={faWrench} title={this.props.t('header.NavOptimizeMods')}/>
+            </button>
+            <button
+              className={'settings' === this.props.section ? 'active' : ''}
+              onClick={() => this.props.changeSection('settings')}
+            >
+              <FontAwesomeIcon icon={faGear} title={this.props.t('header.NavSettings')}/>
+            </button>
+            <button
+              className={'help' === this.props.section ? 'active' : ''}
+              onClick={() => this.props.changeSection('help')}
+            >
+              <FontAwesomeIcon icon={faQuestion} title={this.props.t('header.NavHelp')}/>
+            </button>
+            <button
+              className={'about' === this.props.section ? 'active' : ''}
+              onClick={() => this.props.changeSection('about')}
+            >
+                <FontAwesomeIcon icon={faInfo} title={this.props.t('header.NavAbout')}/>
+            </button>
+          </nav>
+        }
       </div>
-      {showActions &&
-        <nav>
-          <button className={'explore' === this.props.section ? 'active' : ''}
-                  onClick={() => this.props.changeSection('explore')}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} title={this.props.t('header.NavExploreMods')}/>
-          </button>
-          <button className={'optimize' === this.props.section ? 'active' : ''}
-                  onClick={() => this.props.changeSection('optimize')}>
-            <FontAwesomeIcon icon={faWrench} title={this.props.t('header.NavOptimizeMods')}/>
-          </button>
-          <button className={'settings' === this.props.section ? 'active' : ''}
-                  onClick={() => this.props.changeSection('settings')}>
-            <FontAwesomeIcon icon={faGear} title={this.props.t('header.NavSettings')}/>
-          </button>
-          <button className={'help' === this.props.section ? 'active' : ''}
-                  onClick={() => this.props.changeSection('help')}>
-            <FontAwesomeIcon icon={faQuestion} title={this.props.t('header.NavHelp')}/>
-          </button>
-          <button className={'about' === this.props.section ? 'active' : ''}
-                  onClick={() => this.props.changeSection('about')}>
-              <FontAwesomeIcon icon={faInfo} title={this.props.t('header.NavAbout')}/>
-          </button>
-        </nav>
-      }
     </header>;
   }
 
