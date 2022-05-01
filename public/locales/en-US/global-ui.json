@@ -8,6 +8,8 @@
     "SubtitleFor": "for",
     "ProfileSelectionPlayer": "Player",
     "ProfileSelectionAllycode": "Ally code",
+    "ProfileSelectionPlaceholder": "Enter allycode here",
+    "ProfileDelete": "Delete profile",
     "Fetch": "Fetch my data",
     "FetchHot": "Fetch with HotUtils",
     "RememberExisting": "Remember existing mods",

@@ -8,6 +8,8 @@
     "SubtitleFor": "für",
     "ProfileSelectionPlayer": "Spieler",
     "ProfileSelectionAllycode": "Bündniscode",
+    "ProfileSelectionPlaceholder": "Bündniscode hier eingeben",
+    "ProfileDelete": "Profil löschen",
     "Fetch": "Hole meine Mods",
     "FetchHot": "Hole mit HotUtils",
     "RememberExisting": "Behalte existierende Mods",

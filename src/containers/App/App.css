@@ -79,6 +79,8 @@
 
 html, body {
   height: 100%;
+  font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.2rem);
+  box-sizing: border-box;
 }
 
 #root {
@@ -88,7 +90,7 @@ html, body {
 .App {
   text-align: left;
   height: 100%;
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -116,29 +118,28 @@ html, body {
   border-bottom: 1px solid gray;
 }
 
+.App-header .rows {
+  width: 100%;
+  height: 4em;
+  display: flex;
+  flex-direction: column;
+}
+
 .App-header .top-row {
   display: flex;
-  justify-content: space-between;
+  margin: auto 0;
 }
 
 .App-header .state-actions {
   display: flex;
+  align-items: center;
+  margin-right: min(1em, 1vw);
 }
 
 .App-header .App-title {
-  font-size: 1.5em;
-  margin: .5em;
-  padding-left: 0.5em;
+  margin: .3em;
   position: absolute;
-  height: 2em;
-}
-
-.App-title .subtitle {
-  display: block;
-  font-size: .5em;
-}
-.App-header .sizer {
-  width: 10%;
+  height: 3.4em;
 }
 
 .App-header nav {
@@ -147,6 +148,7 @@ html, body {
   align-items: flex-end;
   position: relative;
   bottom: -1px;
+  margin-left: 4em;
 }
 
 .App-header nav button {
@@ -157,8 +159,24 @@ html, body {
   color: lightgray;
 }
 
+.App-header nav button.active {
+  border-color: gold;
+  border-bottom: none;
+  color: white;
+  position: relative;
+}
+
+
 .App-header nav button:hover, .App-header nav button:focus {
   color: white;
+}
+
+.App-header .actions {
+  margin: auto;
+}
+
+.App-header .actions > div {
+  margin-left: 4em;
 }
 
 .App-header .actions label:not(.button),
@@ -202,14 +220,14 @@ html, body {
 
 button, .button {
   display: inline-block;
-  margin: .25em;
+  margin: .1em;
   background-color: #46801a;
   border: 1px outset limegreen;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: 300;
   color: white;
-  padding: 1px .25em;
+  padding: 1px 1px;
   opacity: .9;
   cursor: pointer;
   line-height: 1.3;
@@ -266,12 +284,6 @@ button.link {
   margin: .1em;
   padding: 0;
   font-weight: 400;
-}
-
-nav button.active {
-  border-bottom: none;
-  color: white;
-  position: relative;
 }
 
 .icon {
