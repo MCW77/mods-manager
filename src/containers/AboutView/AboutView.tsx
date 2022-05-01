@@ -21,7 +21,9 @@ class AboutView extends React.PureComponent<Props> {
             Grandivory's Mods Optimizer <span className="subtitle">{this.props.t('header.SubtitleFor')} Star Wars: Galaxy of Heroes™</span>
           </h1>
         </div>
-        Star Wars: Galaxy of Heroes™ is owned by EA and Capital Games. This site is not affiliated with them.<br />
+        <p>
+          Star Wars: Galaxy of Heroes™ is owned by EA and Capital Games. This site is not affiliated with them.
+        </p>
         <a href={'https://github.com/grandivory/mods-optimizer'} target={'_blank'} rel={'noopener noreferrer'}>
           Contribute
         </a>

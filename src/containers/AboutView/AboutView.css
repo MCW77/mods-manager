@@ -1,6 +1,8 @@
 .About-page {
-  width: 100%;
+  line-height: 1.6;
+  padding: 0 1em;
   text-align: center;
+  width: 100%;
 }
 
 .About-page .version {
@@ -9,15 +11,22 @@
 }
 
 .About-title {
+  align-items: center;
   display: flex;
   justify-content: center;
-  text-align: center;
   margin: 0.5em;
-  padding-left: 2.5em;  
+  text-align: center;
 }
+
+.About-title-heading {
+  line-height: 1.2;
+}
+
 .About-title img {
+  height: 3.4em;
   padding: 1em;
 }
+
 .About-title .subtitle {
   display: block;
   font-size: 0.5em;
