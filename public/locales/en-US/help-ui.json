@@ -1,0 +1,84 @@
+{
+  "profiles": {
+    "Title": "Profiles",
+    "topics": {
+      "1": "Adding profiles",
+      "2": "Deleting a profile",
+      "3": "Getting your mods",
+      "4": "Getting your mods as a HotUtils customer",
+      "5": "Importing unequipped mods from C3PO"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Adding profiles",
+        "1": "there 1"
+      },
+      "2": {
+        "Headline": "Deleting a profile",
+        "1": "First you have to select the profile you want to delete in the profiles dropdown at the top. Then you can hit the red trash can button to delete that profile.",
+        "2": "After deletion of a profile you can always create it again by entering the allycode and fetching the profile's data again."
+      }
+    }
+  },
+  "explorer": {
+    "Title": "Mod Explorer",
+    "topics": {
+      "1": "Adding a profile",
+      "2": "Getting your mods"
+    }
+  },
+  "optimizer": {
+    "Title": "Mod Optimizer",
+    "topics": {
+      "1": "Global Settings",
+      "2": "Getting your mods"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Global optimization settings",
+        "1": "This application will allow you to equip the optimum mod set on every character you have by assigning a value to each stat that a mod can confer. You'll give it a list of characters to optimize along with the stats that you're looking for, and it will determine the best mods to equip, one character at a time, until your list is exhausted.",
+        "2": "To get started, enter your ally code in the box in the header and click \"Get my mods!\"."
+      }
+    }
+  },
+  "general": {
+    "Title": "Basics",
+    "topics": {
+      "1": "Welcome",
+      "2": "Mod optimization basics",
+      "3": "Selecting Characters to optimize",
+      "4": "Picking a target",
+      "5": "Picking target values"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes™!",
+        "1": "This application will allow you to equip the optimum mod set on every character you have by assigning a value to each stat that a mod can confer. You'll give it a list of characters to optimize along with the stats that you're looking for, and it will determine the best mods to equip, one character at a time, until your list is exhausted.",
+        "2": "To get started, enter your ally code in the box in the header and click \"Get my mods!\"."
+      },
+      "2": {
+        "Headline": "How does this work?",
+        "1": "Welcome to my mods optimizer for Star Wars: Galaxy of Heroes!",
+        "2": "This application works on a simple principle:",
+        "3": "Every stat should have some set value for a character, and if we know all of those values, then we can calculate how much a given mod, or set of mods, is worth for that character. From there, the tool knows how to find the set of mods that give the highest possible overall value for each of your characters without you needing to look through the hundreds of mods in your inventory!"
+      },
+      "3": {
+        "Headline": "Selecting characters to optimize",
+        "1": "The mods optimizer will start out by considering all mods equipped on any character other than those that are \"Locked\". Then, it will go down the list of selected characters, one by one, choosing the best mods it can find for each character, based on the selected target. As it finishes each character, it removes those mods from its consideration set.",
+        "2": "Therefore, the character that you want to have your absolute best mods should always be first among your selected characters. Usually, this means that you want the character who needs the most speed to be first."
+      },
+      "4": {
+        "Headline": "Picking a target",
+        "1": "Every character in the game has targets. (A collection of predefined weights for all character stats and sometimes mod restrictions). The optimizer will pick the best value mods according to the given weights/restrictions. The targets have been named for their general purpose - 'hSTR Phase 1' or 'PvP' for example. Some characters have multiple different targets that you can select from.",
+        "2": "These targets, while directionally good for characters, are only a base suggestion!",
+        "3": "There are many reasons that you might want to pick different values than those listed by default in the optimizer: you might want to optimize for a different purpose (such as a phase 3 Sith Triumvirate Raid team, where speed can be detrimental), you might want to choose something different to optimize against, or you might simply have a better set of values that you want to employ.",
+        "4": "The easiest way to get started with the optimizer is to choose from the pre-programmed character templates. These are set up with sets of characters and targets that should fit various game modes. If there's no template to fit your exact needs, you can use one as a starting point or create one from scratch. For each individual character, if no target exists that matches what you want, you can select \"Custom\", or simply hit the \"Edit\" button to bring up the character edit modal."
+      },
+      "5": {
+        "Headline": "Picking target values",
+        "1": "Most characters will have the \"basic\" mode selected by default. In basic mode, you select a value for all stats that is between -100 and 100. These values are weights that are assigned to each stat to determine its impoact for that character. Setting two values as equal means that those stats are about equally important for that character. In basic mode, the optimizer will automatically adjust the weights to fit the range of values seen in-game for that stat. For example, giving speed and protection both a value of 100 means that 1 speed is about equivalent to 200 protection (since you find much more protection on mods than you do speed).",
+        "2": "If you want more fine-tuned control over the stat values, you can switch to \"advanced\" mode. In advanced mode, the values given are the value for each point of the listed stat. In advanced mode, if speed and protection are both given a value of 100, then the tool will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works."
+      }
+    }
+  }
+}
