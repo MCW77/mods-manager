@@ -38,6 +38,7 @@ class CharacterAvatar extends React.PureComponent<Props> {
         {displayStars && [1, 2, 3, 4, 5, 6, 7].map(star)}
         <img
           src={baseCharacter.avatarUrl}
+          loading={"lazy"}
           alt={baseCharacter.name}
           title={baseCharacter.name}
           draggable={false} />
