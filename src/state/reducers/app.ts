@@ -3,7 +3,8 @@ import {AppState, IAppState} from "../storage";
 
 export function changeSection(state: IAppState, action: ReturnType<typeof Actions.changeSection>): IAppState {
   return Object.assign({}, state, {
-    section: action.section
+    section: action.section,
+    previousSection: state.section,
   });
 }
 
