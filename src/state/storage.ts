@@ -65,7 +65,12 @@ export interface IAppState {
   }, // A simple map from ally codes to player names for all available profiles
   previousVersion: string,
   profile: PlayerProfile, // All the data about the current character
-  section: 'optimize',
+  section: UITypes.Sections,
+  previousSection: UITypes.Sections,
+  help: {
+    section: string;
+    topic: number,
+  }
   showSidebar: boolean,
   version: string,
   profiles?: PlayerProfile[],
@@ -120,7 +125,12 @@ export class AppState {
       progress: 0,
       step: '1',
     },
-    section: 'optimize',
+    section: 'help',
+    previousSection: 'help',
+    help: {
+      section: 'general',
+      topic: 1,
+    },
     showSidebar: true,
     version: String(import.meta.env.VITE_VERSION) || 'local',
     setRestrictions: {} as SetRestrictions,

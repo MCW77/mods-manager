@@ -128,7 +128,6 @@ class App extends PureComponent<Props> {
     return <Suspense fallback= "loading"><div className={'App'} onKeyPress={this.escapeListener}>
       {this.header(!instructionsScreen)}
       <div className={'app-body'}>
-        {instructionsScreen && this.welcome()}
         {!instructionsScreen && 'explore' === this.props.section &&
           <ExploreView />
         }
@@ -349,25 +348,6 @@ class App extends PureComponent<Props> {
         }
       </div>
     </header>;
-  }
-
-  /**
-   * Renders the welcome screen for when someone first opens the application
-   * @returns JSX Element
-   */
-  welcome() {
-    return <div className={'welcome'}>
-      <h2>Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes™!</h2>
-      <p>
-        This application will allow you to equip the optimum mod set on every character you have by assigning
-        a value to each stat that a mod can confer. You'll give it a list of characters to optimize along
-        with the stats that you're looking for, and it will determine the best mods to equip, one character at a
-        time, until your list is exhausted.
-      </p>
-      <p>
-        To get started, enter your ally code in the box in the header and click "Get my mods!".
-      </p>
-    </div>;
   }
 
   /**

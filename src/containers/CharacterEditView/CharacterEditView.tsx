@@ -176,23 +176,6 @@ class CharacterEditView extends PureComponent<Props> {
           onDragLeave={CharacterEditView.dragLeave}
           onDrop={this.availableCharactersDrop.bind(this)}
         >
-          <h3 className={"instructions"}>
-            Double-click or drag characters to the selected column to pick who
-            to optimize mods for.
-            <button
-              type={"button"}
-              className={"small"}
-              onClick={() =>
-                this.props.showModal(
-                  "instructions",
-                  this.instructionsModal(),
-                  false
-                )
-              }
-            >
-              Show full instructions
-            </button>
-          </h3>
           {this.props.highlightedCharacters.map((character) =>
             this.characterBlock(character, "active")
           )}
@@ -621,97 +604,6 @@ class CharacterEditView extends PureComponent<Props> {
           {this.props.baseCharacters[character.baseID]
             ? this.props.baseCharacters[character.baseID].name
             : character.baseID}
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * Render a modal with instructions on how to use the optimizer
-   * @returns Array[JSX Element]
-   */
-  instructionsModal() {
-    return (
-      <div>
-        <h2>How to use the mods optimizer</h2>
-        <p>
-          Welcome to my mods optimizer for Star Wars: Galaxy of Heroes! This
-          application works on a simple principle: every stat should have some
-          set value for a character, and if we know all of those values, then we
-          can calculate how much a given mod, or set of mods, is worth for that
-          character. From there, the tool knows how to find the set of mods that
-          give the highest possible overall value for each of your characters
-          without you needing to look through the hundreds of mods in your
-          inventory!
-        </p>
-        <h3>Selecting characters to optimize</h3>
-        <p>
-          The mods optimizer will start out by considering all mods equipped on
-          any character other than those that are "Locked". Then, it will go
-          down the list of selected characters, one by one, choosing the best
-          mods it can find for each character, based on the selected target. As
-          it finishes each character, it removes those mods from its
-          consideration set. Therefore, the character that you want to have your
-          absolute best mods should always be first among your selected
-          characters. Usually, this means that you want the character who needs
-          the most speed to be first.
-        </p>
-        <p>
-          I suggest optimizing your arena team first, in order of required
-          speed, then characters you use for raids, then characters for other
-          game modes, like Territory Battles, Territory Wars, and events.
-        </p>
-        <h3>Picking the right values</h3>
-        <p>
-          Every character in the game has been given starting values for all
-          stats that can be used by the optimizer to pick the best mods. These
-          values have been named for their general purpose - hSTR Phase 1, PvP,
-          and PvE, for example. Some characters have multiple different targets
-          that you can select from.{" "}
-          <strong>
-            These targets, while directionally good for characters, are only a
-            base suggestion!
-          </strong>{" "}
-          There are many reasons that you might want to pick different values
-          than those listed by default in the optimizer: you might want to
-          optimize for a different purpose (such as a phase 3 Sith Triumvirate
-          Raid team, where speed can be detrimental), you might want to choose
-          something different to optimize against, or you might simply have a
-          better set of values that you want to employ.
-        </p>
-        <p>
-          The easiest way to get started with the optimizer is to choose from
-          the pre-programmed character templates. These are set up with sets of
-          characters and targets that should fit various game modes. If there's
-          no template to fit your exact needs, you can use one as a starting
-          point or create one from scratch. For each individual character, if no
-          target exists that matches what you want, you can select "Custom", or
-          simply hit the "Edit" button to bring up the character edit modal.
-          Most characters will have the "basic" mode selected by default. In
-          basic mode, you select a value for all stats that is between -100 and
-          100. These values are weights that are assigned to each stat to
-          determine its value for that character. Setting two values as equal
-          means that those stats are about equally important for that character.
-          In basic mode, the optimizer will automatically adjust the weights to
-          fit the range of values seen in-game for that stat. For example,
-          giving speed and protection both a value of 100 means that 1 speed is
-          about equivalent to 200 protection (since you find much more
-          protection on mods than you do speed).
-        </p>
-        <p>
-          If you want more fine-tuned control over the stat values, you can
-          switch to "advanced" mode. In advanced mode, the values given are the
-          value for each point of the listed stat. In advanced mode, if speed
-          and protection are both given a value of 100, then the tool will never
-          select speed, because it can more easily give that character much more
-          protection. I suggest sticking to basic mode until you have a strong
-          sense for how the tool works.
-        </p>
-        <p>I hope that you enjoy the tool! Happy modding!</p>
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            OK
-          </button>
         </div>
       </div>
     );

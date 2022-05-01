@@ -1,0 +1,84 @@
+{
+  "profiles": {
+    "Title": "Profile",
+    "topics": {
+      "1": "Profile hinzufügen",
+      "2": "Ein Profil löschen",
+      "3": "Mods abrufen",
+      "4": "Mods als HotUtils Kunde abrufen",
+      "5": "Unausgerüstete Mods von C3PO importieren"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Profile hinzufügen",
+        "1": "there 1"
+      },
+      "2": {
+        "Headline": "Löschen eines Profils",
+        "1": "Zunächst muss das zu löschende Profil in der Profilauswahl oben ausgewählt werden. Dann kann es über einen Klick auf den roten Papierkorb-Knopf gelöscht werden.",
+        "2": "Ein gelöschtes Profil kann man einfach erneut erstellen indem man wieder den Bündniscode eingibt und die Daten abruft."
+      }
+    }
+  },
+  "explorer": {
+    "Title": "Mod Übersicht",
+    "topics": {
+      "1": "Adding a profile",
+      "2": "Getting your mods"
+    }
+  },
+  "optimizer": {
+    "Title": "Mod Optimierer",
+    "topics": {
+      "1": "Adding a profile",
+      "2": "Getting your mods"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Global optimization settings",
+        "1": "This application will allow you to equip the optimum mod set on every character you have by assigning a value to each stat that a mod can confer. You'll give it a list of characters to optimize along with the stats that you're looking for, and it will determine the best mods to equip, one character at a time, until your list is exhausted.",
+        "2": "To get started, enter your ally code in the box in the header and click \"Get my mods!\"."
+      }
+    }    
+  },
+  "general": {
+    "Title": "Grundlegendes",
+    "topics": {
+      "1": "Willkommen",
+      "2": "Grundlagen der Modoptimierung",
+      "3": "Auswahl der Charaktere",
+      "4": "Auswahl einer Zielvorgabe",
+      "5": "Auswahl der Zielwerte"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Wilkommen zu Grandivorys Mod Optimierer für Star Wars: Galaxy of Heroes™!",
+        "1": "Mit dieser App kannst du die besten Mods für jeden deiner Charaktere finden. Hierfür wird jedem Wert, den ein Mod geben kann, ein Gewicht zugeordnet, das die Bedeutung dieses Wertes für den Charakter widerspiegelt. Du gibst eine Liste von zu optimierenden Charakteren mit den gewünschten Werten an und die App geht die Liste dann nacheinander durch und errechnet die jeweils besten Mods.",
+        "2":  "Um loszulegen, gebe oben im Eingabefeld deinen Bündniscode ein. Sobald du die Eingabe mit 'Enter' bestätigst werden deine Daten (Charaktere, Mods) abgerufen."
+      },
+      "2": {
+        "Headline": "Wie funktioniert die Mod Optimierung?",
+        "1": "Willkommen zu meinem Mod Optimierer für Star Wars: Galaxy of Heroes!",
+        "2": "Dieses Programm arbeitet nach einem einfachen Prinzip:",
+        "3": "Jede Eigenschaft eines Charakters hat eine bestimmte Bedeutung für diesen und wenn wir Werte für die Wichtigkeit jedes Charakterwertes haben, dann können wir einen Gesamtwert für ein Mod oder ein Modset für diesen Charakter berechnen. Somit kann das Programm für jeden Charakter automatisch das beste Modset finden, das den höchsten Gesamtwert für diesen liefert, ohne dass du hierfür über alle Mods in deinem Inventar drüberschauen müsstest."
+      },
+      "3": {
+        "Headline": "Auswahl der zu optimierenden Charaktere",
+        "1": "Der Mod Optimierer zieht zunächst alle nicht ausgerüsteten Mods und solche, die auf nicht gesperrten Charakteren ausgerüstet sind, in Betracht. Dann wird die Liste der ausgewählten Charaktere der Reihe nach abgearbeitet. Für jeden Charakter werden die besten Mods basierend auf den gewählten Zielwerten vorgeschlagen. Mit jedem Modding-Vorschlag für einen Charakter werden die vorgeschlagenen Mods aus der Betrachtung für die folgenden Charaktere entfernt.",
+        "2": "Daher sollten die Charaktere, die deine absolut besten Mods bekommen sollen, an der Spitze der zu optimierenden Charaktere stehen. In der Regel beginnt die Liste mit den Charakteren, für die Tempo besonders wichtig ist."
+      },
+      "4": {
+        "Headline": "Eine Zielvorgabe auswählen",
+        "1": "Für jeden Charakter im Spiel gibt es Zielvorgaben. (Eine Sammlung von Gewichten für jeden Charakterwert und manchmal auch Mod-Restriktionen) Der Optimierer wählt anhand der gegebenen Gewichte und Restriktionen die Mods mit dem höchsten Gesamtwert. Die Zielvorgaben sind nach ihrem Zweck benannt. Z.B. 'hSTR Phase 1' oder 'PvP'. Manche Charaktere haben mehrere Zielvorgaben zur Auswahl.",
+        "2": "Daher sollten die Charaktere, die deine absolut besten Mods bekommen sollen, an der Spitze der zu optimierenden Charaktere stehen. In der Regel beginnt die Liste mit den Charakteren, für die Tempo besonders wichtig ist.",
+        "3": "Es gibt viele Gründe, warum Du andere Werte als die standardmäßig im Optimierer aufgelisteten wählen möchtest: Du möchtest vielleicht für einen anderen Zweck optimieren (z.B. ein hSTR Phase 3 Team, bei dem Tempo nachteilig sein kann), Du möchtest vielleicht einen anderen Optimierungsansatz verfolgen, oder Du hast einfach einen besseren Satz von Werten, die Du verwenden möchtest.",
+        "4": "Am einfachsten beginnt man die Optimierung mit der Auswahl einer der enthaltenen Charakter-Vorlagen. Diese enthalten Sätze von Charakteren und Zielen, die für verschiedene Spielmodi geeignet sind. Wenn es keine Vorlage gibt, die genau deinen Bedürfnissen entspricht, kannst du eine als Ausgangspunkt verwenden oder eine von Grund auf neu erstellen. Gibt es für einen Charakter kein passendes Ziel, kannst du ein vorhandenes editieren und (unter neuem Namen) speichern."
+      },
+      "5": {
+        "Headline": "Gewichte auswählen",
+        "1": "Bei den meisten Charakteren ist standardmäßig der \"Einfach\" Modus ausgewählt. In diesem wählst du für alle Charakterwerte einen Wert zwischen -100 und 100. Diese Werte sind Gewichtungen, die jedem Charakterwert zugewiesen werden, um seine Wichtigkeit für diesen Charakter zu bestimmen. Wenn du zwei identische Gewichte einstellst, bedeutet das, dass die Charakterwerte für den Charakter gleich wichtig sind. Im einfachen Modus passt der Optimierer die Gewichtung automatisch an den Wertebereich an, den man im Spiel für diese Eigenschaft sieht. Ein Beispiel, Tempo und Schutz jeweils einen Wert von 100 zu geben, bedeutet, dass 1 Tempo etwa 200 Schutz entspricht (da man bei Mods viel mehr Schutz als Tempo findet).",
+        "2": "Für mehr Kontrolle über die Gewichte kann in den \"Erweitert\" Modus gewechselt werden. Im erweiterten Modus werden die angegebenen Gewichte direkt mit ihrem Charakterwert multipliziert. Wenn im erweiterten Modus sowohl für Tempo als auch für Schutz ein Gewicht von 100 angegeben wird, wählt das Tool niemals Tempo aus, weil es dem Charakter viel leichter einen höheren Schutz geben kann. Ich schlage vor, im Basismodus zu bleiben, bis du ein Gefühl dafür bekommen hast, wie das Tool funktioniert."
+      }
+    }
+  }
+}
