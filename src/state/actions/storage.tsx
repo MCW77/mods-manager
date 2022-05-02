@@ -32,10 +32,10 @@ export type PlayerProfiles = {[key: string]: string};
  * @param state {Object} The current state of the application, used to populate the database
  * @returns {Function}
  */
-export function databaseReady(state: IAppState): ThunkResult<void> {
+export function databaseReady(allyCode: string): ThunkResult<void> {
   return function (dispatch, getState): void {
     // Load the data from the database and store it in the state
-    dispatch(loadFromDb(state.allyCode));
+    dispatch(loadFromDb(allyCode));
   };
 }
 
