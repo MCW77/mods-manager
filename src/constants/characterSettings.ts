@@ -554,7 +554,10 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('Tenacity', 0, 50, 100, 0, 10, 100, 10, 0, 0, 10, 0, 0, 0, true),
     ]  ),
   'DARTHNIHILUS': new CharacterSettings(
-    [new OptimizationPlan('PvP', 10, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    [
+      new OptimizationPlan('PvP', 10, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('Tanky', 40, 0, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 100, true),
+    ],
     ['Nightmare'],
     DamageType.special
   ),
@@ -600,12 +603,13 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'DEATHTROOPER': new CharacterSettings(
     [
-      new OptimizationPlan('Damage', 0, 0, 80, 100, 25, 0, 25, 0, 25, 0, 0, 0, 0, true),
+      new OptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 25, 0, 25, 0, 0, 0, 0, true),
+      new OptimizationPlan('Iden Lead', 10, 10, 100, 100, 40, 0, 25, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('hSTR Phase 3', 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, true, {}, {},
         [new TargetStat('Speed', undefined, 175, 179)]
-      )
+      ),
     ],
-    ['Troopers', 'Chex Mix']
+    ['Troopers', 'Chex Mix'],
   ),
   'DENGAR': new CharacterSettings(
     [
@@ -1287,11 +1291,10 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'SNOWTROOPER': new CharacterSettings(
     [
-      new OptimizationPlan('PvP', 0, 0, 0, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0, true),
-      new OptimizationPlan('Fast PvP', 0, 0, 100, 50, 0, 0, 50, 0, 100, 0, 0, 0, 0, true),
-      new OptimizationPlan('Fast PvE', 0, 0, 80, 50, 0, 0, 25, 0, 100, 0, 0, 0, 0, true)
+      new OptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0, true),
+      new OptimizationPlan('Iden Lead', 10, 10, 50, 100, 10, 0, 30, 0, 25, 0, 0, 0, 0, true),
     ],
-    ['Troopers']
+    ['Troopers'],
   ),
   'STARKILLER': new CharacterSettings(
     [new OptimizationPlan('PvP', 25, 0, 100, 75, 0, 0, 50, 0, 0, 0, 0, 0, 0, true)]
@@ -1379,8 +1382,9 @@ const characterSettings: CharacterSettingsIndexer = {
   'VISASMARR': new CharacterSettings(
     [
       new OptimizationPlan('PvP', 25, 0, 100, 50, 0, 25, 50, 0, 50, 0, 0, 0, 0, true),
-      new OptimizationPlan('hSTR Phase 1', 25, -5, 0, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0, true)
-    ]
+      new OptimizationPlan('Healer', 50, 0, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, true),      
+      new OptimizationPlan('hSTR Phase 1', 25, -5, 0, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0, true),
+    ],
   ),
   'WAMPA': new CharacterSettings(
     [
