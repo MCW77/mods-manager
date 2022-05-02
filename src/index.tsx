@@ -10,7 +10,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import getDatabase from "./state/storage/Database";
 
-import modsOptimizer from "./state/reducers/modsOptimizer";
+import modsOptimizer, { ThunkDispatch } from "./state/reducers/modsOptimizer";
 
 import { showError } from "./state/actions/app";
 import { databaseReady } from "./state/actions/storage";
@@ -29,7 +29,12 @@ const store = configureStore({
 
 // Instantiate the database
 getDatabase(
-  () => store.dispatch(databaseReady(store.getState())),
+  (db) => {
+    const dispatch: ThunkDispatch = store.dispatch;
+    dispatch(
+      databaseReady(store.getState().allyCode)
+    );
+  },
   (error: DOMException | null) => {
     if (error instanceof DOMException) {
       store.dispatch(showError(
