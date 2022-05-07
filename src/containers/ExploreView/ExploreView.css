@@ -1,5 +1,5 @@
 #mods {
-  width: 100%;
+  height: 100%;
 }
 
 #mods h3 {
@@ -8,7 +8,7 @@
 
 #modgroups {
   overflow-y: auto;
-  height: 85%;
+  height: calc(100% - .8em);
   display: flex;
   flex-direction: column;
 }
