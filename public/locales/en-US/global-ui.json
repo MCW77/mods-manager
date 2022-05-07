@@ -16,5 +16,9 @@
     "Restore": "Restore my progress",
     "Save": "Save my progress",
     "Reset": "Reset Mods Optimizer"
+  },
+  "sidebar": {
+    "Toggle-show": "show sidebar",
+    "Toggle-collapse": "collapse sidebar"
   }
 }

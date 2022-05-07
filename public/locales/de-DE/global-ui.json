@@ -16,5 +16,9 @@
     "Restore": "Fortschritt laden",
     "Save": "Fortschritt speichern",
     "Reset": "Neustart"
+  },
+  "sidebar": {
+    "Toggle-show": "Seitenleiste anzeigen",
+    "Toggle-collapse": "Seitenleiste verbergen"
   }
 }

@@ -1,0 +1,72 @@
+
+.flexsidebar-container {
+  display: flex;
+  flex-flow: row;
+  position: relative;
+  --transition-duration: 1s;
+  --transition-ease: ease;
+}
+
+.flexsidebar-container .flexsidebar {
+  flex: 0.0000001 0 30vw;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;;
+  position: relative;
+  transition: flex var(--transition-duration) var(--transition-ease);
+  will-change: flex;
+}
+
+.flexsidebar-container .flexsidebar > div {
+  background-color: #444;
+  border: 1px solid #888;
+  border-left-width: 0;
+  border-radius: 0 0.5em 0.5em 0;
+  margin: 1em 1em 0 0;
+  width: 28vw;
+  overflow: hidden;
+}
+
+.flexsidebar-container.collapsed .flexsidebar {
+  flex: 0.0000001 1 0;
+}
+
+.flexsidebar-container .flexsidebar-toggle {
+  background-color: #333;
+  border: 1px solid gray;
+  display: block;
+  height: 1.4em;
+  left: 27vw;
+  margin: 0;
+  padding: 0 0.25em;
+  position: absolute;
+  top: 4em;
+  transition: transform var(--transition-duration) var(--transition-ease), left var(--transition-duration) var(--transition-ease);
+  width: 1em;
+  will-change: transform, left;
+  z-index: 1;
+}
+
+.flexsidebar-container.collapsed .flexsidebar-toggle {
+  left: 0;
+  transform: rotate(180deg);
+}
+
+.flexsidebar-container .flexsidebar-maincontent {
+  flex: 0.000001 1 70vw;
+  padding-left: 2em;
+  will-change: flex;
+}
+
+.flexsidebar-container.collapsed .flexsidebar~.flexsidebar-maincontent {
+  flex: 0.000001 0 100vw;
+  will-change: flex;
+}
+
+.flexsidebar-container .flexsidebar-maincontent > div {
+  width: calc(70vw - 2em)  
+}
+
+.flexsidebar-container.collapsed .flexsidebar-maincontent > div {
+  width: calc(100vw - 2em)
+}
