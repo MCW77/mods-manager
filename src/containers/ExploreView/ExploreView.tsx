@@ -39,7 +39,7 @@ import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import { DOMContent } from "components/types";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModFilter from "../../components/ModFilter/ModFilter";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import FlexSidebar from "../../components/FlexSidebar/FlexSidebar";
 
 
 class ExploreView extends React.PureComponent<Props> {
@@ -96,54 +96,58 @@ class ExploreView extends React.PureComponent<Props> {
       );
     });
 
-    return [
-      <Sidebar key={"sidebar"} content={ExploreView.sidebar()} />,
-      <div id="mods" key={"mods"}>
-        <div id="modsheader">
-          <div>
-            {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
-            &nbsp;
-            <button
-              className={"small red"}
-              onClick={() => {
-                this.props.showModal(this.deleteModsModal());
-              }}
-            >
-              <FontAwesomeIcon icon={faTrashCan} title={this.props.t(`explore-ui:DeleteButton`)}/>
-            </button>
+    return (
+      <FlexSidebar
+        sidebarContent={ExploreView.sidebar()}
+        mainContent={
+          <div id="mods" key={"mods"}>
+            <div id="modsheader">
+              <div>
+                {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
+                &nbsp;
+                <button
+                  className={"small red"}
+                  onClick={() => {
+                    this.props.showModal(this.deleteModsModal());
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} title={this.props.t(`explore-ui:DeleteButton`)}/>
+                </button>
+              </div>
+              <div id="modgroupsactions">
+                <button
+                  className="small"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    forEach(
+                      modsElement.getElementsByClassName("modgroupmods"),
+                      (modgroup) => {
+                        modgroup.classList.remove("collapsed");
+                      }
+                    );
+                  }}
+                >
+                  <FontAwesomeIcon icon={faAnglesDown} title={this.props.t('explore-ui:Expand')}/>
+                </button>
+                <button
+                  className="small"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    forEach(
+                      modsElement.getElementsByClassName("modgroupmods"),
+                      (modgroup) => {
+                        modgroup.classList.add("collapsed");
+                      }
+                    );
+                  }}
+                >
+                  <FontAwesomeIcon icon={faAnglesUp} title={this.props.t('explore-ui:Collapse')}/>
+                </button>
+              </div>
+            </div>
+            <div id="modgroups">{modGroups}</div>
           </div>
-          <div id="modgroupsactions">
-            <button
-              className="small"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                forEach(
-                  modsElement.getElementsByClassName("modgroupmods"),
-                  (modgroup) => {
-                    modgroup.classList.remove("collapsed");
-                  }
-                );
-              }}
-            >
-              <FontAwesomeIcon icon={faAnglesDown} title={this.props.t('explore-ui:Expand')}/>
-            </button>
-            <button
-              className="small"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                forEach(
-                  modsElement.getElementsByClassName("modgroupmods"),
-                  (modgroup) => {
-                    modgroup.classList.add("collapsed");
-                  }
-                );
-              }}
-            >
-              <FontAwesomeIcon icon={faAnglesUp} title={this.props.t('explore-ui:Collapse')}/>
-            </button>
-          </div>
-        </div>
-        <div id="modgroups">{modGroups}</div>
-      </div>,
-    ];
+        }
+      />
+    );
   }
 
   /**
