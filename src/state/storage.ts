@@ -70,7 +70,11 @@ export interface IAppState {
   help: {
     section: string;
     topic: number,
-  }
+  },
+  settings: {
+    section: string;
+    topic: number,
+  },
   showSidebar: boolean,
   version: string,
   profiles?: PlayerProfile[],
@@ -128,6 +132,10 @@ export class AppState {
     section: 'help',
     previousSection: 'help',
     help: {
+      section: 'general',
+      topic: 1,
+    },
+    settings: {
       section: 'general',
       topic: 1,
     },
