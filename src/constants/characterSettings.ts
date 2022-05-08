@@ -421,8 +421,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'CANDEROUSORDO': new CharacterSettings(
     [
+      new OptimizationPlan('Maul Lead', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0, true),
       optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE'),
-      new OptimizationPlan('Maul Lead', 0, 0, 0, 50, 75, 0, 100, 0, 25, 0, 0, 0, 0, true),
     ],
   ),
   'CARADUNE': new CharacterSettings(
@@ -724,8 +724,8 @@ const characterSettings: CharacterSettingsIndexer = {
     ['FOTP', 'FO']
   ),
   'FIRSTORDERTROOPER': new CharacterSettings(
-    [new OptimizationPlan('PvP', 20, 20, 100, 50, 50, 25, 0, 0, 0, 5, 5, 0, 0, true)],
-    ['FOST', 'FO']
+    [new OptimizationPlan('PvP', 30, 40, 100, 0, 0, 10, 0, 0, 0, 30, 0, 0, 0, true)],
+    ['FOST', 'FO'],
   ),
   'FOSITHTROOPER': new CharacterSettings(
     [
