@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, withTranslation, WithTranslation } from "react-i18next";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import "./HelpView.css";
+import './HelpView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCircleLeft,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  changeSection,
-} from "../../state/actions/app";
+import { changeSection } from '../../state/actions/app';
 
-import {match, P } from "ts-pattern";
+import { match } from 'ts-pattern';
 
-import { IAppState } from "state/storage";
+import { IAppState } from 'state/storage';
 
 const HelpView = () => {
-  const previousSection = useSelector((state: IAppState) => state.previousSection);
+  const previousSection = useSelector(
+    (state: IAppState) => state.previousSection
+  );
   const helpSection = useSelector((state: IAppState) => state.help.section);
   const helpTopic = useSelector((state: IAppState) => state.help.topic);
   const dispatch = useDispatch();
@@ -26,23 +24,22 @@ const HelpView = () => {
   const [currentTopic, changeCurrentTopic] = useState(helpTopic);
 
   const topicsBySection: Record<string, number[]> = {
-    'general': [1, 2, 3, 4, 5,],
-    'profiles': [1, 2, 3, 4, 5,],
-    'explorer': [1,],
-    'optimizer': [1,],
-  }
+    general: [1, 2, 3, 4, 5],
+    profiles: [1, 2, 3, 4, 5],
+    explorer: [1],
+    optimizer: [1],
+  };
 
   const sectionElements: Record<string, React.RefObject<HTMLDivElement>> = {
-    'general': React.createRef<HTMLDivElement>(),
-    'profiles': React.createRef<HTMLDivElement>(),
-    'explorer': React.createRef<HTMLDivElement>(),
-    'optimizer': React.createRef<HTMLDivElement>(),
-  }
+    general: React.createRef<HTMLDivElement>(),
+    profiles: React.createRef<HTMLDivElement>(),
+    explorer: React.createRef<HTMLDivElement>(),
+    optimizer: React.createRef<HTMLDivElement>(),
+  };
 
   const renderSection = (sectionName: string) => {
     let classes = sectionName;
-    if (sectionName === currentSection)
-      classes += ` selected`;
+    if (sectionName === currentSection) classes += ` selected`;
 
     return (
       <div
@@ -50,64 +47,63 @@ const HelpView = () => {
         ref={sectionElements[sectionName]}
         onClick={() => {
           changeCurrentTopic(0);
-          changeCurrentSection(sectionName)}
-        }
+          changeCurrentSection(sectionName);
+        }}
       >
         {t(`${sectionName}.Title`)}
-      </div>      
-    )
+      </div>
+    );
   };
 
   const renderTopics = () => {
-    if (currentTopic !== 0 || currentSection === '')
-      return null;
+    if (currentTopic !== 0 || currentSection === '') return null;
 
-    return (
-      topicsBySection[currentSection]
-        .map((topic: number) => {
-          return (
-            <span
-              className='topic'
-              key={`${currentSection}-${topic}`}
-              onClick={() => changeCurrentTopic(topic)}
-            >
-              {t(`${currentSection}.topics.${topic}`)}
-            </span>
-          )
-        })      
-    )
-  }
+    return topicsBySection[currentSection].map((topic: number) => {
+      return (
+        <span
+          className="topic"
+          key={`${currentSection}-${topic}`}
+          onClick={() => changeCurrentTopic(topic)}
+        >
+          {t(`${currentSection}.topics.${topic}`)}
+        </span>
+      );
+    });
+  };
 
   const renderTopic = () => {
-    
     return match([currentSection, currentTopic])
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
       .otherwise(() => {
-        const title = t(`${currentSection}.topicById.${currentTopic}.Headline`, "");
+        const title = t(
+          `${currentSection}.topicById.${currentTopic}.Headline`,
+          ''
+        );
         let counter = 1;
         const paragraphs: string[] = [];
-        let paragraph = t(`${currentSection}.topicById.${currentTopic}.${counter}`, "");
-        while (paragraph !== "") {
+        let paragraph = t(
+          `${currentSection}.topicById.${currentTopic}.${counter}`,
+          ''
+        );
+        while (paragraph !== '') {
           paragraphs.push(paragraph);
           counter++;
-          paragraph = t(`${currentSection}.topicById.${currentTopic}.${counter}`, "");
+          paragraph = t(
+            `${currentSection}.topicById.${currentTopic}.${counter}`,
+            ''
+          );
         }
 
         return (
           <div id={`topic-${currentSection}-${currentTopic}`}>
-            {
-              title !== "" &&
-              <h2>{title}</h2>
-            }
-            {
-              paragraphs.map((p, index: number) => (
-                <p key={`help-topic-paragraph-${index}`}>{p}</p>
-              ))
-            }
+            {title !== '' && <h2>{title}</h2>}
+            {paragraphs.map((p, index: number) => (
+              <p key={`help-topic-paragraph-${index}`}>{p}</p>
+            ))}
           </div>
-        )
-      })
-  }
+        );
+      });
+  };
 
   const renderGlobalOptimizationSettingsTopic = () => {
     return (
@@ -147,37 +143,36 @@ const HelpView = () => {
           </li>
         </ul>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className={'Help-page'} key={'help'}>
-    <nav className='sections'>
-      {
-        previousSection !== 'help' &&
-        <div className='returnTo'>
-          <FontAwesomeIcon
-            icon={faCircleLeft}
-            title={`Go back`}
-            onClick={() => dispatch(changeSection(previousSection))}/>
-        </div>
-      }
+      <nav className="sections">
+        {previousSection !== 'help' && (
+          <div className="returnTo">
+            <FontAwesomeIcon
+              icon={faCircleLeft}
+              title={`Go back`}
+              onClick={() => dispatch(changeSection(previousSection))}
+            />
+          </div>
+        )}
 
-      {renderSection('general')}
-      {renderSection('profiles')}
-      {renderSection('explorer')}
-      {renderSection('optimizer')}
-    </nav>
-    <div className={'topics'}>
-      {currentTopic === 0 ? renderTopics() : null}
+        {renderSection('general')}
+        {renderSection('profiles')}
+        {renderSection('explorer')}
+        {renderSection('optimizer')}
+      </nav>
+      <div className={'topics'}>
+        {currentTopic === 0 ? renderTopics() : null}
+      </div>
+      <div className={'topic'}>
+        {currentTopic !== 0 || currentSection === '' ? renderTopic() : null}
+      </div>
     </div>
-    <div className={'topic'}>
-      {currentTopic !== 0 || currentSection === '' ? renderTopic() : null}
-    </div>
-  </div>  
-
   );
-}
+};
 
 HelpView.displayName = 'HelpView';
 
