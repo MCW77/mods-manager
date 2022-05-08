@@ -53,9 +53,7 @@ class ExploreView extends React.PureComponent<Props> {
   };
 
   render() {
-    const modsElement: HTMLDivElement = document.getElementById(
-      "mods"
-    ) as HTMLDivElement;
+    const modsElement = React.createRef<HTMLDivElement>();
 
     const modElements = (mods: Mod[]) => {
       return mods.map((mod) => {
@@ -100,7 +98,11 @@ class ExploreView extends React.PureComponent<Props> {
       <FlexSidebar
         sidebarContent={ExploreView.sidebar()}
         mainContent={
-          <div id="mods" key={"mods"}>
+          <div
+            id="mods"
+            key={"mods"}
+            ref={modsElement}
+          >
             <div id="modsheader">
               <div>
                 {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
@@ -119,7 +121,7 @@ class ExploreView extends React.PureComponent<Props> {
                   className="small"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     forEach(
-                      modsElement.getElementsByClassName("modgroupmods"),
+                      modsElement.current?.getElementsByClassName("modgroupmods"),
                       (modgroup) => {
                         modgroup.classList.remove("collapsed");
                       }
@@ -132,7 +134,7 @@ class ExploreView extends React.PureComponent<Props> {
                   className="small"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     forEach(
-                      modsElement.getElementsByClassName("modgroupmods"),
+                      modsElement.current?.getElementsByClassName("modgroupmods"),
                       (modgroup) => {
                         modgroup.classList.add("collapsed");
                       }
