@@ -1,0 +1,63 @@
+.Settings-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Settings-page .sections {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  padding: 0.5em 1em 0 1em;
+}
+
+.sections div {
+  margin: 0.2em;
+  padding: 0.4em;
+  border-radius: 12px;
+}
+
+.sections div:not(.returnTo) {
+  padding: 0.4em;
+  border: 1px solid white;
+  border-radius: 12px;
+}
+
+.sections div.selected:not(.returnTo) {
+  border: 1px solid gold;
+}
+
+.Settings-page .settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Settings-page .topic {
+  overflow-y: auto;
+}
+
+.Settings-page .topic > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Settings-page .topic > div > * {
+  padding: 0 1em;
+  width: clamp(320px - 2em, 70%, 70ch);
+}
+
+.Settings-page .topic h2 {
+  text-align: center;
+  line-height: 1.2;
+}
+
+.Settings-page .topic p {
+  line-height: 1.4;
+}
+.settings-optimizer {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 45em;
+}
