@@ -40,8 +40,17 @@
 }
 
 .modgroup .modgroupmods {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  row-gap: 1em;
   text-align: center;
 }
+
+.modgroup .modgroupmods > div {
+  width: 21em;
+}
+
 .modgroup .modgroupmods.collapsed {
   display: none;
 }

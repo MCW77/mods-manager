@@ -25,7 +25,7 @@ class ModDetail extends React.PureComponent<Props> {
     const showAssigned = !!this.props.showAssigned;
 
     return (
-      <div className='mod-detail'>
+      <div className={'mod-detail'} key={mod.id}>
         <ModImage mod={mod} />
         {character && <CharacterAvatar character={character} />}
         {character &&
