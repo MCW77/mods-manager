@@ -4,7 +4,7 @@ import { ThunkDispatch } from "state/reducers/modsOptimizer";
 import { withTranslation, WithTranslation } from "react-i18next";
 
 import { Dictionary } from "lodash";
-import { groupBy } from "../../utils/groupBy"
+import { groupBy } from "../../utils/groupBy";
 import memoizeOne from "memoize-one";
 import { orderBy, mapValues, forEach } from "lodash-es";
 
@@ -37,6 +37,7 @@ import { Mod } from "../../domain/Mod";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 
 import { DOMContent } from "components/types";
+import RenderIfVisible  from "react-render-if-visible";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModFilter from "../../components/ModFilter/ModFilter";
 import FlexSidebar from "../../components/FlexSidebar/FlexSidebar";
@@ -61,12 +62,18 @@ class ExploreView extends React.PureComponent<Props> {
           ? this.props.characters[this.props.assignedMods[mod.id]]
           : null;
         return (
-          <ModDetail
-            key={mod.id}
-            mod={mod}
-            assignedCharacter={assignedCharacter}
-            showAssigned
-          />
+          <RenderIfVisible
+            defaultHeight={278}
+            key={`RIV-${mod.id}`}
+            visibleOffset={10000}
+            root={modsElement.current ?? null}
+          >
+            <ModDetail
+              mod={mod}
+              assignedCharacter={assignedCharacter}
+              showAssigned
+            />
+          </RenderIfVisible>
         );
       });
     };
