@@ -37,7 +37,7 @@ import { Mod } from "../../domain/Mod";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 
 import { DOMContent } from "components/types";
-import RenderIfVisible  from "react-render-if-visible";
+import RenderIfVisible  from "../../components/RenderIfVisible/RenderIfVisible";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModFilter from "../../components/ModFilter/ModFilter";
 import FlexSidebar from "../../components/FlexSidebar/FlexSidebar";
@@ -66,7 +66,7 @@ class ExploreView extends React.PureComponent<Props> {
             defaultHeight={278}
             key={`RIV-${mod.id}`}
             visibleOffset={10000}
-            root={modsElement.current ?? null}
+            root={modsElement}
           >
             <ModDetail
               mod={mod}
