@@ -55,6 +55,7 @@ class ExploreView extends React.PureComponent<Props> {
 
   render() {
     const modsElement = React.createRef<HTMLDivElement>();
+    const modGroupsElement = React.createRef<HTMLDivElement>();
 
     const modElements = (mods: Mod[]) => {
       return mods.map((mod) => {
@@ -65,8 +66,8 @@ class ExploreView extends React.PureComponent<Props> {
           <RenderIfVisible
             defaultHeight={278}
             key={`RIV-${mod.id}`}
-            visibleOffset={10000}
-            root={modsElement}
+            visibleOffset={4000}
+            root={modGroupsElement}
           >
             <ModDetail
               mod={mod}
@@ -152,7 +153,7 @@ class ExploreView extends React.PureComponent<Props> {
                 </button>
               </div>
             </div>
-            <div id="modgroups">{modGroups}</div>
+            <div id="modgroups" ref={modGroupsElement}>{modGroups}</div>
           </div>
         }
       />
