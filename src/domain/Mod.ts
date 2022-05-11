@@ -336,7 +336,7 @@ export class Mod {
       flatMod.pips,
       PrimaryStats.PrimaryStat.fromHotUtils(flatMod.primaryBonusType, flatMod.primaryBonusValue),
       secondaryStats,
-      flatMod.characterID,
+      flatMod.characterID ?? 'null',
       flatMod.tier
     );
   }
