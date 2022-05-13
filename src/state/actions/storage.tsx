@@ -5,18 +5,16 @@ import groupByKey from "../../utils/groupByKey";
 import { mapValues } from "lodash-es";
 import nothing from "../../utils/nothing";
 
-import { showError, showFlash, updateProfile } from "./app";
+import { resetState, showError, showFlash, updateProfile } from "./app";
 import { fetchHotUtilsStatus } from './data';
 
 import getDatabase, { IUserData } from "../storage/Database";
 
-
-import { IAppState } from 'state/storage';
 import { BaseCharactersById, BaseCharacter } from 'domain/BaseCharacter';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
 import OptimizerRun from "../../domain/OptimizerRun";
-import { PlayerProfile } from 'domain/PlayerProfile';
+import { PlayerProfile } from '../../domain/PlayerProfile';
 import { SelectedCharacters, SelectedCharactersByTemplateName } from "domain/SelectedCharacters";
 
 export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS';
@@ -97,7 +95,7 @@ function loadBaseCharacters(): ThunkResult<void> {
  * @returns {Function}
  */
 export function loadProfiles(allyCode: string | null): ThunkResult<void> {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     const db = getDatabase();
 
     try {
@@ -116,11 +114,12 @@ export function loadProfiles(allyCode: string | null): ThunkResult<void> {
           :
             cleanedProfiles.find((profile, index) => index === 0);
           
-          if (profile) {
-            dispatch(setProfile(profile));
+          dispatch(setProfile(profile ?? PlayerProfile.Default));
+          if (profile !== undefined) {
             dispatch(fetchHotUtilsStatus(profile.allyCode));
+          } else if (Object.keys(getState().playerProfiles).length !== 0) {
+              dispatch(resetState());
           }
-
           // Set up the playerProfiles object used to switch between available profiles
           const playerProfiles: PlayerProfiles = {} as PlayerProfiles;
           cleanedProfiles.forEach(profile => playerProfiles[profile.allyCode] = profile.playerName);
