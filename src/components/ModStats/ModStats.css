@@ -1,13 +1,12 @@
 .mod-stats {
   text-align: left;
-  width: 17em;
   position: relative;
 }
 
 .mod-stats div.secondaries-scores-container {
   display: flex;
   justify-content: space-between;
-  width: 17em;
+  width: 100%;
   position: relative;
 }
 
@@ -31,6 +30,7 @@
 .mod-stats ul.secondary-scores {
   color: #c5f5f5;
   text-align: right;
+  padding-inline-start: 0;
 }
 
 .mod-stats ul li {
