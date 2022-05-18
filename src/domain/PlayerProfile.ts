@@ -51,9 +51,6 @@ export interface IFlatPlayerProfile {
   globalSettings: IGlobalSettings;
   hotUtilsSessionId?: string | null;
   incrementalOptimizeIndex: number | null
-// Deprecated
-// REMPS
-//  previousSettings;
 }
 
 export class PlayerProfile {
@@ -67,9 +64,6 @@ export class PlayerProfile {
   globalSettings: IGlobalSettings;
   hotUtilsSessionId: string | null;
   incrementalOptimizeIndex: number | null;
-// Deprecated
-// REMPS
-//  previousSettings;
 
   static Default: PlayerProfile = new PlayerProfile(
     "",
@@ -86,8 +80,6 @@ export class PlayerProfile {
     },
     null,
     null,
-// REMPS
-//  null
   );
 
   static defaultGlobalSettings: IGlobalSettings = {
@@ -119,8 +111,6 @@ export class PlayerProfile {
     selectedCharacters: SelectedCharacters = [],
     modAssignments: IModSuggestion[] = [],
     globalSettings: IGlobalSettings = PlayerProfile.defaultGlobalSettings,
-// REMPS
-//    previousSettings = {},
     hotUtilsSessionId: string | null = null,
     incrementalOptimizeIndex: number | null = null,
   ) {
@@ -132,8 +122,6 @@ export class PlayerProfile {
     this.selectedCharacters = selectedCharacters;
     this.modAssignments = modAssignments;
     this.globalSettings = globalSettings;
-// REMPS
-//    this.previousSettings = previousSettings;
     this.hotUtilsSessionId = hotUtilsSessionId;
     this.incrementalOptimizeIndex = incrementalOptimizeIndex;
   }
@@ -149,8 +137,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         this.modAssignments,
         this.globalSettings,
-// REMPS
-//      this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       )
@@ -170,8 +156,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         this.modAssignments,
         this.globalSettings,
-// REMPS
-//        this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -191,8 +175,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         this.modAssignments,
         this.globalSettings,
-// REMPS
-//        this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -212,8 +194,6 @@ export class PlayerProfile {
         selectedCharacters,
         this.modAssignments,
         this.globalSettings,
-// REMPS
-//        this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -239,8 +219,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         modAssignments,
         this.globalSettings,
-// REMPS
-//        this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -259,32 +237,10 @@ export class PlayerProfile {
       this.selectedCharacters,
       this.modAssignments,
       globalSettings,
-// REMPS
-//      this.previousSettings,
       this.hotUtilsSessionId,
       this.incrementalOptimizeIndex,
     );
   }
-
-  /**
-   * Create a new PlayerProfile with empty previous settings
-   */
-// REMPS
-/*
-  resetPreviousSettings() {
-    return new PlayerProfile(
-      this.allyCode,
-      this.playerName,
-      this.characters,
-      this.mods,
-      this.selectedCharacters,
-      this.modAssignments,
-      this.globalSettings,
-      {},
-      this.hotUtilsSessionId
-    );
-  }
-*/
 
   withHotUtilsSessionId(id: string | null) {
     if (id === null) return this;
@@ -297,8 +253,6 @@ export class PlayerProfile {
       this.selectedCharacters,
       this.modAssignments,
       this.globalSettings,
-// REMPS
-//      this.previousSettings,
       id,
       this.incrementalOptimizeIndex,
     )
@@ -344,8 +298,6 @@ export class PlayerProfile {
       selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({ id: id, target: target!.serialize() })),
       modAssignments: this.modAssignments,
       globalSettings: this.globalSettings,
-// REMPS
-//      previousSettings: this.previousSettings,
       hotUtilsSessionId: this.hotUtilsSessionId,
       incrementalOptimizeIndex: this.incrementalOptimizeIndex,
     };
@@ -374,8 +326,6 @@ export class PlayerProfile {
           }  as IModSuggestion
         }) as IModSuggestion[],
         Object.assign({}, PlayerProfile.defaultGlobalSettings, flatPlayerProfile.globalSettings),
-// REMPS
-//        flatPlayerProfile.previousSettings || {},
         flatPlayerProfile.hotUtilsSessionId || null,
         flatPlayerProfile.incrementalOptimizeIndex || null,
       )
