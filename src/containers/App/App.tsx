@@ -351,30 +351,6 @@ class App extends PureComponent<Props> {
   }
 
   /**
-   * Renders a popup describing the changes from the previous version, and any actions that the user needs to take.
-   * @returns JSX Element
-   */
-  changeLogModal() {
-    return <div>
-      <h2 className={'gold'}>Grandivory's Mods Optimizer has updated to version 1.7!</h2>
-      <h3>Here's a short summary of the changes included in this version:</h3>
-      <ul>
-        <li>
-          Updated the integration with <a href={'https://www.hotutils.com'} target={'_blank'} rel={'noopener noreferrer'}>HotUtils</a> to version 2! This brings some great advantages to both HotUtils
-          subscribers and non-subscribers. ALL players can now fetch their mod
-          data <strong>as often as they'd like</strong>, with no cooldown between fetches! A HotUtils subscription is
-          still required to fetch unequipped mods. A progress bar is now also shown when using HotUtils to move your
-          mods in-game, and that move can be cancelled at any time!
-        </li>  
-      </ul>
-      <h3>Happy Modding!</h3>
-      <div className={'actions'}>
-        <button type={'button'} onClick={() => this.props.hideModal()}>OK</button>
-      </div>
-    </div>;
-  }
-
-  /**
    * Renders the "Are you sure?" modal for resetting the app
    * @returns JSX Element
    */
@@ -523,7 +499,6 @@ interface ReduxProps {
   playerProfiles: {
     [key: string]: string
   },
-  previousVersion: string,
   section: UITypes.Sections,
   version: string,
   hotUtilsSubscription: boolean,
@@ -546,7 +521,6 @@ const mapStateToProps = (state: IAppState) => {
     modalContent: state?.modal?.content ?? '',
     isModalCancelable: state?.modal?.cancelable ?? false,
     playerProfiles: state.playerProfiles,
-    previousVersion: state.previousVersion,
     section: state.section,
     version: state.version,
     hotUtilsSubscription: state.hotUtilsSubscription,

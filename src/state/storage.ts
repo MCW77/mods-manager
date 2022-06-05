@@ -63,7 +63,6 @@ export interface IAppState {
   playerProfiles: {
     [key: string]: string
   }, // A simple map from ally codes to player names for all available profiles
-  previousVersion: string,
   profile: PlayerProfile, // All the data about the current character
   section: UITypes.Sections,
   previousSection: UITypes.Sections,
@@ -122,7 +121,6 @@ export class AppState {
     },
     optimizerView: 'edit',
     playerProfiles: {}, // A simple map from ally codes to player names for all available profiles
-    previousVersion: String(import.meta.env.VITE_VERSION) || 'local',
     profile: PlayerProfile.Default, // All the data about the current character
     progress: {
       character: null,
@@ -214,7 +212,6 @@ export function deserializeState(state: IAppState): IAppState {
     modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
     modListFilter: state.modListFilter || AppState.Default.modListFilter,
     optimizerView: state.optimizerView || AppState.Default.optimizerView,
-    previousVersion: state.version,
     section: state.section,
     showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
     version: version
