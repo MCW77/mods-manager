@@ -1,20 +1,27 @@
+// react
 import React from 'react';
+import { TFunction, withTranslation, WithTranslation } from 'react-i18next';
 import {connect, ConnectedProps} from "react-redux";
 
-import { TFunction, withTranslation, WithTranslation } from 'react-i18next';
-
+// styles
 import './ModStats.css';
 
+// state
 import { IAppState } from '../../state/storage';
-import { Character, Characters } from '../../domain/Character';
+
+// domain
 import { CharacterNames } from '../../constants/characterSettings';
-import { Mod } from '../../domain/Mod';
 import { modScores } from '../../domain/constants/ModScoresConsts';
+
+import { Character, Characters } from '../../domain/Character';
+import { Mod } from '../../domain/Mod';
 import { OptimizationPlan} from '../../domain/OptimizationPlan';
 import { SecondaryStats } from '../../domain/Stats';
 
+// components
 import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
 import SellModButton from "../SellModButton/SellModButton";
+
 
 class ModStats extends React.PureComponent<Props> {
   render() {

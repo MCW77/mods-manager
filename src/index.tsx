@@ -1,20 +1,31 @@
+// react
+import { configureStore } from '@reduxjs/toolkit';
 import React, { Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from "react-redux";
-import { configureStore } from '@reduxjs/toolkit'
+import { ThunkDispatch } from "./state/reducers/modsOptimizer";
 
-import './i18n.ts';
+// styles
 import './index.css';
 
 import registerServiceWorker from './registerServiceWorker';
+import './i18n.ts';
 
+// state
 import getDatabase from "./state/storage/Database";
 
-import modsOptimizer, { ThunkDispatch } from "./state/reducers/modsOptimizer";
+// actions
+import {
+  showError,
+} from "./state/actions/app";
+import {
+  databaseReady,
+} from "./state/actions/storage";
 
-import { showError } from "./state/actions/app";
-import { databaseReady } from "./state/actions/storage";
+// reducers
+import modsOptimizer from "./state/reducers/modsOptimizer";
 
+// containers
 import App from './containers/App/App';
 
 

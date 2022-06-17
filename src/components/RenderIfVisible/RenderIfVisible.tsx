@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+// react
+import React, { useState, useRef, useEffect } from 'react';
 
-const isWindowAvailable = typeof window !== 'undefined';
-const isRequestIdleCallbackAvailable = isWindowAvailable && 'requestIdleCallback' in window;
 
 type Props = {
   defaultHeight?: number,
@@ -9,6 +8,10 @@ type Props = {
   root?: React.RefObject<HTMLElement> | null,
   children: React.ReactNode,
 }
+
+const isWindowAvailable = typeof window !== 'undefined';
+const isRequestIdleCallbackAvailable = isWindowAvailable && 'requestIdleCallback' in window;
+
 
 const RenderIfVisible = ({
   defaultHeight = 300,

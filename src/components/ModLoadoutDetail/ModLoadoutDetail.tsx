@@ -1,16 +1,22 @@
+// react
 import React from "react";
 
+// styles
 import './ModLoadoutDetail.css';
 
+// domain
 import { Character } from "../../domain/Character";
-import * as CharacterStatNames from "../../modules/profilesManagement/domain/CharacterStatNames";
-import { CharacterSummaryStats as CSStats } from "../../domain/Stats";
 import { ModLoadout } from "../../domain/ModLoadout";
-import { OptimizationPlan} from "../../domain/OptimizationPlan";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import { MissedGoals } from "../../domain/PlayerProfile";
+import { CharacterSummaryStats as CSStats } from "../../domain/Stats";
+import { TargetStat } from "../../domain/TargetStat";
 
+import * as CharacterStatNames from "../../modules/profilesManagement/domain/CharacterStatNames";
+
+// components
 import ModLoadoutView from "../ModLoadoutView/ModLoadoutView";
-import { MissedGoals } from "domain/PlayerProfile";
-import { TargetStat } from "domain/TargetStat";
+
 
 interface PlayerStat {
   name: CSStats.DisplayStatNames,

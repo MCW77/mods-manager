@@ -1,14 +1,21 @@
+// react
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import "./Sidebar.css";
 
-import { toggleSidebar } from "../../state/actions/app";
+// state
+import { IAppState } from "../../state/storage";
 
-import { IAppState } from "state/storage";
-import * as UITypes from 'components/types';
+// actions
+import {
+  toggleSidebar,
+} from "../../state/actions/app";
 
+// components
+import * as UITypes from '../components/types';
 
 
 class Sidebar extends React.PureComponent<Props> {

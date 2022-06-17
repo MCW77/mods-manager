@@ -1,6 +1,15 @@
+// react
 import React from 'react';
 import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 
+// utils
+import groupByKey from "../../utils/groupByKey";
+
+// state
+import { IAppState } from "../storage";
+import getDatabase, { IUserData } from "../storage/Database";
+
+// actions
 import { saveTemplates } from "./characterEdit"
 import {
   loadProfile,
@@ -11,15 +20,16 @@ import {
   setProfile,
 } from "./storage";
 
-import { IAppState } from "../storage";
-import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
-import type * as UITypes from "../../components/types";
-
-import getDatabase, { IUserData } from "../storage/Database";
-import groupByKey from "../../utils/groupByKey";
-import { Mod } from "../../domain/Mod";
+// domain
 import * as C3POMods from "../../modules/profilesManagement/dtos/c3po";
 import * as C3POMappers from "../../modules/profilesManagement/mappers/c3po";
+
+import { Mod } from "../../domain/Mod";
+import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
+
+// components
+import type * as UITypes from "../../components/types";
+
 
 export const CHANGE_SECTION = 'CHANGE_SECTION' as const;
 export const SHOW_MODAL = 'SHOW_MODAL' as const;

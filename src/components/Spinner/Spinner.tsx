@@ -1,10 +1,14 @@
+// react
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import './Spinner.css';
 
-import { IAppState } from 'state/storage';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+// state
+import { IAppState } from '../../state/storage';
+
 
 class Spinner extends React.PureComponent<Props> {
   render() {

@@ -1,11 +1,19 @@
-import {PlayerProfile, IFlatPlayerProfile} from "../../domain/PlayerProfile";
-import nothing from "../../utils/nothing";
-import { BaseCharacter } from "../../domain/BaseCharacter";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
-import OptimizerRun from "domain/OptimizerRun";
+// utils
 import { defer } from "../../utils/defer";
-import { CharacterTemplate, CharacterTemplates, FlatCharacterTemplate, FlatCharacterTemplates } from "domain/CharacterTemplates";
-import { SelectedCharacters } from "domain/SelectedCharacters";
+import nothing from "../../utils/nothing";
+
+// domain
+import { BaseCharacter } from "../../domain/BaseCharacter";
+import {
+  CharacterTemplate,
+  CharacterTemplates,
+  FlatCharacterTemplate,
+  FlatCharacterTemplates,
+} from "domain/CharacterTemplates";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import OptimizerRun from "../../domain/OptimizerRun";
+import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
+import { SelectedCharacters } from "../../domain/SelectedCharacters";
 
 type DBError = DOMException | null;
 

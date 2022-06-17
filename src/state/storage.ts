@@ -1,28 +1,32 @@
-/**
- * Save the state of the application to localStorage
- * @param state Object
- */
-import { pick } from "../utils/mapObject";
+// utils
 import { mapValues } from "lodash-es";
-import { Character } from "../domain/Character";
-import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
+import formatAllyCode from "../utils/formatAllyCode";
+import { pick } from "../utils/mapObject";
+import { ElementType } from "../utils/typeHelper";
+
 /*
 import groupByKey from "../utils/groupByKey";
 import Mod from "../domain/Mod";
 import cleanAllyCode from "../utils/cleanAllyCode";
 */
-import formatAllyCode from "../utils/formatAllyCode";
-import { CharacterTemplatesByName } from "../domain/CharacterTemplates";
-import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 
-import { ElementType } from "utils/typeHelper";
-import * as UITypes from "components/types";
-import { Characters } from "domain/Character";
-import { BaseCharactersById } from "domain/BaseCharacter";
-import { TargetStats } from "domain/TargetStat";
-import { CharacterEditMode } from "containers/CharacterEditForm/CharacterEditForm";
-import { SetStats } from "domain/Stats";
+// domain
+import { BaseCharactersById } from "../domain/BaseCharacter";
+import { Character } from "../domain/Character";
+import { Characters } from "../domain/Character";
+import { CharacterTemplatesByName } from "../domain/CharacterTemplates";
 import { ModListFilter } from "./actions/review";
+import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
+import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
+import { SetStats } from "../domain/Stats";
+import { TargetStats } from "../domain/TargetStat";
+
+// components
+import * as UITypes from "../components/types";
+
+// containers
+import { CharacterEditMode } from "../containers/CharacterEditForm/CharacterEditForm";
+
 
 export type SetRestrictions = {
   [key in SetStats.GIMOStatNames]: number

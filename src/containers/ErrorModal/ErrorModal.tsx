@@ -1,10 +1,19 @@
+// react
 import React from "react";
+import { connect, ConnectedProps } from "react-redux";
 import Redux from "redux";
 
-import { connect, ConnectedProps } from "react-redux";
+// state
+import { IAppState } from "../../state/storage";
+
+// actions
+import {
+  hideError,
+} from "../../state/actions/app";
+
+// components
 import WarningLabel from "../../components/WarningLabel/WarningLabel";
-import { hideError } from "../../state/actions/app";
-import { IAppState } from "state/storage";
+
 
 class ErrorModal extends React.PureComponent<ErrorModalProps> {
   render() {

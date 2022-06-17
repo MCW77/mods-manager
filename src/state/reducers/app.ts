@@ -1,5 +1,9 @@
-import * as Actions from "state/actions/app";
+// state
 import {AppState, IAppState} from "../storage";
+
+// actions
+import * as Actions from "../actions/app";
+
 
 export function changeSection(state: IAppState, action: ReturnType<typeof Actions.changeSection>): IAppState {
   return Object.assign({}, state, {

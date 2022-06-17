@@ -1,15 +1,25 @@
+// react
 import React, { createRef } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// state
 import { IAppState } from 'state/storage';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
 
-import { hideModal, showError, showModal } from "../../state/actions/app";
+// actions
+import {
+  hideModal,
+  showError,
+  showModal,
+} from "../../state/actions/app";
+
 import { CharacterListGenerationParameters, fetchCharacterList, UseCaseModes } from "../../state/actions/data";
 
+// components
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import Spoiler from "../../components/Spoiler/Spoiler";
 import Toggle from "../../components/Toggle/Toggle";
+
 
 type ToggleType = typeof Toggle;
 type tt = HTMLFormElement;

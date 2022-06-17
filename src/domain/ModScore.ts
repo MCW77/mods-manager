@@ -1,4 +1,6 @@
+// domain
 import { Mod } from './Mod';
+
 
 export default class ModScore {
   constructor(

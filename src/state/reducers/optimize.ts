@@ -1,5 +1,9 @@
+// react
 import { AnyAction } from "redux";
-import { IAppState } from "state/storage";
+
+// state
+import { IAppState } from "../storage";
+
 
 export function optimizeMods(state: IAppState): IAppState {
   return Object.assign({}, state, {

@@ -1,12 +1,18 @@
+// react
 import React, { PureComponent } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import * as Redux from 'redux';
 
-import Review from "../Review/Review";
-import CharacterEditView from "../CharacterEditView/CharacterEditView";
-
+// styles
 import "./OptimizerView.css";
-import { connect, ConnectedProps } from "react-redux";
-import { IAppState } from "state/storage";
+
+// state
+import { IAppState } from "../../state/storage";
+
+// containers
+import CharacterEditView from "../CharacterEditView/CharacterEditView";
+import Review from "../Review/Review";
+
 
 class OptimizerView extends PureComponent<Props> {
   render() {

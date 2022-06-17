@@ -1,5 +1,8 @@
-import { Stats } from "./Stats";
+// domain
 import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+
+import { Stats } from "./Stats";
+
 
 export type GIMOStatNames =  CharacterStatNames.All | CalculatedStatNames;
 

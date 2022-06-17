@@ -1,5 +1,8 @@
-import * as ReviewActions from "state/actions/review";
-import { IAppState } from "state/storage";
+// state
+import { IAppState } from "../storage";
+
+// actions
+import * as ReviewActions from "../actions/review";
 
 export function changeOptimizerView(state: IAppState, action: ReturnType<typeof ReviewActions.changeOptimizerView>): IAppState {
   return Object.assign({}, state, {

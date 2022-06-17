@@ -1,12 +1,23 @@
+// react
 import React from 'react';
 import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// state
 import { IAppState } from 'state/storage';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
 
+// actions
+import {
+  hideModal,
+  setIsBusy,
+} from '../../state/actions/app';
+import {
+  cancelOptimizer,
+} from '../../state/actions/optimize';
+
+// components
 import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
-import { cancelOptimizer } from '../../state/actions/optimize';
-import { hideModal, setIsBusy } from '../../state/actions/app';
+
 
 class OptimizerProgress extends React.Component<Props> {
   render() {

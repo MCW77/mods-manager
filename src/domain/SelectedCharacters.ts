@@ -1,7 +1,11 @@
+// utils
+import { Dictionary } from "lodash";
+
+// domain
 import { CharacterNames } from "../constants/characterSettings";
+
 import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
 
-import { Dictionary } from "lodash";
 
 export type FlatSelectedCharacters = SelectedCharacter[];
 export type SelectedCharacters = SelectedCharacter[];

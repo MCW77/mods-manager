@@ -1,4 +1,6 @@
+// domain
 import { Stats } from "./Stats";
+
 
 // #region GIMOStatNames
 export type GIMOStatNames =

@@ -1,11 +1,15 @@
+// react
 import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from "state/reducers/modsOptimizer";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 
+// styles
 import "./AboutView.css";
 
-import { IAppState } from "state/storage";
+// state
+import { IAppState } from "../../state/storage";
+
 
 class AboutView extends React.PureComponent<Props> {
   render() {

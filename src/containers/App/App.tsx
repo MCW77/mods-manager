@@ -1,41 +1,12 @@
+// react
 import React, { PureComponent, Suspense } from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import './boilerplate.css';
 import './App.css';
-import type * as UITypes from "../../components/types";
-import OptimizerView from "../OptimizerView/OptimizerView";
-import ExploreView from "../ExploreView/ExploreView";
-import FileInput from "../../components/FileInput/FileInput";
-import Modal from "../../components/Modal/Modal";
-import Spinner from "../../components/Spinner/Spinner";
-import { connect, ConnectedProps } from "react-redux";
-import formatAllyCode from "../../utils/formatAllyCode";
-import ErrorModal from "../ErrorModal/ErrorModal";
-import {
-  changeSection,
-  deleteProfile,
-  hideModal,
-  importC3POProfile,
-  reset,
-  restoreProgress,
-  showError,
-  showModal
-} from "../../state/actions/app";
-import { checkVersion, refreshPlayerData, setHotUtilsSessionId } from "../../state/actions/data";
-import FlashMessage from "../../components/Modal/FlashMessage";
-import { saveAs } from 'file-saver';
-import { exportDatabase, loadProfile } from "../../state/actions/storage";
-import Help from '../../components/Help/Help';
-import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { IAppState } from 'state/storage';
-import { PlayerProfile } from '../../domain/PlayerProfile';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
-import { IUserData } from 'state/storage/Database';
-import { withTranslation, WithTranslation } from 'react-i18next';
-import AboutView from '../../containers/AboutView/AboutView';
-import HelpView from '../../containers/HelpView/HelpView';
-import SettingsView from '../../containers/SettingsView/SettingsView';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowsRotate,
   faFile,
@@ -51,6 +22,58 @@ import {
   faUser,
   faWrench,
 } from '@fortawesome/free-solid-svg-icons'
+
+// utils
+import { saveAs } from 'file-saver';
+import formatAllyCode from "../../utils/formatAllyCode";
+
+// state
+import { IAppState } from '../../state/storage';
+import { IUserData } from '../../state/storage/Database';
+
+// actions
+import {
+  changeSection,
+  deleteProfile,
+  hideModal,
+  importC3POProfile,
+  reset,
+  restoreProgress,
+  showError,
+  showModal
+} from "../../state/actions/app";
+import {
+  checkVersion,
+  refreshPlayerData,
+  setHotUtilsSessionId,
+} from "../../state/actions/data";
+import {
+  exportDatabase,
+  loadProfile,
+} from "../../state/actions/storage";
+
+// domain
+import { PlayerProfile } from '../../domain/PlayerProfile';
+
+// components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type * as UITypes from "../../components/types";
+
+import { Dropdown } from '../../components/Dropdown/Dropdown';
+import FileInput from "../../components/FileInput/FileInput";
+import FlashMessage from "../../components/Modal/FlashMessage";
+import Help from '../../components/Help/Help';
+import Modal from "../../components/Modal/Modal";
+import Spinner from "../../components/Spinner/Spinner";
+
+// containers
+import AboutView from '../AboutView/AboutView';
+import ErrorModal from "../ErrorModal/ErrorModal";
+import ExploreView from "../ExploreView/ExploreView";
+import HelpView from '../HelpView/HelpView';
+import OptimizerView from "../OptimizerView/OptimizerView";
+import SettingsView from '../SettingsView/SettingsView';
+
 
 class App extends PureComponent<Props> {
 

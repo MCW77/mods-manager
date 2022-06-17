@@ -1,15 +1,26 @@
+// react
 import React from 'react';
 import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import './Review.css';
 
-import { groupBy } from "../../utils/groupBy"
+// utils
 import { flatten, mapValues, uniq } from "lodash-es";
+import copyToClipboard from "../../utils/clipboard";
 import collectByKey from "../../utils/collectByKey";
-import copyToClipboard from "../../utils/clipboard"
+import { groupBy } from "../../utils/groupBy";
 import groupByKey from "../../utils/groupByKey";
 
+// state
+import { IAppState } from '../../state/storage';
+
+// actions
+import {
+  hideModal,
+  showModal,
+} from "../../state/actions/app";
 import {
   changeModListFilter,
   changeOptimizerView,
@@ -19,30 +30,34 @@ import {
   unequipMod,
   unequipMods
 } from "../../state/actions/review";
-import { hideModal, showModal } from "../../state/actions/app";
-import { createHotUtilsProfile, moveModsWithHotUtils } from '../../state/actions/data';
+import {
+  createHotUtilsProfile,
+  moveModsWithHotUtils,
+} from '../../state/actions/data';
 
-import { CharacterNames } from 'constants/characterSettings';
-import { DOMContent } from 'components/types';
-
-import { IAppState } from 'state/storage';
-import { MissedGoals } from 'domain/PlayerProfile';
-import { Mod } from 'domain/Mod';
-import { ModLoadout } from "../../domain/ModLoadout";
+// domain
+import { CharacterNames } from '../../constants/characterSettings';
 import type * as ModTypes from "../../domain/types/ModTypes";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
 
+import { Mod } from '../../domain/Mod';
+import { ModLoadout } from "../../domain/ModLoadout";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import { MissedGoals } from '../../domain/PlayerProfile';
+
+// components
+import { DOMContent } from '../../components/types';
 
 import Arrow from "../../components/Arrow/Arrow";
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 import Credits from "../../components/Credits/Credits";
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import Help from "../../components/Help/Help"
+import Help from "../../components/Help/Help";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModLoadoutDetail from "../../components/ModLoadoutDetail/ModLoadoutDetail";
 import ModLoadoutView from "../../components/ModLoadoutView/ModLoadoutView";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Toggle from "../../components/Toggle/Toggle";
+
 
 interface HUModsProfile {
   id: CharacterNames,

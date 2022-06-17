@@ -1,19 +1,17 @@
-/**
- * Class to hold information about how a particular player is using the optimizer - their character setup and mods
- */
+// utils
 import { mapValues } from "lodash-es";
 
+// domain
+import { CharacterNames } from "../constants/characterSettings";
+import { PlayerValuesByCharacter } from "../modules/profilesManagement/domain/PlayerValues";
 import * as ModTypes from "./types/ModTypes";
-import { CharacterNames } from "constants/characterSettings";
 
 import { Character, Characters, FlatCharacters, ICharacter } from "./Character";
 import { Mod } from "./Mod";
 import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
 import OptimizerRun from "./OptimizerRun";
-
 import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
 import { TargetStat, FlatTargetStat } from "./TargetStat";
-import { PlayerValuesByCharacter } from "modules/profilesManagement/domain/PlayerValues";
 
 
 type FlatMissedGoals = [FlatTargetStat, number][];
@@ -53,6 +51,9 @@ export interface IFlatPlayerProfile {
   incrementalOptimizeIndex: number | null
 }
 
+/**
+ * Class to hold information about how a particular player is using the optimizer - their character setup and mods
+ */
 export class PlayerProfile {
   allyCode: string;
   playerName: string;

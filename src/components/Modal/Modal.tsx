@@ -1,11 +1,19 @@
+// react
 import * as React from 'react';
-import * as Redux from 'redux';
 import {connect, ConnectedProps} from "react-redux";
+import * as Redux from 'redux';
 
+// styles
 import './Modal.css';
 
-import {hideModal} from "../../state/actions/app";
-import * as UITypes from 'components/types';
+// actions
+import {
+  hideModal,
+} from "../../state/actions/app";
+
+// components
+import * as UITypes from '../types';
+
 
 class Modal extends React.PureComponent<Props> {
   render() {

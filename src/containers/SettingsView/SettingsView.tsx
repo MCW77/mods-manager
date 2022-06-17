@@ -1,24 +1,36 @@
+// react
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import './SettingsView.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleLeft,
+} from '@fortawesome/free-solid-svg-icons';
 
+// utils
 import { match } from 'ts-pattern';
 
-import { changeSection } from '../../state/actions/app';
+// state
+import { IAppState } from '../../state/storage';
+
+// actions
+import {
+  changeSection,
+} from '../../state/actions/app';
 import {
   updateForceCompleteModSets,
   updateLockUnselectedCharacters,
   updateModChangeThreshold,
 } from '../../state/actions/characterEdit';
 
-import { IAppState } from 'state/storage';
+// components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import RangeInput from '../../components/RangeInput/RangeInput';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+
 
 const SettingsView = () => {
   const previousSection = useSelector(

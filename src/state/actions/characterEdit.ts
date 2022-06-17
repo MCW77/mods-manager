@@ -1,25 +1,44 @@
-import { ThunkResult } from "state/reducers/modsOptimizer";
+// domain
+import { SetRestrictions } from "../storage";
 
-import { hideModal, showFlash, updateProfile } from "./app";
+import { SetStats } from "../../domain/Stats";
+import { TargetStat } from "../../domain/TargetStat";
 
+// react
+import { ThunkResult } from "../reducers/modsOptimizer";
+
+// utils
+import { mapValues } from "lodash-es";
 import collectByKey from "../../utils/collectByKey";
 import groupByKey from "../../utils/groupByKey";
-import { mapValues } from "lodash-es";
 
-import { SetRestrictions } from "state/storage";
+// state
 import getDatabase from "../storage/Database";
-import { loadCharacterTemplates } from "./storage";
 
-import { CharacterNames } from "constants/characterSettings";
+// actions
+import {
+  hideModal,
+  showFlash,
+} from "./app";
+
+// thunks
+import {
+  updateProfile,
+} from "./app";
+import {
+  loadCharacterTemplates,
+} from "./storage";
+
+// domain
+import { CharacterNames } from "../../constants/characterSettings";
 import templatesJSON from "../../constants/characterTemplates.json";
 
-import { Character, Characters } from "domain/Character";
-import { CharacterTemplate, CharacterTemplates } from "domain/CharacterTemplates";
+import { Character, Characters } from "../../domain/Character";
+import { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTemplates";
 import { OptimizationPlan, OptimizationPlansById } from "../../domain/OptimizationPlan";
-import { PlayerProfile } from "domain/PlayerProfile";
-import { SelectedCharacters } from "domain/SelectedCharacters";
-import { SetStats } from "domain/Stats";
-import { TargetStat } from "domain/TargetStat";
+import { PlayerProfile } from "../../domain/PlayerProfile";
+import { SelectedCharacters } from "../../domain/SelectedCharacters";
+
 
 const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ name }) => name);
 

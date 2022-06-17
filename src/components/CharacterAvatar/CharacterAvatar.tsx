@@ -1,10 +1,14 @@
+// react
 import * as React from 'react';
 import { connect, ConnectedProps } from "react-redux";
 
+// styles
 import './CharacterAvatar.css';
 
+// domain
 import { BaseCharacter, BaseCharactersById, defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
+
 
 class CharacterAvatar extends React.PureComponent<Props> {
   render(): React.ReactNode {

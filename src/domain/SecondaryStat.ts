@@ -1,5 +1,7 @@
+// domain
 import { Stats } from "./Stats";
 import StatScore from "./StatScore";
+
 
 export type HUNeutralStats = 'Speed' | 'Potency %' | 'Resistance %';
 export type HUOffensiveStats = 'Offense' | 'Offense %' | 'Crit Chance %';

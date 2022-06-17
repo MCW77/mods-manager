@@ -1,12 +1,15 @@
-import setBonuses from "../constants/setbonuses";
-import { Mod } from "./Mod";
-import { Character } from "./Character";
-import { OptimizationPlan} from "./OptimizationPlan";
-import * as ModTypes from "./types/ModTypes";
+// domain
 import * as ModConsts from "./constants/ModConsts";
+import setBonuses from "../constants/setbonuses";
+import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import * as ModTypes from "./types/ModTypes";
+
+import { Character } from "./Character";
+import { Mod } from "./Mod";
+import { OptimizationPlan} from "./OptimizationPlan";
 import SetBonus from "./SetBonus";
 import { Stats, CharacterSummaryStats as CSStats, SetStats } from "./Stats";
-import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+
 
 type SlotIndexer = {
   [key in ModTypes.GIMOSlots]: Mod | null;

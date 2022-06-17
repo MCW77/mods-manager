@@ -1,4 +1,6 @@
-import { CharacterNames } from "constants/characterSettings";
+// domain
+import { CharacterNames } from "../constants/characterSettings";
+
 
 export type GIMOStatNames =
   | 'Health'

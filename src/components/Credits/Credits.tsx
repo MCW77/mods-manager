@@ -1,6 +1,9 @@
+// react
 import React from 'react';
 
+// styles
 import './Credits.css';
+
 
 class Credits extends React.PureComponent {
   render() {

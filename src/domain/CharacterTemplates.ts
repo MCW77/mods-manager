@@ -1,4 +1,6 @@
+// domain
 import { FlatSelectedCharacters, SelectedCharacters } from "./SelectedCharacters";
+
 
 export type FlatCharacterTemplates = FlatCharacterTemplate[];
 

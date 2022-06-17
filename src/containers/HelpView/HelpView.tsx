@@ -1,16 +1,28 @@
+// react
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
+// styles
 import './HelpView.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleLeft,
+} from '@fortawesome/free-solid-svg-icons';
 
-import { changeSection } from '../../state/actions/app';
-
+// utils
 import { match } from 'ts-pattern';
 
-import { IAppState } from 'state/storage';
+// state
+import { IAppState } from '../../state/storage';
+
+// actions
+import {
+  changeSection,
+} from '../../state/actions/app';
+
+// components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const HelpView = () => {
   const previousSection = useSelector(

@@ -1,18 +1,31 @@
-
+// react
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
-import { hideModal, showModal } from '../../state/actions/app';
-import { deleteMod } from '../../state/actions/storage';
-
+// state
 import { IAppState } from '../../state/storage';
+
+// actions
+import {
+  hideModal,
+  showModal,
+} from '../../state/actions/app';
+
+import {
+  deleteMod,
+} from '../../state/actions/storage';
+
+// domain
 import { Mod } from '../../domain/Mod';
+
+// components
 import type * as UITypes from "../../components/types";
 
 import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
 import ModImage from '../ModImage/ModImage';
 import ModStats from '../ModStats/ModStats';
+
 
 class SellModButton extends React.PureComponent<Props> {
   render() {
