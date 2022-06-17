@@ -4,7 +4,7 @@ import {
 } from "../../domain/modules/ModsViewOptions";
 
 
-export const CHANGE_MODS_VIEW_OPTIONS = 'CHANGE_MODS_VIEW_OPTIONS';
+export const CHANGE_MODS_VIEW_OPTIONS = 'CHANGE_MODS_VIEW_OPTIONS' as const;
 
 /**
  * Update the view options for the explore view
