@@ -29,10 +29,11 @@ import { IModSuggestion } from "../../domain/PlayerProfile";
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 
 
-export const CANCEL_OPTIMIZE_MODS = 'CANCEL_OPTIMIZE_MODS';
-export const FINISH_OPTIMIZE_MODS = 'FINISH_OPTIMIZE_MODS';
-export const OPTIMIZE_MODS = 'OPTIMIZE_MODS';
-export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
+export const CANCEL_OPTIMIZE_MODS = 'CANCEL_OPTIMIZE_MODS' as const;
+export const FINISH_OPTIMIZE_MODS = 'FINISH_OPTIMIZE_MODS' as const;
+export const OPTIMIZE_MODS = 'OPTIMIZE_MODS' as const;
+export const UPDATE_PROGRESS = 'UPDATE_PROGRESS' as const;
+
 
 export function cancelOptimizeMods() {
   return {

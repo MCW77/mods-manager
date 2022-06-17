@@ -15,8 +15,8 @@ import { CharacterNames } from "../../constants/characterSettings";
 import { Mod } from "../../domain/Mod";
 
 
-export const CHANGE_MODLIST_FILTER = 'CHANGE_MODLIST_FILTER';
-export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW';
+export const CHANGE_MODLIST_FILTER = 'CHANGE_MODLIST_FILTER' as const;
+export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW' as const;
 
 type ViewOptions = 'list' | 'sets';
 type SortOptions = 'currentCharacter' | 'assignedCharacter';
