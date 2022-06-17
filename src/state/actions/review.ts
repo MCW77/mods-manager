@@ -15,8 +15,8 @@ import { CharacterNames } from "../../constants/characterSettings";
 import { Mod } from "../../domain/Mod";
 
 
-export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW';
 export const CHANGE_MODLIST_FILTER = 'CHANGE_MODLIST_FILTER';
+export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW';
 
 type ViewOptions = 'list' | 'sets';
 type SortOptions = 'currentCharacter' | 'assignedCharacter';
@@ -30,30 +30,23 @@ export interface ModListFilter {
   tag: string;
 }
 
+/**
+ * Update the filter for the mod list view
+ * @param newFilter {{view: string, sort: string, tag: string}}
+ * @returns {{type: string, filter: *}}
+ */
+export function changeModListFilter(newFilter: ModListFilter) {
+  return {
+    type: CHANGE_MODLIST_FILTER,
+    filter: newFilter
+  } as const;
+}
+
 export function changeOptimizerView(newView: string) {
   return {
     type: CHANGE_OPTIMIZER_VIEW,
     view: newView
   } as const;
-}
-
-/**
- * Unassign a mod
- * @param modID {string}
- * @returns {Function}
- */
-export function unequipMod(modID: string) {
-  return updateProfile(profile => {
-    const mods = groupByKey(profile.mods, mod => mod.id);
-    const oldMod = mods[modID];
-    const newMod = oldMod ? oldMod.unequip() : null;
-
-    return newMod ?
-      profile.withMods(Object.values(Object.assign({}, mods, {
-        [modID]: newMod
-      }))) :
-      profile;
-  });
 }
 
 /**
@@ -81,20 +74,6 @@ export function reassignMod(modID: string, characterID: CharacterNames) {
 }
 
 /**
- * Remove a set of mods from their assigned character
- * @param modIDS {Array<string>}
- * @returns {Function}
- */
-export function unequipMods(modIDs: string[]) {
-  return updateProfile(profile => {
-    const modsById = groupByKey(profile.mods, mod => mod.id);
-    const modsUpdate = groupByKey(modIDs.map(modID => modsById[modID].unequip()), mod => mod.id);
-
-    return profile.withMods(Object.values(Object.assign({}, modsById, modsUpdate)));
-  });
-}
-
-/**
  * Reassign a set of mods to a new character
  * @param modIDs {Array<string>}
  * @param characterID {string}
@@ -118,15 +97,36 @@ export function reassignMods(modIDs: string[], characterID: CharacterNames) {
 }
 
 /**
- * Update the filter for the mod list view
- * @param newFilter {{view: string, sort: string, tag: string}}
- * @returns {{type: string, filter: *}}
+ * Unassign a mod
+ * @param modID {string}
+ * @returns {Function}
  */
-export function changeModListFilter(newFilter: ModListFilter) {
-  return {
-    type: CHANGE_MODLIST_FILTER,
-    filter: newFilter
-  } as const;
+export function unequipMod(modID: string) {
+  return updateProfile(profile => {
+    const mods = groupByKey(profile.mods, mod => mod.id);
+    const oldMod = mods[modID];
+    const newMod = oldMod ? oldMod.unequip() : null;
+
+    return newMod ?
+      profile.withMods(Object.values(Object.assign({}, mods, {
+        [modID]: newMod
+      }))) :
+      profile;
+  });
+}
+
+/**
+ * Remove a set of mods from their assigned character
+ * @param modIDS {Array<string>}
+ * @returns {Function}
+ */
+export function unequipMods(modIDs: string[]) {
+  return updateProfile(profile => {
+    const modsById = groupByKey(profile.mods, mod => mod.id);
+    const modsUpdate = groupByKey(modIDs.map(modID => modsById[modID].unequip()), mod => mod.id);
+
+    return profile.withMods(Object.values(Object.assign({}, modsById, modsUpdate)));
+  });
 }
 
 /**
