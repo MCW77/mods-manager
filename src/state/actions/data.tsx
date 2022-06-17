@@ -79,6 +79,30 @@ interface FetchedPlayerData {
   profile: FetchedProfile;
 }
 
+
+function applyCharacterList(overwrite: boolean, characterList: CharacterNames[]) {
+  return updateProfile(profile => {
+    const startingList = overwrite ? [] : profile!.selectedCharacters;
+    const startingCharacterIDs = startingList.map(selectedCharacter => selectedCharacter.id)
+    const charactersToApply = characterList.filter(characterID => !startingCharacterIDs.includes(characterID))
+
+    const newSelectedCharacters = startingList.concat(
+      charactersToApply.map(characterID => {
+        const character = profile.characters[characterID]
+
+        return character ?
+          { id: characterID, target: character.defaultTarget() } :
+          null
+      }).filter(x => null !== x) as {
+        id: CharacterNames,
+        target: OptimizationPlan  
+      }[]
+    )
+
+    return profile.withSelectedCharacters(newSelectedCharacters)
+  })
+}
+
 export function checkVersion() {
   return function (dispatch: ThunkDispatch) {
     return fetchVersion()
@@ -92,6 +116,84 @@ export function checkVersion() {
   }
 }
 
+export function fetchCharacterList(
+  mode: UseCaseModes,
+  overwrite: boolean,
+  allyCode: string,
+  parameters: CharacterListGenerationParameters,
+): ThunkResult<void> {
+  return function (dispatch) {
+    dispatch(setIsBusy(true))
+
+    return post(
+      'https://api.mods-optimizer.swgoh.grandivory.com/characterlist',
+      {
+        allyCode: allyCode,
+        mode: mode,
+        parameters: parameters,
+      }
+    )
+      .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
+      .catch(error => {
+        dispatch(showError(error.message))
+      })
+      .finally(() => dispatch(setIsBusy(false)))
+  }
+}
+
+/**
+ * Fetch base character data from the swgoh.gg API
+ * @returns {Promise<BaseCharactersById>}
+ */
+function fetchCharacters(): Promise<BaseCharactersById> {
+  return fetch('https://api.mods-optimizer.swgoh.grandivory.com/characters/')
+    .then(response => response.json())
+    .then((response) => {
+     
+      return mapAPI2BaseCharactersById(response.units)
+    }).catch();
+}
+
+/*
+function fetchCharacterStats(characters = null) {
+  if (null !== characters) {
+    return fetch('https://api.mods-optimizer.swgoh.grandivory.com/stat-calc-data')
+      .catch(() => {
+        throw new Error('The game data used to calculate character stats is currently being rebuilt. ' +
+          'Please wait 60 seconds and try again')
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          response.text().then(text => { throw new Error(text) })
+        }
+      })
+      .then(statCalculatorData => {
+        const eng_us = require('../../constants/statCalculatorEng_us.json');
+        swgohStatCalc.setGameData(statCalculatorData);
+
+        const characterData = Object.keys(characters).map(charID => ({
+          'defId': charID,
+          'rarity': characters[charID].stars,
+          'level': characters[charID].level,
+          'gear': characters[charID].gearLevel,
+          'equipped': characters[charID].gearPieces.map(id => ({ 'equipmentId': id })),
+          'relic': {
+            'currentTier': characters[charID].relicTier
+          }
+        }));
+
+        swgohStatCalc.calcRosterStats(characterData, { withoutModCalc: true, language: eng_us });
+
+        return characterData;
+      })
+  } else {
+    return Promise.resolve(null);
+  }
+}
+*/
+
 function fetchVersion() {
   return fetch(
     'https://api.mods-optimizer.swgoh.grandivory.com/versionapi',
@@ -104,6 +206,24 @@ function fetchVersion() {
         'Error fetching the current version. Please check to make sure that you are on the latest version'
       );
     });
+}
+
+function post(url = '', data = {}, extras = {}) {
+  return fetch(url, Object.assign({
+    method: 'POST',
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+    mode: "cors",
+  }, extras) as RequestInit)
+    .then(
+      response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.text().then(errorText => Promise.reject(new Error(errorText)));
+        }
+      }
+    );
 }
 
 function processVersion(version: string): ThunkResult<void> {
@@ -123,24 +243,6 @@ function processVersion(version: string): ThunkResult<void> {
       ));
     }
   }
-}
-
-function post(url = '', data = {}, extras = {}) {
-  return fetch(url, Object.assign({
-    method: 'POST',
-    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-    mode: "cors",
-  }, extras) as RequestInit)
-    .then(
-      response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return response.text().then(errorText => Promise.reject(new Error(errorText)));
-        }
-      }
-    );
 }
 
 /**
@@ -240,57 +342,67 @@ export function refreshPlayerData(
 }
 
 /**
- * Fetch base character data from the swgoh.gg API
- * @returns {Promise<BaseCharactersById>}
+ * Show messages related to the results of the fetch operation
+ *
+ * @param {Object} fetchData The results of the various API calls to gather player and game data
+ * @param {Array<string>} errorMessages Any errors that should be shown with the results
+ * @param {boolean} usedHotUtils Whether HotUtils' API was used to get up-to-date mods
+ * @param {boolean} usedSession Whether a HotUtils session was used to pull unequipped mods
  */
-function fetchCharacters(): Promise<BaseCharactersById> {
-  return fetch('https://api.mods-optimizer.swgoh.grandivory.com/characters/')
-    .then(response => response.json())
-    .then((response) => {
-     
-      return mapAPI2BaseCharactersById(response.units)
-    }).catch();
-}
+function showFetchResult(fetchData: FetchedPlayerData, errorMessages: string[], usedSession: boolean): ThunkResult<void> {
+  return function (dispatch) {
+    const fetchResults: JSX.Element[] = [];
 
-/*
-function fetchCharacterStats(characters = null) {
-  if (null !== characters) {
-    return fetch('https://api.mods-optimizer.swgoh.grandivory.com/stat-calc-data')
-      .catch(() => {
-        throw new Error('The game data used to calculate character stats is currently being rebuilt. ' +
-          'Please wait 60 seconds and try again')
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        } else {
-          response.text().then(text => { throw new Error(text) })
-        }
-      })
-      .then(statCalculatorData => {
-        const eng_us = require('../../constants/statCalculatorEng_us.json');
-        swgohStatCalc.setGameData(statCalculatorData);
+    if (errorMessages.length) {
+      fetchResults.push(
+        <div className={'errors'} key={0}>
+          {errorMessages.map((message, index) => <p key={index}>{message}</p>)}
+        </div>
+      );
+    }
 
-        const characterData = Object.keys(characters).map(charID => ({
-          'defId': charID,
-          'rarity': characters[charID].stars,
-          'level': characters[charID].level,
-          'gear': characters[charID].gearLevel,
-          'equipped': characters[charID].gearPieces.map(id => ({ 'equipmentId': id })),
-          'relic': {
-            'currentTier': characters[charID].relicTier
-          }
-        }));
+    fetchResults.push(
+      <p key={100}>
+        Successfully pulled data for <span className={'gold'}>{Object.keys(fetchData.profile.playerValues).length}
+        </span> characters and <span className={'gold'}>{fetchData.profile.mods.length}</span> mods.
+      </p>
+    );
+    fetchResults.push(
+      <p key={111}>
+        <strong className={'gold'}>Your mod data was pulled from HotUtils, and is completely up-to-date!</strong>
+      </p>
+    )
+    fetchResults.push(
+      <p key={121}>
+        <strong className={'gold'}>You can fetch fresh mod data again immediately!</strong>
+      </p>
+    );
 
-        swgohStatCalc.calcRosterStats(characterData, { withoutModCalc: true, language: eng_us });
+    if (!usedSession) {
+      fetchResults.push(<hr key={130} />);
+      fetchResults.push(
+        <h3 key={140}><strong>
+          Remember: The optimizer can only pull data for mods that you currently have equipped, unless you're pulling
+          data using a HotUtils session!
+        </strong></h3>
+      );
+      fetchResults.push(
+        <p key={150}>
+          If it looks like you're missing mods, try equipping them on your characters and fetching data again after
+          the time listed above.
+        </p>
+      );
+    }
 
-        return characterData;
-      })
-  } else {
-    return Promise.resolve(null);
+    dispatch(changeOptimizerView('edit'));
+    dispatch(showFlash(
+      'Success!',
+      <div className={'fetch-results'}>
+        {fetchResults}
+      </div>
+    ));
   }
 }
-*/
 
 function updatePlayerData(
   allyCode: string,
@@ -385,145 +497,108 @@ function updatePlayerData(
   }
 }
 
-/**
- * Show messages related to the results of the fetch operation
- *
- * @param {Object} fetchData The results of the various API calls to gather player and game data
- * @param {Array<string>} errorMessages Any errors that should be shown with the results
- * @param {boolean} usedHotUtils Whether HotUtils' API was used to get up-to-date mods
- * @param {boolean} usedSession Whether a HotUtils session was used to pull unequipped mods
- */
-function showFetchResult(fetchData: FetchedPlayerData, errorMessages: string[], usedSession: boolean): ThunkResult<void> {
-  return function (dispatch) {
-    const fetchResults: JSX.Element[] = [];
-
-    if (errorMessages.length) {
-      fetchResults.push(
-        <div className={'errors'} key={0}>
-          {errorMessages.map((message, index) => <p key={index}>{message}</p>)}
-        </div>
-      );
-    }
-
-    fetchResults.push(
-      <p key={100}>
-        Successfully pulled data for <span className={'gold'}>{Object.keys(fetchData.profile.playerValues).length}
-        </span> characters and <span className={'gold'}>{fetchData.profile.mods.length}</span> mods.
-      </p>
-    );
-    fetchResults.push(
-      <p key={111}>
-        <strong className={'gold'}>Your mod data was pulled from HotUtils, and is completely up-to-date!</strong>
-      </p>
-    )
-    fetchResults.push(
-      <p key={121}>
-        <strong className={'gold'}>You can fetch fresh mod data again immediately!</strong>
-      </p>
-    );
-
-    if (!usedSession) {
-      fetchResults.push(<hr key={130} />);
-      fetchResults.push(
-        <h3 key={140}><strong>
-          Remember: The optimizer can only pull data for mods that you currently have equipped, unless you're pulling
-          data using a HotUtils session!
-        </strong></h3>
-      );
-      fetchResults.push(
-        <p key={150}>
-          If it looks like you're missing mods, try equipping them on your characters and fetching data again after
-          the time listed above.
-        </p>
-      );
-    }
-
-    dispatch(changeOptimizerView('edit'));
-    dispatch(showFlash(
-      'Success!',
-      <div className={'fetch-results'}>
-        {fetchResults}
-      </div>
-    ));
-  }
-}
-
-export function fetchCharacterList(
-  mode: UseCaseModes,
-  overwrite: boolean,
-  allyCode: string,
-  parameters: CharacterListGenerationParameters,
-): ThunkResult<void> {
-  return function (dispatch) {
-    dispatch(setIsBusy(true))
-
-    return post(
-      'https://api.mods-optimizer.swgoh.grandivory.com/characterlist',
-      {
-        allyCode: allyCode,
-        mode: mode,
-        parameters: parameters,
-      }
-    )
-      .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
-      .catch(error => {
-        dispatch(showError(error.message))
-      })
-      .finally(() => dispatch(setIsBusy(false)))
-  }
-}
-
-function applyCharacterList(overwrite: boolean, characterList: CharacterNames[]) {
-  return updateProfile(profile => {
-    const startingList = overwrite ? [] : profile!.selectedCharacters;
-    const startingCharacterIDs = startingList.map(selectedCharacter => selectedCharacter.id)
-    const charactersToApply = characterList.filter(characterID => !startingCharacterIDs.includes(characterID))
-
-    const newSelectedCharacters = startingList.concat(
-      charactersToApply.map(characterID => {
-        const character = profile.characters[characterID]
-
-        return character ?
-          { id: characterID, target: character.defaultTarget() } :
-          null
-      }).filter(x => null !== x) as {
-        id: CharacterNames,
-        target: OptimizationPlan  
-      }[]
-    )
-
-    return profile.withSelectedCharacters(newSelectedCharacters)
-  })
-}
-
 //***********************/
 // HotUtils Integration */
 //***********************/
 
-export function setHotUtilsSessionId(allyCode: string, sessionId: string): ThunkResult<Promise<void>> {
-  return async function (dispatch) {
-    const db = getDatabase();
-    try {
-      const profile: PlayerProfile = await db.getProfile(allyCode);
-      if (!profile) {
-        // If there's no profile to put the Session ID into, then do a pull of data and pass in the session ID
-        dispatch(refreshPlayerData(allyCode, false, sessionId, false));
-      } else {
-        const newProfile = profile.withHotUtilsSessionId(sessionId);
-        db.saveProfile(
-          newProfile,
-          () => dispatch(setProfile(newProfile)),
-          error => dispatch(showFlash(
-            'Storage Error',
-            'Error applying HotUtils session ID to your profile. Please try again.'
-          ))
-        )
+function cancelModMove(taskId: number, sessionId: string):ThunkResult<void> {
+  return function (dispatch) {
+    return post(
+      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+      {
+        'action': 'cancelmove',
+        'sessionId': sessionId,
+        'payload': {
+          'taskId': taskId
+        }
       }
-    }
-    catch (error) {
-      dispatch(showError((error as DOMException).message));
-    }
-  };
+    )
+      .then(response => {
+        if (response.errorMessage) {
+          dispatch(hideModal());
+          dispatch(showError(response.errorMessage));
+        } else {
+          switch (response.responseCode) {
+            case 0:
+              dispatch(hideModal());
+              dispatch(showError(response.responseMessage));
+              break;
+            default:
+              modMoveActive = false;
+              dispatch(showModal(
+                'cancel-mod-move',
+                modCancelModal()
+              ))
+            // Any other functionality around cancellation will happen on the next response from `pollForModMoveStatus`
+          }
+        }
+      })
+      .catch(error => {
+        dispatch(showError(error.message));
+      })
+  }
+}
+
+export function createHotUtilsProfile(profile: HUProfileCreationData, sessionId: string):ThunkResult<void> {
+  return function (dispatch) {
+    dispatch(setIsBusy(true));
+    return post(
+      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+      {
+        'action': 'createprofile',
+        'sessionId': sessionId,
+        'payload': profile
+      }
+    )
+    .then(response => {
+      if (response.errorMessage) {
+        dispatch(hideModal());
+        dispatch(showError(response.errorMessage));
+      } else {
+        switch (response.responseCode) {
+          case 0:
+            dispatch(showError(response.responseMessage));
+            break;
+          case 1:
+            dispatch(hideModal());
+            dispatch(showFlash('Profile created successfully', 'Please login to HotUtils to manage your new profile'))
+            break;
+          default:
+            dispatch(hideModal());
+            dispatch(showError('Unknown response from HotUtils'));
+            break;
+        }
+      }
+    })
+    .catch(error => {
+      dispatch(hideModal());
+      dispatch(showError(error.message));
+    })
+    .finally(() => {
+      dispatch(setIsBusy(false));
+    })
+  }
+}
+
+export function fetchHotUtilsStatus(allyCode: string):ThunkResult<void> {
+  const cleanedAllyCode = cleanAllyCode(allyCode);
+
+  return function (dispatch) {
+    return post(
+      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+      {
+        'action': 'checksubscription',
+        'payload': {
+          'allyCode': cleanedAllyCode
+        }
+      }
+    )
+      // access codes: 0 = no subscription, 1 = subscription, but no connection, 2 = active subscription    
+      .then(response => dispatch(setHotUtilsSubscription(!!response.access)))
+      .catch(error => {
+        dispatch(showError(error.message));
+      })
+  }
 }
 
 /**
@@ -575,66 +650,28 @@ function fetchProfile(allyCode: string, sessionId: string | null) {
   })
 }
 
-export function fetchHotUtilsStatus(allyCode: string):ThunkResult<void> {
-  const cleanedAllyCode = cleanAllyCode(allyCode);
-
-  return function (dispatch) {
-    return post(
-      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
-      {
-        'action': 'checksubscription',
-        'payload': {
-          'allyCode': cleanedAllyCode
-        }
-      }
-    )
-      // access codes: 0 = no subscription, 1 = subscription, but no connection, 2 = active subscription    
-      .then(response => dispatch(setHotUtilsSubscription(!!response.access)))
-      .catch(error => {
-        dispatch(showError(error.message));
-      })
-  }
+function modCancelModal() {
+  return <div>
+    <h3>Moving Your Mods...</h3>
+    <div className={'canceling'}>
+      <p><strong className={'red-text'}>Cancelling...</strong></p>
+    </div>
+    <div className={'actions'}>
+      <button type={'button'} className={'red'} disabled={true}>Cancel</button>
+    </div>
+  </div>;
 }
 
-export function createHotUtilsProfile(profile: HUProfileCreationData, sessionId: string):ThunkResult<void> {
-  return function (dispatch) {
-    dispatch(setIsBusy(true));
-    return post(
-      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
-      {
-        'action': 'createprofile',
-        'sessionId': sessionId,
-        'payload': profile
-      }
-    )
-    .then(response => {
-      if (response.errorMessage) {
-        dispatch(hideModal());
-        dispatch(showError(response.errorMessage));
-      } else {
-        switch (response.responseCode) {
-          case 0:
-            dispatch(showError(response.responseMessage));
-            break;
-          case 1:
-            dispatch(hideModal());
-            dispatch(showFlash('Profile created successfully', 'Please login to HotUtils to manage your new profile'))
-            break;
-          default:
-            dispatch(hideModal());
-            dispatch(showError('Unknown response from HotUtils'));
-            break;
-        }
-      }
-    })
-    .catch(error => {
-      dispatch(hideModal());
-      dispatch(showError(error.message));
-    })
-    .finally(() => {
-      dispatch(setIsBusy(false));
-    })
-  }
+function modProgressModal(taskId: number, sessionId: string, progress: number, dispatch: ThunkDispatch) {
+  return <div>
+    <h3>Moving Your Mods...</h3>
+    <div className={'progress'}>
+      <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${progress}%` }} />
+    </div>
+    <div className={'actions'}>
+      <button type={'button'} className={'red'} onClick={() => dispatch(cancelModMove(taskId, sessionId))}>Cancel</button>
+    </div>
+  </div>;
 }
 
 var modMoveActive = false;
@@ -751,64 +788,28 @@ function pollForModMoveStatus(taskId: number, sessionId: string, dispatch: Thunk
   });
 }
 
-function cancelModMove(taskId: number, sessionId: string):ThunkResult<void> {
-  return function (dispatch) {
-    return post(
-      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
-      {
-        'action': 'cancelmove',
-        'sessionId': sessionId,
-        'payload': {
-          'taskId': taskId
-        }
+export function setHotUtilsSessionId(allyCode: string, sessionId: string): ThunkResult<Promise<void>> {
+  return async function (dispatch) {
+    const db = getDatabase();
+    try {
+      const profile: PlayerProfile = await db.getProfile(allyCode);
+      if (!profile) {
+        // If there's no profile to put the Session ID into, then do a pull of data and pass in the session ID
+        dispatch(refreshPlayerData(allyCode, false, sessionId, false));
+      } else {
+        const newProfile = profile.withHotUtilsSessionId(sessionId);
+        db.saveProfile(
+          newProfile,
+          () => dispatch(setProfile(newProfile)),
+          error => dispatch(showFlash(
+            'Storage Error',
+            'Error applying HotUtils session ID to your profile. Please try again.'
+          ))
+        )
       }
-    )
-      .then(response => {
-        if (response.errorMessage) {
-          dispatch(hideModal());
-          dispatch(showError(response.errorMessage));
-        } else {
-          switch (response.responseCode) {
-            case 0:
-              dispatch(hideModal());
-              dispatch(showError(response.responseMessage));
-              break;
-            default:
-              modMoveActive = false;
-              dispatch(showModal(
-                'cancel-mod-move',
-                modCancelModal()
-              ))
-            // Any other functionality around cancellation will happen on the next response from `pollForModMoveStatus`
-          }
-        }
-      })
-      .catch(error => {
-        dispatch(showError(error.message));
-      })
-  }
-}
-
-function modProgressModal(taskId: number, sessionId: string, progress: number, dispatch: ThunkDispatch) {
-  return <div>
-    <h3>Moving Your Mods...</h3>
-    <div className={'progress'}>
-      <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${progress}%` }} />
-    </div>
-    <div className={'actions'}>
-      <button type={'button'} className={'red'} onClick={() => dispatch(cancelModMove(taskId, sessionId))}>Cancel</button>
-    </div>
-  </div>;
-}
-
-function modCancelModal() {
-  return <div>
-    <h3>Moving Your Mods...</h3>
-    <div className={'canceling'}>
-      <p><strong className={'red-text'}>Cancelling...</strong></p>
-    </div>
-    <div className={'actions'}>
-      <button type={'button'} className={'red'} disabled={true}>Cancel</button>
-    </div>
-  </div>;
+    }
+    catch (error) {
+      dispatch(showError((error as DOMException).message));
+    }
+  };
 }

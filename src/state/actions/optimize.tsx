@@ -29,10 +29,16 @@ import { IModSuggestion } from "../../domain/PlayerProfile";
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 
 
-export const OPTIMIZE_MODS = 'OPTIMIZE_MODS';
-export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
 export const CANCEL_OPTIMIZE_MODS = 'CANCEL_OPTIMIZE_MODS';
 export const FINISH_OPTIMIZE_MODS = 'FINISH_OPTIMIZE_MODS';
+export const OPTIMIZE_MODS = 'OPTIMIZE_MODS';
+export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
+
+export function cancelOptimizeMods() {
+  return {
+    type: CANCEL_OPTIMIZE_MODS
+  } as const;
+}
 
 export function startModOptimization() {
   return {
@@ -46,6 +52,13 @@ export function updateProgress(progress: IncrementalOptimizationProgress) {
     progress: progress
   } as const
 } 
+
+export function cancelOptimizer():ThunkResult<void> {
+  return function (dispatch) {
+    optimizationWorker?.terminate();
+    dispatch(updateProgress({} as IncrementalOptimizationProgress));
+  };
+}
 
 /**
  * Take the results of the mod optimization and apply them to the current profile
@@ -134,12 +147,6 @@ export function finishModOptimization(result: IModSuggestion[], settings: Optimi
   );
 }
 
-export function cancelOptimizeMods() {
-  return {
-    type: CANCEL_OPTIMIZE_MODS
-  } as const;
-}
-
 let optimizationWorker: Worker | null = null;
 
 /**
@@ -199,12 +206,5 @@ export function optimizeMods(): ThunkResult<void> {
     };
 
     optimizationWorker.postMessage(profile.allyCode);
-  };
-}
-
-export function cancelOptimizer():ThunkResult<void> {
-  return function (dispatch) {
-    optimizationWorker?.terminate();
-    dispatch(updateProgress({} as IncrementalOptimizationProgress));
   };
 }
