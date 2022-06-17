@@ -1,5 +1,9 @@
+// utils
 import groupByKey from "../utils/groupByKey";
+
+// domain
 import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
+
 
 export interface IOptimizerSettings {
   target? : FlatOptimizationPlan | null,

@@ -1,21 +1,45 @@
+// react
 import * as React from 'react';
-import * as Redux from 'redux';
-import { connect, ConnectedProps } from "react-redux";
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { connect, ConnectedProps } from "react-redux";
+import * as Redux from 'redux';
 
+// styles
 import './ModFilter.css';
 
-import { changeModsViewOptions } from "../../state/actions/explore";
-
+// state
 import { IAppState } from '../../state/storage';
-import { defaultOptions } from "../../domain/modules/ModsViewOptions";
-import { EquippedSettings, OptimizerSettings, LevelSettings, RaritySettings, SecondarySettings, SetSettings, SlotSettings, TierSettings, SecondariesScoreTierSettings, PrimarySettings, ModsViewOptions, FilterOptions } from 'domain/types/ModsViewOptionsTypes';
+
+// actions
+import {
+  changeModsViewOptions,
+} from "../../state/actions/explore";
+
+// domain
 import * as ModConsts from "../../domain/constants/ModConsts";
 import * as ModScoresConsts from "../../domain/constants/ModScoresConsts";
+import { defaultOptions } from "../../domain/modules/ModsViewOptions";
+import {
+  EquippedSettings,
+  OptimizerSettings,
+  LevelSettings,
+  RaritySettings,
+  SecondarySettings,
+  SetSettings,
+  SlotSettings,
+  TierSettings,
+  SecondariesScoreTierSettings,
+  PrimarySettings,
+  ModsViewOptions,
+  FilterOptions,
+} from '../../domain/types/ModsViewOptionsTypes';
+
 import { PrimaryStats, SecondaryStats, SetStats } from "../../domain/Stats";
 
+// components
 import { Dropdown } from '../Dropdown/Dropdown';
 import Pips from "../Pips/Pips";
+
 
 function selectElement(element: HTMLInputElement | null) {
   if (element !== null && element !== undefined) {

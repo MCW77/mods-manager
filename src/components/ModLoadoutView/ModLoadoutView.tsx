@@ -1,17 +1,19 @@
+// react
 import React from "react";
 
+// styles
 import "./ModLoadoutView.css";
 
+// domain
 import type * as ModTypes from "../../domain/types/ModTypes";
 
-import { Character } from "domain/Character";
-import { ModLoadout } from "domain/ModLoadout";
-import { OptimizationPlan } from "domain/OptimizationPlan";
+import { Character } from "../../domain/Character";
+import { ModLoadout } from "../../domain/ModLoadout";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
 
+// Components
 import ModImage from "../ModImage/ModImage";
 import ModStats from "../ModStats/ModStats";
-
-
 
 
 type ComponentProps = {

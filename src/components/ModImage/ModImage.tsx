@@ -1,15 +1,23 @@
+// react
 import * as React from 'react';
 import { connect, ConnectedProps } from "react-redux";
 
+// styles
 import './ModImage.css';
 
-import { CharacterNames } from '../../constants/characterSettings';
+// state
 import { IAppState } from '../../state/storage';
+
+// domain
+import { CharacterNames } from '../../constants/characterSettings';
+
 import { Mod } from '../../domain/Mod';
 import { SetStats } from '../../domain/Stats';
 
+// components
 import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
 import Pips from '../Pips/Pips';
+
 
 class ModImage extends React.PureComponent<Props> {
 

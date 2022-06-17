@@ -1,5 +1,9 @@
-import { IAppState } from "state/storage";
-import * as Actions from "state/actions/storage"
+// state
+import { IAppState } from "../storage";
+
+// actions
+import * as Actions from "../actions/storage";
+
 
 export function cleanState(state: IAppState) {
   const newState = Object.assign({}, state);

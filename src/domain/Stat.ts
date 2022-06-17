@@ -1,9 +1,13 @@
+// utils
+import Big from "big.js";
+
+// domain
 import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
-import { CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats} from "./Stats";
+
 import { Character } from "./Character";
 import { OptimizationPlan } from "./OptimizationPlan";
+import { CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats} from "./Stats";
 
-import Big from "big.js";
 
 export type NonCalculatedGIMOStatNames =
   PrimaryStats.GIMOStatNames   |

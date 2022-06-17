@@ -1,11 +1,19 @@
+// react
 import * as React from 'react';
-import * as Redux from 'redux';
 import { connect, ConnectedProps } from "react-redux";
+import * as Redux from 'redux';
 
+// styles
 import './Help.css';
 
-import { showFlash } from '../../state/actions/app'
+// actions
+import {
+  showFlash,
+} from '../../state/actions/app';
+
+// components
 import * as UITypes from 'components/types';
+
 
 class Help extends React.PureComponent<Props> {
     render() {

@@ -1,5 +1,7 @@
+// react
 import * as React from "react";
 
+// styles
 import './Arrow.css';
 
 class Arrow extends React.PureComponent {

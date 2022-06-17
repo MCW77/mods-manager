@@ -1,4 +1,6 @@
+// domain
 import { SetStats } from "./Stats";
+
 
 class SetBonus {
   constructor(

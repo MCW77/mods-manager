@@ -1,4 +1,6 @@
+// domain
 import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
+
 
 export const DamageType = {
   'physical': 1,

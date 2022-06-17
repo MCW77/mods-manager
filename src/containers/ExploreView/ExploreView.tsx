@@ -1,23 +1,37 @@
+// react
 import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from "state/reducers/modsOptimizer";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 
+// styles
+import {
+  faAnglesDown,
+  faAnglesUp,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
+import "./ExploreView.css";
+
+// utils
 import { Dictionary } from "lodash";
 import { groupBy } from "../../utils/groupBy";
 import memoizeOne from "memoize-one";
 import { orderBy, mapValues, forEach } from "lodash-es";
 
-import "./ExploreView.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesDown, faAnglesUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+// state
+import { IAppState } from "../../state/storage";
 
+// actions
+import {
+  hideModal,
+  showModal,
+} from "../../state/actions/app";
+import {
+  deleteMods,
+} from "../../state/actions/storage";
 
-import { hideModal, showModal } from "../../state/actions/app";
-import { deleteMods } from "../../state/actions/storage";
-
-import { IAppState } from "state/storage";
-import { CharacterNames } from "constants/characterSettings";
+// domain
+import { CharacterNames } from "../../constants/characterSettings";
 import {
   EquippedSettings,
   FilterKeys,
@@ -31,16 +45,19 @@ import {
   SetSettings,
   SlotSettings,
   TierSettings,
-} from "domain/types/ModsViewOptionsTypes";
+} from "../../domain/types/ModsViewOptionsTypes";
 import { Characters } from "../../domain/Character";
 import { Mod } from "../../domain/Mod";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 
-import { DOMContent } from "components/types";
-import RenderIfVisible  from "../../components/RenderIfVisible/RenderIfVisible";
+// components
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DOMContent } from "../../components/types";
+
+import FlexSidebar from "../../components/FlexSidebar/FlexSidebar";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModFilter from "../../components/ModFilter/ModFilter";
-import FlexSidebar from "../../components/FlexSidebar/FlexSidebar";
+import RenderIfVisible  from "../../components/RenderIfVisible/RenderIfVisible";
 
 
 class ExploreView extends React.PureComponent<Props> {

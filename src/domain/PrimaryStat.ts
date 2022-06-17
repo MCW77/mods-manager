@@ -1,6 +1,8 @@
-import { Stats } from "./Stats";
+// domain
 import * as ModTypes from "./types/ModTypes";
 import * as StatTypes from "./types/StatTypes";
+import { Stats } from "./Stats";
+
 
 export type GIMONeutralStats = 'Speed' | 'Potency %' | 'Tenacity %';
 export type GIMOOffensiveStats = 'Accuracy %' | 'Critical Chance %' | 'Critical Damage %' | 'Offense %';

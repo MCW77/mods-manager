@@ -1,10 +1,21 @@
+// react
 import { AnyAction } from "redux";
-import * as Actions from "../actions/characterEdit";
-import { IAppState, SetRestrictions } from "state/storage";
-import setBonuses from "../../constants/setbonuses";
+
+// utils
 import generateKey from "../../utils/generateKey";
-import { TargetStats } from "domain/TargetStat";
-import { SetStats } from "domain/Stats";
+
+// state
+import { IAppState, SetRestrictions } from "../storage";
+
+// actions
+import * as Actions from "../actions/characterEdit";
+
+// domain
+import setBonuses from "../../constants/setbonuses";
+
+import { SetStats } from "../../domain/Stats";
+import { TargetStats } from "../../domain/TargetStat";
+
 
 export function changeCharacterEditMode(state: IAppState, action: ReturnType<typeof Actions.changeCharacterEditMode>) {
   return Object.assign({}, state, {

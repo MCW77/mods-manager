@@ -1,9 +1,16 @@
+// react
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+// styles
 import './FlexSidebar.css';
+import {
+  faAngleLeft,
+} from '@fortawesome/free-solid-svg-icons';
+
+// components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 interface Props {
   isCollapsed?: boolean;

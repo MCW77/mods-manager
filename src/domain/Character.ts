@@ -1,8 +1,13 @@
-import { OptimizationPlan} from "./OptimizationPlan";
+// utils
+import groupByKey from "../utils/groupByKey";
+
+// domain
 import { characterSettings, CharacterNames } from "../constants/characterSettings";
 import * as DTOs from "../modules/profilesManagement/dtos";
+
+import { OptimizationPlan} from "./OptimizationPlan";
 import { IOptimizerSettings, OptimizerSettings } from "./OptimizerSettings";
-import groupByKey from "../utils/groupByKey";
+
 
 export interface ICharacter {
   baseID: CharacterNames;

@@ -1,6 +1,10 @@
-import type {ElementType} from "../utils/typeHelper";
-import { SecondaryStats } from "./Stats";
+// utils
 import Big from "big.js";
+import type {ElementType} from "../utils/typeHelper";
+
+// domain
+import { SecondaryStats } from "./Stats";
+
 
 class StatScore {
   value: Big;

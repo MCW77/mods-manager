@@ -1,13 +1,23 @@
+// react
 import React, { createRef } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from "state/reducers/modsOptimizer";
+import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 
+// styles
 import "./CharacterEditForm.css";
 
+// utils
 import areObjectsEquivalent from '../../utils/areObjectsEquivalent';
-import { ExpandRecursively } from "utils/typeHelper";
+import { ExpandRecursively } from "../../utils/typeHelper";
 
-import { hideModal } from "../../state/actions/app";
+// state
+import { IAppState, SetRestrictions } from "../../state/storage";
+
+// actions
+import {
+  hideModal,
+} from "../../state/actions/app";
+
 import { optimizeMods } from "../../state/actions/optimize";
 import {
   changeCharacterEditMode,
@@ -26,25 +36,28 @@ import {
   removeTargetStat
 } from "../../state/actions/characterEdit";
 
-import { IAppState, SetRestrictions } from "state/storage";
+// domain
+import { characterSettings, CharacterNames } from "../../constants/characterSettings";
+import setBonuses from "../../constants/setbonuses";
+import type * as ModTypes from "../../domain/types/ModTypes";
+
 import { BaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
 import { CharacterSettings } from "../../domain/CharacterSettings";
-import { characterSettings, CharacterNames } from "../../constants/characterSettings";
 import { Mod } from "../../domain/Mod";
-import type * as ModTypes from "../../domain/types/ModTypes";
 import { OptimizationPlan, PrimaryStatRestrictions } from "../../domain/OptimizationPlan";
+import { IModSuggestion } from "../../domain/PlayerProfile";
 import SetBonus from "../../domain/SetBonus";
-import setBonuses from "../../constants/setbonuses";
 import { SetStats } from "../../domain/Stats";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
+// components
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
+import OptimizerProgress from '../../components/OptimizerProgress/OptimizerProgress';
 import RangeInput from "../../components/RangeInput/RangeInput";
 import Toggle from "../../components/Toggle/Toggle";
-import OptimizerProgress from '../../components/OptimizerProgress/OptimizerProgress';
-import { IModSuggestion } from "domain/PlayerProfile";
+
 
 export type CharacterEditMode = 'basic' | 'advanced';
 

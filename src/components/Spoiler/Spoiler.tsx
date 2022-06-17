@@ -1,10 +1,14 @@
+// react
 import React, { createRef } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import "./Spoiler.css";
 
-import { IAppState } from 'state/storage';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+// state
+import { IAppState } from '../../state/storage';
+
 
 class Spoiler extends React.PureComponent<Props> {
     spoilerContent: React.RefObject<HTMLDivElement>;

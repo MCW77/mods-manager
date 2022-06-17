@@ -1,17 +1,33 @@
+// react
 import React from "react";
 import { ThunkResult } from "../reducers/modsOptimizer";
 
+// state
 import getDatabase from "../storage/Database";
-import { IncrementalOptimizationProgress } from "state/storage";
 
-import { hideModal, setIsBusy, showError, showFlash, updateProfile } from "./app";
-import { changeOptimizerView, updateModListFilter } from "./review";
+// actions
+import {
+  hideModal,
+  setIsBusy,
+  showError,
+  showFlash,
+  updateProfile,
+} from "./app";
+import {
+  changeOptimizerView,
+  updateModListFilter,
+} from "./review";
+
+// domain
+import { IncrementalOptimizationProgress } from "../../state/storage";
 
 import { Character } from "../../domain/Character";
-import OptimizerRun from "domain/OptimizerRun";
-import { IModSuggestion } from "domain/PlayerProfile";
+import OptimizerRun from "../../domain/OptimizerRun";
+import { IModSuggestion } from "../../domain/PlayerProfile";
 
+// components
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
+
 
 export const OPTIMIZE_MODS = 'OPTIMIZE_MODS';
 export const UPDATE_PROGRESS = 'UPDATE_PROGRESS';

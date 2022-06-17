@@ -1,13 +1,23 @@
+// react
 import React, { PureComponent } from "react";
-import Redux from "redux";
-
-import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
-
-import "./CharacterList.css";
 import { connect, ConnectedProps } from "react-redux";
+import Redux from "redux";
+import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
+
+// styles
+import "./CharacterList.css";
+
+// utils
 import groupByKey from "../../utils/groupByKey";
-import CharacterEditForm from "../CharacterEditForm/CharacterEditForm";
-import { showModal } from "../../state/actions/app";
+
+// state
+import { IAppState } from "../../state/storage";
+
+// reducers
+import {
+  showModal,
+} from "../../state/actions/app";
+
 import {
   changeCharacterTarget,
   lockCharacter, moveSelectedCharacter,
@@ -15,13 +25,22 @@ import {
   unselectCharacter, toggleSliceMods,
   toggleUpgradeMods, changeMinimumModDots, setOptimizeIndex
 } from "../../state/actions/characterEdit";
+
+// domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
-import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { OptimizationPlan } from "domain/OptimizationPlan";
-import { Character } from "domain/Character";
-import { IAppState } from "state/storage";
+
+import { Character } from "../../domain/Character";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
+
+// components
 import { DOMContent } from "components/types";
-import { ThunkDispatch } from "state/reducers/modsOptimizer";
+
+import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
+import { Dropdown } from "../../components/Dropdown/Dropdown";
+
+// containers
+import CharacterEditForm from "../CharacterEditForm/CharacterEditForm";
+
 
 class CharacterList extends PureComponent<Props> {
   characterBlockDragStart(index: number) {

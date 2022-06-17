@@ -1,8 +1,16 @@
+// react
 import * as React from 'react';
-import * as Redux from 'redux';
-import './Modal.css';
-import {hideFlash} from "../../state/actions/app";
 import {connect, ConnectedProps} from "react-redux";
+import * as Redux from 'redux';
+
+// styles
+import './Modal.css';
+
+// actions
+import {
+  hideFlash,
+} from "../../state/actions/app";
+
 
 type Props = PropsFromRedux & OwnProps;
 type PropsFromRedux = ConnectedProps<typeof connector>;

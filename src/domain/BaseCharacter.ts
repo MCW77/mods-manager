@@ -1,8 +1,9 @@
-/**
- * interface to hold static settings for each character that the optimizer knows about.
- */
+// utils
 import groupByKey from "../utils/groupByKey";
+
+// domain
 import type { CharacterNames } from "../constants/characterSettings";
+
 
 export type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
 export type BaseCharacterAlignments =
@@ -31,6 +32,9 @@ export interface APIBaseCharacter {
   other: APIBaseCharacterCategory[];
 }
 
+/**
+ * interface to hold static settings for each character that the optimizer knows about.
+ */
 export interface BaseCharacter {
   baseID: CharacterNames;
   name: string;

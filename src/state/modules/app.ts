@@ -1,5 +1,10 @@
+// actions
 import * as App from "../actions/app";
+
+// reducers
 import * as Red from "../reducers/app";
+
+
 export const Actions = {
   [App.CHANGE_SECTION]: App.changeSection,
   [App.DELETE_PROFILE]: App.deleteProfile,

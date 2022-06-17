@@ -1,11 +1,17 @@
+// react
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// styles
 import "./Toggle.css";
 
+//utils
+import { ExpandRecursively, ExpandRecursivelyNoFuncs } from "../../utils/typeHelper";
+
+// state
 import { IAppState } from 'state/storage';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
-import { ExpandRecursively, ExpandRecursivelyNoFuncs } from "utils/typeHelper";
+
 
 class Toggle extends React.Component<ComponentProps, ComponentState> {
   checkbox: React.RefObject<HTMLInputElement>;

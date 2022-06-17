@@ -1,9 +1,10 @@
+// utils
+import cleanAllyCode from "./cleanAllyCode";
+
 /**
  * Format an ally code to follow the ###-###-### format shown in-game
  * @param allyCode string
  */
-import cleanAllyCode from "./cleanAllyCode";
-
 export default function formatAllyCode(allyCode: string) {
   // Take only numbers
   const cleanedAllyCode = cleanAllyCode(allyCode)

@@ -1,10 +1,14 @@
+// react
 import React from 'react';
 import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from '::7../state/reducers/modsOptimizer';
 
+// styles
 import './RangeInput.css';
 
-import { IAppState } from 'state/storage';
-import { ThunkDispatch } from 'state/reducers/modsOptimizer';
+// state
+import { IAppState } from '../../state/storage';
+
 
 class RangeInput extends React.PureComponent<Props> {
   slider: React.RefObject<HTMLInputElement>;

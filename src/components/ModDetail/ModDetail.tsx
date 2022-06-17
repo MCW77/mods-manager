@@ -1,17 +1,22 @@
+// react
 import * as React from 'react';
 import { connect, ConnectedProps } from "react-redux";
 
+// styles
 import './ModDetail.css';
 
-import Arrow from '../Arrow/Arrow';
-import ModImage from '../ModImage/ModImage';
-import ModStats from '../ModStats/ModStats';
-import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
-import SellModButton from "../SellModButton/SellModButton";
-import { PlayerProfile } from '../../domain/PlayerProfile';
+// domain
 import { BaseCharactersById } from "../../domain/BaseCharacter";
 import { Character }  from "../../domain/Character";
 import { Mod } from '../../domain/Mod';
+import { PlayerProfile } from '../../domain/PlayerProfile';
+
+// components
+import Arrow from '../Arrow/Arrow';
+import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
+import ModImage from '../ModImage/ModImage';
+import ModStats from '../ModStats/ModStats';
+import SellModButton from "../SellModButton/SellModButton";
 
 class ModDetail extends React.PureComponent<Props> {
   render() {

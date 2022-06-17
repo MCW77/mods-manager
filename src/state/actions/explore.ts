@@ -1,4 +1,8 @@
-import { ModsViewOptions } from "domain/modules/ModsViewOptions";
+// domain
+import {
+  ModsViewOptions,
+} from "../../domain/modules/ModsViewOptions";
+
 
 export const CHANGE_MODS_VIEW_OPTIONS = 'CHANGE_MODS_VIEW_OPTIONS';
 

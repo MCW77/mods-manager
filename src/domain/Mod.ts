@@ -1,12 +1,17 @@
-import { ModTiersEnum } from "../constants/enums";
-import type * as ModTypes from "./types/ModTypes";
-import { OptimizationPlan} from "./OptimizationPlan";
-import { Character } from "./Character";
-import { modScores } from "./constants/ModScoresConsts";
-import { Stats, CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats } from "./Stats";
-import { CharacterNames } from "constants/characterSettings";
-import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+// utils
 import Big from "big.js";
+
+// domain
+import { CharacterNames } from "../constants/characterSettings";
+import { ModTiersEnum } from "../constants/enums";
+import { modScores } from "./constants/ModScoresConsts";
+import type * as ModTypes from "./types/ModTypes";
+import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+
+import { Character } from "./Character";
+import { OptimizationPlan} from "./OptimizationPlan";
+import { Stats, CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats } from "./Stats";
+
 
 const CSStat = CSStats.CharacterSummaryStat;
 type CSStat = CSStats.CharacterSummaryStat;

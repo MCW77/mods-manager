@@ -1,9 +1,11 @@
+// react
 import React, { PureComponent } from "react";
-import { connect, ConnectedProps } from "react-redux";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 
+// styles
 import "./CharacterEditView.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBan,
   faCompress,
@@ -16,7 +18,20 @@ import {
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { hideModal, showError, showModal } from "../../state/actions/app";
+// utils
+import { saveAs } from "file-saver";
+import collectByKey from "../../utils/collectByKey";
+import keysWhere from "../../utils/keysWhere";
+
+// state
+import { IAppState } from "../../state/storage";
+
+// actions
+import {
+  hideModal,
+  showError,
+  showModal,
+} from "../../state/actions/app";
 import {
   appendTemplate,
   changeCharacterFilter,
@@ -42,11 +57,8 @@ import {
   setOptimizeIndex,
 } from "../../state/actions/characterEdit";
 import {
-  CharacterListGenerationParameters,
-  fetchCharacterList,
-  UseCaseModes,
-} from "../../state/actions/data";
-import { optimizeMods } from "../../state/actions/optimize";
+  optimizeMods
+} from "../../state/actions/optimize";
 import {
   changeOptimizerView,
   updateModListFilter,
@@ -56,24 +68,31 @@ import {
   exportCharacterTemplates,
 } from "../../state/actions/storage";
 
-import { ThunkDispatch } from "state/reducers/modsOptimizer";
-
-import collectByKey from "../../utils/collectByKey";
-import keysWhere from "../../utils/keysWhere";
-import { saveAs } from "file-saver";
-
-import { defaultBaseCharacter } from "../../domain/BaseCharacter";
+// domain
 import {
   characterSettings,
   CharacterNames,
 } from "../../constants/characterSettings";
+import defaultTemplates from "../../constants/characterTemplates.json";
+import {
+  CharacterListGenerationParameters,
+  fetchCharacterList,
+  UseCaseModes,
+} from "../../state/actions/data";
 
-import { Character } from "domain/Character";
-import { DOMContent } from "components/types";
-import { IAppState } from "state/storage";
+import { defaultBaseCharacter } from "../../domain/BaseCharacter";
+import { Character } from "../../domain/Character";
+import {
+  CharacterTemplate,
+  CharacterTemplates,
+  FlatCharacterTemplate,
+} from "../../domain/CharacterTemplates";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import { SelectedCharacters } from "../../domain/SelectedCharacters";
 
-import CharacterList from "../CharacterList/CharacterList";
+// components
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DOMContent } from "../../components/types";
 
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
@@ -84,13 +103,9 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Spoiler from "../../components/Spoiler/Spoiler";
 import Toggle from "../../components/Toggle/Toggle";
 
-import defaultTemplates from "../../constants/characterTemplates.json";
-import {
-  CharacterTemplate,
-  CharacterTemplates,
-  FlatCharacterTemplate,
-} from "domain/CharacterTemplates";
-import { SelectedCharacters } from "domain/SelectedCharacters";
+// containers
+import CharacterList from "../CharacterList/CharacterList";
+
 
 class CharacterEditView extends PureComponent<Props> {
   dragStart(character: Character) {

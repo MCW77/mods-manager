@@ -1,28 +1,54 @@
+// react
 import React from "react";
-
-import { mapValues } from "lodash-es";
-
-import { Mod } from "../../domain/Mod";
-import { BaseCharactersById, APIBaseCharacter, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
-import { OptimizerSettings } from "../../domain/OptimizerSettings";
-import cleanAllyCode from "../../utils/cleanAllyCode";
-import { hideFlash, setIsBusy, showError, showFlash, hideModal, showModal, updateProfile } from "./app";
-import getDatabase, { Database } from "../storage/Database";
-import nothing from "../../utils/nothing";
-import { PlayerProfile } from "../../domain/PlayerProfile";
-import { Character, Characters } from "../../domain/Character";
-import { characterSettings, CharacterNames } from "../../constants/characterSettings";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
-import groupByKey from "../../utils/groupByKey";
-import { addPlayerProfile, setBaseCharacters, setProfile, setHotUtilsSubscription } from "./storage";
 import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
-import { changeOptimizerView } from "./review";
-import { HUFlatMod } from 'domain/types/ModTypes';
+
+// utils
 import { Dictionary } from "lodash";
-import { HUModsMoveProfile, HUProfileCreationData } from "containers/Review/Review";
+import { mapValues } from "lodash-es";
+import cleanAllyCode from "../../utils/cleanAllyCode";
+import groupByKey from "../../utils/groupByKey";
+import nothing from "../../utils/nothing";
+
+// state
+import getDatabase, { Database } from "../storage/Database";
+
+// actions
+import {
+  hideFlash,
+  hideModal,
+  setIsBusy,
+  showError,
+  showFlash,
+  showModal,
+  updateProfile,
+} from "./app";
+import {
+  changeOptimizerView,
+} from "./review";
+import {
+  addPlayerProfile,
+  setBaseCharacters,
+  setHotUtilsSubscription,
+  setProfile,
+} from "./storage";
+
+// domain
+import { characterSettings, CharacterNames } from "../../constants/characterSettings";
+import { HUFlatMod } from '../../domain/types/ModTypes';
+import { PlayerValuesByCharacter } from "../../modules/profilesManagement/domain/PlayerValues";
 import * as DTOs from "../../modules/profilesManagement/dtos";
 import * as Mappers from "../../modules/profilesManagement/mappers";
-import { PlayerValuesByCharacter } from "../../modules/profilesManagement/domain/PlayerValues";
+
+import { BaseCharactersById, APIBaseCharacter, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
+import { Character, Characters } from "../../domain/Character";
+import { Mod } from "../../domain/Mod";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import { OptimizerSettings } from "../../domain/OptimizerSettings";
+import { PlayerProfile } from "../../domain/PlayerProfile";
+
+// containers
+import { HUModsMoveProfile, HUProfileCreationData } from "../../containers/Review/Review";
+
 
 const UseCaseModesObj = {
   GAAndTW: '',

@@ -1,6 +1,9 @@
+// react
 import React from "react";
 
+// styles
 import './WarningLabel.css';
+
 
 class WarningLabel extends React.PureComponent {
   render() {

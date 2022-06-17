@@ -1,6 +1,9 @@
+// react
 import React from 'react';
 
+// styles
 import './Pips.css';
+
 
 type Props = {
   pips: number;

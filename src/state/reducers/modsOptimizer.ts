@@ -1,8 +1,13 @@
+// react
 import * as Redux from "redux";
 import { ThunkAction, ThunkDispatch as TD } from "redux-thunk";
 
+// state
 import { IAppState, AppState } from "../storage";
+
+// #region modules
 import * as App from "../modules/app";
+// #endregion
 
 // #region ActionNames
 import {
@@ -58,41 +63,42 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 
 // #region AppActions
 type AppActions =
-  | ReturnType<typeof StorageActions.setCharacterTemplates>
-  | ReturnType<typeof StorageActions.addPlayerProfile>
-  | ReturnType<typeof StorageActions.setPlayerProfiles>
-  | ReturnType<typeof StorageActions.setProfile>
-  | ReturnType<typeof StorageActions.setBaseCharacters>
-  | ReturnType<typeof StorageActions.setHotUtilsSubscription>
-  | ReturnType<typeof CharacterEditActions.addTargetStat>
-  | ReturnType<typeof CharacterEditActions.removeTargetStat>
-  | ReturnType<typeof CharacterEditActions.changeTargetStats>
-  | ReturnType<typeof CharacterEditActions.changeCharacterEditMode>
-  | ReturnType<typeof CharacterEditActions.changeCharacterFilter>
-  | ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>
-  | ReturnType<typeof CharacterEditActions.toggleCharacterEditSortView>
-  | ReturnType<typeof CharacterEditActions.changeSetRestrictions>
-  | ReturnType<typeof CharacterEditActions.selectSetBonus>
-  | ReturnType<typeof CharacterEditActions.removeSetBonus>
-  | ReturnType<typeof App.Actions.SET_IS_BUSY>
+  | ReturnType<typeof App.Actions.CHANGE_SECTION>
   | ReturnType<typeof App.Actions.HIDE_ERROR>
   | ReturnType<typeof App.Actions.HIDE_FLASH>
   | ReturnType<typeof App.Actions.HIDE_MODAL>
+  | ReturnType<typeof App.Actions.RESET_STATE>
+  | ReturnType<typeof App.Actions.SET_IS_BUSY>
+  | ReturnType<typeof App.Actions.SET_STATE>
   | ReturnType<typeof App.Actions.SHOW_ERROR>
   | ReturnType<typeof App.Actions.SHOW_FLASH>
   | ReturnType<typeof App.Actions.SHOW_MODAL>
-  | ReturnType<typeof App.Actions.CHANGE_SECTION>
-  | ReturnType<typeof App.Actions.SET_STATE>
-  | ReturnType<typeof App.Actions.RESET_STATE>
   | ReturnType<typeof App.Actions.TOGGLE_SIDEBAR>
+  | ReturnType<typeof CharacterEditActions.addTargetStat>
+  | ReturnType<typeof CharacterEditActions.changeCharacterEditMode>
+  | ReturnType<typeof CharacterEditActions.changeCharacterFilter>
+  | ReturnType<typeof CharacterEditActions.changeSetRestrictions>
+  | ReturnType<typeof CharacterEditActions.changeTargetStats>
+  | ReturnType<typeof CharacterEditActions.removeSetBonus>
+  | ReturnType<typeof CharacterEditActions.removeTargetStat>
+  | ReturnType<typeof CharacterEditActions.selectSetBonus>
+  | ReturnType<typeof CharacterEditActions.toggleCharacterEditSortView>
+  | ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>
   | ReturnType<typeof ExploreActions.changeModsViewOptions>
   | ReturnType<typeof OptimizeActions.cancelOptimizeMods>
   | ReturnType<typeof OptimizeActions.startModOptimization>
   | ReturnType<typeof OptimizeActions.updateProgress>
-  | ReturnType<typeof ReviewActions.changeOptimizerView>
   | ReturnType<typeof ReviewActions.changeModListFilter>
+  | ReturnType<typeof ReviewActions.changeOptimizerView>
+  | ReturnType<typeof StorageActions.addPlayerProfile>
+  | ReturnType<typeof StorageActions.setBaseCharacters>
+  | ReturnType<typeof StorageActions.setCharacterTemplates>
+  | ReturnType<typeof StorageActions.setHotUtilsSubscription>
+  | ReturnType<typeof StorageActions.setPlayerProfiles>
+  | ReturnType<typeof StorageActions.setProfile>
 ;
 // #endregion
+
 
 type RootReducer = Redux.Reducer<IAppState, AppActions>;
 

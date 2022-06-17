@@ -1,21 +1,34 @@
+// react
 import React from "react";
 import { ThunkResult } from "../reducers/modsOptimizer";
 
-import groupByKey from "../../utils/groupByKey";
+// utils
 import { mapValues } from "lodash-es";
+import groupByKey from "../../utils/groupByKey";
 import nothing from "../../utils/nothing";
 
-import { resetState, showError, showFlash, updateProfile } from "./app";
-import { fetchHotUtilsStatus } from './data';
-
+// state
 import getDatabase, { IUserData } from "../storage/Database";
 
-import { BaseCharactersById, BaseCharacter } from 'domain/BaseCharacter';
-import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "domain/CharacterTemplates";
+// actions
+import {
+  resetState,
+  showError,
+  showFlash,
+  updateProfile,
+} from "./app";
+import {
+  fetchHotUtilsStatus,
+} from './data';
+
+// domain
+import { BaseCharactersById, BaseCharacter } from '../../domain/BaseCharacter';
+import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "../../domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
 import OptimizerRun from "../../domain/OptimizerRun";
 import { PlayerProfile } from '../../domain/PlayerProfile';
-import { SelectedCharacters, SelectedCharactersByTemplateName } from "domain/SelectedCharacters";
+import { SelectedCharacters, SelectedCharactersByTemplateName } from "../../domain/SelectedCharacters";
+
 
 export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS';
 export const SET_PROFILE = 'SET_PROFILE';

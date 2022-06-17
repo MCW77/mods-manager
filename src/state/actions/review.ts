@@ -1,8 +1,18 @@
-import { updateProfile } from "./app";
+// react
+import { ThunkResult } from "./modsOptimizer";
+
+// utils
 import groupByKey from "../../utils/groupByKey";
-import { CharacterNames } from "constants/characterSettings";
-import { Mod } from "domain/Mod";
-import { ThunkResult } from "state/reducers/modsOptimizer";
+
+// actions
+import {
+  updateProfile,
+} from "./app";
+
+// domain
+import { CharacterNames } from "../../constants/characterSettings";
+
+import { Mod } from "../../domain/Mod";
 
 
 export const CHANGE_OPTIMIZER_VIEW = 'CHANGE_OPTIMIZER_VIEW';

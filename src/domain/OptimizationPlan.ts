@@ -1,12 +1,15 @@
+// utils
 import areObjectsEquivalent from "../utils/areObjectsEquivalent";
-import { TargetStat } from "./TargetStat";
 
-import type * as StatTypes from "./types/StatTypes";
+// domain
+import { CharacterNames } from "../constants/characterSettings";
 import type * as ModTypes from "./types/ModTypes";
-import { CharacterNames } from "constants/characterSettings";
+import type * as StatTypes from "./types/StatTypes";
+import { SetRestrictions } from "../state/storage";
 
 import { PrimaryStats } from "./Stats";
-import { SetRestrictions } from "state/storage";
+import { TargetStat } from "./TargetStat";
+
 
 export type PrimaryStatRestrictions = {
   [key in ModTypes.VariablePrimarySlots]: PrimaryStats.GIMOStatNames 
