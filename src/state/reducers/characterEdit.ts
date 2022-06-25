@@ -1,5 +1,6 @@
 // react
 import { AnyAction } from "redux";
+import { createSelector } from "@reduxjs/toolkit";
 
 // utils
 import generateKey from "../../utils/generateKey";
@@ -113,3 +114,8 @@ export function removeTargetStat(state: IAppState, action: ReturnType<typeof Act
     targetStats: newTargetStats
   });
 }
+
+
+export const selectCharacterEditMode = (state: IAppState) => state.characterEditMode;
+export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
+export const selectTargetStats = (state: IAppState) => state.targetStats;
