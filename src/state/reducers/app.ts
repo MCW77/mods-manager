@@ -1,3 +1,6 @@
+// react
+import { createSelector } from "@reduxjs/toolkit";
+
 // state
 import {AppState, IAppState} from "../storage";
 
@@ -60,18 +63,53 @@ export function resetState() {
   return Object.assign({}, AppState.Default);
 }
 
+export function setIsBusy(state: IAppState, action: ReturnType<typeof AppActions.setIsBusy>): IAppState {
+  return Object.assign({}, state, {
+    isBusy: action.isBusy
+  });
+}
+
+export function setState(state: IAppState, action: ReturnType<typeof AppActions.setState>): IAppState {
+  return Object.assign({}, action.state);
+}
+
 export function toggleSidebar(state: IAppState, action: ReturnType<typeof Actions.toggleSidebar>): IAppState {
   return Object.assign({}, state, {
     showSidebar: !state.showSidebar
   });
 }
 
-export function setState(state: IAppState, action: ReturnType<typeof Actions.setState>): IAppState {
-  return Object.assign({}, action.state);
-}
 
-export function setIsBusy(state: IAppState, action: ReturnType<typeof Actions.setIsBusy>): IAppState {
-  return Object.assign({}, state, {
-    isBusy: action.isBusy
-  });
-}
+export const selectErrorMessage = (state: IAppState) => state.error;
+export const selectFlashMessage = (state: IAppState) => state.flashMessage;
+export const selectIsBusy = (state: IAppState) => state.isBusy;
+export const selectModalMessage = (state: IAppState) => state.modal;
+export const selectIsModalCancelable = createSelector(
+  [selectModalMessage],
+  (modal) => {
+    if (modal === null) return false;
+    return modal.cancelable;
+  }
+);
+export const selectIsModalVisible = createSelector(
+  [selectModalMessage],
+  (modal) => modal !== null
+);
+export const selectModalClasses = createSelector(
+  [selectModalMessage],
+  (modal) => {
+    if (modal === null) return '';
+    return modal.class;
+  }
+);
+export const selectModalContent = createSelector(
+  [selectModalMessage],
+  (modal) => {
+    if (modal === null) return '';
+    return modal.content;
+  }
+);
+export const selectPreviousSection = (state: IAppState) => state.previousSection;
+export const selectSection = (state: IAppState) => state.section;
+export const selectShowSidebar = (state: IAppState) => state.showSidebar;
+export const selectVersion = (state: IAppState) => state.version;

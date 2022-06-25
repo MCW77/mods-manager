@@ -10,3 +10,5 @@ export function changeModsViewOptions(state: IAppState, action: ReturnType<typeo
     modsViewOptions: action.options
   });
 }
+
+export const selectModsViewOptions = (state: IAppState) => state.modsViewOptions;
