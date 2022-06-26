@@ -1,5 +1,4 @@
 // react
-import { AnyAction } from "redux";
 import { createSelector } from "@reduxjs/toolkit";
 
 // utils
@@ -9,7 +8,7 @@ import generateKey from "../../utils/generateKey";
 import { IAppState } from "../storage";
 
 // actions
-import * as Actions from "../actions/characterEdit";
+import * as CharacterEditActions from "../actions/characterEdit";
 
 // domain
 import setBonuses from "../../constants/setbonuses";
@@ -19,37 +18,37 @@ import { SetStats } from "../../domain/Stats";
 import { TargetStats } from "../../domain/TargetStat";
 
 
-export function changeCharacterEditMode(state: IAppState, action: ReturnType<typeof Actions.changeCharacterEditMode>) {
+export function changeCharacterEditMode(state: IAppState, action: ReturnType<typeof CharacterEditActions.changeCharacterEditMode>): IAppState {
   return Object.assign({}, state, {
     characterEditMode: action.mode
   });
 }
 
-export function changeCharacterFilter(state: IAppState, action: AnyAction) {
+export function changeCharacterFilter(state: IAppState, action: ReturnType<typeof CharacterEditActions.changeCharacterFilter>): IAppState {
   return Object.assign({}, state, {
     characterFilter: action.filter
   });
 }
 
-export function toggleHideSelectedCharacters(state: IAppState, action: AnyAction) {
+export function toggleHideSelectedCharacters(state: IAppState, action: ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>): IAppState {
   return Object.assign({}, state, {
     hideSelectedCharacters: !state.hideSelectedCharacters
   });
 }
 
-export function toggleCharacterEditSortView(state: IAppState, action: AnyAction) {
+export function toggleCharacterEditSortView(state: IAppState, action: ReturnType<typeof CharacterEditActions.toggleCharacterEditSortView>): IAppState {
   return Object.assign({}, state, {
     characterEditSortView: !state.characterEditSortView
-  })
+  });
 }
 
-export function changeSetRestrictions(state: IAppState, action: ReturnType<typeof Actions.changeSetRestrictions>) {
+export function changeSetRestrictions(state: IAppState, action: ReturnType<typeof CharacterEditActions.changeSetRestrictions>): IAppState {
   return Object.assign({}, state, {
     setRestrictions: action.setRestrictions
   });
 }
 
-export function selectSetBonus(state: IAppState, action: ReturnType<typeof Actions.selectSetBonus>) {
+export function selectSetBonus(state: IAppState, action: ReturnType<typeof CharacterEditActions.selectSetBonus>) {
   const currentRestrictions = Object.assign({}, state.setRestrictions);
   const updatedRestrictions: SetRestrictions = Object.assign({}, currentRestrictions, {
     [action.setBonus]: (currentRestrictions[action.setBonus] || 0) + 1
@@ -69,7 +68,7 @@ export function selectSetBonus(state: IAppState, action: ReturnType<typeof Actio
   }
 }
 
-export function removeSetBonus(state: IAppState, action: ReturnType<typeof Actions.removeSetBonus>): IAppState {
+export function removeSetBonus(state: IAppState, action: ReturnType<typeof CharacterEditActions.removeSetBonus>): IAppState {
   const currentRestrictions = Object.assign({}, state.setRestrictions);
 
   if (currentRestrictions[action.setBonus] && currentRestrictions[action.setBonus] > 1) {
@@ -88,17 +87,17 @@ export function removeSetBonus(state: IAppState, action: ReturnType<typeof Actio
   return state;
 }
 
-export function changeTargetStats(state: IAppState, action: ReturnType<typeof Actions.changeTargetStats>) {
+export function changeTargetStats(state: IAppState, action: ReturnType<typeof CharacterEditActions.changeTargetStats>): IAppState {
   return Object.assign({}, state, {
     targetStats: action.targetStats.length > 0 ? action.targetStats.map(targetStat => ({
       key: generateKey(24),
       target: targetStat
     })) as TargetStats :
       [] as TargetStats
-  }) as IAppState;
+  });
 }
 
-export function addTargetStat(state: IAppState, action: ReturnType<typeof Actions.addTargetStat>) {
+export function addTargetStat(state: IAppState, action: ReturnType<typeof CharacterEditActions.addTargetStat>): IAppState {
   return Object.assign({}, state, {
     targetStats: state.targetStats.concat({
       key: generateKey(24),
@@ -107,7 +106,7 @@ export function addTargetStat(state: IAppState, action: ReturnType<typeof Action
   });
 }
 
-export function removeTargetStat(state: IAppState, action: ReturnType<typeof Actions.removeTargetStat>) {
+export function removeTargetStat(state: IAppState, action: ReturnType<typeof CharacterEditActions.removeTargetStat>): IAppState {
   const newTargetStats = state.targetStats.slice(0);
 
   newTargetStats.splice(action.index, 1);
