@@ -5,17 +5,17 @@ import { createSelector } from "@reduxjs/toolkit";
 import {AppState, IAppState} from "../storage";
 
 // actions
-import * as Actions from "../actions/app";
+import * as AppActions from "../actions/app";
 
 
-export function changeSection(state: IAppState, action: ReturnType<typeof Actions.changeSection>): IAppState {
+export function changeSection(state: IAppState, action: ReturnType<typeof AppActions.changeSection>): IAppState {
   return Object.assign({}, state, {
     section: action.section,
     previousSection: state.section,
   });
 }
 
-export function showModal(state: IAppState, action: ReturnType<typeof Actions.showModal>): IAppState {
+export function showModal(state: IAppState, action: ReturnType<typeof AppActions.showModal>): IAppState {
   return Object.assign({}, state, {
     modal: {
       class: action.class,
@@ -32,7 +32,7 @@ export function hideModal(state: IAppState): IAppState {
   });
 }
 
-export function showError(state: IAppState, action: ReturnType<typeof Actions.showError>): IAppState {
+export function showError(state: IAppState, action: ReturnType<typeof AppActions.showError>): IAppState {
   return Object.assign({}, state, {
     error: action.content
   });
@@ -44,7 +44,7 @@ export function hideError(state: IAppState): IAppState {
   });
 }
 
-export function showFlash(state: IAppState, action: ReturnType<typeof Actions.showFlash>): IAppState {
+export function showFlash(state: IAppState, action: ReturnType<typeof AppActions.showFlash>): IAppState {
   return Object.assign({}, state, {
     flashMessage: {
       heading: action.heading,
@@ -73,7 +73,7 @@ export function setState(state: IAppState, action: ReturnType<typeof AppActions.
   return Object.assign({}, action.state);
 }
 
-export function toggleSidebar(state: IAppState, action: ReturnType<typeof Actions.toggleSidebar>): IAppState {
+export function toggleSidebar(state: IAppState, action: ReturnType<typeof AppActions.toggleSidebar>): IAppState {
   return Object.assign({}, state, {
     showSidebar: !state.showSidebar
   });

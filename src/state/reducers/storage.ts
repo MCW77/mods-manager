@@ -5,7 +5,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { IAppState } from "../storage";
 
 // actions
-import * as Actions from "../actions/storage";
+import * as StorageActions from "../actions/storage";
 
 
 export function cleanState(state: IAppState) {
@@ -17,18 +17,18 @@ export function cleanState(state: IAppState) {
   return newState;
 }
 
-export function setBaseCharacters(state: IAppState, action: ReturnType<typeof Actions.setBaseCharacters>) {
+export function setBaseCharacters(state: IAppState, action: ReturnType<typeof StorageActions.setBaseCharacters>): IAppState {
   return Object.assign({}, state, { baseCharacters: action.baseCharacters });
 }
 
-export function setProfile(state: IAppState, action: ReturnType<typeof Actions.setProfile>) {
+export function setProfile(state: IAppState, action: ReturnType<typeof StorageActions.setProfile>): IAppState {
   return Object.assign({}, state, {
     allyCode: action.profile ? action.profile.allyCode : '',
     profile: action.profile
   });
 }
 
-export function addPlayerProfile(state: IAppState, action: ReturnType<typeof Actions.addPlayerProfile>) {
+export function addPlayerProfile(state: IAppState, action: ReturnType<typeof StorageActions.addPlayerProfile>): IAppState {
   return Object.assign({}, state, {
     playerProfiles: Object.assign({}, state.playerProfiles, {
       [action.profile.allyCode]: action.profile.playerName
@@ -36,15 +36,15 @@ export function addPlayerProfile(state: IAppState, action: ReturnType<typeof Act
   });
 }
 
-export function setPlayerProfiles(state: IAppState, action: ReturnType<typeof Actions.setPlayerProfiles>) {
+export function setPlayerProfiles(state: IAppState, action: ReturnType<typeof StorageActions.setPlayerProfiles>): IAppState {
   return Object.assign({}, state, { playerProfiles: action.profiles });
 }
 
-export function setCharacterTemplates(state: IAppState, action: ReturnType<typeof Actions.setCharacterTemplates>) {
+export function setCharacterTemplates(state: IAppState, action: ReturnType<typeof StorageActions.setCharacterTemplates>): IAppState {
   return Object.assign({}, state, { characterTemplates: action.templates }) as IAppState;
 }
 
-export function setHotUtilsSubscription(state: IAppState, action: ReturnType<typeof Actions.setHotUtilsSubscription>) {
+export function setHotUtilsSubscription(state: IAppState, action: ReturnType<typeof StorageActions.setHotUtilsSubscription>): IAppState {
   return Object.assign({}, state, { hotUtilsSubscription: action.subscription });
 }
 
