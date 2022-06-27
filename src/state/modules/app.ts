@@ -1,26 +1,9 @@
 // actions
-import * as App from "../actions/app";
+import * as App from '../actions/app';
 
 // reducers
-import * as Red from "../reducers/app";
+import * as Red from '../reducers/app';
 
-
-export const Actions = {
-  [App.CHANGE_SECTION]: App.changeSection,
-  [App.DELETE_PROFILE]: App.deleteProfile,
-  [App.HIDE_ERROR]: App.hideError,
-  [App.HIDE_FLASH]: App.hideFlash,
-  [App.HIDE_MODAL]: App.hideModal,
-  [App.RESET_STATE]: App.resetState,
-  [App.RESTORE_PROGRESS]: App.restoreProgress,
-  [App.IMPORT_C3POPROFILE]: App.importC3POProfile,
-  [App.SET_IS_BUSY]: App.setIsBusy,
-  [App.SET_STATE]: App.setState,
-  [App.SHOW_ERROR]: App.showError,
-  [App.SHOW_FLASH]: App.showFlash,
-  [App.SHOW_MODAL]: App.showModal,
-  [App.TOGGLE_SIDEBAR]: App.toggleSidebar
-}
 
 export const ActionNames = {
   [App.CHANGE_SECTION]: App.CHANGE_SECTION,
@@ -28,8 +11,8 @@ export const ActionNames = {
   [App.HIDE_ERROR]: App.HIDE_ERROR,
   [App.HIDE_FLASH]: App.HIDE_FLASH,
   [App.HIDE_MODAL]: App.HIDE_MODAL,
-  [App.RESET_STATE]: App.RESET_STATE,
   [App.IMPORT_C3POPROFILE]: App.IMPORT_C3POPROFILE,
+  [App.RESET_STATE]: App.RESET_STATE,
   [App.RESTORE_PROGRESS]: App.RESTORE_PROGRESS,
   [App.SET_IS_BUSY]: App.SET_IS_BUSY,
   [App.SET_STATE]: App.SET_STATE,
@@ -37,7 +20,24 @@ export const ActionNames = {
   [App.SHOW_FLASH]: App.SHOW_FLASH,
   [App.SHOW_MODAL]: App.SHOW_MODAL,
   [App.TOGGLE_SIDEBAR]: App.TOGGLE_SIDEBAR
-}
+};
+
+export const Actions = {
+  [App.CHANGE_SECTION]: App.changeSection,
+  [App.DELETE_PROFILE]: App.deleteProfile,
+  [App.HIDE_ERROR]: App.hideError,
+  [App.HIDE_FLASH]: App.hideFlash,
+  [App.HIDE_MODAL]: App.hideModal,
+  [App.IMPORT_C3POPROFILE]: App.importC3POProfile,
+  [App.RESET_STATE]: App.resetState,
+  [App.RESTORE_PROGRESS]: App.restoreProgress,
+  [App.SET_IS_BUSY]: App.setIsBusy,
+  [App.SET_STATE]: App.setState,
+  [App.SHOW_ERROR]: App.showError,
+  [App.SHOW_FLASH]: App.showFlash,
+  [App.SHOW_MODAL]: App.showModal,
+  [App.TOGGLE_SIDEBAR]: App.toggleSidebar
+};
 
 export const Reducers = {
   [App.CHANGE_SECTION]: Red.changeSection,
@@ -51,4 +51,4 @@ export const Reducers = {
   [App.SHOW_FLASH]: Red.showFlash,
   [App.SHOW_MODAL]: Red.showModal,
   [App.TOGGLE_SIDEBAR]: Red.toggleSidebar
-}
+};
