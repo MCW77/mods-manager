@@ -17,24 +17,29 @@ import { IAppState } from "../../state/storage";
 import {
   hideModal,
 } from "../../state/actions/app";
-
-import { optimizeMods } from "../../state/actions/optimize";
 import {
   changeCharacterEditMode,
-  changeMinimumModDots,
   changeSetRestrictions,
-  changeSliceMods,
-  closeEditCharacterForm,
-  deleteTarget,
-  finishEditCharacterTarget,
   removeSetBonus,
-  resetCharacterTargetToDefault,
   selectSetBonus,
-  unlockCharacter,
   changeTargetStats,
   addTargetStat,
   removeTargetStat
 } from "../../state/actions/characterEdit";
+
+// thunks
+import {
+  changeMinimumModDots,
+  changeSliceMods,
+  closeEditCharacterForm,
+  deleteTarget,
+  finishEditCharacterTarget,
+  resetCharacterTargetToDefault,
+  unlockCharacter,
+} from '../../state/thunks/characterEdit';
+import {
+  optimizeMods,
+} from '../../state/thunks/optimize';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";

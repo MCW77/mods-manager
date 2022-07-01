@@ -12,7 +12,11 @@ import {
   showError,
   showModal,
 } from "../../state/actions/app";
-import { fetchCharacterList } from "../../state/actions/data";
+
+// thunks
+import {
+  fetchCharacterList,
+} from '../../state/thunks/data';
 
 // domain
 import { CharacterListGenerationParameters } from '../../domain/CharacterListGenerationParameters';

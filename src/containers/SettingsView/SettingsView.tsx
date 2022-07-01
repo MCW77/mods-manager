@@ -20,11 +20,13 @@ import { IAppState } from '../../state/storage';
 import {
   changeSection,
 } from '../../state/actions/app';
+
+// thunks
 import {
   updateForceCompleteModSets,
   updateLockUnselectedCharacters,
   updateModChangeThreshold,
-} from '../../state/actions/characterEdit';
+} from '../../state/thunks/characterEdit';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

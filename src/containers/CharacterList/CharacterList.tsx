@@ -18,13 +18,19 @@ import {
   showModal,
 } from "../../state/actions/app";
 
+// thunks
 import {
   changeCharacterTarget,
-  lockCharacter, moveSelectedCharacter,
-  selectCharacter, toggleCharacterLock,
-  unselectCharacter, toggleSliceMods,
-  toggleUpgradeMods, changeMinimumModDots, setOptimizeIndex
-} from "../../state/actions/characterEdit";
+  changeMinimumModDots,
+  lockCharacter,
+  moveSelectedCharacter,
+  selectCharacter,
+  setOptimizeIndex,
+  toggleCharacterLock,
+  toggleSliceMods,
+  toggleUpgradeMods,
+  unselectCharacter,
+} from '../../state/thunks/characterEdit';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";

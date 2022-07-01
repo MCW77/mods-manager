@@ -18,9 +18,11 @@ import getDatabase from "./state/storage/Database";
 import {
   showError,
 } from "./state/actions/app";
+
+// thunks
 import {
   databaseReady,
-} from "./state/actions/storage";
+} from './state/thunks/storage';
 
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";

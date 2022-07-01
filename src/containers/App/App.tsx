@@ -34,23 +34,27 @@ import { IUserData } from '../../state/storage/Database';
 // actions
 import {
   changeSection,
-  deleteProfile,
   hideModal,
+  showError,
+  showModal,
+} from "../../state/actions/app";
+
+// thunks
+import {
+  deleteProfile,
   importC3POProfile,
   reset,
   restoreProgress,
-  showError,
-  showModal
-} from "../../state/actions/app";
+} from "../../state/thunks/app";
 import {
   checkVersion,
   refreshPlayerData,
   setHotUtilsSessionId,
-} from "../../state/actions/data";
+} from '../../state/thunks/data';
 import {
   exportDatabase,
   loadProfile,
-} from "../../state/actions/storage";
+} from '../../state/thunks/storage';
 
 // domain
 import { PlayerProfile } from '../../domain/PlayerProfile';
