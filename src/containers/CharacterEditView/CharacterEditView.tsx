@@ -33,8 +33,18 @@ import {
   showModal,
 } from "../../state/actions/app";
 import {
-  appendTemplate,
   changeCharacterFilter,
+  toggleHideSelectedCharacters,
+  toggleCharacterEditSortView,
+} from "../../state/actions/characterEdit";
+import {
+  changeOptimizerView,
+} from "../../state/actions/review";
+
+// thunks
+import {
+  appendTemplate,
+  applyTemplateTargets,
   deleteTemplate,
   lockAllCharacters,
   lockSelectedCharacters,
@@ -43,33 +53,29 @@ import {
   saveTemplate,
   saveTemplates,
   selectCharacter,
+  setOptimizeIndex,
   toggleCharacterLock,
-  toggleHideSelectedCharacters,
-  toggleCharacterEditSortView,
   unlockAllCharacters,
   unlockSelectedCharacters,
   unselectAllCharacters,
   unselectCharacter,
+  updateForceCompleteModSets,
   updateLockUnselectedCharacters,
   updateModChangeThreshold,
-  updateForceCompleteModSets,
-  applyTemplateTargets,
-  setOptimizeIndex,
-} from "../../state/actions/characterEdit";
+} from '../../state/thunks/characterEdit';
 import {
   fetchCharacterList,
-} from "../../state/actions/data";
+} from '../../state/thunks/data';
 import {
-  optimizeMods
-} from "../../state/actions/optimize";
+  optimizeMods,
+} from '../../state/thunks/optimize';
 import {
-  changeOptimizerView,
   updateModListFilter,
-} from "../../state/actions/review";
+} from '../../state/thunks/review';
 import {
   exportCharacterTemplate,
   exportCharacterTemplates,
-} from "../../state/actions/storage";
+} from '../../state/thunks/storage';
 
 // domain
 import {

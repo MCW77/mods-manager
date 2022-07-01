@@ -26,9 +26,11 @@ import {
   hideModal,
   showModal,
 } from "../../state/actions/app";
+
+// thunks
 import {
   deleteMods,
-} from "../../state/actions/storage";
+} from '../../state/thunks/storage';
 
 // domain
 import { CharacterNames } from "../../constants/characterSettings";

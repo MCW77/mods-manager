@@ -24,13 +24,10 @@ export const ActionNames = {
 
 export const Actions = {
   [App.CHANGE_SECTION]: App.changeSection,
-  [App.DELETE_PROFILE]: App.deleteProfile,
   [App.HIDE_ERROR]: App.hideError,
   [App.HIDE_FLASH]: App.hideFlash,
   [App.HIDE_MODAL]: App.hideModal,
-  [App.IMPORT_C3POPROFILE]: App.importC3POProfile,
   [App.RESET_STATE]: App.resetState,
-  [App.RESTORE_PROGRESS]: App.restoreProgress,
   [App.SET_IS_BUSY]: App.setIsBusy,
   [App.SET_STATE]: App.setState,
   [App.SHOW_ERROR]: App.showError,

@@ -24,15 +24,19 @@ import {
 import {
   changeModListFilter,
   changeOptimizerView,
-  reassignMod,
-  reassignMods,
-  unequipMod,
-  unequipMods
 } from "../../state/actions/review";
+
+// thunks
 import {
   createHotUtilsProfile,
   moveModsWithHotUtils,
-} from '../../state/actions/data';
+} from '../../state/thunks/data';
+import {
+  reassignMod,
+  reassignMods,
+  unequipMod,
+  unequipMods,
+} from '../../state/thunks/review';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';

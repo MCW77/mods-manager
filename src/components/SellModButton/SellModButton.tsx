@@ -12,9 +12,10 @@ import {
   showModal,
 } from '../../state/actions/app';
 
+// thunks
 import {
   deleteMod,
-} from '../../state/actions/storage';
+} from '../../state/thunks/storage';
 
 // domain
 import { Mod } from '../../domain/Mod';

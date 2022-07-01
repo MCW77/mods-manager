@@ -11,9 +11,11 @@ import {
   hideModal,
   setIsBusy,
 } from '../../state/actions/app';
+
+// thunks
 import {
   cancelOptimizer,
-} from '../../state/actions/optimize';
+} from '../../state/thunks/optimize';
 
 // components
 import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
