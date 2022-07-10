@@ -56,4 +56,4 @@ class ModLoadoutView extends React.PureComponent<ComponentProps> {
   }
 }
 
-export default ModLoadoutView;
+export { ModLoadoutView };
