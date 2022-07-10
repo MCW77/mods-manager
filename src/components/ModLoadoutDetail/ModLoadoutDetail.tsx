@@ -15,7 +15,7 @@ import { TargetStat } from "../../domain/TargetStat";
 import * as CharacterStatNames from "../../modules/profilesManagement/domain/CharacterStatNames";
 
 // components
-import ModLoadoutView from "../ModLoadoutView/ModLoadoutView";
+import { ModLoadoutView } from "../ModLoadoutView/ModLoadoutView";
 
 
 interface PlayerStat {
