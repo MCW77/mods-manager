@@ -64,7 +64,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type * as UITypes from "../../components/types";
 
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import FileInput from "../../components/FileInput/FileInput";
+import { FileInput } from "../../components/FileInput/FileInput";
 import FlashMessage from "../../components/Modal/FlashMessage";
 import Help from '../../components/Help/Help';
 import Modal from "../../components/Modal/Modal";
