@@ -22,4 +22,4 @@ class Pips extends React.PureComponent<Props> {
   }
 }
 
-export default Pips;
+export { Pips };

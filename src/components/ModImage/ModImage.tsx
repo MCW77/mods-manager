@@ -16,7 +16,7 @@ import { SetStats } from '../../domain/Stats';
 
 // components
 import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
-import Pips from '../Pips/Pips';
+import { Pips } from '../Pips/Pips';
 
 
 class ModImage extends React.PureComponent<Props> {
