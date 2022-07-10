@@ -59,7 +59,7 @@ import { DOMContent } from "../../components/types";
 import { FlexSidebar } from "../../components/FlexSidebar/FlexSidebar";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModFilter from "../../components/ModFilter/ModFilter";
-import RenderIfVisible  from "../../components/RenderIfVisible/RenderIfVisible";
+import { RenderIfVisible } from "../../components/RenderIfVisible/RenderIfVisible";
 
 
 class ExploreView extends React.PureComponent<Props> {

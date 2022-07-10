@@ -74,4 +74,4 @@ const RenderIfVisible = ({
   )
 }
 
-export default RenderIfVisible
+export { RenderIfVisible };
