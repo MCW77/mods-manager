@@ -345,4 +345,4 @@ type ComponentProps = {
   missedGoals: MissedGoals,
 }
 
-export default ModLoadoutDetail;
+export { ModLoadoutDetail };
