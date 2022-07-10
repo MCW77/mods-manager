@@ -56,7 +56,7 @@ import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DOMContent } from "../../components/types";
 
-import FlexSidebar from "../../components/FlexSidebar/FlexSidebar";
+import { FlexSidebar } from "../../components/FlexSidebar/FlexSidebar";
 import ModDetail from "../../components/ModDetail/ModDetail";
 import ModFilter from "../../components/ModFilter/ModFilter";
 import RenderIfVisible  from "../../components/RenderIfVisible/RenderIfVisible";
