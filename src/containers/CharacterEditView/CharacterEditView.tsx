@@ -108,7 +108,7 @@ import OptimizerProgress from "../../components/OptimizerProgress/OptimizerProgr
 import RangeInput from "../../components/RangeInput/RangeInput";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Spoiler from "../../components/Spoiler/Spoiler";
-import Toggle from "../../components/Toggle/Toggle";
+import { Toggle } from "../../components/Toggle/Toggle";
 
 // containers
 import CharacterList from "../CharacterList/CharacterList";
