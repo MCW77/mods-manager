@@ -13,10 +13,12 @@ type DropdownProps = {
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
 } & SelectProps;
 
-export const Dropdown = React.forwardRef<HTMLSelectElement, DropdownProps>(
+const Dropdown = React.forwardRef<HTMLSelectElement, DropdownProps>(
     function Dropdown(props, ref) {
         return <div className={'dropdown'}>
             <select {...props} ref={ref} />
         </div>;
     }
 );
+
+export { Dropdown };
