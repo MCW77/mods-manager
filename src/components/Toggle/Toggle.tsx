@@ -149,4 +149,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
 let connector = connect(mapStateToProps, mapDispatchToProps);
 */
 
-export default Toggle;
+export { Toggle };
