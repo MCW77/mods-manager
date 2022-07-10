@@ -145,4 +145,4 @@ const SettingsView = () => {
   );
 };
 
-export default SettingsView;
+export { SettingsView };
