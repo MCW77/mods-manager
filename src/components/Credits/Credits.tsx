@@ -14,4 +14,4 @@ class Credits extends React.PureComponent {
   }
 }
 
-export default Credits;
+export { Credits };
