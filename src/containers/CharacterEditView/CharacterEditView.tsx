@@ -107,7 +107,7 @@ import Help from "../../components/Help/Help";
 import OptimizerProgress from "../../components/OptimizerProgress/OptimizerProgress";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Spoiler from "../../components/Spoiler/Spoiler";
-import Toggle from "../../components/Toggle/Toggle";
+import { Toggle } from "../../components/Toggle/Toggle";
 
 // containers
 import CharacterList from "../CharacterList/CharacterList";

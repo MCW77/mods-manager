@@ -63,7 +63,7 @@ import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import OptimizerProgress from '../../components/OptimizerProgress/OptimizerProgress';
 import RangeInput from "../../components/RangeInput/RangeInput";
-import Toggle from "../../components/Toggle/Toggle";
+import { Toggle } from "../../components/Toggle/Toggle";
 
 
 class CharacterEditForm extends React.Component<Props> {
