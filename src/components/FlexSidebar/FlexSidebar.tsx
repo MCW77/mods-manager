@@ -45,4 +45,4 @@ const FlexSidebar = (props: Props) => {
   );
 };
 
-export default FlexSidebar;
+export { FlexSidebar };
