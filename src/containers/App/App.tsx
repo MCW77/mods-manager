@@ -76,7 +76,7 @@ import ErrorModal from "../ErrorModal/ErrorModal";
 import ExploreView from "../ExploreView/ExploreView";
 import HelpView from '../HelpView/HelpView';
 import OptimizerView from "../OptimizerView/OptimizerView";
-import SettingsView from '../SettingsView/SettingsView';
+import { SettingsView } from '../SettingsView/SettingsView';
 
 
 class App extends PureComponent<Props> {
