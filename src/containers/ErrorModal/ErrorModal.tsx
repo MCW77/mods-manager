@@ -12,7 +12,7 @@ import {
 } from "../../state/actions/app";
 
 // components
-import WarningLabel from "../../components/WarningLabel/WarningLabel";
+import { WarningLabel } from "../../components/WarningLabel/WarningLabel";
 
 
 class ErrorModal extends React.PureComponent<ErrorModalProps> {

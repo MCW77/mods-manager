@@ -16,4 +16,4 @@ class WarningLabel extends React.PureComponent {
   }
 }
 
-export default WarningLabel;
+export { WarningLabel };
