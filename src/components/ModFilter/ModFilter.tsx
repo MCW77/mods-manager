@@ -38,7 +38,7 @@ import { PrimaryStats, SecondaryStats, SetStats } from "../../domain/Stats";
 
 // components
 import { Dropdown } from '../Dropdown/Dropdown';
-import Pips from "../Pips/Pips";
+import { Pips } from "../Pips/Pips";
 
 
 function selectElement(element: HTMLInputElement | null) {
