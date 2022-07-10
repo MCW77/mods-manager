@@ -52,4 +52,4 @@ class FileInput extends React.PureComponent<Props> {
   }
 }
 
-export default FileInput;
+export { FileInput };
