@@ -16,4 +16,4 @@ class Arrow extends React.PureComponent {
   }
 }
 
-export default Arrow;
+export { Arrow };

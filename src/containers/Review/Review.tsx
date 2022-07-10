@@ -53,7 +53,7 @@ import { MissedGoals } from '../../domain/PlayerProfile';
 // components
 import { DOMContent } from '../../components/types';
 
-import Arrow from "../../components/Arrow/Arrow";
+import { Arrow } from "../../components/Arrow/Arrow";
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 import Credits from "../../components/Credits/Credits";
 import { Dropdown } from '../../components/Dropdown/Dropdown';
