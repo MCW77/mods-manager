@@ -103,7 +103,7 @@ import { DOMContent } from "../../components/types";
 import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { FileInput } from "../../components/FileInput/FileInput";
-import Help from "../../components/Help/Help";
+import { Help } from '../../components/Help/Help';
 import OptimizerProgress from "../../components/OptimizerProgress/OptimizerProgress";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Spoiler from "../../components/Spoiler/Spoiler";
