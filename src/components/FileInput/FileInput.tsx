@@ -1,5 +1,5 @@
 // react
-import * as React from "react";
+import React, { useRef } from "react";
 
 // styles
 import './FileInput.css';
@@ -9,47 +9,38 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 
-type Props = {
+type ComponentProps = {
   className?: string,
   icon: IconDefinition;
   label: string,
   handler: (f: File) => void
 };
 
-class FileInput extends React.PureComponent<Props> {
-  input: HTMLInputElement | null;
-  inputForm: HTMLFormElement | null;
-
-  constructor(props: Props) {
-    super(props);
-    
-    this.input = null;
-    this.inputForm = null;
-  }
-
-  render(): React.ReactNode {
-    const fileHandler = this.props.handler;
-    const extraClass = this.props.className || '';
-    const icon = this.props.icon;
-
+const FileInput = React.memo(
+  ({className = '',
+    icon,
+    label,
+    handler,
+  }: ComponentProps) => {
+    const fileInput = useRef<HTMLInputElement>(null);
     return (
-      <form className={'file-input'} ref={form => this.inputForm = form}>
-        <label className={`file button ${extraClass}`}>
-          <FontAwesomeIcon icon={icon} title={this.props.label}/>
-          <input
-            type={'file'}
-            ref={fileInput => this.input = fileInput}
-            onChange={() => {
-              if (this?.input?.files?.[0])
-                fileHandler(this.input.files[0]);
-              if (this.inputForm)
-                this.inputForm.reset();
-            }}
-          />
-        </label>
-      </form>
+      <label className={`file button ${className}`}>
+        <FontAwesomeIcon icon={icon} title={label}/>
+        <input
+          type={'file'}
+          ref={fileInput}
+          onChange={() => {
+            if (fileInput.current && fileInput.current!.files) {
+              handler(fileInput.current!.files[0]);
+            }
+          }}
+        />
+        {label}
+      </label>
     );
   }
-}
+);
+
+FileInput.displayName = 'FileInput';
 
 export { FileInput };
