@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 
-type Props = {
+type ComponentProps = {
   defaultHeight?: number,
   visibleOffset?: number,
   root?: React.RefObject<HTMLElement> | null,
@@ -18,7 +18,7 @@ const RenderIfVisible = ({
   visibleOffset = 1000,
   root = null,
   children,
-}: Props) => {
+}: ComponentProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(!isWindowAvailable)
   const placeholderHeight = useRef<number>(defaultHeight)
   const intersectionRef = useRef<HTMLDivElement>(null)
@@ -73,5 +73,7 @@ const RenderIfVisible = ({
     </div>
   )
 }
+
+RenderIfVisible.displayName = 'RenderIfVisible';
 
 export { RenderIfVisible };
