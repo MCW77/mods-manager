@@ -12,37 +12,43 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-interface Props {
+interface ComponentProps {
   isCollapsed?: boolean;
   mainContent: JSX.Element | JSX.Element[];
   sidebarContent: JSX.Element | JSX.Element[];
 }
 
-const FlexSidebar = (props: Props) => {
+const FlexSidebar = ({
+  isCollapsed = false,
+  mainContent,
+  sidebarContent,
+}: ComponentProps) => {
   const [t, i18n] = useTranslation('global-ui');
-  const [isCollapsed, setCollapsed] = useState(props.isCollapsed ?? false);
+  const [isCollapsed2, setCollapsed] = useState(isCollapsed);
 
   return (
-    <div className={`flexsidebar-container ${isCollapsed ? 'collapsed' : ''}`}>
+    <div className={`flexsidebar-container ${isCollapsed2 ? 'collapsed' : ''}`}>
       <span
-        className={`flexsidebar-toggle ${isCollapsed ? 'show' : 'collapse'}`}
+        className={`flexsidebar-toggle ${isCollapsed2 ? 'show' : 'collapse'}`}
         onClick={() => {
-          setCollapsed(!isCollapsed);
+          setCollapsed(!isCollapsed2);
         }}
       >
         <FontAwesomeIcon
           icon={faAngleLeft}
-          title={`${isCollapsed ? t('sidebar.Toggle-show', 'show sidebar') : t(`sidebar.Toggle-collapse`, 'collapse sidebar')}`}
+          title={`${isCollapsed2 ? t('sidebar.Toggle-show', 'show sidebar') : t(`sidebar.Toggle-collapse`, 'collapse sidebar')}`}
         />
       </span>
       <div className={`flexsidebar`}>
-        {props.sidebarContent}
+        {sidebarContent}
       </div>
       <div className={`flexsidebar-maincontent`}>
-        {props.mainContent}
+        {mainContent}
       </div>
     </div>
   );
 };
+
+FlexSidebar.displayName = 'FlexSidebar';
 
 export { FlexSidebar };
