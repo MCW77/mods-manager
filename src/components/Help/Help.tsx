@@ -18,7 +18,7 @@ type ComponentProps = {
   header: string;
   children: UITypes.DOMContent;
 }
-  
+
 const Help = React.memo(
   (props: ComponentProps) => {
     const dispatch = useDispatch();
@@ -33,4 +33,4 @@ const Help = React.memo(
 
 Help.displayName = 'Help';
 
-export default Help;
+export { Help };
