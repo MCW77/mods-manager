@@ -5,8 +5,8 @@ import React from "react";
 import './WarningLabel.css';
 
 
-class WarningLabel extends React.PureComponent {
-  render() {
+const WarningLabel = React.memo(
+  () => {
     return (
       <svg className={'warning-label'} viewBox="504.729 350.76 195.116 168.305">
         <path
@@ -14,6 +14,8 @@ class WarningLabel extends React.PureComponent {
       </svg>
     );
   }
-}
+)
+
+WarningLabel.displayName = 'WarningLabel';
 
 export { WarningLabel };
