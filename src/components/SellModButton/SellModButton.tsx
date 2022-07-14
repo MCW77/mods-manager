@@ -22,7 +22,7 @@ import { Mod } from '../../domain/Mod';
 // components
 import type * as UITypes from "../../components/types";
 
-import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
+import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 import ModImage from '../ModImage/ModImage';
 import ModStats from '../ModStats/ModStats';
 

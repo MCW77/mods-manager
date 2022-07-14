@@ -64,4 +64,4 @@ const CharacterAvatar = React.memo(({
 
 CharacterAvatar.displayName = 'CharacterAvatar';
 
-export default CharacterAvatar;
+export { CharacterAvatar };
