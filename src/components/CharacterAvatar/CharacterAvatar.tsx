@@ -1,31 +1,42 @@
 // react
 import * as React from 'react';
-import { connect, ConnectedProps } from "react-redux";
+import { useSelector } from "react-redux";
 
 // styles
 import './CharacterAvatar.css';
 
+// selectors
+import {
+  selectBaseCharacters,
+} from '../../state/reducers/data';
+
 // domain
-import { BaseCharacter, BaseCharactersById, defaultBaseCharacter } from "../../domain/BaseCharacter";
+import { BaseCharacter, defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
 
 
-class CharacterAvatar extends React.PureComponent<Props> {
-  render(): React.ReactNode {
-    const character: Character | undefined = this.props.character;
+type ComponentProps = {
+  character?: Character,
+  displayGear?: boolean,
+  displayLevel?: boolean,
+  displayStars?: boolean,
+  id?: string
+}
 
-    if (!character) {
-      return null;
-    }
+const CharacterAvatar = React.memo(({
+  character,
+  displayGear = true,
+  displayLevel = true,
+  displayStars = true,
+  id,
+}: ComponentProps) => {
+    const baseCharacters = useSelector(selectBaseCharacters);
 
-    const baseCharacter: BaseCharacter = this.props.baseCharacters[character.baseID] ?? {...defaultBaseCharacter, baseID: character.baseID, name: character.baseID};
+    if (character === undefined || character === null) return null;
 
-    const displayStars = this.props.displayStars ?? true;
-    const displayGear = this.props.displayGear ?? true;
-    const displayLevel = this.props.displayLevel ?? true;
-    const id = this.props.id ?? undefined; 
+    const baseCharacter: BaseCharacter = baseCharacters[character.baseID] ?? {...defaultBaseCharacter, baseID: character.baseID, name: character.baseID};
     const className = `avatar gear-${displayGear ?
-      character!.playerValues.gearLevel :
+      character.playerValues.gearLevel :
       0} star-${character!.playerValues.stars} align-${baseCharacter.alignment}`;
 
     const star: (position: number) => React.ReactNode = position => {
@@ -35,7 +46,6 @@ class CharacterAvatar extends React.PureComponent<Props> {
     };
 
     return (
-
       <div
         className={className}
         id={id}>
@@ -46,34 +56,12 @@ class CharacterAvatar extends React.PureComponent<Props> {
           alt={baseCharacter.name}
           title={baseCharacter.name}
           draggable={false} />
-        {displayLevel && <div className={'character-level'}>{character!.playerValues.level || '??'}</div>}
+        {displayLevel && <div className={'character-level'}>{character.playerValues.level}</div>}
       </div>
-    );
+    )
   }
+);
 
-  static imageName(name: string) {
-    return name ? name.trim().toLowerCase().replace(/\s/g, '_').replace(/["']/g, '') : '';
-  }
-}
+CharacterAvatar.displayName = 'CharacterAvatar';
 
-type Props = PropsFromRedux & OwnProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type OwnProps = {
-  character?: Character,
-  displayGear?: boolean,
-  displayLevel?: boolean,
-  displayStars?: boolean,
-  id?: string
-}
-interface RootState {
-  baseCharacters: BaseCharactersById;
-}
-const mapStateToProps = (state: RootState, ownProps: OwnProps) => ({
-  baseCharacters: state.baseCharacters
-});
-
-const mapDispatchToProps = () => ({});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(CharacterAvatar);
+export default CharacterAvatar;
