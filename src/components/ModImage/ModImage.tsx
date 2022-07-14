@@ -67,4 +67,4 @@ const ModImage = React.memo(
 
 ModImage.displayName = 'ModImage';
 
-export default ModImage;
+export { ModImage };

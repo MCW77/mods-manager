@@ -11,8 +11,8 @@ import { Character } from "../../domain/Character";
 import { ModLoadout } from "../../domain/ModLoadout";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 
-// Components
-import ModImage from "../ModImage/ModImage";
+// components
+import { ModImage } from "../ModImage/ModImage";
 import ModStats from "../ModStats/ModStats";
 
 
