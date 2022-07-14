@@ -41,7 +41,7 @@ import { OptimizationPlan } from "../../domain/OptimizationPlan";
 // components
 import { DOMContent } from "components/types";
 
-import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 
 // containers

@@ -18,7 +18,7 @@ import {
 } from '../../state/thunks/optimize';
 
 // components
-import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
+import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 
 
 class OptimizerProgress extends React.Component<Props> {

@@ -13,7 +13,7 @@ import { PlayerProfile } from '../../domain/PlayerProfile';
 
 // components
 import { Arrow } from '../Arrow/Arrow';
-import CharacterAvatar from '../CharacterAvatar/CharacterAvatar';
+import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 import ModImage from '../ModImage/ModImage';
 import ModStats from '../ModStats/ModStats';
 import SellModButton from "../SellModButton/SellModButton";

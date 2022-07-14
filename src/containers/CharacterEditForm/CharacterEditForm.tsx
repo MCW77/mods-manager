@@ -59,7 +59,7 @@ import { SetStats } from "../../domain/Stats";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
 // components
-import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import OptimizerProgress from '../../components/OptimizerProgress/OptimizerProgress';
 import RangeInput from "../../components/RangeInput/RangeInput";
