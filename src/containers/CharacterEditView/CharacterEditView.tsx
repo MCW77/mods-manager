@@ -100,7 +100,7 @@ import { UseCaseModes } from "../../domain/UseCaseModes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DOMContent } from "../../components/types";
 
-import CharacterAvatar from "../../components/CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { FileInput } from "../../components/FileInput/FileInput";
 import { Help } from '../../components/Help/Help';

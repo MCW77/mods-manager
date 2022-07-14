@@ -19,7 +19,7 @@ import { OptimizationPlan} from '../../domain/OptimizationPlan';
 import { SecondaryStats } from '../../domain/Stats';
 
 // components
-import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
 import SellModButton from "../SellModButton/SellModButton";
 
 

@@ -15,7 +15,7 @@ import { Mod } from '../../domain/Mod';
 import { SetStats } from '../../domain/Stats';
 
 // components
-import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
 import { Pips } from '../Pips/Pips';
 
 
