@@ -1,12 +1,14 @@
 // react
 import * as React from 'react';
-import { connect, ConnectedProps } from "react-redux";
+import { useSelector } from "react-redux";
 
 // styles
 import './ModImage.css';
 
-// state
-import { IAppState } from '../../state/storage';
+// selectors
+import {
+  selectCharactersInActiveProfile,
+} from '../../state/reducers/storage';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -15,21 +17,43 @@ import { Mod } from '../../domain/Mod';
 import { SetStats } from '../../domain/Stats';
 
 // components
-import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 import { Pips } from '../Pips/Pips';
 
 
-class ModImage extends React.PureComponent<Props> {
+type ComponentProps = {
+  className?: string,
+  mod: Mod,
+  showAvatar?: boolean,
+}
 
-  render() {
-    const mod = this.props.mod;
-    const modColor = this.modColor(mod);
-    const extraClass = this.props.className ? ` ${this.props.className}` : '';
-    const showAvatar = this.props.showAvatar;
-    const character = mod.characterID ? this.props.characters[mod.characterID as CharacterNames] : null;
+const getModColor = (mod: Mod) => {
+  switch (mod.tier) {
+    case 5:
+      return 'gold';
+    case 4:
+      return 'purple';
+    case 3:
+      return 'blue';
+    case 2:
+      return 'green';
+    default:
+      return 'gray';
+  }
+};
+
+const ModImage = React.memo(
+  ({
+    className = '',
+    mod,
+    showAvatar = false,
+  }: ComponentProps) => {
+    const characters = useSelector(selectCharactersInActiveProfile)
+    const modColor = getModColor(mod);
+    const character = mod.characterID ? characters[mod.characterID as CharacterNames] : null;
 
     return (
-      <div className={`mod-image dots-${mod.pips} ${mod.slot} ${SetStats.SetStat.getClassName(mod.set)} ${modColor} ${extraClass}`}>
+      <div className={`mod-image dots-${mod.pips} ${mod.slot} ${SetStats.SetStat.getClassName(mod.set)} ${modColor} ${className}`}>
         <Pips pips={mod.pips}/>
         <div className={'mod-slot-image'} />
         <div className={'mod-level ' + (15 === mod.level ? 'gold ' : 'gray ') + mod.slot}>{mod.level}</div>
@@ -39,37 +63,8 @@ class ModImage extends React.PureComponent<Props> {
       </div>
     );
   }
+);
 
-  modColor(mod: Mod) {
-    switch (mod.tier) {
-      case 5:
-        return 'gold';
-      case 4:
-        return 'purple';
-      case 3:
-        return 'blue';
-      case 2:
-        return 'green';
-      default:
-        return 'gray';
-    }
-  }
-}
+ModImage.displayName = 'ModImage';
 
-type Props = PropsFromRedux & ComponentProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = {
-  className?: string,
-  mod: Mod,
-  showAvatar?: boolean
-}
-
-const mapStateToProps = (state: IAppState) => ({
-  characters: state.profile.characters
-});
-
-const mapDispatchToProps = () => ({});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(ModImage);
+export default ModImage;
