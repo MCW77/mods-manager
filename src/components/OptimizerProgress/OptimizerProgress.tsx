@@ -1,16 +1,21 @@
 // react
 import React from 'react';
-import { connect, ConnectedProps } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
-
-// state
-import { IAppState } from 'state/storage';
 
 // actions
 import {
   hideModal,
   setIsBusy,
 } from '../../state/actions/app';
+
+// selectors
+import {
+  selectProgress,
+} from '../../state/reducers/optimize';
+import {
+  selectIsIncrementalOptimization,
+} from '../../state/reducers/storage';
 
 // thunks
 import {
@@ -21,50 +26,44 @@ import {
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 
 
-class OptimizerProgress extends React.Component<Props> {
-  render() {
-    return <div>
-      <h3>Optimizing Your Mods...</h3>
-      <div className={'progressBox'}>
-        {this.props.character &&
-          <div className={'character'}><CharacterAvatar character={this.props.character} /></div>
-        }
-        <div className={'step'}>{this.props.step}</div>
-        <div className={'progress'}>
-          <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${this.props.progress}%` }} />
-        </div>
-      </div>
-      <div className={'actions'}>
-        <button type={'button'} className={'red'} onClick={() => this.props.cancel(!this.props.isIncremental)}>Cancel</button>
-      </div>
-    </div>;
-  }
-}
+const OptimizerProgress = () => {
+  const dispatch: ThunkDispatch = useDispatch();
+  const progress = useSelector(selectProgress);
+  const isIncremental = useSelector(selectIsIncrementalOptimization);
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    character: state.progress.character,
-    step: state.progress.step,
-    progress: state.progress.progress,
-    isIncremental: state.profile.incrementalOptimizeIndex !== null
-  }
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  cancel: (closeModal: boolean) => {
+  const cancel = (closeModal: boolean) => {
     dispatch(cancelOptimizer());
     dispatch(setIsBusy(false));
     if (closeModal) {
       dispatch(hideModal());
     }
-  }
-});
+  };
 
-type Props = PropsFromRedux & ComponentProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
+  return (
+    <div>
+      <h3>Optimizing Your Mods...</h3>
+      <div className={'progressBox'}>
+        {progress.character &&
+          <div className={'character'}><CharacterAvatar character={progress.character} /></div>
+        }
+        <div className={'step'}>{progress.step}</div>
+        <div className={'progress'}>
+          <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${progress.progress}%` }} />
+        </div>
+      </div>
+      <div className={'actions'}>
+        <button
+          type={'button'}
+          className={'red'}
+          onClick={() => cancel(!isIncremental)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  )
+};
 
-type ComponentProps = {
-}
+OptimizerProgress.displayName = 'OptimizerProgress';
 
-let connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(OptimizerProgress);
+export default OptimizerProgress;
