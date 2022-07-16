@@ -104,7 +104,7 @@ import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvata
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { FileInput } from "../../components/FileInput/FileInput";
 import { Help } from '../../components/Help/Help';
-import OptimizerProgress from "../../components/OptimizerProgress/OptimizerProgress";
+import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Spoiler from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
