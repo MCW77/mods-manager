@@ -1,7 +1,6 @@
 // react
 import * as React from 'react';
-import {connect, ConnectedProps} from "react-redux";
-import * as Redux from 'redux';
+import { useDispatch } from "react-redux";
 
 // styles
 import './Modal.css';
@@ -15,29 +14,6 @@ import {
 import * as UITypes from '../types';
 
 
-class Modal extends React.PureComponent<Props> {
-  render() {
-    if (!this.props.show) {
-      return null;
-    }
-
-    const className = this.props.className ? ('modal ' + this.props.className) : 'modal';
-    const content = this.props.content;
-
-    return <div
-      className={'overlay'}
-      onClick={() => this.props.cancelable && this.props.hideModal()}
-    >
-      <div className={className} onClick={(e) => e.stopPropagation()}>
-        {content}
-      </div>
-    </div>;
-  }
-}
-
-type Props = PropsFromRedux & ComponentProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
 type ComponentProps = {
   show: boolean,
   className: string,
@@ -45,12 +21,37 @@ type ComponentProps = {
   cancelable: boolean,
 }
 
-const mapStateToProps = () => ({});
+const Modal = React.memo(
+  ({
+    show = false,
+    className = '',
+    content,
+    cancelable = false, 
+  }: ComponentProps) => {
+    const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
-  hideModal: () => dispatch(hideModal())
-});
+    if (show === false) {
+      return null;
+    }
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+    const classList = `modal ${className}`;
 
-export default connector(Modal);
+    return (
+      <div
+        className={'overlay'}
+        onClick={() => cancelable && dispatch(hideModal())}
+      >
+        <div
+          className={classList}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {content}
+        </div>
+      </div>
+    )
+  }
+);
+
+Modal.displayName = 'Modal';
+
+export default Modal;
