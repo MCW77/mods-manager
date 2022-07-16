@@ -66,4 +66,4 @@ const OptimizerProgress = () => {
 
 OptimizerProgress.displayName = 'OptimizerProgress';
 
-export default OptimizerProgress;
+export { OptimizerProgress };
