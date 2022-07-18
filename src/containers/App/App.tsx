@@ -169,7 +169,7 @@ class App extends PureComponent<Props> {
           className={this.props.modalClass}
           content={this.props.modalContent}
           cancelable={this.props.isModalCancelable} />
-        <Spinner show={this.props.isBusy} />
+        <Spinner isVisible={this.props.isBusy} />
       </div>
     </div></Suspense>;
   }
