@@ -25,4 +25,4 @@ const Spinner = React.memo(
 
 Spinner.displayName = 'Spinner';
 
-export default Spinner;
+export { Spinner };
