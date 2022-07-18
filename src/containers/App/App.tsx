@@ -68,7 +68,7 @@ import { FileInput } from "../../components/FileInput/FileInput";
 import FlashMessage from "../../components/Modal/FlashMessage";
 import Help from '../../components/Help/Help';
 import { Modal } from "../../components/Modal/Modal";
-import Spinner from "../../components/Spinner/Spinner";
+import { Spinner } from "../../components/Spinner/Spinner";
 
 // containers
 import AboutView from '../AboutView/AboutView';
