@@ -170,4 +170,4 @@ const ModStats = React.memo(
 
 ModStats.displayName = 'ModStats';
 
-export default ModStats;
+export { ModStats };

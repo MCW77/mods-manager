@@ -13,7 +13,7 @@ import { OptimizationPlan } from "../../domain/OptimizationPlan";
 
 // components
 import { ModImage } from "../ModImage/ModImage";
-import ModStats from "../ModStats/ModStats";
+import { ModStats } from "../ModStats/ModStats";
 
 
 type ComponentProps = {
