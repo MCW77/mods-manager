@@ -27,6 +27,9 @@ import {
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";
 
+// components
+import { Spinner } from './components/Spinner/Spinner';
+
 // containers
 import App from './containers/App/App';
 
@@ -80,7 +83,7 @@ getDatabase(
 const root = createRoot(document.getElementById('root')!);
 root.render(
   <Provider store={store}>
-    <Suspense fallback="loading">
+    <Suspense fallback={<Spinner isVisible={true}/>}>
       <App />
     </Suspense>
   </Provider>
