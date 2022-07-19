@@ -25,7 +25,7 @@ import type * as UITypes from "../../components/types";
 
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 import { ModImage } from '../ModImage/ModImage';
-import ModStats from '../ModStats/ModStats';
+import { ModStats } from '../ModStats/ModStats';
 
 
 class SellModButton extends React.PureComponent<Props> {
