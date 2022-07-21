@@ -28,7 +28,7 @@ import { SecondaryStats } from '../../domain/Stats';
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
-import SellModButton from '../SellModButton/SellModButton';
+import { SellModButton } from '../SellModButton/SellModButton';
 
 type ComponentProps = {
   mod: Mod;
