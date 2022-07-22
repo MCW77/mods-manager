@@ -41,4 +41,4 @@ const Spoiler = React.memo(({ title, children }: ComponentProps) => {
 
 Spoiler.displayName = 'Spoiler';
 
-export default Spoiler;
+export { Spoiler };
