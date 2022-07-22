@@ -1,59 +1,44 @@
 // react
-import React, { createRef } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import React, { useEffect, useRef } from 'react';
 
 // styles
-import "./Spoiler.css";
-
-// state
-import { IAppState } from '../../state/storage';
-
-
-class Spoiler extends React.PureComponent<Props> {
-    spoilerContent: React.RefObject<HTMLDivElement>;
-
-    constructor(props: Props) {
-      super(props);
-
-      this.spoilerContent = createRef<HTMLDivElement>()
-    }
-    componentDidMount() {
-        console.log(this.spoilerContent.current?.scrollHeight);
-        this.spoilerContent.current?.style.setProperty('--content-height', this.spoilerContent.current!.scrollHeight + 'px');
-    }
-
-    render() {
-        return (
-            <div className={'spoiler'}>
-                <div
-                    className={'title'}
-                    onClick={e => ((e.target as HTMLDivElement)!.parentNode! as HTMLDivElement).classList.toggle('open')}>
-                    {this.props.title}
-                </div>
-                <div className={'divider'} />
-                <div className={'content'} ref={this.spoilerContent}>
-                    {this.props.children}
-                </div>
-            </div>
-        );
-    }
-};
-
-type SpoilerChildrenProps = React.HTMLProps<HTMLDivElement>
-type Props = React.PropsWithChildren<PropsFromRedux & ComponentProps>;
-type PropsFromRedux = ConnectedProps<typeof connector>;
+import './Spoiler.css';
 
 type ComponentProps = {
   title: string;
-}
+  children: React.ReactNode;
+};
 
-const mapStateToProps = (state: IAppState) => {
-  return {}
-}
+const Spoiler = React.memo(({ title, children }: ComponentProps) => {
+  const spoilerContent = useRef<HTMLDivElement>(null);
 
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-})
+  useEffect(() => {
+    spoilerContent.current?.style.setProperty(
+      '--content-height',
+      spoilerContent.current!.scrollHeight + 'px',
+    );
+  }, []);
 
-let connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(Spoiler);
+  return (
+    <div className={'spoiler'}>
+      <div
+        className={'title'}
+        onClick={(e) =>
+          (
+            (e.target as HTMLDivElement)!.parentNode! as HTMLDivElement
+          ).classList.toggle('open')
+        }
+      >
+        {title}
+      </div>
+      <div className={'divider'} />
+      <div className={'content'} ref={spoilerContent}>
+        {children}
+      </div>
+    </div>
+  );
+});
+
+Spoiler.displayName = 'Spoiler';
+
+export default Spoiler;
