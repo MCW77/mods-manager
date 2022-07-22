@@ -154,4 +154,4 @@ const CharacterListModal = React.memo(
 
 CharacterListModal.displayName = 'CharacterListModal';
 
-export default CharacterListModal;
+export { CharacterListModal };
