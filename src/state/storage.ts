@@ -12,37 +12,21 @@ import cleanAllyCode from "../utils/cleanAllyCode";
 
 // domain
 import { BaseCharactersById } from "../domain/BaseCharacter";
-import { Character } from "../domain/Character";
-import { Characters } from "../domain/Character";
+import { Character, Characters } from "../domain/Character";
+import { CharacterEditMode } from "../domain/CharacterEditMode";
 import { CharacterTemplatesByName } from "../domain/CharacterTemplates";
-import { ModListFilter } from "./actions/review";
+import { ModalProps } from "../domain/ModalProps";
+import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
+import { OptimizationStatus } from "../domain/OptimizationStatus";
+import { PlayerNamesByAllycode } from "../domain/PlayerNamesByAllycode";
 import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
-import { SetStats } from "../domain/Stats";
+import { SetRestrictions } from "../domain/SetRestrictions";
 import { TargetStats } from "../domain/TargetStat";
 
 // components
 import * as UITypes from "../components/types";
 
-// containers
-import { CharacterEditMode } from "../containers/CharacterEditForm/CharacterEditForm";
-
-
-export type SetRestrictions = {
-  [key in SetStats.GIMOStatNames]: number
-}
-
-export interface IncrementalOptimizationProgress {
-  character: Character | null;
-  progress: number;
-  step: string;
-}
-
-interface ModalProps {
-  class: string,
-  content: string,
-  cancelable: boolean
-}
 
 export interface IAppState {
   allyCode: string,
@@ -59,14 +43,12 @@ export interface IAppState {
   hideSelectedCharacters: boolean,
   hotUtilsSubscription: boolean,
   isBusy: boolean,
-  modal: ModalProps | null,
+  modal: ModalProps,
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
 //  modOptions: ModOptions,
   optimizerView: 'edit' | 'review',
-  playerProfiles: {
-    [key: string]: string
-  }, // A simple map from ally codes to player names for all available profiles
+  playerProfiles: PlayerNamesByAllycode,
   profile: PlayerProfile, // All the data about the current character
   section: UITypes.Sections,
   previousSection: UITypes.Sections,
@@ -84,7 +66,7 @@ export interface IAppState {
   characters?: Characters,
   setRestrictions: SetRestrictions,
   targetStats: TargetStats,
-  progress: IncrementalOptimizationProgress,
+  progress: OptimizationStatus,
 }
 
 export class AppState {

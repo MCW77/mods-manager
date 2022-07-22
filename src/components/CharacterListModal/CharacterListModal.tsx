@@ -12,8 +12,11 @@ import {
   showError,
   showModal,
 } from "../../state/actions/app";
+import { fetchCharacterList } from "../../state/actions/data";
 
-import { CharacterListGenerationParameters, fetchCharacterList, UseCaseModes } from "../../state/actions/data";
+// domain
+import { CharacterListGenerationParameters } from '../../domain/CharacterListGenerationParameters';
+import { UseCaseModes } from '../../domain/UseCaseModes';
 
 // components
 import { Dropdown } from "../../components/Dropdown/Dropdown";

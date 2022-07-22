@@ -41,30 +41,16 @@ import * as Mappers from "../../modules/profilesManagement/mappers";
 
 import { BaseCharactersById, APIBaseCharacter, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
 import { Character, Characters } from "../../domain/Character";
+import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
 import { Mod } from "../../domain/Mod";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import { PlayerProfile } from "../../domain/PlayerProfile";
+import { UseCaseModes } from '../../domain/UseCaseModes';
 
 // containers
 import { HUModsMoveProfile, HUProfileCreationData } from "../../containers/Review/Review";
 
-
-const UseCaseModesObj = {
-  GAAndTW: '',
-  LSTB: '1',
-  DSTB: '2',
-  Arena: '3',
-} as const;
-
-export type UseCaseModes = typeof UseCaseModesObj[keyof typeof UseCaseModesObj];
-
-export interface CharacterListGenerationParameters {
-  'alignmentFilter'?: number,
-  'ignoreArena': true,
-  'minimumGearLevel'?: number,
-  'top'?: number, 
-}
 
 interface FetchedProfile {
   name: string,

@@ -57,6 +57,9 @@ import {
   setOptimizeIndex,
 } from "../../state/actions/characterEdit";
 import {
+  fetchCharacterList,
+} from "../../state/actions/data";
+import {
   optimizeMods
 } from "../../state/actions/optimize";
 import {
@@ -74,14 +77,10 @@ import {
   CharacterNames,
 } from "../../constants/characterSettings";
 import defaultTemplates from "../../constants/characterTemplates.json";
-import {
-  CharacterListGenerationParameters,
-  fetchCharacterList,
-  UseCaseModes,
-} from "../../state/actions/data";
 
 import { defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
+import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
 import {
   CharacterTemplate,
   CharacterTemplates,
@@ -89,6 +88,7 @@ import {
 } from "../../domain/CharacterTemplates";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
+import { UseCaseModes } from "../../domain/UseCaseModes";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -19,9 +19,9 @@ import {
 } from "./review";
 
 // domain
-import { IncrementalOptimizationProgress } from "../../state/storage";
 
 import { Character } from "../../domain/Character";
+import { OptimizationStatus } from "../../domain/OptimizationStatus";
 import OptimizerRun from "../../domain/OptimizerRun";
 import { IModSuggestion } from "../../domain/PlayerProfile";
 
@@ -47,7 +47,7 @@ export function startModOptimization() {
   } as const;
 }
 
-export function updateProgress(progress: IncrementalOptimizationProgress) {
+export function updateProgress(progress: OptimizationStatus) {
   return {
     type: UPDATE_PROGRESS,
     progress: progress

@@ -26,6 +26,7 @@ import { BaseCharactersById, BaseCharacter } from '../../domain/BaseCharacter';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "../../domain/CharacterTemplates";
 import { Mod } from '../../domain/Mod';
 import OptimizerRun from "../../domain/OptimizerRun";
+import { PlayerNamesByAllycode } from '../../domain/PlayerNamesByAllycode';
 import { PlayerProfile } from '../../domain/PlayerProfile';
 import { SelectedCharacters, SelectedCharactersByTemplateName } from "../../domain/SelectedCharacters";
 
@@ -37,7 +38,6 @@ export const SET_HOTUTILS_SUBSCRIPTION = 'SET_HOTUTILS_SUBSCRIPTION' as const;
 export const SET_PLAYER_PROFILES = 'SET_PLAYER_PROFILES' as const;
 export const SET_PROFILE = 'SET_PROFILE' as const;
 
-export type PlayerProfiles = {[key: string]: string};
 
 /*
 export function addModsToProfiles(newProfiles) {
@@ -118,7 +118,7 @@ export function setHotUtilsSubscription(hasAccess: boolean) {
   } as const;
 }
 
-export function setPlayerProfiles(profiles: PlayerProfiles) {
+export function setPlayerProfiles(profiles: PlayerNamesByAllycode) {
   return {
     type: SET_PLAYER_PROFILES,
     profiles: profiles
@@ -387,7 +387,7 @@ export function loadProfiles(allyCode: string | null): ThunkResult<void> {
               dispatch(resetState());
           }
           // Set up the playerProfiles object used to switch between available profiles
-          const playerProfiles: PlayerProfiles = {} as PlayerProfiles;
+          const playerProfiles: PlayerNamesByAllycode = {} as PlayerNamesByAllycode;
           cleanedProfiles.forEach(profile => playerProfiles[profile.allyCode] = profile.playerName);
           dispatch(setPlayerProfiles(playerProfiles));
         },

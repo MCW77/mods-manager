@@ -6,7 +6,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import generateKey from "../../utils/generateKey";
 
 // state
-import { IAppState, SetRestrictions } from "../storage";
+import { IAppState } from "../storage";
 
 // actions
 import * as Actions from "../actions/characterEdit";
@@ -14,6 +14,7 @@ import * as Actions from "../actions/characterEdit";
 // domain
 import setBonuses from "../../constants/setbonuses";
 
+import { SetRestrictions } from '../../domain/SetRestrictions';
 import { SetStats } from "../../domain/Stats";
 import { TargetStats } from "../../domain/TargetStat";
 

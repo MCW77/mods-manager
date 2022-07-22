@@ -4,9 +4,8 @@ import areObjectsEquivalent from "../utils/areObjectsEquivalent";
 // domain
 import { CharacterNames } from "../constants/characterSettings";
 import type * as ModTypes from "./types/ModTypes";
-import type * as StatTypes from "./types/StatTypes";
-import { SetRestrictions } from "../state/storage";
 
+import { SetRestrictions } from "./SetRestrictions";
 import { PrimaryStats } from "./Stats";
 import { TargetStat } from "./TargetStat";
 
