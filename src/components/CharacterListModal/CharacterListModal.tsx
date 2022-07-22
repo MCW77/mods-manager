@@ -23,7 +23,7 @@ import { CharacterListGenerationParameters } from '../../domain/CharacterListGen
 
 // components
 import { Dropdown } from "../../components/Dropdown/Dropdown";
-import Spoiler from "../../components/Spoiler/Spoiler";
+import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
 
 
