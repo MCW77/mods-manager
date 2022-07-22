@@ -24,7 +24,6 @@ import {
 import {
   changeModListFilter,
   changeOptimizerView,
-  ModListFilter,
   reassignMod,
   reassignMods,
   unequipMod,
@@ -40,7 +39,9 @@ import { CharacterNames } from '../../constants/characterSettings';
 import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { Mod } from '../../domain/Mod';
+import { ModListFilter } from '../../domain/ModListFilter';
 import { ModLoadout } from "../../domain/ModLoadout";
+import { ModsByCharacterNames } from '../../domain/ModsByCharacterNames';
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { MissedGoals } from '../../domain/PlayerProfile';
 
@@ -64,8 +65,6 @@ interface HUModsProfile {
   modIds: string[],
   target: string,
 }
-
-type ModsByCharacterNames = Record<CharacterNames, Mod[]>;
 
 type HUModsProfiles = HUModsProfile[];
 export interface HUModsMoveProfile {

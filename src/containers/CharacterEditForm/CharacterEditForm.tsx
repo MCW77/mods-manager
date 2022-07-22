@@ -11,7 +11,7 @@ import areObjectsEquivalent from '../../utils/areObjectsEquivalent';
 import { ExpandRecursively } from "../../utils/typeHelper";
 
 // state
-import { IAppState, SetRestrictions } from "../../state/storage";
+import { IAppState } from "../../state/storage";
 
 // actions
 import {
@@ -43,11 +43,13 @@ import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { BaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
+import { CharacterEditMode } from "../../domain/CharacterEditMode";
 import { CharacterSettings } from "../../domain/CharacterSettings";
 import { Mod } from "../../domain/Mod";
 import { OptimizationPlan, PrimaryStatRestrictions } from "../../domain/OptimizationPlan";
 import { IModSuggestion } from "../../domain/PlayerProfile";
 import SetBonus from "../../domain/SetBonus";
+import { SetRestrictions } from "../../domain/SetRestrictions";
 import { SetStats } from "../../domain/Stats";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
@@ -58,8 +60,6 @@ import OptimizerProgress from '../../components/OptimizerProgress/OptimizerProgr
 import RangeInput from "../../components/RangeInput/RangeInput";
 import Toggle from "../../components/Toggle/Toggle";
 
-
-export type CharacterEditMode = 'basic' | 'advanced';
 
 class CharacterEditForm extends React.Component<Props> {
 

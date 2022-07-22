@@ -1,9 +1,3 @@
-// domain
-import { SetRestrictions } from "../storage";
-
-import { SetStats } from "../../domain/Stats";
-import { TargetStat } from "../../domain/TargetStat";
-
 // react
 import { ThunkResult } from "../reducers/modsOptimizer";
 
@@ -38,6 +32,9 @@ import { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTem
 import { OptimizationPlan, OptimizationPlansById } from "../../domain/OptimizationPlan";
 import { PlayerProfile } from "../../domain/PlayerProfile";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
+import { SetRestrictions } from "../../domain/SetRestrictions";
+import { SetStats } from "../../domain/Stats";
+import { TargetStat } from "../../domain/TargetStat";
 
 
 const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ name }) => name);
