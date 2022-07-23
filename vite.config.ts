@@ -1,13 +1,21 @@
-import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vite';
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    target: 'esnext',
+  },
   plugins: [
     reactRefresh(),
     VitePWA({
-      includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],  
+      includeAssets: [
+        'favicon.svg',
+        'favicon.ico',
+        'robots.txt',
+        'apple-touch-icon.png',
+      ],
       manifest: {
         name: `Grandivory's Mods Optimizer`,
         short_name: 'GIMO',
@@ -29,9 +37,9 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable',
-          }
-        ]
-      }      
+          },
+        ],
+      },
     }),
-  ]
-})
+  ],
+});
