@@ -74,4 +74,4 @@ const ModDetail = React.memo(
 
 ModDetail.displayName = 'ModDetail';
 
-export default ModDetail;
+export { ModDetail };
