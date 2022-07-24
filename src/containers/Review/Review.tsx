@@ -57,7 +57,7 @@ import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvata
 import { Credits } from "../../components/Credits/Credits";
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 import { Help } from "../../components/Help/Help";
-import ModDetail from "../../components/ModDetail/ModDetail";
+import { ModDetail } from "../../components/ModDetail/ModDetail";
 import { ModLoadoutDetail } from "../../components/ModLoadoutDetail/ModLoadoutDetail";
 import { ModLoadoutView } from "../../components/ModLoadoutView/ModLoadoutView";
 import Sidebar from "../../components/Sidebar/Sidebar";
