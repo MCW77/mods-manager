@@ -61,7 +61,7 @@ import { Help } from "../../components/Help/Help";
 import { ModDetail } from "../../components/ModDetail/ModDetail";
 import { ModLoadoutDetail } from "../../components/ModLoadoutDetail/ModLoadoutDetail";
 import { ModLoadoutView } from "../../components/ModLoadoutView/ModLoadoutView";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Toggle } from "../../components/Toggle/Toggle";
 
 
