@@ -1,28 +1,28 @@
 // react
 import React from "react";
-import { withTranslation, WithTranslation } from "react-i18next";
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 // styles
 import "./AboutView.css";
 
-// state
-import { IAppState } from "../../state/storage";
+// selectors
+import {
+  selectVersion,
+} from '../../state/reducers/app';
 
 
-class AboutView extends React.PureComponent<Props> {
-  render() {
-    const modsElement: HTMLDivElement = document.getElementById(
-      "mods"
-    ) as HTMLDivElement;
+const AboutView = React.memo(
+  () => {
+    const version = useSelector(selectVersion);
+    const [t, i18n] = useTranslation('global-ui');
 
-    return [
+    return (
       <div className={'About-page'} key={'about'}>
         <div className={'About-title'}>
           <img className={'About-title-image'} src={'../../img/gold-crit-dmg-arrow-mod-cropped.png'}></img>
           <h1 className={'About-title-heading'}>
-            Grandivory's Mods Optimizer <span className="subtitle">{this.props.t('header.SubtitleFor')} Star Wars: Galaxy of Heroes™</span>
+            Grandivory's Mods Optimizer <span className="subtitle">{t('header.SubtitleFor')} Star Wars: Galaxy of Heroes™</span>
           </h1>
         </div>
         <p>
@@ -44,25 +44,13 @@ class AboutView extends React.PureComponent<Props> {
           Patreon
         </a>
         <div className={'version'}>
-            version {this.props.version}
+            version {version}
         </div>
-      </div>  
-    ];
+      </div>
+    );
   }
-}
+);
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    version: state.version,
-  }
-};
+AboutView.displayName = 'AboutView';
 
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-});
-
-type Props = PropsFromRedux & OwnProps & WithTranslation<['global-ui']>;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type OwnProps = {};
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(withTranslation(['global-ui'])(AboutView));
+export default AboutView;
