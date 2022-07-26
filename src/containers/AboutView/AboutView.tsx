@@ -53,4 +53,4 @@ const AboutView = React.memo(
 
 AboutView.displayName = 'AboutView';
 
-export default AboutView;
+export { AboutView };
