@@ -45,4 +45,4 @@ const ErrorModal = React.memo(
 
 ErrorModal.displayName = 'ErrorModal';
 
-export default ErrorModal;
+export { ErrorModal };
