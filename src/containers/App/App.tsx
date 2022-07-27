@@ -72,7 +72,7 @@ import { Spinner } from "../../components/Spinner/Spinner";
 
 // containers
 import { AboutView } from '../AboutView/AboutView';
-import ErrorModal from "../ErrorModal/ErrorModal";
+import { ErrorModal } from "../ErrorModal/ErrorModal";
 import ExploreView from "../ExploreView/ExploreView";
 import HelpView from '../HelpView/HelpView';
 import OptimizerView from "../OptimizerView/OptimizerView";
