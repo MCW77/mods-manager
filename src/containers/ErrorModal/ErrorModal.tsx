@@ -1,53 +1,48 @@
 // react
 import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import Redux from "redux";
-
-// state
-import { IAppState } from "../../state/storage";
+import { useDispatch, useSelector } from "react-redux";
 
 // actions
 import {
   hideError,
 } from "../../state/actions/app";
 
+// selectors
+import {
+  selectErrorMessage,
+} from "../../state/reducers/app";
+
 // components
 import { WarningLabel } from "../../components/WarningLabel/WarningLabel";
 
 
-class ErrorModal extends React.PureComponent<ErrorModalProps> {
-  render() {
-    if (!this.props.content) {
-      return null;
-    }
+const ErrorModal = React.memo(
+  () => {
+    const dispatch = useDispatch();
+    const content = useSelector(selectErrorMessage);
 
-    return <div className={'overlay'}>
-      <div className={'modal error-modal'}>
-        <WarningLabel />
-        <h2 key={'error-header'}>Error!</h2>
-        <div key={'error-message'}>{this.props.content}</div>
-        <div key={'error-actions'} className={'actions'}>
-          <button type={'button'} onClick={this.props.close}>Ok</button>
+    if (content === null) return null;
+
+    return (
+      <div className={'overlay'}>
+        <div className={'modal error-modal'}>
+          <WarningLabel />
+          <h2 key={'error-header'}>Error!</h2>
+          <div key={'error-message'}>{content}</div>
+          <div key={'error-actions'} className={'actions'}>
+            <button
+              type={'button'}
+              onClick={() => {dispatch(hideError())}}
+            >
+              Ok
+            </button>
+          </div>
         </div>
       </div>
-    </div>;
-
+    )
   }
-}
+);
 
-type ErrorModalProps = PropsFromRedux & AttributeProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
+ErrorModal.displayName = 'ErrorModal';
 
-type AttributeProps = {
-}
-
-const mapStateToProps = (state: IAppState) => ({
-  content: state.error
-});
-
-const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
-  close: () => dispatch(hideError())
-});
-
-let connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(ErrorModal)
+export default ErrorModal;
