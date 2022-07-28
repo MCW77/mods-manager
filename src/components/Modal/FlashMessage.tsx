@@ -1,7 +1,6 @@
 // react
 import * as React from 'react';
-import {connect, ConnectedProps} from "react-redux";
-import * as Redux from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // styles
 import './Modal.css';
@@ -9,48 +8,42 @@ import './Modal.css';
 // actions
 import {
   hideFlash,
-} from "../../state/actions/app";
+} from '../../state/actions/app';
 
+// selectors
+import {
+  selectFlashMessage,
+} from '../../state/reducers/app';
 
-type Props = PropsFromRedux & OwnProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type OwnProps = {
+type ComponentProps = {
   className?: string;
-}
-class FlashMessage extends React.PureComponent<Props> {
-  render() {
-    if (!this.props.flash) {
-      return null;
-    }
+};
 
-    const className = this.props.className ? ('modal flash ' + this.props.className) : 'modal flash';
+const FlashMessage = React.memo(({ className = '' }: ComponentProps) => {
+  const dispatch = useDispatch();
+  const flashMessage = useSelector(selectFlashMessage);
+  const classList = `modal flash ${className}`;
 
-    return <div className={'overlay'}>
-      <div className={className}>
-        <h2>{this.props.flash.heading}</h2>
-        <div className={'content'}>{this.props.flash.content}</div>
+  if (flashMessage === null) return null;
+
+  return (
+    <div className={'overlay'}>
+      <div className={classList}>
+        <h2>{flashMessage.heading}</h2>
+        <div className={'content'}>{flashMessage.content}</div>
         <div className={'actions'}>
-          <button type={'button'} onClick={this.props.hideFlash}>OK</button>
+          <button
+            type={'button'}
+            onClick={() => dispatch(hideFlash())}
+          >
+            OK
+          </button>
         </div>
       </div>
-    </div>;
-  }
-}
-
-interface RootState {
-  flashMessage: {
-    heading: string;
-    content: string;
-  };
-}
-const mapStateToProps = (state: RootState) => ({
-  flash: state.flashMessage
+    </div>
+  );
 });
 
-const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
-  hideFlash: () => dispatch(hideFlash())
-});
+FlashMessage.displayName = 'FlashMessage';
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(FlashMessage);
+export default FlashMessage;
