@@ -65,7 +65,7 @@ import type * as UITypes from "../../components/types";
 
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 import { FileInput } from "../../components/FileInput/FileInput";
-import FlashMessage from "../../components/Modal/FlashMessage";
+import { FlashMessage } from "../../components/Modal/FlashMessage";
 import Help from '../../components/Help/Help';
 import { Modal } from "../../components/Modal/Modal";
 import { Spinner } from "../../components/Spinner/Spinner";

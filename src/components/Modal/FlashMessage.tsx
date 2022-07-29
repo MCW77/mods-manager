@@ -46,4 +46,4 @@ const FlashMessage = React.memo(({ className = '' }: ComponentProps) => {
 
 FlashMessage.displayName = 'FlashMessage';
 
-export default FlashMessage;
+export { FlashMessage };
