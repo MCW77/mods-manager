@@ -62,7 +62,7 @@ import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetSta
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { OptimizerProgress } from '../../components/OptimizerProgress/OptimizerProgress';
-import RangeInput from "../../components/RangeInput/RangeInput";
+import { RangeInput } from "../../components/RangeInput/RangeInput";
 import { Toggle } from "../../components/Toggle/Toggle";
 
 
