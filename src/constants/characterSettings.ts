@@ -726,8 +726,8 @@ const characterSettings: CharacterSettingsIndexer = {
     DamageType.mixed
   ),
   'FIRSTORDERTIEPILOT': new CharacterSettings(
-    [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP')],
-    ['FOTP', 'FO']
+    [new OptimizationPlan('PvP', 20, 0, 100, 100, 10, 0, 50, 0, 0, 0, 0, 0, 0, true)],
+    ['FOTP', 'FO'],
   ),
   'FIRSTORDERTROOPER': new CharacterSettings(
     [new OptimizationPlan('PvP', 30, 40, 100, 0, 0, 10, 0, 0, 0, 30, 0, 0, 0, true)],
@@ -1167,8 +1167,8 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Murderbears']
   ),
   'PHASMA': new CharacterSettings(
-    [new OptimizationPlan('PvP', 0, 0, 100, 25, 25, 0, 25, 0, 25, 0, 0, 0, 0, true)],
-    ['FO']
+    [new OptimizationPlan('PvP', 20, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    ['FO'],
   ),
   'PLOKOON': new CharacterSettings(
     [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE')],
