@@ -31,7 +31,7 @@ import {
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import RangeInput from '../../components/RangeInput/RangeInput';
+import { RangeInput } from '../../components/RangeInput/RangeInput';
 
 
 const SettingsView = () => {

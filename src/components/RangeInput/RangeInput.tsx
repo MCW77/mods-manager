@@ -102,4 +102,4 @@ const RangeInput = React.memo(
 
 RangeInput.displayName = 'RangeInput';
 
-export default RangeInput;
+export { RangeInput };
