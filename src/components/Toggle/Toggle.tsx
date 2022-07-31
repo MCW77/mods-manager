@@ -1,17 +1,96 @@
 // react
-import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import React, { useRef, useState } from 'react';
 
 // styles
 import "./Toggle.css";
 
-//utils
-import { ExpandRecursively, ExpandRecursivelyNoFuncs } from "../../utils/typeHelper";
+type ComponentProps = {
+  name?: string;
+  id?: string;
+  className?: string;
+  inputLabel: string;
+  leftLabel: string;
+  rightLabel: string;
+  leftValue: string;
+  rightValue: string;
+  value: string;
+  disabled?: boolean;
+  onChange?: (newValue: string) => void;
+} 
 
-// state
-import { IAppState } from 'state/storage';
+const Toggle2 = ({
+  name = '',
+  id,
+  className = '',
+  inputLabel,
+  leftLabel,
+  rightLabel,
+  leftValue,
+  rightValue,
+  value,
+  disabled = false,
+  onChange,
+}:ComponentProps) => {
+  const checkbox = useRef<HTMLInputElement>(null);
+  const toggleSwitch = useRef<HTMLSpanElement>(null);
+  const [isDisabled, setDisabled] = useState(disabled);
 
+  const classNames = `toggle-wrapper ${className} ${isDisabled ? 'disabled' : ''}`;
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target;
+
+    if (input.checked) {
+      value = rightValue;
+      if (toggleSwitch.current !== null) {
+        toggleSwitch.current.classList.remove('left');
+        toggleSwitch.current.classList.add('right');
+      }
+    } else {
+      value = leftValue;
+      if (toggleSwitch.current !== null) {
+        toggleSwitch.current.classList.remove('right');
+        toggleSwitch.current.classList.add('left');
+      }  
+    }
+
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+  return (
+    <div className={classNames}>
+      <div className={'toggle-label'}>{inputLabel}</div>
+      <label>
+        <input type={'checkbox'}
+          className={'toggle'}
+          ref={checkbox}          
+          name={name}
+          id={id}
+          value={rightValue}
+          defaultChecked={value === rightValue}
+          onChange={onChangeHandler}
+          disabled={isDisabled}
+        />
+        <span className={'toggle-left-value'}>{leftLabel}</span>
+        <span
+          className={'toggle-switch ' + (value === leftValue ? 'left' : 'right')}
+          ref={toggleSwitch} />
+        <span className={'toggle-right-value'}>{rightLabel}</span>
+      </label>
+    </div>
+  )
+}
+
+const RefToggle = React.forwardRef((
+  props: ComponentProps,
+  ref,
+) => {
+  return (
+    <Toggle2 {...props} ref={ref}></Toggle2>
+  );
+});
 
 class Toggle extends React.Component<ComponentProps, ComponentState> {
   checkbox: React.RefObject<HTMLInputElement>;
@@ -86,7 +165,7 @@ class Toggle extends React.Component<ComponentProps, ComponentState> {
       if (this.toggleSwitch.current !== null) {
         this.toggleSwitch.current.classList.remove('right');
         this.toggleSwitch.current.classList.add('left');
-      }  
+      }
     }
 
     if (this.props.onChange) {
@@ -102,7 +181,7 @@ class Toggle extends React.Component<ComponentProps, ComponentState> {
       <label>
         <input type={'checkbox'}
           className={'toggle'}
-          ref={this.checkbox}          
+          ref={this.checkbox}
           name={this.props.name ?? ''}
           id={this.props.id}
           value={this.props.rightValue}
@@ -124,29 +203,6 @@ interface ComponentState {
   disabled: boolean;
 }
 
-type ComponentProps = {
-  name?: string;
-  id?: string;
-  className?: string;
-  inputLabel: string;
-  leftLabel: string;
-  rightLabel: string;
-  leftValue: string;
-  rightValue: string;
-  value: string;
-  disabled?: boolean;
-  onChange?: (newValue: string) => void;
-}
+Toggle2.displayName = 'Toggle2';
 
-/*
-const mapStateToProps = (state: IAppState) => {
-  return {}
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-})
-
-let connector = connect(mapStateToProps, mapDispatchToProps);
-*/
-
-export { Toggle };
+export { Toggle, Toggle2 };
