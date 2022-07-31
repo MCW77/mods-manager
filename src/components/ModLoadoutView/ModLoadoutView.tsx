@@ -15,45 +15,52 @@ import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { ModImage } from "../ModImage/ModImage";
 import { ModStats } from "../ModStats/ModStats";
 
-
 type ComponentProps = {
   modLoadout: ModLoadout;
   showAvatars: boolean;
   assignedCharacter?: Character;
   assignedTarget?: OptimizationPlan;
-}
-class ModLoadoutView extends React.PureComponent<ComponentProps> {
-  render() {
-    const set = this.props.modLoadout;
-    const showAvatars = 'undefined' !== typeof this.props.showAvatars ? this.props.showAvatars : false;
+};
 
-    const assignedCharacter = this.props.assignedCharacter;
-    const assignedTarget = this.props.assignedTarget;
-
-    const modDetails = (Object.keys(set) as ModTypes.GIMOSlots[])
-      .filter(slot => null !== set[slot])
+const ModLoadoutView = React.memo(
+  ({
+    modLoadout,
+    showAvatars = false,
+    assignedCharacter,
+    assignedTarget,
+  }: ComponentProps) => {
+    const modDetails = (Object.keys(modLoadout) as ModTypes.GIMOSlots[])
+      .filter(slot => null !== modLoadout[slot])
       .map(slot =>
-      <div className={'mod ' + slot} key={set[slot]!.id}>
-        {assignedCharacter && assignedTarget && set[slot]!.shouldLevel(assignedTarget) &&
-        <span className={'icon level active'} />
-        }
-        {assignedCharacter && assignedTarget && set[slot]!.shouldSlice(assignedCharacter, assignedTarget) &&
-        <span className={'icon slice active'} />
-        }
-        <ModImage
-          mod={set[slot]!}
-          showAvatar={showAvatars}
-          className={assignedCharacter && set[slot]!.characterID === assignedCharacter.baseID ? 'no-move' : ''}
-        />
-        <ModStats mod={set[slot]!} showAvatar assignedCharacter={assignedCharacter}
-                  assignedTarget={assignedTarget}/>
-      </div>
+        <div className={'mod ' + slot} key={modLoadout[slot]!.id}>
+          {assignedCharacter && assignedTarget && modLoadout[slot]!.shouldLevel(assignedTarget) &&
+          <span className={'icon level active'} />
+          }
+          {assignedCharacter && assignedTarget && modLoadout[slot]!.shouldSlice(assignedCharacter, assignedTarget) &&
+          <span className={'icon slice active'} />
+          }
+          <ModImage
+            mod={modLoadout[slot]!}
+            showAvatar={showAvatars}
+            className={assignedCharacter && modLoadout[slot]!.characterID === assignedCharacter.baseID ? 'no-move' : ''}
+          />
+          <ModStats
+            mod={modLoadout[slot]!}
+            showAvatar
+            assignedCharacter={assignedCharacter}
+            assignedTarget={assignedTarget}
+          />
+        </div>
     );
 
-    return <div className={'mod-set-view'}>
-      {modDetails}
-    </div>;
+    return (
+      <div className={'mod-set-view'}>
+        {modDetails}
+      </div>
+    );
   }
-}
+);
+
+ModLoadoutView.displayName = 'ModLoadoutView';
 
 export { ModLoadoutView };
