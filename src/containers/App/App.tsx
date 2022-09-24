@@ -74,7 +74,7 @@ import { Spinner } from "../../components/Spinner/Spinner";
 import { AboutView } from '../AboutView/AboutView';
 import { ErrorModal } from "../ErrorModal/ErrorModal";
 import ExploreView from "../ExploreView/ExploreView";
-import HelpView from '../HelpView/HelpView';
+import { HelpView } from '../HelpView/HelpView';
 import OptimizerView from "../OptimizerView/OptimizerView";
 import { SettingsView } from '../SettingsView/SettingsView';
 

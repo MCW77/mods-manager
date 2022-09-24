@@ -188,4 +188,4 @@ const HelpView = () => {
 
 HelpView.displayName = 'HelpView';
 
-export default HelpView;
+export { HelpView };
