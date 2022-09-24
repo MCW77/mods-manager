@@ -4,12 +4,6 @@ import formatAllyCode from "../utils/formatAllyCode";
 import { pick } from "../utils/mapObject";
 import { ElementType } from "../utils/typeHelper";
 
-/*
-import groupByKey from "../utils/groupByKey";
-import Mod from "../domain/Mod";
-import cleanAllyCode from "../utils/cleanAllyCode";
-*/
-
 // domain
 import { BaseCharactersById } from "../domain/BaseCharacter";
 import { Character, Characters } from "../domain/Character";
@@ -46,7 +40,6 @@ export interface IAppState {
   modal: ModalProps,
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
-//  modOptions: ModOptions,
   optimizerView: 'edit' | 'review',
   playerProfiles: PlayerNamesByAllycode,
   profile: PlayerProfile, // All the data about the current character
@@ -98,7 +91,6 @@ export class AppState {
     isBusy: false,
     modal: null,
     modsViewOptions: defaultOptions,
-//    modOptions: defaultOptions,
     modListFilter: {
       view: 'sets',
       show: 'all',
