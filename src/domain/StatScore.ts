@@ -1,6 +1,5 @@
 // utils
 import Big from "big.js";
-import type {ElementType} from "../utils/typeHelper";
 
 // domain
 import { SecondaryStats } from "./Stats";
@@ -78,16 +77,16 @@ class StatScore {
       decimalPoints: 5
     }
   } as const;
-  
+
   constructor (stat: SecondaryStats.SecondaryStat) {
     let currentStatInfo = StatScore.statInfo[(stat.type)];
     let statIntValue: Big;
-    
+
     if (stat.displayModifier === '%')      
-      statIntValue = stat.bigValue.mul(Big(10 ** (currentStatInfo.decimalPoints-2))); 
+      statIntValue = stat.bigValue.mul(Big(10 ** (currentStatInfo.decimalPoints-2)));
     else
       statIntValue = stat.bigValue;
-      
+
     let intDistance = statIntValue.minus(Big(currentStatInfo.intMin * stat.rolls)).plus(1);
     let onePercentEquivalent = Big(currentStatInfo.intCount * stat.rolls).minus(stat.rolls).plus(1).div(100);
     this.value = intDistance.div(onePercentEquivalent);
@@ -117,7 +116,7 @@ class StatScore {
    */
   show() {
       return `${this.valueAsString}%`
-  }  
+  }
 }
 
 export default StatScore;
