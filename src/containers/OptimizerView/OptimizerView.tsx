@@ -33,4 +33,4 @@ const OptimizerView = React.memo(
 
 OptimizerView.displayName = 'OptimizerView';
 
-export default OptimizerView;
+export { OptimizerView };
