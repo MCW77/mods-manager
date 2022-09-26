@@ -15,3 +15,6 @@ export function changeModListFilter(state: IAppState, action: ReturnType<typeof 
     modListFilter: action.filter
   });
 }
+
+export const selectModListFilter = (state: IAppState) => state.modListFilter;
+export const selectOptimizerView = (state: IAppState) => state.optimizerView;
