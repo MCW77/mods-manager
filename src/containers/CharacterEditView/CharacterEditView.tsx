@@ -374,7 +374,7 @@ class CharacterEditView extends PureComponent<Props> {
               </button>
             </div>
           </div>
-          <CharacterList selfDrop={true} draggable={true} />
+          <CharacterList />
         </div>
       </div>
     );
