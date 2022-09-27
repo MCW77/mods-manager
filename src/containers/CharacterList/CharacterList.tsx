@@ -321,4 +321,4 @@ const CharacterList = React.memo(
 
 CharacterList.displayName = 'CharacterList';
 
-export default CharacterList;
+export { CharacterList };
