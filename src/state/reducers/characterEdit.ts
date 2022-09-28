@@ -10,6 +10,11 @@ import { IAppState } from "../storage";
 // actions
 import * as CharacterEditActions from "../actions/characterEdit";
 
+// selectors
+import {
+  selectActiveProfile,
+} from './storage';
+
 // domain
 import setBonuses from "../../constants/setbonuses";
 
@@ -119,3 +124,7 @@ export function removeTargetStat(state: IAppState, action: ReturnType<typeof Cha
 export const selectCharacterEditMode = (state: IAppState) => state.characterEditMode;
 export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
 export const selectTargetStats = (state: IAppState) => state.targetStats;
+export const selectSelectedCharactersInActiveProfile = createSelector(
+  [selectActiveProfile],
+  (activeProfile) => activeProfile.selectedCharacters
+);
