@@ -16,7 +16,7 @@
     "@types/node": "^18.11.2",
     "big.js": "^6.2.1",
     "file-saver": "^2.0.5",
-    "i18next": "^21.9.2",
+    "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.4",
     "lodash-es": "^4.17.21",
