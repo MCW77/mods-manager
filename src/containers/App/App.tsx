@@ -190,7 +190,7 @@ class App extends PureComponent<Props> {
         <div className={'top-row'}>
           <div className={'actions'}>
             <div>
-            <FontAwesomeIcon icon={faUser} title={`${this.props.t('global-ui:header.Fetch')}`}/>
+            <FontAwesomeIcon icon={faUser} title={`${this.props.t('header.Fetch')}`}/>
             {/* If there is no active ally code, then show the regular input field */}
             {!this.props.allyCode &&
               <input
@@ -247,7 +247,7 @@ class App extends PureComponent<Props> {
                 className={'red'}
                 onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
               >
-                <FontAwesomeIcon icon={faTrashCan} title={`${this.props.t('global-ui:header.ProfileDelete')}`}/>
+                <FontAwesomeIcon icon={faTrashCan} title={`${this.props.t('header.ProfileDelete')}`}/>
               </button>
             }
             {
@@ -263,7 +263,7 @@ class App extends PureComponent<Props> {
                     );
                   }}
                 >
-                  <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.Fetch')}`}/>
+                  <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('header.Fetch')}`}/>
                 </button>
                 {
                   this.props.hotUtilsSubscription &&
@@ -284,7 +284,7 @@ class App extends PureComponent<Props> {
                     }}
                   >
                     <span className="fa-layers">
-                      <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('global-ui:header.FetchHot')}`}/>
+                      <FontAwesomeIcon icon={faArrowsRotate} title={`${this.props.t('header.FetchHot')}`}/>
                       <FontAwesomeIcon icon={faFire} size="xs" transform="shrink-6 right-8 down-10" color="Red"/>
                     </span>
                   </button>
@@ -300,7 +300,7 @@ class App extends PureComponent<Props> {
           </div>
           <div className="state-actions">
               <FileInput 
-                label={this.props.t('global-ui:header.Restore')}
+                label={this.props.t('header.Restore')}
                 icon={faFile}
                 handler={(file) => this.readFile(file, this.props.restoreProgress)}
               />
@@ -318,7 +318,7 @@ class App extends PureComponent<Props> {
                     });
                   }}
                 >
-                  <FontAwesomeIcon icon={faSave} title={this.props.t('global-ui:header.Save')}/>
+                  <FontAwesomeIcon icon={faSave} title={this.props.t('header.Save')}/>
                 </button>
               }
               {showActions &&
@@ -327,7 +327,7 @@ class App extends PureComponent<Props> {
                   className={'red'}
                   onClick={() => this.props.showModal('reset-modal', this.resetModal())}
                 >
-                  <FontAwesomeIcon icon={faPowerOff} title={this.props.t('global-ui:header.Reset')}/>
+                  <FontAwesomeIcon icon={faPowerOff} title={this.props.t('header.Reset')}/>
                 </button>
               }
             </div>

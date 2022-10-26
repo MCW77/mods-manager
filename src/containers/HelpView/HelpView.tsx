@@ -24,6 +24,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
+type SectionName =
+  'explorer'
+  | 'general'
+  | 'optimizer'
+  | 'profiles'
+;
+
 const HelpView = () => {
   const previousSection = useSelector(
     (state: IAppState) => state.previousSection
@@ -49,7 +56,7 @@ const HelpView = () => {
     optimizer: React.createRef<HTMLDivElement>(),
   };
 
-  const renderSection = (sectionName: string) => {
+  const renderSection = (sectionName: SectionName) => {
     let classes = sectionName;
     if (sectionName === currentSection) classes += ` selected`;
 
@@ -77,7 +84,7 @@ const HelpView = () => {
           key={`${currentSection}-${topic}`}
           onClick={() => changeCurrentTopic(topic)}
         >
-          {t(`${currentSection}.topics.${topic}`)}
+          {t<any>(`${currentSection}.topics.${topic}`)}
         </span>
       );
     });
@@ -87,20 +94,20 @@ const HelpView = () => {
     return match([currentSection, currentTopic])
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
       .otherwise(() => {
-        const title = t(
+        const title = t<any>(
           `${currentSection}.topicById.${currentTopic}.Headline`,
           ''
         );
         let counter = 1;
         const paragraphs: string[] = [];
-        let paragraph = t(
+        let paragraph = t<any>(
           `${currentSection}.topicById.${currentTopic}.${counter}`,
           ''
         );
         while (paragraph !== '') {
           paragraphs.push(paragraph);
           counter++;
-          paragraph = t(
+          paragraph = t<any>(
             `${currentSection}.topicById.${currentTopic}.${counter}`,
             ''
           );
