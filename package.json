@@ -27,7 +27,7 @@
     "react-redux": "^8.0.5",
     "react-responsive": "^9.0.0",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1",
+    "redux-thunk": "^2.4.2",
     "ts-pattern": "^4.0.5"
   },
   "devDependencies": {
