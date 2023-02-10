@@ -43,11 +43,11 @@ import { CharacterNames } from '../../constants/characterSettings';
 import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { Mod } from '../../domain/Mod';
+import { ModAssignments } from "../../domain/ModAssignment";
 import { ModListFilter } from '../../domain/ModListFilter';
 import { ModLoadout } from "../../domain/ModLoadout";
 import { ModsByCharacterNames } from '../../domain/ModsByCharacterNames';
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
-import { MissedGoals } from '../../domain/PlayerProfile';
 
 // components
 import { DOMContent } from '../../components/types';
@@ -80,15 +80,7 @@ export interface HUProfileCreationData {
     category: string,
     name: string,
     units: HUModsProfiles,
-  }  
-}
-type ModAssignments = ModAssignment[];
-interface ModAssignment {
-  id: CharacterNames;
-  target: OptimizationPlan;
-  assignedMods: Mod[];
-  missedGoals: MissedGoals;
-  messages?: string[];
+  }
 }
 
 type DisplayedMods = DisplayedMod[];
@@ -96,7 +88,7 @@ interface DisplayedMod {
   id: CharacterNames;
   target: OptimizationPlan;
   assignedMods: Mod[]
-};
+}
 
 const sortOptions = {
   'currentCharacter': 'currentCharacter',
@@ -435,7 +427,8 @@ class Review extends React.PureComponent<Props> {
             assignedCharacter={character}
             assignedTarget={target}
             missedGoals={missedGoals}
-          />}
+          />
+        }
         {sortOptions.currentCharacter === this.props.filter.sort &&
           <div className={'mod-set-block'}>
             <ModLoadoutView
@@ -988,5 +981,4 @@ type OwnProps = {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-
 export default connector(Review);
