@@ -84,7 +84,7 @@ const HelpView = () => {
           key={`${currentSection}-${topic}`}
           onClick={() => changeCurrentTopic(topic)}
         >
-          {t<any>(`${currentSection}.topics.${topic}`)}
+          {t(`${currentSection}.topics.${topic}`, '')}
         </span>
       );
     });
@@ -94,20 +94,20 @@ const HelpView = () => {
     return match([currentSection, currentTopic])
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
       .otherwise(() => {
-        const title = t<any>(
+        const title = t(
           `${currentSection}.topicById.${currentTopic}.Headline`,
           ''
         );
         let counter = 1;
         const paragraphs: string[] = [];
-        let paragraph = t<any>(
+        let paragraph = t(
           `${currentSection}.topicById.${currentTopic}.${counter}`,
           ''
         );
         while (paragraph !== '') {
           paragraphs.push(paragraph);
           counter++;
-          paragraph = t<any>(
+          paragraph = t(
             `${currentSection}.topicById.${currentTopic}.${counter}`,
             ''
           );
