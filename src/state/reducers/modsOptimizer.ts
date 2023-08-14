@@ -141,9 +141,9 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       window.location.reload();
       return result;
     case App.ActionNames.TOGGLE_SIDEBAR:
-      return AppState.save(AppReducers.toggleSidebar(state, action));
+      return AppState.save(AppReducers.toggleSidebar(state));
     case App.ActionNames.SET_STATE:
-      return AppState.save(AppReducers.setState(state, action));
+      return AppState.save(AppReducers.setState(action));
     case App.ActionNames.SET_IS_BUSY:
       return AppReducers.setIsBusy(state, action);
 

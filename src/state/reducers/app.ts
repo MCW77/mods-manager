@@ -2,7 +2,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 // state
-import {AppState, IAppState} from "../storage";
+import { AppState, IAppState } from "../storage";
 
 // actions
 import * as AppActions from "../actions/app";
@@ -69,11 +69,11 @@ export function setIsBusy(state: IAppState, action: ReturnType<typeof AppActions
   });
 }
 
-export function setState(state: IAppState, action: ReturnType<typeof AppActions.setState>): IAppState {
+export function setState(action: ReturnType<typeof AppActions.setState>): IAppState {
   return Object.assign({}, action.state);
 }
 
-export function toggleSidebar(state: IAppState, action: ReturnType<typeof AppActions.toggleSidebar>): IAppState {
+export function toggleSidebar(state: IAppState): IAppState {
   return Object.assign({}, state, {
     showSidebar: !state.showSidebar
   });
