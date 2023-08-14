@@ -3,7 +3,6 @@ import { BaseCharactersById } from '../../domain/BaseCharacter';
 import { CharacterTemplatesByName } from "../../domain/CharacterTemplates";
 import { PlayerNamesByAllycode } from '../../domain/PlayerNamesByAllycode';
 import { PlayerProfile } from '../../domain/PlayerProfile';
-import { SelectedCharactersByTemplateName } from "../../domain/SelectedCharacters";
 
 
 export const ADD_PLAYER_PROFILE = 'ADD_PLAYER_PROFILE' as const;
@@ -79,7 +78,7 @@ export function setBaseCharacters(baseCharacters: BaseCharactersById) {
   } as const;
 }
 
-export function setCharacterTemplates(templates: SelectedCharactersByTemplateName) {
+export function setCharacterTemplates(templates: CharacterTemplatesByName) {
   return {
     type: SET_CHARACTER_TEMPLATES,
     templates: templates
