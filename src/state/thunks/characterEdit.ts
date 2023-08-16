@@ -9,6 +9,9 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import getDatabase from "../storage/Database";
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   hideModal,
@@ -27,10 +30,6 @@ import {
   loadCharacterTemplates,
 } from './storage';
 
-// selectors
-import {
-  selectBaseCharacters,
-} from "../reducers/data";
 
 // domain
 import { CharacterNames } from "../../constants/characterSettings";
@@ -85,7 +84,7 @@ export function appendTemplate(name: string): ThunkResult<void> {
       },
       (dispatch, getState, newProfile) => {
         const state = getState();
-        const baseCharacters = selectBaseCharacters(state);
+        const baseCharacters = Data.selectors.selectBaseCharacters(state);
         const missingCharacters =
           template.selectedCharacters.filter(({ id }) => !Object.keys(newProfile.characters).includes(id))
             .map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
@@ -151,7 +150,7 @@ export function applyTemplateTargets(name: string) :ThunkResult<void> {
       },
       (dispatch, getState, newProfile) => {
         const state = getState();
-        const baseCharacters = selectBaseCharacters(state);
+        const baseCharacters = Data.selectors.selectBaseCharacters(state);
         const missingCharacters = template.selectedCharacters.filter(({ id: templateCharId }) =>
           !newProfile.selectedCharacters.map(({ id }) => id).includes(templateCharId)
         ).map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
@@ -436,7 +435,7 @@ export function replaceTemplate(templateName: string): ThunkResult<void> {
       },
       (dispatch, getState, newProfile) => {
         const state = getState();
-        const baseCharacters = selectBaseCharacters(state);
+        const baseCharacters = Data.selectors.selectBaseCharacters(state);
         const missingCharacters =
           template.selectedCharacters.filter(({ id }) => !Object.keys(newProfile.characters).includes(id))
             .map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);

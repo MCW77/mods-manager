@@ -5,10 +5,8 @@ import { useSelector } from "react-redux";
 // styles
 import './CharacterAvatar.css';
 
-// selectors
-import {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
+// modules
+import { Data } from '../../state/modules/data';
 
 // domain
 import { BaseCharacter, defaultBaseCharacter } from "../../domain/BaseCharacter";
@@ -30,7 +28,7 @@ const CharacterAvatar = React.memo(({
   displayStars = true,
   id,
 }: ComponentProps) => {
-    const baseCharacters = useSelector(selectBaseCharacters);
+    const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 
     if (character === undefined || character === null) return null;
 

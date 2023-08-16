@@ -5,6 +5,9 @@ import { ThunkResult } from "../reducers/modsOptimizer";
 // state
 import getDatabase from "../storage/Database";
 
+//modules
+import { Data } from '../modules/data';
+
 // actions
 import {
   hideModal,
@@ -27,11 +30,6 @@ import {
 import {
   updateModListFilter,
 } from "./review";
-
-// selectors
-import {
-  selectBaseCharacters,
-} from "../reducers/data";
 
 // domain
 import { Character } from "../../domain/Character";
@@ -96,7 +94,7 @@ export function cancelOptimizer():ThunkResult<void> {
 
       if (resultsWithMessages.length) {
         const state = getState();
-        const baseCharacters = selectBaseCharacters(state);
+        const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
         dispatch(showFlash(
           '',

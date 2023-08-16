@@ -23,13 +23,13 @@ import {
   setProfile,
 } from "../actions/storage";
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // thunks
 import {
   updateProfile,
 } from './app';
-import {
-  fetchHotUtilsStatus,
-} from './data';
 
 // domain
 import { BaseCharactersById, BaseCharacter } from '../../domain/BaseCharacter';
@@ -254,7 +254,7 @@ export function loadFromDb(allyCode: string): ThunkResult<void> {
       const cleanedProfile = profile.withSelectedCharacters(cleanedSelectedCharacters);
 
       dispatch(setProfile(cleanedProfile));
-      dispatch(fetchHotUtilsStatus(allyCode));
+      dispatch(Data.thunks.fetchHotUtilsStatus(allyCode));
     }
     catch (error) {
       dispatch(showError('Error loading your profile from the database: ' + (error as DOMException).message))
@@ -290,7 +290,7 @@ export function loadProfiles(allyCode: string | null): ThunkResult<void> {
           
           dispatch(setProfile(profile ?? PlayerProfile.Default));
           if (profile !== undefined) {
-            dispatch(fetchHotUtilsStatus(profile.allyCode));
+            dispatch(Data.thunks.fetchHotUtilsStatus(profile.allyCode));
           } else if (Object.keys(getState().playerProfiles).length !== 0) {
               dispatch(resetState());
           }

@@ -3,6 +3,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   hideModal,
@@ -15,9 +18,6 @@ import {
 } from '../../state/thunks/storage';
 
 // selectors
-import {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
 import {
   selectCharactersInActiveProfile,
 } from '../../state/reducers/storage';
@@ -39,7 +39,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
   const characters = useSelector(
     selectCharactersInActiveProfile,
   );
-  const baseCharacters = useSelector(selectBaseCharacters);
+  const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 
   const deleteModal = () => {
     const character =

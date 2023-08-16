@@ -26,6 +26,9 @@ import keysWhere from "../../utils/keysWhere";
 // state
 import { IAppState } from "../../state/storage";
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   hideModal,
@@ -1217,6 +1220,7 @@ class CharacterEditView extends PureComponent<Props> {
 
 const mapStateToProps = (state: IAppState) => {
   const profile = state.profile;
+  const baseCharacters = Data.selectors.selectBaseCharacters(state);
   let availableCharacters = [] as Character[];
   if (state.profile) {
     availableCharacters = Object.values(profile.characters)
@@ -1236,7 +1240,7 @@ const mapStateToProps = (state: IAppState) => {
    * @returns boolean
    */
   const characterFilter = (character: Character) => {
-    const baseCharacter = state.baseCharacters[character.baseID] ?? {
+    const baseCharacter = baseCharacters[character.baseID] ?? {
       ...defaultBaseCharacter,
       baseID: character.baseID,
       name: character.baseID,
@@ -1266,7 +1270,7 @@ const mapStateToProps = (state: IAppState) => {
     characterFilter: state.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters,
     sortView: state.characterEditSortView,
-    baseCharacters: state.baseCharacters,
+    baseCharacters: baseCharacters,
     highlightedCharacters: availableCharacters.filter(characterFilter),
     availableCharacters: availableCharacters
       ? availableCharacters.filter((c) => !characterFilter(c))
@@ -1326,7 +1330,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     allyCode: string,
     parameters: CharacterListGenerationParameters
   ) => {
-    dispatch(fetchCharacterList(mode, behavior, allyCode, parameters));
+    dispatch(Data.thunks.fetchCharacterList(mode, behavior, allyCode, parameters));
     dispatch(hideModal());
   },
   saveTemplate: (name: string) => dispatch(saveTemplate(name)),

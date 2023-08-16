@@ -31,6 +31,9 @@ import formatAllyCode from "../../utils/formatAllyCode";
 import { IAppState } from '../../state/storage';
 import { IUserData } from '../../state/storage/Database';
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   changeSection,
@@ -46,11 +49,6 @@ import {
   reset,
   restoreProgress,
 } from "../../state/thunks/app";
-import {
-  checkVersion,
-  refreshPlayerData,
-  setHotUtilsSessionId,
-} from '../../state/thunks/data';
 import {
   exportDatabase,
   loadProfile,
@@ -554,9 +552,9 @@ const mapStateToProps = (state: IAppState) => {
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   changeSection: (newSection: UITypes.Sections) => dispatch(changeSection(newSection)),
   refreshPlayerData: (allyCode: string, keepOldMods: boolean, sessionId: string | null, useSession = true) =>
-    dispatch(refreshPlayerData(allyCode, keepOldMods,  sessionId, useSession)),
-  setHotUtilsSessionId: (allyCode: string, sessionId: string) => dispatch(setHotUtilsSessionId(allyCode, sessionId)),    
-  checkVersion: () => dispatch(checkVersion()),
+    dispatch(Data.thunks.refreshPlayerData(allyCode, keepOldMods,  sessionId, useSession)),
+  setHotUtilsSessionId: (allyCode: string, sessionId: string) => dispatch(Data.thunks.setHotUtilsSessionId(allyCode, sessionId)),    
+  checkVersion: () => dispatch(Data.thunks.checkVersion()),
   showModal: (clazz: string, content: UITypes.DOMContent) => dispatch(showModal(clazz, content)),
   hideModal: () => dispatch(hideModal()),
   showError: (message: UITypes.DOMContent) => dispatch(showError(message)),

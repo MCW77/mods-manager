@@ -9,6 +9,9 @@ import "./CharacterList.css";
 // utils
 import groupByKey from "../../utils/groupByKey";
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // reducers
 import {
   showModal,
@@ -56,7 +59,7 @@ import CharacterEditForm from "../CharacterEditForm/CharacterEditForm";
 const CharacterList = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
-    const baseCharacters = useSelector(selectBaseCharacters);
+    const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const characters = useSelector(selectCharactersInActiveProfile);
     const selectedCharacters = useSelector(selectSelectedCharactersInActiveProfile);
 

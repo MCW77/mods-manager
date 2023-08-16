@@ -3,15 +3,13 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   hideModal,
 } from "../../state/actions/app";
-
-// thunks
-import {
-  fetchCharacterList,
-} from '../../state/thunks/data';
 
 // selectors
 import {
@@ -135,7 +133,7 @@ const CharacterListModal = React.memo(
                 'top': Number(inputValue('max-list-size')),
               }
 
-              dispatch(fetchCharacterList(
+              dispatch(Data.thunks.fetchCharacterList(
                 form.current['use-case'].value,
                 form.current['overwrite'].value,
                 allycode,

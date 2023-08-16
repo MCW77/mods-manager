@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 // styles
 import './ModStats.css';
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // selectors
-import  {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
 import  {
   selectModsViewOptions,
 } from '../../state/reducers/explore';
@@ -48,7 +48,7 @@ const ModStats = React.memo(
     const characters = useSelector(
       selectCharactersInActiveProfile,
     );
-    const baseCharacters = useSelector(selectBaseCharacters);
+    const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const scoreName = useSelector(
       selectModsViewOptions,
     ).modScore;

@@ -16,6 +16,9 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import { IAppState } from '../../state/storage';
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   hideModal,
@@ -27,10 +30,6 @@ import {
 } from "../../state/actions/review";
 
 // thunks
-import {
-  createHotUtilsProfile,
-  moveModsWithHotUtils,
-} from '../../state/thunks/data';
 import {
   reassignMod,
   reassignMods,
@@ -756,6 +755,7 @@ class Review extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: IAppState) => {
+  const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
   const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments): DisplayedMods {
     let tempAssignments = modAssignments;
@@ -861,12 +861,12 @@ const mapStateToProps = (state: IAppState) => {
 
         tags = uniq(flatten(
           (Object.keys(removedMods) as CharacterNames[]).map(
-            id => id in state.baseCharacters ? state.baseCharacters[id].categories : []
+            id => id in baseCharacters ? baseCharacters[id].categories : []
           ) as string[][] 
         ));
       } else {
         tags = uniq(flatten(
-          displayedMods.map(({ id }) => id in state.baseCharacters ? state.baseCharacters[id].categories : [])
+          displayedMods.map(({ id }) => id in baseCharacters ? baseCharacters[id].categories : [])
         ));
       }
       break;
@@ -889,13 +889,13 @@ const mapStateToProps = (state: IAppState) => {
 
       // Set up the available tags for the sidebar
       tags = Array.from(new Set(flatten(
-        displayedMods.map(({ id }) => state.baseCharacters[id] ? state.baseCharacters[id].categories : [])
+        displayedMods.map(({ id }) => baseCharacters[id] ? baseCharacters[id].categories : [])
       )));
 
       // Filter out any characters that we're not going to display based on the selected tag
       if (filter.tag !== '') {
         displayedMods = displayedMods.filter(({ id }) => {
-          const tags = state.baseCharacters[id] ? state.baseCharacters[id].categories : [];
+          const tags = baseCharacters[id] ? baseCharacters[id].categories : [];
           return tags.includes(filter.tag);
         });
       }
@@ -947,7 +947,7 @@ const mapStateToProps = (state: IAppState) => {
     currentSetValue: currentLoadoutValue,
     newSetValue: newLoadoutValue,
     characters: profile.characters ?? {},
-    baseCharacters: state.baseCharacters,
+    baseCharacters: baseCharacters,
     currentModsByCharacter: currentModsByCharacter,
     displayedMods: displayedMods,
     movingModAssignments: movingModsByAssignedCharacter,
@@ -970,8 +970,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(reassignMods(modIDs, characterID)),
   showModal: (clazz: string, content: DOMContent) => dispatch(showModal(clazz, content)),
   hideModal: () => dispatch(hideModal()),
-  createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(createHotUtilsProfile(profile, sessionId)),
-  moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(moveModsWithHotUtils(profile, sessionId))
+  createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(Data.thunks.createHotUtilsProfile(profile, sessionId)),
+  moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(Data.thunks.moveModsWithHotUtils(profile, sessionId))
 });
 
 type Props = PropsFromRedux & OwnProps;

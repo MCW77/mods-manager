@@ -13,6 +13,9 @@ import { ExpandRecursively } from "../../utils/typeHelper";
 // state
 import { IAppState } from "../../state/storage";
 
+// modules
+import { Data } from '../../state/modules/data';
+
 // actions
 import {
   hideModal,
@@ -882,7 +885,7 @@ const mapStateToProps = (state: IAppState) => {
 
   return {
     editMode: state.characterEditMode,
-    baseCharacters: state.baseCharacters,
+    baseCharacters: Data.selectors.selectBaseCharacters(state),
     setRestrictions: state.setRestrictions,
     targetStats: state.targetStats,
     modAssignments: state.profile.modAssignments,
