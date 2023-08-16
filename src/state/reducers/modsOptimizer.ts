@@ -7,6 +7,8 @@ import { IAppState, AppState } from "../storage";
 
 // #region modules
 import * as App from "../modules/app";
+import { Explore } from "../modules/explore";
+
 // #endregion
 
 // #region ActionNames
@@ -22,7 +24,6 @@ import {
   CHANGE_TARGET_STATS,
   TOGGLE_CHARACTER_EDIT_SORT_VIEW,
 } from "../actions/characterEdit";
-import { CHANGE_MODS_VIEW_OPTIONS } from "../actions/explore";
 import { CANCEL_OPTIMIZE_MODS, OPTIMIZE_MODS, UPDATE_PROGRESS } from "../actions/optimize";
 import { CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
 import {
@@ -38,7 +39,6 @@ import {
 // #region Reducera
 import * as AppReducers from "./app";
 import * as CharacterEditReducers from "./characterEdit";
-import * as ExploreReducers from "./explore";
 import * as OptimizeReducers from "./optimize";
 import { changeModListFilter, changeOptimizerView, } from "./review";
 import * as StorageReducers from "./storage";
@@ -48,7 +48,6 @@ import * as StorageReducers from "./storage";
 import * as ReviewActions from "../actions/review";
 import * as StorageActions from "../actions/storage";
 import * as CharacterEditActions from "../actions/characterEdit";
-import * as ExploreActions from "../actions/explore";
 import * as OptimizeActions from "../actions/optimize";
 // #endregion
 
@@ -84,7 +83,7 @@ type AppActions =
   | ReturnType<typeof CharacterEditActions.selectSetBonus>
   | ReturnType<typeof CharacterEditActions.toggleCharacterEditSortView>
   | ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>
-  | ReturnType<typeof ExploreActions.changeModsViewOptions>
+  | ReturnType<typeof Explore.actions.changeModsViewOptions>
   | ReturnType<typeof OptimizeActions.cancelOptimizeMods>
   | ReturnType<typeof OptimizeActions.startModOptimization>
   | ReturnType<typeof OptimizeActions.updateProgress>
@@ -168,8 +167,10 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case REMOVE_TARGET_STAT:
       return CharacterEditReducers.removeTargetStat(state, action);
 
-    case CHANGE_MODS_VIEW_OPTIONS:
-      return AppState.save(ExploreReducers.changeModsViewOptions(state, action));
+    case Explore.actionNames.CHANGE_MODS_VIEW_OPTIONS:
+      return AppState.save(
+        Explore.reducers.changeModsViewOptions(state, action)
+      );
 
     case OPTIMIZE_MODS:
       return OptimizeReducers.optimizeMods(state);

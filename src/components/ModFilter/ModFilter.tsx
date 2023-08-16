@@ -10,10 +10,8 @@ import './ModFilter.css';
 // state
 import { IAppState } from '../../state/storage';
 
-// actions
-import {
-  changeModsViewOptions,
-} from "../../state/actions/explore";
+// modules
+import { Explore } from '../../state/modules/explore';
 
 // domain
 import * as ModConsts from "../../domain/constants/ModConsts";
@@ -728,7 +726,7 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
-  updateFilter: (modsViewOptions: ModsViewOptions) => dispatch(changeModsViewOptions(modsViewOptions))
+  updateFilter: (modsViewOptions: ModsViewOptions) => dispatch(Explore.actions.changeModsViewOptions(modsViewOptions))
 });
 
 let connector = connect(mapStateToProps, mapDispatchToProps);

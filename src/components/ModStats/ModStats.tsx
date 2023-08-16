@@ -8,11 +8,9 @@ import './ModStats.css';
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Explore } from '../../state/modules/explore';
 
 // selectors
-import  {
-  selectModsViewOptions,
-} from '../../state/reducers/explore';
 import  {
   selectCharactersInActiveProfile,
 } from '../../state/reducers/storage';
@@ -50,7 +48,7 @@ const ModStats = React.memo(
     );
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const scoreName = useSelector(
-      selectModsViewOptions,
+      Explore.selectors.selectModsViewOptions,
     ).modScore;
 
     const translateStat = (displayText: string) => {
