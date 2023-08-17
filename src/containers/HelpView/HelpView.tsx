@@ -15,6 +15,9 @@ import { match } from 'ts-pattern';
 // state
 import { IAppState } from '../../state/storage';
 
+// modules
+import { Help } from '../../state/modules/help';
+
 // actions
 import {
   changeSection,
@@ -35,8 +38,9 @@ const HelpView = () => {
   const previousSection = useSelector(
     (state: IAppState) => state.previousSection
   );
-  const helpSection = useSelector((state: IAppState) => state.help.section);
-  const helpTopic = useSelector((state: IAppState) => state.help.topic);
+  const helpPosition = useSelector(Help.selectors.selectHelpPosition);
+  const helpSection = helpPosition.section;
+  const helpTopic = helpPosition.topic;
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation('help-ui');
   const [currentSection, changeCurrentSection] = useState(helpSection);

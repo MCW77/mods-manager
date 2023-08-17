@@ -8,6 +8,7 @@ import { IAppState, AppState } from "../storage";
 // #region modules
 import * as App from "../modules/app";
 import { Explore } from "../modules/explore";
+import { Help } from "../modules/help";
 
 // #endregion
 
@@ -84,6 +85,7 @@ type AppActions =
   | ReturnType<typeof CharacterEditActions.toggleCharacterEditSortView>
   | ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
+  | ReturnType<typeof Help.actions.setHelpPosition>
   | ReturnType<typeof OptimizeActions.cancelOptimizeMods>
   | ReturnType<typeof OptimizeActions.startModOptimization>
   | ReturnType<typeof OptimizeActions.updateProgress>
@@ -171,6 +173,9 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return AppState.save(
         Explore.reducers.changeModsViewOptions(state, action)
       );
+
+    case Help.actionNames.SET_HELP_POSITION:
+      return Help.reducers.setHelpPosition(state, action);
 
     case OPTIMIZE_MODS:
       return OptimizeReducers.optimizeMods(state);
