@@ -16,6 +16,9 @@ import { match } from 'ts-pattern';
 // state
 import { IAppState } from '../../state/storage';
 
+// modules
+import { Settings } from '../../state/modules/settings';
+
 // actions
 import {
   changeSection,
@@ -38,9 +41,7 @@ const SettingsView = () => {
   const previousSection = useSelector(
     (state: IAppState) => state.previousSection
   );
-  const settingsSection = useSelector(
-    (state: IAppState) => state.settings.section
-  );
+  const settingsSection = useSelector(Settings.selectors.selectSettingsPosition).section;
   const globalOptimizerSettings = useSelector(
     (state: IAppState) => state.profile.globalSettings
   );

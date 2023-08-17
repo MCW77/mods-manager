@@ -9,6 +9,7 @@ import { IAppState, AppState } from "../storage";
 import * as App from "../modules/app";
 import { Explore } from "../modules/explore";
 import { Help } from "../modules/help";
+import { Settings } from "../modules/settings";
 
 // #endregion
 
@@ -91,6 +92,7 @@ type AppActions =
   | ReturnType<typeof OptimizeActions.updateProgress>
   | ReturnType<typeof ReviewActions.changeModListFilter>
   | ReturnType<typeof ReviewActions.changeOptimizerView>
+  | ReturnType<typeof Settings.actions.setSettingsPosition>
   | ReturnType<typeof StorageActions.addPlayerProfile>
   | ReturnType<typeof StorageActions.setBaseCharacters>
   | ReturnType<typeof StorageActions.setCharacterTemplates>
@@ -180,7 +182,7 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case OPTIMIZE_MODS:
       return OptimizeReducers.optimizeMods(state);
     case UPDATE_PROGRESS:
-        return OptimizeReducers.updateProgress(state, action);      
+        return OptimizeReducers.updateProgress(state, action);
     case CANCEL_OPTIMIZE_MODS:
       return AppState.save(OptimizeReducers.cancelOptimizeMods(state));
 
@@ -188,6 +190,9 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return AppState.save(changeOptimizerView(state, action));
     case CHANGE_MODLIST_FILTER:
       return AppState.save(changeModListFilter(state, action));
+
+    case Settings.actionNames.SET_SETTINGS_POSITION:
+      return Settings.reducers.setSettingsPosition(state, action);
 
     default:
       return state;
