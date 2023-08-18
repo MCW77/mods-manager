@@ -15,6 +15,7 @@ import { IAppState } from "../../state/storage";
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Optimize } from '../../state/modules/optimize';
 
 // actions
 import {
@@ -40,9 +41,6 @@ import {
   resetCharacterTargetToDefault,
   unlockCharacter,
 } from '../../state/thunks/characterEdit';
-import {
-  optimizeMods,
-} from '../../state/thunks/optimize';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
@@ -938,7 +936,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   populateTargetStats: (targetStats: TargetStat[]) => dispatch(changeTargetStats(targetStats)),
   addTargetStat: (targetStat: TargetStat) => dispatch(addTargetStat(targetStat)),
   removeTargetStat: (index: number) => dispatch(removeTargetStat(index)),
-  optimizeMods: () => dispatch(optimizeMods()),
+  optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
 });
 
 type Props = PropsFromRedux & ComponentProps;

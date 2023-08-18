@@ -3,6 +3,9 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// modules
+import { Optimize } from '../../state/modules/optimize';
+
 // actions
 import {
   hideModal,
@@ -11,16 +14,9 @@ import {
 
 // selectors
 import {
-  selectProgress,
-} from '../../state/reducers/optimize';
-import {
   selectIsIncrementalOptimization,
 } from '../../state/reducers/storage';
 
-// thunks
-import {
-  cancelOptimizer,
-} from '../../state/thunks/optimize';
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
@@ -28,11 +24,11 @@ import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 
 const OptimizerProgress = () => {
   const dispatch: ThunkDispatch = useDispatch();
-  const progress = useSelector(selectProgress);
+  const progress = useSelector(Optimize.selectors.selectProgress);
   const isIncremental = useSelector(selectIsIncrementalOptimization);
 
   const cancel = (closeModal: boolean) => {
-    dispatch(cancelOptimizer());
+    dispatch(Optimize.thunks.cancelOptimizer());
     dispatch(setIsBusy(false));
     if (closeModal) {
       dispatch(hideModal());

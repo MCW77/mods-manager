@@ -28,6 +28,7 @@ import { IAppState } from "../../state/storage";
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Optimize } from '../../state/modules/optimize';
 
 // actions
 import {
@@ -69,9 +70,6 @@ import {
 import {
   fetchCharacterList,
 } from '../../state/thunks/data';
-import {
-  optimizeMods,
-} from '../../state/thunks/optimize';
 import {
   updateModListFilter,
 } from '../../state/thunks/review';
@@ -1319,7 +1317,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(updateLockUnselectedCharacters(lock)),
   resetAllCharacterTargets: () => dispatch(resetAllCharacterTargets()),
   resetIncrementalIndex: () => dispatch(setOptimizeIndex(null)),
-  optimizeMods: () => dispatch(optimizeMods()),
+  optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
   updateModChangeThreshold: (threshold: number) =>
     dispatch(updateModChangeThreshold(threshold)),
   updateForceCompleteModSets: (forceCompleteModSets: boolean) =>

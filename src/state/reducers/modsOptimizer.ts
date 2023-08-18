@@ -9,6 +9,7 @@ import { IAppState, AppState } from "../storage";
 import * as App from "../modules/app";
 import { Explore } from "../modules/explore";
 import { Help } from "../modules/help";
+import { Optimize } from "../modules/optimize";
 import { Settings } from "../modules/settings";
 
 // #endregion
@@ -26,7 +27,6 @@ import {
   CHANGE_TARGET_STATS,
   TOGGLE_CHARACTER_EDIT_SORT_VIEW,
 } from "../actions/characterEdit";
-import { CANCEL_OPTIMIZE_MODS, OPTIMIZE_MODS, UPDATE_PROGRESS } from "../actions/optimize";
 import { CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
 import {
   ADD_PLAYER_PROFILE,
@@ -41,7 +41,6 @@ import {
 // #region Reducera
 import * as AppReducers from "./app";
 import * as CharacterEditReducers from "./characterEdit";
-import * as OptimizeReducers from "./optimize";
 import { changeModListFilter, changeOptimizerView, } from "./review";
 import * as StorageReducers from "./storage";
 // #endregion
@@ -50,7 +49,6 @@ import * as StorageReducers from "./storage";
 import * as ReviewActions from "../actions/review";
 import * as StorageActions from "../actions/storage";
 import * as CharacterEditActions from "../actions/characterEdit";
-import * as OptimizeActions from "../actions/optimize";
 // #endregion
 
 export type ThunkResult<R> = ThunkAction<R, IAppState, null, AppActions>
@@ -87,9 +85,9 @@ type AppActions =
   | ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
   | ReturnType<typeof Help.actions.setHelpPosition>
-  | ReturnType<typeof OptimizeActions.cancelOptimizeMods>
-  | ReturnType<typeof OptimizeActions.startModOptimization>
-  | ReturnType<typeof OptimizeActions.updateProgress>
+  | ReturnType<typeof Optimize.actions.cancelOptimizeMods>
+  | ReturnType<typeof Optimize.actions.startModOptimization>
+  | ReturnType<typeof Optimize.actions.updateProgress>
   | ReturnType<typeof ReviewActions.changeModListFilter>
   | ReturnType<typeof ReviewActions.changeOptimizerView>
   | ReturnType<typeof Settings.actions.setSettingsPosition>
@@ -179,12 +177,14 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case Help.actionNames.SET_HELP_POSITION:
       return Help.reducers.setHelpPosition(state, action);
 
-    case OPTIMIZE_MODS:
-      return OptimizeReducers.optimizeMods(state);
-    case UPDATE_PROGRESS:
-        return OptimizeReducers.updateProgress(state, action);
-    case CANCEL_OPTIMIZE_MODS:
-      return AppState.save(OptimizeReducers.cancelOptimizeMods(state));
+    case Optimize.actionNames.CANCEL_OPTIMIZE_MODS:
+      return AppState.save(
+        Optimize.reducers.cancelOptimizeMods(state)
+      );
+    case Optimize.actionNames.OPTIMIZE_MODS:
+      return Optimize.reducers.optimizeMods(state);
+    case Optimize.actionNames.UPDATE_PROGRESS:
+        return Optimize.reducers.updateProgress(state, action);      
 
     case CHANGE_OPTIMIZER_VIEW:
       return AppState.save(changeOptimizerView(state, action));
