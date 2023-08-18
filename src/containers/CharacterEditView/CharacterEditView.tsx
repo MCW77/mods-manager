@@ -29,6 +29,7 @@ import { IAppState } from "../../state/storage";
 // modules
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
+import { Review } from '../../state/modules/review';
 
 // actions
 import {
@@ -41,9 +42,6 @@ import {
   toggleHideSelectedCharacters,
   toggleCharacterEditSortView,
 } from "../../state/actions/characterEdit";
-import {
-  changeOptimizerView,
-} from "../../state/actions/review";
 
 // thunks
 import {
@@ -70,9 +68,6 @@ import {
 import {
   fetchCharacterList,
 } from '../../state/thunks/data';
-import {
-  updateModListFilter,
-} from '../../state/thunks/review';
 import {
   exportCharacterTemplate,
   exportCharacterTemplates,
@@ -1292,12 +1287,12 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   toggleCharacterEditSortView: () => dispatch(toggleCharacterEditSortView()),
   reviewOldAssignments: () => {
     dispatch(
-      updateModListFilter({
+      Review.thunks.updateModListFilter({
         view: "sets",
         sort: "assignedCharacter",
       })
     );
-    dispatch(changeOptimizerView("review"));
+    dispatch(Review.actions.changeOptimizerView("review"));
   },
   selectCharacter: (
     characterID: CharacterNames,

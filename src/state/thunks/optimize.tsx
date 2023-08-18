@@ -8,6 +8,7 @@ import getDatabase from "../storage/Database";
 //modules
 import { Data } from "../modules/data";
 import { actions } from "../actions/optimize";
+import { Review } from "../modules/review";
 
 // actions
 import {
@@ -16,17 +17,11 @@ import {
   showError,
   showFlash,
 } from "../actions/app";
-import {
-  changeOptimizerView,
-} from "../actions/review";
 
 // thunks
 import {
   updateProfile,
 } from './app';
-import {
-  updateModListFilter,
-} from "./review";
 
 // domain
 import { Character } from "../../domain/Character";
@@ -79,12 +74,12 @@ export namespace thunks {
 				}
 
 				dispatch(
-					updateModListFilter({
+					Review.thunks.updateModListFilter({
 						view: "sets",
 						sort: "assignedCharacter",
 					}),
 				);
-				dispatch(changeOptimizerView("review"));
+				dispatch(Review.actions.changeOptimizerView("review"));
 				dispatch(hideModal());
 
 				// Create the content of the pop-up for any post-optimization messages

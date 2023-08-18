@@ -18,24 +18,13 @@ import { IAppState } from '../../state/storage';
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Review as ReviewModule } from '../../state/modules/review';
 
 // actions
 import {
   hideModal,
   showModal,
 } from "../../state/actions/app";
-import {
-  changeModListFilter,
-  changeOptimizerView,
-} from "../../state/actions/review";
-
-// thunks
-import {
-  reassignMod,
-  reassignMods,
-  unequipMod,
-  unequipMods,
-} from '../../state/thunks/review';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -954,7 +943,7 @@ const mapStateToProps = (state: IAppState) => {
     modRemovalCost: modRemovalCost,
     modUpgradeCost: modUpgradeCost,
     numMovingMods: numMovingMods,
-    filter: state.modListFilter,
+    filter: ReviewModule.selectors.selectModListFilter(state),
     tags: tags,
     hotUtilsSubscription: state.hotUtilsSubscription,
     hotUtilsSessionId: profile.hotUtilsSessionId ?? ""
@@ -962,12 +951,12 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  edit: () => dispatch(changeOptimizerView('edit')),
-  changeFilter: (filter: ModListFilter) => dispatch(changeModListFilter(filter)),
-  unequipMod: (modID: string) => dispatch(unequipMod(modID)),
-  reassignMod: (modID: string, characterID: CharacterNames) => dispatch(reassignMod(modID, characterID)),
-  unequipMods: (modIDs: string[]) => dispatch(unequipMods(modIDs)),
-  reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(reassignMods(modIDs, characterID)),
+  edit: () => dispatch(ReviewModule.actions.changeOptimizerView('edit')),
+  changeFilter: (filter: ModListFilter) => dispatch(ReviewModule.actions.changeModListFilter(filter)),
+  unequipMod: (modID: string) => dispatch(ReviewModule.thunks.unequipMod(modID)),
+  reassignMod: (modID: string, characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMod(modID, characterID)),
+  unequipMods: (modIDs: string[]) => dispatch(ReviewModule.thunks.unequipMods(modIDs)),
+  reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMods(modIDs, characterID)),
   showModal: (clazz: string, content: DOMContent) => dispatch(showModal(clazz, content)),
   hideModal: () => dispatch(hideModal()),
   createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(Data.thunks.createHotUtilsProfile(profile, sessionId)),

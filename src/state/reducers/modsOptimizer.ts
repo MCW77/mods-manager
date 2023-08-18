@@ -10,6 +10,7 @@ import * as App from "../modules/app";
 import { Explore } from "../modules/explore";
 import { Help } from "../modules/help";
 import { Optimize } from "../modules/optimize";
+import { Review } from "../modules/review";
 import { Settings } from "../modules/settings";
 
 // #endregion
@@ -27,7 +28,6 @@ import {
   CHANGE_TARGET_STATS,
   TOGGLE_CHARACTER_EDIT_SORT_VIEW,
 } from "../actions/characterEdit";
-import { CHANGE_MODLIST_FILTER, CHANGE_OPTIMIZER_VIEW } from "../actions/review";
 import {
   ADD_PLAYER_PROFILE,
   SET_CHARACTER_TEMPLATES,
@@ -41,12 +41,10 @@ import {
 // #region Reducera
 import * as AppReducers from "./app";
 import * as CharacterEditReducers from "./characterEdit";
-import { changeModListFilter, changeOptimizerView, } from "./review";
 import * as StorageReducers from "./storage";
 // #endregion
 
 // #region Actions
-import * as ReviewActions from "../actions/review";
 import * as StorageActions from "../actions/storage";
 import * as CharacterEditActions from "../actions/characterEdit";
 // #endregion
@@ -88,8 +86,8 @@ type AppActions =
   | ReturnType<typeof Optimize.actions.cancelOptimizeMods>
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
-  | ReturnType<typeof ReviewActions.changeModListFilter>
-  | ReturnType<typeof ReviewActions.changeOptimizerView>
+  | ReturnType<typeof Review.actions.changeModListFilter>
+  | ReturnType<typeof Review.actions.changeOptimizerView>
   | ReturnType<typeof Settings.actions.setSettingsPosition>
   | ReturnType<typeof StorageActions.addPlayerProfile>
   | ReturnType<typeof StorageActions.setBaseCharacters>
@@ -186,10 +184,14 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case Optimize.actionNames.UPDATE_PROGRESS:
         return Optimize.reducers.updateProgress(state, action);      
 
-    case CHANGE_OPTIMIZER_VIEW:
-      return AppState.save(changeOptimizerView(state, action));
-    case CHANGE_MODLIST_FILTER:
-      return AppState.save(changeModListFilter(state, action));
+    case Review.actionNames.CHANGE_MODLIST_FILTER:
+      return AppState.save(
+        Review.reducers.changeModListFilter(state, action)
+      );
+    case Review.actionNames.CHANGE_OPTIMIZER_VIEW:
+      return AppState.save(        
+        Review.reducers.changeOptimizerView(state, action)
+      );
 
     case Settings.actionNames.SET_SETTINGS_POSITION:
       return Settings.reducers.setSettingsPosition(state, action);
