@@ -11,6 +11,7 @@ import getDatabase from "../storage/Database";
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
@@ -26,10 +27,6 @@ import {
 import {
   updateProfile,
 } from './app';
-import {
-  loadCharacterTemplates,
-} from './storage';
-
 
 // domain
 import { CharacterNames } from "../../constants/characterSettings";
@@ -297,7 +294,7 @@ export function deleteTemplate(name: string) :ThunkResult<void> {
     db.deleteCharacterTemplate(
       name,
       () => {
-        dispatch(loadCharacterTemplates());
+        dispatch(Storage.thunks.loadCharacterTemplates());
         dispatch(hideModal());
       },
       error => dispatch(showFlash(
@@ -535,7 +532,7 @@ export function saveTemplate(templateName: string): ThunkResult<void> {
 
     db.saveCharacterTemplate(templateName, selectedCharacters,
       () => {
-        dispatch(loadCharacterTemplates());
+        dispatch(Storage.thunks.loadCharacterTemplates());
         dispatch(hideModal());
       },
       error => dispatch(showFlash(
@@ -553,7 +550,7 @@ export function saveTemplates(templates: CharacterTemplates): ThunkResult<void> 
     db.saveCharacterTemplates(
       templates,
       () => {
-        dispatch(loadCharacterTemplates());
+        dispatch(Storage.thunks.loadCharacterTemplates());
         dispatch(hideModal());
       },
       error => dispatch(showFlash(

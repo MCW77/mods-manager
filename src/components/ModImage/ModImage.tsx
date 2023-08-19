@@ -5,10 +5,8 @@ import { useSelector } from "react-redux";
 // styles
 import './ModImage.css';
 
-// selectors
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+// modules
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -48,7 +46,7 @@ const ModImage = React.memo(
     mod,
     showAvatar = false,
   }: ComponentProps) => {
-    const characters = useSelector(selectCharactersInActiveProfile)
+    const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile)
     const modColor = getModColor(mod);
     const character = mod.characterID ? characters[mod.characterID as CharacterNames] : null;
 

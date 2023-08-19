@@ -9,11 +9,7 @@ import './ModStats.css';
 // modules
 import { Data } from '../../state/modules/data';
 import { Explore } from '../../state/modules/explore';
-
-// selectors
-import  {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -44,7 +40,7 @@ const ModStats = React.memo(
   }: ComponentProps) => {
     const [t, i18n] = useTranslation('domain');
     const characters = useSelector(
-      selectCharactersInActiveProfile,
+      Storage.selectors.selectCharactersInActiveProfile,
     );
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const scoreName = useSelector(

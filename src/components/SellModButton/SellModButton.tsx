@@ -5,22 +5,13 @@ import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
   hideModal,
   showModal,
 } from '../../state/actions/app';
-
-// thunks
-import {
-  deleteMod,
-} from '../../state/thunks/storage';
-
-// selectors
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
 
 // domain
 import { Mod } from '../../domain/Mod';
@@ -37,7 +28,7 @@ type ComponentProps = {
 const SellModButton = React.memo(({ mod }: ComponentProps) => {
   const dispatch: ThunkDispatch = useDispatch();
   const characters = useSelector(
-    selectCharactersInActiveProfile,
+    Storage.selectors.selectCharactersInActiveProfile,
   );
   const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 
@@ -73,7 +64,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
           <button
             type={'button'}
             onClick={() => {
-              dispatch(deleteMod(mod));
+              dispatch(Storage.thunks.deleteMod(mod));
               dispatch(hideModal());
             }}
             className={'red'}

@@ -18,6 +18,7 @@ import { IAppState } from '../../state/storage';
 
 // modules
 import { Settings } from '../../state/modules/settings';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
@@ -42,9 +43,7 @@ const SettingsView = () => {
     (state: IAppState) => state.previousSection
   );
   const settingsSection = useSelector(Settings.selectors.selectSettingsPosition).section;
-  const globalOptimizerSettings = useSelector(
-    (state: IAppState) => state.profile.globalSettings
-  );
+  const globalOptimizerSettings = useSelector(Storage.selectors.selectGlobalOptimizationSettings);
   const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
   const [currentSection, changeCurrentSection] = useState(settingsSection);

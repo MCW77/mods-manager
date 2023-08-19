@@ -12,7 +12,7 @@ import { Help } from "../modules/help";
 import { Optimize } from "../modules/optimize";
 import { Review } from "../modules/review";
 import { Settings } from "../modules/settings";
-
+import { Storage } from "../modules/storage";
 // #endregion
 
 // #region ActionNames
@@ -28,24 +28,14 @@ import {
   CHANGE_TARGET_STATS,
   TOGGLE_CHARACTER_EDIT_SORT_VIEW,
 } from "../actions/characterEdit";
-import {
-  ADD_PLAYER_PROFILE,
-  SET_CHARACTER_TEMPLATES,
-  SET_BASE_CHARACTERS,
-  SET_PLAYER_PROFILES,
-  SET_PROFILE,
-  SET_HOTUTILS_SUBSCRIPTION
-} from "../actions/storage";
 // #endregion
 
 // #region Reducera
 import * as AppReducers from "./app";
 import * as CharacterEditReducers from "./characterEdit";
-import * as StorageReducers from "./storage";
 // #endregion
 
 // #region Actions
-import * as StorageActions from "../actions/storage";
 import * as CharacterEditActions from "../actions/characterEdit";
 // #endregion
 
@@ -89,12 +79,12 @@ type AppActions =
   | ReturnType<typeof Review.actions.changeModListFilter>
   | ReturnType<typeof Review.actions.changeOptimizerView>
   | ReturnType<typeof Settings.actions.setSettingsPosition>
-  | ReturnType<typeof StorageActions.addPlayerProfile>
-  | ReturnType<typeof StorageActions.setBaseCharacters>
-  | ReturnType<typeof StorageActions.setCharacterTemplates>
-  | ReturnType<typeof StorageActions.setHotUtilsSubscription>
-  | ReturnType<typeof StorageActions.setPlayerProfiles>
-  | ReturnType<typeof StorageActions.setProfile>
+  | ReturnType<typeof Storage.actions.addPlayerProfile>
+  | ReturnType<typeof Storage.actions.setBaseCharacters>
+  | ReturnType<typeof Storage.actions.setCharacterTemplates>
+  | ReturnType<typeof Storage.actions.setHotUtilsSubscription>
+  | ReturnType<typeof Storage.actions.setPlayerProfiles>
+  | ReturnType<typeof Storage.actions.setProfile>
 ;
 // #endregion
 
@@ -107,19 +97,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
   }
 
   switch (action.type) {
-    case SET_BASE_CHARACTERS:
-      return StorageReducers.setBaseCharacters(state, action);
-    case SET_PROFILE:
-      return AppState.save(StorageReducers.setProfile(state, action));
-    case SET_CHARACTER_TEMPLATES:
-      return AppState.save(StorageReducers.setCharacterTemplates(state, action));
-    case ADD_PLAYER_PROFILE:
-      return StorageReducers.addPlayerProfile(state, action);
-    case SET_PLAYER_PROFILES:
-      return StorageReducers.setPlayerProfiles(state, action);
-    case SET_HOTUTILS_SUBSCRIPTION:
-      return StorageReducers.setHotUtilsSubscription(state, action);
-
 
     case App.ActionNames.CHANGE_SECTION:
       return AppState.save(AppReducers.changeSection(state, action));
@@ -195,6 +172,25 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
 
     case Settings.actionNames.SET_SETTINGS_POSITION:
       return Settings.reducers.setSettingsPosition(state, action);
+
+    case Storage.actionNames.SET_BASE_CHARACTERS:
+      return Storage.reducers.setBaseCharacters(state, action);
+    case Storage.actionNames.SET_PROFILE:
+      return AppState.save(
+        Storage.reducers.setProfile(state, action)
+      );
+    case Storage.actionNames.SET_CHARACTER_TEMPLATES:
+      return AppState.save(
+        Storage.reducers.setCharacterTemplates(state, action)
+      );
+    case Storage.actionNames.ADD_PLAYER_PROFILE:
+      return AppState.save(
+        Storage.reducers.addPlayerProfile(state, action)
+      );
+    case Storage.actionNames.SET_PLAYER_PROFILES:
+      return Storage.reducers.setPlayerProfiles(state, action);
+    case Storage.actionNames.SET_HOTUTILS_SUBSCRIPTION:
+      return Storage.reducers.setHotUtilsSubscription(state, action);
 
     default:
       return state;

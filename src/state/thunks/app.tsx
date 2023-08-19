@@ -9,32 +9,20 @@ import groupByKey from "../../utils/groupByKey";
 import { IAppState } from "../storage";
 import getDatabase, { IUserData } from "../storage/Database";
 
+// modules
+import { Storage } from '../modules/storage';
+
 // actions
 import {
   resetState,
   showError,
   showFlash,
 } from "../actions/app";
-import {
-  setProfile,
-} from "../actions/storage";
 
 // thunks
 import {
   saveTemplates,
 } from "../thunks/characterEdit"
-import {
-  loadProfile,
-  loadProfiles,
-  saveBaseCharacters,
-  saveLastRuns,
-  saveProfiles,
-} from "../thunks/storage";
-
-// selectors
-import {
-  selectAllycode,
-} from '../reducers/storage';
 
 // domain
 import * as C3POMods from "../../modules/profilesManagement/dtos/c3po";
@@ -48,7 +36,7 @@ export function deleteProfile(allyCode: string): ThunkResult<void> {
     const db = getDatabase();
     db.deleteProfile(
       allyCode,
-      () => dispatch(loadProfiles(null)),
+      () => dispatch(Storage.thunks.loadProfiles(null)),
       error => dispatch(showFlash(
         'Storage Error',
         'Error deleting your profile: ' + error?.message
@@ -75,7 +63,7 @@ export function replaceModsForCurrentProfile(mods: C3POMods.C3POModDTO[]): Thunk
   return async function (dispatch, getState) {
     const state = getState();
     const db = getDatabase();
-    let profile = await db.getProfile(selectAllycode(state));
+      let profile = await db.getProfile(Storage.selectors.selectAllycode(state));
     mods = mods.filter(mod => mod.equippedUnit === 'none');
     const mapper = new C3POMappers.ModMapper();
     const newMods: Mod[] = mods.map(
@@ -90,7 +78,7 @@ export function replaceModsForCurrentProfile(mods: C3POMods.C3POModDTO[]): Thunk
     db.saveProfile(
       profile,
       () => {
-        dispatch(loadProfile(selectAllycode(state)));
+        dispatch(Storage.thunks.loadProfile(Storage.selectors.selectAllycode(state)));
         dispatch(showFlash(
           'Success!',
           <p>
@@ -140,21 +128,21 @@ export function restoreProgress(progressData: string): ThunkResult<void> {
               }
             });
 
-            dispatch(saveProfiles(updatedProfiles, stateObj.allyCode));
+              dispatch(Storage.thunks.saveProfiles(updatedProfiles, stateObj.allyCode));
 
           },
           error =>
             // On error, just save the profiles directly from the file
-            dispatch(saveProfiles(stateObj.profiles, stateObj.allyCode))
+              dispatch(Storage.thunks.saveProfiles(stateObj.profiles, stateObj.allyCode))
         );
 
-        dispatch(saveBaseCharacters(stateObj.gameSettings));
-        dispatch(saveLastRuns(stateObj.lastRuns));
+          dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
+          dispatch(Storage.thunks.saveLastRuns(stateObj.lastRuns));
         if (stateObj.characterTemplates) {
           dispatch(saveTemplates(stateObj.characterTemplates))
         }
         if (stateObj.allyCode !== '') {
-          dispatch(loadProfile(stateObj.allyCode));
+            dispatch(Storage.thunks.loadProfile(stateObj.allyCode));
         }
         
       }
@@ -198,7 +186,7 @@ export function updateProfile(
         'Error saving your progress: ' + error?.message + ' Your progress may be lost on page refresh.'
       ))
     );
-    dispatch(setProfile(newProfile));
+      dispatch(Storage.actions.setProfile(newProfile));
     auxiliaryChanges(dispatch, getState, newProfile);
   };
 }

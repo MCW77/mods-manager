@@ -7,11 +7,7 @@ import './ModDetail.css';
 
 // modules
 import { Data } from '../../state/modules/data';
-
-// selectors
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { Character }  from '../../domain/Character';
@@ -41,7 +37,7 @@ const ModDetail = React.memo(
     showAssigned = false,
   }: ComponentProps) => {
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
-    const characters = useSelector(selectCharactersInActiveProfile);
+    const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
 
     const character: Character | null =
       mod.characterID !== "null"

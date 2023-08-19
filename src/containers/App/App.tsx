@@ -33,6 +33,7 @@ import { IUserData } from '../../state/storage/Database';
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
@@ -49,10 +50,6 @@ import {
   reset,
   restoreProgress,
 } from "../../state/thunks/app";
-import {
-  exportDatabase,
-  loadProfile,
-} from '../../state/thunks/storage';
 
 // domain
 import { PlayerProfile } from '../../domain/PlayerProfile';
@@ -561,9 +558,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   reset: () => dispatch(reset()),
   importC3POProfile: (profile: string) => dispatch(importC3POProfile(profile)),
   restoreProgress: (progressData: string) => dispatch(restoreProgress(progressData)),
-  switchProfile: (allyCode: string) => dispatch(loadProfile(allyCode)),
+  switchProfile: (allyCode: string) => dispatch(Storage.thunks.loadProfile(allyCode)),
   deleteProfile: (allyCode: string) => dispatch(deleteProfile(allyCode)),
-  exportDatabase: (callback: (ud: IUserData) => void) => dispatch(exportDatabase(callback))
+  exportDatabase: (callback: (ud: IUserData) => void) => dispatch(Storage.thunks.exportDatabase(callback))
 });
 
 let connector = connect(mapStateToProps, mapDispatchToProps);

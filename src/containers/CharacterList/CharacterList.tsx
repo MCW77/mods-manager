@@ -11,6 +11,7 @@ import groupByKey from "../../utils/groupByKey";
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // reducers
 import {
@@ -38,9 +39,6 @@ import {
 import {
   selectBaseCharacters,
 } from '../../state/reducers/data';
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
@@ -60,7 +58,7 @@ const CharacterList = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
-    const characters = useSelector(selectCharactersInActiveProfile);
+    const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
     const selectedCharacters = useSelector(selectSelectedCharactersInActiveProfile);
 
     const characterBlockDragStart = (index: number) => {

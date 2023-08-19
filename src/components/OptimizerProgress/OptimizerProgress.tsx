@@ -5,18 +5,13 @@ import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // modules
 import { Optimize } from '../../state/modules/optimize';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
   hideModal,
   setIsBusy,
 } from '../../state/actions/app';
-
-// selectors
-import {
-  selectIsIncrementalOptimization,
-} from '../../state/reducers/storage';
-
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
@@ -25,7 +20,7 @@ import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 const OptimizerProgress = () => {
   const dispatch: ThunkDispatch = useDispatch();
   const progress = useSelector(Optimize.selectors.selectProgress);
-  const isIncremental = useSelector(selectIsIncrementalOptimization);
+  const isIncremental = useSelector(Storage.selectors.selectIsIncrementalOptimization);
 
   const cancel = (closeModal: boolean) => {
     dispatch(Optimize.thunks.cancelOptimizer());

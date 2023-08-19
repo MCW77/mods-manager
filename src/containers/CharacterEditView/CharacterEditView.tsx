@@ -30,6 +30,7 @@ import { IAppState } from "../../state/storage";
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
 import { Review } from '../../state/modules/review';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
@@ -68,10 +69,6 @@ import {
 import {
   fetchCharacterList,
 } from '../../state/thunks/data';
-import {
-  exportCharacterTemplate,
-  exportCharacterTemplates,
-} from '../../state/thunks/storage';
 
 // domain
 import {
@@ -1212,21 +1209,22 @@ class CharacterEditView extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: IAppState) => {
-  const profile = state.profile;
+  const allycode = Storage.selectors.selectAllycode(state);
+  const profile = Storage.selectors.selectActiveProfile(state);
+  const characters = Storage.selectors.selectCharactersInActiveProfile(state);
   const baseCharacters = Data.selectors.selectBaseCharacters(state);
   let availableCharacters = [] as Character[];
-  if (state.profile) {
-    availableCharacters = Object.values(profile.characters)
-      .filter((character) => character.playerValues.level >= 50)
-      .filter(
-        (character) =>
-          !state.hideSelectedCharacters ||
-          !profile.selectedCharacters
-            .map(({ id }) => id)
-            .includes(character.baseID)
-      )
-      .sort((left, right) => left.compareGP(right));
-  }
+
+  availableCharacters = Object.values(characters)
+    .filter((character) => character.playerValues.level >= 50)
+    .filter(
+      (character) =>
+        !state.hideSelectedCharacters ||
+        !profile.selectedCharacters
+          .map(({ id }) => id)
+          .includes(character.baseID)
+    )
+    .sort((left, right) => left.compareGP(right));
   /**
    * Checks whether a character matches the filter string in name or tags
    * @param character {Character} The character to check
@@ -1257,9 +1255,9 @@ const mapStateToProps = (state: IAppState) => {
   };
 
   return {
-    allyCode: state.allyCode,
-    mods: profile?.mods ?? [],
-    globalSettings: profile?.globalSettings ?? {},
+    allyCode: allycode,
+    mods: profile.mods ?? [],
+    globalSettings: profile.globalSettings ?? {},
     characterFilter: state.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters,
     sortView: state.characterEditSortView,
@@ -1268,10 +1266,10 @@ const mapStateToProps = (state: IAppState) => {
     availableCharacters: availableCharacters
       ? availableCharacters.filter((c) => !characterFilter(c))
       : [],
-    selectedCharacters: profile?.selectedCharacters ?? {},
-    lastSelectedCharacter: profile?.selectedCharacters.length - 1 ?? 0,
+    selectedCharacters: profile.selectedCharacters ?? {},
+    lastSelectedCharacter: profile.selectedCharacters.length - 1 ?? 0,
     showReviewButton:
-      profile?.modAssignments && Object.keys(profile.modAssignments).length,
+      profile.modAssignments && Object.keys(profile.modAssignments).length,
     characterTemplates: Object.keys(state.characterTemplates),
   };
 };
@@ -1345,11 +1343,11 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     templateName: string,
     callback: (template: CharacterTemplate) => void
   ) => {
-    dispatch(exportCharacterTemplate(templateName, callback));
+    dispatch(Storage.thunks.exportCharacterTemplate(templateName, callback));
     dispatch(hideModal());
   },
   exportAllTemplates: (callback: (templates: CharacterTemplates) => void) => {
-    dispatch(exportCharacterTemplates(callback));
+    dispatch(Storage.thunks.exportCharacterTemplates(callback));
     dispatch(hideModal());
   },
   deleteTemplate: (templateName: string) =>

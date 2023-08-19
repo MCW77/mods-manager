@@ -14,15 +14,13 @@ import './i18n.ts';
 // state
 import getDatabase from "./state/storage/Database";
 
+// modules
+import { Storage } from './state/modules/storage';
+
 // actions
 import {
   showError,
 } from "./state/actions/app";
-
-// thunks
-import {
-  databaseReady,
-} from './state/thunks/storage';
 
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";
@@ -48,7 +46,7 @@ getDatabase(
   (db) => {
     const dispatch: ThunkDispatch = store.dispatch;
     dispatch(
-      databaseReady(store.getState().allyCode)
+      Storage.thunks.databaseReady(store.getState().allyCode)
     );
   },
   (error: DOMException | null) => {

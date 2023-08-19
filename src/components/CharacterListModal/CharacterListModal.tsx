@@ -5,16 +5,12 @@ import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // modules
 import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
   hideModal,
 } from "../../state/actions/app";
-
-// selectors
-import {
-  selectAllycode,
-} from '../../state/reducers/storage';
 
 // domain
 import { CharacterListGenerationParameters } from '../../domain/CharacterListGenerationParameters';
@@ -29,7 +25,7 @@ const CharacterListModal = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
     const form = useRef<HTMLFormElement>(null);
-    const allycode = useSelector(selectAllycode);
+    const allycode = useSelector(Storage.selectors.selectAllycode);
 
     return (
       <div>

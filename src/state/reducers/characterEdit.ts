@@ -7,13 +7,11 @@ import generateKey from "../../utils/generateKey";
 // state
 import { IAppState } from "../storage";
 
+// modules
+import { Storage } from '../modules/storage';
+
 // actions
 import * as CharacterEditActions from "../actions/characterEdit";
-
-// selectors
-import {
-  selectActiveProfile,
-} from './storage';
 
 // domain
 import setBonuses from "../../constants/setbonuses";
@@ -125,6 +123,6 @@ export const selectCharacterEditMode = (state: IAppState) => state.characterEdit
 export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
 export const selectTargetStats = (state: IAppState) => state.targetStats;
 export const selectSelectedCharactersInActiveProfile = createSelector(
-  [selectActiveProfile],
+  [Storage.selectors.selectActiveProfile],
   (activeProfile) => activeProfile.selectedCharacters
 );

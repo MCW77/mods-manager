@@ -19,6 +19,7 @@ import { IAppState } from '../../state/storage';
 // modules
 import { Data } from '../../state/modules/data';
 import { Review as ReviewModule } from '../../state/modules/review';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
@@ -931,7 +932,7 @@ const mapStateToProps = (state: IAppState) => {
    * }}
    */
   return {
-    allyCode: state.allyCode,
+    allyCode: Storage.selectors.selectAllycode(state),
     assignedMods: profile.modAssignments ?? [],
     currentSetValue: currentLoadoutValue,
     newSetValue: newLoadoutValue,
