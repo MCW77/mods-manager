@@ -7,6 +7,7 @@ import { IAppState, AppState } from "../storage";
 
 // #region modules
 import * as App from "../modules/app";
+import { CharacterEdit } from "../modules/characterEdit";
 import { Explore } from "../modules/explore";
 import { Help } from "../modules/help";
 import { Optimize } from "../modules/optimize";
@@ -15,38 +16,17 @@ import { Settings } from "../modules/settings";
 import { Storage } from "../modules/storage";
 // #endregion
 
-// #region ActionNames
-import {
-  CHANGE_CHARACTER_EDIT_MODE,
-  CHANGE_CHARACTER_FILTER,
-  CHANGE_SET_RESTRICTIONS,
-  REMOVE_SET_BONUS,
-  SELECT_SET_BONUS,
-  TOGGLE_HIDE_SELECTED_CHARACTERS,
-  ADD_TARGET_STAT,
-  REMOVE_TARGET_STAT,
-  CHANGE_TARGET_STATS,
-  TOGGLE_CHARACTER_EDIT_SORT_VIEW,
-} from "../actions/characterEdit";
-// #endregion
-
 // #region Reducera
 import * as AppReducers from "./app";
-import * as CharacterEditReducers from "./characterEdit";
 // #endregion
 
-// #region Actions
-import * as CharacterEditActions from "../actions/characterEdit";
-// #endregion
 
 export type ThunkResult<R> = ThunkAction<R, IAppState, null, AppActions>
-
 export type AppThunk = ThunkAction<void, IAppState, null, AppActions>
-
 export type ThunkDispatch = TD<IAppState, null, AppActions>
 export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 
-//export const thunkDispatch = 
+//export const thunkDispatch =
 
 // #region AppActions
 type AppActions =
@@ -61,16 +41,16 @@ type AppActions =
   | ReturnType<typeof App.Actions.SHOW_FLASH>
   | ReturnType<typeof App.Actions.SHOW_MODAL>
   | ReturnType<typeof App.Actions.TOGGLE_SIDEBAR>
-  | ReturnType<typeof CharacterEditActions.addTargetStat>
-  | ReturnType<typeof CharacterEditActions.changeCharacterEditMode>
-  | ReturnType<typeof CharacterEditActions.changeCharacterFilter>
-  | ReturnType<typeof CharacterEditActions.changeSetRestrictions>
-  | ReturnType<typeof CharacterEditActions.changeTargetStats>
-  | ReturnType<typeof CharacterEditActions.removeSetBonus>
-  | ReturnType<typeof CharacterEditActions.removeTargetStat>
-  | ReturnType<typeof CharacterEditActions.selectSetBonus>
-  | ReturnType<typeof CharacterEditActions.toggleCharacterEditSortView>
-  | ReturnType<typeof CharacterEditActions.toggleHideSelectedCharacters>
+  | ReturnType<typeof CharacterEdit.actions.addTargetStat>
+  | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
+  | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
+  | ReturnType<typeof CharacterEdit.actions.changeSetRestrictions>
+  | ReturnType<typeof CharacterEdit.actions.changeTargetStats>
+  | ReturnType<typeof CharacterEdit.actions.removeSetBonus>
+  | ReturnType<typeof CharacterEdit.actions.removeTargetStat>
+  | ReturnType<typeof CharacterEdit.actions.selectSetBonus>
+  | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
+  | ReturnType<typeof CharacterEdit.actions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
   | ReturnType<typeof Help.actions.setHelpPosition>
   | ReturnType<typeof Optimize.actions.cancelOptimizeMods>
@@ -123,26 +103,35 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case App.ActionNames.SET_IS_BUSY:
       return AppReducers.setIsBusy(state, action);
 
-    case CHANGE_CHARACTER_EDIT_MODE:
-      return AppState.save(CharacterEditReducers.changeCharacterEditMode(state, action));
-    case CHANGE_CHARACTER_FILTER:
-      return AppState.save(CharacterEditReducers.changeCharacterFilter(state, action));
-    case TOGGLE_HIDE_SELECTED_CHARACTERS:
-      return AppState.save(CharacterEditReducers.toggleHideSelectedCharacters(state, action));
-    case TOGGLE_CHARACTER_EDIT_SORT_VIEW:
-      return AppState.save(CharacterEditReducers.toggleCharacterEditSortView(state, action));
-    case CHANGE_SET_RESTRICTIONS:
-      return CharacterEditReducers.changeSetRestrictions(state, action);
-    case SELECT_SET_BONUS:
-      return CharacterEditReducers.selectSetBonus(state, action);
-    case REMOVE_SET_BONUS:
-      return CharacterEditReducers.removeSetBonus(state, action);
-    case ADD_TARGET_STAT:
-      return CharacterEditReducers.addTargetStat(state, action);
-    case CHANGE_TARGET_STATS:
-      return CharacterEditReducers.changeTargetStats(state, action);
-    case REMOVE_TARGET_STAT:
-      return CharacterEditReducers.removeTargetStat(state, action);
+    case CharacterEdit.actionNames.ADD_TARGET_STAT:
+      return CharacterEdit.reducers.addTargetStat(state, action);
+    case CharacterEdit.actionNames.CHANGE_CHARACTER_EDIT_MODE:
+      return AppState.save(
+        CharacterEdit.reducers.changeCharacterEditMode(state, action)
+      );
+    case CharacterEdit.actionNames.CHANGE_CHARACTER_FILTER:
+      return AppState.save(
+        CharacterEdit.reducers.changeCharacterFilter(state, action)
+      );
+    case CharacterEdit.actionNames.CHANGE_SET_RESTRICTIONS:
+      return CharacterEdit.reducers.changeSetRestrictions(state, action);
+    case CharacterEdit.actionNames.CHANGE_TARGET_STATS:
+      return CharacterEdit.reducers.changeTargetStats(state, action);
+    case CharacterEdit.actionNames.REMOVE_SET_BONUS:
+      return CharacterEdit.reducers.removeSetBonus(state, action);
+    case CharacterEdit.actionNames.REMOVE_TARGET_STAT:
+      return CharacterEdit.reducers.removeTargetStat(state, action);
+    case CharacterEdit.actionNames.SELECT_SET_BONUS:
+      return CharacterEdit.reducers.selectSetBonus(state, action);
+
+    case CharacterEdit.actionNames.TOGGLE_CHARACTER_EDIT_SORT_VIEW:
+      return AppState.save(
+        CharacterEdit.reducers.toggleCharacterEditSortView(state)
+      );
+    case CharacterEdit.actionNames.TOGGLE_HIDE_SELECTED_CHARACTERS:
+      return AppState.save(
+        CharacterEdit.reducers.toggleHideSelectedCharacters(state)
+      );
 
     case Explore.actionNames.CHANGE_MODS_VIEW_OPTIONS:
       return AppState.save(
@@ -159,14 +148,14 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case Optimize.actionNames.OPTIMIZE_MODS:
       return Optimize.reducers.optimizeMods(state);
     case Optimize.actionNames.UPDATE_PROGRESS:
-        return Optimize.reducers.updateProgress(state, action);      
+        return Optimize.reducers.updateProgress(state, action);
 
     case Review.actionNames.CHANGE_MODLIST_FILTER:
       return AppState.save(
         Review.reducers.changeModListFilter(state, action)
       );
     case Review.actionNames.CHANGE_OPTIMIZER_VIEW:
-      return AppState.save(        
+      return AppState.save(
         Review.reducers.changeOptimizerView(state, action)
       );
 

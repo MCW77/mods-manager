@@ -17,6 +17,7 @@ import { match } from 'ts-pattern';
 import { IAppState } from '../../state/storage';
 
 // modules
+import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Settings } from '../../state/modules/settings';
 import { Storage } from '../../state/modules/storage';
 
@@ -24,13 +25,6 @@ import { Storage } from '../../state/modules/storage';
 import {
   changeSection,
 } from '../../state/actions/app';
-
-// thunks
-import {
-  updateForceCompleteModSets,
-  updateLockUnselectedCharacters,
-  updateModChangeThreshold,
-} from '../../state/thunks/characterEdit';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -93,7 +87,7 @@ const SettingsView = () => {
             editable={true}
             defaultValue={globalOptimizerSettings.modChangeThreshold}
             onChange={(threshold) =>
-              dispatch(updateModChangeThreshold(threshold))
+              dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold))
             }
           />
         </div>
@@ -105,7 +99,7 @@ const SettingsView = () => {
             type={'checkbox'}
             defaultChecked={globalOptimizerSettings.lockUnselectedCharacters}
             onChange={(event) =>
-              dispatch(updateLockUnselectedCharacters(event.target.checked))
+              dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(event.target.checked))
             }
           />
         </div>
@@ -115,7 +109,7 @@ const SettingsView = () => {
             type={'checkbox'}
             defaultChecked={globalOptimizerSettings.forceCompleteSets}
             onChange={(event) =>
-              dispatch(updateForceCompleteModSets(event.target.checked))
+              dispatch(CharacterEdit.thunks.updateForceCompleteModSets(event.target.checked))
             }
           />
         </div>

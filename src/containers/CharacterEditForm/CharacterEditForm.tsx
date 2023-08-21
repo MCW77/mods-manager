@@ -14,6 +14,7 @@ import { ExpandRecursively } from "../../utils/typeHelper";
 import { IAppState } from "../../state/storage";
 
 // modules
+import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
 
@@ -21,26 +22,6 @@ import { Optimize } from '../../state/modules/optimize';
 import {
   hideModal,
 } from "../../state/actions/app";
-import {
-  changeCharacterEditMode,
-  changeSetRestrictions,
-  removeSetBonus,
-  selectSetBonus,
-  changeTargetStats,
-  addTargetStat,
-  removeTargetStat
-} from "../../state/actions/characterEdit";
-
-// thunks
-import {
-  changeMinimumModDots,
-  changeSliceMods,
-  closeEditCharacterForm,
-  deleteTarget,
-  finishEditCharacterTarget,
-  resetCharacterTargetToDefault,
-  unlockCharacter,
-} from '../../state/thunks/characterEdit';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
@@ -65,6 +46,13 @@ import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { OptimizerProgress } from '../../components/OptimizerProgress/OptimizerProgress';
 import { RangeInput } from "../../components/RangeInput/RangeInput";
 import { Toggle } from "../../components/Toggle/Toggle";
+
+
+type ComponentProps = {
+  character: Character,
+  characterIndex: number,
+  target: OptimizationPlan,
+}
 
 
 class CharacterEditForm extends React.Component<Props> {
@@ -909,8 +897,8 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   cancel: () => {
-    dispatch(changeSetRestrictions({} as SetRestrictions));
-    dispatch(changeTargetStats([]));
+    dispatch(CharacterEdit.actions.changeSetRestrictions({} as SetRestrictions));
+    dispatch(CharacterEdit.actions.changeTargetStats([]));
   },
   hideModal: () => dispatch(hideModal()),
   submitForm: (
@@ -920,33 +908,27 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     minimumModDots: number,
     sliceMods: boolean,
   ) => {
-    dispatch(changeMinimumModDots(characterID, minimumModDots));
-    dispatch(changeSliceMods(characterID, sliceMods));
-    dispatch(unlockCharacter(characterID));
-    dispatch(finishEditCharacterTarget(characterIndex, target));
+    dispatch(CharacterEdit.thunks.changeMinimumModDots(characterID, minimumModDots));
+    dispatch(CharacterEdit.thunks.changeSliceMods(characterID, sliceMods));
+    dispatch(CharacterEdit.thunks.unlockCharacter(characterID));
+    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(characterIndex, target));
   },
-  closeForm: () => dispatch(closeEditCharacterForm()),
+  closeForm: () => dispatch(CharacterEdit.thunks.closeEditCharacterForm()),
   resetCharacterTargetToDefault: (characterID: CharacterNames, targetName: string) =>
-    dispatch(resetCharacterTargetToDefault(characterID, targetName)),
-  deleteTarget: (characterID: CharacterNames, targetName: string) => dispatch(deleteTarget(characterID, targetName)),
-  changeCharacterEditMode: (mode: CharacterEditMode) => dispatch(changeCharacterEditMode(mode)),
-  populateSetRestrictions: (setRestrictions: SetRestrictions) => dispatch(changeSetRestrictions(setRestrictions)),
-  selectSetBonus: (set: SetStats.GIMOStatNames) => dispatch(selectSetBonus(set)),
-  removeSetBonus: (set: SetStats.GIMOStatNames) => dispatch(removeSetBonus(set)),
-  populateTargetStats: (targetStats: TargetStat[]) => dispatch(changeTargetStats(targetStats)),
-  addTargetStat: (targetStat: TargetStat) => dispatch(addTargetStat(targetStat)),
-  removeTargetStat: (index: number) => dispatch(removeTargetStat(index)),
+    dispatch(CharacterEdit.thunks.resetCharacterTargetToDefault(characterID, targetName)),
+  deleteTarget: (characterID: CharacterNames, targetName: string) => dispatch(CharacterEdit.thunks.deleteTarget(characterID, targetName)),
+  changeCharacterEditMode: (mode: CharacterEditMode) => dispatch(CharacterEdit.actions.changeCharacterEditMode(mode)),
+  populateSetRestrictions: (setRestrictions: SetRestrictions) => dispatch(CharacterEdit.actions.changeSetRestrictions(setRestrictions)),
+  selectSetBonus: (set: SetStats.GIMOStatNames) => dispatch(CharacterEdit.actions.selectSetBonus(set)),
+  removeSetBonus: (set: SetStats.GIMOStatNames) => dispatch(CharacterEdit.actions.removeSetBonus(set)),
+  populateTargetStats: (targetStats: TargetStat[]) => dispatch(CharacterEdit.actions.changeTargetStats(targetStats)),
+  addTargetStat: (targetStat: TargetStat) => dispatch(CharacterEdit.actions.addTargetStat(targetStat)),
+  removeTargetStat: (index: number) => dispatch(CharacterEdit.actions.removeTargetStat(index)),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
 });
 
 type Props = PropsFromRedux & ComponentProps;
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ComponentProps = {
-  character: Character,
-  characterIndex: number,
-  target: OptimizationPlan
-}
-
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

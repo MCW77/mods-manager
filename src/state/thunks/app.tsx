@@ -10,6 +10,7 @@ import { IAppState } from "../storage";
 import getDatabase, { IUserData } from "../storage/Database";
 
 // modules
+import { CharacterEdit } from '../modules/characterEdit';
 import { Storage } from '../modules/storage';
 
 // actions
@@ -18,11 +19,6 @@ import {
   showError,
   showFlash,
 } from "../actions/app";
-
-// thunks
-import {
-  saveTemplates,
-} from "../thunks/characterEdit"
 
 // domain
 import * as C3POMods from "../../modules/profilesManagement/dtos/c3po";
@@ -139,12 +135,12 @@ export function restoreProgress(progressData: string): ThunkResult<void> {
           dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
           dispatch(Storage.thunks.saveLastRuns(stateObj.lastRuns));
         if (stateObj.characterTemplates) {
-          dispatch(saveTemplates(stateObj.characterTemplates))
+          dispatch(CharacterEdit.thunks.saveTemplates(stateObj.characterTemplates))
         }
         if (stateObj.allyCode !== '') {
             dispatch(Storage.thunks.loadProfile(stateObj.allyCode));
         }
-        
+
       }
     } catch (e) {
       throw new Error(

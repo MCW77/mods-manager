@@ -27,6 +27,7 @@ import keysWhere from "../../utils/keysWhere";
 import { IAppState } from "../../state/storage";
 
 // modules
+import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
 import { Review } from '../../state/modules/review';
@@ -38,37 +39,6 @@ import {
   showError,
   showModal,
 } from "../../state/actions/app";
-import {
-  changeCharacterFilter,
-  toggleHideSelectedCharacters,
-  toggleCharacterEditSortView,
-} from "../../state/actions/characterEdit";
-
-// thunks
-import {
-  appendTemplate,
-  applyTemplateTargets,
-  deleteTemplate,
-  lockAllCharacters,
-  lockSelectedCharacters,
-  replaceTemplate,
-  resetAllCharacterTargets,
-  saveTemplate,
-  saveTemplates,
-  selectCharacter,
-  setOptimizeIndex,
-  toggleCharacterLock,
-  unlockAllCharacters,
-  unlockSelectedCharacters,
-  unselectAllCharacters,
-  unselectCharacter,
-  updateForceCompleteModSets,
-  updateLockUnselectedCharacters,
-  updateModChangeThreshold,
-} from '../../state/thunks/characterEdit';
-import {
-  fetchCharacterList,
-} from '../../state/thunks/data';
 
 // domain
 import {
@@ -1280,9 +1250,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   hideModal: () => dispatch(hideModal()),
   showError: (error: DOMContent) => dispatch(showError(error)),
   changeCharacterFilter: (filter: string) =>
-    dispatch(changeCharacterFilter(filter)),
-  toggleHideSelectedCharacters: () => dispatch(toggleHideSelectedCharacters()),
-  toggleCharacterEditSortView: () => dispatch(toggleCharacterEditSortView()),
+    dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
+  toggleHideSelectedCharacters: () => dispatch(CharacterEdit.actions.toggleHideSelectedCharacters()),
+  toggleCharacterEditSortView: () => dispatch(CharacterEdit.actions.toggleCharacterEditSortView()),
   reviewOldAssignments: () => {
     dispatch(
       Review.thunks.updateModListFilter({
@@ -1296,25 +1266,25 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     characterID: CharacterNames,
     target: OptimizationPlan,
     prevIndex: number
-  ) => dispatch(selectCharacter(characterID, target, prevIndex)),
+  ) => dispatch(CharacterEdit.thunks.selectCharacter(characterID, target, prevIndex)),
   unselectCharacter: (characterIndex: number) =>
-    dispatch(unselectCharacter(characterIndex)),
-  clearSelectedCharacters: () => dispatch(unselectAllCharacters()),
-  lockSelectedCharacters: () => dispatch(lockSelectedCharacters()),
-  unlockSelectedCharacters: () => dispatch(unlockSelectedCharacters()),
-  lockAllCharacters: () => dispatch(lockAllCharacters()),
-  unlockAllCharacters: () => dispatch(unlockAllCharacters()),
+    dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex)),
+  clearSelectedCharacters: () => dispatch(CharacterEdit.thunks.unselectAllCharacters()),
+  lockSelectedCharacters: () => dispatch(CharacterEdit.thunks.lockSelectedCharacters()),
+  unlockSelectedCharacters: () => dispatch(CharacterEdit.thunks.unlockSelectedCharacters()),
+  lockAllCharacters: () => dispatch(CharacterEdit.thunks.lockAllCharacters()),
+  unlockAllCharacters: () => dispatch(CharacterEdit.thunks.unlockAllCharacters()),
   toggleCharacterLock: (characterID: CharacterNames) =>
-    dispatch(toggleCharacterLock(characterID)),
+    dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
   updateLockUnselectedCharacters: (lock: boolean) =>
-    dispatch(updateLockUnselectedCharacters(lock)),
-  resetAllCharacterTargets: () => dispatch(resetAllCharacterTargets()),
-  resetIncrementalIndex: () => dispatch(setOptimizeIndex(null)),
+    dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(lock)),
+  resetAllCharacterTargets: () => dispatch(CharacterEdit.thunks.resetAllCharacterTargets()),
+  resetIncrementalIndex: () => dispatch(CharacterEdit.thunks.setOptimizeIndex(null)),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
   updateModChangeThreshold: (threshold: number) =>
-    dispatch(updateModChangeThreshold(threshold)),
+    dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold)),
   updateForceCompleteModSets: (forceCompleteModSets: boolean) =>
-    dispatch(updateForceCompleteModSets(forceCompleteModSets)),
+    dispatch(CharacterEdit.thunks.updateForceCompleteModSets(forceCompleteModSets)),
   generateCharacterList: (
     mode: UseCaseModes,
     behavior: boolean,
@@ -1324,19 +1294,19 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(Data.thunks.fetchCharacterList(mode, behavior, allyCode, parameters));
     dispatch(hideModal());
   },
-  saveTemplate: (name: string) => dispatch(saveTemplate(name)),
+  saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   saveTemplates: (templates: CharacterTemplates) =>
-    dispatch(saveTemplates(templates)),
+    dispatch(CharacterEdit.thunks.saveTemplates(templates)),
   appendTemplate: (templateName: string) => {
-    dispatch(appendTemplate(templateName));
+    dispatch(CharacterEdit.thunks.appendTemplate(templateName));
     dispatch(hideModal());
   },
   replaceTemplate: (templateName: string) => {
-    dispatch(replaceTemplate(templateName));
+    dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
     dispatch(hideModal());
   },
   applyTemplateTargets: (templateName: string) => {
-    dispatch(applyTemplateTargets(templateName));
+    dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
     dispatch(hideModal());
   },
   exportTemplate: (
