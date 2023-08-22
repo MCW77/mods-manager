@@ -17,15 +17,10 @@ import groupByKey from "../../utils/groupByKey";
 import { IAppState } from '../../state/storage';
 
 // modules
+import { App } from '../../state/modules/app';
 import { Data } from '../../state/modules/data';
 import { Review as ReviewModule } from '../../state/modules/review';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  hideModal,
-  showModal,
-} from "../../state/actions/app";
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -958,8 +953,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   reassignMod: (modID: string, characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMod(modID, characterID)),
   unequipMods: (modIDs: string[]) => dispatch(ReviewModule.thunks.unequipMods(modIDs)),
   reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMods(modIDs, characterID)),
-  showModal: (clazz: string, content: DOMContent) => dispatch(showModal(clazz, content)),
-  hideModal: () => dispatch(hideModal()),
+  showModal: (clazz: string, content: DOMContent) => dispatch(App.actions.showModal(clazz, content)),
+  hideModal: () => dispatch(App.actions.hideModal()),
   createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(Data.thunks.createHotUtilsProfile(profile, sessionId)),
   moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(Data.thunks.moveModsWithHotUtils(profile, sessionId))
 });

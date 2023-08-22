@@ -5,12 +5,8 @@ import { ThunkResult } from "../reducers/modsOptimizer";
 import groupByKey from "../../utils/groupByKey";
 
 // modules
+import { App } from '../modules/app';
 import { actions } from '../actions/review';
-
-// thunks
-import {
-  updateProfile,
-} from './app';
 
 // domain
 import { CharacterNames } from "../../constants/characterSettings";
@@ -28,7 +24,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function reassignMod(modID: string, characterID: CharacterNames) {
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       const modsById = groupByKey(profile.mods, mod => mod.id);
       const oldMod = modsById[modID];
       const currentlyEquippedMod =
@@ -52,7 +48,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function reassignMods(modIDs: string[], characterID: CharacterNames) {
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       const modsById = groupByKey(profile.mods, mod => mod.id);
       const oldMods = modIDs.map(modID => modsById[modID]);
       const currentlyEquippedMods =
@@ -74,7 +70,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function unequipMod(modID: string) {
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       const mods = groupByKey(profile.mods, mod => mod.id);
       const oldMod = mods[modID];
       const newMod = oldMod ? oldMod.unequip() : null;
@@ -93,7 +89,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function unequipMods(modIDs: string[]) {
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       const modsById = groupByKey(profile.mods, mod => mod.id);
       const modsUpdate = groupByKey(modIDs.map(modID => modsById[modID].unequip()), mod => mod.id);
 

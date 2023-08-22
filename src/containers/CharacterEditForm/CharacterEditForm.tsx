@@ -8,20 +8,15 @@ import "./CharacterEditForm.css";
 
 // utils
 import areObjectsEquivalent from '../../utils/areObjectsEquivalent';
-import { ExpandRecursively } from "../../utils/typeHelper";
 
 // state
 import { IAppState } from "../../state/storage";
 
 // modules
+import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
-
-// actions
-import {
-  hideModal,
-} from "../../state/actions/app";
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
@@ -900,7 +895,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(CharacterEdit.actions.changeSetRestrictions({} as SetRestrictions));
     dispatch(CharacterEdit.actions.changeTargetStats([]));
   },
-  hideModal: () => dispatch(hideModal()),
+  hideModal: () => dispatch(App.actions.hideModal()),
   submitForm: (
     characterID: CharacterNames,
     characterIndex: number,

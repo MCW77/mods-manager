@@ -4,14 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // modules
+import { App } from '../../state/modules/app';
 import { Optimize } from '../../state/modules/optimize';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  hideModal,
-  setIsBusy,
-} from '../../state/actions/app';
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
@@ -24,9 +19,9 @@ const OptimizerProgress = () => {
 
   const cancel = (closeModal: boolean) => {
     dispatch(Optimize.thunks.cancelOptimizer());
-    dispatch(setIsBusy(false));
+    dispatch(App.actions.setIsBusy(false));
     if (closeModal) {
-      dispatch(hideModal());
+      dispatch(App.actions.hideModal());
     }
   };
 

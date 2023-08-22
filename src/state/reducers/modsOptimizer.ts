@@ -6,7 +6,7 @@ import { ThunkAction, ThunkDispatch as TD } from "redux-thunk";
 import { IAppState, AppState } from "../storage";
 
 // #region modules
-import * as App from "../modules/app";
+import { App } from "../modules/app";
 import { CharacterEdit } from "../modules/characterEdit";
 import { Explore } from "../modules/explore";
 import { Help } from "../modules/help";
@@ -14,10 +14,6 @@ import { Optimize } from "../modules/optimize";
 import { Review } from "../modules/review";
 import { Settings } from "../modules/settings";
 import { Storage } from "../modules/storage";
-// #endregion
-
-// #region Reducera
-import * as AppReducers from "./app";
 // #endregion
 
 
@@ -30,17 +26,17 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 
 // #region AppActions
 type AppActions =
-  | ReturnType<typeof App.Actions.CHANGE_SECTION>
-  | ReturnType<typeof App.Actions.HIDE_ERROR>
-  | ReturnType<typeof App.Actions.HIDE_FLASH>
-  | ReturnType<typeof App.Actions.HIDE_MODAL>
-  | ReturnType<typeof App.Actions.RESET_STATE>
-  | ReturnType<typeof App.Actions.SET_IS_BUSY>
-  | ReturnType<typeof App.Actions.SET_STATE>
-  | ReturnType<typeof App.Actions.SHOW_ERROR>
-  | ReturnType<typeof App.Actions.SHOW_FLASH>
-  | ReturnType<typeof App.Actions.SHOW_MODAL>
-  | ReturnType<typeof App.Actions.TOGGLE_SIDEBAR>
+  | ReturnType<typeof App.actions.changeSection>
+  | ReturnType<typeof App.actions.hideError>
+  | ReturnType<typeof App.actions.hideFlash>
+  | ReturnType<typeof App.actions.hideModal>
+  | ReturnType<typeof App.actions.resetState>
+  | ReturnType<typeof App.actions.setIsBusy>
+  | ReturnType<typeof App.actions.setState>
+  | ReturnType<typeof App.actions.showError>
+  | ReturnType<typeof App.actions.showFlash>
+  | ReturnType<typeof App.actions.showModal>
+  | ReturnType<typeof App.actions.toggleSidebar>
   | ReturnType<typeof CharacterEdit.actions.addTargetStat>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
@@ -78,30 +74,34 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
 
   switch (action.type) {
 
-    case App.ActionNames.CHANGE_SECTION:
-      return AppState.save(AppReducers.changeSection(state, action));
-    case App.ActionNames.SHOW_MODAL:
-      return AppReducers.showModal(state, action);
-    case App.ActionNames.HIDE_MODAL:
-      return AppReducers.hideModal(state);
-    case App.ActionNames.SHOW_ERROR:
-      return AppReducers.showError(state, action);
-    case App.ActionNames.HIDE_ERROR:
-      return AppReducers.hideError(state);
-    case App.ActionNames.SHOW_FLASH:
-      return AppReducers.showFlash(state, action);
-    case App.ActionNames.HIDE_FLASH:
-      return AppReducers.hideFlash(state);
-    case App.ActionNames.RESET_STATE:
-      const result = AppState.save(AppReducers.resetState());
+    case App.actionNames.CHANGE_SECTION:
+      return AppState.save(App.reducers.changeSection(state, action));
+    case App.actionNames.HIDE_ERROR:
+      return App.reducers.hideError(state);
+    case App.actionNames.HIDE_FLASH:
+      return App.reducers.hideFlash(state);
+    case App.actionNames.HIDE_MODAL:
+      return App.reducers.hideModal(state);
+    case App.actionNames.RESET_STATE:
+      const result = AppState.save(App.reducers.resetState());
       window.location.reload();
       return result;
-    case App.ActionNames.TOGGLE_SIDEBAR:
-      return AppState.save(AppReducers.toggleSidebar(state));
-    case App.ActionNames.SET_STATE:
-      return AppState.save(AppReducers.setState(action));
-    case App.ActionNames.SET_IS_BUSY:
-      return AppReducers.setIsBusy(state, action);
+    case App.actionNames.SET_IS_BUSY:
+      return App.reducers.setIsBusy(state, action);
+    case App.actionNames.SET_STATE:
+      return AppState.save(
+        App.reducers.setState(action)
+      );
+    case App.actionNames.SHOW_ERROR:
+      return App.reducers.showError(state, action);
+    case App.actionNames.SHOW_FLASH:
+      return App.reducers.showFlash(state, action);
+    case App.actionNames.SHOW_MODAL:
+      return App.reducers.showModal(state, action);
+    case App.actionNames.TOGGLE_SIDEBAR:
+      return AppState.save(
+        App.reducers.toggleSidebar(state)
+      );
 
     case CharacterEdit.actionNames.ADD_TARGET_STAT:
       return CharacterEdit.reducers.addTargetStat(state, action);

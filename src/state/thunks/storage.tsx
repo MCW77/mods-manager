@@ -11,20 +11,11 @@ import nothing from "../../utils/nothing";
 import getDatabase, { IUserData } from "../storage/Database";
 
 // actions
-import {
-  resetState,
-  showError,
-  showFlash,
-} from "../actions/app";
 import { actions } from '../../state/actions/storage';
 
 // modules
+import { App } from '../../state/modules/app';
 import { Data } from '../../state/modules/data';
-
-// thunks
-import {
-  updateProfile,
-} from './app';
 
 // domain
 import { BaseCharactersById, BaseCharacter } from '../../domain/BaseCharacter';
@@ -34,7 +25,6 @@ import OptimizerRun from "../../domain/OptimizerRun";
 import { PlayerNamesByAllycode } from "../../domain/PlayerNamesByAllycode";
 import { PlayerProfile } from '../../domain/PlayerProfile';
 import { SelectedCharactersByTemplateName } from "../../domain/SelectedCharacters";
-
 
 export namespace thunks {
   /**
@@ -55,7 +45,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function deleteMod(mod: Mod) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       profile => {
         const oldMods = profile.mods;
 
@@ -68,7 +58,7 @@ export namespace thunks {
         db.deleteLastRun(
           profile.allyCode,
           nothing,
-          error => dispatch(showFlash(
+          error => dispatch(App.actions.showFlash(
             'Storage Error',
             'Error updating your saved results: ' +
             error!.message +
@@ -85,7 +75,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function deleteMods(mods: Mod[]) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       profile => {
         const oldMods = profile.mods;
 
@@ -98,7 +88,7 @@ export namespace thunks {
         db.deleteLastRun(
           profile.allyCode,
           nothing,
-          error => dispatch(showFlash(
+          error => dispatch(App.actions.showFlash(
             'Storage Error',
             'Error updating your saved results: ' +
             error?.message +
@@ -114,7 +104,7 @@ export namespace thunks {
       const db = getDatabase();
       db.getCharacterTemplate(name,
         callback,
-        error => dispatch(showError('Error fetching data from the database: ' + error!.message))
+        error => dispatch(App.actions.showError('Error fetching data from the database: ' + error!.message))
       );
     }
   }
@@ -124,7 +114,7 @@ export namespace thunks {
       const db = getDatabase();
       db.getCharacterTemplates(
         callback,
-        error => dispatch(showError('Error fetching data from the database: ' + error?.message))
+        error => dispatch(App.actions.showError('Error fetching data from the database: ' + error?.message))
       );
     }
   }
@@ -139,7 +129,7 @@ export namespace thunks {
       const db = getDatabase();
       db.export(
         callback,
-        error => dispatch(showError('Error fetching data from the database: ' + error?.message))
+        error => dispatch(App.actions.showError('Error fetching data from the database: ' + error?.message))
       );
     };
   }
@@ -159,7 +149,7 @@ export namespace thunks {
             dispatch(actions.setBaseCharacters(baseCharsObject));
           },
           error =>
-            dispatch(showFlash(
+            dispatch(App.actions.showFlash(
               'Storage Error',
               'Error reading basic character settings: ' +
               error!.message +
@@ -167,7 +157,7 @@ export namespace thunks {
             ))
         );
       } catch (e) {
-        dispatch(showError(
+        dispatch(App.actions.showError(
           [
             <p key={1}>
               Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
@@ -200,13 +190,13 @@ export namespace thunks {
 
             dispatch(actions.setCharacterTemplates(characterTemplatesByName));
           },
-          error => dispatch(showFlash(
+          error => dispatch(App.actions.showFlash(
             'Storage Error',
             'Error loading character templates: ' + error?.message + '.'
           ))
         );
       } catch (e) {
-        dispatch(showError(
+        dispatch(App.actions.showError(
           [
             <p key={1}>
               Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
@@ -253,7 +243,7 @@ export namespace thunks {
         dispatch(Data.thunks.fetchHotUtilsStatus(allyCode));
       }
       catch (error) {
-        dispatch(showError('Error loading your profile from the database: ' + (error as DOMException).message))
+        dispatch(App.actions.showError('Error loading your profile from the database: ' + (error as DOMException).message))
       }
     };
   }
@@ -288,7 +278,7 @@ export namespace thunks {
             if (profile !== undefined) {
               dispatch(Data.thunks.fetchHotUtilsStatus(profile.allyCode));
             } else if (Object.keys(getState().playerProfiles).length !== 0) {
-                dispatch(resetState());
+                dispatch(App.actions.resetState());
             }
             // Set up the playerProfiles object used to switch between available profiles
             const playerProfiles: PlayerNamesByAllycode = {} as PlayerNamesByAllycode;
@@ -296,13 +286,13 @@ export namespace thunks {
             dispatch(actions.setPlayerProfiles(playerProfiles));
           },
           error =>
-            dispatch(showFlash(
+            dispatch(App.actions.showFlash(
               'Storage Error',
               'Error retrieving profiles: ' + error?.message
             ))
         );
       } catch (e) {
-        dispatch(showError(
+        dispatch(App.actions.showError(
           [
             <p key={1}>
               Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
@@ -327,7 +317,7 @@ export namespace thunks {
       db.saveBaseCharacters(
         baseCharacters,
         () => dispatch(loadBaseCharacters()),
-        error => dispatch(showFlash(
+        error => dispatch(App.actions.showFlash(
           'Storage Error',
           'Error saving basic character settings: ' +
           error?.message +
@@ -347,7 +337,7 @@ export namespace thunks {
       const db = getDatabase();
       db.saveLastRuns(
         lastRuns,
-        error => dispatch(showError(
+        error => dispatch(App.actions.showError(
           'Error saving previous runs: ' + error?.message +
           ' The optimizer may not recalculate all toons properly until you fetch data again.'
         ))
@@ -367,7 +357,7 @@ export namespace thunks {
       db.saveProfiles(
         profiles,
         () => dispatch(loadProfiles(allyCode)),
-        error => dispatch(showError(
+        error => dispatch(App.actions.showError(
           'Error saving player profiles: ' + error?.message
         ))
       );

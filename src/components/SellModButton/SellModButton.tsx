@@ -4,14 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // modules
+import { App } from '../../state/modules/app';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  hideModal,
-  showModal,
-} from '../../state/actions/app';
 
 // domain
 import { Mod } from '../../domain/Mod';
@@ -56,7 +51,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
           <button
             type={'button'}
             onClick={() => {
-              dispatch(hideModal());
+              dispatch(App.actions.hideModal());
             }}
           >
             No
@@ -65,7 +60,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
             type={'button'}
             onClick={() => {
               dispatch(Storage.thunks.deleteMod(mod));
-              dispatch(hideModal());
+              dispatch(App.actions.hideModal());
             }}
             className={'red'}
           >
@@ -79,7 +74,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
   return (
     <button
       className={'delete-button red small'}
-      onClick={() => dispatch(showModal('', deleteModal()))}
+      onClick={() => dispatch(App.actions.showModal('', deleteModal()))}
     >
       X
     </button>

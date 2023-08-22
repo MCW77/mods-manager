@@ -4,13 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // modules
+import { App } from '../../state/modules/app';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  hideModal,
-} from "../../state/actions/app";
 
 // domain
 import { CharacterListGenerationParameters } from '../../domain/CharacterListGenerationParameters';
@@ -114,7 +110,7 @@ const CharacterListModal = React.memo(
         </form>
         <hr />
         <div className={'actions'}>
-          <button type={'button'} onClick={() => dispatch(hideModal())}>Cancel</button>
+          <button type={'button'} onClick={() => dispatch(App.actions.hideModal())}>Cancel</button>
           <button
             type={'button'}
             onClick={() => {
@@ -135,7 +131,7 @@ const CharacterListModal = React.memo(
                 allycode,
                 parameters
               ));
-              dispatch(hideModal());
+              dispatch(App.actions.hideModal());
             }}
           >
             Generate

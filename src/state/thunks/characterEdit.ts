@@ -10,20 +10,10 @@ import groupByKey from "../../utils/groupByKey";
 import getDatabase from "../storage/Database";
 
 // modules
+import { App } from '../../state/modules/app';
 import { actions } from '../actions/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  hideModal,
-  showFlash,
-} from "../actions/app";
-
-// thunks
-import {
-  updateProfile,
-} from './app';
 
 // domain
 import { CharacterNames } from "../../constants/characterSettings";
@@ -57,7 +47,7 @@ export namespace thunks {
     const db = getDatabase();
 
     function updateFunction(template: CharacterTemplate) {
-      return updateProfile(
+      return App.thunks.updateProfile(
         profile => {
           const templateTargetsById = getTargetsById(template);
 
@@ -83,7 +73,7 @@ export namespace thunks {
             template.selectedCharacters.filter(({ id }) => !Object.keys(newProfile.characters).includes(id))
               .map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
           if (missingCharacters.length) {
-            dispatch(showFlash(
+            dispatch(App.actions.showFlash(
               'Missing Characters',
               'Missing the following characters from the selected template: ' + missingCharacters.join(', ')
             ));
@@ -105,7 +95,7 @@ export namespace thunks {
         db.getCharacterTemplate(
           name,
           template => updateFunction(template)(dispatch, getState, null),
-          error => dispatch(showFlash(
+          error => dispatch(App.actions.showFlash(
             'Storage Error',
             `Error retrieving your template from the database: ${(error as Error).message}.`
           ))
@@ -118,7 +108,7 @@ export namespace thunks {
     const db = getDatabase();
 
     function updateFunction(template: CharacterTemplate) {
-      return updateProfile(
+      return App.thunks.updateProfile(
         profile => {
           const templateTargetsById: OptimizationPlansById = getTargetsById(template);
           const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
@@ -150,7 +140,7 @@ export namespace thunks {
           ).map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
 
           if (missingCharacters.length) {
-            dispatch(showFlash(
+            dispatch(App.actions.showFlash(
               'Missing Characters',
               'The following characters weren\'t in your selected characters: ' + missingCharacters.join(', ')
             ));
@@ -172,7 +162,7 @@ export namespace thunks {
         db.getCharacterTemplate(
           name,
           template => updateFunction(template)(dispatch, getState, null),
-          error => dispatch(showFlash(
+          error => dispatch(App.actions.showFlash(
             'Storage Error',
             `Error retrieving your template from the database: ${(error as Error).message}.`
           ))
@@ -189,7 +179,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function changeCharacterTarget(characterIndex: number, target: OptimizationPlan) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const newSelectedCharacters = profile.selectedCharacters.slice();
         if (characterIndex >= newSelectedCharacters.length) {
@@ -212,7 +202,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function changeMinimumModDots(characterID: CharacterNames, minimumModDots: number) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
 
@@ -231,7 +221,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function changeSliceMods(characterID: CharacterNames, sliceMods: boolean) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
 
@@ -244,7 +234,7 @@ export namespace thunks {
 
   export function closeEditCharacterForm(): ThunkResult<void> {
     return function (dispatch) {
-      dispatch(hideModal());
+      dispatch(App.actions.hideModal());
       dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       dispatch(actions.changeTargetStats([]));
       dispatch(setOptimizeIndex(null));
@@ -258,7 +248,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function deleteTarget(characterID: CharacterNames, targetName: string) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
         const newCharacters: Characters = Object.assign({}, profile.characters, {
@@ -278,7 +268,7 @@ export namespace thunks {
         return profile.withCharacters(newCharacters).withSelectedCharacters(newSelectedCharacters);
       },
       dispatch => {
-        dispatch(hideModal());
+        dispatch(App.actions.hideModal());
         dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       }
     );
@@ -292,9 +282,9 @@ export namespace thunks {
         name,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
-          dispatch(hideModal());
+          dispatch(App.actions.hideModal());
         },
-        error => dispatch(showFlash(
+        error => dispatch(App.actions.showFlash(
           'Storage Error',
           `Error deleting the character template '${name}'. Error message: ${error!.message}`
         ))
@@ -312,7 +302,7 @@ export namespace thunks {
     characterIndex: number,
     newTarget: OptimizationPlan,
   ) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const newSelectedCharacters = profile.selectedCharacters.slice();
         const [{ id: characterID }] = newSelectedCharacters.splice(characterIndex, 1);
@@ -329,7 +319,7 @@ export namespace thunks {
   }
 
   export function lockAllCharacters() {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) =>
       profile.withCharacters(
         mapValues(
@@ -347,7 +337,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function lockCharacter(characterID: CharacterNames) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
         const newCharacters: Characters = Object.assign({}, profile.characters, {
@@ -364,7 +354,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function lockSelectedCharacters() {
-    return updateProfile((profile: PlayerProfile) => {
+    return App.thunks.updateProfile((profile: PlayerProfile) => {
       const selectedCharacterIDs: CharacterNames[] = Object.keys(groupByKey(profile.selectedCharacters, ({ id }) => id)) as CharacterNames[];
 
       return profile.withCharacters(
@@ -385,7 +375,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function moveSelectedCharacter(fromIndex: number, toIndex: number | null) {
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       if (fromIndex === toIndex) {
         return profile;
       } else {
@@ -408,7 +398,7 @@ export namespace thunks {
     const db = getDatabase();
 
     function updateFunction(template: CharacterTemplate) {
-      return updateProfile(
+      return App.thunks.updateProfile(
         profile => {
           const templateTargetsById = getTargetsById(template);
 
@@ -434,7 +424,7 @@ export namespace thunks {
             template.selectedCharacters.filter(({ id }) => !Object.keys(newProfile.characters).includes(id))
               .map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
           if (missingCharacters.length) {
-            dispatch(showFlash(
+            dispatch(App.actions.showFlash(
               'Missing Characters',
               'Missing the following characters from the selected template: ' + missingCharacters.join(', ')
             ));
@@ -456,7 +446,7 @@ export namespace thunks {
         db.getCharacterTemplate(
           templateName,
           template => updateFunction(template)(dispatch, getState, null),
-          error => dispatch(showFlash(
+          error => dispatch(App.actions.showFlash(
             'Storage Error',
             `Error retrieving your template from the database: ${(error as Error).message}.`
           ))
@@ -470,7 +460,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function resetAllCharacterTargets() {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const newCharacters: Characters = mapValues(
           profile.characters,
@@ -488,7 +478,7 @@ export namespace thunks {
 
         return profile.withCharacters(newCharacters).withSelectedCharacters(newSelectedCharacters);
       },
-      dispatch => dispatch(hideModal())
+      dispatch => dispatch(App.actions.hideModal())
     );
   }
 
@@ -499,7 +489,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function resetCharacterTargetToDefault(characterID: CharacterNames, targetName: string) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const newCharacter = profile.characters[characterID].withResetTarget(targetName);
         const resetTarget = newCharacter.optimizerSettings.targets.find(target => target.name === targetName) ||
@@ -514,7 +504,7 @@ export namespace thunks {
         })).withSelectedCharacters(newSelectedCharacters);
       },
       dispatch => {
-        dispatch(hideModal());
+        dispatch(App.actions.hideModal());
         dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       }
     );
@@ -530,9 +520,9 @@ export namespace thunks {
       db.saveCharacterTemplate(templateName, selectedCharacters,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
-          dispatch(hideModal());
+          dispatch(App.actions.hideModal());
         },
-        error => dispatch(showFlash(
+        error => dispatch(App.actions.showFlash(
           'Storage Error',
           'Error saving the character template: ' + (error as Error).message + '. Please try again.'
         ))
@@ -548,9 +538,9 @@ export namespace thunks {
         templates,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
-          dispatch(hideModal());
+          dispatch(App.actions.hideModal());
         },
-        error => dispatch(showFlash(
+        error => dispatch(App.actions.showFlash(
           'Storage Error',
           'Error saving the character templates: ' + (error as Error).message + '.'
         ))
@@ -573,7 +563,7 @@ export namespace thunks {
   ) {
     const selectedCharacter = { id: characterID, target: target };
 
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       const oldSelectedCharacters = profile.selectedCharacters;
 
       if (null === prevIndex) {
@@ -593,11 +583,11 @@ export namespace thunks {
   }
 
   export function setOptimizeIndex(index: number | null): ThunkResult<void> {
-    return updateProfile(profile => profile.withOptimizeIndex(index));
+    return App.thunks.updateProfile(profile => profile.withOptimizeIndex(index));
   }
 
   export function toggleCharacterLock(characterID: CharacterNames) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
         const newCharacters: Characters = Object.assign({}, profile.characters, {
@@ -614,7 +604,7 @@ export namespace thunks {
   }
 
   export function toggleSliceMods(characterID: CharacterNames) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
         const newCharacters: Characters = Object.assign({}, profile.characters, {
@@ -631,7 +621,7 @@ export namespace thunks {
   }
 
   export function toggleUpgradeMods(characterIndex: number) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.selectedCharacters[characterIndex];
         const newSelectedCharacters = profile.selectedCharacters.slice(0);
@@ -645,7 +635,7 @@ export namespace thunks {
   }
 
   export function unlockAllCharacters() {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) =>
       profile.withCharacters(
         mapValues(
@@ -663,7 +653,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function unlockCharacter(characterID: CharacterNames) {
-    return updateProfile(
+    return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
         const newCharacters: Characters = Object.assign({}, profile.characters, {
@@ -680,7 +670,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function unlockSelectedCharacters() {
-    return updateProfile((profile: PlayerProfile) => {
+    return App.thunks.updateProfile((profile: PlayerProfile) => {
       const selectedCharacterIDs = Object.keys(groupByKey(profile.selectedCharacters, ({ id }) => id));
 
       return profile.withCharacters(
@@ -699,7 +689,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function unselectAllCharacters() {
-    return updateProfile(profile =>
+    return App.thunks.updateProfile(profile =>
       profile.withSelectedCharacters([]));
   }
 
@@ -709,7 +699,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function unselectCharacter(characterIndex: number) {
-    return updateProfile(profile => {
+    return App.thunks.updateProfile(profile => {
       const newSelectedCharacters = profile.selectedCharacters.slice();
 
       if (newSelectedCharacters.length > characterIndex) {
@@ -722,7 +712,7 @@ export namespace thunks {
   }
 
   export function updateForceCompleteModSets(forceCompleteModSets: boolean) {
-    return updateProfile((profile: PlayerProfile) =>
+    return App.thunks.updateProfile((profile: PlayerProfile) =>
       profile.withGlobalSettings(
         Object.assign({}, profile.globalSettings, { forceCompleteSets: forceCompleteModSets })
       )
@@ -735,7 +725,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function updateLockUnselectedCharacters(lock: boolean) {
-    return updateProfile((profile: PlayerProfile) =>
+    return App.thunks.updateProfile((profile: PlayerProfile) =>
       profile.withGlobalSettings(
         Object.assign({}, profile.globalSettings, { lockUnselectedCharacters: lock })
       )
@@ -748,7 +738,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function updateModChangeThreshold(threshold: number) {
-    return updateProfile((profile: PlayerProfile) =>
+    return App.thunks.updateProfile((profile: PlayerProfile) =>
       profile.withGlobalSettings(
         Object.assign({}, profile.globalSettings, { modChangeThreshold: threshold })
       )

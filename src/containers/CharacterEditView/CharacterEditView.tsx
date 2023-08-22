@@ -27,18 +27,12 @@ import keysWhere from "../../utils/keysWhere";
 import { IAppState } from "../../state/storage";
 
 // modules
+import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
 import { Review } from '../../state/modules/review';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  hideModal,
-  showError,
-  showModal,
-} from "../../state/actions/app";
 
 // domain
 import {
@@ -1246,9 +1240,9 @@ const mapStateToProps = (state: IAppState) => {
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   showModal: (clazz: string, content: DOMContent, cancelable: boolean) =>
-    dispatch(showModal(clazz, content, cancelable)),
-  hideModal: () => dispatch(hideModal()),
-  showError: (error: DOMContent) => dispatch(showError(error)),
+    dispatch(App.actions.showModal(clazz, content, cancelable)),
+  hideModal: () => dispatch(App.actions.hideModal()),
+  showError: (error: DOMContent) => dispatch(App.actions.showError(error)),
   changeCharacterFilter: (filter: string) =>
     dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
   toggleHideSelectedCharacters: () => dispatch(CharacterEdit.actions.toggleHideSelectedCharacters()),
@@ -1292,22 +1286,22 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     parameters: CharacterListGenerationParameters
   ) => {
     dispatch(Data.thunks.fetchCharacterList(mode, behavior, allyCode, parameters));
-    dispatch(hideModal());
+    dispatch(App.actions.hideModal());
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   saveTemplates: (templates: CharacterTemplates) =>
     dispatch(CharacterEdit.thunks.saveTemplates(templates)),
   appendTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.appendTemplate(templateName));
-    dispatch(hideModal());
+    dispatch(App.actions.hideModal());
   },
   replaceTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
-    dispatch(hideModal());
+    dispatch(App.actions.hideModal());
   },
   applyTemplateTargets: (templateName: string) => {
     dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
-    dispatch(hideModal());
+    dispatch(App.actions.hideModal());
   },
   exportTemplate: (
     templateName: string,

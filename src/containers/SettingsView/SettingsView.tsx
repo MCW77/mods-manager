@@ -13,10 +13,8 @@ import {
 // utils
 import { match } from 'ts-pattern';
 
-// state
-import { IAppState } from '../../state/storage';
-
 // modules
+import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Settings } from '../../state/modules/settings';
 import { Storage } from '../../state/modules/storage';
@@ -33,9 +31,7 @@ import { RangeInput } from '../../components/RangeInput/RangeInput';
 
 
 const SettingsView = () => {
-  const previousSection = useSelector(
-    (state: IAppState) => state.previousSection
-  );
+  const previousSection = useSelector(App.selectors.selectPreviousSection);
   const settingsSection = useSelector(Settings.selectors.selectSettingsPosition).section;
   const globalOptimizerSettings = useSelector(Storage.selectors.selectGlobalOptimizationSettings);
   const dispatch: ThunkDispatch = useDispatch();
@@ -125,7 +121,7 @@ const SettingsView = () => {
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
-              onClick={() => dispatch(changeSection(previousSection))}
+              onClick={() => dispatch(App.actions.changeSection(previousSection))}
             />
           </div>
         )}

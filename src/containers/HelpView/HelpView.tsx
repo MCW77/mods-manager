@@ -16,12 +16,8 @@ import { match } from 'ts-pattern';
 import { IAppState } from '../../state/storage';
 
 // modules
+import { App } from '../../state/modules/app';
 import { Help } from '../../state/modules/help';
-
-// actions
-import {
-  changeSection,
-} from '../../state/actions/app';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -177,7 +173,7 @@ const HelpView = () => {
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
-              onClick={() => dispatch(changeSection(previousSection))}
+              onClick={() => dispatch(App.actions.changeSection(previousSection))}
             />
           </div>
         )}

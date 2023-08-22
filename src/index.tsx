@@ -14,16 +14,12 @@ import './i18n.ts';
 // state
 import getDatabase from "./state/storage/Database";
 
-// modules
-import { Storage } from './state/modules/storage';
-
-// actions
-import {
-  showError,
-} from "./state/actions/app";
-
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";
+
+// modules
+import { App as AppModule } from './state/modules/app';
+import { Storage } from './state/modules/storage';
 
 // components
 import { Spinner } from './components/Spinner/Spinner';
@@ -51,7 +47,7 @@ getDatabase(
   },
   (error: DOMException | null) => {
     if (error instanceof DOMException) {
-      store.dispatch(showError(
+      store.dispatch(AppModule.actions.showError(
         [
           <p key={1}>Unable to load database. This may be caused by a bug in Firefox in Private Browsing mode or
           with history turned off. If using Firefox, please switch to normal browsing mode. If you are still having
@@ -63,7 +59,7 @@ getDatabase(
         ]
       ));
     } else {
-      store.dispatch(showError(
+      store.dispatch(AppModule.actions.showError(
         [
           <p key={1}>
             Unable to load database: {error} Please fix the problem and try again, or ask for help in the

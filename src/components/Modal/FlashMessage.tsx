@@ -5,15 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 // styles
 import './Modal.css';
 
-// actions
-import {
-  hideFlash,
-} from '../../state/actions/app';
-
-// selectors
-import {
-  selectFlashMessage,
-} from '../../state/reducers/app';
+// modules
+import { App } from '../../state/modules/app';
 
 type ComponentProps = {
   className?: string;
@@ -21,7 +14,7 @@ type ComponentProps = {
 
 const FlashMessage = React.memo(({ className = '' }: ComponentProps) => {
   const dispatch = useDispatch();
-  const flashMessage = useSelector(selectFlashMessage);
+  const flashMessage = useSelector(App.selectors.selectFlashMessage);
   const classList = `modal flash ${className}`;
 
   if (flashMessage === null) return null;
@@ -34,7 +27,7 @@ const FlashMessage = React.memo(({ className = '' }: ComponentProps) => {
         <div className={'actions'}>
           <button
             type={'button'}
-            onClick={() => dispatch(hideFlash())}
+            onClick={() => dispatch(App.actions.hideFlash())}
           >
             OK
           </button>

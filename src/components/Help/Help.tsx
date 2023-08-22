@@ -5,10 +5,8 @@ import { useDispatch } from "react-redux";
 // styles
 import './Help.css';
 
-// actions
-import {
-  showFlash,
-} from '../../state/actions/app';
+// modules
+import { App } from '../../state/modules/app';
 
 // components
 import * as UITypes from 'components/types';
@@ -25,7 +23,7 @@ const Help = React.memo(
 
     return <span className={'icon help'}
       onClick={() =>
-        dispatch(showFlash(props.header, props.children))
+        dispatch(App.actions.showFlash(props.header, props.children))
       }
     />
   }

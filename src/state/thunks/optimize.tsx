@@ -6,22 +6,10 @@ import { ThunkResult } from "../reducers/modsOptimizer";
 import getDatabase from "../storage/Database";
 
 //modules
+import { App } from "../modules/app";
 import { Data } from "../modules/data";
 import { actions } from "../actions/optimize";
 import { Review } from "../modules/review";
-
-// actions
-import {
-  hideModal,
-  setIsBusy,
-  showError,
-  showFlash,
-} from "../actions/app";
-
-// thunks
-import {
-  updateProfile,
-} from './app';
 
 // domain
 import { Character } from "../../domain/Character";
@@ -52,20 +40,20 @@ export namespace thunks {
 		result: IModSuggestion[],
 		settings: OptimizerRun,
 	): ThunkResult<void> {
-		return updateProfile(
+		return App.thunks.updateProfile(
 			(profile) => profile.withModAssignments(result),
 			(dispatch, getState, newProfile) => {
 				const db = getDatabase();
 				db.saveLastRun(settings, (error) =>
 					dispatch(
-						showFlash(
+						App.actions.showFlash(
 							"Storage Error",
 							`Error saving your last run to the database: ${error?.message} The optimizer may not recalculate correctly on your next optimization`,
 						),
 					),
 				);
 
-				dispatch(setIsBusy(false));
+				dispatch(App.actions.setIsBusy(false));
 				dispatch(actions.updateProgress({} as OptimizationStatus));
 
 				// If this was an incremental optimization, leave the user on their current page
@@ -80,7 +68,7 @@ export namespace thunks {
 					}),
 				);
 				dispatch(Review.actions.changeOptimizerView("review"));
-				dispatch(hideModal());
+				dispatch(App.actions.hideModal());
 
 				// Create the content of the pop-up for any post-optimization messages
 
@@ -96,7 +84,7 @@ export namespace thunks {
 					const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
 					dispatch(
-						showFlash(
+						App.actions.showFlash(
 							"",
 							<div className={"optimizer-messages"}>
 								<h3>Important messages regarding your selected targets</h3>
@@ -174,7 +162,7 @@ export namespace thunks {
 				).length > 0
 			) {
 				dispatch(
-					showError(
+					App.actions.showError(
 						"Missing character data required to optimize. Try fetching your data and trying again.",
 					),
 				);
@@ -191,7 +179,7 @@ export namespace thunks {
 			optimizationWorker.onmessage = function (message) {
 				switch (message.data.type) {
 					case "OptimizationSuccess":
-						dispatch(setIsBusy(false));
+						dispatch(App.actions.setIsBusy(false));
 						dispatch(
 							actions.updateProgress({
 								character: null,
@@ -212,7 +200,7 @@ export namespace thunks {
 						);
 						break;
 					case "Progress":
-						dispatch(setIsBusy(false));
+						dispatch(App.actions.setIsBusy(false));
 						dispatch(actions.updateProgress(message.data));
 						break;
 					default:
@@ -223,9 +211,9 @@ export namespace thunks {
 			optimizationWorker.onerror = function (error) {
 				console.log(error);
 				optimizationWorker?.terminate();
-				dispatch(hideModal());
-				dispatch(setIsBusy(false));
-				dispatch(showError(error.message));
+				dispatch(App.actions.hideModal());
+				dispatch(App.actions.setIsBusy(false));
+				dispatch(App.actions.showError(error.message));
 			};
 
 			optimizationWorker.postMessage(profile.allyCode);

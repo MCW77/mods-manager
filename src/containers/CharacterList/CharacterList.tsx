@@ -10,14 +10,10 @@ import "./CharacterList.css";
 import groupByKey from "../../utils/groupByKey";
 
 // modules
+import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
-
-// reducers
-import {
-  showModal,
-} from "../../state/actions/app";
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
@@ -257,7 +253,7 @@ const CharacterList = React.memo(
 
     const showEditCharacterModal = (character: Character, index: number, target: OptimizationPlan) => {
       dispatch(CharacterEdit.thunks.setOptimizeIndex(index));
-      dispatch(showModal(
+      dispatch(App.actions.showModal(
         '',
         <CharacterEditForm
           character={character}
