@@ -3,24 +3,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
-// actions
-import {
-  hideModal,
-  showModal,
-} from '../../state/actions/app';
-
-// thunks
-import {
-  deleteMod,
-} from '../../state/thunks/storage';
-
-// selectors
-import {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+// modules
+import { App } from '../../state/modules/app';
+import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { Mod } from '../../domain/Mod';
@@ -37,9 +23,9 @@ type ComponentProps = {
 const SellModButton = React.memo(({ mod }: ComponentProps) => {
   const dispatch: ThunkDispatch = useDispatch();
   const characters = useSelector(
-    selectCharactersInActiveProfile,
+    Storage.selectors.selectCharactersInActiveProfile,
   );
-  const baseCharacters = useSelector(selectBaseCharacters);
+  const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 
   const deleteModal = () => {
     const character =
@@ -65,7 +51,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
           <button
             type={'button'}
             onClick={() => {
-              dispatch(hideModal());
+              dispatch(App.actions.hideModal());
             }}
           >
             No
@@ -73,8 +59,8 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
           <button
             type={'button'}
             onClick={() => {
-              dispatch(deleteMod(mod));
-              dispatch(hideModal());
+              dispatch(Storage.thunks.deleteMod(mod));
+              dispatch(App.actions.hideModal());
             }}
             className={'red'}
           >
@@ -88,7 +74,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
   return (
     <button
       className={'delete-button red small'}
-      onClick={() => dispatch(showModal('', deleteModal()))}
+      onClick={() => dispatch(App.actions.showModal('', deleteModal()))}
     >
       X
     </button>

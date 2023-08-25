@@ -15,10 +15,9 @@ import { match } from 'ts-pattern';
 // state
 import { IAppState } from '../../state/storage';
 
-// actions
-import {
-  changeSection,
-} from '../../state/actions/app';
+// modules
+import { App } from '../../state/modules/app';
+import { Help } from '../../state/modules/help';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,8 +34,9 @@ const HelpView = () => {
   const previousSection = useSelector(
     (state: IAppState) => state.previousSection
   );
-  const helpSection = useSelector((state: IAppState) => state.help.section);
-  const helpTopic = useSelector((state: IAppState) => state.help.topic);
+  const helpPosition = useSelector(Help.selectors.selectHelpPosition);
+  const helpSection = helpPosition.section;
+  const helpTopic = helpPosition.topic;
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation('help-ui');
   const [currentSection, changeCurrentSection] = useState(helpSection);
@@ -173,7 +173,7 @@ const HelpView = () => {
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
-              onClick={() => dispatch(changeSection(previousSection))}
+              onClick={() => dispatch(App.actions.changeSection(previousSection))}
             />
           </div>
         )}

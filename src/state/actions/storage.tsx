@@ -5,14 +5,6 @@ import { PlayerNamesByAllycode } from '../../domain/PlayerNamesByAllycode';
 import { PlayerProfile } from '../../domain/PlayerProfile';
 
 
-export const ADD_PLAYER_PROFILE = 'ADD_PLAYER_PROFILE' as const;
-export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS' as const;
-export const SET_CHARACTER_TEMPLATES = 'SET_CHARACTER_TEMPLATES' as const;
-export const SET_HOTUTILS_SUBSCRIPTION = 'SET_HOTUTILS_SUBSCRIPTION' as const;
-export const SET_PLAYER_PROFILES = 'SET_PLAYER_PROFILES' as const;
-export const SET_PROFILE = 'SET_PROFILE' as const;
-
-
 /*
 export function addModsToProfiles(newProfiles) {
   const newProfilesObject = groupByKey(newProfiles, profile => profile.allyCode);
@@ -59,49 +51,60 @@ export function addModsToProfiles(newProfiles) {
   }
 }
 */
+export namespace actions {
 
-/**
- * Add a profile to the state's list of player profiles
- * @param profile {PlayerProfile}
- */
-export function addPlayerProfile(profile: PlayerProfile) {
-  return {
-    type: ADD_PLAYER_PROFILE,
-    profile: profile
-  } as const;
-}
+  /**
+   * Add a profile to the state's list of player profiles
+   * @param profile {PlayerProfile}
+   */
+  export function addPlayerProfile(profile: PlayerProfile) {
+    return {
+      type: actionNames.ADD_PLAYER_PROFILE,
+      profile: profile
+    } as const;
+  }
 
-export function setBaseCharacters(baseCharacters: BaseCharactersById) {
-  return {
-    type: SET_BASE_CHARACTERS,
-    baseCharacters: baseCharacters
-  } as const;
-}
+  export function setBaseCharacters(baseCharacters: BaseCharactersById) {
+    return {
+      type: actionNames.SET_BASE_CHARACTERS,
+      baseCharacters: baseCharacters
+    } as const;
+  }
 
-export function setCharacterTemplates(templates: CharacterTemplatesByName) {
-  return {
-    type: SET_CHARACTER_TEMPLATES,
-    templates: templates
-  } as const;
-}
+  export function setCharacterTemplates(templates: CharacterTemplatesByName) {
+    return {
+      type: actionNames.SET_CHARACTER_TEMPLATES,
+      templates: templates
+    } as const;
+  }
 
-export function setHotUtilsSubscription(hasAccess: boolean) {
-  return {
-    type: SET_HOTUTILS_SUBSCRIPTION,
-    subscription: hasAccess
-  } as const;
-}
+  export function setHotUtilsSubscription(hasAccess: boolean) {
+    return {
+      type: actionNames.SET_HOTUTILS_SUBSCRIPTION,
+      subscription: hasAccess
+    } as const;
+  }
 
-export function setPlayerProfiles(profiles: PlayerNamesByAllycode) {
-  return {
-    type: SET_PLAYER_PROFILES,
-    profiles: profiles
-  } as const;
-}
+  export function setPlayerProfiles(profiles: PlayerNamesByAllycode) {
+    return {
+      type: actionNames.SET_PLAYER_PROFILES,
+      profiles: profiles
+    } as const;
+  }
 
-export function setProfile(profile: PlayerProfile) {
-  return {
-    type: SET_PROFILE,
-    profile: profile
-  } as const;
-}
+  export function setProfile(profile: PlayerProfile) {
+    return {
+      type: actionNames.SET_PROFILE,
+      profile: profile
+    } as const;
+  }
+};
+
+export namespace actionNames {
+  export const ADD_PLAYER_PROFILE = 'ADD_PLAYER_PROFILE' as const;
+  export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS' as const;
+  export const SET_CHARACTER_TEMPLATES = 'SET_CHARACTER_TEMPLATES' as const;
+  export const SET_HOTUTILS_SUBSCRIPTION = 'SET_HOTUTILS_SUBSCRIPTION' as const;
+  export const SET_PLAYER_PROFILES = 'SET_PLAYER_PROFILES' as const;
+  export const SET_PROFILE = 'SET_PROFILE' as const;
+};

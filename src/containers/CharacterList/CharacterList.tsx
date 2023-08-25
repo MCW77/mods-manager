@@ -9,35 +9,11 @@ import "./CharacterList.css";
 // utils
 import groupByKey from "../../utils/groupByKey";
 
-// reducers
-import {
-  showModal,
-} from "../../state/actions/app";
-
-// thunks
-import {
-  changeCharacterTarget,
-  changeMinimumModDots,
-  lockCharacter,
-  moveSelectedCharacter,
-  selectCharacter,
-  setOptimizeIndex,
-  toggleCharacterLock,
-  toggleSliceMods,
-  toggleUpgradeMods,
-  unselectCharacter,
-} from '../../state/thunks/characterEdit';
-
-// selectors
-import {
-  selectSelectedCharactersInActiveProfile,
-} from '../../state/reducers/characterEdit';
-import {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+// modules
+import { App } from '../../state/modules/app';
+import { CharacterEdit } from '../../state/modules/characterEdit';
+import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
@@ -56,9 +32,9 @@ import CharacterEditForm from "../CharacterEditForm/CharacterEditForm";
 const CharacterList = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
-    const baseCharacters = useSelector(selectBaseCharacters);
-    const characters = useSelector(selectCharactersInActiveProfile);
-    const selectedCharacters = useSelector(selectSelectedCharactersInActiveProfile);
+    const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+    const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
+    const selectedCharacters = useSelector(CharacterEdit.selectors.selectSelectedCharactersInActiveProfile);
 
     const characterBlockDragStart = (index: number) => {
       return function (event: React.DragEvent<HTMLDivElement>) {
@@ -108,11 +84,11 @@ const CharacterList = React.memo(
           case 'add':
             const movingCharacterID: CharacterNames = event.dataTransfer.getData('text/plain') as CharacterNames;
             const movingCharacter = characters[movingCharacterID];
-            dispatch(selectCharacter(movingCharacterID, movingCharacter.defaultTarget(), dropCharacterIndex));
+            dispatch(CharacterEdit.thunks.selectCharacter(movingCharacterID, movingCharacter.defaultTarget(), dropCharacterIndex));
             break;
           case 'move':
             const movingCharacterIndex = +event.dataTransfer.getData('text/plain');
-            dispatch(moveSelectedCharacter(movingCharacterIndex, dropCharacterIndex));
+            dispatch(CharacterEdit.thunks.moveSelectedCharacter(movingCharacterIndex, dropCharacterIndex));
             break;
           default:
           // Do nothing
@@ -151,9 +127,9 @@ const CharacterList = React.memo(
         if ('custom' === optimizationTarget) {
           showEditCharacterModal(character, index, target.rename('custom'));        
         } else if ('lock' === optimizationTarget) {
-          dispatch(lockCharacter(character.baseID));
+          dispatch(CharacterEdit.thunks.lockCharacter(character.baseID));
         } else {
-          dispatch(changeCharacterTarget(
+          dispatch(CharacterEdit.thunks.changeCharacterTarget(
             index,
             character.targets().find(target => target.name === optimizationTarget)!
           ));
@@ -168,7 +144,7 @@ const CharacterList = React.memo(
         onDragOver={characterBlockDragOver()}
         onDragLeave={characterBlockDragLeave()}
         onDrop={characterBlockDrop(index)}
-        onDoubleClick={() => dispatch(unselectCharacter(index))}
+        onDoubleClick={() => dispatch(CharacterEdit.thunks.unselectCharacter(index))}
       >
         <div className={character.optimizerSettings.isLocked ? `${baseClass} locked` : baseClass}
           draggable={true}
@@ -220,7 +196,7 @@ const CharacterList = React.memo(
       const lockedActive = character.optimizerSettings.isLocked ? 'active' : '';
 
       let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(changeMinimumModDots(character.baseID, Number(event.target.value)));
+        dispatch(CharacterEdit.thunks.changeMinimumModDots(character.baseID, Number(event.target.value)));
         (document?.activeElement as HTMLSelectElement)?.blur();
       }
       handleChange = handleChange.bind(this);
@@ -238,10 +214,10 @@ const CharacterList = React.memo(
           <span className={` ${1 < minimumDots ? 'green active' : 'gray'}`}>{minimumDots}</span>
         </span>
         <span className={`icon level ${levelActive}`}
-          onClick={() => dispatch(toggleUpgradeMods(characterIndex))}
+          onClick={() => dispatch(CharacterEdit.thunks.toggleUpgradeMods(characterIndex))}
           title={levelActive ? 'Level this character\'s mods to 15' : 'Do not level this character\'s mods to 15'} />
         <span className={`icon slice ${sliceActive}`}
-          onClick={() => dispatch(toggleSliceMods(character.baseID))}
+          onClick={() => dispatch(CharacterEdit.thunks.toggleSliceMods(character.baseID))}
           title={sliceActive ? 'Slice this character\'s mods to 6E' : 'Do not slice this character\'s mods to 6E'} />
         <span className={`icon restrictions ${restrictionsActive}`}
           title={restrictionsActive ?
@@ -268,7 +244,7 @@ const CharacterList = React.memo(
             'This character\'s target has no assigned stat weights' :
             'This character\'s target has at least one stat given a value'} />
         <span className={`icon locked ${lockedActive}`}
-          onClick={() => dispatch(toggleCharacterLock(character.baseID))}
+          onClick={() => dispatch(CharacterEdit.thunks.toggleCharacterLock(character.baseID))}
           title={lockedActive ?
             'This character is locked. Its mods will not be assigned to other characters' :
             'This character is not locked'} />
@@ -276,8 +252,8 @@ const CharacterList = React.memo(
     }
 
     const showEditCharacterModal = (character: Character, index: number, target: OptimizationPlan) => {
-      dispatch(setOptimizeIndex(index));
-      dispatch(showModal(
+      dispatch(CharacterEdit.thunks.setOptimizeIndex(index));
+      dispatch(App.actions.showModal(
         '',
         <CharacterEditForm
           character={character}

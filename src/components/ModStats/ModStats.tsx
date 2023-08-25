@@ -6,16 +6,10 @@ import { useSelector } from 'react-redux';
 // styles
 import './ModStats.css';
 
-// selectors
-import  {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
-import  {
-  selectModsViewOptions,
-} from '../../state/reducers/explore';
-import  {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+// modules
+import { Data } from '../../state/modules/data';
+import { Explore } from '../../state/modules/explore';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -46,11 +40,11 @@ const ModStats = React.memo(
   }: ComponentProps) => {
     const [t, i18n] = useTranslation('domain');
     const characters = useSelector(
-      selectCharactersInActiveProfile,
+      Storage.selectors.selectCharactersInActiveProfile,
     );
-    const baseCharacters = useSelector(selectBaseCharacters);
+    const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const scoreName = useSelector(
-      selectModsViewOptions,
+      Explore.selectors.selectModsViewOptions,
     ).modScore;
 
     const translateStat = (displayText: string) => {

@@ -5,10 +5,8 @@ import { useDispatch } from "react-redux";
 // styles
 import './Modal.css';
 
-// actions
-import {
-  hideModal,
-} from "../../state/actions/app";
+// modules
+import { App } from '../../state/modules/app';
 
 // components
 import * as UITypes from '../types';
@@ -39,7 +37,7 @@ const Modal = React.memo(
     return (
       <div
         className={'overlay'}
-        onClick={() => cancelable && dispatch(hideModal())}
+        onClick={() => cancelable && dispatch(App.actions.hideModal())}
       >
         <div
           className={classList}

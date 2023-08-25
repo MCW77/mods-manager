@@ -5,13 +5,9 @@ import { useSelector } from 'react-redux';
 // styles
 import './ModDetail.css';
 
-// selectors
-import {
-  selectBaseCharacters,
-} from '../../state/reducers/data';
-import {
-  selectCharactersInActiveProfile,
-} from '../../state/reducers/storage';
+// modules
+import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { Character }  from '../../domain/Character';
@@ -40,8 +36,8 @@ const ModDetail = React.memo(
     mod,
     showAssigned = false,
   }: ComponentProps) => {
-    const baseCharacters = useSelector(selectBaseCharacters);
-    const characters = useSelector(selectCharactersInActiveProfile);
+    const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+    const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
 
     const character: Character | null =
       mod.characterID !== "null"

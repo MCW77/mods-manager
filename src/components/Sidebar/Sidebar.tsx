@@ -5,13 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 // styles
 import "./Sidebar.css";
 
-// actions
-import {
-  toggleSidebar,
-} from '../../state/actions/app';
-
-// selectors
-import { selectShowSidebar } from '../../state/reducers/app';
+// modules
+import { App } from '../../state/modules/app';
 
 // components
 import * as UITypes from '../types';
@@ -26,7 +21,7 @@ const Sidebar = React.memo(
     content
   }: ComponentProps) => {
     const dispatch = useDispatch();
-    const showSidebar = useSelector(selectShowSidebar);
+    const showSidebar = useSelector(App.selectors.selectShowSidebar);
 
     return (
       <div className="sidebar-wrapper">
@@ -35,7 +30,7 @@ const Sidebar = React.memo(
         </div>
         <button
           className={`toggle-sidebar ${showSidebar ? 'hide' : 'show'}`}
-          onClick={() => dispatch(toggleSidebar()) }
+          onClick={() => dispatch(App.actions.toggleSidebar()) }
         >
         </button>
       </div>

@@ -6,15 +6,13 @@ import { useSelector } from "react-redux";
 // styles
 import "./AboutView.css";
 
-// selectors
-import {
-  selectVersion,
-} from '../../state/reducers/app';
+// modules
+import { App } from '../../state/modules/app';
 
 
 const AboutView = React.memo(
   () => {
-    const version = useSelector(selectVersion);
+    const version = useSelector(App.selectors.selectVersion);
     const [t, i18n] = useTranslation('global-ui');
 
     return (

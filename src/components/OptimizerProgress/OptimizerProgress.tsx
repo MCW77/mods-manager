@@ -3,24 +3,10 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
-// actions
-import {
-  hideModal,
-  setIsBusy,
-} from '../../state/actions/app';
-
-// selectors
-import {
-  selectProgress,
-} from '../../state/reducers/optimize';
-import {
-  selectIsIncrementalOptimization,
-} from '../../state/reducers/storage';
-
-// thunks
-import {
-  cancelOptimizer,
-} from '../../state/thunks/optimize';
+// modules
+import { App } from '../../state/modules/app';
+import { Optimize } from '../../state/modules/optimize';
+import { Storage } from '../../state/modules/storage';
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
@@ -28,14 +14,14 @@ import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 
 const OptimizerProgress = () => {
   const dispatch: ThunkDispatch = useDispatch();
-  const progress = useSelector(selectProgress);
-  const isIncremental = useSelector(selectIsIncrementalOptimization);
+  const progress = useSelector(Optimize.selectors.selectProgress);
+  const isIncremental = useSelector(Storage.selectors.selectIsIncrementalOptimization);
 
   const cancel = (closeModal: boolean) => {
-    dispatch(cancelOptimizer());
-    dispatch(setIsBusy(false));
+    dispatch(Optimize.thunks.cancelOptimizer());
+    dispatch(App.actions.setIsBusy(false));
     if (closeModal) {
-      dispatch(hideModal());
+      dispatch(App.actions.hideModal());
     }
   };
 

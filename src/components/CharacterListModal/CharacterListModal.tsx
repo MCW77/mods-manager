@@ -3,20 +3,10 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
-// actions
-import {
-  hideModal,
-} from "../../state/actions/app";
-
-// thunks
-import {
-  fetchCharacterList,
-} from '../../state/thunks/data';
-
-// selectors
-import {
-  selectAllycode,
-} from '../../state/reducers/storage';
+// modules
+import { App } from '../../state/modules/app';
+import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { CharacterListGenerationParameters } from '../../domain/CharacterListGenerationParameters';
@@ -31,7 +21,7 @@ const CharacterListModal = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
     const form = useRef<HTMLFormElement>(null);
-    const allycode = useSelector(selectAllycode);
+    const allycode = useSelector(Storage.selectors.selectAllycode);
 
     return (
       <div>
@@ -120,7 +110,7 @@ const CharacterListModal = React.memo(
         </form>
         <hr />
         <div className={'actions'}>
-          <button type={'button'} onClick={() => dispatch(hideModal())}>Cancel</button>
+          <button type={'button'} onClick={() => dispatch(App.actions.hideModal())}>Cancel</button>
           <button
             type={'button'}
             onClick={() => {
@@ -135,13 +125,13 @@ const CharacterListModal = React.memo(
                 'top': Number(inputValue('max-list-size')),
               }
 
-              dispatch(fetchCharacterList(
+              dispatch(Data.thunks.fetchCharacterList(
                 form.current['use-case'].value,
                 form.current['overwrite'].value,
                 allycode,
                 parameters
               ));
-              dispatch(hideModal());
+              dispatch(App.actions.hideModal());
             }}
           >
             Generate

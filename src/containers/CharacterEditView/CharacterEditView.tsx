@@ -26,56 +26,13 @@ import keysWhere from "../../utils/keysWhere";
 // state
 import { IAppState } from "../../state/storage";
 
-// actions
-import {
-  hideModal,
-  showError,
-  showModal,
-} from "../../state/actions/app";
-import {
-  changeCharacterFilter,
-  toggleHideSelectedCharacters,
-  toggleCharacterEditSortView,
-} from "../../state/actions/characterEdit";
-import {
-  changeOptimizerView,
-} from "../../state/actions/review";
-
-// thunks
-import {
-  appendTemplate,
-  applyTemplateTargets,
-  deleteTemplate,
-  lockAllCharacters,
-  lockSelectedCharacters,
-  replaceTemplate,
-  resetAllCharacterTargets,
-  saveTemplate,
-  saveTemplates,
-  selectCharacter,
-  setOptimizeIndex,
-  toggleCharacterLock,
-  unlockAllCharacters,
-  unlockSelectedCharacters,
-  unselectAllCharacters,
-  unselectCharacter,
-  updateForceCompleteModSets,
-  updateLockUnselectedCharacters,
-  updateModChangeThreshold,
-} from '../../state/thunks/characterEdit';
-import {
-  fetchCharacterList,
-} from '../../state/thunks/data';
-import {
-  optimizeMods,
-} from '../../state/thunks/optimize';
-import {
-  updateModListFilter,
-} from '../../state/thunks/review';
-import {
-  exportCharacterTemplate,
-  exportCharacterTemplates,
-} from '../../state/thunks/storage';
+// modules
+import { App } from '../../state/modules/app';
+import { CharacterEdit } from '../../state/modules/characterEdit';
+import { Data } from '../../state/modules/data';
+import { Optimize } from '../../state/modules/optimize';
+import { Review } from '../../state/modules/review';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import {
@@ -1216,27 +1173,29 @@ class CharacterEditView extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: IAppState) => {
-  const profile = state.profile;
+  const allycode = Storage.selectors.selectAllycode(state);
+  const profile = Storage.selectors.selectActiveProfile(state);
+  const characters = Storage.selectors.selectCharactersInActiveProfile(state);
+  const baseCharacters = Data.selectors.selectBaseCharacters(state);
   let availableCharacters = [] as Character[];
-  if (state.profile) {
-    availableCharacters = Object.values(profile.characters)
-      .filter((character) => character.playerValues.level >= 50)
-      .filter(
-        (character) =>
-          !state.hideSelectedCharacters ||
-          !profile.selectedCharacters
-            .map(({ id }) => id)
-            .includes(character.baseID)
-      )
-      .sort((left, right) => left.compareGP(right));
-  }
+
+  availableCharacters = Object.values(characters)
+    .filter((character) => character.playerValues.level >= 50)
+    .filter(
+      (character) =>
+        !state.hideSelectedCharacters ||
+        !profile.selectedCharacters
+          .map(({ id }) => id)
+          .includes(character.baseID)
+    )
+    .sort((left, right) => left.compareGP(right));
   /**
    * Checks whether a character matches the filter string in name or tags
    * @param character {Character} The character to check
    * @returns boolean
    */
   const characterFilter = (character: Character) => {
-    const baseCharacter = state.baseCharacters[character.baseID] ?? {
+    const baseCharacter = baseCharacters[character.baseID] ?? {
       ...defaultBaseCharacter,
       baseID: character.baseID,
       name: character.baseID,
@@ -1260,99 +1219,99 @@ const mapStateToProps = (state: IAppState) => {
   };
 
   return {
-    allyCode: state.allyCode,
-    mods: profile?.mods ?? [],
-    globalSettings: profile?.globalSettings ?? {},
+    allyCode: allycode,
+    mods: profile.mods ?? [],
+    globalSettings: profile.globalSettings ?? {},
     characterFilter: state.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters,
     sortView: state.characterEditSortView,
-    baseCharacters: state.baseCharacters,
+    baseCharacters: baseCharacters,
     highlightedCharacters: availableCharacters.filter(characterFilter),
     availableCharacters: availableCharacters
       ? availableCharacters.filter((c) => !characterFilter(c))
       : [],
-    selectedCharacters: profile?.selectedCharacters ?? {},
-    lastSelectedCharacter: profile?.selectedCharacters.length - 1 ?? 0,
+    selectedCharacters: profile.selectedCharacters ?? {},
+    lastSelectedCharacter: profile.selectedCharacters.length - 1 ?? 0,
     showReviewButton:
-      profile?.modAssignments && Object.keys(profile.modAssignments).length,
+      profile.modAssignments && Object.keys(profile.modAssignments).length,
     characterTemplates: Object.keys(state.characterTemplates),
   };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   showModal: (clazz: string, content: DOMContent, cancelable: boolean) =>
-    dispatch(showModal(clazz, content, cancelable)),
-  hideModal: () => dispatch(hideModal()),
-  showError: (error: DOMContent) => dispatch(showError(error)),
+    dispatch(App.actions.showModal(clazz, content, cancelable)),
+  hideModal: () => dispatch(App.actions.hideModal()),
+  showError: (error: DOMContent) => dispatch(App.actions.showError(error)),
   changeCharacterFilter: (filter: string) =>
-    dispatch(changeCharacterFilter(filter)),
-  toggleHideSelectedCharacters: () => dispatch(toggleHideSelectedCharacters()),
-  toggleCharacterEditSortView: () => dispatch(toggleCharacterEditSortView()),
+    dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
+  toggleHideSelectedCharacters: () => dispatch(CharacterEdit.actions.toggleHideSelectedCharacters()),
+  toggleCharacterEditSortView: () => dispatch(CharacterEdit.actions.toggleCharacterEditSortView()),
   reviewOldAssignments: () => {
     dispatch(
-      updateModListFilter({
+      Review.thunks.updateModListFilter({
         view: "sets",
         sort: "assignedCharacter",
       })
     );
-    dispatch(changeOptimizerView("review"));
+    dispatch(Review.actions.changeOptimizerView("review"));
   },
   selectCharacter: (
     characterID: CharacterNames,
     target: OptimizationPlan,
     prevIndex: number
-  ) => dispatch(selectCharacter(characterID, target, prevIndex)),
+  ) => dispatch(CharacterEdit.thunks.selectCharacter(characterID, target, prevIndex)),
   unselectCharacter: (characterIndex: number) =>
-    dispatch(unselectCharacter(characterIndex)),
-  clearSelectedCharacters: () => dispatch(unselectAllCharacters()),
-  lockSelectedCharacters: () => dispatch(lockSelectedCharacters()),
-  unlockSelectedCharacters: () => dispatch(unlockSelectedCharacters()),
-  lockAllCharacters: () => dispatch(lockAllCharacters()),
-  unlockAllCharacters: () => dispatch(unlockAllCharacters()),
+    dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex)),
+  clearSelectedCharacters: () => dispatch(CharacterEdit.thunks.unselectAllCharacters()),
+  lockSelectedCharacters: () => dispatch(CharacterEdit.thunks.lockSelectedCharacters()),
+  unlockSelectedCharacters: () => dispatch(CharacterEdit.thunks.unlockSelectedCharacters()),
+  lockAllCharacters: () => dispatch(CharacterEdit.thunks.lockAllCharacters()),
+  unlockAllCharacters: () => dispatch(CharacterEdit.thunks.unlockAllCharacters()),
   toggleCharacterLock: (characterID: CharacterNames) =>
-    dispatch(toggleCharacterLock(characterID)),
+    dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
   updateLockUnselectedCharacters: (lock: boolean) =>
-    dispatch(updateLockUnselectedCharacters(lock)),
-  resetAllCharacterTargets: () => dispatch(resetAllCharacterTargets()),
-  resetIncrementalIndex: () => dispatch(setOptimizeIndex(null)),
-  optimizeMods: () => dispatch(optimizeMods()),
+    dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(lock)),
+  resetAllCharacterTargets: () => dispatch(CharacterEdit.thunks.resetAllCharacterTargets()),
+  resetIncrementalIndex: () => dispatch(CharacterEdit.thunks.setOptimizeIndex(null)),
+  optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
   updateModChangeThreshold: (threshold: number) =>
-    dispatch(updateModChangeThreshold(threshold)),
+    dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold)),
   updateForceCompleteModSets: (forceCompleteModSets: boolean) =>
-    dispatch(updateForceCompleteModSets(forceCompleteModSets)),
+    dispatch(CharacterEdit.thunks.updateForceCompleteModSets(forceCompleteModSets)),
   generateCharacterList: (
     mode: UseCaseModes,
     behavior: boolean,
     allyCode: string,
     parameters: CharacterListGenerationParameters
   ) => {
-    dispatch(fetchCharacterList(mode, behavior, allyCode, parameters));
-    dispatch(hideModal());
+    dispatch(Data.thunks.fetchCharacterList(mode, behavior, allyCode, parameters));
+    dispatch(App.actions.hideModal());
   },
-  saveTemplate: (name: string) => dispatch(saveTemplate(name)),
+  saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   saveTemplates: (templates: CharacterTemplates) =>
-    dispatch(saveTemplates(templates)),
+    dispatch(CharacterEdit.thunks.saveTemplates(templates)),
   appendTemplate: (templateName: string) => {
-    dispatch(appendTemplate(templateName));
-    dispatch(hideModal());
+    dispatch(CharacterEdit.thunks.appendTemplate(templateName));
+    dispatch(App.actions.hideModal());
   },
   replaceTemplate: (templateName: string) => {
-    dispatch(replaceTemplate(templateName));
-    dispatch(hideModal());
+    dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
+    dispatch(App.actions.hideModal());
   },
   applyTemplateTargets: (templateName: string) => {
-    dispatch(applyTemplateTargets(templateName));
-    dispatch(hideModal());
+    dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
+    dispatch(App.actions.hideModal());
   },
   exportTemplate: (
     templateName: string,
     callback: (template: CharacterTemplate) => void
   ) => {
-    dispatch(exportCharacterTemplate(templateName, callback));
+    dispatch(Storage.thunks.exportCharacterTemplate(templateName, callback));
     dispatch(hideModal());
   },
   exportAllTemplates: (callback: (templates: CharacterTemplates) => void) => {
-    dispatch(exportCharacterTemplates(callback));
+    dispatch(Storage.thunks.exportCharacterTemplates(callback));
     dispatch(hideModal());
   },
   deleteTemplate: (templateName: string) =>

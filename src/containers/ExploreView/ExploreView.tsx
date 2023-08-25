@@ -18,16 +18,9 @@ import { forEach } from 'lodash-es';
 // state
 import { IAppState } from '../../state/storage';
 
-// actions
-import {
-  hideModal,
-  showModal,
-} from '../../state/actions/app';
-
-// thunks
-import {
-  deleteMods,
-} from '../../state/thunks/storage';
+// modules
+import { App } from '../../state/modules/app';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -254,11 +247,11 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  showModal: (content: DOMContent) => dispatch(showModal("", content)),
-  hideModal: () => dispatch(hideModal()),
+  showModal: (content: DOMContent) => dispatch(App.actions.showModal("", content)),
+  hideModal: () => dispatch(App.actions.hideModal()),
   deleteMods: (mods: Mod[]) => {
-    dispatch(deleteMods(mods));
-    dispatch(hideModal());
+    dispatch(Storage.thunks.deleteMods(mods));
+    dispatch(App.actions.hideModal());
   },
 });
 

@@ -2,15 +2,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-// actions
-import {
-  hideError,
-} from "../../state/actions/app";
-
-// selectors
-import {
-  selectErrorMessage,
-} from "../../state/reducers/app";
+// modules
+import { App } from "../../state/modules/app";
 
 // components
 import { WarningLabel } from "../../components/WarningLabel/WarningLabel";
@@ -19,7 +12,7 @@ import { WarningLabel } from "../../components/WarningLabel/WarningLabel";
 const ErrorModal = React.memo(
   () => {
     const dispatch = useDispatch();
-    const content = useSelector(selectErrorMessage);
+    const content = useSelector(App.selectors.selectErrorMessage);
 
     if (content === null) return null;
 
@@ -32,7 +25,7 @@ const ErrorModal = React.memo(
           <div key={'error-actions'} className={'actions'}>
             <button
               type={'button'}
-              onClick={() => {dispatch(hideError())}}
+              onClick={() => {dispatch(App.actions.hideError())}}
             >
               Ok
             </button>

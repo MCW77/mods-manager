@@ -16,27 +16,11 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import { IAppState } from '../../state/storage';
 
-// actions
-import {
-  hideModal,
-  showModal,
-} from "../../state/actions/app";
-import {
-  changeModListFilter,
-  changeOptimizerView,
-} from "../../state/actions/review";
-
-// thunks
-import {
-  createHotUtilsProfile,
-  moveModsWithHotUtils,
-} from '../../state/thunks/data';
-import {
-  reassignMod,
-  reassignMods,
-  unequipMod,
-  unequipMods,
-} from '../../state/thunks/review';
+// modules
+import { App } from '../../state/modules/app';
+import { Data } from '../../state/modules/data';
+import { Review as ReviewModule } from '../../state/modules/review';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { CharacterNames } from '../../constants/characterSettings';
@@ -756,6 +740,7 @@ class Review extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: IAppState) => {
+  const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
   const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments): DisplayedMods {
     let tempAssignments = modAssignments;
@@ -861,12 +846,12 @@ const mapStateToProps = (state: IAppState) => {
 
         tags = uniq(flatten(
           (Object.keys(removedMods) as CharacterNames[]).map(
-            id => id in state.baseCharacters ? state.baseCharacters[id].categories : []
+            id => id in baseCharacters ? baseCharacters[id].categories : []
           ) as string[][] 
         ));
       } else {
         tags = uniq(flatten(
-          displayedMods.map(({ id }) => id in state.baseCharacters ? state.baseCharacters[id].categories : [])
+          displayedMods.map(({ id }) => id in baseCharacters ? baseCharacters[id].categories : [])
         ));
       }
       break;
@@ -889,13 +874,13 @@ const mapStateToProps = (state: IAppState) => {
 
       // Set up the available tags for the sidebar
       tags = Array.from(new Set(flatten(
-        displayedMods.map(({ id }) => state.baseCharacters[id] ? state.baseCharacters[id].categories : [])
+        displayedMods.map(({ id }) => baseCharacters[id] ? baseCharacters[id].categories : [])
       )));
 
       // Filter out any characters that we're not going to display based on the selected tag
       if (filter.tag !== '') {
         displayedMods = displayedMods.filter(({ id }) => {
-          const tags = state.baseCharacters[id] ? state.baseCharacters[id].categories : [];
+          const tags = baseCharacters[id] ? baseCharacters[id].categories : [];
           return tags.includes(filter.tag);
         });
       }
@@ -942,19 +927,19 @@ const mapStateToProps = (state: IAppState) => {
    * }}
    */
   return {
-    allyCode: state.allyCode,
+    allyCode: Storage.selectors.selectAllycode(state),
     assignedMods: profile.modAssignments ?? [],
     currentSetValue: currentLoadoutValue,
     newSetValue: newLoadoutValue,
     characters: profile.characters ?? {},
-    baseCharacters: state.baseCharacters,
+    baseCharacters: baseCharacters,
     currentModsByCharacter: currentModsByCharacter,
     displayedMods: displayedMods,
     movingModAssignments: movingModsByAssignedCharacter,
     modRemovalCost: modRemovalCost,
     modUpgradeCost: modUpgradeCost,
     numMovingMods: numMovingMods,
-    filter: state.modListFilter,
+    filter: ReviewModule.selectors.selectModListFilter(state),
     tags: tags,
     hotUtilsSubscription: state.hotUtilsSubscription,
     hotUtilsSessionId: profile.hotUtilsSessionId ?? ""
@@ -962,16 +947,16 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  edit: () => dispatch(changeOptimizerView('edit')),
-  changeFilter: (filter: ModListFilter) => dispatch(changeModListFilter(filter)),
-  unequipMod: (modID: string) => dispatch(unequipMod(modID)),
-  reassignMod: (modID: string, characterID: CharacterNames) => dispatch(reassignMod(modID, characterID)),
-  unequipMods: (modIDs: string[]) => dispatch(unequipMods(modIDs)),
-  reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(reassignMods(modIDs, characterID)),
-  showModal: (clazz: string, content: DOMContent) => dispatch(showModal(clazz, content)),
-  hideModal: () => dispatch(hideModal()),
-  createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(createHotUtilsProfile(profile, sessionId)),
-  moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(moveModsWithHotUtils(profile, sessionId))
+  edit: () => dispatch(ReviewModule.actions.changeOptimizerView('edit')),
+  changeFilter: (filter: ModListFilter) => dispatch(ReviewModule.actions.changeModListFilter(filter)),
+  unequipMod: (modID: string) => dispatch(ReviewModule.thunks.unequipMod(modID)),
+  reassignMod: (modID: string, characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMod(modID, characterID)),
+  unequipMods: (modIDs: string[]) => dispatch(ReviewModule.thunks.unequipMods(modIDs)),
+  reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMods(modIDs, characterID)),
+  showModal: (clazz: string, content: DOMContent) => dispatch(App.actions.showModal(clazz, content)),
+  hideModal: () => dispatch(App.actions.hideModal()),
+  createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(Data.thunks.createHotUtilsProfile(profile, sessionId)),
+  moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(Data.thunks.moveModsWithHotUtils(profile, sessionId))
 });
 
 type Props = PropsFromRedux & OwnProps;

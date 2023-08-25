@@ -13,20 +13,16 @@ import {
 // utils
 import { match } from 'ts-pattern';
 
-// state
-import { IAppState } from '../../state/storage';
+// modules
+import { App } from '../../state/modules/app';
+import { CharacterEdit } from '../../state/modules/characterEdit';
+import { Settings } from '../../state/modules/settings';
+import { Storage } from '../../state/modules/storage';
 
 // actions
 import {
   changeSection,
 } from '../../state/actions/app';
-
-// thunks
-import {
-  updateForceCompleteModSets,
-  updateLockUnselectedCharacters,
-  updateModChangeThreshold,
-} from '../../state/thunks/characterEdit';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,15 +31,9 @@ import { RangeInput } from '../../components/RangeInput/RangeInput';
 
 
 const SettingsView = () => {
-  const previousSection = useSelector(
-    (state: IAppState) => state.previousSection
-  );
-  const settingsSection = useSelector(
-    (state: IAppState) => state.settings.section
-  );
-  const globalOptimizerSettings = useSelector(
-    (state: IAppState) => state.profile.globalSettings
-  );
+  const previousSection = useSelector(App.selectors.selectPreviousSection);
+  const settingsSection = useSelector(Settings.selectors.selectSettingsPosition).section;
+  const globalOptimizerSettings = useSelector(Storage.selectors.selectGlobalOptimizationSettings);
   const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
   const [currentSection, changeCurrentSection] = useState(settingsSection);
@@ -93,7 +83,7 @@ const SettingsView = () => {
             editable={true}
             defaultValue={globalOptimizerSettings.modChangeThreshold}
             onChange={(threshold) =>
-              dispatch(updateModChangeThreshold(threshold))
+              dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold))
             }
           />
         </div>
@@ -105,7 +95,7 @@ const SettingsView = () => {
             type={'checkbox'}
             defaultChecked={globalOptimizerSettings.lockUnselectedCharacters}
             onChange={(event) =>
-              dispatch(updateLockUnselectedCharacters(event.target.checked))
+              dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(event.target.checked))
             }
           />
         </div>
@@ -115,7 +105,7 @@ const SettingsView = () => {
             type={'checkbox'}
             defaultChecked={globalOptimizerSettings.forceCompleteSets}
             onChange={(event) =>
-              dispatch(updateForceCompleteModSets(event.target.checked))
+              dispatch(CharacterEdit.thunks.updateForceCompleteModSets(event.target.checked))
             }
           />
         </div>
@@ -131,7 +121,7 @@ const SettingsView = () => {
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
-              onClick={() => dispatch(changeSection(previousSection))}
+              onClick={() => dispatch(App.actions.changeSection(previousSection))}
             />
           </div>
         )}

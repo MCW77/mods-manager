@@ -31,30 +31,10 @@ import formatAllyCode from "../../utils/formatAllyCode";
 import { IAppState } from '../../state/storage';
 import { IUserData } from '../../state/storage/Database';
 
-// actions
-import {
-  changeSection,
-  hideModal,
-  showError,
-  showModal,
-} from "../../state/actions/app";
-
-// thunks
-import {
-  deleteProfile,
-  importC3POProfile,
-  reset,
-  restoreProgress,
-} from "../../state/thunks/app";
-import {
-  checkVersion,
-  refreshPlayerData,
-  setHotUtilsSessionId,
-} from '../../state/thunks/data';
-import {
-  exportDatabase,
-  loadProfile,
-} from '../../state/thunks/storage';
+// modules
+import { App as AppModule } from '../../state/modules/app';
+import { Data } from '../../state/modules/data';
+import { Storage } from '../../state/modules/storage';
 
 // domain
 import { PlayerProfile } from '../../domain/PlayerProfile';
@@ -552,20 +532,20 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  changeSection: (newSection: UITypes.Sections) => dispatch(changeSection(newSection)),
+  changeSection: (newSection: UITypes.Sections) => dispatch(AppModule.actions.changeSection(newSection)),
   refreshPlayerData: (allyCode: string, keepOldMods: boolean, sessionId: string | null, useSession = true) =>
-    dispatch(refreshPlayerData(allyCode, keepOldMods,  sessionId, useSession)),
-  setHotUtilsSessionId: (allyCode: string, sessionId: string) => dispatch(setHotUtilsSessionId(allyCode, sessionId)),    
-  checkVersion: () => dispatch(checkVersion()),
-  showModal: (clazz: string, content: UITypes.DOMContent) => dispatch(showModal(clazz, content)),
-  hideModal: () => dispatch(hideModal()),
-  showError: (message: UITypes.DOMContent) => dispatch(showError(message)),
-  reset: () => dispatch(reset()),
-  importC3POProfile: (profile: string) => dispatch(importC3POProfile(profile)),
-  restoreProgress: (progressData: string) => dispatch(restoreProgress(progressData)),
-  switchProfile: (allyCode: string) => dispatch(loadProfile(allyCode)),
-  deleteProfile: (allyCode: string) => dispatch(deleteProfile(allyCode)),
-  exportDatabase: (callback: (ud: IUserData) => void) => dispatch(exportDatabase(callback))
+    dispatch(Data.thunks.refreshPlayerData(allyCode, keepOldMods,  sessionId, useSession)),
+  setHotUtilsSessionId: (allyCode: string, sessionId: string) => dispatch(Data.thunks.setHotUtilsSessionId(allyCode, sessionId)),
+  checkVersion: () => dispatch(Data.thunks.checkVersion()),
+  showModal: (clazz: string, content: UITypes.DOMContent) => dispatch(AppModule.actions.showModal(clazz, content)),
+  hideModal: () => dispatch(AppModule.actions.hideModal()),
+  showError: (message: UITypes.DOMContent) => dispatch(AppModule.actions.showError(message)),
+  reset: () => dispatch(AppModule.thunks.reset()),
+  importC3POProfile: (profile: string) => dispatch(AppModule.thunks.importC3POProfile(profile)),
+  restoreProgress: (progressData: string) => dispatch(AppModule.thunks.restoreProgress(progressData)),
+  switchProfile: (allyCode: string) => dispatch(Storage.thunks.loadProfile(allyCode)),
+  deleteProfile: (allyCode: string) => dispatch(AppModule.thunks.deleteProfile(allyCode)),
+  exportDatabase: (callback: (ud: IUserData) => void) => dispatch(Storage.thunks.exportDatabase(callback))
 });
 
 let connector = connect(mapStateToProps, mapDispatchToProps);

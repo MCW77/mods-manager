@@ -5,13 +5,8 @@ import { useSelector } from "react-redux";
 // styles
 import "./OptimizerView.css";
 
-// state
-import { IAppState } from "../../state/storage";
-
-// selectors
-import {
-  selectOptimizerView,
-} from '../../state/reducers/review';
+// modules
+import { Review as ReviewModule } from '../../state/modules/review';
 
 // containers
 import CharacterEditView from "../CharacterEditView/CharacterEditView";
@@ -20,7 +15,7 @@ import Review from "../Review/Review";
 
 const OptimizerView = React.memo(
   () => {
-    const view = useSelector(selectOptimizerView);
+    const view = useSelector(ReviewModule.selectors.selectOptimizerView);
 
     return (
       <div className={'optimizer-view'}>
