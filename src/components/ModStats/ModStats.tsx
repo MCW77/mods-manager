@@ -18,7 +18,7 @@ import { modScores } from '../../domain/constants/ModScoresConsts';
 import { Character } from '../../domain/Character';
 import { Mod } from '../../domain/Mod';
 import { OptimizationPlan } from '../../domain/OptimizationPlan';
-import { SecondaryStats } from '../../domain/Stats';
+import { SecondaryStats, Stats } from '../../domain/Stats';
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
@@ -47,13 +47,14 @@ const ModStats = React.memo(
       Explore.selectors.selectModsViewOptions,
     ).modScore;
 
-    const translateStat = (displayText: string) => {
-      let parts = displayText.split(' ');
-      if (parts.length === 3) {
-        parts[1] = `${parts[1]} ${parts[2]}`;
-        parts.length = 2;
-      }
-      parts[1] = t(`stats.${parts[1]}`);
+    const translateStat = (displayText: Stats.DisplayedStat) => {
+
+      let seperatorPos = displayText.indexOf(' ');
+      let statValue = displayText.substring(0, seperatorPos);
+      let statName: Stats.DisplayStatNames = displayText.substring(seperatorPos + 1) as Stats.DisplayStatNames;
+      let translatedStatName = t(`stats.${statName}`);
+      let parts = [statValue, translatedStatName];
+
       return parts.join(' ');
     };
 
