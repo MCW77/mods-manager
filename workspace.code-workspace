@@ -14,6 +14,11 @@
 		"typescript.referencesCodeLens.showOnAllFunctions": true,
 		"typescript.suggest.completeFunctionCalls": true,
 		"typescript.suggest.jsdoc.generateReturns": false,
-		"typescript.suggest.completeJSDocs": false
+		"typescript.suggest.completeJSDocs": false,
+		"gitlens.codeLens.scopes": [
+			"document",
+			"containers",
+			"blocks"
+		]
 	}
 }
