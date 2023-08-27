@@ -128,39 +128,20 @@ const HelpView = () => {
     return (
       <div id={`topic-${currentSection}-${currentTopic}`}>
         <h2>{t(`optimizer.topicById.1.Headline`)}</h2>
-        <p>
-          Global settings are a quick way to make changes that apply to every
-          character during an optimization. They always override any
-          character-specific settings that you have set.
-        </p>
-        <ul>
-          <li>
-            <strong>Threshold to change mods</strong> - As the optimizer is
-            running, its normal behavior is to always recommend the absolute
-            best mod set it can find, based on the target you have selected. If
-            this number is above 0, then the optimizer will only recommend that
-            you change mods on a character if the new recommended set is at
-            least this much better than what the character previously had, or if
-            the character's mods were moved to a character higher in your list
-            and needed to be replaced.
-          </li>
-          <li>
-            <strong>Lock all unselected characters</strong> - If this box is
-            checked, then no mods will be taken from characters that aren't in
-            your selected list. If you have a number of unassigned mods, this
-            can be a quick way to make use of them without triggering a major
-            remod of your whole roster.
-          </li>
-          <li>
-            <strong>Don't break mod sets</strong> - If this box is checked, the
-            optimizer will try to keep mod sets together, so you always get the
-            maximum set bonuses. Sometimes it's not possible to do so, either
-            because of other restrictions on a character's target or because you
-            don't have enough mods left to make a full set. In these cases, the
-            optimizer will still drop this restriction to try to recommend the
-            best set.
-          </li>
-        </ul>
+        <div>
+          {t(`optimizer.topicById.1.1`)}
+        </div>
+        <div>
+          <p>
+            <strong>{t(`optimizer.topicById.1.2`)}</strong> - {t(`optimizer.topicById.1.3`)}
+          </p>
+          <p>
+            <strong>{t(`optimizer.topicById.1.4`)}</strong> - {t(`optimizer.topicById.1.5`)}
+          </p>
+          <p>
+            <strong>{t(`optimizer.topicById.1.6`)}</strong> - {t(`optimizer.topicById.1.7`)}
+          </p>
+        </div>
       </div>
     );
   };
