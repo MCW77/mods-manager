@@ -20,10 +20,10 @@ i18n
     ],
     fallbackLng: 'en-US',
     ns: [
-      'domain'
-      , 'explore-ui'
-      , 'global-ui'
-      , 'optimize-ui'
+      'domain',
+      'explore-ui',
+      'global-ui',
+      'optimize-ui',
     ],
     defaultNS: defaultNS,
     load: 'currentOnly',
@@ -34,7 +34,7 @@ i18n
     backend: {
       // for all available options read the backend's repository readme file
       loadPath: '../locales/{{lng}}/{{ns}}.json'
-    }    
+    }
   });
 
 export default i18n;
