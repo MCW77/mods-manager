@@ -46,7 +46,7 @@ const HelpView = () => {
     general: [1, 2, 3, 4, 5],
     profiles: [1, 2, 3, 4, 5],
     explorer: [1],
-    optimizer: [1],
+    optimizer: [1, 2],
   };
 
   const sectionElements: Record<string, React.RefObject<HTMLDivElement>> = {
@@ -93,6 +93,7 @@ const HelpView = () => {
   const renderTopic = () => {
     return match([currentSection, currentTopic])
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
+      .with(['optimizer', 2], () => renderCharacterTemplatesTopic())
       .otherwise(() => {
         const title = t(
           `${currentSection}.topicById.${currentTopic}.Headline`,
@@ -145,6 +146,37 @@ const HelpView = () => {
       </div>
     );
   };
+
+  const renderCharacterTemplatesTopic = () => {
+    return (
+      <div id={`topic-${currentSection}-${currentTopic}`}>
+        <h2>{t(`optimizer.topicById.2.Headline`)}</h2>
+        <p>
+          {t(`optimizer.topicById.2.1`)}
+          <strong>{t(`optimizer.topicById.2.2`)}</strong>{t(`optimizer.topicById.2.3`)}
+          <strong>{t(`optimizer.topicById.2.4`)}</strong>{t(`optimizer.topicById.2.5`)}
+        </p>
+        <h3>{t(`optimizer.topicById.2.6`)}</h3>
+        <p>
+          <strong>{t(`optimizer.topicById.2.7`)}</strong> - {t(`optimizer.topicById.2.8`)}
+          <br />
+          <strong>{t(`optimizer.topicById.2.9`)}</strong> - {t(`optimizer.topicById.2.10`)}
+          <br />
+          <strong>{t(`optimizer.topicById.2.11`)}</strong> - {t(`optimizer.topicById.2.12`)}
+          <br />
+          <strong>{t(`optimizer.topicById.2.13`)}</strong> - {t(`optimizer.topicById.2.14`)}
+        </p>
+        <h3>{t(`optimizer.topicById.2.15`)}</h3>
+        <p>
+          <strong>{t(`optimizer.topicById.2.16`)}</strong> - {t(`optimizer.topicById.2.17`)}
+          <br />
+          <strong>{t(`optimizer.topicById.2.18`)}</strong> - {t(`optimizer.topicById.2.19`)}
+          <br />
+          <strong>{t(`optimizer.topicById.2.20`)}</strong> - {t(`optimizer.topicById.2.21`)}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={'Help-page'} key={'help'}>
