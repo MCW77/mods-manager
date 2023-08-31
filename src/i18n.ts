@@ -22,6 +22,7 @@ i18n
     ns: [
       'domain',
       'explore-ui',
+      'help-ui',
       'global-ui',
       'optimize-ui',
     ],
