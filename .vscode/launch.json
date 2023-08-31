@@ -6,11 +6,12 @@
   "configurations": [
     {
       "name": "Debug in Chrome",
-      "type": "pwa-chrome",
+      "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder/src}",
+      "webRoot": "${workspaceFolder}/src",
       "sourceMaps": true,
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js"],
     }
   ]
 }
