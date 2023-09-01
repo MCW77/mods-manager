@@ -17,6 +17,15 @@
         "Headline": "Löschen eines Profils",
         "1": "Zunächst muss das zu löschende Profil in der Profilauswahl oben ausgewählt werden. Dann kann es über einen Klick auf den roten Papierkorb-Knopf gelöscht werden.",
         "2": "Ein gelöschtes Profil kann man einfach erneut erstellen indem man wieder den Bündniscode eingibt und die Daten abruft."
+      },
+      "4": {
+        "Headline": "Mods als HotUtils Kunde abrufen",
+        "1": "HotUtils ist ein weiteres SWGoH Tool, das sich für Kunden direkt im Spiel anmelden kann.",
+        "2": "Ein Vorteil hiervon ist, dass es alle Mod-Daten abrufen kann, auch von nicht ausgerüsteten Mods.",
+        "3": "Gebrauch auf eigene Gefahr!",
+        "4": "Die HotUtils Functionalität verstößt gegen die Vertragsbedingungen von Star Wars: Galaxy of Heroes.",
+        "5": "Sie übernehmen das gesamte Risiko bei Nutzung des Tools.",
+        "6": "Grandivory's Mods Optimizer und HotUtils gehören nicht zusammen."
       }
     }
   },

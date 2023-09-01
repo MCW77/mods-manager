@@ -4,8 +4,8 @@
     "topics": {
       "1": "Adding profiles",
       "2": "Deleting a profile",
-      "3": "Getting your mods",
-      "4": "Getting your mods as a HotUtils customer",
+      "3": "Fetching your mods",
+      "4": "Fetching your mods as a HotUtils customer",
       "5": "Importing unequipped mods from C3PO"
     },
     "topicById": {
@@ -17,6 +17,15 @@
         "Headline": "Deleting a profile",
         "1": "First you have to select the profile you want to delete in the profiles dropdown at the top. Then you can hit the red trash can button to delete that profile.",
         "2": "After deletion of a profile you can always create it again by entering the allycode and fetching the profile's data again."
+      },
+      "4": {
+        "Headline": "Fetching your mods as a HotUtils customer",
+        "1": "HotUtils is another tool for SWGoH that, if subscribed to, can directly log in to your game account.",
+        "2": "One of the advantages of this is that it can pull all of your mod data, including unequipped mods.",
+        "3": "Use at your own risk!",
+        "4": "HotUtils functionality breaks the terms of service for Star Wars: Galaxy of Heroes.",
+        "5": "You assume all risk in using this tool.",
+        "6": "Grandivory's Mods Optimizer is not associated with HotUtils."
       }
     }
   },

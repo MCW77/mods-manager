@@ -94,6 +94,7 @@ const HelpView = () => {
     return match([currentSection, currentTopic])
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
       .with(['optimizer', 2], () => renderCharacterTemplatesTopic())
+      .with(['profiles', 4], () => renderFetchUnequippedModsWithHUTopic())
       .otherwise(() => {
         const title = t(
           `${currentSection}.topicById.${currentTopic}.Headline`,
@@ -124,6 +125,25 @@ const HelpView = () => {
         );
       });
   };
+
+  /**
+   * Renders a help description for pulling unequipped mods with HotUtils
+   */
+   const renderFetchUnequippedModsWithHUTopic = () => {
+    return <div className={'help'}>
+      <p>
+        {t(`profiles.topicById.4.1`)} {t(`profiles.topicById.4.2`)}
+      </p>
+      <p>
+        <strong>{t(`profiles.topicById.4.3`)}</strong><br />
+        {t(`profiles.topicById.4.4`)} {t(`profiles.topicById.4.5`)} {t(`profiles.topicById.4.6`)}
+      </p>
+      <p><a href={'https://www.hotutils.com/'} target={'_blank'} rel={'noopener noreferrer'}>
+        https://www.hotutils.com/
+      </a></p>
+      <p><img className={'fit'} src={'/img/hotsauce512.png'} alt={'hotsauce'} /></p>
+    </div>;
+  }
 
   const renderGlobalOptimizationSettingsTopic = () => {
     return (
