@@ -19,16 +19,12 @@ import { IAppState } from '../../state/storage';
 import { App } from '../../state/modules/app';
 import { Help } from '../../state/modules/help';
 
+// domain
+import { HelpSections } from '../../domain/HelpSections';
+
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-type SectionName =
-  'explorer'
-  | 'general'
-  | 'optimizer'
-  | 'profiles'
-;
 
 const HelpView = () => {
   const previousSection = useSelector(
@@ -42,7 +38,7 @@ const HelpView = () => {
   const [currentSection, changeCurrentSection] = useState(helpSection);
   const [currentTopic, changeCurrentTopic] = useState(helpTopic);
 
-  const topicsBySection: Record<string, number[]> = {
+  const topicsBySection: Record<HelpSections, number[]> = {
     general: [1, 2, 3, 4, 5],
     profiles: [1, 2, 3, 4, 5],
     explorer: [1],
@@ -56,7 +52,7 @@ const HelpView = () => {
     optimizer: React.createRef<HTMLDivElement>(),
   };
 
-  const renderSection = (sectionName: SectionName) => {
+  const renderSection = (sectionName: HelpSections) => {
     let classes = sectionName;
     if (sectionName === currentSection) classes += ` selected`;
 
@@ -75,7 +71,7 @@ const HelpView = () => {
   };
 
   const renderTopics = () => {
-    if (currentTopic !== 0 || currentSection === '') return null;
+    if (currentTopic !== 0) return null;
 
     return topicsBySection[currentSection].map((topic: number) => {
       return (
@@ -220,7 +216,7 @@ const HelpView = () => {
         {currentTopic === 0 ? renderTopics() : null}
       </div>
       <div className={'topic'}>
-        {currentTopic !== 0 || currentSection === '' ? renderTopic() : null}
+        {currentTopic !== 0 ? renderTopic() : null}
       </div>
     </div>
   );

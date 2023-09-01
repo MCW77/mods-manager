@@ -9,6 +9,7 @@ import { BaseCharactersById } from "../domain/BaseCharacter";
 import { Character, Characters } from "../domain/Character";
 import { CharacterEditMode } from "../domain/CharacterEditMode";
 import { CharacterTemplatesByName } from "../domain/CharacterTemplates";
+import { HelpSections } from "../domain/HelpSections";
 import { ModalProps } from "../domain/ModalProps";
 import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
@@ -46,7 +47,7 @@ export interface IAppState {
   section: UITypes.Sections,
   previousSection: UITypes.Sections,
   help: {
-    section: string;
+    section: HelpSections;
     topic: number,
   },
   settings: {
@@ -146,7 +147,7 @@ export class AppState {
     } catch {
       return AppState.Default;
     }
-    return state ?      
+    return state ?
       deserializeState(JSON.parse(state))
     :
       AppState.Default;
