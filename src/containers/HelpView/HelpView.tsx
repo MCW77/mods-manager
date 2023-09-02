@@ -94,14 +94,14 @@ const HelpView = () => {
       .otherwise(() => {
         const title = t(
           `${currentSection}.topicById.${currentTopic}.Headline`,
-          ''
-        );
+          '',
+        ) as string;
         let counter = 1;
         const paragraphs: string[] = [];
         let paragraph = t(
           `${currentSection}.topicById.${currentTopic}.${counter}`,
-          ''
-        );
+          '',
+        ) as string;
         while (paragraph !== '') {
           paragraphs.push(paragraph);
           counter++;
