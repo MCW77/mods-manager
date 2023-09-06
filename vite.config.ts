@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import UnoCSS from 'unocss/vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -41,6 +42,7 @@ export default defineConfig({
         ],
       },
     }),
+    UnoCSS(),
   ],
   server: {
     port: 3000,
