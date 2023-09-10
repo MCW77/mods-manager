@@ -63,7 +63,7 @@ import { DOMContent } from "../../components/types";
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { FileInput } from "../../components/FileInput/FileInput";
-import { Help } from '../../components/Help/Help';
+import { HelpLink } from "../../components/HelpLink/HelpLink";
 import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
 import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
@@ -150,7 +150,7 @@ class CharacterEditView extends PureComponent<Props> {
         >
           {this.filters()}
           {this.renderCharacterActions()}
-          <Help header="Global Settings">{this.globalSettingsHelp()}</Help>
+          <HelpLink title="Global Settings" section="optimizer" topic={1} />
         </div>
         <div className="characters"
           flex
@@ -178,28 +178,28 @@ class CharacterEditView extends PureComponent<Props> {
                   className="small"
                   onClick={this.props.clearSelectedCharacters}
                 >
-                  <FontAwesomeIcon icon={faBan} title={`Clear`}/>
+                  <FontAwesomeIcon icon={faBan} title="Clear"/>
                 </button>
                 <button
                   className="small"
                   onClick={this.props.lockSelectedCharacters}
                 >
-                  <FontAwesomeIcon icon={faLock} title={`Lock All`}/>
+                  <FontAwesomeIcon icon={faLock} title="Lock All"/>
                 </button>
                 <button
                   className="small"
                   onClick={this.props.unlockSelectedCharacters}
                 >
-                  <FontAwesomeIcon icon={faUnlock} title={`Unlock All`}/>
+                  <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
                 </button>
                 <button
                   className="small"
                   onClick={this.props.toggleCharacterEditSortView}
                 >
                   {this.props.sortView ?
-                    <FontAwesomeIcon icon={faCompress} title={`Normal View`}/>
+                    <FontAwesomeIcon icon={faCompress} title="Normal View"/>
                   :
-                    <FontAwesomeIcon icon={faExpand} title={`Expand View`}/>
+                    <FontAwesomeIcon icon={faExpand} title="Expand View"/>
                   }
                 </button>
                 <button
@@ -218,9 +218,7 @@ class CharacterEditView extends PureComponent<Props> {
             </h4>
             <h5>
               Character Templates{" "}
-              <Help header="Character Templates">
-                {this.characterTemplatesHelp()}
-              </Help>
+              <HelpLink title="" section="optimizer" topic={2} />
             </h5>
             <div className="template-buttons">
               <div className="row">
@@ -1093,102 +1091,6 @@ class CharacterEditView extends PureComponent<Props> {
             Optimize!
           </button>
         </div>
-      </div>
-    );
-  }
-
-  globalSettingsHelp() {
-    return (
-      <div className={"help"}>
-        <p>
-          Global settings are a quick way to make changes that apply to every
-          character during an optimization. They always override any
-          character-specific settings that you have set.
-        </p>
-        <ul>
-          <li>
-            <strong>Threshold to change mods</strong> - As the optimizer is
-            running, its normal behavior is to always recommend the absolute
-            best mod set it can find, based on the target you have selected. If
-            this number is above 0, then the optimizer will only recommend that
-            you change mods on a character if the new recommended set is at
-            least this much better than what the character previously had, or if
-            the character's mods were moved to a character higher in your list
-            and needed to be replaced.
-          </li>
-          <li>
-            <strong>Lock all unselected characters</strong> - If this box is
-            checked, then no mods will be taken from characters that aren't in
-            your selected list. If you have a number of unassigned mods, this
-            can be a quick way to make use of them without triggering a major
-            remod of your whole roster.
-          </li>
-          <li>
-            <strong>Don't break mod sets</strong> - If this box is checked, the
-            optimizer will try to keep mod sets together, so you always get the
-            maximum set bonuses. Sometimes it's not possible to do so, either
-            because of other restrictions on a character's target or because you
-            don't have enough mods left to make a full set. In these cases, the
-            optimizer will still drop this restriction to try to recommend the
-            best set.
-          </li>
-        </ul>
-      </div>
-    );
-  }
-
-  characterTemplatesHelp() {
-    return (
-      <div className={"help"}>
-        <p>
-          Character Templates are a way to work with groups of{" "}
-          <strong>selected characters</strong> and their{" "}
-          <strong>targets</strong> independently of the rest of your data. They
-          can be used to set up teams for a particular use and shared with your
-          friends, guildmates, or on the Mods Optimizer discord server to
-          quickly allow other people to copy your settings. Here is a quick
-          description of the buttons to interact with character templates:
-        </p>
-        <h5>Managing templates</h5>
-        <ul>
-          <li>
-            <strong>Save</strong> - Save your current selected characters and
-            their targets as a new template. You'll be asked to give your
-            template a name, which you can then use to apply it or export it
-            later.
-          </li>
-          <li>
-            <strong>Export</strong> - Export one or all of your templates to a
-            file that can be shared with others.
-          </li>
-          <li>
-            <strong>Load</strong> - Load templates from a file into the
-            optimizer. This won't apply the templates, but will instead add them
-            to the list of known templates that you can work with.
-          </li>
-          <li>
-            <strong>Delete</strong> - Delete one of your templates from the
-            optimizer. This only works on templates that you have created or
-            loaded from a file. The default templates in the optimizer can't be
-            deleted.
-          </li>
-        </ul>
-        <h5>Applying templates</h5>
-        <ul>
-          <li>
-            <strong>Append</strong> - Add the characters from a template to the
-            end of your selected characters.
-          </li>
-          <li>
-            <strong>Replace</strong> - Clear your selected characters and
-            replace them with those from a template.
-          </li>
-          <li>
-            <strong>Apply targets only</strong> - Don't change which characters
-            you have selected or their order, but for any that are in a
-            template, change their targets to match.
-          </li>
-        </ul>
       </div>
     );
   }
