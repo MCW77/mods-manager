@@ -7,11 +7,14 @@ import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 // styles
 import "./CharacterEditView.css";
 import {
+  faAngleUp,
+  faArrowsRotate,
   faBan,
   faCompress,
   faExpand,
   faFile,
   faFileExport,
+  faGears,
   faLock,
   faSave,
   faTrashCan,
@@ -62,7 +65,6 @@ import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { FileInput } from "../../components/FileInput/FileInput";
 import { Help } from '../../components/Help/Help';
 import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
-import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
 
@@ -138,200 +140,207 @@ class CharacterEditView extends PureComponent<Props> {
       : "character-edit";
 
     return (
-      <div className={classes}>
-        <Sidebar
-          content={[
-            this.filterForm(),
-            this.sidebarActions(),
-          ]}
-        />
-        <div className={""}>
-          <Help header={"Global Settings"}>{this.globalSettingsHelp()}</Help>
-        </div>
+      <div className={classes}
+        flex="~ col grow-1"
+      >
         <div
-          className={"available-characters"}
-          onDragEnter={CharacterEditView.availableCharactersDragEnter}
-          onDragOver={CharacterEditView.dragOver}
-          onDragLeave={CharacterEditView.dragLeave}
-          onDrop={this.availableCharactersDrop.bind(this)}
+          className="characters-header"
+          flex="~ justify-around items-center"
+          w-full
         >
-          {this.props.highlightedCharacters.map((character) =>
-            this.characterBlock(character, "active")
-          )}
-          {this.props.availableCharacters.map((character) =>
-            this.characterBlock(character, "inactive")
-          )}
+          {this.filters()}
+          {this.renderCharacterActions()}
+          <Help header="Global Settings">{this.globalSettingsHelp()}</Help>
         </div>
-        <div className={"selected-characters"}>
-          <h4>
-            Selected Characters
-            <div className="character-list-actions">
-              <button
-                className={"small"}
-                onClick={this.props.clearSelectedCharacters}
-              >
-                <FontAwesomeIcon icon={faBan} title={`Clear`}/>
-              </button>
-              <button
-                className={"small"}
-                onClick={this.props.lockSelectedCharacters}
-              >
-                <FontAwesomeIcon icon={faLock} title={`Lock All`}/>
-              </button>
-              <button
-                className={"small"}
-                onClick={this.props.unlockSelectedCharacters}
-              >
-                <FontAwesomeIcon icon={faUnlock} title={`Unlock All`}/>
-              </button>
-              <button
-                className={"small"}
-                onClick={this.props.toggleCharacterEditSortView}
-              >
-                {this.props.sortView ?
-                   <FontAwesomeIcon icon={faCompress} title={`Normal View`}/>
-                 :
-                   <FontAwesomeIcon icon={faExpand} title={`Expand View`}/>
-                }
-              </button>
-              <button
-                className={"small"}
-                onClick={() =>
-                  this.props.showModal(
-                    "generate-character-list",
-                    this.generateCharacterListModal(),
-                    false
-                  )
-                }
-              >
-                Auto-generate List
-              </button>
-            </div>
-          </h4>
-          <h5>
-            Character Templates{" "}
-            <Help header={"Character Templates"}>
-              {this.characterTemplatesHelp()}
-            </Help>
-          </h5>
-          <div className={"template-buttons"}>
-            <div className={"row"}>
-              Manage:
-              <button
-                className={"small"}
-                disabled={!this.props.selectedCharacters.length}
-                onClick={() =>
-                  this.props.showModal(
-                    "save-template",
-                    this.saveTemplateModal(),
-                    false
-                  )
-                }
-              >
-                <FontAwesomeIcon icon={faSave} title={`Save`}/>
-              </button>
-              <button
-                className={"small"}
-                disabled={!this.userTemplates().length}
-                onClick={() =>
-                  this.props.showModal(
-                    "export-template",
-                    this.exportTemplateModal(),
-                    false
-                  )
-                }
-              >
-                <FontAwesomeIcon icon={faFileExport} title={`Export`}/>
-              </button>
-              <FileInput
-                label={"Load"}
-                className={"small"}
-                icon={faFile}
-                handler={(file) =>
-                  this.readFile(file, (templates) => {
-                    try {
-                      const templatesObject = JSON.parse(templates);
-                      const templatesDeserialized = templatesObject.map(
-                        (t: FlatCharacterTemplate) => ({
-                          name: t.name,
-                          selectedCharacters: t.selectedCharacters.map(
-                            ({
-                              id,
-                              target,
-                            }: {
-                              id: CharacterNames;
-                              target: OptimizationPlan;
-                            }) => ({
-                              id: id,
-                              target: OptimizationPlan.deserialize(target),
-                            })
-                          ),
-                        })
-                      );
-                      this.props.saveTemplates(templatesDeserialized);
-                    } catch (e) {
-                      throw new Error(
-                        "Unable to read templates from file. Make sure that you've selected a character templates file"
-                      );
-                    }
-                  })
-                }
-              />
-              <button
-                className={"small red"}
-                disabled={!this.userTemplates().length}
-                onClick={() =>
-                  this.props.showModal(
-                    "delete-template",
-                    this.deleteTemplateModal(),
-                    false
-                  )
-                }
-              >
-                <FontAwesomeIcon icon={faTrashCan} title={`Delete`}/>
-              </button>
-            </div>
-            <div className={"row"}>
-              Apply:
-              <button
-                className={"small"}
-                onClick={() =>
-                  this.props.showModal(
-                    "append-template",
-                    this.appendTemplateModal(),
-                    false
-                  )
-                }
-              >
-                Append
-              </button>
-              <button
-                className={"small"}
-                onClick={() =>
-                  this.props.showModal(
-                    "replace-template",
-                    this.replaceTemplateModal(),
-                    false
-                  )
-                }
-              >
-                Replace
-              </button>
-              <button
-                className={"small"}
-                onClick={() =>
-                  this.props.showModal(
-                    "template-targets",
-                    this.templateTargetsModal(),
-                    false
-                  )
-                }
-              >
-                Apply targets only
-              </button>
-            </div>
+        <div className="characters"
+          flex
+          h-full
+        >
+          <div
+            className="available-characters"
+            onDragEnter={CharacterEditView.availableCharactersDragEnter}
+            onDragOver={CharacterEditView.dragOver}
+            onDragLeave={CharacterEditView.dragLeave}
+            onDrop={this.availableCharactersDrop.bind(this)}
+          >
+            {this.props.highlightedCharacters.map((character) =>
+              this.characterBlock(character, "active")
+            )}
+            {this.props.availableCharacters.map((character) =>
+              this.characterBlock(character, "inactive")
+            )}
           </div>
-          <CharacterList />
+          <div className="selected-characters">
+            <h4>
+              Selected Characters
+              <div className="character-list-actions">
+                <button
+                  className="small"
+                  onClick={this.props.clearSelectedCharacters}
+                >
+                  <FontAwesomeIcon icon={faBan} title={`Clear`}/>
+                </button>
+                <button
+                  className="small"
+                  onClick={this.props.lockSelectedCharacters}
+                >
+                  <FontAwesomeIcon icon={faLock} title={`Lock All`}/>
+                </button>
+                <button
+                  className="small"
+                  onClick={this.props.unlockSelectedCharacters}
+                >
+                  <FontAwesomeIcon icon={faUnlock} title={`Unlock All`}/>
+                </button>
+                <button
+                  className="small"
+                  onClick={this.props.toggleCharacterEditSortView}
+                >
+                  {this.props.sortView ?
+                    <FontAwesomeIcon icon={faCompress} title={`Normal View`}/>
+                  :
+                    <FontAwesomeIcon icon={faExpand} title={`Expand View`}/>
+                  }
+                </button>
+                <button
+                  className="small"
+                  onClick={() =>
+                    this.props.showModal(
+                      "generate-character-list",
+                      this.generateCharacterListModal(),
+                      false
+                    )
+                  }
+                >
+                  Auto-generate List
+                </button>
+              </div>
+            </h4>
+            <h5>
+              Character Templates{" "}
+              <Help header="Character Templates">
+                {this.characterTemplatesHelp()}
+              </Help>
+            </h5>
+            <div className="template-buttons">
+              <div className="row">
+                Manage:
+                <button
+                  className="small"
+                  disabled={!this.props.selectedCharacters.length}
+                  onClick={() =>
+                    this.props.showModal(
+                      "save-template",
+                      this.saveTemplateModal(),
+                      false
+                    )
+                  }
+                >
+                  <FontAwesomeIcon icon={faSave} title="Save"/>
+                </button>
+                <button
+                  className="small"
+                  disabled={!this.userTemplates().length}
+                  onClick={() =>
+                    this.props.showModal(
+                      "export-template",
+                      this.exportTemplateModal(),
+                      false
+                    )
+                  }
+                >
+                  <FontAwesomeIcon icon={faFileExport} title="Export"/>
+                </button>
+                <FileInput
+                  label="Load"
+                  className="small"
+                  icon={faFile}
+                  handler={(file) =>
+                    this.readFile(file, (templates) => {
+                      try {
+                        const templatesObject = JSON.parse(templates);
+                        const templatesDeserialized = templatesObject.map(
+                          (t: FlatCharacterTemplate) => ({
+                            name: t.name,
+                            selectedCharacters: t.selectedCharacters.map(
+                              ({
+                                id,
+                                target,
+                              }: {
+                                id: CharacterNames;
+                                target: OptimizationPlan;
+                              }) => ({
+                                id: id,
+                                target: OptimizationPlan.deserialize(target),
+                              })
+                            ),
+                          })
+                        );
+                        this.props.saveTemplates(templatesDeserialized);
+                      } catch (e) {
+                        throw new Error(
+                          "Unable to read templates from file. Make sure that you've selected a character templates file"
+                        );
+                      }
+                    })
+                  }
+                />
+                <button
+                  className="small red"
+                  disabled={!this.userTemplates().length}
+                  onClick={() =>
+                    this.props.showModal(
+                      "delete-template",
+                      this.deleteTemplateModal(),
+                      false
+                    )
+                  }
+                >
+                  <FontAwesomeIcon icon={faTrashCan} title="Delete"/>
+                </button>
+              </div>
+              <div className="row">
+                Apply:
+                <button
+                  className="small"
+                  onClick={() =>
+                    this.props.showModal(
+                      "append-template",
+                      this.appendTemplateModal(),
+                      false
+                    )
+                  }
+                >
+                  Append
+                </button>
+                <button
+                  className="small"
+                  onClick={() =>
+                    this.props.showModal(
+                      "replace-template",
+                      this.replaceTemplateModal(),
+                      false
+                    )
+                  }
+                >
+                  Replace
+                </button>
+                <button
+                  className="small"
+                  onClick={() =>
+                    this.props.showModal(
+                      "template-targets",
+                      this.templateTargetsModal(),
+                      false
+                    )
+                  }
+                >
+                  Apply targets only
+                </button>
+              </div>
+            </div>
+            <CharacterList />
+          </div>
         </div>
       </div>
     );
@@ -342,28 +351,42 @@ class CharacterEditView extends PureComponent<Props> {
    *
    * @returns JSX Element
    */
-  filterForm() {
+  filters() {
     return (
-      <div className={"filters"} key={"filterForm"}>
-        <div className={"filter-form"}>
-          <label htmlFor={"character-filter"}>
-            Search by character name, tag, or common abbreviation:
-          </label>
+      <div
+        p="x-1 y-2"
+        border="gray-400 solid 1 rounded"
+      >
+        <div
+          flex="~ justify-between"
+          p-2
+          border="b-2 b-gray b-solid"
+        >
+          <span className="text-sm">Filters:</span>
+          <button className="text-sm">
+            <FontAwesomeIcon icon={faAngleUp} title="Hide"/>
+          </button>
+        </div>
+        <div id="filters-content" className="p2">
           <input
+            mb-2 bg-black color-white rounded-2
+            placeholder-blue-500 placeholder-opacity-50
             autoFocus={true}
-            id={"character-filter"}
-            type={"text"}
+            id="character-filter"
+            type="text"
+            placeholder="name, tag, or acronym"
             defaultValue={this.props.characterFilter}
             onChange={(e) =>
               this.props.changeCharacterFilter(e.target.value.toLowerCase())
             }
           />
           <Toggle
-            inputLabel={"Available Characters Display"}
-            leftLabel={"Hide Selected"}
-            rightLabel={"Show All"}
-            leftValue={"hide"}
-            rightValue={"show"}
+            className="text-sm"
+            inputLabel="Show selected"
+            leftLabel=""
+            rightLabel=""
+            leftValue="hide"
+            rightValue="show"
             value={this.props.hideSelectedCharacters ? "hide" : "show"}
             onChange={() => this.props.toggleHideSelectedCharacters()}
           />
@@ -372,17 +395,12 @@ class CharacterEditView extends PureComponent<Props> {
     );
   }
 
-  /**
-   * Renders a sidebar box with action buttons
-   *
-   * @returns JSX Element
-   */
-  sidebarActions() {
+  renderCharacterActions() {
     return (
-      <div className={"sidebar-actions"} key={"sidebar-actions"}>
-        <h3>Actions</h3>
+      <div className="character-actions">
+        <span>Actions:</span>
         <button
-          type={"button"}
+          type="button"
           onClick={() => {
             this.props.resetIncrementalIndex();
             const selectedTargets = this.props.selectedCharacters.map(
@@ -461,7 +479,11 @@ class CharacterEditView extends PureComponent<Props> {
           }}
           disabled={!this.props.selectedCharacters.length}
         >
-          Optimize my mods!
+          <span className="fa-layers">
+            <FontAwesomeIcon icon={faArrowsRotate} title="Optimize" transform="grow-8"/>
+            <FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6"/>
+          </span>
+
         </button>
         {this.props.showReviewButton ? (
           <button type={"button"} onClick={this.props.reviewOldAssignments}>
@@ -469,22 +491,22 @@ class CharacterEditView extends PureComponent<Props> {
           </button>
         ) : null}
         <button
-          type={"button"}
-          className={"blue"}
+          type="button"
+          className="blue"
           onClick={this.props.lockAllCharacters}
         >
-          Lock all characters
+          <FontAwesomeIcon icon={faLock} title="Lock All"/>
         </button>
         <button
-          type={"button"}
-          className={"blue"}
+          type="button"
+          className="blue"
           onClick={this.props.unlockAllCharacters}
         >
-          Unlock all characters
+          <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
         </button>
         <button
-          type={"button"}
-          className={"blue"}
+          type="button"
+          className="blue"
           onClick={() =>
             this.props.showModal("reset-modal", this.resetCharsModal(), false)
           }
@@ -492,7 +514,7 @@ class CharacterEditView extends PureComponent<Props> {
           Reset all targets
         </button>
       </div>
-    );
+    )
   }
 
   /**
