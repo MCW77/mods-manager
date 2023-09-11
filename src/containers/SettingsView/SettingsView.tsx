@@ -135,4 +135,5 @@ const SettingsView = () => {
   );
 };
 
+SettingsView.displayName = 'SettingsView';
 export { SettingsView };
