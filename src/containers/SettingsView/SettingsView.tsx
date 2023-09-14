@@ -15,14 +15,8 @@ import { match } from 'ts-pattern';
 
 // modules
 import { App } from '../../state/modules/app';
-import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Settings } from '../../state/modules/settings';
 import { Storage } from '../../state/modules/storage';
-
-// actions
-import {
-  changeSection,
-} from '../../state/actions/app';
 
 // domain
 import { SettingsSections } from '../../domain/SettingsSections';
@@ -30,8 +24,8 @@ import { SettingsSections } from '../../domain/SettingsSections';
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { RangeInput } from '../../components/RangeInput/RangeInput';
-
+// containers
+import OptimizerSettingsView from '../OptimizerSettingsView/OptimizerSettingsView';
 
 const SettingsView = () => {
   const previousSection = useSelector(App.selectors.selectPreviousSection);
@@ -64,56 +58,10 @@ const SettingsView = () => {
 
   const renderTopic = () => {
     return match(currentSection)
-      .with('optimizer', () => renderGlobalOptimizerSettings())
+      .with('optimizer', () => <OptimizerSettingsView />)
       .otherwise(() => {
         return <div id={`settings-${currentSection}`}></div>;
       });
-  };
-
-  const renderGlobalOptimizerSettings = () => {
-    return (
-      <div className={'global-settings'} key={'global-settings'}>
-        <h3>Global Optimizer Settings </h3>
-        <div className={'form-row'}>
-          <label>Threshold to Change Mods:</label>
-          <RangeInput
-            name={`threshold`}
-            id={`threshold`}
-            min={0}
-            max={100}
-            step={1}
-            isPercent={true}
-            editable={true}
-            defaultValue={globalOptimizerSettings.modChangeThreshold}
-            onChange={(threshold) =>
-              dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold))
-            }
-          />
-        </div>
-        <div className={'form-row'}>
-          <label htmlFor={'lock-unselected'}>
-            Lock all unselected characters:
-          </label>
-          <input
-            type={'checkbox'}
-            defaultChecked={globalOptimizerSettings.lockUnselectedCharacters}
-            onChange={(event) =>
-              dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(event.target.checked))
-            }
-          />
-        </div>
-        <div className={'form-row'}>
-          <label htmlFor={'force-complete-sets'}>Don't break mod sets:</label>
-          <input
-            type={'checkbox'}
-            defaultChecked={globalOptimizerSettings.forceCompleteSets}
-            onChange={(event) =>
-              dispatch(CharacterEdit.thunks.updateForceCompleteModSets(event.target.checked))
-            }
-          />
-        </div>
-      </div>
-    );
   };
 
   return (
