@@ -24,6 +24,9 @@ import {
   changeSection,
 } from '../../state/actions/app';
 
+// domain
+import { SettingsSections } from '../../domain/SettingsSections';
+
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -44,7 +47,7 @@ const SettingsView = () => {
     optimizer: React.createRef<HTMLDivElement>(),
   };
 
-  const renderSection = (sectionName: string) => {
+  const renderSection = (sectionName: SettingsSections) => {
     let classes = sectionName;
     if (sectionName === currentSection) classes += ` selected`;
 

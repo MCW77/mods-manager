@@ -17,6 +17,7 @@ import { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerNamesByAllycode } from "../domain/PlayerNamesByAllycode";
 import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
 import { SetRestrictions } from "../domain/SetRestrictions";
+import { SettingsSections } from "../domain/SettingsSections";
 import { TargetStats } from "../domain/TargetStat";
 
 // components
@@ -51,7 +52,7 @@ export interface IAppState {
     topic: number,
   },
   settings: {
-    section: string;
+    section: SettingsSections;
     topic: number,
   },
   showSidebar: boolean,
