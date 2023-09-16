@@ -1135,9 +1135,8 @@ const mapStateToProps = (state: IAppState) => {
       : [],
     selectedCharacters: profile.selectedCharacters ?? {},
     lastSelectedCharacter: profile.selectedCharacters.length - 1 ?? 0,
-    showReviewButton:
-      profile.modAssignments && Object.keys(profile.modAssignments).length,
-    characterTemplates: Object.keys(state.characterTemplates),
+    showReviewButton: profile.modAssignments && Object.keys(profile.modAssignments).length,
+    characterTemplates: CharacterEdit.selectors.selectUserTemplatesNames(state),
   };
 };
 

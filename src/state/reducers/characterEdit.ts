@@ -120,10 +120,19 @@ export namespace reducers {
 
 export namespace selectors {
   export const selectCharacterEditMode = (state: IAppState) => state.characterEditMode;
+  export const selectOptimizer = (state: IAppState) => state.optimizer;
   export const selectSelectedCharactersInActiveProfile = createSelector(
     [Storage.selectors.selectActiveProfile],
     (activeProfile) => activeProfile.selectedCharacters
   );
   export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
   export const selectTargetStats = (state: IAppState) => state.targetStats;
+  export const selectUserTemplates = createSelector(
+    selectOptimizer,
+    (optimizer) => Object.values(optimizer.userTemplatesByName)
+  );
+  export const selectUserTemplatesNames = createSelector(
+    selectOptimizer,
+    (optimizer) => Object.keys(optimizer.userTemplatesByName)
+  );
 }
