@@ -135,27 +135,14 @@ class CharacterEditView extends PureComponent<Props> {
   }
 
   render() {
-    const classes = this.props.sortView
-      ? "character-edit sort-view"
-      : "character-edit";
-
     return (
-      <div className={classes}
-        flex="~ col grow-1"
-      >
-        <div
-          className="characters-header"
-          flex="~ justify-around items-center"
-          w-full
-        >
+      <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
+        <div className="characters-header flex justify-around items-center w-full">
           {this.filters()}
           {this.renderCharacterActions()}
           <HelpLink title="Global Settings" section="optimizer" topic={1} />
         </div>
-        <div className="characters"
-          flex
-          h-full
-        >
+        <div className="characters flex h-full">
           <div
             className="available-characters"
             onDragEnter={CharacterEditView.availableCharactersDragEnter}
@@ -351,15 +338,8 @@ class CharacterEditView extends PureComponent<Props> {
    */
   filters() {
     return (
-      <div
-        p="x-1 y-2"
-        border="gray-400 solid 1 rounded"
-      >
-        <div
-          flex="~ justify-between"
-          p-2
-          border="b-2 b-gray b-solid"
-        >
+      <div className="p-x-1 p-y-2 border-gray-400 border-solid border-1 rounded">
+        <div className="flex justify-between p-2 border-b-2 border-b-gray border-b-solid">
           <span className="text-sm">Filters:</span>
           <button className="text-sm">
             <FontAwesomeIcon icon={faAngleUp} title="Hide"/>
@@ -367,8 +347,7 @@ class CharacterEditView extends PureComponent<Props> {
         </div>
         <div id="filters-content" className="p2">
           <input
-            mb-2 bg-black color-white rounded-2
-            placeholder-blue-500 placeholder-opacity-50
+            className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
             autoFocus={true}
             id="character-filter"
             type="text"
