@@ -1,5 +1,7 @@
+import { HelpSections } from "@/domain/HelpSections";
+
 export namespace actions {
-	export function setHelpPosition(section: string, topic: number) {
+	export function setHelpPosition(section: HelpSections, topic: number) {
 		return {
 			type: actionNames.SET_HELP_POSITION,
 			section,
