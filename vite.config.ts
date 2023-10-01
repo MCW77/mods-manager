@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import UnoCSS from 'unocss/vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { VitePWA } from 'vite-plugin-pwa';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -44,6 +45,13 @@ export default defineConfig({
     }),
     UnoCSS(),
   ],
+  resolve: {
+    alias: {
+      "#": path.resolve(__dirname, "./src"),
+      "#lib": path.resolve(__dirname, "./src/lib"),
+      "#ui": path.resolve(__dirname, "./src/components/ui"),
+    },
+  },
   server: {
     port: 3000,
   }
