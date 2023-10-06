@@ -16,7 +16,7 @@ type ComponentProps = {
   value: string;
   disabled?: boolean;
   onChange?: (newValue: string) => void;
-} 
+}
 
 const Toggle2 = ({
   name = '',
@@ -51,7 +51,7 @@ const Toggle2 = ({
       if (toggleSwitch.current !== null) {
         toggleSwitch.current.classList.remove('right');
         toggleSwitch.current.classList.add('left');
-      }  
+      }
     }
 
     if (onChange) {
@@ -65,7 +65,7 @@ const Toggle2 = ({
       <label>
         <input type={'checkbox'}
           className={'toggle'}
-          ref={checkbox}          
+          ref={checkbox}
           name={name}
           id={id}
           value={rightValue}
@@ -132,7 +132,7 @@ class Toggle extends React.Component<ComponentProps, ComponentState> {
     } else {
       if (this.checkbox.current !== null)
         this.checkbox.current.checked = false;
-      if (this.toggleSwitch.current !== null) {  
+      if (this.toggleSwitch.current !== null) {
         this.toggleSwitch.current.classList.remove('right');
         this.toggleSwitch.current.classList.add('left');
       }
@@ -144,7 +144,7 @@ class Toggle extends React.Component<ComponentProps, ComponentState> {
   }
 
   enable() {
-    this.setState({ disabled: false });    
+    this.setState({ disabled: false });
   }
 
   /**
