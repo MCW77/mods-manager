@@ -2,6 +2,7 @@
   "name": "mods-manager",
   "version": "0.0.0",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "vite --host=127.0.0.1",
     "build": "tsc && vite build",
     "forcedbuild": "vite build",

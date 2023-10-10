@@ -8,7 +8,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"label": "npm: build",
+			"label": "pnpm: build",
 			"detail": "vite build",
 			"problemMatcher": []
 		}
