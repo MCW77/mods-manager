@@ -1,5 +1,4 @@
 // utils
-import { Dictionary } from "lodash";
 import { groupBy } from "../../../utils/groupBy";
 import memoizeOne from "memoize-one";
 import { orderBy, mapValues } from "lodash-es";
@@ -36,7 +35,7 @@ class ModsFilter {
 
   constructor(modsViewOptions: ModsViewOptions) {
     Mod.setupAccessors();
-    [this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(modsViewOptions.filtering);    
+    [this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(modsViewOptions.filtering);
 
     this.isGroupingEnabled = modsViewOptions.isGroupingEnabled;
 
@@ -105,7 +104,7 @@ class ModsFilter {
 
     return [selectedOptions, unselectedOptions];
   }
-   
+
   selectedOptionsFilter = (mod: Mod) => {
     if (this.selectedOptions.slot.length > 0 && !this.selectedOptions.slot.every(slot => mod.slot === slot))
       return false;
@@ -154,8 +153,8 @@ class ModsFilter {
     return mods.filter(this.selectedOptionsFilter).filter(this.unselectedOptionsFilter)
   }
 
-  filterGroupedMods(groupedMods: Dictionary<Mod[]>): Dictionary<Mod[]> {
-    let filteredMods: Dictionary<Mod[]> = mapValues(groupedMods, (mods: Mod[]) => 
+  filterGroupedMods(groupedMods: Record<string, Mod[]>): Record<string, Mod[]> {
+    let filteredMods: Record<string, Mod[]> = mapValues(groupedMods, (mods: Mod[]) =>
       this.filterMods(mods)
     );
     for (let group in filteredMods) {
@@ -182,11 +181,11 @@ class ModsFilter {
     if (this.isGroupingEnabled)
       return groupedMods(mods)
     else
-      return ungroupedMods(mods); 
+      return ungroupedMods(mods);
   }
 
-  sortGroupedMods(groupedMods: Dictionary<Mod[]>): Dictionary<Mod[]> {
-    return mapValues(groupedMods, (mods: Mod[]) => 
+  sortGroupedMods(groupedMods: Record<string, Mod[]>): Record<string, Mod[]> {
+    return mapValues(groupedMods, (mods: Mod[]) =>
       orderBy(
         mods,
         this.sortOptions,
@@ -195,13 +194,13 @@ class ModsFilter {
     )
   }
 
-  getGroupedModsCount(groupedMods: Dictionary<Mod[]>) {
+  getGroupedModsCount(groupedMods: Record<string, Mod[]>) {
     return Object.entries(groupedMods).reduce((acc, [group, mods]) => {
       return acc + mods.length;
     }, 0)
   }
 
-  applyModsViewOptions(mods: Mod[]): [Dictionary<Mod[]>, number] {
+  applyModsViewOptions(mods: Mod[]): [Record<string, Mod[]>, number] {
     let groupedMods = this.groupMods(mods);
     groupedMods = this.filterGroupedMods(groupedMods);
     groupedMods = this.sortGroupedMods(groupedMods);

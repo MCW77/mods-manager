@@ -7,7 +7,6 @@ import cleanAllyCode from "../../utils/cleanAllyCode";
 import groupByKey from "../../utils/groupByKey";
 import nothing from "../../utils/nothing";
 import { mapValues } from "lodash-es";
-import { Dictionary } from "lodash";
 
 // state
 import getDatabase, { Database } from "../storage/Database";
@@ -413,7 +412,7 @@ export namespace thunks {
 
         if (keepOldMods) {
           // If we're keeping the old mods, that means that any mod we don't see must be unequipped
-          const oldMods = oldProfile.mods.reduce((mods: Dictionary<Mod>, mod) => {
+          const oldMods = oldProfile.mods.reduce((mods: Record<string, Mod>, mod) => {
             mods[mod.id] = mod.unequip();
             return mods;
           }, {});

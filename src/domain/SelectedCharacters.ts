@@ -1,6 +1,3 @@
-// utils
-import { Dictionary } from "lodash";
-
 // domain
 import { CharacterNames } from "../constants/characterSettings";
 
@@ -28,4 +25,4 @@ export interface FlatSelectedCharacter {
   target: FlatOptimizationPlan;
 }
 
-export type SelectedCharactersByTemplateName = Dictionary<SelectedCharacters>;
+export type SelectedCharactersByTemplateName = Record<string, SelectedCharacters>;
