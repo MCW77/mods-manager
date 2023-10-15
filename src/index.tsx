@@ -10,7 +10,7 @@ import 'virtual:uno.css';
 import './index.css';
 
 import registerServiceWorker from './registerServiceWorker';
-import './i18n.ts';
+import './i18n';
 
 // state
 import getDatabase from "./state/storage/Database";
