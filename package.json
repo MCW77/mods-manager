@@ -26,7 +26,7 @@
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
     "lodash-es": "^4.17.21",
-    "lucide-react": "^0.279.0",
+    "lucide-react": "^0.288.0",
     "memoize-one": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
