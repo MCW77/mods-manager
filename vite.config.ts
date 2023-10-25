@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import UnoCSS from 'unocss/vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
@@ -10,7 +10,7 @@ export default defineConfig({
     target: 'esnext',
   },
   plugins: [
-    reactRefresh(),
+    react(),
     VitePWA({
       includeAssets: [
         'favicon.svg',
