@@ -12,17 +12,13 @@ import {
   faBan,
   faCompress,
   faExpand,
-  faFile,
-  faFileExport,
   faGears,
   faLock,
   faSave,
-  faTrashCan,
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import { saveAs } from "file-saver";
 import collectByKey from "../../utils/collectByKey";
 import keysWhere from "../../utils/keysWhere";
 
@@ -47,11 +43,6 @@ import defaultTemplates from "../../constants/characterTemplates.json";
 import { defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
 import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
-import {
-  CharacterTemplate,
-  CharacterTemplates,
-  FlatCharacterTemplate,
-} from "../../domain/CharacterTemplates";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
 import { UseCaseModes } from "../../domain/UseCaseModes";
@@ -62,7 +53,6 @@ import { DOMContent } from "../../components/types";
 
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { FileInput } from "../../components/FileInput/FileInput";
 import { HelpLink } from "../../components/HelpLink/HelpLink";
 import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
 import { Spoiler } from "../../components/Spoiler/Spoiler";
@@ -222,66 +212,6 @@ class CharacterEditView extends PureComponent<Props> {
                   }
                 >
                   <FontAwesomeIcon icon={faSave} title="Save"/>
-                </button>
-                <button
-                  className="small"
-                  disabled={!this.userTemplates().length}
-                  onClick={() =>
-                    this.props.showModal(
-                      "export-template",
-                      this.exportTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faFileExport} title="Export"/>
-                </button>
-                <FileInput
-                  label="Load"
-                  className="small"
-                  icon={faFile}
-                  handler={(file) =>
-                    this.readFile(file, (templates) => {
-                      try {
-                        const templatesObject = JSON.parse(templates);
-                        const templatesDeserialized = templatesObject.map(
-                          (t: FlatCharacterTemplate) => ({
-                            name: t.name,
-                            selectedCharacters: t.selectedCharacters.map(
-                              ({
-                                id,
-                                target,
-                              }: {
-                                id: CharacterNames;
-                                target: OptimizationPlan;
-                              }) => ({
-                                id: id,
-                                target: OptimizationPlan.deserialize(target),
-                              })
-                            ),
-                          })
-                        );
-                        this.props.saveTemplates(templatesDeserialized);
-                      } catch (e) {
-                        throw new Error(
-                          "Unable to read templates from file. Make sure that you've selected a character templates file"
-                        );
-                      }
-                    })
-                  }
-                />
-                <button
-                  className="small red"
-                  disabled={!this.userTemplates().length}
-                  onClick={() =>
-                    this.props.showModal(
-                      "delete-template",
-                      this.deleteTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faTrashCan} title="Delete"/>
                 </button>
               </div>
               <div className="row">
@@ -874,111 +804,6 @@ class CharacterEditView extends PureComponent<Props> {
     );
   }
 
-  exportTemplateModal() {
-    let templateNameInput: HTMLSelectElement | null;
-
-    const templateOptions = this.userTemplates().map((name) => (
-      <option value={name}>{name}</option>
-    ));
-
-    return (
-      <div>
-        <h3>Please select a character template to export</h3>
-        <Dropdown ref={(select) => (templateNameInput = select)}>
-          {templateOptions}
-        </Dropdown>
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
-            type={"button"}
-            onClick={() =>
-              templateNameInput !== null &&
-              this.props.exportTemplate(templateNameInput.value, (template) => {
-                const templateSaveObject = {
-                  name: template.name,
-                  selectedCharacters: template.selectedCharacters.map(
-                    ({ id, target }) => ({
-                      id: id,
-                      target: target.serialize(),
-                    })
-                  ),
-                };
-                const templateSerialized = JSON.stringify([templateSaveObject]);
-                const userData = new Blob([templateSerialized], {
-                  type: "application/json;charset=utf-8",
-                });
-                saveAs(userData, `modsOptimizerTemplate-${template.name}.json`);
-              })
-            }
-          >
-            Export
-          </button>
-          <button
-            type={"button"}
-            onClick={() =>
-              this.props.exportAllTemplates((templates: CharacterTemplates) => {
-                const templatesSaveObject = templates.map(
-                  ({ name, selectedCharacters }) => ({
-                    name: name,
-                    selectedCharacters: selectedCharacters.map(
-                      ({ id, target }) => ({
-                        id: id,
-                        target: target.serialize(),
-                      })
-                    ),
-                  })
-                );
-                const templatesSerialized = JSON.stringify(templatesSaveObject);
-                const userData = new Blob([templatesSerialized], {
-                  type: "application/json;charset=utf-8",
-                });
-                saveAs(
-                  userData,
-                  `modsOptimizerTemplates-${new Date()
-                    .toISOString()
-                    .slice(0, 10)}.json`
-                );
-              })
-            }
-          >
-            Export All
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  deleteTemplateModal() {
-    let templateNameInput: HTMLSelectElement | null;
-
-    const templateOptions = this.userTemplates().map((name) => (
-      <option value={name}>{name}</option>
-    ));
-
-    return (
-      <div>
-        <h3>Please select a character template to delete</h3>
-        <Dropdown ref={(select) => (templateNameInput = select)}>
-          {templateOptions}
-        </Dropdown>
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
-            type={"button"}
-            className={"red"}
-            onClick={() => this.props.deleteTemplate(templateNameInput!.value)}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   /**
    * Render the modal content to show a notice before optimizing a list that includes target stats
    * @returns {*}
@@ -1191,8 +1016,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(App.actions.hideModal());
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
-  saveTemplates: (templates: CharacterTemplates) =>
-    dispatch(CharacterEdit.thunks.saveTemplates(templates)),
   appendTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.appendTemplate(templateName));
     dispatch(App.actions.hideModal());
@@ -1205,19 +1028,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
     dispatch(App.actions.hideModal());
   },
-  exportTemplate: (
-    templateName: string,
-    callback: (template: CharacterTemplate) => void
-  ) => {
-    dispatch(Storage.thunks.exportCharacterTemplate(templateName, callback));
-    dispatch(hideModal());
-  },
-  exportAllTemplates: (callback: (templates: CharacterTemplates) => void) => {
-    dispatch(Storage.thunks.exportCharacterTemplates(callback));
-    dispatch(hideModal());
-  },
-  deleteTemplate: (templateName: string) =>
-    dispatch(deleteTemplate(templateName)),
 });
 
 type Props = PropsFromRedux & OwnProps & WithTranslation<"optimize-ui">;
