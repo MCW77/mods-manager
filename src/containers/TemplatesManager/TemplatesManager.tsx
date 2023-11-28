@@ -152,23 +152,21 @@ const TemplatesManager = React.memo(
                 data-template={template.name}
                 key={`template-${template.name}`}
                 onClick={(event) => {
-                  const target = event.target as HTMLDivElement;
-                  const templateName = target.dataset.template!;
-                  const selectedTemplate = selectedTemplates.find(template => template.name === templateName);
-                  const wasSelected = selectedTemplate !== undefined;
-                  const template = userCharacterTemplates.find(template => template.name === templateName);
-                  target.classList.toggle('selected');
-                  target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
-                  console.log(`wasSelected: ${wasSelected}`);
-                  console.log("selectedTemplatesBefore: ");
-                  console.dir(selectedTemplates);
-                  if (wasSelected) {
-                    setSelectedTemplates(selectedTemplates.toSpliced(selectedTemplates.indexOf(selectedTemplate), 1));
-                  } else {
-                    setSelectedTemplates([...selectedTemplates, template!]);
+                  event.stopPropagation();
+                  const target = event.currentTarget as HTMLDivElement;
+                  if (target.dataset.template !== undefined && target.dataset.template !== null) {
+                    const templateName = target.dataset.template;
+                    const selectedTemplate = selectedTemplates.find(template => template.name === templateName);
+                    const wasSelected = selectedTemplate !== undefined;
+                    const template = userCharacterTemplates.find(template => template.name === templateName);
+                    target.classList.toggle('selected');
+                    target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
+                    if (wasSelected) {
+                      setSelectedTemplates(selectedTemplates.toSpliced(selectedTemplates.indexOf(selectedTemplate), 1));
+                    } else {
+                      setSelectedTemplates([...selectedTemplates, template!]);
+                    }
                   }
-                  console.log("selectedTemplatesAfter: ");
-                  console.dir(selectedTemplates);
                 }}
               >
                 <span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">&nbsp;</span>
