@@ -28,6 +28,7 @@ import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FileInput } from "../../components/FileInput/FileInput";
+import { Button } from "#/components/ui/button";
 
 
 const TemplatesManager = React.memo(
@@ -97,8 +98,7 @@ const TemplatesManager = React.memo(
               })
             }
           />
-          <button
-            className={"small"}
+          <Button
             disabled={selectedTemplates.length === 0}
             onClick={() => {
               const templatesSaveObject = selectedTemplates.map(
@@ -127,10 +127,10 @@ const TemplatesManager = React.memo(
           >
             <FontAwesomeIcon icon={faFileExport} title={`Export`}/>
             Export
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
-            className={"red"}
+            variant={"destructive"}
             disabled={selectedTemplates.length === 0}
             onClick={() => {
               for (const template of selectedTemplates.values()) {
@@ -141,7 +141,7 @@ const TemplatesManager = React.memo(
           >
             <FontAwesomeIcon icon={faTrashCan} title={`${t('settings-ui:optimizer.TemplateDelete')}`}/>
             Delete {selectedTemplates.length}
-          </button>
+          </Button>
 
         </div>
         <div className={'templates'}>
