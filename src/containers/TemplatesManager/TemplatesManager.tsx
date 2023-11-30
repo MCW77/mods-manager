@@ -63,7 +63,7 @@ const TemplatesManager = React.memo(
 
     return (
       <div className={'templates-manager'}>
-        <div>
+        <div className="flex gap-2 items-center">
           <FileInput
             label={'Import'}
             className={"small"}
@@ -125,7 +125,7 @@ const TemplatesManager = React.memo(
 
             }}
           >
-            <FontAwesomeIcon icon={faFileExport} title={`Export`}/>
+            <FontAwesomeIcon className="m-r-2" icon={faFileExport} title={`Export`}/>
             Export
           </Button>
           <Button
@@ -139,7 +139,7 @@ const TemplatesManager = React.memo(
               setSelectedTemplates([]);
             }}
           >
-            <FontAwesomeIcon icon={faTrashCan} title={`${t('settings-ui:optimizer.TemplateDelete')}`}/>
+            <FontAwesomeIcon className="m-r-2" icon={faTrashCan} title={`${t('settings-ui:optimizer.TemplateDelete')}`}/>
             Delete {selectedTemplates.length}
           </Button>
 
