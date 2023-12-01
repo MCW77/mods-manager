@@ -154,26 +154,26 @@ class CharacterEditView extends PureComponent<Props> {
             <h4>
               Selected Characters
               <div className="character-list-actions">
-                <button
-                  className="small"
+                <Button
+                  size="sm"
                   onClick={this.props.clearSelectedCharacters}
                 >
                   <FontAwesomeIcon icon={faBan} title="Clear"/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={this.props.lockSelectedCharacters}
                 >
                   <FontAwesomeIcon icon={faLock} title="Lock All"/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={this.props.unlockSelectedCharacters}
                 >
                   <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={this.props.toggleCharacterEditSortView}
                 >
                   {this.props.sortView ?
@@ -181,9 +181,9 @@ class CharacterEditView extends PureComponent<Props> {
                   :
                     <FontAwesomeIcon icon={faExpand} title="Expand View"/>
                   }
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={() =>
                     this.props.showModal(
                       "generate-character-list",
@@ -193,7 +193,7 @@ class CharacterEditView extends PureComponent<Props> {
                   }
                 >
                   Auto-generate List
-                </button>
+                </Button>
               </div>
             </h4>
             <h5>
@@ -246,7 +246,7 @@ class CharacterEditView extends PureComponent<Props> {
     return (
       <DefaultCollapsibleCard title="Actions">
         <div className={'flex gap-2'}>
-          <button
+          <Button
             type="button"
             onClick={() => {
               this.props.resetIncrementalIndex();
@@ -330,36 +330,37 @@ class CharacterEditView extends PureComponent<Props> {
               <FontAwesomeIcon icon={faArrowsRotate} title="Optimize" transform="grow-8"/>
               <FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6"/>
             </span>
-
-          </button>
+          </Button>
           {this.props.showReviewButton ? (
-            <button type={"button"} onClick={this.props.reviewOldAssignments}>
+            <Button
+              type={"button"}
+              onClick={this.props.reviewOldAssignments}
+            >
               Review recommendations
-            </button>
+            </Button>
           ) : null}
-          <button
+          <Button
             type="button"
-            className="blue"
+            size="icon"
             onClick={this.props.lockAllCharacters}
           >
             <FontAwesomeIcon icon={faLock} title="Lock All"/>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className="blue"
+            size="icon"
             onClick={this.props.unlockAllCharacters}
           >
             <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className="blue"
             onClick={() =>
               this.props.showModal("reset-modal", this.resetCharsModal(), false)
             }
           >
             Reset all targets
-          </button>
+          </Button>
         </div>
       </DefaultCollapsibleCard>
     )
@@ -368,45 +369,45 @@ class CharacterEditView extends PureComponent<Props> {
   renderTemplateActions() {
     return (
       <DefaultCollapsibleCard title="Templates">
-      <div className={'flex gap-2'}>
-        <Button
-          size="sm"
-          onClick={() =>
-            this.props.showModal(
-              "append-template",
-              this.addTemplateModal(),
-              false
-            )
-          }
-        >
-          <FontAwesomeIcon icon={faPlus} title={`Add template`}/>
-        </Button>
-        <Button
-          size="sm"
-          onClick={() =>
-            this.props.showModal(
-              "generate-character-list",
-              this.generateCharacterListModal(),
-              true
-            )
-          }
-        >
-          Auto-generate List
-        </Button>
-        <Button
-          size="sm"
-          disabled={!this.props.selectedCharacters.length}
-          onClick={() =>
-            this.props.showModal(
-              "save-template",
-              this.saveTemplateModal(),
-              false
-            )
-          }
-        >
-          <FontAwesomeIcon icon={faSave} title={`Save`}/>
-        </Button>
-      </div>
+        <div className={'flex gap-2'}>
+          <Button
+            size="sm"
+            onClick={() =>
+              this.props.showModal(
+                "append-template",
+                this.addTemplateModal(),
+                false
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faPlus} title={`Add template`}/>
+          </Button>
+          <Button
+            size="sm"
+            onClick={() =>
+              this.props.showModal(
+                "generate-character-list",
+                this.generateCharacterListModal(),
+                true
+              )
+            }
+          >
+            Auto-generate List
+          </Button>
+          <Button
+            size="icon"
+            disabled={!this.props.selectedCharacters.length}
+            onClick={() =>
+              this.props.showModal(
+                "save-template",
+                this.saveTemplateModal(),
+                false
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faSave} title={`Save`}/>
+          </Button>
+        </div>
       </DefaultCollapsibleCard>
     )
   }
@@ -551,10 +552,13 @@ class CharacterEditView extends PureComponent<Props> {
         </form>
         <hr />
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
+          <Button
+            type={"button"}
+            onClick={() => this.props.hideModal()}
+          >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             onClick={() => {
               if (form !== null) {
@@ -579,7 +583,7 @@ class CharacterEditView extends PureComponent<Props> {
             }}
           >
             Generate
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -601,16 +605,19 @@ class CharacterEditView extends PureComponent<Props> {
           you've made, then it will be overwritten.
         </p>
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
+          <Button
             type={"button"}
-            className={"red"}
+            onClick={() => this.props.hideModal()}
+          >
+            Cancel
+          </Button>
+          <Button
+            type={"button"}
+            variant={"destructive"}
             onClick={() => this.props.resetAllCharacterTargets()}
           >
             Reset
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -661,16 +668,19 @@ class CharacterEditView extends PureComponent<Props> {
           That name has already been taken. Please use a different name.
         </p>
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
+          <Button
+            type={"button"}
+            onClick={() => this.props.hideModal()}
+          >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             ref={(button) => (saveButton = button)}
             onClick={() => this.props.saveTemplate(nameInput!.value)}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -822,10 +832,13 @@ class CharacterEditView extends PureComponent<Props> {
         )}
         <p>Do you want to continue?</p>
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
+          <Button
+            type={"button"}
+            onClick={() => this.props.hideModal()}
+          >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             onClick={() => {
               this.props.showModal(
@@ -837,7 +850,7 @@ class CharacterEditView extends PureComponent<Props> {
             }}
           >
             Optimize!
-          </button>
+          </Button>
         </div>
       </div>
     );
