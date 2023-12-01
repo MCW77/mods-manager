@@ -7,7 +7,6 @@ import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 // styles
 import "./CharacterEditView.css";
 import {
-  faAngleUp,
   faArrowsRotate,
   faBan,
   faCompress,
@@ -130,7 +129,7 @@ class CharacterEditView extends PureComponent<Props> {
   render() {
     return (
       <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
-        <div className="characters-header flex justify-around items-center w-full">
+        <div className="characters-header flex justify-around items-stretch w-full">
           {this.filters()}
           {this.renderCharacterActions()}
           {this.renderTemplateActions()}
@@ -215,13 +214,7 @@ class CharacterEditView extends PureComponent<Props> {
    */
   filters() {
     return (
-      <div className="p-x-1 p-y-2 border-gray-400 border-solid border-1 rounded">
-        <div className="flex justify-between p-2 border-b-2 border-b-gray border-b-solid">
-          <span className="text-sm">Filters:</span>
-          <button className="text-sm">
-            <FontAwesomeIcon icon={faAngleUp} title="Hide"/>
-          </button>
-        </div>
+      <DefaultCollapsibleCard title="Filters">
         <div id="filters-content" className="p2">
           <input
             className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
@@ -245,129 +238,130 @@ class CharacterEditView extends PureComponent<Props> {
             onChange={() => this.props.toggleHideSelectedCharacters()}
           />
         </div>
-      </div>
+      </DefaultCollapsibleCard>
     );
   }
 
   renderCharacterActions() {
     return (
-      <div className="character-actions">
-        <span>Actions:</span>
-        <button
-          type="button"
-          onClick={() => {
-            this.props.resetIncrementalIndex();
-            const selectedTargets = this.props.selectedCharacters.map(
-              ({ target }) => target
-            );
-            const hasTargetStats = selectedTargets.some(
-              (target) =>
-                target.targetStats &&
-                target.targetStats.filter(
-                  (targetStat) => targetStat.optimizeForTarget
-                ).length
-            );
-            const duplicateCharacters: CharacterNames[] = keysWhere(
-              collectByKey(
-                this.props.selectedCharacters,
-                ({ id }: { id: CharacterNames }) => id
-              ),
-              (targets: SelectedCharacters) => targets.length > 1
-            ) as CharacterNames[];
-
-            type IndexOfCharacters = { [id in CharacterNames]: number };
-            const minCharacterIndices: IndexOfCharacters =
-              this.props.selectedCharacters.reduce(
-                (indices, { id }, charIndex) => ({
-                  [id]: charIndex,
-                  ...indices,
-                }),
-                { [this.props.selectedCharacters[0].id]: 0 }
-              ) as IndexOfCharacters;
-
-            const invalidTargets = this.props.selectedCharacters
-              .filter(({ target }, index) =>
-                target.targetStats.find(
-                  (targetStat) =>
-                    targetStat.relativeCharacterId !== "null" &&
-                    minCharacterIndices[targetStat.relativeCharacterId] > index
-                )
-              )
-              .map(({ id }) => id);
-
-            if (invalidTargets.length > 0) {
-              this.props.showError([
-                <p>You have invalid targets set!</p>,
-                <p>
-                  For relative targets, the compared character MUST be earlier
-                  in the selected characters list.
-                </p>,
-                <p>Please fix the following characters:</p>,
-                <ul>
-                  {invalidTargets.map((id) => (
-                    <li>
-                      {this.props.baseCharacters[id]
-                        ? this.props.baseCharacters[id].name
-                        : id}
-                    </li>
-                  ))}
-                </ul>,
-              ]);
-            } else if (duplicateCharacters.length > 0 || hasTargetStats) {
-              this.props.showModal(
-                "notice",
-                this.optimizeWithWarningsModal(
-                  duplicateCharacters,
-                  hasTargetStats
+      <DefaultCollapsibleCard title="Actions">
+        <div className={'flex gap-2'}>
+          <button
+            type="button"
+            onClick={() => {
+              this.props.resetIncrementalIndex();
+              const selectedTargets = this.props.selectedCharacters.map(
+                ({ target }) => target
+              );
+              const hasTargetStats = selectedTargets.some(
+                (target) =>
+                  target.targetStats &&
+                  target.targetStats.filter(
+                    (targetStat) => targetStat.optimizeForTarget
+                  ).length
+              );
+              const duplicateCharacters: CharacterNames[] = keysWhere(
+                collectByKey(
+                  this.props.selectedCharacters,
+                  ({ id }: { id: CharacterNames }) => id
                 ),
-                false
-              );
-            } else {
-              this.props.showModal(
-                "optimizer-progress",
-                <OptimizerProgress />,
-                false
-              );
-              this.props.optimizeMods();
-            }
-          }}
-          disabled={!this.props.selectedCharacters.length}
-        >
-          <span className="fa-layers">
-            <FontAwesomeIcon icon={faArrowsRotate} title="Optimize" transform="grow-8"/>
-            <FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6"/>
-          </span>
+                (targets: SelectedCharacters) => targets.length > 1
+              ) as CharacterNames[];
 
-        </button>
-        {this.props.showReviewButton ? (
-          <button type={"button"} onClick={this.props.reviewOldAssignments}>
-            Review recommendations
+              type IndexOfCharacters = { [id in CharacterNames]: number };
+              const minCharacterIndices: IndexOfCharacters =
+                this.props.selectedCharacters.reduce(
+                  (indices, { id }, charIndex) => ({
+                    [id]: charIndex,
+                    ...indices,
+                  }),
+                  { [this.props.selectedCharacters[0].id]: 0 }
+                ) as IndexOfCharacters;
+
+              const invalidTargets = this.props.selectedCharacters
+                .filter(({ target }, index) =>
+                  target.targetStats.find(
+                    (targetStat) =>
+                      targetStat.relativeCharacterId !== "null" &&
+                      minCharacterIndices[targetStat.relativeCharacterId] > index
+                  )
+                )
+                .map(({ id }) => id);
+
+              if (invalidTargets.length > 0) {
+                this.props.showError([
+                  <p>You have invalid targets set!</p>,
+                  <p>
+                    For relative targets, the compared character MUST be earlier
+                    in the selected characters list.
+                  </p>,
+                  <p>Please fix the following characters:</p>,
+                  <ul>
+                    {invalidTargets.map((id) => (
+                      <li>
+                        {this.props.baseCharacters[id]
+                          ? this.props.baseCharacters[id].name
+                          : id}
+                      </li>
+                    ))}
+                  </ul>,
+                ]);
+              } else if (duplicateCharacters.length > 0 || hasTargetStats) {
+                this.props.showModal(
+                  "notice",
+                  this.optimizeWithWarningsModal(
+                    duplicateCharacters,
+                    hasTargetStats
+                  ),
+                  false
+                );
+              } else {
+                this.props.showModal(
+                  "optimizer-progress",
+                  <OptimizerProgress />,
+                  false
+                );
+                this.props.optimizeMods();
+              }
+            }}
+            disabled={!this.props.selectedCharacters.length}
+          >
+            <span className="fa-layers">
+              <FontAwesomeIcon icon={faArrowsRotate} title="Optimize" transform="grow-8"/>
+              <FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6"/>
+            </span>
+
           </button>
-        ) : null}
-        <button
-          type="button"
-          className="blue"
-          onClick={this.props.lockAllCharacters}
-        >
-          <FontAwesomeIcon icon={faLock} title="Lock All"/>
-        </button>
-        <button
-          type="button"
-          className="blue"
-          onClick={this.props.unlockAllCharacters}
-        >
-          <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-        </button>
-        <button
-          type="button"
-          className="blue"
-          onClick={() =>
-            this.props.showModal("reset-modal", this.resetCharsModal(), false)
-          }
-        >
-          Reset all targets
-        </button>
-      </div>
+          {this.props.showReviewButton ? (
+            <button type={"button"} onClick={this.props.reviewOldAssignments}>
+              Review recommendations
+            </button>
+          ) : null}
+          <button
+            type="button"
+            className="blue"
+            onClick={this.props.lockAllCharacters}
+          >
+            <FontAwesomeIcon icon={faLock} title="Lock All"/>
+          </button>
+          <button
+            type="button"
+            className="blue"
+            onClick={this.props.unlockAllCharacters}
+          >
+            <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
+          </button>
+          <button
+            type="button"
+            className="blue"
+            onClick={() =>
+              this.props.showModal("reset-modal", this.resetCharsModal(), false)
+            }
+          >
+            Reset all targets
+          </button>
+        </div>
+      </DefaultCollapsibleCard>
     )
   }
 
