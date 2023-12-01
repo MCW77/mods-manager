@@ -14,6 +14,7 @@ import {
   faExpand,
   faGears,
   faLock,
+  faPlus,
   faSave,
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
@@ -51,7 +52,9 @@ import { UseCaseModes } from "../../domain/UseCaseModes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DOMContent } from "../../components/types";
 
+import { Button } from "#/components/ui/button";
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
+import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { HelpLink } from "../../components/HelpLink/HelpLink";
 import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
@@ -130,6 +133,7 @@ class CharacterEditView extends PureComponent<Props> {
         <div className="characters-header flex justify-around items-center w-full">
           {this.filters()}
           {this.renderCharacterActions()}
+          {this.renderTemplateActions()}
           <HelpLink title="Global Settings" section="optimizer" topic={1} />
         </div>
         <div className="characters flex h-full">
@@ -197,63 +201,6 @@ class CharacterEditView extends PureComponent<Props> {
               Character Templates{" "}
               <HelpLink title="" section="optimizer" topic={2} />
             </h5>
-            <div className="template-buttons">
-              <div className="row">
-                Manage:
-                <button
-                  className="small"
-                  disabled={!this.props.selectedCharacters.length}
-                  onClick={() =>
-                    this.props.showModal(
-                      "save-template",
-                      this.saveTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faSave} title="Save"/>
-                </button>
-              </div>
-              <div className="row">
-                Apply:
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "append-template",
-                      this.appendTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  Append
-                </button>
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "replace-template",
-                      this.replaceTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  Replace
-                </button>
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "template-targets",
-                      this.templateTargetsModal(),
-                      false
-                    )
-                  }
-                >
-                  Apply targets only
-                </button>
-              </div>
-            </div>
             <CharacterList />
           </div>
         </div>
@@ -421,6 +368,52 @@ class CharacterEditView extends PureComponent<Props> {
           Reset all targets
         </button>
       </div>
+    )
+  }
+
+  renderTemplateActions() {
+    return (
+      <DefaultCollapsibleCard title="Templates">
+      <div className={'flex gap-2'}>
+        <Button
+          size="sm"
+          onClick={() =>
+            this.props.showModal(
+              "append-template",
+              this.addTemplateModal(),
+              false
+            )
+          }
+        >
+          <FontAwesomeIcon icon={faPlus} title={`Add template`}/>
+        </Button>
+        <Button
+          size="sm"
+          onClick={() =>
+            this.props.showModal(
+              "generate-character-list",
+              this.generateCharacterListModal(),
+              true
+            )
+          }
+        >
+          Auto-generate List
+        </Button>
+        <Button
+          size="sm"
+          disabled={!this.props.selectedCharacters.length}
+          onClick={() =>
+            this.props.showModal(
+              "save-template",
+              this.saveTemplateModal(),
+              false
+            )
+          }
+        >
+          <FontAwesomeIcon icon={faSave} title={`Save`}/>
+        </Button>
+      </div>
+      </DefaultCollapsibleCard>
     )
   }
 
@@ -689,72 +682,29 @@ class CharacterEditView extends PureComponent<Props> {
     );
   }
 
-  appendTemplateModal() {
+  addTemplateModal() {
     let templateSelection: HTMLSelectElement | null;
     return (
       <div>
         <h3>Select a character template to add to your selected characters</h3>
         {this.templateSelectElement((select) => (templateSelection = select))}
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
+          <Button
             type={"button"}
-            onClick={() => this.props.appendTemplate(templateSelection!.value)}
+            onClick={() => this.props.hideModal()}
           >
-            Append
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  replaceTemplateModal() {
-    let templateSelection: HTMLSelectElement | null;
-    return (
-      <div>
-        <h3>Select a character template to replace your selected characters</h3>
-        {this.templateSelectElement(
-          (select: HTMLSelectElement) => (templateSelection = select)
-        )}
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
             Cancel
-          </button>
-          <button
-            type={"button"}
-            onClick={() => this.props.replaceTemplate(templateSelection!.value)}
-          >
-            Replace
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  templateTargetsModal() {
-    let templateSelection: HTMLSelectElement | null;
-    return (
-      <div>
-        <h3>
-          Select a character template. The targets used in this template will be
-          applied to any characters you already have in your selected list.
-        </h3>
-        {this.templateSelectElement((select) => (templateSelection = select))}
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             onClick={() => {
-              templateSelection &&
-                this.props.applyTemplateTargets(templateSelection.value);
+              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection!.value);
+              if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection!.value);
+              if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection!.value);
             }}
           >
-            Apply Targets
-          </button>
+            Add
+          </Button>
         </div>
       </div>
     );
@@ -962,6 +912,7 @@ const mapStateToProps = (state: IAppState) => {
     lastSelectedCharacter: profile.selectedCharacters.length - 1 ?? 0,
     showReviewButton: profile.modAssignments && Object.keys(profile.modAssignments).length,
     characterTemplates: CharacterEdit.selectors.selectUserTemplatesNames(state),
+    templatesAddingMode: CharacterEdit.selectors.selectTemplatesAddingMode(state),
   };
 };
 
