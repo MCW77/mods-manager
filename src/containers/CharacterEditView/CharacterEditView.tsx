@@ -129,11 +129,10 @@ class CharacterEditView extends PureComponent<Props> {
   render() {
     return (
       <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
-        <div className="characters-header flex justify-around items-stretch w-full">
+        <div className="characters-header flex justify-around items-stretch w-full p-y-2">
           {this.filters()}
           {this.renderCharacterActions()}
           {this.renderTemplateActions()}
-          <HelpLink title="Global Settings" section="optimizer" topic={1} />
         </div>
         <div className="characters flex h-full">
           <div
@@ -184,10 +183,6 @@ class CharacterEditView extends PureComponent<Props> {
                 </Button>
               </div>
             </h4>
-            <h5>
-              Character Templates{" "}
-              <HelpLink title="" section="optimizer" topic={2} />
-            </h5>
             <CharacterList />
           </div>
         </div>
@@ -349,6 +344,7 @@ class CharacterEditView extends PureComponent<Props> {
           >
             Reset all targets
           </Button>
+          <HelpLink title="Global Settings" section="optimizer" topic={1} />
         </div>
       </DefaultCollapsibleCard>
     )
@@ -395,6 +391,7 @@ class CharacterEditView extends PureComponent<Props> {
           >
             <FontAwesomeIcon icon={faSave} title={`Save`}/>
           </Button>
+          <HelpLink title="" section="optimizer" topic={2} />
         </div>
       </DefaultCollapsibleCard>
     )
