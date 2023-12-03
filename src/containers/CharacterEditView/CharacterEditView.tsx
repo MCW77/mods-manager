@@ -57,6 +57,7 @@ import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { HelpLink } from "../../components/HelpLink/HelpLink";
 import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
+import { SettingsLink } from "../../components/SettingsLink/SettingsLink";
 import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
 
@@ -345,6 +346,7 @@ class CharacterEditView extends PureComponent<Props> {
             Reset all targets
           </Button>
           <HelpLink title="Global Settings" section="optimizer" topic={1} />
+          <SettingsLink title="Global Settings" section="optimizer" topic={1} />
         </div>
       </DefaultCollapsibleCard>
     )
