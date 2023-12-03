@@ -182,18 +182,6 @@ class CharacterEditView extends PureComponent<Props> {
                     <FontAwesomeIcon icon={faExpand} title="Expand View"/>
                   }
                 </Button>
-                <Button
-                  size="sm"
-                  onClick={() =>
-                    this.props.showModal(
-                      "generate-character-list",
-                      this.generateCharacterListModal(),
-                      false
-                    )
-                  }
-                >
-                  Auto-generate List
-                </Button>
               </div>
             </h4>
             <h5>
