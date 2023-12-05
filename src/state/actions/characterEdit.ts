@@ -2,6 +2,7 @@
 import { SetRestrictions } from "../../domain/SetRestrictions";
 import { SetStats } from "../../domain/Stats";
 import { TargetStat } from "../../domain/TargetStat";
+import { TemplatesAddingMode } from "../../domain/TemplatesAddingMode";
 
 
 export namespace actions {
@@ -106,6 +107,13 @@ export namespace actions {
     } as const;
   }
 
+  export function setTemplatesAddingMode(mode: TemplatesAddingMode) {
+    return {
+      type: actionNames.SET_TEMPLATES_ADDING_MODE,
+      mode
+    } as const;
+  }
+
   export function toggleCharacterEditSortView() {
     return {
       type: actionNames.TOGGLE_CHARACTER_EDIT_SORT_VIEW
@@ -128,6 +136,7 @@ export namespace actionNames {
   export const REMOVE_SET_BONUS = 'REMOVE_SET_BONUS' as const;
   export const REMOVE_TARGET_STAT = 'REMOVE_TARGET_STAT' as const;
   export const SELECT_SET_BONUS = 'SELECT_SET_BONUS' as const;
+  export const SET_TEMPLATES_ADDING_MODE = 'SET_TEMPLATES_ADDING_MODE' as const;
   export const TOGGLE_CHARACTER_EDIT_SORT_VIEW = 'TOGGLE_CHARACTER_EDIT_SORT_VIEW' as const;
   export const TOGGLE_HIDE_SELECTED_CHARACTERS = 'TOGGLE_HIDE_SELECTED_CHARACTERS' as const;
 }

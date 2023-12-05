@@ -22,7 +22,6 @@ export type AppThunk = ThunkAction<void, IAppState, null, AppActions>
 export type ThunkDispatch = TD<IAppState, null, AppActions>
 export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 
-//export const thunkDispatch =
 
 // #region AppActions
 type AppActions =
@@ -45,6 +44,7 @@ type AppActions =
   | ReturnType<typeof CharacterEdit.actions.removeSetBonus>
   | ReturnType<typeof CharacterEdit.actions.removeTargetStat>
   | ReturnType<typeof CharacterEdit.actions.selectSetBonus>
+  | ReturnType<typeof CharacterEdit.actions.setTemplatesAddingMode>
   | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
   | ReturnType<typeof CharacterEdit.actions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
@@ -123,7 +123,8 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return CharacterEdit.reducers.removeTargetStat(state, action);
     case CharacterEdit.actionNames.SELECT_SET_BONUS:
       return CharacterEdit.reducers.selectSetBonus(state, action);
-
+    case CharacterEdit.actionNames.SET_TEMPLATES_ADDING_MODE:
+      return CharacterEdit.reducers.setTemplatesAddingMode(state, action);
     case CharacterEdit.actionNames.TOGGLE_CHARACTER_EDIT_SORT_VIEW:
       return AppState.save(
         CharacterEdit.reducers.toggleCharacterEditSortView(state)

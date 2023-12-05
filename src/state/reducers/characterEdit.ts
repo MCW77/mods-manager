@@ -105,6 +105,15 @@ export namespace reducers {
     }
   }
 
+  export function setTemplatesAddingMode(state: IAppState, action: ReturnType<typeof actions.setTemplatesAddingMode>): IAppState {
+    return Object.assign({}, state, {
+      templates: {
+        templatesAddingMode: action.mode,
+        userTemplatesByName: state.templates.userTemplatesByName,
+      }
+    });
+  }
+
   export function toggleCharacterEditSortView(state: IAppState): IAppState {
     return Object.assign({}, state, {
       characterEditSortView: !state.characterEditSortView
@@ -120,19 +129,20 @@ export namespace reducers {
 
 export namespace selectors {
   export const selectCharacterEditMode = (state: IAppState) => state.characterEditMode;
-  export const selectOptimizer = (state: IAppState) => state.optimizer;
+  export const selectTemplates = (state: IAppState) => state.templates;
   export const selectSelectedCharactersInActiveProfile = createSelector(
     [Storage.selectors.selectActiveProfile],
     (activeProfile) => activeProfile.selectedCharacters
   );
   export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
   export const selectTargetStats = (state: IAppState) => state.targetStats;
+  export const selectTemplatesAddingMode = (state: IAppState) => selectTemplates(state).templatesAddingMode;
   export const selectUserTemplates = createSelector(
-    selectOptimizer,
-    (optimizer) => Object.values(optimizer.userTemplatesByName)
+    selectTemplates,
+    (templates) => Object.values(templates.userTemplatesByName)
   );
   export const selectUserTemplatesNames = createSelector(
-    selectOptimizer,
-    (optimizer) => Object.keys(optimizer.userTemplatesByName)
+    selectTemplates,
+    (templates) => Object.keys(templates.userTemplatesByName)
   );
 }

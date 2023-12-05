@@ -7,22 +7,18 @@ import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 // styles
 import "./CharacterEditView.css";
 import {
-  faAngleUp,
   faArrowsRotate,
   faBan,
   faCompress,
   faExpand,
-  faFile,
-  faFileExport,
   faGears,
   faLock,
+  faPlus,
   faSave,
-  faTrashCan,
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import { saveAs } from "file-saver";
 import collectByKey from "../../utils/collectByKey";
 import keysWhere from "../../utils/keysWhere";
 
@@ -47,11 +43,6 @@ import defaultTemplates from "../../constants/characterTemplates.json";
 import { defaultBaseCharacter } from "../../domain/BaseCharacter";
 import { Character } from "../../domain/Character";
 import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
-import {
-  CharacterTemplate,
-  CharacterTemplates,
-  FlatCharacterTemplate,
-} from "../../domain/CharacterTemplates";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
 import { UseCaseModes } from "../../domain/UseCaseModes";
@@ -60,11 +51,13 @@ import { UseCaseModes } from "../../domain/UseCaseModes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DOMContent } from "../../components/types";
 
+import { Button } from "#/components/ui/button";
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
+import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { FileInput } from "../../components/FileInput/FileInput";
 import { HelpLink } from "../../components/HelpLink/HelpLink";
 import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
+import { SettingsLink } from "../../components/SettingsLink/SettingsLink";
 import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
 
@@ -137,10 +130,10 @@ class CharacterEditView extends PureComponent<Props> {
   render() {
     return (
       <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
-        <div className="characters-header flex justify-around items-center w-full">
+        <div className="characters-header flex justify-around items-stretch w-full p-y-2">
           {this.filters()}
           {this.renderCharacterActions()}
-          <HelpLink title="Global Settings" section="optimizer" topic={1} />
+          {this.renderTemplateActions()}
         </div>
         <div className="characters flex h-full">
           <div
@@ -161,26 +154,26 @@ class CharacterEditView extends PureComponent<Props> {
             <h4>
               Selected Characters
               <div className="character-list-actions">
-                <button
-                  className="small"
+                <Button
+                  size="sm"
                   onClick={this.props.clearSelectedCharacters}
                 >
                   <FontAwesomeIcon icon={faBan} title="Clear"/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={this.props.lockSelectedCharacters}
                 >
                   <FontAwesomeIcon icon={faLock} title="Lock All"/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={this.props.unlockSelectedCharacters}
                 >
                   <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size="sm"
                   onClick={this.props.toggleCharacterEditSortView}
                 >
                   {this.props.sortView ?
@@ -188,142 +181,9 @@ class CharacterEditView extends PureComponent<Props> {
                   :
                     <FontAwesomeIcon icon={faExpand} title="Expand View"/>
                   }
-                </button>
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "generate-character-list",
-                      this.generateCharacterListModal(),
-                      false
-                    )
-                  }
-                >
-                  Auto-generate List
-                </button>
+                </Button>
               </div>
             </h4>
-            <h5>
-              Character Templates{" "}
-              <HelpLink title="" section="optimizer" topic={2} />
-            </h5>
-            <div className="template-buttons">
-              <div className="row">
-                Manage:
-                <button
-                  className="small"
-                  disabled={!this.props.selectedCharacters.length}
-                  onClick={() =>
-                    this.props.showModal(
-                      "save-template",
-                      this.saveTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faSave} title="Save"/>
-                </button>
-                <button
-                  className="small"
-                  disabled={!this.userTemplates().length}
-                  onClick={() =>
-                    this.props.showModal(
-                      "export-template",
-                      this.exportTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faFileExport} title="Export"/>
-                </button>
-                <FileInput
-                  label="Load"
-                  className="small"
-                  icon={faFile}
-                  handler={(file) =>
-                    this.readFile(file, (templates) => {
-                      try {
-                        const templatesObject = JSON.parse(templates);
-                        const templatesDeserialized = templatesObject.map(
-                          (t: FlatCharacterTemplate) => ({
-                            name: t.name,
-                            selectedCharacters: t.selectedCharacters.map(
-                              ({
-                                id,
-                                target,
-                              }: {
-                                id: CharacterNames;
-                                target: OptimizationPlan;
-                              }) => ({
-                                id: id,
-                                target: OptimizationPlan.deserialize(target),
-                              })
-                            ),
-                          })
-                        );
-                        this.props.saveTemplates(templatesDeserialized);
-                      } catch (e) {
-                        throw new Error(
-                          "Unable to read templates from file. Make sure that you've selected a character templates file"
-                        );
-                      }
-                    })
-                  }
-                />
-                <button
-                  className="small red"
-                  disabled={!this.userTemplates().length}
-                  onClick={() =>
-                    this.props.showModal(
-                      "delete-template",
-                      this.deleteTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faTrashCan} title="Delete"/>
-                </button>
-              </div>
-              <div className="row">
-                Apply:
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "append-template",
-                      this.appendTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  Append
-                </button>
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "replace-template",
-                      this.replaceTemplateModal(),
-                      false
-                    )
-                  }
-                >
-                  Replace
-                </button>
-                <button
-                  className="small"
-                  onClick={() =>
-                    this.props.showModal(
-                      "template-targets",
-                      this.templateTargetsModal(),
-                      false
-                    )
-                  }
-                >
-                  Apply targets only
-                </button>
-              </div>
-            </div>
             <CharacterList />
           </div>
         </div>
@@ -338,13 +198,7 @@ class CharacterEditView extends PureComponent<Props> {
    */
   filters() {
     return (
-      <div className="p-x-1 p-y-2 border-gray-400 border-solid border-1 rounded">
-        <div className="flex justify-between p-2 border-b-2 border-b-gray border-b-solid">
-          <span className="text-sm">Filters:</span>
-          <button className="text-sm">
-            <FontAwesomeIcon icon={faAngleUp} title="Hide"/>
-          </button>
-        </div>
+      <DefaultCollapsibleCard title="Filters">
         <div id="filters-content" className="p2">
           <input
             className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
@@ -368,129 +222,180 @@ class CharacterEditView extends PureComponent<Props> {
             onChange={() => this.props.toggleHideSelectedCharacters()}
           />
         </div>
-      </div>
+      </DefaultCollapsibleCard>
     );
   }
 
   renderCharacterActions() {
     return (
-      <div className="character-actions">
-        <span>Actions:</span>
-        <button
-          type="button"
-          onClick={() => {
-            this.props.resetIncrementalIndex();
-            const selectedTargets = this.props.selectedCharacters.map(
-              ({ target }) => target
-            );
-            const hasTargetStats = selectedTargets.some(
-              (target) =>
-                target.targetStats &&
-                target.targetStats.filter(
-                  (targetStat) => targetStat.optimizeForTarget
-                ).length
-            );
-            const duplicateCharacters: CharacterNames[] = keysWhere(
-              collectByKey(
-                this.props.selectedCharacters,
-                ({ id }: { id: CharacterNames }) => id
-              ),
-              (targets: SelectedCharacters) => targets.length > 1
-            ) as CharacterNames[];
-
-            type IndexOfCharacters = { [id in CharacterNames]: number };
-            const minCharacterIndices: IndexOfCharacters =
-              this.props.selectedCharacters.reduce(
-                (indices, { id }, charIndex) => ({
-                  [id]: charIndex,
-                  ...indices,
-                }),
-                { [this.props.selectedCharacters[0].id]: 0 }
-              ) as IndexOfCharacters;
-
-            const invalidTargets = this.props.selectedCharacters
-              .filter(({ target }, index) =>
-                target.targetStats.find(
-                  (targetStat) =>
-                    targetStat.relativeCharacterId !== "null" &&
-                    minCharacterIndices[targetStat.relativeCharacterId] > index
-                )
-              )
-              .map(({ id }) => id);
-
-            if (invalidTargets.length > 0) {
-              this.props.showError([
-                <p>You have invalid targets set!</p>,
-                <p>
-                  For relative targets, the compared character MUST be earlier
-                  in the selected characters list.
-                </p>,
-                <p>Please fix the following characters:</p>,
-                <ul>
-                  {invalidTargets.map((id) => (
-                    <li>
-                      {this.props.baseCharacters[id]
-                        ? this.props.baseCharacters[id].name
-                        : id}
-                    </li>
-                  ))}
-                </ul>,
-              ]);
-            } else if (duplicateCharacters.length > 0 || hasTargetStats) {
-              this.props.showModal(
-                "notice",
-                this.optimizeWithWarningsModal(
-                  duplicateCharacters,
-                  hasTargetStats
+      <DefaultCollapsibleCard title="Actions">
+        <div className={'flex gap-2'}>
+          <Button
+            type="button"
+            onClick={() => {
+              this.props.resetIncrementalIndex();
+              const selectedTargets = this.props.selectedCharacters.map(
+                ({ target }) => target
+              );
+              const hasTargetStats = selectedTargets.some(
+                (target) =>
+                  target.targetStats &&
+                  target.targetStats.filter(
+                    (targetStat) => targetStat.optimizeForTarget
+                  ).length
+              );
+              const duplicateCharacters: CharacterNames[] = keysWhere(
+                collectByKey(
+                  this.props.selectedCharacters,
+                  ({ id }: { id: CharacterNames }) => id
                 ),
-                false
-              );
-            } else {
-              this.props.showModal(
-                "optimizer-progress",
-                <OptimizerProgress />,
-                false
-              );
-              this.props.optimizeMods();
-            }
-          }}
-          disabled={!this.props.selectedCharacters.length}
-        >
-          <span className="fa-layers">
-            <FontAwesomeIcon icon={faArrowsRotate} title="Optimize" transform="grow-8"/>
-            <FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6"/>
-          </span>
+                (targets: SelectedCharacters) => targets.length > 1
+              ) as CharacterNames[];
 
-        </button>
-        {this.props.showReviewButton ? (
-          <button type={"button"} onClick={this.props.reviewOldAssignments}>
-            Review recommendations
-          </button>
-        ) : null}
-        <button
-          type="button"
-          className="blue"
-          onClick={this.props.lockAllCharacters}
-        >
-          <FontAwesomeIcon icon={faLock} title="Lock All"/>
-        </button>
-        <button
-          type="button"
-          className="blue"
-          onClick={this.props.unlockAllCharacters}
-        >
-          <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-        </button>
-        <button
-          type="button"
-          className="blue"
-          onClick={() =>
-            this.props.showModal("reset-modal", this.resetCharsModal(), false)
-          }
-        >
-          Reset all targets
-        </button>
-      </div>
+              type IndexOfCharacters = { [id in CharacterNames]: number };
+              const minCharacterIndices: IndexOfCharacters =
+                this.props.selectedCharacters.reduce(
+                  (indices, { id }, charIndex) => ({
+                    [id]: charIndex,
+                    ...indices,
+                  }),
+                  { [this.props.selectedCharacters[0].id]: 0 }
+                ) as IndexOfCharacters;
+
+              const invalidTargets = this.props.selectedCharacters
+                .filter(({ target }, index) =>
+                  target.targetStats.find(
+                    (targetStat) =>
+                      targetStat.relativeCharacterId !== "null" &&
+                      minCharacterIndices[targetStat.relativeCharacterId] > index
+                  )
+                )
+                .map(({ id }) => id);
+
+              if (invalidTargets.length > 0) {
+                this.props.showError([
+                  <p>You have invalid targets set!</p>,
+                  <p>
+                    For relative targets, the compared character MUST be earlier
+                    in the selected characters list.
+                  </p>,
+                  <p>Please fix the following characters:</p>,
+                  <ul>
+                    {invalidTargets.map((id) => (
+                      <li>
+                        {this.props.baseCharacters[id]
+                          ? this.props.baseCharacters[id].name
+                          : id}
+                      </li>
+                    ))}
+                  </ul>,
+                ]);
+              } else if (duplicateCharacters.length > 0 || hasTargetStats) {
+                this.props.showModal(
+                  "notice",
+                  this.optimizeWithWarningsModal(
+                    duplicateCharacters,
+                    hasTargetStats
+                  ),
+                  false
+                );
+              } else {
+                this.props.showModal(
+                  "optimizer-progress",
+                  <OptimizerProgress />,
+                  false
+                );
+                this.props.optimizeMods();
+              }
+            }}
+            disabled={!this.props.selectedCharacters.length}
+          >
+            <span className="fa-layers">
+              <FontAwesomeIcon icon={faArrowsRotate} title="Optimize" transform="grow-8"/>
+              <FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6"/>
+            </span>
+          </Button>
+          {this.props.showReviewButton ? (
+            <Button
+              type={"button"}
+              onClick={this.props.reviewOldAssignments}
+            >
+              Review recommendations
+            </Button>
+          ) : null}
+          <Button
+            type="button"
+            size="icon"
+            onClick={this.props.lockAllCharacters}
+          >
+            <FontAwesomeIcon icon={faLock} title="Lock All"/>
+          </Button>
+          <Button
+            type="button"
+            size="icon"
+            onClick={this.props.unlockAllCharacters}
+          >
+            <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
+          </Button>
+          <Button
+            type="button"
+            onClick={() =>
+              this.props.showModal("reset-modal", this.resetCharsModal(), false)
+            }
+          >
+            Reset all targets
+          </Button>
+          <HelpLink title="Global Settings" section="optimizer" topic={1} />
+          <SettingsLink title="Global Settings" section="optimizer" topic={1} />
+        </div>
+      </DefaultCollapsibleCard>
+    )
+  }
+
+  renderTemplateActions() {
+    return (
+      <DefaultCollapsibleCard title="Templates">
+        <div className={'flex gap-2'}>
+          <Button
+            size="sm"
+            onClick={() =>
+              this.props.showModal(
+                "append-template",
+                this.addTemplateModal(),
+                false
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faPlus} title={`Add template`}/>
+          </Button>
+          <Button
+            size="sm"
+            onClick={() =>
+              this.props.showModal(
+                "generate-character-list",
+                this.generateCharacterListModal(),
+                true
+              )
+            }
+          >
+            Auto-generate List
+          </Button>
+          <Button
+            size="icon"
+            disabled={!this.props.selectedCharacters.length}
+            onClick={() =>
+              this.props.showModal(
+                "save-template",
+                this.saveTemplateModal(),
+                false
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faSave} title={`Save`}/>
+          </Button>
+          <HelpLink title="" section="optimizer" topic={2} />
+        </div>
+      </DefaultCollapsibleCard>
     )
   }
 
@@ -634,10 +539,13 @@ class CharacterEditView extends PureComponent<Props> {
         </form>
         <hr />
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
+          <Button
+            type={"button"}
+            onClick={() => this.props.hideModal()}
+          >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             onClick={() => {
               if (form !== null) {
@@ -662,7 +570,7 @@ class CharacterEditView extends PureComponent<Props> {
             }}
           >
             Generate
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -684,16 +592,19 @@ class CharacterEditView extends PureComponent<Props> {
           you've made, then it will be overwritten.
         </p>
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
+          <Button
             type={"button"}
-            className={"red"}
+            onClick={() => this.props.hideModal()}
+          >
+            Cancel
+          </Button>
+          <Button
+            type={"button"}
+            variant={"destructive"}
             onClick={() => this.props.resetAllCharacterTargets()}
           >
             Reset
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -744,87 +655,47 @@ class CharacterEditView extends PureComponent<Props> {
           That name has already been taken. Please use a different name.
         </p>
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
+          <Button
+            type={"button"}
+            onClick={() => this.props.hideModal()}
+          >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             ref={(button) => (saveButton = button)}
             onClick={() => this.props.saveTemplate(nameInput!.value)}
           >
             Save
-          </button>
+          </Button>
         </div>
       </div>
     );
   }
 
-  appendTemplateModal() {
+  addTemplateModal() {
     let templateSelection: HTMLSelectElement | null;
     return (
       <div>
         <h3>Select a character template to add to your selected characters</h3>
         {this.templateSelectElement((select) => (templateSelection = select))}
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
+          <Button
             type={"button"}
-            onClick={() => this.props.appendTemplate(templateSelection!.value)}
+            onClick={() => this.props.hideModal()}
           >
-            Append
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  replaceTemplateModal() {
-    let templateSelection: HTMLSelectElement | null;
-    return (
-      <div>
-        <h3>Select a character template to replace your selected characters</h3>
-        {this.templateSelectElement(
-          (select: HTMLSelectElement) => (templateSelection = select)
-        )}
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
             Cancel
-          </button>
-          <button
-            type={"button"}
-            onClick={() => this.props.replaceTemplate(templateSelection!.value)}
-          >
-            Replace
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  templateTargetsModal() {
-    let templateSelection: HTMLSelectElement | null;
-    return (
-      <div>
-        <h3>
-          Select a character template. The targets used in this template will be
-          applied to any characters you already have in your selected list.
-        </h3>
-        {this.templateSelectElement((select) => (templateSelection = select))}
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             onClick={() => {
-              templateSelection &&
-                this.props.applyTemplateTargets(templateSelection.value);
+              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection!.value);
+              if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection!.value);
+              if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection!.value);
             }}
           >
-            Apply Targets
-          </button>
+            Add
+          </Button>
         </div>
       </div>
     );
@@ -871,111 +742,6 @@ class CharacterEditView extends PureComponent<Props> {
         )}
         {defaultTemplateOptions}
       </Dropdown>
-    );
-  }
-
-  exportTemplateModal() {
-    let templateNameInput: HTMLSelectElement | null;
-
-    const templateOptions = this.userTemplates().map((name) => (
-      <option value={name}>{name}</option>
-    ));
-
-    return (
-      <div>
-        <h3>Please select a character template to export</h3>
-        <Dropdown ref={(select) => (templateNameInput = select)}>
-          {templateOptions}
-        </Dropdown>
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
-            type={"button"}
-            onClick={() =>
-              templateNameInput !== null &&
-              this.props.exportTemplate(templateNameInput.value, (template) => {
-                const templateSaveObject = {
-                  name: template.name,
-                  selectedCharacters: template.selectedCharacters.map(
-                    ({ id, target }) => ({
-                      id: id,
-                      target: target.serialize(),
-                    })
-                  ),
-                };
-                const templateSerialized = JSON.stringify([templateSaveObject]);
-                const userData = new Blob([templateSerialized], {
-                  type: "application/json;charset=utf-8",
-                });
-                saveAs(userData, `modsOptimizerTemplate-${template.name}.json`);
-              })
-            }
-          >
-            Export
-          </button>
-          <button
-            type={"button"}
-            onClick={() =>
-              this.props.exportAllTemplates((templates: CharacterTemplates) => {
-                const templatesSaveObject = templates.map(
-                  ({ name, selectedCharacters }) => ({
-                    name: name,
-                    selectedCharacters: selectedCharacters.map(
-                      ({ id, target }) => ({
-                        id: id,
-                        target: target.serialize(),
-                      })
-                    ),
-                  })
-                );
-                const templatesSerialized = JSON.stringify(templatesSaveObject);
-                const userData = new Blob([templatesSerialized], {
-                  type: "application/json;charset=utf-8",
-                });
-                saveAs(
-                  userData,
-                  `modsOptimizerTemplates-${new Date()
-                    .toISOString()
-                    .slice(0, 10)}.json`
-                );
-              })
-            }
-          >
-            Export All
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  deleteTemplateModal() {
-    let templateNameInput: HTMLSelectElement | null;
-
-    const templateOptions = this.userTemplates().map((name) => (
-      <option value={name}>{name}</option>
-    ));
-
-    return (
-      <div>
-        <h3>Please select a character template to delete</h3>
-        <Dropdown ref={(select) => (templateNameInput = select)}>
-          {templateOptions}
-        </Dropdown>
-        <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
-            Cancel
-          </button>
-          <button
-            type={"button"}
-            className={"red"}
-            onClick={() => this.props.deleteTemplate(templateNameInput!.value)}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
     );
   }
 
@@ -1053,10 +819,13 @@ class CharacterEditView extends PureComponent<Props> {
         )}
         <p>Do you want to continue?</p>
         <div className={"actions"}>
-          <button type={"button"} onClick={() => this.props.hideModal()}>
+          <Button
+            type={"button"}
+            onClick={() => this.props.hideModal()}
+          >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
             onClick={() => {
               this.props.showModal(
@@ -1068,7 +837,7 @@ class CharacterEditView extends PureComponent<Props> {
             }}
           >
             Optimize!
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -1137,6 +906,7 @@ const mapStateToProps = (state: IAppState) => {
     lastSelectedCharacter: profile.selectedCharacters.length - 1 ?? 0,
     showReviewButton: profile.modAssignments && Object.keys(profile.modAssignments).length,
     characterTemplates: CharacterEdit.selectors.selectUserTemplatesNames(state),
+    templatesAddingMode: CharacterEdit.selectors.selectTemplatesAddingMode(state),
   };
 };
 
@@ -1191,8 +961,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(App.actions.hideModal());
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
-  saveTemplates: (templates: CharacterTemplates) =>
-    dispatch(CharacterEdit.thunks.saveTemplates(templates)),
   appendTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.appendTemplate(templateName));
     dispatch(App.actions.hideModal());
@@ -1205,19 +973,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
     dispatch(App.actions.hideModal());
   },
-  exportTemplate: (
-    templateName: string,
-    callback: (template: CharacterTemplate) => void
-  ) => {
-    dispatch(Storage.thunks.exportCharacterTemplate(templateName, callback));
-    dispatch(hideModal());
-  },
-  exportAllTemplates: (callback: (templates: CharacterTemplates) => void) => {
-    dispatch(Storage.thunks.exportCharacterTemplates(callback));
-    dispatch(hideModal());
-  },
-  deleteTemplate: (templateName: string) =>
-    dispatch(deleteTemplate(templateName)),
 });
 
 type Props = PropsFromRedux & OwnProps & WithTranslation<"optimize-ui">;

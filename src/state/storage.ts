@@ -14,6 +14,7 @@ import { ModalProps } from "../domain/ModalProps";
 import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
+import { Templates } from "../domain/Templates";
 import { PlayerNamesByAllycode } from "../domain/PlayerNamesByAllycode";
 import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
 import { SetRestrictions } from "../domain/SetRestrictions";
@@ -62,6 +63,7 @@ export interface IAppState {
   setRestrictions: SetRestrictions,
   targetStats: TargetStats,
   progress: OptimizationStatus,
+  templates: Templates,
 }
 
 export class AppState {
@@ -76,7 +78,8 @@ export class AppState {
     'optimizerView',
     'section',
     'showSidebar',
-    'version'
+    'version',
+    'templates',
   ] as const;
 
   static readonly Default: IAppState = {
@@ -120,7 +123,11 @@ export class AppState {
     showSidebar: true,
     version: String(import.meta.env.VITE_VERSION) || 'local',
     setRestrictions: {} as SetRestrictions,
-    targetStats: [] as TargetStats
+    targetStats: [] as TargetStats,
+    templates: {
+      templatesAddingMode: 'replace',
+      userTemplatesByName: {}
+    },
   };
 
   /**
@@ -194,7 +201,8 @@ export function deserializeState(state: IAppState): IAppState {
     optimizerView: state.optimizerView || AppState.Default.optimizerView,
     section: state.section,
     showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
-    version: version
+    version: version,
+    templates: state.templates,
   },
     state.profiles ?
       {
