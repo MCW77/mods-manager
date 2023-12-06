@@ -12,6 +12,10 @@
       "webRoot": "${workspaceFolder}/src",
       "sourceMaps": true,
       "skipFiles": ["${workspaceFolder}/node_modules/**/*.js"],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
     }
   ]
 }
