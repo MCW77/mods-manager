@@ -1,4 +1,4 @@
-import { ModTiersEnum, ModSecondariesScoreTiersEnum } from "constants/enums";
+import { ModTiersEnum, ModSecondariesScoreTiersEnum } from "#/constants/enums";
 import * as ModTypes from "../types/ModTypes";
 
 export const gimoSlots: ModTypes.GIMOSlots[] = [

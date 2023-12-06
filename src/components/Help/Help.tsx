@@ -9,7 +9,7 @@ import './Help.css';
 import { App } from '../../state/modules/app';
 
 // components
-import * as UITypes from 'components/types';
+import * as UITypes from '#/components/types';
 
 
 type ComponentProps = {

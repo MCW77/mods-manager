@@ -1,4 +1,4 @@
-import { CharacterNames } from "constants/characterSettings";
+import { CharacterNames } from "#/constants/characterSettings";
 import { ModTiersEnum } from "../../constants/enums";
 import { SetStats, PrimaryStats, SecondaryStats } from "../Stats";
 
@@ -31,7 +31,7 @@ export type HUFlatMod = {
   mod_uid: string,
   primaryBonusType: PrimaryStats.HUStatNames,
   primaryBonusValue: string,
-  
+
   secondaryType_1: SecondaryStats.HUStatNames | null,
   secondaryValue_1: string,
   secondaryRoll_1: SecondaryStats.StrRolls | null,
@@ -44,7 +44,7 @@ export type HUFlatMod = {
   secondaryType_4: SecondaryStats.HUStatNames | null,
   secondaryValue_4: string,
   secondaryRoll_4: SecondaryStats.StrRolls | null,
-  
+
   slot: HUSlots,
   set: SetStats.HUStatNames,
   level: Levels,
@@ -57,7 +57,7 @@ export type GIMOFlatMod = {
   mod_uid: string,
   primaryBonusType: PrimaryStats.GIMOStatNames,
   primaryBonusValue: string,
-  
+
   secondaryType_1: SecondaryStats.GIMOStatNames | null,
   secondaryValue_1: string,
   secondaryRoll_1: SecondaryStats.StrRolls | null,
@@ -70,7 +70,7 @@ export type GIMOFlatMod = {
   secondaryType_4: SecondaryStats.GIMOStatNames | null,
   secondaryValue_4: string,
   secondaryRoll_4: SecondaryStats.StrRolls | null,
-  
+
   slot: GIMOSlots,
   set: SetStats.GIMOStatNames,
   level: Levels,

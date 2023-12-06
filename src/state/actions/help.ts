@@ -1,4 +1,4 @@
-import { HelpSections } from "@/domain/HelpSections";
+import { HelpSections } from "#/domain/HelpSections";
 
 export namespace actions {
 	export function setHelpPosition(section: HelpSections, topic: number) {

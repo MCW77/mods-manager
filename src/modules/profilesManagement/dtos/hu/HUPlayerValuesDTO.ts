@@ -1,4 +1,4 @@
-import { CharacterNames } from "constants/characterSettings";
+import { CharacterNames } from "#/constants/characterSettings";
 import * as DTOs from '../';
 
 interface HUPlayerValuesDTO {

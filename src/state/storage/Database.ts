@@ -9,7 +9,7 @@ import {
   CharacterTemplates,
   FlatCharacterTemplate,
   FlatCharacterTemplates,
-} from "domain/CharacterTemplates";
+} from "#/domain/CharacterTemplates";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import OptimizerRun from "../../domain/OptimizerRun";
 import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
@@ -35,7 +35,7 @@ type OpenDBSuccess = ((this: IDBRequest<IDBDatabase>, ev: Event) => any) | null;
 type DBRequestError<T> = ((this: IDBRequest<T>, ev: Event) => any) | null;
 type DBRequestSuccess<T> = ((this: IDBRequest<T>, ev: Event) => any) | null;
 
-type DBTransactionError = ((this: IDBTransaction, ev: Event) => any) | null; 
+type DBTransactionError = ((this: IDBTransaction, ev: Event) => any) | null;
 type DBTransactionComplete = ((this: IDBTransaction, ev: Event) => any) | null;
 
 export interface IUserData {
@@ -239,7 +239,7 @@ export class Database {
       deleteTemplateRequest.onsuccess = function (event) {
         onsuccess();
       };
-    });  
+    });
   }
 
   /**
@@ -264,17 +264,17 @@ export class Database {
         const baseCharacters: BaseCharacter[] = ((event.target as IDBRequest).result as BaseCharacter[]);
         onsuccess(baseCharacters);
       };
-    })  
+    })
   }
-  
+
   /**
    * Get a single profile. If no allyCode is given, the first profile in the database will be returned.
    * @param allyCode {string}
    */
   async getProfile(allyCode: string) {
-  
+
     let db = await this.database;
-    
+
     if (allyCode !== '') {
 
       return new Promise((successCallback: (profile: PlayerProfile) => void, errorCallback: (error: DOMException | null) => void) => {
@@ -416,7 +416,7 @@ export class Database {
       const saveProfileTransaction = db.transaction(['profiles'], 'readwrite');
       const saveProfileRequest = saveProfileTransaction.objectStore('profiles')
         .put(profile instanceof PlayerProfile ? profile.serialize() : profile);
-      let requestError: DBError = null; 
+      let requestError: DBError = null;
 
       saveProfileRequest.onsuccess = function (event: Event) {
         onsuccess()
@@ -538,8 +538,8 @@ export class Database {
         const singleRequest = saveLastRunsRequest.objectStore('lastRuns').put(
           'function' === typeof lastRun.serialize ? lastRun.serialize() : lastRun
         );
-      });      
-    })  
+      });
+    })
   }
 
   saveCharacterTemplate(name: string, selectedCharacters: SelectedCharacters, onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
@@ -595,7 +595,7 @@ export class Database {
         const singleRequest = saveTemplatesRequest.objectStore('characterTemplates').put(templateObject);
 
         singleRequest.onsuccess = function (event) {
-          if (event !== null && event.target instanceof IDBRequest)        
+          if (event !== null && event.target instanceof IDBRequest)
             keys.push(event.target.result);
         };
       });
