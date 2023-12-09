@@ -29,14 +29,14 @@ const FlexSidebar = ({
   return (
     <div className={`flexsidebar-container ${isCollapsed2 ? 'collapsed' : ''}`}>
       <span
-        className={`flexsidebar-toggle ${isCollapsed2 ? 'show' : 'collapse'}`}
+        className={`flexsidebar-toggle ${isCollapsed2 ? 'show' : 'hide'}`}
         onClick={() => {
           setCollapsed(!isCollapsed2);
         }}
       >
         <FontAwesomeIcon
           icon={faAngleLeft}
-          title={`${isCollapsed2 ? t('sidebar.Toggle-show', 'show sidebar') : t(`sidebar.Toggle-collapse`, 'collapse sidebar')}`}
+          title={`${isCollapsed2 ? t('sidebar.Toggle-show', 'show sidebar') : t(`sidebar.Toggle-collapse`, 'hide sidebar')}`}
         />
       </span>
       <div className={`flexsidebar`}>
