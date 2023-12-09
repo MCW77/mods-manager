@@ -1,11 +1,9 @@
 // react
 import React, { useRef } from 'react';
 
-// styles
-import './RangeInput.css';
-
 type ComponentProps = {
   id: string;
+  className?: string;
   name: string;
   defaultValue: number;
   min: number;
@@ -19,6 +17,7 @@ type ComponentProps = {
 const RangeInput = React.memo(
   ({
     id,
+    className,
     name,
     defaultValue,
     min = 0,
@@ -30,11 +29,11 @@ const RangeInput = React.memo(
   }: ComponentProps) => {
     const slider = useRef<HTMLInputElement>(null);
     const textfield = useRef<HTMLInputElement>(null);
-    const output = useRef<HTMLOutputElement>(null);    
+    const output = useRef<HTMLOutputElement>(null);
 
     if (editable) {
       return (
-        <>
+        <div className={className}>
           <input
             type={'range'}
             id={name && name + '-slider'}
@@ -50,12 +49,12 @@ const RangeInput = React.memo(
             }}
             key={name + 'slider'}
             ref={slider}
-          />,
+          />
           <input
             type={'number'}
             id={id}
             name={name}
-            className={'slider-input'}
+            className={"w-12"}
             defaultValue={defaultValue}
             min={min}
             max={max}
@@ -68,13 +67,13 @@ const RangeInput = React.memo(
             }}
             key={name + 'input'}
             ref={textfield}
-          />,
+          />
           <span key={'percent'}>{isPercent && '%'}</span>
-        </>
+        </div>
       );
     } else {
       return (
-        <>
+        <div className={className}>
           <input
             type={'range'}
             id={id}
@@ -94,7 +93,7 @@ const RangeInput = React.memo(
           <output id={name && name + '-display'} htmlFor={id} key={name + 'output'} ref={output}>
             {defaultValue}{isPercent && '%'}
           </output>
-        </>
+        </div>
       );
     }
   }
