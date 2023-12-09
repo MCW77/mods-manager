@@ -10,6 +10,7 @@ import { Storage } from '../../state/modules/storage';
 
 // components
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
+import { Button } from '#ui/button';
 
 
 const OptimizerProgress = () => {
@@ -38,13 +39,14 @@ const OptimizerProgress = () => {
         </div>
       </div>
       <div className={'actions'}>
-        <button
+        <Button
           type={'button'}
-          className={'red'}
+          variant={'destructive'}
+          className={''}
           onClick={() => cancel(!isIncremental)}
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </div>
   )

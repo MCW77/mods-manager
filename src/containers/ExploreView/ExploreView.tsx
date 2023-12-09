@@ -37,6 +37,7 @@ import { FlexSidebar } from '../../components/FlexSidebar/FlexSidebar';
 import { ModDetail } from '../../components/ModDetail/ModDetail';
 import ModFilter from '../../components/ModFilter/ModFilter';
 import { RenderIfVisible } from '../../components/RenderIfVisible/RenderIfVisible';
+import { Button } from '#ui/button';
 
 
 type AssignedMods = {
@@ -115,18 +116,20 @@ class ExploreView extends React.PureComponent<Props> {
               <div>
                 {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
                 &nbsp;
-                <button
-                  className={"small red"}
+                <Button
+                  type={"button"}
+                  size={"icon"}
+                  variant={'destructive'}
                   onClick={() => {
                     this.props.showModal(this.deleteModsModal());
                   }}
                 >
                   <FontAwesomeIcon icon={faTrashCan} title={this.props.t(`explore-ui:DeleteButton`)}/>
-                </button>
+                </Button>
               </div>
               <div id="modgroupsactions">
-                <button
-                  className="small"
+                <Button
+                  size={"icon"}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     forEach(
                       modsElement.current?.getElementsByClassName("modgroupmods"),
@@ -137,9 +140,9 @@ class ExploreView extends React.PureComponent<Props> {
                   }}
                 >
                   <FontAwesomeIcon icon={faAnglesDown} title={this.props.t('explore-ui:Expand')}/>
-                </button>
-                <button
-                  className="small"
+                </Button>
+                <Button
+                  size={"icon"}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     forEach(
                       modsElement.current?.getElementsByClassName("modgroupmods"),
@@ -150,7 +153,7 @@ class ExploreView extends React.PureComponent<Props> {
                   }}
                 >
                   <FontAwesomeIcon icon={faAnglesUp} title={this.props.t('explore-ui:Collapse')}/>
-                </button>
+                </Button>
               </div>
             </div>
             <div id="modgroups" ref={modGroupsElement}>{modGroups}</div>
@@ -174,25 +177,25 @@ class ExploreView extends React.PureComponent<Props> {
           {this.props.t(`explore-ui:DeleteAlt2`)}
         </p>
         <div className={"actions"}>
-          <button
+          <Button
             type={"button"}
             onClick={() => {
               this.props.hideModal();
             }}
           >
             No
-          </button>
-          <button
+          </Button>
+          <Button
             type={"button"}
+            variant={"destructive"}
             onClick={() => {
               for (let [key, mods] of Object.entries(this.props.displayedMods)) {
                 this.props.deleteMods(mods);
               }
             }}
-            className={"red"}
           >
             Yes, Delete Mods
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -224,7 +227,7 @@ const mapStateToProps = (state: IAppState) => {
               return updatedAssignments;
             }, {} as AssignedMods)
         : {} as AssignedMods;
-        
+
     let modsFilter = new ModsFilter(state.modsViewOptions);
     const [mods, shownMods] = modsFilter.applyModsViewOptions(profile.mods);
 

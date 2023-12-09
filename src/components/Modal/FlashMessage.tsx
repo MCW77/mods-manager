@@ -8,6 +8,9 @@ import './Modal.css';
 // modules
 import { App } from '../../state/modules/app';
 
+// Components
+import { Button } from '#ui/button';
+
 type ComponentProps = {
   className?: string;
 };
@@ -25,12 +28,12 @@ const FlashMessage = React.memo(({ className = '' }: ComponentProps) => {
         <h2>{flashMessage.heading}</h2>
         <div className={'content'}>{flashMessage.content}</div>
         <div className={'actions'}>
-          <button
+          <Button
             type={'button'}
             onClick={() => dispatch(App.actions.hideFlash())}
           >
             OK
-          </button>
+          </Button>
         </div>
       </div>
     </div>

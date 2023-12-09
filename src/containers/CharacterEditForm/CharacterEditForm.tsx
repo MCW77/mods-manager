@@ -41,6 +41,7 @@ import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { OptimizerProgress } from '../../components/OptimizerProgress/OptimizerProgress';
 import { RangeInput } from "../../components/RangeInput/RangeInput";
 import { Toggle } from "../../components/Toggle/Toggle";
+import { Button } from "#ui/button";
 
 
 type ComponentProps = {
@@ -100,21 +101,27 @@ class CharacterEditForm extends React.Component<Props> {
     if ('custom' === target.name) {
       resetButton = null;
     } else if (defaultTarget) {
-      resetButton = <button type={'button'}
+      resetButton =
+      <Button
+        type={'button'}
         id={'reset-button'}
         disabled={defaultTarget.equals(target)}
         onClick={() => {
           this.props.resetCharacterTargetToDefault(character.baseID, target.name);
-        }}>
+        }}
+      >
         Reset target to default
-      </button>
+      </Button>
     } else {
-      resetButton = <button type={'button'}
+      resetButton =
+      <Button
+        type={'button'}
         id={'delete-button'}
-        className={'red'}
-        onClick={() => this.props.deleteTarget(character.baseID, target.name)}>
+        variant={'destructive'}
+        onClick={() => this.props.deleteTarget(character.baseID, target.name)}
+      >
         Delete target
-      </button>
+      </Button>
     }
 
     const slotToPrimaryRestriction = (slot: ModTypes.VariablePrimarySlots) =>
@@ -247,8 +254,13 @@ class CharacterEditForm extends React.Component<Props> {
       </div>
       <div className={'actions'}>
         {resetButton}
-        <button type={'button'} onClick={() => this.props.hideModal()}>Cancel</button>
-        <button type={'submit'}>Save</button>
+        <Button
+          type={'button'}
+          onClick={() => this.props.hideModal()}
+        >
+          Cancel
+        </Button>
+        <Button type={'submit'}>Save</Button>
       </div>
     </form>;
   }
@@ -337,9 +349,16 @@ class CharacterEditForm extends React.Component<Props> {
           rightLabel={'Report Only'}
           rightValue={'false'}
           value={`${targetStat.target.optimizeForTarget}`}
-          disabled={targetStat.target.stat === 'Health+Protection'}          
+          disabled={targetStat.target.stat === 'Health+Protection'}
         />
-        <button type={'button'} className={'red small'} onClick={() => this.props.removeTargetStat(index)}>-</button>
+        <Button
+          type={'button'}
+          size={'sm'}
+          variant={'destructive'}
+          onClick={() => this.props.removeTargetStat(index)}
+        >
+          -
+        </Button>
         <span className={'dropdown'}>
           <select name={'target-stat-name[]'} defaultValue={targetStat.target.stat}
             onChange={event => {
@@ -395,13 +414,13 @@ class CharacterEditForm extends React.Component<Props> {
       </p>
       {targetStatRows}
       <div className={'form-row center'}>
-        <button
+        <Button
           type={'button'}
-          className={'small new-target-stat-button'}
+          size={'sm'}
           onClick={() => this.props.addTargetStat(new TargetStat('Speed'))}
         >
           +
-        </button>
+        </Button>
       </div>
     </div>;
   }
@@ -700,7 +719,12 @@ class CharacterEditForm extends React.Component<Props> {
 
       const rerunButton = (
         <div className={'actions'}>
-          <button type={'button'} onClick={() => this.runIncrementalCalc()}>Run Incremental Optimization</button>
+          <Button
+            type={'button'}
+            onClick={() => this.runIncrementalCalc()}
+          >
+            Run Incremental Optimization
+          </Button>
         </div>
       );
 
@@ -714,7 +738,7 @@ class CharacterEditForm extends React.Component<Props> {
           </div>
         )
       }
-      
+
       const missedGoals = modAssignments.missedGoals;
 
       if (missedGoals.length === 0) {
@@ -723,7 +747,7 @@ class CharacterEditForm extends React.Component<Props> {
             <div className={'form-row'}>
               <span>No missed targets from last run</span>
             </div>
-            {rerunButton}  
+            {rerunButton}
           </div>
       );
     }
@@ -735,7 +759,7 @@ class CharacterEditForm extends React.Component<Props> {
         <span>{targetStat.minimum ?? 0 > resultValue ? " ↓ " : " ↑ "}</span>
         <span>{resultValue}</span>
       </div>
-    );    
+    );
       <div id={'missed-form'}>
         {targetStatRows}
         {rerunButton}

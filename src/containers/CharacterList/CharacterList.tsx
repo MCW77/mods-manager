@@ -24,6 +24,7 @@ import { OptimizationPlan } from "../../domain/OptimizationPlan";
 // components
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
+import { Button } from "#ui/button";
 
 // containers
 import CharacterEditForm from "../CharacterEditForm/CharacterEditForm";
@@ -125,7 +126,7 @@ const CharacterList = React.memo(
         e.target.value = target.name;
 
         if ('custom' === optimizationTarget) {
-          showEditCharacterModal(character, index, target.rename('custom'));        
+          showEditCharacterModal(character, index, target.rename('custom'));
         } else if ('lock' === optimizationTarget) {
           dispatch(CharacterEdit.thunks.lockCharacter(character.baseID));
         } else {
@@ -162,11 +163,12 @@ const CharacterList = React.memo(
               {options}
               <option value={'custom'}>Custom</option>
             </Dropdown>
-            <button
+            <Button
               type={'button'}
-              onClick={() => showEditCharacterModal(character, index, target)}>
+              onClick={() => showEditCharacterModal(character, index, target)}
+            >
               Edit
-            </button>
+            </Button>
           </div>
         </div>
       </div>;

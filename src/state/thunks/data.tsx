@@ -33,6 +33,9 @@ import { OptimizerSettings } from "../../domain/OptimizerSettings";
 import { PlayerProfile } from "../../domain/PlayerProfile";
 import { UseCaseModes } from "../../domain/UseCaseModes";
 
+// components
+import { Button } from "#ui/button";
+
 
 interface FetchedProfile {
   name: string,
@@ -619,7 +622,13 @@ export namespace thunks {
         <p><strong className={'red-text'}>Cancelling...</strong></p>
       </div>
       <div className={'actions'}>
-        <button type={'button'} className={'red'} disabled={true}>Cancel</button>
+        <Button
+          type={'button'}
+          variant={'destructive'}
+          disabled={true}
+        >
+          Cancel
+        </Button>
       </div>
     </div>;
   }
@@ -631,7 +640,13 @@ export namespace thunks {
         <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${progress}%` }} />
       </div>
       <div className={'actions'}>
-        <button type={'button'} className={'red'} onClick={() => dispatch(cancelModMove(taskId, sessionId))}>Cancel</button>
+        <Button
+          type={'button'}
+          variant={'destructive'}
+          onClick={() => dispatch(cancelModMove(taskId, sessionId))}
+        >
+          Cancel
+        </Button>
       </div>
     </div>;
   }

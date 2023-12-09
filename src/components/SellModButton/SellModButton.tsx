@@ -15,6 +15,7 @@ import { Mod } from '../../domain/Mod';
 import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
 import { ModImage } from '../ModImage/ModImage';
 import { ModStats } from '../ModStats/ModStats';
+import { Button } from '#ui/button';
 
 type ComponentProps = {
   mod: Mod;
@@ -47,37 +48,41 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
           <ModStats mod={mod} />
         </div>
         <p>Are you sure you want to delete this mod from the mods optimizer?</p>
-        <div className={'actions'}>
-          <button
+        <div className={'flex gap-2 justify-center'}>
+          <Button
             type={'button'}
             onClick={() => {
               dispatch(App.actions.hideModal());
             }}
           >
             No
-          </button>
-          <button
+          </Button>
+          <Button
             type={'button'}
             onClick={() => {
               dispatch(Storage.thunks.deleteMod(mod));
               dispatch(App.actions.hideModal());
             }}
-            className={'red'}
+            className={''}
+            variant={'destructive'}
           >
             Yes, Delete Mod
-          </button>
+          </Button>
         </div>
       </div>
     );
   };
 
   return (
-    <button
-      className={'delete-button red small'}
+    <Button
+      type={'button'}
+      variant={'destructive'}
+      size={'xs'}
+      className={'absolute top-0 right-0 m-2'}
       onClick={() => dispatch(App.actions.showModal('', deleteModal()))}
     >
       X
-    </button>
+    </Button>
   );
 });
 

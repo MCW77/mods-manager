@@ -15,6 +15,7 @@ import { CharacterListGenerationParameters } from '../../domain/CharacterListGen
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
+import { Button } from "#ui/button";
 
 
 const CharacterListModal = React.memo(
@@ -110,8 +111,13 @@ const CharacterListModal = React.memo(
         </form>
         <hr />
         <div className={'actions'}>
-          <button type={'button'} onClick={() => dispatch(App.actions.hideModal())}>Cancel</button>
-          <button
+          <Button
+            type={'button'}
+            onClick={() => dispatch(App.actions.hideModal())}
+          >
+            Cancel
+          </Button>
+          <Button
             type={'button'}
             onClick={() => {
               if (form.current === null) return;
@@ -135,7 +141,7 @@ const CharacterListModal = React.memo(
             }}
           >
             Generate
-          </button>
+          </Button>
         </div>
       </div>
     );

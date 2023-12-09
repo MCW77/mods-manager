@@ -7,6 +7,7 @@ import { App } from "../../state/modules/app";
 
 // components
 import { WarningLabel } from "../../components/WarningLabel/WarningLabel";
+import { Button } from "#ui/button";
 
 
 const ErrorModal = React.memo(
@@ -23,12 +24,12 @@ const ErrorModal = React.memo(
           <h2 key={'error-header'}>Error!</h2>
           <div key={'error-message'}>{content}</div>
           <div key={'error-actions'} className={'actions'}>
-            <button
+            <Button
               type={'button'}
               onClick={() => {dispatch(App.actions.hideError())}}
             >
               Ok
-            </button>
+            </Button>
           </div>
         </div>
       </div>

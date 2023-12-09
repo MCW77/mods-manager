@@ -37,6 +37,7 @@ import { PrimaryStats, SecondaryStats, SetStats } from "../../domain/Stats";
 // components
 import { Dropdown } from '../Dropdown/Dropdown';
 import { Pips } from "../Pips/Pips";
+import { Button } from '#ui/button';
 
 
 function selectElement(element: HTMLInputElement | null) {
@@ -97,7 +98,7 @@ class ModFilter extends React.PureComponent<Props> {
         selectElement(slotFilter);
       })
     }
-    
+
     const selectNone = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       slotFilters.forEach(slotFilter => {
@@ -128,8 +129,8 @@ class ModFilter extends React.PureComponent<Props> {
         {slotElements}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -140,7 +141,7 @@ class ModFilter extends React.PureComponent<Props> {
     const selectAll = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       setFilters.forEach(setFilter => {
-        selectElement(setFilter);      
+        selectElement(setFilter);
       });
     };
     const selectNone = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -173,8 +174,8 @@ class ModFilter extends React.PureComponent<Props> {
         {sets}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -237,7 +238,7 @@ class ModFilter extends React.PureComponent<Props> {
         unselectElement(tierFilter);
       });
     };
-    
+
     const tierSettings: TierSettings = this.props.modsViewOptions.filtering.tier;
     const tierButtons = [... ModConsts.tiersMap.entries()].map(([tier, displayTier]) => {
       const inputName = `tier-filter-${tier}`;
@@ -262,8 +263,8 @@ class ModFilter extends React.PureComponent<Props> {
         {tierButtons}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -287,7 +288,7 @@ class ModFilter extends React.PureComponent<Props> {
           unselectElement(secondariesScoreTierFilter);
       });
     };
-    
+
     const tierSettings: SecondariesScoreTierSettings = this.props.modsViewOptions.filtering.secondariesscoretier;
     const tierButtons = [... ModConsts.secondaryScoresTiersMap.entries()].map(([tier, displayTier]) => {
       const inputName = `secondariesscore-tier-filter-${displayTier}`;
@@ -312,8 +313,8 @@ class ModFilter extends React.PureComponent<Props> {
         {tierButtons}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -334,7 +335,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const levelButtons = [15, 12, 9, 6, 3, 1].map(level => {
       const inputName = `level-filter-${level}`;
-      const levels: LevelSettings = this.props.modsViewOptions.filtering.level; 
+      const levels: LevelSettings = this.props.modsViewOptions.filtering.level;
       const value = levels[level as keyof LevelSettings] || 0;
 
       return <label htmlFor={inputName} key={inputName}>
@@ -356,8 +357,8 @@ class ModFilter extends React.PureComponent<Props> {
         {levelButtons}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -367,8 +368,8 @@ class ModFilter extends React.PureComponent<Props> {
     const inputName = `equipped-filter-equipped`;
     const equippeds: EquippedSettings = this.props.modsViewOptions.filtering.equipped;
     const value = equippeds['equipped' as keyof EquippedSettings] || 0;
-  
-    const equippedButton = 
+
+    const equippedButton =
       <label htmlFor={inputName} key={inputName}>
         <input type={'number'}
           id={inputName}
@@ -392,7 +393,7 @@ class ModFilter extends React.PureComponent<Props> {
 
   primaryStatFilter(cycleState: (e: React.MouseEvent<HTMLInputElement>) => void) {
     const primaryStatFilters: HTMLInputElement[] = PrimaryStats.PrimaryStat.statNames
-      .map((stat) => document.getElementById(`primary-filter-${stat}`)! as HTMLInputElement);  
+      .map((stat) => document.getElementById(`primary-filter-${stat}`)! as HTMLInputElement);
     const selectAll = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       primaryStatFilters.forEach(filter => selectElement(filter));
@@ -423,8 +424,8 @@ class ModFilter extends React.PureComponent<Props> {
         {primaries}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -463,8 +464,8 @@ class ModFilter extends React.PureComponent<Props> {
         {secondaries}
       </div>
       <div className={'actions'}>
-        <button onClick={selectAll}>All</button>
-        <button onClick={selectNone}>None</button>
+        <Button onClick={selectAll}>All</Button>
+        <Button onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -504,7 +505,7 @@ class ModFilter extends React.PureComponent<Props> {
     const optimizer: OptimizerSettings = this.props.modsViewOptions.filtering.optimizer;
     const value = optimizer['assigned' as keyof OptimizerSettings] || 0;
 
-    const optimizerButton = 
+    const optimizerButton =
       <label htmlFor={inputName} key={inputName}>
         <input type={'number'}
           id={inputName}
@@ -532,9 +533,9 @@ class ModFilter extends React.PureComponent<Props> {
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       this.props.updateFilter(this.collectFilters(e.target.form as HTMLFormElement))
-    };    
-    
-    const groupCheck = 
+    };
+
+    const groupCheck =
       <label htmlFor={inputName} key={inputName}>
         {this.props.t('filter.Group')}
         <input type={'checkbox'}
@@ -567,7 +568,7 @@ class ModFilter extends React.PureComponent<Props> {
     const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       this.props.updateFilter(this.collectFilters(e.target.form as HTMLFormElement))
-    };    
+    };
 
     const sortSelects = [1,2,3,4].map((number: number) => {
       return <Dropdown name={'sort-option-' + number} key={`sort-option-${number}`} defaultValue={this.props.modsViewOptions.sort[number-1]} onChange={onChange}>
@@ -605,7 +606,7 @@ class ModFilter extends React.PureComponent<Props> {
     const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       e.preventDefault();
       this.props.updateFilter(this.collectFilters(e.target.form as HTMLFormElement))
-    };    
+    };
 
     const scoreSelect =
       <Dropdown name={'score-option'} defaultValue={'PureSecondaries'} onChange={onChange}>
@@ -640,7 +641,7 @@ class ModFilter extends React.PureComponent<Props> {
 
   collectFilters(form: HTMLFormElement) {
     const viewOptions: ModsViewOptions = {...defaultOptions};
-    
+
     [...form.elements].filter(element => (element as (HTMLInputElement | HTMLButtonElement)).name.includes('-filter-')).forEach(element => {
       const [fT, fK] = (element as HTMLInputElement).name.split('-filter-');
       let filterType: keyof FilterOptions = fT as keyof FilterOptions;
@@ -676,7 +677,7 @@ class ModFilter extends React.PureComponent<Props> {
     const cycleState = (e: React.MouseEvent<HTMLInputElement>): void => {
       let target: HTMLInputElement & EventTarget;
       target = e.currentTarget;
-    
+
       target.value = String(target.valueAsNumber + 1);
       if (parseInt(target.value) > 1) {
         target.value = String(-1);
@@ -690,10 +691,15 @@ class ModFilter extends React.PureComponent<Props> {
       }
       this.props.updateFilter(this.collectFilters(target.form as HTMLFormElement))
     }
-    
+
     return <form className={'mod-filters filter-form'} id={'mod-filters'} onSubmit={onSubmit}>
       <div className={'form-actions'}>
-        <button type={'button'} onClick={this.resetFilters}>{this.props.t('filter.Reset')}</button>
+        <Button
+          type={'button'}
+          onClick={this.resetFilters}
+        >
+          {this.props.t('filter.Reset')}
+        </Button>
       </div>
       {this.groupOption()}
       {this.slotFilter(cycleState)}
@@ -709,7 +715,12 @@ class ModFilter extends React.PureComponent<Props> {
       {this.scoreOption()}
       {this.sortOption()}
       <div className={'form-actions'}>
-        <button type={'button'} onClick={this.resetFilters}>{this.props.t(`filter.Reset`)}</button>
+        <Button
+          type={'button'}
+          onClick={this.resetFilters}
+        >
+          {this.props.t(`filter.Reset`)}
+        </Button>
       </div>
     </form>;
   }

@@ -46,6 +46,7 @@ import { ModLoadoutDetail } from "../../components/ModLoadoutDetail/ModLoadoutDe
 import { ModLoadoutView } from "../../components/ModLoadoutView/ModLoadoutView";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { Toggle } from "../../components/Toggle/Toggle";
+import { Button } from '#ui/button';
 
 
 interface HUModsProfile {
@@ -240,9 +241,13 @@ class Review extends React.PureComponent<Props> {
     let modRows;
 
     const summaryButton = (
-      <button type={'button'} className={'small'} onClick={() => this.props.showModal('', this.reviewModal())}>
+      <Button
+        type={'button'}
+        size={'sm'}
+        onClick={() => this.props.showModal('', this.reviewModal())}
+      >
         Show Summary
-      </button>
+      </Button>
     );
 
     switch (this.props.filter.view) {
@@ -360,8 +365,18 @@ class Review extends React.PureComponent<Props> {
           <h4>{target.name}</h4>
         </div>
         <div className={'actions'}>
-          <button onClick={this.props.unequipMod.bind(this, mod.id)}>I removed this mod</button>
-          <button onClick={this.props.reassignMod.bind(this, mod.id, characterID)}>I reassigned this mod</button>
+          <Button
+            type={'button'}
+            onClick={this.props.unequipMod.bind(this, mod.id)}
+          >
+            I removed this mod
+          </Button>
+          <Button
+            type={'button'}
+            onClick={this.props.reassignMod.bind(this, mod.id, characterID)}
+          >
+            I reassigned this mod
+          </Button>
         </div>
       </div>;
     });
@@ -393,11 +408,21 @@ class Review extends React.PureComponent<Props> {
           }
           <div className={'actions'}>
             {sortOptions.currentCharacter === this.props.filter.sort &&
-              <button onClick={this.props.unequipMods.bind(this, mods.map(mod => mod.id))}>I removed these mods</button>}
+              <Button
+                type={'button'}
+                onClick={this.props.unequipMods.bind(this, mods.map(mod => mod.id))}
+              >
+                I removed these mods
+              </Button>
+            }
             {sortOptions.assignedCharacter === this.props.filter.sort &&
-              <button onClick={this.props.reassignMods.bind(this, mods.map(mod => mod.id), characterID)}>
+              <Button
+                type={'button'}
+                onClick={this.props.reassignMods.bind(this, mods.map(mod => mod.id), characterID)}
+              >
                 I reassigned these mods
-            </button>}
+              </Button>
+            }
           </div>
         </div>
         {sortOptions.assignedCharacter === this.props.filter.sort &&
@@ -479,9 +504,12 @@ class Review extends React.PureComponent<Props> {
   sidebarActions() {
     return <div className={'sidebar-actions'} key={'sidebar-actions'}>
       <h3>I don't like these results...</h3>
-      <button type={'button'} onClick={this.props.edit}>
+      <Button
+        type={'button'}
+        onClick={this.props.edit}
+      >
         Change my selection
-      </button>
+      </Button>
     </div>
   }
 
@@ -491,26 +519,28 @@ class Review extends React.PureComponent<Props> {
   hotUtilsSidebar() {
     return <div className={'sidebar-hotutils'} key={'sidebar-hotutils'}>
       <h3>HotUtils <Help header={'What is HotUtils?'}>{this.hotUtilsHelp()}</Help></h3>
-      <button
+      <Button
         type={'button'}
         disabled={!(this.props.hotUtilsSubscription && this.props.hotUtilsSessionId)}
         onClick={() => {
           if (this.props.hotUtilsSubscription && this.props.hotUtilsSessionId) {
             this.props.showModal('hotutils-modal', this.hotUtilsCreateProfileModal())
           }
-        }}>
+        }}
+      >
         Create a new mod profile
-      </button>
-      <button
+      </Button>
+      <Button
         type={'button'}
         disabled={!(this.props.hotUtilsSubscription && this.props.hotUtilsSessionId)}
         onClick={() => {
           if (this.props.hotUtilsSubscription && this.props.hotUtilsSessionId) {
             this.props.showModal('hotutils-modal', this.hotUtilsMoveModsModal())
           }
-        }}>
+        }}
+      >
         Move mods in-game
-      </button>
+      </Button>
       <img className={'fit'} src={'/img/hotsauce512.png'} alt={'hotsauce'} />
     </div>;
   }
@@ -556,10 +586,18 @@ class Review extends React.PureComponent<Props> {
         {this.summaryListContent()}
       </pre>
       <div className={'actions'}>
-        <button type={'button'} onClick={() => this.copySummaryToClipboard()}>
+        <Button
+          type={'button'}
+          onClick={() => this.copySummaryToClipboard()}
+        >
           Copy to Clipboard
-        </button>
-        <button type={'button'} onClick={this.props.hideModal}>OK</button>
+        </Button>
+        <Button
+          type={'button'}
+          onClick={this.props.hideModal}
+        >
+          OK
+        </Button>
       </div>
     </div>;
   }
@@ -678,7 +716,7 @@ class Review extends React.PureComponent<Props> {
         <label htmlFor={'profileName'}>Profile Name:</label>
 
         <input
-          id={'profileName'}        
+          id={'profileName'}
           type={'text'}
           name={'profileName'}
           ref={input => profileNameInput = input}
@@ -688,13 +726,22 @@ class Review extends React.PureComponent<Props> {
             }
           }}
         />
-      </div>  
+      </div>
       <p className={'error'} ref={field => error = field}></p>
       <div className={'actions'}>
-        <button type={'button'} className={'red'} onClick={this.props.hideModal}>Cancel</button>
-        <button type={'button'} onClick={() => checkNameAndCreateProfile()}>
+        <Button
+          type={'button'}
+          variant={'destructive'}
+          onClick={this.props.hideModal}
+        >
+          Cancel
+        </Button>
+        <Button
+          type={'button'}
+          onClick={() => checkNameAndCreateProfile()}
+        >
           Create Profile
-        </button>
+        </Button>
       </div>
     </div >;
   }
@@ -724,16 +771,25 @@ class Review extends React.PureComponent<Props> {
         HotUtils.
       </p>
       <div className={'actions'}>
-        <button type={'button'} className={'red'} onClick={this.props.hideModal}>Cancel</button>
-        <button type={'button'} onClick={() => {
-          const profile: HUModsMoveProfile = {
-            units: this.generateHotUtilsProfile()
-          };
+        <Button
+          type={'button'}
+          variant={'destructive'}
+          onClick={this.props.hideModal}
+        >
+          Cancel
+        </Button>
+        <Button
+          type={'button'}
+          onClick={() => {
+            const profile: HUModsMoveProfile = {
+              units: this.generateHotUtilsProfile()
+            };
 
-          this.props.moveModsWithHotUtils(profile, this.props.hotUtilsSessionId);
-        }}>
+            this.props.moveModsWithHotUtils(profile, this.props.hotUtilsSessionId);
+          }}
+        >
           Move my mods
-      </button>
+      </Button>
       </div>
     </div >;
   }
@@ -753,7 +809,7 @@ const mapStateToProps = (state: IAppState) => {
         target: target,
         assignedMods:
           assignedMods.filter(mod => mod.shouldLevel(target) || mod.shouldSlice(profile.characters[id], target)),
-        missedGoals: missedGoals,  
+        missedGoals: missedGoals,
       }));
 */
       tempAssignments.forEach(assignment => {
@@ -779,7 +835,7 @@ const mapStateToProps = (state: IAppState) => {
 
     return result;
   }
-  
+
   const profile = state.profile;
   const filter = state.modListFilter;
   const modsById = groupByKey(profile.mods, mod => mod.id);
@@ -806,7 +862,7 @@ const mapStateToProps = (state: IAppState) => {
   const currentLoadoutValue = modAssignments.map(({ id, target }) =>
     Object.keys(currentModsByCharacter).includes(id) ?
       new ModLoadout(currentModsByCharacter[id]).getOptimizationValue(profile.characters[id], target, false)
-    :  
+    :
       0
   ).reduce((a, b) => a + b, 0);
   const newLoadoutValue = modAssignments.map(({ id, target, assignedMods }) =>
@@ -847,7 +903,7 @@ const mapStateToProps = (state: IAppState) => {
         tags = uniq(flatten(
           (Object.keys(removedMods) as CharacterNames[]).map(
             id => id in baseCharacters ? baseCharacters[id].categories : []
-          ) as string[][] 
+          ) as string[][]
         ));
       } else {
         tags = uniq(flatten(
