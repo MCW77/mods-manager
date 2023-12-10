@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 // styles
 import "./Sidebar.css";
+import {
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 // modules
 import { App } from '../../state/modules/app';
 
 // components
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as UITypes from '../types';
 
 
@@ -24,15 +28,19 @@ const Sidebar = React.memo(
     const showSidebar = useSelector(App.selectors.selectShowSidebar);
 
     return (
-      <div className="sidebar-wrapper">
+      <div className={`sidebar-wrapper ${showSidebar ? 'show' : 'hide'}`}>
         <div className={`sidebar ${showSidebar ? 'show' : 'hide'}`} key={'sidebar'}>
           {content}
         </div>
-        <button
+        <span
           className={`toggle-sidebar ${showSidebar ? 'hide' : 'show'}`}
           onClick={() => dispatch(App.actions.toggleSidebar()) }
         >
-        </button>
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            title={`Go back`}
+          />
+        </span>
       </div>
     );
   }

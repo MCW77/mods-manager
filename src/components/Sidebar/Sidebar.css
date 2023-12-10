@@ -1,15 +1,14 @@
 .sidebar-wrapper {
-  float: left;
   position: relative;
 }
 
-.sidebar-wrapper .toggle-sidebar {
+.toggle-sidebar {
   display: block;
   position: absolute;
-  top: 4rem;
-  left: 17.5rem;
+  top: 4em;
+  right: 1em;
   width: 1em;
-  height: 2em;
+  height: 1em;
   margin: 0;
   border-radius: 1em;
   border: 1px solid gray;
@@ -17,54 +16,40 @@
   transition: all ease-in-out .5s;
 }
 
-.sidebar-wrapper .toggle-sidebar.show {
-  left: 0;
+.toggle-sidebar.show {
   transform: rotate(180deg);
-}
-
-.sidebar-wrapper .toggle-sidebar::before {
-  content: '';
-  position: absolute;
-  top: calc(50% - .5em);
-  right: .25em;
-  width: 0;
-  height: 0;
-  border-top: .5em solid transparent;
-  border-bottom: .5em solid transparent;
-  border-right: .5em solid #ccc;
-}
-
-.sidebar-wrapper .toggle-sidebar::after {
-  content: '';
-  position: absolute;
-  top: calc(50% - .5em);
-  right: 0;
-  width: 0;
-  height: 0;
-  border-top: .5em solid transparent;
-  border-bottom: .5em solid transparent;
-  border-right: .5em solid #333;
+  right: -1em;
 }
 
 .sidebar {
   position: relative;
-  left: 0;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  box-sizing: border-box;
-  transition: all ease-in-out .5s;
-}
-
-.sidebar.hide .toggle-sidebar {
-  left: .7em;
+  will-change: width;  
 }
 
 .sidebar.hide {
-  left: -18em;
-  margin-right: -20em;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  width: 0px;
+  transition: width ease-in-out 1s;
+}
+
+.sidebar.show {
+  width: 100%;
+  transition: width ease-in-out 1s;  
+}
+
+.sidebar-wrapper.hide {
+  transform: translateX(-100%);
+  transition: transform ease-in-out 1s;
+  will-change: transform;
+}
+
+.sidebar-wrapper.show {
+  transform: translateX(0);
+  transition: transform ease-in-out 1s;
+  will-change: transform;
+  position: relative;
 }
 
 .sidebar > div {
@@ -73,9 +58,8 @@
   border-radius: 0 .5em .5em 0;
   border: 1px solid #888;
   border-left-width: 0;
-  margin: 1em 1em 1em 0;
+  margin: 1em 1em 0 0;
   width: 18rem;
-  box-sizing: border-box;
 }
 
 .sidebar-actions {
