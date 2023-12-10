@@ -8,18 +8,17 @@ import { ElementType } from "../utils/typeHelper";
 import { BaseCharactersById } from "../domain/BaseCharacter";
 import { Character, Characters } from "../domain/Character";
 import { CharacterEditMode } from "../domain/CharacterEditMode";
-import { CharacterTemplatesByName } from "../domain/CharacterTemplates";
 import { HelpSections } from "../domain/HelpSections";
 import { ModalProps } from "../domain/ModalProps";
 import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
-import { Templates } from "../domain/Templates";
 import { PlayerNamesByAllycode } from "../domain/PlayerNamesByAllycode";
 import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
 import { SetRestrictions } from "../domain/SetRestrictions";
 import { SettingsSections } from "../domain/SettingsSections";
 import { TargetStats } from "../domain/TargetStat";
+import { Templates } from "../domain/Templates";
 
 // components
 import * as UITypes from "../components/types";
@@ -30,7 +29,6 @@ export interface IAppState {
   characterFilter: string,
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
-  characterTemplates: CharacterTemplatesByName,
   error: UITypes.DOMContent | null,
   flashMessage: {
     heading: UITypes.DOMContent,
@@ -87,7 +85,6 @@ export class AppState {
     characterFilter: '',
     characterEditMode: 'basic',
     characterEditSortView: false,
-    characterTemplates: {} as CharacterTemplatesByName,
     error: null,
     flashMessage: null,
     baseCharacters: {} as BaseCharactersById,
