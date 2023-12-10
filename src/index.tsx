@@ -26,7 +26,7 @@ import { Storage } from './state/modules/storage';
 import { Spinner } from './components/Spinner/Spinner';
 
 // containers
-import App from './containers/App/App';
+import { App } from './containers/App/App';
 
 
 const store = configureStore({
