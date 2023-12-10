@@ -537,7 +537,7 @@ class ModFilter extends React.PureComponent<Props> {
 
     const groupCheck =
       <label htmlFor={inputName} key={inputName}>
-        {this.props.t('filter.Group')}
+        {this.props.t('explore-ui:filter.Group')}
         <input type={'checkbox'}
           id={inputName}
           name={inputName}
@@ -616,7 +616,7 @@ class ModFilter extends React.PureComponent<Props> {
 
 
     return <div>
-        <div className={'toggle-label'}>{this.props.t('filter.ScoreHeadline')}:</div>
+        <div className={'toggle-label'}>{this.props.t('explore-ui:filter.ScoreHeadline')}:</div>
         {scoreSelect}
       </div>;
   }
@@ -698,7 +698,7 @@ class ModFilter extends React.PureComponent<Props> {
           type={'button'}
           onClick={this.resetFilters}
         >
-          {this.props.t('filter.Reset')}
+          {this.props.t('explore-ui:filter.Reset')}
         </Button>
       </div>
       {this.groupOption()}
@@ -719,14 +719,14 @@ class ModFilter extends React.PureComponent<Props> {
           type={'button'}
           onClick={this.resetFilters}
         >
-          {this.props.t(`filter.Reset`)}
+          {this.props.t(`explore-ui:filter.Reset`)}
         </Button>
       </div>
     </form>;
   }
 }
 
-type Props = PropsFromRedux & OwnProps & WithTranslation<'explore-ui'>;
+type Props = PropsFromRedux & OwnProps & WithTranslation<['explore-ui', 'domain']>;
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type OwnProps = {
@@ -741,4 +741,4 @@ const mapDispatchToProps = (dispatch: Redux.Dispatch<Redux.AnyAction>) => ({
 });
 
 let connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(withTranslation('explore-ui')(ModFilter));
+export default connector(withTranslation(['explore-ui', 'domain'])(ModFilter));
