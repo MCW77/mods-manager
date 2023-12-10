@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // containers
-import App from './App';
+import { App } from './App';
 
 
 it('renders without crashing', () => {
