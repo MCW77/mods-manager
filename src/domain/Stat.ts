@@ -51,6 +51,7 @@ type GIMO2DisplayStatNamesMap = Readonly<{
   [key in AllGIMOStatNames]: DisplayStatNames;
 }>
 
+export type DisplayedStat = `${string} ${DisplayStatNames}`;
 
 export abstract class Stat {
 
@@ -159,7 +160,7 @@ export abstract class Stat {
   /**
    * Return a string that represents this stat
    */
-  show(): string {
+  show(): DisplayedStat {
     return `${this.showValue()} ${this.getDisplayType()}`      
   }
 
@@ -167,7 +168,7 @@ export abstract class Stat {
    * Return only the value of this stat as a string
    * @returns {string}
    */
-  showValue(): string {
+  showValue(): `${string}${''|'%'}` {
     return `${this.#displayValue}${this.displayModifier}`;
   }
 
