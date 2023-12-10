@@ -41,7 +41,7 @@ const HelpView = () => {
   const topicsBySection: Record<HelpSections, number[]> = {
     general: [1, 2, 3, 4, 5],
     profiles: [1, 2, 3, 4, 5],
-    explorer: [1],
+    explorer: [1, 2],
     optimizer: [1, 2],
   };
 

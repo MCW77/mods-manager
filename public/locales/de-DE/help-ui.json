@@ -32,8 +32,18 @@
   "explorer": {
     "Title": "Mod Übersicht",
     "topics": {
-      "1": "Adding a profile",
-      "2": "Getting your mods"
+      "1": "Mod Übersicht ??",
+      "2": "Filter"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Mod Übersicht ??",
+        "1": "halli"
+      },
+      "2": {
+        "Headline": "Filter",
+        "1": "hallo"
+      }
     }
   },
   "optimizer": {

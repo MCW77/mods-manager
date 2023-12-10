@@ -32,8 +32,18 @@
   "explorer": {
     "Title": "Mod Explorer",
     "topics": {
-      "1": "Adding a profile",
-      "2": "Getting your mods"
+      "1": "Mod Explorer ??",
+      "2": "Filters"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Mod Explorer",
+        "1": "hello"
+      },
+      "2": {
+        "Headline": "Filters",
+        "1": "there"
+      }
     }
   },
   "optimizer": {
