@@ -48,9 +48,13 @@
   width: clamp(320px - 2em, 70%, 70ch);
 }
 
-.Help-page .topic h2 {
+.Help-page .topic :where(h1, h2, h3, h4, h5, h6) {
   text-align: center;
   line-height: 1.2;
+}
+
+.Help-page .topic :where(h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p) {
+  margin-top: 0;
 }
 
 .Help-page .topic p {
