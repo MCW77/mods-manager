@@ -81,7 +81,7 @@ const SettingsView = () => {
         {renderSection('explorer')}
         {renderSection('optimizer')}
       </nav>
-      <div className={'settings'}>{renderTopic()}</div>
+      <div className={'overflow-y-auto'}>{renderTopic()}</div>
     </div>
   );
 };
