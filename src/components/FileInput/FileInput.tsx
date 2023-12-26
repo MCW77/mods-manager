@@ -7,14 +7,17 @@ import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 
 type ComponentProps = {
+  accept?: string,
   className?: string,
-  icon: IconDefinition;
+  icon: IconDefinition,
   label: string,
   handler: (f: File) => void
 };
 
 const FileInput = React.memo(
-  ({className = '',
+  ({
+    accept = '',
+    className = '',
     icon,
     label,
     handler,
@@ -24,6 +27,7 @@ const FileInput = React.memo(
       <label className={`file button ${className}`}>
         <FontAwesomeIcon icon={icon} title={label}/>
         <input
+          accept={accept}
           className={`sr-only`}
           ref={fileInput}
           type="file"
