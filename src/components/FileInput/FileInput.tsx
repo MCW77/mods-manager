@@ -5,6 +5,10 @@ import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+
 
 type ComponentProps = {
   accept?: string,
@@ -24,11 +28,17 @@ const FileInput = React.memo(
   }: ComponentProps) => {
     const fileInput = useRef<HTMLInputElement>(null);
     return (
-      <label className={`file button ${className}`}>
-        <FontAwesomeIcon icon={icon} title={label}/>
-        <input
+      <div className={className}>
+        <Label htmlFor="file-input" className={'cursor-pointer w-full block group'}>
+          <Button className={'pointer-events-none w-full group-hover:bg-slate-900/90 dark:group-hover:bg-slate-50/90'}>
+            <FontAwesomeIcon className={`p-r-2`} icon={icon} />
+            {label}
+          </Button>
+        </Label>
+        <Input
           accept={accept}
           className={`sr-only`}
+          id="file-input"
           ref={fileInput}
           type="file"
           onChange={() => {
@@ -37,8 +47,7 @@ const FileInput = React.memo(
             }
           }}
         />
-        {label}
-      </label>
+      </div>
     );
   }
 );
