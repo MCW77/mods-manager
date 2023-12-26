@@ -1,0 +1,44 @@
+{
+  "explorer": {
+    "Title": "Mod Inventar"
+  },
+  "general": {
+    "Title": "Allgemein",
+    "accounts": {
+      "Title": "Profile",
+      "Delete": "Lösche Profil",
+      "Import": "Importiere Profil",
+      "Profile": "Bündniscode - Name im Spiel"
+    },
+    "backup": {
+      "Title": "Sicherheitskopie & Neustart",
+      "Restore": "Lade Dateibackup",
+      "Save": "Speichere Dateibackup",
+      "Reset": "Neustart"
+    },
+    "display": {
+      "Title": "Darstellung",
+      "DarkMode": "Dunkler Modus",
+      "Language": "Sprache"
+    }
+  },
+  "optimizer": {
+    "TemplateDelete": "Lösche Vorlage",
+    "Title": "Mod Optimierer",
+    "global": {
+      "Title": "Globale Optimierungseinstellungen",
+      "Threshold": "Grenzwert für Modtausch",
+      "LockUnselected": "Sperre alle unselektierten Charaktere",
+      "NoModSetsBreak": "Keine Modsets aufbrechen"
+    },
+    "templates": {
+      "Title": "Charakter Vorlagen",
+      "AddingMode": "Hinzufügemodus",
+      "Append": "Anhängen",
+      "Apply": "Nur Vorgaben ersetzen",
+      "Delete": "Lösche",
+      "Replace": "Ersetzen",
+      "Own": "Eigene Vorlagen"
+    }
+  }
+}

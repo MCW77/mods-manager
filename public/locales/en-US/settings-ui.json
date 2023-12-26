@@ -1,0 +1,44 @@
+{
+  "explorer": {
+    "Title": "Mod Inventory"
+  },
+  "general": {
+    "Title": "Basics",
+    "accounts": {
+      "Title": "Accounts",
+      "Delete": "Delete account",
+      "Import": "Import account",
+      "Profile": "Allycode - Ingame Name"
+    },
+    "backup": {
+      "Title": "Backups & Reset",
+      "Restore": "Import file backup",
+      "Save": "Save file backup",
+      "Reset": "Reset all data"
+    },
+    "display": {
+      "Title": "Display",
+      "Language": "Language",
+      "DarkMode": "Dark Mode"
+    }
+  },
+  "optimizer": {
+    "TemplateDelete": "Delete template",
+    "Title": "Mod Optimizer",
+    "global": {
+      "Title": "Global Optimizer Settings",
+      "Threshold": "Threshold to change mods",
+      "LockUnselected": "Lock all unselected characters",
+      "NoModSetsBreak": "Don't break mod sets"
+    },
+    "templates": {
+      "Title": "Character Templates",
+      "AddingMode": "Adding mode",
+      "Append": "Append",
+      "Apply": "Apply targets only",
+      "Delete": "Delete",
+      "Replace": "Replace",
+      "Own": "Own templates"
+    }
+  }
+}
