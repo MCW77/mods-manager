@@ -15,5 +15,5 @@ export default function formatAllyCode(allyCode: string) {
   const allyCodeChunks = cleanedAllyCode.match(/\d{1,3}/g) || [];
 
   // Add dashes between each and set the value back on the field
-  return allyCodeChunks.join('-');
+  return allyCodeChunks.join('\u2011');
 }
