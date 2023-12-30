@@ -7,6 +7,11 @@
     "accounts": {
       "Title": "Profile",
       "Delete": "Lösche Profil",
+      "DeletionConfirmation": "Willst du wirklich alle Daten löschen, die für diesen Bündniscode im Browser gespeichert sind? (Mods, Charaktere, Charakterauswahl und Zielwerte)",
+      "DeletionExplanation1": "Die Mod- und Charakterdaten kannst du einfach erneut mit dem Bündniscode abrufen.",
+      "DeletionExplanation2": "Die restlichen Daten sind verloren, falls nicht vorher ein Backup gemacht wurde.",
+      "Cancel": "Abbruch",
+      "Proceed": "Ja, lösche Daten",
       "Import": "Importiere Profil",
       "Profile": "Bündniscode - Name im Spiel"
     },

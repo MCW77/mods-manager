@@ -7,6 +7,11 @@
     "accounts": {
       "Title": "Accounts",
       "Delete": "Delete account",
+      "DeletionConfirmation": "Are you sure you want to delete all data for that allycode that is stored in your browser? (mods, toons, character selections and targets)",
+      "DeletionExplanation1": "You will be able to restore the character and mod data by fetching with this allycode again.",
+      "DeletionExplanation2": "The rest will be lost unless you make a backup first.",
+      "Cancel": "Cancel",
+      "Proceed": "Yes, delete data",
       "Import": "Import account",
       "Profile": "Allycode - Ingame Name"
     },
