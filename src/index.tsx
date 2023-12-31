@@ -31,7 +31,7 @@ import { App } from './containers/App/App';
 
 const store = configureStore({
   reducer: modsOptimizer,
-  middleware: (getDefaultMiddleware) => 
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
@@ -77,10 +77,12 @@ getDatabase(
 
 const root = createRoot(document.getElementById('root')!);
 root.render(
-  <Provider store={store}>
-    <Suspense fallback={<Spinner isVisible={true}/>}>
-      <App />
-    </Suspense>
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <Suspense fallback={<Spinner isVisible={true}/>}>
+        <App />
+      </Suspense>
+    </Provider>
+  </React.StrictMode>
 );
 registerServiceWorker();
