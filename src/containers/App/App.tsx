@@ -10,7 +10,6 @@ import './App.css';
 import {
   faArrowsRotate,
   faFile,
-  faFileImport,
   faFire,
   faGear,
   faInfo,
@@ -18,7 +17,6 @@ import {
   faPowerOff,
   faQuestion,
   faSave,
-  faTrashCan,
   faUser,
   faWrench,
 } from '@fortawesome/free-solid-svg-icons'
@@ -221,15 +219,6 @@ class App extends PureComponent<Props> {
                 <option key={'new'} value={''}>New Code...</option>
               </Dropdown>
             }
-            {this.props.allyCode &&
-              <button
-                type={'button'}
-                className={'red'}
-                onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
-              >
-                <FontAwesomeIcon icon={faTrashCan} title={`${this.props.t('header.ProfileDelete')}`}/>
-              </button>
-            }
             {
               this.props.allyCode &&
               <div className="fetch-actions">
@@ -269,11 +258,6 @@ class App extends PureComponent<Props> {
                     </span>
                   </button>
                 }
-                <FileInput
-                  label={'Import'}
-                  icon={faFileImport}
-                  handler={(file) => this.readFile(file, this.props.importC3POProfile)}
-                />
               </div>
             }
             </div>
@@ -410,27 +394,6 @@ class App extends PureComponent<Props> {
     </div>
   }
 
-  /**
-   * Renders the "Are you sure?" modal for deleting an ally code
-   */
-  deleteAllyCodeModal() {
-    return <div>
-      <h2>Delete <strong>{formatAllyCode(this.props.allyCode)}</strong>?</h2>
-      <p>This will delete the ally code, all of its mods, character selections, and targets from stored data.</p>
-      <p>You will be able to restore the character and mod data by fetching with this ally code again.</p>
-      <p>Are you sure you want to delete this code?</p>
-      <div className={'actions'}>
-        <button type={'button'} onClick={() => this.props.hideModal()}>Cancel</button>
-        <button type={'button'} className={'red'}
-          onClick={() => {
-            this.props.hideModal();
-            this.props.deleteProfile(this.props.allyCode);
-          }}>
-          Delete
-        </button>
-      </div>
-    </div>;
-  }
 
   /**
    * Renders a modal stating that pulling unequipped mods using HotUtils will log you out of the game
@@ -541,10 +504,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   hideModal: () => dispatch(AppModule.actions.hideModal()),
   showError: (message: UITypes.DOMContent) => dispatch(AppModule.actions.showError(message)),
   reset: () => dispatch(AppModule.thunks.reset()),
-  importC3POProfile: (profile: string) => dispatch(AppModule.thunks.importC3POProfile(profile)),
   restoreProgress: (progressData: string) => dispatch(AppModule.thunks.restoreProgress(progressData)),
   switchProfile: (allyCode: string) => dispatch(Storage.thunks.loadProfile(allyCode)),
-  deleteProfile: (allyCode: string) => dispatch(AppModule.thunks.deleteProfile(allyCode)),
   exportDatabase: (callback: (ud: IUserData) => void) => dispatch(Storage.thunks.exportDatabase(callback))
 });
 

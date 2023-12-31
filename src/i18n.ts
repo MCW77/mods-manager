@@ -25,6 +25,7 @@ i18n
       'help-ui',
       'global-ui',
       'optimize-ui',
+      'settings-ui',
     ],
     defaultNS: defaultNS,
     load: 'currentOnly',

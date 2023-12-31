@@ -1,0 +1,49 @@
+{
+  "explorer": {
+    "Title": "Mod Inventory"
+  },
+  "general": {
+    "Title": "Basics",
+    "accounts": {
+      "Title": "Accounts",
+      "Delete": "Delete account",
+      "DeletionConfirmation": "Are you sure you want to delete all data for that allycode that is stored in your browser? (mods, toons, character selections and targets)",
+      "DeletionExplanation1": "You will be able to restore the character and mod data by fetching with this allycode again.",
+      "DeletionExplanation2": "The rest will be lost unless you make a backup first.",
+      "Cancel": "Cancel",
+      "Proceed": "Yes, delete data",
+      "Import": "Import account",
+      "Profile": "Allycode - Ingame Name"
+    },
+    "backup": {
+      "Title": "Backups & Reset",
+      "Restore": "Import file backup",
+      "Save": "Save file backup",
+      "Reset": "Reset all data"
+    },
+    "display": {
+      "Title": "Display",
+      "Language": "Language",
+      "DarkMode": "Dark Mode"
+    }
+  },
+  "optimizer": {
+    "TemplateDelete": "Delete template",
+    "Title": "Mod Optimizer",
+    "global": {
+      "Title": "Global Optimizer Settings",
+      "Threshold": "Threshold to change mods",
+      "LockUnselected": "Lock all unselected characters",
+      "NoModSetsBreak": "Don't break mod sets"
+    },
+    "templates": {
+      "Title": "Character Templates",
+      "AddingMode": "Adding mode",
+      "Append": "Append",
+      "Apply": "Apply targets only",
+      "Delete": "Delete",
+      "Replace": "Replace",
+      "Own": "Own templates"
+    }
+  }
+}

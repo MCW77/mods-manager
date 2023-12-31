@@ -1,0 +1,49 @@
+{
+  "explorer": {
+    "Title": "Mod Inventar"
+  },
+  "general": {
+    "Title": "Allgemein",
+    "accounts": {
+      "Title": "Profile",
+      "Delete": "Lösche Profil",
+      "DeletionConfirmation": "Willst du wirklich alle Daten löschen, die für diesen Bündniscode im Browser gespeichert sind? (Mods, Charaktere, Charakterauswahl und Zielwerte)",
+      "DeletionExplanation1": "Die Mod- und Charakterdaten kannst du einfach erneut mit dem Bündniscode abrufen.",
+      "DeletionExplanation2": "Die restlichen Daten sind verloren, falls nicht vorher ein Backup gemacht wurde.",
+      "Cancel": "Abbruch",
+      "Proceed": "Ja, lösche Daten",
+      "Import": "Importiere Profil",
+      "Profile": "Bündniscode - Name im Spiel"
+    },
+    "backup": {
+      "Title": "Sicherheitskopie & Neustart",
+      "Restore": "Lade Dateibackup",
+      "Save": "Speichere Dateibackup",
+      "Reset": "Neustart"
+    },
+    "display": {
+      "Title": "Darstellung",
+      "DarkMode": "Dunkler Modus",
+      "Language": "Sprache"
+    }
+  },
+  "optimizer": {
+    "TemplateDelete": "Lösche Vorlage",
+    "Title": "Mod Optimierer",
+    "global": {
+      "Title": "Globale Optimierungseinstellungen",
+      "Threshold": "Grenzwert für Modtausch",
+      "LockUnselected": "Sperre alle unselektierten Charaktere",
+      "NoModSetsBreak": "Keine Modsets aufbrechen"
+    },
+    "templates": {
+      "Title": "Charakter Vorlagen",
+      "AddingMode": "Hinzufügemodus",
+      "Append": "Anhängen",
+      "Apply": "Nur Vorgaben ersetzen",
+      "Delete": "Lösche",
+      "Replace": "Ersetzen",
+      "Own": "Eigene Vorlagen"
+    }
+  }
+}
