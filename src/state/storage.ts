@@ -163,7 +163,7 @@ export class AppState {
  * @param state {object}
  */
  static serialize(state: any): any {
-    if (null === state || undefined === typeof state) {
+    if (null === state || "undefined" === typeof state) {
       return null;
     } else if ('function' === typeof state.serialize) {
       return state.serialize();
