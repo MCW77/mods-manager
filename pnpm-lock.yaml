@@ -37,7 +37,7 @@ dependencies:
     version: 1.0.2(@types/react@18.2.46)(react@18.2.0)
   '@reduxjs/toolkit':
     specifier: ^2.0.1
-    version: 2.0.1(react-redux@9.0.2)(react@18.2.0)
+    version: 2.0.1(react-redux@9.0.4)(react@18.2.0)
   '@unocss/preset-mini':
     specifier: ^0.58.0
     version: 0.58.0
@@ -84,8 +84,8 @@ dependencies:
     specifier: ^13.5.0
     version: 13.5.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
   react-redux:
-    specifier: ^9.0.2
-    version: 9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.1)
+    specifier: ^9.0.4
+    version: 9.0.4(@types/react@18.2.46)(react@18.2.0)(redux@5.0.1)
   react-responsive:
     specifier: ^9.0.2
     version: 9.0.2(react@18.2.0)
@@ -2669,7 +2669,7 @@ packages:
       '@babel/runtime': 7.23.2
     dev: false
 
-  /@reduxjs/toolkit@2.0.1(react-redux@9.0.2)(react@18.2.0):
+  /@reduxjs/toolkit@2.0.1(react-redux@9.0.4)(react@18.2.0):
     resolution: {integrity: sha512-fxIjrR9934cmS8YXIGd9e7s1XRsEU++aFc9DVNMFMRTM5Vtsg2DCRMj21eslGtDt43IUf9bJL3h5bwUlZleibA==}
     peerDependencies:
       react: ^16.9.0 || ^17.0.0 || ^18
@@ -2682,7 +2682,7 @@ packages:
     dependencies:
       immer: 10.0.3
       react: 18.2.0
-      react-redux: 9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.1)
+      react-redux: 9.0.4(@types/react@18.2.46)(react@18.2.0)(redux@5.0.1)
       redux: 5.0.1
       redux-thunk: 3.1.0(redux@5.0.1)
       reselect: 5.0.1
@@ -4923,21 +4923,15 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
-  /react-redux@9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.1):
-    resolution: {integrity: sha512-34EI42cYZxJF59Iht6RDM5xDun5EdhV8CbJcTe+mYx97XMHLNYA6RrH9r/ZOZX3CetVCYfBEU9oAY9h3sZarsw==}
+  /react-redux@9.0.4(@types/react@18.2.46)(react@18.2.0)(redux@5.0.1):
+    resolution: {integrity: sha512-9J1xh8sWO0vYq2sCxK2My/QO7MzUMRi3rpiILP/+tDr8krBHixC6JMM17fMK88+Oh3e4Ae6/sHIhNBgkUivwFA==}
     peerDependencies:
-      '@types/react': ^18.2.41
-      '@types/react-dom': ^18.2.17
+      '@types/react': ^18.2.25
       react: ^18.0
-      react-dom: ^18.0
-      react-native: '>=0.71'
+      react-native: '>=0.69'
       redux: ^5.0.0
     peerDependenciesMeta:
       '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-      react-dom:
         optional: true
       react-native:
         optional: true
@@ -4945,10 +4939,8 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.46
-      '@types/react-dom': 18.2.18
       '@types/use-sync-external-store': 0.0.3
       react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       redux: 5.0.1
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
