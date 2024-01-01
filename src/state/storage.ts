@@ -26,81 +26,86 @@ import * as UITypes from "../components/types";
 
 export interface IAppState {
   allyCode: string,
-  characterFilter: string,
+  baseCharacters: BaseCharactersById,
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
+  characterFilter: string,
+  characters?: Characters,
   error: UITypes.DOMContent | null,
   flashMessage: {
     heading: UITypes.DOMContent,
     content: UITypes.DOMContent
   } | null,
-  baseCharacters: BaseCharactersById,
-  hideSelectedCharacters: boolean,
-  hotUtilsSubscription: boolean,
-  isBusy: boolean,
-  modal: ModalProps,
-  modListFilter: ModListFilter,
-  modsViewOptions: ModsViewOptions,
-  optimizerView: 'edit' | 'review',
-  playerProfiles: PlayerNamesByAllycode,
-  profile: PlayerProfile, // All the data about the current character
-  section: UITypes.Sections,
-  previousSection: UITypes.Sections,
   help: {
     section: HelpSections;
     topic: number,
   },
+  hideSelectedCharacters: boolean,
+  hotUtilsSubscription: boolean,
+  isBusy: boolean,
+  modListFilter: ModListFilter,
+  modal: ModalProps,
+  modsViewOptions: ModsViewOptions,
+  optimizerView: 'edit' | 'review',
+  playerProfiles: PlayerNamesByAllycode,
+  previousSection: UITypes.Sections,
+  profile: PlayerProfile, // All the data about the current character
+  profiles?: PlayerProfile[],
+  progress: OptimizationStatus,
+  section: UITypes.Sections,
+  setRestrictions: SetRestrictions,
   settings: {
     section: SettingsSections;
     topic: number,
   },
   showSidebar: boolean,
-  version: string,
-  profiles?: PlayerProfile[],
-  characters?: Characters,
-  setRestrictions: SetRestrictions,
   targetStats: TargetStats,
-  progress: OptimizationStatus,
   templates: Templates,
+  version: string,
 }
 
 export class AppState {
   static readonly keysToSave = [
     'allyCode',
-    'characterFilter',
     'characterEditMode',
     'characterEditSortView',
+    'characterFilter',
     'hideSelectedCharacters',
-    'modsViewOptions',
     'modListFilter',
+    'modsViewOptions',
     'optimizerView',
     'section',
     'showSidebar',
-    'version',
     'templates',
+    'version',
   ] as const;
 
   static readonly Default: IAppState = {
     allyCode: '',
-    characterFilter: '',
+    baseCharacters: {} as BaseCharactersById,
     characterEditMode: 'basic',
     characterEditSortView: false,
+    characterFilter: '',
     error: null,
     flashMessage: null,
-    baseCharacters: {} as BaseCharactersById,
+    help: {
+      section: 'general',
+      topic: 1,
+    },
     hideSelectedCharacters: true,
     hotUtilsSubscription: false,
     isBusy: false,
-    modal: null,
-    modsViewOptions: defaultOptions,
     modListFilter: {
       view: 'sets',
       show: 'all',
       sort: 'assignedCharacter',
       tag: ''
     },
+    modal: null,
+    modsViewOptions: defaultOptions,
     optimizerView: 'edit',
     playerProfiles: {}, // A simple map from ally codes to player names for all available profiles
+    previousSection: 'help',
     profile: PlayerProfile.Default, // All the data about the current character
     progress: {
       character: null,
@@ -108,23 +113,18 @@ export class AppState {
       step: '1',
     },
     section: 'help',
-    previousSection: 'help',
-    help: {
-      section: 'general',
-      topic: 1,
-    },
     settings: {
       section: 'general',
       topic: 1,
     },
-    showSidebar: true,
-    version: String(import.meta.env.VITE_VERSION) || 'local',
     setRestrictions: {} as SetRestrictions,
+    showSidebar: true,
     targetStats: [] as TargetStats,
     templates: {
       templatesAddingMode: 'replace',
       userTemplatesByName: {}
     },
+    version: String(import.meta.env.VITE_VERSION) || 'local',
   };
 
   /**
@@ -198,8 +198,8 @@ export function deserializeState(state: IAppState): IAppState {
     optimizerView: state.optimizerView || AppState.Default.optimizerView,
     section: state.section,
     showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
-    version: version,
     templates: state.templates,
+    version: version,
   },
     state.profiles ?
       {
