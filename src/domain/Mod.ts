@@ -45,14 +45,14 @@ export class Mod {
   assignedID: CharacterNames | 'null';
 
   static firstTimeSetupOfAccessors: boolean = true;
-  
+
   static setupSetAccessor() {
     Object.defineProperty(Mod.prototype, 'Set', {
       get: function(): SetStats.GIMOStatNames {
         return (this as Mod).set;
       },
       configurable: true,
-    });      
+    });
   }
 
   static setupStatAccessors() {
@@ -108,7 +108,7 @@ export class Mod {
       if (this.pips === 6) {
         let tempStat = stat.downgrade();
         tempStat.calcScore();
-        stat.score = tempStat.score; 
+        stat.score = tempStat.score;
       } else {
         stat.calcScore();
       }
@@ -122,7 +122,7 @@ export class Mod {
   isAssigned() {
     return this.assignedID !== 'null';
   }
-  
+
   calculateScores(): void {
     for (let scoreDef of modScores) {
       this.scores[scoreDef.name] = scoreDef.scoringAlgorithm(this);
@@ -282,10 +282,10 @@ export class Mod {
       secondaryValue_4: '45',
       secondaryRoll_4: '1',
     };
-    
+
     for (let i = 0; i < 4; i++) {
       if (i < this.secondaryStats.length) {
-        let mO = this.secondaryStats[i].serialize();        
+        let mO = this.secondaryStats[i].serialize();
         [
           modObject[`secondaryType_${i + 1}` as keyof ModTypes.FlatGIMOModTypeIndexer],
           modObject[`secondaryValue_${i + 1}`as keyof ModTypes.FlatModValueIndexer],
@@ -352,33 +352,33 @@ export class Mod {
 
     if (null !== mod.secondaryType_1 && '' !== mod.secondaryValue_1) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
-        mod.secondaryType_1!,
+        mod.secondaryType_1,
         mod.secondaryValue_1,
-        +mod.secondaryRoll_1! as SecondaryStats.Rolls ?? 1
+        +(mod.secondaryRoll_1 ?? 1) as SecondaryStats.Rolls
       ));
     }
     if (null !== mod.secondaryType_2 && '' !== mod.secondaryValue_2) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
         mod.secondaryType_2,
         mod.secondaryValue_2,
-        +mod.secondaryRoll_2! as SecondaryStats.Rolls ?? 1
+        +(mod.secondaryRoll_2 ?? 1) as SecondaryStats.Rolls
       ));
     }
     if (null !== mod.secondaryType_3 && '' !== mod.secondaryValue_3) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
         mod.secondaryType_3,
         mod.secondaryValue_3,
-        +mod.secondaryRoll_3! as SecondaryStats.Rolls ?? 1
+        +(mod.secondaryRoll_3 ?? 1) as SecondaryStats.Rolls
       ));
     }
     if (null !== mod.secondaryType_4 && '' !== mod.secondaryValue_4) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
         mod.secondaryType_4,
         mod.secondaryValue_4,
-        +mod.secondaryRoll_4! as SecondaryStats.Rolls ?? 1
+        +(mod.secondaryRoll_4 ?? 1) as SecondaryStats.Rolls
       ));
     }
-    
+
     return new Mod(
       mod.mod_uid,
       mod.slot,

@@ -810,8 +810,7 @@ class CharacterEditForm extends React.Component<Props> {
         const maximum = isNaN(targetStatMaxes[i].valueAsNumber) ? 100000000 : targetStatMaxes[i].valueAsNumber;
         const relativeCharacter = targetStatRelativeCharacters[i].value || null;
         const type = targetStatTypes[i].value || null;
-        const shouldOptimize = Boolean(targetStatsShouldOptimize[i]?.value) ?? false;
-
+        const shouldOptimize = targetStatsShouldOptimize[i]?.value === 'true';
 
         if (minimum < maximum) {
           targetStats.push(new TargetStat(name, type, minimum, maximum, relativeCharacter, shouldOptimize));

@@ -903,7 +903,7 @@ const mapStateToProps = (state: IAppState) => {
       ? availableCharacters.filter((c) => !characterFilter(c))
       : [],
     selectedCharacters: profile.selectedCharacters ?? {},
-    lastSelectedCharacter: profile.selectedCharacters.length - 1 ?? 0,
+    lastSelectedCharacter: profile.selectedCharacters.length - 1,
     showReviewButton: profile.modAssignments && Object.keys(profile.modAssignments).length,
     characterTemplates: CharacterEdit.selectors.selectUserTemplatesNames(state),
     templatesAddingMode: CharacterEdit.selectors.selectTemplatesAddingMode(state),

@@ -658,8 +658,8 @@ class Review extends React.PureComponent<Props> {
 
     const checkNameAndCreateProfile = function (this: Review) {
       if (
-        ('' === categoryInput?.value ?? '')
-        || ('' === profileNameInput?.value ?? '')
+        ('' === (categoryInput?.value ?? ''))
+        || ('' === (profileNameInput?.value ?? ''))
       ) {
         if (error !== null)
           error.textContent = 'You must provide a category and name for your profile';
