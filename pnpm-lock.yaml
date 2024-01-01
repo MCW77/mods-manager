@@ -85,16 +85,16 @@ dependencies:
     version: 13.5.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
   react-redux:
     specifier: ^9.0.2
-    version: 9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.0)
+    version: 9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.1)
   react-responsive:
     specifier: ^9.0.2
     version: 9.0.2(react@18.2.0)
   redux:
-    specifier: ^5.0.0
-    version: 5.0.0
+    specifier: ^5.0.1
+    version: 5.0.1
   redux-thunk:
     specifier: ^3.1.0
-    version: 3.1.0(redux@5.0.0)
+    version: 3.1.0(redux@5.0.1)
   tailwind-merge:
     specifier: ^2.2.0
     version: 2.2.0
@@ -2682,9 +2682,9 @@ packages:
     dependencies:
       immer: 10.0.3
       react: 18.2.0
-      react-redux: 9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.0)
-      redux: 5.0.0
-      redux-thunk: 3.1.0(redux@5.0.0)
+      react-redux: 9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.1)
+      redux: 5.0.1
+      redux-thunk: 3.1.0(redux@5.0.1)
       reselect: 5.0.1
     dev: false
 
@@ -4923,7 +4923,7 @@ packages:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
-  /react-redux@9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.0):
+  /react-redux@9.0.2(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)(redux@5.0.1):
     resolution: {integrity: sha512-34EI42cYZxJF59Iht6RDM5xDun5EdhV8CbJcTe+mYx97XMHLNYA6RrH9r/ZOZX3CetVCYfBEU9oAY9h3sZarsw==}
     peerDependencies:
       '@types/react': ^18.2.41
@@ -4949,7 +4949,7 @@ packages:
       '@types/use-sync-external-store': 0.0.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      redux: 5.0.0
+      redux: 5.0.1
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
@@ -5041,16 +5041,16 @@ packages:
     dependencies:
       picomatch: 2.3.1
 
-  /redux-thunk@3.1.0(redux@5.0.0):
+  /redux-thunk@3.1.0(redux@5.0.1):
     resolution: {integrity: sha512-NW2r5T6ksUKXCabzhL9z+h206HQw/NJkcLm1GPImRQ8IzfXwRGqjVhKJGauHirT0DAuyy6hjdnMZaRoAcy0Klw==}
     peerDependencies:
       redux: ^5.0.0
     dependencies:
-      redux: 5.0.0
+      redux: 5.0.1
     dev: false
 
-  /redux@5.0.0:
-    resolution: {integrity: sha512-blLIYmYetpZMET6Q6uCY7Jtl/Im5OBldy+vNPauA8vvsdqyt66oep4EUpAMWNHauTC6xa9JuRPhRB72rY82QGA==}
+  /redux@5.0.1:
+    resolution: {integrity: sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w==}
     dev: false
 
   /regenerate-unicode-properties@10.1.1:
