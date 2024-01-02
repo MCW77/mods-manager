@@ -61,6 +61,7 @@ export interface IAppState {
   showSidebar: boolean,
   targetStats: TargetStats,
   templates: Templates,
+  theme: 'light' | 'dark',
   version: string,
 }
 
@@ -77,6 +78,7 @@ export class AppState {
     'section',
     'showSidebar',
     'templates',
+    'theme',
     'version',
   ] as const;
 
@@ -124,6 +126,7 @@ export class AppState {
       templatesAddingMode: 'replace',
       userTemplatesByName: {}
     },
+    theme: 'dark',
     version: String(import.meta.env.VITE_VERSION) || 'local',
   };
 
@@ -199,6 +202,7 @@ export function deserializeState(state: IAppState): IAppState {
     section: state.section,
     showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
     templates: state.templates,
+    theme: state.theme || AppState.Default.theme,
     version: version,
   },
     state.profiles ?

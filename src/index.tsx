@@ -75,7 +75,9 @@ getDatabase(
   }
 );
 
-const root = createRoot(document.getElementById('root')!);
+const rootNode = document.getElementById('root')!;
+rootNode.classList.add(store.getState().theme);
+const root = createRoot(rootNode);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
