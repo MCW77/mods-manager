@@ -1,12 +1,10 @@
 // utils
 import { mapValues } from "lodash-es";
-import formatAllyCode from "../utils/formatAllyCode";
 import { pick } from "../utils/mapObject";
 import { ElementType } from "../utils/typeHelper";
 
 // domain
 import { BaseCharactersById } from "../domain/BaseCharacter";
-import { Character, Characters } from "../domain/Character";
 import { CharacterEditMode } from "../domain/CharacterEditMode";
 import { HelpSections } from "../domain/HelpSections";
 import { ModalProps } from "../domain/ModalProps";
@@ -14,7 +12,7 @@ import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerNamesByAllycode } from "../domain/PlayerNamesByAllycode";
-import { PlayerProfile, IFlatPlayerProfile } from "../domain/PlayerProfile";
+import { PlayerProfile } from "../domain/PlayerProfile";
 import { SetRestrictions } from "../domain/SetRestrictions";
 import { SettingsSections } from "../domain/SettingsSections";
 import { TargetStats } from "../domain/TargetStat";
@@ -30,7 +28,6 @@ export interface IAppState {
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
   characterFilter: string,
-  characters?: Characters,
   error: UITypes.DOMContent | null,
   flashMessage: {
     heading: UITypes.DOMContent,
@@ -50,7 +47,6 @@ export interface IAppState {
   playerProfiles: PlayerNamesByAllycode,
   previousSection: UITypes.Sections,
   profile: PlayerProfile, // All the data about the current character
-  profiles?: PlayerProfile[],
   progress: OptimizationStatus,
   section: UITypes.Sections,
   setRestrictions: SetRestrictions,
@@ -190,36 +186,23 @@ export class AppState {
 export function deserializeState(state: IAppState): IAppState {
   const version: string = String(import.meta.env.VITE_VERSION) || 'local';
 
-  return Object.assign({}, AppState.Default, {
-    allyCode: state.allyCode,
-    characterEditMode: state.characterEditMode || AppState.Default.characterEditMode,
-    characterEditSortView: state.characterEditSortView || AppState.Default.characterEditSortView,
-    characterFilter: state.characterFilter || AppState.Default.characterFilter,
-    hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
-    modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
-    modListFilter: state.modListFilter || AppState.Default.modListFilter,
-    optimizerView: state.optimizerView || AppState.Default.optimizerView,
-    section: state.section,
-    showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
-    templates: state.templates,
-    theme: state.theme || AppState.Default.theme,
-    version: version,
-  },
-    state.profiles ?
-      {
-        profiles: mapValues(state.profiles, (profile: IFlatPlayerProfile, allyCode: string) => {
-          profile.allyCode = allyCode;
-          profile.playerName = formatAllyCode(allyCode);
-          return PlayerProfile.deserialize(profile);
-        })
-      }
-    :
-      null,
-    state.characters ?
-      {
-        characters: mapValues(state.characters, (character: Character) => Character.deserialize(character))
-      }
-    :
-      null
+  return Object.assign(
+    {},
+    AppState.Default,
+    {
+      allyCode: state.allyCode,
+      characterEditMode: state.characterEditMode || AppState.Default.characterEditMode,
+      characterEditSortView: state.characterEditSortView || AppState.Default.characterEditSortView,
+      characterFilter: state.characterFilter || AppState.Default.characterFilter,
+      hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
+      modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
+      modListFilter: state.modListFilter || AppState.Default.modListFilter,
+      optimizerView: state.optimizerView || AppState.Default.optimizerView,
+      section: state.section,
+      showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
+      templates: state.templates,
+      theme: state.theme || AppState.Default.theme,
+      version: version,
+    },
   );
 }
