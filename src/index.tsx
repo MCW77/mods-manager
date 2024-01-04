@@ -7,10 +7,10 @@ import { ThunkDispatch } from "./state/reducers/modsOptimizer";
 
 // styles
 import 'virtual:uno.css';
+import './i18n';
 import './index.css';
 
 import registerServiceWorker from './registerServiceWorker';
-import './i18n';
 
 // state
 import getDatabase from "./state/storage/Database";
