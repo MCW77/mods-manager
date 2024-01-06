@@ -10,7 +10,6 @@ import {
   faAnglesUp,
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons';
-import './ExploreView.css';
 
 // utils
 import { forEach } from 'lodash-es';
@@ -112,13 +111,13 @@ class ExploreView extends React.PureComponent<Props> {
             key={"mods"}
             ref={modsElement}
           >
-            <div id="modsheader">
-              <div>
+            <div className="flex justify-between">
+              <div className="flex gap-2 p-l-2 items-center text-sm align-middle">
                 {this.props.t(`explore-ui:ModsShown`, {'actual': this.props.displayedModsCount, 'max': this.props.modCount})}
                 &nbsp;
                 <Button
                   type={"button"}
-                  size={"icon"}
+                  size={"sm"}
                   variant={'destructive'}
                   onClick={() => {
                     this.props.showModal(this.deleteModsModal());
@@ -127,9 +126,9 @@ class ExploreView extends React.PureComponent<Props> {
                   <FontAwesomeIcon icon={faTrashCan} title={this.props.t(`explore-ui:DeleteButton`)}/>
                 </Button>
               </div>
-              <div id="modgroupsactions">
+              <div className="flex gap-2 justify-center items-center p-t-2 p-r-6">
                 <Button
-                  size={"icon"}
+                  size={"sm"}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     forEach(
                       modsElement.current?.getElementsByClassName("modgroupmods"),
@@ -142,7 +141,7 @@ class ExploreView extends React.PureComponent<Props> {
                   <FontAwesomeIcon icon={faAnglesDown} title={this.props.t('explore-ui:Expand')}/>
                 </Button>
                 <Button
-                  size={"icon"}
+                  size={"sm"}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     forEach(
                       modsElement.current?.getElementsByClassName("modgroupmods"),
