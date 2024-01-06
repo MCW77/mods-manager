@@ -153,7 +153,7 @@ class CharacterEditView extends PureComponent<Props> {
           <div className="selected-characters">
             <h4>
               Selected Characters
-              <div className="character-list-actions">
+              <div className="flex gap-2 justify-center items-center">
                 <Button
                   size="sm"
                   onClick={this.props.clearSelectedCharacters}
@@ -345,7 +345,7 @@ class CharacterEditView extends PureComponent<Props> {
           >
             Reset all targets
           </Button>
-          <HelpLink title="Global Settings" section="optimizer" topic={1} />
+          <HelpLink title="Global Settings Helppage" section="optimizer" topic={1} />
           <SettingsLink title="Global Settings" section="optimizer" topic={1} />
         </div>
       </DefaultCollapsibleCard>
@@ -381,7 +381,7 @@ class CharacterEditView extends PureComponent<Props> {
             Auto-generate List
           </Button>
           <Button
-            size="icon"
+            size="sm"
             disabled={!this.props.selectedCharacters.length}
             onClick={() =>
               this.props.showModal(
