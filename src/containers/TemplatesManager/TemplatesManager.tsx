@@ -13,6 +13,7 @@ import {
 
 // utils
 import { saveAs } from "file-saver";
+import { readFile } from "#/utils/readFile";
 
 // modules
 import { App } from '../../state/modules/app';
@@ -38,25 +39,6 @@ const TemplatesManager = React.memo(
     const [selectedTemplates, setSelectedTemplates] = useState([] as CharacterTemplates);
     const [t, i18n] = useTranslation(['global-ui', 'settings-ui']);
 
-    /**
-     * Read a file as input and pass its contents to another function for processing
-     * @param fileInput The uploaded file
-     * @param handleResult Function string => *
-     */
-    const readFile = (fileInput: Blob, handleResult: (textInFile: string) => void) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        try {
-          const fileData: string = event?.target?.result as string ?? '';
-          handleResult(fileData);
-        } catch (e) {
-          dispatch(App.actions.showError((e as Error).message));
-        }
-      };
-
-      reader.readAsText(fileInput);
-    }
 
     console.log('rendering TemplatesManager');
     console.dir(selectedTemplates);
@@ -69,33 +51,37 @@ const TemplatesManager = React.memo(
             className={"small"}
             icon={faFile}
             handler={(file) =>
-              readFile(file, (templates) => {
-                try {
-                  const templatesObject = JSON.parse(templates);
-                  const templatesDeserialized = templatesObject.map(
-                    (t: FlatCharacterTemplate) => ({
-                      name: t.name,
-                      selectedCharacters: t.selectedCharacters.map(
-                        ({
-                          id,
-                          target,
-                        }: {
-                          id: CharacterNames;
-                          target: OptimizationPlan;
-                        }) => ({
-                          id: id,
-                          target: OptimizationPlan.deserialize(target),
-                        })
-                      ),
-                    })
-                  );
-                  dispatch(CharacterEdit.thunks.saveTemplates(templatesDeserialized));
-                } catch (e) {
-                  throw new Error(
-                    "Unable to read templates from file. Make sure that you've selected a character templates file"
-                  );
-                }
-              })
+              readFile(
+                file,
+                (templates) => {
+                  try {
+                    const templatesObject = JSON.parse(templates);
+                    const templatesDeserialized = templatesObject.map(
+                      (t: FlatCharacterTemplate) => ({
+                        name: t.name,
+                        selectedCharacters: t.selectedCharacters.map(
+                          ({
+                            id,
+                            target,
+                          }: {
+                            id: CharacterNames;
+                            target: OptimizationPlan;
+                          }) => ({
+                            id: id,
+                            target: OptimizationPlan.deserialize(target),
+                          })
+                        ),
+                      })
+                    );
+                    dispatch(CharacterEdit.thunks.saveTemplates(templatesDeserialized));
+                  } catch (e) {
+                    throw new Error(
+                      "Unable to read templates from file. Make sure that you've selected a character templates file"
+                    );
+                  }
+                },
+                (error) => dispatch(App.actions.showError(error.message)),
+              )
             }
           />
           <Button
