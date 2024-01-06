@@ -1,8 +1,8 @@
 // react
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 import { useTranslation } from "react-i18next";
+import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import {
@@ -16,20 +16,20 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // modules
-import { App } from '../../state/modules/app';
-import { CharacterEdit } from '../../state/modules/characterEdit';
+import { App } from "#/state/modules/app";
+import { CharacterEdit } from '#/state/modules/characterEdit';
 
 // domain
-import { CharacterNames } from "../../constants/characterSettings";
+import { CharacterNames } from "#/constants/characterSettings";
 
-import { CharacterTemplates, FlatCharacterTemplate } from "../../domain/CharacterTemplates";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import { CharacterTemplates, FlatCharacterTemplate } from "#/domain/CharacterTemplates";
+import { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { FileInput } from "../../components/FileInput/FileInput";
-import { Button } from "#/components/ui/button";
+import { FileInput } from "#/components/FileInput/FileInput";
+import { Button } from "#ui/button";
 
 
 const TemplatesManager = React.memo(
@@ -38,10 +38,6 @@ const TemplatesManager = React.memo(
     const userCharacterTemplates = useSelector(CharacterEdit.selectors.selectUserTemplates);
     const [selectedTemplates, setSelectedTemplates] = useState([] as CharacterTemplates);
     const [t, i18n] = useTranslation(['global-ui', 'settings-ui']);
-
-
-    console.log('rendering TemplatesManager');
-    console.dir(selectedTemplates);
 
     return (
       <div className={'templates-manager'}>
