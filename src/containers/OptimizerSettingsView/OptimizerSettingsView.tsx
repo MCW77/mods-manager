@@ -34,10 +34,10 @@ const OptimizerSettingsView = () => {
     <div className="grid grid-gap-2 justify-center grid-cols-[repeat(auto-fit,_minmax(min(500px,_100%),_1fr))]">
       <Card className="!bg-opacity-20 m-4">
         <CardHeader>
-          <CardTitle>Global Optimizer Settings</CardTitle>
+          <CardTitle>{t('optimizer.global.Title')}</CardTitle>
         </CardHeader>
         <CardContent className={global}>
-          <label className={labelCSS}>Threshold to Change Mods:</label>
+          <label className={labelCSS}>{t('optimizer.global.Threshold')}:</label>
           <RangeInput
             className={inputCSS}
             name="threshold"
@@ -56,7 +56,7 @@ const OptimizerSettingsView = () => {
             className={labelCSS}
             htmlFor="lock-unselected"
           >
-            Lock all unselected characters:
+            {t('optimizer.global.LockUnselected')}:
           </label>
           <input
             className={inputCSS}
@@ -70,7 +70,7 @@ const OptimizerSettingsView = () => {
             className={labelCSS}
             htmlFor="force-complete-sets"
           >
-            Don't break mod sets:
+            {t('optimizer.global.NoModSetsBreak')}:
           </label>
           <input
             className={inputCSS}
@@ -87,10 +87,10 @@ const OptimizerSettingsView = () => {
       </Card>
       <Card className="!bg-opacity-20 m-4">
         <CardHeader>
-          <CardTitle>Character Templates</CardTitle>
+          <CardTitle>{t('optimizer.templates.Title')}</CardTitle>
         </CardHeader>
         <CardContent className={global}>
-          <label className={labelCSS}>Template adding mode:</label>
+          <label className={labelCSS}>{t('optimizer.templates.AddingMode')}:</label>
           <FormInput>
             <Select
               value={templatesAddingMode}
@@ -103,9 +103,9 @@ const OptimizerSettingsView = () => {
               </SelectTrigger>
               <SelectContent className="accent-blue">
                 <SelectGroup className="accent-blue">
-                  <SelectItem value="append">append</SelectItem>
-                  <SelectItem value="replace">replace</SelectItem>
-                  <SelectItem value="apply targets only">apply targets only</SelectItem>
+                  <SelectItem value="append">{t('optimizer.templates.Append')}</SelectItem>
+                  <SelectItem value="replace">{t('optimizer.templates.Replace')}</SelectItem>
+                  <SelectItem value="apply targets only">{t('optimizer.templates.Apply')}</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -113,7 +113,7 @@ const OptimizerSettingsView = () => {
           <label
             className={labelCSS}
           >
-            User templates:
+            {t('optimizer.templates.Own')}:
           </label>
           <FormInput><TemplatesManager/></FormInput>
         </CardContent>
