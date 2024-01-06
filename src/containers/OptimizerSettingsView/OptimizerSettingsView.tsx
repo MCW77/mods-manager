@@ -111,15 +111,12 @@ const OptimizerSettingsView = () => {
             </Select>
           </FormInput>
           <label
-            className={labelCSS}
+            className={labelCSS + " self-start"}
           >
             {t('optimizer.templates.Own')}:
           </label>
           <FormInput><TemplatesManager/></FormInput>
         </CardContent>
-        <CardFooter className="grid justify-center">
-          <Button>Reset</Button>
-        </CardFooter>
       </Card>
     </div>
   );
