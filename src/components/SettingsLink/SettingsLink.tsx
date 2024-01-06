@@ -2,11 +2,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-// styles
-import {
-  faGear,
-} from "@fortawesome/free-solid-svg-icons";
-
 // modules
 import { Settings } from '#/state/modules/settings';
 
@@ -14,7 +9,10 @@ import { Settings } from '#/state/modules/settings';
 import { SettingsSections } from "#/domain/SettingsSections";
 
 // components
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Settings as SettingsIcon } from "lucide-react";
+
+import { Button } from "#ui/button";
+
 
 type ComponentProps = {
   title: string;
@@ -26,17 +24,17 @@ const SettingsLink = React.memo(
   ({title, section, topic}: ComponentProps) => {
     const dispatch = useDispatch();
 
-    return (
-      <span
-        className={'cursor-pointer'}
-        title={title}
-        onClick={() =>
-          dispatch(Settings.actions.setSettingsPosition(section, topic))
-        }
-      >
-        <FontAwesomeIcon icon={faGear} />
-      </span>
-    )
+    return <Button
+      className='inline-block h-6 w-6 m-x-1 m-y-0 align-middle cursor-pointer'
+      size='icon'
+      title={title}
+      variant='ghost'
+      onClick={() =>
+        dispatch(Settings.actions.setSettingsPosition(section, topic))
+      }
+    >
+      <SettingsIcon className="h-6 w-6 m-auto"></SettingsIcon>
+    </Button>
   }
 )
 
