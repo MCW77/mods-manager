@@ -892,8 +892,6 @@ const mapStateToProps = (state: IAppState) => {
 
   return {
     allyCode: allycode,
-    mods: profile.mods ?? [],
-    globalSettings: profile.globalSettings ?? {},
     characterFilter: state.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters,
     sortView: state.characterEditSortView,
