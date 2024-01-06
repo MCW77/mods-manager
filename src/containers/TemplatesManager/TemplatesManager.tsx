@@ -37,7 +37,7 @@ const TemplatesManager = React.memo(
     const dispatch: ThunkDispatch = useDispatch();
     const userCharacterTemplates = useSelector(CharacterEdit.selectors.selectUserTemplates);
     const [selectedTemplates, setSelectedTemplates] = useState([] as CharacterTemplates);
-    const [t, i18n] = useTranslation(['global-ui', 'settings-ui']);
+    const [t, i18n] = useTranslation('settings-ui');
 
     return (
       <div className={'templates-manager'}>
@@ -121,8 +121,8 @@ const TemplatesManager = React.memo(
               setSelectedTemplates([]);
             }}
           >
-            <FontAwesomeIcon className="m-r-2" icon={faTrashCan} title={`${t('settings-ui:optimizer.TemplateDelete')}`}/>
-            Delete {selectedTemplates.length}
+            <FontAwesomeIcon className="m-r-2" icon={faTrashCan} title={`${t('optimizer.TemplateDelete')}`}/>
+            {t('optimizer.templates.Delete')} {" " + selectedTemplates.length}
           </Button>
 
         </div>
