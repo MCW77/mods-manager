@@ -19,7 +19,11 @@
       "Title": "Sicherheitskopie & Neustart",
       "Restore": "Lade Dateibackup",
       "Save": "Speichere Dateibackup",
-      "Reset": "Neustart"
+      "Reset": "Neustart",
+      "ResetConfirmation": "Mods-Manager zurücksetzen?",
+      "ResetExplanation": "Alle im Browser gespeicherten Daten werden gelöscht. Die gespeicherten Mods-Manager Daten sind verloren, wenn nicht vorher ein Datei-Backup erstellt wird.",
+      "ResetCancel": "Abbruch",
+      "ResetProceed": "Ja, zurücksetzen"
     },
     "display": {
       "Title": "Darstellung",
