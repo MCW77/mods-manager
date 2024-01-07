@@ -64,6 +64,7 @@ class ExploreView extends React.PureComponent<Props> {
           : null;
         return (
           <RenderIfVisible
+            className={"w-[21em]"}
             defaultHeight={278}
             key={`RIV-${mod.id}`}
             visibleOffset={4000}
@@ -91,13 +92,13 @@ class ExploreView extends React.PureComponent<Props> {
     const modGroups = groupedMods.map((mods: Mod[]) => {
       return (
         <div className="modgroup" key={`modgroup-${mods[0].slot}-${mods[0].set}-${mods[0].primaryStat.getDisplayType()}`}>
-          <div className="modgroupheader" onClick={this.modGroupToggle}>
-            <span>{this.props.t(`domain:Slot`)}: {this.props.t(`domain:slots.name.${mods[0].slot}`)}</span>
-            <span>{this.props.t(`domain:Set`)}: {this.props.t(`domain:stats.${mods[0].set}`)}</span>
-            <span>{this.props.t(`domain:Primary`)}: {this.props.t(`domain:stats.${mods[0].primaryStat.getDisplayType()}`)}</span>
-            <span> ({this.props.t(`domain:ModWithCount`, {count: mods.length})})</span>
+          <div className="modgroupheader flex border-b-lightblue border-b-solid border-b-1 text-xs" onClick={this.modGroupToggle}>
+            <span className="basis-20%">{this.props.t(`domain:Slot`)}: {this.props.t(`domain:slots.name.${mods[0].slot}`)}</span>
+            <span className="basis-30%">{this.props.t(`domain:Set`)}: {this.props.t(`domain:stats.${mods[0].set}`)}</span>
+            <span className="basis-30%">{this.props.t(`domain:Primary`)}: {this.props.t(`domain:stats.${mods[0].primaryStat.getDisplayType()}`)}</span>
+            <span className="basis-20%"> ({this.props.t(`domain:ModWithCount`, {count: mods.length})})</span>
           </div>
-          <div className="modgroupmods">{modElements(mods)}</div>
+          <div className="modgroupmods flex flex-row flex-wrap justify-evenly gap-y-4 p-y-2 text-center [&.collapsed]:hidden">{modElements(mods)}</div>
         </div>
       );
     });
@@ -107,8 +108,7 @@ class ExploreView extends React.PureComponent<Props> {
         sidebarContent={ExploreView.sidebar()}
         mainContent={
           <div
-            id="mods"
-            key={"mods"}
+            className="flex flex-col h-full"
             ref={modsElement}
           >
             <div className="flex justify-between">
@@ -155,7 +155,7 @@ class ExploreView extends React.PureComponent<Props> {
                 </Button>
               </div>
             </div>
-            <div id="modgroups" ref={modGroupsElement}>{modGroups}</div>
+            <div className="flex flex-col overflow-y-auto overscroll-y-contain h-full" ref={modGroupsElement}>{modGroups}</div>
           </div>
         }
       />
@@ -175,7 +175,7 @@ class ExploreView extends React.PureComponent<Props> {
           <br />
           {this.props.t(`explore-ui:DeleteAlt2`)}
         </p>
-        <div className={"actions"}>
+        <div className={"actions flex gap-2 justify-center p-t-2"}>
           <Button
             type={"button"}
             onClick={() => {

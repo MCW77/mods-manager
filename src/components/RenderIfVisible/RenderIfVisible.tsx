@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 
 type ComponentProps = {
+  className?: string,
   defaultHeight?: number,
   visibleOffset?: number,
   root?: React.RefObject<HTMLElement> | null,
@@ -12,8 +13,8 @@ type ComponentProps = {
 const isWindowAvailable = typeof window !== 'undefined';
 const isRequestIdleCallbackAvailable = isWindowAvailable && 'requestIdleCallback' in window;
 
-
 const RenderIfVisible = ({
+  className = '',
   defaultHeight = 300,
   visibleOffset = 1000,
   root = null,
@@ -34,7 +35,8 @@ const RenderIfVisible = ({
     } else {
       setIsVisible(visible);
     }
-  }  
+  }
+
   // Set visibility with intersection observer
   useEffect(() => {
     if (intersectionRef.current === null) return () => {};
@@ -64,7 +66,7 @@ const RenderIfVisible = ({
   }, [isVisible, intersectionRef])
 
   return (
-    <div ref={intersectionRef}>
+    <div className={className} ref={intersectionRef}>
       {isVisible ? (
         <>{children}</>
       ) : (
