@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // styles
 import './SettingsView.css';
@@ -14,23 +14,23 @@ import {
 import { match } from 'ts-pattern';
 
 // modules
-import { App } from '../../state/modules/app';
-import { Settings } from '../../state/modules/settings';
-import { Storage } from '../../state/modules/storage';
+import { App } from '#/state/modules/app';
+import { Settings } from '#/state/modules/settings';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { SettingsSections } from '../../domain/SettingsSections';
+import { SettingsSections } from '#/domain/SettingsSections';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // containers
-import OptimizerSettingsView from '../OptimizerSettingsView/OptimizerSettingsView';
+import GeneralSettingsView from '#/containers/GeneralSettingsView/GeneralSettingsView';
+import OptimizerSettingsView from '#/containers/OptimizerSettingsView/OptimizerSettingsView';
 
 const SettingsView = () => {
   const previousSection = useSelector(App.selectors.selectPreviousSection);
   const settingsSection = useSelector(Settings.selectors.selectSettingsPosition).section;
-  const globalOptimizerSettings = useSelector(Storage.selectors.selectGlobalOptimizationSettings);
   const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
   const [currentSection, changeCurrentSection] = useState(settingsSection);
@@ -58,6 +58,7 @@ const SettingsView = () => {
 
   const renderTopic = () => {
     return match(currentSection)
+      .with('general', () => <GeneralSettingsView />)
       .with('optimizer', () => <OptimizerSettingsView />)
       .otherwise(() => {
         return <div id={`settings-${currentSection}`}></div>;

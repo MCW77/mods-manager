@@ -193,10 +193,6 @@ html, body {
   font-size: 1.2em;
 }
 
-.App-header .actions .fetch-actions {
-  display: inline-block;
-}
-
 .App-header .actions form {
   display: inline-block;
 }
@@ -223,7 +219,7 @@ html, body {
   background: url('../../img/cantina-background.jpg') no-repeat center center;
   background-size: cover;
   will-change: transform;
-  z-index: -1;  
+  z-index: -1;
 }
 .app-body a {
   color: white;

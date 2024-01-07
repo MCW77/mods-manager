@@ -9,25 +9,17 @@ import './boilerplate.css';
 import './App.css';
 import {
   faArrowsRotate,
-  faFile,
   faFire,
   faGear,
   faInfo,
   faMagnifyingGlass,
-  faPowerOff,
   faQuestion,
-  faSave,
   faUser,
   faWrench,
 } from '@fortawesome/free-solid-svg-icons'
 
 // utils
-import { saveAs } from 'file-saver';
 import formatAllyCode from "../../utils/formatAllyCode";
-
-// state
-import { IAppState } from '../../state/storage';
-import { IUserData } from '../../state/storage/Database';
 
 // modules
 import { App as AppModule } from '../../state/modules/app';
@@ -42,9 +34,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type * as UITypes from "../../components/types";
 
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { FileInput } from "../../components/FileInput/FileInput";
 import { FlashMessage } from "../../components/Modal/FlashMessage";
-import Help from '../../components/Help/Help';
 import { Modal } from "../../components/Modal/Modal";
 import { Spinner } from "../../components/Spinner/Spinner";
 
@@ -100,25 +90,6 @@ class App extends PureComponent<Props> {
   }
 */
 
-  /**
-   * Read a file as input and pass its contents to another function for processing
-   * @param fileInput The uploaded file
-   * @param handleResult Function string => *
-   */
-  readFile(fileInput: Blob, handleResult: (textInFile: string) => void) {
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      try {
-        const fileData: string = event?.target?.result as string ?? '';
-        handleResult(fileData);
-      } catch (e) {
-        this.props.showError((e as Error).message);
-      }
-    };
-
-    reader.readAsText(fileInput);
-  }
 
   render() {
     const instructionsScreen = this.props.profile === PlayerProfile.Default;
@@ -152,11 +123,6 @@ class App extends PureComponent<Props> {
     </div></Suspense>;
   }
 
-  /**
-   * Renders the header for the application, optionally showing navigation buttons and a reset button
-   * @param showActions bool If true, render the "Explore" and "Optimize" buttons and the "Reset Mods Optimizer" button
-   * @returns JSX Element
-   */
   header(showActions: boolean) {
 
     let allyCodyInput: HTMLInputElement | null;
@@ -262,39 +228,6 @@ class App extends PureComponent<Props> {
             }
             </div>
           </div>
-          <div className="state-actions">
-              <FileInput 
-                label={this.props.t('header.Restore')}
-                icon={faFile}
-                handler={(file) => this.readFile(file, this.props.restoreProgress)}
-              />
-              {showActions &&
-                <button
-                  type={'button'}
-                  onClick={() => {
-                    this.props.exportDatabase((progressData: IUserData) => {
-                      progressData.version = this.props.version;
-                      progressData.allyCode = this.props.allyCode;
-                      progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
-                      const progressDataSerialized = JSON.stringify(progressData);
-                      const userData = new Blob([progressDataSerialized], { type: 'application/json;charset=utf-8' });
-                      saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
-                    });
-                  }}
-                >
-                  <FontAwesomeIcon icon={faSave} title={this.props.t('header.Save')}/>
-                </button>
-              }
-              {showActions &&
-                <button
-                  type={'button'}
-                  className={'red'}
-                  onClick={() => this.props.showModal('reset-modal', this.resetModal())}
-                >
-                  <FontAwesomeIcon icon={faPowerOff} title={this.props.t('header.Reset')}/>
-                </button>
-              }
-            </div>
         </div>
         {showActions &&
           <nav>
@@ -332,25 +265,6 @@ class App extends PureComponent<Props> {
         }
       </div>
     </header>;
-  }
-
-  /**
-   * Renders the "Are you sure?" modal for resetting the app
-   * @returns JSX Element
-   */
-  resetModal() {
-    return <div>
-      <h2>Reset the mods optimizer?</h2>
-      <p>
-        If you click "Reset", everything that the application currently has saved - your mods,
-        character configuration, selected characters, etc. - will all be deleted.
-        Are you sure that's what you want?
-      </p>
-      <div className={'actions'}>
-        <button type={'button'} onClick={() => this.props.hideModal()}>Cancel</button>
-        <button type={'button'} className={'red'} onClick={() => this.props.reset()}>Reset</button>
-      </div>
-    </div>;
   }
 
   /**
@@ -453,7 +367,6 @@ class App extends PureComponent<Props> {
 
 interface ReduxProps {
   allyCode: string,
-  error: UITypes.DOMContent | null,
   isBusy: boolean,
   displayModal: boolean,
   modalClass: string,
@@ -477,7 +390,6 @@ type AttributeProps = {
 const mapStateToProps = (state: IAppState) => {
   const appProps: ReduxProps = {
     allyCode: state.allyCode,
-    error: state.error,
     isBusy: state.isBusy,
     displayModal: !!state.modal,
     modalClass: state?.modal?.class ?? '',
@@ -502,11 +414,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   checkVersion: () => dispatch(Data.thunks.checkVersion()),
   showModal: (clazz: string, content: UITypes.DOMContent) => dispatch(AppModule.actions.showModal(clazz, content)),
   hideModal: () => dispatch(AppModule.actions.hideModal()),
-  showError: (message: UITypes.DOMContent) => dispatch(AppModule.actions.showError(message)),
-  reset: () => dispatch(AppModule.thunks.reset()),
-  restoreProgress: (progressData: string) => dispatch(AppModule.thunks.restoreProgress(progressData)),
   switchProfile: (allyCode: string) => dispatch(Storage.thunks.loadProfile(allyCode)),
-  exportDatabase: (callback: (ud: IUserData) => void) => dispatch(Storage.thunks.exportDatabase(callback))
 });
 
 let connector = connect(mapStateToProps, mapDispatchToProps);
