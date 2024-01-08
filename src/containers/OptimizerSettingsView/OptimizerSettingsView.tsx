@@ -1,24 +1,24 @@
 // react
 import React, { PropsWithChildren } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // modules
-import { CharacterEdit } from '../../state/modules/characterEdit';
-import { Storage } from '../../state/modules/storage';
+import { CharacterEdit } from '#/state/modules/characterEdit';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { TemplatesAddingMode } from '../../domain/TemplatesAddingMode';
+import { TemplatesAddingMode } from '#/domain/TemplatesAddingMode';
 
 // components
-import { Button } from '#/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '#/components/ui/card';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '#/components/ui/select';
-import { RangeInput } from '../../components/RangeInput/RangeInput';
+import { Button } from '#ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '#ui/card';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '#ui/select';
+import { RangeInput } from '#/components/RangeInput/RangeInput';
 
 // containers
-import { TemplatesManager } from '../TemplatesManager/TemplatesManager';
+import { TemplatesManager } from '#/containers/TemplatesManager/TemplatesManager';
 
 const OptimizerSettingsView = () => {
   const globalOptimizerSettings = useSelector(Storage.selectors.selectGlobalOptimizationSettings);
