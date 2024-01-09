@@ -45,6 +45,7 @@ export const characterNames = [
   'CADBANE',
   'CALKESTIS',
   'CANDEROUSORDO',
+  'CAPTAINREX',
   'CARADUNE',
   'CARTHONASI',
   'CASSIANANDOR',
@@ -189,6 +190,7 @@ export const characterNames = [
   'PLOKOON',
   'POE',
   'POGGLETHELESSER',
+  'PRINCESSKNEESAA',
   'PRINCESSLEIA',
   'QIRA',
   'QUIGONJINN',
@@ -203,6 +205,7 @@ export const characterNames = [
   'SABINEWRENS3',
   'SANASTARROS',
   'SAVAGEOPRESS',
+  'SAWGERRERA',
   'SCARIFREBEL',
   'SECONDSISTER',
   'SEVENTHSISTER',
@@ -222,6 +225,7 @@ export const characterNames = [
   'SUPREMELEADERKYLOREN',
   'T3_M4',
   'TALIA',
+  'TARFFUL',
   'TEEBO',
   'THEMANDALORIAN',
   'THEMANDALORIANBESKARARMOR',
@@ -484,26 +488,50 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'CALKESTIS': new CharacterSettings(
     [
-      new OptimizationPlan('UA TM Gain', 25, 0, 40, 80, -10, 15, 40, 0, 0, 0, 0, 0, 0, true),
-      new OptimizationPlan('UA TM Gain w/ Primaries', 25, 0, 40, 80, -10, 15, 40, 0, 0, 0, 0, 0, 0, true, {
-        "triangle": "Critical Damage %",
+      new OptimizationPlan('PvP', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0, true, {
+        "arrow": "Health %",
+        "triangle": "Health %",
         "cross": "Health %",
         "circle": "Health %",
       }),
-      new OptimizationPlan('UA TM Gain w/ Primaries & Set', 25, 0, 40, 80, -10, 15, 40, 0, 0, 0, 0, 0, 0, true, {
-        "triangle": "Critical Damage %",
+      new OptimizationPlan('PvP w/ Primaries & Set', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0, true, {
+        "arrow": "Health %",
+        "triangle": "Health %",
         "cross": "Health %",
         "circle": "Health %",
       },
       {
-        "health": 3,
-      })
+        "health": 2,
+        "defense": 1,
+      }),
     ],
   ),
   'CANDEROUSORDO': new CharacterSettings(
     [
       new OptimizationPlan('Maul Lead', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0, true),
       optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvE'),
+    ],
+  ),
+  'CAPTAINREX': new CharacterSettings(
+    [
+      new OptimizationPlan('PvP', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0, true, {
+        "arrow": "Speed",
+        "triangle": "Critical Chance %",
+        "cross": "Potency %",
+        "circle": "Health %",
+      }),
+      new OptimizationPlan('PvP w/ Primaries & Set', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0, true, {
+        "arrow": "Speed",
+        "triangle": "Critical Chance %",
+        "cross": "Potency %",
+        "circle": "Health %",
+      }, {
+        "potency": 1,
+        "critchance": 1,
+        "health": 1,
+      }),
     ],
   ),
   'CARADUNE': new CharacterSettings(
@@ -538,22 +566,23 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'CEREJUNDA': new CharacterSettings(
     [
-      new OptimizationPlan('PvP', 20, 30, 20, 0, 0, 10, 25, 0, 0, 10, 0, 0, 0, true),
-      new OptimizationPlan('PvP w/ Primaries', 20, 30, 20, 0, 0, 10, 25, 0, 0, 10, 0, 0, 0, true, {
-        "arrow": "Protection %",
-        "triangle": "Protection %",
-        "cross": "Protection %",
-        "circle": "Protection %",
+      new OptimizationPlan('PvP', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0, true, {
+        "arrow": "Health %",
+        "triangle": "Health %",
+        "cross": "Health %",
+        "circle": "Health %",
       }),
-      new OptimizationPlan('PvP w/ Primaries & Set', 20, 30, 20, 0, 0, 10, 25, 0, 0, 10, 0, 0, 0, true, {
-        "arrow": "Protection %",
-        "triangle": "Protection %",
-        "cross": "Protection %",
-        "circle": "Protection %",
+      new OptimizationPlan('PvP w/ Primaries & Set', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0, true, {
+        "arrow": "Health %",
+        "triangle": "Health %",
+        "cross": "Health %",
+        "circle": "Health %",
       },
       {
-        "health": 3,
-      })
+        "health": 2,
+        "defense": 1,
+      }),
     ],
   ),
   'CHEWBACCALEGENDARY': new CharacterSettings(
@@ -1158,7 +1187,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Rogue 1', 'Cass-2SO', 'K2'],
   ),
   'KANANJARRUSS3': new CharacterSettings(
-    [new OptimizationPlan('Tanky', 0, 40, 100, 0, 30, 0, 0, 0, 50, 0, 0, 0, 0, true)]
+    [new OptimizationPlan('Tanky', 40, 10, 100, 0, 30, 0, 0, 0, 50, 0, 0, 0, 0, true)],
   ),
   'KIADIMUNDI': new CharacterSettings(
     [
@@ -1259,7 +1288,19 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('PvP', 25, 25, 100, 0, 15, 0, 50, 0, 0, 0, 0, 0, 0, true)]
   ),
   'MERRIN': new CharacterSettings(
-    [new OptimizationPlan('PvP', 35, 0, 0, 0, 30, 30, 0, 40, 0, 0, 0, 0, 0, true)],
+    [
+      new OptimizationPlan('PvP', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, true, {
+        "cross": "Potency %",
+        "circle": "Health %",
+      }),
+      new OptimizationPlan('PvP w/ Primaries & Set', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, true, {
+        "cross": "Potency %",
+        "circle": "Health %",
+      }, {
+        "potency": 3,
+      }),
+    ],
     [],
     DamageType.special,
   ),
@@ -1369,6 +1410,27 @@ const characterSettings: CharacterSettingsIndexer = {
   'POGGLETHELESSER': new CharacterSettings(
     [optimizationStrategy["Speedy debuffer"].rename('PvE')]
   ),
+  'PRINCESSKNEESAA': new CharacterSettings(
+    [
+      new OptimizationPlan('PvP', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, true, {
+        "arrow": "Speed",
+        "triangle": "Critical Damage %",
+        "cross": "Potency %",
+        "circle": "Health %",
+      }),
+      new OptimizationPlan('PvP w/ Primaries & Set', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, true, {
+        "arrow": "Speed",
+        "triangle": "Critical Damage %",
+        "cross": "Potency %",
+        "circle": "Health %",
+      }, {
+        "potency": 1,
+        "critchance": 1,
+        "health": 1,
+      }),
+    ],
+  ),
   'PRINCESSLEIA': new CharacterSettings(
     [
       optimizationStrategy["Speed, Crit, and Physical Damage"].rename('PvP'),
@@ -1454,6 +1516,11 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('Balanced', 50, 0, 100, 25, 25, 25, 25, 0, 25, 12.5, 12.5, 0, 0, true),
     ],
     ['zavage']
+  ),
+  'SAWGERRERA': new CharacterSettings(
+    [
+      new OptimizationPlan('PvP', 20, 0, 100, 0, 20, 0, 20, 0, 0, 0, 0, 0, 0, true),
+    ],
   ),
   'SCARIFREBEL': new CharacterSettings(
     [
@@ -1582,6 +1649,25 @@ const characterSettings: CharacterSettingsIndexer = {
     ['NS', 'hSTR NS'],
     DamageType.mixed
   ),
+  'TARFFUL': new CharacterSettings(
+    [
+      new OptimizationPlan('PvP', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, true, {
+        "arrow": "Health %",
+        "triangle": "Health %",
+        "cross": "Health %",
+        "circle": "Health %",
+      }),
+      new OptimizationPlan('PvP w/ Primaries & Set', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, true, {
+        "arrow": "Health %",
+        "triangle": "Health %",
+        "cross": "Health %",
+        "circle": "Health %",
+      }, {
+        "defense": 3,
+      }),
+    ],
+  ),
   'TEEBO': new CharacterSettings(
     [new OptimizationPlan('PvP', 25, 25, 100, 0, 50, 25, 0, 0, 0, 0, 0, 0, 0, true)],
     ['Teebotine', 'Murderbears']
@@ -1708,16 +1794,16 @@ const characterSettings: CharacterSettingsIndexer = {
     ['solo']
   ),
   'ZAALBAR': new CharacterSettings(
-    [new OptimizationPlan('PvP', 50, 50, 25, 0, 25, 50, 0, 0, 0, 0, 0, 0, 50, true)]
+    [new OptimizationPlan('PvP', 50, 50, 25, 0, 25, 50, 0, 0, 0, 0, 0, 0, 50, true)],
   ),
   'ZAMWESELL': new CharacterSettings(
     [
       new OptimizationPlan('PvP', 0, 0, 100, 40, 50, 0, 25, 0, 40, 0, 0, 0, 0, true),
       new OptimizationPlan('Omicron', 10, 10, 100, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, true),
-    ]
+    ],
   ),
   'ZEBS3': new CharacterSettings(
-    [new OptimizationPlan('PvP', 0, 40, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    [new OptimizationPlan('PvP', 40, 0, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, true)],
   ),
   'ZORIIBLISS_V2': new CharacterSettings(
     [new OptimizationPlan('PvP', 5, 10, 100, 50, 10, 0, 20, 0, 0, 0, 0, 0, 0, true)],
