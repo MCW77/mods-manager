@@ -6,16 +6,12 @@
     "NavOptimizeMods": "Optimiere Mods",
     "NavSettings": "Einstellungen",
     "SubtitleFor": "für",
+    "ProfileAdderNewCode": "Neuer Bündniscode...",
     "ProfileSelectionPlayer": "Spieler",
     "ProfileSelectionAllycode": "Bündniscode",
     "ProfileSelectionPlaceholder": "Bündniscode hier eingeben",
-    "ProfileDelete": "Profil löschen",
     "Fetch": "Hole meine Mods",
-    "FetchHot": "Hole mit HotUtils",
-    "RememberExisting": "Behalte existierende Mods",
-    "Restore": "Fortschritt laden",
-    "Save": "Fortschritt speichern",
-    "Reset": "Neustart"
+    "FetchHot": "Hole mit HotUtils"
   },
   "sidebar": {
     "Toggle-show": "Seitenleiste anzeigen",

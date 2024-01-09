@@ -6,16 +6,12 @@
     "NavOptimizeMods": "Optimize my mods",
     "NavSettings": "Settings",
     "SubtitleFor": "for",
+    "ProfileAdderNewCode": "New allycode...",
     "ProfileSelectionPlayer": "Player",
     "ProfileSelectionAllycode": "Ally code",
     "ProfileSelectionPlaceholder": "Enter allycode here",
-    "ProfileDelete": "Delete profile",
     "Fetch": "Fetch my data",
-    "FetchHot": "Fetch with HotUtils",
-    "RememberExisting": "Remember existing mods",
-    "Restore": "Restore my progress",
-    "Save": "Save my progress",
-    "Reset": "Reset Mods Optimizer"
+    "FetchHot": "Fetch with HotUtils"
   },
   "sidebar": {
     "Toggle-show": "show sidebar",

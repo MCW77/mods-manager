@@ -134,12 +134,6 @@ html, body {
   margin: auto 0;
 }
 
-.App-header .state-actions {
-  display: flex;
-  align-items: center;
-  margin-right: min(1em, 1vw);
-}
-
 .App-header .App-title {
   margin: .3em;
   position: absolute;
@@ -173,28 +167,6 @@ html, body {
 
 .App-header nav button:hover, .App-header nav button:focus {
   color: white;
-}
-
-.App-header .actions {
-  margin: auto;
-}
-
-.App-header .actions > div {
-  margin-left: 4em;
-}
-
-.App-header .actions label:not(.button),
-.App-header .actions input:not(.button){
-  margin: 0 .25em;
-  vertical-align: middle;
-}
-
-.App-header input#ally-code {
-  font-size: 1.2em;
-}
-
-.App-header .actions form {
-  display: inline-block;
 }
 
 .app-body {
@@ -231,7 +203,7 @@ html, body {
   color: #eeca44;
 }
 
-button, .button {
+button2, .button {
   display: inline-block;
   margin: .1em;
   background-color: #46801a;
@@ -255,40 +227,40 @@ button[disabled]:hover {
   cursor: auto;
 }
 
-button.small, .button.small {
+button2.small, .button.small {
   font-size: .6em;
 }
 
-button:active, .button:active {
+button2:active, .button:active {
   border: 1px inset limegreen;
 }
 
-button.red, .button.red {
+button2.red, .button.red {
   background-color: darkred;
   border: 1px outset red;
 }
 
-button.red:active, .button.red:active {
+button2.red:active, .button.red:active {
   border: 1px inset red;
 }
 
-button.blue, .button.blue {
+button2.blue, .button.blue {
   background-color: #0b4884;
   border: 1px outset dodgerblue;
   color: white !important;
 }
 
-button.blue:active, .button.blue:active {
+button2.blue:active, .button.blue:active {
   border: 1px inset dodgerblue;
 }
 
-button:hover, button:focus,
+button2:hover, button2:focus,
 .button:hover, .button:focus {
   outline: 0;
   opacity: 1;
 }
 
-button.link {
+button2.link {
   text-decoration: underline;
   background-color: transparent;
   border: none;
@@ -383,25 +355,6 @@ select {
 
 [draggable='true'] {
   cursor: grab;
-}
-
-.add-ally-code-form,
-.add-ally-code-form input[type='text'] {
-  font-size: 1.2em;
-}
-
-.add-ally-code-form h4 {
-  color: #eeca44;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-
-.add-ally-code-form .actions {
-  margin-top: 1em;
-}
-
-input {
-  color: #222222;
 }
 
 li {
