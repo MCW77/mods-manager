@@ -1,24 +1,27 @@
 // react
 import React from "react";
-import { ThunkResult } from "../reducers/modsOptimizer";
+import { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // state
-import getDatabase from "../storage/Database";
+import getDatabase from "#/state/storage/Database";
 
-//modules
-import { App } from "../modules/app";
-import { Data } from "../modules/data";
-import { actions } from "../actions/optimize";
-import { Review } from "../modules/review";
+// actions
+import { actions } from "#/state/actions/optimize";
+
+// modules
+import { App } from "#/state/modules/app";
+import { Data } from "#/state/modules/data";
+import { Review } from "#/state/modules/review";
 
 // domain
-import { Character } from "../../domain/Character";
-import { OptimizationStatus } from "../../domain/OptimizationStatus";
-import OptimizerRun from "../../domain/OptimizerRun";
-import { IModSuggestion } from "../../domain/PlayerProfile";
+import { Character } from "#/domain/Character";
+import { OptimizationStatus } from "#/domain/OptimizationStatus";
+import OptimizerRun from "#/domain/OptimizerRun";
+import { OptimizerSettings } from "#/domain/OptimizerSettings";
+import { IModSuggestion } from "#/domain/PlayerProfile";
 
 // components
-import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 
 let optimizationWorker: Worker | null = null;
 
@@ -98,8 +101,38 @@ export namespace thunks {
 									<tbody>
 										{resultsWithMessages.map(
 											({ id, target, messages, missedGoals }, index) => {
+												const tempStats = {
+													Health: 0,
+													Protection: 0,
+													Speed: 0,
+													'Critical Damage %': 0,
+													'Potency %': 0,
+													'Tenacity %': 0,
+													'Physical Damage': 0,
+													'Special Damage': 0,
+													Armor: 0,
+													Resistance: 0,
+													'Accuracy %': 0,
+													'Critical Avoidance %': 0,
+													'Physical Critical Chance %': 0,
+													'Special Critical Chance %': 0,
+												}
 												const character =
-													newProfile.characters[id] || new Character(id);
+													newProfile.characters[id] || new Character(
+														id,
+														{
+															level: 0,
+															stars: 0,
+															gearLevel: 0,
+															gearPieces: [],
+															galacticPower: 0,
+															baseStats: tempStats,
+															equippedStats: tempStats,
+															relicTier: 0,
+														},
+														OptimizerSettings.Default,
+													);
+
 												return (
 													<tr key={index}>
 														<td>
