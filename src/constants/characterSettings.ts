@@ -43,11 +43,13 @@ export const characterNames = [
   'C3POCHEWBACCA',
   'C3POLEGENDARY',
   'CADBANE',
+  'CALKESTIS',
   'CANDEROUSORDO',
   'CARADUNE',
   'CARTHONASI',
   'CASSIANANDOR',
   'CC2224',
+  'CEREJUNDA',
   'CHEWBACCALEGENDARY',
   'CHIEFCHIRPA',
   'CHIEFNEBIT',
@@ -168,6 +170,7 @@ export const characterNames = [
   'MARAJADE',
   'MAUL',
   'MAULS7',
+  'MERRIN',
   'MISSIONVAO',
   'MOFFGIDEONS1',
   'MONMOTHMA',
@@ -477,7 +480,25 @@ const characterSettings: CharacterSettingsIndexer = {
     ]
   ),
   'CADBANE': new CharacterSettings(
-    [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP')]
+    [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP')],
+  ),
+  'CALKESTIS': new CharacterSettings(
+    [
+      new OptimizationPlan('UA TM Gain', 25, 0, 40, 80, -10, 15, 40, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('UA TM Gain w/ Primaries', 25, 0, 40, 80, -10, 15, 40, 0, 0, 0, 0, 0, 0, true, {
+        "triangle": "Critical Damage %",
+        "cross": "Health %",
+        "circle": "Health %",
+      }),
+      new OptimizationPlan('UA TM Gain w/ Primaries & Set', 25, 0, 40, 80, -10, 15, 40, 0, 0, 0, 0, 0, 0, true, {
+        "triangle": "Critical Damage %",
+        "cross": "Health %",
+        "circle": "Health %",
+      },
+      {
+        "health": 3,
+      })
+    ],
   ),
   'CANDEROUSORDO': new CharacterSettings(
     [
@@ -514,6 +535,26 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['zody'],
     DamageType.mixed
+  ),
+  'CEREJUNDA': new CharacterSettings(
+    [
+      new OptimizationPlan('PvP', 20, 30, 20, 0, 0, 10, 25, 0, 0, 10, 0, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 20, 30, 20, 0, 0, 10, 25, 0, 0, 10, 0, 0, 0, true, {
+        "arrow": "Protection %",
+        "triangle": "Protection %",
+        "cross": "Protection %",
+        "circle": "Protection %",
+      }),
+      new OptimizationPlan('PvP w/ Primaries & Set', 20, 30, 20, 0, 0, 10, 25, 0, 0, 10, 0, 0, 0, true, {
+        "arrow": "Protection %",
+        "triangle": "Protection %",
+        "cross": "Protection %",
+        "circle": "Protection %",
+      },
+      {
+        "health": 3,
+      })
+    ],
   ),
   'CHEWBACCALEGENDARY': new CharacterSettings(
     [
@@ -1217,6 +1258,11 @@ const characterSettings: CharacterSettingsIndexer = {
   'MAULS7': new CharacterSettings(
     [new OptimizationPlan('PvP', 25, 25, 100, 0, 15, 0, 50, 0, 0, 0, 0, 0, 0, true)]
   ),
+  'MERRIN': new CharacterSettings(
+    [new OptimizationPlan('PvP', 35, 0, 0, 0, 30, 30, 0, 40, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special,
+  ),
   'MISSIONVAO': new CharacterSettings(
     [new OptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 75, 0, 50, 0, 0, 0, 0, true)]
   ),
@@ -1486,8 +1532,12 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'STARKILLER': new CharacterSettings(
     [
-      new OptimizationPlan('PvP', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0, true),
-      new OptimizationPlan('PvP w/ Primaries', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0, true, {
+      new OptimizationPlan('PvP', 25, 0, 100, 75, 0, 0, 50, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('PvP w/ Primaries', 25, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, true, {
+        "triangle": "Critical Damage %",
+      }),
+      new OptimizationPlan('Speedy', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0, true),
+      new OptimizationPlan('Speedy w/ Primaries', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0, true, {
         "triangle": "Critical Damage %",
       }),
     ],
