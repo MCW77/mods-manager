@@ -303,6 +303,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "circle": "Health %",
       }),
     ],
+    [],
+    DamageType.special
   ),
   'AHSOKATANO': new CharacterSettings(
     [
@@ -369,7 +371,9 @@ const characterSettings: CharacterSettingsIndexer = {
     [new OptimizationPlan('PvP', 0, 0, 50, 0, 25, 0, 100, 0, 0, 0, 0, 0, 0, true)]
   ),
   'BADBATCHTECH': new CharacterSettings(
-    [optimizationStrategy["Speedy debuffer"].rename('PvP')]
+    [optimizationStrategy["Speedy debuffer"].rename('PvP')],
+    [],
+    DamageType.special
   ),
   'BADBATCHWRECKER': new CharacterSettings(
     [new OptimizationPlan('PvP', 10, 30, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, true)]
@@ -426,6 +430,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'BENSOLO': new CharacterSettings(
     [new OptimizationPlan('PvP', 20, 0, 100, 0, 10, 0, 0, 70, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'BIGGSDARKLIGHTER': new CharacterSettings(
     [optimizationStrategy["Speed, Crit, and Physical Damage"].rename('PvP')],
@@ -464,6 +470,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'BOUSHH': new CharacterSettings(
     [new OptimizationPlan('PvP', 5, 0, 100, 50, 10, 0, 0, 20, 25, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'BT1': new CharacterSettings(
     [
@@ -832,6 +840,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'DOCTORAPHRA': new CharacterSettings(
     [new OptimizationPlan('PvP', 0, 0, 90, 0, 100, 0, 0, 20, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'DROIDEKA': new CharacterSettings(
     [
@@ -936,9 +946,13 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('PvP - Offense', 0, 0, 100, 0, 0, 0, 0, 75, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('PvP - Crit.Dmg', 0, 0, 100, 100, 0, 0, 0, 100, 50, 0, 0, 0, 0, true),
     ],
+    [],
+    DamageType.special
   ),
   'FIFTHBROTHER': new CharacterSettings(
     [new OptimizationPlan('PvP', 20, 10, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'FINN': new CharacterSettings(
     [
@@ -1141,6 +1155,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'HONDO': new CharacterSettings(
     [new OptimizationPlan('PvP', 10, 5, 100, 75, 0, 0, 0, 75, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'HOTHHAN': new CharacterSettings(
     [new OptimizationPlan('PvP', 20, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)],
@@ -1216,6 +1232,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'JABBATHEHUTT': new CharacterSettings(
     [new OptimizationPlan('PvP', 15, 0, 100, 0, 25, 50, 0, 0, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'JANGOFETT': new CharacterSettings(
     [optimizationStrategy["Speed, Crit, Physical Damage, Potency"].rename('PvP')],
@@ -1406,7 +1424,7 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('Slow/Tanky', 100, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
     ],
     [],
-    DamageType.mixed
+    DamageType.special
   ),
   'MAGMATROOPER': new CharacterSettings(
     [
@@ -1425,6 +1443,8 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('PvP', 0, 10, 100, 25, 25, 0, 0, 25, 10, 0, 0, 0, 0, true),
       new OptimizationPlan('Survivability', 0, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true),
     ],
+    [],
+    DamageType.special
   ),
   'MAUL': new CharacterSettings(
     [optimizationStrategy["Special Damage with Potency"].rename('PvP')]
@@ -1662,6 +1682,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'SANASTARROS': new CharacterSettings(
     [new OptimizationPlan('PvP', 0, 0, 100, 50, 5, 0, 0, 20, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'SAVAGEOPRESS': new CharacterSettings(
     [
@@ -1709,6 +1731,8 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'SECONDSISTER': new CharacterSettings(
     [new OptimizationPlan('PvP', 5, 5, 100, 75, 0, 0, 0, 100, 30, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'SEVENTHSISTER': new CharacterSettings(
     [new OptimizationPlan('PvP', 20, 10, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, true)],
@@ -1887,9 +1911,13 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'TRENCH': new CharacterSettings(
     [new OptimizationPlan('PvP', 20, 10, 100, 0, 30, 0, 0, 20, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'TRIPLEZERO': new CharacterSettings(
     [new OptimizationPlan('PvP', 0, 0, 100, 0, 30, 0, 0, 20, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   'TUSKENCHIEFTAIN': new CharacterSettings(
     [new OptimizationPlan('PvP', 15, 10, 100, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, true)],
