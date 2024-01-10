@@ -128,9 +128,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'slots'}>
         {slotElements}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -173,9 +173,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'sets'}>
         {sets}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -262,9 +262,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'tier'}>
         {tierButtons}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -312,9 +312,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'tier'}>
         {tierButtons}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -356,9 +356,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'level'}>
         {levelButtons}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -423,9 +423,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'primaries'}>
         {primaries}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -463,9 +463,9 @@ class ModFilter extends React.PureComponent<Props> {
       <div className={'secondaries'}>
         {secondaries}
       </div>
-      <div className={'actions'}>
-        <Button onClick={selectAll}>All</Button>
-        <Button onClick={selectNone}>None</Button>
+      <div className={'actions flex gap-2 justify-center'}>
+        <Button size="xs" onClick={selectAll}>All</Button>
+        <Button size="xs" onClick={selectNone}>None</Button>
       </div>
     </div>;
   }
@@ -695,6 +695,7 @@ class ModFilter extends React.PureComponent<Props> {
     return <form className={'mod-filters filter-form'} id={'mod-filters'} onSubmit={onSubmit}>
       <div className={'form-actions'}>
         <Button
+          size="sm"
           type={'button'}
           onClick={this.resetFilters}
         >
@@ -716,6 +717,7 @@ class ModFilter extends React.PureComponent<Props> {
       {this.sortOption()}
       <div className={'form-actions'}>
         <Button
+          size="sm"
           type={'button'}
           onClick={this.resetFilters}
         >
