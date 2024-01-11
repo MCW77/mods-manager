@@ -513,8 +513,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "circle": "Health %",
       },
       {
-        "health": 2,
-        "defense": 1,
+        "Health %": 2,
+        "Defense %": 1,
       }),
     ],
   ),
@@ -539,8 +539,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Offense %",
         "circle": "Health %",
       }, {
-        "offense": 1,
-        "health": 1,
+        "Offense %": 1,
+        "Health %": 1,
       }),
     ],
     [],
@@ -561,9 +561,9 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Potency %",
         "circle": "Health %",
       }, {
-        "potency": 1,
-        "critchance": 1,
-        "health": 1,
+        "Potency %": 1,
+        "Critical Chance %": 1,
+        "Health %": 1,
       }),
     ],
   ),
@@ -613,8 +613,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "circle": "Health %",
       },
       {
-        "health": 2,
-        "defense": 1,
+        "Health %": 2,
+        "Defense %": 1,
       }),
     ],
   ),
@@ -640,8 +640,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Health %",
         "circle": "Health %",
       }, {
-        "speed": 1,
-        "health": 1,
+        "Speed %": 1,
+        "Health %": 1,
       }),
       optimizationStrategy.Speed.rename('Speed'),
       new OptimizationPlan('Speed w/ Primaries', 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, {
@@ -679,7 +679,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Tenacity %",
         "circle": "Health %",
       }, {
-        "health": 3,
+        "Health %": 3,
       }),
     ],
   ),
@@ -904,7 +904,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Tenacity %",
         "circle": "Health %",
       }, {
-        "health": 3,
+        "Health %": 3,
       }),
     ],
     ['EE', 'Murderbears'],
@@ -922,8 +922,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Potency %",
         "circle": "Health %",
       }, {
-        "offense": 1,
-        "potency": 1,
+        "Offense %": 1,
+        "Potency %": 1,
       }),
       new OptimizationPlan('hSTR Phase 2', 0, 0, 50, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0, true),
     ],
@@ -1059,7 +1059,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "circle": "Health %",
         "cross": "Health %",
       }, {
-        "speed": 1,
+        "Speed %": 1,
       }),
     ],
     ['Murderbears']
@@ -1138,8 +1138,8 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('PvP w/ Primaries and Sets', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0, true, {
         "cross": "Potency %",
       }, {
-        "speed": 1,
-        "health": 1,
+        "Speed %": 1,
+        "Health %": 1,
       }),
     ],
   ),
@@ -1225,7 +1225,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "circle": "Protection %",
         "cross": "Offense %",
       }, {
-        "offense": 1,
+        "Offense %": 1,
       }),
     ],
     ['ISC']
@@ -1339,8 +1339,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Health %",
         "circle": "Health %",
       }, {
-        "health": 2,
-        "tenacity": 1,
+        "Health %": 2,
+        "Tenacity %": 1,
       }),
     ],
   ),
@@ -1401,8 +1401,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Potency %",
         "circle": "Health %",
       }, {
-        "potency": 1,
-        "health": 2,
+        "Potency %": 1,
+        "Health %": 2,
       }),
       new OptimizationPlan('hSTR Phase 2', 5, 5, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, true),
     ],
@@ -1463,7 +1463,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Potency %",
         "circle": "Health %",
       }, {
-        "potency": 3,
+        "Potency %": 3,
       }),
     ],
     [],
@@ -1562,7 +1562,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Health %",
         "circle": "Health %",
       }, {
-        "health": 3,
+        "Health %": 3,
       }),
       new OptimizationPlan('Fast Tank', 25, 25, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0, true),
     ],
@@ -1598,9 +1598,9 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Potency %",
         "circle": "Health %",
       }, {
-        "potency": 1,
-        "critchance": 1,
-        "health": 1,
+        "Potency %": 1,
+        "Critical Chance %": 1,
+        "Health %": 1,
       }),
     ],
   ),
@@ -1723,8 +1723,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "triangle": "Offense %",
         "cross": "Potency %",
       }, {
-        "speed": 1,
-        "potency": 1,
+        "Speed %": 1,
+        "Potency %": 1,
       }),
     ],
     ['Rogue 1', 'SRP']
@@ -1863,7 +1863,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Health %",
         "circle": "Health %",
       }, {
-        "defense": 3,
+        "Defense %": 3,
       }),
     ],
   ),
@@ -1880,7 +1880,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Potency %",
         "circle": "Health %",
       }, {
-        "potency": 3,
+        "Potency %": 3,
       }),
     ],
     ['Teebotine', 'Murderbears']
@@ -1993,8 +1993,8 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Offense %",
         "circle": "Health %",
       }, {
-        "critdamage": 1,
-        "health": 1,
+        "Critical Damage %": 1,
+        "Health %": 1,
       }),
       new OptimizationPlan('hSTR Phase 2', 0, 0, 80, 50, 0, 0, 100, 0, 10, 0, 0, 0, 0, true),
     ],
@@ -2037,7 +2037,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "arrow": "Speed",
         "cross": "Potency %",
       }, {
-        "health": 3,
+        "Health %": 3,
       }),
     ],
   ),
