@@ -20,7 +20,6 @@ import { Optimize } from '../../state/modules/optimize';
 
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
-import setBonuses from "../../constants/setbonuses";
 import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { BaseCharacter } from "../../domain/BaseCharacter";
@@ -30,9 +29,6 @@ import { CharacterSettings } from "../../domain/CharacterSettings";
 import { Mod } from "../../domain/Mod";
 import { OptimizationPlan, PrimaryStatRestrictions } from "../../domain/OptimizationPlan";
 import { IModSuggestion } from "../../domain/PlayerProfile";
-import SetBonus from "../../domain/SetBonus";
-import { SetRestrictions } from "../../domain/SetRestrictions";
-import { SetStats } from "../../domain/Stats";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
 // components
@@ -40,6 +36,7 @@ import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvata
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { OptimizerProgress } from '../../components/OptimizerProgress/OptimizerProgress';
 import { RangeInput } from "../../components/RangeInput/RangeInput";
+import { SetRestrictionsWidget } from "../../components/SetRestrictionsWidget/SetRestrictionsWidget";
 import { Toggle } from "../../components/Toggle/Toggle";
 import { Button } from "#ui/button";
 
@@ -204,12 +201,10 @@ class CharacterEditForm extends React.Component<Props> {
             </div>
             <div className={'header-row group set-bonuses'}>
               <h4>Restrict Set Bonuses:</h4>
-              {
-                this.setRestrictionsForm(
-                  this.props.setRestrictions || this.props.target.setRestrictions,
-                  this.props.target.useOnlyFullSets
-                )
-              }
+              <SetRestrictionsWidget
+                setRestrictions={this.props.setRestrictions || this.props.target.setRestrictions}
+                useFullSets={this.props.target.useOnlyFullSets}
+              />
             </div>
             <div className={'header-row group target-stats'}>
               {this.targetStatForm(this.props.targetStats ||
@@ -263,68 +258,6 @@ class CharacterEditForm extends React.Component<Props> {
         <Button type={'submit'}>Save</Button>
       </div>
     </form>;
-  }
-
-  /**
-   * Renders a form element for managing set restrictions
-   *
-   * @param setRestrictions {Object<String, Number>}
-   * @param useFullSets {Boolean}
-   * @returns {JSX Element}
-   */
-  setRestrictionsForm(setRestrictions: SetRestrictions, useFullSets: boolean) {
-    let selectedSets: SetStats.GIMOStatNames[] = [];
-    Object.entries(setRestrictions).forEach(([setName, count]) => {
-      for (let i = 0; i < count; i++) {
-        selectedSets.push(setName as SetStats.GIMOStatNames);
-      }
-    });
-    const emptySlots = 3 - selectedSets.reduce((acc, setName) => acc + setBonuses[setName].numberOfModsRequired / 2, 0);
-
-    const setBonusToFormDisplay = (setBonus: SetBonus, index: number) => {
-      const className = setBonus.numberOfModsRequired > (2 * emptySlots) ? 'disabled' : ''
-      const setBonusName = setBonus.name.replace(/\s|%/g, '').toLowerCase()
-      return <img
-        src={`/img/icon_buff_${setBonusName}.png`}
-        alt={setBonus.name}
-        key={index}
-        className={className}
-        onClick={() => this.props.selectSetBonus(setBonus.name)}
-      />
-    };
-
-    const setBonusGroups = [Object.values(setBonuses).slice(0, 4), Object.values(setBonuses).slice(4)];
-    const setBonusGroupsDisplay = setBonusGroups.map(setBonuses => setBonuses.map(setBonusToFormDisplay))
-    const setBonusDisplay = setBonusGroupsDisplay.map((groupDisplay, index) =>
-      <div className="breakable-group" key={index}>{groupDisplay}</div>
-    )
-
-    return <div className={'mod-sets'}>
-      <div className={'form-row center'}>
-        <label htmlFor={'use-full-sets'}>Don't break mod sets</label>
-        <input type={'checkbox'} name={'use-full-sets'} id={'use-full-sets'} defaultChecked={useFullSets} />
-      </div>
-      <p className={'instructions'}>
-        Click on a set bonus to add it to or remove it from the selected sets.
-      </p>
-      <div className={'set-options'}>
-        {setBonusDisplay}
-      </div>
-      <div className={'selected-sets'}>
-        <p>Selected Sets:</p>
-        {selectedSets.map((setName, index) =>
-          <img
-            src={`/img/icon_buff_${setName.replace(/\s|%/g, '').toLowerCase()}.png`}
-            alt={setName}
-            key={index}
-            onClick={() => this.props.removeSetBonus(setName)}
-          />
-        )}
-        {Array.from({ length: emptySlots }, (_, index) =>
-          <span className={'empty-set'} key={index} />
-        )}
-      </div>
-    </div>;
   }
 
   /**
@@ -937,8 +870,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   deleteTarget: (characterID: CharacterNames, targetName: string) => dispatch(CharacterEdit.thunks.deleteTarget(characterID, targetName)),
   changeCharacterEditMode: (mode: CharacterEditMode) => dispatch(CharacterEdit.actions.changeCharacterEditMode(mode)),
   populateSetRestrictions: (setRestrictions: SetRestrictions) => dispatch(CharacterEdit.actions.changeSetRestrictions(setRestrictions)),
-  selectSetBonus: (set: SetStats.GIMOStatNames) => dispatch(CharacterEdit.actions.selectSetBonus(set)),
-  removeSetBonus: (set: SetStats.GIMOStatNames) => dispatch(CharacterEdit.actions.removeSetBonus(set)),
   populateTargetStats: (targetStats: TargetStat[]) => dispatch(CharacterEdit.actions.changeTargetStats(targetStats)),
   addTargetStat: (targetStat: TargetStat) => dispatch(CharacterEdit.actions.addTargetStat(targetStat)),
   removeTargetStat: (index: number) => dispatch(CharacterEdit.actions.removeTargetStat(index)),
