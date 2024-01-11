@@ -1,6 +1,6 @@
 // react
-import React, { createRef } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 
 // styles
@@ -9,17 +9,15 @@ import "./CharacterEditForm.css";
 // utils
 import areObjectsEquivalent from '../../utils/areObjectsEquivalent';
 
-// state
-import { IAppState } from "../../state/storage";
-
 // modules
 import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Optimize } from '../../state/modules/optimize';
+import { Storage } from '../../state/modules/storage';
 
 // domain
-import { characterSettings, CharacterNames } from "../../constants/characterSettings";
+import { characterSettings } from "../../constants/characterSettings";
 import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { BaseCharacter } from "../../domain/BaseCharacter";
@@ -37,8 +35,10 @@ import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { OptimizerProgress } from '../../components/OptimizerProgress/OptimizerProgress';
 import { RangeInput } from "../../components/RangeInput/RangeInput";
 import { SetRestrictionsWidget } from "../../components/SetRestrictionsWidget/SetRestrictionsWidget";
-import { Toggle } from "../../components/Toggle/Toggle";
+import { Toggle, Toggle2 } from "../../components/Toggle/Toggle";
 import { Button } from "#ui/button";
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
 
 
 type ComponentProps = {
@@ -47,218 +47,26 @@ type ComponentProps = {
   target: OptimizationPlan,
 }
 
+const CharacterEditForm = ({
+  character,
+  characterIndex,
+  target,
+}: ComponentProps) => {
+  const dispatch: ThunkDispatch = useDispatch();
+  const form = useRef<HTMLFormElement>(null);
+  const targetStatsShouldOptimize = useRef<Toggle[]>([]);
+  const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+  const mods = useSelector(Storage.selectors.selectModsInActiveProfile)
+  const editMode = useSelector(CharacterEdit.selectors.selectCharacterEditMode);
+  const setRestrictions = useSelector(CharacterEdit.selectors.selectSetRestrictions);
+  const targetStats = useSelector(CharacterEdit.selectors.selectTargetStats);
+  const progress = useSelector(Optimize.selectors.selectProgress);
+  const modAssignments = useSelector(Storage.selectors.selectModAssignmentsInActiveProfile);
 
-class CharacterEditForm extends React.Component<Props> {
-
-  form: React.RefObject<HTMLFormElement>;
-  targetStatsShouldOptimize: (Toggle | null)[];   //: (typeof Toggle | null)[];
-  targetStatIndex: number = 0;
-
-  constructor(props: Props) {
-    super(props);
-    if (Object.keys(props.setRestrictions).length === 0) {
-      props.populateSetRestrictions(props.target.setRestrictions);
-    }
-    if (props.targetStats.length === 0) {
-      props.populateTargetStats(props.target.targetStats);
-    }
-
-    // This is an array to hold references to the `Toggle` element in the target stats form,
-    // so that the value of the element can be accessed directly
-    this.targetStatsShouldOptimize = [];
-    this.form = createRef<HTMLFormElement>();
-    this.setTargetShouldOptimizeRefs = this.setTargetShouldOptimizeRefs.bind(this);
-  }
-
-  componentWillUnmount() {
-    this.props.cancel();
-  }
-
-  setTargetShouldOptimizeRefs(ref: Toggle | null) {
-    this.targetStatsShouldOptimize[this.targetStatIndex] = ref;
-  }
-
-  render() {
-    const character = this.props.character;
-    const target = this.props.target;
-
-    if (!character) {
-      return null;
-    }
-
-    const defaultTarget = characterSettings[character.baseID] ?
-      (characterSettings[character.baseID] as CharacterSettings).targets.find(defaultTarget => defaultTarget.name === target.name) :
-      null;
-
-    // Determine whether the current optimization plan is a default (same name exists), user-defined (same name doesn't
-    // exist), or custom (name is 'custom') This determines whether to display a "Reset target to default" button, a
-    // "Delete target" button, or nothing.
-    let resetButton;
-
-    if ('custom' === target.name) {
-      resetButton = null;
-    } else if (defaultTarget) {
-      resetButton =
-      <Button
-        type={'button'}
-        id={'reset-button'}
-        disabled={defaultTarget.equals(target)}
-        onClick={() => {
-          this.props.resetCharacterTargetToDefault(character.baseID, target.name);
-        }}
-      >
-        Reset target to default
-      </Button>
-    } else {
-      resetButton =
-      <Button
-        type={'button'}
-        id={'delete-button'}
-        variant={'destructive'}
-        onClick={() => this.props.deleteTarget(character.baseID, target.name)}
-      >
-        Delete target
-      </Button>
-    }
-
-    const slotToPrimaryRestriction = (slot: ModTypes.VariablePrimarySlots) =>
-      <div key={`mod-block-${slot}`} className={'mod-block'}>
-        <Dropdown
-          name={`${slot}-primary`}
-          id={`${slot}-primary`}
-          defaultValue={this.props.target.primaryStatRestrictions[slot]}
-          onChange={() => {}}
-        >
-          <option value={''}>Any</option>
-          {this.props[`${slot}Primaries`].map(
-            primary => <option key={primary} value={primary}>{primary}</option>)}
-        </Dropdown>
-        <div className={`mod-image mod-image-${slot}`} />
-      </div>;
-
-    return <form
-      className={`character-edit-form`}
-      noValidate={'advanced' === this.props.editMode}
-      onSubmit={(e) => {
-        e.preventDefault();
-        this.saveTarget();
-        this.props.closeForm();
-      }}
-      ref={this.form}>
-      <div className={'character-view column'}>
-        <CharacterAvatar character={character} />
-        <h2 className={'character-name'}>
-          {this.props.baseCharacters[character.baseID] ? this.props.baseCharacters[character.baseID].name : character.baseID}
-        </h2>
-      </div>
-      <div id={'character-level-options'}>
-        <h3>Character-level options</h3>
-        <div className={'form-row center'}>
-          <label htmlFor='mod-dots' id={'mod-dots-label'}>
-            Use only mods with at least&nbsp;
-            <span className={'dropdown'}>
-              <select name={'mod-dots'} id={'mod-dots'} defaultValue={character.optimizerSettings.minimumModDots}>
-                {[1, 2, 3, 4, 5, 6].map(dots => <option key={dots} value={dots}>{dots}</option>)}
-              </select>
-            </span>
-            &nbsp;dot(s)
-          </label>
-        </div>
-        <div className={'form-row'}>
-          <label htmlFor={'slice-mods'} id={'slice-mods-label'}>Slice 5-dot mods to 6E during optimization?</label>
-          <input
-            type={'checkbox'}
-            id={'slice-mods'}
-            name={'slice-mods'}
-            defaultChecked={character.optimizerSettings.sliceMods} />
-        </div>
-      </div>
-      <div className={'target-level-options'}>
-        <h3>Target-specific Options</h3>
-        <div className="row">
-          <div className={'column'}>
-            <div className={'header-row'}>
-              <label htmlFor={'plan-name'}>Target Name: </label>
-              <input type={'text'} defaultValue={target.name} id={'plan-name'} name={'plan-name'} />
-            </div>
-            <div className={'non-stats'}>
-              <div className={'form-row center'}>
-                <label htmlFor={'upgrade-mods'}>Upgrade Mods to level 15:</label>
-                <input type={'checkbox'} name={'upgrade-mods'} id={'upgrade-mods'}
-                  defaultChecked={this.props.target.upgradeMods} />
-              </div>
-            </div>
-            <div className={'header-row group primary-stats'}>
-              <h4>Restrict Primary Stats:</h4>
-              <div className={'mod-blocks'}>
-                <div className="breakable-group">
-                  {(['arrow', 'triangle'] as ModTypes.VariablePrimarySlots[]).map(slotToPrimaryRestriction)}
-                </div>
-                <div className="breakable-group">
-                  {(['circle', 'cross'] as ModTypes.VariablePrimarySlots[]).map(slotToPrimaryRestriction)}
-                </div>
-              </div>
-            </div>
-            <div className={'header-row group set-bonuses'}>
-              <h4>Restrict Set Bonuses:</h4>
-              <SetRestrictionsWidget
-                setRestrictions={this.props.setRestrictions || this.props.target.setRestrictions}
-                useFullSets={this.props.target.useOnlyFullSets}
-              />
-            </div>
-            <div className={'header-row group target-stats'}>
-              {this.targetStatForm(this.props.targetStats ||
-                this.props.target.targetStats.map((targetStat, index) => ({
-                  key: index,
-                  target: targetStat
-                }))
-              )}
-            </div>
-          </div>
-          <div className={'column'}>
-            <div className={'header-row stat-weights-toggle'}>
-              <Toggle
-                id={'mode'}
-                className={''}
-                inputLabel={'Stat Weights'}
-                name={'mode'}
-                leftLabel={'Basic'}
-                leftValue={'basic'}
-                rightLabel={'Advanced'}
-                rightValue={'advanced'}
-                value={this.props.editMode}
-                disabled={false}
-                onChange={(newValue: string) => this.props.changeCharacterEditMode(newValue as CharacterEditMode)}
-              />
-            </div>
-            <div className={'instructions'}>
-              Give each stat type a value. These values are used as the "goodness" of each stat to calculate the optimum
-              mods to equip. <strong>These are not the amount of each stat you want!</strong> Instead, they are multiplied
-              with the amount of each stat on a mod to determine a score for each mod.
-            </div>
-            {'basic' === this.props.editMode && this.basicForm(target)}
-            {'advanced' === this.props.editMode && this.advancedForm(target)}
-            {this.missedGoalsSection(
-              character.baseID === this.props.modAssignments[this.props.characterIndex]?.id ?
-                this.props.modAssignments[this.props.characterIndex]
-              :
-                null
-            )}
-          </div>
-        </div>
-      </div>
-      <div className={'actions'}>
-        {resetButton}
-        <Button
-          type={'button'}
-          onClick={() => this.props.hideModal()}
-        >
-          Cancel
-        </Button>
-        <Button type={'submit'}>Save</Button>
-      </div>
-    </form>;
-  }
+  useEffect(() => {
+    dispatch(CharacterEdit.actions.changeSetRestrictions(target.setRestrictions));
+    dispatch(CharacterEdit.actions.changeTargetStats(target.targetStats));
+  }, []);
 
   /**
    * Renders a form element for managing a target stat
@@ -266,15 +74,18 @@ class CharacterEditForm extends React.Component<Props> {
    * @param targetStats {Array<TargetStat>}
    * @returns {*}
    */
-  targetStatForm(targetStats: TargetStats) {
-    const baseCharacters = Object.values(this.props.baseCharacters).slice(0) as BaseCharacter[];
-    baseCharacters.sort((a, b) => a.name.localeCompare(b.name))
+   const targetStatForm = (targetStats: TargetStats) => {
+    const baseCharacters2 = Object.values(baseCharacters).slice(0) as BaseCharacter[];
+    baseCharacters2.sort((a, b) => a.name.localeCompare(b.name))
 
     const targetStatRows = targetStats.map((targetStat: TargetStatEntry, index: number) => {
-      this.targetStatIndex = index;
       return <div className={'form-row center'} key={targetStat.key}>
         <Toggle
-          ref={this.setTargetShouldOptimizeRefs}
+          ref={(tog) => {
+            if (tog) {
+              targetStatsShouldOptimize.current[index] = tog
+            }
+          }}
           inputLabel={'Target Stat Type'}
           name={'optimize-for-target[]'}
           leftLabel={'Optimize'}
@@ -288,18 +99,21 @@ class CharacterEditForm extends React.Component<Props> {
           type={'button'}
           size={'sm'}
           variant={'destructive'}
-          onClick={() => this.props.removeTargetStat(index)}
+          className={''}
+          onClick={() => dispatch(CharacterEdit.actions.removeTargetStat(index))}
         >
           -
         </Button>
         <span className={'dropdown'}>
           <select name={'target-stat-name[]'} defaultValue={targetStat.target.stat}
             onChange={event => {
-              if (event.target.value === 'Health+Protection') {
-                this.targetStatsShouldOptimize[index]?.updateValue('false');
-                this.targetStatsShouldOptimize[index]?.disable();
-              } else {
-                this.targetStatsShouldOptimize[index]?.enable();
+              if (targetStatsShouldOptimize.current[index] !== null) {
+                if (event.target.value === 'Health+Protection') {
+                  targetStatsShouldOptimize.current[index].updateValue('false');
+                  targetStatsShouldOptimize.current[index].disable();
+                } else {
+                  targetStatsShouldOptimize.current[index].enable();
+                }
               }
             }}
           >
@@ -323,7 +137,7 @@ class CharacterEditForm extends React.Component<Props> {
         <span className={'dropdown'}>
           <select name={'target-stat-relative-character[]'} defaultValue={targetStat.target.relativeCharacterId !== 'null' ? targetStat.target.relativeCharacterId : ''}>
             <option value={''}>No one</option>
-            {baseCharacters.map(
+            {baseCharacters2.map(
               gs => <option key={gs.baseID} value={gs.baseID}>{gs.name}</option>
             )}
           </select>
@@ -350,7 +164,7 @@ class CharacterEditForm extends React.Component<Props> {
         <Button
           type={'button'}
           size={'sm'}
-          onClick={() => this.props.addTargetStat(new TargetStat('Speed'))}
+          onClick={() => dispatch(CharacterEdit.actions.addTargetStat(new TargetStat('Speed')))}
         >
           +
         </Button>
@@ -363,7 +177,7 @@ class CharacterEditForm extends React.Component<Props> {
    *
    * @param optimizationPlan OptimizationPlan The OptimizationPlan that contains the default values to display
    */
-  basicForm(optimizationPlan: OptimizationPlan) {
+   const basicForm = (optimizationPlan: OptimizationPlan) => {
     return <div id={'basic-form'}>
       <div className={'form-row'}>
         <label htmlFor="health-stat">Health:</label>
@@ -505,7 +319,7 @@ class CharacterEditForm extends React.Component<Props> {
    *
    * @param optimizationPlan OptimizationPlan The OptimizationPlan that contains the default values to display
    */
-  advancedForm(optimizationPlan: OptimizationPlan) {
+  const advancedForm = (optimizationPlan: OptimizationPlan) => {
     return <div id={'advanced-form'}>
       <div className={'form-row'}>
         <label htmlFor="health-stat-advanced">Health:</label>
@@ -640,13 +454,13 @@ class CharacterEditForm extends React.Component<Props> {
     </div>;
   }
 
-  missedGoalsSection(modAssignments: IModSuggestion | null) {
-    if ((this.props.targetStats || []).length === 0) {
+  const missedGoalsSection = (modAssignments: IModSuggestion | null) => {
+    if ((targetStats || []).length === 0) {
       return;
     }
 
     const resultsInner = (() => {
-      if (!areObjectsEquivalent(this.props.progress, {})) {
+      if (!areObjectsEquivalent(progress, {})) {
         return <OptimizerProgress />;
       }
 
@@ -654,7 +468,7 @@ class CharacterEditForm extends React.Component<Props> {
         <div className={'actions'}>
           <Button
             type={'button'}
-            onClick={() => this.runIncrementalCalc()}
+            onClick={() => runIncrementalCalc()}
           >
             Run Incremental Optimization
           </Button>
@@ -708,34 +522,33 @@ class CharacterEditForm extends React.Component<Props> {
     </div>
   }
 
-  runIncrementalCalc() {
-    this.saveTarget();
-    this.props.optimizeMods();
+  const runIncrementalCalc = () => {
+    saveTarget();
+    dispatch(Optimize.thunks.optimizeMods());
   }
 
-  saveTarget() {
-    const form = this.form.current!;
-    const planName = 'lock' !== form['plan-name'].value ? form['plan-name'].value : 'custom';
+  const saveTarget = () => {
+    const form2 = form.current!;
+    const planName = 'lock' !== form2['plan-name'].value ? form2['plan-name'].value : 'custom';
     let newTarget;
     let primaryStatRestrictions: PrimaryStatRestrictions = {} as PrimaryStatRestrictions;
     const targetStats = [];
-    if (form['target-stat-name[]']) {
-      const targetStatNames = form['target-stat-name[]'] instanceof NodeList ?
-        form['target-stat-name[]'] :
-        [form['target-stat-name[]']];
-      const targetStatMins = form['target-stat-min[]'] instanceof NodeList ?
-        form['target-stat-min[]'] :
-        [form['target-stat-min[]']];
-      const targetStatMaxes = form['target-stat-max[]'] instanceof NodeList ?
-        form['target-stat-max[]'] :
-        [form['target-stat-max[]']];
-      const targetStatRelativeCharacters = form['target-stat-relative-character[]'] instanceof NodeList ?
-        form['target-stat-relative-character[]'] :
-        [form['target-stat-relative-character[]']];
-      const targetStatTypes = form['target-stat-type[]'] instanceof NodeList ?
-        form['target-stat-type[]'] :
-        [form['target-stat-type[]']];
-      const targetStatsShouldOptimize = this.targetStatsShouldOptimize;
+    if (form2['target-stat-name[]']) {
+      const targetStatNames = form2['target-stat-name[]'] instanceof NodeList ?
+        form2['target-stat-name[]'] :
+        [form2['target-stat-name[]']];
+      const targetStatMins = form2['target-stat-min[]'] instanceof NodeList ?
+        form2['target-stat-min[]'] :
+        [form2['target-stat-min[]']];
+      const targetStatMaxes = form2['target-stat-max[]'] instanceof NodeList ?
+        form2['target-stat-max[]'] :
+        [form2['target-stat-max[]']];
+      const targetStatRelativeCharacters = form2['target-stat-relative-character[]'] instanceof NodeList ?
+        form2['target-stat-relative-character[]'] :
+        [form2['target-stat-relative-character[]']];
+      const targetStatTypes = form2['target-stat-type[]'] instanceof NodeList ?
+        form2['target-stat-type[]'] :
+        [form2['target-stat-type[]']];
 
       for (let i = 0; i < targetStatNames.length; i++) {
         const name = targetStatNames[i].value;
@@ -743,7 +556,7 @@ class CharacterEditForm extends React.Component<Props> {
         const maximum = isNaN(targetStatMaxes[i].valueAsNumber) ? 100000000 : targetStatMaxes[i].valueAsNumber;
         const relativeCharacter = targetStatRelativeCharacters[i].value || null;
         const type = targetStatTypes[i].value || null;
-        const shouldOptimize = targetStatsShouldOptimize[i]?.value === 'true';
+        const shouldOptimize = targetStatsShouldOptimize.current![i]?.value === 'true';
 
         if (minimum < maximum) {
           targetStats.push(new TargetStat(name, type, minimum, maximum, relativeCharacter, shouldOptimize));
@@ -754,78 +567,68 @@ class CharacterEditForm extends React.Component<Props> {
     }
 
     for (let slot of ['arrow', 'triangle', 'circle', 'cross'] as ModTypes.VariablePrimarySlots[]) {
-      if (form[`${slot}-primary`].value) {
-        primaryStatRestrictions[slot] = form[`${slot}-primary`].value;
+      if (form2[`${slot}-primary`].value) {
+        primaryStatRestrictions[slot] = form2[`${slot}-primary`].value;
       }
     }
 
-    if ('advanced' === this.props.editMode) {
+    if ('advanced' === editMode) {
       // Advanced form
       newTarget = new OptimizationPlan(
         planName,
-        form['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Health,
-        form['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Protection,
-        form['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Speed,
-        form['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Damage %'],
-        form['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Potency %'],
-        form['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Tenacity %'],
-        form['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Physical Damage'],
-        form['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Special Damage'],
-        form['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Chance'],
-        form['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Armor,
-        form['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Resistance,
-        form['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Accuracy %'],
-        form['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Avoidance %'],
-        form['upgrade-mods'].checked || targetStats.length > 0,
+        form2['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Health,
+        form2['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Protection,
+        form2['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Speed,
+        form2['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Damage %'],
+        form2['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Potency %'],
+        form2['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Tenacity %'],
+        form2['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Physical Damage'],
+        form2['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Special Damage'],
+        form2['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Chance'],
+        form2['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Armor,
+        form2['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Resistance,
+        form2['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Accuracy %'],
+        form2['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Avoidance %'],
+        form2['upgrade-mods'].checked || targetStats.length > 0,
         primaryStatRestrictions,
-        this.props.setRestrictions,
+        setRestrictions,
         targetStats,
-        form['use-full-sets'].checked
+        form2['use-full-sets'].checked
       );
     } else {
       // Basic form
       newTarget = new OptimizationPlan(
         planName,
-        form['health-stat'].valueAsNumber,
-        form['protection-stat'].valueAsNumber,
-        form['speed-stat'].valueAsNumber,
-        form['critDmg-stat'].valueAsNumber,
-        form['potency-stat'].valueAsNumber,
-        form['tenacity-stat'].valueAsNumber,
-        form['physDmg-stat'].valueAsNumber,
-        form['specDmg-stat'].valueAsNumber,
-        form['critChance-stat'].valueAsNumber,
-        form['defense-stat'].valueAsNumber / 2,
-        form['defense-stat'].valueAsNumber / 2,
-        form['accuracy-stat'].valueAsNumber,
-        form['critAvoid-stat'].valueAsNumber,
-        form['upgrade-mods'].checked || targetStats.length > 0,
+        form2['health-stat'].valueAsNumber,
+        form2['protection-stat'].valueAsNumber,
+        form2['speed-stat'].valueAsNumber,
+        form2['critDmg-stat'].valueAsNumber,
+        form2['potency-stat'].valueAsNumber,
+        form2['tenacity-stat'].valueAsNumber,
+        form2['physDmg-stat'].valueAsNumber,
+        form2['specDmg-stat'].valueAsNumber,
+        form2['critChance-stat'].valueAsNumber,
+        form2['defense-stat'].valueAsNumber / 2,
+        form2['defense-stat'].valueAsNumber / 2,
+        form2['accuracy-stat'].valueAsNumber,
+        form2['critAvoid-stat'].valueAsNumber,
+        form2['upgrade-mods'].checked || targetStats.length > 0,
         primaryStatRestrictions,
-        this.props.setRestrictions,
+        setRestrictions,
         targetStats,
-        form['use-full-sets'].checked
+        form2['use-full-sets'].checked
       );
     }
 
-    this.props.submitForm(
-      this.props.character.baseID,
-      this.props.characterIndex,
-      newTarget,
-      +form['mod-dots'].value,
-      form['slice-mods'].checked,
-    );
+    dispatch(CharacterEdit.thunks.changeMinimumModDots(character.baseID, +form2['mod-dots'].value));
+    dispatch(CharacterEdit.thunks.changeSliceMods(character.baseID, form2['slice-mods'].checked));
+    dispatch(CharacterEdit.thunks.unlockCharacter(character.baseID));
+    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(characterIndex, newTarget));
+
   }
-}
 
-const mapStateToProps = (state: IAppState) => {
-  const mods = state.profile.mods;
 
-  return {
-    editMode: state.characterEditMode,
-    baseCharacters: Data.selectors.selectBaseCharacters(state),
-    setRestrictions: state.setRestrictions,
-    targetStats: state.targetStats,
-    modAssignments: state.profile.modAssignments,
+  const modsPrimaries = {
     arrowPrimaries: Array.from(new Set(
       mods.filter((mod: Mod) => mod.slot === 'arrow')
           .map((mod: Mod) => mod.primaryStat.type)
@@ -842,43 +645,187 @@ const mapStateToProps = (state: IAppState) => {
       mods.filter((mod: Mod) => mod.slot === 'cross')
           .map((mod: Mod) => mod.primaryStat.type)
     )),
-    progress: state.progress
+  };
+
+  const defaultTarget = characterSettings[character.baseID] ?
+  (characterSettings[character.baseID] as CharacterSettings).targets.find(defaultTarget => defaultTarget.name === target.name) :
+  null;
+
+  let resetButton;
+
+  if ('custom' === target.name) {
+    resetButton = null;
+  } else if (defaultTarget) {
+    resetButton =
+    <Button
+      type={'button'}
+      id={'reset-button'}
+      disabled={defaultTarget.equals(target)}
+      onClick={() => {
+        dispatch(CharacterEdit.thunks.resetCharacterTargetToDefault(character.baseID, target.name));
+      }}>
+      Reset target to default
+    </Button>
+  } else {
+    resetButton =
+    <Button
+      type={'button'}
+      id={'delete-button'}
+      variant={'destructive'}
+      onClick={() => dispatch(CharacterEdit.thunks.deleteTarget(character.baseID, target.name))}>
+      Delete target
+    </Button>
   }
+
+  const slotToPrimaryRestriction = (slot: ModTypes.VariablePrimarySlots) =>
+    <div key={`mod-block-${slot}`} className={'mod-block'}>
+      <Dropdown
+        name={`${slot}-primary`}
+        id={`${slot}-primary`}
+        defaultValue={target.primaryStatRestrictions[slot]}
+        onChange={() => {}}
+      >
+        <option value={''}>Any</option>
+        {modsPrimaries[`${slot}Primaries`].map(
+          primary => <option key={primary} value={primary}>{primary}</option>)}
+      </Dropdown>
+      <div className={`mod-image mod-image-${slot}`} />
+    </div>;
+
+  return (
+
+    // Determine whether the current optimization plan is a default (same name exists), user-defined (same name doesn't
+    // exist), or custom (name is 'custom') This determines whether to display a "Reset target to default" button, a
+    // "Delete target" button, or nothing.
+
+    <form
+      className={`character-edit-form`}
+      noValidate={'advanced' === editMode}
+      onSubmit={(e) => {
+        e.preventDefault();
+        saveTarget();
+        dispatch(CharacterEdit.thunks.closeEditCharacterForm());
+      }}
+      ref={form}>
+      <div className={'character-view column'}>
+        <CharacterAvatar character={character} />
+        <h2 className={'character-name'}>
+          {baseCharacters[character.baseID] ? baseCharacters[character.baseID].name : character.baseID}
+        </h2>
+      </div>
+      <div id={'character-level-options'}>
+        <h3>Character-level options</h3>
+        <div className={'form-row center'}>
+          <label htmlFor='mod-dots' id={'mod-dots-label'}>
+            Use only mods with at least&nbsp;
+            <span className={'dropdown'}>
+              <select name={'mod-dots'} id={'mod-dots'} defaultValue={character.optimizerSettings.minimumModDots}>
+                {[1, 2, 3, 4, 5, 6].map(dots => <option key={dots} value={dots}>{dots}</option>)}
+              </select>
+            </span>
+            &nbsp;dot(s)
+          </label>
+        </div>
+        <div className={'form-row'}>
+          <label htmlFor={'slice-mods'} id={'slice-mods-label'}>Slice 5-dot mods to 6E during optimization?</label>
+          <input
+            type={'checkbox'}
+            id={'slice-mods'}
+            name={'slice-mods'}
+            defaultChecked={character.optimizerSettings.sliceMods} />
+        </div>
+      </div>
+      <div className={'target-level-options'}>
+        <h3>Target-specific Options</h3>
+        <div className="row">
+          <div className={'column'}>
+            <div className={'flex gap-1 justify-center'}>
+              <Label htmlFor={'plan-name'}>Target Name: </Label>
+              <Input type={'text'} defaultValue={target.name} id={'plan-name'} name={'plan-name'} />
+            </div>
+            <div className={'non-stats'}>
+              <div className={'flex gap-1 justify-center'}>
+                <Label htmlFor={'upgrade-mods'}>Upgrade Mods to level 15:</Label>
+                <Input
+                  className={'h-4 w-4'}
+                  defaultChecked={target.upgradeMods}
+                  id={'upgrade-mods'}
+                  name={'upgrade-mods'}
+                  type={'checkbox'}
+                />
+              </div>
+            </div>
+            <div className={'header-row group primary-stats'}>
+              <h4>Restrict Primary Stats:</h4>
+              <div className={'mod-blocks'}>
+                <div className="breakable-group">
+                  {(['arrow', 'triangle'] as ModTypes.VariablePrimarySlots[]).map(slotToPrimaryRestriction)}
+                </div>
+                <div className="breakable-group">
+                  {(['circle', 'cross'] as ModTypes.VariablePrimarySlots[]).map(slotToPrimaryRestriction)}
+                </div>
+              </div>
+            </div>
+            <div className={'header-row group set-bonuses'}>
+              <h4>Restrict Set Bonuses:</h4>
+              <SetRestrictionsWidget
+                setRestrictions={setRestrictions || target.setRestrictions}
+                useFullSets={target.useOnlyFullSets}
+              />
+            </div>
+            <div className={'header-row group target-stats'}>
+              {targetStatForm(targetStats ||
+                target.targetStats.map((targetStat, index) => ({
+                  key: index,
+                  target: targetStat
+                }))
+              )}
+            </div>
+          </div>
+          <div className={'column'}>
+            <div className={'header-row stat-weights-toggle'}>
+              <Toggle
+                id={'mode'}
+                className={''}
+                inputLabel={'Stat Weights'}
+                name={'mode'}
+                leftLabel={'Basic'}
+                leftValue={'basic'}
+                rightLabel={'Advanced'}
+                rightValue={'advanced'}
+                value={editMode}
+                disabled={false}
+                onChange={(newValue: string) => dispatch(CharacterEdit.actions.changeCharacterEditMode(newValue as CharacterEditMode))}
+              />
+            </div>
+            <div className={'instructions'}>
+              Give each stat type a value. These values are used as the "goodness" of each stat to calculate the optimum
+              mods to equip. <strong>These are not the amount of each stat you want!</strong> Instead, they are multiplied
+              with the amount of each stat on a mod to determine a score for each mod.
+            </div>
+            {'basic' === editMode && basicForm(target)}
+            {'advanced' === editMode && advancedForm(target)}
+            {missedGoalsSection(
+              character.baseID === modAssignments[characterIndex]?.id ?
+                modAssignments[characterIndex]
+              :
+                null
+            )}
+          </div>
+        </div>
+      </div>
+      <div className={'actions flex gap-2 justify-center'}>
+        {resetButton}
+        <Button
+          type={'button'}
+          onClick={() => dispatch(App.actions.hideModal())}
+        >
+          Cancel
+        </Button>
+        <Button type={'submit'}>Save</Button>
+      </div>
+    </form>
+  );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  cancel: () => {
-    dispatch(CharacterEdit.actions.changeSetRestrictions({} as SetRestrictions));
-    dispatch(CharacterEdit.actions.changeTargetStats([]));
-  },
-  hideModal: () => dispatch(App.actions.hideModal()),
-  submitForm: (
-    characterID: CharacterNames,
-    characterIndex: number,
-    target: OptimizationPlan,
-    minimumModDots: number,
-    sliceMods: boolean,
-  ) => {
-    dispatch(CharacterEdit.thunks.changeMinimumModDots(characterID, minimumModDots));
-    dispatch(CharacterEdit.thunks.changeSliceMods(characterID, sliceMods));
-    dispatch(CharacterEdit.thunks.unlockCharacter(characterID));
-    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(characterIndex, target));
-  },
-  closeForm: () => dispatch(CharacterEdit.thunks.closeEditCharacterForm()),
-  resetCharacterTargetToDefault: (characterID: CharacterNames, targetName: string) =>
-    dispatch(CharacterEdit.thunks.resetCharacterTargetToDefault(characterID, targetName)),
-  deleteTarget: (characterID: CharacterNames, targetName: string) => dispatch(CharacterEdit.thunks.deleteTarget(characterID, targetName)),
-  changeCharacterEditMode: (mode: CharacterEditMode) => dispatch(CharacterEdit.actions.changeCharacterEditMode(mode)),
-  populateSetRestrictions: (setRestrictions: SetRestrictions) => dispatch(CharacterEdit.actions.changeSetRestrictions(setRestrictions)),
-  populateTargetStats: (targetStats: TargetStat[]) => dispatch(CharacterEdit.actions.changeTargetStats(targetStats)),
-  addTargetStat: (targetStat: TargetStat) => dispatch(CharacterEdit.actions.addTargetStat(targetStat)),
-  removeTargetStat: (index: number) => dispatch(CharacterEdit.actions.removeTargetStat(index)),
-  optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
-});
-
-type Props = PropsFromRedux & ComponentProps;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(CharacterEditForm);
+export { CharacterEditForm };

@@ -27,7 +27,7 @@ import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { Button } from "#ui/button";
 
 // containers
-import CharacterEditForm from "../CharacterEditForm/CharacterEditForm";
+import { CharacterEditForm } from "#/containers/CharacterEditForm/CharacterEditForm";
 
 
 const CharacterList = React.memo(
