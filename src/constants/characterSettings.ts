@@ -1,8 +1,12 @@
-import { OptimizationPlan } from "../domain/OptimizationPlan";
-import optimizationStrategy from "./optimizationStrategy";
-import { CharacterSettings, DamageType } from "../domain/CharacterSettings";
-import { TargetStat } from "../domain/TargetStat";
-import * as UtilityTypes from "../utils/typeHelper";
+// utils
+import * as UtilityTypes from "#/utils/typeHelper";
+
+// domain
+import optimizationStrategy from "#/constants/optimizationStrategy";
+
+import { CharacterSettings, DamageType } from "#/domain/CharacterSettings";
+import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { createTargetStat } from "#/domain/TargetStat";
 
 export const characterNames = [
   '50RT',
@@ -822,7 +826,7 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 25, 0, 25, 0, 0, 0, 0, true),
       new OptimizationPlan('Iden Lead', 10, 10, 100, 100, 40, 0, 25, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('hSTR Phase 3', 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, true, {}, {},
-        [new TargetStat('Speed', undefined, 175, 179)]
+        [createTargetStat('Speed', [], '1', '+', 175, 179, 'null', true)]
       ),
     ],
     ['Troopers', 'Chex Mix'],
@@ -1103,7 +1107,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       new OptimizationPlan('Crits', 0, 0, 100, 50, 25, 0, 25, 0, 100, 0, 0, 0, 0, true),
       new OptimizationPlan('hSTR Phase 3', 0, 0, 0, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, true, {}, {},
-        [new TargetStat('Speed', undefined, 170, 174)]
+        [createTargetStat('Speed', [], '1', '+', 170, 174, 'null', true)]
       )
     ]
   ),
@@ -1124,7 +1128,7 @@ const characterSettings: CharacterSettingsIndexer = {
       new OptimizationPlan('Slow Han', 0, 0, 0, 100, 25, 0, 50, 0, 0, 0, 0, 0, 0, true),
       new OptimizationPlan('Non-relic', 0, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0, true),
       new OptimizationPlan('Chex Mix', 0, 0, 0, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, true, {}, {},
-        [new TargetStat('Speed', undefined, 170, 174)],
+        [createTargetStat('Speed', [], '1', '+', 170, 174, 'null', true)],
       ),
     ],
     ['Raid Han', 'rHan', 'OG Han', 'Zolo', 'Chex Mix', 'Titans'],

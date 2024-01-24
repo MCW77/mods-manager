@@ -236,7 +236,6 @@ export namespace thunks {
     return function (dispatch) {
       dispatch(App.actions.hideModal());
       dispatch(actions.changeSetRestrictions({} as SetRestrictions));
-      dispatch(actions.changeTargetStats([]));
       dispatch(setOptimizeIndex(null));
     }
   }
@@ -626,7 +625,10 @@ export namespace thunks {
         const oldCharacter = profile.selectedCharacters[characterIndex];
         const newSelectedCharacters = profile.selectedCharacters.slice(0);
         newSelectedCharacters.splice(characterIndex, 1, Object.assign({}, oldCharacter, {
-          target: oldCharacter.target!.withUpgradeMods(!oldCharacter.target!.upgradeMods)
+          target: {
+            ...oldCharacter.target,
+            upgradeMods: !oldCharacter.target.upgradeMods,
+          }
         }));
 
         return profile.withSelectedCharacters(newSelectedCharacters);

@@ -36,13 +36,10 @@ type AppActions =
   | ReturnType<typeof App.actions.showFlash>
   | ReturnType<typeof App.actions.showModal>
   | ReturnType<typeof App.actions.toggleSidebar>
-  | ReturnType<typeof CharacterEdit.actions.addTargetStat>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
   | ReturnType<typeof CharacterEdit.actions.changeSetRestrictions>
-  | ReturnType<typeof CharacterEdit.actions.changeTargetStats>
   | ReturnType<typeof CharacterEdit.actions.removeSetBonus>
-  | ReturnType<typeof CharacterEdit.actions.removeTargetStat>
   | ReturnType<typeof CharacterEdit.actions.selectSetBonus>
   | ReturnType<typeof CharacterEdit.actions.setTemplatesAddingMode>
   | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
@@ -103,8 +100,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
         App.reducers.toggleSidebar(state)
       );
 
-    case CharacterEdit.actionNames.ADD_TARGET_STAT:
-      return CharacterEdit.reducers.addTargetStat(state, action);
     case CharacterEdit.actionNames.CHANGE_CHARACTER_EDIT_MODE:
       return AppState.save(
         CharacterEdit.reducers.changeCharacterEditMode(state, action)
@@ -115,12 +110,8 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       );
     case CharacterEdit.actionNames.CHANGE_SET_RESTRICTIONS:
       return CharacterEdit.reducers.changeSetRestrictions(state, action);
-    case CharacterEdit.actionNames.CHANGE_TARGET_STATS:
-      return CharacterEdit.reducers.changeTargetStats(state, action);
     case CharacterEdit.actionNames.REMOVE_SET_BONUS:
       return CharacterEdit.reducers.removeSetBonus(state, action);
-    case CharacterEdit.actionNames.REMOVE_TARGET_STAT:
-      return CharacterEdit.reducers.removeTargetStat(state, action);
     case CharacterEdit.actionNames.SELECT_SET_BONUS:
       return CharacterEdit.reducers.selectSetBonus(state, action);
     case CharacterEdit.actionNames.SET_TEMPLATES_ADDING_MODE:

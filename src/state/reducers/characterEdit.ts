@@ -1,9 +1,6 @@
 // react
 import { createSelector } from "@reduxjs/toolkit";
 
-// utils
-import generateKey from "../../utils/generateKey";
-
 // state
 import { IAppState } from "../storage";
 
@@ -16,18 +13,9 @@ import setBonuses from "../../constants/setbonuses";
 
 import { SetRestrictions } from '../../domain/SetRestrictions';
 import { SetStats } from "../../domain/Stats";
-import { TargetStats } from "../../domain/TargetStat";
 
 
 export namespace reducers {
-  export function addTargetStat(state: IAppState, action: ReturnType<typeof actions.addTargetStat>): IAppState {
-    return Object.assign({}, state, {
-      targetStats: state.targetStats.concat({
-        key: generateKey(24),
-        target: action.targetStat
-      })
-    });
-  }
 
   export function changeCharacterEditMode(state: IAppState, action: ReturnType<typeof actions.changeCharacterEditMode>): IAppState {
     return Object.assign({}, state, {
@@ -44,16 +32,6 @@ export namespace reducers {
   export function changeSetRestrictions(state: IAppState, action: ReturnType<typeof actions.changeSetRestrictions>): IAppState {
     return Object.assign({}, state, {
       setRestrictions: action.setRestrictions
-    });
-  }
-
-  export function changeTargetStats(state: IAppState, action: ReturnType<typeof actions.changeTargetStats>): IAppState {
-    return Object.assign({}, state, {
-      targetStats: action.targetStats.length > 0 ? action.targetStats.map(targetStat => ({
-        key: generateKey(24),
-        target: targetStat
-      })) as TargetStats :
-        [] as TargetStats
     });
   }
 
@@ -74,15 +52,6 @@ export namespace reducers {
     }
 
     return state;
-  }
-
-  export function removeTargetStat(state: IAppState, action: ReturnType<typeof actions.removeTargetStat>): IAppState {
-    const newTargetStats = state.targetStats.slice(0);
-
-    newTargetStats.splice(action.index, 1);
-    return Object.assign({}, state, {
-      targetStats: newTargetStats
-    });
   }
 
   export function selectSetBonus(state: IAppState, action: ReturnType<typeof actions.selectSetBonus>) {
@@ -135,7 +104,6 @@ export namespace selectors {
     (activeProfile) => activeProfile.selectedCharacters
   );
   export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
-  export const selectTargetStats = (state: IAppState) => state.targetStats;
   export const selectTemplatesAddingMode = (state: IAppState) => selectTemplates(state).templatesAddingMode;
   export const selectUserTemplates = createSelector(
     selectTemplates,

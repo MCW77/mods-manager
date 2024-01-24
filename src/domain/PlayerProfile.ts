@@ -11,17 +11,16 @@ import { Mod } from "./Mod";
 import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
 import OptimizerRun from "./OptimizerRun";
 import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
-import { TargetStat, FlatTargetStat } from "./TargetStat";
+import { TargetStat } from "./TargetStat";
 
 
-type FlatMissedGoals = [FlatTargetStat, number][];
 export type MissedGoals = [TargetStat, number][];
 
 export interface IFlatModSuggestion {
   id: CharacterNames;
   target: FlatOptimizationPlan;
   assignedMods: string[];
-  missedGoals: FlatMissedGoals;
+  missedGoals: MissedGoals;
   messages?: string[];
 
 }
@@ -205,7 +204,7 @@ export class PlayerProfile {
 
   withModAssignments(modAssignments: IModSuggestion[]) {
     if (modAssignments) {
-      // TODO 
+      // TODO
 /*
       this.mods.forEach((mod: Mod, i: number, mods: Mod[]) => {
         mod.assignedID = modAssignments.includes(mod.characterID) ? mod.characterID : 'null'
@@ -273,7 +272,7 @@ export class PlayerProfile {
       index,
     );
   }
-  
+
   /**
    * Convert this full PlayerProfile into only what is needed to store the values form an optimizer run
    * @returns OptimizerRun
@@ -313,16 +312,13 @@ export class PlayerProfile {
         mapValues(flatPlayerProfile.characters, Character.deserialize) as Characters,
         flatPlayerProfile.mods.map(Mod.deserialize),
         flatPlayerProfile.selectedCharacters.map(({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })),
-        
+
         flatPlayerProfile.modAssignments.map(({id, target, assignedMods, missedGoals, messages}) => {
                     return {
             id: id,
             target: OptimizationPlan.deserialize(target),
             assignedMods: assignedMods,
-            missedGoals: missedGoals.map((missedGoal) => {
-              let [targetStat, goalValue] = missedGoal;
-              return [TargetStat.deserialize(targetStat), goalValue]
-            }),
+            missedGoals: missedGoals,
             messages: messages
           }  as IModSuggestion
         }) as IModSuggestion[],

@@ -7,11 +7,11 @@ import type * as ModTypes from "./types/ModTypes";
 
 import { SetRestrictions } from "./SetRestrictions";
 import { PrimaryStats } from "./Stats";
-import { TargetStat } from "./TargetStat";
+import { TargetStat, TargetStats } from "./TargetStat";
 
 
 export type PrimaryStatRestrictions = {
-  [key in ModTypes.VariablePrimarySlots]: PrimaryStats.GIMOStatNames 
+  [key in ModTypes.VariablePrimarySlots]: PrimaryStats.GIMOStatNames
 }
 
 interface BaseFlatOptimizationPlan {
@@ -44,11 +44,10 @@ interface BaseFlatOptimizationPlan {
   rawResistance: number;
   rawAccuracy: number;
   rawCritAvoid: number;
-
-  upgradeMods: boolean;
   primaryStatRestrictions: PrimaryStatRestrictions;
   setRestrictions: SetRestrictions;
-  useOnlyFullSets: boolean;  
+  upgradeMods: boolean;
+  useOnlyFullSets: boolean;
 }
 
 interface OldFlatOptimizationPlan extends BaseFlatOptimizationPlan {
@@ -56,7 +55,7 @@ interface OldFlatOptimizationPlan extends BaseFlatOptimizationPlan {
 }
 
 export interface FlatOptimizationPlan extends BaseFlatOptimizationPlan {
-  targetStats: TargetStat[];
+  targetStats: TargetStats;
 }
 
 export type OptimizationPlansById = {
@@ -118,7 +117,7 @@ export class OptimizationPlan {
   upgradeMods: boolean;
   primaryStatRestrictions: PrimaryStatRestrictions;
   setRestrictions: SetRestrictions;
-  targetStats: TargetStat[];
+  targetStats: TargetStats;
   useOnlyFullSets: boolean;
 
   constructor(
@@ -139,11 +138,11 @@ export class OptimizationPlan {
     upgradeMods = true,
     primaryStatRestrictions = {},
     setRestrictions = {},
-    targetStats: TargetStat[] = [],
+    targetStats: TargetStats = [],
     useOnlyFullSets = false
   ) {
     this.name = name;
-    
+
     // Set raw values based on exactly what the user entered
     this.rawHealth = health || 0;
     this.rawProtection = protection || 0;
@@ -184,7 +183,7 @@ export class OptimizationPlan {
 /*
   constructor fromPlan(plan: Partial<OptimizationPlan>): OptimizationPlan {
     this.name = name;
-    
+
     // Set raw values based on exactly what the user entered
     this.rawHealth = health || 0;
     this.rawProtection = protection || 0;
@@ -225,11 +224,6 @@ export class OptimizationPlan {
   }
 */
 
-  /**
-   * Return a renamed version of this optimization plan
-   *
-   * @param name String
-   */
   rename(name: string) {
     return new OptimizationPlan(
       name,
@@ -278,10 +272,6 @@ export class OptimizationPlan {
     );
   }
 
-  /**
-   * Checks to see if two OptimizationPlans are equivalent
-   * @param that
-   */
   equals(that: OptimizationPlan) {
     return that instanceof OptimizationPlan &&
       this.name === that.name &&
@@ -305,11 +295,6 @@ export class OptimizationPlan {
       this.useOnlyFullSets === that.useOnlyFullSets
   }
 
-  /**
-   * Returns true if any stat weight is negative
-   *
-   * @returns {boolean}
-   */
   hasNegativeWeights() {
     return this.Health < 0 ||
       this.Protection < 0 ||
@@ -326,11 +311,6 @@ export class OptimizationPlan {
       this['Critical Avoidance %'] < 0;
   }
 
-  /**
-   * Returns true if every stat has a weight of 0
-   *
-   * @returns {boolean}
-   */
   isBlank() {
     return this.Health === 0 &&
       this.Protection === 0 &&
@@ -347,11 +327,7 @@ export class OptimizationPlan {
       this['Critical Avoidance %'] === 0;
   }
 
-  /**
-   * Returns true if this plan includes either primary stat or set restrictions
-   *
-   * @returns {boolean}
-   */
+  // Returns true if this plan includes either primary stat or set restrictions
   hasRestrictions() {
     return Object.values(this.primaryStatRestrictions).filter(primary => !!primary).length ||
       !areObjectsEquivalent({}, this.setRestrictions);
@@ -387,23 +363,7 @@ export class OptimizationPlan {
     return planObject;
   }
 
-  /**
-   * Deserialize an OptimizationPlan from serialized FlatOptimizationPlan
-   *
-   * @param plan FlatOptimizationPlan
-   * @returns OptimizationPlan
-   */
   static deserialize(plan: FlatOptimizationPlan) {
-    const targetStats: TargetStat[] = plan.targetStats.map(targetStat =>
-      new TargetStat(
-        targetStat.stat,
-        targetStat.type || '+',
-        targetStat.minimum,
-        targetStat.maximum,
-        targetStat.relativeCharacterId,
-        targetStat.optimizeForTarget
-      )
-    );
 
     return new OptimizationPlan(
       plan.name || 'unnamed',
@@ -423,7 +383,7 @@ export class OptimizationPlan {
       'undefined' !== typeof plan.upgradeMods ? plan.upgradeMods : true,
       plan.primaryStatRestrictions || {},
       plan.setRestrictions || {},
-      targetStats,
+      plan.targetStats || [],
       plan.useOnlyFullSets || false
     );
   }
