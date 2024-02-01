@@ -1,6 +1,11 @@
-import { defineConfig, presetUno, presetIcons } from "unocss";
+import { defineConfig, presetUno, presetIcons, presetTypography } from "unocss";
 import presetShadcn from "./src/lib/shadcn/preset.shadcn";
 
 export default defineConfig({
-	presets: [presetUno(), presetIcons(), presetShadcn()],
+  presets: [
+    presetUno(),
+    presetTypography(),
+    presetIcons(),
+    presetShadcn(),
+  ],
 });
