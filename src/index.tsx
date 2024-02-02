@@ -6,9 +6,11 @@ import { Provider } from "react-redux";
 import { ThunkDispatch } from "./state/reducers/modsOptimizer";
 
 // styles
+import './index.css';
+import '@unocss/reset/tailwind.css'
 import 'virtual:uno.css';
 import './i18n';
-import './index.css';
+
 
 import registerServiceWorker from './registerServiceWorker';
 
