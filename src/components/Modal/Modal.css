@@ -7,7 +7,7 @@
   background-color: rgba(0, 0, 0, .5);
   margin: 0;
   padding: 2em;
-  z-index: 10000;
+  z-index:30;
   text-align: center;
   overflow: hidden;
   width: 100%;
