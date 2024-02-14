@@ -9,6 +9,9 @@ import "./CharacterEditForm.css";
 // utils
 import areObjectsEquivalent from '../../utils/areObjectsEquivalent';
 
+// state
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+
 // modules
 import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
@@ -524,6 +527,7 @@ const CharacterEditForm = ({
 
   const runIncrementalCalc = () => {
     saveTarget();
+    isBusy$.set(true);
     dispatch(Optimize.thunks.optimizeMods());
   }
 

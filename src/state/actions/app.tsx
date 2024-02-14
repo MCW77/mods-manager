@@ -36,13 +36,6 @@ export namespace actions {
 		} as const;
 	}
 
-	export function setIsBusy(isBusy: boolean) {
-		return {
-			type: actionNames.SET_IS_BUSY,
-			isBusy: isBusy,
-		} as const;
-	}
-
 	export function setState(state: IAppState) {
 		return {
 			type: actionNames.SET_STATE,
@@ -91,7 +84,6 @@ export namespace actionNames {
 	export const HIDE_FLASH = "HIDE_FLASH" as const;
 	export const HIDE_MODAL = "HIDE_MODAL" as const;
 	export const RESET_STATE = "RESET_STATE" as const;
-	export const SET_IS_BUSY = "SET_IS_BUSY" as const;
 	export const SET_STATE = "SET_STATE" as const;
 	export const SHOW_ERROR = "SHOW_ERROR" as const;
 	export const SHOW_FLASH = "SHOW_FLASH" as const;

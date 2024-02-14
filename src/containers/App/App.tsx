@@ -29,7 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FlashMessage } from "../../components/Modal/FlashMessage";
 import { Modal } from "../../components/Modal/Modal";
 import { ProfilesManager } from '../../components/ProfilesManager/ProfilesManager';
-import { Spinner } from "../../components/Spinner/Spinner";
+import { Spinner } from "#/modules/busyIndication/components/Spinner";
 
 // containers
 import { AboutView } from '../AboutView/AboutView';
@@ -45,7 +45,6 @@ const App = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
     const [t, i18n] = useTranslation('global-ui');
-    const isBusy= useSelector(AppModule.selectors.selectIsBusy);
     const displayModal = useSelector(AppModule.selectors.selectIsModalVisible);
     const modalClass = useSelector(AppModule.selectors.selectModalClasses);
     const modalContent = useSelector(AppModule.selectors.selectModalContent);
@@ -143,7 +142,7 @@ const App = React.memo(
     );
 
     return (
-      <Suspense fallback={<Spinner isVisible={true}/>}>
+      <Suspense fallback={<Spinner />}>
         <div className={'App'} onKeyDown={handleEscape}>
           {header(!instructionsScreen)}
           <div className={'app-body'}>
@@ -168,7 +167,7 @@ const App = React.memo(
               className={modalClass}
               content={modalContent}
               cancelable={isModalCancelable} />
-            <Spinner isVisible={isBusy} />
+            <Spinner />
           </div>
         </div>
       </Suspense>

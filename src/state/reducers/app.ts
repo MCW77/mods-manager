@@ -75,15 +75,6 @@ export namespace reducers {
 		return Object.assign({}, AppState.Default);
 	}
 
-	export function setIsBusy(
-		state: IAppState,
-		action: ReturnType<typeof actions.setIsBusy>,
-	): IAppState {
-		return Object.assign({}, state, {
-			isBusy: action.isBusy,
-		});
-	}
-
 	export function setState(
 		action: ReturnType<typeof actions.setState>,
 	): IAppState {
@@ -100,7 +91,6 @@ export namespace reducers {
 export namespace selectors {
 	export const selectErrorMessage = (state: IAppState) => state.error;
 	export const selectFlashMessage = (state: IAppState) => state.flashMessage;
-	export const selectIsBusy = (state: IAppState) => state.isBusy;
 	export const selectModalMessage = (state: IAppState) => state.modal;
 	export const selectIsModalCancelable = createSelector(
 		[selectModalMessage],

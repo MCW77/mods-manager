@@ -3,6 +3,7 @@ import React from "react";
 import { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // state
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import getDatabase from "#/state/storage/Database";
 
 // actions
@@ -56,7 +57,7 @@ export namespace thunks {
 					),
 				);
 
-				dispatch(App.actions.setIsBusy(false));
+				isBusy$.set(false);
 				dispatch(actions.updateProgress({} as OptimizationStatus));
 
 				// If this was an incremental optimization, leave the user on their current page
@@ -212,7 +213,7 @@ export namespace thunks {
 			optimizationWorker.onmessage = function (message) {
 				switch (message.data.type) {
 					case "OptimizationSuccess":
-						dispatch(App.actions.setIsBusy(false));
+						isBusy$.set(false);
 						dispatch(
 							actions.updateProgress({
 								character: null,
@@ -233,7 +234,7 @@ export namespace thunks {
 						);
 						break;
 					case "Progress":
-						dispatch(App.actions.setIsBusy(false));
+						isBusy$.set(false);
 						dispatch(actions.updateProgress(message.data));
 						break;
 					default:
@@ -245,7 +246,7 @@ export namespace thunks {
 				console.log(error);
 				optimizationWorker?.terminate();
 				dispatch(App.actions.hideModal());
-				dispatch(App.actions.setIsBusy(false));
+				isBusy$.set(false);
 				dispatch(App.actions.showError(error.message));
 			};
 

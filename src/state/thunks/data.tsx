@@ -3,35 +3,37 @@ import React from "react";
 import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 
 // utils
-import cleanAllyCode from "../../utils/cleanAllyCode";
-import groupByKey from "../../utils/groupByKey";
-import nothing from "../../utils/nothing";
+import cleanAllyCode from "#/utils/cleanAllyCode";
+import groupByKey from "#/utils/groupByKey";
+import nothing from "#/utils/nothing";
 import { mapValues } from "lodash-es";
 
 // state
-import getDatabase, { Database } from "../storage/Database";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import getDatabase, { Database } from "#/state/storage/Database";
+
 
 // modules
-import { App } from '../modules/app';
-import { Review } from '../modules/review';
-import { Storage } from '../modules/storage';
+import { App } from '#/state/modules/app';
+import { Review } from '#/state/modules/review';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { characterSettings, CharacterNames } from "../../constants/characterSettings";
-import { HUModsMoveProfile, HUProfileCreationData } from "../../containers/Review/Review";
-import { HUFlatMod } from '../../domain/types/ModTypes';
-import * as DTOs from "../../modules/profilesManagement/dtos";
-import * as Mappers from "../../modules/profilesManagement/mappers";
-import { PlayerValuesByCharacter } from "../../modules/profilesManagement/domain/PlayerValues";
+import { characterSettings, CharacterNames } from "#/constants/characterSettings";
+import { HUModsMoveProfile, HUProfileCreationData } from "#/containers/Review/Review";
+import { HUFlatMod } from '#/domain/types/ModTypes';
+import * as DTOs from "#/modules/profilesManagement/dtos";
+import * as Mappers from "#/modules/profilesManagement/mappers";
+import { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 
-import { BaseCharactersById, mapAPI2BaseCharactersById } from "../../domain/BaseCharacter";
-import { Character } from "../../domain/Character";
-import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
-import { Mod } from "../../domain/Mod";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
-import { OptimizerSettings } from "../../domain/OptimizerSettings";
-import { PlayerProfile } from "../../domain/PlayerProfile";
-import { UseCaseModes } from "../../domain/UseCaseModes";
+import { BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseCharacter";
+import { Character } from "#/domain/Character";
+import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
+import { Mod } from "#/domain/Mod";
+import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { OptimizerSettings } from "#/domain/OptimizerSettings";
+import { PlayerProfile } from "#/domain/PlayerProfile";
+import { UseCaseModes } from "#/domain/UseCaseModes";
 
 // components
 import { Button } from "#ui/button";
@@ -97,7 +99,7 @@ export namespace thunks {
     parameters: CharacterListGenerationParameters,
   ): ThunkResult<void> {
     return function (dispatch) {
-      dispatch(App.actions.setIsBusy(true))
+      isBusy$.set(true);
 
       return post(
         'https://api.mods-optimizer.swgoh.grandivory.com/characterlist',
@@ -107,11 +109,13 @@ export namespace thunks {
           parameters: parameters,
         }
       )
-        .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
-        .catch(error => {
-          dispatch(App.actions.showError(error.message))
-        })
-        .finally(() => dispatch(App.actions.setIsBusy(false)))
+      .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
+      .catch(error => {
+        dispatch(App.actions.showError(error.message))
+      })
+      .finally(() => {
+        isBusy$.set(false);
+      })
     }
   }
 
@@ -245,7 +249,7 @@ export namespace thunks {
     const messages: string[] = [];
 
     return async function (dispatch) {
-      await dispatch(App.actions.setIsBusy(true));
+      isBusy$.set(true);
 
       // First, fetch character definitions from swgoh.gg
       try {
@@ -307,7 +311,7 @@ export namespace thunks {
         ));
       }
       finally {
-        dispatch(App.actions.setIsBusy(false));
+        isBusy$.set(false);
       };
 
       return;
@@ -504,7 +508,7 @@ export namespace thunks {
 
   export function createHotUtilsProfile(profile: HUProfileCreationData, sessionId: string):ThunkResult<void> {
     return function (dispatch) {
-      dispatch(App.actions.setIsBusy(true));
+      isBusy$.set(true);
       return post(
         'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
         {
@@ -538,7 +542,7 @@ export namespace thunks {
         dispatch(App.actions.showError(error.message));
       })
       .finally(() => {
-        dispatch(App.actions.setIsBusy(false));
+        isBusy$.set(false);
       })
     }
   }
@@ -653,7 +657,7 @@ export namespace thunks {
 
   export function moveModsWithHotUtils(profile: HUModsMoveProfile, sessionId: string):ThunkResult<void> {
     return function (dispatch) {
-      dispatch(App.actions.setIsBusy(true));
+      isBusy$.set(true);
       return post(
         'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
         {
@@ -663,7 +667,7 @@ export namespace thunks {
         }
       )
         .then(response => {
-          dispatch(App.actions.setIsBusy(false));
+          isBusy$.set(false);
           if (response.errorMessage) {
             dispatch(App.actions.hideModal());
             dispatch(App.actions.showError(response.errorMessage));
@@ -699,7 +703,7 @@ export namespace thunks {
           dispatch(App.actions.showError(error.message));
         })
         .finally(() => {
-          dispatch(App.actions.setIsBusy(false));
+          isBusy$.set(false);
         })
     }
   }

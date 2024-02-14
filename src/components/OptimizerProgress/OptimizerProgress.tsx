@@ -3,6 +3,9 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// state
+import { isBusy$ } from '#/modules/busyIndication/state/isBusy';
+
 // modules
 import { App } from '../../state/modules/app';
 import { Optimize } from '../../state/modules/optimize';
@@ -20,7 +23,7 @@ const OptimizerProgress = () => {
 
   const cancel = (closeModal: boolean) => {
     dispatch(Optimize.thunks.cancelOptimizer());
-    dispatch(App.actions.setIsBusy(false));
+    isBusy$.set(false);
     if (closeModal) {
       dispatch(App.actions.hideModal());
     }

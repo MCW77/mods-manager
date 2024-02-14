@@ -39,7 +39,6 @@ export interface IAppState {
   },
   hideSelectedCharacters: boolean,
   hotUtilsSubscription: boolean,
-  isBusy: boolean,
   modListFilter: ModListFilter,
   modal: ModalProps,
   modsViewOptions: ModsViewOptions,
@@ -93,7 +92,6 @@ export class AppState {
     },
     hideSelectedCharacters: true,
     hotUtilsSubscription: false,
-    isBusy: false,
     modListFilter: {
       view: 'sets',
       show: 'all',

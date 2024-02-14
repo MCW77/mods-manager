@@ -30,7 +30,6 @@ type AppActions =
   | ReturnType<typeof App.actions.hideFlash>
   | ReturnType<typeof App.actions.hideModal>
   | ReturnType<typeof App.actions.resetState>
-  | ReturnType<typeof App.actions.setIsBusy>
   | ReturnType<typeof App.actions.setState>
   | ReturnType<typeof App.actions.showError>
   | ReturnType<typeof App.actions.showFlash>
@@ -83,8 +82,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       const result = AppState.save(App.reducers.resetState());
       window.location.reload();
       return result;
-    case App.actionNames.SET_IS_BUSY:
-      return App.reducers.setIsBusy(state, action);
     case App.actionNames.SET_STATE:
       return AppState.save(
         App.reducers.setState(action)

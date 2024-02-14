@@ -24,6 +24,7 @@ import keysWhere from "../../utils/keysWhere";
 
 // state
 import { IAppState } from "../../state/storage";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // modules
 import { App } from '../../state/modules/app';
@@ -297,14 +298,15 @@ class CharacterEditView extends PureComponent<Props> {
                     duplicateCharacters,
                     hasTargetStats
                   ),
-                  false
+                  false,
                 );
               } else {
                 this.props.showModal(
                   "optimizer-progress",
                   <OptimizerProgress />,
-                  false
+                  false,
                 );
+                isBusy$.set(true);
                 this.props.optimizeMods();
               }
             }}
@@ -362,7 +364,7 @@ class CharacterEditView extends PureComponent<Props> {
               this.props.showModal(
                 "append-template",
                 this.addTemplateModal(),
-                false
+                false,
               )
             }
           >
@@ -831,8 +833,9 @@ class CharacterEditView extends PureComponent<Props> {
               this.props.showModal(
                 "optimizer-progress",
                 <OptimizerProgress />,
-                false
+                false,
               );
+              isBusy$.set(true);
               this.props.optimizeMods();
             }}
           >
