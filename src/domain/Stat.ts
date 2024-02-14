@@ -5,7 +5,7 @@ import Big from "big.js";
 import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
 import { Character } from "./Character";
-import { OptimizationPlan } from "./OptimizationPlan";
+import * as OptimizationPlan from "./OptimizationPlan";
 import { CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats} from "./Stats";
 
 
@@ -105,7 +105,7 @@ export abstract class Stat {
     'Effective Health (physical)': 'Effective Health (physical)',
     'Effective Health (special)': 'Effective Health (special)',
     'Average Damage (physical)': 'Average Damage (physical)',
-    'Average Damage (special)': 'Average Damage (special)',    
+    'Average Damage (special)': 'Average Damage (special)',
   };
 
   // A list of stat types that can be either a flat value or a percent
@@ -144,7 +144,7 @@ export abstract class Stat {
   }
 
   abstract clone(): this;
-  
+
   getDisplayType(): DisplayStatNames {
     return Stat.gimo2DisplayStatNamesMap[this.type];
   }
@@ -161,7 +161,7 @@ export abstract class Stat {
    * Return a string that represents this stat
    */
   show(): DisplayedStat {
-    return `${this.showValue()} ${this.getDisplayType()}`      
+    return `${this.showValue()} ${this.getDisplayType()}`
   }
 
   /**
@@ -172,7 +172,7 @@ export abstract class Stat {
     return `${this.#displayValue}${this.displayModifier}`;
   }
 
-  
+
 /*
     const valueSum = this._value.plus(that._value);
 
@@ -193,7 +193,7 @@ export abstract class Stat {
       const displayName = Stat.gimo2DisplayStatNamesMap[statName];
       const statType: CharacterStatNames.All = (Stat.mixedTypes.includes(displayName) ? displayName : `${displayName} %`) as CharacterStatNames.All;
 
-      
+
       if (this.isPercentVersion && character.playerValues?.baseStats) {
         return new CSStats.CharacterSummaryStat(statType, `${this._value.mul(character?.playerValues?.baseStats[statName] ?? 0).div(100).toNumber()}`);
       } else if (!this.isPercentVersion) {
@@ -211,7 +211,7 @@ export abstract class Stat {
    * @param character {Character}
    * @param target {OptimizationPlan}
    */
-  getOptimizationValue(character: Character, target: OptimizationPlan) {
+  getOptimizationValue(character: Character, target: OptimizationPlan.OptimizationPlan) {
     // Optimization Plans don't have separate physical and special critical chances, since both are always affected
     // equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit
     // chance, ignore it altogether.
@@ -223,7 +223,7 @@ export abstract class Stat {
 
     const statTypes: OptStats = 'Physical Critical Chance' === this.getDisplayType()
     ?
-      ['Critical Chance'] 
+      ['Critical Chance']
     :
       Stat.display2CSGIMOStatNamesMap[this.getDisplayType()] as CharacterStatNames.WithoutCC[];
 

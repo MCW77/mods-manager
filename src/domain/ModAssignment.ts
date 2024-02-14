@@ -3,13 +3,13 @@ import { CharacterNames } from "../constants/characterSettings";
 import { GIMOFlatMod } from "./types/ModTypes";
 
 import { Mod } from "./Mod";
-import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
+import { OptimizationPlan } from "./OptimizationPlan";
 import { MissedGoals } from "./PlayerProfile";
 
 
 interface FlatModAssignment {
   id: CharacterNames;
-  target: FlatOptimizationPlan;
+  target: OptimizationPlan;
   assignedMods: GIMOFlatMod[];
   missedGoals: MissedGoals;
   messages?: string[];

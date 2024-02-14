@@ -21,7 +21,7 @@ import templatesJSON from "../../constants/characterTemplates.json";
 
 import { Character, Characters } from "../../domain/Character";
 import { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTemplates";
-import { OptimizationPlan, OptimizationPlansById } from "../../domain/OptimizationPlan";
+import { OptimizationPlan, OptimizationPlansById, createOptimizationPlan } from "../../domain/OptimizationPlan";
 import { PlayerProfile } from "../../domain/PlayerProfile";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
 import { SetRestrictions } from "../../domain/SetRestrictions";
@@ -87,7 +87,7 @@ export namespace thunks {
         const template: CharacterTemplate = {
           name: defaultTemplates[name].name,
           selectedCharacters: defaultTemplates[name].selectedCharacters.map(
-            ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
+            ({ id, target }) => ({ id: id, target: target })
           )
         };
         updateFunction(template)(dispatch, getState, null);
@@ -154,7 +154,7 @@ export namespace thunks {
         const template: CharacterTemplate = {
           name: defaultTemplates[name].name,
           selectedCharacters: defaultTemplates[name].selectedCharacters.map(
-            ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
+            ({ id, target }) => ({ id: id, target: target })
           )
         };
         updateFunction(template)(dispatch, getState, null);
@@ -256,7 +256,7 @@ export namespace thunks {
 
         const newSelectedCharacters = profile.selectedCharacters.map(({ id, target: oldTarget }) => {
           if (id === characterID && oldTarget!.name === targetName) {
-            const newTarget = newCharacters[characterID].targets()[0] || new OptimizationPlan('unnamed');
+            const newTarget = newCharacters[characterID].targets()[0] || createOptimizationPlan('unnamed');
 
             return { id: id, target: newTarget };
           } else {
@@ -437,7 +437,7 @@ export namespace thunks {
         const template: CharacterTemplate = {
           name: defaultTemplates[templateName].name,
           selectedCharacters: defaultTemplates[templateName].selectedCharacters.map(
-            ({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })
+            ({ id, target }) => ({ id: id, target: target })
           )
         };
         updateFunction(template)(dispatch, getState, null);
@@ -492,7 +492,7 @@ export namespace thunks {
       (profile: PlayerProfile) => {
         const newCharacter = profile.characters[characterID].withResetTarget(targetName);
         const resetTarget = newCharacter.optimizerSettings.targets.find(target => target.name === targetName) ||
-          new OptimizationPlan('unnamed');
+          createOptimizationPlan('unnamed');
 
         const newSelectedCharacters = profile.selectedCharacters.map(({ id, target }) =>
           id === characterID && target!.name === targetName ? { id: id, target: resetTarget } : { id: id, target: target }

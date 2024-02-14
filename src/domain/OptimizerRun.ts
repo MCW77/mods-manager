@@ -51,7 +51,7 @@ export default class OptimizerRun {
       allyCode: this.allyCode,
       characters: this.characters,
       mods: this.mods,
-      selectedCharacters: this.selectedCharacters.map(({id, target}) => ({id: id, target: target.serialize()})),
+      selectedCharacters: this.selectedCharacters.map(({id, target}) => ({id: id, target: target})),
       globalSettings: this.globalSettings
     };
   }
@@ -63,7 +63,7 @@ export default class OptimizerRun {
       flatRun.mods,
       flatRun.selectedCharacters,
       flatRun.globalSettings
-    );  
+    );
   }
 
 }

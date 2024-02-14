@@ -2,15 +2,15 @@
 import groupByKey from "../utils/groupByKey";
 
 // domain
-import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
+import { OptimizationPlan } from "./OptimizationPlan";
 
 
 export interface IOptimizerSettings {
-  target? : FlatOptimizationPlan | null,
+  target? : OptimizationPlan | null,
   isLocked: boolean,
   minimumModDots: number,
   sliceMods: boolean,
-  targets: FlatOptimizationPlan[],
+  targets: OptimizationPlan[],
   useOnly5DotMods?: boolean
 }
 export class OptimizerSettings implements IOptimizerSettings{
@@ -156,7 +156,7 @@ export class OptimizerSettings implements IOptimizerSettings{
 
   serialize() {
     return {
-      targets: this.targets.map(target => target.serialize()),
+      targets: this.targets,
       minimumModDots: this.minimumModDots,
       sliceMods: this.sliceMods,
       isLocked: this.isLocked
@@ -176,8 +176,8 @@ export class OptimizerSettings implements IOptimizerSettings{
       }
 
       return new OptimizerSettings(
-        settings.target ? OptimizationPlan.deserialize(settings.target) : null,
-        settings.targets.map(OptimizationPlan.deserialize),
+        settings.target ?? null,
+        settings.targets,
         minimumModDots,
         settings.sliceMods || false,
         settings.isLocked

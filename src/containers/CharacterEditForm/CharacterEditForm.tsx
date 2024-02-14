@@ -28,7 +28,7 @@ import { Character } from "../../domain/Character";
 import { CharacterEditMode } from "../../domain/CharacterEditMode";
 import { CharacterSettings } from "../../domain/CharacterSettings";
 import { Mod } from "../../domain/Mod";
-import { OptimizationPlan, PrimaryStatRestrictions } from "../../domain/OptimizationPlan";
+import * as OptimizationPlan from "../../domain/OptimizationPlan";
 import { IModSuggestion } from "../../domain/PlayerProfile";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
@@ -180,7 +180,7 @@ const CharacterEditForm = ({
    *
    * @param optimizationPlan OptimizationPlan The OptimizationPlan that contains the default values to display
    */
-   const basicForm = (optimizationPlan: OptimizationPlan) => {
+  const basicForm = (optimizationPlan: OptimizationPlan.OptimizationPlan) => {
     return <div id={'basic-form'}>
       <div className={'form-row'}>
         <label htmlFor="health-stat">Health:</label>
@@ -322,7 +322,7 @@ const CharacterEditForm = ({
    *
    * @param optimizationPlan OptimizationPlan The OptimizationPlan that contains the default values to display
    */
-  const advancedForm = (optimizationPlan: OptimizationPlan) => {
+  const advancedForm = (optimizationPlan: OptimizationPlan.OptimizationPlan) => {
     return <div id={'advanced-form'}>
       <div className={'form-row'}>
         <label htmlFor="health-stat-advanced">Health:</label>
@@ -535,7 +535,7 @@ const CharacterEditForm = ({
     const form2 = form.current!;
     const planName = 'lock' !== form2['plan-name'].value ? form2['plan-name'].value : 'custom';
     let newTarget;
-    let primaryStatRestrictions: PrimaryStatRestrictions = {} as PrimaryStatRestrictions;
+    let primaryStatRestrictions: OptimizationPlan.PrimaryStatRestrictions = {} as OptimizationPlan.PrimaryStatRestrictions;
     const targetStats = [];
     if (form2['target-stat-name[]']) {
       const targetStatNames = form2['target-stat-name[]'] instanceof NodeList ?
@@ -578,21 +578,21 @@ const CharacterEditForm = ({
 
     if ('advanced' === editMode) {
       // Advanced form
-      newTarget = new OptimizationPlan(
+      newTarget = OptimizationPlan.createOptimizationPlan(
         planName,
-        form2['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Health,
-        form2['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Protection,
-        form2['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Speed,
-        form2['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Damage %'],
-        form2['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Potency %'],
-        form2['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Tenacity %'],
-        form2['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Physical Damage'],
-        form2['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Special Damage'],
-        form2['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Chance'],
-        form2['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Armor,
-        form2['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight.Resistance,
-        form2['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Accuracy %'],
-        form2['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeight['Critical Avoidance %'],
+        form2['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Health,
+        form2['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Protection,
+        form2['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Speed,
+        form2['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Critical Damage %'],
+        form2['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Potency %'],
+        form2['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Tenacity %'],
+        form2['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Physical Damage'],
+        form2['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Special Damage'],
+        form2['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Critical Chance'],
+        form2['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Armor,
+        form2['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Resistance,
+        form2['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Accuracy %'],
+        form2['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Critical Avoidance %'],
         form2['upgrade-mods'].checked || targetStats.length > 0,
         primaryStatRestrictions,
         setRestrictions,
@@ -601,7 +601,7 @@ const CharacterEditForm = ({
       );
     } else {
       // Basic form
-      newTarget = new OptimizationPlan(
+      newTarget = OptimizationPlan.createOptimizationPlan(
         planName,
         form2['health-stat'].valueAsNumber,
         form2['protection-stat'].valueAsNumber,
@@ -664,7 +664,7 @@ const CharacterEditForm = ({
     <Button
       type={'button'}
       id={'reset-button'}
-      disabled={defaultTarget.equals(target)}
+      disabled={OptimizationPlan.equals(defaultTarget, target)}
       onClick={() => {
         dispatch(CharacterEdit.thunks.resetCharacterTargetToDefault(character.baseID, target.name));
       }}>

@@ -5,21 +5,21 @@ import React from "react";
 import "./ModLoadoutView.css";
 
 // domain
-import type * as ModTypes from "../../domain/types/ModTypes";
+import type * as ModTypes from "#/domain/types/ModTypes";
 
-import { Character } from "../../domain/Character";
-import { ModLoadout } from "../../domain/ModLoadout";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import { Character } from "#/domain/Character";
+import { ModLoadout } from "#/domain/ModLoadout";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { ModImage } from "../ModImage/ModImage";
-import { ModStats } from "../ModStats/ModStats";
+import { ModImage } from "#/components/ModImage/ModImage";
+import { ModStats } from "#/components/ModStats/ModStats";
 
 type ComponentProps = {
   modLoadout: ModLoadout;
   showAvatars: boolean;
   assignedCharacter?: Character;
-  assignedTarget?: OptimizationPlan;
+  assignedTarget?: OptimizationPlan.OptimizationPlan;
 };
 
 const ModLoadoutView = React.memo(

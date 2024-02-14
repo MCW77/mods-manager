@@ -8,7 +8,7 @@ import * as ModTypes from "./types/ModTypes";
 
 import { Character, Characters, FlatCharacters, ICharacter } from "./Character";
 import { Mod } from "./Mod";
-import { OptimizationPlan, FlatOptimizationPlan } from "./OptimizationPlan";
+import { OptimizationPlan } from "./OptimizationPlan";
 import OptimizerRun from "./OptimizerRun";
 import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
 import { TargetStat } from "./TargetStat";
@@ -18,7 +18,7 @@ export type MissedGoals = [TargetStat, number][];
 
 export interface IFlatModSuggestion {
   id: CharacterNames;
-  target: FlatOptimizationPlan;
+  target: OptimizationPlan;
   assignedMods: string[];
   missedGoals: MissedGoals;
   messages?: string[];
@@ -295,7 +295,7 @@ export class PlayerProfile {
         'function' === typeof character.serialize ? character.serialize() : character
       ),
       mods: this.mods.map(mod => mod.serialize()),
-      selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({ id: id, target: target!.serialize() })),
+      selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
       modAssignments: this.modAssignments,
       globalSettings: this.globalSettings,
       hotUtilsSessionId: this.hotUtilsSessionId,
@@ -311,12 +311,12 @@ export class PlayerProfile {
         {} as PlayerValuesByCharacter,
         mapValues(flatPlayerProfile.characters, Character.deserialize) as Characters,
         flatPlayerProfile.mods.map(Mod.deserialize),
-        flatPlayerProfile.selectedCharacters.map(({ id, target }) => ({ id: id, target: OptimizationPlan.deserialize(target) })),
+        flatPlayerProfile.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
 
         flatPlayerProfile.modAssignments.map(({id, target, assignedMods, missedGoals, messages}) => {
                     return {
             id: id,
-            target: OptimizationPlan.deserialize(target),
+            target: target,
             assignedMods: assignedMods,
             missedGoals: missedGoals,
             messages: messages

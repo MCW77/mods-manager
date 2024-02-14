@@ -1,7 +1,7 @@
 // domain
 import { CharacterNames } from "../constants/characterSettings";
 
-import { FlatOptimizationPlan, OptimizationPlan } from "./OptimizationPlan";
+import { OptimizationPlan } from "./OptimizationPlan";
 
 
 export type FlatSelectedCharacters = SelectedCharacter[];
@@ -22,7 +22,7 @@ export interface SelectedCharacter {
 
 export interface FlatSelectedCharacter {
   id: CharacterNames;
-  target: FlatOptimizationPlan;
+  target: OptimizationPlan;
 }
 
 export type SelectedCharactersByTemplateName = Record<string, SelectedCharacters>;

@@ -6,25 +6,25 @@ import { useSelector } from 'react-redux';
 import './ModDetail.css';
 
 // modules
-import { Data } from '../../state/modules/data';
-import { Storage } from '../../state/modules/storage';
+import { Data } from '#/state/modules/data';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { Character }  from '../../domain/Character';
-import { Mod } from '../../domain/Mod';
-import { OptimizationPlan } from '../../domain/OptimizationPlan';
+import { Character }  from '#/domain/Character';
+import { Mod } from '#/domain/Mod';
+import * as OptimizationPlan from '#/domain/OptimizationPlan';
 
 // components
-import { Arrow } from '../Arrow/Arrow';
-import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
-import { ModImage } from '../ModImage/ModImage';
-import { ModStats } from '../ModStats/ModStats';
-import { SellModButton } from '../SellModButton/SellModButton';
+import { Arrow } from '#/components/Arrow/Arrow';
+import { CharacterAvatar } from '#/components/CharacterAvatar/CharacterAvatar';
+import { ModImage } from '#/components/ModImage/ModImage';
+import { ModStats } from '#/components/ModStats/ModStats';
+import { SellModButton } from '#/components/SellModButton/SellModButton';
 
 
 type ComponentProps = {
   assignedCharacter: Character | null;
-  assignedTarget?: OptimizationPlan;
+  assignedTarget?: OptimizationPlan.OptimizationPlan;
   mod: Mod;
   showAssigned?: boolean;
 };

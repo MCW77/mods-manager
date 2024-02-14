@@ -31,7 +31,7 @@ import { ModAssignments } from "../../domain/ModAssignment";
 import { ModListFilter } from '../../domain/ModListFilter';
 import { ModLoadout } from "../../domain/ModLoadout";
 import { ModsByCharacterNames } from '../../domain/ModsByCharacterNames';
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import  * as OptimizationPlan from "../../domain/OptimizationPlan";
 
 // components
 import { DOMContent } from '../../components/types';
@@ -71,7 +71,7 @@ export interface HUProfileCreationData {
 type DisplayedMods = DisplayedMod[];
 interface DisplayedMod {
   id: CharacterNames;
-  target: OptimizationPlan;
+  target: OptimizationPlan.OptimizationPlan;
   assignedMods: Mod[]
 }
 
@@ -311,7 +311,7 @@ class Review extends React.PureComponent<Props> {
     let individualMods: {
       id: CharacterNames,
       mod: Mod,
-      target: OptimizationPlan,
+      target: OptimizationPlan.OptimizationPlan,
     }[] = flatten(displayedMods.map(({ id, target, assignedMods }) =>
       assignedMods.map(mod => ({ id: id, target: target, mod: mod }))
     ));
@@ -830,7 +830,7 @@ const mapStateToProps = (state: IAppState) => {
     // Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
     let result: DisplayedMods = Object.values(mapValues<ModsByCharacterNames, DisplayedMod>(
       modsByCharacterNames,
-      (mods: Mod[], id: string): DisplayedMod => ({ id: id as CharacterNames, assignedMods: mods, target: new OptimizationPlan('xyz') })
+      (mods: Mod[], id: string): DisplayedMod => ({ id: id as CharacterNames, assignedMods: mods, target: OptimizationPlan.createOptimizationPlan('xyz') })
     ));
 
     return result;

@@ -5,7 +5,7 @@ import groupByKey from "../utils/groupByKey";
 import { characterSettings, CharacterNames } from "../constants/characterSettings";
 import * as DTOs from "../modules/profilesManagement/dtos";
 
-import { OptimizationPlan} from "./OptimizationPlan";
+import { createOptimizationPlan } from "./OptimizationPlan";
 import { IOptimizerSettings, OptimizerSettings } from "./OptimizerSettings";
 
 
@@ -131,7 +131,7 @@ export class Character implements ICharacter {
   }
 
   defaultTarget() {
-    return this.targets()[0] || new OptimizationPlan('unnamed');
+    return this.targets()[0] || createOptimizationPlan('unnamed');
   }
 
   /**
@@ -153,7 +153,7 @@ export class Character implements ICharacter {
       optimizerSettings: this.optimizerSettings.serialize()
     } as ICharacter;
 
-    
+
   }
 
   static deserialize(character: ICharacter) {

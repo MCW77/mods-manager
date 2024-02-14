@@ -64,7 +64,7 @@ const TemplatesManager = React.memo(
                             target: OptimizationPlan;
                           }) => ({
                             id: id,
-                            target: OptimizationPlan.deserialize(target),
+                            target: target,
                           })
                         ),
                       })
@@ -89,7 +89,7 @@ const TemplatesManager = React.memo(
                   selectedCharacters: selectedCharacters.map(
                     ({ id, target }) => ({
                       id: id,
-                      target: target.serialize(),
+                      target: target,
                     })
                   ),
                 })

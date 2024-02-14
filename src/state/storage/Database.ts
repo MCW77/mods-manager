@@ -364,7 +364,7 @@ export class Database {
           onsuccess({
             name: template.name,
             selectedCharacters: template.selectedCharacters.map(({ id, target }) =>
-              ({ id: id, target: OptimizationPlan.deserialize(target) })
+              ({ id: id, target: target })
             )
           } as CharacterTemplate);
         }
@@ -392,7 +392,7 @@ export class Database {
           const templates: CharacterTemplates = (event.target.result as FlatCharacterTemplates).map(template => ({
             name: template.name,
             selectedCharacters: template.selectedCharacters.map(({ id, target }) =>
-              ({ id: id, target: OptimizationPlan.deserialize(target) })
+              ({ id: id, target: target })
             )
           })) as CharacterTemplates;
           onsuccess(templates);
@@ -548,7 +548,7 @@ export class Database {
         name: name,
         selectedCharacters: selectedCharacters.map(({ id, target }) => ({
           id: id,
-          target: 'undefined' !== typeof target.serialize ? target.serialize() : target
+          target: target
         }))
       };
 
@@ -588,7 +588,7 @@ export class Database {
           selectedCharacters:
             template.selectedCharacters.map(({ id, target }) => ({
               id: id,
-              target: 'undefined' !== typeof target.serialize ? target.serialize() : target
+              target: target
             }))
         };
 

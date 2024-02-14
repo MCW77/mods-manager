@@ -19,7 +19,7 @@ import { Storage } from '../../state/modules/storage';
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
 
 import { Character } from "../../domain/Character";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
+import * as OptimizationPlan from "../../domain/OptimizationPlan";
 
 // components
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
@@ -99,7 +99,7 @@ const CharacterList = React.memo(
       }
     }
 
-    const renderCharacterBlock = (characterId: CharacterNames, target: OptimizationPlan, index: number) => {
+    const renderCharacterBlock = (characterId: CharacterNames, target: OptimizationPlan.OptimizationPlan, index: number) => {
       const character = characters[characterId];
       const defaultTargets = characterSettings[character.baseID] ?
         groupByKey(characterSettings[character.baseID].targets, target => target.name) :
@@ -112,7 +112,7 @@ const CharacterList = React.memo(
         .map(targetName => {
           const changeIndicator = Object.keys(defaultTargets).includes(targetName) &&
             character!.optimizerSettings.targets.map(target => target.name).includes(targetName) &&
-            !defaultTargets[targetName].equals(
+            !OptimizationPlan.equals(defaultTargets[targetName],
               character.optimizerSettings.targets.find(target => target.name === targetName)!
             ) ? '*' : '';
 
@@ -126,7 +126,7 @@ const CharacterList = React.memo(
         e.target.value = target.name;
 
         if ('custom' === optimizationTarget) {
-          showEditCharacterModal(character, index, target.rename('custom'));
+          showEditCharacterModal(character, index, OptimizationPlan.toRenamed(target, 'custom'));
         } else if ('lock' === optimizationTarget) {
           dispatch(CharacterEdit.thunks.lockCharacter(character.baseID));
         } else {
@@ -179,22 +179,22 @@ const CharacterList = React.memo(
      * @param character {Character}
      * @param target {OptimizationPlan}
      */
-    const renderCharacterIcons = (character: Character, target: OptimizationPlan, characterIndex: number) => {
+    const renderCharacterIcons = (character: Character, target: OptimizationPlan.OptimizationPlan, characterIndex: number) => {
       const defaultTargets = characterSettings[character.baseID] ?
         groupByKey(characterSettings[character.baseID].targets, target => target.name) :
         {};
 
       const levelActive = target.upgradeMods ? 'active' : '';
       const sliceActive = character.optimizerSettings.sliceMods ? 'active' : '';
-      const restrictionsActive = target.hasRestrictions() ? 'active' : '';
+      const restrictionsActive = OptimizationPlan.hasRestrictions(target) ? 'active' : '';
       const targetStatActive = target.targetStats && target.targetStats.length ? 'active' : '';
       const duplicateActive = selectedCharacters
         .filter(({ id: selectedCharId }) => selectedCharId === character.baseID).length > 1 ? 'active' : '';
-      const negativeWeightsActive = target.hasNegativeWeights() ? 'active' : '';
+      const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target) ? 'active' : '';
       const minimumDots = character.optimizerSettings.minimumModDots;
       const changedTargetActive = Object.keys(defaultTargets).includes(target.name) &&
-        !defaultTargets[target.name].equals(target) ? 'active' : '';
-      const blankTargetActive = target.isBlank() ? 'active' : '';
+        !OptimizationPlan.equals(defaultTargets[target.name], target) ? 'active' : '';
+      const blankTargetActive = OptimizationPlan.isBlank(target) ? 'active' : '';
       const lockedActive = character.optimizerSettings.isLocked ? 'active' : '';
 
       let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -253,7 +253,7 @@ const CharacterList = React.memo(
       </div>;
     }
 
-    const showEditCharacterModal = (character: Character, index: number, target: OptimizationPlan) => {
+    const showEditCharacterModal = (character: Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
       dispatch(CharacterEdit.thunks.setOptimizeIndex(index));
       dispatch(App.actions.showModal(
         '',

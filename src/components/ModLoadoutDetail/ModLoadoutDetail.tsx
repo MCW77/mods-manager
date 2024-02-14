@@ -5,17 +5,17 @@ import React from "react";
 import './ModLoadoutDetail.css';
 
 // domain
-import { Character } from "../../domain/Character";
-import { ModLoadout } from "../../domain/ModLoadout";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
-import { MissedGoals } from "../../domain/PlayerProfile";
-import { CharacterSummaryStats as CSStats } from "../../domain/Stats";
-import { TargetStat } from "../../domain/TargetStat";
+import { Character } from "#/domain/Character";
+import { ModLoadout } from "#/domain/ModLoadout";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import { MissedGoals } from "#/domain/PlayerProfile";
+import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import { TargetStat } from "#/domain/TargetStat";
 
-import * as CharacterStatNames from "../../modules/profilesManagement/domain/CharacterStatNames";
+import * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
-import { ModLoadoutView } from "../ModLoadoutView/ModLoadoutView";
+import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
 
 
 interface PlayerStat {
@@ -39,10 +39,10 @@ type ComponentProps = {
   newLoadout: ModLoadout;
   showAvatars: boolean;
   character: Character;
-  target: OptimizationPlan;
+  target: OptimizationPlan.OptimizationPlan;
   useUpgrades: boolean;
   assignedCharacter: Character;
-  assignedTarget: OptimizationPlan;
+  assignedTarget: OptimizationPlan.OptimizationPlan;
   missedGoals: MissedGoals;
 };
 

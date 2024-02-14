@@ -30,7 +30,7 @@ import { BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseChar
 import { Character } from "#/domain/Character";
 import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
 import { Mod } from "#/domain/Mod";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { createOptimizationPlan, OptimizationPlan } from "#/domain/OptimizationPlan";
 import { OptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import { UseCaseModes } from "#/domain/UseCaseModes";
@@ -402,7 +402,7 @@ export namespace thunks {
               Id,
               playerValues,
               new OptimizerSettings(
-                characterSettings[Id] ? characterSettings[Id].targets[0] : new OptimizationPlan('xyz'),
+                characterSettings[Id] ? characterSettings[Id].targets[0] : createOptimizationPlan('xyz'),
                 [],
                 fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
                 false,

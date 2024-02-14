@@ -9,7 +9,7 @@ import type * as ModTypes from "./types/ModTypes";
 import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
 import { Character } from "./Character";
-import { OptimizationPlan} from "./OptimizationPlan";
+import * as OptimizationPlan from "./OptimizationPlan";
 import { Stats, CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats } from "./Stats";
 
 
@@ -194,11 +194,11 @@ export class Mod {
     );
   }
 
-  shouldLevel(target: OptimizationPlan) {
+  shouldLevel(target: OptimizationPlan.OptimizationPlan) {
     return OptimizationPlan.shouldUpgradeMods(target) && this.level < 15;
   }
 
-  shouldSlice(character: Character, target: OptimizationPlan) {
+  shouldSlice(character: Character, target: OptimizationPlan.OptimizationPlan) {
     return character.optimizerSettings.sliceMods && this.pips === 5 &&
       (this.level === 15 || this.shouldLevel(target))
   }
@@ -210,7 +210,7 @@ export class Mod {
    * @param withUpgrades {boolean} Whether to level and slice the mod, if they've been selected for the character
    * @returns {Object<String, Number>} A map from stat name to value
    */
-  getStatSummaryForCharacter(character: Character, target: OptimizationPlan, withUpgrades = true) {
+  getStatSummaryForCharacter(character: Character, target: OptimizationPlan.OptimizationPlan, withUpgrades = true) {
     let workingMod: Mod = this;
 
     const summary: {
