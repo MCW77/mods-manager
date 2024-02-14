@@ -47,7 +47,7 @@ import { Label } from "#ui/label";
 type ComponentProps = {
   character: Character,
   characterIndex: number,
-  target: OptimizationPlan,
+  target: OptimizationPlan.OptimizationPlan,
 }
 
 const CharacterEditForm = ({
