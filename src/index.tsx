@@ -78,7 +78,7 @@ getDatabase(
 );
 
 const rootNode = document.getElementById('root')!;
-rootNode.classList.add(store.getState().theme);
+document.body.classList.add(store.getState().theme, "bg-white", "dark:bg-slate-950", "text-slate-500", "dark:text-slate-400");
 const root = createRoot(rootNode);
 root.render(
   <React.StrictMode>
