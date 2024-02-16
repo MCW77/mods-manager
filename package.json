@@ -28,7 +28,7 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@reduxjs/toolkit": "^2.1.0",
     "@unocss/preset-mini": "^0.58.5",
-    "@unocss/reset": "^0.58.3",
+    "@unocss/reset": "^0.58.5",
     "@vitejs/plugin-react": "^4.2.1",
     "big.js": "^6.2.1",
     "class-variance-authority": "^0.7.0",
