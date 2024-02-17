@@ -4,186 +4,107 @@ import groupByKey from "../utils/groupByKey";
 // domain
 import { OptimizationPlan } from "./OptimizationPlan";
 
-
-export interface IOptimizerSettings {
-  target? : OptimizationPlan | null,
+export interface OptimizerSettings {
   isLocked: boolean,
   minimumModDots: number,
   sliceMods: boolean,
   targets: OptimizationPlan[],
-  useOnly5DotMods?: boolean
 }
-export class OptimizerSettings implements IOptimizerSettings{
-  // TODO: Deprecate target - it will now be part of selected characters
-  target;
-  targets;
-  minimumModDots;
-  sliceMods;
-  isLocked;
 
-  static Default = new OptimizerSettings(
-    null,
-    [],
-    1,
-    false,
+export const defaultSettings = {
+  targets: [],
+  minimumModDots: 1,
+  sliceMods: false,
+  isLocked: false,
+};
+
+export const createOptimizerSettings = (
+  targets: OptimizationPlan[],
+  minimumModDots: number,
+  sliceMods: boolean,
+  isLocked: boolean,
+) => {
+  return {
+    targets,
+    minimumModDots,
+    sliceMods,
+    isLocked,
+  };
+}
+
+export const withTarget = (settings: OptimizerSettings, target: OptimizationPlan) => {
+  const targetsObject = groupByKey(settings.targets, target => target.name);
+  const newTargetsObject = ['lock', 'custom'].includes(target.name) ?
+    settings.targets :
+    Object.assign({}, targetsObject, { [target.name]: target });
+
+  return createOptimizerSettings(
+    Object.values(newTargetsObject),
+    settings.minimumModDots,
+    settings.sliceMods,
+    settings.isLocked
+  );
+}
+
+export const  withTargetOverrides = (settings: OptimizerSettings, targets: OptimizationPlan[]) => {
+  const oldTargetsObject = groupByKey(settings.targets, target => target.name);
+  const newTargetsObject = groupByKey(targets, target => target.name);
+
+  return createOptimizerSettings(
+    Object.values(Object.assign({}, oldTargetsObject, newTargetsObject)),
+    settings.minimumModDots,
+    settings.sliceMods,
+    settings.isLocked,
+  );
+}
+
+export const withDeletedTarget = (settings: OptimizerSettings, targetName: string) => {
+  const newTargets = settings.targets.slice();
+  const targetIndex = newTargets.findIndex(target => target.name === targetName);
+  if (-1 !== targetIndex) {
+    newTargets.splice(targetIndex, 1);
+  }
+
+  return createOptimizerSettings(
+    newTargets,
+    settings.minimumModDots,
+    settings.sliceMods,
+    settings.isLocked
+  );
+}
+
+export const lock = (settings: OptimizerSettings) => {
+  return createOptimizerSettings(
+    settings.targets,
+    settings.minimumModDots,
+    settings.sliceMods,
+    true
+  );
+}
+
+export const unlock = (settings: OptimizerSettings) => {
+  return createOptimizerSettings(
+    settings.targets,
+    settings.minimumModDots,
+    settings.sliceMods,
     false
   );
+}
 
-  /**
-   * @param target OptimizationPlan
-   * @param targets Array[OptimizationPlan]
-   * @param minimumModDots Integer
-   * @param sliceMods Boolean
-   * @param isLocked Boolean
-   */
-  constructor(
-    target: OptimizationPlan | null,
-    targets: OptimizationPlan[],
-    minimumModDots: number,
-    sliceMods: boolean,
-    isLocked: boolean,
-  ) {
-    this.target = target ?? null;
-    this.targets = targets;
-    this.minimumModDots = minimumModDots;
-    this.sliceMods = sliceMods;
-    this.isLocked = isLocked;
-    Object.freeze(this);
-  }
+export const withMinimumModDots = (settings: OptimizerSettings, minimumModDots: number) => {
+  return createOptimizerSettings(
+    settings.targets,
+    minimumModDots,
+    settings.sliceMods,
+    settings.isLocked
+  );
+}
 
-  /**
-   * Return a new OptimizerSettings object that matches this one with the target overridden. If the target also exists
-   * in the array of targets, then modify it there as well.
-   * @param target OptimizationPlan
-   */
-  withTarget(target: OptimizationPlan | null) {
-    if (target === null) {
-      return this;
-    }
-
-    const targetsObject = groupByKey(this.targets, target => target.name);
-    const newTargetsObject = ['lock', 'custom'].includes(target.name) ?
-      this.targets :
-      Object.assign({}, targetsObject, { [target.name]: target });
-
-    return new OptimizerSettings(
-      null,
-      Object.values(newTargetsObject),
-      this.minimumModDots,
-      this.sliceMods,
-      this.isLocked
-    );
-  }
-
-  /**
-   * Return a new OptimizerSettings object that matches this one, but with the targets overridden with the passed-in
-   * targets. Any targets that match in name will be replaced, and those that don't will be unchanged.
-   * @param targets Array[OptimizationPlan]
-   */
-  withTargetOverrides(targets: OptimizationPlan[]) {
-    const oldTargetsObject = groupByKey(this.targets, target => target.name);
-    const newTargetsObject = groupByKey(targets, target => target.name);
-
-    return new OptimizerSettings(
-      null,
-      Object.values(Object.assign({}, oldTargetsObject, newTargetsObject)),
-      this.minimumModDots,
-      this.sliceMods,
-      this.isLocked
-    );
-  }
-
-  /**
-   * Return a new OptimizerSettings object that matches this one, but with the given target deleted
-   *
-   * @param targetName {String} The name of the target to delete
-   */
-  withDeletedTarget(targetName: string) {
-    const newTargets = this.targets.slice();
-    const targetIndex = newTargets.findIndex(target => target.name === targetName);
-    if (-1 !== targetIndex) {
-      newTargets.splice(targetIndex, 1);
-    }
-
-    return new OptimizerSettings(
-      null,
-      newTargets,
-      this.minimumModDots,
-      this.sliceMods,
-      this.isLocked
-    );
-  }
-
-  lock() {
-    return new OptimizerSettings(
-      this.target,
-      this.targets,
-      this.minimumModDots,
-      this.sliceMods,
-      true
-    );
-  }
-
-  unlock() {
-    return new OptimizerSettings(
-      this.target,
-      this.targets,
-      this.minimumModDots,
-      this.sliceMods,
-      false
-    );
-  }
-
-  withMinimumModDots(minimumModDots: number) {
-    return new OptimizerSettings(
-      this.target,
-      this.targets,
-      minimumModDots,
-      this.sliceMods,
-      this.isLocked
-    );
-  }
-
-  withModSlicing(sliceMods: boolean) {
-    return new OptimizerSettings(
-      this.target,
-      this.targets,
-      this.minimumModDots,
-      sliceMods,
-      this.isLocked
-    );
-  }
-
-  serialize() {
-    return {
-      targets: this.targets,
-      minimumModDots: this.minimumModDots,
-      sliceMods: this.sliceMods,
-      isLocked: this.isLocked
-    } as IOptimizerSettings
-  }
-
-  static deserialize(settings: IOptimizerSettings) {
-    if (settings) {
-      let minimumModDots;
-
-      if (settings.minimumModDots) {
-        minimumModDots = settings.minimumModDots;
-      } else if (settings.useOnly5DotMods) {
-        minimumModDots = 5;
-      } else {
-        minimumModDots = 1;
-      }
-
-      return new OptimizerSettings(
-        settings.target ?? null,
-        settings.targets,
-        minimumModDots,
-        settings.sliceMods || false,
-        settings.isLocked
-      );
-    } else {
-      return null;
-    }
-  }
+export const withModSlicing = (settings: OptimizerSettings, sliceMods: boolean) => {
+  return createOptimizerSettings(
+    settings.targets,
+    settings.minimumModDots,
+    sliceMods,
+    settings.isLocked
+  );
 }

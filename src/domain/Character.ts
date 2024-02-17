@@ -6,13 +6,13 @@ import { characterSettings, CharacterNames } from "../constants/characterSetting
 import * as DTOs from "../modules/profilesManagement/dtos";
 
 import { createOptimizationPlan } from "./OptimizationPlan";
-import { IOptimizerSettings, OptimizerSettings } from "./OptimizerSettings";
+import * as OptimizerSettings from "./OptimizerSettings";
 
 
 export interface ICharacter {
   baseID: CharacterNames;
   playerValues: DTOs.GIMO.PlayerValuesDTO;
-  optimizerSettings: IOptimizerSettings;
+  optimizerSettings: OptimizerSettings.OptimizerSettings;
 };
 
 export type FlatCharacters = {
@@ -26,7 +26,7 @@ export type Characters = {
 export class Character implements ICharacter {
   baseID: CharacterNames;
   playerValues: DTOs.GIMO.PlayerValuesDTO;
-  optimizerSettings: OptimizerSettings;
+  optimizerSettings: OptimizerSettings.OptimizerSettings;
 
   /**
    * @param baseID String
@@ -37,7 +37,7 @@ export class Character implements ICharacter {
   constructor(
     baseID: CharacterNames,
     playerValues: DTOs.GIMO.PlayerValuesDTO,
-    optimizerSettings: OptimizerSettings,
+    optimizerSettings: OptimizerSettings.OptimizerSettings,
   ) {
     this.baseID = baseID;
     this.playerValues = playerValues;
@@ -66,7 +66,7 @@ export class Character implements ICharacter {
    * Create a new Character object that matches this one, but with optimizerSettings overridden
    * @param optimizerSettings
    */
-  withOptimizerSettings(optimizerSettings: OptimizerSettings) {
+  withOptimizerSettings(optimizerSettings: OptimizerSettings.OptimizerSettings) {
     return new Character(
       this.baseID,
       this.playerValues,
@@ -81,11 +81,11 @@ export class Character implements ICharacter {
     const target = characterSettings[this.baseID] ?
       characterSettings[this.baseID].targets.find(target => target.name === targetName)!
     :
-      null
+      createOptimizationPlan(targetName);
     return new Character(
       this.baseID,
       this.playerValues,
-      this.optimizerSettings.withTarget(target)
+      OptimizerSettings.withTarget(this.optimizerSettings, target),
     );
   }
 
@@ -96,9 +96,7 @@ export class Character implements ICharacter {
     return new Character(
       this.baseID,
       this.playerValues,
-      this.optimizerSettings.withTargetOverrides(
-        characterSettings[this.baseID] ? characterSettings[this.baseID].targets : []
-      )
+      OptimizerSettings.withTargetOverrides(this.optimizerSettings, characterSettings[this.baseID] ? characterSettings[this.baseID].targets : []),
     );
   }
 
@@ -108,7 +106,7 @@ export class Character implements ICharacter {
    */
   withDeletedTarget(targetName: string) {
     const newOptimizerSettings =
-      this.optimizerSettings.withDeletedTarget(targetName);
+      OptimizerSettings.withDeletedTarget(this.optimizerSettings, targetName);
 
     return new Character(
       this.baseID,
@@ -150,7 +148,7 @@ export class Character implements ICharacter {
     return {
       baseID: this.baseID,
       playerValues: this.playerValues,
-      optimizerSettings: this.optimizerSettings.serialize()
+      optimizerSettings: this.optimizerSettings
     } as ICharacter;
 
 
@@ -160,7 +158,7 @@ export class Character implements ICharacter {
     return new Character(
       character.baseID,
       character.playerValues,
-      OptimizerSettings.deserialize(character.optimizerSettings) ?? OptimizerSettings.Default
+      character.optimizerSettings
     );
   }
 }

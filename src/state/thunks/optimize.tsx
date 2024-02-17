@@ -18,7 +18,7 @@ import { Review } from "#/state/modules/review";
 import { Character } from "#/domain/Character";
 import { OptimizationStatus } from "#/domain/OptimizationStatus";
 import OptimizerRun from "#/domain/OptimizerRun";
-import { OptimizerSettings } from "#/domain/OptimizerSettings";
+import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import { IModSuggestion } from "#/domain/PlayerProfile";
 
 // components
@@ -131,7 +131,7 @@ export namespace thunks {
 															equippedStats: tempStats,
 															relicTier: 0,
 														},
-														OptimizerSettings.Default,
+														OptimizerSettings.defaultSettings,
 													);
 
 												return (

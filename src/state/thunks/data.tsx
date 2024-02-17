@@ -31,7 +31,7 @@ import { Character } from "#/domain/Character";
 import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
 import { Mod } from "#/domain/Mod";
 import { createOptimizationPlan, OptimizationPlan } from "#/domain/OptimizationPlan";
-import { OptimizerSettings } from "#/domain/OptimizerSettings";
+import { OptimizerSettings, createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import { UseCaseModes } from "#/domain/UseCaseModes";
 
@@ -401,12 +401,11 @@ export namespace thunks {
             return (new Character(
               Id,
               playerValues,
-              new OptimizerSettings(
-                characterSettings[Id] ? characterSettings[Id].targets[0] : createOptimizationPlan('xyz'),
+              createOptimizerSettings(
                 [],
                 fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
                 false,
-                false
+                false,
               )
             ))
           }
