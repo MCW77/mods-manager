@@ -138,6 +138,7 @@ export const characterNames = [
   'HUMANTHUG',
   'IDENVERSIOEMPIRE',
   'IG11',
+  'IG12',
   'IG86SENTINELDROID',
   'IG88',
   'IMAGUNDI',
@@ -148,6 +149,7 @@ export const characterNames = [
   'JAWA',
   'JAWAENGINEER',
   'JAWASCAVENGER',
+  'JEDIKNIGHTCAL',
   'JEDIKNIGHTCONSULAR',
   'JEDIKNIGHTGUARDIAN',
   'JEDIKNIGHTLUKE',
@@ -158,6 +160,7 @@ export const characterNames = [
   'JYNERSO',
   'K2SO',
   'KANANJARRUSS3',
+  'KELLERANBEQ',
   'KIADIMUNDI',
   'KITFISTO',
   'KRRSANTAN',
@@ -192,6 +195,7 @@ export const characterNames = [
   'PADMEAMIDALA',
   'PAO',
   'PAPLOO',
+  'PAZVIZSLA',
   'PHASMA',
   'PLOKOON',
   'POE',
@@ -225,6 +229,7 @@ export const characterNames = [
   'SMUGGLERCHEWBACCA',
   'SMUGGLERHAN',
   'SNOWTROOPER',
+  'STAP',
   'STARKILLER',
   'STORMTROOPER',
   'STORMTROOPERHAN',
@@ -1192,10 +1197,23 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
   ),
   'IG11': createCharacterSettings(
-    [createOptimizationPlan('Tanky', 25, 0, 50, 0, 0, 10, 5, 0, 5, 5, 5, 0, 0, true)]
+    [createOptimizationPlan('Tanky', 25, 0, 50, 0, 0, 10, 5, 0, 5, 5, 5, 0, 0, true)],
+  ),
+  'IG12': createCharacterSettings(
+    [
+      createOptimizationPlan('Default', 20, 5, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, true, {
+        "arrow": "Speed",
+        "triangle": "Health %",
+        "cross": "Health %",
+        "circle": "Health %",
+      }, {
+        "Health %": 1,
+        "Speed": 1,
+      }),
+    ],
   ),
   'IG86SENTINELDROID': createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')]
+    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')],
   ),
   'IG88': createCharacterSettings(
     [
@@ -1265,8 +1283,23 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100, true),
     ],
   ),
+  'JEDIKNIGHTCAL': createCharacterSettings(
+    [
+      createOptimizationPlan('Default', 25, 0, 100, 98, 2, 2, 3, 6, 2, 1, 1, 0, 0, true, {
+        "arrow": "Speed",
+        "triangle": "Critical Damage %",
+        "circle": "Health %",
+        "cross": "Offense %",
+        }, {
+          "Health %": 1,
+          "Offense %": 1,
+        },
+      )
+    ],
+    ['JKCK'],
+  ),
   'JEDIKNIGHTCONSULAR': createCharacterSettings(
-    [createOptimizationPlan('Healer', 50, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    [createOptimizationPlan('Healer', 50, 0, 100, 25, 0, 0, 75, 0, 0, 0, 0, 0, 0, true)],
     ['JC'],
     DamageType.mixed
   ),
@@ -1346,6 +1379,18 @@ const characterSettings: CharacterSettingsIndexer = {
       }, {
         "Health %": 2,
         "Tenacity %": 1,
+      }),
+    ],
+  ),
+  'KELLERANBEQ': createCharacterSettings(
+    [
+      createOptimizationPlan('Default', 20, 100, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, {
+        "arrow": "Protection %",
+        "triangle": "Protection %",
+        "cross": "Protection %",
+        "circle": "Protection %",
+      }, {
+        "Health %": 3,
       }),
     ],
   ),
@@ -1573,6 +1618,24 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Murderbears'],
   ),
+  'PAZVIZSLA': createCharacterSettings(
+    [
+      createOptimizationPlan('Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, true, {
+        "triangle": "Health %",
+        "cross": "Health %",
+        "circle": "Health %",
+      }, {
+        "Health %": 3,
+      }),
+      createOptimizationPlan('Protection', 50, 75, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, true, {
+        "triangle": "Protection %",
+        "cross": "Protection %",
+        "circle": "Protection %",
+      }, {
+        "Health %": 3,
+      }),
+    ]
+  ),
   'PHASMA': createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)],
     ['FO'],
@@ -1797,6 +1860,19 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Iden Lead', 10, 10, 50, 100, 10, 0, 30, 0, 25, 0, 0, 0, 0, true),
     ],
     ['Troopers'],
+  ),
+  'STAP': createCharacterSettings(
+    [
+      createOptimizationPlan('Default', 0, 0, 100, 10, 10, 0, 50, 0, 10, 0, 0, 0, 0, true,
+        {
+          "arrow": "Speed",
+          "triangle": "Critical Damage %",
+          "cross": "Offense %",
+        }, {
+          "Speed": 1,
+        }
+      ),
+    ],
   ),
   'STARKILLER': createCharacterSettings(
     [
