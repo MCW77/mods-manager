@@ -9,7 +9,7 @@ import * as ModTypes from "./types/ModTypes";
 import * as Character from "./Character";
 import { Mod } from "./Mod";
 import { OptimizationPlan } from "./OptimizationPlan";
-import OptimizerRun from "./OptimizerRun";
+import * as OptimizerRun from "./OptimizerRun";
 import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
 import { TargetStat } from "./TargetStat";
 
@@ -278,7 +278,7 @@ export class PlayerProfile {
    * @returns OptimizerRun
    */
   toOptimizerRun() {
-    return new OptimizerRun(
+    return OptimizerRun.createOptimizerRun(
       this.allyCode,
       this.characters,
       this.mods.map(mod => mod.serialize()),

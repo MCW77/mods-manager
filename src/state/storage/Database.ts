@@ -511,7 +511,7 @@ export class Database {
     this.database.then(db => {
       const saveLastRunRequest = db.transaction(['lastRuns'], 'readwrite')
         .objectStore('lastRuns')
-        .put('function' === typeof lastRun.serialize ? lastRun.serialize() : lastRun);
+        .put(lastRun);
 
       saveLastRunRequest.onerror = function (event: Event) {
         if (event !== null && event.target instanceof IDBRequest)
@@ -535,9 +535,7 @@ export class Database {
       };
 
       lastRuns.forEach(lastRun => {
-        const singleRequest = saveLastRunsRequest.objectStore('lastRuns').put(
-          'function' === typeof lastRun.serialize ? lastRun.serialize() : lastRun
-        );
+        const singleRequest = saveLastRunsRequest.objectStore('lastRuns').put(lastRun);
       });
     })
   }
