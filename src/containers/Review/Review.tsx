@@ -26,6 +26,7 @@ import { Storage } from '../../state/modules/storage';
 import { CharacterNames } from '../../constants/characterSettings';
 import type * as ModTypes from "../../domain/types/ModTypes";
 
+import * as Character from '#/domain/Character';
 import { Mod } from '../../domain/Mod';
 import { ModAssignments } from "../../domain/ModAssignment";
 import { ModListFilter } from '../../domain/ModListFilter';
@@ -326,7 +327,7 @@ class Review extends React.PureComponent<Props> {
         } else if (!rightCharacter) {
           return 1;
         } else {
-          return leftCharacter.compareGP(rightCharacter) || ModLoadout.slotSort(leftMod, rightMod);
+          return Character.compareGP(leftCharacter, rightCharacter) || ModLoadout.slotSort(leftMod, rightMod);
         }
       });
 

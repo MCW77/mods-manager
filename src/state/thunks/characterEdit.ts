@@ -19,7 +19,7 @@ import { Storage } from '../../state/modules/storage';
 import { CharacterNames } from "../../constants/characterSettings";
 import templatesJSON from "../../constants/characterTemplates.json";
 
-import { Character, Characters } from "../../domain/Character";
+import * as Character from "#/domain/Character";
 import { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTemplates";
 import { OptimizationPlan, OptimizationPlansById, createOptimizationPlan } from "../../domain/OptimizationPlan";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
@@ -55,15 +55,16 @@ export namespace thunks {
           const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
             .includes(id));
 
-          const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
+          const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character.Character) => {
             if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
-              return character.withOptimizerSettings(
+              return Character.withOptimizerSettings(
+                character,
                 OptimizerSettings.withTargetOverrides(character.optimizerSettings, templateTargetsById[character.baseID])
               );
             } else {
               return character;
             }
-          }) as Characters);
+          }) as Character.Characters);
 
           return newProfile.withSelectedCharacters(profile.selectedCharacters.concat(availableCharacters));
         },
@@ -112,15 +113,16 @@ export namespace thunks {
       return App.thunks.updateProfile(
         profile => {
           const templateTargetsById: OptimizationPlansById = getTargetsById(template);
-          const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
+          const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character.Character) => {
             if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
-              return character.withOptimizerSettings(
+              return Character.withOptimizerSettings(
+                character,
                 OptimizerSettings.withTargetOverrides(character.optimizerSettings, templateTargetsById[character.baseID])
               );
             } else {
               return character;
             }
-          }) as Characters);
+          }) as Character.Characters);
 
           const newSelectedCharacters = profile.selectedCharacters.slice(0);
           template.selectedCharacters.forEach(({ id: templateCharId, target: templateTarget }) => {
@@ -209,7 +211,8 @@ export namespace thunks {
 
         return profile.withCharacters(Object.assign({}, profile.characters, {
           [characterID]:
-            oldCharacter.withOptimizerSettings(
+            Character.withOptimizerSettings(
+              oldCharacter,
               OptimizerSettings.withMinimumModDots(oldCharacter.optimizerSettings, minimumModDots)
             )
         }));
@@ -229,7 +232,8 @@ export namespace thunks {
         const oldCharacter = profile.characters[characterID];
 
         return profile.withCharacters(Object.assign({}, profile.characters, {
-          [characterID]: oldCharacter.withOptimizerSettings(
+          [characterID]: Character.withOptimizerSettings(
+            oldCharacter,
             OptimizerSettings.withModSlicing(oldCharacter.optimizerSettings, sliceMods)
           )
         }));
@@ -255,13 +259,13 @@ export namespace thunks {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
-        const newCharacters: Characters = Object.assign({}, profile.characters, {
-          [characterID]: oldCharacter.withDeletedTarget(targetName)
+        const newCharacters: Character.Characters = Object.assign({}, profile.characters, {
+          [characterID]: Character.withDeletedTarget(oldCharacter, targetName)
         });
 
         const newSelectedCharacters = profile.selectedCharacters.map(({ id, target: oldTarget }) => {
           if (id === characterID && oldTarget!.name === targetName) {
-            const newTarget = newCharacters[characterID].targets()[0] || createOptimizationPlan('unnamed');
+            const newTarget = Character.targets(newCharacters[characterID])[0] ?? createOptimizationPlan('unnamed');
 
             return { id: id, target: newTarget };
           } else {
@@ -313,7 +317,8 @@ export namespace thunks {
         newSelectedCharacters.splice(characterIndex, 0, { id: characterID, target: newTarget });
 
         const oldCharacter = profile.characters[characterID];
-        const newCharacter = oldCharacter.withOptimizerSettings(
+        const newCharacter = Character.withOptimizerSettings(
+          oldCharacter,
           OptimizerSettings.withTarget(oldCharacter.optimizerSettings, newTarget)
         );
 
@@ -330,11 +335,12 @@ export namespace thunks {
       profile.withCharacters(
         mapValues(
           profile.characters,
-          (character: Character) =>
-          character.withOptimizerSettings(
+          (character: Character.Character) =>
+          Character.withOptimizerSettings(
+            character,
             OptimizerSettings.lock(character.optimizerSettings)
           )
-        ) as Characters
+        ) as Character.Characters
       )
     );
   }
@@ -348,8 +354,9 @@ export namespace thunks {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
-        const newCharacters: Characters = Object.assign({}, profile.characters, {
-          [characterID]: oldCharacter.withOptimizerSettings(
+        const newCharacters: Character.Characters = Object.assign({}, profile.characters, {
+          [characterID]: Character.withOptimizerSettings(
+            oldCharacter,
             OptimizerSettings.lock(oldCharacter.optimizerSettings)
           )
         });
@@ -370,12 +377,13 @@ export namespace thunks {
       return profile.withCharacters(
         mapValues(
           profile.characters,
-          (character: Character) => selectedCharacterIDs.includes(character.baseID) ?
-            character.withOptimizerSettings(
+          (character: Character.Character) => selectedCharacterIDs.includes(character.baseID) ?
+            Character.withOptimizerSettings(
+              character,
               OptimizerSettings.lock(character.optimizerSettings)
             ) :
             character
-        ) as Characters
+        ) as Character.Characters
       );
     });
   }
@@ -417,15 +425,16 @@ export namespace thunks {
           const availableCharacters = template.selectedCharacters.filter(({ id }) => Object.keys(profile.characters)
             .includes(id));
 
-          const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character) => {
+          const newProfile = profile.withCharacters(mapValues(profile.characters, (character: Character.Character) => {
             if (template.selectedCharacters.map(({ id }) => id).includes(character.baseID)) {
-              return character.withOptimizerSettings(
+              return Character.withOptimizerSettings(
+                character,
                 OptimizerSettings.withTargetOverrides(character.optimizerSettings, templateTargetsById[character.baseID])
               );
             } else {
               return character;
             }
-          }) as Characters);
+          }) as Character.Characters);
 
           return newProfile.withSelectedCharacters(availableCharacters);
         },
@@ -474,10 +483,10 @@ export namespace thunks {
   export function resetAllCharacterTargets() {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
-        const newCharacters: Characters = mapValues(
+        const newCharacters: Character.Characters = mapValues(
           profile.characters,
-          (character: Character) => character.withResetTargets()
-        ) as Characters;
+          (character: Character.Character) => Character.withResetTargets(character)
+        ) as Character.Characters;
         const newSelectedCharacters = profile.selectedCharacters.map(
           ({ id, target: oldTarget }) => {
             const resetTarget = newCharacters[id].optimizerSettings.targets.find(
@@ -503,7 +512,7 @@ export namespace thunks {
   export function resetCharacterTargetToDefault(characterID: CharacterNames, targetName: string) {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
-        const newCharacter = profile.characters[characterID].withResetTarget(targetName);
+        const newCharacter = Character.withResetTarget(profile.characters[characterID], targetName);
         const resetTarget = newCharacter.optimizerSettings.targets.find(target => target.name === targetName) ||
           createOptimizationPlan('unnamed');
 
@@ -602,8 +611,9 @@ export namespace thunks {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
-        const newCharacters: Characters = Object.assign({}, profile.characters, {
-          [characterID]: oldCharacter.withOptimizerSettings(
+        const newCharacters: Character.Characters = Object.assign({}, profile.characters, {
+          [characterID]: Character.withOptimizerSettings(
+            oldCharacter,
             oldCharacter.optimizerSettings.isLocked ?
               OptimizerSettings.unlock(oldCharacter.optimizerSettings)
             :
@@ -620,8 +630,9 @@ export namespace thunks {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
-        const newCharacters: Characters = Object.assign({}, profile.characters, {
-          [characterID]: oldCharacter.withOptimizerSettings(
+        const newCharacters: Character.Characters = Object.assign({}, profile.characters, {
+          [characterID]: Character.withOptimizerSettings(
+            oldCharacter,
             OptimizerSettings.withModSlicing(
               oldCharacter.optimizerSettings,
               !oldCharacter.optimizerSettings.sliceMods
@@ -657,11 +668,12 @@ export namespace thunks {
       profile.withCharacters(
         mapValues(
           profile.characters,
-          (character: Character) =>
-          character.withOptimizerSettings(
+          (character: Character.Character) =>
+          Character.withOptimizerSettings(
+            character,
             OptimizerSettings.unlock(character.optimizerSettings)
           )
-        ) as Characters
+        ) as Character.Characters
       )
     );
   }
@@ -675,8 +687,9 @@ export namespace thunks {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const oldCharacter = profile.characters[characterID];
-        const newCharacters: Characters = Object.assign({}, profile.characters, {
-          [characterID]: oldCharacter.withOptimizerSettings(
+        const newCharacters: Character.Characters = Object.assign({}, profile.characters, {
+          [characterID]: Character.withOptimizerSettings(
+            oldCharacter,
             OptimizerSettings.unlock(oldCharacter.optimizerSettings)
           )
         });
@@ -697,12 +710,13 @@ export namespace thunks {
       return profile.withCharacters(
         mapValues(
           profile.characters,
-          (character: Character) => selectedCharacterIDs.includes(character.baseID) ?
-            character.withOptimizerSettings(
+          (character: Character.Character) => selectedCharacterIDs.includes(character.baseID) ?
+            Character.withOptimizerSettings(
+              character,
               OptimizerSettings.unlock(character.optimizerSettings)
             ) :
             character
-        ) as Characters
+        ) as Character.Characters
       );
     });
   }

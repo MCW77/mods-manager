@@ -4,7 +4,7 @@ import setBonuses from "../constants/setbonuses";
 import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 import * as ModTypes from "./types/ModTypes";
 
-import { Character } from "./Character";
+import * as Character from "./Character";
 import { Mod } from "./Mod";
 import * as OptimizationPlan from "./OptimizationPlan";
 import SetBonus from "./SetBonus";
@@ -43,7 +43,7 @@ class ModLoadout implements SlotIndexer{
    *
    * @return Object An object keyed on each stat in the mod set
    */
-  getSummary(character: Character, target: OptimizationPlan.OptimizationPlan, withUpgrades: boolean) {
+  getSummary(character: Character.Character, target: OptimizationPlan.OptimizationPlan, withUpgrades: boolean) {
     let loadoutSummary: {
       [key in CharacterStatNames.All]: CSStats.CharacterSummaryStat
     } = {
@@ -143,7 +143,7 @@ class ModLoadout implements SlotIndexer{
    * @param target {OptimizationPlan}
    * @param withUpgrades {Boolean} Whether to upgrade mods while calculating the value of the set
    */
-  getOptimizationValue(character: Character, target: OptimizationPlan.OptimizationPlan, withUpgrades: boolean = false) {
+  getOptimizationValue(character: Character.Character, target: OptimizationPlan.OptimizationPlan, withUpgrades: boolean = false) {
     return Object.values(this.getSummary(character, target, withUpgrades))
       .reduce((setValue, stat) => setValue + stat.getOptimizationValue(character, target), 0);
   }

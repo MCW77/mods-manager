@@ -27,7 +27,7 @@ import * as Mappers from "#/modules/profilesManagement/mappers";
 import { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 
 import { BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseCharacter";
-import { Character } from "#/domain/Character";
+import * as Character from "#/domain/Character";
 import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
 import { Mod } from "#/domain/Mod";
 import { createOptimizationPlan, OptimizationPlan } from "#/domain/OptimizationPlan";
@@ -66,7 +66,7 @@ export namespace thunks {
           const character = profile.characters[characterID]
 
           return character ?
-            { id: characterID, target: character.defaultTarget() } :
+            { id: characterID, target: Character.defaultTarget(character) } :
             null
         }).filter(x => null !== x) as {
           id: CharacterNames,
@@ -391,14 +391,15 @@ export namespace thunks {
 
         // Collect the new character objects by combining the default characters with the player values
         // and the optimizer settings from the current profile.
-        const newCharacters = mapValues<PlayerValuesByCharacter, Character>(fetchData.profile.playerValues, (playerValues: DTOs.GIMO.PlayerValuesDTO, id: string):Character => {
+        const newCharacters = mapValues<PlayerValuesByCharacter, Character.Character>(fetchData.profile.playerValues, (playerValues: DTOs.GIMO.PlayerValuesDTO, id: string):Character.Character => {
           const Id: CharacterNames = id as CharacterNames;
           if (oldProfile.characters.hasOwnProperty(Id)) {
-            return oldProfile.characters[Id]
-              .withPlayerValues(playerValues)
-              .withOptimizerSettings(oldProfile.characters[Id].optimizerSettings);
+            return Character.withOptimizerSettings(
+              Character.withPlayerValues(oldProfile.characters[Id], playerValues),
+              oldProfile.characters[Id].optimizerSettings
+            );
           } else {
-            return (new Character(
+            return (Character.createCharacter(
               Id,
               playerValues,
               createOptimizerSettings(

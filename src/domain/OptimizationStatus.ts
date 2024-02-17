@@ -1,8 +1,8 @@
-import { Character } from "./Character";
+import * as Character from "./Character";
 
 
 interface OptimizationStatus {
-  character: Character | null;
+  character: Character.Character | null;
   progress: number;
   step: string;
 }

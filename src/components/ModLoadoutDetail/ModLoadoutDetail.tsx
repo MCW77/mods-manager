@@ -5,7 +5,7 @@ import React from "react";
 import './ModLoadoutDetail.css';
 
 // domain
-import { Character } from "#/domain/Character";
+import * as Character from "#/domain/Character";
 import { ModLoadout } from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { MissedGoals } from "#/domain/PlayerProfile";
@@ -38,10 +38,10 @@ type ComponentProps = {
   oldLoadout: ModLoadout;
   newLoadout: ModLoadout;
   showAvatars: boolean;
-  character: Character;
+  character: Character.Character;
   target: OptimizationPlan.OptimizationPlan;
   useUpgrades: boolean;
-  assignedCharacter: Character;
+  assignedCharacter: Character.Character;
   assignedTarget: OptimizationPlan.OptimizationPlan;
   missedGoals: MissedGoals;
 };

@@ -7,7 +7,7 @@ import "./ModLoadoutView.css";
 // domain
 import type * as ModTypes from "#/domain/types/ModTypes";
 
-import { Character } from "#/domain/Character";
+import * as Character from "#/domain/Character";
 import { ModLoadout } from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
@@ -18,7 +18,7 @@ import { ModStats } from "#/components/ModStats/ModStats";
 type ComponentProps = {
   modLoadout: ModLoadout;
   showAvatars: boolean;
-  assignedCharacter?: Character;
+  assignedCharacter?: Character.Character;
   assignedTarget?: OptimizationPlan.OptimizationPlan;
 };
 

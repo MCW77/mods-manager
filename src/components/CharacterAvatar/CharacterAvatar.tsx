@@ -6,15 +6,15 @@ import { useSelector } from "react-redux";
 import './CharacterAvatar.css';
 
 // modules
-import { Data } from '../../state/modules/data';
+import { Data } from '#/state/modules/data';
 
 // domain
-import { BaseCharacter, defaultBaseCharacter } from "../../domain/BaseCharacter";
-import { Character } from "../../domain/Character";
+import { BaseCharacter, defaultBaseCharacter } from "#/domain/BaseCharacter";
+import * as Character from "#/domain/Character";
 
 
 type ComponentProps = {
-  character?: Character,
+  character?: Character.Character,
   displayGear?: boolean,
   displayLevel?: boolean,
   displayStars?: boolean,

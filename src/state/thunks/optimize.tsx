@@ -15,7 +15,7 @@ import { Data } from "#/state/modules/data";
 import { Review } from "#/state/modules/review";
 
 // domain
-import { Character } from "#/domain/Character";
+import * as Character from "#/domain/Character";
 import { OptimizationStatus } from "#/domain/OptimizationStatus";
 import OptimizerRun from "#/domain/OptimizerRun";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
@@ -119,7 +119,7 @@ export namespace thunks {
 													'Special Critical Chance %': 0,
 												}
 												const character =
-													newProfile.characters[id] || new Character(
+													newProfile.characters[id] || Character.createCharacter(
 														id,
 														{
 															level: 0,

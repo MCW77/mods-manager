@@ -24,7 +24,7 @@ import { characterSettings } from "../../constants/characterSettings";
 import type * as ModTypes from "../../domain/types/ModTypes";
 
 import { BaseCharacter } from "../../domain/BaseCharacter";
-import { Character } from "../../domain/Character";
+import * as Character from "#/domain/Character";
 import { CharacterEditMode } from "../../domain/CharacterEditMode";
 import { CharacterSettings } from "../../domain/CharacterSettings";
 import { Mod } from "../../domain/Mod";
@@ -45,7 +45,7 @@ import { Label } from "#ui/label";
 
 
 type ComponentProps = {
-  character: Character,
+  character: Character.Character,
   characterIndex: number,
   target: OptimizationPlan.OptimizationPlan,
 }

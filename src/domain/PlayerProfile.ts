@@ -6,7 +6,7 @@ import { CharacterNames } from "../constants/characterSettings";
 import { PlayerValuesByCharacter } from "../modules/profilesManagement/domain/PlayerValues";
 import * as ModTypes from "./types/ModTypes";
 
-import { Character, Characters, FlatCharacters, ICharacter } from "./Character";
+import * as Character from "./Character";
 import { Mod } from "./Mod";
 import { OptimizationPlan } from "./OptimizationPlan";
 import OptimizerRun from "./OptimizerRun";
@@ -41,7 +41,7 @@ export interface IGlobalSettings {
 export interface IFlatPlayerProfile {
   allyCode: string;
   playerName: string;
-  characters: {[key in CharacterNames]: ICharacter};
+  characters: {[key in CharacterNames]: Character.Character};
   mods: ModTypes.GIMOFlatMod[];
   selectedCharacters: FlatSelectedCharacters;
   modAssignments: IFlatModSuggestion[];
@@ -56,7 +56,7 @@ export interface IFlatPlayerProfile {
 export class PlayerProfile {
   allyCode: string;
   playerName: string;
-  characters: Characters;
+  characters: Character.Characters;
   playerValues: PlayerValuesByCharacter
   mods: Mod[];
   selectedCharacters: SelectedCharacters;
@@ -69,7 +69,7 @@ export class PlayerProfile {
     "",
     "",
     {} as PlayerValuesByCharacter,
-    {} as Characters,
+    {} as Character.Characters,
     [],
     [],
     [],
@@ -106,7 +106,7 @@ export class PlayerProfile {
     allyCode: string,
     playerName: string,
     playerValues: PlayerValuesByCharacter = {} as PlayerValuesByCharacter,
-    characters: Characters = {} as Characters,
+    characters: Character.Characters = {} as Character.Characters,
     mods: Mod[] = [],
     selectedCharacters: SelectedCharacters = [],
     modAssignments: IModSuggestion[] = [],
@@ -145,7 +145,7 @@ export class PlayerProfile {
     }
   }
 
-  withCharacters(characters: Characters) {
+  withCharacters(characters: Character.Characters) {
     if (characters) {
       return new PlayerProfile(
         this.allyCode,
@@ -280,7 +280,7 @@ export class PlayerProfile {
   toOptimizerRun() {
     return new OptimizerRun(
       this.allyCode,
-      mapValues(this.characters, (character: Character) => character.serialize()) as FlatCharacters,
+      this.characters,
       this.mods.map(mod => mod.serialize()),
       this.selectedCharacters,
       this.globalSettings,
@@ -291,9 +291,7 @@ export class PlayerProfile {
     return {
       allyCode: this.allyCode,
       playerName: this.playerName,
-      characters: mapValues(this.characters, (character: Character) =>
-        'function' === typeof character.serialize ? character.serialize() : character
-      ),
+      characters: this.characters,
       mods: this.mods.map(mod => mod.serialize()),
       selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
       modAssignments: this.modAssignments,
@@ -309,7 +307,7 @@ export class PlayerProfile {
         flatPlayerProfile.allyCode,
         flatPlayerProfile.playerName,
         {} as PlayerValuesByCharacter,
-        mapValues(flatPlayerProfile.characters, Character.deserialize) as Characters,
+        flatPlayerProfile.characters,
         flatPlayerProfile.mods.map(Mod.deserialize),
         flatPlayerProfile.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
 

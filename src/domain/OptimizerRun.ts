@@ -1,14 +1,14 @@
 // domain
 import { GIMOFlatMod } from "./types/ModTypes";
 
-import { FlatCharacters } from "./Character";
+import * as Character from "./Character";
 import { IGlobalSettings } from "./PlayerProfile";
 import { SelectedCharacters } from "./SelectedCharacters";
 
 
 interface FlatOptimizerRun {
   allyCode: string;
-  characters: FlatCharacters;
+  characters: Character.Characters;
   mods: GIMOFlatMod[];
   selectedCharacters: SelectedCharacters;
   globalSettings: IGlobalSettings;
@@ -16,7 +16,7 @@ interface FlatOptimizerRun {
 
 export default class OptimizerRun {
   allyCode: string;
-  characters: FlatCharacters;
+  characters: Character.Characters;
   mods: GIMOFlatMod[];
   selectedCharacters: SelectedCharacters;
   globalSettings: IGlobalSettings;
@@ -34,7 +34,7 @@ export default class OptimizerRun {
    */
   constructor(
     allyCode: string,
-    characters: FlatCharacters,
+    characters: Character.Characters,
     mods: GIMOFlatMod[],
     selectedCharacters: SelectedCharacters,
     globalSettings: IGlobalSettings

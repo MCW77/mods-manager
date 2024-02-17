@@ -10,7 +10,7 @@ import { Data } from '#/state/modules/data';
 import { Storage } from '#/state/modules/storage';
 
 // domain
-import { Character }  from '#/domain/Character';
+import * as Character from '#/domain/Character';
 import { Mod } from '#/domain/Mod';
 import * as OptimizationPlan from '#/domain/OptimizationPlan';
 
@@ -23,7 +23,7 @@ import { SellModButton } from '#/components/SellModButton/SellModButton';
 
 
 type ComponentProps = {
-  assignedCharacter: Character | null;
+  assignedCharacter: Character.Character | null;
   assignedTarget?: OptimizationPlan.OptimizationPlan;
   mod: Mod;
   showAssigned?: boolean;
@@ -39,7 +39,7 @@ const ModDetail = React.memo(
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
 
-    const character: Character | null =
+    const character: Character.Character | null =
       mod.characterID !== "null"
         ? characters[mod.characterID]
         : null;

@@ -15,7 +15,7 @@ import { Storage } from '../../state/modules/storage';
 import { CharacterNames } from '../../constants/characterSettings';
 import { modScores } from '../../domain/constants/ModScoresConsts';
 
-import { Character } from '../../domain/Character';
+import * as Character from '#/domain/Character';
 import { Mod } from '../../domain/Mod';
 import { OptimizationPlan } from '../../domain/OptimizationPlan';
 import { SecondaryStats, Stats } from '../../domain/Stats';
@@ -27,7 +27,7 @@ import { SellModButton } from '../SellModButton/SellModButton';
 type ComponentProps = {
   mod: Mod;
   showAvatar?: boolean;
-  assignedCharacter?: Character | null;
+  assignedCharacter?: Character.Character | null;
   assignedTarget?: OptimizationPlan;
 };
 
@@ -95,7 +95,7 @@ const ModStats = React.memo(
       );
     };
 
-    const character: Character | null =
+    const character: Character.Character | null =
       mod.characterID !== null
         ? characters[mod.characterID as CharacterNames]
         : null;

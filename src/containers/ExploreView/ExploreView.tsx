@@ -25,7 +25,7 @@ import { Storage } from '../../state/modules/storage';
 import { CharacterNames } from '../../constants/characterSettings';
 import { ModsFilter } from '../../modules/modExploration/domain/ModsFilter';
 
-import { Characters } from '../../domain/Character';
+import * as Character from '#/domain/Character';
 import { Mod } from '../../domain/Mod';
 
 // components
@@ -239,7 +239,7 @@ const mapStateToProps = (state: IAppState) => {
     };
   } else {
     return {
-      characters: {} as Characters,
+      characters: {} as Character.Characters,
       displayedMods: {},
       assignedMods: {} as AssignedMods,
       modCount: 0,

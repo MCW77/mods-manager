@@ -18,8 +18,8 @@ import { Storage } from '../../state/modules/storage';
 // domain
 import { characterSettings, CharacterNames } from "../../constants/characterSettings";
 
-import { Character } from "../../domain/Character";
-import * as OptimizationPlan from "../../domain/OptimizationPlan";
+import * as Character from "#/domain/Character";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
@@ -85,7 +85,7 @@ const CharacterList = React.memo(
           case 'add':
             const movingCharacterID: CharacterNames = event.dataTransfer.getData('text/plain') as CharacterNames;
             const movingCharacter = characters[movingCharacterID];
-            dispatch(CharacterEdit.thunks.selectCharacter(movingCharacterID, movingCharacter.defaultTarget(), dropCharacterIndex));
+            dispatch(CharacterEdit.thunks.selectCharacter(movingCharacterID, Character.defaultTarget(movingCharacter), dropCharacterIndex));
             break;
           case 'move':
             const movingCharacterIndex = +event.dataTransfer.getData('text/plain');
@@ -106,7 +106,7 @@ const CharacterList = React.memo(
         {};
 
       const selectedPlan = target.name;
-      const options = character.targets()
+      const options = Character.targets(character)
         .map(characterTarget => characterTarget.name)
         .filter(targetName => 'custom' !== targetName)
         .map(targetName => {
@@ -132,7 +132,7 @@ const CharacterList = React.memo(
         } else {
           dispatch(CharacterEdit.thunks.changeCharacterTarget(
             index,
-            character.targets().find(target => target.name === optimizationTarget)!
+            Character.targets(character).find(target => target.name === optimizationTarget)!
           ));
         }
       };
@@ -179,7 +179,7 @@ const CharacterList = React.memo(
      * @param character {Character}
      * @param target {OptimizationPlan}
      */
-    const renderCharacterIcons = (character: Character, target: OptimizationPlan.OptimizationPlan, characterIndex: number) => {
+    const renderCharacterIcons = (character: Character.Character, target: OptimizationPlan.OptimizationPlan, characterIndex: number) => {
       const defaultTargets = characterSettings[character.baseID] ?
         groupByKey(characterSettings[character.baseID].targets, target => target.name) :
         {};
@@ -253,7 +253,7 @@ const CharacterList = React.memo(
       </div>;
     }
 
-    const showEditCharacterModal = (character: Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
+    const showEditCharacterModal = (character: Character.Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
       dispatch(CharacterEdit.thunks.setOptimizeIndex(index));
       dispatch(App.actions.showModal(
         '',

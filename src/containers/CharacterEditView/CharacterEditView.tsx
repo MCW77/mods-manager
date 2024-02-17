@@ -42,7 +42,7 @@ import {
 import defaultTemplates from "../../constants/characterTemplates.json";
 
 import { defaultBaseCharacter } from "../../domain/BaseCharacter";
-import { Character } from "../../domain/Character";
+import * as Character from "#/domain/Character";
 import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
 import { OptimizationPlan } from "../../domain/OptimizationPlan";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
@@ -67,7 +67,7 @@ import { CharacterList } from "../CharacterList/CharacterList";
 
 
 class CharacterEditView extends PureComponent<Props> {
-  dragStart(character: Character) {
+  dragStart(character: Character.Character) {
     return function (event: React.DragEvent<HTMLDivElement>) {
       event.dataTransfer.dropEffect = "copy";
       event.dataTransfer.effectAllowed = "copy";
@@ -407,7 +407,7 @@ class CharacterEditView extends PureComponent<Props> {
    * @param character Character
    * @param className String A class to apply to each character block
    */
-  characterBlock(character: Character, className: string) {
+  characterBlock(character: Character.Character, className: string) {
     const isLocked = character.optimizerSettings.isLocked;
     const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
 
@@ -423,7 +423,7 @@ class CharacterEditView extends PureComponent<Props> {
           onDoubleClick={() =>
             this.props.selectCharacter(
               character.baseID,
-              character.defaultTarget(),
+              Character.defaultTarget(character),
               this.props.lastSelectedCharacter
             )
           }
@@ -852,7 +852,7 @@ const mapStateToProps = (state: IAppState) => {
   const profile = Storage.selectors.selectActiveProfile(state);
   const characters = Storage.selectors.selectCharactersInActiveProfile(state);
   const baseCharacters = Data.selectors.selectBaseCharacters(state);
-  let availableCharacters = [] as Character[];
+  let availableCharacters = [] as Character.Character[];
 
   availableCharacters = Object.values(characters)
     .filter((character) => character.playerValues.level >= 50)
@@ -863,13 +863,13 @@ const mapStateToProps = (state: IAppState) => {
           .map(({ id }) => id)
           .includes(character.baseID)
     )
-    .sort((left, right) => left.compareGP(right));
+    .sort((left, right) => Character.compareGP(left, right));
   /**
    * Checks whether a character matches the filter string in name or tags
    * @param character {Character} The character to check
    * @returns boolean
    */
-  const characterFilter = (character: Character) => {
+  const characterFilter = (character: Character.Character) => {
     const baseCharacter = baseCharacters[character.baseID] ?? {
       ...defaultBaseCharacter,
       baseID: character.baseID,

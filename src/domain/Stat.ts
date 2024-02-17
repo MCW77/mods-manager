@@ -4,7 +4,7 @@ import Big from "big.js";
 // domain
 import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
-import { Character } from "./Character";
+import * as Character from "./Character";
 import * as OptimizationPlan from "./OptimizationPlan";
 import { CharacterSummaryStats as CSStats, PrimaryStats, SecondaryStats, SetStats} from "./Stats";
 
@@ -186,7 +186,7 @@ export abstract class Stat {
    * @param character
    * @returns {Array<Stat>}
    */
-  getFlatValuesForCharacter(character: Character) {
+  getFlatValuesForCharacter(character: Character.Character) {
     const statPropertyNames = Stat.display2CSGIMOStatNamesMap[this.getDisplayType()];
 
     return statPropertyNames.map((statName) => {
@@ -211,7 +211,7 @@ export abstract class Stat {
    * @param character {Character}
    * @param target {OptimizationPlan}
    */
-  getOptimizationValue(character: Character, target: OptimizationPlan.OptimizationPlan) {
+  getOptimizationValue(character: Character.Character, target: OptimizationPlan.OptimizationPlan) {
     // Optimization Plans don't have separate physical and special critical chances, since both are always affected
     // equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit
     // chance, ignore it altogether.
