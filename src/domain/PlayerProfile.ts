@@ -1,6 +1,3 @@
-// utils
-import { mapValues } from "lodash-es";
-
 // domain
 import { CharacterNames } from "../constants/characterSettings";
 import { PlayerValuesByCharacter } from "../modules/profilesManagement/domain/PlayerValues";
@@ -10,7 +7,7 @@ import * as Character from "./Character";
 import { Mod } from "./Mod";
 import { OptimizationPlan } from "./OptimizationPlan";
 import * as OptimizerRun from "./OptimizerRun";
-import { SelectedCharacters, FlatSelectedCharacters } from "./SelectedCharacters";
+import { SelectedCharacters } from "./SelectedCharacters";
 import { TargetStat } from "./TargetStat";
 
 
@@ -43,7 +40,7 @@ export interface IFlatPlayerProfile {
   playerName: string;
   characters: {[key in CharacterNames]: Character.Character};
   mods: ModTypes.GIMOFlatMod[];
-  selectedCharacters: FlatSelectedCharacters;
+  selectedCharacters: SelectedCharacters;
   modAssignments: IFlatModSuggestion[];
   globalSettings: IGlobalSettings;
   hotUtilsSessionId?: string | null;

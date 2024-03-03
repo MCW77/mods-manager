@@ -1,5 +1,5 @@
 // domain
-import { FlatSelectedCharacters, SelectedCharacters } from "./SelectedCharacters";
+import { SelectedCharacters } from "./SelectedCharacters";
 
 
 export type FlatCharacterTemplates = FlatCharacterTemplate[];
@@ -19,7 +19,7 @@ export type CharacterTemplates = CharacterTemplate[];
 
 export interface FlatCharacterTemplate {
   name: string,
-  selectedCharacters: FlatSelectedCharacters
+  selectedCharacters: SelectedCharacters
 }
 
 /**
