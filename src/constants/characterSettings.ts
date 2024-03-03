@@ -1208,7 +1208,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "circle": "Health %",
       }, {
         "Health %": 1,
-        "Speed": 1,
+        "Speed %": 1,
       }),
     ],
   ),
@@ -1869,7 +1869,7 @@ const characterSettings: CharacterSettingsIndexer = {
           "triangle": "Critical Damage %",
           "cross": "Offense %",
         }, {
-          "Speed": 1,
+          "Speed %": 1,
         }
       ),
     ],
