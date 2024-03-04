@@ -827,7 +827,7 @@ function getStatValueForCharacterWithMods(modSet, character, stat, target) {
       },
       0
     );
-    return baseValue + setValue; 
+    return baseValue + setValue;
   } else {
     const statProperty = statTypeMap[stat][0];
     const baseValue = character.playerValues.equippedStats[statProperty];
@@ -838,7 +838,7 @@ function getStatValueForCharacterWithMods(modSet, character, stat, target) {
       // Check to see if the stat is the target stat. If it is, add its value to the total.
       return setStat.displayType === stat ?
         setValueSum + setStat.value
-      : 
+      :
         setValueSum
       },
       0

@@ -204,10 +204,9 @@ export namespace thunks {
 			}
 
 			dispatch(actions.startModOptimization());
-			optimizationWorker = new Worker(
-				`/workers/optimizer.js?version=${
-					import.meta.env.VITE_VERSION || "local"
-				}`,
+			optimizationWorker = new Worker(new URL(
+				"/workers/optimizer.ts", import.meta.url),
+				{ type: "module" },
 			);
 
 			optimizationWorker.onmessage = function (message) {
