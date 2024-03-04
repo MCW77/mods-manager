@@ -10,6 +10,7 @@ import { mapValues } from "lodash-es";
 
 // state
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { optimizationSettings$ } from "#/modules/optimization/state/optimization";
 import getDatabase, { Database } from "#/state/storage/Database";
 
 
@@ -19,7 +20,7 @@ import { Review } from '#/state/modules/review';
 import { Storage } from '#/state/modules/storage';
 
 // domain
-import { characterSettings, CharacterNames } from "#/constants/characterSettings";
+import { CharacterNames } from "#/constants/characterSettings";
 import { HUModsMoveProfile, HUProfileCreationData } from "#/containers/Review/Review";
 import { HUFlatMod } from '#/domain/types/ModTypes';
 import * as DTOs from "#/modules/profilesManagement/dtos";
@@ -30,8 +31,8 @@ import { BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseChar
 import * as Character from "#/domain/Character";
 import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
 import { Mod } from "#/domain/Mod";
-import { createOptimizationPlan, OptimizationPlan } from "#/domain/OptimizationPlan";
-import { OptimizerSettings, createOptimizerSettings } from "#/domain/OptimizerSettings";
+import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import { UseCaseModes } from "#/domain/UseCaseModes";
 
@@ -385,6 +386,7 @@ export namespace thunks {
         :
           new PlayerProfile(allyCode, fetchData.profile.name);
         baseProfile.allyCode = allyCode;
+        optimizationSettings$.addProfile(allyCode);
 
         const sessionId = fetchData.profile.sessionId  ?? baseProfile.hotUtilsSessionId;
         const oldProfile = baseProfile.withHotUtilsSessionId(sessionId);

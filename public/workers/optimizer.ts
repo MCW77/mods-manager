@@ -1,3 +1,6 @@
+// state
+import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimization/state/optimization';
+
 /*********************************************************************************************************************
  * Messaging.                                                                                                         *
  ********************************************************************************************************************/
@@ -48,15 +51,11 @@ self.onmessage = function (message) {
       const lastRunCharacters = {};
 
       for (let character of Object.values(profile.characters)) {
-        // If there are any holdovers from previous versions, clear them out
-        character.optimizerSettings.target = null;
         characters[character.baseID] = character;
       }
 
       if (lastRun.characters) {
         for (let character of Object.values(lastRun.characters)) {
-          // If there are any holdovers from previous versions, clear them out
-          character.optimizerSettings.target = null;
           lastRunCharacters[character.baseID] = character;
         }
 
@@ -78,7 +77,7 @@ self.onmessage = function (message) {
         characters,
         selectedCharacters,
         profile.incrementalOptimizeIndex,
-        profile.globalSettings,
+        optimizationSettings$.settingsByProfile[profile.allyCode].peek(),
         lastRun,
       );
 
@@ -102,9 +101,10 @@ self.onmessage = function (message) {
       } else {
         lastRun = Object.assign({}, result, {
           globalSettings: {
-            modChangeThreshold: result.modChangeThreshold,
+            forceCompleteSets: false,
             lockUnselectedCharacters: result.lockUnselectedCharacters,
-            forceCompleteSets: false
+            modChangeThreshold: result.modChangeThreshold,
+            simulate6EModSlice: result.simulate6EModSlice,
           }
         })
       }
@@ -1133,13 +1133,22 @@ Object.freeze(chooseTwoOptions);
  * @return {Object} An array with an entry for each item in `order`. Each entry will be of the form
  *                  {id, target, assignedMods, messages}
  */
-function optimizeMods(availableMods, characters, order, incrementalOptimizeIndex, globalSettings, previousRun = {}) {
+function optimizeMods(
+  availableMods,
+  characters,
+  order,
+  incrementalOptimizeIndex,
+  globalSettings: ProfileOptimizationSettings,
+  previousRun = {}
+) {
   // We only want to recalculate mods if settings have changed between runs. If global settings or locked
   // characters have changed, recalculate all characters
-  let recalculateMods = !previousRun.globalSettings ||
-    globalSettings.modChangeThreshold !== previousRun.globalSettings.modChangeThreshold ||
-    globalSettings.lockUnselectedCharacters !== previousRun.globalSettings.lockUnselectedCharacters ||
+  let recalculateMods =
+    !previousRun.globalSettings ||
     globalSettings.forceCompleteSets !== previousRun.globalSettings.forceCompleteSets ||
+    globalSettings.lockUnselectedCharacters !== previousRun.globalSettings.lockUnselectedCharacters ||
+    globalSettings.modChangeThreshold !== previousRun.globalSettings.modChangeThreshold ||
+    globalSettings.simulate6EModSlice !== previousRun.globalSettings.simulate6EModSlice ||
     availableMods.length !== previousRun.mods.length;
 
   if (!recalculateMods) {
@@ -2267,7 +2276,8 @@ function* getCandidateSetsGenerator(potentialUsedSets, baseSets, setlessMods, se
    * @param allowFirstSetNulls {boolean} Whether to allow null values in the first set
    * @param allowSecondSetNulls {boolean} Whether to allow null values in the second set
    */
-  function* combineSetsGenerator(firstSet,
+  function* combineSetsGenerator(
+    firstSet,
     secondSet,
     thirdSet,
     allowFirstSetNulls = false,

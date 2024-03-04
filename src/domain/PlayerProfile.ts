@@ -9,6 +9,7 @@ import { OptimizationPlan } from "./OptimizationPlan";
 import * as OptimizerRun from "./OptimizerRun";
 import { SelectedCharacters } from "./SelectedCharacters";
 import { TargetStat } from "./TargetStat";
+import { optimizationSettings$ } from "#/modules/optimization/state/optimization";
 
 
 export type MissedGoals = [TargetStat, number][];
@@ -29,12 +30,6 @@ export interface IModSuggestion {
   messages?: string[];
 }
 
-export interface IGlobalSettings {
-  modChangeThreshold: number;
-  lockUnselectedCharacters: boolean;
-  forceCompleteSets: boolean;
-};
-
 export interface IFlatPlayerProfile {
   allyCode: string;
   playerName: string;
@@ -42,7 +37,6 @@ export interface IFlatPlayerProfile {
   mods: ModTypes.GIMOFlatMod[];
   selectedCharacters: SelectedCharacters;
   modAssignments: IFlatModSuggestion[];
-  globalSettings: IGlobalSettings;
   hotUtilsSessionId?: string | null;
   incrementalOptimizeIndex: number | null
 }
@@ -58,7 +52,6 @@ export class PlayerProfile {
   mods: Mod[];
   selectedCharacters: SelectedCharacters;
   modAssignments: IModSuggestion[];
-  globalSettings: IGlobalSettings;
   hotUtilsSessionId: string | null;
   incrementalOptimizeIndex: number | null;
 
@@ -70,20 +63,9 @@ export class PlayerProfile {
     [],
     [],
     [],
-    {
-      modChangeThreshold: 0,
-      lockUnselectedCharacters: true,
-      forceCompleteSets: true
-    },
     null,
     null,
   );
-
-  static defaultGlobalSettings: IGlobalSettings = {
-    modChangeThreshold: 0,
-    lockUnselectedCharacters: false,
-    forceCompleteSets: false
-  };
 
   /**
    * @param allyCode {string} The ally code for the player whose data this is
@@ -107,7 +89,6 @@ export class PlayerProfile {
     mods: Mod[] = [],
     selectedCharacters: SelectedCharacters = [],
     modAssignments: IModSuggestion[] = [],
-    globalSettings: IGlobalSettings = PlayerProfile.defaultGlobalSettings,
     hotUtilsSessionId: string | null = null,
     incrementalOptimizeIndex: number | null = null,
   ) {
@@ -118,7 +99,6 @@ export class PlayerProfile {
     this.mods = mods;
     this.selectedCharacters = selectedCharacters;
     this.modAssignments = modAssignments;
-    this.globalSettings = globalSettings;
     this.hotUtilsSessionId = hotUtilsSessionId;
     this.incrementalOptimizeIndex = incrementalOptimizeIndex;
   }
@@ -133,7 +113,6 @@ export class PlayerProfile {
         this.mods,
         this.selectedCharacters,
         this.modAssignments,
-        this.globalSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       )
@@ -152,7 +131,6 @@ export class PlayerProfile {
         this.mods,
         this.selectedCharacters,
         this.modAssignments,
-        this.globalSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -171,7 +149,6 @@ export class PlayerProfile {
         mods,
         this.selectedCharacters,
         this.modAssignments,
-        this.globalSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -190,7 +167,6 @@ export class PlayerProfile {
         this.mods,
         selectedCharacters,
         this.modAssignments,
-        this.globalSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
@@ -215,28 +191,12 @@ export class PlayerProfile {
         this.mods,
         this.selectedCharacters,
         modAssignments,
-        this.globalSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
       );
     } else {
       return this;
     }
-  }
-
-  withGlobalSettings(globalSettings: IGlobalSettings) {
-    return new PlayerProfile(
-      this.allyCode,
-      this.playerName,
-      this.playerValues,
-      this.characters,
-      this.mods,
-      this.selectedCharacters,
-      this.modAssignments,
-      globalSettings,
-      this.hotUtilsSessionId,
-      this.incrementalOptimizeIndex,
-    );
   }
 
   withHotUtilsSessionId(id: string | null) {
@@ -249,7 +209,6 @@ export class PlayerProfile {
       this.mods,
       this.selectedCharacters,
       this.modAssignments,
-      this.globalSettings,
       id,
       this.incrementalOptimizeIndex,
     )
@@ -264,7 +223,6 @@ export class PlayerProfile {
       this.mods,
       this.selectedCharacters,
       this.modAssignments,
-      this.globalSettings,
       this.hotUtilsSessionId,
       index,
     );
@@ -280,7 +238,7 @@ export class PlayerProfile {
       this.characters,
       this.mods.map(mod => mod.serialize()),
       this.selectedCharacters,
-      this.globalSettings,
+      optimizationSettings$.settingsByProfile[this.allyCode].peek(),
     );
   }
 
@@ -292,7 +250,6 @@ export class PlayerProfile {
       mods: this.mods.map(mod => mod.serialize()),
       selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
       modAssignments: this.modAssignments,
-      globalSettings: this.globalSettings,
       hotUtilsSessionId: this.hotUtilsSessionId,
       incrementalOptimizeIndex: this.incrementalOptimizeIndex,
     };
@@ -317,7 +274,6 @@ export class PlayerProfile {
             messages: messages
           }  as IModSuggestion
         }) as IModSuggestion[],
-        Object.assign({}, PlayerProfile.defaultGlobalSettings, flatPlayerProfile.globalSettings),
         flatPlayerProfile.hotUtilsSessionId || null,
         flatPlayerProfile.incrementalOptimizeIndex || null,
       )

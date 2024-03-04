@@ -747,38 +747,4 @@ export namespace thunks {
       }
     });
   }
-
-  export function updateForceCompleteModSets(forceCompleteModSets: boolean) {
-    return App.thunks.updateProfile((profile: PlayerProfile) =>
-      profile.withGlobalSettings(
-        Object.assign({}, profile.globalSettings, { forceCompleteSets: forceCompleteModSets })
-      )
-    );
-  }
-
-  /**
-   * Update whether to keep all unselected characters locked.
-   * @param lock {boolean}
-   * @returns {Function}
-   */
-  export function updateLockUnselectedCharacters(lock: boolean) {
-    return App.thunks.updateProfile((profile: PlayerProfile) =>
-      profile.withGlobalSettings(
-        Object.assign({}, profile.globalSettings, { lockUnselectedCharacters: lock })
-      )
-    );
-  }
-
-  /**
-   * Update the threshold before the optimizer will suggest changing mods on a character
-   * @param threshold
-   * @returns {Function}
-   */
-  export function updateModChangeThreshold(threshold: number) {
-    return App.thunks.updateProfile((profile: PlayerProfile) =>
-      profile.withGlobalSettings(
-        Object.assign({}, profile.globalSettings, { modChangeThreshold: threshold })
-      )
-    );
-  }
 }

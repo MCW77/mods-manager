@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
+// state
+import { reactive } from '@legendapp/state/react';
+import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
+
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';
 import { Storage } from '#/state/modules/storage';
@@ -12,17 +16,22 @@ import { Storage } from '#/state/modules/storage';
 import { TemplatesAddingMode } from '#/domain/TemplatesAddingMode';
 
 // components
+import { SingleValueSlider } from '#/components/SingleValueSlider/SingleValueSlider';
 import { Button } from '#ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '#ui/card';
+import { Input } from "#ui/input";
+import { Label } from '#ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '#ui/select';
-import { RangeInput } from '#/components/RangeInput/RangeInput';
 
 // containers
 import { TemplatesManager } from '#/containers/TemplatesManager/TemplatesManager';
 
+const ReactiveInput = reactive(Input);
+const ReactiveSlider = reactive(SingleValueSlider);
+
 const OptimizerSettingsView = () => {
-  const globalOptimizerSettings = useSelector(Storage.selectors.selectGlobalOptimizationSettings);
   const templatesAddingMode = useSelector(CharacterEdit.selectors.selectTemplatesAddingMode);
+  const allyCode = useSelector(Storage.selectors.selectAllycode);
   const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
 
@@ -37,47 +46,75 @@ const OptimizerSettingsView = () => {
           <CardTitle>{t('optimizer.global.Title')}</CardTitle>
         </CardHeader>
         <CardContent className={global}>
-          <label className={labelCSS}>{t('optimizer.global.Threshold')}:</label>
-          <RangeInput
-            className={inputCSS}
-            name="threshold"
-            id="threshold"
-            min={0}
-            max={100}
-            step={1}
-            isPercent={true}
-            editable={true}
-            defaultValue={globalOptimizerSettings.modChangeThreshold}
-            onChange={(threshold) =>
-              dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold))
-            }
-          />
-          <label
+          <Label
+            className={labelCSS}
+            htmlFor="threshold2"
+          >
+            {t('optimizer.global.Threshold')}:
+          </Label>
+          <div className={inputCSS + " flex gap-2"}>
+            <ReactiveSlider
+              id="threshold1"
+              min={0}
+              max={100}
+              step={1}
+              $value={optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold}
+              onChange={(threshold: number) => {
+                optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold.set(threshold)
+              }}
+            />
+            <ReactiveInput
+              id="threshold2"
+              type="number"
+              $value={optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold}
+              onChange={(event) =>
+                optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold.set(event.target.valueAsNumber)
+              }
+            />
+          </div>
+          <Label
             className={labelCSS}
             htmlFor="lock-unselected"
           >
             {t('optimizer.global.LockUnselected')}:
-          </label>
-          <input
+          </Label>
+          <ReactiveInput
             className={inputCSS}
+            id="lock-unselected"
             type="checkbox"
-            defaultChecked={globalOptimizerSettings.lockUnselectedCharacters}
+            $checked={optimizationSettings$.settingsByProfile[allyCode].lockUnselectedCharacters}
             onChange={(event) =>
-              dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(event.target.checked))
+              optimizationSettings$.settingsByProfile[allyCode].lockUnselectedCharacters.set(event.target.checked)
             }
           />
-          <label
+          <Label
             className={labelCSS}
             htmlFor="force-complete-sets"
           >
             {t('optimizer.global.NoModSetsBreak')}:
-          </label>
-          <input
+          </Label>
+          <ReactiveInput
             className={inputCSS}
+            id="force-complete-sets"
             type="checkbox"
-            defaultChecked={globalOptimizerSettings.forceCompleteSets}
+            $checked={optimizationSettings$.settingsByProfile[allyCode].forceCompleteSets}
             onChange={(event) =>
-              dispatch(CharacterEdit.thunks.updateForceCompleteModSets(event.target.checked))
+              optimizationSettings$.settingsByProfile[allyCode].forceCompleteSets.set(event.target.checked)
+            }
+          />
+          <Label
+            className={labelCSS}
+            htmlFor="simulate-6e"
+          >
+            {t('optimizer.global.Simulate6E')}
+          </Label>
+          <ReactiveInput
+            className={inputCSS}
+            id="simulate-6e"
+            type="checkbox"
+            $checked={optimizationSettings$.settingsByProfile[allyCode].simulate6EModSlice}
+            onChange={(event) =>
+              optimizationSettings$.settingsByProfile[allyCode].simulate6EModSlice.set(event.target.checked)
             }
           />
         </CardContent>
@@ -90,7 +127,7 @@ const OptimizerSettingsView = () => {
           <CardTitle>{t('optimizer.templates.Title')}</CardTitle>
         </CardHeader>
         <CardContent className={global}>
-          <label className={labelCSS}>{t('optimizer.templates.AddingMode')}:</label>
+          <Label className={labelCSS}>{t('optimizer.templates.AddingMode')}:</Label>
           <FormInput>
             <Select
               value={templatesAddingMode}
@@ -110,11 +147,11 @@ const OptimizerSettingsView = () => {
               </SelectContent>
             </Select>
           </FormInput>
-          <label
+          <Label
             className={labelCSS + " self-start"}
           >
             {t('optimizer.templates.Own')}:
-          </label>
+          </Label>
           <FormInput><TemplatesManager/></FormInput>
         </CardContent>
       </Card>

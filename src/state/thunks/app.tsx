@@ -8,6 +8,7 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import { IAppState } from "../storage";
 import getDatabase, { IUserData } from "../storage/Database";
+import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
 
 // modules
 import { actions } from '../actions/app';
@@ -25,6 +26,7 @@ export namespace thunks {
   export function deleteProfile(allyCode: string): ThunkResult<void> {
     return function (dispatch) {
       const db = getDatabase();
+      optimizationSettings$.deleteProfile(allyCode);
       db.deleteProfile(
         allyCode,
         () => dispatch(Storage.thunks.loadProfiles(null)),
@@ -43,7 +45,7 @@ export namespace thunks {
         dispatch(replaceModsForCurrentProfile(mods));
       } catch (e) {
         throw new Error(
-          `Unable to process the file. Error message: ${(e as Error).message}`       
+          `Unable to process the file. Error message: ${(e as Error).message}`
         );
       }
     }

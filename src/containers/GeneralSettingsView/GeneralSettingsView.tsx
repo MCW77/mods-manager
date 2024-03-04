@@ -8,6 +8,9 @@ import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 import { saveAs } from 'file-saver';
 import { readFile } from '#/utils/readFile';
 
+// state
+import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
+
 // modules
 import { App } from '#/state/modules/app';
 import { Storage } from '#/state/modules/storage';
@@ -50,7 +53,7 @@ const GeneralSettingsView = () => {
         <Button
           type={'button'}
           variant={'destructive'}
-          onClick={() => dispatch(App.thunks.reset())}
+          onClick={() => {dispatch(App.thunks.reset()); optimizationSettings$.clearProfiles();}}
         >
           {t('general.backup.ResetProceed')}
         </Button>

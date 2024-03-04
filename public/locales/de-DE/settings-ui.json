@@ -38,7 +38,8 @@
       "Title": "Globale Optimierungseinstellungen",
       "Threshold": "Grenzwert für Modtausch",
       "LockUnselected": "Sperre alle unselektierten Charaktere",
-      "NoModSetsBreak": "Keine Modsets aufbrechen"
+      "NoModSetsBreak": "Keine Modsets aufbrechen",
+      "Simulate6E": "Simuliere 6E-Mods"
     },
     "templates": {
       "Title": "Charakter Vorlagen",

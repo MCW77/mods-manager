@@ -44,10 +44,6 @@ export namespace reducers {
 export namespace selectors {
   export const selectAllycode = (state: IAppState) => state.allyCode;
   export const selectActiveProfile = (state: IAppState) => state.profile;
-  export const selectGlobalOptimizationSettings = createSelector(
-    [selectActiveProfile],
-    (profile) => profile.globalSettings
-  );
   export const selectHotUtilsSubscription = (state: IAppState) => state.hotUtilsSubscription;
   export const selectIsIncrementalOptimization = createSelector(
     [selectActiveProfile],

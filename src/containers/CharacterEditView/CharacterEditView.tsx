@@ -943,15 +943,9 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   unlockAllCharacters: () => dispatch(CharacterEdit.thunks.unlockAllCharacters()),
   toggleCharacterLock: (characterID: CharacterNames) =>
     dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
-  updateLockUnselectedCharacters: (lock: boolean) =>
-    dispatch(CharacterEdit.thunks.updateLockUnselectedCharacters(lock)),
   resetAllCharacterTargets: () => dispatch(CharacterEdit.thunks.resetAllCharacterTargets()),
   resetIncrementalIndex: () => dispatch(CharacterEdit.thunks.setOptimizeIndex(null)),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
-  updateModChangeThreshold: (threshold: number) =>
-    dispatch(CharacterEdit.thunks.updateModChangeThreshold(threshold)),
-  updateForceCompleteModSets: (forceCompleteModSets: boolean) =>
-    dispatch(CharacterEdit.thunks.updateForceCompleteModSets(forceCompleteModSets)),
   generateCharacterList: (
     mode: UseCaseModes,
     behavior: boolean,

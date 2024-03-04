@@ -38,7 +38,8 @@
       "Title": "Global Optimizer Settings",
       "Threshold": "Threshold to change mods",
       "LockUnselected": "Lock all unselected characters",
-      "NoModSetsBreak": "Don't break mod sets"
+      "NoModSetsBreak": "Don't break mod sets",
+      "Simulate6E": "Simulate 6E mods"
     },
     "templates": {
       "Title": "Character Templates",

@@ -1,8 +1,8 @@
 // domain
 import { GIMOFlatMod } from "./types/ModTypes";
+import { ProfileOptimizationSettings } from "#/modules/optimization/state/optimization";
 
 import * as Character from "./Character";
-import { IGlobalSettings } from "./PlayerProfile";
 import { SelectedCharacters } from "./SelectedCharacters";
 
 export interface OptimizerRun {
@@ -10,7 +10,7 @@ export interface OptimizerRun {
   characters: Character.Characters;
   mods: GIMOFlatMod[];
   selectedCharacters: SelectedCharacters;
-  globalSettings: IGlobalSettings;
+  globalSettings: ProfileOptimizationSettings;
 };
 
 export const createOptimizerRun = (
@@ -18,7 +18,7 @@ export const createOptimizerRun = (
   characters: Character.Characters,
   mods: GIMOFlatMod[],
   selectedCharacters: SelectedCharacters,
-  globalSettings: IGlobalSettings,
+  globalSettings: ProfileOptimizationSettings,
 ): OptimizerRun => {
   return {
     allyCode,
