@@ -17,7 +17,7 @@ import { Review } from "#/state/modules/review";
 // domain
 import * as Character from "#/domain/Character";
 import { OptimizationStatus } from "#/domain/OptimizationStatus";
-import OptimizerRun from "#/domain/OptimizerRun";
+import { OptimizerRun } from "#/domain/OptimizerRun";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import { IModSuggestion } from "#/domain/PlayerProfile";
 

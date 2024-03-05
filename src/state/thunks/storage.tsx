@@ -1,30 +1,30 @@
 // react
 import React from "react";
-import { ThunkResult } from "../reducers/modsOptimizer";
+import { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // utils
 import { mapValues } from "lodash-es";
-import groupByKey from "../../utils/groupByKey";
-import nothing from "../../utils/nothing";
+import groupByKey from "#/utils/groupByKey";
+import nothing from "#/utils/nothing";
 
 // state
-import getDatabase, { IUserData } from "../storage/Database";
+import getDatabase, { IUserData } from "#/state/storage/Database";
 
 // actions
-import { actions } from '../../state/actions/storage';
+import { actions } from '#/state/actions/storage';
 
 // modules
-import { App } from '../../state/modules/app';
-import { Data } from '../../state/modules/data';
+import { App } from '#/state/modules/app';
+import { Data } from '#/state/modules/data';
 
 // domain
-import { BaseCharactersById, BaseCharacter } from '../../domain/BaseCharacter';
-import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "../../domain/CharacterTemplates";
-import { Mod } from '../../domain/Mod';
-import OptimizerRun from "../../domain/OptimizerRun";
-import { PlayerNamesByAllycode } from "../../domain/PlayerNamesByAllycode";
-import { PlayerProfile } from '../../domain/PlayerProfile';
-import { SelectedCharactersByTemplateName } from "../../domain/SelectedCharacters";
+import { BaseCharactersById, BaseCharacter } from '#/domain/BaseCharacter';
+import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "#/domain/CharacterTemplates";
+import { Mod } from '#/domain/Mod';
+import { OptimizerRun } from "#/domain/OptimizerRun";
+import { PlayerNamesByAllycode } from "#/domain/PlayerNamesByAllycode";
+import { PlayerProfile } from '#/domain/PlayerProfile';
+import { SelectedCharactersByTemplateName } from "#/domain/SelectedCharacters";
 
 export namespace thunks {
   /**
