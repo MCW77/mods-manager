@@ -1,6 +1,26 @@
 // state
 import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimization/state/optimization';
 
+// domain
+import type * as ModTypes from "../../src/domain/types/ModTypes";
+
+import { PrimaryStats, SecondaryStats } from '../../src/domain/Stats';
+
+
+interface PrimaryStat {
+  type: PrimaryStats.GIMOStatNames;
+  displayType: string;
+  value: number;
+  isPercent: boolean;
+}
+
+interface SecondaryStat {
+  type: SecondaryStats.GIMOStatNames;
+  displayType: string;
+  value: number;
+  isPercent: boolean;
+}
+
 /*********************************************************************************************************************
  * Messaging.                                                                                                         *
  ********************************************************************************************************************/
@@ -382,8 +402,8 @@ function firstOrNull(arr) {
   }
 }
 
-function chooseFromArray(input, choices) {
-  let combinations = [];
+function chooseFromArray(input: readonly string[], choices: number) {
+  let combinations: string[][] = [];
 
   for (let i = 0; i <= input.length - choices; i++) {
     if (1 >= choices) {
@@ -426,7 +446,7 @@ function areObjectsEquivalent(left, right) {
   });
 }
 
-function deserializeStat(type, value) {
+function deserializePrimaryStat(type: PrimaryStats.GIMOStatNames, value: string) {
   const displayType = type.endsWith('%') ? type.substr(0, type.length - 1).trim() : type;
   const rawValue = value.replace(/[+%]/g, '');
   const realValue = +rawValue;
@@ -440,21 +460,35 @@ function deserializeStat(type, value) {
   };
 }
 
-function deserializeMod(mod) {
-  const primaryStat = deserializeStat(mod.primaryBonusType, mod.primaryBonusValue);
-  let secondaryStats = [];
+function deserializeSecondaryStat(type: SecondaryStats.GIMOStatNames, value: string) {
+  const displayType = type.endsWith('%') ? type.substr(0, type.length - 1).trim() : type;
+  const rawValue = value.replace(/[+%]/g, '');
+  const realValue = +rawValue;
+  const isPercent = (type.endsWith('%') || value.endsWith('%')) && wholeStatTypes.includes(displayType);
 
-  if ('None' !== mod.secondaryType_1 && '' !== mod.secondaryValue_1) {
-    secondaryStats.push(deserializeStat(mod.secondaryType_1, mod.secondaryValue_1));
+  return {
+    type: type,
+    displayType: displayType,
+    value: realValue,
+    isPercent: isPercent
+  };
+}
+
+function deserializeMod(mod: ModTypes.GIMOFlatMod) {
+  const primaryStat = deserializePrimaryStat(mod.primaryBonusType, mod.primaryBonusValue);
+  let secondaryStats: SecondaryStat[] = [];
+
+  if (null !== mod.secondaryType_1 && '' !== mod.secondaryValue_1) {
+    secondaryStats.push(deserializeSecondaryStat(mod.secondaryType_1, mod.secondaryValue_1));
   }
-  if ('None' !== mod.secondaryType_2 && '' !== mod.secondaryValue_2) {
-    secondaryStats.push(deserializeStat(mod.secondaryType_2, mod.secondaryValue_2));
+  if (null !== mod.secondaryType_2 && '' !== mod.secondaryValue_2) {
+    secondaryStats.push(deserializeSecondaryStat(mod.secondaryType_2, mod.secondaryValue_2));
   }
-  if ('None' !== mod.secondaryType_3 && '' !== mod.secondaryValue_3) {
-    secondaryStats.push(deserializeStat(mod.secondaryType_3, mod.secondaryValue_3));
+  if (null !== mod.secondaryType_3 && '' !== mod.secondaryValue_3) {
+    secondaryStats.push(deserializeSecondaryStat(mod.secondaryType_3, mod.secondaryValue_3));
   }
-  if ('None' !== mod.secondaryType_4 && '' !== mod.secondaryValue_4) {
-    secondaryStats.push(deserializeStat(mod.secondaryType_4, mod.secondaryValue_4));
+  if (null !== mod.secondaryType_4 && '' !== mod.secondaryValue_4) {
+    secondaryStats.push(deserializeSecondaryStat(mod.secondaryType_4, mod.secondaryValue_4));
   }
 
 //  const setBonus = setBonuses[mod.set.toLowerCase().replace(' ', '')];
