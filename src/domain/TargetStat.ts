@@ -38,27 +38,28 @@ export const targetStatsNames: Readonly<TargetStatsNames[]> = [
 ] as const;
 
 export type TargetStat = {
-  id: string,
+  id: number,
   stat: TargetStatsNames
-  type?: string
+  type?: '+' | '*'
   minimum?: number
   maximum?: number
   relativeCharacterId: CharacterNames | 'null'
   optimizeForTarget: boolean
 };
+
 export type TargetStats = TargetStat[];
 
 const nextId = (targetStats: TargetStats) => {
-  const ids = targetStats.map((targetStat) => parseInt(targetStat.id, 10));
+  const ids = targetStats.map((targetStat) => targetStat.id);
   const maxId = Math.max(...ids);
-  return maxId === -Infinity ? '0' : (maxId+1).toString();
+  return maxId === -Infinity ? 0 : maxId + 1;
 };
 
 export const createTargetStat = (
   stat: TargetStatsNames = 'Speed',
   stats: TargetStats,
-  id: string = '0',
-  type: string = '+',
+  id: number = 0,
+  type: '+' | '*' = '+',
   minimum: number = 0,
   maximum: number = 0,
   relativeCharacterId: CharacterNames | 'null' = 'null',
