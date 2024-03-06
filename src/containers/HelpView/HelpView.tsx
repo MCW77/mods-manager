@@ -24,6 +24,7 @@ import { HelpSections } from '../../domain/HelpSections';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Label } from '#/components/ui/label';
 
 
 const HelpView = () => {
@@ -42,7 +43,7 @@ const HelpView = () => {
     general: [1, 2, 3, 4, 5],
     profiles: [1, 2, 3, 4, 5],
     explorer: [1, 2],
-    optimizer: [1, 2],
+    optimizer: [1, 2, 3],
   };
 
   const sectionElements: Record<string, React.RefObject<HTMLDivElement>> = {
@@ -90,6 +91,7 @@ const HelpView = () => {
     return match([currentSection, currentTopic])
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
       .with(['optimizer', 2], () => renderCharacterTemplatesTopic())
+      .with(['optimizer', 3], () => renderAutoGenerationTopic())
       .with(['profiles', 4], () => renderFetchUnequippedModsWithHUTopic())
       .otherwise(() => {
         const title = t(
@@ -190,6 +192,28 @@ const HelpView = () => {
           <br />
           <strong>{t(`optimizer.topicById.2.20`)}</strong> - {t(`optimizer.topicById.2.21`)}
         </p>
+      </div>
+    );
+  }
+
+  const renderAutoGenerationTopic = () => {
+    return (
+      <div id={`topic-${currentSection}-${currentTopic}`}>
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{t(`optimizer.topicById.3.Headline`)}</h1>
+        <p>
+          {t(`optimizer.topicById.3.1`)}
+        </p>
+        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{t(`optimizer.topicById.3.2`)}</h2>
+        <section>
+          <Label>{t(`optimizer.topicById.3.3`)}:</Label>
+          <p>{t(`optimizer.topicById.3.4`)}</p>
+          <Label>{t(`optimizer.topicById.3.5`)}:</Label>
+          <p>{t(`optimizer.topicById.3.6`)}</p>
+          <Label>{t(`optimizer.topicById.3.7`)}:</Label>
+          <p>{t(`optimizer.topicById.3.8`)}</p>
+          <Label>{t(`optimizer.topicById.3.9`)}:</Label>
+          <p>{t(`optimizer.topicById.3.10`)}</p>
+        </section>
       </div>
     );
   }
