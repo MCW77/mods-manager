@@ -7,11 +7,11 @@ import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/mo
 self.onmessage = function (message) {
   const openDbRequest = indexedDB.open('ModsOptimizer', 2);
   openDbRequest.onerror = function (event) {
-    throw event.target.error;
+    throw (event.target as IDBRequest).error;
   };
 
   openDbRequest.onupgradeneeded = function (event) {
-    const db = event.target.result;
+    const db = (event.target as IDBRequest).result;
 
     if (event.oldVersion < 1) {
       // Create object stores for: game data about each character, player profiles, and the last run done by each player
@@ -25,7 +25,7 @@ self.onmessage = function (message) {
   };
 
   openDbRequest.onsuccess = function (event) {
-    const db = event.target.result;
+    const db = (event.target as IDBRequest).result;
     db.onversionchange = function (event) {
       if (!event.newVersion) {
         db.close();
