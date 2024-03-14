@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 // styles
-import './HelpView.css';
 import {
   faCircleLeft,
 } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +23,7 @@ import { HelpSections } from '../../domain/HelpSections';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '#/components/ui/button';
 import { Label } from '#/components/ui/label';
 
 
@@ -46,20 +46,22 @@ const HelpView = () => {
     optimizer: [1, 2, 3],
   };
 
-  const sectionElements: Record<string, React.RefObject<HTMLDivElement>> = {
-    general: React.createRef<HTMLDivElement>(),
-    profiles: React.createRef<HTMLDivElement>(),
-    explorer: React.createRef<HTMLDivElement>(),
-    optimizer: React.createRef<HTMLDivElement>(),
+  const sectionElements: Record<string, React.RefObject<HTMLButtonElement>> = {
+    general: React.createRef<HTMLButtonElement>(),
+    profiles: React.createRef<HTMLButtonElement>(),
+    explorer: React.createRef<HTMLButtonElement>(),
+    optimizer: React.createRef<HTMLButtonElement>(),
   };
 
-  const renderSection = (sectionName: HelpSections) => {
-    let classes = sectionName;
-    if (sectionName === currentSection) classes += ` selected`;
+  const topicCSS = 'prose m-x-auto max-w-[80ch] flex flex-col items-center text-balance';
 
+  const renderSection = (sectionName: HelpSections) => {
     return (
-      <div
-        className={classes}
+      <Button
+        variant={'ghost'}
+        role={'tab'}
+        aria-selected={sectionName === currentSection}
+        className={'rounded-xl p-2 m-1 border border-solid border-white aria-selected:border-yellow-300'}
         ref={sectionElements[sectionName]}
         onClick={() => {
           changeCurrentTopic(0);
@@ -67,7 +69,7 @@ const HelpView = () => {
         }}
       >
         {t(`${sectionName}.Title`)}
-      </div>
+      </Button>
     );
   };
 
@@ -76,13 +78,12 @@ const HelpView = () => {
 
     return topicsBySection[currentSection].map((topic: number) => {
       return (
-        <span
-          className="topic"
+        <h1
           key={`${currentSection}-${topic}`}
           onClick={() => changeCurrentTopic(topic)}
         >
           {t(`${currentSection}.topics.${topic}`, '')}
-        </span>
+        </h1>
       );
     });
   };
@@ -114,7 +115,7 @@ const HelpView = () => {
         }
 
         return (
-          <div id={`topic-${currentSection}-${currentTopic}`}>
+          <div className={topicCSS}>
             {title !== '' && <h2>{title}</h2>}
             {paragraphs.map((p, index: number) => (
               <p key={`help-topic-paragraph-${index}`}>{p}</p>
@@ -128,7 +129,7 @@ const HelpView = () => {
    * Renders a help description for pulling unequipped mods with HotUtils
    */
    const renderFetchUnequippedModsWithHUTopic = () => {
-    return <div className={'help'}>
+    return <div className={topicCSS}>
       <p>
         {t(`profiles.topicById.4.1`)} {t(`profiles.topicById.4.2`)}
       </p>
@@ -139,13 +140,13 @@ const HelpView = () => {
       <p><a href={'https://www.hotutils.com/'} target={'_blank'} rel={'noopener noreferrer'}>
         https://www.hotutils.com/
       </a></p>
-      <p><img className={'fit'} src={'/img/hotsauce512.png'} alt={'hotsauce'} /></p>
+      <p><img className={'w-full'} src={'/img/hotsauce512.png'} alt={'hotsauce'} /></p>
     </div>;
   }
 
   const renderGlobalOptimizationSettingsTopic = () => {
     return (
-      <div id={`topic-${currentSection}-${currentTopic}`}>
+      <div className={topicCSS}>
         <h2>{t(`optimizer.topicById.1.Headline`)}</h2>
         <div>
           {t(`optimizer.topicById.1.1`)}
@@ -167,7 +168,7 @@ const HelpView = () => {
 
   const renderCharacterTemplatesTopic = () => {
     return (
-      <div id={`topic-${currentSection}-${currentTopic}`}>
+      <div className={topicCSS}>
         <h2>{t(`optimizer.topicById.2.Headline`)}</h2>
         <p>
           {t(`optimizer.topicById.2.1`)}
@@ -198,12 +199,12 @@ const HelpView = () => {
 
   const renderAutoGenerationTopic = () => {
     return (
-      <div id={`topic-${currentSection}-${currentTopic}`}>
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{t(`optimizer.topicById.3.Headline`)}</h1>
+      <div className={topicCSS}>
+        <h1>{t(`optimizer.topicById.3.Headline`)}</h1>
         <p>
           {t(`optimizer.topicById.3.1`)}
         </p>
-        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{t(`optimizer.topicById.3.2`)}</h2>
+        <h2>{t(`optimizer.topicById.3.2`)}</h2>
         <section>
           <Label>{t(`optimizer.topicById.3.3`)}:</Label>
           <p>{t(`optimizer.topicById.3.4`)}</p>
@@ -219,10 +220,10 @@ const HelpView = () => {
   }
 
   return (
-    <div className={'Help-page'} key={'help'}>
-      <nav className="sections">
+    <div className={'w-full flex flex-col'}>
+      <nav className="flex flex-wrap justify-evenly p-4">
         {previousSection !== 'help' && (
-          <div className="returnTo">
+          <div className="m-1 p-2 rounded-xl">
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
@@ -236,10 +237,10 @@ const HelpView = () => {
         {renderSection('explorer')}
         {renderSection('optimizer')}
       </nav>
-      <div className={'topics'}>
+      <div className={topicCSS + ' text-center'}>
         {currentTopic === 0 ? renderTopics() : null}
       </div>
-      <div className={'topic'}>
+      <div className={'overflow-y-auto'}>
         {currentTopic !== 0 ? renderTopic() : null}
       </div>
     </div>
