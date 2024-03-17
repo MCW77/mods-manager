@@ -188,8 +188,6 @@ const CharacterList = React.memo(
       const sliceActive = character.optimizerSettings.sliceMods ? 'active' : '';
       const restrictionsActive = OptimizationPlan.hasRestrictions(target) ? 'active' : '';
       const targetStatActive = target.targetStats && target.targetStats.length ? 'active' : '';
-      const duplicateActive = selectedCharacters
-        .filter(({ id: selectedCharId }) => selectedCharId === character.baseID).length > 1 ? 'active' : '';
       const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target) ? 'active' : '';
       const minimumDots = character.optimizerSettings.minimumModDots;
       const changedTargetActive = Object.keys(defaultTargets).includes(target.name) &&
@@ -229,10 +227,6 @@ const CharacterList = React.memo(
           title={targetStatActive ?
             'This character has a target stat selected' :
             'This character has no target stat selected'} />
-        <span className={`icon duplicate ${duplicateActive}`}
-          title={duplicateActive ?
-            'This character is in the list more than once' :
-            'This character is only in the list once'} />
         <span className={`icon negative ${negativeWeightsActive}`}
           title={negativeWeightsActive ?
             'This character\'s target has negative stat weights' :

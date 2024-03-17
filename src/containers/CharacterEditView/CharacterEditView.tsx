@@ -52,7 +52,6 @@ import { UseCaseModes } from "../../domain/UseCaseModes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DOMContent } from "../../components/types";
 
-import { Button } from "#/components/ui/button";
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
@@ -61,6 +60,9 @@ import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerP
 import { SettingsLink } from "../../components/SettingsLink/SettingsLink";
 import { Spoiler } from "../../components/Spoiler/Spoiler";
 import { Toggle } from "../../components/Toggle/Toggle";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
+import { Switch } from "#ui/switch";
 
 // containers
 import { CharacterList } from "../CharacterList/CharacterList";
@@ -411,6 +413,10 @@ class CharacterEditView extends PureComponent<Props> {
     const isLocked = character.optimizerSettings.isLocked;
     const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
 
+    const isCharacterSelected = (characterID: CharacterNames) => this.props.selectedCharacters.some(
+      (selectedCharacter) => selectedCharacter.id === characterID
+    );
+
     return (
       <div className={classAttr} key={character.baseID}>
         <span
@@ -418,8 +424,8 @@ class CharacterEditView extends PureComponent<Props> {
           onClick={() => this.props.toggleCharacterLock(character.baseID)}
         />
         <div
-          draggable={true}
-          onDragStart={this.dragStart(character)}
+          draggable={isCharacterSelected(character.baseID) ? undefined : true}
+          onDragStart={isCharacterSelected(character.baseID) ? undefined : this.dragStart(character)}
           onDoubleClick={() =>
             this.props.selectCharacter(
               character.baseID,
@@ -510,24 +516,6 @@ class CharacterEditView extends PureComponent<Props> {
                 <option value={13}>13</option>
               </Dropdown>
             </div>
-            {/* <div className={'form-row'}>
-            <label htmlFor={'gear-level-threshold'}>Gear level threshold:</label>
-            <Dropdown name={'gear-level-threshold'} defaultValue={12}>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-              <option value={11}>11</option>
-              <option value={12}>12</option>
-              <option value={13}>13</option>
-            </Dropdown>
-          </div> */}
             <div className={"form-row"}>
               <label htmlFor={"max-list-size"}>Maximum list size:&nbsp;</label>
               <input
@@ -691,7 +679,7 @@ class CharacterEditView extends PureComponent<Props> {
           <Button
             type={"button"}
             onClick={() => {
-              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection!.value);
+              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection!.value, this.props.selectedCharacters);
               if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection!.value);
               if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection!.value);
             }}
@@ -956,9 +944,18 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     dispatch(App.actions.hideModal());
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
-  appendTemplate: (templateName: string) => {
-    dispatch(CharacterEdit.thunks.appendTemplate(templateName));
-    dispatch(App.actions.hideModal());
+  appendTemplate: (templateName: string, selectedCharacters: SelectedCharacters) => {
+    if (defaultTemplates.some((template) => template.name === templateName)) {
+      const template = defaultTemplates.find((template) => template.name === templateName)!;
+      const selectedCharactersIDs = template.selectedCharacters.map(
+        ({ id, target }) => id
+      )
+      if (selectedCharactersIDs.some((id) => selectedCharacters.some((selectedCharacter) => selectedCharacter.id === id))) {
+        return;
+      }
+      dispatch(CharacterEdit.thunks.appendTemplate(templateName));
+      dispatch(App.actions.hideModal());
+    };
   },
   replaceTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
