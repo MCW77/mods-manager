@@ -20,10 +20,7 @@ import { App } from "#/state/modules/app";
 import { CharacterEdit } from '#/state/modules/characterEdit';
 
 // domain
-import { CharacterNames } from "#/constants/characterSettings";
-
-import { CharacterTemplates, FlatCharacterTemplate } from "#/domain/CharacterTemplates";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { CharacterTemplates } from "#/domain/CharacterTemplates";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -49,27 +46,10 @@ const TemplatesManager = React.memo(
             handler={(file) =>
               readFile(
                 file,
-                (templates) => {
+                (templatesString) => {
                   try {
-                    const templatesObject = JSON.parse(templates);
-                    const templatesDeserialized = templatesObject.map(
-                      (t: FlatCharacterTemplate) => ({
-                        name: t.name,
-                        selectedCharacters: t.selectedCharacters.map(
-                          ({
-                            id,
-                            target,
-                          }: {
-                            id: CharacterNames;
-                            target: OptimizationPlan;
-                          }) => ({
-                            id: id,
-                            target: target,
-                          })
-                        ),
-                      })
-                    );
-                    dispatch(CharacterEdit.thunks.saveTemplates(templatesDeserialized));
+                    const templates = JSON.parse(templatesString);
+                    dispatch(CharacterEdit.thunks.saveTemplates(templates));
                   } catch (e) {
                     throw new Error(
                       "Unable to read templates from file. Make sure that you've selected a character templates file"

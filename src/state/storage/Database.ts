@@ -7,8 +7,6 @@ import { BaseCharacter } from "#/domain/BaseCharacter";
 import {
   CharacterTemplate,
   CharacterTemplates,
-  FlatCharacterTemplate,
-  FlatCharacterTemplates,
 } from "#/domain/CharacterTemplates";
 import { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile, IFlatPlayerProfile } from "#/domain/PlayerProfile";
@@ -359,13 +357,8 @@ export class Database {
 
       templateRequest.onsuccess = function (event) {
         if  (event !== null && event.target instanceof IDBRequest) {
-          const template: FlatCharacterTemplate = event.target.result;
-          onsuccess({
-            name: template.name,
-            selectedCharacters: template.selectedCharacters.map(({ id, target }) =>
-              ({ id: id, target: target })
-            )
-          } as CharacterTemplate);
+          const template: CharacterTemplate = event.target.result;
+          onsuccess(template);
         }
       };
 
@@ -388,12 +381,7 @@ export class Database {
 
       templatesRequest.onsuccess = function (event) {
         if  (event !== null && event.target instanceof IDBRequest) {
-          const templates: CharacterTemplates = (event.target.result as FlatCharacterTemplates).map(template => ({
-            name: template.name,
-            selectedCharacters: template.selectedCharacters.map(({ id, target }) =>
-              ({ id: id, target: target })
-            )
-          })) as CharacterTemplates;
+          const templates: CharacterTemplates = event.target.result;
           onsuccess(templates);
         }
       };

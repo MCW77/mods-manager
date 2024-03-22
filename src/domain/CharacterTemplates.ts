@@ -1,9 +1,6 @@
 // domain
 import { SelectedCharacters } from "./SelectedCharacters";
 
-
-export type FlatCharacterTemplates = FlatCharacterTemplate[];
-
 /**
  * ```
  * {
@@ -14,13 +11,8 @@ export type FlatCharacterTemplates = FlatCharacterTemplate[];
  *   }[]
  * }[]
  * ```
-*/
+ */
 export type CharacterTemplates = CharacterTemplate[];
-
-export interface FlatCharacterTemplate {
-  name: string,
-  selectedCharacters: SelectedCharacters
-}
 
 /**
  * ```
@@ -34,8 +26,8 @@ export interface FlatCharacterTemplate {
  * ```
  */
 export interface CharacterTemplate {
-  name: string,
-  selectedCharacters: SelectedCharacters
+	name: string;
+	selectedCharacters: SelectedCharacters;
 }
 
 /**
@@ -50,8 +42,5 @@ export interface CharacterTemplate {
  *   }
  * }
  * ```
-*/
-export interface CharacterTemplatesByName {
-  [key: string]: CharacterTemplate;
-};
-
+ */
+export type CharacterTemplatesByName = Record<string, CharacterTemplate>;
