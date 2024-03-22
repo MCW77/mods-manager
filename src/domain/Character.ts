@@ -14,9 +14,7 @@ export interface Character {
   optimizerSettings: OptimizerSettings.OptimizerSettings;
 };
 
-export type Characters = {
-  [key in CharacterNames]: Character
-}
+export type Characters = Record<CharacterNames, Character>;
 
 export const createCharacter = (baseID: CharacterNames, playerValues: DTOs.GIMO.PlayerValuesDTO, optimizerSettings: OptimizerSettings.OptimizerSettings): Character => {
   return {
