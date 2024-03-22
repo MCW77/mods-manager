@@ -38,13 +38,13 @@ export const targetStatsNames: Readonly<TargetStatsNames[]> = [
 ] as const;
 
 export type TargetStat = {
-  id: number,
-  stat: TargetStatsNames
-  type?: '+' | '*'
-  minimum?: number
-  maximum?: number
-  relativeCharacterId: CharacterNames | 'null'
-  optimizeForTarget: boolean
+  id: number;
+  stat: TargetStatsNames;
+  type: '+' | '*';
+  minimum: number;
+  maximum: number;
+  relativeCharacterId: CharacterNames | 'null';
+  optimizeForTarget: boolean;
 };
 
 export type TargetStats = TargetStat[];
