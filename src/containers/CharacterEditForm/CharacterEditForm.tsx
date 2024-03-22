@@ -29,7 +29,7 @@ import { CharacterEditMode } from "../../domain/CharacterEditMode";
 import { CharacterSettings } from "../../domain/CharacterSettings";
 import { Mod } from "../../domain/Mod";
 import * as OptimizationPlan from "../../domain/OptimizationPlan";
-import { IModSuggestion } from "../../domain/PlayerProfile";
+import { ModSuggestion } from "../../domain/PlayerProfile";
 import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
 
 // components
@@ -457,7 +457,7 @@ const CharacterEditForm = ({
     </div>;
   }
 
-  const missedGoalsSection = (modAssignments: IModSuggestion | null) => {
+  const missedGoalsSection = (modAssignments: ModSuggestion | null) => {
     if ((targetStats || []).length === 0) {
       return;
     }

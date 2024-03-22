@@ -19,7 +19,7 @@ import * as Character from "#/domain/Character";
 import { OptimizationStatus } from "#/domain/OptimizationStatus";
 import { OptimizerRun } from "#/domain/OptimizerRun";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
-import { IModSuggestion } from "#/domain/PlayerProfile";
+import { ModSuggestion } from "#/domain/PlayerProfile";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
@@ -41,7 +41,7 @@ export namespace thunks {
 	 * @returns {*}
 	 */
 	export function finishModOptimization(
-		result: IModSuggestion[],
+		result: ModSuggestion[],
 		settings: OptimizerRun,
 	): ThunkResult<void> {
 		return App.thunks.updateProfile(

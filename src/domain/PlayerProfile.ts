@@ -14,15 +14,7 @@ import { optimizationSettings$ } from "#/modules/optimization/state/optimization
 
 export type MissedGoals = [TargetStat, number][];
 
-export interface IFlatModSuggestion {
-  id: CharacterNames;
-  target: OptimizationPlan;
-  assignedMods: string[];
-  missedGoals: MissedGoals;
-  messages?: string[];
-
-}
-export interface IModSuggestion {
+export interface ModSuggestion {
   id: CharacterNames;
   target: OptimizationPlan;
   assignedMods: string[];
@@ -33,10 +25,10 @@ export interface IModSuggestion {
 export interface IFlatPlayerProfile {
   allyCode: string;
   playerName: string;
-  characters: {[key in CharacterNames]: Character.Character};
+  characters: Character.Characters;
   mods: ModTypes.GIMOFlatMod[];
   selectedCharacters: SelectedCharacters;
-  modAssignments: IFlatModSuggestion[];
+  modAssignments: ModSuggestion[];
   hotUtilsSessionId?: string | null;
   incrementalOptimizeIndex: number | null
 }
@@ -51,7 +43,7 @@ export class PlayerProfile {
   playerValues: PlayerValuesByCharacter
   mods: Mod[];
   selectedCharacters: SelectedCharacters;
-  modAssignments: IModSuggestion[];
+  modAssignments: ModSuggestion[];
   hotUtilsSessionId: string | null;
   incrementalOptimizeIndex: number | null;
 
@@ -88,7 +80,7 @@ export class PlayerProfile {
     characters: Character.Characters = {} as Character.Characters,
     mods: Mod[] = [],
     selectedCharacters: SelectedCharacters = [],
-    modAssignments: IModSuggestion[] = [],
+    modAssignments: ModSuggestion[] = [],
     hotUtilsSessionId: string | null = null,
     incrementalOptimizeIndex: number | null = null,
   ) {
@@ -175,7 +167,7 @@ export class PlayerProfile {
     }
   }
 
-  withModAssignments(modAssignments: IModSuggestion[]) {
+  withModAssignments(modAssignments: ModSuggestion[]) {
     if (modAssignments) {
       // TODO
 /*
@@ -272,8 +264,8 @@ export class PlayerProfile {
             assignedMods: assignedMods,
             missedGoals: missedGoals,
             messages: messages
-          }  as IModSuggestion
-        }) as IModSuggestion[],
+          }  as ModSuggestion
+        }) as ModSuggestion[],
         flatPlayerProfile.hotUtilsSessionId || null,
         flatPlayerProfile.incrementalOptimizeIndex || null,
       )
