@@ -293,15 +293,6 @@ class CharacterEditView extends PureComponent<Props> {
                     ))}
                   </ul>,
                 ]);
-              } else if (duplicateCharacters.length > 0 || hasTargetStats) {
-                this.props.showModal(
-                  "notice",
-                  this.optimizeWithWarningsModal(
-                    duplicateCharacters,
-                    hasTargetStats
-                  ),
-                  false,
-                );
               } else {
                 this.props.showModal(
                   "optimizer-progress",
@@ -732,105 +723,6 @@ class CharacterEditView extends PureComponent<Props> {
         )}
         {defaultTemplateOptions}
       </Dropdown>
-    );
-  }
-
-  /**
-   * Render the modal content to show a notice before optimizing a list that includes target stats
-   * @returns {*}
-   */
-  optimizeWithWarningsModal(
-    duplicates: CharacterNames[],
-    hasTargetStats: boolean
-  ) {
-    return (
-      <div>
-        <h2>Optimizer Warnings</h2>
-        <hr />
-        {duplicates.length > 0 && (
-          <div>
-            <h3>You have duplicate characters selected</h3>
-            <p>
-              The optimizer can create multiple suggestions for the same
-              character using different targets. However, if you plan to move
-              your mods in-game with HotUtils, then each character should only
-              be included in the list once.
-            </p>
-            <p className={"left"}>
-              <strong>Duplicated Characters:</strong>
-            </p>
-            <ul>
-              {duplicates.map((characterID: CharacterNames) => (
-                <li>
-                  {this.props.baseCharacters[characterID]
-                    ? this.props.baseCharacters[characterID].name
-                    : characterID}
-                </li>
-              ))}
-            </ul>
-            <hr />
-          </div>
-        )}
-        {hasTargetStats && (
-          <div>
-            <h3>You have selected characters with target stats</h3>
-            <p>
-              Using a target stat can be very slow -{" "}
-              <strong>up to multiple hours for a single character</strong> - and
-              can rapidly drain your battery if you are on a laptop or mobile
-              device. If you want the optimization to go faster, there are a few
-              things you can do:
-            </p>
-            <hr />
-            <ul>
-              <li>
-                Set very narrow targets for your stats. The narrower the target,
-                the faster the optimizer can rule sets out.
-              </li>
-              <li>
-                Add additional restrictions, like specific sets or primary
-                stats.
-              </li>
-              <li>
-                Set targets that are hard to hit. If only a few sets can even
-                manage to hit a target, the optimizer only needs to check those
-                sets.
-              </li>
-              <li>
-                If you've already completed a run for the character with a
-                target stat, don't change their settings or those of any
-                characters above them. If the optimizer doesn't think it needs
-                to recalculate the best mod set, it will leave the previous
-                recommendation in place.
-              </li>
-            </ul>
-            <hr />
-          </div>
-        )}
-        <p>Do you want to continue?</p>
-        <div className={"actions"}>
-          <Button
-            type={"button"}
-            onClick={() => this.props.hideModal()}
-          >
-            Cancel
-          </Button>
-          <Button
-            type={"button"}
-            onClick={() => {
-              this.props.showModal(
-                "optimizer-progress",
-                <OptimizerProgress />,
-                false,
-              );
-              isBusy$.set(true);
-              this.props.optimizeMods();
-            }}
-          >
-            Optimize!
-          </Button>
-        </div>
-      </div>
     );
   }
 }
