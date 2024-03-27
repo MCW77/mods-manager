@@ -28,7 +28,7 @@ import type * as ModTypes from "../../domain/types/ModTypes";
 
 import * as Character from '#/domain/Character';
 import { Mod } from '../../domain/Mod';
-import { ModAssignments } from "../../domain/ModAssignment";
+import { ModAssignment, ModAssignments } from "../../domain/ModAssignment";
 import { ModListFilter } from '../../domain/ModListFilter';
 import { ModLoadout } from "../../domain/ModLoadout";
 import { ModsByCharacterNames } from '../../domain/ModsByCharacterNames';
@@ -67,13 +67,6 @@ export interface HUProfileCreationData {
     name: string,
     units: HUModsProfiles,
   }
-}
-
-type DisplayedMods = DisplayedMod[];
-interface DisplayedMod {
-  id: CharacterNames;
-  target: OptimizationPlan.OptimizationPlan;
-  assignedMods: Mod[]
 }
 
 const sortOptions = {
@@ -308,7 +301,7 @@ class Review extends React.PureComponent<Props> {
    * @param displayedMods {Array<Object>}
    * @returns {Array<*>}
    */
-  listView(displayedMods: DisplayedMods) {
+  listView(displayedMods: ModAssignments) {
     let individualMods: {
       id: CharacterNames,
       mod: Mod,
@@ -388,7 +381,7 @@ class Review extends React.PureComponent<Props> {
    * @param modAssignments {array<Object>} An array of objects containing `id`, `target`, and `assignedMods` keys
    * @returns array[JSX Element]
    */
-  setsView(modAssignments: DisplayedMods) {
+  setsView(modAssignments: ModAssignments) {
     // Iterate over each character to render a full mod set
     return modAssignments.map(({ id: characterID, target, assignedMods: mods, missedGoals }, index) => {
       const character = this.props.characters[characterID];
@@ -799,7 +792,7 @@ class Review extends React.PureComponent<Props> {
 const mapStateToProps = (state: IAppState) => {
   const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
-  const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments): DisplayedMods {
+  const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments): ModAssignments {
     let tempAssignments = modAssignments;
 
     // If we're only showing upgrades, then filter out any mod that isn't being upgraded
@@ -829,9 +822,9 @@ const mapStateToProps = (state: IAppState) => {
     );
 
     // Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
-    let result: DisplayedMods = Object.values(mapValues<ModsByCharacterNames, DisplayedMod>(
+    let result: ModAssignments = Object.values(mapValues<ModsByCharacterNames, ModAssignment>(
       modsByCharacterNames,
-      (mods: Mod[], id: string): DisplayedMod => ({ id: id as CharacterNames, assignedMods: mods, target: OptimizationPlan.createOptimizationPlan('xyz') })
+      (mods: Mod[], id: string): ModAssignment => ({ id: id as CharacterNames, assignedMods: mods, target: OptimizationPlan.createOptimizationPlan('xyz'), missedGoals: [] })
     ));
 
     return result;
@@ -870,7 +863,7 @@ const mapStateToProps = (state: IAppState) => {
     (new ModLoadout(assignedMods)).getOptimizationValue(profile.characters[id], target, true)
   ).reduce((a, b) => a + b, 0);
 
-  let displayedMods: DisplayedMods;
+  let displayedMods: ModAssignments;
   let tags: string[];
   switch (filter.view) {
     case viewOptions.list:
@@ -880,7 +873,8 @@ const mapStateToProps = (state: IAppState) => {
           id: id,
           target: target,
           assignedMods:
-            assignedMods.filter(mod => mod.shouldLevel(target) || mod.shouldSlice(profile.characters[id], target))
+            assignedMods.filter(mod => mod.shouldLevel(target) || mod.shouldSlice(profile.characters[id], target)),
+          missedGoals: [],
         })).filter(({ assignedMods }) => assignedMods.length > 0);
 
       } else {
@@ -888,7 +882,8 @@ const mapStateToProps = (state: IAppState) => {
         displayedMods = modAssignments.map(({ id, target, assignedMods }) => ({
           id: id,
           target: target,
-          assignedMods: assignedMods.filter(mod => mod.characterID !== id).sort(ModLoadout.slotSort)
+          assignedMods: assignedMods.filter(mod => mod.characterID !== id).sort(ModLoadout.slotSort),
+          missedGoals: [],
         }));
       }
 
