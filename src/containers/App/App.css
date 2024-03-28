@@ -279,10 +279,6 @@ button2.link {
   vertical-align: middle;
 }
 
-.modal.reset-modal {
-  width: 40em;
-}
-
 .modal.error-modal {
   border: 1px solid darkred;
   background-color: #ead118;
@@ -303,10 +299,6 @@ button2.link {
 
 .modal.changelog-modal {
   max-width: 45em;
-}
-
-.modal.pull-unequipped-modal {
-  max-width: 40em;
 }
 
 .modal .help {

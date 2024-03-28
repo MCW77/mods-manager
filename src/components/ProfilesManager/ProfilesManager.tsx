@@ -11,8 +11,10 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
+// state
+import { dialog$ } from "#/modules/dialog/state/dialog";
+
 // modules
-import { App } from '#/state/modules/app';
 import { Data } from '#/state/modules/data';
 import { Storage } from '#/state/modules/storage';
 
@@ -38,8 +40,8 @@ const ProfilesManager = React.memo(
      * Renders a modal stating that pulling unequipped mods using HotUtils will log you out of the game
     */
     const fetchUnequippedModal = () => {
-      return <div key={'hotutils-move-mods-modal'}>
-        <h2>Fetch your unequipped mods using HotUtils</h2>
+      return <div className={'max-w-[40rem] prose dark:prose-invert'}>
+        <h1>Fetch your unequipped mods using HotUtils</h1>
         <p>
           This will fetch all of your player data, including unequipped mods by using HotUtils.
           Please note that <strong className={'gold'}>
@@ -51,19 +53,19 @@ const ProfilesManager = React.memo(
           Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with
           HotUtils.
         </p>
-        <div className={'actions'}>
+        <div className={'actions flex gap-2 justify-center'}>
           <Button
             type={'button'}
             variant={'destructive'}
             className={''}
-            onClick={() => dispatch(App.actions.hideModal())}
+            onClick={() => dialog$.hide()}
           >
             Cancel
           </Button>
           <Button
             type={'button'}
             onClick={() => {
-              dispatch(App.actions.hideModal());
+              dialog$.hide();
               dispatch(Data.thunks.refreshPlayerData(
                 allyCode,
                 true,
@@ -110,7 +112,9 @@ const ProfilesManager = React.memo(
                 profile.hotUtilsSessionId &&
 
                 <Button
+                  size={'icon'}
                   type={'button'}
+                  variant={'outline'}
                   disabled={!(
                     hotUtilsSubscription &&
                     profile &&
@@ -118,13 +122,13 @@ const ProfilesManager = React.memo(
                   )}
                   onClick={() => {
                     if (hotUtilsSubscription && profile?.hotUtilsSessionId) {
-                      dispatch(App.actions.showModal('pull-unequipped-modal', fetchUnequippedModal()))
+                      dialog$.show(fetchUnequippedModal());
                     }
                   }}
                 >
                   <span className="fa-layers">
                     <FontAwesomeIcon icon={faArrowsRotate} title={`${t('header.FetchHot')}`}/>
-                    <FontAwesomeIcon icon={faFire} size="xs" transform="shrink-6 right-8 down-10" color="Red"/>
+                    <FontAwesomeIcon icon={faFire} size="sm" transform="shrink-1 right-14 down-15" color="Red"/>
                   </span>
                 </Button>
               }

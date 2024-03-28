@@ -24,6 +24,7 @@ import keysWhere from "../../utils/keysWhere";
 
 // state
 import { IAppState } from "../../state/storage";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // modules
@@ -133,12 +134,12 @@ class CharacterEditView extends PureComponent<Props> {
   render() {
     return (
       <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
-        <div className="characters-header flex justify-around items-stretch w-full p-y-2">
+        <div className="flex justify-around items-stretch w-full p-y-2">
           {this.filters()}
           {this.renderCharacterActions()}
           {this.renderTemplateActions()}
         </div>
-        <div className="characters flex h-full">
+        <div className="flex h-full">
           <div
             className="available-characters"
             onDragEnter={CharacterEditView.availableCharactersDragEnter}
@@ -202,7 +203,7 @@ class CharacterEditView extends PureComponent<Props> {
   filters() {
     return (
       <DefaultCollapsibleCard title="Filters">
-        <div id="filters-content" className="p2">
+        <div className="p2 flex flex-col">
           <input
             className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
             autoFocus={true}
@@ -294,10 +295,9 @@ class CharacterEditView extends PureComponent<Props> {
                   </ul>,
                 ]);
               } else {
-                this.props.showModal(
-                  "optimizer-progress",
+                dialog$.show(
                   <OptimizerProgress />,
-                  false,
+                  true,
                 );
                 isBusy$.set(true);
                 this.props.optimizeMods();
@@ -335,7 +335,7 @@ class CharacterEditView extends PureComponent<Props> {
           <Button
             type="button"
             onClick={() =>
-              this.props.showModal("reset-modal", this.resetCharsModal(), false)
+              dialog$.show(this.resetCharsModal())
             }
           >
             Reset all targets
@@ -353,38 +353,20 @@ class CharacterEditView extends PureComponent<Props> {
         <div className={'flex gap-2'}>
           <Button
             size="sm"
-            onClick={() =>
-              this.props.showModal(
-                "append-template",
-                this.addTemplateModal(),
-                false,
-              )
-            }
+            onClick={() => dialog$.show(this.addTemplateModal())}
           >
             <FontAwesomeIcon icon={faPlus} title={`Add template`}/>
           </Button>
           <Button
             size="sm"
-            onClick={() =>
-              this.props.showModal(
-                "generate-character-list",
-                this.generateCharacterListModal(),
-                true
-              )
-            }
+            onClick={() => dialog$.show(this.generateCharacterListModal())}
           >
             Auto-generate List
           </Button>
           <Button
             size="sm"
             disabled={!this.props.selectedCharacters.length}
-            onClick={() =>
-              this.props.showModal(
-                "save-template",
-                this.saveTemplateModal(),
-                false
-              )
-            }
+            onClick={() => dialog$.show(this.saveTemplateModal())}
           >
             <FontAwesomeIcon icon={faSave} title={`Save`}/>
           </Button>
@@ -441,7 +423,7 @@ class CharacterEditView extends PureComponent<Props> {
     let overwrite: Toggle | null;
 
     return (
-      <div>
+      <div className="max-w-[40em]">
         <h3 className={"gold"}>Auto-generate Character List</h3>
         <p>
           This utility will auto-generate a character list for you based on your
@@ -462,7 +444,10 @@ class CharacterEditView extends PureComponent<Props> {
           </span>
         </p>
         <hr />
-        <form ref={(element) => (form = element)}>
+        <form
+          className={"inline-block"}
+          ref={(element) => (form = element)}
+        >
           <label htmlFor={"use-case"}>Select your use case:</label>
           <Dropdown name={"use-case"} defaultValue={""} onChange={() => {}}>
             <option value={""}>Grand Arena / Territory Wars</option>
@@ -522,13 +507,14 @@ class CharacterEditView extends PureComponent<Props> {
         <div className={"actions"}>
           <Button
             type={"button"}
-            onClick={() => this.props.hideModal()}
+            onClick={() => dialog$.hide()}
           >
             Cancel
           </Button>
           <Button
             type={"button"}
             onClick={() => {
+              dialog$.hide();
               if (form !== null) {
                 const parameters: CharacterListGenerationParameters = {
                   ignoreArena: true,
@@ -564,7 +550,7 @@ class CharacterEditView extends PureComponent<Props> {
    */
   resetCharsModal() {
     return (
-      <div>
+      <div className="w-[40em]">
         <h2>Are you sure you want to reset all characters to defaults?</h2>
         <p>
           This will <strong>not</strong> overwrite any new optimization targets
@@ -575,14 +561,17 @@ class CharacterEditView extends PureComponent<Props> {
         <div className={"actions"}>
           <Button
             type={"button"}
-            onClick={() => this.props.hideModal()}
+            onClick={() => dialog$.hide()}
           >
             Cancel
           </Button>
           <Button
             type={"button"}
             variant={"destructive"}
-            onClick={() => this.props.resetAllCharacterTargets()}
+            onClick={() => {
+              dialog$.hide();
+              this.props.resetAllCharacterTargets();
+            }}
           >
             Reset
           </Button>
@@ -638,14 +627,17 @@ class CharacterEditView extends PureComponent<Props> {
         <div className={"actions"}>
           <Button
             type={"button"}
-            onClick={() => this.props.hideModal()}
+            onClick={() => dialog$.hide()}
           >
             Cancel
           </Button>
           <Button
             type={"button"}
             ref={(button) => (saveButton = button)}
-            onClick={() => this.props.saveTemplate(nameInput!.value)}
+            onClick={() => {
+              dialog$.hide();
+              this.props.saveTemplate(nameInput!.value);
+            }}
           >
             Save
           </Button>
@@ -663,13 +655,14 @@ class CharacterEditView extends PureComponent<Props> {
         <div className={"actions"}>
           <Button
             type={"button"}
-            onClick={() => this.props.hideModal()}
+            onClick={() => dialog$.hide()}
           >
             Cancel
           </Button>
           <Button
             type={"button"}
             onClick={() => {
+              dialog$.hide();
               if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection!.value, this.props.selectedCharacters);
               if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection!.value);
               if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection!.value);
@@ -792,9 +785,6 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  showModal: (clazz: string, content: DOMContent, cancelable: boolean) =>
-    dispatch(App.actions.showModal(clazz, content, cancelable)),
-  hideModal: () => dispatch(App.actions.hideModal()),
   showError: (error: DOMContent) => dispatch(App.actions.showError(error)),
   changeCharacterFilter: (filter: string) =>
     dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
@@ -833,7 +823,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     parameters: CharacterListGenerationParameters
   ) => {
     dispatch(Data.thunks.fetchCharacterList(mode, behavior, allyCode, parameters));
-    dispatch(App.actions.hideModal());
+    dialog$.hide();
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   appendTemplate: (templateName: string, selectedCharacters: SelectedCharacters) => {
@@ -846,16 +836,16 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
         return;
       }
       dispatch(CharacterEdit.thunks.appendTemplate(templateName));
-      dispatch(App.actions.hideModal());
+      dialog$.hide();
     };
   },
   replaceTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
-    dispatch(App.actions.hideModal());
+    dialog$.hide();
   },
   applyTemplateTargets: (templateName: string) => {
     dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
-    dispatch(App.actions.hideModal());
+    dialog$.hide();
   },
 });
 

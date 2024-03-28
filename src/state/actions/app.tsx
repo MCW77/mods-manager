@@ -24,12 +24,6 @@ export namespace actions {
 		} as const;
 	}
 
-	export function hideModal() {
-		return {
-			type: actionNames.HIDE_MODAL,
-		} as const;
-	}
-
 	export function resetState() {
 		return {
 			type: actionNames.RESET_STATE,
@@ -58,19 +52,6 @@ export namespace actions {
 		} as const;
 	}
 
-	export function showModal(
-		modalClass: string,
-		modalContent: UITypes.DOMContent,
-		cancelable = true,
-	) {
-		return {
-			type: actionNames.SHOW_MODAL,
-			class: modalClass,
-			content: modalContent,
-			cancelable: cancelable,
-		} as const;
-	}
-
 	export function toggleSidebar() {
 		return {
 			type: actionNames.TOGGLE_SIDEBAR,
@@ -82,11 +63,9 @@ export namespace actionNames {
 	export const CHANGE_SECTION = "CHANGE_SECTION" as const;
 	export const HIDE_ERROR = "HIDE_ERROR" as const;
 	export const HIDE_FLASH = "HIDE_FLASH" as const;
-	export const HIDE_MODAL = "HIDE_MODAL" as const;
 	export const RESET_STATE = "RESET_STATE" as const;
 	export const SET_STATE = "SET_STATE" as const;
 	export const SHOW_ERROR = "SHOW_ERROR" as const;
 	export const SHOW_FLASH = "SHOW_FLASH" as const;
-	export const SHOW_MODAL = "SHOW_MODAL" as const;
 	export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR" as const;
 }

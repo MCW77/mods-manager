@@ -3,6 +3,7 @@ import React from "react";
 import { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // state
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import getDatabase from "#/state/storage/Database";
 
@@ -23,6 +24,8 @@ import { ModSuggestion } from "#/domain/PlayerProfile";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+import { Button } from "#/components/ui/button";
+import { DialogClose } from "#/components/ui/dialog";
 
 let optimizationWorker: Worker | null = null;
 
@@ -44,6 +47,7 @@ export namespace thunks {
 		result: ModSuggestion[],
 		settings: OptimizerRun,
 	): ThunkResult<void> {
+		isBusy$.set(true);
 		return App.thunks.updateProfile(
 			(profile) => profile.withModAssignments(result),
 			(dispatch, getState, newProfile) => {
@@ -62,7 +66,7 @@ export namespace thunks {
 
 				// If this was an incremental optimization, leave the user on their current page
 				if (newProfile.incrementalOptimizeIndex !== null) {
-					return;
+					return true;
 				}
 
 				dispatch(
@@ -72,7 +76,7 @@ export namespace thunks {
 					}),
 				);
 				dispatch(Review.actions.changeOptimizerView("review"));
-				dispatch(App.actions.hideModal());
+				dialog$.hide()
 
 				// Create the content of the pop-up for any post-optimization messages
 
@@ -87,10 +91,8 @@ export namespace thunks {
 					const state = getState();
 					const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
-					dispatch(
-						App.actions.showFlash(
-							"",
-							<div className={"optimizer-messages"}>
+					dialog$.show(
+						<div>
 								<h3>Important messages regarding your selected targets</h3>
 								<table>
 									<thead>
@@ -150,7 +152,7 @@ export namespace thunks {
 																	<li key={index}>{message}</li>
 																))}
 															</ul>
-															<ul className={"missed-goals"}>
+														<ul className={"text-red-600"}>
 																{missedGoals.map(
 																	([missedGoal, value], index) => (
 																		<li key={index}>
@@ -172,10 +174,17 @@ export namespace thunks {
 										)}
 									</tbody>
 								</table>
-							</div>,
-						),
+							<div className={"flex justify-center"}>
+								<DialogClose>
+									<Button>
+										Close
+									</Button>
+								</DialogClose>
+							</div>
+						</div>
 					);
 				}
+				return true;
 			},
 		);
 	}
@@ -203,7 +212,7 @@ export namespace thunks {
 				return;
 			}
 
-			dispatch(actions.startModOptimization());
+//			dispatch(actions.startModOptimization());
 			optimizationWorker = new Worker(new URL(
 				"/workers/optimizer.ts", import.meta.url),
 				{ type: "module" },
@@ -220,16 +229,11 @@ export namespace thunks {
 								progress: 100,
 							}),
 						);
-						// Set a timeout so the modal has time to display
-						setTimeout(
-							() =>
 								dispatch(
 									finishModOptimization(
 										message.data.result,
 										profile.toOptimizerRun(),
 									),
-								),
-							0,
 						);
 						break;
 					case "Progress":
@@ -244,7 +248,7 @@ export namespace thunks {
 			optimizationWorker.onerror = function (error) {
 				console.log(error);
 				optimizationWorker?.terminate();
-				dispatch(App.actions.hideModal());
+				dialog$.hide();
 				isBusy$.set(false);
 				dispatch(App.actions.showError(error.message));
 			};

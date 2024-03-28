@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import { readFile } from '#/utils/readFile';
 
 // state
+import { dialog$ } from '#/modules/dialog/state/dialog';
 import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
 
 // modules
@@ -46,7 +47,7 @@ const GeneralSettingsView = () => {
       <div className={'flex gap-2 justify-center p-1'}>
         <Button
           type={'button'}
-          onClick={() => dispatch(App.actions.hideModal())}
+          onClick={() => dialog$.hide()}
         >
           {t('general.backup.ResetCancel')}
         </Button>
@@ -131,7 +132,7 @@ const GeneralSettingsView = () => {
             className={inputCSS}
             type={'button'}
             variant={'destructive'}
-            onClick={() => dispatch(App.actions.showModal('reset-modal', resetModal()))}
+            onClick={() => dialog$.show(resetModal())}
           >
             <FontAwesomeIcon
               className={'p-r-2'}

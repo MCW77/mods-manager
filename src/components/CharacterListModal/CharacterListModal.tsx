@@ -3,8 +3,10 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
+// state
+import { dialog$ } from "#/modules/dialog/state/dialog";
+
 // modules
-import { App } from '../../state/modules/app';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
 
@@ -33,7 +35,7 @@ const CharacterListModal = React.memo(
           ordered or what targets should be chosen.
         </p>
         <p>
-          <span className={'purple'}>Note:</span> unless you specify otherwise in "Advanced Settings" below, your current
+          <span className={'font-bold'}>Note:</span> unless you specify otherwise in "Advanced Settings" below, your current
           arena team will always be placed at the top of the list.
         </p>
         <p><span className={'blue'}>Provided by&nbsp;
@@ -113,7 +115,7 @@ const CharacterListModal = React.memo(
         <div className={'actions'}>
           <Button
             type={'button'}
-            onClick={() => dispatch(App.actions.hideModal())}
+            onClick={() => dialog$.hide()}
           >
             Cancel
           </Button>
@@ -137,7 +139,7 @@ const CharacterListModal = React.memo(
                 allycode,
                 parameters
               ));
-              dispatch(App.actions.hideModal());
+              dialog$.hide();
             }}
           >
             Generate

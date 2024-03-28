@@ -15,9 +15,9 @@ import groupByKey from "../../utils/groupByKey";
 
 // state
 import { IAppState } from '../../state/storage';
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // modules
-import { App } from '../../state/modules/app';
 import { Data } from '../../state/modules/data';
 import { Review as ReviewModule } from '../../state/modules/review';
 import { Storage } from '../../state/modules/storage';
@@ -35,8 +35,6 @@ import { ModsByCharacterNames } from '../../domain/ModsByCharacterNames';
 import  * as OptimizationPlan from "../../domain/OptimizationPlan";
 
 // components
-import { DOMContent } from '../../components/types';
-
 import { Arrow } from "../../components/Arrow/Arrow";
 import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
 import { Credits } from "../../components/Credits/Credits";
@@ -238,7 +236,7 @@ class Review extends React.PureComponent<Props> {
       <Button
         type={'button'}
         size={'sm'}
-        onClick={() => this.props.showModal('', this.reviewModal())}
+        onClick={() => dialog$.show(this.reviewModal())}
       >
         Show Summary
       </Button>
@@ -579,7 +577,7 @@ class Review extends React.PureComponent<Props> {
       <pre id="summary_pre" className={'summary'}>
         {this.summaryListContent()}
       </pre>
-      <div className={'actions'}>
+      <div className={'flex justify-center gap-2'}>
         <Button
           type={'button'}
           onClick={() => this.copySummaryToClipboard()}
@@ -588,7 +586,7 @@ class Review extends React.PureComponent<Props> {
         </Button>
         <Button
           type={'button'}
-          onClick={this.props.hideModal}
+          onClick={() => dialog$.hide()}
         >
           OK
         </Button>
@@ -726,7 +724,7 @@ class Review extends React.PureComponent<Props> {
         <Button
           type={'button'}
           variant={'destructive'}
-          onClick={this.props.hideModal}
+          onClick={() => dialog$.hide()}
         >
           Cancel
         </Button>
@@ -768,7 +766,7 @@ class Review extends React.PureComponent<Props> {
         <Button
           type={'button'}
           variant={'destructive'}
-          onClick={this.props.hideModal}
+          onClick={() => dialog$.hide()}
         >
           Cancel
         </Button>
@@ -1005,8 +1003,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   reassignMod: (modID: string, characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMod(modID, characterID)),
   unequipMods: (modIDs: string[]) => dispatch(ReviewModule.thunks.unequipMods(modIDs)),
   reassignMods: (modIDs: string[], characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMods(modIDs, characterID)),
-  showModal: (clazz: string, content: DOMContent) => dispatch(App.actions.showModal(clazz, content)),
-  hideModal: () => dispatch(App.actions.hideModal()),
   createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) => dispatch(Data.thunks.createHotUtilsProfile(profile, sessionId)),
   moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(Data.thunks.moveModsWithHotUtils(profile, sessionId))
 });

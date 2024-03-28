@@ -11,6 +11,9 @@ import { faFileImport, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import formatAllyCode from "#/utils/formatAllyCode";
 import { readFile } from "#/utils/readFile";
 
+// state
+import { dialog$ } from "#/modules/dialog/state/dialog";
+
 // modules
 import { App } from "#/state/modules/app";
 import { Storage } from "#/state/modules/storage";
@@ -22,6 +25,7 @@ import { FileInput } from "#/components/FileInput/FileInput";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
+
 
 const AccountsManager = React.memo(() => {
 	const dispatch: ThunkDispatch = useDispatch();
@@ -50,7 +54,7 @@ const AccountsManager = React.memo(() => {
 				<div className={"flex gap-2 justify-center p-1"}>
 					<Button
 						type={"button"}
-						onClick={() => dispatch(App.actions.hideModal())}
+						onClick={() => dialog$.hide()}
 					>
 						{t("general.accounts.Cancel")}
 					</Button>
@@ -59,7 +63,7 @@ const AccountsManager = React.memo(() => {
 						variant={"destructive"}
 						className={""}
 						onClick={() => {
-							dispatch(App.actions.hideModal());
+							dialog$.hide();
 							dispatch(App.thunks.deleteProfile(selectedProfile));
 						}}
 					>
@@ -92,9 +96,7 @@ const AccountsManager = React.memo(() => {
 					disabled={selectedProfile === ""}
 					type={"button"}
 					variant={"destructive"}
-					onClick={() =>
-						dispatch(App.actions.showModal("", deleteAllyCodeModal()))
-					}
+					onClick={() => dialog$.show(deleteAllyCodeModal())}
 				>
 					<FontAwesomeIcon
 						className="m-r-2"

@@ -9,6 +9,7 @@ import nothing from "#/utils/nothing";
 import { mapValues } from "lodash-es";
 
 // state
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizationSettings$ } from "#/modules/optimization/state/optimization";
 import getDatabase, { Database } from "#/state/storage/Database";
@@ -128,8 +129,7 @@ export namespace thunks {
     return fetch('https://api.mods-optimizer.swgoh.grandivory.com/characters/')
       .then(response => response.json())
       .then((response) => {
-
-        return mapAPI2BaseCharactersById(response.units)
+        return mapAPI2BaseCharactersById(response.units);
       }).catch();
   }
 
@@ -333,7 +333,7 @@ export namespace thunks {
 
       if (errorMessages.length) {
         fetchResults.push(
-          <div className={'errors'} key={0}>
+          <div className={'text-[#ff4500] border-b-1 border-solid border-b-white'} key={0}>
             {errorMessages.map((message, index) => <p key={index}>{message}</p>)}
           </div>
         );
@@ -484,20 +484,17 @@ export namespace thunks {
       )
         .then(response => {
           if (response.errorMessage) {
-            dispatch(App.actions.hideModal());
+            dialog$.hide();
             dispatch(App.actions.showError(response.errorMessage));
           } else {
             switch (response.responseCode) {
               case 0:
-                dispatch(App.actions.hideModal());
+                dialog$.hide();
                 dispatch(App.actions.showError(response.responseMessage));
                 break;
               default:
                 modMoveActive = false;
-                dispatch(App.actions.showModal(
-                  'cancel-mod-move',
-                  modCancelModal()
-                ))
+                dialog$.show(modCancelModal());
               // Any other functionality around cancellation will happen on the next response from `pollForModMoveStatus`
             }
           }
@@ -521,7 +518,7 @@ export namespace thunks {
       )
       .then(response => {
         if (response.errorMessage) {
-          dispatch(App.actions.hideModal());
+          dialog$.hide();
           dispatch(App.actions.showError(response.errorMessage));
         } else {
           switch (response.responseCode) {
@@ -529,18 +526,18 @@ export namespace thunks {
               dispatch(App.actions.showError(response.responseMessage));
               break;
             case 1:
-              dispatch(App.actions.hideModal());
+              dialog$.hide();
               dispatch(App.actions.showFlash('Profile created successfully', 'Please login to HotUtils to manage your new profile'))
               break;
             default:
-              dispatch(App.actions.hideModal());
+              dialog$.hide();
               dispatch(App.actions.showError('Unknown response from HotUtils'));
               break;
           }
         }
       })
       .catch(error => {
-        dispatch(App.actions.hideModal());
+        dialog$.hide();
         dispatch(App.actions.showError(error.message));
       })
       .finally(() => {
@@ -624,8 +621,8 @@ export namespace thunks {
   function modCancelModal() {
     return <div>
       <h3>Moving Your Mods...</h3>
-      <div className={'canceling'}>
-        <p><strong className={'red-text'}>Cancelling...</strong></p>
+      <div className={'h-4 w-64 text-center p-0 my-2 mx-auto'}>
+        <p><strong className={'text-red-6'}>Cancelling...</strong></p>
       </div>
       <div className={'actions'}>
         <Button
@@ -671,28 +668,25 @@ export namespace thunks {
         .then(response => {
           isBusy$.set(false);
           if (response.errorMessage) {
-            dispatch(App.actions.hideModal());
+            dialog$.hide();
             dispatch(App.actions.showError(response.errorMessage));
           } else {
             switch (response.responseCode) {
               case 0:
-                dispatch(App.actions.hideModal());
+                dialog$.hide();
                 dispatch(App.actions.showError(response.responseMessage));
                 break;
               default:
                 if (response.taskId === 0) {
-                  dispatch(App.actions.hideModal());
+                  dialog$.hide();
                   dispatch(App.actions.showFlash(
                     "No Action Taken",
                     "There were no mods to move!"
                   ))
                 } else {
                   modMoveActive = true;
-                  // Show the progress modal
-                  dispatch(App.actions.showModal(
-                    'mod-move-progress',
-                    modProgressModal(response.taskId, sessionId, 0, dispatch)
-                  ));
+                  // Show the progress modal 'mod-move-progress'
+                  dialog$.show(modProgressModal(response.taskId, sessionId, 0, dispatch));
                   // Start polling for udpates
                   return pollForModMoveStatus(response.taskId, sessionId, dispatch);
                 }
@@ -701,7 +695,7 @@ export namespace thunks {
           }
         })
         .catch(error => {
-          dispatch(App.actions.hideModal());
+          dialog$.hide();
           dispatch(App.actions.showError(error.message));
         })
         .finally(() => {
@@ -735,7 +729,7 @@ export namespace thunks {
                 const updatedMods = response.mods.profiles[0].mods.map(Mod.fromHotUtils);
                 dispatch(App.thunks.updateProfile(profile => profile.withMods(updatedMods)));
 
-                dispatch(App.actions.hideModal());
+                dialog$.hide();
                 if (response.progress.index === response.progress.count) {
                   dispatch(App.actions.showFlash(
                     'Mods successfully moved',
@@ -751,10 +745,8 @@ export namespace thunks {
                 // Update the modal
                 if (modMoveActive) {
                   const progress = 100 * response.progress.index / response.progress.count;
-                  dispatch(App.actions.showModal(
-                    'mod-move-progress',
-                    modProgressModal(taskId, sessionId, progress, dispatch)
-                  ))
+                  // 'mod-move-progress'
+                  dialog$.show(modProgressModal(taskId, sessionId, progress, dispatch));
                 }
                 // If the move is still ongoing, then poll again after a few seconds.
                 setTimeout(

@@ -1,44 +1,44 @@
 // react
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
+import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import "./CharacterEditForm.css";
 
 // utils
-import areObjectsEquivalent from '../../utils/areObjectsEquivalent';
+import areObjectsEquivalent from '#/utils/areObjectsEquivalent';
 
 // state
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // modules
-import { App } from '../../state/modules/app';
-import { CharacterEdit } from '../../state/modules/characterEdit';
-import { Data } from '../../state/modules/data';
-import { Optimize } from '../../state/modules/optimize';
-import { Storage } from '../../state/modules/storage';
+import { CharacterEdit } from '#/state/modules/characterEdit';
+import { Data } from '#/state/modules/data';
+import { Optimize } from '#/state/modules/optimize';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { characterSettings } from "../../constants/characterSettings";
-import type * as ModTypes from "../../domain/types/ModTypes";
+import { characterSettings } from "#/constants/characterSettings";
+import type * as ModTypes from "#/domain/types/ModTypes";
 
-import { BaseCharacter } from "../../domain/BaseCharacter";
+import { BaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { CharacterEditMode } from "../../domain/CharacterEditMode";
-import { CharacterSettings } from "../../domain/CharacterSettings";
-import { Mod } from "../../domain/Mod";
-import * as OptimizationPlan from "../../domain/OptimizationPlan";
-import { ModSuggestion } from "../../domain/PlayerProfile";
-import { TargetStat, TargetStatEntry, TargetStats } from "../../domain/TargetStat";
+import { CharacterEditMode } from "#/domain/CharacterEditMode";
+import { CharacterSettings } from "#/domain/CharacterSettings";
+import { Mod } from "#/domain/Mod";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import { ModSuggestion } from "#/domain/PlayerProfile";
+import { TargetStat, TargetStatEntry, TargetStats } from "#/domain/TargetStat";
 
 // components
-import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
-import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { OptimizerProgress } from '../../components/OptimizerProgress/OptimizerProgress';
-import { RangeInput } from "../../components/RangeInput/RangeInput";
-import { SetRestrictionsWidget } from "../../components/SetRestrictionsWidget/SetRestrictionsWidget";
-import { Toggle, Toggle2 } from "../../components/Toggle/Toggle";
+import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+import { Dropdown } from "#/components/Dropdown/Dropdown";
+import { OptimizerProgress } from '#/components/OptimizerProgress/OptimizerProgress';
+import { RangeInput } from "#/components/RangeInput/RangeInput";
+import { SetRestrictionsWidget } from "#/components/SetRestrictionsWidget/SetRestrictionsWidget";
+import { Toggle, Toggle2 } from "#/components/Toggle/Toggle";
 import { Button } from "#ui/button";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
@@ -708,6 +708,7 @@ const CharacterEditForm = ({
       onSubmit={(e) => {
         e.preventDefault();
         saveTarget();
+        dialog$.hide();
         dispatch(CharacterEdit.thunks.closeEditCharacterForm());
       }}
       ref={form}>
@@ -822,7 +823,7 @@ const CharacterEditForm = ({
         {resetButton}
         <Button
           type={'button'}
-          onClick={() => dispatch(App.actions.hideModal())}
+          onClick={() => dialog$.hide())}
         >
           Cancel
         </Button>

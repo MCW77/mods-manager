@@ -70,7 +70,7 @@
 }
 
 .character-edit .character-list {
-  height: calc(100% - 6.8em);
+  height: calc(100% - 13.6em);
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -181,28 +181,8 @@
   list-style: none;
 }
 
-.modal.optimizer-progress h3 {
-  color: #a35ef9;
-}
-
-.modal.generate-character-list {
-  max-width: 40em;
-}
-
-.modal.generate-character-list span.purple {
-  font-weight: bold;
-}
-
-.modal.generate-character-list form {
-  display: inline-block;
-}
-
 .modal.generate-character-list label {
   display: block;
-}
-
-.modal.generate-character-list .toggle-wrapper {
-  margin-top: 1em;
 }
 
 .modal.generate-character-list .form-row {

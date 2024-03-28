@@ -1,38 +1,34 @@
 // react
-import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 // styles
-import './Modal.css';
+import "./Modal.css";
 
 // modules
-import { App } from '../../state/modules/app';
+import { App } from "#/state/modules/app";
 
-// Components
-import { Button } from '#ui/button';
+// components
+import { Button } from "#ui/button";
 
-type ComponentProps = {
-  className?: string;
-};
 
-const FlashMessage = React.memo(({ className = '' }: ComponentProps) => {
+const FlashMessage = React.memo(() => {
   const dispatch = useDispatch();
   const flashMessage = useSelector(App.selectors.selectFlashMessage);
-  const classList = `modal flash ${className}`;
 
   if (flashMessage === null) return null;
 
   return (
     <div className={'overlay'}>
-      <div className={classList}>
-        <h2>{flashMessage.heading}</h2>
-        <div className={'content'}>{flashMessage.content}</div>
+      <div className={"modal flash"}>
+        <h2 className={"text-[#eeca41]"}>{flashMessage.heading}</h2>
+        <div>{flashMessage.content}</div>
         <div className={'actions'}>
           <Button
             type={'button'}
             onClick={() => dispatch(App.actions.hideFlash())}
           >
-            OK
+            Ok
           </Button>
         </div>
       </div>

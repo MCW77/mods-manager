@@ -17,6 +17,8 @@ import { forEach } from 'lodash-es';
 // state
 import { IAppState } from '../../state/storage';
 
+import { dialog$ } from '#/modules/dialog/state/dialog';
+
 // modules
 import { App } from '../../state/modules/app';
 import { Storage } from '../../state/modules/storage';
@@ -120,7 +122,7 @@ class ExploreView extends React.PureComponent<Props> {
                   size={"sm"}
                   variant={'destructive'}
                   onClick={() => {
-                    this.props.showModal(this.deleteModsModal());
+                    dialog$.show(this.deleteModsModal());
                   }}
                 >
                   <FontAwesomeIcon icon={faTrashCan} title={this.props.t(`explore-ui:DeleteButton`)}/>
@@ -179,7 +181,7 @@ class ExploreView extends React.PureComponent<Props> {
           <Button
             type={"button"}
             onClick={() => {
-              this.props.hideModal();
+              dialog$.hide();
             }}
           >
             No
@@ -249,11 +251,9 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  showModal: (content: DOMContent) => dispatch(App.actions.showModal("", content)),
-  hideModal: () => dispatch(App.actions.hideModal()),
   deleteMods: (mods: Mod[]) => {
     dispatch(Storage.thunks.deleteMods(mods));
-    dispatch(App.actions.hideModal());
+    dialog$.hide();
   },
 });
 

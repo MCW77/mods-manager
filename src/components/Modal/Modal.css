@@ -33,24 +33,3 @@
   box-sizing: border-box;
   overflow-y: auto;
 }
-
-.modal.flash h2 {
-  color: #eeca44;
-}
-
-.modal.flash .errors {
-  color: orangered;
-  border-bottom: 1px solid white;
-}
-
-.modal.notice {
-  max-width: 40em;
-}
-
-.modal.notice h2 {
-  color: #eeca44;
-}
-
-.modal.notice h3 {
-  color: #e64343;
-}

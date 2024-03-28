@@ -9,8 +9,10 @@ import "./CharacterList.css";
 // utils
 import groupByKey from "../../utils/groupByKey";
 
+// state
+import { dialog$ } from "#/modules/dialog/state/dialog";
+
 // modules
-import { App } from '../../state/modules/app';
 import { CharacterEdit } from '../../state/modules/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
@@ -249,18 +251,17 @@ const CharacterList = React.memo(
 
     const showEditCharacterModal = (character: Character.Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
       dispatch(CharacterEdit.thunks.setOptimizeIndex(index));
-      dispatch(App.actions.showModal(
-        '',
+      dialog$.show(
         <CharacterEditForm
           character={character}
           characterIndex={index}
           target={target}
-        />
-      ));
+        />,
+      );
     }
 
     return (
-      <div className={'character-list'}
+      <div className={'character-list overscroll-contain'}
         onDragEnter={characterBlockDragEnter()}
         onDragOver={characterBlockDragOver()}
         onDragLeave={characterBlockDragLeave()}

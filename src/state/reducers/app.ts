@@ -1,6 +1,3 @@
-// react
-import { createSelector } from "@reduxjs/toolkit";
-
 // state
 import { AppState, IAppState } from "../storage";
 
@@ -15,26 +12,6 @@ export namespace reducers {
 		return Object.assign({}, state, {
 			section: action.section,
 			previousSection: state.section,
-		});
-	}
-
-	export function showModal(
-		state: IAppState,
-		action: ReturnType<typeof actions.showModal>,
-	): IAppState {
-		return Object.assign({}, state, {
-			modal: {
-				class: action.class,
-				content: action.content,
-				cancelable: action.cancelable,
-			},
-		});
-	}
-
-	export function hideModal(state: IAppState): IAppState {
-		return Object.assign({}, state, {
-			setRestrictions: {},
-			modal: null,
 		});
 	}
 
@@ -91,32 +68,6 @@ export namespace reducers {
 export namespace selectors {
 	export const selectErrorMessage = (state: IAppState) => state.error;
 	export const selectFlashMessage = (state: IAppState) => state.flashMessage;
-	export const selectModalMessage = (state: IAppState) => state.modal;
-	export const selectIsModalCancelable = createSelector(
-		[selectModalMessage],
-		(modal) => {
-			if (modal === null) return false;
-			return modal.cancelable;
-		},
-	);
-	export const selectIsModalVisible = createSelector(
-		[selectModalMessage],
-		(modal) => modal !== null,
-	);
-	export const selectModalClasses = createSelector(
-		[selectModalMessage],
-		(modal) => {
-			if (modal === null) return "";
-			return modal.class;
-		},
-	);
-	export const selectModalContent = createSelector(
-		[selectModalMessage],
-		(modal) => {
-			if (modal === null) return "";
-			return modal.content;
-		},
-	);
 	export const selectPreviousSection = (state: IAppState) =>
 		state.previousSection;
 	export const selectSection = (state: IAppState) => state.section;

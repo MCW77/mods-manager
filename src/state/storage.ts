@@ -7,7 +7,6 @@ import { ElementType } from "../utils/typeHelper";
 import { BaseCharactersById } from "../domain/BaseCharacter";
 import { CharacterEditMode } from "../domain/CharacterEditMode";
 import { HelpSections } from "../domain/HelpSections";
-import { ModalProps } from "../domain/ModalProps";
 import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
@@ -40,7 +39,6 @@ export interface IAppState {
   hideSelectedCharacters: boolean,
   hotUtilsSubscription: boolean,
   modListFilter: ModListFilter,
-  modal: ModalProps,
   modsViewOptions: ModsViewOptions,
   optimizerView: 'edit' | 'review',
   playerProfiles: PlayerNamesByAllycode,
@@ -98,7 +96,6 @@ export class AppState {
       sort: 'assignedCharacter',
       tag: ''
     },
-    modal: null,
     modsViewOptions: defaultOptions,
     optimizerView: 'edit',
     playerProfiles: {}, // A simple map from ally codes to player names for all available profiles

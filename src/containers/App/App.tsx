@@ -2,7 +2,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // styles
 import './boilerplate.css';
@@ -16,28 +16,28 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 // modules
-import { App as AppModule } from '../../state/modules/app';
-import { Data } from '../../state/modules/data';
-import { Storage } from '../../state/modules/storage';
+import { App as AppModule } from '#/state/modules/app';
+import { Data } from '#/state/modules/data';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { PlayerProfile } from '../../domain/PlayerProfile';
+import { PlayerProfile } from '#/domain/PlayerProfile';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { FlashMessage } from "../../components/Modal/FlashMessage";
-import { Modal } from "../../components/Modal/Modal";
-import { ProfilesManager } from '../../components/ProfilesManager/ProfilesManager';
+import { FlashMessage } from "#/components/Modal/FlashMessage";
+import { ProfilesManager } from '#/components/ProfilesManager/ProfilesManager';
+import { Dialog } from '#/modules/dialog/components/Dialog';
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
 
 // containers
-import { AboutView } from '../AboutView/AboutView';
-import { ErrorModal } from "../ErrorModal/ErrorModal";
-import ExploreView from "../ExploreView/ExploreView";
-import { HelpView } from '../HelpView/HelpView';
-import { OptimizerView } from '../OptimizerView/OptimizerView';
-import { SettingsView } from '../SettingsView/SettingsView';
+import { AboutView } from '#/containers/AboutView/AboutView';
+import { ErrorModal } from "#/containers/ErrorModal/ErrorModal";
+import ExploreView from "#/containers/ExploreView/ExploreView";
+import { HelpView } from '#/containers/HelpView/HelpView';
+import { OptimizerView } from '#/containers/OptimizerView/OptimizerView';
+import { SettingsView } from '#/containers/SettingsView/SettingsView';
 
 
 
@@ -45,20 +45,10 @@ const App = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
     const [t, i18n] = useTranslation('global-ui');
-    const displayModal = useSelector(AppModule.selectors.selectIsModalVisible);
-    const modalClass = useSelector(AppModule.selectors.selectModalClasses);
-    const modalContent = useSelector(AppModule.selectors.selectModalContent);
-    const isModalCancelable = useSelector(AppModule.selectors.selectIsModalCancelable);
     const section = useSelector(AppModule.selectors.selectSection);
     const profile = useSelector(Storage.selectors.selectActiveProfile);
 
     const instructionsScreen = profile === PlayerProfile.Default;
-
-    const handleEscape = ({key}: React.KeyboardEvent<HTMLDivElement>) => {
-      if (key === 'Escape' && isModalCancelable) {
-        dispatch(AppModule.actions.hideModal());
-      }
-    };
 
     const header = (showActions: boolean) => {
 
@@ -143,7 +133,7 @@ const App = React.memo(
 
     return (
       <Suspense fallback={<Spinner />}>
-        <div className={'App'} onKeyDown={handleEscape}>
+        <div className={'App'}>
           {header(!instructionsScreen)}
           <div className={'app-body'}>
             {!instructionsScreen && 'explore' === section &&
@@ -163,10 +153,7 @@ const App = React.memo(
             }
             <FlashMessage />
             <ErrorModal />
-            <Modal show={displayModal}
-              className={modalClass}
-              content={modalContent}
-              cancelable={isModalCancelable} />
+            <Dialog/>
             <Spinner />
           </div>
         </div>

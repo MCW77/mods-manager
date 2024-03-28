@@ -2,12 +2,6 @@
 import { OptimizationStatus } from "../../domain/OptimizationStatus";
 
 export namespace actions {
-	export function cancelOptimizeMods() {
-		return {
-			type: actionNames.CANCEL_OPTIMIZE_MODS,
-		} as const;
-	}
-
 	export function startModOptimization() {
 		return {
 			type: actionNames.OPTIMIZE_MODS,

@@ -28,12 +28,10 @@ type AppActions =
   | ReturnType<typeof App.actions.changeSection>
   | ReturnType<typeof App.actions.hideError>
   | ReturnType<typeof App.actions.hideFlash>
-  | ReturnType<typeof App.actions.hideModal>
   | ReturnType<typeof App.actions.resetState>
   | ReturnType<typeof App.actions.setState>
   | ReturnType<typeof App.actions.showError>
   | ReturnType<typeof App.actions.showFlash>
-  | ReturnType<typeof App.actions.showModal>
   | ReturnType<typeof App.actions.toggleSidebar>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
@@ -45,7 +43,6 @@ type AppActions =
   | ReturnType<typeof CharacterEdit.actions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
   | ReturnType<typeof Help.actions.setHelpPosition>
-  | ReturnType<typeof Optimize.actions.cancelOptimizeMods>
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
   | ReturnType<typeof Review.actions.changeModListFilter>
@@ -76,8 +73,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return App.reducers.hideError(state);
     case App.actionNames.HIDE_FLASH:
       return App.reducers.hideFlash(state);
-    case App.actionNames.HIDE_MODAL:
-      return App.reducers.hideModal(state);
     case App.actionNames.RESET_STATE:
       const result = AppState.save(App.reducers.resetState());
       window.location.reload();
@@ -90,8 +85,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return App.reducers.showError(state, action);
     case App.actionNames.SHOW_FLASH:
       return App.reducers.showFlash(state, action);
-    case App.actionNames.SHOW_MODAL:
-      return App.reducers.showModal(state, action);
     case App.actionNames.TOGGLE_SIDEBAR:
       return AppState.save(
         App.reducers.toggleSidebar(state)
@@ -130,12 +123,7 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case Help.actionNames.SET_HELP_POSITION:
       return Help.reducers.setHelpPosition(state, action);
 
-    case Optimize.actionNames.CANCEL_OPTIMIZE_MODS:
-      return AppState.save(
-        Optimize.reducers.cancelOptimizeMods(state)
-      );
-    case Optimize.actionNames.OPTIMIZE_MODS:
-      return Optimize.reducers.optimizeMods(state);
+
     case Optimize.actionNames.UPDATE_PROGRESS:
         return Optimize.reducers.updateProgress(state, action);
 

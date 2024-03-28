@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
 
 // state
+import { dialog$ } from '#/modules/dialog/state/dialog';
 import { isBusy$ } from '#/modules/busyIndication/state/isBusy';
 
 // modules
@@ -25,23 +26,23 @@ const OptimizerProgress = () => {
     dispatch(Optimize.thunks.cancelOptimizer());
     isBusy$.set(false);
     if (closeModal) {
-      dispatch(App.actions.hideModal());
+      dialog$.hide();
     }
   };
 
   return (
-    <div>
-      <h3>Optimizing Your Mods...</h3>
-      <div className={'progressBox'}>
+    <div className="w-500px">
+      <h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
+      <div>
         {progress.character &&
-          <div className={'character'}><CharacterAvatar character={progress.character} /></div>
+          <div><CharacterAvatar character={progress.character} /></div>
         }
         <div className={'step'}>{progress.step}</div>
-        <div className={'progress'}>
-          <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${progress.progress}%` }} />
+        <div className={'progress h-[1em] w-[17em] m-x-[.5em] m-y-auto rounded-lg border-1px border-solid border-[#32cd32] p-0 overflow-hidden'}>
+          <span className={'progress-bar block h-full bg-[length:2.828em_1em] bg-repeat-x bg-gradient-to-br from-[#8fff3a] via-[#46801a] to-[#8fff3a] transition-[width] duration-500'} style={{ width: `${progress.progress}%` }} />
         </div>
       </div>
-      <div className={'actions'}>
+      <div>
         <Button
           type={'button'}
           variant={'destructive'}

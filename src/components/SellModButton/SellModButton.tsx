@@ -1,20 +1,22 @@
 // react
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
+
+// state
+import { dialog$ } from '#/modules/dialog/state/dialog';
 
 // modules
-import { App } from '../../state/modules/app';
-import { Data } from '../../state/modules/data';
-import { Storage } from '../../state/modules/storage';
+import { Data } from '#/state/modules/data';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { Mod } from '../../domain/Mod';
+import { Mod } from '#/domain/Mod';
 
 // components
-import { CharacterAvatar } from '../CharacterAvatar/CharacterAvatar';
-import { ModImage } from '../ModImage/ModImage';
-import { ModStats } from '../ModStats/ModStats';
+import { CharacterAvatar } from '#/components/CharacterAvatar/CharacterAvatar';
+import { ModImage } from '#/components/ModImage/ModImage';
+import { ModStats } from '#/components/ModStats/ModStats';
 import { Button } from '#ui/button';
 
 type ComponentProps = {
@@ -52,7 +54,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
           <Button
             type={'button'}
             onClick={() => {
-              dispatch(App.actions.hideModal());
+              dialog$.hide();
             }}
           >
             No
@@ -61,7 +63,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
             type={'button'}
             onClick={() => {
               dispatch(Storage.thunks.deleteMod(mod));
-              dispatch(App.actions.hideModal());
+              dialog$.hide();
             }}
             className={''}
             variant={'destructive'}
@@ -79,7 +81,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
       variant={'destructive'}
       size={'xs'}
       className={'absolute top-0 right-0 m-2'}
-      onClick={() => dispatch(App.actions.showModal('', deleteModal()))}
+      onClick={() => dialog$.show(deleteModal())}
     >
       X
     </Button>

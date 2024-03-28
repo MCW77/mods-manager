@@ -9,6 +9,8 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import getDatabase from "../storage/Database";
 
+import { dialog$ } from "#/modules/dialog/state/dialog";
+
 // modules
 import { App } from '../../state/modules/app';
 import { actions } from '../actions/characterEdit';
@@ -243,7 +245,7 @@ export namespace thunks {
 
   export function closeEditCharacterForm(): ThunkResult<void> {
     return function (dispatch) {
-      dispatch(App.actions.hideModal());
+      dialog$.hide();
       dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       dispatch(setOptimizeIndex(null));
     }
@@ -276,7 +278,7 @@ export namespace thunks {
         return profile.withCharacters(newCharacters).withSelectedCharacters(newSelectedCharacters);
       },
       dispatch => {
-        dispatch(App.actions.hideModal());
+        dialog$.hide();
         dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       }
     );
@@ -290,7 +292,7 @@ export namespace thunks {
         name,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
-          dispatch(App.actions.hideModal());
+          dialog$.hide();
         },
         error => dispatch(App.actions.showFlash(
           'Storage Error',
@@ -499,7 +501,7 @@ export namespace thunks {
 
         return profile.withCharacters(newCharacters).withSelectedCharacters(newSelectedCharacters);
       },
-      dispatch => dispatch(App.actions.hideModal())
+      dispatch => dialog$.hide()
     );
   }
 
@@ -525,7 +527,7 @@ export namespace thunks {
         })).withSelectedCharacters(newSelectedCharacters);
       },
       dispatch => {
-        dispatch(App.actions.hideModal());
+        dialog$.hide();
         dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       }
     );
@@ -541,7 +543,7 @@ export namespace thunks {
       db.saveCharacterTemplate(templateName, selectedCharacters,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
-          dispatch(App.actions.hideModal());
+          dialog$.hide();
         },
         error => dispatch(App.actions.showFlash(
           'Storage Error',
@@ -559,7 +561,7 @@ export namespace thunks {
         templates,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
-          dispatch(App.actions.hideModal());
+          dialog$.hide();
         },
         error => dispatch(App.actions.showFlash(
           'Storage Error',
