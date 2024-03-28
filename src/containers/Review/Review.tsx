@@ -1,51 +1,52 @@
 // react
 import React from 'react';
 import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // styles
 import './Review.css';
 
 // utils
 import { flatten, mapValues, uniq } from "lodash-es";
-import copyToClipboard from "../../utils/clipboard";
-import collectByKey from "../../utils/collectByKey";
-import { groupBy } from "../../utils/groupBy";
-import groupByKey from "../../utils/groupByKey";
+import copyToClipboard from "#/utils/clipboard";
+import collectByKey from "#/utils/collectByKey";
+import { groupBy } from "#/utils/groupBy";
+import groupByKey from "#/utils/groupByKey";
 
 // state
-import { IAppState } from '../../state/storage';
+import { IAppState } from '#/state/storage';
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // modules
-import { Data } from '../../state/modules/data';
-import { Review as ReviewModule } from '../../state/modules/review';
-import { Storage } from '../../state/modules/storage';
+import { Data } from '#/state/modules/data';
+import { Review as ReviewModule } from '#/state/modules/review';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { CharacterNames } from '../../constants/characterSettings';
-import type * as ModTypes from "../../domain/types/ModTypes";
+import { CharacterNames } from '#/constants/characterSettings';
+import type * as ModTypes from "#/domain/types/ModTypes";
 
 import * as Character from '#/domain/Character';
-import { Mod } from '../../domain/Mod';
-import { ModAssignment, ModAssignments } from "../../domain/ModAssignment";
-import { ModListFilter } from '../../domain/ModListFilter';
-import { ModLoadout } from "../../domain/ModLoadout";
-import { ModsByCharacterNames } from '../../domain/ModsByCharacterNames';
-import  * as OptimizationPlan from "../../domain/OptimizationPlan";
+import { Mod } from '#/domain/Mod';
+import { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
+import { ModListFilter } from '#/domain/ModListFilter';
+import { ModLoadout } from "#/domain/ModLoadout";
+import { ModsByCharacterNames } from '#/domain/ModsByCharacterNames';
+import  * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { Arrow } from "../../components/Arrow/Arrow";
-import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
-import { Credits } from "../../components/Credits/Credits";
-import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { Help } from "../../components/Help/Help";
-import { ModDetail } from "../../components/ModDetail/ModDetail";
-import { ModLoadoutDetail } from "../../components/ModLoadoutDetail/ModLoadoutDetail";
-import { ModLoadoutView } from "../../components/ModLoadoutView/ModLoadoutView";
-import { Sidebar } from "../../components/Sidebar/Sidebar";
-import { Toggle } from "../../components/Toggle/Toggle";
+import { Arrow } from "#/components/Arrow/Arrow";
+import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+import { Credits } from "#/components/Credits/Credits";
+import { DefaultCollapsibleCard } from '#/components/DefaultCollapsibleCard';
+import { ModDetail } from "#/components/ModDetail/ModDetail";
+import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail";
+import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
 import { Button } from '#ui/button';
+import { Label } from '#ui/label';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
+import { Switch } from '#ui/switch';
 
 
 interface HUModsProfile {
@@ -232,16 +233,6 @@ class Review extends React.PureComponent<Props> {
   render() {
     let modRows;
 
-    const summaryButton = (
-      <Button
-        type={'button'}
-        size={'sm'}
-        onClick={() => dialog$.show(this.reviewModal())}
-      >
-        Show Summary
-      </Button>
-    );
-
     switch (this.props.filter.view) {
       case viewOptions.list:
         modRows = this.listView(this.props.displayedMods);
@@ -249,15 +240,6 @@ class Review extends React.PureComponent<Props> {
       default:
         modRows = this.setsView(this.props.displayedMods);
     }
-
-    const subHeading = 0 < this.props.modUpgradeCost ?
-      <h3>
-        Your mods will cost {formatNumber(this.props.modRemovalCost)} <Credits /> to move,
-        and an additional {formatNumber(this.props.modUpgradeCost)} <Credits /> to level up to 15.
-      </h3> :
-      <h3>
-        Your mods will cost {formatNumber(this.props.modRemovalCost)} <Credits /> to move
-      </h3>;
 
     let reviewContent;
 
@@ -268,7 +250,7 @@ class Review extends React.PureComponent<Props> {
           <h3>Don't forget to assign mods to all your pilots!</h3>
         </div>;
       } else {
-        reviewContent = <div className={'mods-list'}>
+        reviewContent = <div className={'flex flex-col min-h-min'}>
           {modRows}
         </div>;
       }
@@ -278,20 +260,184 @@ class Review extends React.PureComponent<Props> {
           No more mods to move under that filter. Try a different filter now!
         </h3>;
       } else {
-        reviewContent = <div className={'mods-list'}>
+        reviewContent = <div className={'flex flex-col min-h-min'}>
           {modRows}
         </div>;
       }
     }
 
-    return <div className={'review'}>
-      <Sidebar content={this.fullSidebar()} />
-      <div className="review-list">
-        <h2>Reassigning {this.props.numMovingMods} mods {summaryButton}</h2>
-        {subHeading}
-        {reviewContent}
+    return <div className={'review flex flex-col flex-grow-1 overflow-y-auto'}>
+      <div className={'flex flex-col justify-around items-stretch p-y-2 min-h-min'}>
+        <div className="flex flex-wrap justify-around items-stretch p-y-2">
+            {this.displayWidget()}
+            {this.actionsWidget()}
+            {this.summaryWidget()}
+          </div>
+        <div className="overflow-y-auto">
+          {reviewContent}
+        </div>
       </div>
     </div>;
+  }
+
+  actionsWidget() {
+    return <DefaultCollapsibleCard title="Actions">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Button
+            type={'button'}
+            size={'sm'}
+            onClick={() => dialog$.show(this.reviewModal())}
+          >
+            Show Summary
+          </Button>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="">I don't like these results...</Label>
+          <Button
+            type={'button'}
+            onClick={this.props.edit}
+          >
+            Change my selection
+          </Button>
+        </div>
+        <div id="Hotutils-Actions" className="flex flex-col gap-2">
+          <Label htmlFor="Hotutils-Actions">HotUtils</Label>
+          <Button
+            type={'button'}
+            disabled={!(this.props.hotUtilsSubscription && this.props.hotUtilsSessionId)}
+            onClick={() => {
+              if (this.props.hotUtilsSubscription && this.props.hotUtilsSessionId) {
+                dialog$.show(this.hotUtilsCreateProfileModal());
+              }
+            }}
+          >
+            Create Loadout
+          </Button>
+          <Button
+            type={'button'}
+            disabled={!(this.props.hotUtilsSubscription && this.props.hotUtilsSessionId)}
+            onClick={() => {
+              if (this.props.hotUtilsSubscription && this.props.hotUtilsSessionId) {
+                dialog$.show(this.hotUtilsMoveModsModal());
+              }
+            }}
+          >
+            Move mods in-game
+          </Button>
+        </div>
+      </div>
+    </DefaultCollapsibleCard>
+  }
+
+  displayWidget() {
+    const filter = this.props.filter;
+    const global = "grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
+    const labelCSS = "grid-col-[labels] grid-row-auto" as const;
+    const inputCSS = "grid-col-[controls] grid-row-auto" as const;
+
+    return <DefaultCollapsibleCard
+      title="Display"
+    >
+      <div className={global}>
+        <Label className={labelCSS} htmlFor="sort-options"
+        >
+          Group by character:
+        </Label>
+        <div
+          className={inputCSS + " flex gap-2 items-center"}
+          id="sort-options"
+        >
+          <Label htmlFor="sort-options-value">current</Label>
+          <Switch
+          className="mr-2 ml-2"
+            id={'sort-options-value'}
+            checked={filter.sort === sortOptions.assignedCharacter}
+            onCheckedChange={checked => this.props.changeFilter(Object.assign({}, filter, { sort: checked ? sortOptions.assignedCharacter : sortOptions.currentCharacter }))}
+          >
+          </Switch>
+          <Label className={labelCSS} htmlFor="sort-options-value">assigned</Label>
+        </div>
+        <Label className={labelCSS} htmlFor="view-options">Show mods as:</Label>
+        <div
+          className={inputCSS + " flex gap-2 items-center"}
+          id="view-options"
+        >
+          <Label htmlFor="view-options-value">{viewOptions.sets}</Label>
+          <Switch
+            id={'view-options-value'}
+            checked={filter.view === viewOptions.list}
+            onCheckedChange={checked => this.props.changeFilter(Object.assign({}, filter, { view: checked ? viewOptions.list : viewOptions.sets }))}
+          >
+          </Switch>
+          <Label htmlFor="view-options-value">{viewOptions.list}</Label>
+        </div>
+        <Label className={labelCSS} htmlFor={'show'}>Show me:</Label>
+        <Select
+          value={filter.show}
+          onValueChange={value => this.props.changeFilter(Object.assign({}, filter, { show: value }))}
+        >
+          <SelectTrigger
+            className={inputCSS}
+            id={'show'}
+          >
+            <SelectValue></SelectValue>
+          </SelectTrigger>
+          <SelectContent className={"max-h-[50%]"}>
+            <SelectGroup>
+              <SelectItem value={showOptions.all}>All assignments</SelectItem>
+              <SelectItem value={showOptions.change}>Changing characters</SelectItem>
+              <SelectItem value={showOptions.upgrades}>Mod upgrades</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Label htmlFor={'tag'}>Show characters by tag:</Label>
+        <Select
+          value={filter.tag}
+          onValueChange={value => this.props.changeFilter(Object.assign({}, filter, { tag: value }))}
+        >
+          <SelectTrigger
+            className={inputCSS}
+            id={'tag'}
+          >
+            <SelectValue></SelectValue>
+          </SelectTrigger>
+          <SelectContent className={"max-h-[50%]"}>
+            <SelectGroup>
+              <SelectItem value={'All'}>All</SelectItem>
+              {this.props.tags.map(tag => <SelectItem value={tag} key={tag}>{tag}</SelectItem>)}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+    </DefaultCollapsibleCard>
+  }
+
+  summaryWidget() {
+    const valueChange = 100 * (this.props.newSetValue - this.props.currentSetValue) / this.props.currentSetValue;
+
+    return <DefaultCollapsibleCard
+      className=""
+      title="Summary"
+    >
+      <div className="prose prose-sm text-sm">
+      <h4>Costs</h4>
+      <p>
+        <span>Reassigning {this.props.numMovingMods} mods</span><br />
+        <span>Your mods will cost {formatNumber(this.props.modRemovalCost)} <Credits /> to move,</span><br />
+        <span>and an additional {formatNumber(this.props.modUpgradeCost)} <Credits /> to level up to 15.</span>
+      </p>
+      <h4>Set Value</h4>
+      <p>
+        <span>Old set value sum: {formatNumber(Number(this.props.currentSetValue.toFixed(2)))}</span><br />
+        <span>New set value sum: {formatNumber(Number(this.props.newSetValue.toFixed(2)))}</span><br />
+        <span>Overall change: <span className={valueChange > 0 ? 'increase' : valueChange < 0 ? 'decrease' : ''}>
+          {formatNumber(Number(valueChange.toFixed(2)))}%
+          </span>
+        </span>
+      </p>
+      </div>
+    </DefaultCollapsibleCard>
   }
 
   /**
@@ -322,7 +468,7 @@ class Review extends React.PureComponent<Props> {
         }
       });
 
-      if (this.props.filter.tag !== '') {
+      if (this.props.filter.tag !== 'All') {
         individualMods = individualMods.filter(({ mod }) => {
           let tags: string[];
           if (mod.characterID === 'null') {
@@ -333,7 +479,7 @@ class Review extends React.PureComponent<Props> {
           return tags.includes(this.props.filter.tag);
         });
       }
-    } else if (this.props.filter.tag !== '') {
+    } else if (this.props.filter.tag !== 'All') {
       individualMods = individualMods.filter(({ id, mod }) => {
         const tags = this.props.baseCharacters[id] ? this.props.baseCharacters[id].categories : [];
         return tags.includes(this.props.filter.tag);
@@ -440,131 +586,6 @@ class Review extends React.PureComponent<Props> {
         }
       </div>;
     });
-  }
-
-  /**
-   * Render a form used to filter and sort the mods displayed on the page
-   * @returns JSX Element
-   */
-  filterForm() {
-    const filter = this.props.filter;
-    const tagOptions = this.props.tags.map(tag => <option value={tag} key={tag}>{tag}</option>);
-
-    return <div className={'filter-form'}>
-      <Toggle className={"organize-toggle"}
-        inputLabel={'Organize mods by:'}
-        leftLabel={'Currently Equipped'}
-        leftValue={sortOptions.currentCharacter}
-        rightLabel={'Assigned Character'}
-        rightValue={sortOptions.assignedCharacter}
-        value={filter.sort}
-        onChange={sortBy => this.props.changeFilter(Object.assign({}, filter, { sort: sortBy }))}
-      />
-      <Toggle inputLabel={'Show mods as:'}
-        leftLabel={'Sets'}
-        leftValue={viewOptions.sets}
-        rightLabel={'Individual mods'}
-        rightValue={viewOptions.list}
-        value={filter.view}
-        onChange={viewAs => this.props.changeFilter(Object.assign({}, filter, { view: viewAs }))}
-      />
-      <label htmlFor={'show'}>Show me:</label>
-      <Dropdown id={'show'}
-        value={filter.show}
-        onChange={e => this.props.changeFilter(Object.assign({}, filter, { show: (e.target as HTMLSelectElement).value }))}
-      >
-        <option value={showOptions.all}>All assignments</option>
-        <option value={showOptions.change}>Changing characters</option>
-        <option value={showOptions.upgrades}>Mod Upgrades</option>
-      </Dropdown>
-      <label htmlFor={'tag'}>Show characters by tag:</label>
-      <Dropdown id={'tag'}
-        value={filter.tag}
-        onChange={e => this.props.changeFilter(Object.assign({}, filter, { tag: (e.target as HTMLSelectElement).value }))}
-      >
-        <option value={''}>All</option>
-        {tagOptions}
-      </Dropdown>
-    </div>;
-  }
-
-  /**
-   * Renders a sidebar box with action buttons
-   *
-   * @returns JSX Element
-   */
-  sidebarActions() {
-    return <div className={'sidebar-actions'} key={'sidebar-actions'}>
-      <h3>I don't like these results...</h3>
-      <Button
-        type={'button'}
-        onClick={this.props.edit}
-      >
-        Change my selection
-      </Button>
-    </div>
-  }
-
-  /**
-   * Renders a sidebar box with actions for HotUtils
-   */
-  hotUtilsSidebar() {
-    return <div className={'sidebar-hotutils'} key={'sidebar-hotutils'}>
-      <h3>HotUtils <Help header={'What is HotUtils?'}>{this.hotUtilsHelp()}</Help></h3>
-      <Button
-        type={'button'}
-        disabled={!(this.props.hotUtilsSubscription && this.props.hotUtilsSessionId)}
-        onClick={() => {
-          if (this.props.hotUtilsSubscription && this.props.hotUtilsSessionId) {
-            this.props.showModal('hotutils-modal', this.hotUtilsCreateProfileModal())
-          }
-        }}
-      >
-        Create a new mod profile
-      </Button>
-      <Button
-        type={'button'}
-        disabled={!(this.props.hotUtilsSubscription && this.props.hotUtilsSessionId)}
-        onClick={() => {
-          if (this.props.hotUtilsSubscription && this.props.hotUtilsSessionId) {
-            this.props.showModal('hotutils-modal', this.hotUtilsMoveModsModal())
-          }
-        }}
-      >
-        Move mods in-game
-      </Button>
-      <img className={'fit'} src={'/img/hotsauce512.png'} alt={'hotsauce'} />
-    </div>;
-  }
-
-  /**
-   * Render both the filter form and standard sidebar actions
-   * @returns {*[]}
-   */
-  fullSidebar() {
-    const valueChange = 100 * (this.props.newSetValue - this.props.currentSetValue) / this.props.currentSetValue;
-
-    const setValueSummary = <div key={'setValueSummary'} className='setValueSummary'>
-      <h3>Set Value Summary</h3>
-      <h4>Old set value sum: {formatNumber(Number(this.props.currentSetValue.toFixed(2)))}</h4>
-      <h4>New set value sum: {formatNumber(Number(this.props.newSetValue.toFixed(2)))}</h4>
-      <h4>Overall change: <span className={valueChange > 0 ? 'increase' : valueChange < 0 ? 'decrease' : ''}>
-        {formatNumber(Number(valueChange.toFixed(2)))}%
-        </span>
-      </h4>
-    </div>;
-
-    const sidebarElements = [
-      <div className={'filters'} key={'filters'}>
-        {this.filterForm()}
-      </div>,
-      this.sidebarActions(),
-      setValueSummary
-    ];
-
-    sidebarElements.push(this.hotUtilsSidebar())
-
-    return sidebarElements
   }
 
   /**
@@ -928,7 +949,7 @@ const mapStateToProps = (state: IAppState) => {
       )));
 
       // Filter out any characters that we're not going to display based on the selected tag
-      if (filter.tag !== '') {
+      if (filter.tag !== 'All') {
         displayedMods = displayedMods.filter(({ id }) => {
           const tags = baseCharacters[id] ? baseCharacters[id].categories : [];
           return tags.includes(filter.tag);

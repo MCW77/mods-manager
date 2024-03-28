@@ -94,7 +94,7 @@ export class AppState {
       view: 'sets',
       show: 'all',
       sort: 'assignedCharacter',
-      tag: ''
+      tag: 'All',
     },
     modsViewOptions: defaultOptions,
     optimizerView: 'edit',
