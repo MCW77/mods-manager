@@ -93,87 +93,87 @@ export namespace thunks {
 
 					dialog$.show(
 						<div>
-								<h3>Important messages regarding your selected targets</h3>
-								<table>
-									<thead>
-										<tr>
-											<th>Character</th>
-											<th>Messages</th>
-										</tr>
-									</thead>
-									<tbody>
-										{resultsWithMessages.map(
-											({ id, target, messages, missedGoals }, index) => {
-												const tempStats = {
-													Health: 0,
-													Protection: 0,
-													Speed: 0,
-													'Critical Damage %': 0,
-													'Potency %': 0,
-													'Tenacity %': 0,
-													'Physical Damage': 0,
-													'Special Damage': 0,
-													Armor: 0,
-													Resistance: 0,
-													'Accuracy %': 0,
-													'Critical Avoidance %': 0,
-													'Physical Critical Chance %': 0,
-													'Special Critical Chance %': 0,
-												}
-												const character =
-													newProfile.characters[id] || Character.createCharacter(
-														id,
-														{
-															level: 0,
-															stars: 0,
-															gearLevel: 0,
-															gearPieces: [],
-															galacticPower: 0,
-															baseStats: tempStats,
-															equippedStats: tempStats,
-															relicTier: 0,
-														},
-														OptimizerSettings.defaultSettings,
-													);
-
-												return (
-													<tr key={index}>
-														<td>
-															<CharacterAvatar character={character} />
-															<br />
-															{baseCharacters[id]
-																? baseCharacters[id].name
-																: id}
-														</td>
-														<td>
-															<h4>{target.name}:</h4>
-															<ul>
-																{messages!.map((message, index) => (
-																	<li key={index}>{message}</li>
-																))}
-															</ul>
-														<ul className={"text-red-600"}>
-																{missedGoals.map(
-																	([missedGoal, value], index) => (
-																		<li key={index}>
-																			{`Missed goal stat for ${
-																				missedGoal.stat
-																			}. Value of ${
-																				value % 1 ? value.toFixed(2) : value
-																			} was not between ${
-																				missedGoal.minimum
-																			} and ${missedGoal.maximum}.`}
-																		</li>
-																	),
-																)}
-															</ul>
-														</td>
-													</tr>
+							<h3>Important messages regarding your selected targets</h3>
+							<table>
+								<thead>
+									<tr>
+										<th>Character</th>
+										<th>Messages</th>
+									</tr>
+								</thead>
+								<tbody>
+									{resultsWithMessages.map(
+										({ id, target, messages, missedGoals }, index) => {
+											const tempStats = {
+												Health: 0,
+												Protection: 0,
+												Speed: 0,
+												'Critical Damage %': 0,
+												'Potency %': 0,
+												'Tenacity %': 0,
+												'Physical Damage': 0,
+												'Special Damage': 0,
+												Armor: 0,
+												Resistance: 0,
+												'Accuracy %': 0,
+												'Critical Avoidance %': 0,
+												'Physical Critical Chance %': 0,
+												'Special Critical Chance %': 0,
+											}
+											const character =
+												newProfile.characters[id] || Character.createCharacter(
+													id,
+													{
+														level: 0,
+														stars: 0,
+														gearLevel: 0,
+														gearPieces: [],
+														galacticPower: 0,
+														baseStats: tempStats,
+														equippedStats: tempStats,
+														relicTier: 0,
+													},
+													OptimizerSettings.defaultSettings,
 												);
-											},
-										)}
-									</tbody>
-								</table>
+
+											return (
+												<tr key={index}>
+													<td>
+														<CharacterAvatar character={character} />
+														<br />
+														{baseCharacters[id]
+															? baseCharacters[id].name
+															: id}
+													</td>
+													<td>
+														<h4>{target.name}:</h4>
+														<ul>
+															{messages!.map((message, index) => (
+																<li key={index}>{message}</li>
+															))}
+														</ul>
+														<ul className={"text-red-600"}>
+															{missedGoals.map(
+																([missedGoal, value], index) => (
+																	<li key={index}>
+																		{`Missed goal stat for ${
+																			missedGoal.stat
+																		}. Value of ${
+																			value % 1 ? value.toFixed(2) : value
+																		} was not between ${
+																			missedGoal.minimum
+																		} and ${missedGoal.maximum}.`}
+																	</li>
+																),
+															)}
+														</ul>
+													</td>
+												</tr>
+											);
+										},
+									)}
+								</tbody>
+							</table>
 							<div className={"flex justify-center"}>
 								<DialogClose>
 									<Button>
@@ -229,11 +229,11 @@ export namespace thunks {
 								progress: 100,
 							}),
 						);
-								dispatch(
-									finishModOptimization(
-										message.data.result,
-										profile.toOptimizerRun(),
-									),
+						dispatch(
+							finishModOptimization(
+								message.data.result,
+								profile.toOptimizerRun(),
+							),
 						);
 						break;
 					case "Progress":
