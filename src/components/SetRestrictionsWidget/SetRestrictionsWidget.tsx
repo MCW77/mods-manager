@@ -3,14 +3,14 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 // modules
-import { CharacterEdit } from "../../state/modules/characterEdit";
+import { CharacterEdit } from "#/state/modules/characterEdit";
 
 // domain
-import setBonuses from "../../constants/setbonuses";
+import setBonuses from "#/constants/setbonuses";
 
-import SetBonus from "../../domain/SetBonus";
-import { SetRestrictions } from "../../domain/SetRestrictions";
-import { SetStats } from "../../domain/Stats";
+import SetBonus from "#/domain/SetBonus";
+import { SetRestrictions } from "#/domain/SetRestrictions";
+import { SetStats } from "#/domain/Stats";
 
 
 type ComponentProps = {
