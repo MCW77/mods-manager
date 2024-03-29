@@ -213,16 +213,17 @@ class CharacterEditView extends PureComponent<Props> {
               this.props.changeCharacterFilter(e.target.value.toLowerCase())
             }
           />
-          <Toggle
-            className="text-sm"
-            inputLabel="Show selected"
-            leftLabel=""
-            rightLabel=""
-            leftValue="hide"
-            rightValue="show"
-            value={this.props.hideSelectedCharacters ? "hide" : "show"}
-            onChange={() => this.props.toggleHideSelectedCharacters()}
-          />
+          <div>
+            <Label className="p-r-2" htmlFor={"hide-selected"}>
+              Hide selected
+            </Label>
+            <Switch
+              id={"hide-selected"}
+              checked={this.props.hideSelectedCharacters}
+              onCheckedChange={() => this.props.toggleHideSelectedCharacters()}
+            >
+            </Switch>
+          </div>
         </div>
       </DefaultCollapsibleCard>
     );
