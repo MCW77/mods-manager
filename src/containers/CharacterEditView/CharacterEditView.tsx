@@ -24,6 +24,7 @@ import keysWhere from "#/utils/keysWhere";
 
 // state
 import { IAppState } from "#/state/storage";
+import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
@@ -44,10 +45,8 @@ import defaultTemplates from "#/constants/characterTemplates.json";
 
 import { defaultBaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
 import { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { SelectedCharacters } from "#/domain/SelectedCharacters";
-import { UseCaseModes } from "#/domain/UseCaseModes";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -59,8 +58,6 @@ import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { HelpLink } from "#/components/HelpLink/HelpLink";
 import { OptimizerProgress } from "#/components/OptimizerProgress/OptimizerProgress";
 import { SettingsLink } from "#/components/SettingsLink/SettingsLink";
-import { Spoiler } from "#/components/Spoiler/Spoiler";
-import { Toggle } from "#/components/Toggle/Toggle";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Switch } from "#ui/switch";
@@ -360,7 +357,17 @@ class CharacterEditView extends PureComponent<Props> {
           </Button>
           <Button
             size="sm"
-            onClick={() => dialog$.show(this.generateCharacterListModal())}
+            onClick={async () => {
+              try {
+               isBusy$.set(true);
+               const ranking = await stackRank$.fetch(this.props.allyCode)
+               this.props.applyRanking(ranking);
+              } catch (error) {
+                if (error instanceof Error) this.props.showError(error.message);
+              } finally {
+                isBusy$.set(false);
+              }
+            }}
           >
             Auto-generate List
           </Button>
@@ -453,131 +460,6 @@ class CharacterEditView extends PureComponent<Props> {
           {this.props.baseCharacters[character.baseID]
             ? this.props.baseCharacters[character.baseID].name
             : character.baseID}
-        </div>
-      </div>
-    );
-  }
-
-  generateCharacterListModal() {
-    let form: HTMLFormElement | null;
-    let overwrite: Toggle | null;
-
-    return (
-      <div className="max-w-[40em]">
-        <h3 className={"gold"}>Auto-generate Character List</h3>
-        <p>
-          This utility will auto-generate a character list for you based on your
-          current roster and selected use case. This is intended to be an easy
-          starting point, and is by no means the final say in how your
-          characters should be ordered or what targets should be chosen.
-        </p>
-        <p>
-          <span className={"blue"}>
-            Provided by&nbsp;
-            <a
-              href={"https://swgoh.spineless.net/"}
-              target={"_blank"}
-              rel={"noopener noreferrer"}
-            >
-              https://swgoh.spineless.net/
-            </a>
-          </span>
-        </p>
-        <hr />
-        <form
-          className={"inline-block"}
-          ref={(element) => (form = element)}
-        >
-          <label htmlFor={"use-case"}>Select your use case:</label>
-          <Dropdown name={"use-case"} defaultValue={""} onChange={() => {}}>
-            <option value={""}>Grand Arena / Territory Wars</option>
-            <option value={1}>Light-side Territory Battle</option>
-            <option value={2}>Dark-side Territory Battle</option>
-            <option value={3}>Arena only</option>
-          </Dropdown>
-          <Toggle
-            name={"overwrite"}
-            ref={(toggle) => (overwrite = toggle)}
-            inputLabel={"Overwrite existing list?"}
-            leftValue={"false"}
-            leftLabel={"Append"}
-            rightValue={"true"}
-            rightLabel={"Overwrite"}
-            value={`true`}
-          />
-          <Spoiler title={"Advanced Settings"}>
-            <div className={"form-row"}>
-              <label htmlFor={"alignment-filter"}>Alignment:</label>
-              <Dropdown name={"alignment-filter"} defaultValue={0}>
-                <option value={0}>All Characters</option>
-                <option value={1}>Light Side Only</option>
-                <option value={2}>Dark Side Only</option>
-              </Dropdown>
-            </div>
-            <div className={"form-row"}>
-              <label htmlFor={"minimum-gear-level"}>Minimum Gear Level:</label>
-              <Dropdown name={"minimum-gear-level"} defaultValue={1}>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-                <option value={6}>6</option>
-                <option value={7}>7</option>
-                <option value={8}>8</option>
-                <option value={9}>9</option>
-                <option value={10}>10</option>
-                <option value={11}>11</option>
-                <option value={12}>12</option>
-                <option value={13}>13</option>
-              </Dropdown>
-            </div>
-            <div className={"form-row"}>
-              <label htmlFor={"max-list-size"}>Maximum list size:&nbsp;</label>
-              <input
-                name={"max-list-size"}
-                type={"text"}
-                inputMode={"numeric"}
-                size={3}
-              />
-            </div>
-          </Spoiler>
-        </form>
-        <hr />
-        <div className={"actions"}>
-          <Button
-            type={"button"}
-            onClick={() => dialog$.hide()}
-          >
-            Cancel
-          </Button>
-          <Button
-            type={"button"}
-            onClick={() => {
-              dialog$.hide();
-              if (form !== null) {
-                const parameters: CharacterListGenerationParameters = {
-                  ignoreArena: true,
-                };
-                if (form["alignment-filter"].value != "0")
-                  parameters.alignmentFilter = form["alignment-filter"].value;
-                if (form["minimum-gear-level"].value != "1")
-                  parameters.minimumGearLevel =
-                    form["minimum-gear-level"].value;
-                if (form["max-list-size"].value != "")
-                  parameters.top = form["max-list-size"].value;
-
-                this.props.generateCharacterList(
-                  form["use-case"].value,
-                  form.overwrite.value,
-                  this.props.allyCode,
-                  parameters
-                );
-              }
-            }}
-          >
-            Generate
-          </Button>
         </div>
       </div>
     );
@@ -861,14 +743,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   resetAllCharacterTargets: () => dispatch(CharacterEdit.thunks.resetAllCharacterTargets()),
   resetIncrementalIndex: () => dispatch(CharacterEdit.thunks.setOptimizeIndex(null)),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
-  generateCharacterList: (
-    mode: UseCaseModes,
-    behavior: boolean,
-    allyCode: string,
-    parameters: CharacterListGenerationParameters
-  ) => {
-    dispatch(Data.thunks.fetchCharacterList(mode, behavior, allyCode, parameters));
-    dialog$.hide();
+  applyRanking: (ranking: CharacterNames[]) => {
+    dispatch(Data.thunks.applyRanking(ranking));
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   appendTemplate: (templateName: string, selectedCharacters: SelectedCharacters) => {

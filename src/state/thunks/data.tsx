@@ -30,12 +30,11 @@ import { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/Pla
 
 import { BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
 import { Mod } from "#/domain/Mod";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
-import { UseCaseModes } from "#/domain/UseCaseModes";
+import { SelectedCharacters } from "#/domain/SelectedCharacters";
+
 
 // components
 import { Button } from "#ui/button";
@@ -56,28 +55,17 @@ interface FetchedPlayerData {
 
 
 export namespace thunks {
-
-  function applyCharacterList(overwrite: boolean, characterList: CharacterNames[]) {
+  export function applyRanking(ranking: CharacterNames[]): ThunkResult<void> {
     return App.thunks.updateProfile(profile => {
-      const startingList = overwrite ? [] : profile!.selectedCharacters;
-      const startingCharacterIDs = startingList.map(selectedCharacter => selectedCharacter.id)
-      const charactersToApply = characterList.filter(characterID => !startingCharacterIDs.includes(characterID))
-
-      const newSelectedCharacters = startingList.concat(
-        charactersToApply.map(characterID => {
-          const character = profile.characters[characterID]
-
-          return character ?
-            { id: characterID, target: Character.defaultTarget(character) } :
-            null
-        }).filter(x => null !== x) as {
-          id: CharacterNames,
-          target: OptimizationPlan
-        }[]
-      )
-
-      return profile.withSelectedCharacters(newSelectedCharacters)
-    })
+      const rankedSelectedCharacters: SelectedCharacters = [];
+      ranking.forEach(characterID => {
+        const currentSelectedCharacter = profile.selectedCharacters.find(selectedCharacter => selectedCharacter.id === characterID);
+        if (currentSelectedCharacter) {
+          rankedSelectedCharacters.push(currentSelectedCharacter);
+        }
+      });
+      return profile.withSelectedCharacters(rankedSelectedCharacters);
+    });
   }
 
   export function checkVersion(): ThunkResult<Promise<string>> {
@@ -91,33 +79,6 @@ export namespace thunks {
           dispatch(App.actions.showError(error.message));
           return '';
         });
-    }
-  }
-
-  export function fetchCharacterList(
-    mode: UseCaseModes,
-    overwrite: boolean,
-    allyCode: string,
-    parameters: CharacterListGenerationParameters,
-  ): ThunkResult<void> {
-    return function (dispatch) {
-      isBusy$.set(true);
-
-      return post(
-        'https://api.mods-optimizer.swgoh.grandivory.com/characterlist',
-        {
-          allyCode: allyCode,
-          mode: mode,
-          parameters: parameters,
-        }
-      )
-      .then((characterList: CharacterNames[]) => dispatch(applyCharacterList(overwrite, characterList)))
-      .catch(error => {
-        dispatch(App.actions.showError(error.message))
-      })
-      .finally(() => {
-        isBusy$.set(false);
-      })
     }
   }
 

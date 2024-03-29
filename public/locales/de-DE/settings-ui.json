@@ -49,6 +49,19 @@
       "Delete": "Lösche",
       "Replace": "Ersetzen",
       "Own": "Eigene Vorlagen"
+    },
+    "stackrank": {
+      "Title": "Rangreihenfolge",
+      "UseCase": "Verwendungszweck",
+      "IgnoreArena": "Ignoriere Arena",
+      "Alignment": "Gesinnung",
+      "AlignmentAll": "Alle Charaktere",
+      "AlignmentDark": "Dunkle Seite",
+      "AlignmentLight": "Helle Seite",
+      "AlignmentNeutral": "Neutral",
+      "MinimumGear": "Minimales Ausrüstungslevel",
+      "Top": "Maximale Listenlänge",
+      "OmicronBoosts": "Omicron-Verstärkungen"
     }
   }
 }

@@ -50,7 +50,8 @@
     "Title": "Mod Optimizer",
     "topics": {
       "1": "Global Settings",
-      "2": "Character Templates"
+      "2": "Character Templates",
+      "3": "Stack Rank"
     },
     "topicById": {
       "1": {
@@ -86,6 +87,19 @@
         "19": "Clear your selected characters and replace them with those from a template.",
         "20": "Apply targets only",
         "21": "Don't change which characters you have selected or their order, but for any that are in a template, change their targets to match."
+      },
+      "3": {
+        "Headline": "Stack Rank",
+        "1": "Set a dynamic order based on your current roster and selected use case. This is intended to be an easy starting point, and is by no means the final say in how your characters should be ordered or what targets should be chosen.",
+        "2": "Settings",
+        "3": "Use Case",
+        "4": "Select the game modes that you want to optimize for.",
+        "5": "Minimum Gear Level",
+        "6": "Only consider characters that are at least this gear level.",
+        "7": "Maximum List Length",
+        "8": "The maximum number of characters to include in the template. If you have more characters that meet the other criteria, they will be ignored.",
+        "9": "Omicron Boosts",
+        "10": "Select the game modes that will have characters with omicrons for that mode boosted."
       }
     }
   },

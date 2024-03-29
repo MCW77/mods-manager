@@ -49,6 +49,19 @@
       "Delete": "Delete",
       "Replace": "Replace",
       "Own": "Own templates"
+    },
+    "stackrank": {
+      "Title": "Stack Rank",
+      "UseCase": "Use case",
+      "IgnoreArena": "Ignore arena",
+      "Alignment": "Alignment",
+      "AlignmentAll": "All Characters",
+      "AlignmentDark": "Dark Side",
+      "AlignmentLight": "Light Side",
+      "AlignmentNeutral": "Neutral",
+      "MinimumGear": "Minimum gearlevel",
+      "Top": "Maximum list size",
+      "OmicronBoosts": "Omicron Boosts"
     }
   }
 }

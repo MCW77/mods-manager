@@ -50,7 +50,8 @@
     "Title": "Mod Optimierer",
     "topics": {
       "1": "Globale Einstellungen",
-      "2": "Charakter Vorlagen"
+      "2": "Charakter Vorlagen",
+      "3": "Rangreihenfolge"
     },
     "topicById": {
       "1": {
@@ -86,6 +87,19 @@
         "19": "Clear your selected characters and replace them with those from a template.",
         "20": "Apply targets only",
         "21": "Don't change which characters you have selected or their order, but for any that are in a template, change their targets to match."
+      },
+      "3": {
+        "Headline": "Rangreihenfolge",
+        "1": "Bestimme dynamisch die Reihenfolge, basierend auf deinem derzeitigen Roster und dem gewählten Verwendungszweck.",
+        "2": "Einstellungen",
+        "3": "Verwendungszweck",
+        "4": "Wähle die Spielmodi, für die optimiert wird.",
+        "5": "Minimales Ausrüstungslevel",
+        "6": "Ziehe nur Charaktere in Betracht, die mindestens dieses Ausrüstungslevel haben.",
+        "7": "Maximale Listenlänge",
+        "8": "Die maximale Anzahl von Charakteren, die in die Vorlage aufgenommen werden sollen.",
+        "9": "Omicron-Verstärkungen",
+        "10": "Wähle die Spielmodi, bei denen Charaktere mit Omicrons für den jeweiligen Spielmodus bevorzugt werden."
       }
     }
   },

@@ -25,6 +25,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 // containers
 import { TemplatesManager } from '#/containers/TemplatesManager/TemplatesManager';
+import { StackRankSettingsForm } from '#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm';
 
 const ReactiveInput = reactive(Input);
 const ReactiveSlider = reactive(SingleValueSlider);
@@ -153,6 +154,14 @@ const OptimizerSettingsView = () => {
             {t('optimizer.templates.Own')}:
           </Label>
           <FormInput><TemplatesManager/></FormInput>
+        </CardContent>
+      </Card>
+      <Card className="!bg-opacity-20 m-4">
+        <CardHeader>
+          <CardTitle>{t('optimizer.stackrank.Title')}</CardTitle>
+        </CardHeader>
+        <CardContent className={global}>
+          <StackRankSettingsForm/>
         </CardContent>
       </Card>
     </div>
