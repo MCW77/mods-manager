@@ -269,10 +269,10 @@ class Review extends React.PureComponent<Props> {
     return <div className={'review flex flex-col flex-grow-1 overflow-y-auto'}>
       <div className={'flex flex-col justify-around items-stretch p-y-2 min-h-min'}>
         <div className="flex flex-wrap justify-around items-stretch p-y-2">
-            {this.displayWidget()}
-            {this.actionsWidget()}
-            {this.summaryWidget()}
-          </div>
+          {this.displayWidget()}
+          {this.actionsWidget()}
+          {this.summaryWidget()}
+        </div>
         <div className="overflow-y-auto">
           {reviewContent}
         </div>
