@@ -2,7 +2,7 @@
 import React, { PureComponent } from "react";
 import { withTranslation, WithTranslation } from "react-i18next";
 import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
+import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import "./CharacterEditView.css";
@@ -19,54 +19,54 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import collectByKey from "../../utils/collectByKey";
-import keysWhere from "../../utils/keysWhere";
+import collectByKey from "#/utils/collectByKey";
+import keysWhere from "#/utils/keysWhere";
 
 // state
-import { IAppState } from "../../state/storage";
+import { IAppState } from "#/state/storage";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // modules
-import { App } from '../../state/modules/app';
-import { CharacterEdit } from '../../state/modules/characterEdit';
-import { Data } from '../../state/modules/data';
-import { Optimize } from '../../state/modules/optimize';
-import { Review } from '../../state/modules/review';
-import { Storage } from '../../state/modules/storage';
+import { App } from '#/state/modules/app';
+import { CharacterEdit } from '#/state/modules/characterEdit';
+import { Data } from '#/state/modules/data';
+import { Optimize } from '#/state/modules/optimize';
+import { Review } from '#/state/modules/review';
+import { Storage } from '#/state/modules/storage';
 
 // domain
 import {
   characterSettings,
   CharacterNames,
-} from "../../constants/characterSettings";
-import defaultTemplates from "../../constants/characterTemplates.json";
+} from "#/constants/characterSettings";
+import defaultTemplates from "#/constants/characterTemplates.json";
 
-import { defaultBaseCharacter } from "../../domain/BaseCharacter";
+import { defaultBaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { CharacterListGenerationParameters } from "../../domain/CharacterListGenerationParameters";
-import { OptimizationPlan } from "../../domain/OptimizationPlan";
-import { SelectedCharacters } from "../../domain/SelectedCharacters";
-import { UseCaseModes } from "../../domain/UseCaseModes";
+import { CharacterListGenerationParameters } from "#/domain/CharacterListGenerationParameters";
+import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { SelectedCharacters } from "#/domain/SelectedCharacters";
+import { UseCaseModes } from "#/domain/UseCaseModes";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DOMContent } from "../../components/types";
+import { DOMContent } from "#/components/types";
 
-import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
+import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { HelpLink } from "../../components/HelpLink/HelpLink";
-import { OptimizerProgress } from "../../components/OptimizerProgress/OptimizerProgress";
-import { SettingsLink } from "../../components/SettingsLink/SettingsLink";
-import { Spoiler } from "../../components/Spoiler/Spoiler";
-import { Toggle } from "../../components/Toggle/Toggle";
+import { Dropdown } from "#/components/Dropdown/Dropdown";
+import { HelpLink } from "#/components/HelpLink/HelpLink";
+import { OptimizerProgress } from "#/components/OptimizerProgress/OptimizerProgress";
+import { SettingsLink } from "#/components/SettingsLink/SettingsLink";
+import { Spoiler } from "#/components/Spoiler/Spoiler";
+import { Toggle } from "#/components/Toggle/Toggle";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Switch } from "#ui/switch";
 
 // containers
-import { CharacterList } from "../CharacterList/CharacterList";
+import { CharacterList } from "#/containers/CharacterList/CharacterList";
 
 
 class CharacterEditView extends PureComponent<Props> {
@@ -137,6 +137,7 @@ class CharacterEditView extends PureComponent<Props> {
         <div className="flex justify-around items-stretch w-full p-y-2">
           {this.filters()}
           {this.renderCharacterActions()}
+          {this.renderSelectionActions()}
           {this.renderTemplateActions()}
         </div>
         <div className="flex h-full">
@@ -374,6 +375,45 @@ class CharacterEditView extends PureComponent<Props> {
         </div>
       </DefaultCollapsibleCard>
     )
+  }
+
+  renderSelectionActions() {
+    return (
+      <DefaultCollapsibleCard title="Selection">
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            onClick={this.props.clearSelectedCharacters}
+          >
+            Clear
+          </Button>
+          <Button
+            type="button"
+            onClick={this.props.lockSelectedCharacters}
+          >
+            Lock All
+          </Button>
+          <Button
+            type="button"
+            onClick={this.props.unlockSelectedCharacters}
+          >
+            Unlock All
+          </Button>
+          <Button
+            type="button"
+            onClick={this.props.toggleCharacterEditSortView}
+          >
+            {this.props.sortView ? "Normal View" : "Expand View"}
+          </Button>
+          <Button
+            type="button"
+            onClick={() => this.props.addAll(this.props.highlightedCharacters, this.props.lastSelectedCharacter)}
+          >
+            Add all
+          </Button>
+        </div>
+      </DefaultCollapsibleCard>
+    );
   }
 
   /**
@@ -804,6 +844,11 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     target: OptimizationPlan,
     prevIndex: number
   ) => dispatch(CharacterEdit.thunks.selectCharacter(characterID, target, prevIndex)),
+  addAll: (allCharacters: Character.Character[], lastSelectedCharacter: number) => {
+    allCharacters.forEach((character, index) => {
+      dispatch(CharacterEdit.thunks.selectCharacter(character.baseID, Character.defaultTarget(character), index+lastSelectedCharacter));
+    });
+  },
   unselectCharacter: (characterIndex: number) =>
     dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex)),
   clearSelectedCharacters: () => dispatch(CharacterEdit.thunks.unselectAllCharacters()),
