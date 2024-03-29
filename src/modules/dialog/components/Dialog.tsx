@@ -1,13 +1,12 @@
 // react
-import * as React from 'react';
-import { observer, reactive } from '@legendapp/state/react';
+import React from "react";
+import { observer, reactive } from "@legendapp/state/react";
 
 // state
 import { dialog$ } from "../state/dialog";
 
 // components
-import * as DialogPrimitive from '#/components/Dialogs/Dialog/Dialog';
-import { Button } from '#ui/button';
+import * as DialogPrimitive from "#/components/Dialogs/Dialog/Dialog";
 
 const ReactiveDialog = reactive(DialogPrimitive.Dialog);
 
