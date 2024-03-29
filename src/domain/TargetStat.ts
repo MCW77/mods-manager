@@ -38,7 +38,7 @@ export const targetStatsNames: Readonly<TargetStatsNames[]> = [
 ] as const;
 
 export type TargetStat = {
-  id: number;
+  id: string;
   stat: TargetStatsNames;
   type: '+' | '*';
   minimum: number;
@@ -49,23 +49,15 @@ export type TargetStat = {
 
 export type TargetStats = TargetStat[];
 
-const nextId = (targetStats: TargetStats) => {
-  const ids = targetStats.map((targetStat) => targetStat.id);
-  const maxId = Math.max(...ids);
-  return maxId === -Infinity ? 0 : maxId + 1;
-};
-
 export const createTargetStat = (
   stat: TargetStatsNames = 'Speed',
-  stats: TargetStats,
-  id: number = 0,
   type: '+' | '*' = '+',
   minimum: number = 0,
   maximum: number = 0,
   relativeCharacterId: CharacterNames | 'null' = 'null',
   optimizeForTarget = true
 ): TargetStat => ({
-  id: stats ? nextId(stats) : id,
+  id: crypto.randomUUID(),
   stat,
   type,
   minimum,
