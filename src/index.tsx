@@ -1,3 +1,7 @@
+// state
+import "#/utils/globalLegendPersistSettings";
+import getDatabase from "./state/storage/Database";
+
 // react
 import { configureStore } from '@reduxjs/toolkit';
 import React, { Suspense } from 'react';
@@ -11,11 +15,7 @@ import '@unocss/reset/tailwind.css'
 import 'virtual:uno.css';
 import './i18n';
 
-
 import registerServiceWorker from './registerServiceWorker';
-
-// state
-import getDatabase from "./state/storage/Database";
 
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";
@@ -29,7 +29,6 @@ import { Spinner } from './components/Spinner/Spinner';
 
 // containers
 import { App } from './containers/App/App';
-
 
 const store = configureStore({
   reducer: modsOptimizer,

@@ -1,19 +1,7 @@
 // state
 import { observable } from "@legendapp/state";
-import { configureObservablePersistence, persistObservable } from "@legendapp/state/persist"
-import { ObservablePersistIndexedDB } from "@legendapp/state/persist-plugins/indexeddb"
+import { persistObservable } from "@legendapp/state/persist"
 
-
-configureObservablePersistence({
-  pluginLocal: ObservablePersistIndexedDB,
-  localOptions: {
-    indexedDB: {
-      databaseName: "GIMO",
-      version: 1,
-      tableNames: ["OptimizationSettings"],
-    },
-  },
-})
 export interface ProfileOptimizationSettings {
   forceCompleteSets: boolean;
   lockUnselectedCharacters: boolean;
@@ -56,7 +44,6 @@ export const optimizationSettings$ = observable<OptimizationSettings>(
 );
 
 persistObservable(optimizationSettings$.settingsByProfile, {
-  pluginLocal: ObservablePersistIndexedDB,
   local: {
     name: "OptimizationSettings",
     indexedDB: {

@@ -1,4 +1,5 @@
 // state
+import "../../src/utils/globalLegendPersistSettings";
 import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
 
 // domain
