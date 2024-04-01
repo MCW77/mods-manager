@@ -3,9 +3,11 @@ import React from "react";
 import { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // state
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import getDatabase from "#/state/storage/Database";
+
+import { dialog$ } from "#/modules/dialog/state/dialog";
+import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // actions
 import { actions } from "#/state/actions/optimize";
@@ -65,7 +67,7 @@ export namespace thunks {
 				dispatch(actions.updateProgress({} as OptimizationStatus));
 
 				// If this was an incremental optimization, leave the user on their current page
-				if (newProfile.incrementalOptimizeIndex !== null) {
+				if (incrementalOptimization$.indicesByProfile[newProfile.allyCode].peek() !== null) {
 					return true;
 				}
 

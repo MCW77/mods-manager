@@ -30,7 +30,6 @@ export interface IFlatPlayerProfile {
   selectedCharacters: SelectedCharacters;
   modAssignments: ModSuggestion[];
   hotUtilsSessionId?: string | null;
-  incrementalOptimizeIndex: number | null
 }
 
 /**
@@ -45,7 +44,6 @@ export class PlayerProfile {
   selectedCharacters: SelectedCharacters;
   modAssignments: ModSuggestion[];
   hotUtilsSessionId: string | null;
-  incrementalOptimizeIndex: number | null;
 
   static Default: PlayerProfile = new PlayerProfile(
     "",
@@ -56,22 +54,17 @@ export class PlayerProfile {
     [],
     [],
     null,
-    null,
   );
 
   /**
    * @param allyCode {string} The ally code for the player whose data this is
    * @param playerName {string} The player name associated with this profile
+   * @param playerValues {Object<string, PlayerValues>} A map from character IDs to PlayerValues
    * @param characters {Object<string, Character>} A map from character IDs to character objects
    * @param mods {Array<Mod>} An array of Mods
    * @param selectedCharacters {Array<ISelectedCharacter>} An array of Objects with Character IDs and OptimizationPlans
    * @param modAssignments {Array<Object>} An array of character definitions and assigned mods
-   * @param globalSettings {Object} An object containing settings that apply in the context of a player, rather than a
-   *                                character
-   * @param incrementalOptimizeIndex {number | null} Specify to terminate optimization at a specific character, for incremental optimization
-   * @param previousSettings {Object} Deprecated - An object that holds the previous values for characters, mods,
-   *                                  selectedCharacters, and modChangeThreshold. If none of these have changed, then
-   *                                  modAssignments shouldn't change on a reoptimization.
+   * @param hotUtilsSessionId {string} The session ID for the HotUtils session
    */
   constructor(
     allyCode: string,
@@ -82,7 +75,6 @@ export class PlayerProfile {
     selectedCharacters: SelectedCharacters = [],
     modAssignments: ModSuggestion[] = [],
     hotUtilsSessionId: string | null = null,
-    incrementalOptimizeIndex: number | null = null,
   ) {
     this.allyCode = allyCode;
     this.playerName = playerName;
@@ -92,7 +84,6 @@ export class PlayerProfile {
     this.selectedCharacters = selectedCharacters;
     this.modAssignments = modAssignments;
     this.hotUtilsSessionId = hotUtilsSessionId;
-    this.incrementalOptimizeIndex = incrementalOptimizeIndex;
   }
 
   withPlayerName(name: string) {
@@ -106,7 +97,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         this.modAssignments,
         this.hotUtilsSessionId,
-        this.incrementalOptimizeIndex,
       )
     } else {
       return this;
@@ -124,7 +114,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         this.modAssignments,
         this.hotUtilsSessionId,
-        this.incrementalOptimizeIndex,
       );
     } else {
       return this;
@@ -142,7 +131,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         this.modAssignments,
         this.hotUtilsSessionId,
-        this.incrementalOptimizeIndex,
       );
     } else {
       return this;
@@ -160,7 +148,6 @@ export class PlayerProfile {
         selectedCharacters,
         this.modAssignments,
         this.hotUtilsSessionId,
-        this.incrementalOptimizeIndex,
       );
     } else {
       return this;
@@ -184,7 +171,6 @@ export class PlayerProfile {
         this.selectedCharacters,
         modAssignments,
         this.hotUtilsSessionId,
-        this.incrementalOptimizeIndex,
       );
     } else {
       return this;
@@ -202,22 +188,7 @@ export class PlayerProfile {
       this.selectedCharacters,
       this.modAssignments,
       id,
-      this.incrementalOptimizeIndex,
     )
-  }
-
-  withOptimizeIndex(index: number | null) {
-    return new PlayerProfile(
-      this.allyCode,
-      this.playerName,
-      this.playerValues,
-      this.characters,
-      this.mods,
-      this.selectedCharacters,
-      this.modAssignments,
-      this.hotUtilsSessionId,
-      index,
-    );
   }
 
   /**
@@ -243,7 +214,6 @@ export class PlayerProfile {
       selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
       modAssignments: this.modAssignments,
       hotUtilsSessionId: this.hotUtilsSessionId,
-      incrementalOptimizeIndex: this.incrementalOptimizeIndex,
     };
   }
 
@@ -255,19 +225,9 @@ export class PlayerProfile {
         {} as PlayerValuesByCharacter,
         flatPlayerProfile.characters,
         flatPlayerProfile.mods.map(Mod.deserialize),
-        flatPlayerProfile.selectedCharacters.map(({ id, target }) => ({ id: id, target: target })),
-
-        flatPlayerProfile.modAssignments.map(({id, target, assignedMods, missedGoals, messages}) => {
-                    return {
-            id: id,
-            target: target,
-            assignedMods: assignedMods,
-            missedGoals: missedGoals,
-            messages: messages
-          }  as ModSuggestion
-        }) as ModSuggestion[],
+        flatPlayerProfile.selectedCharacters,
+        flatPlayerProfile.modAssignments,
         flatPlayerProfile.hotUtilsSessionId || null,
-        flatPlayerProfile.incrementalOptimizeIndex || null,
       )
     } else {
       return PlayerProfile.Default;

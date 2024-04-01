@@ -11,6 +11,7 @@ import areObjectsEquivalent from '#/utils/areObjectsEquivalent';
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // modules
@@ -43,7 +44,6 @@ import { Button } from "#ui/button";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 
-
 type ComponentProps = {
   character: Character.Character,
   characterIndex: number,
@@ -56,6 +56,7 @@ const CharacterEditForm = ({
   target,
 }: ComponentProps) => {
   const dispatch: ThunkDispatch = useDispatch();
+  const allyCode = useSelector(Storage.selectors.selectAllycode);
   const form = useRef<HTMLFormElement>(null);
   const targetStatsShouldOptimize = useRef<Toggle[]>([]);
   const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
@@ -708,6 +709,7 @@ const CharacterEditForm = ({
       onSubmit={(e) => {
         e.preventDefault();
         saveTarget();
+        incrementalOptimization$.indicesByProfile[allyCode].set(null);
         dialog$.hide();
         dispatch(CharacterEdit.thunks.closeEditCharacterForm());
       }}

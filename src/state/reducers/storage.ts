@@ -45,10 +45,6 @@ export namespace selectors {
   export const selectAllycode = (state: IAppState) => state.allyCode;
   export const selectActiveProfile = (state: IAppState) => state.profile;
   export const selectHotUtilsSubscription = (state: IAppState) => state.hotUtilsSubscription;
-  export const selectIsIncrementalOptimization = createSelector(
-    [selectActiveProfile],
-    (profile) => profile.incrementalOptimizeIndex !== null
-  );
   export const selectPlayerProfiles = (state: IAppState) => state.playerProfiles;
   export const selectCharactersInActiveProfile = createSelector(
     [selectActiveProfile],

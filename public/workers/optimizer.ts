@@ -1,5 +1,6 @@
 // state
 import "../../src/utils/globalLegendPersistSettings";
+import { incrementalOptimization$ } from '../../src/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
 
 // domain
@@ -97,7 +98,7 @@ self.onmessage = function (message) {
         allMods,
         characters,
         selectedCharacters,
-        profile.incrementalOptimizeIndex,
+        incrementalOptimization$.indicesByProfile[profile.allyCode].peek(),
         optimizationSettings$.settingsByProfile[profile.allyCode].peek(),
         lastRun,
       );

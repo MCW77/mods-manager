@@ -8,6 +8,7 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import { IAppState } from "../storage";
 import getDatabase, { IUserData } from "../storage/Database";
+import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 
 // modules
@@ -27,6 +28,7 @@ export namespace thunks {
     return function (dispatch) {
       const db = getDatabase();
       optimizationSettings$.deleteProfile(allyCode);
+      incrementalOptimization$.deleteProfile(allyCode);
       db.deleteProfile(
         allyCode,
         () => dispatch(Storage.thunks.loadProfiles(null)),

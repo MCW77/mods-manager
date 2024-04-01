@@ -10,6 +10,7 @@ import { readFile } from '#/utils/readFile';
 
 // state
 import { dialog$ } from '#/modules/dialog/state/dialog';
+import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 
 // modules
@@ -54,7 +55,11 @@ const GeneralSettingsView = () => {
         <Button
           type={'button'}
           variant={'destructive'}
-          onClick={() => {dispatch(App.thunks.reset()); optimizationSettings$.clearProfiles();}}
+          onClick={() => {
+            dispatch(App.thunks.reset());
+            optimizationSettings$.clearProfiles();
+            incrementalOptimization$.clearProfiles();
+          }}
         >
           {t('general.backup.ResetProceed')}
         </Button>

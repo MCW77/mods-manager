@@ -1,31 +1,32 @@
 // react
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "../../state/reducers/modsOptimizer";
+import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import "./CharacterList.css";
 
 // utils
-import groupByKey from "../../utils/groupByKey";
+import groupByKey from "#/utils/groupByKey";
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 
 // modules
-import { CharacterEdit } from '../../state/modules/characterEdit';
-import { Data } from '../../state/modules/data';
-import { Storage } from '../../state/modules/storage';
+import { CharacterEdit } from '#/state/modules/characterEdit';
+import { Data } from '#/state/modules/data';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import { characterSettings, CharacterNames } from "../../constants/characterSettings";
+import { characterSettings, CharacterNames } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { CharacterAvatar } from "../../components/CharacterAvatar/CharacterAvatar";
-import { Dropdown } from "../../components/Dropdown/Dropdown";
+import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { Button } from "#ui/button";
 
 // containers
@@ -35,6 +36,7 @@ import { CharacterEditForm } from "#/containers/CharacterEditForm/CharacterEditF
 const CharacterList = React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
+    const allyCode = useSelector(Storage.selectors.selectAllycode);
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
     const selectedCharacters = useSelector(CharacterEdit.selectors.selectSelectedCharactersInActiveProfile);
@@ -250,7 +252,7 @@ const CharacterList = React.memo(
     }
 
     const showEditCharacterModal = (character: Character.Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
-      dispatch(CharacterEdit.thunks.setOptimizeIndex(index));
+      incrementalOptimization$.indicesByProfile[allyCode].set(index);
       dialog$.show(
         <CharacterEditForm
           character={character}

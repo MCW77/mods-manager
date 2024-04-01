@@ -9,10 +9,12 @@ import nothing from "#/utils/nothing";
 import { mapValues } from "lodash-es";
 
 // state
+import getDatabase, { Database } from "#/state/storage/Database";
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-import getDatabase, { Database } from "#/state/storage/Database";
 
 
 // modules
@@ -348,6 +350,7 @@ export namespace thunks {
           new PlayerProfile(allyCode, fetchData.profile.name);
         baseProfile.allyCode = allyCode;
         optimizationSettings$.addProfile(allyCode);
+        incrementalOptimization$.addProfile(allyCode);
 
         const sessionId = fetchData.profile.sessionId  ?? baseProfile.hotUtilsSessionId;
         const oldProfile = baseProfile.withHotUtilsSessionId(sessionId);

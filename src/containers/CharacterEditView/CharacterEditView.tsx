@@ -24,9 +24,11 @@ import keysWhere from "#/utils/keysWhere";
 
 // state
 import { IAppState } from "#/state/storage";
-import { stackRank$ } from "#/modules/stackRank/state/stackRank";
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // modules
 import { App } from '#/state/modules/app';
@@ -236,7 +238,7 @@ class CharacterEditView extends PureComponent<Props> {
           <Button
             type="button"
             onClick={() => {
-              this.props.resetIncrementalIndex();
+              incrementalOptimization$.indicesByProfile[this.props.allyCode].set(null);
               const selectedTargets = this.props.selectedCharacters.map(
                 ({ target }) => target
               );
@@ -742,7 +744,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   toggleCharacterLock: (characterID: CharacterNames) =>
     dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
   resetAllCharacterTargets: () => dispatch(CharacterEdit.thunks.resetAllCharacterTargets()),
-  resetIncrementalIndex: () => dispatch(CharacterEdit.thunks.setOptimizeIndex(null)),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
   applyRanking: (ranking: CharacterNames[]) => {
     dispatch(Data.thunks.applyRanking(ranking));
