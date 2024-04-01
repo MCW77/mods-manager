@@ -9,7 +9,7 @@ export interface ProfileOptimizationSettings {
   simulate6EModSlice: boolean;
 }
 
-export type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
+type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 
 interface OptimizationSettings {
   settingsByProfile: SettingsByProfile;
@@ -36,9 +36,7 @@ export const optimizationSettings$ = observable<OptimizationSettings>(
       optimizationSettings$.settingsByProfile.set({});
     },
     deleteProfile: (allyCode: string) => {
-      const settingsByProfile = optimizationSettings$.settingsByProfile.peek();
-      delete settingsByProfile[allyCode];
-      optimizationSettings$.settingsByProfile.set(settingsByProfile);
+      optimizationSettings$.settingsByProfile[allyCode].delete();
     },
   },
 );
