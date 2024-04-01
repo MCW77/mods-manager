@@ -11,7 +11,7 @@ import { mapValues } from "lodash-es";
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { optimizationSettings$ } from "#/modules/optimization/state/optimization";
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import getDatabase, { Database } from "#/state/storage/Database";
 
 

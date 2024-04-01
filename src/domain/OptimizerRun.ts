@@ -1,6 +1,6 @@
 // domain
 import { GIMOFlatMod } from "./types/ModTypes";
-import { ProfileOptimizationSettings } from "#/modules/optimization/state/optimization";
+import { ProfileOptimizationSettings } from "#/modules/optimizationSettings/state/optimizationSettings";
 
 import { Characters } from "./Character";
 import { SelectedCharacters } from "./SelectedCharacters";

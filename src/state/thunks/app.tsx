@@ -8,7 +8,7 @@ import groupByKey from "../../utils/groupByKey";
 // state
 import { IAppState } from "../storage";
 import getDatabase, { IUserData } from "../storage/Database";
-import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
+import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 
 // modules
 import { actions } from '../actions/app';

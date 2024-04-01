@@ -1,5 +1,5 @@
 // state
-import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimization/state/optimization';
+import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
 
 // domain
 import type * as ModTypes from "../../src/domain/types/ModTypes";

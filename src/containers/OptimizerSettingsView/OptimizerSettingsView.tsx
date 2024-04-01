@@ -6,7 +6,7 @@ import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // state
 import { reactive } from '@legendapp/state/react';
-import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
+import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';

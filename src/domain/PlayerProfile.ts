@@ -9,7 +9,7 @@ import { OptimizationPlan } from "./OptimizationPlan";
 import * as OptimizerRun from "./OptimizerRun";
 import { SelectedCharacters } from "./SelectedCharacters";
 import { TargetStat } from "./TargetStat";
-import { optimizationSettings$ } from "#/modules/optimization/state/optimization";
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 
 
 export type MissedGoals = [TargetStat, number][];

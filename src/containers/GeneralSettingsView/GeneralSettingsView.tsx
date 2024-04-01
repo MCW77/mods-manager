@@ -10,7 +10,7 @@ import { readFile } from '#/utils/readFile';
 
 // state
 import { dialog$ } from '#/modules/dialog/state/dialog';
-import { optimizationSettings$ } from '#/modules/optimization/state/optimization';
+import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 
 // modules
 import { App } from '#/state/modules/app';
