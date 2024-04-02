@@ -55,6 +55,7 @@ const OptimizerSettingsView = () => {
           </Label>
           <div className={inputCSS + " flex gap-2"}>
             <ReactiveSlider
+              className={"min-w-[120px]"}
               id="threshold1"
               min={0}
               max={100}
@@ -65,7 +66,10 @@ const OptimizerSettingsView = () => {
               }}
             />
             <ReactiveInput
+              className={"w-20"}
               id="threshold2"
+              min={0}
+              max={100}
               type="number"
               $value={optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold}
               onChange={(event) =>
