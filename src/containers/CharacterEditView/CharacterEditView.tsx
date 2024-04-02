@@ -134,7 +134,7 @@ class CharacterEditView extends PureComponent<Props> {
   render() {
     return (
       <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
-        <div className="flex justify-around items-stretch w-full p-y-2">
+        <div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2">
           {this.filters()}
           {this.renderCharacterActions()}
           {this.renderSelectionActions()}
@@ -148,47 +148,16 @@ class CharacterEditView extends PureComponent<Props> {
             onDragLeave={CharacterEditView.dragLeave}
             onDrop={this.availableCharactersDrop.bind(this)}
           >
-            {this.props.highlightedCharacters.map((character) =>
-              this.characterBlock(character, "active")
-            )}
-            {this.props.availableCharacters.map((character) =>
-              this.characterBlock(character, "inactive")
-            )}
+            <div className={"grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]"}>
+              {this.props.highlightedCharacters.map((character) =>
+                this.characterBlock(character, "active")
+              )}
+              {this.props.availableCharacters.map((character) =>
+                this.characterBlock(character, "inactive")
+              )}
+            </div>
           </div>
           <div className="selected-characters">
-            <h4>
-              Selected Characters
-              <div className="flex gap-2 justify-center items-center">
-                <Button
-                  size="sm"
-                  onClick={this.props.clearSelectedCharacters}
-                >
-                  <FontAwesomeIcon icon={faBan} title="Clear"/>
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={this.props.lockSelectedCharacters}
-                >
-                  <FontAwesomeIcon icon={faLock} title="Lock All"/>
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={this.props.unlockSelectedCharacters}
-                >
-                  <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={this.props.toggleCharacterEditSortView}
-                >
-                  {this.props.sortView ?
-                    <FontAwesomeIcon icon={faCompress} title="Normal View"/>
-                  :
-                    <FontAwesomeIcon icon={faExpand} title="Expand View"/>
-                  }
-                </Button>
-              </div>
-            </h4>
             <CharacterList />
           </div>
         </div>
@@ -393,33 +362,46 @@ class CharacterEditView extends PureComponent<Props> {
       <DefaultCollapsibleCard title="Selection">
         <div className="flex gap-2">
           <Button
+            className="flex flex-gap-2"
             type="button"
             onClick={this.props.clearSelectedCharacters}
           >
-            Clear
+            <FontAwesomeIcon icon={faBan} title="Clear"/> Clear
           </Button>
           <Button
+            className="flex flex-gap-2"
             type="button"
             onClick={this.props.lockSelectedCharacters}
           >
+            <FontAwesomeIcon icon={faLock} title="Lock All"/>
             Lock All
           </Button>
           <Button
+            className="flex flex-gap-2"
             type="button"
             onClick={this.props.unlockSelectedCharacters}
           >
+            <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
             Unlock All
           </Button>
           <Button
+            className="flex flex-gap-2"
             type="button"
             onClick={this.props.toggleCharacterEditSortView}
           >
+            {this.props.sortView ?
+                <FontAwesomeIcon icon={faCompress} title="Normal View"/>
+              :
+                <FontAwesomeIcon icon={faExpand} title="Expand View"/>
+            }
             {this.props.sortView ? "Normal View" : "Expand View"}
           </Button>
           <Button
+            className="flex flex-gap-2"
             type="button"
             onClick={() => this.props.addAll(this.props.highlightedCharacters, this.props.lastSelectedCharacter)}
           >
+            <FontAwesomeIcon icon={faPlus} title={`Add all`}/>
             Add all
           </Button>
         </div>
@@ -731,9 +713,11 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     prevIndex: number
   ) => dispatch(CharacterEdit.thunks.selectCharacter(characterID, target, prevIndex)),
   addAll: (allCharacters: Character.Character[], lastSelectedCharacter: number) => {
+    isBusy$.set(true);
     allCharacters.forEach((character, index) => {
       dispatch(CharacterEdit.thunks.selectCharacter(character.baseID, Character.defaultTarget(character), index+lastSelectedCharacter));
     });
+    isBusy$.set(false);
   },
   unselectCharacter: (characterIndex: number) =>
     dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex)),
