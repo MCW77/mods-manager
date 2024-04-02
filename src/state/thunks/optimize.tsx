@@ -178,7 +178,7 @@ export namespace thunks {
 								</tbody>
 							</table>
 							<div className={"flex justify-center"}>
-								<DialogClose>
+								<DialogClose asChild>
 									<Button>
 										Close
 									</Button>
