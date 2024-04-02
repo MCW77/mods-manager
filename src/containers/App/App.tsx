@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // styles
-import './boilerplate.css';
 import './App.css';
 import {
   faGear,
