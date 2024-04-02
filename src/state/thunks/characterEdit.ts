@@ -596,10 +596,6 @@ export namespace thunks {
     });
   }
 
-  export function setOptimizeIndex(index: number | null): ThunkResult<void> {
-    return App.thunks.updateProfile(profile => profile.withOptimizeIndex(index));
-  }
-
   export function toggleCharacterLock(characterID: CharacterNames) {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
