@@ -9,6 +9,24 @@ import { SetRestrictions } from "#/domain/SetRestrictions";
 import { PrimaryStats } from "#/domain/Stats";
 import { TargetStats } from "#/domain/TargetStat";
 
+// #region OptimizableStats
+export type OptimizableStats =
+  | "Health"
+  | "Protection"
+  | "Speed"
+  | "Critical Damage %"
+  | "Potency %"
+  | "Tenacity %"
+  | "Physical Damage"
+  | "Special Damage"
+  | "Critical Chance"
+  | "Armor"
+  | "Resistance"
+  | "Accuracy %"
+  | "Critical Avoidance %"
+;
+// #endregion
+
 export const statWeights = {
   'Health': 2000,
   'Protection': 4000,
@@ -23,7 +41,7 @@ export const statWeights = {
   'Armor': 33,
   'Resistance': 33,
   'Accuracy %': 10,
-  'Critical Avoidance %': 10
+  'Critical Avoidance %': 10,
 };
 
 export const createOptimizationPlan = (
@@ -45,7 +63,7 @@ export const createOptimizationPlan = (
   primaryStatRestrictions = {},
   setRestrictions = {},
   targetStats: TargetStats = [],
-  useOnlyFullSets = false
+  useOnlyFullSets = false,
 ) => {
   return {
     name: name,
@@ -55,35 +73,57 @@ export const createOptimizationPlan = (
     upgradeMods: upgradeMods,
     useOnlyFullSets: useOnlyFullSets,
 
-    // Set raw values based on exactly what the user entered
-    rawHealth: health || 0,
-    rawProtection: protection || 0,
-    rawSpeed: speed || 0,
-    rawCritDmg: critDmg || 0,
-    rawPotency: potency || 0,
-    rawTenacity: tenacity || 0,
-    rawPhysDmg: physDmg || 0,
-    rawSpecDmg: specDmg || 0,
-    rawCritChance: critChance || 0,
-    rawArmor: armor || 0,
-    rawResistance: resistance || 0,
-    rawAccuracy: accuracy || 0,
-    rawCritAvoid: critAvoid || 0,
+    Health: health || 0,
+    Protection: protection || 0,
+    Speed: speed || 0,
+    'Critical Damage %': critDmg || 0,
+    'Potency %': potency || 0,
+    'Tenacity %': tenacity || 0,
+    'Physical Damage': physDmg || 0,
+    'Special Damage': specDmg || 0,
+    'Critical Chance': critChance || 0,
+    Armor: armor || 0,
+    Resistance: resistance || 0,
+    'Accuracy %': accuracy || 0,
+    'Critical Avoidance %': critAvoid || 0,
+  }
+}
 
-    // Set the values that will actually be used for scoring based on the weights of each stat
-    Health: (health || 0) / statWeights.Health,
-    Protection: (protection || 0) / statWeights.Protection,
-    Speed: (speed || 0) / statWeights.Speed,
-    'Critical Damage %': (critDmg || 0) / statWeights['Critical Damage %'],
-    'Potency %': (potency || 0) / statWeights['Potency %'],
-    'Tenacity %': (tenacity || 0) / statWeights['Tenacity %'],
-    'Physical Damage': (physDmg || 0) / statWeights['Physical Damage'],
-    'Special Damage': (specDmg || 0) / statWeights['Special Damage'],
-    'Critical Chance': (critChance || 0 ) / statWeights['Critical Chance'],
-    Armor: (armor || 0) / statWeights.Armor,
-    Resistance: (resistance || 0) / statWeights.Resistance,
-    'Accuracy %': (accuracy || 0) / statWeights['Accuracy %'],
-    'Critical Avoidance %': (critAvoid || 0) / statWeights['Critical Avoidance %'],
+export const normalize = (plan: OptimizationPlan) => {
+  return {
+    ...plan,
+    Health: (plan.Health || 0) / statWeights.Health,
+    Protection: (plan.Protection || 0) / statWeights.Protection,
+    Speed: (plan.Speed || 0) / statWeights.Speed,
+    'Critical Damage %': (plan["Critical Damage %"] || 0) / statWeights['Critical Damage %'],
+    'Potency %': (plan["Potency %"] || 0) / statWeights['Potency %'],
+    'Tenacity %': (plan["Tenacity %"] || 0) / statWeights['Tenacity %'],
+    'Physical Damage': (plan["Physical Damage"] || 0) / statWeights['Physical Damage'],
+    'Special Damage': (plan["Special Damage"] || 0) / statWeights['Special Damage'],
+    'Critical Chance': (plan["Critical Chance"] || 0 ) / statWeights['Critical Chance'],
+    Armor: (plan.Armor || 0) / statWeights.Armor,
+    Resistance: (plan.Resistance || 0) / statWeights.Resistance,
+    'Accuracy %': (plan["Accuracy %"] || 0) / statWeights['Accuracy %'],
+    'Critical Avoidance %': (plan["Critical Avoidance %"] || 0) / statWeights['Critical Avoidance %'],
+  }
+}
+
+export const denormalize = (plan: OptimizationPlan) => {
+  return {
+    ...plan,
+    Health: (plan.Health || 0) * statWeights.Health,
+    Protection: (plan.Protection || 0) * statWeights.Protection,
+    Speed: (plan.Speed || 0) * statWeights.Speed,
+    'Critical Damage %': (plan["Critical Damage %"] || 0) * statWeights['Critical Damage %'],
+    'Potency %': (plan["Potency %"] || 0) * statWeights['Potency %'],
+    'Tenacity %': (plan["Tenacity %"] || 0) * statWeights['Tenacity %'],
+    'Physical Damage': (plan["Physical Damage"] || 0) * statWeights['Physical Damage'],
+    'Special Damage': (plan["Special Damage"] || 0) * statWeights['Special Damage'],
+    'Critical Chance': (plan["Critical Chance"] || 0 ) * statWeights['Critical Chance'],
+    Armor: (plan.Armor || 0) * statWeights.Armor,
+    Resistance: (plan.Resistance || 0) * statWeights.Resistance,
+    'Accuracy %': (plan["Accuracy %"] || 0) * statWeights['Accuracy %'],
+    'Critical Avoidance %': (plan["Critical Avoidance %"] || 0) * statWeights['Critical Avoidance %'],
   }
 }
 
@@ -163,11 +203,9 @@ export const equals = (first: OptimizationPlan, second: OptimizationPlan) => {
   )
 }
 
-export type PrimaryStatRestrictions = {
-  [key in ModTypes.VariablePrimarySlots]: PrimaryStats.GIMOStatNames
-}
+export type PrimaryStatRestrictions = Record<ModTypes.VariablePrimarySlots, PrimaryStats.GIMOStatNames>;
 
-export interface OptimizationPlan {
+export interface OptimizationPlan extends Record<OptimizableStats, number>{
   name: string;
 
   Health: number;
@@ -184,19 +222,6 @@ export interface OptimizationPlan {
   'Accuracy %': number;
   'Critical Avoidance %': number;
 
-  rawHealth: number;
-  rawProtection: number;
-  rawSpeed: number;
-  rawCritDmg: number;
-  rawPotency: number;
-  rawTenacity: number;
-  rawPhysDmg: number;
-  rawSpecDmg: number;
-  rawCritChance: number;
-  rawArmor: number;
-  rawResistance: number;
-  rawAccuracy: number;
-  rawCritAvoid: number;
   primaryStatRestrictions: PrimaryStatRestrictions;
   setRestrictions: SetRestrictions;
   targetStats: TargetStats;
@@ -204,6 +229,4 @@ export interface OptimizationPlan {
   useOnlyFullSets: boolean;
 }
 
-export type OptimizationPlansById = {
-  [id in CharacterNames]: OptimizationPlan[]
-}
+export type OptimizationPlansById = Record<CharacterNames, OptimizationPlan[]>;

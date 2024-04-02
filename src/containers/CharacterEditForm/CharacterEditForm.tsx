@@ -1,15 +1,15 @@
 // react
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
-// styles
-import "./CharacterEditForm.css";
+import { reactive, useObservable } from "@legendapp/state/react";
 
 // utils
 import areObjectsEquivalent from '#/utils/areObjectsEquivalent';
 
 // state
+import { ObservableObject, beginBatch, endBatch } from "@legendapp/state";
+
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -22,27 +22,40 @@ import { Storage } from '#/state/modules/storage';
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
-import type * as ModTypes from "#/domain/types/ModTypes";
+import setBonuses from "#/constants/setbonuses";
 
-import { BaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { CharacterEditMode } from "#/domain/CharacterEditMode";
 import { CharacterSettings } from "#/domain/CharacterSettings";
-import { Mod } from "#/domain/Mod";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { ModSuggestion } from "#/domain/PlayerProfile";
-import { TargetStat, TargetStatEntry, TargetStats } from "#/domain/TargetStat";
+import { SetStats } from "#/domain/Stats";
+import { TargetStat, createTargetStat } from "#/domain/TargetStat";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { OptimizerProgress } from '#/components/OptimizerProgress/OptimizerProgress';
-import { RangeInput } from "#/components/RangeInput/RangeInput";
 import { SetRestrictionsWidget } from "#/components/SetRestrictionsWidget/SetRestrictionsWidget";
-import { Toggle, Toggle2 } from "#/components/Toggle/Toggle";
+import { StatWeightsWidget } from "#/components/StatWeightsWidget/StatWeightsWidget";
+import { TargetStatsWidget } from "#/components/TargetStatsWidget/TargetStatsWidget";
+import { PrimaryStatRestrictionsWidget } from "#/components/PrimaryStatRestrictionsWidget/PrimaryStatRestrictionsWidget";
 import { Button } from "#ui/button";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs-vertical";
+
+type ObservableOptimizationPlan = ObservableObject<{
+  target: OptimizationPlan.OptimizationPlan,
+  addSetBonus: (setName: SetStats.GIMOStatNames) => void,
+  addTargetStat: () => void,
+  removeSetBonus: (setName: SetStats.GIMOStatNames) => void,
+  removeTargetStatById: (id: string) => void,
+  zeroAll: () => void,
+}>
+export type { ObservableOptimizationPlan };
+
+const ReactiveInput = reactive(Input);
+const ReactiveSelect = reactive(Select);
 
 type ComponentProps = {
   character: Character.Character,
@@ -55,409 +68,93 @@ const CharacterEditForm = ({
 }: ComponentProps) => {
   const dispatch: ThunkDispatch = useDispatch();
   const allyCode = useSelector(Storage.selectors.selectAllycode);
-  const form = useRef<HTMLFormElement>(null);
-  const targetStatsShouldOptimize = useRef<Toggle[]>([]);
   const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
-  const mods = useSelector(Storage.selectors.selectModsInActiveProfile)
   const editMode = useSelector(CharacterEdit.selectors.selectCharacterEditMode);
-  const setRestrictions = useSelector(CharacterEdit.selectors.selectSetRestrictions);
-  const targetStats = useSelector(CharacterEdit.selectors.selectTargetStats);
   const progress = useSelector(Optimize.selectors.selectProgress);
   const modAssignments = useSelector(Storage.selectors.selectModAssignmentsInActiveProfile);
 
+  const cloneCharacter = () => structuredClone(character);
+  const cloneOptimizationPlan = () => structuredClone(target);
+
+  let character$: ObservableObject<{character: Character.Character}> = useObservable({
+    character: cloneCharacter(),
+  });
+  let target$: ObservableOptimizationPlan = useObservable({
+    target: cloneOptimizationPlan(),
+    addSetBonus: (setName: SetStats.GIMOStatNames) => {
+      let restrictions = target$.target.setRestrictions.peek();
+      let newRestrictions = setName in restrictions ?
+        {...restrictions, [setName]: restrictions[setName]+1}
+      :
+        {...restrictions, [setName]: 1};
+      const newRestrictionsKVs = Object.entries(newRestrictions) as [SetStats.GIMOStatNames, number][];
+      const requiredSlots = newRestrictionsKVs.reduce((acc, [setName, count]: [SetStats.GIMOStatNames, number]) =>
+        acc + setBonuses[setName].numberOfModsRequired * count, 0);
+      if (requiredSlots <= 6) {
+        target$.target.setRestrictions.set(newRestrictions);
+      }
+    },
+    addTargetStat: () => {
+      target$.target.targetStats.push(createTargetStat('Speed'));
+      target$.target.upgradeMods.set(true);
+    },
+    removeSetBonus: (setName: SetStats.GIMOStatNames) => {
+      let restrictions = target$.target.setRestrictions.peek();
+      if (restrictions[setName] !== undefined) {
+        if (restrictions[setName] > 0) {
+          target$.target.setRestrictions[setName].set(restrictions[setName] -1);
+        } else {
+          target$.target.setRestrictions[setName].delete();
+        }
+      }
+    },
+    removeTargetStatById: (id: string) => {
+      let index = target$.target.targetStats.peek().findIndex((ts: TargetStat) => ts.id === id);
+      if (index !== -1) {
+        target$.target.targetStats.splice(index, 1);
+      }
+    },
+    zeroAll: () => {
+      beginBatch();
+      target$.target["Health"].set(0);
+      target$.target["Protection"].set(0);
+      target$.target["Speed"].set(0);
+      target$.target["Critical Damage %"].set(0);
+      target$.target["Potency %"].set(0);
+      target$.target["Tenacity %"].set(0);
+      target$.target["Physical Damage"].set(0);
+      target$.target["Special Damage"].set(0);
+      target$.target["Critical Chance"].set(0);
+      target$.target["Armor"].set(0);
+      target$.target["Resistance"].set(0);
+      target$.target["Accuracy %"].set(0);
+      target$.target["Critical Avoidance %"].set(0);
+      endBatch();
+    }
+  });
+
   useEffect(() => {
-    dispatch(CharacterEdit.actions.changeSetRestrictions(target.setRestrictions));
-    dispatch(CharacterEdit.actions.changeTargetStats(target.targetStats));
+    const characterDispose = character$.onChange(
+      value => console.log("character$ changed to", value ?? typeof value)
+    );
+    const dispose = target$.onChange(
+      value => console.log("target$ changed to", value ?? typeof value)
+    );
+    console.log('character$ and target$ listeners added');
+    character$.character.set(cloneCharacter());
+    target$.target.set(cloneOptimizationPlan());
+    return () => {
+      character$.character.set(cloneCharacter());
+      target$.target.set(cloneOptimizationPlan());
+      characterDispose();
+      console.log('character$ listener removed');
+      dispose();
+      console.log('target$ listener removed');
+    }
   }, []);
 
-  /**
-   * Renders a form element for managing a target stat
-   *
-   * @param targetStats {Array<TargetStat>}
-   * @returns {*}
-   */
-   const targetStatForm = (targetStats: TargetStats) => {
-    const baseCharacters2 = Object.values(baseCharacters).slice(0) as BaseCharacter[];
-    baseCharacters2.sort((a, b) => a.name.localeCompare(b.name))
-
-    const targetStatRows = targetStats.map((targetStat: TargetStatEntry, index: number) => {
-      return <div className={'form-row center'} key={targetStat.key}>
-        <Toggle
-          ref={(tog) => {
-            if (tog) {
-              targetStatsShouldOptimize.current[index] = tog
-            }
-          }}
-          inputLabel={'Target Stat Type'}
-          name={'optimize-for-target[]'}
-          leftLabel={'Optimize'}
-          leftValue={'true'}
-          rightLabel={'Report Only'}
-          rightValue={'false'}
-          value={`${targetStat.target.optimizeForTarget}`}
-          disabled={targetStat.target.stat === 'Health+Protection'}
-        />
-        <Button
-          type={'button'}
-          size={'sm'}
-          variant={'destructive'}
-          className={''}
-          onClick={() => dispatch(CharacterEdit.actions.removeTargetStat(index))}
-        >
-          -
-        </Button>
-        <span className={'dropdown'}>
-          <select name={'target-stat-name[]'} defaultValue={targetStat.target.stat}
-            onChange={event => {
-              if (targetStatsShouldOptimize.current[index] !== null) {
-                if (event.target.value === 'Health+Protection') {
-                  targetStatsShouldOptimize.current[index].updateValue('false');
-                  targetStatsShouldOptimize.current[index].disable();
-                } else {
-                  targetStatsShouldOptimize.current[index].enable();
-                }
-              }
-            }}
-          >
-            {TargetStat.possibleTargetStats.map(stat => <option key={stat} value={stat}>{stat}</option>)}
-          </select>
-        </span>
-        &nbsp; must be between &nbsp;
-        <input
-          type={'number'}
-          step={'any'}
-          name={'target-stat-min[]'}
-          defaultValue={targetStat.target.minimum} />
-          &nbsp; and &nbsp;
-        <input
-          type={'number'}
-          step={'any'}
-          name={'target-stat-max[]'}
-          defaultValue={targetStat.target.maximum} />
-        <br />
-          compared to &nbsp;
-        <span className={'dropdown'}>
-          <select name={'target-stat-relative-character[]'} defaultValue={targetStat.target.relativeCharacterId !== 'null' ? targetStat.target.relativeCharacterId : ''}>
-            <option value={''}>No one</option>
-            {baseCharacters2.map(
-              gs => <option key={gs.baseID} value={gs.baseID}>{gs.name}</option>
-            )}
-          </select>
-        </span>
-        &nbsp; using &nbsp;
-        <span className={'dropdown'}>
-          <select name={'target-stat-type[]'} defaultValue={targetStat.target.type || '+'}>
-            <option value='+'>+/-</option>
-            <option value='%'>%</option>
-          </select>
-        </span>
-      </div>
-    }
-    );
-
-    return <div>
-      <h4>Set Target Stats:</h4>
-      <p><em>Note that adding target stats makes the optimizer take a <strong>LONG</strong> time to complete.</em></p>
-      <p>
-        Setting any Target Stat will make the optimizer assume that all mods are being leveled to 15 for this character.
-      </p>
-      {targetStatRows}
-      <div className={'form-row center'}>
-        <Button
-          type={'button'}
-          size={'sm'}
-          onClick={() => dispatch(CharacterEdit.actions.addTargetStat(new TargetStat('Speed')))}
-        >
-          +
-        </Button>
-      </div>
-    </div>;
-  }
-
-  /**
-   * Renders a form for stat weights that uses range inputs between -100 and 100
-   *
-   * @param optimizationPlan OptimizationPlan The OptimizationPlan that contains the default values to display
-   */
-  const basicForm = (optimizationPlan: OptimizationPlan.OptimizationPlan) => {
-    return <div id={'basic-form'}>
-      <div className={'form-row'}>
-        <label htmlFor="health-stat">Health:</label>
-        <RangeInput
-          editable={true}
-          id={'health-stat'}
-          name={'health-stat'}
-          defaultValue={optimizationPlan.rawHealth}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="protection-stat">Protection:</label>
-        <RangeInput
-          editable={true}
-          id={'protection-stat'}
-          name={'protection-stat'}
-          defaultValue={optimizationPlan.rawProtection}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="speed-stat">Speed:</label>
-        <RangeInput
-          editable={true}
-          id={'speed-stat'}
-          name={'speed-stat'}
-          defaultValue={optimizationPlan.rawSpeed}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="critChance-stat">Critical Chance %:</label>
-        <RangeInput
-          editable={true}
-          id={'critChance-stat'}
-          name={'critChance-stat'}
-          defaultValue={optimizationPlan.rawCritChance}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="critDmg-stat">Critical Damage %:</label>
-        <RangeInput
-          editable={true}
-          id={'critDmg-stat'}
-          name={'critDmg-stat'}
-          defaultValue={optimizationPlan.rawCritDmg}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="potency-stat">Potency %:</label>
-        <RangeInput
-          editable={true}
-          id={'potency-stat'}
-          name={'potency-stat'}
-          defaultValue={optimizationPlan.rawPotency}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="tenacity-stat">Tenacity %:</label>
-        <RangeInput
-          editable={true}
-          id={'tenacity-stat'}
-          name={'tenacity-stat'}
-          defaultValue={optimizationPlan.rawTenacity}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="physDmg-stat">Physical Damage:</label>
-        <RangeInput
-          editable={true}
-          id={'physDmg-stat'}
-          name={'physDmg-stat'}
-          defaultValue={optimizationPlan.rawPhysDmg}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="specDmg-stat">Special Damage:</label>
-        <RangeInput
-          editable={true}
-          id={'specDmg-stat'}
-          name={'specDmg-stat'}
-          defaultValue={optimizationPlan.rawSpecDmg}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor={'defense-stat'}>Defense:</label>
-        <RangeInput
-          editable={true}
-          id={'defense-stat'}
-          name={'defense-stat'}
-          defaultValue={optimizationPlan.rawArmor + optimizationPlan.rawResistance}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="accuracy-stat">Accuracy:</label>
-        <RangeInput
-          editable={true}
-          id={'accuracy-stat'}
-          name={'accuracy-stat'}
-          defaultValue={optimizationPlan.rawAccuracy}
-          min={-100}
-          max={100}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="critAvoid-stat">Critical Avoidance:</label>
-        <RangeInput
-          editable={true}
-          id={'critAvoid-stat'}
-          name={'critAvoid-stat'}
-          defaultValue={optimizationPlan.rawCritAvoid}
-          min={-100}
-          max={100}
-        />
-      </div>
-    </div>;
-  }
-
-  /**
-   * Renders a form for stat weights that allows for granular control over weights
-   *
-   * @param optimizationPlan OptimizationPlan The OptimizationPlan that contains the default values to display
-   */
-  const advancedForm = (optimizationPlan: OptimizationPlan.OptimizationPlan) => {
-    return <div id={'advanced-form'}>
-      <div className={'form-row'}>
-        <label htmlFor="health-stat-advanced">Health:</label>
-        <input
-          id={'health-stat-advanced'}
-          name={'health-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan.Health}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="protection-stat-advanced">Protection:</label>
-        <input
-          id={'protection-stat-advanced'}
-          name={'protection-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan.Protection}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="speed-stat-advanced">Speed:</label>
-        <input
-          id={'speed-stat-advanced'}
-          name={'speed-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan.Speed}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="critChance-stat-advanced">Critical Chance %:</label>
-        <input
-          id={'critChance-stat-advanced'}
-          name={'critChance-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Critical Chance']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="critDmg-stat-advanced">Critical Damage %:</label>
-        <input
-          id={'critDmg-stat-advanced'}
-          name={'critDmg-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Critical Damage %']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="potency-stat-advanced">Potency %:</label>
-        <input
-          id={'potency-stat-advanced'}
-          name={'potency-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Potency %']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="tenacity-stat-advanced">Tenacity %:</label>
-        <input
-          id={'tenacity-stat-advanced'}
-          name={'tenacity-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Tenacity %']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="physDmg-stat-advanced">Physical Damage:</label>
-        <input
-          id={'physDmg-stat-advanced'}
-          name={'physDmg-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Physical Damage']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="specDmg-stat-advanced">Special Damage:</label>
-        <input
-          id={'specDmg-stat-advanced'}
-          name={'specDmg-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Special Damage']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="armor-stat-advanced">Armor:</label>
-        <input
-          id={'armor-stat-advanced'}
-          name={'armor-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan.Armor}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="resistance-stat-advanced">Resistance:</label>
-        <input
-          id={'resistance-stat-advanced'}
-          name={'resistance-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan.Resistance}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="accuracy-stat-advanced">Accuracy:</label>
-        <input
-          id={'accuracy-stat-advanced'}
-          name={'accuracy-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Accuracy %']}
-        />
-      </div>
-      <div className={'form-row'}>
-        <label htmlFor="critAvoid-stat-advanced">Critical Avoidance:</label>
-        <input
-          id={'critAvoid-stat-advanced'}
-          name={'critAvoid-stat-advanced'}
-          type={'number'}
-          step={.01}
-          defaultValue={optimizationPlan['Critical Avoidance %']}
-        />
-      </div>
-    </div>;
-  }
-
   const missedGoalsSection = (modAssignments: ModSuggestion | null) => {
-    if ((targetStats || []).length === 0) {
+    if ((target$.target.targetStats.peek() || []).length === 0) {
       return;
     }
 
@@ -531,124 +228,16 @@ const CharacterEditForm = ({
   }
 
   const saveTarget = () => {
-    const form2 = form.current!;
-    const planName = 'lock' !== form2['plan-name'].value ? form2['plan-name'].value : 'custom';
-    let newTarget;
-    let primaryStatRestrictions: OptimizationPlan.PrimaryStatRestrictions = {} as OptimizationPlan.PrimaryStatRestrictions;
-    const targetStats = [];
-    if (form2['target-stat-name[]']) {
-      const targetStatNames = form2['target-stat-name[]'] instanceof NodeList ?
-        form2['target-stat-name[]'] :
-        [form2['target-stat-name[]']];
-      const targetStatMins = form2['target-stat-min[]'] instanceof NodeList ?
-        form2['target-stat-min[]'] :
-        [form2['target-stat-min[]']];
-      const targetStatMaxes = form2['target-stat-max[]'] instanceof NodeList ?
-        form2['target-stat-max[]'] :
-        [form2['target-stat-max[]']];
-      const targetStatRelativeCharacters = form2['target-stat-relative-character[]'] instanceof NodeList ?
-        form2['target-stat-relative-character[]'] :
-        [form2['target-stat-relative-character[]']];
-      const targetStatTypes = form2['target-stat-type[]'] instanceof NodeList ?
-        form2['target-stat-type[]'] :
-        [form2['target-stat-type[]']];
+    const isBasic = 'basic' === editMode;
+    let newTarget: OptimizationPlan.OptimizationPlan = target$.target.peek();
+    if (!isBasic) newTarget = OptimizationPlan.denormalize(newTarget);
+    const char = character$.character.peek();
 
-      for (let i = 0; i < targetStatNames.length; i++) {
-        const name = targetStatNames[i].value;
-        const minimum = isNaN(targetStatMins[i].valueAsNumber) ? 0 : targetStatMins[i].valueAsNumber;
-        const maximum = isNaN(targetStatMaxes[i].valueAsNumber) ? 100000000 : targetStatMaxes[i].valueAsNumber;
-        const relativeCharacter = targetStatRelativeCharacters[i].value || null;
-        const type = targetStatTypes[i].value || null;
-        const shouldOptimize = targetStatsShouldOptimize.current![i]?.value === 'true';
-
-        if (minimum < maximum) {
-          targetStats.push(new TargetStat(name, type, minimum, maximum, relativeCharacter, shouldOptimize));
-        } else {
-          targetStats.push(new TargetStat(name, type, maximum, minimum, relativeCharacter, shouldOptimize));
-        }
-      }
-    }
-
-    for (let slot of ['arrow', 'triangle', 'circle', 'cross'] as ModTypes.VariablePrimarySlots[]) {
-      if (form2[`${slot}-primary`].value) {
-        primaryStatRestrictions[slot] = form2[`${slot}-primary`].value;
-      }
-    }
-
-    if ('advanced' === editMode) {
-      // Advanced form
-      newTarget = OptimizationPlan.createOptimizationPlan(
-        planName,
-        form2['health-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Health,
-        form2['protection-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Protection,
-        form2['speed-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Speed,
-        form2['critDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Critical Damage %'],
-        form2['potency-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Potency %'],
-        form2['tenacity-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Tenacity %'],
-        form2['physDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Physical Damage'],
-        form2['specDmg-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Special Damage'],
-        form2['critChance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Critical Chance'],
-        form2['armor-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Armor,
-        form2['resistance-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights.Resistance,
-        form2['accuracy-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Accuracy %'],
-        form2['critAvoid-stat-advanced'].valueAsNumber * OptimizationPlan.statWeights['Critical Avoidance %'],
-        form2['upgrade-mods'].checked || targetStats.length > 0,
-        primaryStatRestrictions,
-        setRestrictions,
-        targetStats,
-        form2['use-full-sets'].checked
-      );
-    } else {
-      // Basic form
-      newTarget = OptimizationPlan.createOptimizationPlan(
-        planName,
-        form2['health-stat'].valueAsNumber,
-        form2['protection-stat'].valueAsNumber,
-        form2['speed-stat'].valueAsNumber,
-        form2['critDmg-stat'].valueAsNumber,
-        form2['potency-stat'].valueAsNumber,
-        form2['tenacity-stat'].valueAsNumber,
-        form2['physDmg-stat'].valueAsNumber,
-        form2['specDmg-stat'].valueAsNumber,
-        form2['critChance-stat'].valueAsNumber,
-        form2['defense-stat'].valueAsNumber / 2,
-        form2['defense-stat'].valueAsNumber / 2,
-        form2['accuracy-stat'].valueAsNumber,
-        form2['critAvoid-stat'].valueAsNumber,
-        form2['upgrade-mods'].checked || targetStats.length > 0,
-        primaryStatRestrictions,
-        setRestrictions,
-        targetStats,
-        form2['use-full-sets'].checked
-      );
-    }
-
-    dispatch(CharacterEdit.thunks.changeMinimumModDots(character.baseID, +form2['mod-dots'].value));
-    dispatch(CharacterEdit.thunks.changeSliceMods(character.baseID, form2['slice-mods'].checked));
-    dispatch(CharacterEdit.thunks.unlockCharacter(character.baseID));
-    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(character.baseID, newTarget));
-
+    dispatch(CharacterEdit.thunks.changeMinimumModDots(char.baseID, char.optimizerSettings.minimumModDots));
+    dispatch(CharacterEdit.thunks.changeSliceMods(char.baseID, char.optimizerSettings.sliceMods));
+    dispatch(CharacterEdit.thunks.unlockCharacter(char.baseID));
+    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(char.baseID, newTarget));
   }
-
-
-  const modsPrimaries = {
-    arrowPrimaries: Array.from(new Set(
-      mods.filter((mod: Mod) => mod.slot === 'arrow')
-          .map((mod: Mod) => mod.primaryStat.type)
-    )),
-    trianglePrimaries: Array.from(new Set(
-      mods.filter((mod: Mod) => mod.slot === 'triangle')
-          .map((mod: Mod) => mod.primaryStat.type)
-    )),
-    circlePrimaries: Array.from(new Set(
-      mods.filter((mod: Mod) => mod.slot === 'circle')
-          .map((mod: Mod) => mod.primaryStat.type)
-    )),
-    crossPrimaries: Array.from(new Set(
-      mods.filter((mod: Mod) => mod.slot === 'cross')
-          .map((mod: Mod) => mod.primaryStat.type)
-    )),
-  };
 
   const defaultTarget = characterSettings[character.baseID] ?
   (characterSettings[character.baseID] as CharacterSettings).targets.find(defaultTarget => defaultTarget.name === target.name) :
@@ -680,21 +269,6 @@ const CharacterEditForm = ({
     </Button>
   }
 
-  const slotToPrimaryRestriction = (slot: ModTypes.VariablePrimarySlots) =>
-    <div key={`mod-block-${slot}`} className={'mod-block'}>
-      <Dropdown
-        name={`${slot}-primary`}
-        id={`${slot}-primary`}
-        defaultValue={target.primaryStatRestrictions[slot]}
-        onChange={() => {}}
-      >
-        <option value={''}>Any</option>
-        {modsPrimaries[`${slot}Primaries`].map(
-          primary => <option key={primary} value={primary}>{primary}</option>)}
-      </Dropdown>
-      <div className={`mod-image mod-image-${slot}`} />
-    </div>;
-
   return (
 
     // Determine whether the current optimization plan is a default (same name exists), user-defined (same name doesn't
@@ -702,7 +276,7 @@ const CharacterEditForm = ({
     // "Delete target" button, or nothing.
 
     <form
-      className={`character-edit-form`}
+      className={`character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8`}
       noValidate={'advanced' === editMode}
       onSubmit={(e) => {
         e.preventDefault();
@@ -710,121 +284,125 @@ const CharacterEditForm = ({
         incrementalOptimization$.indicesByProfile[allyCode].set(null);
         optimizerView$.view.set('basic');
       }}
-      ref={form}>
-      <div className={'character-view column'}>
-        <CharacterAvatar character={character} />
-        <h2 className={'character-name'}>
-          {baseCharacters[character.baseID] ? baseCharacters[character.baseID].name : character.baseID}
-        </h2>
-      </div>
-      <div id={'character-level-options'}>
-        <h3>Character-level options</h3>
-        <div className={'form-row center'}>
-          <label htmlFor='mod-dots' id={'mod-dots-label'}>
-            Use only mods with at least&nbsp;
-            <span className={'dropdown'}>
-              <select name={'mod-dots'} id={'mod-dots'} defaultValue={character.optimizerSettings.minimumModDots}>
-                {[1, 2, 3, 4, 5, 6].map(dots => <option key={dots} value={dots}>{dots}</option>)}
-              </select>
-            </span>
-            &nbsp;dot(s)
-          </label>
+    >
+      <div className={"flex flex-gap-4 justify-around"}>
+        <div className={'flex flex-gap-2 items-center'}>
+          <CharacterAvatar character={character} />
+          <Label>
+            {baseCharacters[character.baseID] ? baseCharacters[character.baseID].name : character.baseID}
+          </Label>
         </div>
-        <div className={'form-row'}>
-          <label htmlFor={'slice-mods'} id={'slice-mods-label'}>Slice 5-dot mods to 6E during optimization?</label>
-          <input
-            type={'checkbox'}
-            id={'slice-mods'}
-            name={'slice-mods'}
-            defaultChecked={character.optimizerSettings.sliceMods} />
+        <div className={'flex gap-2 justify-center items-center'}>
+          <div className={'actions p-2 flex gap-2 justify-center'}>
+            {resetButton}
+            <Button
+              type={'button'}
+              onClick={() => optimizerView$.view.set("basic")} // dialog$.hide()}
+            >
+              Cancel
+            </Button>
+            <Button type={'submit'}>Save</Button>
+          </div>
+          <Label htmlFor={'plan-name'}>Target Name: </Label>
+          <ReactiveInput
+            className={'w-fit'}
+            id={'plan-name'}
+            type={'text'}
+            $value={target$.target.name}
+            onChange={(e: React.FormEvent<HTMLInputElement>) => {
+              target$.target.name.set(e.currentTarget.value);
+            }}
+          />
         </div>
       </div>
-      <div className={'target-level-options'}>
-        <h3>Target-specific Options</h3>
-        <div className="row">
-          <div className={'column'}>
-            <div className={'flex gap-1 justify-center'}>
-              <Label htmlFor={'plan-name'}>Target Name: </Label>
-              <Input type={'text'} defaultValue={target.name} id={'plan-name'} name={'plan-name'} />
+      <Tabs
+        className="h-full w-full"
+        defaultValue="Mods"
+        orientation={'vertical'}
+      >
+        <TabsList>
+          <TabsTrigger value="Mods">Mods</TabsTrigger>
+          <TabsTrigger value="Weights">Weights</TabsTrigger>
+          <TabsTrigger value="Primaries">Primaries</TabsTrigger>
+          <TabsTrigger value="Sets">Sets</TabsTrigger>
+          <TabsTrigger value="Stat Targets">Target Stats</TabsTrigger>
+        </TabsList>
+        <TabsContent value="Mods">
+          <div className={"flex flex-col flex-gap-4"}>
+            <h3>Character-level options</h3>
+            <div>
+              <Label htmlFor='mod-dots' id={'mod-dots-label'}>
+                Use only mods with at least&nbsp;
+                <span>
+                  <ReactiveSelect
+                    name={'mod-dots'}
+                    $value={() => character$.character.optimizerSettings.minimumModDots.get().toString()}
+                    onValueChange={(value) => {
+                      character$.character.optimizerSettings.minimumModDots.set(parseInt(value));
+                    }}
+                  >
+                    <SelectTrigger className={"w-12 h-4 px-2 mx-2 inline-flex"} id={'mod-dots2'}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={"w-8 min-w-12"} position={"popper"} sideOffset={5}>
+                      {[1, 2, 3, 4, 5, 6].map(dots => <SelectItem className={"w-8"} key={dots} value={dots.toString()}>{dots}</SelectItem>)}
+                    </SelectContent>
+                  </ReactiveSelect>
+                </span>
+                &nbsp;dot(s)
+              </Label>
             </div>
-            <div className={'non-stats'}>
-              <div className={'flex gap-1 justify-center'}>
+            <div className={"flex flex-gap-2"}>
+              <Label htmlFor={'slice-mods'} id={'slice-mods-label'}>Slice 5-dot mods to 6E during optimization?</Label>
+              <ReactiveInput
+                className={'h-4 w-4'}
+                id={'slice-mods'}
+                name={'slice-mods'}
+                type={'checkbox'}
+                $checked={character$.character.optimizerSettings.sliceMods}
+                onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                  character$.character.optimizerSettings.sliceMods.set(e.currentTarget.checked);
+                }}
+              />
+            </div>
+          </div>
+          <div>
+            <h3>Target-specific Options</h3>
+            <div>
+              <div className={'flex gap-2'}>
                 <Label htmlFor={'upgrade-mods'}>Upgrade Mods to level 15:</Label>
-                <Input
+                <ReactiveInput
                   className={'h-4 w-4'}
-                  defaultChecked={target.upgradeMods}
+                  $checked={target$.target.upgradeMods}
                   id={'upgrade-mods'}
                   name={'upgrade-mods'}
                   type={'checkbox'}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                    target$.target.upgradeMods.set(e.currentTarget.checked);
+                  }}
                 />
               </div>
             </div>
-            <div className={'header-row group primary-stats'}>
-              <h4>Restrict Primary Stats:</h4>
-              <div className={'mod-blocks'}>
-                <div className="breakable-group">
-                  {(['arrow', 'triangle'] as ModTypes.VariablePrimarySlots[]).map(slotToPrimaryRestriction)}
-                </div>
-                <div className="breakable-group">
-                  {(['circle', 'cross'] as ModTypes.VariablePrimarySlots[]).map(slotToPrimaryRestriction)}
-                </div>
-              </div>
-            </div>
-            <div className={'header-row group set-bonuses'}>
-              <h4>Restrict Set Bonuses:</h4>
-              <SetRestrictionsWidget
-                setRestrictions={setRestrictions || target.setRestrictions}
-                useFullSets={target.useOnlyFullSets}
-              />
-            </div>
-            <div className={'header-row group target-stats'}>
-              {targetStatForm(targetStats ||
-                target.targetStats.map((targetStat, index) => ({
-                  key: index,
-                  target: targetStat
-                }))
-              )}
-            </div>
           </div>
-          <div className={'column'}>
-            <div className={'header-row stat-weights-toggle'}>
-              <Toggle
-                id={'mode'}
-                className={''}
-                inputLabel={'Stat Weights'}
-                name={'mode'}
-                leftLabel={'Basic'}
-                leftValue={'basic'}
-                rightLabel={'Advanced'}
-                rightValue={'advanced'}
-                value={editMode}
-                disabled={false}
-                onChange={(newValue: string) => dispatch(CharacterEdit.actions.changeCharacterEditMode(newValue as CharacterEditMode))}
-              />
-            </div>
-            <div className={'instructions'}>
-              Give each stat type a value. These values are used as the "goodness" of each stat to calculate the optimum
-              mods to equip. <strong>These are not the amount of each stat you want!</strong> Instead, they are multiplied
-              with the amount of each stat on a mod to determine a score for each mod.
-            </div>
-            {'basic' === editMode && basicForm(target)}
-            {'advanced' === editMode && advancedForm(target)}
+        </TabsContent>
+        <TabsContent value="Weights">
+          <div>
+            <StatWeightsWidget target$={target$} />
             {missedGoalsSection(
               modAssignments.find((modAssignment: ModSuggestion) => modAssignment.id === character.baseID) ?? null
             )}
           </div>
-        </div>
-      </div>
-      <div className={'actions flex gap-2 justify-center'}>
-        {resetButton}
-        <Button
-          type={'button'}
-          onClick={() => optimizerView$.view.set("basic"))}
-        >
-          Cancel
-        </Button>
-        <Button type={'submit'}>Save</Button>
-      </div>
+        </TabsContent>
+        <TabsContent value="Primaries">
+          <PrimaryStatRestrictionsWidget primaryRestrictions$={target$.target.primaryStatRestrictions}></PrimaryStatRestrictionsWidget>
+        </TabsContent>
+        <TabsContent value="Sets">
+          <SetRestrictionsWidget target$={target$}/>
+        </TabsContent>
+        <TabsContent value="Stat Targets">
+          <TargetStatsWidget target$={target$} />
+        </TabsContent>
+      </Tabs>
     </form>
   );
 };

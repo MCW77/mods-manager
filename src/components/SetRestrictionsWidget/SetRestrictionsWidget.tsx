@@ -1,84 +1,107 @@
 // react
 import React from "react";
-import { useDispatch } from "react-redux";
 
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
+// state
+import { observer, reactive } from "@legendapp/state/react";
+import { computed } from "@legendapp/state";
+
+import { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
 
 // domain
 import setBonuses from "#/constants/setbonuses";
 
 import SetBonus from "#/domain/SetBonus";
-import { SetRestrictions } from "#/domain/SetRestrictions";
 import { SetStats } from "#/domain/Stats";
+
+// components
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
 
 
 type ComponentProps = {
-  setRestrictions: SetRestrictions,
-  useFullSets: boolean,
+  target$: ObservableOptimizationPlan,
 }
 
-const SetRestrictionsWidget = ({
-  setRestrictions,
-  useFullSets,
-}: ComponentProps) => {
-  const dispatch = useDispatch();
+const ReactiveInput = reactive(Input);
 
-  let selectedSets: SetStats.GIMOStatNames[] = [];
-  Object.entries(setRestrictions).forEach(([setName, count]) => {
-    for (let i = 0; i < count; i++) {
-      selectedSets.push(setName as SetStats.GIMOStatNames);
+const SetRestrictionsWidget = observer(({
+  target$,
+}: ComponentProps) => {
+  const setRestrictions$ = target$.target.setRestrictions;
+
+  let selectedSets$ = computed(
+    () => {
+      let selectedSets: SetStats.GIMOStatNames[] = [];
+      Object.entries(setRestrictions$.get()).forEach(([setName, count]) => {
+        for (let i = 0; i < count; i++) {
+          selectedSets.push(setName as SetStats.GIMOStatNames);
+        }
+      })
+      return selectedSets;
     }
-  });
-  const emptySlots = 3 - selectedSets.reduce((acc, setName) => acc + setBonuses[setName].numberOfModsRequired / 2, 0);
+  );
+  selectedSets$.onChange(value => console.log("selectedSets: ", value ?? typeof value));
+
+  const emptySlots$ = computed(() =>
+    3 - selectedSets$.get().reduce((acc, setName) => acc + setBonuses[setName].numberOfModsRequired / 2, 0)
+  );
 
   const setBonusToFormDisplay = (setBonus: SetBonus, index: number) => {
-    const className = setBonus.numberOfModsRequired > (2 * emptySlots) ? 'disabled' : ''
+    const className = setBonus.numberOfModsRequired > (2 * emptySlots$.get()) ? 'disabled' : ''
     const setBonusName = setBonus.name.replace(/\s|%/g, '').toLowerCase()
     return <img
       src={`/img/icon_buff_${setBonusName}.png`}
       alt={setBonus.name}
       key={index}
       className={className}
-      onClick={() => dispatch(CharacterEdit.actions.selectSetBonus(setBonus.name))}
+      onClick={() => target$.addSetBonus(setBonus.name)}
     />
   };
 
-  const setBonusGroups = [Object.values(setBonuses).slice(0, 4), Object.values(setBonuses).slice(4)];
+  const setBonusGroups = [Object.values(setBonuses).filter((setBonus) => setBonus.numberOfModsRequired === 2), Object.values(setBonuses).filter((setBonus) => setBonus.numberOfModsRequired === 4)];
   const setBonusGroupsDisplay = setBonusGroups.map(setBonuses => setBonuses.map(setBonusToFormDisplay))
   const setBonusDisplay = setBonusGroupsDisplay.map((groupDisplay, index) =>
-    <div className="breakable-group" key={index}>{groupDisplay}</div>
+    <div className="flex flex-row gap-4" key={index}>{groupDisplay}</div>
   )
 
-  return <div className={'mod-sets'}>
-    <div className={'form-row center'}>
-      <label htmlFor={'use-full-sets'}>Don't break mod sets</label>
-      <input type={'checkbox'} name={'use-full-sets'} id={'use-full-sets'} defaultChecked={useFullSets} />
-    </div>
-    <p className={'instructions'}>
-      Click on a set bonus to add it to or remove it from the selected sets.
-    </p>
-    <div className={'set-options'}>
-      {setBonusDisplay}
-    </div>
-    <div className={'selected-sets'}>
-      <p>Selected Sets:</p>
-      <div className="flex gap-2 justify-center">
-      {selectedSets.map((setName, index) =>
-        <img
-          src={`/img/icon_buff_${setName.replace(/\s|%/g, '').toLowerCase()}.png`}
-          alt={setName}
-          key={index}
-          onClick={() => dispatch(CharacterEdit.actions.removeSetBonus(setName))}
+  return <div className={''}>
+    <h4>Restrict Set Bonuses:</h4>
+    <div className={'flex flex-col gap-4'}>
+      <div className={'flex gap-2'}>
+        <Label htmlFor={'use-full-sets'}>Don't break mod sets</Label>
+        <ReactiveInput
+          className={"w-auto h-auto"}
+          id={'use-full-sets'}
+          type={'checkbox'}
+          value={target$.target.useOnlyFullSets.get() ? 'on' : 'off'}
+          onChange={(e) => target$.target.useOnlyFullSets.set(e.currentTarget.value === 'on')}
         />
-      )}
-      {Array.from({ length: emptySlots }, (_, index) =>
-        <span className={'empty-set'} key={index} />
-      )}
+      </div>
+      <p className={''}>
+        Click on a set bonus to add it to or remove it from the selected sets.
+      </p>
+      <div className={'flex flex-col gap-4'}>
+        {setBonusDisplay}
+      </div>
+      <div className={'selected-sets'}>
+        <p>Selected Sets:</p>
+        <div className="flex gap-2 min-h-[5rem]">
+          {selectedSets$.get().map((setName, index) =>
+            <img
+              src={`/img/icon_buff_${setName.replace(/\s|%/g, '').toLowerCase()}.png`}
+              alt={setName}
+              key={index}
+              onClick={() => target$.removeSetBonus(setName)}
+            />
+          )}
+          {Array.from({ length: emptySlots$.get() }, (_, index) =>
+            <span className={'empty-set'} key={index} />
+          )}
+        </div>
       </div>
     </div>
-  </div>;
-}
+  </div>
+});
 
 SetRestrictionsWidget.displayName = 'SetRestrictionsWidget';
 
