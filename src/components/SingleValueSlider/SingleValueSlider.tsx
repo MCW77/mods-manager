@@ -1,5 +1,5 @@
 // react
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // components
 import { Slider } from '#ui/slider';
@@ -24,6 +24,10 @@ const SingleValueSlider = ({
   onChange,
 }: SingleValueSliderProps) => {
   const [sliderValue, setSliderValue] = useState<number>(value);
+
+  useEffect(() => {
+    setSliderValue(value);
+  }, [value]);
 
   const handleSliderChange = (newValue: number[]) => {
     setSliderValue(newValue[0]);
