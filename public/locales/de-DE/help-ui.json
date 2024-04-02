@@ -103,6 +103,45 @@
       }
     }
   },
+  "editor": {
+    "Title": "Optimierungsplan-Editor",
+    "topics": {
+      "1": "Übersicht",
+      "2": "Mod Verbesserungen",
+      "3": "Gewichte",
+      "4": "Primärwerte",
+      "5": "Modsets",
+      "6": "Zielvorgaben"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Übersicht",
+        "1": ""
+      },
+      "2": {
+        "Headline": "Mod Verbesserungen",
+        "1": ""
+      },
+      "3": {
+        "Headline": "Gewichte",
+        "1": "Der Wert eines Mods ist die gewichtete Summe der Charakterwerte. Die Gewichte werden hier bestimmt. Es gibt zwei Modi die Gewichte einzustellen, 'Einfach' und 'Fortgeschritten'.",
+        "2": "Einfach: Gewichte werden normalisiert, um zum Wertebereich des Wertes zu passen. Alle Gewichte liegen zwischen -100 und 100. Gibt man zum Beispiel Tempo und Schutz dasselbe Gewicht, bedeutet das, dass 1 Punkt Tempo denselben Wert des Mods ergibt wie 200 Schutz (Da ein Mod etwa 200 mal mehr Schutz als Tempo geben kann).",
+        "3": "Fortgeschritten: Nun gibt es keinen Wertebereich für Gewichte und sie werden direkt mit dem Charakterwert multipliziert. Wenn zwei Charakterwerte das gleiche Gewicht haben, erhöht ein Punkt im ersten Charakterwert den Modwert genauso wie einer im zweiten. Ich empfehle, im einfachen Modus zu bleiben, bis man ein Gefühl für Gewichte bekommen hat."
+      },
+      "4": {
+        "Headline": "Primärwerte",
+        "1": ""
+      },
+      "5": {
+        "Headline": "Modsets",
+        "1": ""
+      },
+      "6": {
+        "Headline": "Zielvorgaben",
+        "1": ""
+      }
+    }
+  },
   "general": {
     "Title": "Grundlegendes",
     "topics": {

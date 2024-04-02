@@ -103,6 +103,45 @@
       }
     }
   },
+  "editor": {
+    "Title": "Optimizationplan-Editor",
+    "topics": {
+      "1": "Overview",
+      "2": "Mod Upgrades",
+      "3": "Weights",
+      "4": "Primaries",
+      "5": "Modsets",
+      "6": "Targetstats"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Overview",
+        "1": ""
+      },
+      "2": {
+        "Headline": "Mod Upgrades",
+        "1": ""
+      },
+      "3": {
+        "Headline": "Weights",
+        "1": "The modscore is the weighted sum of all stats of a mod. The weights are defined here. There are two modes: Basic and Advanced.",
+        "2": "Basic: Weights are normalized to fit the range of values for that stat. All weights are between -100 and 100. For example, giving speed and protection the same weight means that 1 speed will score the same as 200 protection (since you find 200x more protection on mods than you do speed).",
+        "3": "Advanced: Now there is no range for the weights and weights are multiplied with the stat directly. If two stats have the same weight one point of the first stat is worth the same as one point of the second stat. If you give speed and protection the same weight, the optimizer will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works."
+      },
+      "4": {
+        "Headline": "Primaries",
+        "1": ""
+      },
+      "5": {
+        "Headline": "Modsets",
+        "1": ""
+      },
+      "6": {
+        "Headline": "Targetstats",
+        "1": ""
+      }
+    }
+  },
   "general": {
     "Title": "Basics",
     "topics": {

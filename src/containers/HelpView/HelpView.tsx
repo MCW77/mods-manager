@@ -43,7 +43,8 @@ const HelpView = () => {
     general: [1, 2, 3, 4, 5],
     profiles: [1, 2, 3, 4, 5],
     explorer: [1, 2],
-    optimizer: [1, 2, 3],
+    optimizer: [1, 2, 3, 4],
+    editor: [1, 2, 3],
   };
 
   const sectionElements: Record<string, React.RefObject<HTMLButtonElement>> = {
@@ -51,6 +52,7 @@ const HelpView = () => {
     profiles: React.createRef<HTMLButtonElement>(),
     explorer: React.createRef<HTMLButtonElement>(),
     optimizer: React.createRef<HTMLButtonElement>(),
+    editor: React.createRef<HTMLButtonElement>(),
   };
 
   const topicCSS = 'prose m-x-auto max-w-[80ch] flex flex-col items-center text-balance';
@@ -93,6 +95,7 @@ const HelpView = () => {
       .with(['optimizer', 1], () => renderGlobalOptimizationSettingsTopic())
       .with(['optimizer', 2], () => renderCharacterTemplatesTopic())
       .with(['optimizer', 3], () => renderAutoGenerationTopic())
+      .with(['editor', 3], () => renderOptimizationPlanEditorWeightsTopic())
       .with(['profiles', 4], () => renderFetchUnequippedModsWithHUTopic())
       .otherwise(() => {
         const title = t(
@@ -125,6 +128,25 @@ const HelpView = () => {
       });
   };
 
+  const renderOptimizationPlanEditorWeightsTopic = () => {
+    const topicPath = `editor.topicById.3.`;
+    return (
+      <div className={topicCSS}>
+        <h2>{t(`${topicPath}Headline`)}</h2>
+        <div>
+          {t(`${topicPath}1`)}
+        </div>
+        <div>
+          <p>
+            {t(`${topicPath}2`)}
+          </p>
+          <p>
+            {t(`${topicPath}3`)}
+          </p>
+        </div>
+      </div>
+    );
+  }
   /**
    * Renders a help description for pulling unequipped mods with HotUtils
    */
@@ -236,6 +258,7 @@ const HelpView = () => {
         {renderSection('profiles')}
         {renderSection('explorer')}
         {renderSection('optimizer')}
+        {renderSection('editor')}
       </nav>
       <div className={topicCSS + ' text-center'}>
         {currentTopic === 0 ? renderTopics() : null}
