@@ -297,7 +297,7 @@ class Review extends React.PureComponent<Props> {
           <Label htmlFor="">I don't like these results...</Label>
           <Button
             type={'button'}
-            onClick={() => optimizerView$.view.set("edit")}
+            onClick={() => optimizerView$.view.set("basic")}
           >
             Change my selection
           </Button>
