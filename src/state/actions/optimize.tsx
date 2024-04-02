@@ -17,7 +17,6 @@ export namespace actions {
 }
 
 export namespace actionNames {
-	export const CANCEL_OPTIMIZE_MODS = "CANCEL_OPTIMIZE_MODS" as const;
 	export const OPTIMIZE_MODS = "OPTIMIZE_MODS" as const;
 	export const UPDATE_PROGRESS = "UPDATE_PROGRESS" as const;
 }
