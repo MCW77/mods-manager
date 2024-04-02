@@ -17,6 +17,7 @@ import groupByKey from "#/utils/groupByKey";
 import { IAppState } from '#/state/storage';
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { optimizerView$ } from '#/modules/optimizerView/state/optimizerView';
 
 // modules
 import { Data } from '#/state/modules/data';
@@ -296,7 +297,7 @@ class Review extends React.PureComponent<Props> {
           <Label htmlFor="">I don't like these results...</Label>
           <Button
             type={'button'}
-            onClick={this.props.edit}
+            onClick={() => optimizerView$.view.set("edit")}
           >
             Change my selection
           </Button>
@@ -1018,7 +1019,6 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  edit: () => dispatch(ReviewModule.actions.changeOptimizerView('edit')),
   changeFilter: (filter: ModListFilter) => dispatch(ReviewModule.actions.changeModListFilter(filter)),
   unequipMod: (modID: string) => dispatch(ReviewModule.thunks.unequipMod(modID)),
   reassignMod: (modID: string, characterID: CharacterNames) => dispatch(ReviewModule.thunks.reassignMod(modID, characterID)),

@@ -28,6 +28,7 @@ import { IAppState } from "#/state/storage";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // modules
@@ -722,7 +723,7 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
         sort: "assignedCharacter",
       })
     );
-    dispatch(Review.actions.changeOptimizerView("review"));
+    optimizerView$.view.set("review");
   },
   selectCharacter: (
     characterID: CharacterNames,

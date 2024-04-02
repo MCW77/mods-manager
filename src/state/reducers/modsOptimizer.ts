@@ -46,7 +46,6 @@ type AppActions =
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
   | ReturnType<typeof Review.actions.changeModListFilter>
-  | ReturnType<typeof Review.actions.changeOptimizerView>
   | ReturnType<typeof Settings.actions.setSettingsPosition>
   | ReturnType<typeof Storage.actions.addPlayerProfile>
   | ReturnType<typeof Storage.actions.setBaseCharacters>
@@ -130,10 +129,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
     case Review.actionNames.CHANGE_MODLIST_FILTER:
       return AppState.save(
         Review.reducers.changeModListFilter(state, action)
-      );
-    case Review.actionNames.CHANGE_OPTIMIZER_VIEW:
-      return AppState.save(
-        Review.reducers.changeOptimizerView(state, action)
       );
 
     case Settings.actionNames.SET_SETTINGS_POSITION:

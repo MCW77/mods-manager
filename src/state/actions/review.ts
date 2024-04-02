@@ -14,15 +14,8 @@ export namespace actions {
 		} as const;
 	}
 
-	export function changeOptimizerView(newView: string) {
-		return {
-			type: actionNames.CHANGE_OPTIMIZER_VIEW,
-			view: newView,
-		} as const;
-	}
 }
 
 export namespace actionNames {
 	export const CHANGE_MODLIST_FILTER = "CHANGE_MODLIST_FILTER" as const;
-	export const CHANGE_OPTIMIZER_VIEW = "CHANGE_OPTIMIZER_VIEW" as const;
 }

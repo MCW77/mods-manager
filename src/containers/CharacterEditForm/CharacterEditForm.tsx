@@ -10,9 +10,9 @@ import "./CharacterEditForm.css";
 import areObjectsEquivalent from '#/utils/areObjectsEquivalent';
 
 // state
-import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';
@@ -46,13 +46,11 @@ import { Label } from "#ui/label";
 
 type ComponentProps = {
   character: Character.Character,
-  characterIndex: number,
   target: OptimizationPlan.OptimizationPlan,
 }
 
 const CharacterEditForm = ({
   character,
-  characterIndex,
   target,
 }: ComponentProps) => {
   const dispatch: ThunkDispatch = useDispatch();
@@ -628,7 +626,7 @@ const CharacterEditForm = ({
     dispatch(CharacterEdit.thunks.changeMinimumModDots(character.baseID, +form2['mod-dots'].value));
     dispatch(CharacterEdit.thunks.changeSliceMods(character.baseID, form2['slice-mods'].checked));
     dispatch(CharacterEdit.thunks.unlockCharacter(character.baseID));
-    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(characterIndex, newTarget));
+    dispatch(CharacterEdit.thunks.finishEditCharacterTarget(character.baseID, newTarget));
 
   }
 
@@ -710,8 +708,7 @@ const CharacterEditForm = ({
         e.preventDefault();
         saveTarget();
         incrementalOptimization$.indicesByProfile[allyCode].set(null);
-        dialog$.hide();
-        dispatch(CharacterEdit.thunks.closeEditCharacterForm());
+        optimizerView$.view.set('basic');
       }}
       ref={form}>
       <div className={'character-view column'}>
@@ -813,10 +810,7 @@ const CharacterEditForm = ({
             {'basic' === editMode && basicForm(target)}
             {'advanced' === editMode && advancedForm(target)}
             {missedGoalsSection(
-              character.baseID === modAssignments[characterIndex]?.id ?
-                modAssignments[characterIndex]
-              :
-                null
+              modAssignments.find((modAssignment: ModSuggestion) => modAssignment.id === character.baseID) ?? null
             )}
           </div>
         </div>
@@ -825,7 +819,7 @@ const CharacterEditForm = ({
         {resetButton}
         <Button
           type={'button'}
-          onClick={() => dialog$.hide())}
+          onClick={() => optimizerView$.view.set("basic"))}
         >
           Cancel
         </Button>

@@ -10,8 +10,8 @@ import "./CharacterList.css";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';
@@ -28,9 +28,6 @@ import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { Button } from "#ui/button";
-
-// containers
-import { CharacterEditForm } from "#/containers/CharacterEditForm/CharacterEditForm";
 
 
 const CharacterList = React.memo(
@@ -253,13 +250,14 @@ const CharacterList = React.memo(
 
     const showEditCharacterModal = (character: Character.Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
       incrementalOptimization$.indicesByProfile[allyCode].set(index);
-      dialog$.show(
-        <CharacterEditForm
-          character={character}
-          characterIndex={index}
-          target={target}
-        />,
-      );
+      optimizerView$.assign({
+        currentCharacter: {
+          id: character.baseID,
+          index: index,
+          target: target,
+        },
+        view: 'edit',
+      });
     }
 
     return (

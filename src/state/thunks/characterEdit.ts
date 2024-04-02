@@ -243,14 +243,6 @@ export namespace thunks {
     );
   }
 
-  export function closeEditCharacterForm(): ThunkResult<void> {
-    return function (dispatch) {
-      dialog$.hide();
-      dispatch(actions.changeSetRestrictions({} as SetRestrictions));
-      dispatch(setOptimizeIndex(null));
-    }
-  }
-
   /**
    * Delete the currently selected target for a given character
    * @param characterID {String} The character ID of the character being reset
@@ -309,15 +301,14 @@ export namespace thunks {
    * @returns {Function}
    */
   export function finishEditCharacterTarget(
-    characterIndex: number,
+    characterID: CharacterNames,
     newTarget: OptimizationPlan,
   ) {
     return App.thunks.updateProfile(
       (profile: PlayerProfile) => {
         const newSelectedCharacters = profile.selectedCharacters.slice();
-        const [{ id: characterID }] = newSelectedCharacters.splice(characterIndex, 1);
-        newSelectedCharacters.splice(characterIndex, 0, { id: characterID, target: newTarget });
-
+        const characterIndex = newSelectedCharacters.findIndex(({ id }) => id === characterID);
+        newSelectedCharacters.splice(characterIndex, 1, { id: characterID, target: newTarget });
         const oldCharacter = profile.characters[characterID];
         const newCharacter = Character.withOptimizerSettings(
           oldCharacter,

@@ -8,6 +8,7 @@ import getDatabase from "#/state/storage/Database";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // actions
 import { actions } from "#/state/actions/optimize";
@@ -77,8 +78,8 @@ export namespace thunks {
 						sort: "assignedCharacter",
 					}),
 				);
-				dispatch(Review.actions.changeOptimizerView("review"));
 				dialog$.hide()
+				optimizerView$.view.set("review");
 
 				// Create the content of the pop-up for any post-optimization messages
 

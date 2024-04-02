@@ -15,11 +15,11 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 
 // modules
 import { App } from '#/state/modules/app';
-import { Review } from '#/state/modules/review';
 import { Storage } from '#/state/modules/storage';
 
 // domain
@@ -324,7 +324,7 @@ export namespace thunks {
         );
       }
 
-      dispatch(Review.actions.changeOptimizerView('edit'));
+      optimizerView$.view.set('basic');
       dispatch(App.actions.showFlash(
         'Success!',
         <div className={'fetch-results'}>
