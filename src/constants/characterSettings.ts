@@ -1711,6 +1711,7 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   'PAZVIZSLA': createCharacterSettings(
     [
+      createOptimizationPlan('GIMO Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, true),
       createOptimizationPlan('Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, true, {
         "triangle": "Health %",
         "cross": "Health %",
