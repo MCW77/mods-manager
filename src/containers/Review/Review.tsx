@@ -535,7 +535,7 @@ class Review extends React.PureComponent<Props> {
         return null;
       }
 
-      return <div className={'mod-row set'} key={index}>
+      return <div className={'mod-row set'} key={characterID}>
         <div className={'character-id'}>
           <CharacterAvatar character={character} />
           <Arrow />
@@ -594,7 +594,7 @@ class Review extends React.PureComponent<Props> {
    * @returns Array[JSX Element]
    */
   reviewModal() {
-    return <div key={'summary_modal_content'}>
+    return <div>
       <h2>Move Summary</h2>
       <pre id="summary_pre" className={'summary'}>
         {this.summaryListContent()}
@@ -627,6 +627,16 @@ class Review extends React.PureComponent<Props> {
     const capitalize = function (str: string) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     };
+    const setMap = {
+      "Speed %": "Speed",
+      "Offense %": "Offense",
+      "Defense %": "Defense",
+      "Health %": "Health",
+      "Critical Chance %": "Critchance",
+      "Critical Damage %": "Critdamage",
+      "Potency %": "Potency",
+      "Tenacity %": "Tenacity",
+    }
 
     return this.props.movingModAssignments.map(({ id, target, assignedMods: mods }) => {
       const assignedCharacter = this.props.characters[id];
@@ -640,7 +650,7 @@ class Review extends React.PureComponent<Props> {
       ].concat(
         mods.map(mod => {
           const moveFrom = mod.characterID !== 'null' ? this.props.baseCharacters[mod.characterID].name : 'your unassigned mods';
-          return `Move ${capitalize(mod.set)}(${mod.primaryStat.type}) ${capitalize(mod.slot)} from ${moveFrom}.`;
+          return `Move ${setMap[mod.set]}(${mod.primaryStat.type}) ${capitalize(mod.slot)} from ${moveFrom}.`;
         })
       ).join('\r\n');
     }).join('\r\n\r\n');
@@ -693,7 +703,7 @@ class Review extends React.PureComponent<Props> {
       }
     }.bind(this);
 
-    return <div key={'hotutils-create-profile-modal'}>
+    return <div>
       <h2>Create a new mod profile in HotUtils</h2>
       <p>
         This will create a new mods profile in HotUtils using the recommendations listed here. After creating your
@@ -761,7 +771,7 @@ class Review extends React.PureComponent<Props> {
   }
 
   hotUtilsMoveModsModal() {
-    return <div key={'hotutils-move-mods-modal'}>
+    return <div>
       <h2>Move mods in-game using HotUtils</h2>
       <h3>
         Moving your mods will cost<br />
