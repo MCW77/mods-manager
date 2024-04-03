@@ -24,7 +24,7 @@
     "noFallthroughCasesInSwitch": true,
     "noErrorTruncation": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "public/workers/optimizer.ts"],
   "exclude": [
      "node_modules/**/*",
      "dist/**/*",
