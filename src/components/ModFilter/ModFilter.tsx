@@ -35,9 +35,11 @@ import {
 import { PrimaryStats, SecondaryStats, SetStats } from "../../domain/Stats";
 
 // components
-import { Dropdown } from '../Dropdown/Dropdown';
-import { Pips } from "../Pips/Pips";
+import { Dropdown } from '#/components/Dropdown/Dropdown';
+import { Pips } from "#/components/Pips/Pips";
 import { Button } from '#ui/button';
+import { Input } from '#ui/input';
+import { Label } from '#ui/label';
 
 
 function selectElement(element: HTMLInputElement | null) {
@@ -59,9 +61,9 @@ function unselectElement(element: HTMLInputElement | null) {
 
 function classForValue(value: number) {
   switch (value) {
-    case 1: return 'select';
-    case -1: return 'unselect';
-    default: return '';
+    case 1: return 'select hidden';
+    case -1: return 'unselect hidden';
+    default: return 'hidden';
   }
 }
 
@@ -535,19 +537,18 @@ class ModFilter extends React.PureComponent<Props> {
       this.props.updateFilter(this.collectFilters(e.target.form as HTMLFormElement))
     };
 
-    const groupCheck =
-      <label htmlFor={inputName} key={inputName}>
+    return <div className={"flex flex-row flex gap-2 items-center justify-center w-full"}>
+      <Label htmlFor={inputName}>
         {this.props.t('explore-ui:filter.Group')}
-        <input type={'checkbox'}
-          id={inputName}
-          name={inputName}
-          defaultChecked={isGroupingEnabled}
-          onChange={onChange} />
-      </label>
-    ;
-
-    return <div id={'group-filters'}>
-      {groupCheck}
+      </Label>
+      <Input
+        className={"w-4"}
+        id={inputName}
+        name={inputName}
+        type={'checkbox'}
+        defaultChecked={isGroupingEnabled}
+        onChange={onChange}
+      />
     </div>;
 
   }
@@ -692,7 +693,7 @@ class ModFilter extends React.PureComponent<Props> {
       this.props.updateFilter(this.collectFilters(target.form as HTMLFormElement))
     }
 
-    return <form className={'mod-filters filter-form'} id={'mod-filters'} onSubmit={onSubmit}>
+    return <form className={'mod-filters filter-form text-center p-4'} id={'mod-filters'} onSubmit={onSubmit}>
       <div className={'form-actions'}>
         <Button
           size="sm"

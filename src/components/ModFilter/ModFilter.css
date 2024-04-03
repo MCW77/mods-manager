@@ -16,16 +16,10 @@
   display: block;
 }
 
-.mod-filters input[type=number],
-.mod-filters input[type=checkbox] {
-  display: none;
-}
-
 .filter-form.mod-filters label {
   display: inline;
   border: none;
   font-size: 1em;
-  margin: auto;
 }
 
 .mod-filters span.option {
