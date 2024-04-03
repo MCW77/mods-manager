@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { Reactive, observer, reactive } from "@legendapp/state/react";
+import { Switch, observer, reactive } from "@legendapp/state/react";
 
 // state
 import { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
@@ -9,20 +9,20 @@ import { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/Chara
 import { CharacterNames } from "#/constants/characterSettings";
 
 import { BaseCharacter } from "#/domain/BaseCharacter";
-import { targetStatsNames } from "#/domain/TargetStat";
+import { TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
 
 // components
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from "#ui/select";
-import { Switch } from "#ui/switch";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
+import { Switch as ShadSwitch} from "#ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
-const ReactiveSwitch = reactive(Switch);
+const ReactiveSwitch = reactive(ShadSwitch);
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
 type ComponentProps = {
@@ -38,7 +38,7 @@ const TargetStatWidget = observer(({
 }: ComponentProps) => {
   const targetStat$ = target$.target.targetStats.find(ts => ts.peek().id === id)!;
 
-  return <Card className={'w-fit'} >
+  return <Card className={'flex flex-col flex-gap-2 w-fit'} >
     <div className="flex justify-between py-4 px-6">
       <div className="flex justify-center p-2 ml-auto mr-auto">
         <Label className="p-r-2" htmlFor={"optimize-for-target" + id}>
@@ -68,50 +68,76 @@ const TargetStatWidget = observer(({
         </Button>
       </div>
     </div>
-    <Label>
-      {
-        `The ${targetStat$.stat.get()} must be between
-          ${targetStat$.relativeCharacterId.get() === 'null' ?
-              targetStat$.minimum.get() + ' and ' + targetStat$.maximum.get()
-            :
-              targetStat$.type.get() === '+' ?
-                Intl.NumberFormat("en-US", {
-                  signDisplay: "exceptZero"
-              }).format(targetStat$.minimum.get()) + ' and ' + Intl.NumberFormat("en-US", {
-                signDisplay: "exceptZero"
-            }).format(targetStat$.maximum.get()) + ' compared to the ' + targetStat$.stat.get() + ' of ' + baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name
-              :
-                targetStat$.minimum.get() + '% and ' + targetStat$.maximum.get() + '% of the  ' + targetStat$.stat.get() + ' of ' + baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name
-          }
-        `
-      }
-    </Label>
+    <Switch value={targetStat$.relativeCharacterId}>
+      {{
+        null: () => <Label>
+          {`The ${targetStat$.stat.get()} must be between ${targetStat$.minimum.get()} and ${targetStat$.maximum.get()}`}
+        </Label>,
+        default: () => <Switch value={targetStat$.type}>
+          {{
+            '+': () => <div className={"flex flex-col flex-gap-1"}>
+              <Label>
+                {`The ${targetStat$.stat.get()} must be between`}
+              </Label>
+              <Label>
+                {
+                  Intl.NumberFormat("en-US", {
+                    signDisplay: "exceptZero"
+                  }).format(targetStat$.minimum.get()) + ' and ' + Intl.NumberFormat("en-US", {
+                    signDisplay: "exceptZero"
+                  }).format(targetStat$.maximum.get()) + ' compared to the ' + targetStat$.stat.get() + ' of ' + baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name
+                }
+              </Label>
+            </div>,
+            '*': () => <div className={"flex flex-col flex-gap-1"}>
+              <Label>
+                {`The ${targetStat$.stat.get()} must be between`}
+              </Label>
+              <Label>
+                {
+                  targetStat$.minimum.get() + '% and ' + targetStat$.maximum.get() + '% of the  ' + targetStat$.stat.get() + ' of ' + baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name
+                }
+              </Label>
+            </div>,
+          }}
+        </Switch>
+      }}
+    </Switch>
     <div className={"flex gap-4 justify-start items-center p-2"}>
       <div className='flex flex-col items-start gap-1'>
         <Label className="p-r-2" htmlFor={"target-stat" + id}>
           Stat:
         </Label>
-        <Reactive.select
-          id={"target-stat" + id}
+        <ReactiveSelect
           $value={targetStat$.stat}
-          onChange={event => {
-            if (event.target.value === 'Health+Protection') {
+          onValueChange={value => {
+            if (value === 'Health+Protection') {
               targetStat$.optimizeForTarget.set(false);
             }
+            targetStat$.stat.set(value as TargetStatsNames);
           }}
         >
-          {targetStatsNames.map(stat => <option key={stat} value={stat}>{stat}</option>)}
-        </Reactive.select>
+          <SelectTrigger><SelectValue></SelectValue></SelectTrigger>
+          <SelectContent
+            className={"max-h-[50%]"}
+            position={"popper"}
+          >
+            <SelectGroup>
+              {targetStatsNames.map(
+                stat => <SelectItem key={stat} value={stat}>{stat}</SelectItem>
+              )}
+            </SelectGroup>
+          </SelectContent>
+        </ReactiveSelect>
       </div>
       <div className='flex flex-col gap-1'>
         <Label className="p-r-2" htmlFor={"target-stat-min" + id}>
           Minimum:
         </Label>
         <ReactiveInput
-          className={'w-20'}
+          className={'w-24'}
           id={"target-stat-min" + id}
           min={targetStat$.type.get() === '*' ? 0 : undefined}
-          size={7}
           type={'number'}
           $value={targetStat$.minimum}
           onChange={(e: React.FormEvent<HTMLInputElement>) => {
@@ -124,10 +150,9 @@ const TargetStatWidget = observer(({
           Maximum:
         </Label>
         <ReactiveInput
-          className={'w-20'}
+          className={'w-24'}
           id={"target-stat-max" + id}
           min={targetStat$.type.get() === '*' ? 0 : undefined}
-          size={7}
           step={'any'}
           type={'number'}
           $value={targetStat$.maximum}
@@ -148,8 +173,11 @@ const TargetStatWidget = observer(({
             targetStat$.relativeCharacterId.set(value as CharacterNames);
           }}
         >
-          <SelectTrigger>{baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name}</SelectTrigger>
-          <SelectContent className={"max-h-[50%]"}>
+          <SelectTrigger><SelectValue></SelectValue></SelectTrigger>
+          <SelectContent
+            className={"max-h-[50%]"}
+            position={"popper"}
+          >
             <SelectGroup>
             <SelectItem value={'null'}>No one</SelectItem>
             {baseCharacters.map(
@@ -158,7 +186,6 @@ const TargetStatWidget = observer(({
             </SelectGroup>
           </SelectContent>
         </ReactiveSelect>
-
       </div>
       <div className='flex flex-col items-start justify-center gap-1'>
         <Label className="p-r-2" htmlFor={"target-stat-type" + id}>
@@ -204,3 +231,4 @@ const TargetStatWidget = observer(({
 TargetStatWidget.displayName = 'TargetStatWidget';
 
 export { TargetStatWidget };
+// {baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name}
