@@ -73,6 +73,7 @@ export const characterNames = [
   'CT210408',
   'DAKA',
   'DARKTROOPER',
+  'DARTHBANE',
   'DARTHMALAK',
   'DARTHMALGUS',
   'DARTHNIHILUS',
@@ -798,7 +799,10 @@ const characterSettings: CharacterSettingsIndexer = {
     ['NS', 'hSTR NS']
   ),
   'DARKTROOPER': createCharacterSettings(
-    [createOptimizationPlan('PvP', 10, 10, 50, 0, 0, 5, 60, 0, 0, 2.5, 2.5, 0, 0, true)]
+    [createOptimizationPlan('PvP', 10, 10, 50, 0, 0, 5, 60, 0, 0, 2.5, 2.5, 0, 0, true)],
+  ),
+  'DARTHBANE': createCharacterSettings(
+    [createOptimizationPlan('PvP', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3, true)],
   ),
   'DARTHMALAK': createCharacterSettings(
     [
