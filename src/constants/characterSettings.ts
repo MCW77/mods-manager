@@ -185,6 +185,7 @@ export const characterNames = [
   'MERRIN',
   'MISSIONVAO',
   'MOFFGIDEONS1',
+  'MOFFGIDEONS3',
   'MONMOTHMA',
   'MOTHERTALZIN',
   'NIGHTSISTERACOLYTE',
@@ -1540,7 +1541,7 @@ const characterSettings: CharacterSettingsIndexer = {
   'MAGMATROOPER': createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
-      createOptimizationPlan('Anti-Traya', 0, 0, 25, 25, 50, 0, 25, 0, 25, 0, 0, 0, 0, true)
+      createOptimizationPlan('Anti-Traya', 0, 0, 25, 25, 50, 0, 25, 0, 25, 0, 0, 0, 0, true),
     ]
   ),
   'MAGNAGUARD': createCharacterSettings(
@@ -1615,10 +1616,13 @@ const characterSettings: CharacterSettingsIndexer = {
     DamageType.special,
   ),
   'MISSIONVAO': createCharacterSettings(
-    [createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 75, 0, 50, 0, 0, 0, 0, true)]
+    [createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 75, 0, 50, 0, 0, 0, 0, true)],
   ),
   'MOFFGIDEONS1': createCharacterSettings(
-    [createOptimizationPlan('PvP', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, true)]
+    [createOptimizationPlan('PvP', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+  ),
+  'MOFFGIDEONS3': createCharacterSettings(
+    [createOptimizationPlan('PvP', 3, 20, 100, 0, 4, 3, 2, 3, 4, 4, 4, 0, 0, true)],
   ),
   'MONMOTHMA': createCharacterSettings(
     [createOptimizationPlan('Leader', 5, 5, 100, 0, 0, 25, 10, 0, 0, 0, 0, 0, 0, true)],
@@ -1628,7 +1632,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 50, 0, 0, 25, 10, 0, 0, 0, 0, true),
       createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 100, 0, 0, 0, 75, 25, 0, 0, 0, 0, true),
-      createOptimizationPlan('hSTR Phase 3', 0, -5, 0, 0, 10, 0, 0, 100, 0, 0, 0, 0, 0, true)
+      createOptimizationPlan('hSTR Phase 3', 0, -5, 0, 0, 10, 0, 0, 100, 0, 0, 0, 0, 0, true),
     ],
     ['MT', 'NS', 'hSTR NS'],
     DamageType.special
@@ -1645,7 +1649,7 @@ const characterSettings: CharacterSettingsIndexer = {
   'NIGHTSISTERINITIATE': createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvE'),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, true)
+      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, true),
     ],
     ['NI', 'NS']
   ),
@@ -1653,7 +1657,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('PvE', 0, 0, 100, 50, 25, 0, 75, 0, 50, 0, 0, 0, 0, true),
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP'),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 40, 0, 0, 100, 0, 0, 0, 0, 0, 0, true)
+      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 40, 0, 0, 100, 0, 0, 0, 0, 0, 0, true),
     ],
     ['NS']
   ),
@@ -1662,7 +1666,7 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Strong Zombie', 20, 20, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, true),
       createOptimizationPlan('Weak Zombie', 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false),
       createOptimizationPlan('hSTR Phase 4', 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true),
-      createOptimizationPlan('hSTR Phase 3', 20, 0, 100, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, true)
+      createOptimizationPlan('hSTR Phase 3', 20, 0, 100, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, true),
     ],
     ['NS', 'hSTR NS']
   ),
@@ -1682,7 +1686,7 @@ const characterSettings: CharacterSettingsIndexer = {
   'PADMEAMIDALA': createCharacterSettings(
     [
       createOptimizationPlan('PvP', 35, 0, 100, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0, true),
-      createOptimizationPlan('Slow', 50, 0, 0, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0, true)
+      createOptimizationPlan('Slow', 50, 0, 0, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0, true),
     ],
     ['Padme']
   ),
