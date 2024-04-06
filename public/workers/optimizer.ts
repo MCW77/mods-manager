@@ -1380,12 +1380,10 @@ function optimizeMods(
 
     // Extract any target stats that are set as only goals
     const goalStats = absoluteTarget.targetStats.filter(targetStat => !targetStat.optimizeForTarget);
-    const filteredAbsoluteTarget: OptimizationPlan = {
-      ...absoluteTarget,
-      targetStats: absoluteTarget.targetStats.filter(targetStat => targetStat.optimizeForTarget)
-    }
 
-    const realTarget = combineTargetStats(filteredAbsoluteTarget, character);
+    absoluteTarget.targetStats = absoluteTarget.targetStats.filter(targetStat => targetStat.optimizeForTarget);
+
+    const realTarget = combineTargetStats(absoluteTarget, character);
 
     const { modSet: newModSetForCharacter, messages: characterMessages } =
       findBestModSetForCharacter(usableMods, character, realTarget);
