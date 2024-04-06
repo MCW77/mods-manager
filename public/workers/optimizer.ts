@@ -1309,12 +1309,14 @@ function optimizeMods(
     .filter(id => characters[id].optimizerSettings.isLocked)
     .concat(globalSettings.lockUnselectedCharacters ? unselectedCharacters : []);
 
-  const endIndex = incrementalOptimizeIndex !== null ? incrementalOptimizeIndex + 1 : order.length;
+  if (incrementalOptimizeIndex !== null && incrementalOptimizeIndex < order.length) {
+    order.length = incrementalOptimizeIndex + 1;
+  }
 
   // For each not-locked character in the list, find the best mod set for that character
-  const optimizerResults = order.slice(0, endIndex).reduce((modSuggestions: ModSuggestion[], { id: characterID, target }, index) => {
+  const optimizerResults = order.reduce((modSuggestions: ModSuggestion[], { id: characterID, target }, index) => {
     const character = characters[characterID];
-    const previousCharacter = previousRun?.characters ? previousRun.characters[characterID] : null;
+    const previousCharacter = previousRun?.characters[characterID] ?? null;
 
     // If the character is locked, skip it
     if (character.optimizerSettings.isLocked) {
