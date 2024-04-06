@@ -333,6 +333,9 @@ class CharacterEditView extends PureComponent<Props> {
             onClick={async () => {
               try {
                isBusy$.set(true);
+               if (this.props.selectedCharacters.length === 0) {
+                 this.props.addAll(this.props.highlightedCharacters, this.props.lastSelectedCharacter);
+               }
                const ranking = await stackRank$.fetch(this.props.allyCode)
                this.props.applyRanking(ranking);
               } catch (error) {
