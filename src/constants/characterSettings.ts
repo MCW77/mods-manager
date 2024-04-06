@@ -41,7 +41,9 @@ export const characterNames = [
   'BOBAFETTSCION',
   'BODHIROOK',
   'BOKATAN',
+  'BOOMADIER',
   'BOSSK',
+  'BOSSNASS',
   'BOUSHH',
   'BT1',
   'C3POCHEWBACCA',
@@ -51,6 +53,7 @@ export const characterNames = [
   'CANDEROUSORDO',
   'CAPTAINDROGAN',
   'CAPTAINREX',
+  'CAPTAINTARPALS',
   'CARADUNE',
   'CARTHONASI',
   'CASSIANANDOR',
@@ -489,11 +492,17 @@ const characterSettings: CharacterSettingsIndexer = {
   'BOKATAN': createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 10, 0, 50, 0, 0, 0, 0, true)],
   ),
+  'BOOMADIER': createCharacterSettings(
+    [createOptimizationPlan('PvP', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3, true)],
+  ),
   'BOSSK': createCharacterSettings(
     [
       createOptimizationPlan('Leader', 10, 10, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0, true),
-      createOptimizationPlan('Non-leader', 10, 0, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0, true)
+      createOptimizationPlan('Non-leader', 10, 0, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0, true),
     ]
+  ),
+  'BOSSNASS': createCharacterSettings(
+    [createOptimizationPlan('PvP', 4, 22, 100, 0, 28, 15, 2, 3, 2, 2, 2, 0, 0, true)],
   ),
   'BOUSHH': createCharacterSettings(
     [
@@ -533,7 +542,7 @@ const characterSettings: CharacterSettingsIndexer = {
       optimizationStrategy["Speedy debuffer"],
       optimizationStrategy.Speed,
       createOptimizationPlan('hSTR Phase 1', 0, 0, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, true),
-      createOptimizationPlan('Anti-Malak', 10, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true)
+      createOptimizationPlan('Anti-Malak', 10, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, true),
     ]
   ),
   'CADBANE': createCharacterSettings(
@@ -609,6 +618,9 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
     ],
   ),
+  'CAPTAINTARPALS': createCharacterSettings(
+    [createOptimizationPlan('PvP', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3, true)],
+  ),
   'CARADUNE': createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 80, 100, 20, 0, 25, 0, 0, 0, 0, 0, 0, true),
@@ -616,7 +628,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ]
   ),
   'CARTHONASI': createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')]
+    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
   ),
   'CASSIANANDOR': createCharacterSettings(
     [
@@ -634,7 +646,7 @@ const characterSettings: CharacterSettingsIndexer = {
   'CC2224': createCharacterSettings(
     [
       createOptimizationPlan('Leader', 0, 0, 100, 50, 25, 0, 25, 0, 50, 12.5, 12.5, 0, 0, true),
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Non-leader')
+      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Non-leader'),
     ],
     ['zody'],
     DamageType.mixed
