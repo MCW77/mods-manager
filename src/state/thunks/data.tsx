@@ -11,12 +11,14 @@ import { mapValues } from "lodash-es";
 // state
 import getDatabase, { Database } from "#/state/storage/Database";
 
+import { beginBatch, endBatch } from "@legendapp/state";
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { App } from '#/state/modules/app';
@@ -37,10 +39,8 @@ import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import { SelectedCharacters } from "#/domain/SelectedCharacters";
 
-
 // components
 import { Button } from "#ui/button";
-
 
 interface FetchedProfile {
   name: string,
@@ -414,8 +414,11 @@ export namespace thunks {
             ' The optimizer may not recalculate correctly until you fetch again'
           ))
         );
-        dispatch(Storage.actions.addPlayerProfile(newProfile));
         dispatch(Storage.actions.setProfile(newProfile));
+        beginBatch();
+        profilesManagement$.addProfile(newProfile.allyCode, newProfile);
+        profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
+        endBatch()
         dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
 
       }
@@ -737,7 +740,10 @@ export namespace thunks {
           const newProfile = profile.withHotUtilsSessionId(sessionId);
           db.saveProfile(
             newProfile,
-            () => dispatch(Storage.actions.setProfile(newProfile)),
+            () => {
+              dispatch(Storage.actions.setProfile(newProfile));
+              profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
+            },
             error => dispatch(App.actions.showFlash(
               'Storage Error',
               'Error applying HotUtils session ID to your profile. Please try again.'

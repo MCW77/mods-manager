@@ -1,8 +1,12 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import { observer, reactive } from "@legendapp/state/react";
+
+// state
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { Storage } from '#/state/modules/storage';
@@ -10,38 +14,40 @@ import { Storage } from '#/state/modules/storage';
 // components
 import { Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from '#ui/select';
 
+const ReactiveSelect = reactive(Select);
 
 type ComponentProps = {
   setAddMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ProfileSelector = React.memo(
+const ProfileSelector = observer(React.memo(
   ({ setAddMode }: ComponentProps) => {
     const dispatch: ThunkDispatch = useDispatch();
     const [t, i18n] = useTranslation('global-ui');
-    const profiles = useSelector(Storage.selectors.selectPlayerProfiles);
-    const allyCode = useSelector(Storage.selectors.selectAllycode);
+    const profiles = profilesManagement$.profiles.playernameByAllycode.get();
+    const allycode = profilesManagement$.profiles.activeAllycode.get();
 
     return (
-      <Select
-        value={allyCode}
+      <ReactiveSelect
+        value={allycode}
         onValueChange={value => {
           if (value === 'new') {
             setAddMode(true);
           } else {
             dispatch(Storage.thunks.loadProfile(value));
+            profilesManagement$.profiles.activeAllycode.set(value);
           }
         }}
       >
         <SelectTrigger className="w-[180px] accent-blue">
-          <SelectValue placeholder={allyCode}/>
+          <SelectValue placeholder={allycode}/>
         </SelectTrigger>
         <SelectContent className="accent-blue">
           <SelectGroup className="accent-blue">
             {
               Object.entries(profiles)
                 .map(([allyCode, playerName]) =>
-                  <SelectItem key={allyCode} value={allyCode}>{playerName}</SelectItem>
+                  <SelectItem key={allyCode} value={allyCode}>{profilesManagement$.activePlayer.get()}</SelectItem>
                 )
             }
           </SelectGroup>
@@ -50,10 +56,10 @@ const ProfileSelector = React.memo(
             <SelectItem key="new" value="new">{t('header.ProfileAdderNewCode')}</SelectItem>
           </SelectGroup>
         </SelectContent>
-      </Select>
+      </ReactiveSelect>
     )
   }
-);
+));
 
 ProfileSelector.displayName = 'ProfileSelector';
 

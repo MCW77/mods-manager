@@ -18,6 +18,7 @@ import { IAppState } from '#/state/storage';
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from '#/modules/optimizerView/state/optimizerView';
+import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
 
 // modules
 import { Data } from '#/state/modules/data';
@@ -48,7 +49,6 @@ import { Button } from '#ui/button';
 import { Label } from '#ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
 import { Switch } from '#ui/switch';
-
 
 interface HUModsProfile {
   id: CharacterNames,
@@ -1009,7 +1009,7 @@ const mapStateToProps = (state: IAppState) => {
    * }}
    */
   return {
-    allyCode: Storage.selectors.selectAllycode(state),
+    allycode: profilesManagement$.profiles.activeAllycode.get(),
     assignedMods: profile.modAssignments ?? [],
     currentSetValue: currentLoadoutValue,
     newSetValue: newLoadoutValue,

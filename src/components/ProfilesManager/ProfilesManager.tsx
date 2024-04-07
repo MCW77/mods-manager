@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import { observer } from "@legendapp/state/react";
 
 // styles
 import {
@@ -13,6 +14,7 @@ import {
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { Data } from '#/state/modules/data';
@@ -25,12 +27,11 @@ import { ProfileAdder } from "#/components/ProfileAdder/ProfileAdder";
 import { ProfileSelector } from "#/components/ProfileSelector/ProfileSelector";
 import { Button } from "#ui/button";
 
-
-const ProfilesManager = React.memo(
+const ProfilesManager = observer(React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
-    const allyCode = useSelector(Storage.selectors.selectAllycode);
-    const profiles = useSelector(Storage.selectors.selectPlayerProfiles);
+    const allycode = profilesManagement$.profiles.activeAllycode.get();
+    const profiles = profilesManagement$.profiles.playernameByAllycode.get();
     const profile = useSelector(Storage.selectors.selectActiveProfile);
     const hotUtilsSubscription = useSelector(Storage.selectors.selectHotUtilsSubscription);
     const [isAddingAProfile, setIsAddingAProfile] = useState(Object.keys(profiles).length === 0)
@@ -67,7 +68,7 @@ const ProfilesManager = React.memo(
             onClick={() => {
               dialog$.hide();
               dispatch(Data.thunks.refreshPlayerData(
-                allyCode,
+                allycode,
                 true,
                 profile?.hotUtilsSessionId ?? null
               ));
@@ -88,7 +89,7 @@ const ProfilesManager = React.memo(
           :
             <ProfileSelector setAddMode={setIsAddingAProfile} />
         }
-        {allyCode &&
+        {allycode &&
           <>
             <div className="inline align-middle">
               <Button
@@ -98,7 +99,7 @@ const ProfilesManager = React.memo(
                 size={'icon'}
                 onClick={() => {
                   dispatch(Data.thunks.refreshPlayerData(
-                    allyCode,
+                    allycode,
                     true,
                     null
                   ));
@@ -138,7 +139,7 @@ const ProfilesManager = React.memo(
       </div>
     )
   }
-);
+));
 
 ProfilesManager.displayName = 'ProfilesManager';
 

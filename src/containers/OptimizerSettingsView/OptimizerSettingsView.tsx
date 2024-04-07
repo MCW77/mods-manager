@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // state
-import { reactive } from '@legendapp/state/react';
+import { observer, reactive } from '@legendapp/state/react';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
+import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
 
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';
@@ -30,9 +31,9 @@ import { StackRankSettingsForm } from '#/modules/stackRank/components/StackRankS
 const ReactiveInput = reactive(Input);
 const ReactiveSlider = reactive(SingleValueSlider);
 
-const OptimizerSettingsView = () => {
+const OptimizerSettingsView = observer(() => {
   const templatesAddingMode = useSelector(CharacterEdit.selectors.selectTemplatesAddingMode);
-  const allyCode = useSelector(Storage.selectors.selectAllycode);
+  const allycode = profilesManagement$.profiles.activeAllycode.get();
   const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
 
@@ -60,9 +61,9 @@ const OptimizerSettingsView = () => {
               min={0}
               max={100}
               step={1}
-              $value={optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold}
+              $value={optimizationSettings$.settingsByProfile[allycode].modChangeThreshold}
               onChange={(threshold: number) => {
-                optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold.set(threshold)
+                optimizationSettings$.settingsByProfile[allycode].modChangeThreshold.set(threshold)
               }}
             />
             <ReactiveInput
@@ -71,9 +72,9 @@ const OptimizerSettingsView = () => {
               min={0}
               max={100}
               type="number"
-              $value={optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold}
+              $value={optimizationSettings$.settingsByProfile[allycode].modChangeThreshold}
               onChange={(event) =>
-                optimizationSettings$.settingsByProfile[allyCode].modChangeThreshold.set(event.target.valueAsNumber)
+                optimizationSettings$.settingsByProfile[allycode].modChangeThreshold.set(event.target.valueAsNumber)
               }
             />
           </div>
@@ -87,9 +88,9 @@ const OptimizerSettingsView = () => {
             className={inputCSS}
             id="lock-unselected"
             type="checkbox"
-            $checked={optimizationSettings$.settingsByProfile[allyCode].lockUnselectedCharacters}
+            $checked={optimizationSettings$.settingsByProfile[allycode].lockUnselectedCharacters}
             onChange={(event) =>
-              optimizationSettings$.settingsByProfile[allyCode].lockUnselectedCharacters.set(event.target.checked)
+              optimizationSettings$.settingsByProfile[allycode].lockUnselectedCharacters.set(event.target.checked)
             }
           />
           <Label
@@ -102,9 +103,9 @@ const OptimizerSettingsView = () => {
             className={inputCSS}
             id="force-complete-sets"
             type="checkbox"
-            $checked={optimizationSettings$.settingsByProfile[allyCode].forceCompleteSets}
+            $checked={optimizationSettings$.settingsByProfile[allycode].forceCompleteSets}
             onChange={(event) =>
-              optimizationSettings$.settingsByProfile[allyCode].forceCompleteSets.set(event.target.checked)
+              optimizationSettings$.settingsByProfile[allycode].forceCompleteSets.set(event.target.checked)
             }
           />
           <Label
@@ -117,9 +118,9 @@ const OptimizerSettingsView = () => {
             className={inputCSS}
             id="simulate-6e"
             type="checkbox"
-            $checked={optimizationSettings$.settingsByProfile[allyCode].simulate6EModSlice}
+            $checked={optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice}
             onChange={(event) =>
-              optimizationSettings$.settingsByProfile[allyCode].simulate6EModSlice.set(event.target.checked)
+              optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice.set(event.target.checked)
             }
           />
         </CardContent>
@@ -170,7 +171,7 @@ const OptimizerSettingsView = () => {
       </Card>
     </div>
   );
-};
+});
 
 const FormInput = (props: PropsWithChildren<{}>) => {
   return (
@@ -178,7 +179,7 @@ const FormInput = (props: PropsWithChildren<{}>) => {
       {props.children}
     </div>
   )
-}
+};
 
 OptimizerSettingsView.displayName = 'OptimizerSettingsView';
 

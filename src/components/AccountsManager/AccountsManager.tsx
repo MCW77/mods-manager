@@ -1,7 +1,7 @@
 // react
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
@@ -13,10 +13,10 @@ import { readFile } from "#/utils/readFile";
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { App } from "#/state/modules/app";
-import { Storage } from "#/state/modules/storage";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,10 +26,9 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
-
 const AccountsManager = React.memo(() => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const playerProfiles = useSelector(Storage.selectors.selectPlayerProfiles);
+	const playerProfiles = profilesManagement$.profiles.playernameByAllycode.get()
 	const [selectedProfile, setSelectedProfile] = useState(
 		Object.keys(playerProfiles)[0] ?? "",
 	);

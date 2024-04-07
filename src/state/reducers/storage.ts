@@ -20,18 +20,6 @@ export namespace reducers {
     });
   }
 
-  export function addPlayerProfile(state: IAppState, action: ReturnType<typeof actions.addPlayerProfile>): IAppState {
-    return Object.assign({}, state, {
-      playerProfiles: Object.assign({}, selectors.selectPlayerProfiles(state), {
-        [action.profile.allyCode]: action.profile.playerName
-      })
-    });
-  }
-
-  export function setPlayerProfiles(state: IAppState, action: ReturnType<typeof actions.setPlayerProfiles>): IAppState {
-    return Object.assign({}, state, { playerProfiles: action.profiles });
-  }
-
   export function setCharacterTemplates(state: IAppState, action: ReturnType<typeof actions.setCharacterTemplates>): IAppState {
     return Object.assign({}, state, { templates: { userTemplatesByName: action.templates, templatesAddingMode: state.templates.templatesAddingMode} }) as IAppState;
   }
@@ -42,10 +30,8 @@ export namespace reducers {
 };
 
 export namespace selectors {
-  export const selectAllycode = (state: IAppState) => state.allyCode;
   export const selectActiveProfile = (state: IAppState) => state.profile;
   export const selectHotUtilsSubscription = (state: IAppState) => state.hotUtilsSubscription;
-  export const selectPlayerProfiles = (state: IAppState) => state.playerProfiles;
   export const selectCharactersInActiveProfile = createSelector(
     [selectActiveProfile],
     (activeProfile) => activeProfile.characters

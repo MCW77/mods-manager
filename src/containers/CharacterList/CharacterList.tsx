@@ -2,6 +2,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import { observer } from "@legendapp/state/react";
 
 // styles
 import "./CharacterList.css";
@@ -12,7 +13,7 @@ import groupByKey from "#/utils/groupByKey";
 // state
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';
 import { Data } from '#/state/modules/data';
@@ -29,11 +30,10 @@ import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { Button } from "#ui/button";
 
-
-const CharacterList = React.memo(
+const CharacterList = observer(React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
-    const allyCode = useSelector(Storage.selectors.selectAllycode);
+    const allycode = profilesManagement$.profiles.activeAllycode.get();
     const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
     const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
     const selectedCharacters = useSelector(CharacterEdit.selectors.selectSelectedCharactersInActiveProfile);
@@ -249,7 +249,7 @@ const CharacterList = React.memo(
     }
 
     const showEditCharacterModal = (character: Character.Character, index: number, target: OptimizationPlan.OptimizationPlan) => {
-      incrementalOptimization$.indicesByProfile[allyCode].set(index);
+      incrementalOptimization$.indicesByProfile[allycode].set(index);
       optimizerView$.assign({
         currentCharacter: {
           id: character.baseID,
@@ -290,7 +290,7 @@ const CharacterList = React.memo(
       </div>
     );
   }
-);
+));
 
 CharacterList.displayName = 'CharacterList';
 

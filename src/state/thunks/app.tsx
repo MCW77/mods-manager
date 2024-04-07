@@ -10,6 +10,7 @@ import { IAppState } from "../storage";
 import getDatabase, { IUserData } from "../storage/Database";
 import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
+import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
 
 // modules
 import { actions } from '../actions/app';
@@ -21,7 +22,6 @@ import * as C3POMods from "../../modules/profilesManagement/dtos/c3po";
 import * as C3POMappers from "../../modules/profilesManagement/mappers/c3po";
 import { Mod } from "../../domain/Mod";
 import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
-
 
 export namespace thunks {
   export function deleteProfile(allyCode: string): ThunkResult<void> {
@@ -58,7 +58,7 @@ export namespace thunks {
     return async function (dispatch, getState) {
       const state = getState();
       const db = getDatabase();
-      let profile = await db.getProfile(Storage.selectors.selectAllycode(state));
+      let profile = await db.getProfile(profilesManagement$.profiles.activeAllycode.get());
       mods = mods.filter(mod => mod.equippedUnit === 'none');
       const mapper = new C3POMappers.ModMapper();
       const newMods: Mod[] = mods.map(
@@ -73,7 +73,7 @@ export namespace thunks {
       db.saveProfile(
         profile,
         () => {
-          dispatch(Storage.thunks.loadProfile(Storage.selectors.selectAllycode(state)));
+          dispatch(Storage.thunks.loadProfile(profilesManagement$.profiles.activeAllycode.get()));
           dispatch(actions.showFlash(
             'Success!',
             <p>
@@ -182,6 +182,7 @@ export namespace thunks {
         ))
       );
       dispatch(Storage.actions.setProfile(newProfile));
+      profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
       auxiliaryChanges(dispatch, getState, newProfile);
     };
   }

@@ -38,7 +38,6 @@ const ProfileAdder = React.memo(
       return async function (dispatch) {
         await dispatch(Data.thunks.refreshPlayerData(allyCode, true, null));
         setIsFetchFinished(true);
-//        setAddMode(false);
       };
     }
 

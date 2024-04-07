@@ -47,11 +47,9 @@ type AppActions =
   | ReturnType<typeof Optimize.actions.updateProgress>
   | ReturnType<typeof Review.actions.changeModListFilter>
   | ReturnType<typeof Settings.actions.setSettingsPosition>
-  | ReturnType<typeof Storage.actions.addPlayerProfile>
   | ReturnType<typeof Storage.actions.setBaseCharacters>
   | ReturnType<typeof Storage.actions.setCharacterTemplates>
   | ReturnType<typeof Storage.actions.setHotUtilsSubscription>
-  | ReturnType<typeof Storage.actions.setPlayerProfiles>
   | ReturnType<typeof Storage.actions.setProfile>
 ;
 // #endregion
@@ -144,12 +142,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return AppState.save(
         Storage.reducers.setCharacterTemplates(state, action)
       );
-    case Storage.actionNames.ADD_PLAYER_PROFILE:
-      return AppState.save(
-        Storage.reducers.addPlayerProfile(state, action)
-      );
-    case Storage.actionNames.SET_PLAYER_PROFILES:
-      return Storage.reducers.setPlayerProfiles(state, action);
     case Storage.actionNames.SET_HOTUTILS_SUBSCRIPTION:
       return Storage.reducers.setHotUtilsSubscription(state, action);
 

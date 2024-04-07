@@ -10,7 +10,6 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // modules
 import { Optimize } from "#/state/modules/optimize";
-import { Storage } from "#/state/modules/storage";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
@@ -18,10 +17,9 @@ import { Button } from "#ui/button";
 
 const OptimizerProgress = () => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const allyCode = useSelector(Storage.selectors.selectAllycode);
 	const progress = useSelector(Optimize.selectors.selectProgress);
 	const isIncremental =
-		incrementalOptimization$.indicesByProfile[allyCode].peek() !== null;
+		incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
 		dispatch(Optimize.thunks.cancelOptimizer());

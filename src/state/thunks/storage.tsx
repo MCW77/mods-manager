@@ -10,6 +10,8 @@ import nothing from "#/utils/nothing";
 // state
 import getDatabase, { IUserData } from "#/state/storage/Database";
 
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
 // actions
 import { actions } from '#/state/actions/storage';
 
@@ -22,7 +24,6 @@ import { BaseCharactersById, BaseCharacter } from '#/domain/BaseCharacter';
 import { CharacterTemplate, CharacterTemplates, CharacterTemplatesByName } from "#/domain/CharacterTemplates";
 import { Mod } from '#/domain/Mod';
 import { OptimizerRun } from "#/domain/OptimizerRun";
-import { PlayerNamesByAllycode } from "#/domain/PlayerNamesByAllycode";
 import { PlayerProfile } from '#/domain/PlayerProfile';
 import { SelectedCharactersByTemplateName } from "#/domain/SelectedCharacters";
 
@@ -240,6 +241,7 @@ export namespace thunks {
         const cleanedProfile = profile.withSelectedCharacters(cleanedSelectedCharacters);
 
         dispatch(actions.setProfile(cleanedProfile));
+        profilesManagement$.profiles.activeAllycode.set(allyCode);
         dispatch(Data.thunks.fetchHotUtilsStatus(allyCode));
       }
       catch (error) {
@@ -275,15 +277,15 @@ export namespace thunks {
               cleanedProfiles.find((profile, index) => index === 0);
 
             dispatch(actions.setProfile(profile ?? PlayerProfile.Default));
+            profilesManagement$.profiles.activeAllycode.set(profile?.allyCode ?? '');
             if (profile !== undefined) {
               dispatch(Data.thunks.fetchHotUtilsStatus(profile.allyCode));
-            } else if (Object.keys(getState().playerProfiles).length !== 0) {
+            } else if (profilesManagement$.hasProfiles.get()) {
                 dispatch(App.actions.resetState());
             }
-            // Set up the playerProfiles object used to switch between available profiles
-            const playerProfiles: PlayerNamesByAllycode = {} as PlayerNamesByAllycode;
-            cleanedProfiles.forEach(profile => playerProfiles[profile.allyCode] = profile.playerName);
-            dispatch(actions.setPlayerProfiles(playerProfiles));
+            cleanedProfiles.forEach(profile => {
+              profilesManagement$.addProfile(profile.allyCode, profile);
+            });
           },
           error =>
             dispatch(App.actions.showFlash(

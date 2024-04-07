@@ -20,6 +20,9 @@ import registerServiceWorker from './registerServiceWorker';
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";
 
+// state
+import { profilesManagement$ } from "./modules/profilesManagement/state/profilesManagement";
+
 // modules
 import { App as AppModule } from './state/modules/app';
 import { Storage } from './state/modules/storage';
@@ -44,7 +47,7 @@ getDatabase(
   (db) => {
     const dispatch: ThunkDispatch = store.dispatch;
     dispatch(
-      Storage.thunks.databaseReady(store.getState().allyCode)
+      Storage.thunks.databaseReady(profilesManagement$.profiles.activeAllycode.get())
     );
   },
   (error: DOMException | null) => {

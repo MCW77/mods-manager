@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-import { reactive, useObservable } from "@legendapp/state/react";
+import { observer, reactive, useObservable } from "@legendapp/state/react";
 
 // utils
 import areObjectsEquivalent from '#/utils/areObjectsEquivalent';
@@ -13,6 +13,7 @@ import { ObservableObject, beginBatch, endBatch } from "@legendapp/state";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { CharacterEdit } from '#/state/modules/characterEdit';
@@ -62,12 +63,12 @@ type ComponentProps = {
   target: OptimizationPlan.OptimizationPlan,
 }
 
-const CharacterEditForm = ({
+const CharacterEditForm = observer(({
   character,
   target,
 }: ComponentProps) => {
   const dispatch: ThunkDispatch = useDispatch();
-  const allyCode = useSelector(Storage.selectors.selectAllycode);
+  const allycode = profilesManagement$.profiles.activeAllycode.get()
   const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
   const editMode = useSelector(CharacterEdit.selectors.selectCharacterEditMode);
   const progress = useSelector(Optimize.selectors.selectProgress);
@@ -281,7 +282,7 @@ const CharacterEditForm = ({
       onSubmit={(e) => {
         e.preventDefault();
         saveTarget();
-        incrementalOptimization$.indicesByProfile[allyCode].set(null);
+        incrementalOptimization$.indicesByProfile[allycode].set(null);
         optimizerView$.view.set('basic');
       }}
     >
@@ -405,6 +406,8 @@ const CharacterEditForm = ({
       </Tabs>
     </form>
   );
-};
+});
+
+CharacterEditForm.displayName = 'CharacterEditForm';
 
 export { CharacterEditForm };

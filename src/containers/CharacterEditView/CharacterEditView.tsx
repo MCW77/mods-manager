@@ -29,6 +29,7 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // modules
@@ -67,7 +68,6 @@ import { Switch } from "#ui/switch";
 
 // containers
 import { CharacterList } from "#/containers/CharacterList/CharacterList";
-
 
 class CharacterEditView extends PureComponent<Props> {
   dragStart(character: Character.Character) {
@@ -632,7 +632,7 @@ class CharacterEditView extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: IAppState) => {
-  const allycode = Storage.selectors.selectAllycode(state);
+  const allycode = profilesManagement$.profiles.activeAllycode.get();
   const profile = Storage.selectors.selectActiveProfile(state);
   const characters = Storage.selectors.selectCharactersInActiveProfile(state);
   const baseCharacters = Data.selectors.selectBaseCharacters(state);

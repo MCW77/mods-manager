@@ -1,6 +1,8 @@
 // state
-import { observable } from "@legendapp/state";
+import { ObservableComputed, ObservableObject, computed, observable } from "@legendapp/state";
 import { persistObservable } from "@legendapp/state/persist"
+
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 export interface ProfileOptimizationSettings {
   forceCompleteSets: boolean;
@@ -12,14 +14,20 @@ export interface ProfileOptimizationSettings {
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 
 interface OptimizationSettings {
+  activeSettings: ObservableComputed<ProfileOptimizationSettings>;
   settingsByProfile: SettingsByProfile;
   addProfile: (allyCode: string) => void;
   clearProfiles: () => void;
   deleteProfile: (allyCode: string) => void;
 }
 
-export const optimizationSettings$ = observable<OptimizationSettings>(
+export const optimizationSettings$: ObservableObject<OptimizationSettings> = observable<OptimizationSettings>(
   {
+    activeSettings: computed<ProfileOptimizationSettings>(() =>
+      optimizationSettings$.settingsByProfile[
+        profilesManagement$.profiles.activeAllycode.get()
+      ].get() as ProfileOptimizationSettings
+    ),
     settingsByProfile: {},
     addProfile: (allyCode: string) => {
       return optimizationSettings$.settingsByProfile.set({

@@ -9,10 +9,11 @@ import { saveAs } from 'file-saver';
 import { readFile } from '#/utils/readFile';
 
 // state
+import { observer } from '@legendapp/state/react';
 import { dialog$ } from '#/modules/dialog/state/dialog';
 import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
-
+import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
 // modules
 import { App } from '#/state/modules/app';
 import { Storage } from '#/state/modules/storage';
@@ -30,9 +31,8 @@ import { Button } from '#ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '#ui/card';
 import { Separator } from '#ui/separator';
 
-
-const GeneralSettingsView = () => {
-  const allycode = useSelector(Storage.selectors.selectAllycode);
+const GeneralSettingsView = observer(() => {
+  const allycode = profilesManagement$.profiles.activeAllycode.get();
   const version = useSelector(App.selectors.selectVersion);
   const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
@@ -59,6 +59,7 @@ const GeneralSettingsView = () => {
             dispatch(App.thunks.reset());
             optimizationSettings$.clearProfiles();
             incrementalOptimization$.clearProfiles();
+            profilesManagement$.clearProfiles();
           }}
         >
           {t('general.backup.ResetProceed')}
@@ -150,7 +151,7 @@ const GeneralSettingsView = () => {
       </Card>
     </div>
   );
-};
+});
 
 const FormInput = (props: PropsWithChildren<{}>) => {
   return (

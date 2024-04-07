@@ -10,7 +10,6 @@ import { HelpSections } from "../domain/HelpSections";
 import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
-import { PlayerNamesByAllycode } from "../domain/PlayerNamesByAllycode";
 import { PlayerProfile } from "../domain/PlayerProfile";
 import { SetRestrictions } from "../domain/SetRestrictions";
 import { SettingsSections } from "../domain/SettingsSections";
@@ -22,7 +21,6 @@ import * as UITypes from "../components/types";
 
 
 export interface IAppState {
-  allyCode: string,
   baseCharacters: BaseCharactersById,
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
@@ -41,7 +39,6 @@ export interface IAppState {
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
   optimizerView: 'edit' | 'review',
-  playerProfiles: PlayerNamesByAllycode,
   previousSection: UITypes.Sections,
   profile: PlayerProfile, // All the data about the current character
   progress: OptimizationStatus,
@@ -60,7 +57,6 @@ export interface IAppState {
 
 export class AppState {
   static readonly keysToSave = [
-    'allyCode',
     'characterEditMode',
     'characterEditSortView',
     'characterFilter',
@@ -68,7 +64,6 @@ export class AppState {
     'modListFilter',
     'modsViewOptions',
     'optimizerView',
-    'playerProfiles',
     'section',
     'showSidebar',
     'templates',
@@ -77,7 +72,6 @@ export class AppState {
   ] as const;
 
   static readonly Default: IAppState = {
-    allyCode: '',
     baseCharacters: {} as BaseCharactersById,
     characterEditMode: 'basic',
     characterEditSortView: false,
@@ -98,7 +92,6 @@ export class AppState {
     },
     modsViewOptions: defaultOptions,
     optimizerView: 'edit',
-    playerProfiles: {}, // A simple map from ally codes to player names for all available profiles
     previousSection: 'help',
     profile: PlayerProfile.Default, // All the data about the current character
     progress: {
@@ -186,7 +179,6 @@ export function deserializeState(state: IAppState): IAppState {
     {},
     AppState.Default,
     {
-      allyCode: state.allyCode,
       characterEditMode: state.characterEditMode || AppState.Default.characterEditMode,
       characterEditSortView: state.characterEditSortView || AppState.Default.characterEditSortView,
       characterFilter: state.characterFilter || AppState.Default.characterFilter,
@@ -194,7 +186,6 @@ export function deserializeState(state: IAppState): IAppState {
       modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
       modListFilter: state.modListFilter || AppState.Default.modListFilter,
       optimizerView: state.optimizerView || AppState.Default.optimizerView,
-      playerProfiles: state.playerProfiles || AppState.Default.playerProfiles,
       section: state.section,
       showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
       templates: state.templates,

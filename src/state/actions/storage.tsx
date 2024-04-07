@@ -1,8 +1,7 @@
 // domain
-import { BaseCharactersById } from '../../domain/BaseCharacter';
-import { CharacterTemplatesByName } from "../../domain/CharacterTemplates";
-import { PlayerNamesByAllycode } from '../../domain/PlayerNamesByAllycode';
-import { PlayerProfile } from '../../domain/PlayerProfile';
+import { BaseCharactersById } from "#/domain/BaseCharacter";
+import { CharacterTemplatesByName } from "#/domain/CharacterTemplates";
+import { PlayerProfile } from "#/domain/PlayerProfile";
 
 
 /*
@@ -52,18 +51,6 @@ export function addModsToProfiles(newProfiles) {
 }
 */
 export namespace actions {
-
-  /**
-   * Add a profile to the state's list of player profiles
-   * @param profile {PlayerProfile}
-   */
-  export function addPlayerProfile(profile: PlayerProfile) {
-    return {
-      type: actionNames.ADD_PLAYER_PROFILE,
-      profile: profile
-    } as const;
-  }
-
   export function setBaseCharacters(baseCharacters: BaseCharactersById) {
     return {
       type: actionNames.SET_BASE_CHARACTERS,
@@ -85,13 +72,6 @@ export namespace actions {
     } as const;
   }
 
-  export function setPlayerProfiles(profiles: PlayerNamesByAllycode) {
-    return {
-      type: actionNames.SET_PLAYER_PROFILES,
-      profiles: profiles
-    } as const;
-  }
-
   export function setProfile(profile: PlayerProfile) {
     return {
       type: actionNames.SET_PROFILE,
@@ -101,10 +81,8 @@ export namespace actions {
 };
 
 export namespace actionNames {
-  export const ADD_PLAYER_PROFILE = 'ADD_PLAYER_PROFILE' as const;
   export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS' as const;
   export const SET_CHARACTER_TEMPLATES = 'SET_CHARACTER_TEMPLATES' as const;
   export const SET_HOTUTILS_SUBSCRIPTION = 'SET_HOTUTILS_SUBSCRIPTION' as const;
-  export const SET_PLAYER_PROFILES = 'SET_PLAYER_PROFILES' as const;
   export const SET_PROFILE = 'SET_PROFILE' as const;
 };
