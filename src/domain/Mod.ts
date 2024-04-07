@@ -1,6 +1,9 @@
 // utils
 import Big from "big.js";
 
+// state
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+
 // domain
 import { CharacterNames } from "../constants/characterSettings";
 import { ModTiersEnum } from "../constants/enums";
@@ -199,7 +202,7 @@ export class Mod {
   }
 
   shouldSlice(character: Character.Character, target: OptimizationPlan.OptimizationPlan) {
-    return character.optimizerSettings.sliceMods && this.pips === 5 &&
+    return optimizationSettings$.activeSettings.simulate6EModSlice.peek() && this.pips === 5 &&
       (this.level === 15 || this.shouldLevel(target))
   }
 
@@ -234,10 +237,10 @@ export class Mod {
 
     if (withUpgrades) {
       // Upgrade or slice each mod as necessary based on the optimizer settings and level of the mod
-      if (15 > workingMod.level && target.upgradeMods) {
+      if (15 > workingMod.level && optimizationSettings$.activeSettings.simulateLevel15Mods.peek()) {
         workingMod = workingMod.levelUp();
       }
-      if (15 === workingMod.level && 5 === workingMod.pips && character.optimizerSettings.sliceMods) {
+      if (15 === workingMod.level && 5 === workingMod.pips && optimizationSettings$.activeSettings.simulate6EModSlice.peek()) {
         workingMod = workingMod.slice();
       }
     }

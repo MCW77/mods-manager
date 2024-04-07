@@ -8,6 +8,7 @@ import type * as ModTypes from "#/domain/types/ModTypes";
 import { SetRestrictions } from "#/domain/SetRestrictions";
 import { PrimaryStats } from "#/domain/Stats";
 import { TargetStats } from "#/domain/TargetStat";
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 
 // #region OptimizableStats
 export type OptimizableStats =
@@ -59,7 +60,6 @@ export const createOptimizationPlan = (
   resistance: number = 0,
   accuracy: number = 0,
   critAvoid: number = 0,
-  upgradeMods = true,
   primaryStatRestrictions = {},
   setRestrictions = {},
   targetStats: TargetStats = [],
@@ -70,7 +70,6 @@ export const createOptimizationPlan = (
     primaryStatRestrictions: primaryStatRestrictions as PrimaryStatRestrictions,
     setRestrictions: setRestrictions as SetRestrictions,
     targetStats: targetStats,
-    upgradeMods: upgradeMods,
     useOnlyFullSets: useOnlyFullSets,
 
     Health: health || 0,
@@ -135,7 +134,7 @@ export const toRenamed = (plan: OptimizationPlan, name: string) => {
 }
 
 export const shouldUpgradeMods = (target: OptimizationPlan) => {
-  return target.upgradeMods || target.targetStats.length > 0;
+  return optimizationSettings$.activeSettings.simulateLevel15Mods.peek() || target.targetStats.length > 0;
 }
 
 export const hasRestrictions = (target: OptimizationPlan) => {
@@ -195,7 +194,6 @@ export const equals = (first: OptimizationPlan, second: OptimizationPlan) => {
     first.Resistance === second.Resistance &&
     first['Accuracy %'] === second['Accuracy %'] &&
     first['Critical Avoidance %'] === second['Critical Avoidance %'] &&
-    first.upgradeMods === second.upgradeMods &&
     areObjectsEquivalent(first.primaryStatRestrictions, second.primaryStatRestrictions) &&
     areObjectsEquivalent(first.setRestrictions, second.setRestrictions) &&
     areObjectsEquivalent(first.targetStats, second.targetStats) &&
@@ -225,7 +223,6 @@ export interface OptimizationPlan extends Record<OptimizableStats, number>{
   primaryStatRestrictions: PrimaryStatRestrictions;
   setRestrictions: SetRestrictions;
   targetStats: TargetStats;
-  upgradeMods: boolean;
   useOnlyFullSets: boolean;
 }
 

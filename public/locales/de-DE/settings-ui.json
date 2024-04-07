@@ -39,7 +39,8 @@
       "Threshold": "Grenzwert für Modtausch",
       "LockUnselected": "Sperre alle unselektierten Charaktere",
       "NoModSetsBreak": "Keine Modsets aufbrechen",
-      "Simulate6E": "Simuliere 6E-Mods"
+      "Simulate6E": "Simuliere 6E-Mods",
+      "SimulateLevel15": "Simuliere Level 15 Mods"
     },
     "templates": {
       "Title": "Charakter Vorlagen",

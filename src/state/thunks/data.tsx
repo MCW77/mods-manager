@@ -372,7 +372,6 @@ export namespace thunks {
                 [],
                 fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
                 false,
-                false,
               )
             ))
           }

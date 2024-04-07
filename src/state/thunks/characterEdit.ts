@@ -223,27 +223,6 @@ export namespace thunks {
   }
 
   /**
-   * Change whether to slice mods when optimizing a given character
-   * @param characterID string The character ID of the character being updated
-   * @param sliceMods boolean
-   * @returns {Function}
-   */
-  export function changeSliceMods(characterID: CharacterNames, sliceMods: boolean) {
-    return App.thunks.updateProfile(
-      (profile: PlayerProfile) => {
-        const oldCharacter = profile.characters[characterID];
-
-        return profile.withCharacters(Object.assign({}, profile.characters, {
-          [characterID]: Character.withOptimizerSettings(
-            oldCharacter,
-            OptimizerSettings.withModSlicing(oldCharacter.optimizerSettings, sliceMods)
-          )
-        }));
-      }
-    );
-  }
-
-  /**
    * Delete the currently selected target for a given character
    * @param characterID {String} The character ID of the character being reset
    * @param targetName {String} The name of the target to delete
@@ -611,42 +590,6 @@ export namespace thunks {
         });
 
         return profile.withCharacters(newCharacters);
-      }
-    );
-  }
-
-  export function toggleSliceMods(characterID: CharacterNames) {
-    return App.thunks.updateProfile(
-      (profile: PlayerProfile) => {
-        const oldCharacter = profile.characters[characterID];
-        const newCharacters: Character.Characters = Object.assign({}, profile.characters, {
-          [characterID]: Character.withOptimizerSettings(
-            oldCharacter,
-            OptimizerSettings.withModSlicing(
-              oldCharacter.optimizerSettings,
-              !oldCharacter.optimizerSettings.sliceMods
-            )
-          )
-        });
-
-        return profile.withCharacters(newCharacters);
-      }
-    );
-  }
-
-  export function toggleUpgradeMods(characterIndex: number) {
-    return App.thunks.updateProfile(
-      (profile: PlayerProfile) => {
-        const oldCharacter = profile.selectedCharacters[characterIndex];
-        const newSelectedCharacters = profile.selectedCharacters.slice(0);
-        newSelectedCharacters.splice(characterIndex, 1, Object.assign({}, oldCharacter, {
-          target: {
-            ...oldCharacter.target,
-            upgradeMods: !oldCharacter.target.upgradeMods,
-          }
-        }));
-
-        return profile.withSelectedCharacters(newSelectedCharacters);
       }
     );
   }

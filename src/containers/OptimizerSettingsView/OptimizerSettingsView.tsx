@@ -123,6 +123,21 @@ const OptimizerSettingsView = observer(() => {
               optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice.set(event.target.checked)
             }
           />
+          <Label
+            className={labelCSS}
+            htmlFor="simulate-level-15"
+          >
+            {t('optimizer.global.SimulateLevel15')}
+          </Label>
+          <ReactiveInput
+            className={inputCSS}
+            id="simulate-level-15"
+            type="checkbox"
+            $checked={optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods}
+            onChange={(event) =>
+              optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods.set(event.target.checked)
+            }
+          />
         </CardContent>
         <CardFooter className="grid justify-center">
           <Button>Reset</Button>

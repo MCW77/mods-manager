@@ -185,8 +185,6 @@ const CharacterList = observer(React.memo(
         groupByKey(characterSettings[character.baseID].targets, target => target.name) :
         {};
 
-      const levelActive = target.upgradeMods ? 'active' : '';
-      const sliceActive = character.optimizerSettings.sliceMods ? 'active' : '';
       const restrictionsActive = OptimizationPlan.hasRestrictions(target) ? 'active' : '';
       const targetStatActive = target.targetStats && target.targetStats.length ? 'active' : '';
       const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target) ? 'active' : '';
@@ -214,12 +212,6 @@ const CharacterList = observer(React.memo(
           </select>
           <span className={` ${1 < minimumDots ? 'green active' : 'gray'}`}>{minimumDots}</span>
         </span>
-        <span className={`icon level ${levelActive}`}
-          onClick={() => dispatch(CharacterEdit.thunks.toggleUpgradeMods(characterIndex))}
-          title={levelActive ? 'Level this character\'s mods to 15' : 'Do not level this character\'s mods to 15'} />
-        <span className={`icon slice ${sliceActive}`}
-          onClick={() => dispatch(CharacterEdit.thunks.toggleSliceMods(character.baseID))}
-          title={sliceActive ? 'Slice this character\'s mods to 6E' : 'Do not slice this character\'s mods to 6E'} />
         <span className={`icon restrictions ${restrictionsActive}`}
           title={restrictionsActive ?
             'This character has restrictions active' :

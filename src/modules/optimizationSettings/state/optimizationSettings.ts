@@ -9,6 +9,7 @@ export interface ProfileOptimizationSettings {
   lockUnselectedCharacters: boolean;
   modChangeThreshold: number;
   simulate6EModSlice: boolean;
+  simulateLevel15Mods: boolean;
 }
 
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
@@ -37,6 +38,7 @@ export const optimizationSettings$: ObservableObject<OptimizationSettings> = obs
           lockUnselectedCharacters: false,
           modChangeThreshold: 0,
           simulate6EModSlice: false,
+          simulateLevel15Mods: true,
         },
       });
     },

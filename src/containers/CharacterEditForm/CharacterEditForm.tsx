@@ -97,7 +97,6 @@ const CharacterEditForm = observer(({
     },
     addTargetStat: () => {
       target$.target.targetStats.push(createTargetStat('Speed'));
-      target$.target.upgradeMods.set(true);
     },
     removeSetBonus: (setName: SetStats.GIMOStatNames) => {
       let restrictions = target$.target.setRestrictions.peek();
@@ -235,7 +234,6 @@ const CharacterEditForm = observer(({
     const char = character$.character.peek();
 
     dispatch(CharacterEdit.thunks.changeMinimumModDots(char.baseID, char.optimizerSettings.minimumModDots));
-    dispatch(CharacterEdit.thunks.changeSliceMods(char.baseID, char.optimizerSettings.sliceMods));
     dispatch(CharacterEdit.thunks.unlockCharacter(char.baseID));
     dispatch(CharacterEdit.thunks.finishEditCharacterTarget(char.baseID, newTarget));
   }
@@ -352,37 +350,6 @@ const CharacterEditForm = observer(({
                 </span>
                 &nbsp;dot(s)
               </Label>
-            </div>
-            <div className={"flex flex-gap-2"}>
-              <Label htmlFor={'slice-mods'} id={'slice-mods-label'}>Slice 5-dot mods to 6E during optimization?</Label>
-              <ReactiveInput
-                className={'h-4 w-4'}
-                id={'slice-mods'}
-                name={'slice-mods'}
-                type={'checkbox'}
-                $checked={character$.character.optimizerSettings.sliceMods}
-                onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                  character$.character.optimizerSettings.sliceMods.set(e.currentTarget.checked);
-                }}
-              />
-            </div>
-          </div>
-          <div>
-            <h3>Target-specific Options</h3>
-            <div>
-              <div className={'flex gap-2'}>
-                <Label htmlFor={'upgrade-mods'}>Upgrade Mods to level 15:</Label>
-                <ReactiveInput
-                  className={'h-4 w-4'}
-                  $checked={target$.target.upgradeMods}
-                  id={'upgrade-mods'}
-                  name={'upgrade-mods'}
-                  type={'checkbox'}
-                  onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                    target$.target.upgradeMods.set(e.currentTarget.checked);
-                  }}
-                />
-              </div>
             </div>
           </div>
         </TabsContent>

@@ -39,7 +39,8 @@
       "Threshold": "Threshold to change mods",
       "LockUnselected": "Lock all unselected characters",
       "NoModSetsBreak": "Don't break mod sets",
-      "Simulate6E": "Simulate 6E mods"
+      "Simulate6E": "Simulate 6E mods",
+      "SimulateLevel15": "Simulate level 15 mods"
     },
     "templates": {
       "Title": "Character Templates",

@@ -594,10 +594,7 @@ function getFlatStatsFromModSet(
   character: Character.Character,
   target: OptimizationPlan,
 ) {
-  const statsFromSetBonus = getSetBonusStatsFromModSet(
-    modSet,
-    target.upgradeMods
-  );
+  const statsFromSetBonus = getSetBonusStatsFromModSet(modSet);
   const statsDirectlyFromMods: StatValue[] = [];
   const flattenedStats: Stat[] = [];
   const combinedStats: Partial<Record<Stats.DisplayStatNames, Stat>> = {};
@@ -670,20 +667,18 @@ function getFlatStatsFromMod(
 /**
  * Get all of the Stats that apply to the set bonuses for a given set of mods
  * @param modSet {Array<Mod>}
- * @param upgradeMods {boolean} Whether or not to treat all mods as if they are level 15
  *
  * @return {Array<Stat>}
  */
 function getSetBonusStatsFromModSet(
   modSet: Mod[],
-  upgradeMods: boolean,
 ) {
   let setStats: SetStat[] = [];
   const setBonusCounts: Partial<Record<SetStats.GIMOStatNames, { setBonus: SetBonus, lowCount: number, highCount: number}>> = {};
 
   modSet.forEach(mod => {
     const setName = mod.set.name;
-    const highCountValue = upgradeMods || mod.level === 15 ? 1 : 0;
+    const highCountValue = optimizationSettings$.activeSettings.simulateLevel15Mods.peek() || mod.level === 15 ? 1 : 0;
 
     setBonusCounts[setName] = {
       setBonus: mod.set,
@@ -1118,7 +1113,8 @@ function getUpgradedMod(
   const workingMod: Mod = Object.assign({}, mod);
 
   // Level the mod if the target says to
-  if (15 > workingMod.level && target.upgradeMods) {
+
+  if (15 > workingMod.level && optimizationSettings$.activeSettings.simulateLevel15Mods.peek()) {
     workingMod.primaryStat = {
       displayType: workingMod.primaryStat.displayType,
       isPercentVersion: workingMod.primaryStat.isPercentVersion,
@@ -1129,7 +1125,7 @@ function getUpgradedMod(
   }
 
   // Slice the mod to 6E if needed
-  if (15 === workingMod.level && 5 === workingMod.pips && character.optimizerSettings.sliceMods) {
+  if (15 === workingMod.level && 5 === workingMod.pips && optimizationSettings$.activeSettings.simulate6EModSlice.peek()) {
     workingMod.pips = 6;
     workingMod.primaryStat = {
       displayType: workingMod.primaryStat.displayType,
@@ -1274,6 +1270,7 @@ function optimizeMods(
     globalSettings.lockUnselectedCharacters !== previousRun.globalSettings.lockUnselectedCharacters ||
     globalSettings.modChangeThreshold !== previousRun.globalSettings.modChangeThreshold ||
     globalSettings.simulate6EModSlice !== previousRun.globalSettings.simulate6EModSlice ||
+    globalSettings.simulateLevel15Mods !== previousRun.globalSettings.simulateLevel15Mods ||
     availableMods.length !== previousRun.mods.length;
 
   if (!recalculateMods) {
@@ -1338,7 +1335,6 @@ function optimizeMods(
       ) &&
       previousCharacter.optimizerSettings &&
       character.optimizerSettings.minimumModDots === previousCharacter.optimizerSettings.minimumModDots &&
-      character.optimizerSettings.sliceMods === previousCharacter.optimizerSettings.sliceMods &&
       character.optimizerSettings.isLocked === previousCharacter.optimizerSettings.isLocked &&
       previousModAssignments[index]
     ) {

@@ -1,3 +1,6 @@
+// state
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+
 // domain
 import * as ModConsts from "./constants/ModConsts";
 import setBonuses from "../constants/setbonuses";
@@ -86,7 +89,7 @@ class ModLoadout implements SlotIndexer{
       const currentMaxCount = maxSetCounts.get(set) || 0;
       if (set) {
         smallSetCounts.set(set, currentSmallCount + 1);
-        if ((withUpgrades && target.upgradeMods) || 15 === mod.level) {
+        if ((withUpgrades && optimizationSettings$.activeSettings.simulateLevel15Mods.peek()) || 15 === mod.level) {
           maxSetCounts.set(set, currentMaxCount + 1);
         }
       }
