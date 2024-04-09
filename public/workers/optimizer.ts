@@ -1617,7 +1617,7 @@ function findBestModSetForCharacter(
   switch (0 < targetStats.length) {
     case true:
       // If so, create an array of potential mod sets that could fill it
-      let potentialModSets = Array.from(getPotentialModsToSatisfyTargetStats(usableMods, character, mutableTarget));
+      let potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, mutableTarget);
 
       ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, mutableTarget));
 
@@ -1632,6 +1632,8 @@ function findBestModSetForCharacter(
 
         if (mutableTarget.useOnlyFullSets) {
           extraMessages.push('Could not fill the target stat with full sets, so the full sets restriction was dropped');
+
+          potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, mutableTarget);
           ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, reducedTarget));
         }
       }
@@ -2130,7 +2132,7 @@ function findStatValuesThatMeetTarget(
 }
 
 function findBestModSetFromPotentialMods(
-  potentialModSets: ModsAndSatisfiedSetRestrictions[],
+  potentialModSets: Generator<ModsAndSatisfiedSetRestrictions>,
   character: Character.Character,
   target: OptimizationPlan,
 ) {
