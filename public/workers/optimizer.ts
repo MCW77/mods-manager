@@ -98,7 +98,6 @@ type PartialModsBySlot = Partial<ModsBySlot>;
 type NullablePartialModsBySlot = PartialModsBySlot | null;
 type SetCountByName = Partial<SetRestrictions>;
 type SetRestrictionsEntries = [SetStats.GIMOStatNames, number][];
-type SetlessMods = Record<ModTypes.GIMOSlots, Mod | null> | null;
 
 /*********************************************************************************************************************
  * Messaging.                                                                                                         *
@@ -1075,7 +1074,6 @@ function scoreStat(
  */
 function scoreMod(
   mod: Mod,
-  character: Character.Character,
   target: OptimizationPlan,
 ) {
   const cacheHit = cache.modScores[mod.id];
@@ -1605,7 +1603,7 @@ function findBestModSetForCharacter(
   // for the rest of the time processing mods for this character.
   modsToCache.forEach(mod => {
     getFlatStatsFromMod(mod, character, target);
-    scoreMod(mod, character, target);
+    scoreMod(mod, target);
   });
 
   let modSet: Mod[];
@@ -1711,7 +1709,7 @@ function* getPotentialModsToSatisfyTargetStats(
   // Determine the sets of values for each target stat that will satisfy it
   // {statName: {setCount: [{slot: slotValue}]}}
   const modConfigurationsByStat: Partial<Record<TargetStatsNames, Record<number, Record<string, number>[]>>> = {};
-  type SetRestriction = [SetStats.GIMOStatNames, number];
+
   const totalModSlotsOpen =
 			6 -
 			Object.entries<number>(setRestrictions)
@@ -1808,7 +1806,7 @@ function* getPotentialModsToSatisfyTargetStats(
    *                                                     that fulfills the target stat as [mods, setRestriction]
    */
   function* targetStatRecursor(
-    modGroup: [Mod[], SetRestrictions],
+    modGroup: ModsAndSatisfiedSetRestrictions,
     targetStats: TargetStats,
     topLevel: boolean,
   ): Generator<ModsAndSatisfiedSetRestrictions> {
