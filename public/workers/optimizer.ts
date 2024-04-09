@@ -1611,7 +1611,7 @@ function findBestModSetForCharacter(
   let messages: string[];
   let extraMessages: string[] = [];
   let mutableTarget = Object.assign({}, target);
-  let reducedTarget: OptimizationPlan;
+  let reducedTarget: OptimizationPlan = mutableTarget;
 
   // First, check to see if there is any target stat
   switch (0 < targetStats.length) {
@@ -1624,17 +1624,18 @@ function findBestModSetForCharacter(
       // If we couldn't find a mod set that would fulfill the target stat, but we're limiting to only full sets, then
       // try again without that limitation
       if (modSet.length === 0) {
-        reducedTarget = mutableTarget.useOnlyFullSets ?
-          Object.assign({}, mutableTarget, {
-            useOnlyFullSets: false
-          }) :
-          mutableTarget;
+        reducedTarget = mutableTarget.useOnlyFullSets
+									? Object.assign({}, mutableTarget, {
+											useOnlyFullSets: false,
+										})
+									: mutableTarget;
 
         if (mutableTarget.useOnlyFullSets) {
           extraMessages.push('Could not fill the target stat with full sets, so the full sets restriction was dropped');
           ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, reducedTarget));
         }
-
+      }
+      if (modSet.length === 0) {
         ({ modSet, messages } =
           findBestModSetByLooseningSetRestrictions(usableMods, character, reducedTarget, setRestrictions));
 
