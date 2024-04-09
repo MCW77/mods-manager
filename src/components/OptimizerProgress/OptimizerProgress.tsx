@@ -30,7 +30,7 @@ const OptimizerProgress = () => {
 	};
 
 	return (
-		<div className="w-500px">
+		<div className="w-600px">
 			<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
 			<div>
 				{progress.character && (
