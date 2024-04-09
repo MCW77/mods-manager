@@ -591,7 +591,6 @@ function clearCache() {
 function getFlatStatsFromModSet(
   modSet: Mod[],
   character: Character.Character,
-  target: OptimizationPlan,
 ) {
   const statsFromSetBonus = getSetBonusStatsFromModSet(modSet);
   const statsDirectlyFromMods: StatValue[] = [];
@@ -791,7 +790,7 @@ function getMissedGoals(
 ) {
   const missedGoals: MissedGoals = [];
   goalStats.forEach(goalStat => {
-    const characterValue = getStatValueForCharacterWithMods(modSet, character, goalStat.stat, target);
+    const characterValue = getStatValueForCharacterWithMods(modSet, character, goalStat.stat);
 
     if (characterValue < goalStat.minimum || characterValue > goalStat.maximum) {
       missedGoals.push([goalStat, characterValue]);
@@ -870,7 +869,7 @@ function modSetFulfillsTargetStatRestriction(
 
   // Check each target stat individually
   return targetStats.every(targetStat => {
-    const totalValue = getStatValueForCharacterWithMods(modSet, character, targetStat.stat, target);
+    const totalValue = getStatValueForCharacterWithMods(modSet, character, targetStat.stat);
     return totalValue <= targetStat.maximum && totalValue >= targetStat.minimum;
   });
 }
@@ -887,7 +886,6 @@ function getStatValueForCharacterWithMods(
   modSet: Mod[],
   character: Character.Character,
   stat: TargetStatsNames,
-  target: OptimizationPlan,
 ) {
   if (stat !== "Health+Protection" && Stats.Stat.display2CSGIMOStatNamesMap[stat] && Stats.Stat.display2CSGIMOStatNamesMap[stat].length > 1) {
     throw new Error(
@@ -900,7 +898,7 @@ function getStatValueForCharacterWithMods(
     const baseValue = character.playerValues.equippedStats[healthProperty] +
       character.playerValues.equippedStats[protProperty];
 
-    const setStats = getFlatStatsFromModSet(modSet, character, target);
+    const setStats = getFlatStatsFromModSet(modSet, character);
 
     const setValue = setStats.reduce((setValueSum, setStat) => {
       // Check to see if the stat is health or protection. If it is, add its value to the total.
@@ -916,7 +914,7 @@ function getStatValueForCharacterWithMods(
     const statProperty = Stats.Stat.display2CSGIMOStatNamesMap[stat][0];
     const baseValue = character.playerValues.equippedStats[statProperty];
 
-    const setStats = getFlatStatsFromModSet(modSet, character, target);
+    const setStats = getFlatStatsFromModSet(modSet, character);
 
     const setValue = setStats.reduce((setValueSum, setStat) => {
       // Check to see if the stat is the target stat. If it is, add its value to the total.
@@ -1160,7 +1158,7 @@ function scoreModSet(
   character: Character.Character,
   target: OptimizationPlan,
 ) {
-  return getFlatStatsFromModSet(modSet, character, target)
+  return getFlatStatsFromModSet(modSet, character)
     .reduce((score, stat) => score + scoreStat(stat, target), 0);
 }
 
@@ -1506,7 +1504,7 @@ function changeRelativeTargetStatsToAbsolute(
       });
 
       const characterStatValue =
-        getStatValueForCharacterWithMods(characterMods, relativeCharacter, targetStat.stat, target);
+        getStatValueForCharacterWithMods(characterMods, relativeCharacter, targetStat.stat);
 
       let minimum, maximum;
 
@@ -2092,13 +2090,6 @@ function findStatValuesThatMeetTarget(
       const currentSlot = gimoSlots[slotIndex];
       firstOfSlot[slotIndex] = true;
       for (let slotValue of valuesBySlot[currentSlot]) {
-        postMessage({
-          type: 'Slot',
-          value: JSON.stringify({
-            slot: currentSlot,
-            value: slotValue,
-          }),
-        });
         yield* slotRecursor(slotIndex+1, Object.assign({}, valuesObject, { [currentSlot]: slotValue }));
         firstOfSlot[slotIndex] = false;
         if (abort[slotIndex]) {
