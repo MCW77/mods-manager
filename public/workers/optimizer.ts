@@ -1588,12 +1588,13 @@ function findBestModSetForCharacter(
   character: Character.Character,
   target: OptimizationPlan,
 ) {
-  const modsToCache = character.playerValues.gearLevel < 12 ?
+
+  const filteredMods = character.playerValues.gearLevel < 12 ?
     mods.filter(mod => 6 > mod.pips || mod.characterID === character.baseID) :
     mods;
-  const usableMods = character.playerValues.gearLevel < 12 ?
-    mods.filter(mod => 6 > mod.pips || mod.characterID === character.baseID) :
-    mods;
+  const modsToCache = filteredMods;
+  const usableMods = filteredMods;
+
   const setRestrictions = target.setRestrictions;
   const targetStats = target.targetStats;
   // Clear the cache at the start of each character
