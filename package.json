@@ -41,6 +41,7 @@
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.364.0",
     "memoize-one": "^6.0.0",
+    "next-themes": "^0.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.0",
@@ -48,6 +49,7 @@
     "react-responsive": "^9.0.2",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
     "ts-pattern": "^5.1.0"
