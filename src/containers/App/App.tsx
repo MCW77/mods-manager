@@ -32,7 +32,6 @@ import { Spinner } from "#/modules/busyIndication/components/Spinner";
 
 // containers
 import { AboutView } from '#/containers/AboutView/AboutView';
-import { ErrorModal } from "#/containers/ErrorModal/ErrorModal";
 import ExploreView from "#/containers/ExploreView/ExploreView";
 import { HelpView } from '#/containers/HelpView/HelpView';
 import { OptimizerView } from '#/containers/OptimizerView/OptimizerView';
@@ -151,7 +150,6 @@ const App = React.memo(
               <AboutView />
             }
             <FlashMessage />
-            <ErrorModal />
             <Dialog/>
             <Spinner />
           </div>

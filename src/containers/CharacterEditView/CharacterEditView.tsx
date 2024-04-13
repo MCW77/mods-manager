@@ -124,7 +124,7 @@ class CharacterEditView extends PureComponent<Props> {
         const fileData: string = (event?.target?.result as string) ?? "";
         handleResult(fileData);
       } catch (e) {
-        this.props.showError((e as Error).message);
+        dialog$.showError((e as Error).message);
       }
     };
 
@@ -248,23 +248,26 @@ class CharacterEditView extends PureComponent<Props> {
                 .map(({ id }) => id);
 
               if (invalidTargets.length > 0) {
-                this.props.showError([
-                  <p>You have invalid targets set!</p>,
-                  <p>
-                    For relative targets, the compared character MUST be earlier
-                    in the selected characters list.
-                  </p>,
-                  <p>Please fix the following characters:</p>,
-                  <ul>
-                    {invalidTargets.map((id) => (
-                      <li>
-                        {this.props.baseCharacters[id]
-                          ? this.props.baseCharacters[id].name
-                          : id}
-                      </li>
-                    ))}
-                  </ul>,
-                ]);
+                dialog$.showError(
+                  "Didn't optimize your selected charcters!",
+                  <div>
+                    <p>You have invalid targets set!</p>,
+                    <p>
+                      For relative targets, the character compared to MUST be earlier
+                      in the selected characters list. The following characters don't follow this rule:
+                    </p>,
+                    <ul>
+                      {invalidTargets.map((id) => (
+                        <li>
+                          {this.props.baseCharacters[id]
+                            ? this.props.baseCharacters[id].name
+                            : id}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>,
+                  "Just move the characters to the correct order and try again!"
+                );
               } else {
                 dialog$.show(
                   <OptimizerProgress />,
@@ -339,7 +342,7 @@ class CharacterEditView extends PureComponent<Props> {
                const ranking = await stackRank$.fetch(this.props.allyCode)
                this.props.applyRanking(ranking);
               } catch (error) {
-                if (error instanceof Error) this.props.showError(error.message);
+                if (error instanceof Error) dialog$.showError(error.message);
               } finally {
                 isBusy$.set(false);
               }
@@ -696,7 +699,6 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  showError: (error: DOMContent) => dispatch(App.actions.showError(error)),
   changeCharacterFilter: (filter: string) =>
     dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
   toggleHideSelectedCharacters: () => dispatch(CharacterEdit.actions.toggleHideSelectedCharacters()),

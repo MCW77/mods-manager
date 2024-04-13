@@ -86,7 +86,7 @@ const AccountsManager = React.memo(() => {
 							file,
 							(textInFile) =>
 								dispatch(App.thunks.importC3POProfile(textInFile)),
-							(error) => dispatch(App.actions.showError(error.message)),
+							(error) => dialog$.showError(error.message),
 						)
 					}
 				/>

@@ -1,27 +1,29 @@
 // react
 import React from 'react';
-import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
+import { ThunkDispatch, ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // utils
-import groupByKey from "../../utils/groupByKey";
+import groupByKey from "#/utils/groupByKey";
 
 // state
-import { IAppState } from "../storage";
-import getDatabase, { IUserData } from "../storage/Database";
+import { IAppState } from "#/state/storage";
+import getDatabase, { IUserData } from "#/state/storage/Database";
+
+import { dialog$ } from '#/modules/dialog/state/dialog';
 import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
 
 // modules
-import { actions } from '../actions/app';
-import { CharacterEdit } from '../modules/characterEdit';
-import { Storage } from '../modules/storage';
+import { actions } from '#/state/actions/app';
+import { CharacterEdit } from '#/state/modules/characterEdit';
+import { Storage } from '#/state/modules/storage';
 
 // domain
-import * as C3POMods from "../../modules/profilesManagement/dtos/c3po";
-import * as C3POMappers from "../../modules/profilesManagement/mappers/c3po";
-import { Mod } from "../../domain/Mod";
-import { PlayerProfile, IFlatPlayerProfile } from "../../domain/PlayerProfile";
+import * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
+import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po";
+import { Mod } from "#/domain/Mod";
+import { PlayerProfile, IFlatPlayerProfile } from "#/domain/PlayerProfile";
 
 export namespace thunks {
   export function deleteProfile(allyCode: string): ThunkResult<void> {
@@ -81,9 +83,7 @@ export namespace thunks {
             </p>,
           ));
         },
-        error => dispatch(actions.showError(
-          'Error saving player profiles: ' + error?.message
-        ))
+        error => dialog$.showError('Error saving player profiles: ' + error?.message)
       );
     }
   }
@@ -93,9 +93,9 @@ export namespace thunks {
       const db = getDatabase();
       db.delete(
         () => dispatch(actions.resetState()),
-        error => dispatch(actions.showError(
-          'Error deleting the database: ' + error?.message + '. Try clearing it manually and refreshing.'
-        ))
+        error => dialog$.showError(
+          `Error deleting the database: ${error?.message}. Try clearing it manually and refreshing.`
+        )
       );
     };
   }

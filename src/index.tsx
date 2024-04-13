@@ -24,7 +24,6 @@ import modsOptimizer from "./state/reducers/modsOptimizer";
 import { profilesManagement$ } from "./modules/profilesManagement/state/profilesManagement";
 
 // modules
-import { App as AppModule } from './state/modules/app';
 import { Storage } from './state/modules/storage';
 
 // components
@@ -32,6 +31,7 @@ import { Spinner } from './components/Spinner/Spinner';
 
 // containers
 import { App } from './containers/App/App';
+import { dialog$ } from "./modules/dialog/state/dialog";
 
 const store = configureStore({
   reducer: modsOptimizer,
@@ -52,29 +52,17 @@ getDatabase(
   },
   (error: DOMException | null) => {
     if (error instanceof DOMException) {
-      store.dispatch(AppModule.actions.showError(
-        [
-          <p key={1}>Unable to load database. This may be caused by a bug in Firefox in Private Browsing mode or
-          with history turned off. If using Firefox, please switch to normal browsing mode. If you are still having
-            issues, please ask for help in the discord server below.</p>,
-          <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
-            only</strong>! Other browsers may work, but they are not officially supported. If you're having trouble, try
-            using one of the supported browsers before asking for help.</p>,
-          <p key={3}>Error Message: {error.message}</p>,
-        ]
-      ));
+      dialog$.showError(
+        <div>`Unable to load database (${error.message})`</div>,
+        "This may be caused by a bug in Firefox in Private Browsing mode or with history turned off",
+        "If using Firefox, please switch to normal browsing mode. If you are still having issues, please ask for help in the discord server below.",
+      );
     } else {
-      store.dispatch(AppModule.actions.showError(
-        [
-          <p key={1}>
-            Unable to load database: {error} Please fix the problem and try again, or ask for help in the
-            discord server below.
-          </p>,
-          <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
-            only</strong>! Other browsers may work, but they are not officially supported. If you're having trouble, try
-            using one of the supported browsers before asking for help.</p>
-        ]
-      ));
+      dialog$.showError(
+        <div>`Unable to load database (${error ?? ""})`</div>,
+        "Unknown cause",
+        "You found a unknown bug, please report in the discord server so we can improve with your solution or find one.",
+      );
     }
   }
 );

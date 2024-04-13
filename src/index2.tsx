@@ -14,8 +14,9 @@ import registerServiceWorker from './registerServiceWorker';
 // state
 import getDatabase from "./state/storage/Database";
 
+import { dialog$ } from './modules/dialog/state/dialog';
+
 // modules
-import { App as AppModule } from './state/modules/app';
 import { Storage } from './state/modules/storage';
 
 // components
@@ -35,7 +36,7 @@ getDatabase(
   },
   (error: DOMException | null) => {
     if (error instanceof DOMException) {
-      store.dispatch(AppModule.actions.showError(
+      dialog$.showError(
         [
           <p key={1}>Unable to load database. This may be caused by a bug in Firefox in Private Browsing mode or
           with history turned off. If using Firefox, please switch to normal browsing mode. If you are still having
@@ -47,7 +48,7 @@ getDatabase(
         ]
       ));
     } else {
-      store.dispatch(AppModule.actions.showError(
+      dialog$.showError(
         [
           <p key={1}>
             Unable to load database: {error} Please fix the problem and try again, or ask for help in the

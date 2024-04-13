@@ -15,21 +15,6 @@ export namespace reducers {
 		});
 	}
 
-	export function showError(
-		state: IAppState,
-		action: ReturnType<typeof actions.showError>,
-	): IAppState {
-		return Object.assign({}, state, {
-			error: action.content,
-		});
-	}
-
-	export function hideError(state: IAppState): IAppState {
-		return Object.assign({}, state, {
-			error: null,
-		});
-	}
-
 	export function showFlash(
 		state: IAppState,
 		action: ReturnType<typeof actions.showFlash>,
@@ -66,7 +51,6 @@ export namespace reducers {
 }
 
 export namespace selectors {
-	export const selectErrorMessage = (state: IAppState) => state.error;
 	export const selectFlashMessage = (state: IAppState) => state.flashMessage;
 	export const selectPreviousSection = (state: IAppState) =>
 		state.previousSection;

@@ -26,6 +26,7 @@ import { Mod } from '#/domain/Mod';
 import { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile } from '#/domain/PlayerProfile';
 import { SelectedCharactersByTemplateName } from "#/domain/SelectedCharacters";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 export namespace thunks {
   /**
@@ -105,7 +106,7 @@ export namespace thunks {
       const db = getDatabase();
       db.getCharacterTemplate(name,
         callback,
-        error => dispatch(App.actions.showError('Error fetching data from the database: ' + error!.message))
+        error => dialog$.showError('Error fetching data from the database: ' + error!.message)
       );
     }
   }
@@ -115,7 +116,7 @@ export namespace thunks {
       const db = getDatabase();
       db.getCharacterTemplates(
         callback,
-        error => dispatch(App.actions.showError('Error fetching data from the database: ' + error?.message))
+        error => dialog$.showError('Error fetching data from the database: ' + error?.message)
       );
     }
   }
@@ -130,7 +131,7 @@ export namespace thunks {
       const db = getDatabase();
       db.export(
         callback,
-        error => dispatch(App.actions.showError('Error fetching data from the database: ' + error?.message))
+        error => dialog$.showError('Error fetching data from the database: ' + error?.message)
       );
     };
   }
@@ -158,17 +159,14 @@ export namespace thunks {
             ))
         );
       } catch (e) {
-        dispatch(App.actions.showError(
+        dialog$.showError(
           [
             <p key={1}>
               Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
               discord server below.
             </p>,
-            <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
-              only</strong>! Other browsers may work, but they are not officially supported. If you're having trouble, try
-              using one of the supported browsers before asking for help.</p>
           ]
-        ));
+        );
       }
     }
   }
@@ -197,17 +195,14 @@ export namespace thunks {
           ))
         );
       } catch (e) {
-        dispatch(App.actions.showError(
+        dialog$.showError(
           [
             <p key={1}>
               Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
               discord server below.
             </p>,
-            <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
-              only</strong>! Other browsers may work, but they are not officially supported. If you're having trouble, try
-              using one of the supported browsers before asking for help.</p>
           ]
-        ));
+        );
       }
     }
   }
@@ -245,7 +240,7 @@ export namespace thunks {
         dispatch(Data.thunks.fetchHotUtilsStatus(allyCode));
       }
       catch (error) {
-        dispatch(App.actions.showError('Error loading your profile from the database: ' + (error as DOMException).message))
+        dialog$.showError('Error loading your profile from the database: ' + (error as DOMException).message)
       }
     };
   }
@@ -294,17 +289,14 @@ export namespace thunks {
             ))
         );
       } catch (e) {
-        dispatch(App.actions.showError(
+        dialog$.showError(
           [
             <p key={1}>
               Unable to load database: {(e as Error).message} Please fix the problem and try again, or ask for help in the
               discord server below.
             </p>,
-            <p key={2}>Grandivory's mods optimizer is tested to work in <strong>Firefox, Chrome, and Safari on desktop
-              only</strong>! Other browsers may work, but they are not officially supported. If you're having trouble, try
-              using one of the supported browsers before asking for help.</p>
           ]
-        ));
+        );
       }
     };
   }
@@ -339,10 +331,10 @@ export namespace thunks {
       const db = getDatabase();
       db.saveLastRuns(
         lastRuns,
-        error => dispatch(App.actions.showError(
+        error => dialog$.showError(
           'Error saving previous runs: ' + error?.message +
           ' The optimizer may not recalculate all toons properly until you fetch data again.'
-        ))
+        )
       );
     };
   }
@@ -359,9 +351,9 @@ export namespace thunks {
       db.saveProfiles(
         profiles,
         () => dispatch(loadProfiles(allyCode)),
-        error => dispatch(App.actions.showError(
+        error => dialog$.showError(
           'Error saving player profiles: ' + error?.message
-        ))
+        )
       );
     };
   }

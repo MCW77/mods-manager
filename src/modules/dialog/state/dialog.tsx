@@ -1,33 +1,82 @@
 // react
-import * as React from 'react';
+import * as React from "react";
 
 // state
-import { observable } from "@legendapp/state";
+import { ObservableObject, observable } from "@legendapp/state";
 
 // components
-import * as UITypes from '#/components/types';
+import { ErrorMessage } from "../components/ErrorMessage";
 
-export const dialog$ = observable({
-  content: <></> as UITypes.DOMContent,
-  modal: false,
-  open: false,
-  show: (content: UITypes.DOMContent, modal: boolean = false) => {
-    if (dialog$.open.peek() === false) {
-      dialog$.content.set(content);
-      dialog$.modal.set(modal);
-      dialog$.open.set(true);
-      return ;
-    }
-    const dispose = dialog$.open.onChange(({value}) => {
-      if (value === false) {
-        dialog$.content.set(content);
-        dialog$.modal.set(modal);
-        dialog$.open.set(true);
-        dispose();
-      }
-    })
-  },
-  hide: () => {
-    dialog$.open.set(false);
-  },
+type Dialog = {
+	content: React.ReactNode;
+	error: React.ReactNode;
+	reason: React.ReactNode;
+	solution: React.ReactNode;
+	isError: boolean;
+	modal: boolean;
+	open: boolean;
+	show: (content: React.ReactNode, modal?: boolean) => void;
+	showError: (
+		error: React.ReactNode,
+		reason?: React.ReactNode,
+		solution?: React.ReactNode,
+	) => void;
+	hide: () => void;
+};
+
+export const dialog$: ObservableObject<Dialog> = observable({
+	content: "" as React.ReactNode,
+	error: "" as React.ReactNode,
+	reason: "" as React.ReactNode,
+	solution: "" as React.ReactNode,
+	isError: false,
+	modal: false,
+	open: false,
+	show: (content: React.ReactNode, modal: boolean = false) => {
+		if (dialog$.open.peek() === false) {
+			dialog$.content.set(content);
+			dialog$.modal.set(modal);
+			dialog$.open.set(true);
+			return;
+		}
+		const dispose = dialog$.open.onChange(({ value }) => {
+			if (value === false) {
+				dialog$.content.set(content);
+				dialog$.modal.set(modal);
+				dialog$.open.set(false);
+				dispose();
+			}
+		});
+	},
+	showError(
+		error: React.ReactNode,
+		reason: React.ReactNode = "",
+		solution: React.ReactNode = "",
+	) {
+		dialog$.isError.set(true);
+		if (dialog$.open.peek() === false) {
+			dialog$.error.set(error);
+			dialog$.reason.set(reason);
+			dialog$.solution.set(solution);
+			dialog$.content.set(<ErrorMessage></ErrorMessage>);
+			dialog$.modal.set(false);
+			dialog$.open.set(true);
+			return;
+		}
+		const dispose = dialog$.open.onChange(({ value }) => {
+			if (value === false) {
+				dialog$.error.set("");
+				dialog$.reason.set("");
+				dialog$.solution.set("");
+				dialog$.modal.set(false);
+				dialog$.content.set(<></>);
+				dialog$.open.set(false);
+				dialog$.isError.set(false);
+				dispose();
+			}
+		});
+	},
+	hide: () => {
+		dialog$.open.set(false);
+	},
 });

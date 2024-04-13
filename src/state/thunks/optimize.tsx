@@ -220,11 +220,7 @@ export namespace thunks {
 						null === char.playerValues.equippedStats,
 				).length > 0
 			) {
-				dispatch(
-					App.actions.showError(
-						"Missing character data required to optimize. Try fetching your data and trying again.",
-					),
-				);
+				dialog$.showError("Missing character data required to optimize. Try fetching your data and trying again.");
 				return;
 			}
 
@@ -266,7 +262,7 @@ export namespace thunks {
 				optimizationWorker?.terminate();
 				dialog$.hide();
 				isBusy$.set(false);
-				dispatch(App.actions.showError(error.message));
+				dialog$.showError(error.message);
 			};
 
 			optimizationWorker.postMessage(profile.allyCode);

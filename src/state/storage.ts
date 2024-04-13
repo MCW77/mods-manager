@@ -25,7 +25,6 @@ export interface IAppState {
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
   characterFilter: string,
-  error: UITypes.DOMContent | null,
   flashMessage: {
     heading: UITypes.DOMContent,
     content: UITypes.DOMContent
@@ -76,7 +75,6 @@ export class AppState {
     characterEditMode: 'basic',
     characterEditSortView: false,
     characterFilter: '',
-    error: null,
     flashMessage: null,
     help: {
       section: 'general',

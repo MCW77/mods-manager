@@ -12,12 +12,6 @@ export namespace actions {
 		} as const;
 	}
 
-	export function hideError() {
-		return {
-			type: actionNames.HIDE_ERROR,
-		} as const;
-	}
-
 	export function hideFlash() {
 		return {
 			type: actionNames.HIDE_FLASH,
@@ -34,13 +28,6 @@ export namespace actions {
 		return {
 			type: actionNames.SET_STATE,
 			state: state,
-		} as const;
-	}
-
-	export function showError(errorContent: UITypes.DOMContent) {
-		return {
-			type: actionNames.SHOW_ERROR,
-			content: errorContent,
 		} as const;
 	}
 
@@ -61,11 +48,9 @@ export namespace actions {
 
 export namespace actionNames {
 	export const CHANGE_SECTION = "CHANGE_SECTION" as const;
-	export const HIDE_ERROR = "HIDE_ERROR" as const;
 	export const HIDE_FLASH = "HIDE_FLASH" as const;
 	export const RESET_STATE = "RESET_STATE" as const;
 	export const SET_STATE = "SET_STATE" as const;
-	export const SHOW_ERROR = "SHOW_ERROR" as const;
 	export const SHOW_FLASH = "SHOW_FLASH" as const;
 	export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR" as const;
 }

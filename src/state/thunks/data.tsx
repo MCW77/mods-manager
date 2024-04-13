@@ -78,7 +78,7 @@ export namespace thunks {
           return version;
         }).catch(error => {
           dispatch(App.actions.hideFlash());
-          dispatch(App.actions.showError(error.message));
+          dialog$.showError(error.message);
           return '';
         });
     }
@@ -263,16 +263,14 @@ export namespace thunks {
         dispatch(showFetchResult(data, messages, !!sessionId && useSession));
       }
       catch(error) {
-        dispatch(App.actions.showError(
+        dialog$.showError(
           [
-            <p key={1}>{(error as Error).message}</p>,
-            <p key={2}>
-              This is an error with an API that the optimizer uses, and not a problem with the optimizer itself. Feel
-              free to discuss this error on the optimizer discord, but know that there are no changes that can be made
-              to the optimizer to fix this issue.
-            </p>
-          ]
-        ));
+            <p key={1}>Sorry we couldn't fetch your data from hotutils</p>,
+            <p key={2}>{(error as Error).message}</p>,
+          ],
+          "Internally used hotutils api didn't respond. Maybe your internet connection has a problem or the hotutils server is down.",
+          <>Please check internet connectivity. If no such problem, you can check out the <a className={"underline text-blue-600 hover:text-blue-800 visited:text-purple-600"} href="https://discord.com/channels/470702742298689544/591758965335916565" target={"_blank"}>hotutils discord</a>. Maybe hotutils is undergoing maintenance or has a known problem. If so retry after maintenance is done or the bug has been fixed."</>,
+        );
       }
       finally {
         isBusy$.set(false);
@@ -424,7 +422,7 @@ export namespace thunks {
       catch(error)
       {
         const errorMessage = error instanceof DOMException ? error.message : '';
-        dispatch(App.actions.showError(`Error fetching your profile: ${errorMessage} Please try again`));
+        dialog$.showError(`Error fetching your profile: ${errorMessage} Please try again`);
       }
 
       return;
@@ -451,12 +449,12 @@ export namespace thunks {
         .then(response => {
           if (response.errorMessage) {
             dialog$.hide();
-            dispatch(App.actions.showError(response.errorMessage));
+            dialog$.showError(response.errorMessage);
           } else {
             switch (response.responseCode) {
               case 0:
                 dialog$.hide();
-                dispatch(App.actions.showError(response.responseMessage));
+                dialog$.showError(response.responseMessage);
                 break;
               default:
                 modMoveActive = false;
@@ -466,7 +464,7 @@ export namespace thunks {
           }
         })
         .catch(error => {
-          dispatch(App.actions.showError(error.message));
+          dialog$.showError(error.message);
         })
     }
   }
@@ -485,11 +483,11 @@ export namespace thunks {
       .then(response => {
         if (response.errorMessage) {
           dialog$.hide();
-          dispatch(App.actions.showError(response.errorMessage));
+          dialog$.showError(response.errorMessage);
         } else {
           switch (response.responseCode) {
             case 0:
-              dispatch(App.actions.showError(response.responseMessage));
+              dialog$.showError(response.responseMessage);
               break;
             case 1:
               dialog$.hide();
@@ -497,14 +495,14 @@ export namespace thunks {
               break;
             default:
               dialog$.hide();
-              dispatch(App.actions.showError('Unknown response from HotUtils'));
+              dialog$.showError('Unknown response from HotUtils');
               break;
           }
         }
       })
       .catch(error => {
         dialog$.hide();
-        dispatch(App.actions.showError(error.message));
+        dialog$.showError(error.message);
       })
       .finally(() => {
         isBusy$.set(false);
@@ -528,7 +526,7 @@ export namespace thunks {
         // access codes: 0 = no subscription, 1 = subscription, but no connection, 2 = active subscription
         .then(response => dispatch(Storage.actions.setHotUtilsSubscription(!!response.access)))
         .catch(error => {
-          dispatch(App.actions.showError(error.message));
+          dialog$.showError(error.message);
         })
     }
   }
@@ -635,12 +633,12 @@ export namespace thunks {
           isBusy$.set(false);
           if (response.errorMessage) {
             dialog$.hide();
-            dispatch(App.actions.showError(response.errorMessage));
+            dialog$.showError(response.errorMessage);
           } else {
             switch (response.responseCode) {
               case 0:
                 dialog$.hide();
-                dispatch(App.actions.showError(response.responseMessage));
+                dialog$.showError(response.responseMessage);
                 break;
               default:
                 if (response.taskId === 0) {
@@ -662,7 +660,7 @@ export namespace thunks {
         })
         .catch(error => {
           dialog$.hide();
-          dispatch(App.actions.showError(error.message));
+          dialog$.showError(error.message);
         })
         .finally(() => {
           isBusy$.set(false);
@@ -751,7 +749,7 @@ export namespace thunks {
         }
       }
       catch (error) {
-        dispatch(App.actions.showError((error as DOMException).message));
+        dialog$.showError((error as DOMException).message);
       }
     };
   }

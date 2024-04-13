@@ -15,8 +15,10 @@ import {
 import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
+// state
+import { dialog$ } from "#/modules/dialog/state/dialog";
+
 // modules
-import { App } from "#/state/modules/app";
 import { CharacterEdit } from '#/state/modules/characterEdit';
 
 // domain
@@ -27,7 +29,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FileInput } from "#/components/FileInput/FileInput";
 import { Button } from "#ui/button";
-
 
 const TemplatesManager = React.memo(
   () => {
@@ -56,7 +57,7 @@ const TemplatesManager = React.memo(
                     );
                   }
                 },
-                (error) => dispatch(App.actions.showError(error.message)),
+                (error) => dialog$.showError(error.message),
               )
             }
           />

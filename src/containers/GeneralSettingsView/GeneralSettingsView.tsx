@@ -3,17 +3,18 @@ import React, { PropsWithChildren } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
+import { observer } from '@legendapp/state/react';
 
 // utils
 import { saveAs } from 'file-saver';
 import { readFile } from '#/utils/readFile';
 
 // state
-import { observer } from '@legendapp/state/react';
 import { dialog$ } from '#/modules/dialog/state/dialog';
 import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
 import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
 import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
+
 // modules
 import { App } from '#/state/modules/app';
 import { Storage } from '#/state/modules/storage';
@@ -113,7 +114,7 @@ const GeneralSettingsView = observer(() => {
               handler={(file) => readFile(
                 file,
                 (textInFile) => dispatch(App.thunks.restoreProgress(textInFile)),
-                (error) => dispatch(App.actions.showError(error.message)),
+                (error) => dialog$.showError(error.message),
               )}
             />
             <Button
