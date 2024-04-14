@@ -85,7 +85,7 @@ const CharacterEditForm = observer(({
     addSetBonus: (setName: SetStats.GIMOStatNames) => {
       let restrictions = target$.target.setRestrictions.peek();
       let newRestrictions = setName in restrictions ?
-        {...restrictions, [setName]: restrictions[setName]+1}
+        {...restrictions, [setName]: restrictions[setName]!+1} // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
       :
         {...restrictions, [setName]: 1};
       const newRestrictionsKVs = Object.entries(newRestrictions) as [SetStats.GIMOStatNames, number][];
@@ -101,8 +101,8 @@ const CharacterEditForm = observer(({
     removeSetBonus: (setName: SetStats.GIMOStatNames) => {
       let restrictions = target$.target.setRestrictions.peek();
       if (restrictions[setName] !== undefined) {
-        if (restrictions[setName] > 0) {
-          target$.target.setRestrictions[setName].set(restrictions[setName] -1);
+        if (restrictions[setName]! > 0) { // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
+          target$.target.setRestrictions[setName].set(restrictions[setName]! -1); // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
         } else {
           target$.target.setRestrictions[setName].delete();
         }

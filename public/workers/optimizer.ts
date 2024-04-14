@@ -96,7 +96,6 @@ type SetValues = Record<TargetStatsNames, {
 type ModsBySlot = Record<ModTypes.GIMOSlots, Mod | null>;
 type PartialModsBySlot = Partial<ModsBySlot>;
 type NullablePartialModsBySlot = PartialModsBySlot | null;
-type SetCountByName = Partial<SetRestrictions>;
 type SetRestrictionsEntries = [SetStats.GIMOStatNames, number][];
 
 /*********************************************************************************************************************
@@ -807,11 +806,11 @@ function getMissedGoals(
  */
 function modSetFulfillsFullSetRestriction(modSet: Mod[]) {
   // Count how many mods exist in each set
-  const setCounts: SetCountByName = modSet.reduce<SetCountByName>((acc, mod) => {
+  const setCounts: SetRestrictions = modSet.reduce<SetRestrictions>((acc, mod) => {
     return Object.assign({}, acc, {
       [mod.set.name]: (acc[mod.set.name] || 0) + 1
     })
-  }, {} as SetCountByName);
+  }, {});
 
   //console.log(`setCounts: ${JSON.stringify(setCounts)}`);
   return (Object.entries(setCounts) as [SetStats.GIMOStatNames, number][]).every(
@@ -831,10 +830,10 @@ function modSetFulfillsFullSetRestriction(modSet: Mod[]) {
  */
 function modSetFulfillsSetRestriction(
   modSet: Mod[],
-  setDefinition: Partial<SetRestrictions>,
+  setDefinition: SetRestrictions,
 ) {
   // Count how many mods exist in each set
-  const setCounts: Partial<SetRestrictions> = modSet.reduce<Partial<SetRestrictions>>((acc, mod) => {
+  const setCounts: SetRestrictions = modSet.reduce<SetRestrictions>((acc, mod) => {
     return Object.assign({}, acc, {
       [mod.set.name]: (acc[mod.set.name] || 0) + 1
     })
@@ -842,7 +841,7 @@ function modSetFulfillsSetRestriction(
 
   // Check that each set in the setDefinition has a corresponding value at least that high in setCounts, unless
   // the given count is -1, meaning the set should be actively avoided
-  return (Object.entries(setDefinition) as [SetStats.GIMOStatNames, number][]).every(([setName, count]) => {
+  return (Object.entries(setDefinition) as SetRestrictionsEntries).every(([setName, count]) => {
     const numberOfFullSets = Math.floor((setCounts[setName] || 0) / setBonuses[setName].numberOfModsRequired);
     return (count >= 0 && numberOfFullSets >= count) || (count < 0 && numberOfFullSets === 0);
   });
@@ -946,7 +945,7 @@ function getStatValueForCharacterWithMods(
  */
 function restrictMods(
   allMods: Mod[],
-  setRestriction: SetCountByName,
+  setRestriction: SetRestrictions,
 ) {
   const potentialSets = areSetsComplete(setRestriction) ?
     Object.entries(setRestriction).filter(([set, count]) => count > 0).map(([set]) => set) :
@@ -961,7 +960,7 @@ function restrictMods(
  * @param setDefinition {Object<SetBonus, Number>}
  * @returns {Boolean}
  */
-function areSetsComplete(setDefinition: SetCountByName) {
+function areSetsComplete(setDefinition: SetRestrictions) {
   return 6 === (Object.entries(setDefinition) as SetRestrictionsEntries)
     .filter(([setName, setCount]) => -1 !== setCount)
     .reduce((filledSlots, [setName, setCount]) => filledSlots + setBonuses[setName].numberOfModsRequired * setCount, 0);
@@ -1169,9 +1168,9 @@ function scoreModSet(
  * @param setRestrictions {Object}
  * @returns {{restriction: Object, messages: Array<String>}[]}
  */
-function loosenRestrictions(setRestrictions: Partial<SetRestrictions>) {
+function loosenRestrictions(setRestrictions: SetRestrictions) {
   let restrictionsArray:{
-    restriction: Partial<SetRestrictions>,
+    restriction: SetRestrictions,
     messages: string[]
   }[] = [{
     restriction: setRestrictions,
@@ -2258,7 +2257,7 @@ function findBestModSetWithoutChangingRestrictions(
   usableMods: Mod[],
   character: Character.Character,
   target: OptimizationPlan,
-  setsToUse: Partial<SetRestrictions>,
+  setsToUse: SetRestrictions,
 ) {
   const potentialUsedSets = new Set<SetBonus>();
   const baseSets: Partial<Record<SetStats.GIMOStatNames, ModsBySlot>> = {};
@@ -2464,7 +2463,7 @@ function* getCandidateSetsGenerator(
   potentialUsedSets: Set<SetBonus>,
   baseSets: Partial<Record<SetStats.GIMOStatNames, ModsBySlot>>,
   setlessMods: NullablePartialModsBySlot,
-  setsToUse: Partial<SetRestrictions>,
+  setsToUse: SetRestrictions,
 ): Generator<Mod[]> {
   /**
    * Possible sets:

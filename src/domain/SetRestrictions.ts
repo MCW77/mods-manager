@@ -1,5 +1,10 @@
 import { SetStats } from "./Stats";
 
-type SetRestrictions = Record<SetStats.GIMOStatNames, number>;
+type SetRestrictions = Partial<Record<SetStats.GIMOStatNames, number>>;
 
-export type { SetRestrictions };
+// Todo Use below typeguard when ts 5.5 is released
+function hasRestrictionOn(setRestrictions: SetRestrictions, set: SetStats.GIMOStatNames) {
+  return setRestrictions !== undefined && setRestrictions !== null && set in setRestrictions;
+}
+
+export { type SetRestrictions, hasRestrictionOn };

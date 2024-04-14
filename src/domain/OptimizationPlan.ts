@@ -63,14 +63,14 @@ export const createOptimizationPlan = (
   accuracy: number = 0,
   critAvoid: number = 0,
   primaryStatRestrictions = {},
-  setRestrictions = {},
+  setRestrictions: SetRestrictions = {},
   targetStats: TargetStats = [],
   useOnlyFullSets = false,
 ) => {
   return {
     name: name,
     primaryStatRestrictions: primaryStatRestrictions as PrimaryStatRestrictions,
-    setRestrictions: setRestrictions as SetRestrictions,
+    setRestrictions: setRestrictions,
     targetStats: targetStats,
     useOnlyFullSets: useOnlyFullSets,
 
