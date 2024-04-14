@@ -33,7 +33,6 @@ export interface IAppState {
   hotUtilsSubscription: boolean,
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
-  optimizerView: 'edit' | 'review',
   previousSection: UITypes.Sections,
   profile: PlayerProfile, // All the data about the current character
   progress: OptimizationStatus,
@@ -58,7 +57,6 @@ export class AppState {
     'hideSelectedCharacters',
     'modListFilter',
     'modsViewOptions',
-    'optimizerView',
     'section',
     'showSidebar',
     'templates',
@@ -84,7 +82,6 @@ export class AppState {
       tag: 'All',
     },
     modsViewOptions: defaultOptions,
-    optimizerView: 'edit',
     previousSection: 'help',
     profile: PlayerProfile.Default, // All the data about the current character
     progress: {
@@ -178,7 +175,6 @@ export function deserializeState(state: IAppState): IAppState {
       hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
       modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
       modListFilter: state.modListFilter || AppState.Default.modListFilter,
-      optimizerView: state.optimizerView || AppState.Default.optimizerView,
       section: state.section,
       showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
       templates: state.templates,
