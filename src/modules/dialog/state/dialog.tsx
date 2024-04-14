@@ -6,6 +6,7 @@ import { ObservableObject, observable } from "@legendapp/state";
 
 // components
 import { ErrorMessage } from "../components/ErrorMessage";
+import { toast } from "sonner";
 
 type Dialog = {
 	content: React.ReactNode;
@@ -21,6 +22,13 @@ type Dialog = {
 		reason?: React.ReactNode,
 		solution?: React.ReactNode,
 	) => void;
+  showFlash: (
+    title: React.ReactNode,
+    description?: string,
+    actionLabel?: string,
+    actionHandler?: () => void,
+    type?: string,
+  ) => void;
 	hide: () => void;
 };
 
@@ -76,6 +84,44 @@ export const dialog$: ObservableObject<Dialog> = observable({
 			}
 		});
 	},
+  showFlash: (
+    title: React.ReactNode,
+    description: string = "",
+    actionLabel: string = "",
+    actionHandler: () => void = () => {},
+    type: string = "",
+  ) => {
+
+    let options = {};
+    actionLabel !== ""
+    ? options = {
+      action: {
+        label: actionLabel,
+        onClick: actionHandler,
+      },
+      description: description,
+    }
+    : options = {
+      description: description,
+    };
+
+    switch (type) {
+      case "error":
+      toast.error(title, options);
+      break;
+      case "warning":
+      toast.warning(title, options);
+      break;
+      case "info":
+      toast.info(title, options);
+      break;
+      case "success":
+      toast.success(title, options);
+      break;
+      default:
+      toast(title, options);
+    }
+  },
 	hide: () => {
 		dialog$.open.set(false);
 	},

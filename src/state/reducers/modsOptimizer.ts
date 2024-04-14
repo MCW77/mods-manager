@@ -26,10 +26,8 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 // #region AppActions
 type AppActions =
   | ReturnType<typeof App.actions.changeSection>
-  | ReturnType<typeof App.actions.hideFlash>
   | ReturnType<typeof App.actions.resetState>
   | ReturnType<typeof App.actions.setState>
-  | ReturnType<typeof App.actions.showFlash>
   | ReturnType<typeof App.actions.toggleSidebar>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
@@ -64,8 +62,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
 
     case App.actionNames.CHANGE_SECTION:
       return AppState.save(App.reducers.changeSection(state, action));
-    case App.actionNames.HIDE_FLASH:
-      return App.reducers.hideFlash(state);
     case App.actionNames.RESET_STATE:
       const result = AppState.save(App.reducers.resetState());
       window.location.reload();
@@ -74,8 +70,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return AppState.save(
         App.reducers.setState(action)
       );
-    case App.actionNames.SHOW_FLASH:
-      return App.reducers.showFlash(state, action);
     case App.actionNames.TOGGLE_SIDEBAR:
       return AppState.save(
         App.reducers.toggleSidebar(state)

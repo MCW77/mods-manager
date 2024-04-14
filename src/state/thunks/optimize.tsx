@@ -56,12 +56,14 @@ export namespace thunks {
 			(dispatch, getState, newProfile) => {
 				const db = getDatabase();
 				db.saveLastRun(settings, (error) =>
-					dispatch(
-						App.actions.showFlash(
-							"Storage Error",
-							`Error saving your last run to the database: ${error?.message} The optimizer may not recalculate correctly on your next optimization`,
-						),
+					dialog$.showFlash(
+						"Storage Error",
+						`Error saving your last run to the database: ${error?.message} The optimizer may not recalculate correctly on your next optimization`,
+						"",
+						undefined,
+						"error",
 					),
+
 				);
 
 				isBusy$.set(false);

@@ -1,6 +1,9 @@
 // utils
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
+// state
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+
 // domain
 import { CharacterNames } from "#/constants/characterSettings";
 import type * as ModTypes from "#/domain/types/ModTypes";
@@ -8,7 +11,6 @@ import type * as ModTypes from "#/domain/types/ModTypes";
 import { SetRestrictions } from "#/domain/SetRestrictions";
 import { PrimaryStats } from "#/domain/Stats";
 import { TargetStats } from "#/domain/TargetStat";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 
 // #region OptimizableStats
 export type OptimizableStats =

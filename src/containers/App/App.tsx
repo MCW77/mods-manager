@@ -25,8 +25,8 @@ import { PlayerProfile } from '#/domain/PlayerProfile';
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { FlashMessage } from "#/components/Modal/FlashMessage";
 import { ProfilesManager } from '#/components/ProfilesManager/ProfilesManager';
+import { Toaster } from '#/components/ui/sonner';
 import { Dialog } from '#/modules/dialog/components/Dialog';
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
 
@@ -149,9 +149,9 @@ const App = React.memo(
             {'about' === section &&
               <AboutView />
             }
-            <FlashMessage />
-            <Dialog/>
+            <Dialog />
             <Spinner />
+            <Toaster toastOptions={{duration: 8000}}/>
           </div>
         </div>
       </Suspense>

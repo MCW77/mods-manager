@@ -12,12 +12,6 @@ export namespace actions {
 		} as const;
 	}
 
-	export function hideFlash() {
-		return {
-			type: actionNames.HIDE_FLASH,
-		} as const;
-	}
-
 	export function resetState() {
 		return {
 			type: actionNames.RESET_STATE,
@@ -31,14 +25,6 @@ export namespace actions {
 		} as const;
 	}
 
-	export function showFlash(heading: string, flashContent: UITypes.DOMContent) {
-		return {
-			type: actionNames.SHOW_FLASH,
-			heading: heading,
-			content: flashContent,
-		} as const;
-	}
-
 	export function toggleSidebar() {
 		return {
 			type: actionNames.TOGGLE_SIDEBAR,
@@ -48,9 +34,7 @@ export namespace actions {
 
 export namespace actionNames {
 	export const CHANGE_SECTION = "CHANGE_SECTION" as const;
-	export const HIDE_FLASH = "HIDE_FLASH" as const;
 	export const RESET_STATE = "RESET_STATE" as const;
 	export const SET_STATE = "SET_STATE" as const;
-	export const SHOW_FLASH = "SHOW_FLASH" as const;
 	export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR" as const;
 }

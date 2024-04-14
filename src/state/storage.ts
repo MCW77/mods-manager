@@ -25,10 +25,6 @@ export interface IAppState {
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
   characterFilter: string,
-  flashMessage: {
-    heading: UITypes.DOMContent,
-    content: UITypes.DOMContent
-  } | null,
   help: {
     section: HelpSections;
     topic: number,
@@ -75,7 +71,6 @@ export class AppState {
     characterEditMode: 'basic',
     characterEditSortView: false,
     characterFilter: '',
-    flashMessage: null,
     help: {
       section: 'general',
       topic: 1,

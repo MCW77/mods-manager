@@ -33,7 +33,6 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // modules
-import { App } from '#/state/modules/app';
 import { CharacterEdit } from '#/state/modules/characterEdit';
 import { Data } from '#/state/modules/data';
 import { Optimize } from '#/state/modules/optimize';

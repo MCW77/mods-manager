@@ -23,7 +23,6 @@ import { profilesManagement$ } from '#/modules/profilesManagement/state/profiles
 // modules
 import { Data } from '#/state/modules/data';
 import { Review as ReviewModule } from '#/state/modules/review';
-import { Storage } from '#/state/modules/storage';
 
 // domain
 import { CharacterNames } from '#/constants/characterSettings';

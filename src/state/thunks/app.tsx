@@ -34,10 +34,13 @@ export namespace thunks {
       db.deleteProfile(
         allyCode,
         () => dispatch(Storage.thunks.loadProfiles(null)),
-        error => dispatch(actions.showFlash(
-          'Storage Error',
-          'Error deleting your profile: ' + error?.message
-        ))
+        error => dialog$.showFlash(
+          "Storage Error",
+          `Error deleting your profile: ${error?.message}`,
+          "",
+          undefined,
+          "error",
+        )
       );
     };
   }
@@ -76,12 +79,15 @@ export namespace thunks {
         profile,
         () => {
           dispatch(Storage.thunks.loadProfile(profilesManagement$.profiles.activeAllycode.get()));
-          dispatch(actions.showFlash(
-            'Success!',
+          dialog$.showFlash(
             <p>
               Successfully imported <span className={'gold'}>{totalMods}</span> mods for player <span className={'gold'}>{state.profile.playerName}</span>
             </p>,
-          ));
+            "",
+            "",
+            undefined,
+            "success",
+          );
         },
         error => dialog$.showError('Error saving player profiles: ' + error?.message)
       );
@@ -176,10 +182,13 @@ export namespace thunks {
       db.saveProfile(
         newProfile,
         () => {},
-        error => dispatch(actions.showFlash(
-          'Storage Error',
-          'Error saving your progress: ' + error?.message + ' Your progress may be lost on page refresh.'
-        ))
+        error => dialog$.showFlash(
+          "Storage Error",
+          `Error saving your progress: ${error?.message} Your progress may be lost on page refresh.`,
+          "",
+          undefined,
+          "error",
+        )
       );
       dispatch(Storage.actions.setProfile(newProfile));
       profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);

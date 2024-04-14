@@ -10,6 +10,7 @@ import nothing from "#/utils/nothing";
 // state
 import getDatabase, { IUserData } from "#/state/storage/Database";
 
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // actions
@@ -26,7 +27,6 @@ import { Mod } from '#/domain/Mod';
 import { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile } from '#/domain/PlayerProfile';
 import { SelectedCharactersByTemplateName } from "#/domain/SelectedCharacters";
-import { dialog$ } from "#/modules/dialog/state/dialog";
 
 export namespace thunks {
   /**
@@ -60,12 +60,13 @@ export namespace thunks {
         db.deleteLastRun(
           profile.allyCode,
           nothing,
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            'Error updating your saved results: ' +
-            error!.message +
-            ' The optimizer may not recalculate correctly until you fetch data again'
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error updating your saved results: ${error?.message}. The optimizer may not recalculate correctly until you fetch data again`,
+            "",
+            undefined,
+            "error",
+          )
         );
       }
     );
@@ -90,12 +91,13 @@ export namespace thunks {
         db.deleteLastRun(
           profile.allyCode,
           nothing,
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            'Error updating your saved results: ' +
-            error?.message +
-            ' The optimizer may not recalculate correctly until you fetch data again'
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error updating your saved results: ${error?.message}. The optimizer may not recalculate correctly until you fetch data again`,
+            "",
+            undefined,
+            "error",
+          )
         );
       }
     )
@@ -151,12 +153,13 @@ export namespace thunks {
             dispatch(actions.setBaseCharacters(baseCharsObject));
           },
           error =>
-            dispatch(App.actions.showFlash(
-              'Storage Error',
-              'Error reading basic character settings: ' +
-              error!.message +
-              ' The settings will be restored when you next fetch data.'
-            ))
+            dialog$.showFlash(
+              "Storage Error",
+              `Error reading basic character settings: ${error?.message}. The settings will be restored when you next fetch data.`,
+              "",
+              undefined,
+              "error",
+            )
         );
       } catch (e) {
         dialog$.showError(
@@ -189,10 +192,13 @@ export namespace thunks {
 
             dispatch(actions.setCharacterTemplates(characterTemplatesByName));
           },
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            'Error loading character templates: ' + error?.message + '.'
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error loading character templates: ${error?.message}.`,
+            "",
+            undefined,
+            "error",
+          )
         );
       } catch (e) {
         dialog$.showError(
@@ -283,10 +289,13 @@ export namespace thunks {
             });
           },
           error =>
-            dispatch(App.actions.showFlash(
-              'Storage Error',
-              'Error retrieving profiles: ' + error?.message
-            ))
+            dialog$.showFlash(
+              "Storage Error",
+              `Error retrieving profiles: ${error?.message}`,
+              "",
+              undefined,
+              "error",
+            )
         );
       } catch (e) {
         dialog$.showError(
@@ -311,12 +320,13 @@ export namespace thunks {
       db.saveBaseCharacters(
         baseCharacters,
         () => dispatch(loadBaseCharacters()),
-        error => dispatch(App.actions.showFlash(
-          'Storage Error',
-          'Error saving basic character settings: ' +
-          error?.message +
-          ' The settings will be restored when you next fetch data.'
-        ))
+        error => dialog$.showFlash(
+          "Storage Error",
+          `Error saving basic character settings: ${error?.message} The settings will be restored when you next fetch data.`,
+          "",
+          undefined,
+          "error",
+        )
       );
     };
   }

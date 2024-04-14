@@ -77,10 +77,13 @@ export namespace thunks {
             template.selectedCharacters.filter(({ id }) => !Object.keys(newProfile.characters).includes(id))
               .map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
           if (missingCharacters.length) {
-            dispatch(App.actions.showFlash(
-              'Missing Characters',
-              'Missing the following characters from the selected template: ' + missingCharacters.join(', ')
-            ));
+            dialog$.showFlash(
+              "Missing Characters",
+              'Missing the following characters from the selected template: ' + missingCharacters.join(', '),
+              "",
+              undefined,
+              "warning",
+            );
           }
         }
       )
@@ -99,10 +102,13 @@ export namespace thunks {
         db.getCharacterTemplate(
           name,
           template => updateFunction(template)(dispatch, getState, null),
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            `Error retrieving your template from the database: ${(error as Error).message}.`
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error retrieving your template from the database: ${(error as Error).message}.`,
+            "",
+            undefined,
+            "error",
+          )
         );
       }
     }
@@ -145,10 +151,13 @@ export namespace thunks {
           ).map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
 
           if (missingCharacters.length) {
-            dispatch(App.actions.showFlash(
-              'Missing Characters',
-              'The following characters weren\'t in your selected characters: ' + missingCharacters.join(', ')
-            ));
+            dialog$.showFlash(
+              "Missing Characters",
+              'The following characters weren\'t in your selected characters: ' + missingCharacters.join(', '),
+              "",
+              undefined,
+              "warning",
+            );
           }
         }
       )
@@ -167,10 +176,13 @@ export namespace thunks {
         db.getCharacterTemplate(
           name,
           template => updateFunction(template)(dispatch, getState, null),
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            `Error retrieving your template from the database: ${(error as Error).message}.`
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error retrieving your template from the database: ${(error as Error).message}.`,
+            "",
+            undefined,
+            "error",
+          )
         );
       }
     }
@@ -265,10 +277,13 @@ export namespace thunks {
           dispatch(Storage.thunks.loadCharacterTemplates());
           dialog$.hide();
         },
-        error => dispatch(App.actions.showFlash(
-          'Storage Error',
-          `Error deleting the character template '${name}'. Error message: ${error!.message}`
-        ))
+        error => dialog$.showFlash(
+          "Storage Error",
+          `Error deleting the character template '${name}'. Error message: ${error!.message}`,
+          "",
+          undefined,
+          "error",
+        )
       );
     }
   }
@@ -417,10 +432,13 @@ export namespace thunks {
             template.selectedCharacters.filter(({ id }) => !Object.keys(newProfile.characters).includes(id))
               .map(({ id }) => baseCharacters[id] ? baseCharacters[id].name : id);
           if (missingCharacters.length) {
-            dispatch(App.actions.showFlash(
-              'Missing Characters',
-              'Missing the following characters from the selected template: ' + missingCharacters.join(', ')
-            ));
+            dialog$.showFlash(
+              "Missing Characters",
+              'Missing the following characters from the selected template: ' + missingCharacters.join(', '),
+              "",
+              undefined,
+              "warning",
+            );
           }
         }
       );
@@ -439,10 +457,13 @@ export namespace thunks {
         db.getCharacterTemplate(
           templateName,
           template => updateFunction(template)(dispatch, getState, null),
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            `Error retrieving your template from the database: ${(error as Error).message}.`
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error retrieving your template from the database: ${(error as Error).message}.`,
+            "",
+            undefined,
+            "error",
+          )
         );
       }
     }
@@ -515,10 +536,13 @@ export namespace thunks {
           dispatch(Storage.thunks.loadCharacterTemplates());
           dialog$.hide();
         },
-        error => dispatch(App.actions.showFlash(
-          'Storage Error',
-          'Error saving the character template: ' + (error as Error).message + '. Please try again.'
-        ))
+        error => dialog$.showFlash(
+          "Storage Error",
+          'Error saving the character template: ' + (error as Error).message + '. Please try again.',
+          "",
+          undefined,
+          "error",
+        )
       );
     };
   }
@@ -533,10 +557,13 @@ export namespace thunks {
           dispatch(Storage.thunks.loadCharacterTemplates());
           dialog$.hide();
         },
-        error => dispatch(App.actions.showFlash(
-          'Storage Error',
-          'Error saving the character templates: ' + (error as Error).message + '.'
-        ))
+        error => dialog$.showFlash(
+          "Storage Error",
+          'Error saving the character templates: ' + (error as Error).message + '.',
+          "",
+          undefined,
+          "error",
+        )
       );
     };
   }

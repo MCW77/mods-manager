@@ -77,7 +77,6 @@ export namespace thunks {
           dispatch(processVersion(version));
           return version;
         }).catch(error => {
-          dispatch(App.actions.hideFlash());
           dialog$.showError(error.message);
           return '';
         });
@@ -173,16 +172,15 @@ export namespace thunks {
       const state = getState();
 
       if (state.version !== version) {
-        dispatch(App.actions.showFlash(
-          'Version out-of-date!',
-          [
-            <p key={1}>
-              The mods optimizer has been updated to version <strong>{version}</strong>.
-              You're currently running version <strong>{state.version}</strong>
-            </p>,
-            <p key={2}>Please clear your cache and refresh to get the latest version.</p>
-          ]
-        ));
+        dialog$.showFlash(
+          `Newer version available:
+          Newest version: ${version}
+          Your version: ${state.version}`,
+          "",
+          "Get new version",
+          () => window.location.assign(location.href + '?reload=' + Date.now()),
+          "warning",
+        );
       }
     }
   }
@@ -246,12 +244,13 @@ export namespace thunks {
           db.saveBaseCharacters(
             Object.values(data.baseCharacters),
             nothing,
-            error => dispatch(App.actions.showFlash(
-              'Storage Error',
-              'Error saving base character settings: ' +
-              error?.message +
-              ' The optimizer may not function properly for all characters'
-            ))
+            error => dialog$.showFlash(
+              "Storage Error",
+              `Error saving base character settings: ${error?.message} The optimizer may not function properly for all characters until you fetch again`,
+              "",
+              undefined,
+              "error",
+            )
           )
         }
 
@@ -323,12 +322,15 @@ export namespace thunks {
       }
 
       optimizerView$.view.set('basic');
-      dispatch(App.actions.showFlash(
-        'Success!',
+      dialog$.showFlash(
         <div className={'fetch-results'}>
           {fetchResults}
-        </div>
-      ));
+        </div>,
+        "",
+        "",
+        undefined,
+        "success",
+      );
     }
   }
 
@@ -396,20 +398,24 @@ export namespace thunks {
         db.saveProfile(
           newProfile,
           () => {},
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            'Error saving your profile: ' + error!.message + ' Your data may be lost on page refresh.'
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error saving your profile: ${error?.message} Your data may be lost on page refresh.`,
+            "",
+            undefined,
+            "error",
+          )
         );
         db.deleteLastRun(
           newProfile.allyCode,
           nothing,
-          error => dispatch(App.actions.showFlash(
-            'Storage Error',
-            'Error updating your data: ' +
-            error!.message +
-            ' The optimizer may not recalculate correctly until you fetch again'
-          ))
+          error => dialog$.showFlash(
+            "Storage Error",
+            `Error updating your data: ${error?.message} The optimizer may not recalculate correctly until you fetch again`,
+            "",
+            undefined,
+            "error",
+          )
         );
         dispatch(Storage.actions.setProfile(newProfile));
         beginBatch();
@@ -491,7 +497,13 @@ export namespace thunks {
               break;
             case 1:
               dialog$.hide();
-              dispatch(App.actions.showFlash('Profile created successfully', 'Please login to HotUtils to manage your new profile'))
+              dialog$.showFlash(
+                'Profile created successfully',
+                'Please login to HotUtils to manage your new profile',
+                "",
+                undefined,
+                "success",
+              );
               break;
             default:
               dialog$.hide();
@@ -643,10 +655,13 @@ export namespace thunks {
               default:
                 if (response.taskId === 0) {
                   dialog$.hide();
-                  dispatch(App.actions.showFlash(
+                  dialog$.showFlash(
                     "No Action Taken",
-                    "There were no mods to move!"
-                  ))
+                    "There were no mods to move!",
+                    "",
+                    undefined,
+                    "info",
+                  )
                 } else {
                   modMoveActive = true;
                   // Show the progress modal 'mod-move-progress'
@@ -695,15 +710,21 @@ export namespace thunks {
 
                 dialog$.hide();
                 if (response.progress.index === response.progress.count) {
-                  dispatch(App.actions.showFlash(
-                    'Mods successfully moved',
-                    'Your mods have been moved. You may log into Galaxy of Heroes to see your characters.'
-                  ));
+                  dialog$.showFlash(
+                    "Mods successfully moved",
+                    "Your mods have been moved. You may log into Galaxy of Heroes to see your characters.",
+                    "",
+                    undefined,
+                    "success",
+                  );
                 } else {
-                  dispatch(App.actions.showFlash(
-                    'Mod move cancelled',
-                    'Your mod move has been cancelled. ' + response.progress.index + ' characters have already been updated.'
-                  ));
+                  dialog$.showFlash(
+                    "Mod move cancelled",
+                    `Your mod move has been cancelled. ${response.progress.index} characters have already been updated.`,
+                    "",
+                    undefined,
+                    "info",
+                  );
                 }
               } else {
                 // Update the modal
@@ -741,10 +762,13 @@ export namespace thunks {
               dispatch(Storage.actions.setProfile(newProfile));
               profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
             },
-            error => dispatch(App.actions.showFlash(
-              'Storage Error',
-              'Error applying HotUtils session ID to your profile. Please try again.'
-            ))
+            error => dialog$.showFlash(
+              "Storage Error",
+              "Error applying HotUtils session ID to your profile. Please try again.",
+              "",
+              undefined,
+              "error",
+            )
           )
         }
       }

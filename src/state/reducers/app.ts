@@ -15,24 +15,6 @@ export namespace reducers {
 		});
 	}
 
-	export function showFlash(
-		state: IAppState,
-		action: ReturnType<typeof actions.showFlash>,
-	): IAppState {
-		return Object.assign({}, state, {
-			flashMessage: {
-				heading: action.heading,
-				content: action.content,
-			},
-		});
-	}
-
-	export function hideFlash(state: IAppState): IAppState {
-		return Object.assign({}, state, {
-			flashMessage: null,
-		});
-	}
-
 	export function resetState() {
 		return Object.assign({}, AppState.Default);
 	}
@@ -51,7 +33,6 @@ export namespace reducers {
 }
 
 export namespace selectors {
-	export const selectFlashMessage = (state: IAppState) => state.flashMessage;
 	export const selectPreviousSection = (state: IAppState) =>
 		state.previousSection;
 	export const selectSection = (state: IAppState) => state.section;
