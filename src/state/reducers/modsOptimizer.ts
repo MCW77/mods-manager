@@ -31,9 +31,6 @@ type AppActions =
   | ReturnType<typeof App.actions.toggleSidebar>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
-  | ReturnType<typeof CharacterEdit.actions.changeSetRestrictions>
-  | ReturnType<typeof CharacterEdit.actions.removeSetBonus>
-  | ReturnType<typeof CharacterEdit.actions.selectSetBonus>
   | ReturnType<typeof CharacterEdit.actions.setTemplatesAddingMode>
   | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
   | ReturnType<typeof CharacterEdit.actions.toggleHideSelectedCharacters>
@@ -83,12 +80,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return AppState.save(
         CharacterEdit.reducers.changeCharacterFilter(state, action)
       );
-    case CharacterEdit.actionNames.CHANGE_SET_RESTRICTIONS:
-      return CharacterEdit.reducers.changeSetRestrictions(state, action);
-    case CharacterEdit.actionNames.REMOVE_SET_BONUS:
-      return CharacterEdit.reducers.removeSetBonus(state, action);
-    case CharacterEdit.actionNames.SELECT_SET_BONUS:
-      return CharacterEdit.reducers.selectSetBonus(state, action);
     case CharacterEdit.actionNames.SET_TEMPLATES_ADDING_MODE:
       return CharacterEdit.reducers.setTemplatesAddingMode(state, action);
     case CharacterEdit.actionNames.TOGGLE_CHARACTER_EDIT_SORT_VIEW:

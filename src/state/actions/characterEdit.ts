@@ -1,6 +1,4 @@
 // domain
-import { SetRestrictions } from "../../domain/SetRestrictions";
-import { SetStats } from "../../domain/Stats";
 import { TargetStat } from "../../domain/TargetStat";
 import { TemplatesAddingMode } from "../../domain/TemplatesAddingMode";
 
@@ -44,18 +42,6 @@ export namespace actions {
   }
 
   /**
-   * Fill the set restrictions to display on the character edit form
-   * @param setRestrictions {SetRestrictions}
-   * @returns {{setRestrictions: SetRestrictions, type: 'CHANGE_SET_RESTRICTIONS'}}
-   */
-  export function changeSetRestrictions(setRestrictions: SetRestrictions) {
-    return {
-      type: actionNames.CHANGE_SET_RESTRICTIONS,
-      setRestrictions: setRestrictions
-    } as const;
-  }
-
-  /**
    * Fill the target stats to display on the character edit form
    *
    * @param targetStats {Array<TargetStat>}
@@ -69,19 +55,6 @@ export namespace actions {
   }
 
   /**
-   * Remove a set bonus from the currently selected sets
-   *
-   * @param setBonus
-   * @returns {{setBonus: *, type: string}}
-   */
-  export function removeSetBonus(set: SetStats.GIMOStatNames) {
-    return {
-      type: actionNames.REMOVE_SET_BONUS,
-      setBonus: set
-    } as const;
-  }
-
-  /**
    * Remove a target stat from the character edit form
    *
    * @param index {Int}
@@ -91,19 +64,6 @@ export namespace actions {
     return {
       type: actionNames.REMOVE_TARGET_STAT,
       index: index
-    } as const;
-  }
-
-  /**
-   * Add a set bonus to the currently selected sets
-   *
-   * @param setBonus
-   * @returns {{setBonus: *, type: string}}
-   */
-  export function selectSetBonus(set: SetStats.GIMOStatNames) {
-    return {
-      type: actionNames.SELECT_SET_BONUS,
-      setBonus: set
     } as const;
   }
 
@@ -131,11 +91,8 @@ export namespace actionNames {
   export const ADD_TARGET_STAT = 'ADD_TARGET_STAT' as const;
   export const CHANGE_CHARACTER_EDIT_MODE = 'CHANGE_CHARACTER_EDIT_MODE' as const;
   export const CHANGE_CHARACTER_FILTER = 'CHANGE_CHARACTER_FILTER' as const;
-  export const CHANGE_SET_RESTRICTIONS = 'CHANGE_SET_RESTRICTIONS' as const;
   export const CHANGE_TARGET_STATS = 'CHANGE_TARGET_STATS' as const;
-  export const REMOVE_SET_BONUS = 'REMOVE_SET_BONUS' as const;
   export const REMOVE_TARGET_STAT = 'REMOVE_TARGET_STAT' as const;
-  export const SELECT_SET_BONUS = 'SELECT_SET_BONUS' as const;
   export const SET_TEMPLATES_ADDING_MODE = 'SET_TEMPLATES_ADDING_MODE' as const;
   export const TOGGLE_CHARACTER_EDIT_SORT_VIEW = 'TOGGLE_CHARACTER_EDIT_SORT_VIEW' as const;
   export const TOGGLE_HIDE_SELECTED_CHARACTERS = 'TOGGLE_HIDE_SELECTED_CHARACTERS' as const;

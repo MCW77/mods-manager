@@ -2,21 +2,13 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 // state
-import { IAppState } from "../storage";
+import { IAppState } from "#/state/storage";
 
 // modules
-import { actions } from "../actions/characterEdit";
-import { Storage } from '../modules/storage';
-
-// domain
-import setBonuses from "../../constants/setbonuses";
-
-import { SetRestrictions } from '../../domain/SetRestrictions';
-import { SetStats } from "../../domain/Stats";
-
+import { actions } from "#/state/actions/characterEdit";
+import { Storage } from '#/state/modules/storage';
 
 export namespace reducers {
-
   export function changeCharacterEditMode(state: IAppState, action: ReturnType<typeof actions.changeCharacterEditMode>): IAppState {
     return Object.assign({}, state, {
       characterEditMode: action.mode
@@ -27,51 +19,6 @@ export namespace reducers {
     return Object.assign({}, state, {
       characterFilter: action.filter
     });
-  }
-
-  export function changeSetRestrictions(state: IAppState, action: ReturnType<typeof actions.changeSetRestrictions>): IAppState {
-    return Object.assign({}, state, {
-      setRestrictions: action.setRestrictions
-    });
-  }
-
-  export function removeSetBonus(state: IAppState, action: ReturnType<typeof actions.removeSetBonus>): IAppState {
-    const currentRestrictions = Object.assign({}, state.setRestrictions);
-
-    if (currentRestrictions[action.setBonus] && currentRestrictions[action.setBonus] > 1) {
-      return Object.assign({}, state, {
-        setRestrictions: Object.assign({}, currentRestrictions, {
-          [action.setBonus]: currentRestrictions[action.setBonus] - 1
-        })
-      });
-    } else if (currentRestrictions[action.setBonus] && currentRestrictions[action.setBonus] === 1) {
-      delete currentRestrictions[action.setBonus];
-      return Object.assign({}, state, {
-        setRestrictions: Object.assign({}, currentRestrictions)
-      });
-    }
-
-    return state;
-  }
-
-  export function selectSetBonus(state: IAppState, action: ReturnType<typeof actions.selectSetBonus>) {
-    const currentRestrictions = Object.assign({}, state.setRestrictions);
-    const updatedRestrictions: SetRestrictions = Object.assign({}, currentRestrictions, {
-      [action.setBonus]: (currentRestrictions[action.setBonus] || 0) + 1
-    });
-
-    // Only update the set restrictions if the sets can still be fulfilled
-    const updatedRestrictionsKVs = Object.entries(updatedRestrictions) as [SetStats.GIMOStatNames, number][];
-    const requiredSlots = updatedRestrictionsKVs.reduce((acc, [setName, count]: [SetStats.GIMOStatNames, number]) =>
-      acc + setBonuses[setName].numberOfModsRequired * count, 0);
-
-    if (requiredSlots <= 6) {
-      return Object.assign({}, state, {
-        setRestrictions: updatedRestrictions
-      });
-    } else {
-      return state;
-    }
   }
 
   export function setTemplatesAddingMode(state: IAppState, action: ReturnType<typeof actions.setTemplatesAddingMode>): IAppState {
@@ -103,7 +50,6 @@ export namespace selectors {
     [Storage.selectors.selectActiveProfile],
     (activeProfile) => activeProfile.selectedCharacters
   );
-  export const selectSetRestrictions = (state: IAppState) => state.setRestrictions;
   export const selectTemplatesAddingMode = (state: IAppState) => selectTemplates(state).templatesAddingMode;
   export const selectUserTemplates = createSelector(
     selectTemplates,

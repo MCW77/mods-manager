@@ -13,7 +13,6 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // modules
 import { App } from '../../state/modules/app';
-import { actions } from '../actions/characterEdit';
 import { Data } from '../../state/modules/data';
 import { Storage } from '../../state/modules/storage';
 
@@ -27,11 +26,8 @@ import { OptimizationPlan, OptimizationPlansById, createOptimizationPlan } from 
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "../../domain/PlayerProfile";
 import { SelectedCharacters } from "../../domain/SelectedCharacters";
-import { SetRestrictions } from "../../domain/SetRestrictions";
-
 
 const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ name }) => name);
-
 
 function getTargetsById(template: CharacterTemplate): OptimizationPlansById {
   return mapValues(
@@ -262,7 +258,6 @@ export namespace thunks {
       },
       dispatch => {
         dialog$.hide();
-        dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       }
     );
   }
@@ -519,7 +514,6 @@ export namespace thunks {
       },
       dispatch => {
         dialog$.hide();
-        dispatch(actions.changeSetRestrictions({} as SetRestrictions));
       }
     );
   }

@@ -11,7 +11,6 @@ import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerProfile } from "../domain/PlayerProfile";
-import { SetRestrictions } from "../domain/SetRestrictions";
 import { SettingsSections } from "../domain/SettingsSections";
 import { TargetStats } from "../domain/TargetStat";
 import { Templates } from "../domain/Templates";
@@ -37,7 +36,6 @@ export interface IAppState {
   profile: PlayerProfile, // All the data about the current character
   progress: OptimizationStatus,
   section: UITypes.Sections,
-  setRestrictions: SetRestrictions,
   settings: {
     section: SettingsSections;
     topic: number,
@@ -94,7 +92,6 @@ export class AppState {
       section: 'general',
       topic: 1,
     },
-    setRestrictions: {} as SetRestrictions,
     showSidebar: true,
     targetStats: [] as TargetStats,
     templates: {
