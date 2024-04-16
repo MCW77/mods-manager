@@ -6,7 +6,6 @@ import { ElementType } from "../utils/typeHelper";
 // domain
 import { BaseCharactersById } from "../domain/BaseCharacter";
 import { CharacterEditMode } from "../domain/CharacterEditMode";
-import { HelpSections } from "../domain/HelpSections";
 import { ModListFilter } from "../domain/ModListFilter";
 import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import { OptimizationStatus } from "../domain/OptimizationStatus";
@@ -15,19 +14,11 @@ import { SettingsSections } from "../domain/SettingsSections";
 import { TargetStats } from "../domain/TargetStat";
 import { Templates } from "../domain/Templates";
 
-// components
-import * as UITypes from "../components/types";
-
-
 export interface IAppState {
   baseCharacters: BaseCharactersById,
   characterEditMode: CharacterEditMode,
   characterEditSortView: boolean,
   characterFilter: string,
-  help: {
-    section: HelpSections;
-    topic: number,
-  },
   hideSelectedCharacters: boolean,
   hotUtilsSubscription: boolean,
   modListFilter: ModListFilter,
@@ -62,10 +53,6 @@ export class AppState {
     characterEditMode: 'basic',
     characterEditSortView: false,
     characterFilter: '',
-    help: {
-      section: 'general',
-      topic: 1,
-    },
     hideSelectedCharacters: true,
     hotUtilsSubscription: false,
     modListFilter: {

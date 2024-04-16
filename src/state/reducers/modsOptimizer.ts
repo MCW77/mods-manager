@@ -9,7 +9,6 @@ import { IAppState, AppState } from "../storage";
 import { App } from "../modules/app";
 import { CharacterEdit } from "../modules/characterEdit";
 import { Explore } from "../modules/explore";
-import { Help } from "../modules/help";
 import { Optimize } from "../modules/optimize";
 import { Review } from "../modules/review";
 import { Settings } from "../modules/settings";
@@ -34,7 +33,6 @@ type AppActions =
   | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
   | ReturnType<typeof CharacterEdit.actions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
-  | ReturnType<typeof Help.actions.setHelpPosition>
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
   | ReturnType<typeof Review.actions.changeModListFilter>
@@ -91,10 +89,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
       return AppState.save(
         Explore.reducers.changeModsViewOptions(state, action)
       );
-
-    case Help.actionNames.SET_HELP_POSITION:
-      return Help.reducers.setHelpPosition(state, action);
-
 
     case Optimize.actionNames.UPDATE_PROGRESS:
         return Optimize.reducers.updateProgress(state, action);

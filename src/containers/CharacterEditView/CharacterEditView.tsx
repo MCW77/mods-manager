@@ -53,14 +53,13 @@ import { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DOMContent } from "#/components/types";
 
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Dropdown } from "#/components/Dropdown/Dropdown";
-import { HelpLink } from "#/components/HelpLink/HelpLink";
 import { OptimizerProgress } from "#/components/OptimizerProgress/OptimizerProgress";
 import { SettingsLink } from "#/components/SettingsLink/SettingsLink";
+import { HelpLink } from "#/modules/help/components/HelpLink";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Switch } from "#ui/switch";

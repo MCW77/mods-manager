@@ -37,9 +37,9 @@ import { Dialog } from '#/modules/dialog/components/Dialog';
 // containers
 import { AboutView } from '#/containers/AboutView/AboutView';
 import ExploreView from "#/containers/ExploreView/ExploreView";
-import { HelpView } from '#/containers/HelpView/HelpView';
 import { OptimizerView } from '#/containers/OptimizerView/OptimizerView';
 import { SettingsView } from '#/containers/SettingsView/SettingsView';
+import { HelpView } from '#/modules/help/pages/HelpView';
 
 const ReactiveTabs = reactive(Tabs);
 
