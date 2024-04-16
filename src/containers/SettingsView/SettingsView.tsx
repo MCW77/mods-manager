@@ -1,8 +1,8 @@
 // react
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
+import { useSelector } from 'react-redux';
+import { observer } from '@legendapp/state/react';
 
 // styles
 import './SettingsView.css';
@@ -13,10 +13,11 @@ import {
 // utils
 import { match } from 'ts-pattern';
 
+// state
+import { ui$ } from '#/modules/ui/state/ui';
+
 // modules
-import { App } from '#/state/modules/app';
 import { Settings } from '#/state/modules/settings';
-import { Storage } from '#/state/modules/storage';
 
 // domain
 import { SettingsSections } from '#/domain/SettingsSections';
@@ -28,10 +29,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import GeneralSettingsView from '#/containers/GeneralSettingsView/GeneralSettingsView';
 import OptimizerSettingsView from '#/containers/OptimizerSettingsView/OptimizerSettingsView';
 
-const SettingsView = () => {
-  const previousSection = useSelector(App.selectors.selectPreviousSection);
+const SettingsView = observer(() => {
   const settingsSection = useSelector(Settings.selectors.selectSettingsPosition).section;
-  const dispatch: ThunkDispatch = useDispatch();
   const [t, i18n] = useTranslation('settings-ui');
   const [currentSection, changeCurrentSection] = useState(settingsSection);
 
@@ -68,12 +67,14 @@ const SettingsView = () => {
   return (
     <div className={'Settings-page'} key={'settings'}>
       <nav className="sections">
-        {previousSection !== 'settings' && (
+        {ui$.previousSection.get() !== 'settings' && (
           <div className="returnTo">
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
-              onClick={() => dispatch(App.actions.changeSection(previousSection))}
+              onClick={() => {
+                ui$.goToPreviousSection();
+              }}
             />
           </div>
         )}
@@ -85,7 +86,8 @@ const SettingsView = () => {
       <div className={'overflow-y-auto'}>{renderTopic()}</div>
     </div>
   );
-};
+});
 
 SettingsView.displayName = 'SettingsView';
+
 export { SettingsView };

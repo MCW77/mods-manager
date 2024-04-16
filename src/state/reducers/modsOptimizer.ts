@@ -25,7 +25,6 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 
 // #region AppActions
 type AppActions =
-  | ReturnType<typeof App.actions.changeSection>
   | ReturnType<typeof App.actions.resetState>
   | ReturnType<typeof App.actions.setState>
   | ReturnType<typeof App.actions.toggleSidebar>
@@ -56,9 +55,6 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
   }
 
   switch (action.type) {
-
-    case App.actionNames.CHANGE_SECTION:
-      return AppState.save(App.reducers.changeSection(state, action));
     case App.actionNames.RESET_STATE:
       const result = AppState.save(App.reducers.resetState());
       window.location.reload();

@@ -5,16 +5,6 @@ import { AppState, IAppState } from "../storage";
 import { actions } from "../actions/app";
 
 export namespace reducers {
-	export function changeSection(
-		state: IAppState,
-		action: ReturnType<typeof actions.changeSection>,
-	): IAppState {
-		return Object.assign({}, state, {
-			section: action.section,
-			previousSection: state.section,
-		});
-	}
-
 	export function resetState() {
 		return Object.assign({}, AppState.Default);
 	}
@@ -33,9 +23,6 @@ export namespace reducers {
 }
 
 export namespace selectors {
-	export const selectPreviousSection = (state: IAppState) =>
-		state.previousSection;
-	export const selectSection = (state: IAppState) => state.section;
 	export const selectShowSidebar = (state: IAppState) => state.showSidebar;
 	export const selectVersion = (state: IAppState) => state.version;
 }

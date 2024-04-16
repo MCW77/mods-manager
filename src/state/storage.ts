@@ -32,10 +32,8 @@ export interface IAppState {
   hotUtilsSubscription: boolean,
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
-  previousSection: UITypes.Sections,
   profile: PlayerProfile, // All the data about the current character
   progress: OptimizationStatus,
-  section: UITypes.Sections,
   settings: {
     section: SettingsSections;
     topic: number,
@@ -43,7 +41,6 @@ export interface IAppState {
   showSidebar: boolean,
   targetStats: TargetStats,
   templates: Templates,
-  theme: 'light' | 'dark',
   version: string,
 }
 
@@ -55,10 +52,8 @@ export class AppState {
     'hideSelectedCharacters',
     'modListFilter',
     'modsViewOptions',
-    'section',
     'showSidebar',
     'templates',
-    'theme',
     'version',
   ] as const;
 
@@ -80,14 +75,12 @@ export class AppState {
       tag: 'All',
     },
     modsViewOptions: defaultOptions,
-    previousSection: 'help',
     profile: PlayerProfile.Default, // All the data about the current character
     progress: {
       character: null,
       progress: 0,
       step: '1',
     },
-    section: 'help',
     settings: {
       section: 'general',
       topic: 1,
@@ -98,7 +91,6 @@ export class AppState {
       templatesAddingMode: 'replace',
       userTemplatesByName: {}
     },
-    theme: 'dark',
     version: String(import.meta.env.VITE_VERSION) || 'local',
   };
 
@@ -172,10 +164,8 @@ export function deserializeState(state: IAppState): IAppState {
       hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
       modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
       modListFilter: state.modListFilter || AppState.Default.modListFilter,
-      section: state.section,
       showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
       templates: state.templates,
-      theme: state.theme || AppState.Default.theme,
       version: version,
     },
   );

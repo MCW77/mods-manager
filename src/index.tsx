@@ -21,6 +21,7 @@ import registerServiceWorker from './registerServiceWorker';
 import modsOptimizer from "./state/reducers/modsOptimizer";
 
 // state
+import { ui$ } from "./modules/ui/state/ui";
 import { profilesManagement$ } from "./modules/profilesManagement/state/profilesManagement";
 
 // modules
@@ -68,7 +69,7 @@ getDatabase(
 );
 
 const rootNode = document.getElementById('root')!;
-document.body.classList.add(store.getState().theme, "bg-white", "dark:bg-slate-950", "text-slate-500", "dark:text-slate-400");
+document.body.classList.add(ui$.theme.get(), "bg-white", "dark:bg-slate-950", "text-slate-500", "dark:text-slate-400");
 const root = createRoot(rootNode);
 root.render(
   <React.StrictMode>

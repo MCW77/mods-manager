@@ -2,6 +2,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
+// state
+import { ui$ } from "#/modules/ui/state/ui";
+
 // modules
 import { Settings } from '#/state/modules/settings';
 
@@ -12,7 +15,6 @@ import { SettingsSections } from "#/domain/SettingsSections";
 import { Settings as SettingsIcon } from "lucide-react";
 
 import { Button } from "#ui/button";
-
 
 type ComponentProps = {
   title: string;
@@ -29,9 +31,10 @@ const SettingsLink = React.memo(
       size='icon'
       title={title}
       variant='ghost'
-      onClick={() =>
-        dispatch(Settings.actions.setSettingsPosition(section, topic))
-      }
+      onClick={() => {
+        dispatch(Settings.actions.setSettingsPosition(section, topic));
+        ui$.currentSection.set('settings');
+      }}
     >
       <SettingsIcon className="h-6 w-6 m-auto"></SettingsIcon>
     </Button>

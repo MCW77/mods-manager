@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { observer } from '@legendapp/state/react';
 
 // styles
 import {
@@ -12,10 +13,9 @@ import {
 import { match } from 'ts-pattern';
 
 // state
-import { IAppState } from '../../state/storage';
+import { ui$ } from '#/modules/ui/state/ui';
 
 // modules
-import { App } from '../../state/modules/app';
 import { Help } from '../../state/modules/help';
 
 // domain
@@ -26,11 +26,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '#/components/ui/button';
 import { Label } from '#/components/ui/label';
 
-
-const HelpView = () => {
-  const previousSection = useSelector(
-    (state: IAppState) => state.previousSection
-  );
+const HelpView = observer(() => {
   const helpPosition = useSelector(Help.selectors.selectHelpPosition);
   const helpSection = helpPosition.section;
   const helpTopic = helpPosition.topic;
@@ -244,12 +240,14 @@ const HelpView = () => {
   return (
     <div className={'w-full flex flex-col'}>
       <nav className="flex flex-wrap justify-evenly p-4">
-        {previousSection !== 'help' && (
+        {ui$.previousSection.get() !== 'help' && (
           <div className="m-1 p-2 rounded-xl">
             <FontAwesomeIcon
               icon={faCircleLeft}
               title={`Go back`}
-              onClick={() => dispatch(App.actions.changeSection(previousSection))}
+              onClick={() => {
+                ui$.goToPreviousSection();
+              }}
             />
           </div>
         )}
@@ -268,7 +266,7 @@ const HelpView = () => {
       </div>
     </div>
   );
-};
+});
 
 HelpView.displayName = 'HelpView';
 

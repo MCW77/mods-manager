@@ -1,7 +1,7 @@
 // react
 import React, { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // styles
@@ -14,21 +14,25 @@ import {
   faWrench,
 } from '@fortawesome/free-solid-svg-icons'
 
+// state
+import { Show, observer, reactive} from '@legendapp/state/react';
+import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
+import { ui$ } from '#/modules/ui/state/ui';
+
 // modules
-import { App as AppModule } from '#/state/modules/app';
 import { Data } from '#/state/modules/data';
-import { Storage } from '#/state/modules/storage';
 
 // domain
-import { PlayerProfile } from '#/domain/PlayerProfile';
+import { SectionNames } from '#/modules/ui/domain/SectionNames';
 
 // components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ProfilesManager } from '#/components/ProfilesManager/ProfilesManager';
-import { Toaster } from '#/components/ui/sonner';
-import { Dialog } from '#/modules/dialog/components/Dialog';
+import { Toaster } from '#ui/sonner';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
+import { Dialog } from '#/modules/dialog/components/Dialog';
 
 // containers
 import { AboutView } from '#/containers/AboutView/AboutView';
@@ -37,67 +41,14 @@ import { HelpView } from '#/containers/HelpView/HelpView';
 import { OptimizerView } from '#/containers/OptimizerView/OptimizerView';
 import { SettingsView } from '#/containers/SettingsView/SettingsView';
 
+const ReactiveTabs = reactive(Tabs);
 
-
-const App = React.memo(
+const App = observer(React.memo(
   () => {
     const dispatch: ThunkDispatch = useDispatch();
     const [t, i18n] = useTranslation('global-ui');
-    const section = useSelector(AppModule.selectors.selectSection);
-    const profile = useSelector(Storage.selectors.selectActiveProfile);
-
-    const instructionsScreen = profile === PlayerProfile.Default;
-
-    const header = (showActions: boolean) => {
-
-      return <header className={'App-header'}>
-        <img className={'App-title'} src={'../../img/gold-crit-dmg-arrow-mod-cropped.png'}>
-        </img>
-        <div className="rows">
-          <div className={'top-row'}>
-            <div className={'m-auto'}>
-              <div>
-                <ProfilesManager />
-              </div>
-            </div>
-          </div>
-          {showActions &&
-            <nav>
-              <button
-                className={'explore' === section ? 'active' : ''}
-                onClick={() => dispatch(AppModule.actions.changeSection('explore'))}
-              >
-                <FontAwesomeIcon icon={faMagnifyingGlass} title={t('header.NavExploreMods')}/>
-              </button>
-              <button
-                className={'optimize' === section ? 'active' : ''}
-                onClick={() => dispatch(AppModule.actions.changeSection('optimize'))}
-              >
-                <FontAwesomeIcon icon={faWrench} title={t('header.NavOptimizeMods')}/>
-              </button>
-              <button
-                className={'settings' === section ? 'active' : ''}
-                onClick={() => dispatch(AppModule.actions.changeSection('settings'))}
-              >
-                <FontAwesomeIcon icon={faGear} title={t('header.NavSettings')}/>
-              </button>
-              <button
-                className={'help' === section ? 'active' : ''}
-                onClick={() => dispatch(AppModule.actions.changeSection('help'))}
-              >
-                <FontAwesomeIcon icon={faQuestion} title={t('header.NavHelp')}/>
-              </button>
-              <button
-                className={'about' === section ? 'active' : ''}
-                onClick={() => dispatch(AppModule.actions.changeSection('about'))}
-              >
-                  <FontAwesomeIcon icon={faInfo} title={t('header.NavAbout')}/>
-              </button>
-            </nav>
-          }
-        </div>
-      </header>;
-    }
+    const firstSection = profilesManagement$.hasProfiles.peek() ? 'explore' : 'help';
+    ui$.currentSection.set(firstSection);
 
     console.log('rendering APP');
 
@@ -131,33 +82,52 @@ const App = React.memo(
 
     return (
       <Suspense fallback={<Spinner />}>
-        <div className={'App'}>
-          {header(!instructionsScreen)}
-          <div className={'app-body'}>
-            {!instructionsScreen && 'explore' === section &&
-              <ExploreView />
-            }
-            {!instructionsScreen && 'optimize' === section &&
-              <OptimizerView />
-            }
-            {!instructionsScreen && 'settings' === section &&
-              <SettingsView />
-            }
-            {'help' === section &&
-              <HelpView />
-            }
-            {'about' === section &&
-              <AboutView />
-            }
+          <div className={'App'}>
+            <div className={'app-body'}>
             <Dialog />
             <Spinner />
             <Toaster toastOptions={{duration: 8000}}/>
+            <ReactiveTabs
+              className="h-full w-full"
+              $value={ui$.currentSection}
+              onValueChange={(section) => ui$.currentSection.set(section as SectionNames)}
+            >
+              <div className={"flex justify-around"}>
+                <div className={"flex flex-gap-2 items-center"}>
+                  <img className={"h-6"} src={'../../img/gold-crit-dmg-arrow-mod-cropped.png'}></img>
+                  <TabsList>
+                    <Show if={profilesManagement$.hasProfiles}>{() => <TabsTrigger value="explore"><div className={"flex flex-gap-1 items-center"}><FontAwesomeIcon icon={faMagnifyingGlass} title={t('header.NavExploreMods')}/>{t('header.NavExploreMods')}</div></TabsTrigger>}</Show>
+                    <Show if={profilesManagement$.hasProfiles}>{() => <TabsTrigger value="optimize"><div className={"flex flex-gap-1 items-center"}><FontAwesomeIcon icon={faWrench} title={t('header.NavOptimizeMods')}/>{t('header.NavOptimizeMods')}</div></TabsTrigger>}</Show>
+                    <Show if={profilesManagement$.hasProfiles}>{() => <TabsTrigger value="settings"><div className={"flex flex-gap-1 items-center"}><FontAwesomeIcon icon={faGear} title={t('header.NavSettings')}/>{t('header.NavSettings')}</div></TabsTrigger>}</Show>
+                    <TabsTrigger value="help"><div className={"flex flex-gap-1 items-center"}><FontAwesomeIcon icon={faQuestion} title={t('header.NavHelp')}/>{t('header.NavHelp')}</div></TabsTrigger>
+                    <TabsTrigger value="about"><div className={"flex flex-gap-1 items-center"}><FontAwesomeIcon icon={faInfo} title={t('header.NavAbout')}/>{t('header.NavAbout')}</div></TabsTrigger>
+                  </TabsList>
+                </div>
+                <ProfilesManager />
+              </div>
+              <TabsContent className={"flex max-h-full"} value="explore">
+                <ExploreView />
+              </TabsContent>
+              <TabsContent className={"flex max-h-full"} value="optimize">
+                <OptimizerView />
+              </TabsContent>
+              <TabsContent value="settings">
+                <SettingsView />
+              </TabsContent>
+              <TabsContent value="help">
+                <HelpView />
+              </TabsContent>
+              <TabsContent value="about">
+                <AboutView />
+              </TabsContent>
+            </ReactiveTabs>
+            </div>
           </div>
-        </div>
       </Suspense>
-    );
+    )
+
   }
-);
+));
 
 App.displayName = 'App';
 

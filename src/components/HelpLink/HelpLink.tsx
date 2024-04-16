@@ -2,6 +2,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
+// state
+import { ui$ } from "#/modules/ui/state/ui";
+
 // modules
 import { Help } from '#/state/modules/help';
 
@@ -12,7 +15,6 @@ import { HelpSections } from "#/domain/HelpSections";
 import { HelpCircle } from "lucide-react";
 
 import { Button } from "#ui/button";
-
 
 type ComponentProps = {
   title: string;
@@ -29,9 +31,10 @@ const HelpLink = React.memo(
       size='icon'
       title={title}
       variant='ghost'
-      onClick={() =>
-        dispatch(Help.actions.setHelpPosition(section, topic))
-      }
+      onClick={() => {
+        dispatch(Help.actions.setHelpPosition(section, topic));
+        ui$.currentSection.set('help');
+      }}
     >
       <HelpCircle className="h-6 w-6 m-auto"></HelpCircle>
     </Button>
