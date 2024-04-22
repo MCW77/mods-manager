@@ -276,7 +276,7 @@ const CharacterEditForm = observer(({
     // "Delete target" button, or nothing.
 
     <form
-      className={`character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8`}
+      className={"character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8"}
       noValidate={'advanced' === editMode}
       onSubmit={(e) => {
         e.preventDefault();

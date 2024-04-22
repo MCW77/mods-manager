@@ -63,12 +63,12 @@ export namespace thunks {
       const state = getState();
       const db = getDatabase();
       let profile = await db.getProfile(profilesManagement$.profiles.activeAllycode.get());
-      mods = mods.filter(mod => mod.equippedUnit === 'none');
+      mods = mods.filter(mod => mod.equippedUnit === "none");
       const mapper = new C3POMappers.ModMapper();
       const newMods: Mod[] = mods.map(
         mod => mapper.fromC3PO(mod)
       ).concat(profile.mods.filter(
-        mod => mod.characterID !== 'null'
+        mod => mod.characterID !== "null"
       ));
 
       profile = profile.withMods(newMods);
@@ -88,7 +88,7 @@ export namespace thunks {
             "success",
           );
         },
-        error => dialog$.showError('Error saving player profiles: ' + error?.message)
+        error => dialog$.showError(`Error saving player profiles: ${error?.message}`)
       );
     }
   }
@@ -110,7 +110,7 @@ export namespace thunks {
       try {
         const stateObj: IUserData = JSON.parse(progressData);
 
-        if (stateObj.version > '1.4' && stateObj.version !== 'develop') {
+        if (stateObj.version > "1.4" && stateObj.version !== "develop") {
 
           // Get all of the current profiles from the database - if any have HotUtils session IDs, we'll keep those,
           // overwriting anything stored in the file
@@ -141,15 +141,14 @@ export namespace thunks {
           if (stateObj.characterTemplates) {
             dispatch(CharacterEdit.thunks.saveTemplates(stateObj.characterTemplates))
           }
-          if (stateObj.allyCode !== '') {
+          if (stateObj.allyCode !== "") {
             dispatch(Storage.thunks.loadProfile(stateObj.allyCode));
           }
 
         }
       } catch (e) {
         throw new Error(
-          'Unable to process progress file. Is this a template file? If so, use the "load" button below. Error message: ' +
-          (e as Error).message
+          `Unable to process progress file. Is this a template file? If so, use the "load" button below. Error message: ${(e as Error).message}`
         );
       }
     }

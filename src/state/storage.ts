@@ -37,48 +37,48 @@ export interface IAppState {
 
 export class AppState {
   static readonly keysToSave = [
-    'characterEditMode',
-    'characterEditSortView',
-    'characterFilter',
-    'hideSelectedCharacters',
-    'modListFilter',
-    'modsViewOptions',
-    'showSidebar',
-    'templates',
-    'version',
+    "characterEditMode",
+    "characterEditSortView",
+    "characterFilter",
+    "hideSelectedCharacters",
+    "modListFilter",
+    "modsViewOptions",
+    "showSidebar",
+    "templates",
+    "version",
   ] as const;
 
   static readonly Default: IAppState = {
     baseCharacters: {} as BaseCharactersById,
-    characterEditMode: 'basic',
+    characterEditMode: "basic",
     characterEditSortView: false,
-    characterFilter: '',
+    characterFilter: "",
     hideSelectedCharacters: true,
     hotUtilsSubscription: false,
     modListFilter: {
-      view: 'sets',
-      show: 'all',
-      sort: 'assignedCharacter',
-      tag: 'All',
+      view: "sets",
+      show: "all",
+      sort: "assignedCharacter",
+      tag: "All",
     },
     modsViewOptions: defaultOptions,
     profile: PlayerProfile.Default, // All the data about the current character
     progress: {
       character: null,
       progress: 0,
-      step: '1',
+      step: "1",
     },
     settings: {
-      section: 'general',
+      section: "general",
       topic: 1,
     },
     showSidebar: true,
     targetStats: [] as TargetStats,
     templates: {
-      templatesAddingMode: 'replace',
+      templatesAddingMode: "replace",
       userTemplatesByName: {}
     },
-    version: String(import.meta.env.VITE_VERSION) || 'local',
+    version: String(import.meta.env.VITE_VERSION) || "local",
   };
 
   /**
@@ -90,7 +90,7 @@ export class AppState {
     const reducedState: Pick<IAppState, ElementType<typeof AppState.keysToSave>> =
       pick(state, ...AppState.keysToSave);
     const storedState = AppState.serialize(reducedState);
-    window.localStorage.setItem('optimizer.state', JSON.stringify(storedState));
+    window.localStorage.setItem("optimizer.state", JSON.stringify(storedState));
     return state;
   }
 
@@ -102,7 +102,7 @@ export class AppState {
     let state: string | null = null;
 
     try {
-      state = window.localStorage.getItem('optimizer.state');
+      state = window.localStorage.getItem("optimizer.state");
     } catch {
       return AppState.Default;
     }
@@ -119,18 +119,20 @@ export class AppState {
  static serialize(state: any): any {
     if (null === state || "undefined" === typeof state) {
       return null;
-    } else if ('function' === typeof state.serialize) {
+    }
+    if ("function" === typeof state.serialize) {
       return state.serialize();
-    } else if (state instanceof Array) {
+    }
+    if (Array.isArray(state)) {
       return state.map(item => AppState.serialize(item));
-    } else if (state instanceof Object) {
+    }
+    if (state instanceof Object) {
       return mapValues(
         state,
         (stateValue: any) => AppState.serialize(stateValue)
       );
-    } else {
-      return state;
     }
+    return state;
   }
 }
 
@@ -139,7 +141,7 @@ export class AppState {
  * @param state {IAppState}
  */
 export function deserializeState(state: IAppState): IAppState {
-  const version: string = String(import.meta.env.VITE_VERSION) || 'local';
+  const version: string = String(import.meta.env.VITE_VERSION) || "local";
 
   return Object.assign(
     {},
@@ -151,7 +153,7 @@ export function deserializeState(state: IAppState): IAppState {
       hideSelectedCharacters: state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
       modsViewOptions: Object.assign({}, AppState.Default.modsViewOptions, state.modsViewOptions),
       modListFilter: state.modListFilter || AppState.Default.modListFilter,
-      showSidebar: 'undefined' !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
+      showSidebar: "undefined" !== typeof state.showSidebar ? state.showSidebar : AppState.Default.showSidebar,
       templates: state.templates,
       version: version,
     },

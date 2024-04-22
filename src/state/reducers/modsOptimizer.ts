@@ -53,10 +53,11 @@ const modsOptimizer: RootReducer = function(state: IAppState | undefined, action
   }
 
   switch (action.type) {
-    case App.actionNames.RESET_STATE:
+    case App.actionNames.RESET_STATE: {
       const result = AppState.save(App.reducers.resetState());
       window.location.reload();
       return result;
+    }
     case App.actionNames.SET_STATE:
       return AppState.save(
         App.reducers.setState(action)

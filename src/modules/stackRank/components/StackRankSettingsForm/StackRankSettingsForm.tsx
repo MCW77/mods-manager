@@ -21,7 +21,7 @@ const ReactiveInput = reactive(Input);
 
 const StackRankSettingsForm = observer(
   () => {
-    const [t, i18n] = useTranslation('settings-ui');
+    const [t, i18n] = useTranslation("settings-ui");
 
     const global = "grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
     const labelCSS = "grid-col-[labels] grid-row-auto" as const;
@@ -30,12 +30,12 @@ const StackRankSettingsForm = observer(
     return <form className={global}>
       <Label
         className={labelCSS}
-        htmlFor={'use-case'}
+        htmlFor={"use-case"}
       >
-        {t('optimizer.stackrank.UseCase')}:
+        {t("optimizer.stackrank.UseCase")}:
       </Label>
       <ReactiveSelect
-        name={`use-case`}
+        name={"use-case"}
         $value={stackRank$.useCase}
         onValueChange={(value) => {
           stackRank$.useCase.set(value);
@@ -43,40 +43,40 @@ const StackRankSettingsForm = observer(
       >
         <SelectTrigger
           className={inputCSS}
-          id={`use-case`}
+          id={"use-case"}
         >
-          <SelectValue></SelectValue>
+          <SelectValue />
         </SelectTrigger>
         <SelectContent className={"max-h-[50%]"}>
           <SelectGroup>
-            <SelectItem value={'0'}>GAC / TW / RotE</SelectItem>
-            <SelectItem value={'1'}>LS-TB</SelectItem>
-            <SelectItem value={'2'}>DS-TB</SelectItem>
-            <SelectItem value={'3'}>Arena only</SelectItem>
+            <SelectItem value={"0"}>GAC / TW / RotE</SelectItem>
+            <SelectItem value={"1"}>LS-TB</SelectItem>
+            <SelectItem value={"2"}>DS-TB</SelectItem>
+            <SelectItem value={"3"}>Arena only</SelectItem>
           </SelectGroup>
         </SelectContent>
       </ReactiveSelect>
       <Label
         className={labelCSS}
-        htmlFor={'ignore-arena'}
+        htmlFor={"ignore-arena"}
       >
-        {t('optimizer.stackrank.IgnoreArena')}:
+        {t("optimizer.stackrank.IgnoreArena")}:
       </Label>
       <ReactiveSwitch
         className={inputCSS}
-        id={`ignore-arena`}
-        name={`ignore-arena`}
+        id={"ignore-arena"}
+        name={"ignore-arena"}
         $checked={stackRank$.parameters.ignoreArena}
         onCheckedChange={(value) => stackRank$.parameters.ignoreArena.set(value)}
       />
       <Label
         className={labelCSS}
-        htmlFor={'alignment-filter'}
+        htmlFor={"alignment-filter"}
       >
-        {t('optimizer.stackrank.Alignment')}:
+        {t("optimizer.stackrank.Alignment")}:
       </Label>
       <ReactiveSelect
-        name={`alignment-filter`}
+        name={"alignment-filter"}
         $value={stackRank$.parameters.alignmentFilter}
         onValueChange={(value) => {
           stackRank$.parameters.alignmentFilter.set(value as "0" | "1" | "2" | "3");
@@ -84,112 +84,112 @@ const StackRankSettingsForm = observer(
       >
         <SelectTrigger
           className={inputCSS}
-          id={`alignment-filter`}
+          id={"alignment-filter"}
         >
-          <SelectValue></SelectValue>
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectItem value={"0"}>{t('optimizer.stackrank.AlignmentAll')}</SelectItem>
-            <SelectItem value={"1"}>{t('optimizer.stackrank.AlignmentLight')}</SelectItem>
-            <SelectItem value={"2"}>{t('optimizer.stackrank.AlignmentDark')}</SelectItem>
-            <SelectItem value={"3"}>{t('optimizer.stackrank.AlignmentNeutral')}</SelectItem>
+            <SelectItem value={"0"}>{t("optimizer.stackrank.AlignmentAll")}</SelectItem>
+            <SelectItem value={"1"}>{t("optimizer.stackrank.AlignmentLight")}</SelectItem>
+            <SelectItem value={"2"}>{t("optimizer.stackrank.AlignmentDark")}</SelectItem>
+            <SelectItem value={"3"}>{t("optimizer.stackrank.AlignmentNeutral")}</SelectItem>
           </SelectGroup>
         </SelectContent>
       </ReactiveSelect>
       <Label
         className={labelCSS}
-        htmlFor={'minimum-gear-level'}
+        htmlFor={"minimum-gear-level"}
       >
-        {t('optimizer.stackrank.MinimumGear')}:
+        {t("optimizer.stackrank.MinimumGear")}:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`minimum-gear-level`}
-        type={'number'}
+        id={"minimum-gear-level"}
+        type={"number"}
         $value={stackRank$.parameters.minimumGearLevel}
         onChange={(event) => stackRank$.parameters.minimumGearLevel.set(event.target.valueAsNumber)}
       />
       <Label
         className={labelCSS}
-        htmlFor={'top'}
+        htmlFor={"top"}
       >
-        {t('optimizer.stackrank.Top')}:
+        {t("optimizer.stackrank.Top")}:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`top`}
-        type={'number'}
+        id={"top"}
+        type={"number"}
         $value={stackRank$.parameters.top}
         onChange={(event) => stackRank$.parameters.top.set(event.target.valueAsNumber)}
       />
       <Label
         className={labelCSS}
       >
-        {t('optimizer.stackrank.OmicronBoosts')}:
+        {t("optimizer.stackrank.OmicronBoosts")}:
       </Label>
       <Label
         className={labelCSS}
-        htmlFor={'omicron-boost-gac'}
+        htmlFor={"omicron-boost-gac"}
       >
         GAC:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`omicron-boost-gac`}
-        type={'checkbox'}
+        id={"omicron-boost-gac"}
+        type={"checkbox"}
         $checked={stackRank$.parameters.omicronGac}
         onChange={(e) => stackRank$.parameters.omicronGac.set(e.currentTarget.checked)}
       />
       <Label
         className={labelCSS}
-        htmlFor={'omicron-boost-tw'}
+        htmlFor={"omicron-boost-tw"}
       >
         TW:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`omicron-boost-tw`}
-        type={'checkbox'}
+        id={"omicron-boost-tw"}
+        type={"checkbox"}
         $checked={stackRank$.parameters.omicronTw}
         onChange={(e) => stackRank$.parameters.omicronTw.set(e.currentTarget.checked)}
       />
       <Label
         className={labelCSS}
-        htmlFor={'omicron-boost-tb'}
+        htmlFor={"omicron-boost-tb"}
       >
         TB:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`omicron-boost-tb`}
-        type={'checkbox'}
+        id={"omicron-boost-tb"}
+        type={"checkbox"}
         $checked={stackRank$.parameters.omicronTb}
         onChange={(e) => stackRank$.parameters.omicronTb.set(e.currentTarget.checked)}
       />
       <Label
         className={labelCSS}
-        htmlFor={'omicron-boost-raids'}
+        htmlFor={"omicron-boost-raids"}
       >
         Raids:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`omicron-boost-raids`}
-        type={'checkbox'}
+        id={"omicron-boost-raids"}
+        type={"checkbox"}
         $checked={stackRank$.parameters.omicronRaids}
         onChange={(e) => stackRank$.parameters.omicronRaids.set(e.currentTarget.checked)}
       />
       <Label
         className={labelCSS}
-        htmlFor={'omicron-boost-conquest'}
+        htmlFor={"omicron-boost-conquest"}
       >
         Conquest:
       </Label>
       <ReactiveInput
         className={inputCSS}
-        id={`omicron-boost-conquest`}
-        type={'checkbox'}
+        id={"omicron-boost-conquest"}
+        type={"checkbox"}
         $checked={stackRank$.parameters.omicronConquest}
         onChange={(e) => stackRank$.parameters.omicronConquest.set(e.currentTarget.checked)}
       />
@@ -197,6 +197,6 @@ const StackRankSettingsForm = observer(
   }
 )
 
-StackRankSettingsForm.displayName = 'StackRankSettingsForm';
+StackRankSettingsForm.displayName = "StackRankSettingsForm";
 
 export { StackRankSettingsForm };

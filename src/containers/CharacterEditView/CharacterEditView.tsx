@@ -328,7 +328,7 @@ class CharacterEditView extends PureComponent<Props> {
             size="sm"
             onClick={() => dialog$.show(this.addTemplateModal())}
           >
-            <FontAwesomeIcon icon={faPlus} title={`Add template`}/>
+            <FontAwesomeIcon icon={faPlus} title={"Add template"}/>
           </Button>
           <Button
             size="sm"
@@ -354,7 +354,7 @@ class CharacterEditView extends PureComponent<Props> {
             disabled={!this.props.selectedCharacters.length}
             onClick={() => dialog$.show(this.saveTemplateModal())}
           >
-            <FontAwesomeIcon icon={faSave} title={`Save`}/>
+            <FontAwesomeIcon icon={faSave} title={"Save"}/>
           </Button>
           <HelpLink title="" section="optimizer" topic={2} />
         </div>
@@ -406,7 +406,7 @@ class CharacterEditView extends PureComponent<Props> {
             type="button"
             onClick={() => this.props.addAll(this.props.highlightedCharacters, this.props.lastSelectedCharacter)}
           >
-            <FontAwesomeIcon icon={faPlus} title={`Add all`}/>
+            <FontAwesomeIcon icon={faPlus} title={"Add all"}/>
             Add all
           </Button>
         </div>

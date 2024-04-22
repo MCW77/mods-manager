@@ -25,50 +25,51 @@ import {
 const ReactiveSelect = reactive(Select);
 
 type ComponentProps = {
-  setAddMode: React.Dispatch<React.SetStateAction<boolean>>;
-}
+	setAddMode: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const ProfileSelector = observer(React.memo(
-  ({ setAddMode }: ComponentProps) => {
-    const dispatch: ThunkDispatch = useDispatch();
-    const [t, i18n] = useTranslation('global-ui');
-    const profiles = profilesManagement$.profiles.playernameByAllycode.get();
-    const allycode = profilesManagement$.profiles.activeAllycode.get();
+const ProfileSelector = observer(
+	React.memo(({ setAddMode }: ComponentProps) => {
+		const dispatch: ThunkDispatch = useDispatch();
+		const [t, i18n] = useTranslation("global-ui");
+		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
+		const allycode = profilesManagement$.profiles.activeAllycode.get();
 
-    return (
-      <ReactiveSelect
-        value={allycode}
-        onValueChange={value => {
-          if (value === 'new') {
-            setAddMode(true);
-          } else {
-            dispatch(Storage.thunks.loadProfile(value));
-            profilesManagement$.profiles.activeAllycode.set(value);
-          }
-        }}
-      >
-        <SelectTrigger className="w-[180px] accent-blue">
-          <SelectValue placeholder={allycode}/>
-        </SelectTrigger>
-        <SelectContent className="accent-blue">
-          <SelectGroup className="accent-blue">
-            {
-              Object.entries(profiles)
-                .map(([allyCode, playerName]) =>
-                  <SelectItem key={allyCode} value={allyCode}>{profilesManagement$.activePlayer.get()}</SelectItem>
-                )
-            }
-          </SelectGroup>
-          <SelectSeparator />
-          <SelectGroup className="accent-blue">
-            <SelectItem key="new" value="new">{t('header.ProfileAdderNewCode')}</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </ReactiveSelect>
-    )
-  }
-));
+		return (
+			<ReactiveSelect
+				value={allycode}
+				onValueChange={(value) => {
+					if (value === "new") {
+						setAddMode(true);
+					} else {
+						dispatch(Storage.thunks.loadProfile(value));
+						profilesManagement$.profiles.activeAllycode.set(value);
+					}
+				}}
+			>
+				<SelectTrigger className="w-[180px] accent-blue">
+					<SelectValue placeholder={allycode} />
+				</SelectTrigger>
+				<SelectContent className="accent-blue">
+					<SelectGroup className="accent-blue">
+						{Object.entries(profiles).map(([allyCode, playerName]) => (
+							<SelectItem key={allyCode} value={allyCode}>
+								{profilesManagement$.activePlayer.get()}
+							</SelectItem>
+						))}
+					</SelectGroup>
+					<SelectSeparator />
+					<SelectGroup className="accent-blue">
+						<SelectItem key="new" value="new">
+							{t("header.ProfileAdderNewCode")}
+						</SelectItem>
+					</SelectGroup>
+				</SelectContent>
+			</ReactiveSelect>
+		);
+	}),
+);
 
-ProfileSelector.displayName = 'ProfileSelector';
+ProfileSelector.displayName = "ProfileSelector";
 
 export { ProfileSelector };
