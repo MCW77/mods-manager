@@ -70,7 +70,7 @@ import { CharacterList } from "#/containers/CharacterList/CharacterList";
 
 class CharacterEditView extends PureComponent<Props> {
   dragStart(character: Character.Character) {
-    return function (event: React.DragEvent<HTMLDivElement>) {
+    return (event: React.DragEvent<HTMLDivElement>) => {
       event.dataTransfer.dropEffect = "copy";
       event.dataTransfer.effectAllowed = "copy";
       event.dataTransfer.setData("text/plain", character.baseID);

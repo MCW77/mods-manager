@@ -26,7 +26,7 @@ import type { PlayerProfile, IFlatPlayerProfile } from "#/domain/PlayerProfile";
 
 export namespace thunks {
   export function deleteProfile(allyCode: string): ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       const db = getDatabase();
       optimizationSettings$.deleteProfile(allyCode);
       incrementalOptimization$.deleteProfile(allyCode);
@@ -45,7 +45,7 @@ export namespace thunks {
   }
 
   export function importC3POProfile(profileJSON: string): ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       try {
         const mods: C3POMods.C3POModDTO[] = JSON.parse(profileJSON);
         dispatch(replaceModsForCurrentProfile(mods));
@@ -59,7 +59,7 @@ export namespace thunks {
 
   export function replaceModsForCurrentProfile(mods: C3POMods.C3POModDTO[]): ThunkResult<Promise<void>> {
 
-    return async function (dispatch, getState) {
+    return async (dispatch, getState) => {
       const state = getState();
       const db = getDatabase();
       let profile = await db.getProfile(profilesManagement$.profiles.activeAllycode.get());
@@ -94,7 +94,7 @@ export namespace thunks {
   }
 
   export function reset(): ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       const db = getDatabase();
       db.delete(
         () => dispatch(actions.resetState()),
@@ -106,7 +106,7 @@ export namespace thunks {
   }
 
   export function restoreProgress(progressData: string): ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       try {
         const stateObj: IUserData = JSON.parse(progressData);
 
@@ -172,10 +172,10 @@ export namespace thunks {
     updateFunc: UpdateFunc,
     auxiliaryChanges: AuxiliaryChangesFunc = noop
   ): ThunkResult<void> {
-    return function (dispatch, getState: () => IAppState) {
+    return (dispatch, getState: () => IAppState) => {
       const state = getState();
       const db = getDatabase();
-      const newProfile = updateFunc(state.profile!); //ToDo: Check if profile is never null
+      const newProfile = updateFunc(state.profile);
 
       db.saveProfile(
         newProfile,

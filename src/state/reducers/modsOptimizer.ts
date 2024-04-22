@@ -47,7 +47,7 @@ type AppActions =
 
 type RootReducer = Redux.Reducer<IAppState, AppActions>;
 
-const modsOptimizer: RootReducer = function(state: IAppState | undefined, action: AppActions): IAppState {
+const modsOptimizer: RootReducer = (state: IAppState | undefined, action: AppActions): IAppState => {
   if (!state) {
     return AppState.save(AppState.restore());
   }
