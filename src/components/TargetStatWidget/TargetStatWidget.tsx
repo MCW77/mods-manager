@@ -1,15 +1,15 @@
 // react
-import React from "react";
+import type React from "react";
 import { Switch, observer, reactive } from "@legendapp/state/react";
 
 // state
-import { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
+import type { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
 
 // domain
-import { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/characterSettings";
 
-import { BaseCharacter } from "#/domain/BaseCharacter";
-import { TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
+import type { BaseCharacter } from "#/domain/BaseCharacter";
+import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
 
 // components
 import { Button } from "#ui/button";

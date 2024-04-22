@@ -1,5 +1,5 @@
 // state
-import { ObservableComputed, ObservableObject, computed, observable } from "@legendapp/state";
+import { type ObservableComputed, type ObservableObject, computed, observable } from "@legendapp/state";
 import { persistObservable } from "@legendapp/state/persist"
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";

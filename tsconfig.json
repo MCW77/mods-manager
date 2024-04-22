@@ -13,20 +13,20 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "#/*": ["./src/*", "./dist/*", ""],
       "#lib/*": ["./src/lib/*"],
-      "#ui/*": ["./src/components/ui/*"],
+      "#ui/*": ["./src/components/ui/*"]
     },
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
-    "noErrorTruncation": true,
+    "noErrorTruncation": true
   },
   "include": ["src/**/*", "public/workers/optimizer.ts"],
   "exclude": [
      "node_modules/**/*",
-     "dist/**/*",
-  ],
+     "dist/**/*"
+  ]
 }

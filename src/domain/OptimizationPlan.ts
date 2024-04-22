@@ -5,12 +5,12 @@ import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 
 // domain
-import { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/characterSettings";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
-import { SetRestrictions } from "#/domain/SetRestrictions";
-import { PrimaryStats } from "#/domain/Stats";
-import { TargetStats } from "#/domain/TargetStat";
+import type { SetRestrictions } from "#/domain/SetRestrictions";
+import type { PrimaryStats } from "#/domain/Stats";
+import type { TargetStats } from "#/domain/TargetStat";
 
 // #region OptimizableStats
 export type OptimizableStats =

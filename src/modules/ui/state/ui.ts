@@ -2,7 +2,7 @@
 import { observable } from "@legendapp/state";
 
 // domain
-import { SectionNames } from "../domain/SectionNames";
+import type { SectionNames } from "../domain/SectionNames";
 
 interface UI {
   currentSection: SectionNames;

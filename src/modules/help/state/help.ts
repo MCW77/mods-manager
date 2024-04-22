@@ -2,7 +2,7 @@
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 // domain
-import { HelpSections } from "../domain/HelpSections";
+import type { HelpSections } from "../domain/HelpSections";
 import { ui$ } from "#/modules/ui/state/ui";
 
 interface Help {

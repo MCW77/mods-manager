@@ -1,10 +1,8 @@
 // react
-import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observable } from "@legendapp/state";
-import { For, Memo, Reactive, Switch, observer, reactive } from "@legendapp/state/react";
+import { observer, reactive } from "@legendapp/state/react";
 
 import { stackRank$ } from "../../state/stackRank";
 
@@ -12,11 +10,11 @@ import { stackRank$ } from "../../state/stackRank";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
-import { Switch as ShadSwitch } from "#ui/switch";
+import { Switch } from "#ui/switch";
 
 
 const ReactiveSelect = reactive(Select);
-const ReactiveSwitch = reactive(ShadSwitch);
+const ReactiveSwitch = reactive(Switch);
 const ReactiveInput = reactive(Input);
 
 

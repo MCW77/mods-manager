@@ -1,13 +1,12 @@
 // react
-import React from 'react';
-import { ThunkDispatch, ThunkResult } from "#/state/reducers/modsOptimizer";
+import type { ThunkDispatch, ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // utils
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { IAppState } from "#/state/storage";
-import getDatabase, { IUserData } from "#/state/storage/Database";
+import type { IAppState } from "#/state/storage";
+import getDatabase, { type IUserData } from "#/state/storage/Database";
 
 import { dialog$ } from '#/modules/dialog/state/dialog';
 import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
@@ -20,10 +19,10 @@ import { CharacterEdit } from '#/state/modules/characterEdit';
 import { Storage } from '#/state/modules/storage';
 
 // domain
-import * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
+import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
 import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po";
-import { Mod } from "#/domain/Mod";
-import { PlayerProfile, IFlatPlayerProfile } from "#/domain/PlayerProfile";
+import type { Mod } from "#/domain/Mod";
+import type { PlayerProfile, IFlatPlayerProfile } from "#/domain/PlayerProfile";
 
 export namespace thunks {
   export function deleteProfile(allyCode: string): ThunkResult<void> {

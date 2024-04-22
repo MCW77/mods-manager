@@ -1,32 +1,39 @@
 // react
-import React, { PropsWithChildren } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
+import type { ComponentProps } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
-import { observer, reactive } from '@legendapp/state/react';
-import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
-import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
+import { observer, reactive } from "@legendapp/state/react";
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
-import { CharacterEdit } from '#/state/modules/characterEdit';
-import { Storage } from '#/state/modules/storage';
+import { CharacterEdit } from "#/state/modules/characterEdit";
+import { Storage } from "#/state/modules/storage";
 
 // domain
-import { TemplatesAddingMode } from '#/domain/TemplatesAddingMode';
+import type { TemplatesAddingMode } from "#/domain/TemplatesAddingMode";
 
 // components
-import { SingleValueSlider } from '#/components/SingleValueSlider/SingleValueSlider';
-import { Button } from '#ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '#ui/card';
+import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
+import { Button } from "#ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "#ui/card";
 import { Input } from "#ui/input";
-import { Label } from '#ui/label';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '#ui/select';
+import { Label } from "#ui/label";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#ui/select";
 
 // containers
-import { TemplatesManager } from '#/containers/TemplatesManager/TemplatesManager';
-import { StackRankSettingsForm } from '#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm';
+import { TemplatesManager } from "#/containers/TemplatesManager/TemplatesManager";
+import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
 
 const ReactiveInput = reactive(Input);
 const ReactiveSlider = reactive(SingleValueSlider);
@@ -188,14 +195,12 @@ const OptimizerSettingsView = observer(() => {
   );
 });
 
-const FormInput = (props: PropsWithChildren<{}>) => {
-  return (
-    <div className="grid-col-[controls] grid-row-auto">
-      {props.children}
-    </div>
-  )
+const FormInput = (props: ComponentProps<"div">) => {
+	return (
+		<div className="grid-col-[controls] grid-row-auto">{props.children}</div>
+	);
 };
 
-OptimizerSettingsView.displayName = 'OptimizerSettingsView';
+OptimizerSettingsView.displayName = "OptimizerSettingsView";
 
 export default OptimizerSettingsView;

@@ -1,36 +1,40 @@
 // react
-import React, { PropsWithChildren } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
-import { observer } from '@legendapp/state/react';
+import type { ComponentProps } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import { observer } from "@legendapp/state/react";
 
 // utils
-import { saveAs } from 'file-saver';
-import { readFile } from '#/utils/readFile';
+import { saveAs } from "file-saver";
+import { readFile } from "#/utils/readFile";
 
 // state
-import { dialog$ } from '#/modules/dialog/state/dialog';
-import { incrementalOptimization$ } from '#/modules/incrementalOptimization/state/incrementalOptimization';
-import { optimizationSettings$ } from '#/modules/optimizationSettings/state/optimizationSettings';
-import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
+import { dialog$ } from "#/modules/dialog/state/dialog";
+import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
-import { App } from '#/state/modules/app';
-import { Storage } from '#/state/modules/storage';
+import { App } from "#/state/modules/app";
+import { Storage } from "#/state/modules/storage";
 
 // domain
-import { IUserData } from '#/state/storage/Database';
+import type { IUserData } from "#/state/storage/Database";
 
 // components
-import { faFileImport, faPowerOff, faSave } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faFileImport,
+	faPowerOff,
+	faSave,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { AccountsManager } from '#/components/AccountsManager/AccountsManager';
-import { FileInput } from '#/components/FileInput/FileInput';
-import { Button } from '#ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '#ui/card';
-import { Separator } from '#ui/separator';
+import { AccountsManager } from "#/components/AccountsManager/AccountsManager";
+import { FileInput } from "#/components/FileInput/FileInput";
+import { Button } from "#ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
+import { Separator } from "#ui/separator";
 
 const GeneralSettingsView = observer(() => {
   const allycode = profilesManagement$.profiles.activeAllycode.get();
@@ -154,14 +158,12 @@ const GeneralSettingsView = observer(() => {
   );
 });
 
-const FormInput = (props: PropsWithChildren<{}>) => {
+const FormInput = (props: ComponentProps<"div">) => {
   return (
-    <div className="grid-col-[controls] grid-row-auto">
-      {props.children}
-    </div>
-  )
-}
+		<div className="grid-col-[controls] grid-row-auto">{props.children}</div>
+	);
+};
 
-GeneralSettingsView.displayName = 'GeneralSettingsView';
+GeneralSettingsView.displayName = "GeneralSettingsView";
 
 export default GeneralSettingsView;

@@ -1,14 +1,15 @@
 // react
+// biome-ignore lint/style/useImportType: <explanation>
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer, reactive, useObservable } from "@legendapp/state/react";
 
 // utils
-import areObjectsEquivalent from '#/utils/areObjectsEquivalent';
+import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
 // state
-import { ObservableObject, beginBatch, endBatch } from "@legendapp/state";
+import { type ObservableObject, beginBatch, endBatch } from "@legendapp/state";
 
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -16,21 +17,21 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
-import { CharacterEdit } from '#/state/modules/characterEdit';
-import { Data } from '#/state/modules/data';
-import { Optimize } from '#/state/modules/optimize';
-import { Storage } from '#/state/modules/storage';
+import { CharacterEdit } from "#/state/modules/characterEdit";
+import { Data } from "#/state/modules/data";
+import { Optimize } from "#/state/modules/optimize";
+import { Storage } from "#/state/modules/storage";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
 import setBonuses from "#/constants/setbonuses";
 
-import * as Character from "#/domain/Character";
-import { CharacterSettings } from "#/domain/CharacterSettings";
+import type * as Character from "#/domain/Character";
+import type { CharacterSettings } from "#/domain/CharacterSettings";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
-import { ModSuggestion } from "#/domain/PlayerProfile";
-import { SetStats } from "#/domain/Stats";
-import { TargetStat, createTargetStat } from "#/domain/TargetStat";
+import type { ModSuggestion } from "#/domain/PlayerProfile";
+import type { SetStats } from "#/domain/Stats";
+import { type TargetStat, createTargetStat } from "#/domain/TargetStat";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";

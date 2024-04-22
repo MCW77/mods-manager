@@ -1,8 +1,9 @@
 // react
+// biome-ignore lint/style/useImportType: <explanation>
 import React, { PureComponent } from "react";
-import { withTranslation, WithTranslation } from "react-i18next";
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import { withTranslation, type WithTranslation } from "react-i18next";
+import { connect, type ConnectedProps } from "react-redux";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import "./CharacterEditView.css";
@@ -23,7 +24,7 @@ import collectByKey from "#/utils/collectByKey";
 import keysWhere from "#/utils/keysWhere";
 
 // state
-import { IAppState } from "#/state/storage";
+import type { IAppState } from "#/state/storage";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
@@ -33,23 +34,23 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // modules
-import { CharacterEdit } from '#/state/modules/characterEdit';
-import { Data } from '#/state/modules/data';
-import { Optimize } from '#/state/modules/optimize';
-import { Review } from '#/state/modules/review';
-import { Storage } from '#/state/modules/storage';
+import { CharacterEdit } from "#/state/modules/characterEdit";
+import { Data } from "#/state/modules/data";
+import { Optimize } from "#/state/modules/optimize";
+import { Review } from "#/state/modules/review";
+import { Storage } from "#/state/modules/storage";
 
 // domain
 import {
   characterSettings,
-  CharacterNames,
+  type CharacterNames,
 } from "#/constants/characterSettings";
 import defaultTemplates from "#/constants/characterTemplates.json";
 
 import { defaultBaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
-import { SelectedCharacters } from "#/domain/SelectedCharacters";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

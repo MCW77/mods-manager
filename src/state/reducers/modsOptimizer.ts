@@ -1,9 +1,9 @@
 // react
-import * as Redux from "redux";
-import { ThunkAction, ThunkDispatch as TD } from "redux-thunk";
+import type * as Redux from "redux";
+import type { ThunkAction, ThunkDispatch as TD } from "redux-thunk";
 
 // state
-import { IAppState, AppState } from "../storage";
+import { type IAppState, AppState } from "../storage";
 
 // #region modules
 import { App } from "../modules/app";

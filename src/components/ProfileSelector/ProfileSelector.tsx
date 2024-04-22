@@ -2,17 +2,25 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer, reactive } from "@legendapp/state/react";
 
 // state
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
-import { Storage } from '#/state/modules/storage';
+import { Storage } from "#/state/modules/storage";
 
 // components
-import { Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from '#ui/select';
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectSeparator,
+	SelectTrigger,
+	SelectValue,
+} from "#ui/select";
 
 const ReactiveSelect = reactive(Select);
 

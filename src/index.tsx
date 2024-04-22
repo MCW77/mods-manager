@@ -3,36 +3,36 @@ import "#/utils/globalLegendPersistSettings";
 import getDatabase from "./state/storage/Database";
 
 // react
-import { configureStore } from '@reduxjs/toolkit';
-import React, { Suspense } from 'react';
-import { createRoot } from 'react-dom/client';
+import { configureStore } from "@reduxjs/toolkit";
+import React, { Suspense } from "react";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { ThunkDispatch } from "./state/reducers/modsOptimizer";
+import type { ThunkDispatch } from "./state/reducers/modsOptimizer";
 
 // styles
-import './index.css';
-import '@unocss/reset/tailwind.css'
-import 'virtual:uno.css';
-import './i18n';
+import "./index.css";
+import "@unocss/reset/tailwind.css";
+import "virtual:uno.css";
+import "./i18n";
 
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from "./registerServiceWorker";
 
 // reducers
 import modsOptimizer from "./state/reducers/modsOptimizer";
 
 // state
-import { ui$ } from "./modules/ui/state/ui";
+import { dialog$ } from "./modules/dialog/state/dialog";
 import { profilesManagement$ } from "./modules/profilesManagement/state/profilesManagement";
+import { ui$ } from "./modules/ui/state/ui";
 
 // modules
-import { Storage } from './state/modules/storage';
+import { Storage } from "./state/modules/storage";
 
 // components
-import { Spinner } from './components/Spinner/Spinner';
+import { Spinner } from "./components/Spinner/Spinner";
 
 // containers
-import { App } from './containers/App/App';
-import { dialog$ } from "./modules/dialog/state/dialog";
+import { App } from "./containers/App/App";
 
 const store = configureStore({
   reducer: modsOptimizer,

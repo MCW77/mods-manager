@@ -1,18 +1,18 @@
 // utils
 import { mapValues } from "lodash-es";
 import { pick } from "../utils/mapObject";
-import { ElementType } from "../utils/typeHelper";
+import type { ElementType } from "../utils/typeHelper";
 
 // domain
-import { BaseCharactersById } from "../domain/BaseCharacter";
-import { CharacterEditMode } from "../domain/CharacterEditMode";
-import { ModListFilter } from "../domain/ModListFilter";
-import { ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
-import { OptimizationStatus } from "../domain/OptimizationStatus";
+import type { BaseCharactersById } from "../domain/BaseCharacter";
+import type { CharacterEditMode } from "../domain/CharacterEditMode";
+import type { ModListFilter } from "../domain/ModListFilter";
+import { type ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
+import type { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerProfile } from "../domain/PlayerProfile";
-import { SettingsSections } from "../domain/SettingsSections";
-import { TargetStats } from "../domain/TargetStat";
-import { Templates } from "../domain/Templates";
+import type { SettingsSections } from "../domain/SettingsSections";
+import type { TargetStats } from "../domain/TargetStat";
+import type { Templates } from "../domain/Templates";
 
 export interface IAppState {
   baseCharacters: BaseCharactersById,

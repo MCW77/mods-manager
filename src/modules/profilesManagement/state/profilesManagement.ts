@@ -1,7 +1,9 @@
 // state
-import { PlayerProfile } from "#/domain/PlayerProfile";
-import { ObservableComputed, ObservableObject, computed, observable } from "@legendapp/state";
+import { type ObservableComputed, type ObservableObject, computed, observable } from "@legendapp/state";
 import { persistObservable } from "@legendapp/state/persist";
+
+// domain
+import type { PlayerProfile } from "#/domain/PlayerProfile";
 
 interface Profiles {
 	activeAllycode: string;

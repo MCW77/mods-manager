@@ -1,45 +1,44 @@
 // react
-import React from 'react';
-import { withTranslation, WithTranslation } from 'react-i18next';
-import { connect, ConnectedProps } from 'react-redux';
-import { ThunkDispatch } from '../../state/reducers/modsOptimizer';
+import React from "react";
+import { withTranslation, type WithTranslation } from "react-i18next";
+import { connect, type ConnectedProps } from "react-redux";
+import type { ThunkDispatch } from "../../state/reducers/modsOptimizer";
 
 // styles
 import {
-  faAnglesDown,
-  faAnglesUp,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons';
+	faAnglesDown,
+	faAnglesUp,
+	faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import { forEach } from 'lodash-es';
+import { forEach } from "lodash-es";
 
 // state
-import { IAppState } from '../../state/storage';
+import type { IAppState } from "../../state/storage";
 
-import { dialog$ } from '#/modules/dialog/state/dialog';
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // modules
-import { App } from '../../state/modules/app';
-import { Storage } from '../../state/modules/storage';
+import { App } from "../../state/modules/app";
+import { Storage } from "../../state/modules/storage";
 
 // domain
-import { CharacterNames } from '../../constants/characterSettings';
-import { ModsFilter } from '../../modules/modExploration/domain/ModsFilter';
+import type { CharacterNames } from "../../constants/characterSettings";
+import { ModsFilter } from "../../modules/modExploration/domain/ModsFilter";
 
-import * as Character from '#/domain/Character';
-import { Mod } from '../../domain/Mod';
+import type * as Character from "#/domain/Character";
+import type { Mod } from "../../domain/Mod";
 
 // components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DOMContent } from '../../components/types';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DOMContent } from "../../components/types";
 
-import { FlexSidebar } from '../../components/FlexSidebar/FlexSidebar';
-import { ModDetail } from '../../components/ModDetail/ModDetail';
-import ModFilter from '../../components/ModFilter/ModFilter';
-import { RenderIfVisible } from '../../components/RenderIfVisible/RenderIfVisible';
-import { Button } from '#ui/button';
-
+import { FlexSidebar } from "../../components/FlexSidebar/FlexSidebar";
+import { ModDetail } from "../../components/ModDetail/ModDetail";
+import ModFilter from "../../components/ModFilter/ModFilter";
+import { RenderIfVisible } from "../../components/RenderIfVisible/RenderIfVisible";
+import { Button } from "#ui/button";
 
 type AssignedMods = {
   [key: string]: CharacterNames

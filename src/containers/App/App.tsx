@@ -1,45 +1,45 @@
 // react
-import React, { Suspense, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Suspense, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
-import './App.css';
+import "./App.css";
 import {
-  faGear,
-  faInfo,
-  faMagnifyingGlass,
-  faQuestion,
-  faWrench,
-} from '@fortawesome/free-solid-svg-icons'
+	faGear,
+	faInfo,
+	faMagnifyingGlass,
+	faQuestion,
+	faWrench,
+} from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { Show, observer, reactive} from '@legendapp/state/react';
-import { profilesManagement$ } from '#/modules/profilesManagement/state/profilesManagement';
-import { ui$ } from '#/modules/ui/state/ui';
+import { Show, observer, reactive } from "@legendapp/state/react";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
-import { Data } from '#/state/modules/data';
+import { Data } from "#/state/modules/data";
 
 // domain
-import { SectionNames } from '#/modules/ui/domain/SectionNames';
+import type { SectionNames } from "#/modules/ui/domain/SectionNames";
 
 // components
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ProfilesManager } from '#/components/ProfilesManager/ProfilesManager';
-import { Toaster } from '#ui/sonner';
+import { ProfilesManager } from "#/components/ProfilesManager/ProfilesManager";
+import { Toaster } from "#ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
-import { Dialog } from '#/modules/dialog/components/Dialog';
+import { Dialog } from "#/modules/dialog/components/Dialog";
 
 // containers
-import { AboutView } from '#/containers/AboutView/AboutView';
+import { AboutView } from "#/containers/AboutView/AboutView";
 import ExploreView from "#/containers/ExploreView/ExploreView";
-import { OptimizerView } from '#/containers/OptimizerView/OptimizerView';
-import { SettingsView } from '#/containers/SettingsView/SettingsView';
-import { HelpView } from '#/modules/help/pages/HelpView';
+import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
+import { SettingsView } from "#/containers/SettingsView/SettingsView";
+import { HelpView } from "#/modules/help/pages/HelpView";
 
 const ReactiveTabs = reactive(Tabs);
 
