@@ -91,7 +91,7 @@ const App = observer(
 					<div className={"app-body"}>
 						<Dialog />
 						<Spinner />
-						<Toaster toastOptions={{duration: 8000}}/>
+						<Toaster toastOptions={{ duration: 8000 }} />
 						<ReactiveTabs
 							className="h-full w-full"
 							$value={ui$.currentSection}
@@ -102,6 +102,7 @@ const App = observer(
 							<div className={"flex justify-around"}>
 								<div className={"flex flex-gap-2 items-center"}>
 									<img
+										alt={"Logo"}
 										className={"h-6"}
 										src={"../../img/gold-crit-dmg-arrow-mod-cropped.png"}
 									/>
