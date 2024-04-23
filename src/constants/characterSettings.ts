@@ -1577,7 +1577,7 @@ const characterSettings: CharacterSettingsIndexer = {
         "cross": "Offense %",
         "circle": "Health %",
       }, {
-        "offense": 1,
+        "Offense %": 1,
       }),
     ],
   ),
