@@ -1,8 +1,8 @@
 // state
-import { AppState, IAppState } from "../storage";
+import { AppState, type IAppState } from "../storage";
 
 // actions
-import { actions } from "../actions/app";
+import type { actions } from "../actions/app";
 
 export namespace reducers {
 	export function resetState() {

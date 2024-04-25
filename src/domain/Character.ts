@@ -2,8 +2,8 @@
 import groupByKey from "../utils/groupByKey";
 
 // domain
-import { characterSettings, CharacterNames } from "../constants/characterSettings";
-import * as DTOs from "../modules/profilesManagement/dtos";
+import { characterSettings, type CharacterNames } from "../constants/characterSettings";
+import type * as DTOs from "../modules/profilesManagement/dtos";
 
 import { createOptimizationPlan } from "./OptimizationPlan";
 import * as OptimizerSettings from "./OptimizerSettings";

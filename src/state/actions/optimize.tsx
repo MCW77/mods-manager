@@ -1,5 +1,5 @@
 // domain
-import { OptimizationStatus } from "../../domain/OptimizationStatus";
+import type { OptimizationStatus } from "../../domain/OptimizationStatus";
 
 export namespace actions {
 	export function startModOptimization() {

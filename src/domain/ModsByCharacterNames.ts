@@ -1,10 +1,8 @@
 // domain
-import { CharacterNames } from "../constants/characterSettings";
+import type { CharacterNames } from "../constants/characterSettings";
 
-import { Mod } from './Mod';
-
+import type { Mod } from "./Mod";
 
 type ModsByCharacterNames = Record<CharacterNames, Mod[]>;
-
 
 export type { ModsByCharacterNames };

@@ -1,7 +1,7 @@
 // react
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer } from "@legendapp/state/react";
 
 // styles
@@ -20,7 +20,7 @@ import { Data } from '#/state/modules/data';
 import { Storage } from '#/state/modules/storage';
 
 // domain
-import { characterSettings, CharacterNames } from "#/constants/characterSettings";
+import { characterSettings, type CharacterNames } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
@@ -39,36 +39,36 @@ const CharacterList = observer(React.memo(
     const selectedCharacters = useSelector(CharacterEdit.selectors.selectSelectedCharactersInActiveProfile);
 
     const characterBlockDragStart = (index: number) => {
-      return function (event: React.DragEvent<HTMLDivElement>) {
-        event.dataTransfer.dropEffect = 'move';
-        event.dataTransfer.effectAllowed = 'move';
-        event.dataTransfer.setData('text/plain', `${index}`);
+      return (event: React.DragEvent<HTMLDivElement>) => {
+        event.dataTransfer.dropEffect = "move";
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", `${index}`);
         // We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
         const options = {
-          'effect': 'move'
+          effect: "move"
         };
-        event.dataTransfer.setData('application/json', JSON.stringify(options));
+        event.dataTransfer.setData("application/json", JSON.stringify(options));
       };
     }
 
     const characterBlockDragEnter = () => {
-      return function (event: React.DragEvent<HTMLDivElement>) {
+      return (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
 
-        (event.target as HTMLDivElement).classList.add('drop-character');
+        (event.target as HTMLDivElement).classList.add("drop-character");
       }
     }
 
     const characterBlockDragOver = () => {
-      return function (event: React.DragEvent<HTMLDivElement>) {
+      return (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
       }
     }
 
     const characterBlockDragLeave = () => {
-      return function (event: React.DragEvent<HTMLDivElement>) {
+      return (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        (event.target as HTMLDivElement).classList.remove('drop-character');
+        (event.target as HTMLDivElement).classList.remove("drop-character");
       }
     }
 
@@ -77,26 +77,28 @@ const CharacterList = observer(React.memo(
      * @returns {Function}
      */
     const characterBlockDrop = (dropCharacterIndex: number | null) => {
-      return function (event: React.DragEvent<HTMLDivElement>) {
+      return (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         event.stopPropagation();
-        const options = JSON.parse(event.dataTransfer.getData('application/json'));
+        const options = JSON.parse(event.dataTransfer.getData("application/json"));
 
         switch (options.effect) {
-          case 'add':
-            const movingCharacterID: CharacterNames = event.dataTransfer.getData('text/plain') as CharacterNames;
+          case "add": {
+            const movingCharacterID: CharacterNames = event.dataTransfer.getData("text/plain") as CharacterNames;
             const movingCharacter = characters[movingCharacterID];
             dispatch(CharacterEdit.thunks.selectCharacter(movingCharacterID, Character.defaultTarget(movingCharacter), dropCharacterIndex));
             break;
-          case 'move':
-            const movingCharacterIndex = +event.dataTransfer.getData('text/plain');
+          }
+          case "move": {
+            const movingCharacterIndex = +event.dataTransfer.getData("text/plain");
             dispatch(CharacterEdit.thunks.moveSelectedCharacter(movingCharacterIndex, dropCharacterIndex));
             break;
+          }
           default:
           // Do nothing
         }
 
-        (event.target as HTMLDivElement).classList.remove('drop-character');
+        (event.target as HTMLDivElement).classList.remove("drop-character");
       }
     }
 
@@ -109,13 +111,13 @@ const CharacterList = observer(React.memo(
       const selectedPlan = target.name;
       const options = Character.targets(character)
         .map(characterTarget => characterTarget.name)
-        .filter(targetName => 'custom' !== targetName)
+        .filter(targetName => "custom" !== targetName)
         .map(targetName => {
           const changeIndicator = Object.keys(defaultTargets).includes(targetName) &&
-            character!.optimizerSettings.targets.map(target => target.name).includes(targetName) &&
+            character.optimizerSettings.targets.map(target => target.name).includes(targetName) &&
             !OptimizationPlan.equals(defaultTargets[targetName],
               character.optimizerSettings.targets.find(target => target.name === targetName)!
-            ) ? '*' : '';
+            ) ? "*" : "";
 
           return <option value={targetName} key={targetName}>{changeIndicator}{targetName}</option>;
         });
@@ -126,15 +128,18 @@ const CharacterList = observer(React.memo(
         // Don't change the select value unless we explicitly do so through a state change
         e.target.value = target.name;
 
-        if ('custom' === optimizationTarget) {
-          showEditCharacterModal(character, index, OptimizationPlan.toRenamed(target, 'custom'));
-        } else if ('lock' === optimizationTarget) {
+        if ("custom" === optimizationTarget) {
+          showEditCharacterModal(character, index, OptimizationPlan.toRenamed(target, "custom"));
+        } else if ("lock" === optimizationTarget) {
           dispatch(CharacterEdit.thunks.lockCharacter(character.baseID));
         } else {
-          dispatch(CharacterEdit.thunks.changeCharacterTarget(
-            index,
-            Character.targets(character).find(target => target.name === optimizationTarget)!
-          ));
+          const target = Character.targets(character).find(target => target.name === optimizationTarget);
+          if (target !== undefined) {
+            dispatch(CharacterEdit.thunks.changeCharacterTarget(
+              index,
+              target,
+            ));
+          }
         }
       };
 
@@ -162,10 +167,10 @@ const CharacterList = observer(React.memo(
             <label>Target:</label>
             <Dropdown value={selectedPlan} onChange={onSelect.bind(this)}>
               {options}
-              <option value={'custom'}>Custom</option>
+              <option value={"custom"}>Custom</option>
             </Dropdown>
             <Button
-              type={'button'}
+              type={"button"}
               onClick={() => showEditCharacterModal(character, index, target)}
             >
               Edit
@@ -185,14 +190,14 @@ const CharacterList = observer(React.memo(
         groupByKey(characterSettings[character.baseID].targets, target => target.name) :
         {};
 
-      const restrictionsActive = OptimizationPlan.hasRestrictions(target) ? 'active' : '';
-      const targetStatActive = target.targetStats && target.targetStats.length ? 'active' : '';
-      const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target) ? 'active' : '';
+      const restrictionsActive = OptimizationPlan.hasRestrictions(target) ? "active" : "";
+      const targetStatActive = target.targetStats?.length ? "active" : "";
+      const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target) ? "active" : "";
       const minimumDots = character.optimizerSettings.minimumModDots;
       const changedTargetActive = Object.keys(defaultTargets).includes(target.name) &&
-        !OptimizationPlan.equals(defaultTargets[target.name], target) ? 'active' : '';
-      const blankTargetActive = OptimizationPlan.isBlank(target) ? 'active' : '';
-      const lockedActive = character.optimizerSettings.isLocked ? 'active' : '';
+        !OptimizationPlan.equals(defaultTargets[target.name], target) ? "active" : "";
+      const blankTargetActive = OptimizationPlan.isBlank(target) ? "active" : "";
+      const lockedActive = character.optimizerSettings.isLocked ? "active" : "";
 
       let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(CharacterEdit.thunks.changeMinimumModDots(character.baseID, Number(event.target.value)));
@@ -203,7 +208,7 @@ const CharacterList = observer(React.memo(
       return <div className={'character-icons'}>
 
         <span className={`icon minimum-dots`}
-          title={`This character will only use mods with at least ${minimumDots} ${1 === minimumDots ? 'dot' : 'dots'}`} >
+          title={`This character will only use mods with at least ${minimumDots} ${1 === minimumDots ? "dot" : "dots"}`} >
           <select
             value={minimumDots}
             onChange={handleChange}
@@ -214,29 +219,29 @@ const CharacterList = observer(React.memo(
         </span>
         <span className={`icon restrictions ${restrictionsActive}`}
           title={restrictionsActive ?
-            'This character has restrictions active' :
-            'This character has no restrictions active'} />
+            "This character has restrictions active" :
+            "This character has no restrictions active"} />
         <span className={`icon target ${targetStatActive}`}
           title={targetStatActive ?
-            'This character has a target stat selected' :
-            'This character has no target stat selected'} />
+            "This character has a target stat selected" :
+            "This character has no target stat selected"} />
         <span className={`icon negative ${negativeWeightsActive}`}
           title={negativeWeightsActive ?
-            'This character\'s target has negative stat weights' :
-            'This character\'s target has no negative stat weights'} />
+            "This character\'s target has negative stat weights" :
+            "This character\'s target has no negative stat weights"} />
         <span className={`icon changed-target ${changedTargetActive}`}
           title={changedTargetActive ?
-            'This character\'s target has been modified from the default' :
-            'This character\'s target matches the default'} />
+            "This character\'s target has been modified from the default" :
+            "This character\'s target matches the default"} />
         <span className={`icon blank-target ${blankTargetActive}`}
           title={blankTargetActive ?
-            'This character\'s target has no assigned stat weights' :
-            'This character\'s target has at least one stat given a value'} />
+            "This character\'s target has no assigned stat weights" :
+            "This character\'s target has at least one stat given a value"} />
         <span className={`icon locked ${lockedActive}`}
           onClick={() => dispatch(CharacterEdit.thunks.toggleCharacterLock(character.baseID))}
           title={lockedActive ?
-            'This character is locked. Its mods will not be assigned to other characters' :
-            'This character is not locked'} />
+            "This character is locked. Its mods will not be assigned to other characters" :
+            "This character is not locked"} />
       </div>;
     }
 
@@ -248,7 +253,7 @@ const CharacterList = observer(React.memo(
           index: index,
           target: target,
         },
-        view: 'edit',
+        view: "edit",
       });
     }
 
@@ -284,6 +289,6 @@ const CharacterList = observer(React.memo(
   }
 ));
 
-CharacterList.displayName = 'CharacterList';
+CharacterList.displayName = "CharacterList";
 
 export { CharacterList };

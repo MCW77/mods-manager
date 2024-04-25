@@ -4,7 +4,7 @@ import memoizeOne from "memoize-one";
 import { orderBy, mapValues } from "lodash-es";
 
 // domain
-import {
+import type {
   EquippedSettings,
   FilterKeys,
   FilterOptions,
@@ -19,7 +19,7 @@ import {
   TierSettings,
 } from "../../../domain/types/ModsViewOptionsTypes";
 import { Mod } from "../../../domain/Mod";
-import { OptimizerSettings } from "../../../domain/OptimizerSettings";
+import type { OptimizerSettings } from "../../../domain/OptimizerSettings";
 
 type AnyFilterOptions = {
   [key in keyof FilterOptions]: any[]
@@ -174,14 +174,13 @@ class ModsFilter {
     const groupedMods = memoizeOne((mods: Mod[]) => {
       return groupBy(
         mods,
-        (mod: Mod) => mod.slot + "-" + mod["set"] + "-" + mod.primaryStat.type
+        (mod: Mod) => `${mod.slot}-${mod.set}-${mod.primaryStat.type}`
       );
     });
 
-    if (this.isGroupingEnabled)
-      return groupedMods(mods)
-    else
-      return ungroupedMods(mods);
+    if (this.isGroupingEnabled) return groupedMods(mods)
+
+    return ungroupedMods(mods);
   }
 
   sortGroupedMods(groupedMods: Record<string, Mod[]>): Record<string, Mod[]> {

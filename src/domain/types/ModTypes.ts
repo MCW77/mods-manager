@@ -1,6 +1,6 @@
-import { CharacterNames } from "#/constants/characterSettings";
-import { ModTiersEnum } from "../../constants/enums";
-import { SetStats, PrimaryStats, SecondaryStats } from "../Stats";
+import type { CharacterNames } from "#/constants/characterSettings";
+import type { ModTiersEnum } from "../../constants/enums";
+import type { SetStats, PrimaryStats, SecondaryStats } from "../Stats";
 
 export type Levels = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15;
 export type Pips = 1 | 2 | 3 | 4 | 5 | 6;

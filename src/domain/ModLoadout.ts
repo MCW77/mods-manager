@@ -4,13 +4,13 @@ import { optimizationSettings$ } from "#/modules/optimizationSettings/state/opti
 // domain
 import * as ModConsts from "./constants/ModConsts";
 import setBonuses from "../constants/setbonuses";
-import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
-import * as ModTypes from "./types/ModTypes";
+import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import type * as ModTypes from "./types/ModTypes";
 
-import * as Character from "./Character";
-import { Mod } from "./Mod";
-import * as OptimizationPlan from "./OptimizationPlan";
-import SetBonus from "./SetBonus";
+import type * as Character from "./Character";
+import type { Mod } from "./Mod";
+import type * as OptimizationPlan from "./OptimizationPlan";
+import type SetBonus from "./SetBonus";
 import { Stats, CharacterSummaryStats as CSStats, SetStats } from "./Stats";
 
 
@@ -28,11 +28,11 @@ class ModLoadout implements SlotIndexer{
   cross!: Mod | null;
 
   constructor(mods: (Mod | null)[]) {
-    for (let slot of ModConsts.gimoSlots) {
+    for (const slot of ModConsts.gimoSlots) {
       this[slot] = null;
     }
 
-    for (let mod of mods.filter(mod => null !== mod) as Mod[]) {
+    for (const mod of mods.filter(mod => null !== mod) as Mod[]) {
       this[mod.slot] = mod;
     }
   }
@@ -47,31 +47,49 @@ class ModLoadout implements SlotIndexer{
    * @return Object An object keyed on each stat in the mod set
    */
   getSummary(character: Character.Character, target: OptimizationPlan.OptimizationPlan, withUpgrades: boolean) {
-    let loadoutSummary: {
-      [key in CharacterStatNames.All]: CSStats.CharacterSummaryStat
-    } = {
-      'Health': new CSStats.CharacterSummaryStat('Health', '0'),
-      'Protection': new CSStats.CharacterSummaryStat('Protection', '0'),
-      'Speed': new CSStats.CharacterSummaryStat('Speed', '0'),
-      'Critical Damage %': new CSStats.CharacterSummaryStat('Critical Damage %', '0'),
-      'Potency %': new CSStats.CharacterSummaryStat('Potency %', '0'),
-      'Tenacity %': new CSStats.CharacterSummaryStat('Tenacity %', '0'),
-      'Physical Damage': new CSStats.CharacterSummaryStat('Physical Damage', '0'),
-      'Physical Critical Chance %': new CSStats.CharacterSummaryStat('Physical Critical Chance %', '0'),
-      'Armor': new CSStats.CharacterSummaryStat('Armor', '0'),
-      'Special Damage': new CSStats.CharacterSummaryStat('Special Damage', '0'),
-      'Special Critical Chance %': new CSStats.CharacterSummaryStat('Special Critical Chance %', '0'),
-      'Resistance': new CSStats.CharacterSummaryStat('Resistance', '0'),
-      'Accuracy %': new CSStats.CharacterSummaryStat('Accuracy %', '0'),
-      'Critical Avoidance %': new CSStats.CharacterSummaryStat('Critical Avoidance %', '0'),
-    };
+    const loadoutSummary: {
+					[key in CharacterStatNames.All]: CSStats.CharacterSummaryStat;
+				} = {
+					Health: new CSStats.CharacterSummaryStat("Health", "0"),
+					Protection: new CSStats.CharacterSummaryStat("Protection", "0"),
+					Speed: new CSStats.CharacterSummaryStat("Speed", "0"),
+					"Critical Damage %": new CSStats.CharacterSummaryStat(
+						"Critical Damage %",
+						"0",
+					),
+					"Potency %": new CSStats.CharacterSummaryStat("Potency %", "0"),
+					"Tenacity %": new CSStats.CharacterSummaryStat("Tenacity %", "0"),
+					"Physical Damage": new CSStats.CharacterSummaryStat(
+						"Physical Damage",
+						"0",
+					),
+					"Physical Critical Chance %": new CSStats.CharacterSummaryStat(
+						"Physical Critical Chance %",
+						"0",
+					),
+					Armor: new CSStats.CharacterSummaryStat("Armor", "0"),
+					"Special Damage": new CSStats.CharacterSummaryStat(
+						"Special Damage",
+						"0",
+					),
+					"Special Critical Chance %": new CSStats.CharacterSummaryStat(
+						"Special Critical Chance %",
+						"0",
+					),
+					Resistance: new CSStats.CharacterSummaryStat("Resistance", "0"),
+					"Accuracy %": new CSStats.CharacterSummaryStat("Accuracy %", "0"),
+					"Critical Avoidance %": new CSStats.CharacterSummaryStat(
+						"Critical Avoidance %",
+						"0",
+					),
+				};
 
     // Holds the number of mods in each set
-    let smallSetCounts = new WeakMap();
+    const smallSetCounts = new WeakMap();
     // Hold the number of mods in each set that have been or will be leveled fully (thus providing the max set bonus)
-    let maxSetCounts = new WeakMap();
+    const maxSetCounts = new WeakMap();
 
-    for (let slot of ModConsts.gimoSlots) {
+    for (const slot of ModConsts.gimoSlots) {
       const mod = this[slot];
       if (null === mod) {
         continue;
@@ -96,7 +114,7 @@ class ModLoadout implements SlotIndexer{
     }
 
     // Update the summary for each stat from each complete mod set
-    for (let setKey of SetStats.SetStat.statNames) {
+    for (const setKey of SetStats.SetStat.statNames) {
       const setDescription = setBonuses[setKey];
 
       // Add in any set bonuses
@@ -111,30 +129,30 @@ class ModLoadout implements SlotIndexer{
         Math.floor((smallSetCounts.get(setDescription) || 0) / setDescription.numberOfModsRequired);
 
       const maxSetStats = setDescription.maxBonus.getFlatValuesForCharacter(character);
-      maxSetStats.forEach(stat => {
+      for (const stat of maxSetStats) {
         for (let i = 0; i < maxSetMultiplier; i++) {
           loadoutSummary[stat.type as CharacterStatNames.All] = loadoutSummary[stat.type as CharacterStatNames.All].plus(stat);
         }
-      });
+      }
 
       const smallSetStats = setDescription.smallBonus.getFlatValuesForCharacter(character);
-      smallSetStats.forEach(stat => {
+      for (const stat of smallSetStats) {
         for (let i = 0; i < smallSetMultiplier; i++) {
           loadoutSummary[stat.type as CharacterStatNames.All] = loadoutSummary[stat.type as CharacterStatNames.All].plus(stat);
         }
-      });
+      }
     }
 
     // Update the summary to mark the stats that should always be displayed as percentages
     // Also update all stats to be the correct precision
-    Object.values(loadoutSummary).forEach(stat => {
+    for (const stat of Object.values(loadoutSummary)) {
       if (!Stats.Stat.mixedTypes.includes(stat.getDisplayType() as Stats.DisplayStatNames)) {
         stat.displayModifier = '%';
       } else {
         stat.value = Math.trunc(stat.value);
       }
       stat.updateDisplayValue();
-    });
+    }
 
     return loadoutSummary;
   }
@@ -146,7 +164,7 @@ class ModLoadout implements SlotIndexer{
    * @param target {OptimizationPlan}
    * @param withUpgrades {Boolean} Whether to upgrade mods while calculating the value of the set
    */
-  getOptimizationValue(character: Character.Character, target: OptimizationPlan.OptimizationPlan, withUpgrades: boolean = false) {
+  getOptimizationValue(character: Character.Character, target: OptimizationPlan.OptimizationPlan, withUpgrades = false) {
     return Object.values(this.getSummary(character, target, withUpgrades))
       .reduce((setValue, stat) => setValue + stat.getOptimizationValue(character, target), 0);
   }

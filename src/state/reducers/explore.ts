@@ -1,8 +1,8 @@
 // state
-import { IAppState } from "../storage";
+import type { IAppState } from "../storage";
 
 // actions
-import { actions } from "../actions/explore";
+import type { actions } from "../actions/explore";
 
 export namespace reducers {
 	export function changeModsViewOptions(

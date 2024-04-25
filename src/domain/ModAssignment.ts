@@ -1,9 +1,9 @@
 // domain
-import { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/characterSettings";
 
-import { Mod } from "#/domain/Mod";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
-import { MissedGoals } from "#/domain/PlayerProfile";
+import type { Mod } from "#/domain/Mod";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { MissedGoals } from "#/domain/PlayerProfile";
 
 interface ModAssignment {
 	id: CharacterNames;

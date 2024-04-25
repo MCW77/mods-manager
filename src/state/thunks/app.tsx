@@ -63,16 +63,16 @@ export namespace thunks {
       const state = getState();
       const db = getDatabase();
       let profile = await db.getProfile(profilesManagement$.profiles.activeAllycode.get());
-      mods = mods.filter(mod => mod.equippedUnit === "none");
+      const unequippedMods = mods.filter(mod => mod.equippedUnit === "none");
       const mapper = new C3POMappers.ModMapper();
-      const newMods: Mod[] = mods.map(
+      const newMods: Mod[] = unequippedMods.map(
         mod => mapper.fromC3PO(mod)
       ).concat(profile.mods.filter(
         mod => mod.characterID !== "null"
       ));
 
       profile = profile.withMods(newMods);
-      const totalMods = mods.length;
+      const totalMods = unequippedMods.length;
 
       db.saveProfile(
         profile,
@@ -157,7 +157,7 @@ export namespace thunks {
   type UpdateFunc = (a: PlayerProfile) => PlayerProfile;
   type AuxiliaryChangesFunc = (dispatch: ThunkDispatch, getState: () => IAppState, c: PlayerProfile) => void;
 
-  function noop (a: any, b: any, c: any) {
+  function noop (a: unknown, b: unknown, c: unknown) {
   }
 
   /**

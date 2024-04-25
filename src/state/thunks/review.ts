@@ -1,5 +1,5 @@
 // react
-import { ThunkResult } from "../reducers/modsOptimizer";
+import type { ThunkResult } from "../reducers/modsOptimizer";
 
 // utils
 import groupByKey from "../../utils/groupByKey";
@@ -9,14 +9,14 @@ import { App } from '../modules/app';
 import { actions } from '../actions/review';
 
 // domain
-import { CharacterNames } from "../../constants/characterSettings";
+import type { CharacterNames } from "../../constants/characterSettings";
 
-import { Mod } from "../../domain/Mod";
-import { ModListFilter } from "../../domain/ModListFilter";
+import type { Mod } from "../../domain/Mod";
+import type { ModListFilter } from "../../domain/ModListFilter";
 
 
 export namespace thunks {
-  
+
   /**
    * Move a mod from its current character to a different character
    * @param modID {string}
@@ -103,7 +103,7 @@ export namespace thunks {
    * @returns {Function}
    */
   export function updateModListFilter(newFilter: Partial<ModListFilter>): ThunkResult<void> {
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
       const state = getState();
 
       dispatch(actions.changeModListFilter(

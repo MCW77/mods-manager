@@ -1,6 +1,6 @@
 // domain
-import * as ModTypes from "./types/ModTypes";
-import * as StatTypes from "./types/StatTypes";
+import type * as ModTypes from "./types/ModTypes";
+import type * as StatTypes from "./types/StatTypes";
 import { Stats } from "./Stats";
 
 
@@ -24,8 +24,6 @@ export type HUDefensiveStats =
   'Crit Avoidance %'
 ;
 export type HUStatNames = HUNeutralStats | HUOffensiveStats | HUDefensiveStats;
-
-let l = typeof Stats.Stat;
 
 export class PrimaryStat extends Stats.Stat {
   static statNames: Readonly<GIMOStatNames[]> = [
@@ -53,7 +51,7 @@ export class PrimaryStat extends Stats.Stat {
     'Potency %': 'Potency %',
     'Protection %': 'Protection %',
     'Resistance %': 'Tenacity %',
-    'Speed': 'Speed',
+    Speed: 'Speed',
   }
 
   static GIMO2DisplayStatNamesMap: {[key in GIMOStatNames]: StatTypes.DisplayStatNames} = {
@@ -67,7 +65,7 @@ export class PrimaryStat extends Stats.Stat {
     'Potency %': 'Potency',
     'Protection %': 'Protection',
     'Tenacity %': 'Tenacity',
-    'Speed': 'Speed',
+    Speed: 'Speed',
   }
 
   // Map pips to maximum value at level 15 for each primary stat type
@@ -104,7 +102,7 @@ export class PrimaryStat extends Stats.Stat {
       [5, "23.5"],
       [6, "24"]
     ]),
-    'Speed': new Map<ModTypes.Pips, string>([
+    Speed: new Map<ModTypes.Pips, string>([
       [1, "17"],
       [2, "19"],
       [3, "21"],
@@ -174,11 +172,11 @@ export class PrimaryStat extends Stats.Stat {
   clone(): this {
     return new PrimaryStat(this.type, this.stringValue) as this
   };
-  
+
   static fromHotUtils(type: HUStatNames, value: string) {
     return new PrimaryStat(PrimaryStat.HU2GIMOStatNamesMap[type], value);
   }
-  
+
 /*
   getDisplayType(): StatTypes.AnyStat {
     return PrimaryStat.GIMO2DisplayStatNamesMap[this.type];
@@ -190,7 +188,7 @@ export class PrimaryStat extends Stats.Stat {
    * @param modPips ModTypes.Pips
    */
   upgrade(modPips: ModTypes.Pips): PrimaryStat {
-    return new PrimaryStat(this.type, PrimaryStat.maxPrimaries[this.type].get(modPips)!);
+    return new PrimaryStat(this.type, PrimaryStat.maxPrimaries[this.type].get(modPips) ?? "0");
   }
 
   /**

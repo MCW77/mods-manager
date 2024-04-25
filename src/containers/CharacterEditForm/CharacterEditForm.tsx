@@ -78,14 +78,14 @@ const CharacterEditForm = observer(({
   const cloneCharacter = () => structuredClone(character);
   const cloneOptimizationPlan = () => structuredClone(target);
 
-  let character$: ObservableObject<{character: Character.Character}> = useObservable({
+  const character$: ObservableObject<{character: Character.Character}> = useObservable({
     character: cloneCharacter(),
   });
-  let target$: ObservableOptimizationPlan = useObservable({
+  const target$: ObservableOptimizationPlan = useObservable({
     target: cloneOptimizationPlan(),
     addSetBonus: (setName: SetStats.GIMOStatNames) => {
-      let restrictions = target$.target.setRestrictions.peek();
-      let newRestrictions = setName in restrictions ?
+      const restrictions = target$.target.setRestrictions.peek();
+      const newRestrictions = setName in restrictions ?
         {...restrictions, [setName]: restrictions[setName]!+1} // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
       :
         {...restrictions, [setName]: 1};
@@ -100,7 +100,7 @@ const CharacterEditForm = observer(({
       target$.target.targetStats.push(createTargetStat('Speed'));
     },
     removeSetBonus: (setName: SetStats.GIMOStatNames) => {
-      let restrictions = target$.target.setRestrictions.peek();
+      const restrictions = target$.target.setRestrictions.peek();
       if (restrictions[setName] !== undefined) {
         if (restrictions[setName]! > 0) { // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
           target$.target.setRestrictions[setName].set(restrictions[setName]! -1); // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
@@ -110,24 +110,24 @@ const CharacterEditForm = observer(({
       }
     },
     removeTargetStatById: (id: string) => {
-      let index = target$.target.targetStats.peek().findIndex((ts: TargetStat) => ts.id === id);
+      const index = target$.target.targetStats.peek().findIndex((ts: TargetStat) => ts.id === id);
       if (index !== -1) {
         target$.target.targetStats.splice(index, 1);
       }
     },
     zeroAll: () => {
       beginBatch();
-      target$.target["Health"].set(0);
-      target$.target["Protection"].set(0);
-      target$.target["Speed"].set(0);
+      target$.target.Health.set(0);
+      target$.target.Protection.set(0);
+      target$.target.Speed.set(0);
       target$.target["Critical Damage %"].set(0);
       target$.target["Potency %"].set(0);
       target$.target["Tenacity %"].set(0);
       target$.target["Physical Damage"].set(0);
       target$.target["Special Damage"].set(0);
       target$.target["Critical Chance"].set(0);
-      target$.target["Armor"].set(0);
-      target$.target["Resistance"].set(0);
+      target$.target.Armor.set(0);
+      target$.target.Resistance.set(0);
       target$.target["Accuracy %"].set(0);
       target$.target["Critical Avoidance %"].set(0);
       endBatch();
@@ -152,7 +152,7 @@ const CharacterEditForm = observer(({
       dispose();
       console.log('target$ listener removed');
     }
-  }, []);
+  });
 
   const missedGoalsSection = (modAssignments: ModSuggestion | null) => {
     if ((target$.target.targetStats.peek() || []).length === 0) {
@@ -200,7 +200,7 @@ const CharacterEditForm = observer(({
     }
 
     const targetStatRows = missedGoals.map(([targetStat, resultValue]: [t: TargetStat, r: number], index: number) =>
-      <div className={'form-row'} key={index}>
+      <div className={'form-row'} key={targetStat.id}>
         <span>{targetStat.stat}</span>
         <span>({targetStat.minimum})-({targetStat.maximum})</span>
         <span>{targetStat.minimum ?? 0 > resultValue ? " ↓ " : " ↑ "}</span>
@@ -243,7 +243,7 @@ const CharacterEditForm = observer(({
   (characterSettings[character.baseID] as CharacterSettings).targets.find(defaultTarget => defaultTarget.name === target.name) :
   null;
 
-  let resetButton;
+  let resetButton: React.ReactNode;
 
   if ('custom' === target.name) {
     resetButton = null;
@@ -338,7 +338,7 @@ const CharacterEditForm = observer(({
                     name={'mod-dots'}
                     $value={() => character$.character.optimizerSettings.minimumModDots.get().toString()}
                     onValueChange={(value) => {
-                      character$.character.optimizerSettings.minimumModDots.set(parseInt(value));
+                      character$.character.optimizerSettings.minimumModDots.set(Number.parseInt(value));
                     }}
                   >
                     <SelectTrigger className={"w-12 h-4 px-2 mx-2 inline-flex"} id={'mod-dots2'}>
@@ -363,7 +363,7 @@ const CharacterEditForm = observer(({
           </div>
         </TabsContent>
         <TabsContent value="Primaries">
-          <PrimaryStatRestrictionsWidget primaryRestrictions$={target$.target.primaryStatRestrictions}></PrimaryStatRestrictionsWidget>
+          <PrimaryStatRestrictionsWidget primaryRestrictions$={target$.target.primaryStatRestrictions} />
         </TabsContent>
         <TabsContent value="Sets">
           <SetRestrictionsWidget target$={target$}/>

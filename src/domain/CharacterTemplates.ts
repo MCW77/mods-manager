@@ -1,5 +1,5 @@
 // domain
-import { SelectedCharacters } from "./SelectedCharacters";
+import type { SelectedCharacters } from "./SelectedCharacters";
 
 /**
  * ```

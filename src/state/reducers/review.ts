@@ -1,8 +1,8 @@
 // state
-import { IAppState } from "../storage";
+import type { IAppState } from "../storage";
 
 // actions
-import { actions } from "../actions/review";
+import type { actions } from "../actions/review";
 
 export namespace reducers {
 	export function changeModListFilter(

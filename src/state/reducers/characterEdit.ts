@@ -2,10 +2,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 // state
-import { IAppState } from "#/state/storage";
+import type { IAppState } from "#/state/storage";
 
 // modules
-import { actions } from "#/state/actions/characterEdit";
+import type { actions } from "#/state/actions/characterEdit";
 import { Storage } from '#/state/modules/storage';
 
 export namespace reducers {

@@ -1,5 +1,5 @@
 // domain
-import { ModsViewOptions } from "../../domain/modules/ModsViewOptions";
+import type { ModsViewOptions } from "../../domain/modules/ModsViewOptions";
 
 export namespace actions {
 	/**

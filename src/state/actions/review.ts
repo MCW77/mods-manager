@@ -1,5 +1,5 @@
 // domain
-import { ModListFilter } from "../../domain/ModListFilter";
+import type { ModListFilter } from "../../domain/ModListFilter";
 
 export namespace actions {
 	/**

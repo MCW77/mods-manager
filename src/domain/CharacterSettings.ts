@@ -1,11 +1,11 @@
 // domain
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 
 export const DamageType = {
-  'physical': 1,
-  'special': 0,
-  'mixed': .5
+  physical: 1,
+  special: 0,
+  mixed: .5
 } as const;
 
 export interface CharacterSettings {

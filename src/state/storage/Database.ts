@@ -3,14 +3,14 @@ import { defer } from "#/utils/defer";
 import nothing from "#/utils/nothing";
 
 // domain
-import { BaseCharacter } from "#/domain/BaseCharacter";
-import {
+import type { BaseCharacter } from "#/domain/BaseCharacter";
+import type {
   CharacterTemplate,
   CharacterTemplates,
 } from "#/domain/CharacterTemplates";
-import { OptimizerRun } from "#/domain/OptimizerRun";
-import { PlayerProfile, IFlatPlayerProfile } from "#/domain/PlayerProfile";
-import { SelectedCharacters } from "#/domain/SelectedCharacters";
+import type { OptimizerRun } from "#/domain/OptimizerRun";
+import { PlayerProfile, type IFlatPlayerProfile } from "#/domain/PlayerProfile";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 type DBError = DOMException | null;
 

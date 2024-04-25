@@ -131,7 +131,10 @@ const GeneralSettingsView = observer(() => {
 									Storage.thunks.exportDatabase((progressData: IUserData) => {
 										progressData.version = version;
 										progressData.allyCode = allycode;
-										progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId);
+										for (const profile of progressData.profiles) {
+											// biome-ignore lint/performance/noDelete: <explanation>
+											delete profile.hotUtilsSessionId;
+										}
 										const progressDataSerialized = JSON.stringify(progressData);
 										const userData = new Blob([progressDataSerialized], {
 											type: "application/json;charset=utf-8",

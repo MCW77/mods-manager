@@ -100,11 +100,12 @@ class CharacterEditView extends PureComponent<Props> {
     const options = JSON.parse(event.dataTransfer.getData("application/json"));
 
     switch (options.effect) {
-      case "move":
+      case "move": {
         // This is coming from the selected characters - remove the character from the list
         const characterIndex = +event.dataTransfer.getData("text/plain");
         this.props.unselectCharacter(characterIndex);
         break;
+      }
       default:
       // Do nothing
     }
@@ -213,7 +214,6 @@ class CharacterEditView extends PureComponent<Props> {
               );
               const hasTargetStats = selectedTargets.some(
                 (target) =>
-                  target.targetStats &&
                   target.targetStats.filter(
                     (targetStat) => targetStat.optimizeForTarget
                   ).length
@@ -228,13 +228,10 @@ class CharacterEditView extends PureComponent<Props> {
 
               type IndexOfCharacters = { [id in CharacterNames]: number };
               const minCharacterIndices: IndexOfCharacters =
-                this.props.selectedCharacters.reduce(
-                  (indices, { id }, charIndex) => ({
-                    [id]: charIndex,
-                    ...indices,
-                  }),
-                  { [this.props.selectedCharacters[0].id]: 0 }
-                ) as IndexOfCharacters;
+              this.props.selectedCharacters.reduce((indices, { id }, charIndex) => {
+                indices[id] = charIndex;
+                return indices;
+              }, { [this.props.selectedCharacters[0].id]: 0 }) as IndexOfCharacters;
 
               const invalidTargets = this.props.selectedCharacters
                 .filter(({ target }, index) =>
@@ -433,6 +430,9 @@ class CharacterEditView extends PureComponent<Props> {
         <span
           className={`icon locked ${isLocked ? "active" : ""}`}
           onClick={() => this.props.toggleCharacterLock(character.baseID)}
+          onKeyUp={(e) => {
+            if (e.code === "Enter") this.props.toggleCharacterLock(character.baseID)
+          }}
         />
         <div
           draggable={isCharacterSelected(character.baseID) ? undefined : true}
@@ -506,14 +506,15 @@ class CharacterEditView extends PureComponent<Props> {
           type={"text"}
           id={"template-name"}
           name={"template-name"}
-          ref={(input) => (nameInput = input)}
+          ref={(input) => {nameInput = input}}
           autoFocus
           onKeyUp={(e) => {
-            if (e.key === "Enter" && isNameUnique(nameInput!.value)) {
-              this.props.saveTemplate(nameInput!.value);
+            if (nameInput === undefined || nameInput === null || saveButton === undefined || saveButton === null) return;
+            if (e.key === "Enter" && nameInput && isNameUnique(nameInput.value)) {
+              this.props.saveTemplate(nameInput.value);
             }
             // Don't change the input if the user is trying to select something
-            if (window.getSelection()?.toString() ?? "" !== "") {
+            if (window.getSelection()?.toString() !== undefined) {
               return;
             }
             // Don't change the input if the user is hitting the arrow keys
@@ -525,12 +526,12 @@ class CharacterEditView extends PureComponent<Props> {
               return;
             }
 
-            if (!isNameUnique(nameInput!.value)) {
-              nameInput!.classList.add("invalid");
-              saveButton!.disabled = true;
+            if (!isNameUnique(nameInput.value)) {
+              nameInput.classList.add("invalid");
+              saveButton.disabled = true;
             } else {
-              nameInput!.classList.remove("invalid");
-              saveButton!.disabled = false;
+              nameInput.classList.remove("invalid");
+              saveButton.disabled = false;
             }
           }}
         />
@@ -546,10 +547,11 @@ class CharacterEditView extends PureComponent<Props> {
           </Button>
           <Button
             type={"button"}
-            ref={(button) => (saveButton = button)}
+            ref={(button) => {saveButton = button}}
             onClick={() => {
               dialog$.hide();
-              this.props.saveTemplate(nameInput!.value);
+              if (nameInput)
+                this.props.saveTemplate(nameInput.value);
             }}
           >
             Save
@@ -564,7 +566,7 @@ class CharacterEditView extends PureComponent<Props> {
     return (
       <div>
         <h3>Select a character template to add to your selected characters</h3>
-        {this.templateSelectElement((select) => (templateSelection = select))}
+        {this.templateSelectElement((select) => {templateSelection = select})}
         <div className={"actions"}>
           <Button
             type={"button"}
@@ -576,9 +578,10 @@ class CharacterEditView extends PureComponent<Props> {
             type={"button"}
             onClick={() => {
               dialog$.hide();
-              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection!.value, this.props.selectedCharacters);
-              if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection!.value);
-              if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection!.value);
+              if (templateSelection === null) return;
+              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection.value, this.props.selectedCharacters);
+              if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection.value);
+              if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection.value);
             }}
           >
             Add
@@ -609,12 +612,12 @@ class CharacterEditView extends PureComponent<Props> {
     defaultTemplateNames.sort();
 
     const userTemplateOptions = userTemplateNames.map((name, index) => (
-      <option key={`user-${index}`} value={name}>
+      <option key={`user-${name}`} value={name}>
         {name}
       </option>
     ));
     const defaultTemplateOptions = defaultTemplateNames.map((name, index) => (
-      <option key={`default-${index}`} value={name}>
+      <option key={`default-${name}`} value={name}>
         {name}
       </option>
     ));
@@ -739,17 +742,17 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   },
   saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   appendTemplate: (templateName: string, selectedCharacters: SelectedCharacters) => {
-    if (defaultTemplates.some((template) => template.name === templateName)) {
-      const template = defaultTemplates.find((template) => template.name === templateName)!;
-      const selectedCharactersIDs = template.selectedCharacters.map(
-        ({ id, target }) => id
-      )
-      if (selectedCharactersIDs.some((id) => selectedCharacters.some((selectedCharacter) => selectedCharacter.id === id))) {
-        return;
-      }
-      dispatch(CharacterEdit.thunks.appendTemplate(templateName));
-      dialog$.hide();
-    };
+    const template = defaultTemplates.find((template) => template.name === templateName);
+    if (template === undefined) return;
+
+    const selectedCharactersIDs = template.selectedCharacters.map(
+      ({ id, target }) => id
+    )
+    if (selectedCharactersIDs.some((id) => selectedCharacters.some((selectedCharacter) => selectedCharacter.id === id))) {
+      return;
+    }
+    dispatch(CharacterEdit.thunks.appendTemplate(templateName));
+    dialog$.hide();
   },
   replaceTemplate: (templateName: string) => {
     dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
@@ -761,9 +764,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   },
 });
 
-type Props = PropsFromRedux & OwnProps & WithTranslation<"optimize-ui">;
+type Props = PropsFromRedux & WithTranslation<"optimize-ui">;
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type OwnProps = {};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 

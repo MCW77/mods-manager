@@ -1,7 +1,7 @@
 // domain
-import { BaseCharactersById } from "#/domain/BaseCharacter";
-import { CharacterTemplatesByName } from "#/domain/CharacterTemplates";
-import { PlayerProfile } from "#/domain/PlayerProfile";
+import type { BaseCharactersById } from "#/domain/BaseCharacter";
+import type { CharacterTemplatesByName } from "#/domain/CharacterTemplates";
+import type { PlayerProfile } from "#/domain/PlayerProfile";
 
 
 /*

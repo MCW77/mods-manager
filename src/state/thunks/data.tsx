@@ -1,6 +1,5 @@
 // react
-import React from "react";
-import { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
+import type { ThunkDispatch, ThunkResult } from "../reducers/modsOptimizer";
 
 // utils
 import cleanAllyCode from "#/utils/cleanAllyCode";
@@ -9,7 +8,7 @@ import nothing from "#/utils/nothing";
 import { mapValues } from "lodash-es";
 
 // state
-import getDatabase, { Database } from "#/state/storage/Database";
+import getDatabase, { type Database } from "#/state/storage/Database";
 
 import { beginBatch, endBatch } from "@legendapp/state";
 
@@ -25,19 +24,19 @@ import { App } from '#/state/modules/app';
 import { Storage } from '#/state/modules/storage';
 
 // domain
-import { CharacterNames } from "#/constants/characterSettings";
-import { HUModsMoveProfile, HUProfileCreationData } from "#/containers/Review/Review";
-import { HUFlatMod } from '#/domain/types/ModTypes';
-import * as DTOs from "#/modules/profilesManagement/dtos";
+import type { CharacterNames } from "#/constants/characterSettings";
+import type { HUModsMoveProfile, HUProfileCreationData } from "#/containers/Review/Review";
+import type { HUFlatMod } from '#/domain/types/ModTypes';
+import type * as DTOs from "#/modules/profilesManagement/dtos";
 import * as Mappers from "#/modules/profilesManagement/mappers";
-import { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
+import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 
-import { BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseCharacter";
+import { type BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
 import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
-import { SelectedCharacters } from "#/domain/SelectedCharacters";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 // components
 import { Button } from "#ui/button";
@@ -60,27 +59,25 @@ export namespace thunks {
   export function applyRanking(ranking: CharacterNames[]): ThunkResult<void> {
     return App.thunks.updateProfile(profile => {
       const rankedSelectedCharacters: SelectedCharacters = [];
-      ranking.forEach(characterID => {
+      for (const characterID of ranking) {
         const currentSelectedCharacter = profile.selectedCharacters.find(selectedCharacter => selectedCharacter.id === characterID);
         if (currentSelectedCharacter) {
           rankedSelectedCharacters.push(currentSelectedCharacter);
         }
-      });
+      }
       return profile.withSelectedCharacters(rankedSelectedCharacters);
     });
   }
 
   export function checkVersion(): ThunkResult<Promise<string>> {
-    return function (dispatch: ThunkDispatch) {
-      return fetchVersion()
+    return (dispatch: ThunkDispatch) => fetchVersion()
         .then(version => {
           dispatch(processVersion(version));
           return version;
         }).catch(error => {
           dialog$.showError(error.message);
           return '';
-        });
-    }
+        })
   }
 
   /**
@@ -88,7 +85,7 @@ export namespace thunks {
    * @returns {Promise<BaseCharactersById>}
    */
   function fetchCharacters(): Promise<BaseCharactersById> {
-    return fetch('https://api.mods-optimizer.swgoh.grandivory.com/characters/')
+    return fetch("https://api.mods-optimizer.swgoh.grandivory.com/characters/")
       .then(response => response.json())
       .then((response) => {
         return mapAPI2BaseCharactersById(response.units);
@@ -137,22 +134,22 @@ export namespace thunks {
 
   function fetchVersion() {
     return fetch(
-      'https://api.mods-optimizer.swgoh.grandivory.com/versionapi',
-      { method: 'POST', body: null, mode: 'cors' }
+      "https://api.mods-optimizer.swgoh.grandivory.com/versionapi",
+      { method: "POST", body: null, mode: "cors" }
     )
       .then(response => response.text())
       .catch(error => {
         console.error(error);
         throw new Error(
-          'Error fetching the current version. Please check to make sure that you are on the latest version'
+          "Error fetching the current version. Please check to make sure that you are on the latest version"
         );
       });
   }
 
-  function post(url = '', data = {}, extras = {}) {
+  function post(url = "", data = {}, extras = {}) {
     return fetch(url, Object.assign({
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
       body: JSON.stringify(data),
       mode: "cors",
     }, extras) as RequestInit)
@@ -160,15 +157,14 @@ export namespace thunks {
         response => {
           if (response.ok) {
             return response.json();
-          } else {
-            return response.text().then(errorText => Promise.reject(new Error(errorText)));
           }
+          return response.text().then(errorText => Promise.reject(new Error(errorText)));
         }
       );
   }
 
   function processVersion(version: string): ThunkResult<void> {
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
       const state = getState();
 
       if (state.version !== version) {
@@ -178,7 +174,7 @@ export namespace thunks {
           Your version: ${state.version}`,
           "",
           "Get new version",
-          () => window.location.assign(location.href + '?reload=' + Date.now()),
+          () => window.location.assign(`${location.href}?reload=${Date.now()}`),
           "warning",
         );
       }
@@ -200,17 +196,17 @@ export namespace thunks {
     allyCode: string,
     keepOldMods: boolean,
     sessionId: string | null,
-    useSession: boolean = true
+    useSession = true
   ): ThunkResult<Promise<void>> {
     const cleanedAllyCode = cleanAllyCode(allyCode);
-    let data: FetchedPlayerData = {
+    const data: FetchedPlayerData = {
       baseCharacters: {} as BaseCharactersById,
       profile: {} as FetchedProfile
     };
 
     const messages: string[] = [];
 
-    return async function (dispatch) {
+    return async (dispatch) => {
       isBusy$.set(true);
 
       // First, fetch character definitions from swgoh.gg
@@ -219,13 +215,12 @@ export namespace thunks {
         data.baseCharacters = baseCharacters;
       }
       catch (error) {
-        messages.push('Error when fetching character definitions from HotUtils. ' +
-          'Some characters may not optimize properly until you fetch again.'
+        messages.push("Error when fetching character definitions from HotUtils. Some characters may not optimize properly until you fetch again."
         );
-        messages.push('This is an error with an API that the optimizer uses (HotUtils) and NOT ' +
-          'an error in the optimizer itself. Feel free to discuss it on the ' +
-          'optimizer\'s discord server, but know that there are no changes that ' +
-          'can be made to the optimizer to fix this issue.'
+        messages.push(`This is an error with an API that the optimizer uses (HotUtils) and NOT
+          an error in the optimizer itself. Feel free to discuss it on the
+          optimizer\'s discord server, but know that there are no changes that
+          can be made to the optimizer to fix this issue.`
         );
         return;
       }
@@ -268,7 +263,7 @@ export namespace thunks {
             <p key={2}>{(error as Error).message}</p>,
           ],
           "Internally used hotutils api didn't respond. Maybe your internet connection has a problem or the hotutils server is down.",
-          <>Please check internet connectivity. If no such problem, you can check out the <a className={"underline text-blue-600 hover:text-blue-800 visited:text-purple-600"} href="https://discord.com/channels/470702742298689544/591758965335916565" target={"_blank"}>hotutils discord</a>. Maybe hotutils is undergoing maintenance or has a known problem. If so retry after maintenance is done or the bug has been fixed."</>,
+          <>Please check internet connectivity. If no such problem, you can check out the <a className={"underline text-blue-600 hover:text-blue-800 visited:text-purple-600"} href="https://discord.com/channels/470702742298689544/591758965335916565" target={"_blank"} rel="noreferrer">hotutils discord</a>. Maybe hotutils is undergoing maintenance or has a known problem. If so retry after maintenance is done or the bug has been fixed."</>,
         );
       }
       finally {
@@ -288,13 +283,13 @@ export namespace thunks {
    * @param {boolean} usedSession Whether a HotUtils session was used to pull unequipped mods
    */
   function showFetchResult(fetchData: FetchedPlayerData, errorMessages: string[], usedSession: boolean): ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       const fetchResults: JSX.Element[] = [];
 
       if (errorMessages.length) {
         fetchResults.push(
           <div className={'text-[#ff4500] border-b-1 border-solid border-b-white'} key={0}>
-            {errorMessages.map((message, index) => <p key={index}>{message}</p>)}
+            {errorMessages.map((message, index) => <p key={message}>{message}</p>)}
           </div>
         );
       }
@@ -321,7 +316,7 @@ export namespace thunks {
         );
       }
 
-      optimizerView$.view.set('basic');
+      optimizerView$.view.set("basic");
       dialog$.showFlash(
         <div className={'fetch-results'}>
           {fetchResults}
@@ -340,9 +335,9 @@ export namespace thunks {
     db: Database,
     keepOldMods: boolean
   ): ThunkResult<Promise<void>> {
-    return async function (dispatch) {
+    return async (dispatch) => {
       try {
-        let dbProfile = await db.getProfile(allyCode);
+        const dbProfile = await db.getProfile(allyCode);
 
         const baseProfile = dbProfile !== PlayerProfile.Default ?
           dbProfile.withPlayerName(fetchData.profile.name)
@@ -359,28 +354,27 @@ export namespace thunks {
         // and the optimizer settings from the current profile.
         const newCharacters = mapValues<PlayerValuesByCharacter, Character.Character>(fetchData.profile.playerValues, (playerValues: DTOs.GIMO.PlayerValuesDTO, id: string):Character.Character => {
           const Id: CharacterNames = id as CharacterNames;
-          if (oldProfile.characters.hasOwnProperty(Id)) {
+          if (Object.hasOwn(oldProfile.characters, Id)) {
             return Character.withOptimizerSettings(
               Character.withPlayerValues(oldProfile.characters[Id], playerValues),
               oldProfile.characters[Id].optimizerSettings
             );
-          } else {
+          }
             return (Character.createCharacter(
               Id,
               playerValues,
               createOptimizerSettings(
                 [],
-                fetchData.baseCharacters[Id] && fetchData.baseCharacters[Id].categories.includes('Crew Member') ? 5 : 1,
+                fetchData.baseCharacters[Id]?.categories.includes("Crew Member") ? 5 : 1,
                 false,
               )
             ))
-          }
         });
 
         const newMods = groupByKey(fetchData.profile.mods, mod => mod.id);
 
         // If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
-        let finalMods;
+        let finalMods: Mod[];
 
         if (keepOldMods) {
           // If we're keeping the old mods, that means that any mod we don't see must be unequipped
@@ -427,7 +421,7 @@ export namespace thunks {
       }
       catch(error)
       {
-        const errorMessage = error instanceof DOMException ? error.message : '';
+        const errorMessage = error instanceof DOMException ? error.message : "";
         dialog$.showError(`Error fetching your profile: ${errorMessage} Please try again`);
       }
 
@@ -441,14 +435,13 @@ export namespace thunks {
   //***********************/
 
   function cancelModMove(taskId: number, sessionId: string):ThunkResult<void> {
-    return function (dispatch) {
-      return post(
-        'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+    return (dispatch) => post(
+        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
         {
-          'action': 'cancelmove',
-          'sessionId': sessionId,
-          'payload': {
-            'taskId': taskId
+          action: "cancelmove",
+          sessionId: sessionId,
+          payload: {
+            taskId: taskId
           }
         }
       )
@@ -472,18 +465,17 @@ export namespace thunks {
         .catch(error => {
           dialog$.showError(error.message);
         })
-    }
   }
 
   export function createHotUtilsProfile(profile: HUProfileCreationData, sessionId: string):ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       isBusy$.set(true);
       return post(
-        'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
         {
-          'action': 'createprofile',
-          'sessionId': sessionId,
-          'payload': profile
+          action: "createprofile",
+          sessionId: sessionId,
+          payload: profile
         }
       )
       .then(response => {
@@ -498,8 +490,8 @@ export namespace thunks {
             case 1:
               dialog$.hide();
               dialog$.showFlash(
-                'Profile created successfully',
-                'Please login to HotUtils to manage your new profile',
+                "Profile created successfully",
+                "Please login to HotUtils to manage your new profile",
                 "",
                 undefined,
                 "success",
@@ -507,7 +499,7 @@ export namespace thunks {
               break;
             default:
               dialog$.hide();
-              dialog$.showError('Unknown response from HotUtils');
+              dialog$.showError("Unknown response from HotUtils");
               break;
           }
         }
@@ -525,13 +517,12 @@ export namespace thunks {
   export function fetchHotUtilsStatus(allyCode: string):ThunkResult<void> {
     const cleanedAllyCode = cleanAllyCode(allyCode);
 
-    return function (dispatch) {
-      return post(
-        'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+    return (dispatch) => post(
+        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
         {
-          'action': 'checksubscription',
-          'payload': {
-            'allyCode': cleanedAllyCode
+          action: "checksubscription",
+          payload: {
+            allyCode: cleanedAllyCode
           }
         }
       )
@@ -540,7 +531,6 @@ export namespace thunks {
         .catch(error => {
           dialog$.showError(error.message);
         })
-    }
   }
 
   /**
@@ -559,12 +549,12 @@ export namespace thunks {
     }
 
     return post(
-      'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/',
+      "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/",
       {
-        'action': 'getprofile',
-        'sessionId': sessionId,
-        'payload': {
-          'allyCode': allyCode,
+        action: "getprofile",
+        sessionId: sessionId,
+        payload: {
+          allyCode: allyCode,
         }
       }
     ).then(response => {
@@ -592,7 +582,7 @@ export namespace thunks {
     })
   }
 
-  var modMoveActive = false;
+  let modMoveActive = false;
 
   function modCancelModal() {
     return <div>
@@ -602,8 +592,8 @@ export namespace thunks {
       </div>
       <div className={'actions'}>
         <Button
-          type={'button'}
-          variant={'destructive'}
+          type={"button"}
+          variant={"destructive"}
           disabled={true}
         >
           Cancel
@@ -616,12 +606,12 @@ export namespace thunks {
     return <div>
       <h3>Moving Your Mods...</h3>
       <div className={'progress'}>
-        <span className={'progress-bar'} id={'progress-bar'} style={{ width: `${progress}%` }} />
+        <span className={'progress-bar'} id={"progress-bar"} style={{ width: `${progress}%` }} />
       </div>
       <div className={'actions'}>
         <Button
-          type={'button'}
-          variant={'destructive'}
+          type={"button"}
+          variant={"destructive"}
           onClick={() => dispatch(cancelModMove(taskId, sessionId))}
         >
           Cancel
@@ -631,14 +621,14 @@ export namespace thunks {
   }
 
   export function moveModsWithHotUtils(profile: HUModsMoveProfile, sessionId: string):ThunkResult<void> {
-    return function (dispatch) {
+    return (dispatch) => {
       isBusy$.set(true);
       return post(
-        'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
         {
-          'action': 'movemods',
-          'sessionId': sessionId,
-          'payload': profile
+          action: "movemods",
+          sessionId: sessionId,
+          payload: profile
         }
       )
         .then(response => {
@@ -686,12 +676,12 @@ export namespace thunks {
   function pollForModMoveStatus(taskId: number, sessionId: string, dispatch: ThunkDispatch) {
     return new Promise((resolve, reject) => {
       post(
-        'https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2',
+        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
         {
-          'action': 'checkmovestatus',
-          'sessionId': sessionId,
-          'payload': {
-            'taskId': taskId
+          action: "checkmovestatus",
+          sessionId: sessionId,
+          payload: {
+            taskId: taskId
           }
         }
       ).then(response => {
@@ -747,7 +737,7 @@ export namespace thunks {
   }
 
   export function setHotUtilsSessionId(allyCode: string, sessionId: string): ThunkResult<Promise<void>> {
-    return async function (dispatch) {
+    return async (dispatch) => {
       const db = getDatabase();
       try {
         const profile: PlayerProfile = await db.getProfile(allyCode);

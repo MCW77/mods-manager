@@ -1,6 +1,6 @@
 // domain
-import { TargetStat } from "../../domain/TargetStat";
-import { TemplatesAddingMode } from "../../domain/TemplatesAddingMode";
+import type { TargetStat } from "../../domain/TargetStat";
+import type { TemplatesAddingMode } from "../../domain/TemplatesAddingMode";
 
 
 export namespace actions {

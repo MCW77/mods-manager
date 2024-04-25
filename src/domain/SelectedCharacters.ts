@@ -1,7 +1,7 @@
 // domain
-import { CharacterNames } from "../constants/characterSettings";
+import type { CharacterNames } from "../constants/characterSettings";
 
-import { OptimizationPlan } from "./OptimizationPlan";
+import type { OptimizationPlan } from "./OptimizationPlan";
 
 export type SelectedCharacters = SelectedCharacter[];
 
@@ -14,8 +14,11 @@ export type SelectedCharacters = SelectedCharacter[];
  * ```
  */
 export interface SelectedCharacter {
-  id: CharacterNames;
-  target: OptimizationPlan;
+	id: CharacterNames;
+	target: OptimizationPlan;
 }
 
-export type SelectedCharactersByTemplateName = Record<string, SelectedCharacters>;
+export type SelectedCharactersByTemplateName = Record<
+	string,
+	SelectedCharacters
+>;

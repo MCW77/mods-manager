@@ -1,8 +1,8 @@
 // react
-import { AnyAction } from "redux";
+import type { AnyAction } from "redux";
 
 // state
-import { IAppState } from "../storage";
+import type { IAppState } from "../storage";
 
 export namespace reducers {
 	export function updateProgress(

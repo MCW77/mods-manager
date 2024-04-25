@@ -2,7 +2,7 @@
 import groupByKey from "../utils/groupByKey";
 
 // domain
-import { OptimizationPlan } from "./OptimizationPlan";
+import type { OptimizationPlan } from "./OptimizationPlan";
 
 export interface OptimizerSettings {
   isLocked: boolean,
@@ -30,7 +30,7 @@ export const createOptimizerSettings = (
 
 export const withTarget = (settings: OptimizerSettings, target: OptimizationPlan) => {
   const targetsObject = groupByKey(settings.targets, target => target.name);
-  const newTargetsObject = ['lock', 'custom'].includes(target.name) ?
+  const newTargetsObject = ["lock", "custom"].includes(target.name) ?
     settings.targets :
     Object.assign({}, targetsObject, { [target.name]: target });
 

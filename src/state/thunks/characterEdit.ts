@@ -1,5 +1,5 @@
 // react
-import { ThunkResult } from "../reducers/modsOptimizer";
+import type { ThunkResult } from "../reducers/modsOptimizer";
 
 // utils
 import { mapValues } from "lodash-es";
@@ -12,20 +12,20 @@ import getDatabase from "../storage/Database";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // modules
-import { App } from '../../state/modules/app';
-import { Data } from '../../state/modules/data';
-import { Storage } from '../../state/modules/storage';
+import { App } from "../../state/modules/app";
+import { Data } from "../../state/modules/data";
+import { Storage } from "../../state/modules/storage";
 
 // domain
-import { CharacterNames } from "../../constants/characterSettings";
+import type { CharacterNames } from "../../constants/characterSettings";
 import templatesJSON from "../../constants/characterTemplates.json";
 
 import * as Character from "#/domain/Character";
-import { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTemplates";
-import { OptimizationPlan, OptimizationPlansById, createOptimizationPlan } from "../../domain/OptimizationPlan";
+import type { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTemplates";
+import { type OptimizationPlan, type OptimizationPlansById, createOptimizationPlan } from "../../domain/OptimizationPlan";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
-import { PlayerProfile } from "../../domain/PlayerProfile";
-import { SelectedCharacters } from "../../domain/SelectedCharacters";
+import type { PlayerProfile } from "../../domain/PlayerProfile";
+import type { SelectedCharacters } from "../../domain/SelectedCharacters";
 
 const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ name }) => name);
 
@@ -59,9 +59,8 @@ export namespace thunks {
                 character,
                 OptimizerSettings.withTargetOverrides(character.optimizerSettings, templateTargetsById[character.baseID])
               );
-            } else {
-              return character;
             }
+            return character;
           }) as Character.Characters);
 
           return newProfile.withSelectedCharacters(profile.selectedCharacters.concat(availableCharacters));
@@ -75,7 +74,7 @@ export namespace thunks {
           if (missingCharacters.length) {
             dialog$.showFlash(
               "Missing Characters",
-              'Missing the following characters from the selected template: ' + missingCharacters.join(', '),
+              `Missing the following characters from the selected template: ${missingCharacters.join(', ')}`,
               "",
               undefined,
               "warning",
@@ -85,7 +84,7 @@ export namespace thunks {
       )
     }
 
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
       if (Object.keys(defaultTemplates).includes(name)) {
         const template: CharacterTemplate = {
           name: defaultTemplates[name].name,
@@ -123,19 +122,18 @@ export namespace thunks {
                 character,
                 OptimizerSettings.withTargetOverrides(character.optimizerSettings, templateTargetsById[character.baseID])
               );
-            } else {
-              return character;
             }
+            return character;
           }) as Character.Characters);
 
           const newSelectedCharacters = profile.selectedCharacters.slice(0);
-          template.selectedCharacters.forEach(({ id: templateCharId, target: templateTarget }) => {
-            for (let selectedCharacter of newSelectedCharacters) {
+          for (const { id: templateCharId, target: templateTarget } of template.selectedCharacters) {
+            for (const selectedCharacter of newSelectedCharacters) {
               if (selectedCharacter.id === templateCharId) {
                 selectedCharacter.target = templateTarget;
               }
             }
-          });
+          }
 
           return newProfile.withSelectedCharacters(newSelectedCharacters);
         },
@@ -149,7 +147,7 @@ export namespace thunks {
           if (missingCharacters.length) {
             dialog$.showFlash(
               "Missing Characters",
-              'The following characters weren\'t in your selected characters: ' + missingCharacters.join(', '),
+              `The following characters weren\'t in your selected characters: ${missingCharacters.join(', ')}`,
               "",
               undefined,
               "warning",
@@ -159,7 +157,7 @@ export namespace thunks {
       )
     }
 
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
       if (Object.keys(defaultTemplates).includes(name)) {
         const template: CharacterTemplate = {
           name: defaultTemplates[name].name,
@@ -245,13 +243,12 @@ export namespace thunks {
         });
 
         const newSelectedCharacters = profile.selectedCharacters.map(({ id, target: oldTarget }) => {
-          if (id === characterID && oldTarget!.name === targetName) {
-            const newTarget = Character.targets(newCharacters[characterID])[0] ?? createOptimizationPlan('unnamed');
+          if (id === characterID && oldTarget.name === targetName) {
+            const newTarget = Character.targets(newCharacters[characterID])[0] ?? createOptimizationPlan("unnamed");
 
             return { id: id, target: newTarget };
-          } else {
-            return { id: id, target: oldTarget };
           }
+          return { id: id, target: oldTarget };
         });
 
         return profile.withCharacters(newCharacters).withSelectedCharacters(newSelectedCharacters);
@@ -265,20 +262,22 @@ export namespace thunks {
   export function deleteTemplate(name: string) :ThunkResult<void> {
     const db = getDatabase();
 
-    return function (dispatch) {
+    return (dispatch) => {
       db.deleteCharacterTemplate(
         name,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
           dialog$.hide();
         },
-        error => dialog$.showFlash(
-          "Storage Error",
-          `Error deleting the character template '${name}'. Error message: ${error!.message}`,
-          "",
-          undefined,
-          "error",
-        )
+        error => {
+          if (error instanceof Error) dialog$.showFlash(
+            "Storage Error",
+            `Error deleting the character template '${name}'. Error message: ${error.message}`,
+            "",
+            undefined,
+            "error",
+          )
+        }
       );
     }
   }
@@ -380,19 +379,18 @@ export namespace thunks {
     return App.thunks.updateProfile(profile => {
       if (fromIndex === toIndex) {
         return profile;
-      } else {
-        const newSelectedCharacters = profile.selectedCharacters.slice();
-        const [oldValue] = newSelectedCharacters.splice(fromIndex, 1);
-        if (null === toIndex) {
-          return profile.withSelectedCharacters([oldValue].concat(newSelectedCharacters));
-        } else if (fromIndex < toIndex) {
-          newSelectedCharacters.splice(toIndex, 0, oldValue);
-          return profile.withSelectedCharacters(newSelectedCharacters);
-        } else {
-          newSelectedCharacters.splice(toIndex + 1, 0, oldValue);
-          return profile.withSelectedCharacters(newSelectedCharacters);
-        }
       }
+      const newSelectedCharacters = profile.selectedCharacters.slice();
+      const [oldValue] = newSelectedCharacters.splice(fromIndex, 1);
+      if (null === toIndex) {
+        return profile.withSelectedCharacters([oldValue].concat(newSelectedCharacters));
+      }
+      if (fromIndex < toIndex) {
+        newSelectedCharacters.splice(toIndex, 0, oldValue);
+        return profile.withSelectedCharacters(newSelectedCharacters);
+      }
+      newSelectedCharacters.splice(toIndex + 1, 0, oldValue);
+      return profile.withSelectedCharacters(newSelectedCharacters);
     });
   }
 
@@ -413,9 +411,8 @@ export namespace thunks {
                 character,
                 OptimizerSettings.withTargetOverrides(character.optimizerSettings, templateTargetsById[character.baseID])
               );
-            } else {
-              return character;
             }
+            return character;
           }) as Character.Characters);
 
           return newProfile.withSelectedCharacters(availableCharacters);
@@ -429,7 +426,7 @@ export namespace thunks {
           if (missingCharacters.length) {
             dialog$.showFlash(
               "Missing Characters",
-              'Missing the following characters from the selected template: ' + missingCharacters.join(', '),
+              `Missing the following characters from the selected template: ${missingCharacters.join(', ')}`,
               "",
               undefined,
               "warning",
@@ -439,7 +436,7 @@ export namespace thunks {
       );
     }
 
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
       if (Object.keys(defaultTemplates).includes(templateName)) {
         const template: CharacterTemplate = {
           name: defaultTemplates[templateName].name,
@@ -478,7 +475,7 @@ export namespace thunks {
         const newSelectedCharacters = profile.selectedCharacters.map(
           ({ id, target: oldTarget }) => {
             const resetTarget = newCharacters[id].optimizerSettings.targets.find(
-              target => target.name === oldTarget!.name
+              target => target.name === oldTarget.name
             );
 
             return resetTarget ? { id: id, target: resetTarget } : { id: id, target: oldTarget };
@@ -505,7 +502,7 @@ export namespace thunks {
           createOptimizationPlan('unnamed');
 
         const newSelectedCharacters = profile.selectedCharacters.map(({ id, target }) =>
-          id === characterID && target!.name === targetName ? { id: id, target: resetTarget } : { id: id, target: target }
+          id === characterID && target.name === targetName ? { id: id, target: resetTarget } : { id: id, target: target }
         );
 
         return profile.withCharacters(Object.assign({}, profile.characters, {
@@ -521,7 +518,7 @@ export namespace thunks {
   export function saveTemplate(templateName: string): ThunkResult<void> {
     const db = getDatabase();
 
-    return function (dispatch, getState) {
+    return (dispatch, getState) => {
       const state = getState();
       const selectedCharacters = state.profile.selectedCharacters;
 
@@ -532,7 +529,7 @@ export namespace thunks {
         },
         error => dialog$.showFlash(
           "Storage Error",
-          'Error saving the character template: ' + (error as Error).message + '. Please try again.',
+          `Error saving the character template: ${(error as Error).message}. Please try again.`,
           "",
           undefined,
           "error",
@@ -544,7 +541,7 @@ export namespace thunks {
   export function saveTemplates(templates: CharacterTemplates): ThunkResult<void> {
     const db = getDatabase();
 
-    return function (dispatch) {
+    return (dispatch) => {
       db.saveCharacterTemplates(
         templates,
         () => {
@@ -553,7 +550,7 @@ export namespace thunks {
         },
         error => dialog$.showFlash(
           "Storage Error",
-          'Error saving the character templates: ' + (error as Error).message + '.',
+          `Error saving the character templates: ${(error as Error).message}.`,
           "",
           undefined,
           "error",
@@ -583,16 +580,15 @@ export namespace thunks {
       if (null === prevIndex) {
         // If there's no previous index, put the new character at the top of the list
         return profile.withSelectedCharacters([selectedCharacter].concat(oldSelectedCharacters));
-      } else {
-        const newSelectedCharacters = oldSelectedCharacters.slice();
-        newSelectedCharacters.splice(
-          prevIndex + 1,
-          0,
-          selectedCharacter
-        );
-
-        return profile.withSelectedCharacters(newSelectedCharacters);
       }
+      const newSelectedCharacters = oldSelectedCharacters.slice();
+      newSelectedCharacters.splice(
+        prevIndex + 1,
+        0,
+        selectedCharacter
+      );
+
+      return profile.withSelectedCharacters(newSelectedCharacters);
     });
   }
 
@@ -695,9 +691,8 @@ export namespace thunks {
       if (newSelectedCharacters.length > characterIndex) {
         newSelectedCharacters.splice(characterIndex, 1);
         return profile.withSelectedCharacters(newSelectedCharacters);
-      } else {
-        return profile;
       }
+      return profile;
     });
   }
 }

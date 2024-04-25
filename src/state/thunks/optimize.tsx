@@ -1,6 +1,5 @@
 // react
-import React from "react";
-import { ThunkResult } from "#/state/reducers/modsOptimizer";
+import type { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // state
 import getDatabase from "#/state/storage/Database";
@@ -20,10 +19,10 @@ import { Review } from "#/state/modules/review";
 
 // domain
 import * as Character from "#/domain/Character";
-import { OptimizationStatus } from "#/domain/OptimizationStatus";
-import { OptimizerRun } from "#/domain/OptimizerRun";
+import type { OptimizationStatus } from "#/domain/OptimizationStatus";
+import type { OptimizerRun } from "#/domain/OptimizerRun";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
-import { ModSuggestion } from "#/domain/PlayerProfile";
+import type { ModSuggestion } from "#/domain/PlayerProfile";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
@@ -34,7 +33,7 @@ let optimizationWorker: Worker | null = null;
 
 export namespace thunks {
 	export function cancelOptimizer(): ThunkResult<void> {
-		return function (dispatch) {
+		return (dispatch) => {
 			optimizationWorker?.terminate();
 			dispatch(actions.updateProgress({} as OptimizationStatus));
 		};
@@ -95,8 +94,8 @@ export namespace thunks {
 				if (resultsWithMessages.length) {
 					const state = getState();
 					const baseCharacters = Data.selectors.selectBaseCharacters(state);
-					let doubledResultsWithMessages = [];
-					for (let item of resultsWithMessages) {
+					const doubledResultsWithMessages = [];
+					for (const item of resultsWithMessages) {
 						doubledResultsWithMessages.push(item);
 						doubledResultsWithMessages.push(item);
 					}
@@ -153,7 +152,7 @@ export namespace thunks {
 
 														return (
 															index % 2 === 0 ?
-																<div key={id+"-Avatar"} className="grid gap-1 p-4">
+																<div key={`${id}-Avatar`} className="grid gap-1 p-4">
 																	<CharacterAvatar character={character} />
 																	<br />
 																	{baseCharacters[id]
@@ -161,17 +160,17 @@ export namespace thunks {
 																		: id}
 															  </div>
 															:
-																<div key={id+"-Messages"} className="grid gap-1 p-4">
+																<div key={`${id}-Messages`} className="grid gap-1 p-4">
 																	<h4>{target.name}:</h4>
 																	<ul>
-																		{messages!.map((message, index) => (
-																			<li key={index}>{message}</li>
+																		{messages?.map((message) => (
+																			<li key={message}>{message}</li>
 																		))}
 																	</ul>
 																	<ul className={"text-red-600"}>
 																		{missedGoals.map(
-																			([missedGoal, value], index) => (
-																				<li key={index}>
+																			([missedGoal, value]) => (
+																				<li key={missedGoal.id}>
 																					{`Missed goal stat for ${
 																						missedGoal.stat
 																					}. Value of ${
@@ -211,7 +210,7 @@ export namespace thunks {
 	 * Run the optimization algorithm and update the player's profile with the results
 	 */
 	export function optimizeMods(): ThunkResult<void> {
-		return function (dispatch, getState) {
+		return (dispatch, getState) => {
 			const profile = getState().profile;
 
 			// If any of the characters being optimized don't have stats, then show an error message
@@ -232,7 +231,7 @@ export namespace thunks {
 				{ type: "module" },
 			);
 
-			optimizationWorker.onmessage = function (message) {
+			optimizationWorker.onmessage = (message) => {
 				switch (message.data.type) {
 					case "OptimizationSuccess":
 						isBusy$.set(false);
@@ -259,7 +258,7 @@ export namespace thunks {
 				}
 			};
 
-			optimizationWorker.onerror = function (error) {
+			optimizationWorker.onerror = (error) => {
 				console.log(error);
 				optimizationWorker?.terminate();
 				dialog$.hide();

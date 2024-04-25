@@ -1,5 +1,5 @@
 // domain
-import * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
 import { Stats } from "./Stats";
 
@@ -7,7 +7,7 @@ import { Stats } from "./Stats";
 export type GIMOStatNames =  CharacterStatNames.All | CalculatedStatNames;
 
 // #region DisplayStatNames
-export type DisplayStatNames = 
+export type DisplayStatNames =
   | 'Speed'
   | 'Potency'
   | 'Tenacity'
@@ -35,15 +35,15 @@ export type CalculatedStatNames =
   | 'Effective Health (special)'
   | 'Average Damage (physical)'
   | 'Average Damage (special)'
-;  
+;
 //#endregion
 
 export class CharacterSummaryStat extends Stats.Stat {
 
   static csGIMO2DisplayStatNamesMap: {[key in GIMOStatNames]: DisplayStatNames} = {
-    'Health': 'Health',
-    'Protection': 'Protection',
-    'Speed': 'Speed',    
+    Health: 'Health',
+    Protection: 'Protection',
+    Speed: 'Speed',
     'Critical Damage %': 'Critical Damage',
     'Potency %': 'Potency',
     'Tenacity %': 'Tenacity',
@@ -51,8 +51,8 @@ export class CharacterSummaryStat extends Stats.Stat {
     'Special Damage': 'Special Damage',
     'Physical Critical Chance %': 'Physical Critical Chance',
     'Special Critical Chance %': 'Special Critical Chance',
-    'Armor': 'Armor',
-    'Resistance': 'Resistance',
+    Armor: 'Armor',
+    Resistance: 'Resistance',
     'Accuracy %': 'Accuracy',
     'Critical Avoidance %': 'Critical Avoidance',
     'Effective Health (physical)': 'Effective Health (physical)',
@@ -95,7 +95,7 @@ export class CharacterSummaryStat extends Stats.Stat {
     if (that.getDisplayType() !== this.getDisplayType() || that.isPercentVersion !== this.isPercentVersion) {
       throw new Error("Can't add two Stats of different types");
     }
-    
+
     const result = this.clone();
     result.value = this.bigValue.plus(that.bigValue).toNumber();
     return result;
@@ -114,19 +114,19 @@ export class CharacterSummaryStat extends Stats.Stat {
     if (that.type !== this.type) {
       throw new Error("Can't take the difference between Stats of different types");
     }
-    let valueDiff = this.bigValue.minus(that.bigValue);
+    const valueDiff = this.bigValue.minus(that.bigValue);
     let strValueDiff: string;
     if (valueDiff.mod(1)) {
       strValueDiff = `${valueDiff.toFixed(2)}`;
     } else {
       strValueDiff = `${valueDiff}`;
     }
-    let result = this.clone();
+    const result = this.clone();
     result.value = valueDiff.toNumber();
 //    result.rawValue = strValueDiff;
     return result;
 //    return new Stat(this.type, `${strValueDiff}${this.displayModifier}`);
   }
 
-  
+
 }
