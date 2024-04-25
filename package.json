@@ -33,7 +33,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "big.js": "^6.2.1",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "file-saver": "^2.0.5",
     "i18next": "^23.11.2",
     "i18next-browser-languagedetector": "^7.2.1",
