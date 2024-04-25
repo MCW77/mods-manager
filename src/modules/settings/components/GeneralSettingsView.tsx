@@ -32,6 +32,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { AccountsManager } from "#/components/AccountsManager/AccountsManager";
 import { FileInput } from "#/components/FileInput/FileInput";
+import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";
@@ -84,16 +85,7 @@ const GeneralSettingsView = observer(() => {
 					<CardTitle>{t("general.display.Title")}</CardTitle>
 				</CardHeader>
 				<CardContent className={global}>
-					<label className={labelCSS} htmlFor="language">{t('general.display.Language')}</label>
-					<select
-						className={inputCSS}
-						id="language"
-						value={i18n.language}
-						onChange={(e) => i18n.changeLanguage(e.target.value)}
-					>
-						<option value="en-US">English</option>
-						<option value="de-DE">Deutsch</option>
-					</select>
+					<UISettingsForm />
 				</CardContent>
 			</Card>
 			<Card className="!bg-opacity-20 m-4">

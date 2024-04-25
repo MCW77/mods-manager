@@ -10,7 +10,7 @@ import type { ModListFilter } from "../domain/ModListFilter";
 import { type ModsViewOptions, defaultOptions } from "../domain/modules/ModsViewOptions";
 import type { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerProfile } from "../domain/PlayerProfile";
-import type { SettingsSections } from "../domain/SettingsSections";
+import type { SettingsSections } from "../modules/settings/domain/SettingsSections";
 import type { TargetStats } from "../domain/TargetStat";
 import type { Templates } from "../domain/Templates";
 

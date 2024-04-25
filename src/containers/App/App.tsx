@@ -38,8 +38,8 @@ import { Dialog } from "#/modules/dialog/components/Dialog";
 import { AboutView } from "#/containers/AboutView/AboutView";
 import ExploreView from "#/containers/ExploreView/ExploreView";
 import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
-import { SettingsView } from "#/containers/SettingsView/SettingsView";
 import { HelpView } from "#/modules/help/pages/HelpView";
+import { SettingsView } from "#/modules/settings/pages/SettingsView";
 
 const ReactiveTabs = reactive(Tabs);
 

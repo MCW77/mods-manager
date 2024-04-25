@@ -11,7 +11,6 @@ import { CharacterEdit } from "../modules/characterEdit";
 import { Explore } from "../modules/explore";
 import { Optimize } from "../modules/optimize";
 import { Review } from "../modules/review";
-import { Settings } from "../modules/settings";
 import { Storage } from "../modules/storage";
 // #endregion
 
@@ -36,7 +35,6 @@ type AppActions =
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
   | ReturnType<typeof Review.actions.changeModListFilter>
-  | ReturnType<typeof Settings.actions.setSettingsPosition>
   | ReturnType<typeof Storage.actions.setBaseCharacters>
   | ReturnType<typeof Storage.actions.setCharacterTemplates>
   | ReturnType<typeof Storage.actions.setHotUtilsSubscription>
@@ -98,9 +96,6 @@ const modsOptimizer: RootReducer = (state: IAppState | undefined, action: AppAct
       return AppState.save(
         Review.reducers.changeModListFilter(state, action)
       );
-
-    case Settings.actionNames.SET_SETTINGS_POSITION:
-      return Settings.reducers.setSettingsPosition(state, action);
 
     case Storage.actionNames.SET_BASE_CHARACTERS:
       return Storage.reducers.setBaseCharacters(state, action);

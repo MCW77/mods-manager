@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { observer } from "@legendapp/state/react";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
@@ -16,9 +14,7 @@ import { CharacterEdit } from "#/state/modules/characterEdit";
 import type { TemplatesAddingMode } from "#/domain/TemplatesAddingMode";
 
 // components
-import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
-import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import {
 	Select,
@@ -32,15 +28,12 @@ import {
 // containers
 import { TemplatesManager } from "#/containers/TemplatesManager/TemplatesManager";
 import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
-
-const ReactiveInput = reactive(Input);
-const ReactiveSlider = reactive(SingleValueSlider);
+import { OptimizationSettingsForm } from "#/modules/optimizationSettings/components/OptimizationSettingsForm";
 
 const OptimizerSettingsView = observer(() => {
 	const templatesAddingMode = useSelector(
 		CharacterEdit.selectors.selectTemplatesAddingMode,
 	);
-	const allycode = profilesManagement$.profiles.activeAllycode.get();
 	const dispatch: ThunkDispatch = useDispatch();
 	const [t, i18n] = useTranslation("settings-ui");
 
@@ -55,97 +48,8 @@ const OptimizerSettingsView = observer(() => {
 				<CardHeader>
 					<CardTitle>{t("optimizer.global.Title")}</CardTitle>
 				</CardHeader>
-				<CardContent className={global}>
-					<Label
-						className={labelCSS}
-						htmlFor="threshold2"
-					>
-						{t('optimizer.global.Threshold')}:
-					</Label>
-					<div className={inputCSS + " flex gap-2"}>
-						<ReactiveSlider
-							className={"min-w-[120px]"}
-							id="threshold1"
-							min={0}
-							max={100}
-							step={1}
-							$value={optimizationSettings$.settingsByProfile[allycode].modChangeThreshold}
-							onChange={(threshold: number) => {
-								optimizationSettings$.settingsByProfile[allycode].modChangeThreshold.set(threshold)
-							}}
-						/>
-						<ReactiveInput
-							className={"w-20"}
-							id="threshold2"
-							min={0}
-							max={100}
-							type="number"
-							$value={optimizationSettings$.settingsByProfile[allycode].modChangeThreshold}
-							onChange={(event) =>
-								optimizationSettings$.settingsByProfile[allycode].modChangeThreshold.set(event.target.valueAsNumber)
-							}
-						/>
-					</div>
-					<Label
-						className={labelCSS}
-						htmlFor="lock-unselected"
-					>
-						{t('optimizer.global.LockUnselected')}:
-					</Label>
-					<ReactiveInput
-						className={inputCSS}
-						id="lock-unselected"
-						type="checkbox"
-						$checked={optimizationSettings$.settingsByProfile[allycode].lockUnselectedCharacters}
-						onChange={(event) =>
-							optimizationSettings$.settingsByProfile[allycode].lockUnselectedCharacters.set(event.target.checked)
-						}
-					/>
-					<Label
-						className={labelCSS}
-						htmlFor="force-complete-sets"
-					>
-						{t('optimizer.global.NoModSetsBreak')}:
-					</Label>
-					<ReactiveInput
-						className={inputCSS}
-						id="force-complete-sets"
-						type="checkbox"
-						$checked={optimizationSettings$.settingsByProfile[allycode].forceCompleteSets}
-						onChange={(event) =>
-							optimizationSettings$.settingsByProfile[allycode].forceCompleteSets.set(event.target.checked)
-						}
-					/>
-					<Label
-						className={labelCSS}
-						htmlFor="simulate-6e"
-					>
-						{t('optimizer.global.Simulate6E')}
-					</Label>
-					<ReactiveInput
-						className={inputCSS}
-						id="simulate-6e"
-						type="checkbox"
-						$checked={optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice}
-						onChange={(event) =>
-							optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice.set(event.target.checked)
-						}
-					/>
-					<Label
-						className={labelCSS}
-						htmlFor="simulate-level-15"
-					>
-						{t('optimizer.global.SimulateLevel15')}
-					</Label>
-					<ReactiveInput
-						className={inputCSS}
-						id="simulate-level-15"
-						type="checkbox"
-						$checked={optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods}
-						onChange={(event) =>
-							optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods.set(event.target.checked)
-						}
-					/>
+				<CardContent>
+					<OptimizationSettingsForm />
 				</CardContent>
 			</Card>
 			<Card className="!bg-opacity-20 m-4">
