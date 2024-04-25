@@ -18,8 +18,8 @@ dependencies:
     specifier: ^0.2.0
     version: 0.2.0(@fortawesome/fontawesome-svg-core@6.5.2)(react@18.2.0)
   '@legendapp/state':
-    specifier: ^2.1.11
-    version: 2.1.11(react@18.2.0)
+    specifier: ^2.1.13
+    version: 2.1.13(react@18.2.0)
   '@radix-ui/react-collapsible':
     specifier: ^1.0.3
     version: 1.0.3(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0)(react@18.2.0)
@@ -2287,8 +2287,8 @@ packages:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  /@legendapp/state@2.1.11(react@18.2.0):
-    resolution: {integrity: sha512-btZY6PcBBJJ1cVj2YqFAhXM8nYZxdwa+5pHswAJOLhd5yw9jRmARE2NOGNY/3niVGvo3Fycu5LsSJO1OXwg6Bg==}
+  /@legendapp/state@2.1.13(react@18.2.0):
+    resolution: {integrity: sha512-jXgp4jPncAz3dgA2dwsT70W6j4ySm7qWTpbBEg9UU82Zw+k3uXOQDTupXbb4vES6+bF9tMlxJxutyLkAtkCTOg==}
     peerDependencies:
       react: '>=16.8.0'
     peerDependenciesMeta:
