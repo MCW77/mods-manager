@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import { faFileImport, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -102,7 +102,7 @@ const AccountsManager = React.memo(() => {
 						icon={faTrashCan}
 						title={`${t("general.accounts.Delete")}`}
 					/>
-					{t("general.accounts.Delete") + " " + formatAllyCode(selectedProfile)}
+					{`${t("general.accounts.Delete")} ${formatAllyCode(selectedProfile)}`}
 				</Button>
 			</div>
 			<div className={"accounts"}>
@@ -114,7 +114,7 @@ const AccountsManager = React.memo(() => {
 					{Object.entries(playerProfiles).map((profile, index) => (
 						<div className="flex items-center space-x-2" key={profile[0]}>
 							<RadioGroupItem value={profile[0]} id={`profile-${index}`} />
-							<Label htmlFor={`profile-$(index)`}>{`${formatAllyCode(
+							<Label htmlFor={`profile-${index}`}>{`${formatAllyCode(
 								profile[0],
 							)} - ${profile[1]}`}</Label>
 						</div>

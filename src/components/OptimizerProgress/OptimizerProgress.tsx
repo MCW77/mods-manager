@@ -1,7 +1,6 @@
 // react
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
@@ -18,8 +17,7 @@ import { Button } from "#ui/button";
 const OptimizerProgress = () => {
 	const dispatch: ThunkDispatch = useDispatch();
 	const progress = useSelector(Optimize.selectors.selectProgress);
-	const isIncremental =
-		incrementalOptimization$.activeIndex.peek() !== null;
+	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
 		dispatch(Optimize.thunks.cancelOptimizer());

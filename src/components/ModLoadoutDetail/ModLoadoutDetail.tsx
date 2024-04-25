@@ -5,14 +5,14 @@ import React from "react";
 import './ModLoadoutDetail.css';
 
 // domain
-import * as Character from "#/domain/Character";
-import { ModLoadout } from "#/domain/ModLoadout";
-import * as OptimizationPlan from "#/domain/OptimizationPlan";
-import { MissedGoals } from "#/domain/PlayerProfile";
+import type * as Character from "#/domain/Character";
+import type { ModLoadout } from "#/domain/ModLoadout";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { MissedGoals } from "#/domain/PlayerProfile";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
-import { TargetStat } from "#/domain/TargetStat";
+import type { TargetStat } from "#/domain/TargetStat";
 
-import * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
 import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
@@ -83,48 +83,48 @@ const ModLoadoutDetail = React.memo(
         critDamage: 0,
       };
 
-      playerStats.forEach(stat => {
+      for (const stat of playerStats) {
         switch (stat.name) {
           case 'Health':
-            currentStats['health'] = stat.currentValue;
-            recommendedStats['health'] = stat.recommendedValue;
+            currentStats.health = stat.currentValue;
+            recommendedStats.health = stat.recommendedValue;
             break;
           case 'Protection':
-            currentStats['protection'] = stat.currentValue;
-            recommendedStats['protection'] = stat.recommendedValue;
+            currentStats.protection = stat.currentValue;
+            recommendedStats.protection = stat.recommendedValue;
             break;
           case 'Armor':
-            currentStats['armor'] = stat.currentValue;
-            recommendedStats['armor'] = stat.recommendedValue;
+            currentStats.armor = stat.currentValue;
+            recommendedStats.armor = stat.recommendedValue;
             break;
           case 'Resistance':
-            currentStats['resistance'] = stat.currentValue;
-            recommendedStats['resistance'] = stat.recommendedValue;
+            currentStats.resistance = stat.currentValue;
+            recommendedStats.resistance = stat.recommendedValue;
             break;
           case 'Physical Damage':
-            currentStats['physDamage'] = stat.currentValue;
-            recommendedStats['physDamage'] = stat.recommendedValue;
+            currentStats.physDamage = stat.currentValue;
+            recommendedStats.physDamage = stat.recommendedValue;
             break;
           case 'Physical Critical Chance':
-            currentStats['physCritChance'] = stat.currentValue;
-            recommendedStats['physCritChance'] = stat.recommendedValue;
+            currentStats.physCritChance = stat.currentValue;
+            recommendedStats.physCritChance = stat.recommendedValue;
             break;
           case 'Special Damage':
-            currentStats['specDamage'] = stat.currentValue;
-            recommendedStats['specDamage'] = stat.recommendedValue;
+            currentStats.specDamage = stat.currentValue;
+            recommendedStats.specDamage = stat.recommendedValue;
             break;
           case 'Special Critical Chance':
-            currentStats['specCritChance'] = stat.currentValue;
-            recommendedStats['specCritChance'] = stat.recommendedValue;
+            currentStats.specCritChance = stat.currentValue;
+            recommendedStats.specCritChance = stat.recommendedValue;
             break;
           case 'Critical Damage':
-            currentStats['critDamage'] = stat.currentValue;
-            recommendedStats['critDamage'] = stat.recommendedValue;
+            currentStats.critDamage = stat.currentValue;
+            recommendedStats.critDamage = stat.recommendedValue;
             break;
           default:
             break;
         }
-      })
+      }
 
       const currentEffectiveHealthPhysical =
         (currentStats.health + currentStats.protection) / (1 - (currentStats.armor / 100));
@@ -240,12 +240,11 @@ const ModLoadoutDetail = React.memo(
 
     const statsDisplay = playerStats.map((stat, index) => {
       if (stat.recommendedValue == null) {
-        return <tr key={index}>
+        return <tr key={stat.name}>
           <td className={'stat-type'}>{stat.name}</td>
           <td className={'stat-value'}>???(???)</td>
           {stat.diffStat &&
-            <td className={'stat-diff' +
-              (stat.diffStat.value > 0 ? ' increase' : stat.diffStat.value < 0 ? ' decrease' : '')
+            <td className={`stat-diff${stat.diffStat.value > 0 ? ' increase' : stat.diffStat.value < 0 ? ' decrease' : ''}`
             }>
               {stat.diffStat.showValue()}
             </td>
@@ -257,7 +256,7 @@ const ModLoadoutDetail = React.memo(
         ? `Value must be between ${stat.missedGoal[0].minimum} and ${stat.missedGoal[0].maximum}`
         : undefined;
 
-      return <tr key={index}>
+      return <tr key={stat.name}>
         <td className={`stat-type ${missedMessage ? 'red-text' : ''}`} title={missedMessage}>{stat.name}</td>
         {stat.diffStat &&
           <td className={'stat-value'}>
@@ -279,13 +278,11 @@ const ModLoadoutDetail = React.memo(
             <span className={'mods-value'}>({stat.recommendedStat.showValue()})</span>
           }
         </td>
-        <td className={'optimizer-value ' +
-          (stat.optimizationValue > 0 ? 'increase' : stat.optimizationValue < 0 ? 'decrease' : '')}>
+        <td className={`optimizer-value ${stat.optimizationValue > 0 ? 'increase' : stat.optimizationValue < 0 ? 'decrease' : ''}`}>
           {(stat.optimizationValue || 0).toFixed(2)}
         </td>
         {stat.diffStat &&
-          <td className={'stat-diff' +
-            (stat.diffStat.value > 0 ? ' increase' : stat.diffStat.value < 0 ? ' decrease' : '')
+          <td className={`stat-diff${stat.diffStat.value > 0 ? ' increase' : stat.diffStat.value < 0 ? ' decrease' : ''}`
           }>
             {stat.diffStat.showValue()}
           </td>
@@ -315,7 +312,7 @@ const ModLoadoutDetail = React.memo(
                 <th colSpan={oldLoadout ? 5 : 4}>Stats Summary</th>
               </tr>
               <tr>
-                <th></th>
+                <th />
                 <th>Current</th>
                 <th>Recommended</th>
                 <th>Value</th>

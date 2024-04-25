@@ -1,51 +1,51 @@
 // react
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // components
-import { Slider } from '#ui/slider';
+import { Slider } from "#ui/slider";
 
 interface SingleValueSliderProps {
-  className?: string;
-  id?: string;
-  min: number;
-  max: number;
-  step: number;
-  value: number;
-  onChange: (newValue: number) => void;
+	className?: string;
+	id?: string;
+	min: number;
+	max: number;
+	step: number;
+	value: number;
+	onChange: (newValue: number) => void;
 }
 
 const SingleValueSlider = ({
-  className = '',
-  id = '',
-  min,
-  max,
-  step,
-  value,
-  onChange,
+	className = "",
+	id = "",
+	min,
+	max,
+	step,
+	value,
+	onChange,
 }: SingleValueSliderProps) => {
-  const [sliderValue, setSliderValue] = useState<number>(value);
+	const [sliderValue, setSliderValue] = useState<number>(value);
 
-  useEffect(() => {
-    setSliderValue(value);
-  }, [value]);
+	useEffect(() => {
+		setSliderValue(value);
+	}, [value]);
 
-  const handleSliderChange = (newValue: number[]) => {
-    setSliderValue(newValue[0]);
-    value = newValue[0];
-    onChange(newValue[0]);
-  };
+	const handleSliderChange = (newValue: number[]) => {
+		setSliderValue(newValue[0]);
+		value = newValue[0];
+		onChange(newValue[0]);
+	};
 
-  return (
-    <Slider
-      className={className}
-      id={id}
-      min={min}
-      max={max}
-      step={step}
-      value={[sliderValue]}
-      onValueChange={handleSliderChange}
-    />
-  );
+	return (
+		<Slider
+			className={className}
+			id={id}
+			min={min}
+			max={max}
+			step={step}
+			value={[sliderValue]}
+			onValueChange={handleSliderChange}
+		/>
+	);
 };
 
 export { SingleValueSlider };

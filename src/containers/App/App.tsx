@@ -56,12 +56,11 @@ const App = observer(
 
 		useEffect(() => {
 			const queryParams = new URLSearchParams(document.location.search);
+			const allycode = queryParams.get("allyCode");
+			const sessionId = queryParams.get("SessionID");
 
-			if (queryParams.has("allyCode")) {
-				const allycode = queryParams.get("allyCode")!;
-
-				if (queryParams.has("SessionID")) {
-					const sessionId = queryParams.get("SessionID")!;
+			if (allycode) {
+				if (sessionId) {
 					if (queryParams.has("NoPull")) {
 						dispatch(Data.thunks.setHotUtilsSessionId(allycode, sessionId));
 					} else {
@@ -83,7 +82,7 @@ const App = observer(
 
 			// Check the current version of the app against the API
 			dispatch(Data.thunks.checkVersion());
-		}, []);
+		});
 
 		return (
 			<Suspense fallback={<Spinner />}>

@@ -1,26 +1,21 @@
 // react
-import React from 'react';
+import React from "react";
 
 // styles
-import './Pips.css';
-
+import "./Pips.css";
 
 type ComponentProps = {
-  pips: number;
-}
+	pips: number;
+};
 
-const Pips = React.memo(
-  ({pips}: ComponentProps) => {
-    const pipElements = Array.from(Array(pips).keys()).map((_, index) => <span key={index} className='pip'/>);
+const Pips = React.memo(({ pips }: ComponentProps) => {
+	const pipElements = Array.from(Array(pips).keys()).map((_, index) => (
+		<span key={index} className="pip" />
+	));
 
-    return (
-      <div className='pips inset'>
-        {pipElements}
-      </div>
-    );
-  }
-);
+	return <div className="pips inset">{pipElements}</div>;
+});
 
-Pips.displayName = 'Pips';
+Pips.displayName = "Pips";
 
 export { Pips };
