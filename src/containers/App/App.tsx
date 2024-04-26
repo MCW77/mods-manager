@@ -50,7 +50,6 @@ const App = observer(
 		const firstSection = profilesManagement$.hasProfiles.peek()
 			? "explore"
 			: "help";
-		ui$.currentSection.set(firstSection);
 
 		console.log("rendering APP");
 
@@ -82,6 +81,7 @@ const App = observer(
 
 			// Check the current version of the app against the API
 			dispatch(Data.thunks.checkVersion());
+			ui$.currentSection.set(firstSection);
 		});
 
 		return (
