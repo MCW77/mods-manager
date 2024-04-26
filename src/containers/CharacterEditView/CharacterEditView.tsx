@@ -55,6 +55,8 @@ import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import ResetAllCharacterTargetsModal from "./ResetAllCharacterTargetsModal";
+
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Dropdown } from "#/components/Dropdown/Dropdown";
@@ -109,26 +111,6 @@ class CharacterEditView extends PureComponent<Props> {
       default:
       // Do nothing
     }
-  }
-
-  /**
-   * Read a file as input and pass its contents to another function for processing
-   * @param fileInput The uploaded file
-   * @param handleResult {Function}
-   */
-  readFile(fileInput: Blob, handleResult: (textInFile: string) => void) {
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      try {
-        const fileData: string = (event?.target?.result as string) ?? "";
-        handleResult(fileData);
-      } catch (e) {
-        dialog$.showError((e as Error).message);
-      }
-    };
-
-    reader.readAsText(fileInput);
   }
 
   render() {
@@ -254,7 +236,7 @@ class CharacterEditView extends PureComponent<Props> {
                     </p>,
                     <ul>
                       {invalidTargets.map((id) => (
-                        <li>
+                        <li key={id}>
                           {this.props.baseCharacters[id]
                             ? this.props.baseCharacters[id].name
                             : id}
@@ -305,7 +287,7 @@ class CharacterEditView extends PureComponent<Props> {
           <Button
             type="button"
             onClick={() =>
-              dialog$.show(this.resetCharsModal())
+              dialog$.show(<ResetAllCharacterTargetsModal />)
             }
           >
             Reset all targets
@@ -451,43 +433,6 @@ class CharacterEditView extends PureComponent<Props> {
           {this.props.baseCharacters[character.baseID]
             ? this.props.baseCharacters[character.baseID].name
             : character.baseID}
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * Renders an "Are you sure?" modal to reset all characters to their default optimization targets
-   *
-   * @return JSX Element
-   */
-  resetCharsModal() {
-    return (
-      <div className="w-[40em]">
-        <h2>Are you sure you want to reset all characters to defaults?</h2>
-        <p>
-          This will <strong>not</strong> overwrite any new optimization targets
-          that you've saved, but if you've edited any existing targets, or if
-          any new targets have been created that have the same name as one that
-          you've made, then it will be overwritten.
-        </p>
-        <div className={"actions"}>
-          <Button
-            type={"button"}
-            onClick={() => dialog$.hide()}
-          >
-            Cancel
-          </Button>
-          <Button
-            type={"button"}
-            variant={"destructive"}
-            onClick={() => {
-              dialog$.hide();
-              this.props.resetAllCharacterTargets();
-            }}
-          >
-            Reset
-          </Button>
         </div>
       </div>
     );
@@ -735,7 +680,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   unlockAllCharacters: () => dispatch(CharacterEdit.thunks.unlockAllCharacters()),
   toggleCharacterLock: (characterID: CharacterNames) =>
     dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
-  resetAllCharacterTargets: () => dispatch(CharacterEdit.thunks.resetAllCharacterTargets()),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
   applyRanking: (ranking: CharacterNames[]) => {
     dispatch(Data.thunks.applyRanking(ranking));
