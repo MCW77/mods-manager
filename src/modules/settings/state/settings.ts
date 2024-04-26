@@ -2,7 +2,7 @@
 import { observable } from "@legendapp/state";
 
 // domain
-import { SettingsSections } from "../domain/SettingsSections";
+import type { SettingsSections } from "../domain/SettingsSections";
 import { ui$ } from "#/modules/ui/state/ui";
 
 interface Settings {

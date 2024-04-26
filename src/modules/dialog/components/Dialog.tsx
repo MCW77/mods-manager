@@ -1,5 +1,4 @@
 // react
-import React from "react";
 import { observer, reactive } from "@legendapp/state/react";
 
 // state

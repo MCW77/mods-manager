@@ -5,7 +5,7 @@ import React from "react";
 import { help$ } from "#/modules/help/state/help";
 
 //domain
-import { HelpSections } from "#/modules/help/domain/HelpSections";
+import type { HelpSections } from "#/modules/help/domain/HelpSections";
 
 // components
 import { HelpCircle } from "lucide-react";
@@ -27,7 +27,7 @@ const HelpLink = React.memo(({ title, section, topic }: ComponentProps) => {
 			variant="ghost"
 			onClick={() => help$.setHelpPosition(section, topic)}
 		>
-			<HelpCircle className="h-6 w-6 m-auto"></HelpCircle>
+			<HelpCircle className="h-6 w-6 m-auto" />
 		</Button>
 	);
 });

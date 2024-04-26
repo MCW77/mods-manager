@@ -1,4 +1,7 @@
-import { CharacterNames } from "#/constants/characterSettings";
-import * as DTOs from '../dtos';
+import type { CharacterNames } from "#/constants/characterSettings";
+import type * as DTOs from "../dtos";
 
-export type PlayerValuesByCharacter = Record<CharacterNames, DTOs.GIMO.PlayerValuesDTO>;
+export type PlayerValuesByCharacter = Record<
+	CharacterNames,
+	DTOs.GIMO.PlayerValuesDTO
+>;

@@ -2,7 +2,7 @@
 import { observable } from "@legendapp/state";
 
 // domain
-import { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/characterSettings";
 
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 

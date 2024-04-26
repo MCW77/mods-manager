@@ -1,4 +1,4 @@
-import * as CharacterStatNames from "../../domain/CharacterStatNames"
+import type * as CharacterStatNames from "../../domain/CharacterStatNames";
 type CharacterStatNamesIndexer = Record<CharacterStatNames.All, number>;
 
 /**
@@ -8,20 +8,20 @@ type CharacterStatNamesIndexer = Record<CharacterStatNames.All, number>;
  */
 
 interface CharacterStatsDTO extends CharacterStatNamesIndexer {
-  Health: number;
-  Protection: number;
-  Speed: number;
-  'Critical Damage %': number;
-  'Potency %': number;
-  'Tenacity %': number;
-  'Physical Damage': number;
-  'Special Damage': number;
-  Armor: number;
-  Resistance: number;
-  'Accuracy %': number;
-  'Critical Avoidance %': number;
-  'Physical Critical Chance %': number;
-  'Special Critical Chance %': number;
+	Health: number;
+	Protection: number;
+	Speed: number;
+	"Critical Damage %": number;
+	"Potency %": number;
+	"Tenacity %": number;
+	"Physical Damage": number;
+	"Special Damage": number;
+	Armor: number;
+	Resistance: number;
+	"Accuracy %": number;
+	"Critical Avoidance %": number;
+	"Physical Critical Chance %": number;
+	"Special Critical Chance %": number;
 }
 
 export type { CharacterStatsDTO };

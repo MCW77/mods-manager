@@ -5,7 +5,7 @@ import React from "react";
 import { settings$ } from "../state/settings";
 
 // domain
-import { SettingsSections } from "../domain/SettingsSections";
+import type { SettingsSections } from "../domain/SettingsSections";
 
 // components
 import { Settings as SettingsIcon } from "lucide-react";
@@ -26,7 +26,7 @@ const SettingsLink = React.memo(({ title, section }: ComponentProps) => {
 			variant="ghost"
 			onClick={() => settings$.section.set(section)}
 		>
-			<SettingsIcon className="h-6 w-6 m-auto"></SettingsIcon>
+			<SettingsIcon className="h-6 w-6 m-auto" />
 		</Button>
 	);
 });

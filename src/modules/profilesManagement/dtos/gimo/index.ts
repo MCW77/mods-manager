@@ -1,2 +1,2 @@
-export * from './CharacterStatsDTO';
-export * from './PlayerValuesDTO';
+export * from "./CharacterStatsDTO";
+export * from "./PlayerValuesDTO";

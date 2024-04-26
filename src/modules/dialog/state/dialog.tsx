@@ -1,8 +1,8 @@
 // react
-import * as React from "react";
+import type * as React from "react";
 
 // state
-import { ObservableObject, observable } from "@legendapp/state";
+import { type ObservableObject, observable } from "@legendapp/state";
 
 // components
 import { ErrorMessage } from "../components/ErrorMessage";
@@ -22,13 +22,13 @@ type Dialog = {
 		reason?: React.ReactNode,
 		solution?: React.ReactNode,
 	) => void;
-  showFlash: (
-    title: React.ReactNode,
-    description?: string,
-    actionLabel?: string,
-    actionHandler?: () => void,
-    type?: string,
-  ) => void;
+	showFlash: (
+		title: React.ReactNode,
+		description?: string,
+		actionLabel?: string,
+		actionHandler?: () => void,
+		type?: string,
+	) => void;
 	hide: () => void;
 };
 
@@ -40,7 +40,7 @@ export const dialog$: ObservableObject<Dialog> = observable({
 	isError: false,
 	modal: false,
 	open: false,
-	show: (content: React.ReactNode, modal: boolean = false) => {
+	show: (content: React.ReactNode, modal = false) => {
 		if (dialog$.open.peek() === false) {
 			dialog$.content.set(content);
 			dialog$.modal.set(modal);
@@ -66,7 +66,7 @@ export const dialog$: ObservableObject<Dialog> = observable({
 			dialog$.error.set(error);
 			dialog$.reason.set(reason);
 			dialog$.solution.set(solution);
-			dialog$.content.set(<ErrorMessage></ErrorMessage>);
+			dialog$.content.set(<ErrorMessage />);
 			dialog$.modal.set(false);
 			dialog$.open.set(true);
 			return;
@@ -84,44 +84,43 @@ export const dialog$: ObservableObject<Dialog> = observable({
 			}
 		});
 	},
-  showFlash: (
-    title: React.ReactNode,
-    description: string = "",
-    actionLabel: string = "",
-    actionHandler: () => void = () => {},
-    type: string = "",
-  ) => {
+	showFlash: (
+		title: React.ReactNode,
+		description = "",
+		actionLabel = "",
+		actionHandler: () => void = () => {},
+		type = "",
+	) => {
+		let options = {};
+		actionLabel !== ""
+			? (options = {
+					action: {
+						label: actionLabel,
+						onClick: actionHandler,
+					},
+					description: description,
+				})
+			: (options = {
+					description: description,
+				});
 
-    let options = {};
-    actionLabel !== ""
-    ? options = {
-      action: {
-        label: actionLabel,
-        onClick: actionHandler,
-      },
-      description: description,
-    }
-    : options = {
-      description: description,
-    };
-
-    switch (type) {
-      case "error":
-      toast.error(title, options);
-      break;
-      case "warning":
-      toast.warning(title, options);
-      break;
-      case "info":
-      toast.info(title, options);
-      break;
-      case "success":
-      toast.success(title, options);
-      break;
-      default:
-      toast(title, options);
-    }
-  },
+		switch (type) {
+			case "error":
+				toast.error(title, options);
+				break;
+			case "warning":
+				toast.warning(title, options);
+				break;
+			case "info":
+				toast.info(title, options);
+				break;
+			case "success":
+				toast.success(title, options);
+				break;
+			default:
+				toast(title, options);
+		}
+	},
 	hide: () => {
 		dialog$.open.set(false);
 	},

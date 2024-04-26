@@ -1,2 +1,2 @@
-export * from './HUCharacterStatsMapper';
-export * from './HUPlayerValuesMapper';
+export * from "./HUCharacterStatsMapper";
+export * from "./HUPlayerValuesMapper";

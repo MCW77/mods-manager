@@ -10,7 +10,7 @@ import { WarningLabel } from "#/components/WarningLabel/WarningLabel";
 import { DialogClose } from "#ui/dialog";
 
 const ErrorMessage = observer(
-	React.memo((props: {}) => {
+	React.memo(() => {
 		return (
 			<div className={"flex flex-col gap-4"}>
 				<div className={"flex flex-gap-4 items-center"}>

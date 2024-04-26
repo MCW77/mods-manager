@@ -14,7 +14,7 @@ import { help$ } from "../state/help";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
-import { HelpSections } from "../domain/HelpSections";
+import type { HelpSections } from "../domain/HelpSections";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
