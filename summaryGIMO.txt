@@ -25,16 +25,15 @@ Move Health(Health %) Circle from Sith Eternal Emperor.
 Move Health(Health %) Cross from R2-D2.
 
 Jabba the Hutt - PvP
-Move Health(Offense %) Square from Scout Trooper.
 Move Speed(Health %) Arrow from Jedi Knight Revan.
 Move Speed(Defense %) Diamond from Seventh Sister.
 Move Speed(Health %) Triangle from Jedi Knight Revan.
-Move Health(Health %) Circle from Rey (Jedi Training).
-Move Speed(Tenacity %) Cross from Wat Tambor.
+Move Tenacity(Health %) Circle from Chewbacca.
+Move Speed(Tenacity %) Cross from General Hux.
 
 Supreme Leader Kylo Ren - PvP - Speed
 Move Offense(Offense %) Square from Rey.
-Move Offense(Offense %) Arrow from Taron Malicos.
+Move Offense(Offense %) Arrow from Bo-Katan (Mand'alor).
 Move Offense(Defense %) Diamond from Grand Inquisitor.
 Move Offense(Health %) Triangle from Rey.
 Move Health(Offense %) Cross from Starkiller.
@@ -73,7 +72,7 @@ Move Health(Offense %) Arrow from Dark Trooper.
 Move Health(Defense %) Diamond from Darth Bane.
 Move Offense(Critical Damage %) Triangle from Ahsoka Tano (Fulcrum).
 Move Offense(Health %) Circle from Dark Trooper.
-Move Offense(Offense %) Cross from Admiral Raddus.
+Move Offense(Offense %) Cross from Bo-Katan (Mand'alor).
 
 Darth Malgus - PvP
 Move Health(Offense %) Square from Darth Bane.
@@ -83,7 +82,7 @@ Move Health(Health %) Cross from Captain Drogan.
 
 Jedi Knight Revan - PvP
 Move Speed(Offense %) Square from Commander Ahsoka Tano.
-Move Speed(Speed) Arrow from Fifth Brother.
+Move Speed(Speed) Arrow from IG-11.
 Move Speed(Defense %) Diamond from Jedi Master Luke Skywalker.
 Move Offense(Critical Damage %) Triangle from Han Solo.
 Move Speed(Health %) Circle from Commander Ahsoka Tano.
@@ -92,10 +91,17 @@ Move Health(Offense %) Cross from Jedi Master Kenobi.
 Third Sister - PvP
 Move Health(Offense %) Square from Padmé Amidala.
 Move Health(Health %) Arrow from Rey.
-Move Health(Defense %) Diamond from Jedi Knight Cal Kestis.
+Move Health(Defense %) Diamond from Taron Malicos.
 Move Health(Health %) Triangle from Captain Drogan.
 Move Health(Health %) Circle from R2-D2.
 Move Health(Health %) Cross from Rey.
+
+Bo-Katan (Mand'alor) - PvP
+Move Defense(Offense %) Square from Moff Gideon.
+Move Offense(Offense %) Arrow from Range Trooper.
+Move Offense(Offense %) Triangle from Maul.
+Move Offense(Health %) Circle from Rey.
+Move Offense(Offense %) Cross from Grand Inquisitor.
 
 Taron Malicos - Fast Build
 Move Offense(Offense %) Square from Grand Inquisitor.
@@ -107,14 +113,14 @@ Move Critchance(Health %) Cross from Bastila Shan (Fallen).
 
 Maul - PvP
 Move Health(Offense %) Square from Third Sister.
-Move Offense(Speed) Arrow from ARC Trooper.
+Move Offense(Speed) Arrow from Ahsoka Tano.
 Move Offense(Defense %) Diamond from General Skywalker.
 Move Offense(Health %) Triangle from Grand Master Yoda.
 Move Health(Health %) Circle from Darth Traya.
 
 Commander Ahsoka Tano - PvP
 Move Health(Offense %) Square from R2-D2.
-Move Speed(Speed) Arrow from Grand Admiral Thrawn.
+Move Speed(Speed) Arrow from Count Dooku.
 Move Speed(Defense %) Diamond from The Mandalorian (Beskar Armor).
 Move Speed(Critical Damage %) Triangle from Darth Revan.
 Move Speed(Health %) Circle from Darth Revan.
@@ -128,10 +134,9 @@ Move Health(Protection %) Circle from Third Sister.
 Move Defense(Protection %) Cross from Jedi Master Luke Skywalker.
 
 Starkiller - PvP
-Move Critdamage(Offense %) Square from Supreme Leader Kylo Ren.
+Move Health(Offense %) Square from Scout Trooper.
 Move Critdamage(Offense %) Arrow from Jedi Knight Luke Skywalker.
 Move Critdamage(Critical Damage %) Triangle from Supreme Leader Kylo Ren.
-Move Health(Health %) Circle from Darth Bane.
 Move Critdamage(Health %) Cross from Visas Marr.
 
 Darth Vader - PvP
@@ -145,24 +150,25 @@ C-3PO - Speedy debuffer
 Move Critchance(Offense %) Square from Nute Gunray.
 Move Speed(Speed) Arrow from Mara Jade, The Emperor's Hand.
 Move Health(Defense %) Diamond from Commander Ahsoka Tano.
-Move Speed(Offense %) Triangle from B1 Battle Droid.
+Move Speed(Defense %) Triangle from Mara Jade, The Emperor's Hand.
 Move Speed(Protection %) Circle from Jedi Master Luke Skywalker.
-Move Speed(Potency %) Cross from B1 Battle Droid.
+Move Speed(Potency %) Cross from Admiral Piett.
 
 Admiral Piett - PvP
 Move Speed(Offense %) Square from Echo.
-Move Speed(Speed) Arrow from IG-11.
+Move Speed(Speed) Arrow from Fifth Brother.
 Move Speed(Defense %) Diamond from Leia Organa.
 Move Critchance(Critical Damage %) Triangle from Ben Solo.
 Move Critchance(Protection %) Circle from General Skywalker.
+Move Speed(Potency %) Cross from Count Dooku.
 
 Emperor Palpatine - PvP
 Move Offense(Offense %) Square from General Skywalker.
-Move Offense(Speed) Arrow from Darth Talon.
+Move Offense(Speed) Arrow from B1 Battle Droid.
 Move Health(Defense %) Diamond from Boushh (Leia Organa).
-Move Offense(Offense %) Triangle from IG-11.
-Move Health(Protection %) Circle from Maul.
-Move Offense(Offense %) Cross from Grand Inquisitor.
+Move Offense(Offense %) Triangle from Bo-Katan (Mand'alor).
+Move Offense(Health %) Circle from Count Dooku.
+Move Critdamage(Offense %) Cross from Supreme Leader Kylo Ren.
 
 Padmé Amidala - PvP
 Move Health(Offense %) Square from Captain Drogan.
@@ -175,7 +181,7 @@ Moff Gideon - PvP
 Move Speed(Offense %) Square from Shaak Ti.
 Move Speed(Speed) Arrow from Nute Gunray.
 Move Speed(Defense %) Diamond from Admiral Piett.
-Move Speed(Defense %) Triangle from Mara Jade, The Emperor's Hand.
+Move Speed(Offense %) Triangle from Kuiil.
 Move Health(Protection %) Circle from Greef Karga.
 Move Potency(Potency %) Cross from Scout Trooper.
 
@@ -183,28 +189,28 @@ Mara Jade, The Emperor's Hand - PvP
 Move Speed(Offense %) Square from Jedi Master Luke Skywalker.
 Move Potency(Speed) Arrow from Doctor Aphra.
 Move Speed(Defense %) Diamond from Moff Gideon.
-Move Speed(Offense %) Triangle from Kuiil.
+Move Speed(Offense %) Triangle from IG-11.
 Move Speed(Protection %) Circle from Leia Organa.
 Move Potency(Potency %) Cross from Echo.
 
 Bastila Shan - Leader
 Move Potency(Offense %) Square from Doctor Aphra.
-Move Offense(Speed) Arrow from Jedi Knight Anakin.
+Move Potency(Speed) Arrow from Tech.
 Move Potency(Defense %) Diamond from Mara Jade, The Emperor's Hand.
-Move Offense(Health %) Triangle from Scout Trooper.
-Move Offense(Health %) Circle from Count Dooku.
-Move Offense(Potency %) Cross from Count Dooku.
+Move Potency(Health %) Triangle from Doctor Aphra.
+Move Health(Health %) Circle from Bastila Shan (Fallen).
+Move Health(Potency %) Cross from Doctor Aphra.
 
 General Kenobi - Speedy Tank
-Move Defense(Offense %) Square from Moff Gideon.
+Move Health(Offense %) Square from Greef Karga.
 Move Defense(Protection %) Arrow from Darth Malak.
 Move Defense(Defense %) Diamond from Darth Malgus.
-Move Health(Protection %) Triangle from The Armorer.
+Move Health(Protection %) Triangle from Kanan Jarrus.
 Move Health(Protection %) Circle from Kelleran Beq.
-Move Defense(Protection %) Cross from Darth Malak.
+Move Health(Protection %) Cross from Kuiil.
 
 Bastila Shan (Fallen) - PvP
-Move Health(Offense %) Square from Greef Karga.
+Move Health(Offense %) Square from Jedi Knight Revan.
 Move Speed(Speed) Arrow from Commander Ahsoka Tano.
 Move Health(Defense %) Diamond from Scout Trooper.
 Move Speed(Health %) Triangle from Echo.
@@ -212,66 +218,66 @@ Move Speed(Health %) Circle from Jedi Knight Revan.
 Move Speed(Health %) Cross from Jedi Knight Revan.
 
 Ben Solo - PvP
-Move Offense(Offense %) Square from Taron Malicos.
+Move Critdamage(Offense %) Square from Supreme Leader Kylo Ren.
 Move Offense(Speed) Arrow from Admiral Raddus.
-Move Speed(Defense %) Diamond from Kuiil.
-Move Offense(Offense %) Triangle from Maul.
-Move Offense(Health %) Circle from Rey.
+Move Offense(Defense %) Diamond from Rey.
+Move Offense(Offense %) Triangle from Taron Malicos.
+Move Offense(Health %) Circle from Bo-Katan (Mand'alor).
 Move Critdamage(Offense %) Cross from Jedi Knight Luke Skywalker.
 
 Captain Drogan - PvP
-Move Health(Offense %) Square from Jedi Knight Revan.
-Move Offense(Speed) Arrow from Ahsoka Tano.
-Move Offense(Defense %) Diamond from Rey.
-Move Offense(Offense %) Triangle from Taron Malicos.
-Move Offense(Health %) Circle from Admiral Raddus.
-Move Critdamage(Offense %) Cross from Supreme Leader Kylo Ren.
+Move Speed(Offense %) Square from General Grievous.
+Move Critchance(Speed) Arrow from Grand Inquisitor.
+Move Speed(Defense %) Diamond from Count Dooku.
+Move Speed(Offense %) Triangle from Admiral Piett.
+Move Critchance(Health %) Circle from Admiral Raddus.
+Move Speed(Offense %) Cross from Grand Admiral Thrawn.
 
 Boushh (Leia Organa) - PvP
 Move Critdamage(Offense %) Square from Darth Vader.
 Move Speed(Speed) Arrow from Leia Organa.
-Move Speed(Defense %) Diamond from Fifth Brother.
-Move Speed(Offense %) Triangle from Admiral Piett.
-Move Critchance(Health %) Circle from Ben Solo.
-Move Speed(Offense %) Cross from Grand Admiral Thrawn.
+Move Speed(Defense %) Diamond from Kuiil.
+Move Speed(Offense %) Triangle from 0-0-0.
+Move Speed(Health %) Circle from Echo.
+Move Critchance(Health %) Cross from CT-7567 "Rex".
 
 Grand Inquisitor - PvP
 Move Critdamage(Offense %) Square from Jedi Knight Luke Skywalker.
-Move Offense(Speed) Arrow from Count Dooku.
+Move Offense(Speed) Arrow from Jedi Knight Anakin.
 Move Critdamage(Defense %) Diamond from Supreme Leader Kylo Ren.
-Move Offense(Health %) Circle from First Order Officer.
-Move Offense(Tenacity %) Cross from ARC Trooper.
+Move Offense(Health %) Circle from B1 Battle Droid.
+Move Offense(Tenacity %) Cross from Admiral Raddus.
 
 General Grievous - PvP
-Move Health(Defense %) Diamond from Barriss Offee.
+Move Potency(Offense %) Square from IG-12 & Grogu.
+Move Health(Defense %) Diamond from Jedi Knight Cal Kestis.
 Move Health(Health %) Triangle from Padmé Amidala.
 Move Health(Health %) Cross from Darth Traya.
 
 Shaak Ti - PvP
-Move Health(Offense %) Square from CT-7567 "Rex".
-Move Health(Speed) Arrow from Third Sister.
+Move Critdamage(Offense %) Square from Kelleran Beq.
+Move Health(Speed) Arrow from Padmé Amidala.
 Move Health(Defense %) Diamond from Captain Drogan.
-Move Health(Health %) Triangle from Darth Traya.
-Move Health(Health %) Circle from Hera Syndulla.
+Move Offense(Health %) Triangle from Scout Trooper.
+Move Health(Health %) Circle from IG-12 & Grogu.
 Move Health(Health %) Cross from Darth Bane.
 
 CT-7567 "Rex" - PvP
-Move Tenacity(Offense %) Square from Jabba the Hutt.
 Move Speed(Speed) Arrow from Moff Gideon.
 Move Speed(Defense %) Diamond from Jabba the Hutt.
-Move Speed(Health %) Circle from Echo.
+Move Speed(Health %) Triangle from Barriss Offee.
 Move Speed(Tenacity %) Cross from Jabba the Hutt.
 
 Jedi Knight Anakin - PvP
 Move Critchance(Offense %) Square from Jango Fett.
-Move Critchance(Speed) Arrow from Grand Inquisitor.
-Move Critchance(Defense %) Diamond from Count Dooku.
+Move Critchance(Speed) Arrow from Sith Assassin.
+Move Critchance(Defense %) Diamond from IG-11.
 Move Critchance(Critical Chance %) Triangle from Nute Gunray.
-Move Critchance(Health %) Circle from Sith Marauder.
-Move Critchance(Health %) Cross from CT-7567 "Rex".
+Move Critchance(Health %) Circle from Ahsoka Tano.
+Move Critchance(Offense %) Cross from ARC Trooper.
 
 Echo - PvP
-Move Potency(Offense %) Square from Count Dooku.
+Move Potency(Offense %) Square from B1 Battle Droid.
 Move Potency(Speed) Arrow from Admiral Piett.
 Move Speed(Defense %) Diamond from Nute Gunray.
 Move Speed(Critical Chance %) Triangle from Jabba the Hutt.
@@ -279,35 +285,35 @@ Move Speed(Protection %) Circle from Shaak Ti.
 Move Speed(Potency %) Cross from Nute Gunray.
 
 Jedi Knight Cal Kestis - PvP
-Move Offense(Offense %) Square from Admiral Raddus.
-Move Offense(Offense %) Arrow from Range Trooper.
-Move Defense(Defense %) Diamond from General Kenobi.
-Move Offense(Offense %) Triangle from Canderous Ordo.
-Move Critdamage(Health %) Circle from Starkiller.
+Move Offense(Offense %) Square from Taron Malicos.
+Move Offense(Offense %) Arrow from Droideka.
+Move Health(Defense %) Diamond from Grand Master Yoda.
+Move Offense(Offense %) Triangle from Droideka.
+Move Health(Health %) Circle from Darth Bane.
 Move Offense(Offense %) Cross from Dark Trooper.
 
 Dark Trooper - PvP
 Move Offense(Offense %) Square from Maul.
-Move Offense(Offense %) Arrow from Droideka.
-Move Critchance(Offense %) Triangle from Pao.
-Move Critchance(Health %) Circle from ARC Trooper.
-Move Offense(Offense %) Cross from Jedi Knight Anakin.
+Move Offense(Speed) Arrow from Resistance Hero Finn.
+Move Health(Offense %) Triangle from Paz Vizsla.
+Move Health(Protection %) Circle from Maul.
+Move Offense(Offense %) Cross from Taron Malicos.
 
 R2-D2 - PvP
-Move Health(Offense %) Square from Bastila Shan (Fallen).
+Move Critchance(Offense %) Square from Dark Trooper Moff Gideon.
 Move Speed(Speed) Arrow from Kuiil.
 Move Speed(Defense %) Diamond from Shaak Ti.
-Move Speed(Critical Chance %) Triangle from Grand Admiral Thrawn.
-Move Health(Health %) Circle from Bastila Shan (Fallen).
+Move Critchance(Critical Chance %) Triangle from Sith Assassin.
+Move Speed(Health %) Circle from Nute Gunray.
 Move Speed(Potency %) Cross from First Order Officer.
 
 Scout Trooper - PvP
-Move Speed(Offense %) Square from B1 Battle Droid.
-Move Speed(Speed) Arrow from Wat Tambor.
-Move Potency(Defense %) Diamond from Echo.
-Move Speed(Offense %) Triangle from Jedi Knight Anakin.
+Move Speed(Offense %) Square from Count Dooku.
+Move Speed(Speed) Arrow from Grand Admiral Thrawn.
+Move Speed(Defense %) Diamond from Fifth Brother.
+Move Critdamage(Offense %) Triangle from Hoth Rebel Scout.
 Move Speed(Protection %) Circle from Fifth Brother.
-Move Potency(Health %) Cross from Grand Master Yoda.
+Move Offense(Potency %) Cross from B1 Battle Droid.
 
 Rey (Jedi Training) - PvP
 Move Critdamage(Offense %) Square from Visas Marr.
@@ -315,241 +321,257 @@ Move Critdamage(Speed) Arrow from Starkiller.
 Move Critdamage(Defense %) Diamond from Visas Marr.
 Move Potency(Critical Damage %) Triangle from Jedi Knight Luke Skywalker.
 Move Critdamage(Protection %) Circle from Jedi Knight Luke Skywalker.
-Move Potency(Offense %) Cross from Ki-Adi-Mundi.
+Move Potency(Offense %) Cross from Death Trooper.
 
 General Hux - PvP
-Move Tenacity(Offense %) Square from Commander Luke Skywalker.
-Move Health(Speed) Arrow from Padmé Amidala.
+Move Health(Offense %) Square from Bastila Shan (Fallen).
+Move Health(Speed) Arrow from CT-7567 "Rex".
 Move Health(Defense %) Diamond from CT-7567 "Rex".
 Move Tenacity(Health %) Triangle from Rey (Jedi Training).
-Move Health(Health %) Circle from Grand Master Yoda.
+Move Defense(Health %) Circle from Seventh Sister.
 Move Health(Tenacity %) Cross from Chewbacca.
 
 Resistance Hero Poe - PvP
 Move Critdamage(Offense %) Square from Han Solo.
-Move Critdamage(Speed) Arrow from CT-21-0408 "Echo".
+Move Critdamage(Speed) Arrow from Captain Rex.
 Move Potency(Defense %) Diamond from Darth Vader.
 Move Critdamage(Critical Damage %) Triangle from Boushh (Leia Organa).
 Move Critdamage(Protection %) Circle from Darth Vader.
 Move Potency(Defense %) Cross from IG-11.
 
 General Veers - PvP
-Move Offense(Offense %) Square from ARC Trooper.
-Move Critchance(Offense %) Arrow from IG-88.
-Move Critchance(Defense %) Diamond from ARC Trooper.
+Move Offense(Offense %) Square from Ahsoka Tano.
+Move Critchance(Offense %) Arrow from Imperial Super Commando.
+Move Critchance(Defense %) Diamond from Death Trooper.
 Move Offense(Critical Damage %) Triangle from Ki-Adi-Mundi.
-Move Offense(Protection %) Circle from BT-1.
-Move Offense(Offense %) Cross from Droideka.
+Move Offense(Protection %) Circle from Resistance Hero Finn.
+Move Offense(Offense %) Cross from Sith Trooper.
 
 Resistance Hero Finn - PvP
-Move Critchance(Offense %) Square from Dark Trooper Moff Gideon.
-Move Speed(Speed) Arrow from Seventh Sister.
-Move Speed(Defense %) Diamond from IG-11.
+Move Critdamage(Offense %) Square from Starkiller.
+Move Critdamage(Speed) Arrow from Visas Marr.
+Move Critdamage(Defense %) Diamond from Han Solo.
 Move Offense(Critical Damage %) Triangle from Count Dooku.
-Move Speed(Protection %) Circle from The Mandalorian (Beskar Armor).
-Move Speed(Offense %) Cross from Eighth Brother.
+Move Critchance(Health %) Circle from Ben Solo.
+Move Critdamage(Offense %) Cross from Ben Solo.
 
 Wrecker - PvP
 Move Critchance(Offense %) Square from The Mandalorian (Beskar Armor).
-Move Health(Speed) Arrow from Dark Trooper Moff Gideon.
-Move Health(Defense %) Diamond from Dark Trooper Moff Gideon.
-Move Tenacity(Protection %) Triangle from Third Sister.
+Move Health(Speed) Arrow from Third Sister.
+Move Potency(Defense %) Diamond from Echo.
+Move Health(Protection %) Triangle from Greef Karga.
 Move Health(Protection %) Circle from Dark Trooper Moff Gideon.
 Move Health(Protection %) Cross from Third Sister.
 
 Ahsoka Tano - PvP
 Move Health(Offense %) Square from Darth Traya.
 Move Health(Speed) Arrow from Grand Master Yoda.
-Move Health(Defense %) Diamond from Grand Master Yoda.
+Move Health(Defense %) Diamond from IG-12 & Grogu.
 Move Critchance(Critical Damage %) Triangle from Visas Marr.
-Move Health(Health %) Circle from CT-7567 "Rex".
-Move Critchance(Health %) Cross from Rey (Jedi Training).
+Move Health(Health %) Circle from Jedi Knight Cal Kestis.
+Move Potency(Health %) Cross from Grand Master Yoda.
 
 Hermit Yoda - Speed
-Move Speed(Offense %) Square from Fifth Brother.
+Move Defense(Offense %) Square from Bo-Katan (Mand'alor).
 Move Speed(Speed) Arrow from The Mandalorian (Beskar Armor).
 Move Health(Defense %) Diamond from Bastila Shan (Fallen).
-Move Critdamage(Offense %) Triangle from Hoth Rebel Scout.
-Move Speed(Health %) Circle from Nute Gunray.
+Move Speed(Critical Chance %) Triangle from Grand Admiral Thrawn.
+Move Speed(Protection %) Circle from The Mandalorian (Beskar Armor).
 Move Speed(Defense %) Cross from Moff Gideon.
 
 Grand Admiral Thrawn - PvP
-Move Health(Speed) Arrow from Rey (Jedi Training).
-Move Health(Defense %) Diamond from Padmé Amidala.
-Move Health(Protection %) Triangle from Greef Karga.
+Move Tenacity(Offense %) Square from Krrsantan.
+Move Health(Speed) Arrow from Dark Trooper Moff Gideon.
+Move Health(Defense %) Diamond from Dark Trooper Moff Gideon.
+Move Tenacity(Protection %) Triangle from Third Sister.
 Move Health(Protection %) Cross from Shaak Ti.
 
 Kylo Ren (Unmasked) - PvP
 Move Health(Offense %) Square from General Kenobi.
-Move Health(Speed) Arrow from CT-7567 "Rex".
+Move Health(Speed) Arrow from General Kenobi.
 Move Defense(Defense %) Diamond from Darth Malak.
-Move Defense(Health %) Triangle from Amilyn Holdo.
+Move Defense(Health %) Triangle from Cal Kestis.
 Move Health(Health %) Circle from Cal Kestis.
 Move Health(Health %) Cross from Cal Kestis.
 
 Dash Rendar - PvP
-Move Health(Offense %) Square from Sith Assassin.
-Move Offense(Speed) Arrow from Bo-Katan Kryze.
-Move Health(Defense %) Diamond from Admiral Raddus.
-Move Offense(Critical Damage %) Triangle from ARC Trooper.
-Move Offense(Health %) Circle from Ahsoka Tano.
-Move Offense(Tenacity %) Cross from Han Solo.
+Move Speed(Offense %) Square from Admiral Piett.
+Move Potency(Offense %) Arrow from Death Trooper.
+Move Speed(Defense %) Diamond from Sith Assassin.
+Move Speed(Health %) Circle from BT-1.
+Move Speed(Offense %) Cross from Sith Assassin.
 
 Bossk - Leader
-Move Speed(Offense %) Square from Hoth Rebel Scout.
-Move Speed(Speed) Arrow from Shaak Ti.
-Move Speed(Defense %) Diamond from Grand Admiral Thrawn.
-Move Speed(Health %) Triangle from Barriss Offee.
-Move Defense(Health %) Circle from Seventh Sister.
-Move Defense(Tenacity %) Cross from Seventh Sister.
+Move Health(Offense %) Square from Grand Master Yoda.
+Move Tenacity(Speed) Arrow from Chewbacca.
+Move Health(Defense %) Diamond from Padmé Amidala.
+Move Tenacity(Health %) Triangle from CT-7567 "Rex".
+Move Health(Health %) Circle from Grand Master Yoda.
+Move Health(Tenacity %) Cross from Eighth Brother.
 
 Geonosian Brood Alpha - Tanky
 Move Health(Offense %) Square from Cere Junda.
-Move Health(Speed) Arrow from Mon Mothma.
+Move Health(Speed) Arrow from Rey (Jedi Training).
 Move Health(Defense %) Diamond from Darth Traya.
 Move Health(Protection %) Triangle from Cere Junda.
-Move Health(Health %) Circle from Pao.
+Move Health(Health %) Circle from Rey (Jedi Training).
 Move Health(Health %) Cross from General Kenobi.
 
 Dark Trooper Moff Gideon - PvP
 Move Defense(Offense %) Square from B2 Super Battle Droid.
 Move Defense(Speed) Arrow from Bossk.
 Move Health(Defense %) Diamond from Rey (Jedi Training).
-Move Potency(Protection %) Triangle from General Veers.
+Move Potency(Protection %) Triangle from Hermit Yoda.
 Move Potency(Protection %) Circle from Admiral Piett.
 Move Health(Protection %) Cross from Greef Karga.
 
 BB-8 - PvP
 Move Health(Offense %) Square from Jedi Knight Cal Kestis.
 Move Health(Speed) Arrow from Darth Traya.
-Move Critchance(Defense %) Diamond from Sith Assassin.
-Move Critchance(Critical Chance %) Triangle from Sith Assassin.
-Move Defense(Health %) Circle from Amilyn Holdo.
-Move Defense(Health %) Cross from Kuiil.
+Move Critchance(Critical Chance %) Triangle from Pao.
+Move Defense(Health %) Circle from First Order Officer.
+Move Defense(Tenacity %) Cross from Seventh Sister.
 
 Captain Rex - PvP
-Move Health(Offense %) Square from Grand Master Yoda.
-Move Critchance(Health %) Arrow from Barriss Offee.
-Move Health(Defense %) Diamond from Hera Syndulla.
+Move Health(Offense %) Square from Rey (Jedi Training).
+Move Critchance(Health %) Arrow from Baze Malbus.
+Move Health(Defense %) Diamond from Ki-Adi-Mundi.
 Move Critchance(Critical Chance %) Triangle from Bastila Shan.
-Move Potency(Potency %) Cross from CT-21-0408 "Echo".
+Move Defense(Health %) Circle from Paz Vizsla.
+Move Defense(Health %) Cross from The Armorer.
 
 The Armorer - PvP
-Move Critdamage(Offense %) Square from Kelleran Beq.
+Move Health(Offense %) Square from Grand Admiral Thrawn.
 Move Health(Speed) Arrow from Hondo Ohnaka.
-Move Health(Defense %) Diamond from First Order Officer.
-Move Potency(Health %) Triangle from Doctor Aphra.
-Move Critdamage(Health %) Circle from Han Solo.
-Move Critdamage(Protection %) Cross from Kelleran Beq.
+Move Health(Defense %) Diamond from Wat Tambor.
+Move Critdamage(Health %) Triangle from Jolee Bindo.
+Move Health(Health %) Circle from Barriss Offee.
+Move Critchance(Health %) Cross from Rey (Jedi Training).
 
 Obi-Wan Kenobi (Old Ben) - Speed
 Move Potency(Offense %) Square from First Order Officer.
-Move Potency(Speed) Arrow from B1 Battle Droid.
-Move Potency(Defense %) Diamond from Captain Rex.
+Move Potency(Speed) Arrow from First Order Officer.
+Move Potency(Defense %) Diamond from B1 Battle Droid.
 Move Potency(Protection %) Triangle from Captain Rex.
-Move Health(Protection %) Circle from Doctor Aphra.
-Move Health(Potency %) Cross from Doctor Aphra.
+Move Potency(Health %) Circle from Captain Rex.
+Move Potency(Potency %) Cross from Captain Rex.
 
 Doctor Aphra - PvP
 Move Potency(Offense %) Square from Captain Rex.
-Move Potency(Speed) Arrow from Captain Rex.
+Move Potency(Offense %) Arrow from Canderous Ordo.
 Move Defense(Defense %) Diamond from B2 Super Battle Droid.
 Move Potency(Offense %) Triangle from Death Trooper.
-Move Critchance(Protection %) Circle from Bastila Shan.
-Move Potency(Potency %) Cross from Captain Rex.
+Move Critchance(Protection %) Circle from Emperor Palpatine.
+Move Potency(Potency %) Cross from Bastila Shan.
 
 Ninth Sister - PvP
 Move Speed(Offense %) Square from Kylo Ren (Unmasked).
 Move Health(Protection %) Arrow from General Veers.
-Move Health(Defense %) Diamond from Cere Junda.
+Move Defense(Defense %) Diamond from Cal Kestis.
 Move Health(Protection %) Triangle from Shaak Ti.
 Move Speed(Health %) Circle from Moff Gideon.
-Move Health(Protection %) Cross from Hermit Yoda.
+Move Defense(Protection %) Cross from Darth Malak.
 
 Cere Junda - PvP
 Move Health(Offense %) Square from Hermit Yoda.
-Move Health(Speed) Arrow from General Kenobi.
+Move Health(Speed) Arrow from Barriss Offee.
 Move Health(Defense %) Diamond from General Grievous.
-Move Health(Health %) Triangle from General Grievous.
+Move Health(Health %) Triangle from Darth Traya.
 Move Defense(Health %) Circle from Kylo Ren (Unmasked).
-Move Defense(Health %) Cross from First Order Stormtrooper.
+Move Defense(Health %) Cross from Baze Malbus.
+
+The Mandalorian (Beskar Armor) - PvP
+Move Offense(Offense %) Square from Admiral Raddus.
+Move Offense(Speed) Arrow from Fennec Shand.
+Move Critdamage(Defense %) Diamond from Ben Solo.
+Move Critchance(Offense %) Triangle from Admiral Raddus.
+Move Offense(Health %) Circle from Taron Malicos.
+Move Offense(Tenacity %) Cross from Han Solo.
 
 Krrsantan - PvP
-Move Defense(Offense %) Square from Kuiil.
+Move Defense(Offense %) Square from General Veers.
 Move Health(Speed) Arrow from Hermit Yoda.
-Move Defense(Defense %) Diamond from Cal Kestis.
-Move Health(Defense %) Triangle from Hermit Yoda.
+Move Defense(Defense %) Diamond from General Kenobi.
+Move Health(Defense %) Triangle from The Armorer.
 Move Defense(Health %) Circle from B2 Super Battle Droid.
 Move Defense(Defense %) Cross from Bossk.
 
 Iden Versio - PvP
-Move Critdamage(Offense %) Square from Starkiller.
-Move Critdamage(Speed) Arrow from Han Solo.
-Move Critdamage(Defense %) Diamond from Commander Luke Skywalker.
-Move Potency(Critical Damage %) Triangle from Dash Rendar.
-Move Potency(Protection %) Circle from CT-21-0408 "Echo".
+Move Critdamage(Offense %) Square from Ahsoka Tano (Fulcrum).
+Move Critdamage(Speed) Arrow from CT-21-0408 "Echo".
+Move Potency(Defense %) Diamond from Doctor Aphra.
+Move Critdamage(Critical Damage %) Triangle from Commander Luke Skywalker.
+Move Potency(Protection %) Circle from Bastila Shan.
 Move Critdamage(Potency %) Cross from Darth Vader.
 
 Old Daka - PvP
-Move Health(Offense %) Square from Rey (Jedi Training).
-Move Health(Defense %) Diamond from Pao.
-Move Critdamage(Health %) Triangle from Jolee Bindo.
-Move Health(Health %) Circle from Barriss Offee.
+Move Health(Offense %) Square from Barriss Offee.
+Move Health(Speed) Arrow from Vandor Chewbacca.
+Move Health(Defense %) Diamond from Barriss Offee.
+Move Health(Health %) Triangle from General Grievous.
+Move Health(Health %) Circle from Amilyn Holdo.
 Move Health(Health %) Cross from Jedi Knight Cal Kestis.
 
+50R-T - PvP
+Move Speed(Offense %) Square from Seventh Sister.
+Move Speed(Speed) Arrow from Echo.
+Move Speed(Defense %) Diamond from Grand Admiral Thrawn.
+Move Health(Defense %) Triangle from IG-12 & Grogu.
+Move Speed(Health %) Circle from IG-11.
+Move Health(Defense %) Cross from Fifth Brother.
+
 Merrin - PvP
-Move Potency(Offense %) Square from Magmatrooper.
-Move Potency(Offense %) Arrow from Magmatrooper.
-Move Potency(Defense %) Diamond from Imperial Probe Droid.
-Move Potency(Offense %) Triangle from Mother Talzin.
-Move Health(Health %) Circle from Taron Malicos.
+Move Potency(Offense %) Square from Tech.
+Move Offense(Health %) Arrow from Gar Saxon.
+Move Critdamage(Defense %) Diamond from Captain Rex.
+Move Potency(Offense %) Triangle from Gungan Phalanx.
+Move Health(Health %) Circle from CT-21-0408 "Echo".
 Move Health(Potency %) Cross from Emperor Palpatine.
 
 Mother Talzin - PvP
-Move Speed(Offense %) Square from Admiral Piett.
-Move Potency(Speed) Arrow from Scout Trooper.
-Move Potency(Defense %) Diamond from Doctor Aphra.
-Move Offense(Critical Chance %) Triangle from Mon Mothma.
+Move Speed(Offense %) Square from IG-11.
+Move Speed(Speed) Arrow from Zam Wesell.
+Move Speed(Defense %) Diamond from BT-1.
+Move Speed(Critical Chance %) Triangle from Tusken Chieftain.
 Move Tenacity(Protection %) Circle from Scout Trooper.
-Move Tenacity(Potency %) Cross from Death Trooper.
+Move Tenacity(Potency %) Cross from CT-21-0408 "Echo".
 
 Seventh Sister - PvP
-Move Critdamage(Offense %) Square from Ben Solo.
-Move Health(Speed) Arrow from Jedi Knight Cal Kestis.
-Move Health(Defense %) Diamond from Wat Tambor.
-Move Offense(Health %) Triangle from Wampa.
-Move Health(Health %) Circle from Jedi Knight Cal Kestis.
-Move Health(Tenacity %) Cross from Pao.
+Move Speed(Offense %) Square from Kuiil.
+Move Speed(Speed) Arrow from Shaak Ti.
+Move Health(Defense %) Diamond from Chewbacca.
+Move Speed(Health %) Triangle from Vandor Chewbacca.
+Move Speed(Health %) Circle from Wat Tambor.
+Move Health(Tenacity %) Cross from Amilyn Holdo.
 
 Fifth Brother - PvP
-Move Health(Offense %) Square from The Armorer.
-Move Tenacity(Speed) Arrow from General Hux.
-Move Health(Defense %) Diamond from Chewbacca.
-Move Critdamage(Health %) Triangle from Old Daka.
-Move Tenacity(Health %) Circle from Chewbacca.
+Move Critdamage(Offense %) Square from Ben Solo.
+Move Health(Speed) Arrow from Jedi Knight Cal Kestis.
+Move Health(Defense %) Diamond from Hera Syndulla.
+Move Offense(Health %) Triangle from Wampa.
+Move Critdamage(Health %) Circle from Han Solo.
 Move Critdamage(Health %) Cross from Barriss Offee.
 
 Eighth Brother - PvP
-Move Critdamage(Offense %) Square from Ahsoka Tano (Fulcrum).
-Move Critdamage(Speed) Arrow from Visas Marr.
-Move Critdamage(Defense %) Diamond from Ben Solo.
-Move Health(Offense %) Triangle from Admiral Raddus.
-Move Health(Protection %) Circle from General Hux.
-Move Critdamage(Offense %) Cross from Ben Solo.
+Move Health(Offense %) Square from The Armorer.
+Move Offense(Speed) Arrow from Mace Windu.
+Move Offense(Defense %) Diamond from Ahsoka Tano.
+Move Offense(Critical Damage %) Triangle from ARC Trooper.
+Move Health(Protection %) Circle from The Armorer.
+Move Offense(Tenacity %) Cross from Wat Tambor.
 
 First Order Officer - Speed
-Move Speed(Offense %) Square from Seventh Sister.
-Move Speed(Speed) Arrow from Echo.
-Move Critdamage(Defense %) Diamond from Han Solo.
-Move Speed(Offense %) Triangle from 0-0-0.
-Move Speed(Health %) Circle from Wat Tambor.
-Move Offense(Tenacity %) Cross from Krrsantan.
+Move Speed(Offense %) Square from Fifth Brother.
+Move Speed(Speed) Arrow from Seventh Sister.
+Move Speed(Offense %) Triangle from Wat Tambor.
+Move Speed(Protection %) Circle from Sith Assassin.
+Move Tenacity(Defense %) Cross from Chopper.
 
 Darth Bane - PvP
-Move Potency(Offense %) Square from Barriss Offee.
-Move Health(Speed) Arrow from Vandor Chewbacca.
-Move Health(Defense %) Diamond from Kanan Jarrus.
-Move Offense(Health %) Triangle from Mace Windu.
+Move Tenacity(Offense %) Square from Amilyn Holdo.
+Move Health(Speed) Arrow from Paz Vizsla.
+Move Health(Defense %) Diamond from Paz Vizsla.
+Move Critdamage(Health %) Triangle from Old Daka.
 Move Health(Health %) Circle from Jolee Bindo.
 Move Health(Health %) Cross from General Grievous.
 
@@ -557,1487 +579,1493 @@ Commander Luke Skywalker - PvP
 Move Critdamage(Offense %) Square from Dash Rendar.
 Move Critdamage(Speed) Arrow from Boushh (Leia Organa).
 Move Critdamage(Defense %) Diamond from Jango Fett.
-Move Health(Protection %) Circle from Sith Assassin.
-Move Defense(Offense %) Cross from Resistance Hero Finn.
+Move Critdamage(Critical Damage %) Triangle from Starkiller.
+Move Health(Protection %) Circle from Eighth Brother.
+Move Defense(Offense %) Cross from Paz Vizsla.
 
 Grand Master Yoda - Speedy
-Move Speed(Offense %) Square from Wat Tambor.
-Move Potency(Offense %) Arrow from Death Trooper.
-Move Speed(Defense %) Diamond from B1 Battle Droid.
-Move Speed(Offense %) Triangle from Tech.
-Move Potency(Health %) Circle from Resistance Hero Finn.
-Move Speed(Offense %) Cross from BT-1.
+Move Offense(Offense %) Square from Resistance Hero Finn.
+Move Offense(Speed) Arrow from Qui-Gon Jinn.
+Move Critchance(Defense %) Diamond from Ahsoka Tano (Fulcrum).
+Move Offense(Critical Damage %) Triangle from First Order Officer.
+Move Offense(Protection %) Circle from Fennec Shand.
+Move Critchance(Offense %) Cross from Ahsoka Tano.
 
 Han Solo - Fast Han
 Move Critdamage(Offense %) Square from CT-21-0408 "Echo".
-Move Critdamage(Speed) Arrow from Ki-Adi-Mundi.
-Move Critdamage(Defense %) Diamond from Dash Rendar.
-Move Offense(Critical Damage %) Triangle from First Order Officer.
+Move Critdamage(Speed) Arrow from ARC Trooper.
+Move Critdamage(Defense %) Diamond from Commander Luke Skywalker.
+Move Defense(Critical Damage %) Triangle from Moff Gideon.
 Move Critdamage(Health %) Circle from Dash Rendar.
-Move Critchance(Offense %) Cross from Sith Assassin.
+Move Health(Offense %) Cross from Resistance Hero Poe.
 
 Wat Tambor - PvP
-Move Speed(Offense %) Square from Eighth Brother.
-Move Health(Speed) Arrow from Jawa Engineer.
+Move Health(Offense %) Square from Paz Vizsla.
+Move Health(Speed) Arrow from Boss Nass.
 Move Health(Defense %) Diamond from Resistance Hero Poe.
-Move Speed(Health %) Triangle from Vandor Chewbacca.
-Move Speed(Health %) Circle from Hoth Rebel Scout.
-Move Speed(Potency %) Cross from 0-0-0.
+Move Offense(Health %) Triangle from Baze Malbus.
+Move Health(Health %) Circle from Mon Mothma.
+Move Potency(Health %) Cross from Kyle Katarn.
 
 Darth Traya - PvP
-Move Health(Offense %) Square from Ahsoka Tano.
+Move Health(Offense %) Square from 0-0-0.
 Move Health(Speed) Arrow from Cad Bane.
-Move Health(Defense %) Diamond from BB-8.
-Move Health(Defense %) Triangle from Wat Tambor.
-Move Health(Protection %) Circle from BB-8.
-Move Health(Protection %) Cross from Dark Trooper Moff Gideon.
+Move Health(Defense %) Diamond from The Armorer.
+Move Offense(Protection %) Triangle from Dark Trooper Moff Gideon.
+Move Health(Protection %) Circle from Kuiil.
+Move Critdamage(Protection %) Cross from Kelleran Beq.
 
 Barriss Offee - PvP
 Move Health(Offense %) Square from Wampa.
-Move Health(Offense %) Arrow from Cal Kestis.
-Move Offense(Defense %) Diamond from Taron Malicos.
-Move Health(Health %) Triangle from Geonosian Brood Alpha.
-Move Health(Health %) Circle from Old Daka.
-Move Potency(Health %) Cross from Cad Bane.
+Move Health(Offense %) Arrow from Taron Malicos.
+Move Health(Defense %) Diamond from Old Daka.
+Move Health(Health %) Triangle from Mace Windu.
+Move Health(Health %) Circle from Mace Windu.
+Move Health(Health %) Cross from Princess Kneesaa.
 
 B2 Super Battle Droid - Survival
 Move Health(Offense %) Square from Director Krennic.
 Move Potency(Accuracy %) Arrow from Darth Vader.
 Move Potency(Defense %) Diamond from Jedi Knight Anakin.
 Move Health(Protection %) Triangle from Kelleran Beq.
-Move Health(Health %) Circle from Mace Windu.
+Move Health(Protection %) Circle from Hunter.
 Move Health(Protection %) Cross from Captain Han Solo.
 
 Enfys Nest - PvP
-Move Tenacity(Offense %) Square from Chewbacca.
+Move Tenacity(Offense %) Square from Commander Luke Skywalker.
 Move Tenacity(Speed) Arrow from Jabba the Hutt.
 Move Tenacity(Defense %) Diamond from Krrsantan.
 Move Tenacity(Critical Damage %) Triangle from Chewbacca.
-Move Tenacity(Tenacity %) Cross from Amilyn Holdo.
+Move Tenacity(Health %) Circle from Pao.
 
 Chewbacca - PvP
-Move Critchance(Offense %) Square from Royal Guard.
-Move Offense(Speed) Arrow from Fennec Shand.
-Move Critchance(Defense %) Diamond from Ahsoka Tano (Fulcrum).
+Move Speed(Offense %) Square from Sith Assassin.
+Move Offense(Speed) Arrow from Bo-Katan Kryze.
+Move Offense(Defense %) Diamond from Admiral Raddus.
 Move Offense(Critical Damage %) Triangle from Ahsoka Tano.
-Move Offense(Protection %) Circle from Eighth Brother.
-Move Offense(Offense %) Cross from Bo-Katan Kryze.
+Move Offense(Protection %) Circle from Hera Syndulla.
+Move Health(Offense %) Cross from Jedi Knight Anakin.
 
 Kelleran Beq - PvP
-Move Defense(Offense %) Square from General Veers.
-Move Critchance(Defense %) Diamond from Range Trooper.
-Move Speed(Protection %) Triangle from The Mandalorian (Beskar Armor).
-Move Tenacity(Protection %) Circle from C-3PO.
-Move Health(Protection %) Cross from Tarfful.
+Move Health(Offense %) Square from Shoretrooper.
+Move Critchance(Defense %) Diamond from Emperor Palpatine.
+Move Health(Protection %) Triangle from Paploo.
+Move Tenacity(Protection %) Circle from Krrsantan.
+Move Health(Protection %) Cross from Stormtrooper.
 
 Jango Fett - PvP
 Move Critdamage(Offense %) Square from The Mandalorian.
 Move Critdamage(Offense %) Arrow from Ahsoka Tano (Fulcrum).
-Move Speed(Defense %) Diamond from BT-1.
-Move Critdamage(Critical Damage %) Triangle from Starkiller.
-Move Critdamage(Protection %) Circle from Ahsoka Tano (Fulcrum).
-Move Health(Offense %) Cross from Taron Malicos.
+Move Critdamage(Defense %) Diamond from Dash Rendar.
+Move Critchance(Offense %) Triangle from Jedi Knight Anakin.
+Move Critchance(Protection %) Circle from Canderous Ordo.
+Move Critdamage(Offense %) Cross from Dash Rendar.
 
 CT-5555 "Fives" - PvP
-Move Offense(Offense %) Square from Jedi Knight Anakin.
+Move Health(Offense %) Square from Pao.
 Move Potency(Protection %) Arrow from First Order Stormtrooper.
-Move Potency(Defense %) Diamond from Death Trooper.
-Move Offense(Protection %) Triangle from Dark Trooper Moff Gideon.
-Move Offense(Protection %) Circle from Darth Talon.
-Move Offense(Protection %) Cross from General Skywalker.
-
-The Mandalorian (Beskar Armor) - PvP
-Move Tenacity(Offense %) Square from General Hux.
-Move Health(Speed) Arrow from 0-0-0.
-Move Critdamage(Defense %) Diamond from The Mandalorian.
-Move Critdamage(Offense %) Triangle from Kyle Katarn.
-Move Defense(Protection %) Circle from Hermit Yoda.
-Move Health(Offense %) Cross from Resistance Hero Poe.
+Move Potency(Defense %) Diamond from General Veers.
+Move Health(Protection %) Triangle from Zorii Bliss.
+Move Health(Protection %) Circle from Cere Junda.
+Move Health(Protection %) Cross from Dark Trooper Moff Gideon.
 
 Cal Kestis - PvP
 Move Health(Offense %) Square from First Order Stormtrooper.
-Move Defense(Health %) Arrow from Sith Empire Trooper.
-Move Defense(Defense %) Diamond from CT-5555 "Fives".
+Move Defense(Defense %) Diamond from Stormtrooper.
 Move Defense(Defense %) Triangle from Kylo Ren (Unmasked).
 Move Defense(Health %) Circle from General Kenobi.
-Move Health(Defense %) Cross from Kanan Jarrus.
+Move Health(Defense %) Cross from Hera Syndulla.
 
 Nute Gunray - PvP
-Move Speed(Offense %) Square from IG-11.
-Move Speed(Speed) Arrow from Embo.
-Move Speed(Defense %) Diamond from Eighth Brother.
-Move Health(Critical Damage %) Triangle from Darth Bane.
-Move Speed(Health %) Circle from IG-11.
-Move Health(Defense %) Cross from Fifth Brother.
+Move Speed(Offense %) Square from Wat Tambor.
+Move Speed(Speed) Arrow from Zorii Bliss.
+Move Speed(Defense %) Diamond from General Hux.
+Move Speed(Protection %) Triangle from The Mandalorian (Beskar Armor).
+Move Health(Protection %) Circle from Doctor Aphra.
+Move Health(Tenacity %) Cross from Jolee Bindo.
 
 Fennec Shand - PvP - Offense
+Move Speed(Offense %) Square from General Hux.
 Move Defense(Speed) Arrow from Kylo Ren (Unmasked).
-Move Offense(Defense %) Diamond from Ahsoka Tano.
-Move Critchance(Offense %) Triangle from Cad Bane.
-Move Offense(Protection %) Circle from Jedi Knight Anakin.
-Move Offense(Offense %) Cross from Sith Trooper.
+Move Critdamage(Defense %) Diamond from The Mandalorian.
+Move Speed(Offense %) Triangle from Admiral Trench.
+Move Speed(Health %) Circle from Old Daka.
+Move Speed(Offense %) Cross from BT-1.
 
 Count Dooku - PvP
-Move Tenacity(Offense %) Square from BB-8.
-Move Potency(Offense %) Arrow from Canderous Ordo.
-Move Tenacity(Defense %) Diamond from Emperor Palpatine.
-Move Tenacity(Offense %) Triangle from Krrsantan.
-Move Potency(Protection %) Circle from B1 Battle Droid.
+Move Tenacity(Offense %) Square from Chewbacca.
+Move Potency(Offense %) Arrow from IG-88.
+Move Tenacity(Defense %) Diamond from C-3PO.
+Move Tenacity(Offense %) Triangle from Amilyn Holdo.
+Move Potency(Health %) Circle from Sith Marauder.
 Move Tenacity(Tenacity %) Cross from Commander Luke Skywalker.
 
 CT-21-0408 "Echo" - PvP
-Move Offense(Offense %) Square from Droideka.
-Move Offense(Offense %) Arrow from Imperial Super Commando.
+Move Offense(Offense %) Square from Fennec Shand.
+Move Offense(Speed) Arrow from Kylo Ren.
 Move Offense(Defense %) Diamond from Fennec Shand.
-Move Offense(Critical Damage %) Triangle from General Hux.
-Move Defense(Protection %) Circle from Range Trooper.
-Move Health(Offense %) Cross from Ahsoka Tano.
+Move Critdamage(Offense %) Triangle from Dark Trooper.
+Move Critdamage(Protection %) Circle from Ahsoka Tano (Fulcrum).
+Move Offense(Offense %) Cross from Bo-Katan Kryze.
 
 Kylo Ren - PvP
-Move Tenacity(Offense %) Square from C-3PO.
-Move Critchance(Speed) Arrow from Sith Assassin.
-Move Critdamage(Defense %) Diamond from General Hux.
-Move Defense(Critical Damage %) Triangle from Moff Gideon.
-Move Critchance(Health %) Circle from Mon Mothma.
-Move Health(Offense %) Cross from Fennec Shand.
+Move Tenacity(Offense %) Square from BB-8.
+Move Offense(Speed) Arrow from Coruscant Underworld Police.
+Move Offense(Defense %) Diamond from Resistance Hero Finn.
+Move Offense(Critical Chance %) Triangle from B1 Battle Droid.
+Move Potency(Protection %) Circle from Sabine Wren.
+Move Offense(Protection %) Cross from General Skywalker.
 
 Canderous Ordo - Maul Lead
-Move Offense(Offense %) Square from Mission Vao.
+Move Offense(Offense %) Square from Imperial Super Commando.
 Move Critdamage(Offense %) Arrow from IG-86 Sentinel Droid.
 Move Offense(Defense %) Diamond from Imperial Super Commando.
-Move Offense(Critical Chance %) Triangle from Fennec Shand.
-Move Critchance(Protection %) Circle from Droideka.
+Move Offense(Critical Chance %) Triangle from First Order Stormtrooper.
+Move Critchance(Protection %) Circle from Kyle Katarn.
 Move Offense(Offense %) Cross from Imperial Super Commando.
 
 ARC Trooper - PvP
-Move Offense(Offense %) Square from Mother Talzin.
+Move Offense(Offense %) Square from Droideka.
 Move Offense(Speed) Arrow from Mission Vao.
-Move Offense(Defense %) Diamond from Chopper.
-Move Critchance(Offense %) Triangle from Droideka.
-Move Health(Protection %) Circle from Fennec Shand.
-Move Offense(Offense %) Cross from Veteran Smuggler Chewbacca.
+Move Offense(Defense %) Diamond from CT-5555 "Fives".
+Move Critchance(Offense %) Triangle from Fennec Shand.
+Move Offense(Protection %) Circle from Bo-Katan Kryze.
+Move Health(Offense %) Cross from Fennec Shand.
 
 Sith Empire Trooper - PvP
 Move Defense(Offense %) Square from Cal Kestis.
 Move Defense(Defense %) Arrow from L3-37.
-Move Defense(Defense %) Diamond from Hermit Yoda.
-Move Health(Defense %) Triangle from Cal Kestis.
-Move Defense(Health %) Circle from Chopper.
+Move Defense(Defense %) Diamond from Range Trooper.
+Move Health(Defense %) Triangle from Chopper.
+Move Defense(Protection %) Circle from L3-37.
 Move Tenacity(Defense %) Cross from Kylo Ren (Unmasked).
 
 Sith Marauder - PvP
-Move Critchance(Offense %) Square from Iden Versio.
-Move Critdamage(Speed) Arrow from Commander Luke Skywalker.
-Move Critdamage(Defense %) Diamond from General Veers.
-Move Tenacity(Critical Damage %) Triangle from Eighth Brother.
-Move Critdamage(Protection %) Circle from Commander Luke Skywalker.
-Move Critdamage(Offense %) Cross from Dash Rendar.
+Move Critchance(Offense %) Square from Royal Guard.
+Move Offense(Speed) Arrow from Mother Talzin.
+Move Offense(Defense %) Diamond from Mace Windu.
+Move Offense(Critical Damage %) Triangle from General Hux.
+Move Critchance(Health %) Circle from Hoth Rebel Scout.
+Move Offense(Offense %) Cross from Veteran Smuggler Chewbacca.
 
 Greef Karga - PvP
-Move Speed(Offense %) Square from BT-1.
+Move Speed(Offense %) Square from Eighth Brother.
 Move Speed(Speed) Arrow from Admiral Trench.
-Move Speed(Defense %) Diamond from Hoth Rebel Scout.
-Move Critchance(Critical Chance %) Triangle from Hera Syndulla.
-Move Speed(Protection %) Circle from Kuiil.
-Move Health(Tenacity %) Cross from General Hux.
+Move Speed(Defense %) Diamond from Eighth Brother.
+Move Speed(Critical Damage %) Triangle from Seventh Sister.
+Move Health(Protection %) Circle from 0-0-0.
+Move Health(Tenacity %) Cross from Pao.
 
 Mon Mothma - Leader
-Move Health(Offense %) Square from Pao.
-Move Tenacity(Speed) Arrow from Chewbacca.
-Move Health(Defense %) Diamond from The Armorer.
+Move Tenacity(Offense %) Square from Hoth Rebel Scout.
+Move Critdamage(Speed) Arrow from Han Solo.
+Move Health(Defense %) Diamond from Hoth Rebel Scout.
 Move Tenacity(Critical Chance %) Triangle from BB-8.
-Move Health(Protection %) Circle from Krrsantan.
-Move Health(Tenacity %) Cross from Jolee Bindo.
-
-The Mandalorian - PvP
-Move Speed(Offense %) Square from 0-0-0.
-Move Speed(Speed) Arrow from Eighth Brother.
-Move Critchance(Defense %) Diamond from Amilyn Holdo.
-Move Speed(Critical Chance %) Triangle from Tusken Chieftain.
-Move Speed(Health %) Circle from Wampa.
+Move Health(Protection %) Circle from General Hux.
 Move Critchance(Tenacity %) Cross from Hoth Rebel Scout.
 
-Embo - PvP
-Move Health(Offense %) Square from Mon Mothma.
-Move Critdamage(Speed) Arrow from Threepio & Chewie.
-Move Health(Defense %) Diamond from Mon Mothma.
-Move Critdamage(Protection %) Triangle from Admiral Trench.
+The Mandalorian - PvP
+Move Critchance(Offense %) Square from Iden Versio.
+Move Health(Speed) Arrow from Geonosian Brood Alpha.
+Move Critdamage(Defense %) Diamond from Hermit Yoda.
+Move Potency(Critical Chance %) Triangle from Iden Versio.
 Move Critchance(Protection %) Circle from Grand Inquisitor.
-Move Critdamage(Protection %) Cross from Jango Fett.
+Move Health(Offense %) Cross from Resistance Hero Finn.
+
+Embo - PvP
+Move Speed(Offense %) Square from Darth Sion.
+Move Speed(Speed) Arrow from Tusken Chieftain.
+Move Speed(Defense %) Diamond from Admiral Trench.
+Move Critdamage(Protection %) Triangle from Emperor Palpatine.
+Move Defense(Protection %) Circle from Hermit Yoda.
+Move Speed(Protection %) Cross from Darth Sion.
 
 Asajj Ventress - PvP
-Move Critdamage(Offense %) Square from Ki-Adi-Mundi.
-Move Critdamage(Speed) Arrow from Jango Fett.
-Move Critdamage(Defense %) Diamond from CT-21-0408 "Echo".
+Move Critdamage(Offense %) Square from ARC Trooper.
+Move Critdamage(Speed) Arrow from Commander Luke Skywalker.
+Move Critdamage(Defense %) Diamond from ARC Trooper.
 Move Health(Critical Damage %) Triangle from Fifth Brother.
 Move Critdamage(Protection %) Circle from Jango Fett.
-Move Health(Potency %) Cross from Hera Syndulla.
+Move Health(Potency %) Cross from IG-12 & Grogu.
 
 Boba Fett, Scion of Jango - PvP
-Move Health(Offense %) Square from Darth Talon.
-Move Potency(Speed) Arrow from Bastila Shan.
-Move Critchance(Defense %) Diamond from Aurra Sing.
-Move Critchance(Critical Damage %) Triangle from Jango Fett.
-Move Potency(Health %) Circle from Tech.
+Move Potency(Offense %) Square from Death Trooper.
+Move Potency(Speed) Arrow from Emperor Palpatine.
+Move Critchance(Defense %) Diamond from Bo-Katan Kryze.
+Move Tenacity(Critical Damage %) Triangle from BT-1.
+Move Critchance(Protection %) Circle from BB-8.
 Move Defense(Offense %) Cross from Royal Guard.
 
 Jolee Bindo - PvP
-Move Tenacity(Offense %) Square from Amilyn Holdo.
+Move Tenacity(Offense %) Square from C-3PO.
 Move Health(Critical Avoidance %) Arrow from Kanan Jarrus.
-Move Tenacity(Defense %) Diamond from Enfys Nest.
-Move Health(Health %) Triangle from Paz Vizsla.
-Move Health(Health %) Circle from Darth Nihilus.
-Move Health(Tenacity %) Cross from Enfys Nest.
+Move Health(Defense %) Diamond from Cere Junda.
+Move Health(Health %) Triangle from 50R-T.
+Move Health(Health %) Circle from Enfys Nest.
+Move Tenacity(Tenacity %) Cross from C-3PO.
 
 L3-37 - Tanky
-Move Health(Offense %) Square from Mace Windu.
+Move Health(Offense %) Square from Old Daka.
 Move Defense(Critical Avoidance %) Arrow from B2 Super Battle Droid.
-Move Tenacity(Defense %) Diamond from Jolee Bindo.
-Move Health(Defense %) Triangle from CT-5555 "Fives".
+Move Health(Defense %) Diamond from Darth Talon.
+Move Health(Defense %) Triangle from Range Trooper.
 Move Defense(Health %) Circle from CT-5555 "Fives".
-Move Tenacity(Defense %) Cross from Chopper.
+Move Health(Tenacity %) Cross from Wampa.
 
 Vandor Chewbacca - PvE
-Move Health(Offense %) Square from Aayla Secura.
-Move Health(Speed) Arrow from Geonosian Brood Alpha.
-Move Critdamage(Defense %) Diamond from Ki-Adi-Mundi.
-Move Health(Critical Chance %) Triangle from Hondo Ohnaka.
-Move Critdamage(Health %) Circle from The Mandalorian.
+Move Health(Offense %) Square from Jedi Knight Anakin.
+Move Health(Speed) Arrow from Luminara Unduli.
+Move Critchance(Defense %) Diamond from Amilyn Holdo.
+Move Health(Critical Chance %) Triangle from Mon Mothma.
+Move Critchance(Health %) Circle from Wampa.
 
 Finn - PvP
-Move Critdamage(Offense %) Square from Sith Trooper.
+Move Critdamage(Offense %) Square from Boba Fett, Scion of Jango.
 Move Critdamage(Offense %) Arrow from Kit Fisto.
-Move Critchance(Defense %) Diamond from STAP.
-Move Critchance(Critical Damage %) Triangle from The Mandalorian.
-Move Critdamage(Protection %) Circle from Wedge Antilles.
-Move Critdamage(Offense %) Cross from Sith Marauder.
+Move Critdamage(Defense %) Diamond from First Order SF TIE Pilot.
+Move Speed(Critical Damage %) Triangle from Eighth Brother.
+Move Defense(Protection %) Circle from Range Trooper.
+Move Critdamage(Offense %) Cross from Ki-Adi-Mundi.
 
 Geonosian Spy - PvP
-Move Offense(Offense %) Square from Resistance Trooper.
-Move Offense(Speed) Arrow from Resistance Trooper.
-Move Offense(Defense %) Diamond from Darth Talon.
-Move Health(Critical Damage %) Triangle from Jedi Knight Cal Kestis.
-Move Offense(Protection %) Circle from Canderous Ordo.
-Move Health(Offense %) Cross from Second Sister.
+Move Offense(Offense %) Square from Qui-Gon Jinn.
+Move Offense(Speed) Arrow from Veteran Smuggler Chewbacca.
+Move Offense(Defense %) Diamond from Sith Trooper.
+Move Health(Critical Damage %) Triangle from Darth Bane.
+Move Offense(Health %) Circle from Mother Talzin.
+Move Health(Offense %) Cross from Droideka.
 
 Darth Nihilus - PvP
-Move Tenacity(Offense %) Square from Krrsantan.
-Move Tenacity(Speed) Arrow from Krrsantan.
-Move Critchance(Defense %) Diamond from Bastila Shan.
-Move Health(Defense %) Triangle from Kanan Jarrus.
-Move Critdamage(Health %) Circle from Ki-Adi-Mundi.
+Move Potency(Offense %) Square from Bastila Shan.
+Move Tenacity(Speed) Arrow from C-3PO.
+Move Tenacity(Defense %) Diamond from Enfys Nest.
+Move Health(Defense %) Triangle from Hera Syndulla.
+Move Potency(Health %) Circle from Jedi Knight Anakin.
 
 Darth Sion - PvP
 Move Health(Offense %) Square from Hera Syndulla.
-Move Defense(Speed) Arrow from BB-8.
+Move Defense(Speed) Arrow from The Armorer.
 Move Defense(Protection %) Triangle from Darth Malak.
-Move Health(Protection %) Circle from The Armorer.
-Move Defense(Protection %) Cross from BB-8.
+Move Health(Protection %) Circle from Chopper.
+Move Defense(Protection %) Cross from Hermit Yoda.
 
 Poggle the Lesser - PvE
-Move Potency(Offense %) Square from Bastila Shan.
-Move Critdamage(Speed) Arrow from Resistance Hero Finn.
-Move Health(Defense %) Diamond from Iden Versio.
-Move Potency(Critical Chance %) Triangle from Magmatrooper.
-Move Health(Protection %) Circle from Emperor Palpatine.
-Move Critchance(Potency %) Cross from Bastila Shan.
+Move Speed(Offense %) Square from BT-1.
+Move Potency(Speed) Arrow from Scout Trooper.
+Move Speed(Defense %) Diamond from 0-0-0.
+Move Potency(Critical Chance %) Triangle from Tech.
+Move Speed(Protection %) Circle from Cara Dune.
+Move Speed(Potency %) Cross from 0-0-0.
 
 Mace Windu - PvP
-Move Potency(Offense %) Square from Death Trooper.
+Move Offense(Speed) Arrow from Hera Syndulla.
 Move Offense(Defense %) Diamond from Sith Empire Trooper.
-Move Offense(Protection %) Triangle from Embo.
-Move Potency(Health %) Circle from IG-88.
-Move Offense(Potency %) Cross from Darth Talon.
+Move Critdamage(Offense %) Triangle from Hondo Ohnaka.
+Move Critdamage(Health %) Circle from Ki-Adi-Mundi.
+Move Offense(Potency %) Cross from Colonel Starck.
 
 Ki-Adi-Mundi - Balanced
 Move Speed(Offense %) Square from CT-5555 "Fives".
-Move Speed(Speed) Arrow from Second Sister.
-Move Speed(Defense %) Diamond from 0-0-0.
-Move Defense(Offense %) Triangle from Range Trooper.
-Move Speed(Health %) Circle from Vandor Chewbacca.
+Move Health(Speed) Arrow from Kyle Katarn.
+Move Tenacity(Defense %) Diamond from Chopper.
+Move Defense(Offense %) Triangle from CT-5555 "Fives".
+Move Health(Protection %) Circle from Droideka.
 Move Defense(Tenacity %) Cross from CT-5555 "Fives".
 
 Qi'ra - PvP
-Move Speed(Offense %) Square from Second Sister.
-Move Speed(Speed) Arrow from Rebel Officer Leia Organa.
-Move Speed(Defense %) Diamond from Tusken Chieftain.
-Move Critchance(Offense %) Triangle from IG-88.
-Move Critchance(Protection %) Circle from Death Trooper.
-Move Speed(Offense %) Cross from Gungan Boomadier.
+Move Tenacity(Offense %) Square from Jolee Bindo.
+Move Critdamage(Speed) Arrow from Hunter.
+Move Critdamage(Defense %) Diamond from Sith Marauder.
+Move Critchance(Offense %) Triangle from Canderous Ordo.
+Move Critdamage(Protection %) Circle from Commander Luke Skywalker.
+Move Critdamage(Offense %) Cross from Sith Marauder.
 
 Zorii Bliss - PvP
-Move Speed(Offense %) Square from Cara Dune.
-Move Health(Speed) Arrow from Kyle Katarn.
-Move Speed(Defense %) Diamond from Admiral Trench.
-Move Speed(Critical Damage %) Triangle from Seventh Sister.
+Move Speed(Offense %) Square from Second Sister.
+Move Speed(Speed) Arrow from Rebel Officer Leia Organa.
+Move Speed(Defense %) Diamond from Embo.
+Move Health(Critical Damage %) Triangle from Jedi Knight Cal Kestis.
 Move Health(Protection %) Circle from Admiral Trench.
-Move Speed(Protection %) Cross from Tusken Chieftain.
+Move Speed(Protection %) Cross from Second Sister.
 
 B1 Battle Droid - PvP
-Move Offense(Offense %) Square from Eeth Koth.
-Move Offense(Speed) Arrow from Coruscant Underworld Police.
-Move Offense(Defense %) Diamond from Mace Windu.
-Move Critdamage(Offense %) Triangle from Dark Trooper.
-Move Offense(Protection %) Circle from Mother Talzin.
-Move Critdamage(Offense %) Cross from Hunter.
+Move Offense(Offense %) Square from Mission Vao.
+Move Health(Critical Avoidance %) Arrow from Bastila Shan (Fallen).
+Move Offense(Defense %) Diamond from Droideka.
+Move Speed(Offense %) Triangle from Cad Bane.
+Move Offense(Protection %) Circle from Qui-Gon Jinn.
+Move Offense(Potency %) Cross from Mother Talzin.
 
 Skiff Guard (Lando Calrissian) - PvP
-Move Speed(Offense %) Square from Admiral Trench.
-Move Speed(Speed) Arrow from Qui-Gon Jinn.
-Move Speed(Defense %) Diamond from Second Sister.
-Move Health(Critical Chance %) Triangle from Finn.
-Move Health(Protection %) Circle from Cere Junda.
+Move Speed(Offense %) Square from Tusken Chieftain.
+Move Speed(Speed) Arrow from 0-0-0.
+Move Health(Defense %) Diamond from Tusken Chieftain.
+Move Health(Critical Chance %) Triangle from Darth Nihilus.
+Move Speed(Health %) Circle from Tusken Chieftain.
 Move Speed(Offense %) Cross from Snowtrooper.
 
 Baze Malbus - PvP
 Move Health(Offense %) Square from Vandor Chewbacca.
-Move Health(Speed) Arrow from Zaalbar.
-Move Tenacity(Defense %) Diamond from Darth Nihilus.
-Move Health(Health %) Triangle from Merrin.
+Move Health(Speed) Arrow from Finn.
+Move Tenacity(Defense %) Diamond from Jolee Bindo.
+Move Health(Defense %) Triangle from Zaalbar.
 Move Speed(Health %) Circle from Royal Guard.
-Move Health(Tenacity %) Cross from Mon Mothma.
+Move Health(Tenacity %) Cross from Tusken Chieftain.
 
 Range Trooper - PvP
-Move Critdamage(Offense %) Square from Sith Marauder.
-Move Critchance(Speed) Arrow from Geonosian Spy.
+Move Critdamage(Offense %) Square from Ki-Adi-Mundi.
+Move Critdamage(Speed) Arrow from Jango Fett.
 Move Critdamage(Defense %) Diamond from Boba Fett, Scion of Jango.
-Move Critdamage(Critical Damage %) Triangle from CT-21-0408 "Echo".
-Move Critdamage(Protection %) Circle from Resistance Hero Poe.
-Move Critchance(Offense %) Cross from Geonosian Spy.
+Move Critchance(Critical Damage %) Triangle from Jango Fett.
+Move Critdamage(Health %) Circle from The Mandalorian.
+Move Critchance(Offense %) Cross from Aayla Secura.
 
 Second Sister - PvP
-Move Tenacity(Offense %) Square from Jolee Bindo.
-Move Offense(Speed) Arrow from Mother Talzin.
-Move Offense(Defense %) Diamond from Bo-Katan Kryze.
+Move Offense(Offense %) Square from Resistance Trooper.
+Move Critchance(Speed) Arrow from Geonosian Spy.
+Move Offense(Defense %) Diamond from Mother Talzin.
 Move Offense(Critical Damage %) Triangle from Bo-Katan Kryze.
-Move Offense(Protection %) Circle from Sith Trooper.
-Move Health(Offense %) Cross from Princess Leia.
+Move Offense(Protection %) Circle from Kylo Ren.
+Move Critchance(Offense %) Cross from Geonosian Soldier.
 
 Colonel Starck - PvP
-Move Speed(Offense %) Square from Darth Sion.
-Move Speed(Speed) Arrow from Hoth Rebel Scout.
-Move Speed(Defense %) Diamond from Cara Dune.
-Move Speed(Offense %) Triangle from Cara Dune.
-Move Health(Protection %) Circle from 0-0-0.
-Move Critdamage(Tenacity %) Cross from The Mandalorian.
+Move Speed(Offense %) Square from Bistan.
+Move Speed(Speed) Arrow from General Hux.
+Move Speed(Defense %) Diamond from Second Sister.
+Move Health(Critical Damage %) Triangle from Resistance Hero Finn.
+Move Health(Protection %) Circle from Death Trooper.
+Move Speed(Potency %) Cross from Merrin.
 
 Hunter - PvP
-Move Speed(Offense %) Square from Merrin.
-Move Speed(Speed) Arrow from Nightsister Spirit.
-Move Defense(Defense %) Diamond from Wrecker.
-Move Speed(Offense %) Triangle from Saw Gerrera.
+Move Health(Offense %) Square from Admiral Trench.
+Move Potency(Speed) Arrow from Bistan.
+Move Defense(Defense %) Diamond from Kanan Jarrus.
+Move Potency(Offense %) Triangle from Mother Talzin.
 Move Health(Protection %) Circle from Hondo Ohnaka.
-Move Speed(Potency %) Cross from Tech.
+Move Critchance(Potency %) Cross from Iden Versio.
 
 BT-1 - PvP
 Move Potency(Offense %) Square from Emperor Palpatine.
-Move Offense(Speed) Arrow from Veteran Smuggler Chewbacca.
-Move Offense(Defense %) Diamond from Droideka.
-Move Offense(Critical Damage %) Triangle from Sith Trooper.
-Move Offense(Protection %) Circle from Mission Vao.
-Move Critdamage(Offense %) Cross from Skiff Guard (Lando Calrissian).
+Move Critdamage(Speed) Arrow from Boba Fett, Scion of Jango.
+Move Critdamage(Defense %) Diamond from Hunter.
+Move Critdamage(Critical Damage %) Triangle from CT-21-0408 "Echo".
+Move Health(Protection %) Circle from Second Sister.
+Move Critdamage(Offense %) Cross from Hunter.
 
 0-0-0 - PvP
-Move Speed(Offense %) Square from Tech.
-Move Speed(Speed) Arrow from Zam Wesell.
-Move Speed(Defense %) Diamond from Tech.
-Move Potency(Critical Chance %) Triangle from Iden Versio.
-Move Speed(Protection %) Circle from Cara Dune.
-Move Potency(Potency %) Cross from Magmatrooper.
-
-Tech - PvP
-Move Speed(Offense %) Square from Zorii Bliss.
-Move Speed(Speed) Arrow from Saw Gerrera.
-Move Speed(Defense %) Diamond from Zam Wesell.
-Move Tenacity(Protection %) Triangle from Emperor Palpatine.
-Move Speed(Protection %) Circle from Darth Sion.
-Move Critchance(Potency %) Cross from Iden Versio.
-
-Threepio & Chewie - PvP
-Move Critdamage(Offense %) Square from Resistance Hero Poe.
-Move Critdamage(Speed) Arrow from Hunter.
-Move Critdamage(Defense %) Diamond from Hunter.
-Move Speed(Critical Damage %) Triangle from BT-1.
-Move Health(Protection %) Circle from Second Sister.
-Move Critdamage(Offense %) Cross from TIE Fighter Pilot.
-
-Bo-Katan Kryze - PvP
-Move Critdamage(Offense %) Square from Resistance Hero Finn.
-Move Critdamage(Speed) Arrow from Colonel Starck.
-Move Critdamage(Defense %) Diamond from First Order TIE Pilot.
-Move Health(Critical Damage %) Triangle from Darth Talon.
-Move Health(Protection %) Circle from Iden Versio.
-Move Critdamage(Potency %) Cross from Colonel Starck.
-
-Shoretrooper - Speedy Tank
-Move Health(Offense %) Square from 50R-T.
-Move Health(Protection %) Arrow from Director Krennic.
-Move Health(Defense %) Diamond from Vandor Chewbacca.
-Move Health(Protection %) Triangle from Zorii Bliss.
-Move Health(Protection %) Cross from Baze Malbus.
-
-Sun Fac - Tanky
-Move Defense(Offense %) Square from Range Trooper.
-Move Defense(Protection %) Arrow from Shoretrooper.
-Move Health(Defense %) Diamond from Old Daka.
-Move Defense(Protection %) Triangle from Shoretrooper.
-Move Health(Protection %) Circle from Tusken Chieftain.
-Move Defense(Protection %) Cross from Wrecker.
-
-Admiral Trench - PvP
-Move Health(Offense %) Square from Tusken Chieftain.
-Move Potency(Speed) Arrow from Emperor Palpatine.
-Move Health(Defense %) Diamond from Hondo Ohnaka.
-Move Health(Offense %) Triangle from Princess Kneesaa.
-Move Health(Protection %) Circle from Hunter.
-Move Potency(Protection %) Cross from Cara Dune.
-
-Saw Gerrera - PvP
-Move Health(Offense %) Square from Old Daka.
-Move Health(Speed) Arrow from Princess Kneesaa.
-Move Health(Defense %) Diamond from Merrin.
-Move Health(Offense %) Triangle from Ugnaught.
-Move Critchance(Health %) Circle from Cad Bane.
+Move Speed(Offense %) Square from IG-100 MagnaGuard.
+Move Speed(Speed) Arrow from Nightsister Spirit.
+Move Speed(Defense %) Diamond from Cara Dune.
+Move Speed(Offense %) Triangle from Merrin.
+Move Health(Protection %) Circle from Darth Talon.
 Move Defense(Potency %) Cross from Finn.
 
+Tech - PvP
+Move Speed(Offense %) Square from Merrin.
+Move Speed(Speed) Arrow from URoRRuR'R'R.
+Move Speed(Defense %) Diamond from Cad Bane.
+Move Tenacity(Protection %) Triangle from General Veers.
+Move Speed(Protection %) Circle from Darth Sion.
+Move Critchance(Potency %) Cross from Cara Dune.
+
+Threepio & Chewie - PvP
+Move Offense(Offense %) Square from Kylo Ren.
+Move Critchance(Speed) Arrow from Young Han Solo.
+Move Offense(Defense %) Diamond from Eeth Koth.
+Move Offense(Critical Damage %) Triangle from Sith Trooper.
+Move Offense(Protection %) Circle from Sith Trooper.
+Move Health(Offense %) Cross from Princess Leia.
+
+Paz Vizsla - Health
+Move Health(Offense %) Square from Geonosian Brood Alpha.
+Move Health(Protection %) Arrow from Director Krennic.
+Move Health(Defense %) Diamond from Vandor Chewbacca.
+Move Health(Protection %) Triangle from Stormtrooper.
+Move Health(Protection %) Circle from Baze Malbus.
+Move Health(Protection %) Cross from Rebel Officer Leia Organa.
+
+Bo-Katan Kryze - PvP
+Move Critdamage(Offense %) Square from Resistance Hero Poe.
+Move Critdamage(Speed) Arrow from Darth Talon.
+Move Critchance(Defense %) Diamond from Bastila Shan.
+Move Critchance(Critical Damage %) Triangle from The Mandalorian.
+Move Critdamage(Protection %) Circle from Resistance Hero Poe.
+Move Critdamage(Potency %) Cross from Darth Talon.
+
+Shoretrooper - Speedy Tank
+Move Health(Offense %) Square from First Order Executioner.
+Move Health(Protection %) Arrow from Cere Junda.
+Move Health(Defense %) Diamond from Tusken Shaman.
+Move Health(Protection %) Triangle from Jawa Engineer.
+Move Health(Protection %) Circle from Colonel Starck.
+Move Health(Protection %) Cross from Zorii Bliss.
+
+Sun Fac - Tanky
+Move Health(Offense %) Square from Baze Malbus.
+Move Health(Speed) Arrow from Second Sister.
+Move Tenacity(Defense %) Diamond from Pao.
+Move Defense(Protection %) Triangle from Shoretrooper.
+Move Critdamage(Health %) Circle from ARC Trooper.
+Move Defense(Protection %) Cross from Kanan Jarrus.
+
+Admiral Trench - PvP
+Move Health(Offense %) Square from Hondo Ohnaka.
+Move Potency(Speed) Arrow from Iden Versio.
+Move Health(Defense %) Diamond from Hondo Ohnaka.
+Move Health(Offense %) Triangle from Princess Kneesaa.
+Move Potency(Protection %) Circle from Iden Versio.
+Move Health(Potency %) Cross from Gungan Boomadier.
+
+Saw Gerrera - PvP
+Move Health(Offense %) Square from 50R-T.
+Move Potency(Speed) Arrow from Ima-Gun Di.
+Move Health(Defense %) Diamond from Savage Opress.
+Move Health(Offense %) Triangle from Ugnaught.
+Move Potency(Health %) Circle from Vandor Chewbacca.
+Move Health(Offense %) Cross from Kylo Ren.
+
 Sith Trooper - PvP
-Move Potency(Offense %) Square from Imperial Super Commando.
-Move Offense(Speed) Arrow from Royal Guard.
-Move Offense(Defense %) Diamond from Canderous Ordo.
+Move Offense(Offense %) Square from Young Han Solo.
+Move Critdamage(Offense %) Arrow from STAP.
+Move Health(Defense %) Diamond from Kylo Ren.
 Move Offense(Critical Damage %) Triangle from Snowtrooper.
-Move Offense(Protection %) Circle from Imperial Super Commando.
-Move Critdamage(Offense %) Cross from Ahsoka Tano (Fulcrum).
+Move Offense(Protection %) Circle from Gar Saxon.
+Move Offense(Tenacity %) Cross from Coruscant Underworld Police.
 
 Darth Talon - PvP
-Move Health(Offense %) Square from Hondo Ohnaka.
-Move Speed(Speed) Arrow from Tusken Chieftain.
+Move Speed(Offense %) Square from Zorii Bliss.
+Move Speed(Speed) Arrow from Saw Gerrera.
 Move Speed(Defense %) Diamond from Tusken Warrior.
-Move Health(Protection %) Triangle from Paploo.
-Move Speed(Protection %) Circle from Kyle Katarn.
-Move Speed(Protection %) Cross from Darth Sion.
+Move Offense(Protection %) Triangle from Cara Dune.
+Move Speed(Protection %) Circle from Cad Bane.
+Move Critdamage(Protection %) Cross from Jango Fett.
 
 Visas Marr - PvP
-Move Health(Offense %) Square from Zaalbar.
-Move Health(Speed) Arrow from Boss Nass.
-Move Health(Defense %) Diamond from Skiff Guard (Lando Calrissian).
-Move Critdamage(Critical Chance %) Triangle from Gar Saxon.
-Move Critdamage(Health %) Circle from Sabine Wren.
-Move Health(Offense %) Cross from Qui-Gon Jinn.
+Move Health(Offense %) Square from Jyn Erso.
+Move Health(Speed) Arrow from HK-47.
+Move Health(Defense %) Diamond from Qui-Gon Jinn.
+Move Critdamage(Critical Chance %) Triangle from Kyle Katarn.
+Move Health(Health %) Circle from Nightsister Zombie.
+Move Critdamage(Tenacity %) Cross from The Mandalorian.
 
 Cara Dune - PvP
 Move Critdamage(Offense %) Square from Sabine Wren.
-Move Critdamage(Speed) Arrow from Resistance Hero Poe.
-Move Critdamage(Defense %) Diamond from Resistance Hero Finn.
+Move Critdamage(Speed) Arrow from Sabine Wren.
+Move Critdamage(Defense %) Diamond from Sabine Wren.
 Move Potency(Critical Damage %) Triangle from Sabine Wren.
-Move Potency(Protection %) Circle from Colonel Starck.
-Move Critdamage(Potency %) Cross from Sabine Wren.
+Move Critdamage(Health %) Circle from TIE Fighter Pilot.
+Move Potency(Potency %) Cross from Tech.
 
 Kyle Katarn - Mothma Lead
+Move Speed(Offense %) Square from Chirrut Îmwe.
 Move Speed(Speed) Arrow from Princess Leia.
-Move Speed(Defense %) Diamond from Qui-Gon Jinn.
-Move Potency(Offense %) Triangle from Imperial Probe Droid.
+Move Health(Defense %) Diamond from Tusken Raider.
+Move Health(Offense %) Triangle from Qui-Gon Jinn.
 Move Speed(Health %) Circle from 50R-T.
-Move Potency(Offense %) Cross from HK-47.
+Move Speed(Offense %) Cross from Sana Starros.
 
 Droideka - PvP
-Move Health(Offense %) Square from Gar Saxon.
-Move Critdamage(Offense %) Arrow from STAP.
-Move Offense(Defense %) Diamond from Sith Trooper.
-Move Offense(Critical Chance %) Triangle from Rey (Scavenger).
-Move Offense(Protection %) Circle from Resistance Trooper.
-Move Offense(Tenacity %) Cross from Coruscant Underworld Police.
+Move Potency(Offense %) Square from STAP.
+Move Health(Critical Avoidance %) Arrow from Enfys Nest.
+Move Potency(Defense %) Diamond from Canderous Ordo.
+Move Potency(Offense %) Triangle from Imperial Probe Droid.
+Move Potency(Protection %) Circle from First Order Stormtrooper.
+Move Critdamage(Offense %) Cross from Ahsoka Tano (Fulcrum).
 
 Zaalbar - PvP
-Move Health(Offense %) Square from First Order Executioner.
-Move Health(Protection %) Arrow from K-2SO.
+Move Health(Offense %) Square from Stormtrooper.
+Move Speed(Critical Avoidance %) Arrow from Jolee Bindo.
 Move Health(Defense %) Diamond from Gamorrean Guard.
-Move Health(Protection %) Triangle from Jawa Engineer.
-Move Health(Protection %) Circle from First Order Stormtrooper.
-Move Health(Protection %) Cross from Saw Gerrera.
+Move Health(Protection %) Triangle from Clone Wars Chewbacca.
+Move Health(Protection %) Circle from Tech.
+Move Critdamage(Protection %) Cross from Boba Fett, Scion of Jango.
 
 Mission Vao - PvP
-Move Critdamage(Offense %) Square from Geonosian Spy.
-Move Critdamage(Speed) Arrow from Boba Fett, Scion of Jango.
+Move Critdamage(Offense %) Square from Hunter.
+Move Critdamage(Speed) Arrow from BT-1.
 Move Critchance(Defense %) Diamond from Geonosian Soldier.
 Move Critdamage(Critical Damage %) Triangle from Sith Marauder.
-Move Critchance(Protection %) Circle from Bo-Katan Kryze.
-Move Critdamage(Offense %) Cross from First Order SF TIE Pilot.
+Move Critchance(Protection %) Circle from Imperial Super Commando.
+Move Critdamage(Offense %) Cross from TIE Fighter Pilot.
 
 Boba Fett - PvE
-Move Critchance(Offense %) Square from Qi'ra.
-Move Offense(Defense %) Diamond from Eeth Koth.
+Move Offense(Offense %) Square from Eeth Koth.
+Move Critchance(Speed) Arrow from Greedo.
+Move Critchance(Defense %) Diamond from Qi'ra.
 Move Offense(Critical Damage %) Triangle from Resistance Trooper.
-Move Offense(Protection %) Circle from Rey (Scavenger).
-Move Offense(Potency %) Cross from Canderous Ordo.
+Move Offense(Protection %) Circle from Resistance Trooper.
+Move Offense(Potency %) Cross from Resistance Trooper.
 
 Captain Phasma - PvP
-Move Health(Offense %) Square from Geonosian Brood Alpha.
-Move Health(Speed) Arrow from Imperial Probe Droid.
+Move Health(Offense %) Square from Cad Bane.
+Move Potency(Speed) Arrow from IG-12 & Grogu.
 Move Health(Defense %) Diamond from Geonosian Brood Alpha.
-Move Health(Defense %) Triangle from Savage Opress.
-Move Health(Health %) Circle from Zaalbar.
-Move Health(Potency %) Cross from Eeth Koth.
+Move Health(Defense %) Triangle from Geonosian Brood Alpha.
+Move Health(Protection %) Circle from Geonosian Brood Alpha.
+Move Potency(Protection %) Cross from Hondo Ohnaka.
 
 Royal Guard - Tanky
-Move Health(Offense %) Square from Baze Malbus.
-Move Health(Protection %) Arrow from Cere Junda.
-Move Health(Defense %) Diamond from Stormtrooper.
-Move Health(Protection %) Triangle from Baze Malbus.
-Move Health(Protection %) Circle from Captain Han Solo.
-Move Health(Protection %) Cross from Cere Junda.
+Move Health(Offense %) Square from Zaalbar.
+Move Defense(Protection %) Arrow from Shoretrooper.
+Move Health(Defense %) Diamond from Director Krennic.
+Move Health(Protection %) Triangle from Boss Nass.
+Move Health(Protection %) Circle from Saw Gerrera.
+Move Defense(Protection %) Cross from Shoretrooper.
 
 First Order Stormtrooper - PvP
-Move Defense(Offense %) Square from Wrecker.
-Move Defense(Speed) Arrow from The Armorer.
+Move Defense(Offense %) Square from Range Trooper.
+Move Defense(Speed) Arrow from BB-8.
 Move Defense(Defense %) Diamond from Shoretrooper.
 Move Defense(Protection %) Triangle from Darth Sion.
-Move Defense(Protection %) Circle from L3-37.
+Move Defense(Protection %) Circle from Wrecker.
 Move Defense(Protection %) Cross from Range Trooper.
 
 Nightsister Zombie - Strong Zombie
-Move Health(Offense %) Square from Jyn Erso.
-Move Health(Speed) Arrow from Captain Han Solo.
-Move Health(Defense %) Diamond from Embo.
+Move Health(Offense %) Square from Skiff Guard (Lando Calrissian).
+Move Health(Speed) Arrow from Old Daka.
+Move Health(Defense %) Diamond from Merrin.
 Move Tenacity(Protection %) Triangle from C-3PO.
-Move Health(Protection %) Circle from Geonosian Brood Alpha.
-Move Tenacity(Tenacity %) Cross from C-3PO.
+Move Health(Protection %) Circle from Merrin.
+Move Tenacity(Tenacity %) Cross from Krrsantan.
 
 Geonosian Soldier - PvP
-Move Critchance(Offense %) Square from Biggs Darklighter.
-Move Critchance(Speed) Arrow from Dengar.
-Move Critchance(Defense %) Diamond from Qi'ra.
-Move Critchance(Critical Damage %) Triangle from Wedge Antilles.
-Move Critchance(Protection %) Circle from First Order TIE Pilot.
+Move Critchance(Offense %) Square from Tusken Warrior.
+Move Critchance(Speed) Arrow from Aayla Secura.
+Move Critchance(Defense %) Diamond from Dengar.
+Move Critchance(Critical Damage %) Triangle from First Order TIE Pilot.
+Move Critchance(Protection %) Circle from Wedge Antilles.
+Move Critchance(Protection %) Cross from First Order TIE Pilot.
 
 Tusken Warrior - PvP
-Move Potency(Offense %) Square from Cad Bane.
+Move Potency(Offense %) Square from Embo.
 Move Speed(Speed) Arrow from Gungan Boomadier.
-Move Speed(Defense %) Diamond from Poggle the Lesser.
+Move Speed(Defense %) Diamond from Sana Starros.
+Move Speed(Critical Damage %) Triangle from Embo.
 Move Speed(Protection %) Circle from Zorii Bliss.
 Move Potency(Offense %) Cross from Rey (Scavenger).
 
 Tusken Chieftain - PvP
-Move Speed(Offense %) Square from Qui-Gon Jinn.
-Move Speed(Speed) Arrow from Darth Sion.
-Move Tenacity(Defense %) Diamond from C-3PO.
+Move Speed(Offense %) Square from Zam Wesell.
+Move Tenacity(Speed) Arrow from Krrsantan.
+Move Speed(Defense %) Diamond from 50R-T.
 Move Tenacity(Health %) Triangle from Poggle the Lesser.
 Move Speed(Protection %) Circle from Embo.
 Move Speed(Tenacity %) Cross from Admiral Trench.
 
-Paz Vizsla - Health
-Move Health(Offense %) Square from Nightsister Acolyte.
-Move Health(Speed) Arrow from Lobot.
-Move Health(Defense %) Diamond from Zaalbar.
-Move Health(Protection %) Triangle from Tusken Raider.
-Move Health(Protection %) Circle from Sana Starros.
-Move Health(Protection %) Cross from Carth Onasi.
-
 Ahsoka Tano (Fulcrum) - PvP
-Move Critdamage(Offense %) Square from Captain Phasma.
-Move Critdamage(Speed) Arrow from BT-1.
-Move Critchance(Defense %) Diamond from Rose Tico.
+Move Critdamage(Offense %) Square from Sith Trooper.
+Move Critdamage(Speed) Arrow from Sith Trooper.
+Move Critchance(Defense %) Diamond from Resistance Trooper.
 Move Critdamage(Critical Damage %) Triangle from Resistance Hero Poe.
 Move Critchance(Protection %) Circle from Boba Fett, Scion of Jango.
-Move Critdamage(Offense %) Cross from Boba Fett.
+Move Critdamage(Offense %) Cross from Skiff Guard (Lando Calrissian).
 
 Amilyn Holdo - PvP
-Move Health(Offense %) Square from Kit Fisto.
-Move Potency(Speed) Arrow from Iden Versio.
-Move Health(Defense %) Diamond from Princess Kneesaa.
-Move Tenacity(Defense %) Triangle from First Order Stormtrooper.
+Move Tenacity(Offense %) Square from Ninth Sister.
+Move Health(Speed) Arrow from Imperial Probe Droid.
+Move Health(Defense %) Diamond from Nightsister Zombie.
+Move Tenacity(Defense %) Triangle from Krrsantan.
 Move Potency(Protection %) Circle from General Veers.
-Move Tenacity(Tenacity %) Cross from Sun Fac.
+Move Potency(Potency %) Cross from Imperial Probe Droid.
 
 Hondo Ohnaka - PvP
-Move Critdamage(Offense %) Square from Boba Fett, Scion of Jango.
-Move Health(Critical Avoidance %) Arrow from Bastila Shan (Fallen).
-Move Critdamage(Defense %) Diamond from Colonel Starck.
+Move Critdamage(Offense %) Square from Sith Marauder.
+Move Critdamage(Speed) Arrow from Ki-Adi-Mundi.
+Move Health(Defense %) Diamond from Chief Chirpa.
 Move Health(Critical Damage %) Triangle from Hunter.
 Move Critdamage(Health %) Circle from Jyn Erso.
-Move Critdamage(Offense %) Cross from Aayla Secura.
+Move Critdamage(Offense %) Cross from First Order SF TIE Pilot.
 
 Dengar - PvP
-Move Critchance(Offense %) Square from First Order TIE Pilot.
-Move Potency(Speed) Arrow from First Order Officer.
-Move Critchance(Defense %) Diamond from Wedge Antilles.
+Move Potency(Speed) Arrow from Bastila Shan.
+Move Critchance(Defense %) Diamond from Carth Onasi.
 Move Potency(Critical Chance %) Triangle from Qi'ra.
 Move Potency(Protection %) Circle from Qi'ra.
-Move Potency(Potency %) Cross from Veteran Smuggler Han Solo.
+Move Potency(Potency %) Cross from Darth Sidious.
 
 HK-47 - PvP
-Move Critdamage(Offense %) Square from Hunter.
-Move Critdamage(Speed) Arrow from Skiff Guard (Lando Calrissian).
-Move Critdamage(Defense %) Diamond from Bistan.
+Move Critchance(Offense %) Square from First Order SF TIE Pilot.
+Move Critdamage(Speed) Arrow from Aurra Sing.
+Move Critdamage(Defense %) Diamond from Colonel Starck.
 Move Critdamage(Offense %) Triangle from Kit Fisto.
-Move Potency(Protection %) Circle from Magmatrooper.
-Move Health(Offense %) Cross from Talia.
+Move Critchance(Protection %) Circle from Carth Onasi.
+Move Critdamage(Offense %) Cross from Geonosian Spy.
 
 Zam Wesell - PvP
 Move Potency(Offense %) Square from Canderous Ordo.
-Move Potency(Speed) Arrow from Tech.
-Move Speed(Defense %) Diamond from Kyle Katarn.
+Move Potency(Speed) Arrow from Cassian Andor.
+Move Speed(Defense %) Diamond from Poe Dameron.
 Move Speed(Critical Damage %) Triangle from Second Sister.
 Move Speed(Health %) Circle from Geonosian Soldier.
-Move Speed(Potency %) Cross from IG-88.
+Move Speed(Potency %) Cross from Cad Bane.
 
 Cad Bane - PvP
-Move Critdamage(Offense %) Square from TIE Fighter Pilot.
-Move Critdamage(Speed) Arrow from Sith Trooper.
-Move Critdamage(Defense %) Diamond from Geonosian Spy.
+Move Critdamage(Offense %) Square from Darth Talon.
+Move Critdamage(Speed) Arrow from Captain Phasma.
+Move Critdamage(Defense %) Diamond from First Order TIE Pilot.
 Move Critchance(Critical Damage %) Triangle from Boba Fett, Scion of Jango.
-Move Critdamage(Protection %) Circle from Aurra Sing.
-Move Critchance(Potency %) Cross from Tusken Warrior.
+Move Critdamage(Protection %) Circle from Skiff Guard (Lando Calrissian).
+Move Critchance(Potency %) Cross from Zam Wesell.
 
 IG-88 - Damage
-Move Critdamage(Offense %) Square from Threepio & Chewie.
-Move Critchance(Speed) Arrow from Hera Syndulla.
-Move Critchance(Defense %) Diamond from Mission Vao.
-Move Critdamage(Critical Damage %) Triangle from Geonosian Spy.
-Move Critdamage(Health %) Circle from TIE Fighter Pilot.
-Move Critdamage(Offense %) Cross from Kylo Ren.
+Move Critchance(Offense %) Square from Aurra Sing.
+Move Critchance(Speed) Arrow from Royal Guard.
+Move Critdamage(Defense %) Diamond from Skiff Guard (Lando Calrissian).
+Move Critdamage(Critical Damage %) Triangle from Darth Sidious.
+Move Critdamage(Protection %) Circle from Biggs Darklighter.
+Move Critdamage(Offense %) Cross from Boba Fett.
 
 CC-2224 "Cody" - Leader
 Move Defense(Offense %) Square from Chopper.
-Move Critchance(Speed) Arrow from Biggs Darklighter.
-Move Critchance(Defense %) Diamond from Dengar.
+Move Critchance(Speed) Arrow from Dengar.
+Move Critchance(Defense %) Diamond from Greedo.
 Move Critchance(Defense %) Triangle from Royal Guard.
 Move Defense(Health %) Circle from Captain Phasma.
-Move Critchance(Potency %) Cross from Greedo.
+Move Critchance(Potency %) Cross from Rose Tico.
 
 Juhani - PvP
-Move Defense(Offense %) Square from Kanan Jarrus.
-Move Defense(Defense %) Diamond from Poe Dameron.
-Move Defense(Protection %) Triangle from Poe Dameron.
+Move Defense(Offense %) Square from Wrecker.
+Move Defense(Protection %) Arrow from Stormtrooper.
+Move Defense(Defense %) Diamond from Scarif Rebel Pathfinder.
 Move Defense(Protection %) Circle from Kanan Jarrus.
-Move Defense(Protection %) Cross from Shoretrooper.
+Move Defense(Protection %) Cross from Wrecker.
 
 Kanan Jarrus - PvP
 Move Health(Offense %) Square from Princess Kneesaa.
-Move Health(Speed) Arrow from Luminara Unduli.
-Move Health(Defense %) Diamond from Baze Malbus.
+Move Health(Speed) Arrow from Plo Koon.
+Move Health(Defense %) Diamond from Princess Kneesaa.
 Move Health(Health %) Triangle from Director Krennic.
 Move Health(Health %) Circle from Nightsister Spirit.
-Move Health(Health %) Cross from Princess Kneesaa.
+Move Health(Health %) Cross from Chief Nebit.
 
 Death Trooper - PvP
-Move Critdamage(Offense %) Square from Colonel Starck.
-Move Potency(Speed) Arrow from Greedo.
-Move Critdamage(Defense %) Diamond from Sabine Wren.
-Move Critdamage(Critical Damage %) Triangle from Threepio & Chewie.
-Move Critdamage(Protection %) Circle from Skiff Guard (Lando Calrissian).
-Move Potency(Potency %) Cross from Qi'ra.
+Move Critdamage(Offense %) Square from Threepio & Chewie.
+Move Critdamage(Speed) Arrow from Colonel Starck.
+Move Critdamage(Defense %) Diamond from CT-21-0408 "Echo".
+Move Health(Critical Damage %) Triangle from Skiff Guard (Lando Calrissian).
+Move Tenacity(Protection %) Circle from Ninth Sister.
+Move Critdamage(Potency %) Cross from Sabine Wren.
 
 Aayla Secura - PvP
 Move Potency(Offense %) Square from Clone Sergeant - Phase I.
-Move Potency(Speed) Arrow from Qi'ra.
-Move Potency(Defense %) Diamond from Grand Moff Tarkin.
+Move Potency(Speed) Arrow from Boba Fett.
+Move Potency(Defense %) Diamond from Obi-Wan Kenobi (Old Ben).
 Move Critchance(Critical Chance %) Triangle from Young Lando Calrissian.
-Move Critchance(Protection %) Circle from STAP.
-Move Potency(Potency %) Cross from Grand Moff Tarkin.
+Move Critchance(Protection %) Circle from Magmatrooper.
+Move Potency(Potency %) Cross from Canderous Ordo.
 
 Ezra Bridger - PvP
-Move Speed(Offense %) Square from Embo.
-Move Critchance(Defense %) Diamond from Greedo.
-Move Speed(Critical Damage %) Triangle from Zam Wesell.
+Move Critchance(Offense %) Square from Young Lando Calrissian.
+Move Speed(Speed) Arrow from Eighth Brother.
+Move Critchance(Defense %) Diamond from Kyle Katarn.
+Move Speed(Critical Damage %) Triangle from Bistan.
 Move Speed(Health %) Circle from Bodhi Rook.
 Move Speed(Defense %) Cross from Sith Empire Trooper.
 
 Young Lando Calrissian - PvE
-Move Speed(Offense %) Square from Rebel Officer Leia Organa.
+Move Speed(Offense %) Square from Cara Dune.
 Move Critchance(Speed) Arrow from Tusken Warrior.
-Move Speed(Defense %) Diamond from Resistance Pilot.
-Move Speed(Critical Damage %) Triangle from Qui-Gon Jinn.
-Move Speed(Protection %) Circle from Tusken Warrior.
-Move Critchance(Potency %) Cross from Zam Wesell.
+Move Speed(Defense %) Diamond from Bistan.
+Move Speed(Critical Damage %) Triangle from HK-47.
+Move Speed(Protection %) Circle from Bistan.
+Move Critchance(Potency %) Cross from Greedo.
 
 Hera Syndulla - PvP
 Move Health(Offense %) Square from Savage Opress.
-Move Health(Speed) Arrow from Dathcha.
+Move Health(Speed) Arrow from Jawa Engineer.
 Move Health(Defense %) Diamond from Captain Han Solo.
-Move Health(Critical Chance %) Triangle from 50R-T.
+Move Health(Health %) Triangle from Captain Han Solo.
 Move Health(Health %) Circle from Luminara Unduli.
 Move Health(Tenacity %) Cross from Geonosian Brood Alpha.
 
 Sabine Wren - PvP
-Move Critchance(Offense %) Square from Young Lando Calrissian.
-Move Critdamage(Speed) Arrow from Aurra Sing.
-Move Critdamage(Defense %) Diamond from Captain Phasma.
-Move Critdamage(Critical Damage %) Triangle from Resistance Hero Finn.
-Move Critchance(Protection %) Circle from Captain Tarpals.
-Move Critdamage(Potency %) Cross from Bistan.
+Move Offense(Offense %) Square from Gar Saxon.
+Move Critchance(Speed) Arrow from Ewok Scout.
+Move Critchance(Defense %) Diamond from Zam Wesell.
+Move Offense(Critical Damage %) Triangle from Mission Vao.
+Move Offense(Protection %) Circle from Mission Vao.
+Move Offense(Potency %) Cross from Mace Windu.
 
 Pao - PvP
-Move Speed(Offense %) Square from Young Han Solo.
+Move Speed(Offense %) Square from Rose Tico.
 Move Speed(Speed) Arrow from Snowtrooper.
-Move Potency(Defense %) Diamond from Mother Talzin.
-Move Speed(Critical Damage %) Triangle from Sana Starros.
-Move Speed(Protection %) Circle from Merrin.
-Move Potency(Potency %) Cross from Resistance Trooper.
+Move Health(Defense %) Diamond from Tech.
+Move Speed(Critical Damage %) Triangle from Tusken Warrior.
+Move Speed(Protection %) Circle from Rebel Officer Leia Organa.
+Move Health(Offense %) Cross from Talia.
 
 Jawa Scavenger - PvE
-Move Potency(Offense %) Square from Greedo.
-Move Critchance(Speed) Arrow from Rose Tico.
-Move Health(Defense %) Diamond from IG-88.
+Move Potency(Offense %) Square from Mother Talzin.
+Move Critchance(Speed) Arrow from Resistance Trooper.
+Move Health(Defense %) Diamond from Chirrut Îmwe.
 Move Critchance(Critical Chance %) Triangle from CC-2224 "Cody".
 Move Health(Protection %) Circle from Dengar.
-Move Potency(Potency %) Cross from Imperial Probe Droid.
+Move Potency(Potency %) Cross from Bistan.
 
 Chief Nebit - PvP
-Move Health(Offense %) Square from Princess Leia.
-Move Health(Speed) Arrow from Jedi Consular.
-Move Health(Defense %) Diamond from Cad Bane.
+Move Health(Offense %) Square from Nightsister Acolyte.
+Move Health(Speed) Arrow from Princess Kneesaa.
+Move Health(Defense %) Diamond from First Order Stormtrooper.
 Move Health(Health %) Triangle from Ewok Elder.
 Move Health(Health %) Circle from Ugnaught.
+Move Health(Health %) Cross from Clone Wars Chewbacca.
 
 Admiral Raddus - PvP
-Move Health(Offense %) Square from Nightsister Zombie.
-Move Speed(Speed) Arrow from Tarfful.
-Move Speed(Defense %) Diamond from 50R-T.
-Move Speed(Protection %) Triangle from Tarfful.
-Move Health(Protection %) Circle from Asajj Ventress.
+Move Speed(Offense %) Square from Tarfful.
+Move Speed(Speed) Arrow from Darth Sion.
+Move Speed(Defense %) Diamond from Zorii Bliss.
+Move Health(Protection %) Triangle from Saw Gerrera.
+Move Health(Protection %) Circle from Shoretrooper.
 Move Speed(Protection %) Cross from Embo.
 
-50R-T - PvP
-Move Defense(Offense %) Square from L3-37.
-Move Defense(Speed) Arrow from Chopper.
-Move Defense(Defense %) Diamond from Royal Guard.
-Move Defense(Defense %) Triangle from L3-37.
-Move Defense(Protection %) Circle from Wrecker.
-Move Defense(Protection %) Cross from General Veers.
-
 Wampa - PvP
-Move Critdamage(Offense %) Square from Wedge Antilles.
-Move Critdamage(Speed) Arrow from Captain Phasma.
-Move Health(Defense %) Diamond from Snowtrooper.
-Move Health(Critical Damage %) Triangle from TIE Fighter Pilot.
-Move Critdamage(Health %) Circle from Aayla Secura.
-Move Critdamage(Offense %) Cross from STAP.
+Move Critdamage(Offense %) Square from TIE Fighter Pilot.
+Move Critdamage(Speed) Arrow from Resistance Hero Poe.
+Move Critchance(Defense %) Diamond from Aayla Secura.
+Move Critdamage(Critical Damage %) Triangle from Threepio & Chewie.
+Move Critchance(Health %) Circle from Captain Tarpals.
+Move Critdamage(Offense %) Cross from HK-47.
 
 Sana Starros - PvP
-Move Speed(Speed) Arrow from Geonosian Soldier.
-Move Critdamage(Defense %) Diamond from Sith Marauder.
-Move Speed(Critical Damage %) Triangle from Resistance Pilot.
-Move Tenacity(Protection %) Circle from Resistance Pilot.
+Move Potency(Offense %) Square from Obi-Wan Kenobi (Old Ben).
+Move Speed(Speed) Arrow from Rose Tico.
+Move Potency(Defense %) Diamond from Iden Versio.
+Move Speed(Critical Damage %) Triangle from Zam Wesell.
+Move Speed(Protection %) Circle from Poe Dameron.
+Move Speed(Defense %) Cross from Chirrut Îmwe.
 
 Kuiil - PvP
-Move Speed(Offense %) Square from Stormtrooper.
+Move Speed(Offense %) Square from Saw Gerrera.
 Move Speed(Speed) Arrow from 50R-T.
-Move Speed(Defense %) Diamond from Zorii Bliss.
-Move Health(Critical Chance %) Triangle from Nightsister Spirit.
-Move Health(Protection %) Circle from Tarfful.
+Move Health(Defense %) Diamond from Resistance Pilot.
+Move Speed(Defense %) Triangle from Poe Dameron.
+Move Health(Protection %) Circle from Asajj Ventress.
 Move Speed(Potency %) Cross from 50R-T.
 
 IG-11 - Tanky
-Move Health(Offense %) Square from Captain Tarpals.
-Move Health(Speed) Arrow from Plo Koon.
+Move Health(Offense %) Square from Princess Leia.
+Move Health(Speed) Arrow from Jedi Consular.
 Move Health(Defense %) Diamond from Darth Maul.
-Move Health(Defense %) Triangle from Zaalbar.
-Move Health(Health %) Circle from Nightsister Zombie.
-Move Health(Health %) Cross from Clone Wars Chewbacca.
+Move Health(Defense %) Triangle from Savage Opress.
+Move Health(Health %) Circle from Princess Kneesaa.
+Move Health(Health %) Cross from Jedi Knight Guardian.
 
 Darth Maul - PvP
-Move Potency(Offense %) Square from Poe Dameron.
-Move Speed(Speed) Arrow from Carth Onasi.
-Move Speed(Defense %) Diamond from Lando Calrissian.
+Move Potency(Offense %) Square from Resistance Pilot.
+Move Speed(Speed) Arrow from Geonosian Soldier.
+Move Speed(Defense %) Diamond from Saw Gerrera.
 Move Speed(Offense %) Triangle from Dathcha.
-Move Potency(Protection %) Circle from Obi-Wan Kenobi (Old Ben).
-Move Speed(Potency %) Cross from Rose Tico.
+Move Speed(Health %) Circle from Gungan Boomadier.
+Move Potency(Potency %) Cross from Magmatrooper.
 
 Cassian Andor - PvP
-Move Potency(Speed) Arrow from Cara Dune.
-Move Potency(Defense %) Diamond from Obi-Wan Kenobi (Old Ben).
+Move Potency(Offense %) Square from Darth Sidious.
+Move Potency(Speed) Arrow from Embo.
+Move Potency(Defense %) Diamond from T3-M4.
 Move Potency(Protection %) Triangle from Obi-Wan Kenobi (Old Ben).
-Move Potency(Protection %) Circle from Poe Dameron.
-Move Potency(Potency %) Cross from T3-M4.
+Move Potency(Protection %) Circle from Obi-Wan Kenobi (Old Ben).
+Move Potency(Potency %) Cross from Grand Moff Tarkin.
 
 Sith Assassin - PvP
-Move Potency(Offense %) Square from Obi-Wan Kenobi (Old Ben).
-Move Potency(Speed) Arrow from Teebo.
-Move Speed(Defense %) Diamond from Saw Gerrera.
+Move Speed(Offense %) Square from Poe Dameron.
+Move Speed(Speed) Arrow from Stormtrooper Han.
+Move Speed(Defense %) Diamond from Lando Calrissian.
 Move Speed(Offense %) Triangle from Princess Leia.
-Move Speed(Health %) Circle from Chirrut Îmwe.
-Move Speed(Potency %) Cross from Garazeb "Zeb" Orrelios.
+Move Potency(Protection %) Circle from T3-M4.
+Move Potency(Potency %) Cross from T3-M4.
 
 Savage Opress - PvP/Omicron
 Move Health(Offense %) Square from Boss Nass.
 Move Defense(Health %) Arrow from Gamorrean Guard.
-Move Defense(Defense %) Diamond from Scarif Rebel Pathfinder.
-Move Health(Defense %) Triangle from Nightsister Zombie.
-Move Health(Health %) Circle from Jedi Knight Guardian.
-Move Health(Health %) Cross from Jedi Knight Guardian.
+Move Health(Defense %) Diamond from IG-86 Sentinel Droid.
+Move Defense(Defense %) Triangle from B2 Super Battle Droid.
+Move Defense(Health %) Cross from IG-100 MagnaGuard.
 
 Chirrut Îmwe - PvP
-Move Critchance(Offense %) Square from First Order SF TIE Pilot.
-Move Critdamage(Speed) Arrow from Jyn Erso.
+Move Critdamage(Offense %) Square from Captain Phasma.
+Move Critchance(Speed) Arrow from Qi'ra.
 Move Critchance(Defense %) Diamond from Luminara Unduli.
-Move Critdamage(Critical Damage %) Triangle from Aurra Sing.
-Move Critdamage(Protection %) Circle from Veteran Smuggler Han Solo.
+Move Critdamage(Critical Damage %) Triangle from Darth Talon.
+Move Critdamage(Protection %) Circle from First Order TIE Pilot.
 Move Critdamage(Tenacity %) Cross from Threepio & Chewie.
 
 Qui-Gon Jinn - PvP
-Move Critchance(Offense %) Square from Zam Wesell.
-Move Critdamage(Speed) Arrow from Wedge Antilles.
-Move Critdamage(Defense %) Diamond from TIE Fighter Pilot.
-Move Critchance(Critical Damage %) Triangle from Mission Vao.
+Move Critchance(Offense %) Square from Greedo.
+Move Critdamage(Speed) Arrow from Jyn Erso.
+Move Critdamage(Defense %) Diamond from Captain Phasma.
+Move Critchance(Critical Damage %) Triangle from First Order SF TIE Pilot.
 Move Critdamage(Protection %) Circle from Boba Fett.
-Move Critdamage(Potency %) Cross from Cassian Andor.
+Move Critdamage(Potency %) Cross from IG-88.
 
 Princess Leia - PvP
-Move Speed(Offense %) Square from Tusken Warrior.
-Move Critchance(Speed) Arrow from Young Han Solo.
-Move Speed(Defense %) Diamond from Bodhi Rook.
-Move Speed(Critical Damage %) Triangle from Rebel Officer Leia Organa.
-Move Speed(Protection %) Circle from Rose Tico.
-Move Critchance(Protection %) Cross from Aurra Sing.
+Move Critdamage(Offense %) Square from IG-88.
+Move Critchance(Speed) Arrow from Luke Skywalker (Farmboy).
+Move Critchance(Defense %) Diamond from Rose Tico.
+Move Critdamage(Critical Damage %) Triangle from Biggs Darklighter.
+Move Critdamage(Protection %) Circle from Aurra Sing.
+Move Critdamage(Offense %) Cross from STAP.
 
 First Order TIE Pilot - PvP
-Move Health(Offense %) Square from HK-47.
-Move Health(Speed) Arrow from HK-47.
-Move Health(Defense %) Diamond from Rebel Officer Leia Organa.
-Move Health(Critical Damage %) Triangle from Aayla Secura.
-Move Health(Health %) Circle from Princess Kneesaa.
-Move Health(Defense %) Cross from Nightsister Zombie.
+Move Critdamage(Offense %) Square from Biggs Darklighter.
+Move Critdamage(Speed) Arrow from Darth Sidious.
+Move Critdamage(Defense %) Diamond from IG-88.
+Move Health(Critical Damage %) Triangle from TIE Fighter Pilot.
+Move Critdamage(Health %) Circle from Clone Sergeant - Phase I.
+Move Health(Defense %) Cross from Savage Opress.
+
+T3-M4 - PvP
+Move Critchance(Offense %) Square from Bo-Katan Kryze.
+Move Critchance(Speed) Arrow from Pao.
+Move Tenacity(Defense %) Diamond from Mon Mothma.
+Move Tenacity(Critical Chance %) Triangle from Tusken Raider.
+Move Health(Protection %) Circle from Chirrut Îmwe.
+Move Health(Potency %) Cross from Mission Vao.
 
 Carth Onasi - PvP
-Move Critchance(Offense %) Square from Tusken Raider.
-Move Critchance(Speed) Arrow from Luke Skywalker (Farmboy).
-Move Critdamage(Defense %) Diamond from Aayla Secura.
-Move Critdamage(Critical Damage %) Triangle from First Order TIE Pilot.
-Move Critdamage(Protection %) Circle from Bistan.
-Move Critdamage(Potency %) Cross from Clone Sergeant - Phase I.
+Move Critchance(Offense %) Square from Ezra Bridger.
+Move Critchance(Speed) Arrow from Nightsister Initiate.
+Move Critdamage(Defense %) Diamond from TIE Fighter Pilot.
+Move Critdamage(Critical Damage %) Triangle from Colonel Starck.
+Move Critdamage(Protection %) Circle from IG-88.
+Move Critdamage(Potency %) Cross from Cassian Andor.
 
 Magmatrooper - PvE
-Move Critchance(Offense %) Square from STAP.
-Move Critchance(Speed) Arrow from Ewok Scout.
-Move Health(Defense %) Diamond from Sana Starros.
-Move Health(Critical Damage %) Triangle from Skiff Guard (Lando Calrissian).
-Move Health(Protection %) Circle from Greedo.
-Move Defense(Potency %) Cross from Poe Dameron.
+Move Critdamage(Offense %) Square from Colonel Starck.
+Move Critdamage(Speed) Arrow from Skiff Guard (Lando Calrissian).
+Move Critdamage(Defense %) Diamond from Geonosian Spy.
+Move Potency(Critical Damage %) Triangle from Grand Moff Tarkin.
+Move Critdamage(Protection %) Circle from First Order SF TIE Pilot.
+Move Potency(Potency %) Cross from Qi'ra.
 
 Stormtrooper - Speedy Tank
-Move Defense(Offense %) Square from Sith Empire Trooper.
-Move Defense(Speed) Arrow from Wrecker.
-Move Defense(Defense %) Diamond from L3-37.
-Move Defense(Defense %) Triangle from B2 Super Battle Droid.
+Move Defense(Offense %) Square from L3-37.
+Move Defense(Speed) Arrow from Chopper.
+Move Defense(Defense %) Diamond from Wrecker.
+Move Defense(Defense %) Triangle from L3-37.
 Move Defense(Protection %) Circle from Finn.
 Move Defense(Defense %) Cross from B2 Super Battle Droid.
 
 Chopper - PvP
-Move Health(Offense %) Square from Chief Nebit.
-Move Health(Speed) Arrow from Talia.
+Move Health(Offense %) Square from Kit Fisto.
+Move Health(Speed) Arrow from Captain Han Solo.
 Move Health(Defense %) Diamond from Ima-Gun Di.
-Move Health(Critical Chance %) Triangle from Captain Han Solo.
-Move Health(Health %) Circle from Paz Vizsla.
-Move Health(Health %) Cross from Paz Vizsla.
+Move Health(Critical Chance %) Triangle from Gungan Boomadier.
+Move Health(Health %) Circle from Teebo.
+Move Health(Health %) Cross from Nightsister Acolyte.
 
 URoRRuR'R'R - PvP
-Move Health(Offense %) Square from IG-100 MagnaGuard.
-Move Defense(Speed) Arrow from Savage Opress.
-Move Health(Defense %) Diamond from Nightsister Zombie.
-Move Defense(Defense %) Triangle from Chopper.
-Move Health(Protection %) Cross from Hondo Ohnaka.
+Move Health(Offense %) Square from Juhani.
+Move Speed(Speed) Arrow from Tarfful.
+Move Speed(Defense %) Diamond from Tarfful.
+Move Speed(Protection %) Triangle from Tarfful.
+Move Health(Protection %) Circle from Tarfful.
+Move Speed(Protection %) Cross from First Order Stormtrooper.
 
 Clone Sergeant - Phase I - PvP
-Move Critchance(Offense %) Square from Bo-Katan Kryze.
-Move Critdamage(Speed) Arrow from Cassian Andor.
-Move Critdamage(Defense %) Diamond from Cassian Andor.
-Move Critchance(Critical Damage %) Triangle from Ezra Bridger.
-Move Critdamage(Protection %) Circle from First Order SF TIE Pilot.
-Move Critdamage(Potency %) Cross from Darth Sidious.
+Move Critchance(Offense %) Square from Carth Onasi.
+Move Critchance(Speed) Arrow from Captain Tarpals.
+Move Health(Defense %) Diamond from Snowtrooper.
+Move Critchance(Critical Damage %) Triangle from Geonosian Spy.
+Move Critchance(Health %) Circle from Nightsister Initiate.
+Move Health(Potency %) Cross from Eeth Koth.
 
 Tusken Raider - PvE
-Move Critdamage(Offense %) Square from Skiff Guard (Lando Calrissian).
-Move Critdamage(Speed) Arrow from Bistan.
+Move Critdamage(Offense %) Square from Geonosian Spy.
+Move Critdamage(Speed) Arrow from First Order TIE Pilot.
 Move Critdamage(Defense %) Diamond from Boba Fett.
-Move Potency(Critical Damage %) Triangle from Veteran Smuggler Han Solo.
-Move Critdamage(Health %) Circle from Clone Sergeant - Phase I.
-Move Potency(Potency %) Cross from Nightsister Spirit.
+Move Health(Critical Damage %) Triangle from Asajj Ventress.
+Move Health(Protection %) Circle from Greedo.
+Move Critdamage(Potency %) Cross from Clone Sergeant - Phase I.
 
 Tusken Shaman - PvP
-Move Potency(Offense %) Square from IG-88.
-Move Potency(Speed) Arrow from Ugnaught.
-Move Tenacity(Critical Chance %) Triangle from Darth Nihilus.
-Move Health(Protection %) Circle from Imperial Probe Droid.
-Move Health(Potency %) Cross from Jawa Scavenger.
+Move Potency(Offense %) Square from Grand Moff Tarkin.
+Move Health(Speed) Arrow from Dathcha.
+Move Health(Defense %) Diamond from Zaalbar.
+Move Health(Critical Chance %) Triangle from Nightsister Spirit.
+Move Potency(Potency %) Cross from Nightsister Spirit.
 
 Scarif Rebel Pathfinder - PvP
-Move Health(Offense %) Square from Finn.
-Move Health(Speed) Arrow from Baze Malbus.
+Move Defense(Offense %) Square from Kanan Jarrus.
+Move Defense(Speed) Arrow from Savage Opress.
 Move Defense(Defense %) Diamond from Biggs Darklighter.
-Move Defense(Defense %) Triangle from Sith Empire Trooper.
+Move Defense(Defense %) Triangle from Wrecker.
 Move Defense(Health %) Circle from IG-100 MagnaGuard.
-Move Defense(Health %) Cross from IG-100 MagnaGuard.
+Move Defense(Health %) Cross from Zaalbar.
 
 Hoth Rebel Scout - PvE
-Move Speed(Offense %) Square from Geonosian Soldier.
-Move Critchance(Speed) Arrow from Nightsister Initiate.
-Move Speed(Defense %) Diamond from Captain Tarpals.
-Move Speed(Critical Damage %) Triangle from Geonosian Soldier.
-Move Critchance(Health %) Circle from Nightsister Initiate.
+Move Speed(Offense %) Square from Rebel Officer Leia Organa.
+Move Critchance(Speed) Arrow from Young Lando Calrissian.
+Move Speed(Defense %) Diamond from Bodhi Rook.
+Move Critchance(Critical Damage %) Triangle from Aurra Sing.
+Move Speed(Protection %) Circle from Tusken Warrior.
 Move Speed(Potency %) Cross from Mob Enforcer.
 
+Jedi Knight Guardian - PvE
+Move Health(Offense %) Square from Stormtrooper Han.
+Move Potency(Speed) Arrow from Ugnaught.
+Move Health(Defense %) Diamond from Admiral Ackbar.
+Move Potency(Protection %) Triangle from URoRRuR'R'R.
+Move Health(Protection %) Circle from Tusken Raider.
+Move Health(Potency %) Cross from Jawa Scavenger.
+
 Imperial Probe Droid - Tanky
-Move Health(Offense %) Square from URoRRuR'R'R.
-Move Health(Speed) Arrow from Jawa.
-Move Health(Defense %) Diamond from Jedi Consular.
-Move Health(Protection %) Triangle from Boss Nass.
+Move Health(Offense %) Square from Captain Han Solo.
+Move Health(Speed) Arrow from Lobot.
+Move Health(Defense %) Diamond from Stormtrooper Han.
+Move Health(Protection %) Triangle from Tusken Shaman.
 Move Health(Protection %) Circle from Stormtrooper.
-Move Health(Protection %) Cross from Zorii Bliss.
+Move Health(Protection %) Cross from Carth Onasi.
 
 IG-100 MagnaGuard - PvP
-Move Health(Offense %) Square from Scarif Rebel Pathfinder.
+Move Health(Offense %) Square from Finn.
 Move Defense(Critical Avoidance %) Arrow from CT-5555 "Fives".
-Move Defense(Defense %) Diamond from Finn.
-Move Defense(Defense %) Triangle from Wrecker.
-Move Health(Protection %) Circle from Tusken Shaman.
-Move Defense(Protection %) Cross from Juhani.
+Move Defense(Defense %) Diamond from Baze Malbus.
+Move Defense(Defense %) Triangle from Sith Empire Trooper.
+Move Health(Protection %) Circle from Resistance Pilot.
+Move Defense(Protection %) Cross from General Veers.
 
 Greedo - Crits
-Move Critchance(Offense %) Square from Dengar.
+Move Critchance(Offense %) Square from Aayla Secura.
 Move Critchance(Speed) Arrow from CC-2224 "Cody".
-Move Critchance(Defense %) Diamond from Tusken Raider.
+Move Health(Defense %) Diamond from Mission Vao.
 Move Critchance(Critical Chance %) Triangle from Luminara Unduli.
-Move Critchance(Protection %) Circle from CC-2224 "Cody".
+Move Health(Protection %) Circle from Aayla Secura.
 Move Critchance(Potency %) Cross from CC-2224 "Cody".
 
 Jyn Erso - PvP
-Move Critchance(Offense %) Square from Luke Skywalker (Farmboy).
-Move Potency(Speed) Arrow from Darth Sidious.
+Move Potency(Offense %) Square from Tusken Raider.
+Move Potency(Speed) Arrow from Tusken Raider.
 Move Critchance(Defense %) Diamond from Young Han Solo.
-Move Potency(Critical Chance %) Triangle from Darth Maul.
-Move Health(Protection %) Circle from Rebel Officer Leia Organa.
-Move Offense(Potency %) Cross from Mother Talzin.
+Move Critchance(Critical Chance %) Triangle from Dengar.
+Move Potency(Health %) Circle from Ima-Gun Di.
+Move Potency(Potency %) Cross from Garazeb "Zeb" Orrelios.
 
 Nightsister Spirit - PvE
-Move Tenacity(Offense %) Square from Bistan.
-Move Critchance(Speed) Arrow from Young Lando Calrissian.
-Move Critchance(Defense %) Diamond from Wicket.
-Move Health(Critical Chance %) Triangle from Veteran Smuggler Chewbacca.
-Move Defense(Protection %) Circle from Biggs Darklighter.
-Move Health(Potency %) Cross from Nightsister Initiate.
+Move Tenacity(Offense %) Square from Mon Mothma.
+Move Health(Speed) Arrow from Talia.
+Move Potency(Defense %) Diamond from STAP.
+Move Potency(Critical Chance %) Triangle from Darth Maul.
+Move Defense(Protection %) Circle from Juhani.
+Move Defense(Potency %) Cross from Poe Dameron.
+
+IG-12 & Grogu - PvP
+Move Health(Offense %) Square from Chief Nebit.
+Move Health(Speed) Arrow from Nightsister Acolyte.
+Move Health(Defense %) Diamond from Boss Nass.
+Move Health(Critical Chance %) Triangle from Sana Starros.
+Move Health(Health %) Circle from Coruscant Underworld Police.
+Move Health(Protection %) Cross from Tarfful.
 
 Biggs Darklighter - PvP
-Move Critdamage(Offense %) Square from Veteran Smuggler Han Solo.
-Move Critdamage(Speed) Arrow from First Order SF TIE Pilot.
+Move Critdamage(Offense %) Square from First Order TIE Pilot.
+Move Critdamage(Speed) Arrow from Wedge Antilles.
 Move Critdamage(Defense %) Diamond from Asajj Ventress.
 Move Defense(Critical Damage %) Triangle from Captain Phasma.
 Move Health(Protection %) Circle from Ewok Elder.
-Move Critdamage(Protection %) Cross from First Order TIE Pilot.
+Move Critdamage(Protection %) Cross from Aurra Sing.
 
 Snowtrooper - PvP
-Move Critdamage(Offense %) Square from Aurra Sing.
-Move Critdamage(Speed) Arrow from Veteran Smuggler Han Solo.
-Move Critdamage(Defense %) Diamond from First Order SF TIE Pilot.
-Move Tenacity(Critical Damage %) Triangle from Bistan.
-Move Health(Protection %) Circle from Qui-Gon Jinn.
+Move Health(Offense %) Square from Nightsister Zombie.
+Move Critdamage(Speed) Arrow from Asajj Ventress.
+Move Critdamage(Defense %) Diamond from Aurra Sing.
+Move Tenacity(Critical Damage %) Triangle from Resistance Pilot.
+Move Critdamage(Health %) Circle from STAP.
 Move Critdamage(Defense %) Cross from Captain Phasma.
 
 Aurra Sing - hSTR Phase 3
 Move Critdamage(Offense %) Square from Asajj Ventress.
-Move Critdamage(Speed) Arrow from Asajj Ventress.
-Move Health(Defense %) Diamond from Chief Chirpa.
-Move Tenacity(Critical Damage %) Triangle from Kylo Ren.
-Move Critdamage(Protection %) Circle from Kylo Ren.
-Move Critdamage(Protection %) Cross from Boba Fett, Scion of Jango.
+Move Critdamage(Speed) Arrow from First Order SF TIE Pilot.
+Move Critdamage(Defense %) Diamond from Cassian Andor.
+Move Health(Critical Damage %) Triangle from Greedo.
+Move Critdamage(Protection %) Circle from Ezra Bridger.
+Move Potency(Defense %) Cross from Gungan Phalanx.
 
 Rebel Officer Leia Organa - PvP
-Move Potency(Offense %) Square from Grand Moff Tarkin.
+Move Potency(Offense %) Square from Veteran Smuggler Han Solo.
 Move Potency(Speed) Arrow from Grand Moff Tarkin.
 Move Potency(Defense %) Diamond from Hoth Rebel Soldier.
-Move Potency(Critical Damage %) Triangle from Colonel Starck.
-Move Potency(Health %) Circle from Ima-Gun Di.
+Move Potency(Critical Damage %) Triangle from IG-88.
+Move Potency(Protection %) Circle from Grand Moff Tarkin.
 Move Potency(Potency %) Cross from Logray.
 
 Poe Dameron - PvP
-Move Speed(Offense %) Square from Resistance Pilot.
-Move Potency(Speed) Arrow from URoRRuR'R'R.
-Move Potency(Defense %) Diamond from T3-M4.
-Move Speed(Defense %) Triangle from Juhani.
+Move Speed(Offense %) Square from URoRRuR'R'R.
+Move Potency(Speed) Arrow from T3-M4.
+Move Potency(Defense %) Diamond from Garazeb "Zeb" Orrelios.
+Move Speed(Defense %) Triangle from Scarif Rebel Pathfinder.
 Move Speed(Protection %) Circle from Garazeb "Zeb" Orrelios.
-Move Speed(Potency %) Cross from Lando Calrissian.
+Move Speed(Potency %) Cross from Veteran Smuggler Han Solo.
 
 Resistance Trooper - PvP
-Move Critdamage(Offense %) Square from Boba Fett.
-Move Critchance(Speed) Arrow from Captain Tarpals.
-Move Critdamage(Defense %) Diamond from Clone Sergeant - Phase I.
+Move Critdamage(Offense %) Square from Wedge Antilles.
+Move Critdamage(Speed) Arrow from Threepio & Chewie.
+Move Critdamage(Defense %) Diamond from Ezra Bridger.
 Move Critchance(Critical Chance %) Triangle from Nightsister Initiate.
-Move Critdamage(Health %) Circle from Omega.
+Move Critchance(Protection %) Circle from CC-2224 "Cody".
 Move Critdamage(Tenacity %) Cross from Asajj Ventress.
 
 First Order SF TIE Pilot - PvP
-Move Speed(Offense %) Square from Nightsister Spirit.
-Move Potency(Speed) Arrow from Ima-Gun Di.
-Move Potency(Defense %) Diamond from Resistance Trooper.
+Move Potency(Offense %) Square from Veteran Smuggler Chewbacca.
+Move Potency(Speed) Arrow from Teebo.
+Move Speed(Defense %) Diamond from Veteran Smuggler Han Solo.
 Move Speed(Critical Damage %) Triangle from Garazeb "Zeb" Orrelios.
 Move Speed(Protection %) Circle from Luke Skywalker (Farmboy).
-Move Speed(Potency %) Cross from Bodhi Rook.
+Move Speed(Potency %) Cross from Lando Calrissian.
 
 Bistan - PvP
-Move Speed(Offense %) Square from Rose Tico.
+Move Speed(Offense %) Square from Geonosian Soldier.
 Move Speed(Speed) Arrow from Merrin.
-Move Speed(Defense %) Diamond from Tarfful.
-Move Health(Critical Damage %) Triangle from Asajj Ventress.
+Move Critchance(Defense %) Diamond from Wicket.
+Move Critchance(Critical Damage %) Triangle from Wedge Antilles.
 Move Speed(Health %) Circle from Lando Calrissian.
-Move Health(Potency %) Cross from Ima-Gun Di.
+Move Speed(Potency %) Cross from Bodhi Rook.
 
 Jawa - PvE
-Move Potency(Offense %) Square from Veteran Smuggler Chewbacca.
-Move Critdamage(Speed) Arrow from Aayla Secura.
-Move Critdamage(Defense %) Diamond from Darth Sidious.
-Move Critdamage(Offense %) Triangle from Omega.
-Move Critdamage(Protection %) Circle from Geonosian Spy.
-Move Potency(Potency %) Cross from Teebo.
+Move Speed(Offense %) Square from Nightsister Spirit.
+Move Health(Speed) Arrow from Jawa Scavenger.
+Move Speed(Defense %) Diamond from Captain Tarpals.
+Move Speed(Critical Damage %) Triangle from Chirrut Îmwe.
+Move Speed(Protection %) Circle from Young Han Solo.
+Move Health(Potency %) Cross from Nightsister Initiate.
 
 Gar Saxon - PvP
-Move Speed(Offense %) Square from Chirrut Îmwe.
-Move Speed(Speed) Arrow from Stormtrooper Han.
-Move Speed(Defense %) Diamond from IG-12 & Grogu.
-Move Health(Offense %) Triangle from Talia.
+Move Speed(Offense %) Square from Mob Enforcer.
+Move Speed(Speed) Arrow from Cara Dune.
+Move Speed(Defense %) Diamond from Rebel Officer Leia Organa.
+Move Critdamage(Offense %) Triangle from Omega.
 Move Speed(Health %) Circle from Ewok Scout.
-Move Offense(Potency %) Cross from Mace Windu.
+Move Health(Potency %) Cross from Ima-Gun Di.
 
 Imperial Super Commando - PvP
 Move Health(Offense %) Square from Talia.
-Move Tenacity(Speed) Arrow from Tusken Raider.
+Move Tenacity(Speed) Arrow from Tusken Shaman.
 Move Speed(Defense %) Diamond from Mob Enforcer.
 Move Speed(Offense %) Triangle from Young Han Solo.
-Move Speed(Protection %) Circle from Young Han Solo.
-Move Speed(Protection %) Cross from Stormtrooper.
+Move Speed(Protection %) Circle from Veteran Smuggler Han Solo.
+Move Speed(Protection %) Cross from Tusken Warrior.
 
 Young Han Solo - PvP
-Move Critchance(Offense %) Square from Rey (Scavenger).
-Move Health(Speed) Arrow from Nightsister Acolyte.
-Move Health(Defense %) Diamond from Chirrut Îmwe.
-Move Critchance(Critical Damage %) Triangle from Boba Fett.
-Move Health(Health %) Circle from Teebo.
-Move Health(Health %) Cross from Nightsister Acolyte.
+Move Health(Offense %) Square from Omega.
+Move Health(Speed) Arrow from Carth Onasi.
+Move Health(Defense %) Diamond from Logray.
+Move Health(Critical Damage %) Triangle from Jyn Erso.
+Move Health(Protection %) Circle from Sana Starros.
+Move Health(Defense %) Cross from Admiral Ackbar.
 
 Garazeb "Zeb" Orrelios - PvP
-Move Potency(Offense %) Square from Gungan Boomadier.
-Move Health(Speed) Arrow from Paz Vizsla.
+Move Potency(Offense %) Square from Imperial Probe Droid.
+Move Health(Speed) Arrow from Gungan Phalanx.
 Move Health(Defense %) Diamond from Young Lando Calrissian.
 Move Potency(Health %) Triangle from Mob Enforcer.
-Move Health(Health %) Circle from Coruscant Underworld Police.
+Move Health(Health %) Circle from Jedi Knight Guardian.
 Move Health(Potency %) Cross from Darth Maul.
 
-IG-12 & Grogu - PvP
-Move Health(Offense %) Square from Tusken Shaman.
-Move Health(Speed) Arrow from Rey (Scavenger).
-Move Health(Defense %) Diamond from Admiral Ackbar.
-Move Health(Critical Chance %) Triangle from Lando Calrissian.
-Move Health(Protection %) Circle from Saw Gerrera.
-Move Health(Protection %) Cross from Hoth Rebel Soldier.
-
 Darth Sidious - PvP
-Move Speed(Offense %) Square from Stormtrooper Han.
-Move Speed(Speed) Arrow from Admiral Ackbar.
+Move Speed(Offense %) Square from Garazeb "Zeb" Orrelios.
+Move Speed(Speed) Arrow from Veteran Smuggler Han Solo.
 Move Speed(Defense %) Diamond from Jawa Engineer.
-Move Potency(Offense %) Triangle from Imperial Super Commando.
+Move Health(Offense %) Triangle from Talia.
 Move Speed(Health %) Circle from Lobot.
-Move Potency(Potency %) Cross from Ugnaught.
+Move Potency(Potency %) Cross from Teebo.
 
 Lando Calrissian - PvP
 Move Critchance(Offense %) Square from Coruscant Underworld Police.
 Move Tenacity(Speed) Arrow from Sun Fac.
 Move Critchance(Defense %) Diamond from CC-2224 "Cody".
-Move Critchance(Critical Chance %) Triangle from Dengar.
-Move Critchance(Health %) Circle from Hoth Rebel Soldier.
+Move Health(Protection %) Circle from Captain Han Solo.
 Move Health(Protection %) Cross from Dengar.
 
 Tarfful - PvP
-Move Potency(Offense %) Square from Juhani.
-Move Defense(Speed) Arrow from Obi-Wan Kenobi (Old Ben).
-Move Defense(Defense %) Diamond from First Order Stormtrooper.
-Move Speed(Defense %) Triangle from IG-100 MagnaGuard.
-Move Defense(Health %) Circle from Gar Saxon.
-Move Defense(Health %) Cross from Scarif Rebel Pathfinder.
+Move Defense(Offense %) Square from Sith Empire Trooper.
+Move Defense(Speed) Arrow from Wrecker.
+Move Defense(Defense %) Diamond from Royal Guard.
+Move Defense(Defense %) Triangle from IG-100 MagnaGuard.
+Move Defense(Health %) Circle from Zaalbar.
+Move Defense(Health %) Cross from Plo Koon.
 
 Wedge Antilles - PvP
-Move Critchance(Offense %) Square from CC-2224 "Cody".
-Move Critdamage(Speed) Arrow from First Order TIE Pilot.
-Move Critdamage(Defense %) Diamond from Veteran Smuggler Han Solo.
-Move Critchance(Critical Damage %) Triangle from First Order SF TIE Pilot.
-Move Critdamage(Health %) Circle from First Order Executioner.
+Move Critdamage(Offense %) Square from Boba Fett.
+Move Critchance(Speed) Arrow from Magmatrooper.
+Move Critchance(Critical Damage %) Triangle from Ezra Bridger.
+Move Critdamage(Protection %) Circle from Geonosian Spy.
 Move Critdamage(Health %) Cross from First Order Executioner.
 
 Rose Tico - PvP
-Move Speed(Offense %) Square from Carth Onasi.
-Move Potency(Speed) Arrow from Mob Enforcer.
-Move Potency(Defense %) Diamond from Garazeb "Zeb" Orrelios.
-Move Speed(Critical Damage %) Triangle from Carth Onasi.
+Move Speed(Offense %) Square from Sana Starros.
+Move Speed(Speed) Arrow from Chirrut Îmwe.
+Move Potency(Defense %) Diamond from Clone Sergeant - Phase I.
 Move Speed(Protection %) Circle from Stormtrooper Han.
-Move Speed(Protection %) Cross from Merrin.
+Move Potency(Potency %) Cross from Ugnaught.
 
 Plo Koon - PvE
-Move Health(Offense %) Square from Omega.
+Move Speed(Offense %) Square from Gungan Boomadier.
 Move Potency(Speed) Arrow from Hoth Rebel Soldier.
-Move Health(Defense %) Diamond from Logray.
-Move Defense(Critical Damage %) Triangle from Biggs Darklighter.
-Move Potency(Health %) Circle from IG-12 & Grogu.
-Move Health(Tenacity %) Cross from Old Daka.
-
-Veteran Smuggler Han Solo - PvE
-Move Health(Offense %) Square from Captain Han Solo.
-Move Speed(Speed) Arrow from Zorii Bliss.
-Move Speed(Defense %) Diamond from Dathcha.
-Move Health(Critical Damage %) Triangle from Jyn Erso.
+Move Potency(Defense %) Diamond from Veteran Smuggler Chewbacca.
+Move Speed(Critical Damage %) Triangle from Geonosian Soldier.
 Move Speed(Protection %) Circle from Zam Wesell.
-Move Speed(Defense %) Cross from Admiral Ackbar.
+Move Speed(Defense %) Cross from Scarif Rebel Pathfinder.
 
-Grand Moff Tarkin - PvP
-Move Critdamage(Offense %) Square from Darth Sidious.
-Move Critchance(Speed) Arrow from Pao.
-Move Critdamage(Defense %) Diamond from Jyn Erso.
-Move Critchance(Critical Damage %) Triangle from Gungan Boomadier.
-Move Critdamage(Health %) Circle from Cassian Andor.
+Ima-Gun Di - PvP
+Move Critdamage(Offense %) Square from HK-47.
+Move Tenacity(Speed) Arrow from Poggle the Lesser.
+Move Critdamage(Defense %) Diamond from Darth Sidious.
+Move Defense(Critical Damage %) Triangle from Finn.
+Move Critdamage(Health %) Circle from First Order Executioner.
 Move Critdamage(Tenacity %) Cross from Jyn Erso.
 
+Veteran Smuggler Han Solo - PvE
+Move Health(Offense %) Square from Kyle Katarn.
+Move Speed(Speed) Arrow from Sana Starros.
+Move Speed(Defense %) Diamond from Dathcha.
+Move Offense(Critical Damage %) Triangle from Kylo Ren.
+Move Speed(Protection %) Circle from K-2SO.
+Move Speed(Protection %) Cross from Saw Gerrera.
+
+Grand Moff Tarkin - PvP
+Move Critchance(Offense %) Square from Luke Skywalker (Farmboy).
+Move Potency(Speed) Arrow from Mob Enforcer.
+Move Tenacity(Defense %) Diamond from Ninth Sister.
+Move Potency(Critical Damage %) Triangle from Boba Fett.
+Move Critchance(Health %) Circle from Hoth Rebel Soldier.
+Move Health(Tenacity %) Cross from Old Daka.
+
 Chief Chirpa - PvP
-Move Speed(Offense %) Square from Poggle the Lesser.
-Move Speed(Speed) Arrow from Poggle the Lesser.
+Move Speed(Offense %) Square from K-2SO.
+Move Speed(Speed) Arrow from Wat Tambor.
 Move Health(Defense %) Diamond from Paploo.
 Move Health(Defense %) Triangle from Admiral Ackbar.
 Move Speed(Health %) Circle from Snowtrooper.
 Move Speed(Health %) Cross from Jawa Engineer.
 
 Admiral Ackbar - Survivability
-Move Health(Offense %) Square from Shoretrooper.
-Move Health(Speed) Arrow from Tusken Shaman.
-Move Health(Defense %) Diamond from Boss Nass.
-Move Health(Protection %) Triangle from Tusken Shaman.
-Move Health(Protection %) Circle from Carth Onasi.
-Move Health(Protection %) Cross from Chief Chirpa.
+Move Health(Offense %) Square from Poggle the Lesser.
+Move Health(Speed) Arrow from Jawa.
+Move Health(Defense %) Diamond from Plo Koon.
+Move Tenacity(Protection %) Triangle from Ninth Sister.
+Move Health(Protection %) Circle from Poggle the Lesser.
+Move Tenacity(Protection %) Cross from Ninth Sister.
 
 Paploo - PvP
-Move Health(Offense %) Square from Chief Chirpa.
-Move Health(Defense %) Diamond from Plo Koon.
-Move Health(Critical Chance %) Triangle from Ima-Gun Di.
-Move Defense(Health %) Circle from Savage Opress.
-Move Defense(Health %) Cross from Savage Opress.
+Move Health(Offense %) Square from Admiral Ackbar.
+Move Health(Speed) Arrow from Zaalbar.
+Move Health(Defense %) Diamond from Lobot.
+Move Tenacity(Health %) Triangle from Jedi Consular.
+Move Tenacity(Health %) Circle from Gungan Phalanx.
+Move Health(Tenacity %) Cross from Dathcha.
 
 First Order Executioner - PvP
-Move Health(Offense %) Square from Wicket.
-Move Health(Speed) Arrow from Jawa Scavenger.
-Move Health(Defense %) Diamond from Lobot.
-Move Health(Critical Damage %) Triangle from Greedo.
+Move Health(Offense %) Square from Tusken Shaman.
+Move Health(Speed) Arrow from Rey (Scavenger).
+Move Health(Defense %) Diamond from Luke Skywalker (Farmboy).
+Move Health(Critical Damage %) Triangle from Aayla Secura.
 Move Health(Protection %) Circle from Chief Chirpa.
 Move Health(Tenacity %) Cross from Luminara Unduli.
 
 Wicket - PvP
-Move Speed(Offense %) Square from Admiral Ackbar.
-Move Speed(Speed) Arrow from Sana Starros.
-Move Tenacity(Defense %) Diamond from Ninth Sister.
-Move Offense(Critical Damage %) Triangle from Clone Sergeant - Phase I.
+Move Speed(Offense %) Square from Scarif Rebel Pathfinder.
+Move Critchance(Speed) Arrow from Eeth Koth.
+Move Speed(Defense %) Diamond from Ewok Scout.
+Move Critchance(Critical Damage %) Triangle from Carth Onasi.
 Move Speed(Health %) Circle from Princess Leia.
-Move Speed(Protection %) Cross from Rebel Officer Leia Organa.
+Move Speed(Health %) Cross from Young Han Solo.
 
 Ewok Elder - PvP
 Move Tenacity(Offense %) Square from Darth Nihilus.
 Move Tenacity(Speed) Arrow from Darth Nihilus.
-Move Tenacity(Defense %) Diamond from Threepio & Chewie.
-Move Tenacity(Health %) Triangle from Jedi Consular.
-Move Tenacity(Protection %) Circle from Sun Fac.
-Move Tenacity(Tenacity %) Cross from Luke Skywalker (Farmboy).
+Move Tenacity(Defense %) Diamond from Darth Nihilus.
+Move Tenacity(Health %) Triangle from Hoth Rebel Soldier.
+Move Tenacity(Protection %) Circle from Darth Nihilus.
+Move Tenacity(Tenacity %) Cross from Sun Fac.
 
 Princess Kneesaa - PvP
-Move Health(Offense %) Square from Jawa Scavenger.
+Move Health(Offense %) Square from Wicket.
 Move Health(Speed) Arrow from Darth Maul.
 Move Health(Defense %) Diamond from Ugnaught.
-Move Health(Critical Chance %) Triangle from Nightsister Acolyte.
+Move Health(Critical Chance %) Triangle from Veteran Smuggler Chewbacca.
 Move Health(Protection %) Circle from Veteran Smuggler Chewbacca.
-Move Health(Tenacity %) Cross from Dathcha.
+Move Health(Defense %) Cross from Juhani.
 
 Logray - PvP
-Move Potency(Offense %) Square from Imperial Probe Droid.
-Move Tenacity(Speed) Arrow from Kylo Ren.
-Move Potency(Defense %) Diamond from Jawa Scavenger.
-Move Potency(Critical Damage %) Triangle from Grand Moff Tarkin.
-Move Potency(Protection %) Circle from Grand Moff Tarkin.
+Move Potency(Offense %) Square from Qi'ra.
+Move Potency(Speed) Arrow from Jedi Knight Guardian.
+Move Potency(Defense %) Diamond from Grand Moff Tarkin.
+Move Potency(Critical Damage %) Triangle from Cassian Andor.
+Move Critdamage(Health %) Circle from Cassian Andor.
 Move Defense(Potency %) Cross from Obi-Wan Kenobi (Old Ben).
 
-T3-M4 - PvP
-Move Speed(Offense %) Square from Tarfful.
-Move Health(Speed) Arrow from Logray.
-Move Speed(Defense %) Diamond from Carth Onasi.
-Move Speed(Critical Chance %) Triangle from Rose Tico.
-Move Health(Protection %) Circle from Tusken Raider.
-Move Speed(Protection %) Cross from Kyle Katarn.
-
 Omega - PvP
-Move Health(Offense %) Square from Lobot.
-Move Defense(Offense %) Arrow from Gar Saxon.
+Move Potency(Offense %) Square from Jawa.
+Move Potency(Critical Avoidance %) Arrow from Sith Marauder.
 Move Critdamage(Defense %) Diamond from First Order Executioner.
-Move Tenacity(Health %) Triangle from Hoth Rebel Soldier.
+Move Offense(Defense %) Triangle from Gar Saxon.
 Move Defense(Protection %) Circle from Sith Empire Trooper.
 Move Speed(Tenacity %) Cross from Ewok Scout.
 
 Gamorrean Guard - PvP
-Move Health(Offense %) Square from Jedi Consular.
-Move Defense(Speed) Arrow from Finn.
-Move Defense(Defense %) Diamond from Savage Opress.
-Move Defense(Health %) Triangle from Scarif Rebel Pathfinder.
+Move Health(Offense %) Square from Lobot.
+Move Health(Speed) Arrow from Nightsister Zombie.
+Move Defense(Defense %) Diamond from Finn.
+Move Health(Defense %) Triangle from Nightsister Zombie.
 Move Defense(Health %) Circle from Plo Koon.
-Move Health(Tenacity %) Cross from Wampa.
+Move Health(Tenacity %) Cross from Ewok Elder.
 
 K-2SO - Tanky
-Move Tenacity(Offense %) Square from Ninth Sister.
-Move Tenacity(Speed) Arrow from Wampa.
-Move Tenacity(Defense %) Diamond from Stormtrooper Han.
-Move Tenacity(Protection %) Circle from Threepio & Chewie.
-Move Tenacity(Tenacity %) Cross from Poggle the Lesser.
+Move Health(Offense %) Square from Ewok Elder.
+Move Tenacity(Speed) Arrow from Mon Mothma.
+Move Health(Defense %) Diamond from Nightsister Acolyte.
+Move Tenacity(Protection %) Triangle from Sun Fac.
+Move Tenacity(Protection %) Circle from C-3PO.
+Move Tenacity(Tenacity %) Cross from Mon Mothma.
+
+Luminara Unduli - PvE
+Move Health(Offense %) Square from Chief Chirpa.
+Move Health(Speed) Arrow from Logray.
+Move Health(Defense %) Diamond from Talia.
+Move Health(Critical Chance %) Triangle from Ima-Gun Di.
+Move Health(Protection %) Circle from Darth Maul.
+Move Health(Defense %) Cross from Nightsister Zombie.
 
 Dathcha - PvE
-Move Potency(Offense %) Square from Darth Maul.
-Move Health(Speed) Arrow from Lando Calrissian.
-Move Potency(Defense %) Diamond from URoRRuR'R'R.
-Move Potency(Critical Damage %) Triangle from Cassian Andor.
-Move Potency(Protection %) Circle from T3-M4.
+Move Critchance(Offense %) Square from Rey (Scavenger).
+Move Critchance(Speed) Arrow from Wicket.
+Move Tenacity(Defense %) Diamond from Threepio & Chewie.
+Move Health(Critical Damage %) Triangle from Chief Chirpa.
+Move Health(Protection %) Circle from Admiral Ackbar.
 Move Health(Tenacity %) Cross from Jedi Consular.
 
-Jedi Knight Guardian - PvE
-Move Potency(Offense %) Square from IG-12 & Grogu.
-Move Health(Defense %) Diamond from Nightsister Acolyte.
-Move Potency(Protection %) Triangle from URoRRuR'R'R.
-Move Health(Protection %) Circle from Jawa Scavenger.
-Move Potency(Protection %) Cross from URoRRuR'R'R.
-
 TIE Fighter Pilot - PvP
-Move Speed(Offense %) Square from Garazeb "Zeb" Orrelios.
+Move Speed(Offense %) Square from Captain Tarpals.
 Move Health(Speed) Arrow from Bodhi Rook.
-Move Speed(Defense %) Diamond from Ewok Scout.
-Move Health(Critical Damage %) Triangle from Chief Chirpa.
-Move Speed(Protection %) Circle from Poggle the Lesser.
-Move Speed(Health %) Cross from Young Han Solo.
+Move Speed(Defense %) Diamond from URoRRuR'R'R.
+Move Tenacity(Critical Damage %) Triangle from Enfys Nest.
+Move Speed(Protection %) Circle from Mob Enforcer.
+Move Speed(Tenacity %) Cross from Wicket.
 
 Resistance Pilot - PvP
-Move Critdamage(Offense %) Square from Kylo Ren.
-Move Health(Accuracy %) Arrow from Supreme Leader Kylo Ren.
-Move Critdamage(Defense %) Diamond from Ezra Bridger.
-Move Tenacity(Critical Damage %) Triangle from Enfys Nest.
+Move Potency(Offense %) Square from Logray.
+Move Critdamage(Critical Avoidance %) Arrow from Clone Sergeant - Phase I.
+Move Critdamage(Defense %) Diamond from HK-47.
+Move Potency(Critical Damage %) Triangle from Veteran Smuggler Han Solo.
 Move Critdamage(Protection %) Circle from Kit Fisto.
 Move Critdamage(Tenacity %) Cross from Kit Fisto.
 
 Rey (Scavenger) - PvP
-Move Critdamage(Offense %) Square from Ezra Bridger.
-Move Health(Speed) Arrow from Ewok Elder.
-Move Critdamage(Defense %) Diamond from Kylo Ren.
-Move Health(Critical Damage %) Triangle from Chirrut Îmwe.
-Move Critdamage(Protection %) Circle from Ezra Bridger.
+Move Health(Offense %) Square from Jawa Scavenger.
+Move Health(Speed) Arrow from Lando Calrissian.
+Move Critdamage(Defense %) Diamond from Jyn Erso.
+Move Critdamage(Critical Chance %) Triangle from Clone Sergeant - Phase I.
+Move Critdamage(Protection %) Circle from HK-47.
 Move Critdamage(Protection %) Cross from Wedge Antilles.
 
 Captain Han Solo - PvP
 Move Speed(Offense %) Square from Jawa Engineer.
-Move Health(Speed) Arrow from Chirrut Îmwe.
+Move Health(Speed) Arrow from Paploo.
 Move Health(Defense %) Diamond from Ewok Elder.
 Move Speed(Health %) Triangle from Bodhi Rook.
 Move Speed(Health %) Circle from Gamorrean Guard.
-Move Speed(Health %) Cross from IG-12 & Grogu.
+Move Speed(Health %) Cross from Captain Tarpals.
 
 Jawa Engineer - PvP
-Move Potency(Offense %) Square from T3-M4.
-Move Potency(Critical Avoidance %) Arrow from Sabine Wren.
-Move Potency(Defense %) Diamond from Jawa.
+Move Potency(Offense %) Square from Darth Maul.
+Move Tenacity(Speed) Arrow from Wampa.
+Move Potency(Defense %) Diamond from Jawa Scavenger.
 Move Potency(Defense %) Triangle from Gamorrean Guard.
 Move Potency(Protection %) Circle from Boss Nass.
-Move Potency(Defense %) Cross from Gamorrean Guard.
+Move Tenacity(Tenacity %) Cross from Poggle the Lesser.
 
 Talia - PvP
-Move Health(Offense %) Square from Bodhi Rook.
-Move Health(Speed) Arrow from Chief Chirpa.
-Move Tenacity(Defense %) Diamond from Wampa.
-Move Offense(Critical Damage %) Triangle from Coruscant Underworld Police.
-Move Health(Protection %) Circle from Baze Malbus.
-Move Health(Tenacity %) Cross from Chirrut Îmwe.
-
-Nightsister Acolyte - PvP
-Move Speed(Offense %) Square from Mob Enforcer.
-Move Critchance(Speed) Arrow from Eeth Koth.
-Move Critchance(Defense %) Diamond from Nightsister Initiate.
-Move Speed(Critical Chance %) Triangle from Wicket.
-Move Speed(Protection %) Circle from Dathcha.
-Move Speed(Tenacity %) Cross from Wicket.
-
-Mob Enforcer - PvP
-Move Potency(Offense %) Square from Jawa.
-Move Critchance(Speed) Arrow from Wicket.
-Move Health(Defense %) Diamond from Luke Skywalker (Farmboy).
-Move Potency(Critical Damage %) Triangle from Darth Sidious.
+Move Critchance(Offense %) Square from CC-2224 "Cody".
+Move Health(Speed) Arrow from Ewok Elder.
+Move Health(Defense %) Diamond from Kit Fisto.
+Move Health(Critical Damage %) Triangle from Rebel Officer Leia Organa.
 Move Health(Protection %) Circle from Nightsister Acolyte.
 Move Critchance(Tenacity %) Cross from Young Lando Calrissian.
 
-Ima-Gun Di - PvP
-Move Potency(Offense %) Square from Logray.
-Move Potency(Speed) Arrow from T3-M4.
-Move Health(Defense %) Diamond from HK-47.
-Move Health(Critical Damage %) Triangle from First Order Executioner.
-Move Health(Protection %) Circle from Darth Maul.
-Move Health(Defense %) Cross from Paploo.
-
-Veteran Smuggler Chewbacca - PvE
-Move Health(Offense %) Square from Paploo.
-Move Tenacity(Speed) Arrow from C-3PO.
-Move Offense(Critical Chance %) Triangle from HK-47.
-Move Potency(Protection %) Circle from Jawa.
+Nightsister Acolyte - PvP
+Move Health(Offense %) Square from Bodhi Rook.
+Move Health(Speed) Arrow from Chief Chirpa.
+Move Critchance(Defense %) Diamond from Nightsister Initiate.
+Move Offense(Critical Chance %) Triangle from Rey (Scavenger).
+Move Critchance(Protection %) Circle from Eeth Koth.
 Move Defense(Protection %) Cross from Biggs Darklighter.
 
+Mob Enforcer - PvP
+Move Health(Offense %) Square from Paploo.
+Move Tenacity(Speed) Arrow from Hoth Rebel Scout.
+Move Tenacity(Defense %) Diamond from Poggle the Lesser.
+Move Offense(Critical Damage %) Triangle from Coruscant Underworld Police.
+Move Health(Protection %) Circle from Imperial Probe Droid.
+Move Offense(Protection %) Cross from Qui-Gon Jinn.
+
+STAP - PvP
+Move Speed(Offense %) Square from Snowtrooper.
+Move Defense(Speed) Arrow from Obi-Wan Kenobi (Old Ben).
+Move Health(Defense %) Diamond from Coruscant Underworld Police.
+Move Speed(Critical Chance %) Triangle from Wicket.
+Move Speed(Protection %) Circle from Rose Tico.
+Move Speed(Protection %) Cross from Stormtrooper Han.
+
+Veteran Smuggler Chewbacca - PvE
+Move Critdamage(Offense %) Square from Cassian Andor.
+Move Defense(Speed) Arrow from Poe Dameron.
+Move Health(Defense %) Diamond from Nightsister Spirit.
+Move Critdamage(Critical Chance %) Triangle from IG-86 Sentinel Droid.
+Move Critdamage(Health %) Circle from Omega.
+Move Critdamage(Tenacity %) Cross from Omega.
+
 Stormtrooper Han - PvP
-Move Potency(Offense %) Square from Teebo.
+Move Potency(Offense %) Square from T3-M4.
 Move Tenacity(Protection %) Arrow from Ninth Sister.
 Move Potency(Defense %) Diamond from Magmatrooper.
-Move Potency(Protection %) Triangle from Jawa Scavenger.
+Move Potency(Protection %) Triangle from Magmatrooper.
 Move Critdamage(Protection %) Circle from Darth Sidious.
-Move Potency(Protection %) Cross from Boss Nass.
+Move Potency(Protection %) Cross from URoRRuR'R'R.
 
 Teebo - PvP
-Move Potency(Offense %) Square from Jedi Knight Guardian.
-Move Defense(Speed) Arrow from Poe Dameron.
+Move Health(Speed) Arrow from Admiral Ackbar.
+Move Potency(Defense %) Diamond from Imperial Probe Droid.
 Move Potency(Protection %) Triangle from T3-M4.
-Move Potency(Protection %) Circle from Logray.
-Move Defense(Health %) Cross from Plo Koon.
+Move Potency(Protection %) Circle from Jawa.
+Move Health(Protection %) Cross from Hoth Rebel Soldier.
 
 Clone Wars Chewbacca - Tanky
 Move Health(Offense %) Square from Plo Koon.
-Move Health(Speed) Arrow from Nightsister Zombie.
+Move Speed(Protection %) Arrow from K-2SO.
 Move Defense(Defense %) Diamond from Juhani.
-Move Health(Protection %) Circle from Director Krennic.
-Move Defense(Protection %) Cross from The Armorer.
-
-Luminara Unduli - PvE
-Move Speed(Offense %) Square from Saw Gerrera.
-Move Speed(Critical Avoidance %) Arrow from Sith Marauder.
-Move Speed(Defense %) Diamond from Gungan Boomadier.
-Move Speed(Health %) Triangle from IG-12 & Grogu.
-Move Health(Protection %) Circle from HK-47.
-Move Health(Defense %) Cross from Zaalbar.
+Move Speed(Protection %) Triangle from K-2SO.
+Move Defense(Protection %) Circle from Scarif Rebel Pathfinder.
+Move Health(Protection %) Cross from Chief Chirpa.
 
 Hoth Rebel Soldier - PvE
 Move Health(Offense %) Square from IG-86 Sentinel Droid.
-Move Speed(Protection %) Arrow from Stormtrooper.
-Move Health(Defense %) Diamond from Kit Fisto.
-Move Tenacity(Protection %) Triangle from Ninth Sister.
-Move Health(Protection %) Circle from Wicket.
-Move Health(Protection %) Cross from Jawa.
+Move Defense(Speed) Arrow from Juhani.
+Move Health(Defense %) Diamond from Jedi Consular.
+Move Speed(Protection %) Triangle from Stormtrooper Han.
+Move Health(Protection %) Circle from Director Krennic.
+Move Health(Protection %) Cross from Paploo.
 
 IG-86 Sentinel Droid - PvP
 Move Health(Offense %) Square from Luminara Unduli.
-Move Critdamage(Critical Avoidance %) Arrow from Jolee Bindo.
+Move Health(Accuracy %) Arrow from Supreme Leader Kylo Ren.
 Move Health(Defense %) Diamond from Omega.
-Move Critdamage(Critical Chance %) Triangle from STAP.
-Move Critdamage(Protection %) Cross from Ezra Bridger.
+Move Health(Critical Damage %) Triangle from First Order Executioner.
+Move Offense(Protection %) Circle from Rey (Scavenger).
+Move Defense(Protection %) Cross from BB-8.
 
 Director Krennic - PvP
-Move Speed(Offense %) Square from Snowtrooper.
-Move Speed(Critical Avoidance %) Arrow from Resistance Pilot.
-Move Health(Defense %) Diamond from Nightsister Spirit.
-Move Speed(Critical Chance %) Triangle from Ewok Scout.
-Move Speed(Protection %) Circle from Mob Enforcer.
-Move Offense(Protection %) Cross from Mission Vao.
+Move Health(Offense %) Square from Gungan Phalanx.
+Move Critdamage(Critical Avoidance %) Arrow from Biggs Darklighter.
+Move Health(Defense %) Diamond from Chief Nebit.
+Move Critdamage(Critical Chance %) Triangle from STAP.
+Move Critdamage(Protection %) Circle from IG-86 Sentinel Droid.
+Move Critdamage(Protection %) Cross from Ezra Bridger.
 
 Lobot - PvE
 Move Health(Offense %) Square from Ugnaught.
-Move Defense(Critical Avoidance %) Arrow from IG-100 MagnaGuard.
+Move Defense(Critical Avoidance %) Arrow from Sith Empire Trooper.
 Move Defense(Defense %) Diamond from IG-100 MagnaGuard.
-Move Defense(Health %) Circle from Scarif Rebel Pathfinder.
-Move Defense(Protection %) Cross from L3-37.
+Move Tenacity(Protection %) Circle from Threepio & Chewie.
+Move Tenacity(Tenacity %) Cross from Luke Skywalker (Farmboy).
 
 Kit Fisto - PvE
-Move Critchance(Offense %) Square from Ewok Scout.
+Move Speed(Offense %) Square from Lando Calrissian.
 Move Health(Accuracy %) Arrow from TIE Fighter Pilot.
-Move Health(Defense %) Diamond from Chief Nebit.
-Move Critdamage(Critical Chance %) Triangle from IG-86 Sentinel Droid.
-Move Critchance(Protection %) Circle from Eeth Koth.
-Move Tenacity(Protection %) Cross from Ninth Sister.
+Move Speed(Defense %) Diamond from Gungan Boomadier.
+Move Speed(Critical Chance %) Triangle from Ewok Scout.
+Move Speed(Protection %) Circle from URoRRuR'R'R.
+Move Health(Tenacity %) Cross from Lobot.
 
 Eeth Koth - PvP
-Move Speed(Offense %) Square from Lando Calrissian.
-Move Potency(Critical Avoidance %) Arrow from Garazeb "Zeb" Orrelios.
-Move Speed(Defense %) Diamond from Princess Leia.
-Move Potency(Critical Chance %) Triangle from Jawa.
-Move Speed(Protection %) Circle from Admiral Ackbar.
-Move Speed(Health %) Cross from Captain Tarpals.
+Move Speed(Offense %) Square from Dathcha.
+Move Speed(Critical Avoidance %) Arrow from Garazeb "Zeb" Orrelios.
+Move Potency(Defense %) Diamond from Jawa.
+Move Speed(Critical Chance %) Triangle from Captain Tarpals.
+Move Speed(Protection %) Circle from Dathcha.
+Move Potency(Defense %) Cross from Gamorrean Guard.
 
 Luke Skywalker (Farmboy) - PvE
-Move Health(Offense %) Square from K-2SO.
-Move Health(Accuracy %) Arrow from Dash Rendar.
-Move Health(Defense %) Diamond from Coruscant Underworld Police.
-Move Health(Critical Chance %) Triangle from Teebo.
-Move Health(Protection %) Circle from Paploo.
+Move Health(Offense %) Square from Nightsister Initiate.
+Move Potency(Critical Avoidance %) Arrow from Resistance Pilot.
+Move Health(Defense %) Diamond from Rey (Scavenger).
+Move Potency(Critical Chance %) Triangle from Jawa.
+Move Health(Protection %) Circle from Jawa Scavenger.
 Move Tenacity(Protection %) Cross from Tusken Shaman.
 
 Ewok Scout - PvP
-Move Speed(Offense %) Square from Dathcha.
-Move Speed(Health %) Arrow from IG-12 & Grogu.
-Move Health(Defense %) Diamond from Talia.
-Move Speed(Critical Chance %) Triangle from Captain Tarpals.
-Move Speed(Protection %) Circle from Gungan Boomadier.
-Move Health(Tenacity %) Cross from Lobot.
+Move Health(Offense %) Square from Hoth Rebel Soldier.
+Move Health(Accuracy %) Arrow from Dash Rendar.
+Move Potency(Defense %) Diamond from Teebo.
+Move Potency(Critical Chance %) Triangle from Logray.
+Move Potency(Protection %) Circle from Logray.
+Move Potency(Protection %) Cross from Boss Nass.
 
 Nightsister Initiate - PvE
-Move Health(Critical Avoidance %) Arrow from Enfys Nest.
-Move Health(Defense %) Diamond from Rey (Scavenger).
-Move Potency(Critical Chance %) Triangle from Logray.
-Move Health(Protection %) Circle from Talia.
+Move Critchance(Offense %) Square from Ewok Scout.
+Move Critchance(Accuracy %) Arrow from The Mandalorian.
+Move Tenacity(Defense %) Diamond from Sun Fac.
+Move Health(Critical Chance %) Triangle from Nightsister Acolyte.
+Move Health(Protection %) Circle from Paploo.
 Move Tenacity(Protection %) Cross from Tusken Raider.
 
 Bodhi Rook - PvP
-Move Health(Offense %) Square from Ewok Elder.
-Move Critdamage(Critical Avoidance %) Arrow from Clone Sergeant - Phase I.
+Move Health(Offense %) Square from Ima-Gun Di.
+Move Critdamage(Protection %) Arrow from Ezra Bridger.
 Move Health(Defense %) Diamond from Jedi Knight Guardian.
 Move Health(Defense %) Triangle from Plo Koon.
 Move Health(Protection %) Circle from Young Lando Calrissian.
 Move Tenacity(Protection %) Cross from Resistance Pilot.
 
 Jedi Consular - Healer
-Move Health(Offense %) Square from Gamorrean Guard.
 Move Critdamage(Health %) Arrow from First Order Executioner.
-Move Health(Defense %) Diamond from IG-86 Sentinel Droid.
+Move Health(Defense %) Diamond from Clone Wars Chewbacca.
 Move Offense(Health %) Triangle from Jedi Knight Guardian.
 Move Health(Protection %) Circle from Clone Wars Chewbacca.
-Move Health(Tenacity %) Cross from Ewok Elder.
+Move Health(Protection %) Cross from Jawa.
 
 Ugnaught - PvE
-Move Health(Offense %) Square from Hoth Rebel Soldier.
-Move Critchance(Accuracy %) Arrow from The Mandalorian.
-Move Tenacity(Defense %) Diamond from Sun Fac.
-Move Tenacity(Critical Chance %) Triangle from Luke Skywalker (Farmboy).
-Move Tenacity(Protection %) Circle from Ninth Sister.
-Move Tenacity(Protection %) Cross from Stormtrooper Han.
+Move Health(Offense %) Square from Gamorrean Guard.
+Move Speed(Critical Avoidance %) Arrow from Chief Nebit.
+Move Tenacity(Defense %) Diamond from Wampa.
+Move Health(Critical Chance %) Triangle from Teebo.
+Move Health(Protection %) Circle from Talia.
+Move Defense(Protection %) Cross from L3-37.
 
 Coruscant Underworld Police - Why?
-Move Health(Offense %) Square from Ima-Gun Di.
-Move Speed(Critical Avoidance %) Arrow from Chief Nebit.
-Move Health(Defense %) Diamond from Clone Wars Chewbacca.
-Move Speed(Protection %) Triangle from Stormtrooper.
+Move Potency(Offense %) Square from Jedi Knight Guardian.
+Move Potency(Critical Avoidance %) Arrow from Amilyn Holdo.
+Move Speed(Defense %) Diamond from Princess Leia.
+Move Offense(Protection %) Triangle from Imperial Super Commando.
 Move Health(Protection %) Circle from Chief Nebit.
-Move Tenacity(Tenacity %) Cross from K-2SO.
-
-STAP - PvP
-Move Health(Offense %) Square from Clone Wars Chewbacca.
-Move Critdamage(Health %) Arrow from Omega.
-Move Tenacity(Defense %) Diamond from K-2SO.
-Move Offense(Protection %) Triangle from Eeth Koth.
-Move Speed(Protection %) Circle from Jawa Engineer.
-Move Critdamage(Tenacity %) Cross from Omega.
-
-Captain Tarpals - PvP
-Move Health(Offense %) Square from Paz Vizsla.
-Move Health(Critical Avoidance %) Arrow from Scarif Rebel Pathfinder.
-Move Health(Defense %) Diamond from Paz Vizsla.
-Move Tenacity(Protection %) Triangle from Sun Fac.
-Move Tenacity(Health %) Circle from Jedi Consular.
-Move Health(Protection %) Cross from Director Krennic.
+Move Tenacity(Protection %) Cross from K-2SO.
 
 Boss Nass - PvP
-Move Tenacity(Offense %) Square from Sun Fac.
-Move Health(Critical Avoidance %) Arrow from Clone Wars Chewbacca.
-Move Health(Defense %) Diamond from Director Krennic.
-Move Speed(Protection %) Triangle from Stormtrooper Han.
-Move Tenacity(Protection %) Circle from K-2SO.
+Move Potency(Offense %) Square from Magmatrooper.
+Move Speed(Critical Avoidance %) Arrow from Scarif Rebel Pathfinder.
+Move Defense(Defense %) Diamond from Gar Saxon.
+Move Potency(Protection %) Triangle from Jawa Scavenger.
+Move Health(Protection %) Circle from Wicket.
+Move Health(Protection %) Cross from Cere Junda.
+
+Captain Tarpals - PvP
+Move Health(Offense %) Square from Clone Wars Chewbacca.
+Move Health(Critical Avoidance %) Arrow from IG-100 MagnaGuard.
+Move Tenacity(Defense %) Diamond from Gungan Phalanx.
+Move Offense(Protection %) Triangle from Eeth Koth.
+Move Tenacity(Health %) Circle from Jedi Consular.
+Move Critdamage(Health %) Cross from IG-86 Sentinel Droid.
+
+Gungan Phalanx - unnamed
+Move Tenacity(Offense %) Square from Enfys Nest.
+Move Critdamage(Health %) Arrow from Omega.
+Move Defense(Defense %) Diamond from L3-37.
+Move Tenacity(Critical Chance %) Triangle from Luke Skywalker (Farmboy).
+Move Speed(Protection %) Circle from Jawa Engineer.
 Move Defense(Protection %) Cross from Gar Saxon.
 
 Gungan Boomadier - PvP
-Move Tenacity(Offense %) Square from Enfys Nest.
-Move Defense(Defense %) Diamond from Gar Saxon.
+Move Tenacity(Offense %) Square from Sun Fac.
+Move Health(Critical Avoidance %) Arrow from Clone Wars Chewbacca.
+Move Tenacity(Defense %) Diamond from K-2SO.
 Move Critdamage(Protection %) Triangle from Chief Nebit.
-Move Defense(Protection %) Circle from Juhani.
-Move Critdamage(Health %) Cross from IG-86 Sentinel Droid.
+Move Tenacity(Protection %) Circle from Sun Fac.
+Move Health(Protection %) Cross from Director Krennic.
