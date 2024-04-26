@@ -98,7 +98,7 @@ const App = observer(
 								ui$.currentSection.set(section as SectionNames)
 							}
 						>
-							<div className={"flex justify-around"}>
+							<div className={"flex justify-around p-1"}>
 								<div className={"flex flex-gap-2 items-center"}>
 									<img
 										alt={"Logo"}

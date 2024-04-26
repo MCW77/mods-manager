@@ -115,60 +115,6 @@ html, body {
   min-height: 3em;
 }
 
-.App-header {
-  background-color: #222;
-  padding: 0;
-  color: white;
-  border-bottom: 1px solid gray;
-}
-
-.App-header .rows {
-  width: 100%;
-  height: 4em;
-  display: flex;
-  flex-direction: column;
-}
-
-.App-header .top-row {
-  display: flex;
-  margin: auto 0;
-}
-
-.App-header .App-title {
-  margin: .3em;
-  position: absolute;
-  height: 3.4em;
-}
-
-.App-header nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  position: relative;
-  bottom: -1px;
-  margin-left: 4em;
-}
-
-.App-header nav button {
-  margin-bottom: 0;
-  border-radius: 5px 5px 0 0;
-  border: 1px solid gray;
-  background-color: #202020;
-  color: lightgray;
-}
-
-.App-header nav button.active {
-  border-color: gold;
-  border-bottom: none;
-  color: white;
-  position: relative;
-}
-
-
-.App-header nav button:hover, .App-header nav button:focus {
-  color: white;
-}
-
 .app-body {
   flex: 1 1 auto;
   display: flex;
