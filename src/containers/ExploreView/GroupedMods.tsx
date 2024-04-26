@@ -54,7 +54,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
   const modGroups: ModGroup[] = [];
   for (const modGroup of groupedMods) {
     modGroups.push({
-      isOpen: false,
+      isOpen: true,
       key: `${modGroup[0].slot}-${modGroup[0].set}-${modGroup[0].primaryStat.getDisplayType()}`,
       mods: modGroup,
     });
