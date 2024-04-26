@@ -9,7 +9,7 @@ import type { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/
 // modules
 import { Data } from "#/state/modules/data";
 
-import type { BaseCharacter } from "#/domain/BaseCharacter";
+import type { BaseCharacters } from "#/domain/BaseCharacter";
 
 // components
 import { TargetStatWidget } from "#/components/TargetStatWidget/TargetStatWidget";
@@ -25,7 +25,7 @@ const TargetStatsWidget = observer(({ target$ }: ComponentProps) => {
 
 	const baseCharacters2 = useMemo(
 		() =>
-			(Object.values(baseCharacters).slice(0) as BaseCharacter[]).sort((a, b) =>
+			(Object.values(baseCharacters).slice(0) as BaseCharacters).sort((a, b) =>
 				a.name.localeCompare(b.name),
 			),
 		[baseCharacters],

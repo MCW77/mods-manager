@@ -1,22 +1,22 @@
 // state
 import "../../src/utils/globalLegendPersistSettings";
 import { incrementalOptimization$ } from '../../src/modules/incrementalOptimization/state/incrementalOptimization';
-import { optimizationSettings$, ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
+import { optimizationSettings$, type ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
 
 // domain
-import { CharacterNames } from '../../src/constants/characterSettings';
+import type { CharacterNames } from '../../src/constants/characterSettings';
 import { gimoSlots } from '../../src/domain/constants/ModConsts';
 import type * as ModTypes from "../../src/domain/types/ModTypes";
 
-import * as Character from "../../src/domain/Character";
-import { WithoutCC } from "../../src/modules/profilesManagement/domain/CharacterStatNames";
-import { OptimizerRun } from '../../src/domain/OptimizerRun';
-import { IFlatPlayerProfile, MissedGoals, ModSuggestion } from '../../src/domain/PlayerProfile';
-import { PrimaryStats, SecondaryStats, SetStats, Stats } from '../../src/domain/Stats';
-import { OptimizableStats, OptimizationPlan } from '../../src/domain/OptimizationPlan';
-import { SelectedCharacters } from '../../src/domain/SelectedCharacters';
-import { SetRestrictions } from '../../src/domain/SetRestrictions';
-import { TargetStat, TargetStats, TargetStatsNames } from '../../src/domain/TargetStat';
+import type * as Character from "../../src/domain/Character";
+import type { WithoutCC } from "../../src/modules/profilesManagement/domain/CharacterStatNames";
+import type { OptimizerRun } from '../../src/domain/OptimizerRun';
+import type { IFlatPlayerProfile, MissedGoals, ModSuggestion } from '../../src/domain/PlayerProfile';
+import { PrimaryStats, SecondaryStats, type SetStats, Stats } from '../../src/domain/Stats';
+import type { OptimizableStats, OptimizationPlan } from '../../src/domain/OptimizationPlan';
+import type { SelectedCharacters } from '../../src/domain/SelectedCharacters';
+import type { SetRestrictions } from '../../src/domain/SetRestrictions';
+import type { TargetStat, TargetStats, TargetStatsNames } from '../../src/domain/TargetStat';
 
 
 interface Cache {
@@ -102,13 +102,13 @@ type SetRestrictionsEntries = [SetStats.GIMOStatNames, number][];
  * Messaging.                                                                                                         *
  ********************************************************************************************************************/
 
-self.onmessage = function (message) {
+self.onmessage = (message) => {
   const openDbRequest = indexedDB.open('ModsOptimizer', 2);
-  openDbRequest.onerror = function (event) {
+  openDbRequest.onerror = (event) => {
     throw (event.target as IDBRequest<IDBDatabase>).error;
   };
 
-  openDbRequest.onupgradeneeded = function (event) {
+  openDbRequest.onupgradeneeded = (event) => {
     const db = (event.target as IDBRequest<IDBDatabase>).result;
 
     if (event.oldVersion < 1) {
@@ -122,9 +122,9 @@ self.onmessage = function (message) {
     }
   };
 
-  openDbRequest.onsuccess = function (event) {
+  openDbRequest.onsuccess = (event) => {
     const db = (event.target as IDBRequest<IDBDatabase>).result;
-    db.onversionchange = function (event: IDBVersionChangeEvent) {
+    db.onversionchange = (event: IDBVersionChangeEvent) => {
       if (!event.newVersion) {
         db.close();
       }
@@ -136,11 +136,11 @@ self.onmessage = function (message) {
     // Get the data needed to optimize from the profile and last runs
     const getDataTransaction = db.transaction(['profiles', 'lastRuns']);
 
-    getDataTransaction.onerror = function (event) {
+    getDataTransaction.onerror = (event) => {
       if (event.target) throw (event.target as IDBTransaction).error;
     };
 
-    getDataTransaction.oncomplete = function () {
+    getDataTransaction.oncomplete = () => {
       if (!profile) {
         throw new Error('Unable to read your profile for optimization. Please clear your cache and try again.');
       }
@@ -150,14 +150,14 @@ self.onmessage = function (message) {
 
       if (lastRun !== undefined && lastRun !== null){
         if (lastRun.characters) {
-          for (let character of Object.values(lastRun.characters)) {
+          for (const character of Object.values(lastRun.characters)) {
             lastRunCharacters[character.baseID] = character;
           }
 
           lastRun.characters = lastRunCharacters as Character.Characters;
         }
 
-        lastRun.selectedCharacters = lastRun.selectedCharacters instanceof Array ?
+        lastRun.selectedCharacters = Array.isArray(lastRun.selectedCharacters) ?
           lastRun.selectedCharacters.map(({ id, target }) => ({ id: id, target: deserializeTarget(target) })) :
           lastRun.selectedCharacters;
       }
@@ -181,12 +181,12 @@ self.onmessage = function (message) {
     };
 
     const profileRequest: IDBRequest<IFlatPlayerProfile> = getDataTransaction.objectStore('profiles').get(message.data);
-    profileRequest.onsuccess = function (event: Event) {
+    profileRequest.onsuccess = (event: Event) => {
       profile = (event.target as IDBRequest<IFlatPlayerProfile>).result;
     };
 
     const lastRunRequest:IDBRequest<OptimizerRun> = getDataTransaction.objectStore('lastRuns').get(message.data);
-    lastRunRequest.onsuccess = function (event) {
+    lastRunRequest.onsuccess = (event) => {
       const result = (event.target as IDBRequest<OptimizerRun>).result;
 
       if (!result) {
@@ -205,7 +205,7 @@ function optimizationSuccessMessage(result: ModSuggestion[]) {
   });
 }
 
-function progressMessage(character: Character.Character, step: string, progress: number = 100) {
+function progressMessage(character: Character.Character, step: string, progress = 100) {
   postMessage({
     type: 'Progress',
     character: character,
@@ -225,9 +225,9 @@ function progressMessage(character: Character.Character, step: string, progress:
  ********************************************************************************************************************/
 
 const statDisplayNames = Object.freeze({
-  'Health': 'Health',
-  'Protection': 'Protection',
-  'Speed': 'Speed',
+  Health: 'Health',
+  Protection: 'Protection',
+  Speed: 'Speed',
   'Critical Damage %': 'Critical Damage',
   'Potency %': 'Potency',
   'Tenacity %': 'Tenacity',
@@ -236,9 +236,9 @@ const statDisplayNames = Object.freeze({
   'Critical Chance': 'Critical Chance',
   'Physical Critical Chance %': 'Physical Critical Chance',
   'Special Critical Chance %': 'Special Critical Chance',
-  'Defense': 'Defense',
-  'Armor': 'Armor',
-  'Resistance': 'Resistance',
+  Defense: 'Defense',
+  Armor: 'Armor',
+  Resistance: 'Resistance',
   'Accuracy %': 'Accuracy',
   'Critical Avoidance %': 'Critical Avoidance',
   'Physical Critical Avoidance': 'Physical Critical Avoidance',
@@ -298,7 +298,7 @@ const setBonuses: Record<SetStats.GIMOStatNames, SetBonus> = Object.freeze({
 
 // Map pips to maximum value at level 15 for each primary stat type
 const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<number, number>>>> = Object.freeze({
-  'Offense': {
+  Offense: {
     1: 1.88,
     2: 2,
     3: 3.88,
@@ -306,7 +306,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 5.88,
     6: 8.50
   },
-  'Defense': {
+  Defense: {
     1: 3.75,
     2: 4,
     3: 7.75,
@@ -314,7 +314,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 11.75,
     6: 20
   },
-  'Health': {
+  Health: {
     1: 1.88,
     2: 2,
     3: 3.88,
@@ -322,7 +322,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 5.88,
     6: 16
   },
-  'Protection': {
+  Protection: {
     1: 7.5,
     2: 8,
     3: 15.5,
@@ -330,7 +330,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 23.5,
     6: 24
   },
-  'Speed': {
+  Speed: {
     1: 17,
     2: 19,
     3: 21,
@@ -338,7 +338,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 30,
     6: 32
   },
-  'Accuracy': {
+  Accuracy: {
     1: 7.5,
     2: 8,
     3: 8.75,
@@ -370,7 +370,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 36,
     6: 42
   },
-  'Potency': {
+  Potency: {
     1: 15,
     2: 16,
     3: 18,
@@ -378,7 +378,7 @@ const maxStatPrimaries: Readonly<Partial<Record<Stats.DisplayStatNames, Record<n
     5: 24,
     6: 30
   },
-  'Tenacity': {
+  Tenacity: {
     1: 15,
     2: 16,
     3: 18,
@@ -392,13 +392,13 @@ const statSlicingUpgradeFactors: Readonly<Partial<Record<SecondaryStats.GIMOStat
   'Offense %': 3.02,
   'Defense %': 2.34,
   'Health %': 1.86,
-  'Defense': 1.63,
-  'Tenacity': 1.33,
-  'Potency': 1.33,
+  Defense: 1.63,
+  Tenacity: 1.33,
+  Potency: 1.33,
   'Protection %': 1.33,
-  'Health': 1.26,
-  'Protection': 1.11,
-  'Offense': 1.10,
+  Health: 1.26,
+  Protection: 1.11,
+  Offense: 1.10,
   'Critical Chance': 1.04
 });
 
@@ -411,7 +411,7 @@ const statWeights = Object.freeze({
   'Tenacity %': 15,
   'Physical Damage': 225,
   'Special Damage': 450,
-  'Offense': 225,
+  Offense: 225,
   'Critical Chance': 10,
   Armor: 33,
   Resistance: 33,
@@ -421,25 +421,24 @@ const statWeights = Object.freeze({
 
 /**
  * Return the first value from an array, if one exists. Otherwise, return null.
- * @param arr {Array}
+ * @param mods {Array}
  * @returns {*}
  */
-function firstOrNull(arr: Array<any>) {
-  if ('undefined' !== typeof arr[0]) {
-    return arr[0];
-  } else {
-    return null;
+function firstOrNull(mods: Mod[]) {
+  if ('undefined' !== typeof mods[0]) {
+    return mods[0];
   }
+  return null;
 }
 
 function chooseFromArray<T>(input: readonly T[], choices: number) {
-  let combinations: T[][] = [];
+  const combinations: T[][] = [];
 
   for (let i = 0; i <= input.length - choices; i++) {
     if (1 >= choices) {
       combinations.push([input[i]]);
     } else {
-      for (let subResult of chooseFromArray(input.slice(i + 1), choices - 1)) {
+      for (const subResult of chooseFromArray(input.slice(i + 1), choices - 1)) {
         combinations.push([input[i]].concat(subResult));
       }
     }
@@ -448,11 +447,12 @@ function chooseFromArray<T>(input: readonly T[], choices: number) {
   return combinations;
 }
 
-function areObjectsEquivalent(left: Object, right: Object): boolean {
+function areObjectsEquivalent(left: object, right: object): boolean {
   // If either object is null, then Object.getOwnPropertyNames will fail. Do these checks first
   if (left === null) {
     return right === null;
-  } else if (right === null) {
+  }
+  if (right === null) {
     return false;
   }
 
@@ -468,11 +468,10 @@ function areObjectsEquivalent(left: Object, right: Object): boolean {
 
   // Check that every property is equivalent
   return leftProps.every((propName: string) => {
-    if ((left as Record<string, any>)[propName] instanceof Object) {
-      return areObjectsEquivalent((left as Record<string, any>)[propName], (right as Record<string, any>)[propName]);
-    } else {
-      return (left as Record<string, any>)[propName] === (right as Record<string, any>)[propName];
+    if ((left as Record<string, unknown>)[propName] instanceof Object) {
+      return areObjectsEquivalent((left as Record<string, object>)[propName], (right as Record<string, object>)[propName]);
     }
+    return (left as Record<string, unknown>)[propName] === (right as Record<string, unknown>)[propName];
   });
 }
 
@@ -506,7 +505,7 @@ function deserializeSecondaryStat(type: SecondaryStats.GIMOStatNames, value: str
 
 function deserializeMod(mod: ModTypes.GIMOFlatMod) {
   const primaryStat = deserializePrimaryStat(mod.primaryBonusType, mod.primaryBonusValue);
-  let secondaryStats: SecondaryStat[] = [];
+  const secondaryStats: SecondaryStat[] = [];
 
   if (null !== mod.secondaryType_1 && '' !== mod.secondaryValue_1) {
     secondaryStats.push(deserializeSecondaryStat(mod.secondaryType_1, mod.secondaryValue_1));
@@ -540,7 +539,7 @@ function deserializeMod(mod: ModTypes.GIMOFlatMod) {
 function deserializeTarget(target: OptimizationPlan) {
   const updatedTarget = Object.assign({}, target);
 
-  for (let stat of (Object.keys(updatedTarget) as OptimizableStats[])) {
+  for (const stat of (Object.keys(updatedTarget) as OptimizableStats[])) {
     if (Object.keys(statWeights).includes(stat)) {
       updatedTarget[stat] = updatedTarget[stat] / statWeights[stat];
     }
@@ -557,18 +556,18 @@ function deserializeTarget(target: OptimizationPlan) {
  * Caching variables                                                                                                 *
  ********************************************************************************************************************/
 let cache: Cache = {
-  'modScores': {},
-  'modUpgrades': {},
-  'modStats': {},
-  'statValues': {}
+  modScores: {},
+  modUpgrades: {},
+  modStats: {},
+  statValues: {}
 };
 
 function clearCache() {
   cache = {
-    'modScores': {},
-    'modUpgrades': {},
-    'modStats': {},
-    'statValues': {}
+    modScores: {},
+    modUpgrades: {},
+    modStats: {},
+    statValues: {}
   };
 }
 
@@ -596,19 +595,19 @@ function getFlatStatsFromModSet(
   const flattenedStats: Stat[] = [];
   const combinedStats: Partial<Record<Stats.DisplayStatNames, Stat>> = {};
 
-  modSet.forEach(mod =>
-    statsDirectlyFromMods.push(...cache.modStats[mod.id])
-  );
+  for (const mod of modSet) {
+    statsDirectlyFromMods.push(...cache.modStats[mod.id]);
+  }
 
-  statsFromSetBonus.forEach(stat =>
-    flattenedStats.push(...flattenStatValues(stat, character))
-  );
+  for (const stat of statsFromSetBonus) {
+    flattenedStats.push(...flattenStatValues(stat, character));
+  }
 
-  statsDirectlyFromMods.forEach(stat =>
-    flattenedStats.push(...flattenStatValues(stat, character))
-  );
+  for (const stat of statsDirectlyFromMods) {
+    flattenedStats.push(...flattenStatValues(stat, character));
+  }
 
-  flattenedStats.forEach(stat => {
+  for (const stat of flattenedStats) {
     const oldStat = combinedStats[stat.displayType];
     if (oldStat) {
       combinedStats[stat.displayType] = {
@@ -617,9 +616,9 @@ function getFlatStatsFromModSet(
         value: oldStat.value + stat.value
       };
     } else {
-      combinedStats[stat.displayType] = stat
+      combinedStats[stat.displayType] = stat;
     }
-  });
+  }
 
   // Truncate any stat that can only have a whole value
   return Object.values(combinedStats).map(stat => {
@@ -627,9 +626,8 @@ function getFlatStatsFromModSet(
       return Object.assign(stat, {
         value: Math.trunc(stat.value)
       });
-    } else {
-      return stat;
     }
+    return stat;
   });
 }
 
@@ -653,9 +651,9 @@ function getFlatStatsFromMod(
   const workingMod = getUpgradedMod(mod, character, target);
 
   flattenedStats.push(...flattenStatValues(workingMod.primaryStat, character));
-  workingMod.secondaryStats.forEach(stat =>
-    flattenedStats.push(...flattenStatValues(stat, character))
-  );
+  for (const stat of workingMod.secondaryStats) {
+    flattenedStats.push(...flattenStatValues(stat, character));
+  }
 
   cache.modStats[mod.id] = flattenedStats;
   return flattenedStats;
@@ -670,21 +668,21 @@ function getFlatStatsFromMod(
 function getSetBonusStatsFromModSet(
   modSet: Mod[],
 ) {
-  let setStats: SetStat[] = [];
+  const setStats: SetStat[] = [];
   const setBonusCounts: Partial<Record<SetStats.GIMOStatNames, { setBonus: SetBonus, lowCount: number, highCount: number}>> = {};
 
-  modSet.forEach(mod => {
+  for (const mod of modSet) {
     const setName = mod.set.name;
     const highCountValue = optimizationSettings$.activeSettings.simulateLevel15Mods.peek() || mod.level === 15 ? 1 : 0;
 
     setBonusCounts[setName] = {
       setBonus: mod.set,
-      lowCount: setBonusCounts[setName] ? setBonusCounts[setName]!.lowCount + 1 : 1,
-      highCount: setBonusCounts[setName] ? setBonusCounts[setName]!.highCount + highCountValue : highCountValue
+      lowCount: setBonusCounts[setName] ? setBonusCounts[setName].lowCount + 1 : 1,
+      highCount: setBonusCounts[setName] ? setBonusCounts[setName].highCount + highCountValue : highCountValue
     }
-  });
+  }
 
-  Object.values(setBonusCounts).forEach(({ setBonus, lowCount, highCount }) => {
+  for (const { setBonus, lowCount, highCount } of Object.values(setBonusCounts)) {
     const maxBonusCount = Math.floor(highCount / setBonus.numberOfModsRequired);
     const smallBonusCount =
       Math.floor((lowCount - maxBonusCount * setBonus.numberOfModsRequired) / setBonus.numberOfModsRequired);
@@ -696,7 +694,7 @@ function getSetBonusStatsFromModSet(
     for (let i = 0; i < smallBonusCount; i++) {
       setStats.push(setBonus.smallBonus);
     }
-  });
+  }
 
   return setStats;
 }
@@ -731,14 +729,14 @@ function flattenStatValues(
         displayType: displayName,
         value: stat.value * character.playerValues.baseStats[statName] / 100
       };
-    } else if (!stat.isPercentVersion) {
+    }
+    if (!stat.isPercentVersion) {
       return {
         displayType: displayName,
         value: stat.value
       };
-    } else {
-      throw new Error(`Stat is given as a percentage, but ${character.baseID} has no base stats`);
     }
+    throw new Error(`Stat is given as a percentage, but ${character.baseID} has no base stats`);
   });
 
   cache.statValues[cacheKey] = flattenedStats;
@@ -758,7 +756,9 @@ function modSetSatisfiesCharacterRestrictions(
 ) {
   const minimumDots = character.optimizerSettings.minimumModDots;
   const modSetSlots: Partial<Record<ModTypes.GIMOSlots, Mod>> = {};
-  modSet.forEach(mod => modSetSlots[mod.slot] = mod);
+  for (const mod of modSet) {
+    modSetSlots[mod.slot] = mod;
+  }
 
   return modSet.every(mod => mod.pips >= minimumDots) &&
     (!target.primaryStatRestrictions.arrow ||
@@ -788,13 +788,13 @@ function getMissedGoals(
   target: OptimizationPlan,
 ) {
   const missedGoals: MissedGoals = [];
-  goalStats.forEach(goalStat => {
+  for (const goalStat of goalStats) {
     const characterValue = getStatValueForCharacterWithMods(modSet, character, goalStat.stat);
 
     if (characterValue < goalStat.minimum || characterValue > goalStat.maximum) {
       missedGoals.push([goalStat, characterValue]);
     }
-  });
+  }
   return missedGoals;
 }
 
@@ -892,8 +892,8 @@ function getStatValueForCharacterWithMods(
     );
   }
   if (stat === "Health+Protection") {
-    const healthProperty = Stats.Stat.display2CSGIMOStatNamesMap["Health"][0];
-    const protProperty = Stats.Stat.display2CSGIMOStatNamesMap["Protection"][0];
+    const healthProperty = Stats.Stat.display2CSGIMOStatNamesMap.Health[0];
+    const protProperty = Stats.Stat.display2CSGIMOStatNamesMap.Protection[0];
     const baseValue = character.playerValues.equippedStats[healthProperty] +
       character.playerValues.equippedStats[protProperty];
 
@@ -909,31 +909,30 @@ function getStatValueForCharacterWithMods(
       0
     );
     return baseValue + setValue;
-  } else {
-    const statProperty = Stats.Stat.display2CSGIMOStatNamesMap[stat][0];
-    const baseValue = character.playerValues.equippedStats[statProperty];
-
-    const setStats = getFlatStatsFromModSet(modSet, character);
-
-    const setValue = setStats.reduce((setValueSum, setStat) => {
-      // Check to see if the stat is the target stat. If it is, add its value to the total.
-      return setStat.displayType === stat ?
-        setValueSum + setStat.value
-      :
-        setValueSum
-      },
-      0
-    );
-    let returnValue = baseValue + setValue;
-
-    // Change target stat to a percentage for Armor and Resistance
-    // so Reo'Ris shuts up about it in the Discord.
-    if (['armor', 'resistance'].includes(statProperty)) {
-      returnValue = 100 * returnValue / (character.playerValues.level * 7.5 + returnValue);
-    }
-
-    return returnValue;
   }
+  const statProperty = Stats.Stat.display2CSGIMOStatNamesMap[stat][0];
+  const baseValue = character.playerValues.equippedStats[statProperty];
+
+  const setStats = getFlatStatsFromModSet(modSet, character);
+
+  const setValue = setStats.reduce((setValueSum, setStat) => {
+    // Check to see if the stat is the target stat. If it is, add its value to the total.
+    return setStat.displayType === stat ?
+      setValueSum + setStat.value
+    :
+      setValueSum
+    },
+    0
+  );
+  let returnValue = baseValue + setValue;
+
+  // Change target stat to a percentage for Armor and Resistance
+  // so Reo'Ris shuts up about it in the Discord.
+  if (['armor', 'resistance'].includes(statProperty)) {
+    returnValue = 100 * returnValue / (character.playerValues.level * 7.5 + returnValue);
+  }
+
+  return returnValue;
 }
 
 /**
@@ -1010,11 +1009,10 @@ function filterMods(
         [`No ${primaryStat} or ${minDots}-dot ${slot} mods were available, so both restrictions were dropped.`] :
         [`No ${minDots}-dot ${slot} mods were available, so the dots restriction was dropped.`]
     }
-  } else {
-    return {
-      mods: [],
-      messages: [`No ${slot} mods were available to use.`]
-    }
+  }
+  return {
+    mods: [],
+    messages: [`No ${slot} mods were available to use.`]
   }
 }
 
@@ -1029,14 +1027,13 @@ function modSort(character: Character.Character) {
       // If mods have equal value, then favor the one that's already equipped
       if (left.characterID !== 'null' && character.baseID === left.characterID) {
         return -1;
-      } else if (right.characterID !== 'null' && character.baseID === right.characterID) {
-        return 1;
-      } else {
-        return 0;
       }
-    } else {
-      return cache.modScores[right.id] - cache.modScores[left.id];
+      if (right.characterID !== 'null' && character.baseID === right.characterID) {
+        return 1;
+      }
+      return 0;
     }
+    return cache.modScores[right.id] - cache.modScores[left.id];
   }
 }
 
@@ -1169,7 +1166,7 @@ function scoreModSet(
  * @returns {{restriction: Object, messages: Array<String>}[]}
  */
 function loosenRestrictions(setRestrictions: SetRestrictions) {
-  let restrictionsArray:{
+  const restrictionsArray:{
     restriction: SetRestrictions,
     messages: string[]
   }[] = [{
@@ -1179,15 +1176,16 @@ function loosenRestrictions(setRestrictions: SetRestrictions) {
 // TODO add type for restriction
 
   // Try without sets
-  restrictionsArray.forEach(({ restriction, messages }) => {
+  for (const { restriction, messages } of restrictionsArray) {
     if (Object.entries(restriction).length) {
       restrictionsArray.push({
         restriction: {},
-        messages:
-          messages.concat('No mod sets could be found using the given sets, so the sets restriction was removed')
+        messages: messages.concat(
+          'No mod sets could be found using the given sets, so the sets restriction was removed'
+        ),
       });
     }
-  });
+  }
 
   return restrictionsArray;
 }
@@ -1204,16 +1202,16 @@ function loosenRestrictions(setRestrictions: SetRestrictions) {
 const fourSlotOptions = chooseFromArray<ModTypes.GIMOSlots>(gimoSlots, 4);
 
 const chooseFourOptions: ModTypes.GIMOSlots[][][] = [];
-for (let usedSlots of fourSlotOptions) {
+for (const usedSlots of fourSlotOptions) {
   chooseFourOptions.push([usedSlots, gimoSlots.filter(slot => !usedSlots.includes(slot))]);
 }
 
 const twoSlotOptions = chooseFromArray<ModTypes.GIMOSlots>(gimoSlots, 2);
 const chooseTwoOptions: ModTypes.GIMOSlots[][][] = [];
-for (let firstSetSlots of twoSlotOptions) {
-  let remainingSlots = gimoSlots.filter(slot => !firstSetSlots.includes(slot));
-  let secondSetOptions = chooseFromArray<ModTypes.GIMOSlots>(remainingSlots, 2);
-  for (let secondSetSlots of secondSetOptions) {
+for (const firstSetSlots of twoSlotOptions) {
+  const remainingSlots = gimoSlots.filter(slot => !firstSetSlots.includes(slot));
+  const secondSetOptions = chooseFromArray<ModTypes.GIMOSlots>(remainingSlots, 2);
+  for (const secondSetSlots of secondSetOptions) {
     chooseTwoOptions.push([
       firstSetSlots,
       secondSetSlots,
@@ -1271,7 +1269,7 @@ function optimizeMods(
   if (!recalculateMods) {
     let charID: CharacterNames;
     for (charID in characters) {
-      if (!characters.hasOwnProperty(charID)) {
+      if (!Object.hasOwn(characters, charID)) {
         continue;
       }
       if (!previousRun?.characters[charID] ||
@@ -1351,9 +1349,8 @@ function optimizeMods(
         missedGoals: missedGoals
       } as ModSuggestion);
       return modSuggestions;
-    } else {
-      recalculateMods = true;
     }
+    recalculateMods = true;
 
     if (globalSettings.forceCompleteSets) {
       target.useOnlyFullSets = true;
@@ -1498,14 +1495,15 @@ function changeRelativeTargetStatsToAbsolute(
 
       // Because we so heavily rely on the cache, we need to make sure the mod values are cached here.
       clearCache();
-      characterMods.forEach(mod => {
+      for (const mod of characterMods) {
         getFlatStatsFromMod(mod, relativeCharacter, target);
-      });
+      }
 
       const characterStatValue =
         getStatValueForCharacterWithMods(characterMods, relativeCharacter, targetStat.stat);
 
-      let minimum, maximum;
+      let minimum: number;
+      let maximum: number;
 
       if (targetStat.type === '*') {
         minimum = characterStatValue * targetStat.minimum / 100;
@@ -1541,28 +1539,31 @@ function combineTargetStats(
 ) {
   const targetStatMap: Partial<Record<TargetStatsNames, TargetStat>> = {};
 
-  target.targetStats.forEach((targetStat: TargetStat) => {
+  for (const targetStat of target.targetStats) {
     const statName = targetStat.stat;
 
-    if (!targetStatMap.hasOwnProperty(statName)) {
+    if (!Object.hasOwn(targetStatMap, statName)) {
       targetStatMap[statName] = targetStat;
-      return;
+      continue;
     }
 
-    const newMinimum = Math.max(targetStatMap[statName]!.minimum, targetStat.minimum);
-    const newMaximum = Math.min(targetStatMap[statName]!.maximum, targetStat.maximum);
+    const currentStat = targetStatMap[statName];
+    if (currentStat) {
+      const newMinimum = Math.max(currentStat.minimum ?? 0, targetStat.minimum);
+      const newMaximum = Math.min(currentStat.maximum ?? 0, targetStat.maximum);
 
-    if (newMinimum > newMaximum) {
-      throw new Error(`
-        The multiple ${statName} targets on ${character.baseID} don't have any solution. Please adjust the targets.
-        First Target: ${targetStatMap[statName]!.minimum}-${targetStatMap[statName]!.maximum}.
-        Second Target: ${targetStat.minimum}-${targetStat.maximum}.
-      `.trim());
+      if (newMinimum > newMaximum) {
+        throw new Error(`
+          The multiple ${statName} targets on ${character.baseID} don't have any solution. Please adjust the targets.
+          First Target: ${currentStat.minimum}-${currentStat.maximum}.
+          Second Target: ${targetStat.minimum}-${targetStat.maximum}.
+        `.trim());
+      }
+
+      currentStat.minimum = newMinimum;
+      currentStat.maximum = newMaximum;
     }
-
-    targetStatMap[statName]!.minimum = newMinimum;
-    targetStatMap[statName]!.maximum = newMaximum;
-  });
+  }
 
   return {
     ...target,
@@ -1599,20 +1600,21 @@ function findBestModSetForCharacter(
 
   // Get the flattened stats and score every mod for this character. From that point on, only look at the cache
   // for the rest of the time processing mods for this character.
-  modsToCache.forEach(mod => {
+  for (const mod of modsToCache) {
     getFlatStatsFromMod(mod, character, target);
     scoreMod(mod, target);
-  });
+  }
 
   let modSet: Mod[];
   let messages: string[];
   let extraMessages: string[] = [];
-  let mutableTarget = Object.assign({}, target);
+  const mutableTarget = Object.assign({}, target);
   let reducedTarget: OptimizationPlan = mutableTarget;
 
   // First, check to see if there is any target stat
   switch (0 < targetStats.length) {
-    case true:
+    // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
+    case true: {
       // If so, create an array of potential mod sets that could fill it
       let potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, mutableTarget);
 
@@ -1651,6 +1653,7 @@ function findBestModSetForCharacter(
       }
 
       extraMessages = ['Could not fulfill the target stat as given, so the target stat restriction was dropped'];
+    }
 //      mutableTarget.targetStat = null;
     // Intentional fall-through
     case false:
@@ -1725,14 +1728,14 @@ function* getPotentialModsToSatisfyTargetStats(
 
   const [modValues, valuesBySlot] = collectModValuesBySlot(usableMods, statNames);
 
-  targetStats.forEach(targetStat => {
+  for (const targetStat of targetStats) {
     const setValue = setValues[targetStat.stat];
 
     if (setValue) {
       modConfigurationsByStat[targetStat.stat] = {};
       const minSets = setRestrictions[setValue.set.name] || 0;
       const maxSets = (setRestrictions[setValue.set.name] || 0) +
-        Math.floor(totalModSlotsOpen / setValue.set.numberOfModsRequired)
+        Math.floor(totalModSlotsOpen / setValue.set.numberOfModsRequired);
 
       for (let numSetsUsed = minSets; numSetsUsed <= maxSets; numSetsUsed++) {
         const nonModValue = characterValues[targetStat.stat] + setValue.value * numSetsUsed;
@@ -1741,7 +1744,6 @@ function* getPotentialModsToSatisfyTargetStats(
         const progressMax = (numSetsUsed - minSets + 1) / (maxSets - minSets + 1) * 100;
 
         modConfigurationsByStat[targetStat.stat]![numSetsUsed] = findStatValuesThatMeetTarget(
-          //TODO
           valuesBySlot[targetStat.stat]!,
           targetStat.minimum - nonModValue,
           targetStat.maximum - nonModValue,
@@ -1753,7 +1755,6 @@ function* getPotentialModsToSatisfyTargetStats(
     } else {
       modConfigurationsByStat[targetStat.stat] = {
         0: findStatValuesThatMeetTarget(
-          // TODO
           valuesBySlot[targetStat.stat]!,
           targetStat.minimum - characterValues[targetStat.stat],
           targetStat.maximum - characterValues[targetStat.stat],
@@ -1761,9 +1762,9 @@ function* getPotentialModsToSatisfyTargetStats(
           100,
           character
         )
-      }
+      };
     }
-  });
+  }
 
   /**
    * Given a set of mods, return only those mods that might be used with the current target. Filter out any mods
@@ -1813,9 +1814,8 @@ function* getPotentialModsToSatisfyTargetStats(
       if (6 > modGroup[0].length) {
         // If we don't have enough mods to fill out a set, don't even both checking
         return;
-      } else {
-        yield modGroup;
       }
+      yield modGroup;
     } else {
       const updatedTargetStats = targetStats.slice(0);
       const currentTarget = updatedTargetStats.pop()!;
@@ -1850,14 +1850,14 @@ function* getPotentialModsToSatisfyTargetStats(
           const potentialModValues = modConfigurationsByStat[currentTarget.stat]![numSetsUsed];
 
           // Filter out mods into only those that have those values
-          for (let potentialModValuesObject of potentialModValues) {
+          for (const potentialModValuesObject of potentialModValues) {
             const modsThatFitGivenValues: Mod[] = [];
 
-            mods.forEach(mod => {
+            for (const mod of mods) {
               if (modValues[currentTarget.stat]![mod.id] === potentialModValuesObject[mod.slot]) {
                 modsThatFitGivenValues.push(mod);
               }
-            });
+            }
 
             // Send progress messages as we iterate over the possible values
             if (++currentIteration % onePercent === 0) {
@@ -1875,14 +1875,14 @@ function* getPotentialModsToSatisfyTargetStats(
         let currentIteration = 0;
 
         // Filter out mods into only those that have those values
-        for (let potentialModValuesObject of potentialModValues) {
+        for (const potentialModValuesObject of potentialModValues) {
           const modsThatFitGivenValues: Mod[] = [];
 
-          mods.forEach(mod => {
+          for (const mod of mods) {
             if (modValues[currentTarget.stat]![mod.id] === potentialModValuesObject[mod.slot]) {
               modsThatFitGivenValues.push(mod);
             }
-          });
+          }
 
           // Send progress messages as we iterate over the possible values
           if (currentIteration++ % onePercent === 0) {
@@ -1911,7 +1911,7 @@ function getStatValuesForCharacter(
   stats: TargetStatsNames[],
 ) {
   const characterValues = {} as Record<TargetStatsNames, number>;
-  stats.forEach(stat => {
+  for (const stat of stats) {
     if (stat === "Health+Protection") {
       throw new Error(
         "Cannot optimize Health+Protection. Use as Report Only."
@@ -1922,11 +1922,9 @@ function getStatValuesForCharacter(
       throw new Error(
         "Trying to set an ambiguous target stat. Offense, Crit Chance, etc. need to be broken into physical or special."
       );
-    } else {
-      characterValues[stat] =
-        character.playerValues.equippedStats[characterStatProperties[0]] || 0;
     }
-  })
+    characterValues[stat] = character.playerValues.equippedStats[characterStatProperties[0]] || 0;
+  }
 
   return characterValues;
 }
@@ -1948,16 +1946,16 @@ function getSetBonusesThatHaveValueForStats(
   const setValues: Partial<SetValues> = {};
 
   // Figure out any sets that are valuable towards each stat
-  for (let setBonus of Object.values(setBonuses)) {
+  for (const setBonus of Object.values(setBonuses)) {
     // Don't use any sets that are restricted
-    if (-1 == setRestrictions[setBonus.name]) {
+    if (-1 === setRestrictions[setBonus.name]) {
       continue;
     }
 
     // TODO: Eventually support non-max bonuses
     const setStats = flattenStatValues(setBonus.maxBonus, character);
 
-    stats.forEach(stat => {
+    for (const stat of stats) {
       // This works on the assumption that only one mod set could ever fill a given stat
       const valuableStat = setStats.find(setStat => setStat.displayType === stat);
 
@@ -1969,11 +1967,11 @@ function getSetBonusesThatHaveValueForStats(
           valuableStat.value;
 
         setValues[stat] = {
-          'set': setBonus,
-          'value': workingValue
+          set: setBonus,
+          value: workingValue
         };
       }
-    });
+    }
   }
 
   return setValues as SetValues;
@@ -1999,20 +1997,21 @@ function collectModValuesBySlot(
   const valuesBySlot: Partial<Record<TargetStatsNames, Record<string, Set<number>>>> = {};
 
   // Initialize the sub-objects in each of the above
-  stats.forEach(stat => {
-    const slotValuesForTarget = {} as Record<ModTypes.GIMOSlots, Set<number>>;
-    gimoSlots.forEach(slot => {
+  for (const stat of stats) {
+    const slotValuesForTarget: Partial<Record<ModTypes.GIMOSlots, Set<number>>> = {};
+    for (const slot of gimoSlots) {
       slotValuesForTarget[slot] = new Set([0]);
-    });
+    }
     valuesBySlot[stat] = slotValuesForTarget;
     modValues[stat] = {};
-  });
+  }
 
   // Iterate through all the mods, filling out the objects as we go
-  mods.forEach(mod => {
+  for (const mod of mods) {
     const modSummary = cache.modStats[mod.id];
     const combinedModSummary = {} as Record<Stats.DisplayStatNames, StatValue>;
-    modSummary.forEach(stat => {
+
+    for (const stat of modSummary) {
       const oldStat = combinedModSummary[stat.displayType];
       if (oldStat) {
         combinedModSummary[stat.displayType] = {
@@ -2022,9 +2021,9 @@ function collectModValuesBySlot(
       } else {
         combinedModSummary[stat.displayType] = stat
       }
-    });
+    }
 
-    stats.forEach(stat => {
+    for (const stat of stats) {
       if (stat !== "Health+Protection") {
         const statForTarget = combinedModSummary[stat];
         const statValue = statForTarget ? statForTarget.value : 0;
@@ -2032,15 +2031,15 @@ function collectModValuesBySlot(
         modValues[stat]![mod.id] = statValue;
         valuesBySlot[stat]![mod.slot].add(statValue);
       }
-    });
-  });
+    }
+  }
 
   // sort the values in each slot descending
-  stats.forEach(stat => {
-    gimoSlots.forEach(slot => {
+  for (const stat of stats) {
+    for (const slot of gimoSlots) {
       valuesBySlot[stat]![slot] = new Set(Array.from(valuesBySlot[stat]![slot]).sort((a, b) => b - a));
-    });
-  });
+    }
+  }
 
   return [modValues, valuesBySlot];
 }
@@ -2065,16 +2064,16 @@ function findStatValuesThatMeetTarget(
   character: Character.Character,
 ) {
   const onePercent = Math.floor((
-    valuesBySlot['square'].size *
-    valuesBySlot['arrow'].size *
-    valuesBySlot['diamond'].size *
-    valuesBySlot['triangle'].size *
-    valuesBySlot['circle'].size *
-    valuesBySlot['cross'].size) /
+    valuesBySlot.square.size *
+    valuesBySlot.arrow.size *
+    valuesBySlot.diamond.size *
+    valuesBySlot.triangle.size *
+    valuesBySlot.circle.size *
+    valuesBySlot.cross.size) /
     (progressMax - progressMin));
   let iterations = 0;
   let abort = [false, false, false, false, false, false];
-  let firstOfSlot = [true, true, true, true, true, true];
+  const firstOfSlot = [true, true, true, true, true, true];
 
   progressMessage(character, 'Step 1/2: Finding stat values to meet targets', progressMin);
 
@@ -2088,7 +2087,7 @@ function findStatValuesThatMeetTarget(
     if (slotIndex < 6) {
       const currentSlot = gimoSlots[slotIndex];
       firstOfSlot[slotIndex] = true;
-      for (let slotValue of valuesBySlot[currentSlot]) {
+      for (const slotValue of valuesBySlot[currentSlot]) {
         yield* slotRecursor(slotIndex+1, Object.assign({}, valuesObject, { [currentSlot]: slotValue }));
         firstOfSlot[slotIndex] = false;
         if (abort[slotIndex]) {
@@ -2129,9 +2128,9 @@ function findBestModSetFromPotentialMods(
   let bestModSetAndMessages: {
     modSet: Mod[],
     messages: string[]
-  } = { modSet: [], messages: [] }
-    , bestSetScore = -Infinity
-    , bestUnmovedMods = 0;
+  } = { modSet: [], messages: [] };
+  let bestSetScore = Number.NEGATIVE_INFINITY;
+  let bestUnmovedMods = 0;
 
   function updateBestSet(
     setAndMessages: {
@@ -2150,7 +2149,7 @@ function findBestModSetFromPotentialMods(
     return setAndMessages.modSet !== null;
   }
 
-  for (let [mods, candidateSetRestrictions] of potentialModSets) {
+  for (const [mods, candidateSetRestrictions] of potentialModSets) {
     const setAndMessages: SetOrNullAndMessages =
       findBestModSetWithoutChangingRestrictions(mods, character, target, candidateSetRestrictions);
     if (setAndMessagesHasSet(setAndMessages)) {
@@ -2227,7 +2226,7 @@ function findBestModSetByLooseningSetRestrictions(
     const restrictedMods = restrictMods(usableMods, restriction);
 
     // Try to optimize using this set of mods
-    let { modSet: bestModSet, messages: setMessages } =
+    const { modSet: bestModSet, messages: setMessages } =
       findBestModSetWithoutChangingRestrictions(restrictedMods, character, target, restriction);
 
     if (bestModSet) {
@@ -2262,12 +2261,12 @@ function findBestModSetWithoutChangingRestrictions(
   const potentialUsedSets = new Set<SetBonus>();
   const baseSets: Partial<Record<SetStats.GIMOStatNames, ModsBySlot>> = {};
   const messages: string[] = [];
-  let squares: Mod[];
-  let arrows: Mod[];
-  let diamonds: Mod[];
-  let triangles: Mod[];
-  let circles: Mod[];
-  let crosses: Mod[];
+  let squares: Mod[] = [];
+  let arrows: Mod[] = [];
+  let diamonds: Mod[] = [];
+  let triangles: Mod[] = [];
+  let circles: Mod[] = [];
+  let crosses: Mod[] = [];
   let setlessMods: NullablePartialModsBySlot;
   let subMessages: string[];
 
@@ -2329,9 +2328,8 @@ function findBestModSetWithoutChangingRestrictions(
     const modSet = [squares[0], arrows[0], diamonds[0], triangles[0], circles[0], crosses[0]];
     if (modSetFulfillsSetRestriction(modSet, setsToUse)) {
       return { modSet: modSet, messages: messages };
-    } else {
-      return { modSet: null, messages: [] };
     }
+    return { modSet: null, messages: [] };
   }
 
   /**
@@ -2344,9 +2342,8 @@ function findBestModSetWithoutChangingRestrictions(
     const mod: Mod | null = firstOrNull(candidates);
     if (mod && cache.modScores[mod.id] >= 0) {
       return mod;
-    } else {
-      return null;
     }
+    return null;
   };
 
   const usedSets = (Object.entries(setsToUse) as SetRestrictionsEntries)
@@ -2358,7 +2355,7 @@ function findBestModSetWithoutChangingRestrictions(
 
   if (0 === modSlotsOpen) {
     // If sets are 100% deterministic, make potentialUsedSets only them
-    for (let setName of usedSets) {
+    for (const setName of usedSets) {
       const setBonus = setBonuses[setName];
       potentialUsedSets.add(setBonus);
     }
@@ -2373,7 +2370,7 @@ function findBestModSetWithoutChangingRestrictions(
     setlessMods = null;
   } else {
     // Otherwise, use any set bonus with positive value that fits into the set restriction
-    for (let setBonus of Object.values(setBonuses)) {
+    for (const setBonus of Object.values(setBonuses)) {
       if (setBonus.numberOfModsRequired <= modSlotsOpen &&
         scoreStat(setBonus.maxBonus, target) > 0
       ) {
@@ -2382,7 +2379,7 @@ function findBestModSetWithoutChangingRestrictions(
     }
 
     // Still make sure that any chosen sets are in the potential used sets
-    for (let setName of usedSets) {
+    for (const setName of usedSets) {
       potentialUsedSets.add(setBonuses[setName]);
     }
 
@@ -2399,7 +2396,7 @@ function findBestModSetWithoutChangingRestrictions(
   }
 
   // Go through each set bonus with a positive value, and find the best mod sub-sets
-  for (let setBonus of potentialUsedSets) {
+  for (const setBonus of potentialUsedSets) {
     baseSets[setBonus.name] = {
       square: firstOrNull(squares.filter(mod => setBonus.name === mod.set.name)),
       arrow: firstOrNull(arrows.filter(mod => setBonus.name === mod.set.name)),
@@ -2415,10 +2412,10 @@ function findBestModSetWithoutChangingRestrictions(
   const candidateSets = getCandidateSetsGenerator(potentialUsedSets, baseSets, setlessMods, setsToUse);
 
   let bestModSet: Mod[] = [];
-  let bestSetScore = -Infinity;
-  let bestUnmovedMods: number = -1;
+  let bestSetScore = Number.NEGATIVE_INFINITY;
+  let bestUnmovedMods = -1;
 
-  for (let set of candidateSets) {
+  for (const set of candidateSets) {
     const setScore = scoreModSet(set, character, target);
     if (setScore > bestSetScore) {
       bestModSet = set;
@@ -2507,7 +2504,7 @@ function* getCandidateSetsGenerator(
    */
   function setObjectToArray() {
     const modArray: Mod[] = [];
-    for (let slot of gimoSlots) {
+    for (const slot of gimoSlots) {
       if (setObject[slot]) {
         modArray.push(setObject[slot]!);
       }
@@ -2538,14 +2535,14 @@ function* getCandidateSetsGenerator(
     }
     if (!thirdSet) {
       generateSets:
-      for (let [firstSetSlots, secondSetSlots] of chooseFourOptions) {
-        for (let slot of firstSetSlots) {
+      for (const [firstSetSlots, secondSetSlots] of chooseFourOptions) {
+        for (const slot of firstSetSlots) {
           if (!allowFirstSetNulls && null === firstSet[slot]) {
             continue generateSets;
           }
           setObject[slot] = firstSet[slot];
         }
-        for (let slot of secondSetSlots) {
+        for (const slot of secondSetSlots) {
           if (!allowSecondSetNulls && null === secondSet[slot]) {
             continue generateSets;
           }
@@ -2555,20 +2552,20 @@ function* getCandidateSetsGenerator(
       }
     } else {
       generateSets:
-      for (let [firstSetSlots, secondSetSlots, thirdSetSlots] of chooseTwoOptions) {
-        for (let slot of firstSetSlots) {
+      for (const [firstSetSlots, secondSetSlots, thirdSetSlots] of chooseTwoOptions) {
+        for (const slot of firstSetSlots) {
           if (!allowFirstSetNulls && null === firstSet[slot]) {
             continue generateSets;
           }
           setObject[slot] = firstSet[slot];
         }
-        for (let slot of secondSetSlots) {
+        for (const slot of secondSetSlots) {
           if (!allowSecondSetNulls && null === secondSet[slot]) {
             continue generateSets;
           }
           setObject[slot] = secondSet[slot];
         }
-        for (let slot of thirdSetSlots) {
+        for (const slot of thirdSetSlots) {
           if (null === thirdSet[slot]) {
             continue generateSets;
           }
@@ -2597,7 +2594,7 @@ function* getCandidateSetsGenerator(
       yield* combineSetsGenerator(firstSet, setlessMods, null, false, true);
 
       // The four-mod set plus any two-mod sets with value
-      for (let secondSetType of twoModSets) {
+      for (const secondSetType of twoModSets) {
         secondSet = baseSets[secondSetType]!;
         yield* combineSetsGenerator(firstSet, secondSet);
       }
@@ -2632,7 +2629,7 @@ function* getCandidateSetsGenerator(
     yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
 
     // The two sets plus any two-mod sets with value
-    for (let thirdSetType of twoModSets) {
+    for (const thirdSetType of twoModSets) {
       thirdSet = baseSets[thirdSetType]!;
       yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
     }
@@ -2646,7 +2643,7 @@ function* getCandidateSetsGenerator(
     // If no sets are forced, we can check every possible combination
     // The base set
     if (setlessMods) {
-      for (let slot of gimoSlots) {
+      for (const slot of gimoSlots) {
         // TODO check if the null check an not null bang are ok
         if (setlessMods[slot] !== null) {
           setObject[slot] = setlessMods[slot]!;
@@ -2655,35 +2652,35 @@ function* getCandidateSetsGenerator(
       yield setObjectToArray();
     }
 
-    for (let firstSetType of fourModSets) {
-      let firstSet = baseSets[firstSetType]!; // TODO check if the not undefined bang is ok
+    for (const firstSetType of fourModSets) {
+      const firstSet = baseSets[firstSetType]!; // TODO check if the not undefined bang is ok
 
       // the whole set plus setless mods
       yield* combineSetsGenerator(firstSet, setlessMods, null, false, true);
 
       // the whole set plus any 2-mod set
-      for (let secondSetType of twoModSets) {
-        let secondSet = baseSets[secondSetType]!; // TODO check if the not undefined bang is ok
+      for (const secondSetType of twoModSets) {
+        const secondSet = baseSets[secondSetType]!; // TODO check if the not undefined bang is ok
         yield* combineSetsGenerator(firstSet, secondSet);
       }
     }
 
     for (let i = 0; i < twoModSets.length; i++) {
-      let firstSet = baseSets[twoModSets[i]]!; // TODO check if the not undefined bang is ok
+      const firstSet = baseSets[twoModSets[i]]!; // TODO check if the not undefined bang is ok
 
       // the whole set plus setless mods
       yield* combineSetsGenerator(setlessMods, firstSet, null, true);
 
       // the whole set plus a set of 4 from any 2-mod sets and the base set
       for (let j = i; j < twoModSets.length; j++) {
-        let secondSet = baseSets[twoModSets[j]]!; // TODO check if the not undefined bang is ok
+        const secondSet = baseSets[twoModSets[j]]!; // TODO check if the not undefined bang is ok
 
         // the first set plus the second set plus setless mods
         yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
 
         // the first set plus the second set plus another set
         for (let k = j; k < twoModSets.length; k++) {
-          let thirdSet = baseSets[twoModSets[k]]!; // TODO check if the not undefined bang is ok
+          const thirdSet = baseSets[twoModSets[k]]!; // TODO check if the not undefined bang is ok
 
           yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
         }

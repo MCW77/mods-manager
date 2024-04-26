@@ -20,7 +20,7 @@ import { App } from "#/state/modules/app";
 import { Data } from "#/state/modules/data";
 
 // domain
-import type { BaseCharactersById, BaseCharacter } from "#/domain/BaseCharacter";
+import type { BaseCharactersById, BaseCharacters } from "#/domain/BaseCharacter";
 import type {
 	CharacterTemplate,
 	CharacterTemplates,
@@ -344,7 +344,7 @@ export namespace thunks {
 	 * @param baseCharacters {Array<BaseCharacter>}
 	 */
 	export function saveBaseCharacters(
-		baseCharacters: BaseCharacter[],
+		baseCharacters: BaseCharacters,
 	): ThunkResult<void> {
 		return (dispatch) => {
 			const db = getDatabase();

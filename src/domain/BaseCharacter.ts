@@ -61,18 +61,12 @@ export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
 				let alignments: string[] = [];
 				if (bc.alignment === 2) {
 					alignments = ["light", "lightside", "ls"];
-					if (
-						bc.other &&
-						bc.other.some((entry) => entry.key === "unaligned_force_user")
-					)
+					if (bc.other?.some((entry) => entry.key === "unaligned_force_user"))
 						alignments = alignments.concat(["lsufu"]);
 				}
 				if (bc.alignment === 3) {
 					alignments = ["dark", "darkside", "ds"];
-					if (
-						bc.other &&
-						bc.other.some((entry) => entry.key === "unaligned_force_user")
-					)
+					if (bc.other?.some((entry) => entry.key === "unaligned_force_user"))
 						alignments = alignments.concat(["dsufu"]);
 				}
 				categories = categories.concat(alignments);

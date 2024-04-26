@@ -207,7 +207,7 @@ const CharacterList = observer(React.memo(
 
       return <div className={'character-icons'}>
 
-        <span className={`icon minimum-dots`}
+        <span className={"icon minimum-dots"}
           title={`This character will only use mods with at least ${minimumDots} ${1 === minimumDots ? "dot" : "dots"}`} >
           <select
             value={minimumDots}
@@ -239,6 +239,11 @@ const CharacterList = observer(React.memo(
             "This character\'s target has at least one stat given a value"} />
         <span className={`icon locked ${lockedActive}`}
           onClick={() => dispatch(CharacterEdit.thunks.toggleCharacterLock(character.baseID))}
+          onKeyUp={(event: React.KeyboardEvent<HTMLSpanElement>) => {
+            if (event.key === "Enter") {
+              dispatch(CharacterEdit.thunks.toggleCharacterLock(character.baseID));
+            }
+          }}
           title={lockedActive ?
             "This character is locked. Its mods will not be assigned to other characters" :
             "This character is not locked"} />

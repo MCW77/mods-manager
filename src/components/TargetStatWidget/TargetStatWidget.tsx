@@ -8,7 +8,7 @@ import type { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
 
-import type { BaseCharacter } from "#/domain/BaseCharacter";
+import type { BaseCharacters } from "#/domain/BaseCharacter";
 import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
 
 // components
@@ -35,7 +35,7 @@ const ReactiveToggleGroup = reactive(ToggleGroup);
 type ComponentProps = {
 	target$: ObservableOptimizationPlan;
 	id: string;
-	baseCharacters: BaseCharacter[];
+	baseCharacters: BaseCharacters;
 };
 
 const TargetStatWidget = observer(

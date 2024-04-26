@@ -92,15 +92,16 @@ class ModsFilter {
 
     type FilterKV = [FilterKeys, CombinedSettings];
 
-    (Object.entries(filters) as FilterKV[])
-    .forEach(([type, values]) => {
+    const entries = Object.entries(filters) as FilterKV[];
+
+    for (const [type, values] of entries) {
       selectedOptions[type] = Object.entries(values)
         .filter(([option, value]) => 1 === value)
-        .map(([option]) => (isNaN(Number(option)) ? option : +option));
+        .map(([option]) => (Number.isNaN(Number(option)) ? option : +option));
       unselectedOptions[type] = Object.entries(values)
         .filter(([option, value]) => -1 === value)
-        .map(([option]) => (isNaN(Number(option)) ? option : +option));
-    });
+        .map(([option]) => (Number.isNaN(Number(option)) ? option : +option));
+    }
 
     return [selectedOptions, unselectedOptions];
   }
@@ -154,10 +155,10 @@ class ModsFilter {
   }
 
   filterGroupedMods(groupedMods: Record<string, Mod[]>): Record<string, Mod[]> {
-    let filteredMods: Record<string, Mod[]> = mapValues(groupedMods, (mods: Mod[]) =>
+    const filteredMods: Record<string, Mod[]> = mapValues(groupedMods, (mods: Mod[]) =>
       this.filterMods(mods)
     );
-    for (let group in filteredMods) {
+    for (const group in filteredMods) {
       if (filteredMods[group].length === 0)
       delete filteredMods[group]
     }
