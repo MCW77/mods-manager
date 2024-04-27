@@ -677,8 +677,8 @@ function getSetBonusStatsFromModSet(
 
     setBonusCounts[setName] = {
       setBonus: mod.set,
-      lowCount: setBonusCounts[setName] ? setBonusCounts[setName].lowCount + 1 : 1,
-      highCount: setBonusCounts[setName] ? setBonusCounts[setName].highCount + highCountValue : highCountValue
+      lowCount: setBonusCounts[setName]?.lowCount ?? 0 + 1,
+      highCount: setBonusCounts[setName]?.highCount ?? 0 + highCountValue,
     }
   }
 
@@ -1111,7 +1111,7 @@ function getUpgradedMod(
       displayType: workingMod.primaryStat.displayType,
       isPercentVersion: workingMod.primaryStat.isPercentVersion,
       type: workingMod.primaryStat.type,
-      value: maxStatPrimaries[workingMod.primaryStat.displayType]![workingMod.pips]
+      value: maxStatPrimaries[workingMod.primaryStat.displayType]?.[workingMod.pips] ?? 0
     };
     workingMod.level = 15;
   }
@@ -1123,7 +1123,7 @@ function getUpgradedMod(
       displayType: workingMod.primaryStat.displayType,
       isPercentVersion: workingMod.primaryStat.isPercentVersion,
       type: workingMod.primaryStat.type,
-      value: maxStatPrimaries[workingMod.primaryStat.displayType]![6]
+      value: maxStatPrimaries[workingMod.primaryStat.displayType]?.[6] ?? 0
     };
     workingMod.secondaryStats = workingMod.secondaryStats.map(stat => {
       const statName: SecondaryStats.GIMOStatNames = stat.isPercentVersion ? `${stat.displayType} %` as SecondaryStats.GIMOStatNames : stat.displayType as SecondaryStats.GIMOStatNames;
@@ -1132,7 +1132,7 @@ function getUpgradedMod(
         displayType: stat.displayType,
         isPercentVersion: stat.isPercentVersion,
         type: stat.type,
-        value: 'Speed' === stat.displayType ? stat.value + 1 : statSlicingUpgradeFactors[statName]! * stat.value
+        value: "Speed" === stat.displayType ? stat.value + 1 : (statSlicingUpgradeFactors[statName] ?? 0) * stat.value
       };
     });
     workingMod.tier = 1;
