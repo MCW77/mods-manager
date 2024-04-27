@@ -55,7 +55,7 @@ import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ResetAllCharacterTargetsModal from "./ResetAllCharacterTargetsModal";
+import { ResetAllCharacterTargetsModal } from "./ResetAllCharacterTargetsModal";
 
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";

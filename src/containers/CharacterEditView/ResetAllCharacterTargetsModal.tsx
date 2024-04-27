@@ -45,4 +45,4 @@ const ResetAllCharacterTargetsModal = () => {
 
 ResetAllCharacterTargetsModal.displayName = "ResetAllCharacterTargetsModal";
 
-export default ResetAllCharacterTargetsModal;
+export { ResetAllCharacterTargetsModal };
