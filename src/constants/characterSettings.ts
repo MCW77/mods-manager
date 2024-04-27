@@ -1,10 +1,10 @@
 // utils
-import * as UtilityTypes from "#/utils/typeHelper";
+import type * as UtilityTypes from "#/utils/typeHelper";
 
 // domain
 import optimizationStrategy from "#/constants/optimizationStrategy";
 
-import { createCharacterSettings, CharacterSettings, DamageType } from "#/domain/CharacterSettings";
+import { createCharacterSettings, type CharacterSettings, DamageType } from "#/domain/CharacterSettings";
 import { createOptimizationPlan, toRenamed } from "#/domain/OptimizationPlan";
 import { createTargetStat } from "#/domain/TargetStat";
 
@@ -284,63 +284,63 @@ const characterSettings: CharacterSettingsIndexer = {
   '50RT': createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 20, 0, 0, 0, 0, 25, 0, 0, 0)],
   ),
-  'AAYLASECURA': createCharacterSettings(
+  AAYLASECURA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 75, 0, 10, 0, 100, 0, 0, 0, 0),
       createOptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 50, 0, 0, 0, 0, 0, 0),
     ]
   ),
-  'ADMINISTRATORLANDO': createCharacterSettings(
+  ADMINISTRATORLANDO: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 0, 0, 25, 0, 75, 0, 0, 0, 0)]
   ),
-  'ADMIRALACKBAR': createCharacterSettings(
+  ADMIRALACKBAR: createCharacterSettings(
     [
       createOptimizationPlan('Survivability', 20, 20, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0),
       optimizationStrategy.Speed
     ],
     ['AA', 'Snackbar', 'ABC']
   ),
-  'ADMIRALPIETT': createCharacterSettings(
+  ADMIRALPIETT: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0)]
   ),
-  'ADMIRALRADDUS': createCharacterSettings(
+  ADMIRALRADDUS: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 10, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
       createOptimizationPlan('Protection', 10, 20, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
       createOptimizationPlan('Protection w/ Primaries', 10, 20, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, {
-        "triangle": "Protection %",
-        "cross": "Protection %",
-        "circle": "Protection %",
+        triangle: "Protection %",
+        cross: "Protection %",
+        circle: "Protection %",
       }),
       createOptimizationPlan('Health', 20, 10, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
       createOptimizationPlan('Health w/ Primaries', 20, 10, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
     ],
     [],
     DamageType.special
   ),
-  'AHSOKATANO': createCharacterSettings(
+  AHSOKATANO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 0, 100, 50, 0, 0, 25, 0, 10, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 20, 0, 100, 50, 0, 0, 25, 0, 10, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Offense %",
+        circle: "Health %",
       }),
       createOptimizationPlan('Padme Lead', 10, 0, 100, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0),
       createOptimizationPlan('Slow Damage', 25, 0, 0, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0)
     ],
     ['Snips']
   ),
-  'AMILYNHOLDO': createCharacterSettings(
+  AMILYNHOLDO: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 50, 25, 0, 0, 0, 5, 5, 0, 0)],
     ['Hodor'],
     DamageType.mixed
   ),
-  'ANAKINKNIGHT': createCharacterSettings(
+  ANAKINKNIGHT: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 75, 25, 0, 25, 0, 80, 0, 0, 0, 0),
       createOptimizationPlan('Padme Lead', 10, 0, 80, 100, 25, 0, 25, 0, 40, 0, 0, 0, 0),
@@ -352,17 +352,17 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['JKA']
   ),
-  'ARCTROOPER501ST': createCharacterSettings(
+  ARCTROOPER501ST: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 0, 0, 50, 0, 15, 0, 0, 0, 0),
       createOptimizationPlan('KAM', 10, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('KAM/CA', 10, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 100),
     ],
   ),
-  'ARMORER': createCharacterSettings(
+  ARMORER: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 10, 100, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0)],
   ),
-  'ASAJVENTRESS': createCharacterSettings(
+  ASAJVENTRESS: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 10, 10, 20, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 100, 0, 0, 25, 25, 0, 0, 0, 0, 0),
@@ -371,46 +371,46 @@ const characterSettings: CharacterSettingsIndexer = {
     ['AV', 'Zen', 'NS', 'hSTR NS', 'ABC'],
     DamageType.mixed
   ),
-  'AURRA_SING': createCharacterSettings(
+  AURRA_SING: createCharacterSettings(
     [
       createOptimizationPlan('hSTR Phase 3', 0, 0, 75, 100, 0, 0, 50, 0, 10, 0, 0, 0, 0),
       createOptimizationPlan('PvP', 0, 0, 100, 80, 20, 0, 50, 0, 25, 0, 0, 0, 0)
     ]
   ),
-  'BADBATCHECHO': createCharacterSettings(
+  BADBATCHECHO: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speedy debuffer"], 'PvP')],
   ),
-  'BADBATCHHUNTER': createCharacterSettings(
+  BADBATCHHUNTER: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 0, 15, 0, 25, 0, 0, 0, 0, 0, 0)],
   ),
-  'BADBATCHOMEGA': createCharacterSettings(
+  BADBATCHOMEGA: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 50, 0, 25, 0, 100, 0, 0, 0, 0, 0, 0)]
   ),
-  'BADBATCHTECH': createCharacterSettings(
+  BADBATCHTECH: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speedy debuffer"], 'PvP')],
     [],
     DamageType.special
   ),
-  'BADBATCHWRECKER': createCharacterSettings(
+  BADBATCHWRECKER: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 30, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0)]
   ),
-  'B1BATTLEDROIDV2': createCharacterSettings(
+  B1BATTLEDROIDV2: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0)]
   ),
-  'B2SUPERBATTLEDROID': createCharacterSettings(
+  B2SUPERBATTLEDROID: createCharacterSettings(
     [
       createOptimizationPlan('Survival', 50, 50, 0, 0, 50, 25, 0, 0, 0, 0, 0, 50, 0),
       createOptimizationPlan('Tenacity', 50, 50, 0, 0, 50, 100, 0, 0, 0, 0, 0, 0, 100),
       createOptimizationPlan('Potency', 50, 50, 0, 0, 100, 50, 0, 0, 0, 0, 0, 0, 100),
     ]
   ),
-  'BARRISSOFFEE': createCharacterSettings(
+  BARRISSOFFEE: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 70, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('hSTR P1 Jedi', 75, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'BASTILASHAN': createCharacterSettings(
+  BASTILASHAN: createCharacterSettings(
     [
       createOptimizationPlan('Leader', 10, 0, 100, 0, 50, 0, 0, 25, 0, 0, 0, 0, 0),
       toRenamed(optimizationStrategy["Special Damage with Potency"], 'Non-leader'),
@@ -420,7 +420,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'BASTILASHANDARK': createCharacterSettings(
+  BASTILASHANDARK: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Offensive', 0, 0, 100, 50, 5, 0, 0, 25, 0, 0, 0, 0, 0),
@@ -428,28 +428,28 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'BAZEMALBUS': createCharacterSettings(
+  BAZEMALBUS: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 50, 0, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 50, 0, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "circle": "Health %",
-        "cross": "Health %"
+        arrow: "Speed",
+        triangle: "Health %",
+        circle: "Health %",
+        cross: "Health %"
       }),
       createOptimizationPlan('PvP Slow', 50, 0, 20, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('PvP Slow w/ Primaries', 50, 0, 20, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "circle": "Health %",
-        "cross": "Health %"
+        arrow: "Speed",
+        triangle: "Health %",
+        circle: "Health %",
+        cross: "Health %"
       }),
       createOptimizationPlan('Slow Tank', 50, 50, 0, 0, 10, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('hSTR Phase 4', 10, 10, -100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     ],
     ['Rogue 1', 'Chaze', 'Chiggs']
   ),
-  'BB8': createCharacterSettings(
+  BB8: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 5, 100, 0, 0, 10, 0, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 1', 10, -5, 100, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0),
@@ -458,20 +458,20 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['bb8', 'Wampanader', 'ABC']
   ),
-  'BENSOLO': createCharacterSettings(
+  BENSOLO: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 0, 100, 0, 10, 0, 0, 70, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'BIGGSDARKLIGHTER': createCharacterSettings(
+  BIGGSDARKLIGHTER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')],
     ['Wiggs', 'Chiggs']
   ),
-  'BISTAN': createCharacterSettings(
+  BISTAN: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
     ['Rogue 1', 'SuperStar2D2']
   ),
-  'BOBAFETT': createCharacterSettings(
+  BOBAFETT: createCharacterSettings(
     [
       createOptimizationPlan('PvE', 0, 0, 50, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP'),
@@ -480,42 +480,42 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('hSTR Phase 3 Greedo', 0, 0, 20, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0)
     ]
   ),
-  'BOBAFETTSCION': createCharacterSettings(
+  BOBAFETTSCION: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
     ]
   ),
-  'BODHIROOK': createCharacterSettings(
+  BODHIROOK: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 10, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['Rogue 1']
   ),
-  'BOKATAN': createCharacterSettings(
+  BOKATAN: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 10, 0, 50, 0, 0, 0, 0)],
   ),
-  'BOOMADIER': createCharacterSettings(
+  BOOMADIER: createCharacterSettings(
     [createOptimizationPlan('PvP', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3)],
   ),
-  'BOSSK': createCharacterSettings(
+  BOSSK: createCharacterSettings(
     [
       createOptimizationPlan('Leader', 10, 10, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Non-leader', 10, 0, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0),
     ]
   ),
-  'BOSSNASS': createCharacterSettings(
+  BOSSNASS: createCharacterSettings(
     [createOptimizationPlan('PvP', 4, 22, 100, 0, 28, 15, 2, 3, 2, 2, 2, 0, 0)],
   ),
-  'BOUSHH': createCharacterSettings(
+  BOUSHH: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 0, 100, 0, 10, 0, 0, 20, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 5, 0, 100, 0, 10, 0, 0, 20, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Offense %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Offense %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 5, 0, 100, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Offense %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Offense %",
       }, {
         "Speed %": 1,
         "Potency %": 1,
@@ -524,20 +524,20 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'BT1': createCharacterSettings(
+  BT1: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 5, 0, 80, 0, 10, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 0, 0, 100, 50, 5, 0, 50, 0, 10, 0, 0, 0, 0, {
-        "arrow": "Offense %",
-        "triangle": "Critical Damage %",
-        "cross": "Offense %",
+        arrow: "Offense %",
+        triangle: "Critical Damage %",
+        cross: "Offense %",
       }),
     ],
   ),
-  'C3POCHEWBACCA': createCharacterSettings(
+  C3POCHEWBACCA: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 80, 10, 0, 50, 0, 25, 0, 0, 0, 0)]
   ),
-  'C3POLEGENDARY': createCharacterSettings(
+  C3POLEGENDARY: createCharacterSettings(
     [
       optimizationStrategy["Speedy debuffer"],
       optimizationStrategy.Speed,
@@ -545,23 +545,23 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Anti-Malak', 10, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
     ]
   ),
-  'CADBANE': createCharacterSettings(
+  CADBANE: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
   ),
-  'CALKESTIS': createCharacterSettings(
+  CALKESTIS: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Health %",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Health %",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       },
       {
         "Health %": 2,
@@ -569,26 +569,26 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
     ],
   ),
-  'CANDEROUSORDO': createCharacterSettings(
+  CANDEROUSORDO: createCharacterSettings(
     [
       createOptimizationPlan('Maul Lead', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0),
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
     ],
   ),
-  'CAPTAINDROGAN': createCharacterSettings(
+  CAPTAINDROGAN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 0, 10, 10, 0, 70, 20, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 10, 0, 100, 0, 10, 10, 0, 70, 20, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Offense %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 10, 0, 100, 0, 10, 10, 0, 70, 20, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Offense %",
+        circle: "Health %",
       }, {
         "Offense %": 1,
         "Health %": 1,
@@ -597,20 +597,20 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'CAPTAINREX': createCharacterSettings(
+  CAPTAINREX: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Critical Chance %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Critical Chance %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Critical Chance %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Critical Chance %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Potency %": 1,
         "Critical Chance %": 1,
@@ -618,32 +618,32 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
     ],
   ),
-  'CAPTAINTARPALS': createCharacterSettings(
+  CAPTAINTARPALS: createCharacterSettings(
     [createOptimizationPlan('PvP', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3)],
   ),
-  'CARADUNE': createCharacterSettings(
+  CARADUNE: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 80, 100, 20, 0, 25, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Mothma Lead', 10, 10, 100, 0, 20, 20, 5, 0, 0, 5, 0, 0, 0),
     ]
   ),
-  'CARTHONASI': createCharacterSettings(
+  CARTHONASI: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
   ),
-  'CASSIANANDOR': createCharacterSettings(
+  CASSIANANDOR: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 20, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('AdRad', 10, 20, 100, 0, 25, 0, 0, 10, 0, 0, 0, 0, 0),
       createOptimizationPlan('AdRad w/ Primaries', 10, 20, 100, 0, 25, 0, 0, 10, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Chance %",
-        "cross": "Potency %",
-        "circle": "Protection %",
+        triangle: "Critical Chance %",
+        cross: "Potency %",
+        circle: "Protection %",
       }),
     ],
     ['Rogue 1', 'SuperStar2D2'],
     DamageType.mixed
   ),
-  'CC2224': createCharacterSettings(
+  CC2224: createCharacterSettings(
     [
       createOptimizationPlan('Leader', 0, 0, 100, 50, 25, 0, 25, 0, 50, 12.5, 12.5, 0, 0),
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Non-leader'),
@@ -651,20 +651,20 @@ const characterSettings: CharacterSettingsIndexer = {
     ['zody'],
     DamageType.mixed
   ),
-  'CEREJUNDA': createCharacterSettings(
+  CEREJUNDA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Health %",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Health %",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       },
       {
         "Health %": 2,
@@ -672,7 +672,7 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
     ],
   ),
-  'CHEWBACCALEGENDARY': createCharacterSettings(
+  CHEWBACCALEGENDARY: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP'),
       createOptimizationPlan('Tenacity', 25, 25, 100, 0, 0, 80, 10, 0, 0, 0, 0, 0, 0),
@@ -681,75 +681,75 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Chex Mix']
   ),
-  'CHIEFCHIRPA': createCharacterSettings(
+  CHIEFCHIRPA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 12, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 12, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 12, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }, {
         "Speed %": 1,
         "Health %": 1,
       }),
       toRenamed(optimizationStrategy.Speed, 'Speed'),
       createOptimizationPlan('Speed w/ Primaries', 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Chance %",
-        "cross": "Protection %",
-        "circle": "Protection %",
+        triangle: "Critical Chance %",
+        cross: "Protection %",
+        circle: "Protection %",
       }),
     ],
     ['Murderbears']
   ),
-  'CHIEFNEBIT': createCharacterSettings(
+  CHIEFNEBIT: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 50, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Detonator', 60, 60, 100, 0, 0, 0, 0, 0, 0, 50, 0, 0, 25),
     ],
     ['nebs'],
   ),
-  'CHIRRUTIMWE': createCharacterSettings(
+  CHIRRUTIMWE: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 20, 25, 0, 50, 0, 0, 0, 0),
       toRenamed(optimizationStrategy["Speedy Chex Mix"], 'Chex Mix')
     ],
     ['Rogue 1', 'Chaze', 'Chiggs', 'Chex Mix']
   ),
-  'CHOPPERS3': createCharacterSettings(
+  CHOPPERS3: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 50, 0, 100, 0, 20, 20, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 50, 0, 100, 0, 20, 20, 0, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "cross": "Tenacity %",
-        "circle": "Health %",
+        arrow: "Speed",
+        cross: "Tenacity %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 50, 0, 100, 0, 20, 20, 0, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "cross": "Tenacity %",
-        "circle": "Health %",
+        arrow: "Speed",
+        cross: "Tenacity %",
+        circle: "Health %",
       }, {
         "Health %": 3,
       }),
     ],
   ),
-  'CLONESERGEANTPHASEI': createCharacterSettings(
+  CLONESERGEANTPHASEI: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
     ['Sarge']
   ),
-  'CLONEWARSCHEWBACCA': createCharacterSettings(
+  CLONEWARSCHEWBACCA: createCharacterSettings(
     [createOptimizationPlan('Tanky', 50, 50, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0)],
     ['CWC']
   ),
-  'COLONELSTARCK': createCharacterSettings(
+  COLONELSTARCK: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 10, 5, 0, 5, 0, 5, 0, 0, 0, 0)],
     ['Tony Stark', 'Troopers']
   ),
-  'COMMANDERAHSOKA': createCharacterSettings(
+  COMMANDERAHSOKA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 0, 100, 50, 0, 0, 0, 30, 0, 0, 0, 0, 0),
       createOptimizationPlan('Health', 10, 0, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
@@ -758,7 +758,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['CAT'],
     DamageType.special
   ),
-  'COMMANDERLUKESKYWALKER': createCharacterSettings(
+  COMMANDERLUKESKYWALKER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 25, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('Chewpio', 10, 10, 100, 0, 10, 50, 50, 0, 0, 0, 0, 0, 0),
@@ -768,23 +768,23 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['CLS', 'Wampanader', 'Chex Mix', 'ABC', 'Titans'],
   ),
-  'CORUSCANTUNDERWORLDPOLICE': createCharacterSettings(
+  CORUSCANTUNDERWORLDPOLICE: createCharacterSettings(
     [createOptimizationPlan('Why?', 0, 0, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['CUP']
   ),
-  'COUNTDOOKU': createCharacterSettings(
+  COUNTDOOKU: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 0, 50, 50, 25, 25, 0, 0, 0, 0, 0)],
     [],
     DamageType.mixed
   ),
-  'CT5555': createCharacterSettings(
+  CT5555: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 15, 30, 50, 0, 15, 0, 25, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('KAM', 30, 15, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('KAM/CA', 30, 15, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100),
     ],
   ),
-  'CT7567': createCharacterSettings(
+  CT7567: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 0, 100, 0, 5, 10, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('KAM', 10, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -792,7 +792,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Titans'],
   ),
-  'CT210408': createCharacterSettings(
+  CT210408: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 50, 0, 75, 75, 0, 0, 0, 0, 0),
       createOptimizationPlan('Nuke', 0, 0, 50, 100, 0, 0, 75, 75, 25, 0, 0, 0, 0),
@@ -802,7 +802,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.mixed
   ),
-  'DAKA': createCharacterSettings(
+  DAKA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 0, 100, 0, 25, 15, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Tanky', 75, 0, 100, 0, 30, 15, 0, 0, 0, 0, 0, 0, 100),
@@ -811,22 +811,22 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['NS', 'hSTR NS']
   ),
-  'DARKTROOPER': createCharacterSettings(
+  DARKTROOPER: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 10, 50, 0, 0, 5, 60, 0, 0, 2.5, 2.5, 0, 0)],
   ),
-  'DARTHBANE': createCharacterSettings(
+  DARTHBANE: createCharacterSettings(
     [createOptimizationPlan('PvP', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3)],
   ),
-  'DARTHMALAK': createCharacterSettings(
+  DARTHMALAK: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 50, 100, 0, 10, 0, 10, 0, 0, 10, 0, 0, 0),
       createOptimizationPlan('Tenacity', 0, 50, 100, 0, 10, 100, 10, 0, 0, 10, 0, 0, 0),
     ],
   ),
-  'DARTHMALGUS': createCharacterSettings(
+  DARTHMALGUS: createCharacterSettings(
     [createOptimizationPlan('PvP', 50, 10, 100, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0)],
   ),
-  'DARTHNIHILUS': createCharacterSettings(
+  DARTHNIHILUS: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 30, 0, 100, 0, 50, 60, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Tanky', 40, 0, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 100),
@@ -834,28 +834,28 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Nightmare'],
     DamageType.special
   ),
-  'DARTHREVAN': createCharacterSettings(
+  DARTHREVAN: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 0, 100, 50, 5, 0, 0, 10, 5, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'DARTHSIDIOUS': createCharacterSettings(
+  DARTHSIDIOUS: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 0, 25, 0, 50, 0, 0, 0, 0, 0, 0)],
     ['Auto Lightzader']
   ),
-  'DARTHSION': createCharacterSettings(
+  DARTHSION: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 30, 100, 0, 5, 0, 0, 0, 0, 20, 0, 0, 0),
       createOptimizationPlan('PvP/CA', 25, 30, 100, 0, 5, 0, 0, 0, 0, 20, 0, 0, 100),
     ],
     ['Nightmare']
   ),
-  'DARTHTALON': createCharacterSettings(
+  DARTHTALON: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 15, 25, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'DARTHTRAYA': createCharacterSettings(
+  DARTHTRAYA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 15, 10, 100, 0, 5, 0, 0, 15, 0, 0, 0, 0, 0),
       createOptimizationPlan('Tanky', 25, 75, 65, 0, 0, 65, 0, 0, 0, 0, 0, 0, 100)
@@ -863,10 +863,10 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'DASHRENDAR': createCharacterSettings(
+  DASHRENDAR: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 0, 100, 60, 5, 0, 50, 0, 10, 0, 0, 0, 0)],
   ),
-  'DATHCHA': createCharacterSettings(
+  DATHCHA: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
       createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100),
@@ -874,7 +874,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.mixed
   ),
-  'DEATHTROOPER': createCharacterSettings(
+  DEATHTROOPER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 25, 0, 25, 0, 0, 0, 0),
       createOptimizationPlan('Iden Lead', 10, 10, 100, 100, 40, 0, 25, 0, 0, 0, 0, 0, 0),
@@ -884,43 +884,43 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Troopers', 'Chex Mix'],
   ),
-  'DENGAR': createCharacterSettings(
+  DENGAR: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 60, 0, 0, 0, 100, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0),
     ]
   ),
-  'DIRECTORKRENNIC': createCharacterSettings(
+  DIRECTORKRENNIC: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Special Damage, Potency"], 'PvP')],
     ['Imperial Grancor Maneuver'],
     DamageType.special
   ),
-  'DOCTORAPHRA': createCharacterSettings(
+  DOCTORAPHRA: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 90, 0, 100, 0, 0, 20, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'DROIDEKA': createCharacterSettings(
+  DROIDEKA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 10, 0, 0, 10, 20, 100, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Maul Kickstarter', 0, 5, 100, 0, 5, 5, 20, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'EETHKOTH': createCharacterSettings(
+  EETHKOTH: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Special Damage, Potency"], 'PvP')],
     [],
     DamageType.mixed
   ),
-  'EIGHTHBROTHER': createCharacterSettings(
+  EIGHTHBROTHER: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 5, 100, 50, 0, 0, 30, 0, 5, 0, 0, 0, 0)],
   ),
-  'EMBO': createCharacterSettings(
+  EMBO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 20, 100, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 3', 0, 0, 50, 25, 0, 0, 75, 0, 100, 0, 0, 0, 0)
     ]
   ),
-  'EMPERORPALPATINE': createCharacterSettings(
+  EMPERORPALPATINE: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Special Damage with Potency"], 'PvP'),
       createOptimizationPlan('Tanky', 0, 100, 70, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -928,7 +928,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['EP', 'Palp', 'EzPz', 'Nightmare'],
     DamageType.special
   ),
-  'ENFYSNEST': createCharacterSettings(
+  ENFYSNEST: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 50, 25, 100, 10, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Speedy', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -939,46 +939,46 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Nesty', 'Baby Wampa', 'solo'],
     DamageType.special
   ),
-  'EPIXFINN': createCharacterSettings(
+  EPIXFINN: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 0, 0, 0, 25, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'EPIXPOE': createCharacterSettings(
+  EPIXPOE: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 0, 20, 20, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'EWOKELDER': createCharacterSettings(
+  EWOKELDER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 25, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Tenacity %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Tenacity %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 25, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Tenacity %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Tenacity %",
+        circle: "Health %",
       }, {
         "Health %": 3,
       }),
     ],
     ['EE', 'Murderbears'],
   ),
-  'EWOKSCOUT': createCharacterSettings(
+  EWOKSCOUT: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 15, 0, 100, 0, 50, 0, 50, 0, 20, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 15, 0, 100, 0, 50, 0, 50, 0, 20, 0, 0, 0, 0, {
-        "triangle": "Offense %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Offense %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 15, 0, 100, 0, 50, 0, 50, 0, 20, 0, 0, 0, 0, {
-        "triangle": "Offense %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Offense %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Offense %": 1,
         "Potency %": 1,
@@ -987,19 +987,19 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Murderbears'],
   ),
-  'EZRABRIDGERS3': createCharacterSettings(
+  EZRABRIDGERS3: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 0, 100, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 5, 0, 100, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Offense %",
+        circle: "Health %",
       }),
       createOptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 50, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('hSTR P2 Jedi', 0, 0, 60, 100, 0, 0, 75, 0, 75, 0, 0, 0, 0),
     ],
   ),
-  'FENNECSHAND': createCharacterSettings(
+  FENNECSHAND: createCharacterSettings(
     [
       createOptimizationPlan('PvP - Offense', 0, 0, 100, 0, 0, 0, 0, 75, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP - Crit.Dmg', 0, 0, 100, 100, 0, 0, 0, 100, 50, 0, 0, 0, 0),
@@ -1007,12 +1007,12 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'FIFTHBROTHER': createCharacterSettings(
+  FIFTHBROTHER: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'FINN': createCharacterSettings(
+  FINN: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Slow Crit, Physical Damage, Potency"], 'PvP'),
       createOptimizationPlan('Tanky', 30, 100, 100, 0, 5, 5, 50, 0, 0, 10, 0, 0, 0),
@@ -1020,73 +1020,73 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Zinn']
   ),
-  'FIRSTORDEREXECUTIONER': createCharacterSettings(
+  FIRSTORDEREXECUTIONER: createCharacterSettings(
     [createOptimizationPlan('PvP', 25, 0, 100, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0)],
     ['Fox', 'Panda', 'Foe', 'FO']
   ),
-  'FIRSTORDEROFFICERMALE': createCharacterSettings(
+  FIRSTORDEROFFICERMALE: createCharacterSettings(
     [toRenamed(optimizationStrategy.Speed, 'Speed')],
     ['Foo', 'FO']
   ),
-  'FIRSTORDERSPECIALFORCESPILOT': createCharacterSettings(
+  FIRSTORDERSPECIALFORCESPILOT: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'PvP')],
     ['SFTP', 'FO'],
     DamageType.mixed
   ),
-  'FIRSTORDERTIEPILOT': createCharacterSettings(
+  FIRSTORDERTIEPILOT: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 0, 100, 100, 10, 0, 50, 0, 0, 0, 0, 0, 0)],
     ['FOTP', 'FO'],
   ),
-  'FIRSTORDERTROOPER': createCharacterSettings(
+  FIRSTORDERTROOPER: createCharacterSettings(
     [createOptimizationPlan('PvP', 30, 40, 100, 0, 0, 10, 0, 0, 0, 30, 0, 0, 0)],
     ['FOST', 'FO'],
   ),
-  'FOSITHTROOPER': createCharacterSettings(
+  FOSITHTROOPER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 25, 100, 0, 0, 80, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Tanky', 40, 0, 100, 50, 0, 0, 50, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'FULCRUMAHSOKA': createCharacterSettings(
+  FULCRUMAHSOKA: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP'),
       createOptimizationPlan('Omicron', 10, 0, 50, 100, 0, -30, 75, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('Omicron w/ Primaries', 10, 0, 50, 0, 0, -30, 100, 0, 50, 0, 0, 0, 0, {
-        "arrow": "Offense %",
-        "triangle": "Critical Damage %",
-        "cross": "Offense %",
+        arrow: "Offense %",
+        triangle: "Critical Damage %",
+        cross: "Offense %",
       }),
     ],
     ['ATF', 'FAT'],
   ),
-  'GAMORREANGUARD': createCharacterSettings(
+  GAMORREANGUARD: createCharacterSettings(
     [createOptimizationPlan('PvP', 75, 0, 100, 0, 75, 100, 0, 0, 0, 50, 0, 0, 0)],
     ['Piggy']
   ),
-  'GARSAXON': createCharacterSettings(
+  GARSAXON: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Offense %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Offense %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Offense %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Offense %",
       }, {
         "Offense %": 1,
         "Potency %": 1,
       }),
     ],
   ),
-  'GENERALHUX': createCharacterSettings(
+  GENERALHUX: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 10, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 15)],
     [],
     DamageType.special
   ),
-  'GENERALKENOBI': createCharacterSettings(
+  GENERALKENOBI: createCharacterSettings(
     [
       createOptimizationPlan('Speedy Tank', 25, 50, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('Balanced', 50, 100, 50, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0),
@@ -1097,7 +1097,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['GK', 'Titans']
   ),
-  'GENERALSKYWALKER': createCharacterSettings(
+  GENERALSKYWALKER: createCharacterSettings(
     [
       createOptimizationPlan('PvP - Defense', 10, 25, 100, 0, 20, 0, 10, 0, 0, 10, 10, 0, 0),
       createOptimizationPlan('PvP - Offense', 0, 0, 100, 100, 20, 0, 20, 0, 0, 0, 0, 0, 0),
@@ -1105,58 +1105,58 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['GAS']
   ),
-  'GEONOSIANBROODALPHA': createCharacterSettings(
+  GEONOSIANBROODALPHA: createCharacterSettings(
     [
       createOptimizationPlan('Tanky', 20, 20, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Offense', 0, 0, 100, 50, 0, 10, 20, 0, 20, 0, 0, 0, 0),
     ]
   ),
-  'GEONOSIANSOLDIER': createCharacterSettings(
+  GEONOSIANSOLDIER: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 80, 90, 0, 0, 50, 0, 100, 0, 0, 0, 0)]
   ),
-  'GEONOSIANSPY': createCharacterSettings(
+  GEONOSIANSPY: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')]
   ),
-  'GLLEIA': createCharacterSettings(
+  GLLEIA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 15, 100, 0, 15, 0, 5, 0, 0, 10, 10, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 20, 15, 100, 0, 15, 0, 5, 0, 0, 10, 10, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "circle": "Health %",
-        "cross": "Health %",
+        arrow: "Speed",
+        triangle: "Health %",
+        circle: "Health %",
+        cross: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 20, 15, 100, 0, 15, 0, 5, 0, 0, 10, 10, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "circle": "Health %",
-        "cross": "Health %",
+        arrow: "Speed",
+        triangle: "Health %",
+        circle: "Health %",
+        cross: "Health %",
       }, {
         "Speed %": 1,
       }),
     ],
     ['Murderbears']
   ),
-  'GLREY': createCharacterSettings(
+  GLREY: createCharacterSettings(
     [
       createOptimizationPlan('PvP - Health', 50, 0, 100, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP - Offense', 15, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
     ]
   ),
-  'GRANDADMIRALTHRAWN': createCharacterSettings(
+  GRANDADMIRALTHRAWN: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 20, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0)],
     ['GAT', 'Imperial Grancor Maneuver', 'Wampanader', 'ABC', 'Titans'],
     DamageType.special
   ),
-  'GRANDINQUISITOR': createCharacterSettings(
+  GRANDINQUISITOR: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 5, 100, 50, 0, 0, 30, 0, 5, 0, 0, 0, 0)],
   ),
-  'GRANDMASTERLUKE': createCharacterSettings(
+  GRANDMASTERLUKE: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 25, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['GMLS', 'JMLS', 'GLLS'],
     DamageType.special
   ),
-  'GRANDMASTERYODA': createCharacterSettings(
+  GRANDMASTERYODA: createCharacterSettings(
     [
       createOptimizationPlan('Speedy', 0, 0, 100, 50, 25, 0, 0, 80, 25, 0, 0, 0, 0),
       createOptimizationPlan('Offense', 0, 0, 50, 100, 0, 0, 0, 100, 25, 0, 0, 0, 0),
@@ -1167,12 +1167,12 @@ const characterSettings: CharacterSettingsIndexer = {
     ['GMY'],
     DamageType.special
   ),
-  'GRANDMOFFTARKIN': createCharacterSettings(
+  GRANDMOFFTARKIN: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 100, 25, 0, 15, 15, 50, 0, 0, 0, 0)],
     ['GMT', 'Auto Lightzader', 'Imperial Grancor Maneuver'],
     DamageType.mixed
   ),
-  'GREEDO': createCharacterSettings(
+  GREEDO: createCharacterSettings(
     [
       createOptimizationPlan('Crits', 0, 0, 100, 50, 25, 0, 25, 0, 100, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, {}, {},
@@ -1180,10 +1180,10 @@ const characterSettings: CharacterSettingsIndexer = {
       )
     ]
   ),
-  'GREEFKARGA': createCharacterSettings(
+  GREEFKARGA: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 5, 100, 0, 5, 10, 0, 0, 0, 0, 0, 0, 0)],
   ),
-  'GRIEVOUS': createCharacterSettings(
+  GRIEVOUS: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 100, 0, 80, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Fast', 20, 0, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -1191,7 +1191,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['GG'],
   ),
-  'HANSOLO': createCharacterSettings(
+  HANSOLO: createCharacterSettings(
     [
       createOptimizationPlan('Fast Han', 0, 0, 100, 100, 10, 0, 25, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Slow Han', 0, 0, 0, 100, 25, 0, 50, 0, 0, 0, 0, 0, 0),
@@ -1202,94 +1202,94 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Raid Han', 'rHan', 'OG Han', 'Zolo', 'Chex Mix', 'Titans'],
   ),
-  'HERASYNDULLAS3': createCharacterSettings(
+  HERASYNDULLAS3: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0, {
-        "cross": "Potency %",
+        cross: "Potency %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0, {
-        "cross": "Potency %",
+        cross: "Potency %",
       }, {
         "Speed %": 1,
         "Health %": 1,
       }),
     ],
   ),
-  'HERMITYODA': createCharacterSettings(
+  HERMITYODA: createCharacterSettings(
     [optimizationStrategy.Speed],
     ['Hyoda', 'Hoboda', 'Hobo', 'HY'],
     DamageType.mixed
   ),
-  'HK47': createCharacterSettings(
+  HK47: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 75, 0, 0, 50, 0, 25, 0, 0, 0, 0)
     ]
   ),
-  'HONDO': createCharacterSettings(
+  HONDO: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 5, 100, 75, 0, 0, 0, 75, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'HOTHHAN': createCharacterSettings(
+  HOTHHAN: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['CHS', 'CHolo', 'Snolo', 'Hoth Han']
   ),
-  'HOTHLEIA': createCharacterSettings(
+  HOTHLEIA: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 50, 0, 25, 0, 30, 0, 0, 0, 0)],
     ['ROLO']
   ),
-  'HOTHREBELSCOUT': createCharacterSettings(
+  HOTHREBELSCOUT: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
       createOptimizationPlan('Mothma Lead', 5, 10, 100, 0, 5, 5, 75, 0, 100, 5, 0, 0, 0),
     ],
     ['HRS', 'Hoth Bros']
   ),
-  'HOTHREBELSOLDIER': createCharacterSettings(
+  HOTHREBELSOLDIER: createCharacterSettings(
     [createOptimizationPlan('PvE', 25, 25, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['HRS', 'Hoth Bros']
   ),
-  'HUMANTHUG': createCharacterSettings(
+  HUMANTHUG: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
   ),
-  'IDENVERSIOEMPIRE': createCharacterSettings(
+  IDENVERSIOEMPIRE: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 50, 0, 25, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Wampa Slayer', 0, 0, 100, 30, 100, 0, 10, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'IG11': createCharacterSettings(
+  IG11: createCharacterSettings(
     [createOptimizationPlan('Tanky', 25, 0, 50, 0, 0, 10, 5, 0, 5, 5, 5, 0, 0)],
   ),
-  'IG12': createCharacterSettings(
+  IG12: createCharacterSettings(
     [
       createOptimizationPlan('GIMO PvP', 20, 5, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Default', 20, 5, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }, {
         "Health %": 1,
         "Speed %": 1,
       }),
     ],
   ),
-  'IG86SENTINELDROID': createCharacterSettings(
+  IG86SENTINELDROID: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')],
   ),
-  'IG88': createCharacterSettings(
+  IG88: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Damage'),
       createOptimizationPlan('Nuke', 0, 0, 100, 25, 50, 0, 25, 0, 75, 0, 0, 0, 0)
     ]
   ),
-  'IMAGUNDI': createCharacterSettings(
+  IMAGUNDI: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
     ['IGD']
   ),
-  'IMPERIALPROBEDROID': createCharacterSettings(
+  IMPERIALPROBEDROID: createCharacterSettings(
     [
       createOptimizationPlan('Tanky', 50, 50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Offense', 0, 0, 100, 80, 50, 0, 25, 0, 50, 0, 0, 0, 0),
@@ -1297,35 +1297,35 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['IPD']
   ),
-  'IMPERIALSUPERCOMMANDO': createCharacterSettings(
+  IMPERIALSUPERCOMMANDO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 15, 100, 0, 20, 0, 100, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 0, 15, 100, 0, 20, 0, 100, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Offense %",
-        "triangle": "Offense %",
-        "circle": "Protection %",
-        "cross": "Offense %",
+        arrow: "Offense %",
+        triangle: "Offense %",
+        circle: "Protection %",
+        cross: "Offense %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 0, 15, 100, 0, 20, 0, 100, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Offense %",
-        "triangle": "Offense %",
-        "circle": "Protection %",
-        "cross": "Offense %",
+        arrow: "Offense %",
+        triangle: "Offense %",
+        circle: "Protection %",
+        cross: "Offense %",
       }, {
         "Offense %": 1,
       }),
     ],
     ['ISC']
   ),
-  'JABBATHEHUTT': createCharacterSettings(
+  JABBATHEHUTT: createCharacterSettings(
     [createOptimizationPlan('PvP', 15, 0, 100, 0, 25, 50, 0, 0, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'JANGOFETT': createCharacterSettings(
+  JANGOFETT: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
   ),
-  'JAWA': createCharacterSettings(
+  JAWA: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'PvE'),
       createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100),
@@ -1333,7 +1333,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.mixed
   ),
-  'JAWAENGINEER': createCharacterSettings(
+  JAWAENGINEER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 0, 50, 10, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Detonator', 20, 10, 100, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0),
@@ -1341,53 +1341,53 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.mixed
   ),
-  'JAWASCAVENGER': createCharacterSettings(
+  JAWASCAVENGER: createCharacterSettings(
     [
       createOptimizationPlan('PvE', 0, 0, 100, 25, 50, 0, 25, 0, 100, 0, 0, 0, 0),
       createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100),
     ],
   ),
-  'JEDIKNIGHTCAL': createCharacterSettings(
+  JEDIKNIGHTCAL: createCharacterSettings(
     [
       createOptimizationPlan('GIMO PvP', 25, 0, 100, 25, 0, 0, 75, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Default', 25, 0, 100, 98, 2, 2, 3, 6, 2, 1, 1, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Critical Damage %",
-        "circle": "Health %",
-        "cross": "Offense %",
+        arrow: "Speed",
+        triangle: "Critical Damage %",
+        circle: "Health %",
+        cross: "Offense %",
         }, {
           "Health %": 1,
           "Offense %": 1,
         },
       ),
       createOptimizationPlan('Debuffer', 5, 0, 100, 0, 35, 0, 20, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Potency %": 1,
       }),
     ],
     ['JKCK'],
   ),
-  'JEDIKNIGHTCONSULAR': createCharacterSettings(
+  JEDIKNIGHTCONSULAR: createCharacterSettings(
     [createOptimizationPlan('Healer', 50, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['JC'],
     DamageType.mixed
   ),
-  'JEDIKNIGHTGUARDIAN': createCharacterSettings(
+  JEDIKNIGHTGUARDIAN: createCharacterSettings(
     [createOptimizationPlan('PvE', 40, 20, 100, 0, 50, 25, 0, 0, 0, 12.5, 12.5, 0, 0)],
     ['JKG']
   ),
-  'JEDIKNIGHTLUKE': createCharacterSettings(
+  JEDIKNIGHTLUKE: createCharacterSettings(
     [
       createOptimizationPlan('Leader', 5, 5, 0, 100, 25, 0, 50, 0, 15, 0, 0, 0, 0),
       createOptimizationPlan('Non-leader', 5, 5, 25, 100, 25, 0, 50, 0, 15, 0, 0, 0, 0),
     ],
     ['JKL']
   ),
-  'JEDIKNIGHTREVAN': createCharacterSettings(
+  JEDIKNIGHTREVAN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 50, 0, 0, 0, 10, 0, 0, 0, 0, 0),
       createOptimizationPlan('Health', 10, 0, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
@@ -1395,106 +1395,106 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'JEDIMASTERKENOBI': createCharacterSettings(
+  JEDIMASTERKENOBI: createCharacterSettings(
 
     [createOptimizationPlan('PvP', 5, 0, 100, 25, 0, 0, 10, 0, 0, 0, 0, 0, 0)],
     ['JMK'],
   ),
-  'JOLEEBINDO': createCharacterSettings(
+  JOLEEBINDO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 50, 0, 75, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100),
       createOptimizationPlan('Health and Speed', 100, 0, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Healer', 30, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0)
     ]
   ),
-  'JUHANI': createCharacterSettings(
+  JUHANI: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 100, 90, 0, 5, 0, 0, 0, 0, 15, 0, 0, 0)],
   ),
-  'JYNERSO': createCharacterSettings(
+  JYNERSO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 50, 50, 0, 20, 0, 75, 0, 0, 0, 0),
       createOptimizationPlan('AdRad', 10, 0, 100, 100, 25, 0, 20, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('AdRad w/ Primaries', 10, 0, 100, 0, 25, 0, 20, 0, 50, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
     ],
     ['Rogue 1', 'Auto Lightzader', 'Imperial Grancor Maneuver', 'SuperStar2D2'],
   ),
-  'K2SO': createCharacterSettings(
+  K2SO: createCharacterSettings(
     [
       createOptimizationPlan('Tanky', 20, 20, 100, 0, 50, 50, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('AdRad', 20, 40, 50, 0, 50, 50, 0, 0, 0, 10, 10, 0, 0),
       createOptimizationPlan('AdRad w/ Primaries', 20, 40, 50, 0, 50, 50, 0, 0, 0, 10, 10, 0, 0, {
-        "arrow": "Protection %",
-        "triangle": "Protection %",
-        "cross": "Tenacity %",
-        "circle": "Protection %",
+        arrow: "Protection %",
+        triangle: "Protection %",
+        cross: "Tenacity %",
+        circle: "Protection %",
       }),
     ],
     ['Rogue 1', 'Cass-2SO', 'K2'],
   ),
-  'KANANJARRUSS3': createCharacterSettings(
+  KANANJARRUSS3: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 40, 0, 100, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 40, 0, 100, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 40, 0, 100, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }, {
         "Health %": 2,
         "Tenacity %": 1,
       }),
     ],
   ),
-  'KELLERANBEQ': createCharacterSettings(
+  KELLERANBEQ: createCharacterSettings(
     [
       createOptimizationPlan('GIMO PvP', 20, 100, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Default', 20, 100, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Protection %",
-        "triangle": "Protection %",
-        "cross": "Protection %",
-        "circle": "Protection %",
+        arrow: "Protection %",
+        triangle: "Protection %",
+        cross: "Protection %",
+        circle: "Protection %",
       }, {
         "Health %": 3,
       }),
     ],
   ),
-  'KIADIMUNDI': createCharacterSettings(
+  KIADIMUNDI: createCharacterSettings(
     [
       createOptimizationPlan('Balanced', 10, 10, 100, 50, 20, 0, 50, 0, 25, 10, 10, 0, 0),
       createOptimizationPlan('Offense', 0, 0, 100, 50, 20, 0, 75, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('Defense', 20, 20, 100, 0, 20, 10, 0, 0, 0, 15, 15, 0, 0)
     ]
   ),
-  'KITFISTO': createCharacterSettings(
+  KITFISTO: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvE')],
     ['Fisty', 'Fister']
   ),
-  'KRRSANTAN': createCharacterSettings(
+  KRRSANTAN: createCharacterSettings(
     [createOptimizationPlan('PvP', 30, 30, 100, 0, 10, 10, 0, 0, 0, 25, 0, 0, 0)],
   ),
-  'KUIIL': createCharacterSettings(
+  KUIIL: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 10, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'KYLEKATARN': createCharacterSettings(
+  KYLEKATARN: createCharacterSettings(
     [createOptimizationPlan('Mothma Lead', 5, 0, 100, 0, 5, 5, 50, 0, 0, 5, 0, 0, 0)],
   ),
-  'KYLOREN': createCharacterSettings(
+  KYLOREN: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 0, 0, 25, 0, 25, 0, 0, 0, 0)],
     ['Old Kylo', 'zylo', 'FO']
   ),
-  'KYLORENUNMASKED': createCharacterSettings(
+  KYLORENUNMASKED: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 75, 50, 100, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0),
       createOptimizationPlan('Tanky', 100, 100, 50, 0, 0, 75, 0, 0, 0, 37.5, 37.5, 0, 0),
@@ -1502,28 +1502,28 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['kru', 'matt', 'Snape', 'FO']
   ),
-  'L3_37': createCharacterSettings(
+  L3_37: createCharacterSettings(
     [
       createOptimizationPlan('Tanky', 40, 20, 50, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('Speedy', 40, 20, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0)
     ],
     ['solo']
   ),
-  'LOBOT': createCharacterSettings(
+  LOBOT: createCharacterSettings(
     [createOptimizationPlan('PvE', 0, 0, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0)]
   ),
-  'LOGRAY': createCharacterSettings(
+  LOGRAY: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 40, 50, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 10, 0, 100, 40, 50, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 10, 0, 100, 40, 50, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Potency %": 1,
         "Health %": 2,
@@ -1532,17 +1532,17 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Murderbears'],
   ),
-  'LORDVADER': createCharacterSettings(
+  LORDVADER: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 15, 100, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0)]
   ),
-  'LUKESKYWALKER': createCharacterSettings(
+  LUKESKYWALKER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE')],
     ['farmboi']
   ),
-  'LUMINARAUNDULI': createCharacterSettings(
+  LUMINARAUNDULI: createCharacterSettings(
     [createOptimizationPlan('PvE', 40, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)]
   ),
-  'MACEWINDU': createCharacterSettings(
+  MACEWINDU: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 15, 0, 100, 0, 50, 0, 0, 50, 0, 0, 0, 0, 0),
       createOptimizationPlan('Slow/Tanky', 100, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -1550,38 +1550,38 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'MAGMATROOPER': createCharacterSettings(
+  MAGMATROOPER: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
       createOptimizationPlan('Anti-Traya', 0, 0, 25, 25, 50, 0, 25, 0, 25, 0, 0, 0, 0),
     ]
   ),
-  'MAGNAGUARD': createCharacterSettings(
+  MAGNAGUARD: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 30, 30, 100, 0, 20, 20, 0, 0, 0, 25, 0, 0, 100),
       createOptimizationPlan('Balanced', 20, 20, 100, 25, 50, 25, 25, 0, 25, 12.5, 12.5, 0, 0),
     ],
   ),
-  'MANDALORBOKATAN': createCharacterSettings(
+  MANDALORBOKATAN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 80, 0, 0, 0, 100, 0, 0, 12.5, 12.5, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 10, 0, 80, 0, 0, 0, 100, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Offense %",
-        "triangle": "Offense %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        arrow: "Offense %",
+        triangle: "Offense %",
+        cross: "Offense %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 10, 0, 80, 0, 0, 0, 100, 0, 0, 12.5, 12.5, 0, 0, {
-        "arrow": "Offense %",
-        "triangle": "Offense %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        arrow: "Offense %",
+        triangle: "Offense %",
+        cross: "Offense %",
+        circle: "Health %",
       }, {
         "Offense %": 1,
       }),
     ],
   ),
-  'MARAJADE': createCharacterSettings(
+  MARAJADE: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 10, 100, 25, 25, 0, 0, 25, 10, 0, 0, 0, 0),
       createOptimizationPlan('Survivability', 0, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -1589,36 +1589,36 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'MAUL': createCharacterSettings(
+  MAUL: createCharacterSettings(
     [toRenamed(optimizationStrategy["Special Damage with Potency"], 'PvP')]
   ),
-  'MAULS7': createCharacterSettings(
+  MAULS7: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 25, 100, 0, 15, 0, 50, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('DS Mando', 0, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
     ]
   ),
-  'MERRIN': createCharacterSettings(
+  MERRIN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, {
-        "cross": "Potency %",
-        "circle": "Health %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, {
-        "cross": "Potency %",
-        "circle": "Health %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Potency %": 3,
       }),
       createOptimizationPlan('Tenacity', 15, 0, 0, 0, 20, 60, 0, 30, 0, 0, 0, 0, 0),
       createOptimizationPlan('Tenacity w/ Primaries', 15, 0, 0, 0, 20, 60, 0, 30, 0, 0, 0, 0, 0, {
-        "cross": "Tenacity %",
-        "circle": "Health %",
+        cross: "Tenacity %",
+        circle: "Health %",
       }),
       createOptimizationPlan('Tenacity w/ Primaries & Sets', 15, 0, 0, 0, 0, 60, 0, 30, 0, 0, 0, 0, 0, {
-        "cross": "Tenacity %",
-        "circle": "Health %",
+        cross: "Tenacity %",
+        circle: "Health %",
       }, {
         "Tenacity %": 2,
         "Potency %": 1,
@@ -1627,20 +1627,20 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special,
   ),
-  'MISSIONVAO': createCharacterSettings(
+  MISSIONVAO: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 75, 0, 50, 0, 0, 0, 0)],
   ),
-  'MOFFGIDEONS1': createCharacterSettings(
+  MOFFGIDEONS1: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0)],
   ),
-  'MOFFGIDEONS3': createCharacterSettings(
+  MOFFGIDEONS3: createCharacterSettings(
     [createOptimizationPlan('PvP', 3, 20, 100, 0, 4, 3, 2, 3, 4, 4, 4, 0, 0)],
   ),
-  'MONMOTHMA': createCharacterSettings(
+  MONMOTHMA: createCharacterSettings(
     [createOptimizationPlan('Leader', 5, 5, 100, 0, 0, 25, 10, 0, 0, 0, 0, 0, 0)],
     ['MM']
   ),
-  'MOTHERTALZIN': createCharacterSettings(
+  MOTHERTALZIN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 50, 0, 0, 25, 10, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 100, 0, 0, 0, 75, 25, 0, 0, 0, 0),
@@ -1649,7 +1649,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['MT', 'NS', 'hSTR NS'],
     DamageType.special
   ),
-  'NIGHTSISTERACOLYTE': createCharacterSettings(
+  NIGHTSISTERACOLYTE: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 50, 50, 80, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 2', 0, 0, 100, 100, 0, 0, 100, 100, 100, 0, 0, 0, 0),
@@ -1658,14 +1658,14 @@ const characterSettings: CharacterSettingsIndexer = {
     ['NA', 'NS'],
     DamageType.mixed
   ),
-  'NIGHTSISTERINITIATE': createCharacterSettings(
+  NIGHTSISTERINITIATE: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvE'),
       createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0),
     ],
     ['NI', 'NS']
   ),
-  'NIGHTSISTERSPIRIT': createCharacterSettings(
+  NIGHTSISTERSPIRIT: createCharacterSettings(
     [
       createOptimizationPlan('PvE', 0, 0, 100, 50, 25, 0, 75, 0, 50, 0, 0, 0, 0),
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP'),
@@ -1673,7 +1673,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['NS']
   ),
-  'NIGHTSISTERZOMBIE': createCharacterSettings(
+  NIGHTSISTERZOMBIE: createCharacterSettings(
     [
       createOptimizationPlan('Strong Zombie', 20, 20, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Weak Zombie', 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false),
@@ -1682,27 +1682,27 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['NS', 'hSTR NS']
   ),
-  'NINTHSISTER': createCharacterSettings(
+  NINTHSISTER: createCharacterSettings(
     [createOptimizationPlan('PvP', 40, 50, 100, 0, 0, 40, 0, 0, 0, 30, 0, 0, 0)],
   ),
-  'NUTEGUNRAY': createCharacterSettings(
+  NUTEGUNRAY: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed with survivability"], 'PvP'),
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Damage')
     ]
   ),
-  'OLDBENKENOBI': createCharacterSettings(
+  OLDBENKENOBI: createCharacterSettings(
     [createOptimizationPlan('Speed', 10, 10, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['OB']
   ),
-  'PADMEAMIDALA': createCharacterSettings(
+  PADMEAMIDALA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 35, 0, 100, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0),
       createOptimizationPlan('Slow', 50, 0, 0, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0),
     ],
     ['Padme']
   ),
-  'PAO': createCharacterSettings(
+  PAO: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP'),
       createOptimizationPlan('Mothma Lead', 10, 30, 100, 0, 5, 5, 100, 0, 0, 5, 0, 0, 0),
@@ -1710,18 +1710,18 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Rogue 1', 'Chex Mix']
   ),
-  'PAPLOO': createCharacterSettings(
+  PAPLOO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 0, 100, 0, 0, 10, 0, 0, 0, 5, 5, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 20, 0, 100, 0, 0, 10, 0, 0, 0, 5, 5, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 20, 0, 100, 0, 0, 10, 0, 0, 0, 5, 5, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }, {
         "Health %": 3,
       }),
@@ -1729,54 +1729,54 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Murderbears'],
   ),
-  'PAZVIZSLA': createCharacterSettings(
+  PAZVIZSLA: createCharacterSettings(
     [
       createOptimizationPlan('GIMO Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0),
       createOptimizationPlan('Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }, {
         "Health %": 3,
       }),
       createOptimizationPlan('Protection', 50, 75, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, {
-        "triangle": "Protection %",
-        "cross": "Protection %",
-        "circle": "Protection %",
+        triangle: "Protection %",
+        cross: "Protection %",
+        circle: "Protection %",
       }, {
         "Health %": 3,
       }),
     ]
   ),
-  'PHASMA': createCharacterSettings(
+  PHASMA: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['FO'],
   ),
-  'PLOKOON': createCharacterSettings(
+  PLOKOON: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE')],
     [],
     DamageType.mixed
   ),
-  'POE': createCharacterSettings(
+  POE: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 10, 100, 0, 40, 20, 0, 0, 0, 5, 0, 0, 0)],
   ),
-  'POGGLETHELESSER': createCharacterSettings(
+  POGGLETHELESSER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speedy debuffer"], 'PvE')]
   ),
-  'PRINCESSKNEESAA': createCharacterSettings(
+  PRINCESSKNEESAA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Critical Damage %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Critical Damage %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Critical Damage %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        arrow: "Speed",
+        triangle: "Critical Damage %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Potency %": 1,
         "Critical Chance %": 1,
@@ -1784,18 +1784,18 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
     ],
   ),
-  'PRINCESSLEIA': createCharacterSettings(
+  PRINCESSLEIA: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP'),
       createOptimizationPlan('hSTR Phase 2', 0, 0, 50, 100, 0, 0, 25, 0, 50, 0, 0, 0, 0)
     ],
     ['Machine Gun']
   ),
-  'QIRA': createCharacterSettings(
+  QIRA: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 10, 0, 50, 0, 25, 0, 0, 0, 0)],
     ['solo'],
   ),
-  'QUIGONJINN': createCharacterSettings(
+  QUIGONJINN: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Special Damage, Potency"], 'PvP'),
       createOptimizationPlan('Omicron', 0, 0, 0, 0, 0, 0, 100, 100, 0, 0, 0, 0, 0),
@@ -1804,7 +1804,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ['QGJ'],
     DamageType.mixed
   ),
-  'R2D2_LEGENDARY': createCharacterSettings(
+  R2D2_LEGENDARY: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 5, 100, 0, 25, 10, 0, 0, 25, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 1', 10, -5, 100, 25, 25, 0, 25, 0, 50, 0, 0, 0, 0)
@@ -1812,29 +1812,29 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Trashcan', 'R2z2', 'SuperStar2D2'],
     DamageType.mixed
   ),
-  'RANGETROOPER': createCharacterSettings(
+  RANGETROOPER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')],
     ['Troopers']
   ),
-  'RESISTANCEPILOT': createCharacterSettings(
+  RESISTANCEPILOT: createCharacterSettings(
     [toRenamed(optimizationStrategy["Slow Crit, Physical Damage, Potency"], 'PvP')],
     ['RP']
   ),
-  'RESISTANCETROOPER': createCharacterSettings(
+  RESISTANCETROOPER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 10, 100, 25, 0, 50, 0, 100, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 1', 0, -5, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0)
     ],
     ['RT', 'res trooper']
   ),
-  'REY': createCharacterSettings(
+  REY: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 25, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 1', 0, -5, 90, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0)
     ],
     ['scav rey']
   ),
-  'REYJEDITRAINING': createCharacterSettings(
+  REYJEDITRAINING: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 20, 0, 20, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 1', 0, -5, 90, 100, 50, 0, 50, 0, 0, 0, 0, 0, 0),
@@ -1842,68 +1842,68 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['JTR', 'RJT', 'Jedi Rey', 'Jey Z']
   ),
-  'ROSETICO': createCharacterSettings(
+  ROSETICO: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 5, 100, 50, 30, 0, 20, 20, 25, 0, 0, 0, 0)],
     [],
     DamageType.mixed
   ),
-  'ROYALGUARD': createCharacterSettings(
+  ROYALGUARD: createCharacterSettings(
     [
       createOptimizationPlan('Tanky', 50, 50, 25, 0, 0, 25, 0, 0, 0, 5, 5, 0, 0),
       createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
     ],
     ['RG', 'Red Guard']
   ),
-  'SABINEWRENS3': createCharacterSettings(
+  SABINEWRENS3: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP'),
       createOptimizationPlan('hSTR Phase 2', 20, 20, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     ]
   ),
-  'SANASTARROS': createCharacterSettings(
+  SANASTARROS: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 5, 0, 0, 20, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'SAVAGEOPRESS': createCharacterSettings(
+  SAVAGEOPRESS: createCharacterSettings(
     [
       createOptimizationPlan('PvP/Omicron', 100, 0, 0, 0, 0, 0, 10, 0, 0, 50, 0, 0, 0),
       createOptimizationPlan('Balanced', 50, 0, 100, 25, 25, 25, 25, 0, 25, 12.5, 12.5, 0, 0),
     ],
     ['zavage']
   ),
-  'SAWGERRERA': createCharacterSettings(
+  SAWGERRERA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 20, 0, 100, 0, 20, 0, 20, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'SCARIFREBEL': createCharacterSettings(
+  SCARIFREBEL: createCharacterSettings(
     [
       createOptimizationPlan('GIMO PvP', 30, 10, 100, 0, 25, 10, 0, 0, 0, 10, 10, 0, 0),
       createOptimizationPlan('Health', 8, 12, 50, 0, 8, 12, 0, 0, 0, 10, 10, 0, 45, {
-        "triangle": "Health %",
-        "cross": "Health %",
+        triangle: "Health %",
+        cross: "Health %",
       }),
       createOptimizationPlan('Protection', 30, 20, 100, 0, 25, 10, 0, 0, 0, 10, 0, 0, 0, {
-        "triangle": "Protection %",
-        "cross": "Protection %",
+        triangle: "Protection %",
+        cross: "Protection %",
       }),
       createOptimizationPlan('hSTR Phase 2', 20, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
     ],
     ['Rogue 1', 'SRP'],
   ),
-  'SCOUTTROOPER_V3': createCharacterSettings(
+  SCOUTTROOPER_V3: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 10, 100, 0, 30, 10, 15, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 5, 10, 100, 0, 30, 10, 15, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Potency %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Potency %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 5, 10, 100, 0, 30, 10, 15, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "triangle": "Offense %",
-        "cross": "Potency %",
+        arrow: "Speed",
+        triangle: "Offense %",
+        cross: "Potency %",
       }, {
         "Speed %": 1,
         "Potency %": 1,
@@ -1911,15 +1911,15 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Rogue 1', 'SRP']
   ),
-  'SECONDSISTER': createCharacterSettings(
+  SECONDSISTER: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 5, 100, 75, 0, 0, 0, 100, 30, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'SEVENTHSISTER': createCharacterSettings(
+  SEVENTHSISTER: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0)],
   ),
-  'SHAAKTI': createCharacterSettings(
+  SHAAKTI: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 25, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Nuke', 25, 25, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -1927,107 +1927,107 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('KAM/CA', 20, 10, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100),
     ],
   ),
-  'SHORETROOPER': createCharacterSettings(
+  SHORETROOPER: createCharacterSettings(
     [
       createOptimizationPlan('Speedy Tank', 50, 50, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     ],
     ['ShT', 'Troopers', 'Imperial Grancor Maneuver']
   ),
-  'SITHASSASSIN': createCharacterSettings(
+  SITHASSASSIN: createCharacterSettings(
     [toRenamed(optimizationStrategy["Special Damage with Potency"], 'PvP')],
     ['SA', 'Sassy']
   ),
-  'SITHMARAUDER': createCharacterSettings(
+  SITHMARAUDER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
     ['SM']
   ),
-  'SITHPALPATINE': createCharacterSettings(
+  SITHPALPATINE: createCharacterSettings(
     [createOptimizationPlan('PvP', 40, 5, 100, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0)],
     ['SEE'],
     DamageType.special
   ),
-  'SITHTROOPER': createCharacterSettings(
+  SITHTROOPER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 25, 50, 0, 0, 15, 0, 0, 0, 25, 25, 0, 0),
       createOptimizationPlan('DR Lead', 25, 50, 15, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0)
     ],
     ['SiT', 'Nightmare']
   ),
-  'SMUGGLERCHEWBACCA': createCharacterSettings(
+  SMUGGLERCHEWBACCA: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
       createOptimizationPlan('PvP', 0, 0, 100, 80, 25, 0, 60, 0, 25, 0, 0, 0, 0)
     ],
     ['Vets']
   ),
-  'SMUGGLERHAN': createCharacterSettings(
+  SMUGGLERHAN: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE'),
       createOptimizationPlan('PvP', 0, 0, 100, 80, 25, 0, 60, 0, 0, 0, 0, 0, 0)
     ],
     ['Vets']
   ),
-  'SNOWTROOPER': createCharacterSettings(
+  SNOWTROOPER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0),
       createOptimizationPlan('Iden Lead', 10, 10, 50, 100, 10, 0, 30, 0, 25, 0, 0, 0, 0),
     ],
     ['Troopers'],
   ),
-  'STAP': createCharacterSettings(
+  STAP: createCharacterSettings(
     [
       createOptimizationPlan('GIMO PvP', 0, 0, 100, 10, 10, 0, 50, 0, 10, 0, 0, 0, 0),
       createOptimizationPlan('Default', 0, 0, 100, 10, 10, 0, 50, 0, 10, 0, 0, 0, 0,
         {
-          "arrow": "Speed",
-          "triangle": "Critical Damage %",
-          "cross": "Offense %",
+          arrow: "Speed",
+          triangle: "Critical Damage %",
+          cross: "Offense %",
         }, {
           "Speed %": 1,
         }
       ),
     ],
   ),
-  'STARKILLER': createCharacterSettings(
+  STARKILLER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 0, 100, 75, 0, 0, 50, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 25, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
+        triangle: "Critical Damage %",
       }),
       createOptimizationPlan('Speedy', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Speedy w/ Primaries', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
+        triangle: "Critical Damage %",
       }),
     ],
   ),
-  'STORMTROOPER': createCharacterSettings(
+  STORMTROOPER: createCharacterSettings(
     [
       createOptimizationPlan('Speedy Tank', 25, 25, 50, 0, 0, 25, 0, 0, 0, 25, 25, 0, 0),
       createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Iden Lead', 0, 75, 50, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0),
       createOptimizationPlan('Iden Lead w/ Primaries', 0, 100, 50, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, {
-        "arrow": "Defense %",
-        "triangle": "Defense %",
-        "cross": "Defense %",
+        arrow: "Defense %",
+        triangle: "Defense %",
+        cross: "Defense %",
       }),
     ],
     ['Troopers'],
   ),
-  'STORMTROOPERHAN': createCharacterSettings(
+  STORMTROOPERHAN: createCharacterSettings(
     [createOptimizationPlan('PvP', 25, 50, 50, 0, 100, 10, 0, 0, 0, 20, 0, 0, 0)],
     ['STHan']
   ),
-  'SUNFAC': createCharacterSettings(
+  SUNFAC: createCharacterSettings(
     [createOptimizationPlan('Tanky', 40, 40, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0)]
   ),
-  'SUPREMELEADERKYLOREN': createCharacterSettings(
+  SUPREMELEADERKYLOREN: createCharacterSettings(
     [
       createOptimizationPlan('PvP - Speed', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP - Offense', 20, 0, 100, 100, 0, 0, 40, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'T3_M4': createCharacterSettings(
+  T3_M4: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 10, 100, 0, 25, 10, 0, 10, 10, 0, 0, 0, 0),
       createOptimizationPlan('Damage', 10, 20, 100, 50, 50, 10, 0, 20, 25, 0, 0, 0, 0),
@@ -2036,7 +2036,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [],
     DamageType.special
   ),
-  'TALIA': createCharacterSettings(
+  TALIA: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Mixed Damage"], 'PvP'),
       createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 0, 0, 0, 100, 100, 100, 0, 0, 0, 0),
@@ -2044,144 +2044,144 @@ const characterSettings: CharacterSettingsIndexer = {
     ['NS', 'hSTR NS'],
     DamageType.mixed
   ),
-  'TARFFUL': createCharacterSettings(
+  TARFFUL: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, {
-        "arrow": "Health %",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Set', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, {
-        "arrow": "Health %",
-        "triangle": "Health %",
-        "cross": "Health %",
-        "circle": "Health %",
+        arrow: "Health %",
+        triangle: "Health %",
+        cross: "Health %",
+        circle: "Health %",
       }, {
         "Defense %": 3,
       }),
     ],
   ),
-  'TARONMALICOS': createCharacterSettings(
+  TARONMALICOS: createCharacterSettings(
     [
       createOptimizationPlan('Fast Build', 20, 0, 100, 50, 0, 0, 40, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Fast Build w/ Primaries', 20, 0, 100, 50, 0, 0, 40, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
+        triangle: "Critical Damage %",
       }),
       createOptimizationPlan('Fast Build w/ Primaries & Sets', 20, 0, 100, 50, 0, 0, 40, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
+        triangle: "Critical Damage %",
       }, {
         "Offense %": 1,
         "Health %": 1,
       }),
       createOptimizationPlan('Slow Build', 40, 0, 100, 50, 0, 0, 60, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Slow Build w/ Primaries', 40, 0, 100, 50, 0, 0, 60, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
+        triangle: "Critical Damage %",
       }),
       createOptimizationPlan('Slow Build w/ Primaries & Sets', 40, 0, 100, 50, 0, 0, 60, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
+        triangle: "Critical Damage %",
       }, {
         "Offense %": 1,
         "Health %": 1,
       }),
     ],
   ),
-  'TEEBO': createCharacterSettings(
+  TEEBO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 10, 0, 100, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Potency %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 10, 0, 100, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, {
-        "triangle": "Health %",
-        "cross": "Potency %",
-        "circle": "Health %",
+        triangle: "Health %",
+        cross: "Potency %",
+        circle: "Health %",
       }, {
         "Potency %": 3,
       }),
     ],
     ['Teebotine', 'Murderbears']
   ),
-  'THEMANDALORIAN': createCharacterSettings(
+  THEMANDALORIAN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 5, 100, 15, 0, 0, 5, 0, 30, 0, 0, 0, 0),
       createOptimizationPlan('Relic 7', 0, 0, 100, 80, 0, 0, 20, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Non-relic', 0, 0, 100, 80, 0, 0, 10, 0, 20, 0, 0, 0, 0),
     ],
   ),
-  'THEMANDALORIANBESKARARMOR': createCharacterSettings(
+  THEMANDALORIANBESKARARMOR: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 5, 100, 0, 15, 0, 30, 0, 0, 0, 0, 0, 0)],
   ),
-  'THIRDSISTER': createCharacterSettings(
+  THIRDSISTER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 30, 5, 100, 50, 0, 0, 50, 0, 0, 5, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 30, 5, 100, 0, 0, 0, 50, 0, 0, 5, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "circle": "Health %",
-        "cross": "Health %",
+        triangle: "Critical Damage %",
+        circle: "Health %",
+        cross: "Health %",
       }),
     ],
   ),
-  'TIEFIGHTERPILOT': createCharacterSettings(
+  TIEFIGHTERPILOT: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
     ['TFP', 'Auto Lightzader']
   ),
-  'TRENCH': createCharacterSettings(
+  TRENCH: createCharacterSettings(
     [createOptimizationPlan('PvP', 20, 10, 100, 0, 30, 0, 0, 20, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'TRIPLEZERO': createCharacterSettings(
+  TRIPLEZERO: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 0, 30, 0, 0, 20, 0, 0, 0, 0, 0)],
     [],
     DamageType.special
   ),
-  'TUSKENCHIEFTAIN': createCharacterSettings(
+  TUSKENCHIEFTAIN: createCharacterSettings(
     [createOptimizationPlan('PvP', 15, 10, 100, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0)],
   ),
-  'TUSKENHUNTRESS': createCharacterSettings(
+  TUSKENHUNTRESS: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 75, 10, 0, 40, 0, 10, 0, 0, 0, 0)],
   ),
-  'TUSKENRAIDER': createCharacterSettings(
+  TUSKENRAIDER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE')],
   ),
-  'TUSKENSHAMAN': createCharacterSettings(
+  TUSKENSHAMAN: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 5, 100, 0, 30, 10, 0, 0, 0, 0, 0, 0, 0)],
   ),
-  'UGNAUGHT': createCharacterSettings(
+  UGNAUGHT: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'PvE')],
     [],
     DamageType.mixed
   ),
-  'UNDERCOVERLANDO': createCharacterSettings(
+  UNDERCOVERLANDO: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 0, 100, 50, 0, 0, 25, 0, 25, 0, 0, 0, 0)],
   ),
-  'URORRURRR': createCharacterSettings(
+  URORRURRR: createCharacterSettings(
     [createOptimizationPlan('PvP', 10, 20, 100, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0)],
   ),
-  'VADER': createCharacterSettings(
+  VADER: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 100, 40, 0, 20, 0, 20, 0, 0, 0, 0),
       createOptimizationPlan('Raids', 0, 0, 100, 50, 25, 0, 25, 0, 25, 0, 0, 0, 0),
     ],
     ['Auto Lightzader', 'Wampanader', 'Nightmare'],
   ),
-  'VEERS': createCharacterSettings(
+  VEERS: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'PvP')],
     ['Troopers'],
     DamageType.mixed
   ),
-  'VISASMARR': createCharacterSettings(
+  VISASMARR: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 25, 0, 100, 50, 0, 25, 50, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('Healer', 50, 0, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('hSTR Phase 1', 25, -5, 0, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0),
     ],
   ),
-  'WAMPA': createCharacterSettings(
+  WAMPA: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 80, 100, 10, 0, 50, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('Omicron', 100, 0, 75, 0, 0, 75, 50, 0, 0, 20, 0, 0, 0),
@@ -2191,27 +2191,27 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['beast', 'Wampanader'],
   ),
-  'WATTAMBOR': createCharacterSettings(
+  WATTAMBOR: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 30, 0, 100, 0, 25, 10, 0, 0, 0, 0, 0, 0, 0)
     ]
   ),
-  'WEDGEANTILLES': createCharacterSettings(
+  WEDGEANTILLES: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')],
     ['Wiggs', 'chiggs', 'SuperStar2D2']
   ),
-  'WICKET': createCharacterSettings(
+  WICKET: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 5, 0, 100, 100, 0, 0, 40, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 5, 0, 100, 100, 0, 0, 40, 0, 50, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Offense %",
+        circle: "Health %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 5, 0, 100, 100, 0, 0, 60, 0, 50, 0, 0, 0, 0, {
-        "triangle": "Critical Damage %",
-        "cross": "Offense %",
-        "circle": "Health %",
+        triangle: "Critical Damage %",
+        cross: "Offense %",
+        circle: "Health %",
       }, {
         "Critical Damage %": 1,
         "Health %": 1,
@@ -2220,53 +2220,53 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['Murderbears'],
   ),
-  'YOUNGCHEWBACCA': createCharacterSettings(
+  YOUNGCHEWBACCA: createCharacterSettings(
     [
       createOptimizationPlan('PvE', 50, 0, 100, 50, 0, 0, 25, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('Tanky', 100, 0, 50, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0),
     ],
     ['Dwight', 'solo'],
   ),
-  'YOUNGHAN': createCharacterSettings(
+  YOUNGHAN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 10, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
       createOptimizationPlan('HAAT', 0, 0, 80, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0),
     ],
     ['YOLO', 'solo', 'Jim'],
   ),
-  'YOUNGLANDO': createCharacterSettings(
+  YOUNGLANDO: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE')],
     ['solo']
   ),
-  'ZAALBAR': createCharacterSettings(
+  ZAALBAR: createCharacterSettings(
     [createOptimizationPlan('PvP', 50, 50, 25, 0, 25, 50, 0, 0, 0, 0, 0, 0, 50)],
   ),
-  'ZAMWESELL': createCharacterSettings(
+  ZAMWESELL: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 40, 50, 0, 25, 0, 40, 0, 0, 0, 0),
       createOptimizationPlan('Omicron', 10, 10, 100, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0),
     ],
   ),
-  'ZEBS3': createCharacterSettings(
+  ZEBS3: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 40, 0, 100, 0, 50, 0, 20, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('PvP w/ Primaries', 40, 0, 100, 0, 50, 0, 20, 0, 0, 0, 0, 0, 0, {
-        "cross": "Potency %",
+        cross: "Potency %",
       }),
       createOptimizationPlan('PvP w/ Primaries & Sets', 40, 0, 100, 0, 50, 0, 20, 0, 0, 0, 0, 0, 0, {
-        "arrow": "Speed",
-        "cross": "Potency %",
+        arrow: "Speed",
+        cross: "Potency %",
       }, {
         "Health %": 3,
       }),
     ],
   ),
-  'ZORIIBLISS_V2': createCharacterSettings(
+  ZORIIBLISS_V2: createCharacterSettings(
     [createOptimizationPlan('PvP', 5, 10, 100, 50, 10, 0, 20, 0, 0, 0, 0, 0, 0)],
   ),
 };
 
-for (let charID in characterSettings) {
+for (const charID in characterSettings) {
   Object.freeze(characterSettings[charID as CharacterNames]);
 }
 
