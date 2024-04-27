@@ -56,6 +56,7 @@ import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ResetAllCharacterTargetsModal } from "./ResetAllCharacterTargetsModal";
+import { SaveTemplateModal } from "./SaveTemplateModal";
 
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
@@ -331,7 +332,7 @@ class CharacterEditView extends PureComponent<Props> {
           <Button
             size="sm"
             disabled={!this.props.selectedCharacters.length}
-            onClick={() => dialog$.show(this.saveTemplateModal())}
+            onClick={() => dialog$.show(<SaveTemplateModal />)}
           >
             <FontAwesomeIcon icon={faSave} title={"Save"}/>
           </Button>
@@ -433,74 +434,6 @@ class CharacterEditView extends PureComponent<Props> {
           {this.props.baseCharacters[character.baseID]
             ? this.props.baseCharacters[character.baseID].name
             : character.baseID}
-        </div>
-      </div>
-    );
-  }
-
-  saveTemplateModal() {
-    const isNameUnique = (name: string) =>
-      !this.props.characterTemplates.includes(name);
-    let nameInput: HTMLInputElement | null;
-    let saveButton: HTMLButtonElement | null;
-
-    return (
-      <div>
-        <h3>Please enter a name for this character template</h3>
-        <input
-          type={"text"}
-          id={"template-name"}
-          name={"template-name"}
-          ref={(input) => {nameInput = input}}
-          autoFocus
-          onKeyUp={(e) => {
-            if (nameInput === undefined || nameInput === null || saveButton === undefined || saveButton === null) return;
-            if (e.key === "Enter" && nameInput && isNameUnique(nameInput.value)) {
-              this.props.saveTemplate(nameInput.value);
-            }
-            // Don't change the input if the user is trying to select something
-            if (window.getSelection()?.toString() !== undefined) {
-              return;
-            }
-            // Don't change the input if the user is hitting the arrow keys
-            if (
-              ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
-                e.key
-              )
-            ) {
-              return;
-            }
-
-            if (!isNameUnique(nameInput.value)) {
-              nameInput.classList.add("invalid");
-              saveButton.disabled = true;
-            } else {
-              nameInput.classList.remove("invalid");
-              saveButton.disabled = false;
-            }
-          }}
-        />
-        <p className={"error"}>
-          That name has already been taken. Please use a different name.
-        </p>
-        <div className={"actions"}>
-          <Button
-            type={"button"}
-            onClick={() => dialog$.hide()}
-          >
-            Cancel
-          </Button>
-          <Button
-            type={"button"}
-            ref={(button) => {saveButton = button}}
-            onClick={() => {
-              dialog$.hide();
-              if (nameInput)
-                this.props.saveTemplate(nameInput.value);
-            }}
-          >
-            Save
-          </Button>
         </div>
       </div>
     );
@@ -684,7 +617,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   applyRanking: (ranking: CharacterNames[]) => {
     dispatch(Data.thunks.applyRanking(ranking));
   },
-  saveTemplate: (name: string) => dispatch(CharacterEdit.thunks.saveTemplate(name)),
   appendTemplate: (templateName: string, selectedCharacters: SelectedCharacters) => {
     const template = defaultTemplates.find((template) => template.name === templateName);
     if (template === undefined) return;
