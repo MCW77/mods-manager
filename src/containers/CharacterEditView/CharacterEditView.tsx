@@ -45,7 +45,6 @@ import {
   characterSettings,
   type CharacterNames,
 } from "#/constants/characterSettings";
-import defaultTemplates from "#/constants/characterTemplates.json";
 
 import { defaultBaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
@@ -55,12 +54,12 @@ import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { AddTemplateModal } from "./AddTemplateModal";
 import { ResetAllCharacterTargetsModal } from "./ResetAllCharacterTargetsModal";
 import { SaveTemplateModal } from "./SaveTemplateModal";
 
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { OptimizerProgress } from "#/components/OptimizerProgress/OptimizerProgress";
 import { SettingsLink } from "#/modules/settings/components/SettingsLink";
 import { HelpLink } from "#/modules/help/components/HelpLink";
@@ -159,7 +158,6 @@ class CharacterEditView extends PureComponent<Props> {
         <div className="p2 flex flex-col">
           <input
             className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
-            autoFocus={true}
             id="character-filter"
             type="text"
             placeholder="name, tag, or acronym"
@@ -306,7 +304,7 @@ class CharacterEditView extends PureComponent<Props> {
         <div className={'flex gap-2'}>
           <Button
             size="sm"
-            onClick={() => dialog$.show(this.addTemplateModal())}
+            onClick={() => dialog$.show(<AddTemplateModal />)}
           >
             <FontAwesomeIcon icon={faPlus} title={"Add template"}/>
           </Button>
@@ -438,80 +436,6 @@ class CharacterEditView extends PureComponent<Props> {
       </div>
     );
   }
-
-  addTemplateModal() {
-    let templateSelection: HTMLSelectElement | null;
-    return (
-      <div>
-        <h3>Select a character template to add to your selected characters</h3>
-        {this.templateSelectElement((select) => {templateSelection = select})}
-        <div className={"actions"}>
-          <Button
-            type={"button"}
-            onClick={() => dialog$.hide()}
-          >
-            Cancel
-          </Button>
-          <Button
-            type={"button"}
-            onClick={() => {
-              dialog$.hide();
-              if (templateSelection === null) return;
-              if (this.props.templatesAddingMode === 'append') this.props.appendTemplate(templateSelection.value, this.props.selectedCharacters);
-              if (this.props.templatesAddingMode === 'replace') this.props.replaceTemplate(templateSelection.value);
-              if (this.props.templatesAddingMode === 'apply targets only') this.props.applyTemplateTargets(templateSelection.value);
-            }}
-          >
-            Add
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  userTemplates() {
-    return this.props.characterTemplates.filter(
-      (templateName) =>
-        !defaultTemplates.map(({ name }) => name).includes(templateName)
-    );
-  }
-
-  /**
-   * Create a select element for a character template, with user templates at the
-   * top, followed by a dashed line, followed by default templates, all sorted by name
-   *
-   * @param refFunction {Function} A function to get the reference for the select element
-   */
-  templateSelectElement(refFunction: (element: HTMLSelectElement) => void) {
-    const userTemplateNames = this.userTemplates();
-    const defaultTemplateNames = defaultTemplates.map(({ name }) => name);
-
-    userTemplateNames.sort();
-    defaultTemplateNames.sort();
-
-    const userTemplateOptions = userTemplateNames.map((name, index) => (
-      <option key={`user-${name}`} value={name}>
-        {name}
-      </option>
-    ));
-    const defaultTemplateOptions = defaultTemplateNames.map((name, index) => (
-      <option key={`default-${name}`} value={name}>
-        {name}
-      </option>
-    ));
-
-    return (
-      <Dropdown ref={refFunction}>
-        {userTemplateOptions}
-        {userTemplateOptions.length && (
-          <option disabled={true} value={""}>
-            ------------------------------------------------
-          </option>
-        )}
-        {defaultTemplateOptions}
-      </Dropdown>
-    );
-  }
 }
 
 const mapStateToProps = (state: IAppState) => {
@@ -573,8 +497,6 @@ const mapStateToProps = (state: IAppState) => {
     selectedCharacters: profile.selectedCharacters ?? {},
     lastSelectedCharacter: profile.selectedCharacters.length - 1,
     showReviewButton: profile.modAssignments && Object.keys(profile.modAssignments).length,
-    characterTemplates: CharacterEdit.selectors.selectUserTemplatesNames(state),
-    templatesAddingMode: CharacterEdit.selectors.selectTemplatesAddingMode(state),
   };
 };
 
@@ -616,27 +538,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
   applyRanking: (ranking: CharacterNames[]) => {
     dispatch(Data.thunks.applyRanking(ranking));
-  },
-  appendTemplate: (templateName: string, selectedCharacters: SelectedCharacters) => {
-    const template = defaultTemplates.find((template) => template.name === templateName);
-    if (template === undefined) return;
-
-    const selectedCharactersIDs = template.selectedCharacters.map(
-      ({ id, target }) => id
-    )
-    if (selectedCharactersIDs.some((id) => selectedCharacters.some((selectedCharacter) => selectedCharacter.id === id))) {
-      return;
-    }
-    dispatch(CharacterEdit.thunks.appendTemplate(templateName));
-    dialog$.hide();
-  },
-  replaceTemplate: (templateName: string) => {
-    dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
-    dialog$.hide();
-  },
-  applyTemplateTargets: (templateName: string) => {
-    dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
-    dialog$.hide();
   },
 });
 
