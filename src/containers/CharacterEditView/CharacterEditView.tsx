@@ -9,17 +9,15 @@ import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import "./CharacterEditView.css";
 import {
   faArrowsRotate,
-  faBan,
-  faCompress,
-  faExpand,
   faGears,
   faLock,
-  faPlus,
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
 import type { IAppState } from "#/state/storage";
+
+import { observable } from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
@@ -60,8 +58,10 @@ import { Switch } from "#ui/switch";
 
 // containers
 import { CharacterList } from "#/containers/CharacterList/CharacterList";
+import { SelectionActions } from "./SelectionActions";
 import { TemplatesActions } from "./TemplatesActions";
 
+const isSelectionExpanded$ = observable(false);
 class CharacterEditView extends PureComponent<Props> {
   dragStart(character: Character.Character) {
     return (event: React.DragEvent<HTMLDivElement>) => {
@@ -107,11 +107,13 @@ class CharacterEditView extends PureComponent<Props> {
 
   render() {
     return (
-      <div className={`character-edit flex flex-col flex-grow-1 ${this.props.sortView ? "sort-view" : ""}`}>
+      <div className={`character-edit flex flex-col flex-grow-1 ${isSelectionExpanded$.get() ? "sort-view" : ""}`}>
         <div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2">
           {this.filters()}
           {this.renderCharacterActions()}
-          {this.renderSelectionActions()}
+          <DefaultCollapsibleCard title="Selection">
+            <SelectionActions visibleCharacters={this.props.highlightedCharacters} lastSelectedCharacterIndex={this.props.lastSelectedCharacter} isSelectionExpanded$={isSelectionExpanded$}/>
+          </DefaultCollapsibleCard>
           <DefaultCollapsibleCard title="Templates">
             <TemplatesActions hasNoSelectedCharacters={this.props.selectedCharacters.length === 0} visibleCharacters={this.props.highlightedCharacters} lastSelectedCharacterIndex={this.props.lastSelectedCharacter}/>
           </DefaultCollapsibleCard>
@@ -276,58 +278,6 @@ class CharacterEditView extends PureComponent<Props> {
     )
   }
 
-  renderSelectionActions() {
-    return (
-      <DefaultCollapsibleCard title="Selection">
-        <div className="flex gap-2">
-          <Button
-            className="flex flex-gap-2"
-            type="button"
-            onClick={this.props.clearSelectedCharacters}
-          >
-            <FontAwesomeIcon icon={faBan} title="Clear"/> Clear
-          </Button>
-          <Button
-            className="flex flex-gap-2"
-            type="button"
-            onClick={this.props.lockSelectedCharacters}
-          >
-            <FontAwesomeIcon icon={faLock} title="Lock All"/>
-            Lock All
-          </Button>
-          <Button
-            className="flex flex-gap-2"
-            type="button"
-            onClick={this.props.unlockSelectedCharacters}
-          >
-            <FontAwesomeIcon icon={faUnlock} title="Unlock All"/>
-            Unlock All
-          </Button>
-          <Button
-            className="flex flex-gap-2"
-            type="button"
-            onClick={this.props.toggleCharacterEditSortView}
-          >
-            {this.props.sortView ?
-                <FontAwesomeIcon icon={faCompress} title="Normal View"/>
-              :
-                <FontAwesomeIcon icon={faExpand} title="Expand View"/>
-            }
-            {this.props.sortView ? "Normal View" : "Expand View"}
-          </Button>
-          <Button
-            className="flex flex-gap-2"
-            type="button"
-            onClick={() => this.props.addAll(this.props.highlightedCharacters, this.props.lastSelectedCharacter)}
-          >
-            <FontAwesomeIcon icon={faPlus} title={"Add all"}/>
-            Add all
-          </Button>
-        </div>
-      </DefaultCollapsibleCard>
-    );
-  }
-
   /**
    * Render a character block for the set of available characters. This includes the character portrait and a button
    * to edit the character's stats
@@ -424,7 +374,6 @@ const mapStateToProps = (state: IAppState) => {
     allyCode: allycode,
     characterFilter: state.characterFilter,
     hideSelectedCharacters: state.hideSelectedCharacters,
-    sortView: state.characterEditSortView,
     baseCharacters: baseCharacters,
     highlightedCharacters: availableCharacters.filter(characterFilter),
     availableCharacters: availableCharacters
@@ -440,7 +389,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   changeCharacterFilter: (filter: string) =>
     dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
   toggleHideSelectedCharacters: () => dispatch(CharacterEdit.actions.toggleHideSelectedCharacters()),
-  toggleCharacterEditSortView: () => dispatch(CharacterEdit.actions.toggleCharacterEditSortView()),
   reviewOldAssignments: () => {
     dispatch(
       Review.thunks.updateModListFilter({
@@ -455,18 +403,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
     target: OptimizationPlan,
     prevIndex: number
   ) => dispatch(CharacterEdit.thunks.selectCharacter(characterID, target, prevIndex)),
-  addAll: (allCharacters: Character.Character[], lastSelectedCharacter: number) => {
-    isBusy$.set(true);
-    allCharacters.forEach((character, index) => {
-      dispatch(CharacterEdit.thunks.selectCharacter(character.baseID, Character.defaultTarget(character), index+lastSelectedCharacter));
-    });
-    isBusy$.set(false);
-  },
   unselectCharacter: (characterIndex: number) =>
     dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex)),
-  clearSelectedCharacters: () => dispatch(CharacterEdit.thunks.unselectAllCharacters()),
-  lockSelectedCharacters: () => dispatch(CharacterEdit.thunks.lockSelectedCharacters()),
-  unlockSelectedCharacters: () => dispatch(CharacterEdit.thunks.unlockSelectedCharacters()),
   lockAllCharacters: () => dispatch(CharacterEdit.thunks.lockAllCharacters()),
   unlockAllCharacters: () => dispatch(CharacterEdit.thunks.unlockAllCharacters()),
   toggleCharacterLock: (characterID: CharacterNames) =>
