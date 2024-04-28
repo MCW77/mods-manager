@@ -21,17 +21,12 @@ import { Data } from "#/state/modules/data";
 import { Storage } from "#/state/modules/storage";
 
 // domain
-import {
-  characterSettings,
-  type CharacterNames,
-} from "#/constants/characterSettings";
+import { characterSettings } from "#/constants/characterSettings";
 
 import { defaultBaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 // components
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 
 // containers
@@ -40,6 +35,7 @@ import { SelectionActions } from "./SelectionActions";
 import { TemplatesActions } from "./TemplatesActions";
 import { CharacterActions } from "./CharacterActions";
 import { CharacterFilters } from "./CharacterFilters";
+import { CharacterWidget } from "./CharacterWidget";
 
 
 const isSelectionExpanded$ = observable(false);
@@ -111,63 +107,18 @@ class CharacterEditView extends PureComponent<Props> {
             onDragLeave={CharacterEditView.dragLeave}
             onDrop={this.availableCharactersDrop.bind(this)}
           >
-            <div className={"grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]"}>
+            <div className={"grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] p-x-1"}>
               {this.props.highlightedCharacters.map((character) =>
-                this.characterBlock(character, "active")
+                <CharacterWidget key={character.baseID} character={character} className={"active"} />
               )}
               {this.props.availableCharacters.map((character) =>
-                this.characterBlock(character, "inactive")
+                <CharacterWidget key={character.baseID} character={character} className={"inactive"} />
               )}
             </div>
           </div>
           <div className="selected-characters">
             <CharacterList />
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  /**
-   * Render a character block for the set of available characters. This includes the character portrait and a button
-   * to edit the character's stats
-   * @param character Character
-   * @param className String A class to apply to each character block
-   */
-  characterBlock(character: Character.Character, className: string) {
-    const isLocked = character.optimizerSettings.isLocked;
-    const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
-
-    const isCharacterSelected = (characterID: CharacterNames) => this.props.selectedCharacters.some(
-      (selectedCharacter) => selectedCharacter.id === characterID
-    );
-
-    return (
-      <div className={classAttr} key={character.baseID}>
-        <span
-          className={`icon locked ${isLocked ? "active" : ""}`}
-          onClick={() => this.props.toggleCharacterLock(character.baseID)}
-          onKeyUp={(e) => {
-            if (e.code === "Enter") this.props.toggleCharacterLock(character.baseID)
-          }}
-        />
-        <div
-          draggable={isCharacterSelected(character.baseID) ? undefined : true}
-          onDragStart={isCharacterSelected(character.baseID) ? undefined : this.dragStart(character)}
-          onDoubleClick={() =>
-            this.props.selectCharacter(
-              character.baseID,
-              Character.defaultTarget(character),
-              this.props.lastSelectedCharacter
-            )
-          }
-        >
-          <CharacterAvatar character={character} />
-        </div>
-        <div className={"character-name"}>
-          {this.props.baseCharacters[character.baseID]
-            ? this.props.baseCharacters[character.baseID].name
-            : character.baseID}
         </div>
       </div>
     );
@@ -222,7 +173,6 @@ const mapStateToProps = (state: IAppState) => {
   };
 
   return {
-    baseCharacters: baseCharacters,
     highlightedCharacters: availableCharacters.filter(filterCharacters),
     availableCharacters: availableCharacters
       ? availableCharacters.filter((c) => !filterCharacters(c))
@@ -233,16 +183,8 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  selectCharacter: (
-    characterID: CharacterNames,
-    target: OptimizationPlan,
-    prevIndex: number
-  ) => dispatch(CharacterEdit.thunks.selectCharacter(characterID, target, prevIndex)),
   unselectCharacter: (characterIndex: number) =>
     dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex)),
-  toggleCharacterLock: (characterID: CharacterNames) =>
-    dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
-
 });
 
 type Props = PropsFromRedux & WithTranslation<"optimize-ui">;
