@@ -6,8 +6,8 @@ configureObservablePersistence({
 	localOptions: {
 		indexedDB: {
 			databaseName: "GIMO",
-			version: 2,
-			tableNames: ["OptimizationSettings", "IncrementalOptimization", "Profiles"],
+			version: 3,
+			tableNames: ["OptimizationSettings", "IncrementalOptimization", "Profiles", "CharactersManagement"],
 		},
 	},
 });

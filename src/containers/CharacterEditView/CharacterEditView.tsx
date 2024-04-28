@@ -13,7 +13,7 @@ import type { IAppState } from "#/state/storage";
 
 import { observable } from "@legendapp/state";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
@@ -33,14 +33,14 @@ import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { Label } from "#ui/label";
-import { Switch } from "#ui/switch";
 
 // containers
 import { CharacterList } from "#/containers/CharacterList/CharacterList";
 import { SelectionActions } from "./SelectionActions";
 import { TemplatesActions } from "./TemplatesActions";
 import { CharacterActions } from "./CharacterActions";
+import { CharacterFilters } from "./CharacterFilters";
+
 
 const isSelectionExpanded$ = observable(false);
 class CharacterEditView extends PureComponent<Props> {
@@ -90,9 +90,11 @@ class CharacterEditView extends PureComponent<Props> {
     return (
       <div className={`character-edit flex flex-col flex-grow-1 ${isSelectionExpanded$.get() ? "sort-view" : ""}`}>
         <div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2">
-          {this.filters()}
+          <DefaultCollapsibleCard title="Filters">
+           <CharacterFilters />
+          </DefaultCollapsibleCard>
           <DefaultCollapsibleCard title="Actions">
-            <CharacterActions visibleCharacters={this.props.highlightedCharacters} lastSelectedCharacterIndex={this.props.lastSelectedCharacter} isSelectionExpanded$={isSelectionExpanded$}/>
+            <CharacterActions />
           </DefaultCollapsibleCard>
           <DefaultCollapsibleCard title="Selection">
             <SelectionActions visibleCharacters={this.props.highlightedCharacters} lastSelectedCharacterIndex={this.props.lastSelectedCharacter} isSelectionExpanded$={isSelectionExpanded$}/>
@@ -123,41 +125,6 @@ class CharacterEditView extends PureComponent<Props> {
           </div>
         </div>
       </div>
-    );
-  }
-
-  /**
-   * Renders a form for filtering available characters
-   *
-   * @returns JSX Element
-   */
-  filters() {
-    return (
-      <DefaultCollapsibleCard title="Filters">
-        <div className="p2 flex flex-col">
-          <input
-            className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
-            id="character-filter"
-            type="text"
-            placeholder="name, tag, or acronym"
-            defaultValue={this.props.characterFilter}
-            onChange={(e) =>
-              this.props.changeCharacterFilter(e.target.value.toLowerCase())
-            }
-          />
-          <div>
-            <Label className="p-r-2" htmlFor={"hide-selected"}>
-              Hide selected
-            </Label>
-            <Switch
-              id={"hide-selected"}
-              checked={this.props.hideSelectedCharacters}
-              onCheckedChange={() => this.props.toggleHideSelectedCharacters()}
-            >
-            </Switch>
-          </div>
-        </div>
-      </DefaultCollapsibleCard>
     );
   }
 
@@ -208,7 +175,6 @@ class CharacterEditView extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: IAppState) => {
-  const allycode = profilesManagement$.profiles.activeAllycode.get();
   const profile = Storage.selectors.selectActiveProfile(state);
   const characters = Storage.selectors.selectCharactersInActiveProfile(state);
   const baseCharacters = Data.selectors.selectBaseCharacters(state);
@@ -218,30 +184,32 @@ const mapStateToProps = (state: IAppState) => {
     .filter((character) => character.playerValues.level >= 50)
     .filter(
       (character) =>
-        !state.hideSelectedCharacters ||
+        !charactersManagement$.filters.hideSelectedCharacters.get() ||
         !profile.selectedCharacters
           .map(({ id }) => id)
           .includes(character.baseID)
     )
     .sort((left, right) => Character.compareGP(left, right));
+
   /**
    * Checks whether a character matches the filter string in name or tags
    * @param character {Character} The character to check
    * @returns boolean
    */
-  const characterFilter = (character: Character.Character) => {
+  const filterCharacters = (character: Character.Character) => {
     const baseCharacter = baseCharacters[character.baseID] ?? {
       ...defaultBaseCharacter,
       baseID: character.baseID,
       name: character.baseID,
     };
+    const characterFilter = charactersManagement$.filters.characterFilter.get();
 
     return (
-      state.characterFilter === "" ||
-      baseCharacter.name.toLowerCase().includes(state.characterFilter) ||
-      (["lock", "locked"].includes(state.characterFilter) &&
+      characterFilter === "" ||
+      baseCharacter.name.toLowerCase().includes(characterFilter) ||
+      (["lock", "locked"].includes(characterFilter) &&
         character.optimizerSettings.isLocked) ||
-      (["unlock", "unlocked"].includes(state.characterFilter) &&
+      (["unlock", "unlocked"].includes(characterFilter) &&
         !character.optimizerSettings.isLocked) ||
       baseCharacter.categories
         .concat(
@@ -249,17 +217,15 @@ const mapStateToProps = (state: IAppState) => {
             ? characterSettings[character.baseID].extraTags
             : []
         )
-        .some((tag) => tag.toLowerCase().includes(state.characterFilter))
+        .some((tag) => tag.toLowerCase().includes(characterFilter))
     );
   };
 
   return {
-    characterFilter: state.characterFilter,
-    hideSelectedCharacters: state.hideSelectedCharacters,
     baseCharacters: baseCharacters,
-    highlightedCharacters: availableCharacters.filter(characterFilter),
+    highlightedCharacters: availableCharacters.filter(filterCharacters),
     availableCharacters: availableCharacters
-      ? availableCharacters.filter((c) => !characterFilter(c))
+      ? availableCharacters.filter((c) => !filterCharacters(c))
       : [],
     selectedCharacters: profile.selectedCharacters ?? {},
     lastSelectedCharacter: profile.selectedCharacters.length - 1,
@@ -267,9 +233,6 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-  changeCharacterFilter: (filter: string) =>
-    dispatch(CharacterEdit.actions.changeCharacterFilter(filter)),
-  toggleHideSelectedCharacters: () => dispatch(CharacterEdit.actions.toggleHideSelectedCharacters()),
   selectCharacter: (
     characterID: CharacterNames,
     target: OptimizationPlan,
