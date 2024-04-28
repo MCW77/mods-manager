@@ -91,9 +91,9 @@ const SetRestrictionsWidget = observer(({ target$ }: ComponentProps) => {
 						className={"w-auto h-auto"}
 						id={"use-full-sets"}
 						type={"checkbox"}
-						value={target$.target.useOnlyFullSets.get() ? "on" : "off"}
+						$checked={target$.target.useOnlyFullSets}
 						onChange={(e) =>
-							target$.target.useOnlyFullSets.set(e.currentTarget.value === "on")
+							target$.target.useOnlyFullSets.set(e.target.checked)
 						}
 					/>
 				</div>
