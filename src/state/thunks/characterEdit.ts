@@ -88,6 +88,7 @@ export namespace thunks {
       if (Object.keys(defaultTemplates).includes(name)) {
         const template: CharacterTemplate = {
           id: defaultTemplates[name].id,
+          category: defaultTemplates[name].category,
           selectedCharacters: defaultTemplates[name].selectedCharacters.map(
             ({ id, target }) => ({ id: id, target: target })
           )
@@ -161,6 +162,7 @@ export namespace thunks {
       if (Object.keys(defaultTemplates).includes(name)) {
         const template: CharacterTemplate = {
           id: defaultTemplates[name].id,
+          category: defaultTemplates[name].category,
           selectedCharacters: defaultTemplates[name].selectedCharacters.map(
             ({ id, target }) => ({ id: id, target: target })
           )
@@ -440,6 +442,7 @@ export namespace thunks {
       if (Object.keys(defaultTemplates).includes(templateName)) {
         const template: CharacterTemplate = {
           id: defaultTemplates[templateName].id,
+          category: defaultTemplates[templateName].category,
           selectedCharacters: defaultTemplates[templateName].selectedCharacters.map(
             ({ id, target }) => ({ id: id, target: target })
           )
@@ -515,14 +518,14 @@ export namespace thunks {
     );
   }
 
-  export function saveTemplate(templateName: string): ThunkResult<void> {
+  export function saveTemplate(templateName: string, category: string): ThunkResult<void> {
     const db = getDatabase();
 
     return (dispatch, getState) => {
       const state = getState();
       const selectedCharacters = state.profile.selectedCharacters;
 
-      db.saveCharacterTemplate(templateName, selectedCharacters,
+      db.saveCharacterTemplate(templateName, category, selectedCharacters,
         () => {
           dispatch(Storage.thunks.loadCharacterTemplates());
           dialog$.hide();

@@ -603,6 +603,7 @@ export class Database {
 
 	saveCharacterTemplate(
 		name: string,
+		category: string,
 		selectedCharacters: SelectedCharacters,
 		onsuccess = nothing,
 		onerror: DBErrorFunc = dbErrorFunc,
@@ -610,6 +611,7 @@ export class Database {
 		this.database.then((db) => {
 			const templateObject = {
 				id: name,
+				category: category,
 				selectedCharacters: selectedCharacters.map(({ id, target }) => ({
 					id: id,
 					target: target,
