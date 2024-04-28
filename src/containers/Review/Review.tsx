@@ -18,7 +18,6 @@ import type { IAppState } from "#/state/storage";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { Data } from "#/state/modules/data";
@@ -31,12 +30,12 @@ import type * as ModTypes from "#/domain/types/ModTypes";
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
 import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
-import type { ModListFilter } from "#/domain/ModListFilter";
 import { ModLoadout } from "#/domain/ModLoadout";
 import type { ModsByCharacterNames } from "#/domain/ModsByCharacterNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
+import { DisplayWidget } from "./DisplayWidget";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Credits } from "#/components/Credits/Credits";
@@ -46,15 +45,6 @@ import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail
 import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#ui/select";
-import { Switch } from "#ui/switch";
 
 interface HUModsProfile {
 	id: CharacterNames;
@@ -290,7 +280,9 @@ class Review extends React.PureComponent<Props> {
 					}
 				>
 					<div className="flex flex-wrap justify-around items-stretch p-y-2">
-						{this.displayWidget()}
+            <DefaultCollapsibleCard title="Display">
+              <DisplayWidget />
+            </DefaultCollapsibleCard>
 						{this.actionsWidget()}
 						{this.summaryWidget()}
 					</div>
@@ -363,115 +355,6 @@ class Review extends React.PureComponent<Props> {
 							Move mods in-game
 						</Button>
 					</div>
-				</div>
-			</DefaultCollapsibleCard>
-		);
-	}
-
-	displayWidget() {
-		const filter = this.props.filter;
-		const global =
-			"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
-		const labelCSS = "grid-col-[labels] grid-row-auto" as const;
-		const inputCSS = "grid-col-[controls] grid-row-auto" as const;
-
-		return (
-			<DefaultCollapsibleCard title="Display">
-				<div className={global}>
-					<Label className={labelCSS} htmlFor="sort-options">
-						Group by character:
-					</Label>
-					<div
-						className={`${inputCSS} flex gap-2 items-center`}
-						id="sort-options"
-					>
-						<Label htmlFor="sort-options-value">current</Label>
-						<Switch
-							className="mr-2 ml-2"
-							id={"sort-options-value"}
-							checked={filter.sort === sortOptions.assignedCharacter}
-							onCheckedChange={(checked) =>
-								this.props.changeFilter(
-									Object.assign({}, filter, {
-										sort: checked
-											? sortOptions.assignedCharacter
-											: sortOptions.currentCharacter,
-									}),
-								)
-							}
-						/>
-						<Label className={labelCSS} htmlFor="sort-options-value">
-							assigned
-						</Label>
-					</div>
-					<Label className={labelCSS} htmlFor="view-options">
-						Show mods as:
-					</Label>
-					<div
-						className={`${inputCSS} flex gap-2 items-center`}
-						id="view-options"
-					>
-						<Label htmlFor="view-options-value">{viewOptions.sets}</Label>
-						<Switch
-							id={"view-options-value"}
-							checked={filter.view === viewOptions.list}
-							onCheckedChange={(checked) =>
-								this.props.changeFilter(
-									Object.assign({}, filter, {
-										view: checked ? viewOptions.list : viewOptions.sets,
-									}),
-								)
-							}
-						/>
-						<Label htmlFor="view-options-value">{viewOptions.list}</Label>
-					</div>
-					<Label className={labelCSS} htmlFor={"show"}>
-						Show me:
-					</Label>
-					<Select
-						value={filter.show}
-						onValueChange={(value) =>
-							this.props.changeFilter(
-								Object.assign({}, filter, { show: value }),
-							)
-						}
-					>
-						<SelectTrigger className={inputCSS} id={"show"}>
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent className={"max-h-[50%]"}>
-							<SelectGroup>
-								<SelectItem value={showOptions.all}>All assignments</SelectItem>
-								<SelectItem value={showOptions.change}>
-									Changing characters
-								</SelectItem>
-								<SelectItem value={showOptions.upgrades}>
-									Mod upgrades
-								</SelectItem>
-							</SelectGroup>
-						</SelectContent>
-					</Select>
-					<Label htmlFor={"tag"}>Show characters by tag:</Label>
-					<Select
-						value={filter.tag}
-						onValueChange={(value) =>
-							this.props.changeFilter(Object.assign({}, filter, { tag: value }))
-						}
-					>
-						<SelectTrigger className={inputCSS} id={"tag"}>
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent className={"max-h-[50%]"}>
-							<SelectGroup>
-								<SelectItem value={"All"}>All</SelectItem>
-								{this.props.tags.map((tag) => (
-									<SelectItem value={tag} key={tag}>
-										{tag}
-									</SelectItem>
-								))}
-							</SelectGroup>
-						</SelectContent>
-					</Select>
 				</div>
 			</DefaultCollapsibleCard>
 		);
@@ -1103,7 +986,6 @@ const mapStateToProps = (state: IAppState) => {
 		.reduce((a, b) => a + b, 0);
 
 	let displayedMods: ModAssignments;
-	let tags: string[];
 	switch (filter.view) {
 		case viewOptions.list:
 			if (showOptions.upgrades === filter.show) {
@@ -1131,34 +1013,6 @@ const mapStateToProps = (state: IAppState) => {
 					missedGoals: [],
 				}));
 			}
-
-			if (sortOptions.currentCharacter === filter.sort) {
-				// collectByKey
-				const removedMods: ModsByCharacterNames = groupBy(
-					flatten(
-						displayedMods.map(({ id, assignedMods }) =>
-							assignedMods.filter((mod) => mod.characterID !== id),
-						),
-					),
-					(mod: Mod) => mod.characterID,
-				);
-
-				tags = uniq(
-					flatten(
-						(Object.keys(removedMods) as CharacterNames[]).map((id) =>
-							id in baseCharacters ? baseCharacters[id].categories : [],
-						) as string[][],
-					),
-				);
-			} else {
-				tags = uniq(
-					flatten(
-						displayedMods.map(({ id }) =>
-							id in baseCharacters ? baseCharacters[id].categories : [],
-						),
-					),
-				);
-			}
 			break;
 		default:
 			// If we're displaying as sets, but sorting by current character, we need to rework the modAssignments
@@ -1183,17 +1037,6 @@ const mapStateToProps = (state: IAppState) => {
 				displayedMods = modAssignments;
 			}
 
-			// Set up the available tags for the sidebar
-			tags = Array.from(
-				new Set(
-					flatten(
-						displayedMods.map(({ id }) =>
-							baseCharacters[id] ? baseCharacters[id].categories : [],
-						),
-					),
-				),
-			);
-
 			// Filter out any characters that we're not going to display based on the selected tag
 			if (filter.tag !== "All") {
 				displayedMods = displayedMods.filter(({ id }) => {
@@ -1202,7 +1045,6 @@ const mapStateToProps = (state: IAppState) => {
 				});
 			}
 	}
-	tags.sort();
 
 	const movingModsByAssignedCharacter = modAssignments
 		.map(({ id, target, assignedMods }) => ({
@@ -1256,7 +1098,6 @@ const mapStateToProps = (state: IAppState) => {
 	 * }}
 	 */
 	return {
-		allycode: profilesManagement$.profiles.activeAllycode.get(),
 		assignedMods: profile.modAssignments ?? [],
 		currentSetValue: currentLoadoutValue,
 		newSetValue: newLoadoutValue,
@@ -1269,15 +1110,12 @@ const mapStateToProps = (state: IAppState) => {
 		modUpgradeCost: modUpgradeCost,
 		numMovingMods: numMovingMods,
 		filter: ReviewModule.selectors.selectModListFilter(state),
-		tags: tags,
 		hotUtilsSubscription: state.hotUtilsSubscription,
 		hotUtilsSessionId: profile.hotUtilsSessionId ?? "",
 	};
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-	changeFilter: (filter: ModListFilter) =>
-		dispatch(ReviewModule.actions.changeModListFilter(filter)),
 	unequipMod: (modID: string) =>
 		dispatch(ReviewModule.thunks.unequipMod(modID)),
 	reassignMod: (modID: string, characterID: CharacterNames) =>
