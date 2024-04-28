@@ -21,9 +21,10 @@ interface ProfilesManagement {
 	activePlayer: ObservableComputed<string>;
 	activeProfile: ObservableComputed<PlayerProfile>;
 	hasProfiles: ObservableComputed<boolean>;
-	addProfile: (allyCode: string, profile: PlayerProfile) => void;
+	addProfile: (profile: PlayerProfile) => void;
 	clearProfiles: () => void;
 	deleteProfile: (allyCode: string) => void;
+	updateProfile: (profile: PlayerProfile) => void;
 }
 
 export const profilesManagement$: ObservableObject<ProfilesManagement> =
@@ -45,17 +46,17 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		),
 		hasProfiles: computed<boolean>(
 			() =>
-				Object.keys(profilesManagement$.profiles.profilesByAllycode.get())
+				Object.keys(profilesManagement$.profiles.profilesByAllycode.peek())
 					.length > 0,
 		),
-		addProfile: (allycode: string, profile: PlayerProfile) => {
+		addProfile: (profile: PlayerProfile) => {
 			profilesManagement$.profiles.profilesByAllycode.set({
 				...profilesManagement$.profiles.profilesByAllycode.peek(),
-				[allycode]: {} as PlayerProfile, // TODO save the profile once PlayerProfiles are serializable
+				[profile.allyCode]: {} as PlayerProfile, // TODO save the profile once PlayerProfiles are serializable
 			});
 			profilesManagement$.profiles.playernameByAllycode.set({
 				...profilesManagement$.profiles.playernameByAllycode.peek(),
-				[allycode]: profile.playerName,
+				[profile.allyCode]: profile.playerName,
 			});
 		},
 		clearProfiles: () => {
@@ -74,6 +75,11 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 						)[0]
 					: "",
 			);
+		},
+		updateProfile: (profile: PlayerProfile) => {
+			profilesManagement$.profiles.profilesByAllycode[profile.allyCode].set(
+				{} as PlayerProfile,
+			); // TODO save the profile once PlayerProfiles are serializable
 		},
 	});
 

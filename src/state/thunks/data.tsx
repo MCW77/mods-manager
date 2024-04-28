@@ -413,7 +413,7 @@ export namespace thunks {
         );
         dispatch(Storage.actions.setProfile(newProfile));
         beginBatch();
-        profilesManagement$.addProfile(newProfile.allyCode, newProfile);
+        profilesManagement$.addProfile(newProfile);
         profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
         endBatch()
         dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
