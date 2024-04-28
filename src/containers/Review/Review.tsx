@@ -1,7 +1,7 @@
 // react
 import React from 'react';
-import { connect, ConnectedProps } from "react-redux";
-import { ThunkDispatch } from '#/state/reducers/modsOptimizer';
+import { connect, type ConnectedProps } from "react-redux";
+import type { ThunkDispatch } from '#/state/reducers/modsOptimizer';
 
 // styles
 import './Review.css';
@@ -14,7 +14,7 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { IAppState } from '#/state/storage';
+import type { IAppState } from '#/state/storage';
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from '#/modules/optimizerView/state/optimizerView';
@@ -25,15 +25,15 @@ import { Data } from '#/state/modules/data';
 import { Review as ReviewModule } from '#/state/modules/review';
 
 // domain
-import { CharacterNames } from '#/constants/characterSettings';
+import type { CharacterNames } from '#/constants/characterSettings';
 import type * as ModTypes from "#/domain/types/ModTypes";
 
 import * as Character from '#/domain/Character';
-import { Mod } from '#/domain/Mod';
-import { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
-import { ModListFilter } from '#/domain/ModListFilter';
+import type { Mod } from '#/domain/Mod';
+import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
+import type { ModListFilter } from '#/domain/ModListFilter';
 import { ModLoadout } from "#/domain/ModLoadout";
-import { ModsByCharacterNames } from '#/domain/ModsByCharacterNames';
+import type { ModsByCharacterNames } from '#/domain/ModsByCharacterNames';
 import  * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
@@ -69,19 +69,19 @@ export interface HUProfileCreationData {
 }
 
 const sortOptions = {
-  'currentCharacter': 'currentCharacter',
-  'assignedCharacter': 'assignedCharacter'
+  currentCharacter: 'currentCharacter',
+  assignedCharacter: 'assignedCharacter'
 };
 
 const viewOptions = {
-  'list': 'list',
-  'sets': 'sets'
+  list: 'list',
+  sets: 'sets'
 };
 
 const showOptions = {
-  'upgrades': 'upgrades',
-  'change': 'change',
-  'all': 'all'
+  upgrades: 'upgrades',
+  change: 'change',
+  all: 'all'
 };
 
 // A map from number of pips that a mod has to the cost to remove it
@@ -205,7 +205,7 @@ const modUpgradeCosts: {
 };
 
 function formatNumber(num: number) {
-  return num.toLocaleString(navigator.language, { 'useGrouping': true });
+  return num.toLocaleString(navigator.language, { useGrouping: true });
 }
 
 class Review extends React.PureComponent<Props> {
@@ -231,7 +231,7 @@ class Review extends React.PureComponent<Props> {
   }
 
   render() {
-    let modRows;
+    let modRows: React.ReactNode;
 
     switch (this.props.filter.view) {
       case viewOptions.list:
@@ -241,7 +241,7 @@ class Review extends React.PureComponent<Props> {
         modRows = this.setsView(this.props.displayedMods);
     }
 
-    let reviewContent;
+    let reviewContent: React.ReactNode;
 
     if (0 === this.props.numMovingMods) {
       if (0 === this.props.displayedMods.length) {
@@ -345,7 +345,7 @@ class Review extends React.PureComponent<Props> {
           Group by character:
         </Label>
         <div
-          className={inputCSS + " flex gap-2 items-center"}
+          className={`${inputCSS} flex gap-2 items-center`}
           id="sort-options"
         >
           <Label htmlFor="sort-options-value">current</Label>
@@ -360,7 +360,7 @@ class Review extends React.PureComponent<Props> {
         </div>
         <Label className={labelCSS} htmlFor="view-options">Show mods as:</Label>
         <div
-          className={inputCSS + " flex gap-2 items-center"}
+          className={`${inputCSS} flex gap-2 items-center`}
           id="view-options"
         >
           <Label htmlFor="view-options-value">{viewOptions.sets}</Label>
@@ -381,7 +381,7 @@ class Review extends React.PureComponent<Props> {
             className={inputCSS}
             id={'show'}
           >
-            <SelectValue></SelectValue>
+            <SelectValue />
           </SelectTrigger>
           <SelectContent className={"max-h-[50%]"}>
             <SelectGroup>
@@ -400,7 +400,7 @@ class Review extends React.PureComponent<Props> {
             className={inputCSS}
             id={'tag'}
           >
-            <SelectValue></SelectValue>
+            <SelectValue />
           </SelectTrigger>
           <SelectContent className={"max-h-[50%]"}>
             <SelectGroup>
@@ -461,11 +461,11 @@ class Review extends React.PureComponent<Props> {
 
         if (!leftCharacter) {
           return -1;
-        } else if (!rightCharacter) {
-          return 1;
-        } else {
-          return Character.compareGP(leftCharacter, rightCharacter) || ModLoadout.slotSort(leftMod, rightMod);
         }
+        if (!rightCharacter) {
+          return 1;
+        }
+        return Character.compareGP(leftCharacter, rightCharacter) || ModLoadout.slotSort(leftMod, rightMod);
       });
 
       if (this.props.filter.tag !== 'All') {
@@ -538,11 +538,11 @@ class Review extends React.PureComponent<Props> {
         <div className={'character-id'}>
           <CharacterAvatar character={character} />
           <Arrow />
-          <h3 className={missedGoals && missedGoals.length ? 'red-text' : ''}>
+          <h3 className={missedGoals?.length ? 'red-text' : ''}>
             {this.props.baseCharacters[characterID] ? this.props.baseCharacters[characterID].name : characterID}
           </h3>
           {target &&
-            <h4 className={missedGoals && missedGoals.length ? 'red-text' : ''}>{target.name}</h4>
+            <h4 className={missedGoals?.length ? 'red-text' : ''}>{target.name}</h4>
           }
           <div className={'actions'}>
             {sortOptions.currentCharacter === this.props.filter.sort &&
@@ -623,9 +623,7 @@ class Review extends React.PureComponent<Props> {
   }
 
   summaryListContent() {
-    const capitalize = function (str: string) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    };
+    const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
     const setMap = {
       "Speed %": "Speed",
       "Offense %": "Offense",
@@ -727,7 +725,7 @@ class Review extends React.PureComponent<Props> {
           type={'text'}
           name={'categoryName'}
           defaultValue={'Grandivory'}
-          ref={input => categoryInput = input}
+          ref={input => {categoryInput = input}}
           onKeyUp={(e) => {
             if (e.key === 'Enter') {
               checkNameAndCreateProfile();
@@ -742,7 +740,7 @@ class Review extends React.PureComponent<Props> {
           id={'profileName'}
           type={'text'}
           name={'profileName'}
-          ref={input => profileNameInput = input}
+          ref={input => {profileNameInput = input}}
           onKeyUp={(e) => {
             if (e.key === 'Enter') {
               checkNameAndCreateProfile();
@@ -750,7 +748,7 @@ class Review extends React.PureComponent<Props> {
           }}
         />
       </div>
-      <p className={'error'} ref={field => error = field}></p>
+      <p className={'error'} ref={field => {error = field}} />
       <div className={'actions'}>
         <Button
           type={'button'}
@@ -821,8 +819,8 @@ class Review extends React.PureComponent<Props> {
 const mapStateToProps = (state: IAppState) => {
   const baseCharacters = Data.selectors.selectBaseCharacters(state);
 
-  const getModAssignmentsByCurrentCharacter = function(modAssignments: ModAssignments): ModAssignments {
-    let tempAssignments = modAssignments;
+  const getModAssignmentsByCurrentCharacter = (modAssignments: ModAssignments): ModAssignments => {
+    const tempAssignments = modAssignments;
 
     // If we're only showing upgrades, then filter out any mod that isn't being upgraded
     if (showOptions.upgrades === filter.show) {
@@ -835,12 +833,12 @@ const mapStateToProps = (state: IAppState) => {
         missedGoals: missedGoals,
       }));
 */
-      tempAssignments.forEach(assignment => {
+      for (const assignment of tempAssignments) {
         assignment.assignedMods = assignment.assignedMods.filter(mod =>
-           mod.shouldLevel(assignment.target) ||
-           mod.shouldSlice(profile.characters[assignment.id], assignment.target)
-        )
-      })
+          mod.shouldLevel(assignment.target) ||
+          mod.shouldSlice(profile.characters[assignment.id], assignment.target)
+        );
+      }
     }
     // Filter out any mods that aren't moving
     const mods = tempAssignments.map(({ id, assignedMods }) => assignedMods.filter(mod => mod.characterID !== id));
@@ -851,7 +849,7 @@ const mapStateToProps = (state: IAppState) => {
     );
 
     // Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
-    let result: ModAssignments = Object.values(mapValues<ModsByCharacterNames, ModAssignment>(
+    const result: ModAssignments = Object.values(mapValues<ModsByCharacterNames, ModAssignment>(
       modsByCharacterNames,
       (mods: Mod[], id: string): ModAssignment => ({ id: id as CharacterNames, assignedMods: mods, target: OptimizationPlan.createOptimizationPlan('xyz'), missedGoals: [] })
     ));
@@ -1037,11 +1035,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) => dispatch(Data.thunks.moveModsWithHotUtils(profile, sessionId))
 });
 
-type Props = PropsFromRedux & OwnProps;
+type Props = PropsFromRedux;
 type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type OwnProps = {
-}
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(Review);
