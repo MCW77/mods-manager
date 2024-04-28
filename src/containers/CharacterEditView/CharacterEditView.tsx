@@ -15,7 +15,6 @@ import {
   faGears,
   faLock,
   faPlus,
-  faSave,
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,7 +26,6 @@ import { incrementalOptimization$ } from "#/modules/incrementalOptimization/stat
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
@@ -49,9 +47,7 @@ import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { AddTemplateModal } from "./AddTemplateModal";
 import { ResetAllCharacterTargetsModal } from "./ResetAllCharacterTargetsModal";
-import { SaveTemplateModal } from "./SaveTemplateModal";
 
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
@@ -64,6 +60,7 @@ import { Switch } from "#ui/switch";
 
 // containers
 import { CharacterList } from "#/containers/CharacterList/CharacterList";
+import { TemplatesActions } from "./TemplatesActions";
 
 class CharacterEditView extends PureComponent<Props> {
   dragStart(character: Character.Character) {
@@ -115,7 +112,9 @@ class CharacterEditView extends PureComponent<Props> {
           {this.filters()}
           {this.renderCharacterActions()}
           {this.renderSelectionActions()}
-          {this.renderTemplateActions()}
+          <DefaultCollapsibleCard title="Templates">
+            <TemplatesActions hasNoSelectedCharacters={this.props.selectedCharacters.length === 0} visibleCharacters={this.props.highlightedCharacters} lastSelectedCharacterIndex={this.props.lastSelectedCharacter}/>
+          </DefaultCollapsibleCard>
         </div>
         <div className="flex h-full">
           <div
@@ -272,48 +271,6 @@ class CharacterEditView extends PureComponent<Props> {
           </Button>
           <HelpLink title="Global Settings Helppage" section="optimizer" topic={1} />
           <SettingsLink title="Global Settings" section="optimizer" />
-        </div>
-      </DefaultCollapsibleCard>
-    )
-  }
-
-  renderTemplateActions() {
-    return (
-      <DefaultCollapsibleCard title="Templates">
-        <div className={'flex gap-2'}>
-          <Button
-            size="sm"
-            onClick={() => dialog$.show(<AddTemplateModal />)}
-          >
-            <FontAwesomeIcon icon={faPlus} title={"Add template"}/>
-          </Button>
-          <Button
-            size="sm"
-            onClick={async () => {
-              try {
-               isBusy$.set(true);
-               if (this.props.selectedCharacters.length === 0) {
-                 this.props.addAll(this.props.highlightedCharacters, this.props.lastSelectedCharacter);
-               }
-               const ranking = await stackRank$.fetch(this.props.allyCode)
-               this.props.applyRanking(ranking);
-              } catch (error) {
-                if (error instanceof Error) dialog$.showError(error.message);
-              } finally {
-                isBusy$.set(false);
-              }
-            }}
-          >
-            Auto-generate List
-          </Button>
-          <Button
-            size="sm"
-            disabled={!this.props.selectedCharacters.length}
-            onClick={() => dialog$.show(<SaveTemplateModal />)}
-          >
-            <FontAwesomeIcon icon={faSave} title={"Save"}/>
-          </Button>
-          <HelpLink title="" section="optimizer" topic={2} />
         </div>
       </DefaultCollapsibleCard>
     )
@@ -515,9 +472,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
   toggleCharacterLock: (characterID: CharacterNames) =>
     dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID)),
   optimizeMods: () => dispatch(Optimize.thunks.optimizeMods()),
-  applyRanking: (ranking: CharacterNames[]) => {
-    dispatch(Data.thunks.applyRanking(ranking));
-  },
 });
 
 type Props = PropsFromRedux & WithTranslation<"optimize-ui">;
