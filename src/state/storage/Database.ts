@@ -91,7 +91,7 @@ export class Database {
 					db.createObjectStore("lastRuns", { keyPath: "allyCode" });
 				}
 				if (event.oldVersion < 2) {
-					db.createObjectStore("characterTemplates", { keyPath: "name" });
+					db.createObjectStore("characterTemplates", { keyPath: "id" });
 				}
 			}
 		};
@@ -609,7 +609,7 @@ export class Database {
 	) {
 		this.database.then((db) => {
 			const templateObject = {
-				name: name,
+				id: name,
 				selectedCharacters: selectedCharacters.map(({ id, target }) => ({
 					id: id,
 					target: target,
@@ -655,7 +655,7 @@ export class Database {
 
 			for (const template of templates) {
 				const templateObject = {
-					name: template.name,
+					id: template.id,
 					selectedCharacters: template.selectedCharacters.map(
 						({ id, target }) => ({
 							id: id,

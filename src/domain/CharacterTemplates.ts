@@ -4,7 +4,7 @@ import type { SelectedCharacters } from "./SelectedCharacters";
 /**
  * ```
  * {
- *   name: string,
+ *   id: string,
  *   selectedCharacters: {
  *     id: CharacterNames,
  *     target: OptimizationPlan
@@ -17,7 +17,7 @@ export type CharacterTemplates = CharacterTemplate[];
 /**
  * ```
  * {
- *   name: string,
+ *   id: string,
  *   selectedCharacters: {
  *     id: CharacterNames,
  *     target: OptimizationPlan
@@ -26,7 +26,7 @@ export type CharacterTemplates = CharacterTemplate[];
  * ```
  */
 export interface CharacterTemplate {
-	name: string;
+	id: string;
 	selectedCharacters: SelectedCharacters;
 }
 
@@ -34,7 +34,7 @@ export interface CharacterTemplate {
  * ```
  * {
  *   [key: string]: {
- *     name: string,
+ *     id: string,
  *     selectedCharacters: {
  *       id: CharacterNames,
  *       target: OptimizationPlan

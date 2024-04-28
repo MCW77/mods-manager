@@ -1,6 +1,6 @@
 [
   {
-      "name": "Assault Battle - Forest Moon",
+      "id": "Assault Battle - Forest Moon",
       "selectedCharacters": [
           {
               "id": "MAGNAGUARD",
@@ -120,7 +120,7 @@
       ]
   },
   {
-      "name": "Assault Battle - Ground War",
+      "id": "Assault Battle - Ground War",
       "selectedCharacters": [
           {
               "id": "GENERALSKYWALKER",
@@ -240,7 +240,7 @@
       ]
   },
   {
-      "name": "Assault Battle - Places of Power",
+      "id": "Assault Battle - Places of Power",
       "selectedCharacters": [
           {
               "id": "EMPERORPALPATINE",
@@ -360,7 +360,7 @@
       ]
   },
   {
-      "name": "Assault Battle - Secrets and Shadows",
+      "id": "Assault Battle - Secrets and Shadows",
       "selectedCharacters": [
           {
               "id": "DAKA",
@@ -480,7 +480,7 @@
       ]
   },
   {
-      "name": "Events - C3PO",
+      "id": "Events - C3PO",
       "selectedCharacters": [
           {
               "id": "CHIEFCHIRPA",
@@ -600,7 +600,7 @@
       ]
   },
   {
-      "name": "Events - GAS Phase 2",
+      "id": "Events - GAS Phase 2",
       "selectedCharacters": [
           {
               "id": "C3POLEGENDARY",
@@ -720,7 +720,7 @@
       ]
   },
   {
-      "name": "Events - GAS Phase 4",
+      "id": "Events - GAS Phase 4",
       "selectedCharacters": [
           {
               "id": "B1BATTLEDROIDV2",
@@ -840,7 +840,7 @@
       ]
   },
   {
-      "name": "Events - Malak (DS)",
+      "id": "Events - Malak (DS)",
       "selectedCharacters": [
           {
               "id": "DARTHREVAN",
@@ -960,7 +960,7 @@
       ]
   },
   {
-      "name": "Events - Malak (LS)",
+      "id": "Events - Malak (LS)",
       "selectedCharacters": [
           {
               "id": "JEDIKNIGHTREVAN",
@@ -1080,7 +1080,7 @@
       ]
   },
   {
-      "name": "Events - Padme (Droids)",
+      "id": "Events - Padme (Droids)",
       "selectedCharacters": [
           {
               "id": "GRIEVOUS",
@@ -1200,7 +1200,7 @@
       ]
   },
   {
-      "name": "Events - Padme (Geonosians)",
+      "id": "Events - Padme (Geonosians)",
       "selectedCharacters": [
           {
               "id": "GEONOSIANBROODALPHA",
@@ -1320,7 +1320,7 @@
       ]
   },
   {
-      "name": "Events - Padme (Mixed)",
+      "id": "Events - Padme (Mixed)",
       "selectedCharacters": [
           {
               "id": "GRIEVOUS",
@@ -1440,7 +1440,7 @@
       ]
   },
   {
-      "name": "GL Leia - Tier 2",
+      "id": "GL Leia - Tier 2",
       "selectedCharacters": [
           {
               "id": "HOTHLEIA",
@@ -1505,7 +1505,7 @@
       ]
   },
   {
-      "name": "HAAT - ABC",
+      "id": "HAAT - ABC",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -1625,7 +1625,7 @@
       ]
   },
   {
-      "name": "HAAT - RJT w/ Finn",
+      "id": "HAAT - RJT w/ Finn",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -1745,7 +1745,7 @@
       ]
   },
   {
-      "name": "HAAT - RJT w/ RT",
+      "id": "HAAT - RJT w/ RT",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -1865,7 +1865,7 @@
       ]
   },
   {
-      "name": "HAAT - Wampanader",
+      "id": "HAAT - Wampanader",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -1985,7 +1985,7 @@
       ]
   },
   {
-      "name": "Krayt - Cad T6 (Fatal based)",
+      "id": "Krayt - Cad T6 (Fatal based)",
       "selectedCharacters": [
           {
               "id": "CADBANE",
@@ -2189,7 +2189,7 @@
       ]
   },
   {
-      "name": "LSTB - 50 Shards of KAM",
+      "id": "LSTB - 50 Shards of KAM",
       "selectedCharacters": [
           {
               "id": "CT210408",
@@ -2402,7 +2402,7 @@
       ]
   },
   {
-      "name": "LSTB - KAM Mission",
+      "id": "LSTB - KAM Mission",
       "selectedCharacters": [
           {
               "id": "SHAAKTI",
@@ -2522,7 +2522,7 @@
       ]
   },
   {
-      "name": "PvP - Bounty Hunters, Bossk Lead",
+      "id": "PvP - Bounty Hunters, Bossk Lead",
       "selectedCharacters": [
           {
               "id": "BOSSK",
@@ -2642,7 +2642,7 @@
       ]
   },
   {
-      "name": "PvP - Bounty Hunters, Jango Lead",
+      "id": "PvP - Bounty Hunters, Jango Lead",
       "selectedCharacters": [
           {
               "id": "BOSSK",
@@ -2762,7 +2762,7 @@
       ]
   },
   {
-      "name": "PvP - CLS Rebels",
+      "id": "PvP - CLS Rebels",
       "selectedCharacters": [
           {
               "id": "COMMANDERLUKESKYWALKER",
@@ -2882,7 +2882,7 @@
       ]
   },
   {
-      "name": "PvP - CLS w/ Chaze",
+      "id": "PvP - CLS w/ Chaze",
       "selectedCharacters": [
           {
               "id": "COMMANDERLUKESKYWALKER",
@@ -3002,7 +3002,7 @@
       ]
   },
   {
-      "name": "PvP - Carth Scoundrels",
+      "id": "PvP - Carth Scoundrels",
       "selectedCharacters": [
           {
               "id": "CARTHONASI",
@@ -3122,7 +3122,7 @@
       ]
   },
   {
-      "name": "PvP - DR w/ GMY",
+      "id": "PvP - DR w/ GMY",
       "selectedCharacters": [
           {
               "id": "GRANDMASTERYODA",
@@ -3242,7 +3242,7 @@
       ]
   },
   {
-      "name": "PvP - DR w/ Malak",
+      "id": "PvP - DR w/ Malak",
       "selectedCharacters": [
           {
               "id": "DARTHREVAN",
@@ -3362,7 +3362,7 @@
       ]
   },
   {
-      "name": "PvP - DR w/o Malak",
+      "id": "PvP - DR w/o Malak",
       "selectedCharacters": [
           {
               "id": "DARTHREVAN",
@@ -3482,7 +3482,7 @@
       ]
   },
   {
-      "name": "PvP - EP-led Empire",
+      "id": "PvP - EP-led Empire",
       "selectedCharacters": [
           {
               "id": "VADER",
@@ -3602,7 +3602,7 @@
       ]
   },
   {
-      "name": "PvP - Ewoks",
+      "id": "PvP - Ewoks",
       "selectedCharacters": [
           {
               "id": "WICKET",
@@ -3722,7 +3722,7 @@
       ]
   },
   {
-      "name": "PvP - GAS 501st",
+      "id": "PvP - GAS 501st",
       "selectedCharacters": [
           {
               "id": "CT7567",
@@ -3842,7 +3842,7 @@
       ]
   },
   {
-      "name": "PvP - GG Lead",
+      "id": "PvP - GG Lead",
       "selectedCharacters": [
           {
               "id": "GRIEVOUS",
@@ -3962,7 +3962,7 @@
       ]
   },
   {
-      "name": "PvP - GG Nuke",
+      "id": "PvP - GG Nuke",
       "selectedCharacters": [
           {
               "id": "GRIEVOUS",
@@ -4120,7 +4120,7 @@
       ]
   },
   {
-      "name": "PvP - Geonosians",
+      "id": "PvP - Geonosians",
       "selectedCharacters": [
           {
               "id": "GEONOSIANBROODALPHA",
@@ -4240,7 +4240,7 @@
       ]
   },
   {
-      "name": "PvP - Imperial Troopers",
+      "id": "PvP - Imperial Troopers",
       "selectedCharacters": [
           {
               "id": "COLONELSTARCK",
@@ -4360,7 +4360,7 @@
       ]
   },
   {
-      "name": "PvP - JKA Nuke",
+      "id": "PvP - JKA Nuke",
       "selectedCharacters": [
           {
               "id": "CT7567",
@@ -4507,7 +4507,7 @@
       ]
   },
   {
-      "name": "PvP - JKR",
+      "id": "PvP - JKR",
       "selectedCharacters": [
           {
               "id": "JEDIKNIGHTREVAN",
@@ -4627,7 +4627,7 @@
       ]
   },
   {
-      "name": "PvP - JKR w/ HY",
+      "id": "PvP - JKR w/ HY",
       "selectedCharacters": [
           {
               "id": "JEDIKNIGHTREVAN",
@@ -4747,7 +4747,7 @@
       ]
   },
   {
-      "name": "PvP - KRU Lead",
+      "id": "PvP - KRU Lead",
       "selectedCharacters": [
           {
               "id": "KYLORENUNMASKED",
@@ -4867,7 +4867,7 @@
       ]
   },
   {
-      "name": "PvP - Nightsisters w/ Nest",
+      "id": "PvP - Nightsisters w/ Nest",
       "selectedCharacters": [
           {
               "id": "ENFYSNEST",
@@ -4987,7 +4987,7 @@
       ]
   },
   {
-      "name": "PvP - Nightsisters, Asajj Lead",
+      "id": "PvP - Nightsisters, Asajj Lead",
       "selectedCharacters": [
           {
               "id": "ASAJVENTRESS",
@@ -5107,7 +5107,7 @@
       ]
   },
   {
-      "name": "PvP - Nightsisters, Talzin Lead",
+      "id": "PvP - Nightsisters, Talzin Lead",
       "selectedCharacters": [
           {
               "id": "ASAJVENTRESS",
@@ -5227,7 +5227,7 @@
       ]
   },
   {
-      "name": "PvP - Nute Lead",
+      "id": "PvP - Nute Lead",
       "selectedCharacters": [
           {
               "id": "COUNTDOOKU",
@@ -5347,7 +5347,7 @@
       ]
   },
   {
-      "name": "PvP - Padme Anti-Malak",
+      "id": "PvP - Padme Anti-Malak",
       "selectedCharacters": [
           {
               "id": "C3POLEGENDARY",
@@ -5467,7 +5467,7 @@
       ]
   },
   {
-      "name": "PvP - Padme Lead",
+      "id": "PvP - Padme Lead",
       "selectedCharacters": [
           {
               "id": "PADMEAMIDALA",
@@ -5587,7 +5587,7 @@
       ]
   },
   {
-      "name": "PvP - Phoenix",
+      "id": "PvP - Phoenix",
       "selectedCharacters": [
           {
               "id": "HERASYNDULLAS3",
@@ -5719,7 +5719,7 @@
       ]
   },
   {
-      "name": "PvP - Qi'ra Scoundrels",
+      "id": "PvP - Qi'ra Scoundrels",
       "selectedCharacters": [
           {
               "id": "ENFYSNEST",
@@ -5839,7 +5839,7 @@
       ]
   },
   {
-      "name": "PvP - Qi'ra Scoundrels w/ Big Z",
+      "id": "PvP - Qi'ra Scoundrels w/ Big Z",
       "selectedCharacters": [
           {
               "id": "ENFYSNEST",
@@ -5959,7 +5959,7 @@
       ]
   },
   {
-      "name": "PvP - RJT",
+      "id": "PvP - RJT",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -6079,7 +6079,7 @@
       ]
   },
   {
-      "name": "PvP - Rogue One",
+      "id": "PvP - Rogue One",
       "selectedCharacters": [
           {
               "id": "CHIRRUTIMWE",
@@ -6199,7 +6199,7 @@
       ]
   },
   {
-      "name": "PvP - Shaak Ti Lead",
+      "id": "PvP - Shaak Ti Lead",
       "selectedCharacters": [
           {
               "id": "SHAAKTI",
@@ -6319,7 +6319,7 @@
       ]
   },
   {
-      "name": "PvP - Traya Anti-JKR",
+      "id": "PvP - Traya Anti-JKR",
       "selectedCharacters": [
           {
               "id": "GRANDADMIRALTHRAWN",
@@ -6439,7 +6439,7 @@
       ]
   },
   {
-      "name": "PvP - Traya Lead",
+      "id": "PvP - Traya Lead",
       "selectedCharacters": [
           {
               "id": "DARTHNIHILUS",
@@ -6559,7 +6559,7 @@
       ]
   },
   {
-      "name": "ROTE - Reva Mission w/ 8th Brother",
+      "id": "ROTE - Reva Mission w/ 8th Brother",
       "selectedCharacters": [
           {
               "id": "SEVENTHSISTER",
@@ -6830,7 +6830,7 @@
       ]
   },
   {
-      "name": "STR - Phase 1 - RJT w/ Finn",
+      "id": "STR - Phase 1 - RJT w/ Finn",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -6950,7 +6950,7 @@
       ]
   },
   {
-      "name": "STR - Phase 1 - RJT w/ RT",
+      "id": "STR - Phase 1 - RJT w/ RT",
       "selectedCharacters": [
           {
               "id": "BB8",
@@ -7070,7 +7070,7 @@
       ]
   },
   {
-      "name": "STR - Phase 1 - Yodalicious",
+      "id": "STR - Phase 1 - Yodalicious",
       "selectedCharacters": [
           {
               "id": "GRANDMASTERYODA",
@@ -7190,7 +7190,7 @@
       ]
   },
   {
-      "name": "STR - Phase 2 - Beast",
+      "id": "STR - Phase 2 - Beast",
       "selectedCharacters": [
           {
               "id": "HERMITYODA",
@@ -7310,7 +7310,7 @@
       ]
   },
   {
-      "name": "STR - Phase 2 - JKR Lead",
+      "id": "STR - Phase 2 - JKR Lead",
       "selectedCharacters": [
           {
               "id": "JEDIKNIGHTREVAN",
@@ -7430,7 +7430,7 @@
       ]
   },
   {
-      "name": "STR - Phase 2 - Padme Lead",
+      "id": "STR - Phase 2 - Padme Lead",
       "selectedCharacters": [
           {
               "id": "C3POLEGENDARY",
@@ -7550,7 +7550,7 @@
       ]
   },
   {
-      "name": "STR - Phase 3 - Bounty and the Beast",
+      "id": "STR - Phase 3 - Bounty and the Beast",
       "selectedCharacters": [
           {
               "id": "CHEWBACCALEGENDARY",
@@ -7688,7 +7688,7 @@
       ]
   },
   {
-      "name": "STR - Phase 3 - DR Lead",
+      "id": "STR - Phase 3 - DR Lead",
       "selectedCharacters": [
           {
               "id": "DARTHREVAN",
@@ -7808,7 +7808,7 @@
       ]
   },
   {
-      "name": "STR - Phase 3 - Deathstorm",
+      "id": "STR - Phase 3 - Deathstorm",
       "selectedCharacters": [
           {
               "id": "ASAJVENTRESS",
@@ -7928,7 +7928,7 @@
       ]
   },
   {
-      "name": "STR - Phase 3 - Nightsisters w/ Anakin",
+      "id": "STR - Phase 3 - Nightsisters w/ Anakin",
       "selectedCharacters": [
           {
               "id": "ASAJVENTRESS",
@@ -8048,7 +8048,7 @@
       ]
   },
   {
-      "name": "STR - Phase 4 - Nightsisters",
+      "id": "STR - Phase 4 - Nightsisters",
       "selectedCharacters": [
           {
               "id": "ASAJVENTRESS",
@@ -8168,7 +8168,7 @@
       ]
   },
   {
-      "name": "STR - Phase 4 - Rex & Baze",
+      "id": "STR - Phase 4 - Rex & Baze",
       "selectedCharacters": [
           {
               "id": "C3POLEGENDARY",

@@ -197,7 +197,7 @@ export namespace thunks {
 						const templatesObject: SelectedCharactersByTemplateName = mapValues(
 							groupByKey(
 								characterTemplates,
-								(template) => template.name,
+								(template) => template.id,
 							) as CharacterTemplatesByName,
 							({ selectedCharacters }: CharacterTemplate) => selectedCharacters,
 						);
@@ -205,12 +205,12 @@ export namespace thunks {
 						let characterTemplatesKVPs = Object.entries(characterTemplates);
 						characterTemplatesKVPs = characterTemplatesKVPs.map(
 							([key, value]) => {
-								return [value.name, value];
+								return [value.id, value];
 							},
 						);
 						const characterTemplatesByName = Object.fromEntries(
 							Object.entries(characterTemplates).map(([key, value]) => {
-								return [value.name, value];
+								return [value.id, value];
 							}),
 						);
 

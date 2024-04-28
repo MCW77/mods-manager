@@ -27,7 +27,7 @@ import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import type { PlayerProfile } from "../../domain/PlayerProfile";
 import type { SelectedCharacters } from "../../domain/SelectedCharacters";
 
-const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ name }) => name);
+const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ id: name }) => name);
 
 function getTargetsById(template: CharacterTemplate): OptimizationPlansById {
   return mapValues(
@@ -87,7 +87,7 @@ export namespace thunks {
     return (dispatch, getState) => {
       if (Object.keys(defaultTemplates).includes(name)) {
         const template: CharacterTemplate = {
-          name: defaultTemplates[name].name,
+          id: defaultTemplates[name].id,
           selectedCharacters: defaultTemplates[name].selectedCharacters.map(
             ({ id, target }) => ({ id: id, target: target })
           )
@@ -160,7 +160,7 @@ export namespace thunks {
     return (dispatch, getState) => {
       if (Object.keys(defaultTemplates).includes(name)) {
         const template: CharacterTemplate = {
-          name: defaultTemplates[name].name,
+          id: defaultTemplates[name].id,
           selectedCharacters: defaultTemplates[name].selectedCharacters.map(
             ({ id, target }) => ({ id: id, target: target })
           )
@@ -439,7 +439,7 @@ export namespace thunks {
     return (dispatch, getState) => {
       if (Object.keys(defaultTemplates).includes(templateName)) {
         const template: CharacterTemplate = {
-          name: defaultTemplates[templateName].name,
+          id: defaultTemplates[templateName].id,
           selectedCharacters: defaultTemplates[templateName].selectedCharacters.map(
             ({ id, target }) => ({ id: id, target: target })
           )

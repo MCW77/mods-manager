@@ -22,17 +22,17 @@ import { Button } from "#ui/button";
 import { Input } from "#ui/input";
 
 interface Templates {
-	name: string;
+	id: string;
 	templates: string[];
 	isUnique: ObservableComputed<boolean>;
 }
 
 const ReactiveInput = reactive(Input);
 const templates$: ObservableObject<Templates> = observable<Templates>({
-  name: "",
+  id: "",
   templates: [],
   isUnique: computed(() => {
-    return !templates$.templates.get().includes(templates$.name.get());
+    return !templates$.templates.get().includes(templates$.id.get());
   }),
 });
 
@@ -54,14 +54,14 @@ const SaveTemplateModal = observer(() => {
               type={"text"}
               id={"template-name"}
               placeholder={"Template Name"}
-              $value={templates$.name}
+              $value={templates$.id}
               onChange={(event) => {
-                templates$.name.set(event.target.value);
+                templates$.id.set(event.target.value);
               }}
               onKeyUp={(e) => {
-                if (e.key === "Enter" && templates$.name.get() !== "" && templates$.isUnique.get()) {
+                if (e.key === "Enter" && templates$.id.get() !== "" && templates$.isUnique.get()) {
                   dialog$.hide();
-                  dispatch(CharacterEdit.thunks.saveTemplate(templates$.name.get()));
+                  dispatch(CharacterEdit.thunks.saveTemplate(templates$.id.get()));
                 }
               }}
             />
@@ -81,10 +81,10 @@ const SaveTemplateModal = observer(() => {
 				</Button>
 				<Button
 					type={"button"}
-					disabled={!templates$.isUnique.get() || templates$.name.get() === ""}
+					disabled={!templates$.isUnique.get() || templates$.id.get() === ""}
 					onClick={() => {
 						dialog$.hide();
-						dispatch(CharacterEdit.thunks.saveTemplate(templates$.name.get()));
+						dispatch(CharacterEdit.thunks.saveTemplate(templates$.id.get()));
 					}}
 				>
 					Save

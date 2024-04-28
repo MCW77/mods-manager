@@ -65,7 +65,7 @@ const TemplatesManager = React.memo(
             disabled={selectedTemplates.length === 0}
             onClick={() => {
               const templatesSaveObject = selectedTemplates.map(
-                ({ name, selectedCharacters }) => ({
+                ({ id: name, selectedCharacters }) => ({
                   name: name,
                   selectedCharacters: selectedCharacters.map(
                     ({ id, target }) => ({
@@ -97,7 +97,7 @@ const TemplatesManager = React.memo(
             disabled={selectedTemplates.length === 0}
             onClick={() => {
               for (const template of selectedTemplates.values()) {
-                dispatch(CharacterEdit.thunks.deleteTemplate(template.name));
+                dispatch(CharacterEdit.thunks.deleteTemplate(template.id));
               }
               setSelectedTemplates([]);
             }}
@@ -112,16 +112,16 @@ const TemplatesManager = React.memo(
             (template) => (
               <div
                 className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
-                data-template={template.name}
-                key={`template-${template.name}`}
+                data-template={template.id}
+                key={`template-${template.id}`}
                 onClick={(event) => {
                   event.stopPropagation();
                   const target = event.currentTarget as HTMLDivElement;
                   if (target.dataset.template !== undefined && target.dataset.template !== null) {
                     const templateName = target.dataset.template;
-                    const selectedTemplate = selectedTemplates.find(template => template.name === templateName);
+                    const selectedTemplate = selectedTemplates.find(template => template.id === templateName);
                     const wasSelected = selectedTemplate !== undefined;
-                    const template = userCharacterTemplates.find(template => template.name === templateName);
+                    const template = userCharacterTemplates.find(template => template.id === templateName);
                     target.classList.toggle('selected');
                     target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
                     if (wasSelected) {
@@ -133,7 +133,7 @@ const TemplatesManager = React.memo(
                 }}
               >
                 <span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">&nbsp;</span>
-                {template.name}
+                {template.id}
               </div>
             )
           )}

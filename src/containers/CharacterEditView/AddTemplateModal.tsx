@@ -53,7 +53,7 @@ const AddTemplateModal = observer(() => {
 						if (templateName === null) return;
 						if (templatesAddingMode === "append") {
 							const template = defaultTemplates.find(
-								(template) => template.name === templateName,
+								(template) => template.id === templateName,
 							);
 							if (template === undefined) return;
 
