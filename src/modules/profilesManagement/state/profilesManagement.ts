@@ -46,7 +46,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		),
 		hasProfiles: computed<boolean>(
 			() =>
-				Object.keys(profilesManagement$.profiles.profilesByAllycode.peek())
+				Object.keys(profilesManagement$.profiles.profilesByAllycode.get())
 					.length > 0,
 		),
 		addProfile: (profile: PlayerProfile) => {
