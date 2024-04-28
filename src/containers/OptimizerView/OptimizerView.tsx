@@ -13,7 +13,7 @@ import { Switch } from "@legendapp/state/react";
 
 // containers
 import { CharacterEditForm } from "#/containers/CharacterEditForm/CharacterEditForm";
-import CharacterEditView from "#/containers/CharacterEditView/CharacterEditView";
+import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
 import Review from "#/containers/Review/Review";
 
 
@@ -25,11 +25,11 @@ const OptimizerView = React.memo(
       <div className={'flex items-stretch overflow-hidden flex-grow-1'}>
         <Switch value={optimizerView$.view}>
           {{
-            "basic": () => <CharacterEditView/>,
-            "edit": () => <CharacterEditForm
+            basic: () => <CharacterEditView/>,
+            edit: () => <CharacterEditForm
               character={characters[optimizerView$.currentCharacter.id.get()]}
               target={optimizerView$.currentCharacter.target.get()}/>,
-            "review": () => <Review/>,
+            review: () => <Review/>,
           }}
         </Switch>
       </div>
