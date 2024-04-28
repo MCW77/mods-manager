@@ -7,7 +7,7 @@ import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import "./Review.css";
 
 // utils
-import { flatten, mapValues, uniq } from "lodash-es";
+import { flatten, mapValues } from "lodash-es";
 import copyToClipboard from "#/utils/clipboard";
 import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
@@ -36,6 +36,7 @@ import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { DisplayWidget } from "./DisplayWidget";
+import { SummaryWidget } from "./SummaryWidget";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Credits } from "#/components/Credits/Credits";
@@ -284,7 +285,15 @@ class Review extends React.PureComponent<Props> {
               <DisplayWidget />
             </DefaultCollapsibleCard>
 						{this.actionsWidget()}
-						{this.summaryWidget()}
+            <DefaultCollapsibleCard className="" title="Summary">
+              <SummaryWidget
+                currentSetValue={this.props.currentSetValue}
+                newSetValue={this.props.newSetValue}
+                modRemovalCost={this.props.modRemovalCost}
+                modUpgradeCost={this.props.modUpgradeCost}
+                numMovingMods={this.props.numMovingMods}
+              />
+            </DefaultCollapsibleCard>
 					</div>
 					<div className="overflow-y-auto">{reviewContent}</div>
 				</div>
@@ -355,60 +364,6 @@ class Review extends React.PureComponent<Props> {
 							Move mods in-game
 						</Button>
 					</div>
-				</div>
-			</DefaultCollapsibleCard>
-		);
-	}
-
-	summaryWidget() {
-		const valueChange =
-			(100 * (this.props.newSetValue - this.props.currentSetValue)) /
-			this.props.currentSetValue;
-
-		return (
-			<DefaultCollapsibleCard className="" title="Summary">
-				<div className="prose prose-sm text-sm">
-					<h4>Costs</h4>
-					<p>
-						<span>Reassigning {this.props.numMovingMods} mods</span>
-						<br />
-						<span>
-							Your mods will cost {formatNumber(this.props.modRemovalCost)}{" "}
-							<Credits /> to move,
-						</span>
-						<br />
-						<span>
-							and an additional {formatNumber(this.props.modUpgradeCost)}{" "}
-							<Credits /> to level up to 15.
-						</span>
-					</p>
-					<h4>Set Value</h4>
-					<p>
-						<span>
-							Old set value sum:{" "}
-							{formatNumber(Number(this.props.currentSetValue.toFixed(2)))}
-						</span>
-						<br />
-						<span>
-							New set value sum:{" "}
-							{formatNumber(Number(this.props.newSetValue.toFixed(2)))}
-						</span>
-						<br />
-						<span>
-							Overall change:{" "}
-							<span
-								className={
-									valueChange > 0
-										? "increase"
-										: valueChange < 0
-											? "decrease"
-											: ""
-								}
-							>
-								{formatNumber(Number(valueChange.toFixed(2)))}%
-							</span>
-						</span>
-					</p>
 				</div>
 			</DefaultCollapsibleCard>
 		);
