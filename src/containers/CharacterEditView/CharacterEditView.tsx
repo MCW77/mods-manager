@@ -19,10 +19,6 @@ import {
   faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
-// utils
-import collectByKey from "#/utils/collectByKey";
-import keysWhere from "#/utils/keysWhere";
-
 // state
 import type { IAppState } from "#/state/storage";
 
@@ -49,7 +45,6 @@ import {
 import { defaultBaseCharacter } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -190,22 +185,6 @@ class CharacterEditView extends PureComponent<Props> {
             type="button"
             onClick={() => {
               incrementalOptimization$.indicesByProfile[this.props.allyCode].set(null);
-              const selectedTargets = this.props.selectedCharacters.map(
-                ({ target }) => target
-              );
-              const hasTargetStats = selectedTargets.some(
-                (target) =>
-                  target.targetStats.filter(
-                    (targetStat) => targetStat.optimizeForTarget
-                  ).length
-              );
-              const duplicateCharacters: CharacterNames[] = keysWhere(
-                collectByKey(
-                  this.props.selectedCharacters,
-                  ({ id }: { id: CharacterNames }) => id
-                ),
-                (targets: SelectedCharacters) => targets.length > 1
-              ) as CharacterNames[];
 
               type IndexOfCharacters = { [id in CharacterNames]: number };
               const minCharacterIndices: IndexOfCharacters =
