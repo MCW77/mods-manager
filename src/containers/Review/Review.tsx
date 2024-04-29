@@ -8,7 +8,6 @@ import "./Review.css";
 
 // utils
 import { flatten, mapValues } from "lodash-es";
-import copyToClipboard from "#/utils/clipboard";
 import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
@@ -37,6 +36,7 @@ import * as OptimizationPlan from "#/domain/OptimizationPlan";
 // components
 import { DisplayWidget } from "./DisplayWidget";
 import { SummaryWidget } from "./SummaryWidget";
+import { TextualReview } from "./TextualReview";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Credits } from "#/components/Credits/Credits";
@@ -309,7 +309,7 @@ class Review extends React.PureComponent<Props> {
 						<Button
 							type={"button"}
 							size={"sm"}
-							onClick={() => dialog$.show(this.reviewModal())}
+							onClick={() => dialog$.show(<TextualReview modAssignments={this.props.movingModAssignments}/>)}
 						>
 							Show Summary
 						</Button>
@@ -556,76 +556,6 @@ class Review extends React.PureComponent<Props> {
 				);
 			},
 		);
-	}
-
-	/**
-	 * Render a modal with a copy-paste-able review of the mods to move
-	 * @returns Array[JSX Element]
-	 */
-	reviewModal() {
-		return (
-			<div>
-				<h2>Move Summary</h2>
-				<pre id="summary_pre" className={"summary"}>
-					{this.summaryListContent()}
-				</pre>
-				<div className={"flex justify-center gap-2"}>
-					<Button type={"button"} onClick={() => this.copySummaryToClipboard()}>
-						Copy to Clipboard
-					</Button>
-					<Button type={"button"} onClick={() => dialog$.hide()}>
-						OK
-					</Button>
-				</div>
-			</div>
-		);
-	}
-
-	/**
-	 * Copies the summary display text into the clipboard
-	 */
-	copySummaryToClipboard() {
-		copyToClipboard(this.summaryListContent());
-	}
-
-	summaryListContent() {
-		const capitalize = (str: string) =>
-			str.charAt(0).toUpperCase() + str.slice(1);
-		const setMap = {
-			"Speed %": "Speed",
-			"Offense %": "Offense",
-			"Defense %": "Defense",
-			"Health %": "Health",
-			"Critical Chance %": "Critchance",
-			"Critical Damage %": "Critdamage",
-			"Potency %": "Potency",
-			"Tenacity %": "Tenacity",
-		};
-
-		return this.props.movingModAssignments
-			.map(({ id, target, assignedMods: mods }) => {
-				const assignedCharacter = this.props.characters[id];
-				const characterName = this.props.baseCharacters[
-					assignedCharacter.baseID
-				]
-					? this.props.baseCharacters[assignedCharacter.baseID].name
-					: assignedCharacter.baseID;
-
-				return [`${characterName} - ${target.name}`]
-					.concat(
-						mods.map((mod) => {
-							const moveFrom =
-								mod.characterID !== "null"
-									? this.props.baseCharacters[mod.characterID].name
-									: "your unassigned mods";
-							return `Move ${setMap[mod.set]}(${
-								mod.primaryStat.type
-							}) ${capitalize(mod.slot)} from ${moveFrom}.`;
-						}),
-					)
-					.join("\r\n");
-			})
-			.join("\r\n\r\n");
 	}
 
 	hotUtilsHelp() {
@@ -1006,6 +936,7 @@ const mapStateToProps = (state: IAppState) => {
 			id: id,
 			target: target,
 			assignedMods: assignedMods.filter((mod) => mod.characterID !== id),
+      missedGoals: [],
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);
 
