@@ -77,7 +77,7 @@ export const dialog$: ObservableObject<Dialog> = observable({
 				dialog$.reason.set("");
 				dialog$.solution.set("");
 				dialog$.modal.set(false);
-				dialog$.content.set(<></>);
+				dialog$.content.set(null);
 				dialog$.open.set(false);
 				dialog$.isError.set(false);
 				dispose();
@@ -92,17 +92,19 @@ export const dialog$: ObservableObject<Dialog> = observable({
 		type = "",
 	) => {
 		let options = {};
-		actionLabel !== ""
-			? (options = {
-					action: {
-						label: actionLabel,
-						onClick: actionHandler,
-					},
-					description: description,
-				})
-			: (options = {
-					description: description,
-				});
+		if (actionLabel !== "") {
+			options = {
+				action: {
+					label: actionLabel,
+					onClick: actionHandler,
+				},
+				description: description,
+			}
+		} else {
+			options = {
+				description: description,
+			}
+		}
 
 		switch (type) {
 			case "error":
