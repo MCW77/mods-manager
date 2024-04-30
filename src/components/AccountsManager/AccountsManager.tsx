@@ -28,7 +28,8 @@ import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
 const AccountsManager = React.memo(() => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const playerProfiles = profilesManagement$.profiles.playernameByAllycode.get()
+	const playerProfiles =
+		profilesManagement$.profiles.playernameByAllycode.get();
 	const [selectedProfile, setSelectedProfile] = useState(
 		Object.keys(playerProfiles)[0] ?? "",
 	);
@@ -51,10 +52,7 @@ const AccountsManager = React.memo(() => {
 				</p>
 
 				<div className={"flex gap-2 justify-center p-1"}>
-					<Button
-						type={"button"}
-						onClick={() => dialog$.hide()}
-					>
+					<Button type={"button"} onClick={() => dialog$.hide()}>
 						{t("general.accounts.Cancel")}
 					</Button>
 					<Button
