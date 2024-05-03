@@ -30,6 +30,7 @@ import type { Mod } from "#/domain/Mod";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import type { SelectedCharactersByTemplateName } from "#/domain/SelectedCharacters";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 export namespace thunks {
 	/**
@@ -266,9 +267,10 @@ export namespace thunks {
 					cleanedSelectedCharacters,
 				);
 
+				if (cleanedProfile.allyCode) profilesManagement$.profiles.activeAllycode.set(cleanedProfile.allyCode);
 				dispatch(actions.setProfile(cleanedProfile));
 				profilesManagement$.profiles.activeAllycode.set(allyCode);
-				dispatch(Data.thunks.fetchHotUtilsStatus(allyCode));
+				hotutils$.checkSubscriptionStatus();
 			} catch (error) {
 				dialog$.showError(
 					`Error loading your profile from the database: ${
@@ -282,10 +284,10 @@ export namespace thunks {
 	/**
 	 * Load profiles from the database and store them in the state. Only keep the full profile for the current active
 	 * ally code. All others only keep the ally code and name
-	 * @param allyCode
+	 * @param allycode
 	 * @returns {Function}
 	 */
-	export function loadProfiles(allyCode: string | null): ThunkResult<void> {
+	export function loadProfiles(allycode: string | null): ThunkResult<void> {
 		return (dispatch, getState) => {
 			const db = getDatabase();
 
@@ -302,8 +304,8 @@ export namespace thunks {
 						});
 
 						// Set the active profile
-						const profile = allyCode
-							? cleanedProfiles.find((profile) => profile.allyCode === allyCode)
+						const profile = allycode
+							? cleanedProfiles.find((profile) => profile.allyCode === allycode)
 							: cleanedProfiles.find((profile, index) => index === 0);
 
 						dispatch(actions.setProfile(profile ?? PlayerProfile.Default));
@@ -311,12 +313,12 @@ export namespace thunks {
 							profile?.allyCode ?? "",
 						);
 						if (profile !== undefined) {
-							dispatch(Data.thunks.fetchHotUtilsStatus(profile.allyCode));
+							hotutils$.checkSubscriptionStatus();
 						} else if (profilesManagement$.hasProfiles.get()) {
 							dispatch(App.actions.resetState());
 						}
             for (const profile of cleanedProfiles) {
-              profilesManagement$.addProfile(profile.allyCode, profile);
+              profilesManagement$.addProfile(profile);
             }
 					},
 					(error) =>

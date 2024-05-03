@@ -1,9 +1,9 @@
 // react
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-import { observer } from "@legendapp/state/react";
+import { Show, observer } from "@legendapp/state/react";
 
 // styles
 import {
@@ -13,12 +13,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { dialog$ } from "#/modules/dialog/state/dialog";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { Data } from "#/state/modules/data";
-import { Storage } from "#/state/modules/storage";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,67 +29,12 @@ import { Button } from "#ui/button";
 const ProfilesManager = observer(
 	React.memo(() => {
 		const dispatch: ThunkDispatch = useDispatch();
+		const [t] = useTranslation("global-ui");
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
 		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
-		const profile = useSelector(Storage.selectors.selectActiveProfile);
-		const hotUtilsSubscription = useSelector(
-			Storage.selectors.selectHotUtilsSubscription,
-		);
 		const [isAddingAProfile, setIsAddingAProfile] = useState(
 			Object.keys(profiles).length === 0,
 		);
-		const [t, i18n] = useTranslation("global-ui");
-
-		/**
-		 * Renders a modal stating that pulling unequipped mods using HotUtils will log you out of the game
-		 */
-		const fetchUnequippedModal = () => {
-			return (
-				<div className={"max-w-[40rem] prose dark:prose-invert"}>
-					<h1>Fetch your unequipped mods using HotUtils</h1>
-					<p>
-						This will fetch all of your player data, including unequipped mods
-						by using HotUtils. Please note that{" "}
-						<strong className={"gold"}>
-							this action will log you out of Galaxy of Heroes if you are
-							currently logged in
-						</strong>
-						.
-					</p>
-					<p>
-						<strong>Use at your own risk!</strong> HotUtils functionality breaks
-						the terms of service for Star Wars: Galaxy of Heroes. You assume all
-						risk in using this tool. Grandivory's Mods Optimizer is not
-						associated with HotUtils.
-					</p>
-					<div className={"actions flex gap-2 justify-center"}>
-						<Button
-							type={"button"}
-							variant={"destructive"}
-							className={""}
-							onClick={() => dialog$.hide()}
-						>
-							Cancel
-						</Button>
-						<Button
-							type={"button"}
-							onClick={() => {
-								dialog$.hide();
-								dispatch(
-									Data.thunks.refreshPlayerData(
-										allycode,
-										true,
-										profile?.hotUtilsSessionId ?? null,
-									),
-								);
-							}}
-						>
-							Fetch my data
-						</Button>
-					</div>
-				</div>
-			);
-		};
 
 		return (
 			<div className="flex items-center">
@@ -102,7 +46,7 @@ const ProfilesManager = observer(
 				)}
 				{allycode && (
 					<>
-						<div className="inline align-middle">
+						<div className="flex gap-1">
 							<Button
 								className={"m-l-2"}
 								type={"button"}
@@ -117,23 +61,20 @@ const ProfilesManager = observer(
 									title={`${t("header.Fetch")}`}
 								/>
 							</Button>
-							{hotUtilsSubscription && profile && profile.hotUtilsSessionId && (
+							<Show if={hotutils$.hasActiveSession}>
 								<Button
 									size={"icon"}
 									type={"button"}
 									variant={"outline"}
-									disabled={
-										!(
-											hotUtilsSubscription &&
-											profile &&
-											profile.hotUtilsSessionId
+									onClick={() =>
+										dispatch(
+											Data.thunks.refreshPlayerData(
+												allycode,
+												true,
+												hotutils$.activeSessionId.get() ?? null,
+											),
 										)
 									}
-									onClick={() => {
-										if (hotUtilsSubscription && profile?.hotUtilsSessionId) {
-											dialog$.show(fetchUnequippedModal());
-										}
-									}}
 								>
 									<span className="fa-layers">
 										<FontAwesomeIcon
@@ -148,7 +89,7 @@ const ProfilesManager = observer(
 										/>
 									</span>
 								</Button>
-							)}
+							</Show>
 						</div>
 					</>
 				)}

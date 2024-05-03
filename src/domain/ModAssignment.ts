@@ -13,6 +13,21 @@ interface ModAssignment {
 	messages?: string[];
 }
 
+const createModAssignment = (
+	id: CharacterNames,
+	target: OptimizationPlan,
+	assignedMods: Mod[],
+	missedGoals: MissedGoals = [],
+	messages: string[] = [],
+): ModAssignment => ({
+	id,
+	target,
+	assignedMods,
+	missedGoals,
+	messages,
+});
+
 type ModAssignments = ModAssignment[];
 
-export type { ModAssignment, ModAssignments };
+export { type ModAssignment, type ModAssignments, createModAssignment };
+

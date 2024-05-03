@@ -20,7 +20,6 @@ export interface IAppState {
   characterEditSortView: boolean,
   characterFilter: string,
   hideSelectedCharacters: boolean,
-  hotUtilsSubscription: boolean,
   modListFilter: ModListFilter,
   modsViewOptions: ModsViewOptions,
   profile: PlayerProfile, // All the data about the current character
@@ -54,7 +53,6 @@ export class AppState {
     characterEditSortView: false,
     characterFilter: "",
     hideSelectedCharacters: true,
-    hotUtilsSubscription: false,
     modListFilter: {
       view: "sets",
       show: "all",

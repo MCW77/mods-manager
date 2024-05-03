@@ -29,6 +29,9 @@
       "Title": "Display",
       "Language": "Language",
       "DarkMode": "Dark Mode"
+    },
+    "hotutils": {
+      "SessionIdPrompt": "Enter your HotUtils sessionid here"
     }
   },
   "optimizer": {

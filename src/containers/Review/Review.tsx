@@ -39,13 +39,16 @@ import { SummaryWidget } from "./SummaryWidget";
 import { TextualReview } from "./TextualReview";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { Credits } from "#/components/Credits/Credits";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { ModDetail } from "#/components/ModDetail/ModDetail";
 import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail";
 import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
+import { CreateProfileModal } from "#/modules/hotUtils/components/CreateProfileModal";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
+import { MoveModsModal } from "#/modules/hotUtils/components/MoveModsModal";
+import { ActionsWidget } from "./ActionsWidget";
 
 interface HUModsProfile {
 	id: CharacterNames;
@@ -202,37 +205,7 @@ const modUpgradeCosts: {
 	},
 };
 
-function formatNumber(num: number) {
-	return num.toLocaleString(navigator.language, { useGrouping: true });
-}
-
 class Review extends React.PureComponent<Props> {
-	generateHotUtilsProfile() {
-		const assignedMods = this.props.assignedMods
-			.filter((x) => null !== x)
-			.filter(({ id }) => this.props.characters[id].playerValues.level >= 50)
-			.map(({ id, assignedMods, target }) => ({
-				id: id,
-				modIds: assignedMods,
-				target: target.name,
-			}));
-
-		const lockedMods = (
-			Object.entries(this.props.currentModsByCharacter) as [
-				CharacterNames,
-				Mod[],
-			][]
-		)
-			.filter(([id]) => this.props.characters[id].optimizerSettings.isLocked)
-			.map(([id, mods]) => ({
-				id: id,
-				modIds: mods.map(({ id }) => id),
-				target: "locked",
-			}));
-
-		return assignedMods.concat(lockedMods);
-	}
-
 	render() {
 		let modRows: React.ReactNode;
 
@@ -284,7 +257,9 @@ class Review extends React.PureComponent<Props> {
             <DefaultCollapsibleCard title="Display">
               <DisplayWidget />
             </DefaultCollapsibleCard>
-						{this.actionsWidget()}
+            <DefaultCollapsibleCard title="Actions">
+              <ActionsWidget />
+            </DefaultCollapsibleCard>
             <DefaultCollapsibleCard className="" title="Summary">
               <SummaryWidget
                 currentSetValue={this.props.currentSetValue}
@@ -298,74 +273,6 @@ class Review extends React.PureComponent<Props> {
 					<div className="overflow-y-auto">{reviewContent}</div>
 				</div>
 			</div>
-		);
-	}
-
-	actionsWidget() {
-		return (
-			<DefaultCollapsibleCard title="Actions">
-				<div className="flex flex-col gap-4">
-					<div className="flex flex-col gap-2">
-						<Button
-							type={"button"}
-							size={"sm"}
-							onClick={() => dialog$.show(<TextualReview modAssignments={this.props.movingModAssignments}/>)}
-						>
-							Show Summary
-						</Button>
-					</div>
-					<div className="flex flex-col gap-2">
-						<Label htmlFor="">I don't like these results...</Label>
-						<Button
-							type={"button"}
-							onClick={() => optimizerView$.view.set("basic")}
-						>
-							Change my selection
-						</Button>
-					</div>
-					<div id="Hotutils-Actions" className="flex flex-col gap-2">
-						<Label htmlFor="Hotutils-Actions">HotUtils</Label>
-						<Button
-							type={"button"}
-							disabled={
-								!(
-									this.props.hotUtilsSubscription &&
-									this.props.hotUtilsSessionId
-								)
-							}
-							onClick={() => {
-								if (
-									this.props.hotUtilsSubscription &&
-									this.props.hotUtilsSessionId
-								) {
-									dialog$.show(this.hotUtilsCreateProfileModal());
-								}
-							}}
-						>
-							Create Loadout
-						</Button>
-						<Button
-							type={"button"}
-							disabled={
-								!(
-									this.props.hotUtilsSubscription &&
-									this.props.hotUtilsSessionId
-								)
-							}
-							onClick={() => {
-								if (
-									this.props.hotUtilsSubscription &&
-									this.props.hotUtilsSessionId
-								) {
-									dialog$.show(this.hotUtilsMoveModsModal());
-								}
-							}}
-						>
-							Move mods in-game
-						</Button>
-					</div>
-				</div>
-			</DefaultCollapsibleCard>
 		);
 	}
 
@@ -589,179 +496,6 @@ class Review extends React.PureComponent<Props> {
 						alt={"hotsauce"}
 					/>
 				</p>
-			</div>
-		);
-	}
-
-	hotUtilsCreateProfileModal() {
-		let categoryInput: HTMLInputElement | null;
-		let profileNameInput: HTMLInputElement | null;
-		let error: HTMLParagraphElement | null;
-
-		const checkNameAndCreateProfile = function (this: Review) {
-			if (
-				"" === (categoryInput?.value ?? "") ||
-				"" === (profileNameInput?.value ?? "")
-			) {
-				if (error !== null)
-					error.textContent =
-						"You must provide a category and name for your profile";
-			} else {
-				if (error !== null) error.textContent = "";
-
-				const profile: HUProfileCreationData = {
-					set: {
-						category: categoryInput?.value ?? "",
-						name: profileNameInput?.value ?? "",
-						units: this.generateHotUtilsProfile(),
-					},
-				};
-
-				this.props.createHotUtilsProfile(profile, this.props.hotUtilsSessionId);
-			}
-		}.bind(this);
-
-		return (
-			<div>
-				<h2>Create a new mod profile in HotUtils</h2>
-				<p>
-					This will create a new mods profile in HotUtils using the
-					recommendations listed here. After creating your profile, please log
-					into{" "}
-					<a
-						href={"https://www.hotutils.com/"}
-						target={"_blank"}
-						rel={"noopener noreferrer"}
-					>
-						HotUtils
-					</a>{" "}
-					to access your new profile.
-				</p>
-				<p>
-					<strong>Use at your own risk!</strong> HotUtils functionality breaks
-					the terms of service for Star Wars: Galaxy of Heroes. You assume all
-					risk in using this tool. Grandivory's Mods Optimizer is not associated
-					with HotUtils.
-				</p>
-				<hr />
-				<p className={"center"}>
-					Please enter a name for your new profile. Please note that using the
-					same name as an existing profile will cause it to be overwritten.
-				</p>
-				<div className={"form-row"}>
-					<label htmlFor={"categoryName"}>Category:</label>
-					<input
-						id={"categoryName"}
-						type={"text"}
-						name={"categoryName"}
-						defaultValue={"Grandivory"}
-						ref={(input) => {
-							categoryInput = input;
-						}}
-						onKeyUp={(e) => {
-							if (e.key === "Enter") {
-								checkNameAndCreateProfile();
-							}
-						}}
-					/>
-				</div>
-				<div className={"form-row"}>
-					<label htmlFor={"profileName"}>Profile Name:</label>
-
-					<input
-						id={"profileName"}
-						type={"text"}
-						name={"profileName"}
-						ref={(input) => {
-							profileNameInput = input;
-						}}
-						onKeyUp={(e) => {
-							if (e.key === "Enter") {
-								checkNameAndCreateProfile();
-							}
-						}}
-					/>
-				</div>
-				<p
-					className={"error"}
-					ref={(field) => {
-						error = field;
-					}}
-				/>
-				<div className={"actions"}>
-					<Button
-						type={"button"}
-						variant={"destructive"}
-						onClick={() => dialog$.hide()}
-					>
-						Cancel
-					</Button>
-					<Button type={"button"} onClick={() => checkNameAndCreateProfile()}>
-						Create Profile
-					</Button>
-				</div>
-			</div>
-		);
-	}
-
-	hotUtilsMoveModsModal() {
-		return (
-			<div>
-				<h2>Move mods in-game using HotUtils</h2>
-				<h3>
-					Moving your mods will cost
-					<br />
-					<span className={"box"}>
-						<strong className={"white"}>
-							{formatNumber(this.props.modRemovalCost)}
-						</strong>{" "}
-						<Credits />
-					</span>
-				</h3>
-				<p>
-					This will move all of your mods as recommended by Grandivory's Mods
-					Optimizer. Please note that{" "}
-					<strong className={"gold"}>
-						this action will log you out of Galaxy of Heroes if you are
-						currently logged in
-					</strong>
-					.
-				</p>
-				<p>
-					Moving your mods can take several minutes. Please be patient and allow
-					the process to complete before refreshing or logging back into Galaxy
-					of Heroes.
-				</p>
-				<p>
-					<strong>Use at your own risk!</strong> HotUtils functionality breaks
-					the terms of service for Star Wars: Galaxy of Heroes. You assume all
-					risk in using this tool. Grandivory's Mods Optimizer is not associated
-					with HotUtils.
-				</p>
-				<div className={"actions"}>
-					<Button
-						type={"button"}
-						variant={"destructive"}
-						onClick={() => dialog$.hide()}
-					>
-						Cancel
-					</Button>
-					<Button
-						type={"button"}
-						onClick={() => {
-							const profile: HUModsMoveProfile = {
-								units: this.generateHotUtilsProfile(),
-							};
-
-							this.props.moveModsWithHotUtils(
-								profile,
-								this.props.hotUtilsSessionId,
-							);
-						}}
-					>
-						Move my mods
-					</Button>
-				</div>
 			</div>
 		);
 	}
@@ -996,8 +730,6 @@ const mapStateToProps = (state: IAppState) => {
 		modUpgradeCost: modUpgradeCost,
 		numMovingMods: numMovingMods,
 		filter: ReviewModule.selectors.selectModListFilter(state),
-		hotUtilsSubscription: state.hotUtilsSubscription,
-		hotUtilsSessionId: profile.hotUtilsSessionId ?? "",
 	};
 };
 
@@ -1010,10 +742,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
 		dispatch(ReviewModule.thunks.unequipMods(modIDs)),
 	reassignMods: (modIDs: string[], characterID: CharacterNames) =>
 		dispatch(ReviewModule.thunks.reassignMods(modIDs, characterID)),
-	createHotUtilsProfile: (profile: HUProfileCreationData, sessionId: string) =>
-		dispatch(Data.thunks.createHotUtilsProfile(profile, sessionId)),
-	moveModsWithHotUtils: (profile: HUModsMoveProfile, sessionId: string) =>
-		dispatch(Data.thunks.moveModsWithHotUtils(profile, sessionId)),
 });
 
 type Props = PropsFromRedux;

@@ -22,17 +22,17 @@ type ComponentProps = {
 
 const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const [t, i18n] = useTranslation("global-ui");
+	const [t] = useTranslation("global-ui");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [isFetchFinished, setIsFetchFinished] = useState(false);
 
 	useEffect(() => {
 		if (isFetchFinished === true) setAddMode(false);
-	}, [isFetchFinished]);
+	}, [isFetchFinished, setAddMode]);
 
-	const fetch = (allyCode: string): ThunkResult<Promise<void>> => {
+	const fetch = (allycode: string): ThunkResult<Promise<void>> => {
 		return async (dispatch) => {
-			await dispatch(Data.thunks.refreshPlayerData(allyCode, true, null));
+			await dispatch(Data.thunks.refreshPlayerData(allycode, true, null));
 			setIsFetchFinished(true);
 		};
 	};

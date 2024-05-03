@@ -32,6 +32,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { AccountsManager } from "#/components/AccountsManager/AccountsManager";
 import { FileInput } from "#/components/FileInput/FileInput";
+import { HotutilsSettingsForm } from "#/modules/hotUtils/components/HotutilsSettingsForm";
 import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
@@ -98,6 +99,14 @@ const GeneralSettingsView = observer(() => {
 			</Card>
 			<Card className="!bg-opacity-20 m-4">
 				<CardHeader>
+					<CardTitle>HotUtils</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<HotutilsSettingsForm />
+				</CardContent>
+			</Card>
+			<Card className="!bg-opacity-20 m-4">
+				<CardHeader>
 					<CardTitle>{t("general.backup.Title")}</CardTitle>
 				</CardHeader>
 				<CardContent className={"flex gap-6 items-center"}>
@@ -123,10 +132,6 @@ const GeneralSettingsView = observer(() => {
 									Storage.thunks.exportDatabase((progressData: IUserData) => {
 										progressData.version = version;
 										progressData.allyCode = allycode;
-										for (const profile of progressData.profiles) {
-											// biome-ignore lint/performance/noDelete: <explanation>
-											delete profile.hotUtilsSessionId;
-										}
 										const progressDataSerialized = JSON.stringify(progressData);
 										const userData = new Blob([progressDataSerialized], {
 											type: "application/json;charset=utf-8",

@@ -4,6 +4,8 @@ import { createSelector } from "@reduxjs/toolkit";
 // state
 import type { IAppState } from "../storage";
 
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
 // actions
 import type { actions } from "../actions/storage";
 
@@ -19,8 +21,8 @@ export namespace reducers {
 		state: IAppState,
 		action: ReturnType<typeof actions.setProfile>,
 	): IAppState {
+		if (action.profile) profilesManagement$.profiles.activeAllycode.set(action.profile.allyCode);
 		return Object.assign({}, state, {
-			allyCode: action.profile ? action.profile.allyCode : "",
 			profile: action.profile,
 		});
 	}
@@ -36,21 +38,10 @@ export namespace reducers {
 			},
 		}) as IAppState;
 	}
-
-	export function setHotUtilsSubscription(
-		state: IAppState,
-		action: ReturnType<typeof actions.setHotUtilsSubscription>,
-	): IAppState {
-		return Object.assign({}, state, {
-			hotUtilsSubscription: action.subscription,
-		});
-	}
 }
 
 export namespace selectors {
 	export const selectActiveProfile = (state: IAppState) => state.profile;
-	export const selectHotUtilsSubscription = (state: IAppState) =>
-		state.hotUtilsSubscription;
 	export const selectCharactersInActiveProfile = createSelector(
 		[selectActiveProfile],
 		(activeProfile) => activeProfile.characters,

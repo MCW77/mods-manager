@@ -36,10 +36,6 @@ const DisplayWidget = () => {
 	const dispatch = useDispatch();
 	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 	const profile = useSelector(Storage.selectors.selectActiveProfile);
-	const hotUtilsSubscription = useSelector(
-		Storage.selectors.selectHotUtilsSubscription,
-	);
-	const hotUtilsSessionId = profile.hotUtilsSessionId ?? "";
 	const filter = useSelector(ReviewModule.selectors.selectModListFilter);
 
 	const sortOptions = {

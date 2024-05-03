@@ -31,7 +31,7 @@ type ComponentProps = {
 const ProfileSelector = observer(
 	React.memo(({ setAddMode }: ComponentProps) => {
 		const dispatch: ThunkDispatch = useDispatch();
-		const [t, i18n] = useTranslation("global-ui");
+		const [t] = useTranslation("global-ui");
 		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
 

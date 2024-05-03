@@ -1,7 +1,7 @@
 // react
 import React, { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
@@ -16,11 +16,13 @@ import {
 
 // state
 import { Show, observer, reactive } from "@legendapp/state/react";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
 import { Data } from "#/state/modules/data";
+import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { SectionNames } from "#/modules/ui/domain/SectionNames";
@@ -46,7 +48,8 @@ const ReactiveTabs = reactive(Tabs);
 const App = observer(
 	React.memo(() => {
 		const dispatch: ThunkDispatch = useDispatch();
-		const [t, i18n] = useTranslation("global-ui");
+		const [t] = useTranslation("global-ui");
+		const profile = useSelector(Storage.selectors.selectActiveProfile);
 		const firstSection = profilesManagement$.hasProfiles.peek()
 			? "explore"
 			: "help";
@@ -61,7 +64,16 @@ const App = observer(
 			if (allycode) {
 				if (sessionId) {
 					if (queryParams.has("NoPull")) {
-						dispatch(Data.thunks.setHotUtilsSessionId(allycode, sessionId));
+						if (profilesManagement$.profiles.activeAllycode.get() === "")
+							dispatch(
+								Data.thunks.refreshPlayerData(
+									allycode,
+									false,
+									sessionId,
+									false,
+								),
+							);
+						else hotutils$.sessionIdsByProfile[allycode].set(sessionId);
 					} else {
 						dispatch(
 							Data.thunks.refreshPlayerData(allycode, true, sessionId, false),
@@ -82,7 +94,7 @@ const App = observer(
 			// Check the current version of the app against the API
 			dispatch(Data.thunks.checkVersion());
 			ui$.currentSection.set(firstSection);
-		});
+		}, [firstSection, dispatch]);
 
 		return (
 			<Suspense fallback={<Spinner />}>

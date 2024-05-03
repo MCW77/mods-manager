@@ -37,7 +37,6 @@ type AppActions =
   | ReturnType<typeof Review.actions.changeModListFilter>
   | ReturnType<typeof Storage.actions.setBaseCharacters>
   | ReturnType<typeof Storage.actions.setCharacterTemplates>
-  | ReturnType<typeof Storage.actions.setHotUtilsSubscription>
   | ReturnType<typeof Storage.actions.setProfile>
 ;
 // #endregion
@@ -107,8 +106,6 @@ const modsOptimizer: RootReducer = (state: IAppState | undefined, action: AppAct
       return AppState.save(
         Storage.reducers.setCharacterTemplates(state, action)
       );
-    case Storage.actionNames.SET_HOTUTILS_SUBSCRIPTION:
-      return Storage.reducers.setHotUtilsSubscription(state, action);
 
     default:
       return state;

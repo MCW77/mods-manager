@@ -13,6 +13,7 @@ import getDatabase, { type Database } from "#/state/storage/Database";
 import { beginBatch, endBatch } from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
@@ -25,33 +26,20 @@ import { Storage } from '#/state/modules/storage';
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
-import type { HUModsMoveProfile, HUProfileCreationData } from "#/containers/Review/Review";
-import type { HUFlatMod } from '#/domain/types/ModTypes';
+import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 import type * as DTOs from "#/modules/profilesManagement/dtos";
-import * as Mappers from "#/modules/profilesManagement/mappers";
 import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 
 import { type BaseCharactersById, mapAPI2BaseCharactersById } from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
-import { Mod } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod";
 import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
-// components
-import { Button } from "#ui/button";
-
-interface FetchedProfile {
-  name: string,
-  mods: Mod[],
-  playerValues: PlayerValuesByCharacter,
-  updated: boolean,
-  sessionId?: string,
-}
-
 interface FetchedPlayerData {
   baseCharacters: BaseCharactersById;
-  profile: FetchedProfile;
+  profile: FetchedGIMOProfile;
 }
 
 
@@ -132,35 +120,19 @@ export namespace thunks {
   }
   */
 
-  function fetchVersion() {
-    return fetch(
-      "https://api.mods-optimizer.swgoh.grandivory.com/versionapi",
-      { method: "POST", body: null, mode: "cors" }
-    )
-      .then(response => response.text())
-      .catch(error => {
-        console.error(error);
-        throw new Error(
-          "Error fetching the current version. Please check to make sure that you are on the latest version"
-        );
-      });
-  }
-
-  function post(url = "", data = {}, extras = {}) {
-    return fetch(url, Object.assign({
-      method: "POST",
-      headers: { Accept: "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-      mode: "cors",
-    }, extras) as RequestInit)
-      .then(
-        response => {
-          if (response.ok) {
-            return response.json();
-          }
-          return response.text().then(errorText => Promise.reject(new Error(errorText)));
-        }
+  async function fetchVersion() {
+    try {
+      const response = await fetch(
+        "https://api.mods-optimizer.swgoh.grandivory.com/versionapi",
+        { method: "POST", body: null, mode: "cors" }
       );
+      return await response.text();
+    } catch (error) {
+      console.error(error);
+      throw new Error(
+        "Error fetching the current version. Please check to make sure that you are on the latest version"
+      );
+    }
   }
 
   function processVersion(version: string): ThunkResult<void> {
@@ -183,7 +155,7 @@ export namespace thunks {
 
   /**
    * Collect all the information needed for the optimizer for a player
-   * @param allyCode {string}
+   * @param allycode {string}
    * @param keepOldMods {boolean} Whether to keep all existing mods, regardless of whether they were returned in this call
    * @param useHotUtils {boolean} Whether to use mod data from HotUtils in place of swgoh.help
    * @param sessionId {string} A session ID to use with HotUtils, which pulls unequipped mods but
@@ -193,15 +165,15 @@ export namespace thunks {
    * @returns {function(*=): Promise<T | never | never>}
    */
   export function refreshPlayerData(
-    allyCode: string,
+    allycode: string,
     keepOldMods: boolean,
     sessionId: string | null,
     useSession = true
   ): ThunkResult<Promise<void>> {
-    const cleanedAllyCode = cleanAllyCode(allyCode);
+    const cleanedAllyCode = cleanAllyCode(allycode);
     const data: FetchedPlayerData = {
       baseCharacters: {} as BaseCharactersById,
-      profile: {} as FetchedProfile
+      profile: {} as FetchedGIMOProfile
     };
 
     const messages: string[] = [];
@@ -227,10 +199,8 @@ export namespace thunks {
 
       // Then, fetch the player's data from HotUtils
       try {
-        const huProfile = await fetchProfile(cleanedAllyCode, useSession ? sessionId : null);
-        huProfile.sessionId = sessionId ?? '';
+        const huProfile = await hotutils$.fetchProfile(cleanedAllyCode);
         data.profile = huProfile;
-        const playerValues = huProfile.playerValues;
 
         // Process all of the data that's been collected
         const db = getDatabase();
@@ -330,25 +300,23 @@ export namespace thunks {
   }
 
   function updatePlayerData(
-    allyCode: string,
+    allycode: string,
     fetchData: FetchedPlayerData,
     db: Database,
     keepOldMods: boolean
   ): ThunkResult<Promise<void>> {
     return async (dispatch) => {
       try {
-        const dbProfile = await db.getProfile(allyCode);
+        const dbProfile = await db.getProfile(allycode);
 
-        const baseProfile = dbProfile !== PlayerProfile.Default ?
+        const oldProfile = dbProfile !== PlayerProfile.Default ?
           dbProfile.withPlayerName(fetchData.profile.name)
         :
-          new PlayerProfile(allyCode, fetchData.profile.name);
-        baseProfile.allyCode = allyCode;
-        optimizationSettings$.addProfile(allyCode);
-        incrementalOptimization$.addProfile(allyCode);
+          new PlayerProfile(allycode, fetchData.profile.name);
+        oldProfile.allyCode = allycode;
+        optimizationSettings$.addProfile(allycode);
+        incrementalOptimization$.addProfile(allycode);
 
-        const sessionId = fetchData.profile.sessionId  ?? baseProfile.hotUtilsSessionId;
-        const oldProfile = baseProfile.withHotUtilsSessionId(sessionId);
 
         // Collect the new character objects by combining the default characters with the player values
         // and the optimizer settings from the current profile.
@@ -411,12 +379,14 @@ export namespace thunks {
             "error",
           )
         );
+        if (newProfile.allyCode) profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
         dispatch(Storage.actions.setProfile(newProfile));
         beginBatch();
         profilesManagement$.addProfile(newProfile);
         profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
         endBatch()
-        dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
+        hotutils$.checkSubscriptionStatus();
+//        dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
 
       }
       catch(error)
@@ -427,344 +397,5 @@ export namespace thunks {
 
       return;
     }
-  }
-
-
-  //***********************/
-  // HotUtils Integration */
-  //***********************/
-
-  function cancelModMove(taskId: number, sessionId: string):ThunkResult<void> {
-    return (dispatch) => post(
-        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-        {
-          action: "cancelmove",
-          sessionId: sessionId,
-          payload: {
-            taskId: taskId
-          }
-        }
-      )
-        .then(response => {
-          if (response.errorMessage) {
-            dialog$.hide();
-            dialog$.showError(response.errorMessage);
-          } else {
-            switch (response.responseCode) {
-              case 0:
-                dialog$.hide();
-                dialog$.showError(response.responseMessage);
-                break;
-              default:
-                modMoveActive = false;
-                dialog$.show(modCancelModal());
-              // Any other functionality around cancellation will happen on the next response from `pollForModMoveStatus`
-            }
-          }
-        })
-        .catch(error => {
-          dialog$.showError(error.message);
-        })
-  }
-
-  export function createHotUtilsProfile(profile: HUProfileCreationData, sessionId: string):ThunkResult<void> {
-    return (dispatch) => {
-      isBusy$.set(true);
-      return post(
-        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-        {
-          action: "createprofile",
-          sessionId: sessionId,
-          payload: profile
-        }
-      )
-      .then(response => {
-        if (response.errorMessage) {
-          dialog$.hide();
-          dialog$.showError(response.errorMessage);
-        } else {
-          switch (response.responseCode) {
-            case 0:
-              dialog$.showError(response.responseMessage);
-              break;
-            case 1:
-              dialog$.hide();
-              dialog$.showFlash(
-                "Profile created successfully",
-                "Please login to HotUtils to manage your new profile",
-                "",
-                undefined,
-                "success",
-              );
-              break;
-            default:
-              dialog$.hide();
-              dialog$.showError("Unknown response from HotUtils");
-              break;
-          }
-        }
-      })
-      .catch(error => {
-        dialog$.hide();
-        dialog$.showError(error.message);
-      })
-      .finally(() => {
-        isBusy$.set(false);
-      })
-    }
-  }
-
-  export function fetchHotUtilsStatus(allyCode: string):ThunkResult<void> {
-    const cleanedAllyCode = cleanAllyCode(allyCode);
-
-    return (dispatch) => post(
-        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-        {
-          action: "checksubscription",
-          payload: {
-            allyCode: cleanedAllyCode
-          }
-        }
-      )
-        // access codes: 0 = no subscription, 1 = subscription, but no connection, 2 = active subscription
-        .then(response => dispatch(Storage.actions.setHotUtilsSubscription(!!response.access)))
-        .catch(error => {
-          dialog$.showError(error.message);
-        })
-  }
-
-  /**
-   * Fetch a player profile from the API
-   * @param allyCode {string} The ally code to request
-   * @returns {Promise<T | never>}
-   */
-  function fetchProfile(allyCode: string, sessionId: string | null) {
-    interface IHUProfile {
-      allycode: number,
-      name: string,
-      guild: string,
-      mods: HUFlatMod[],
-      characters: any,
-      updated?: boolean,
-    }
-
-    return post(
-      "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/",
-      {
-        action: "getprofile",
-        sessionId: sessionId,
-        payload: {
-          allyCode: allyCode,
-        }
-      }
-    ).then(response => {
-      if (response.errorMessage) {
-        throw new Error(response.errorMessage);
-      }
-
-      const playerProfile: IHUProfile = response.mods.profiles[0];
-
-      // Convert mods to the serialized format recognized by the optimizer
-      const profileMods = playerProfile.mods.map(Mod.fromHotUtils);
-
-      // Convert each character to a PlayerValues object
-      const profileValues: PlayerValuesByCharacter = playerProfile.characters.reduce((characters: PlayerValuesByCharacter, character: DTOs.HU.HUPlayerValuesDTO) => {
-        characters[character.baseId] = Mappers.HU.HUPlayerValuesMapper.fromHU(character);
-        return characters;
-      }, {} as PlayerValuesByCharacter);
-
-      return {
-        name: playerProfile.name,
-        mods: profileMods,
-        playerValues: profileValues,
-        updated: playerProfile.updated ?? false
-      } as FetchedProfile;
-    })
-  }
-
-  let modMoveActive = false;
-
-  function modCancelModal() {
-    return <div>
-      <h3>Moving Your Mods...</h3>
-      <div className={'h-4 w-64 text-center p-0 my-2 mx-auto'}>
-        <p><strong className={'text-red-6'}>Cancelling...</strong></p>
-      </div>
-      <div className={'actions'}>
-        <Button
-          type={"button"}
-          variant={"destructive"}
-          disabled={true}
-        >
-          Cancel
-        </Button>
-      </div>
-    </div>;
-  }
-
-  function modProgressModal(taskId: number, sessionId: string, progress: number, dispatch: ThunkDispatch) {
-    return <div>
-      <h3>Moving Your Mods...</h3>
-      <div className={'progress'}>
-        <span className={'progress-bar'} id={"progress-bar"} style={{ width: `${progress}%` }} />
-      </div>
-      <div className={'actions'}>
-        <Button
-          type={"button"}
-          variant={"destructive"}
-          onClick={() => dispatch(cancelModMove(taskId, sessionId))}
-        >
-          Cancel
-        </Button>
-      </div>
-    </div>;
-  }
-
-  export function moveModsWithHotUtils(profile: HUModsMoveProfile, sessionId: string):ThunkResult<void> {
-    return (dispatch) => {
-      isBusy$.set(true);
-      return post(
-        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-        {
-          action: "movemods",
-          sessionId: sessionId,
-          payload: profile
-        }
-      )
-        .then(response => {
-          isBusy$.set(false);
-          if (response.errorMessage) {
-            dialog$.hide();
-            dialog$.showError(response.errorMessage);
-          } else {
-            switch (response.responseCode) {
-              case 0:
-                dialog$.hide();
-                dialog$.showError(response.responseMessage);
-                break;
-              default:
-                if (response.taskId === 0) {
-                  dialog$.hide();
-                  dialog$.showFlash(
-                    "No Action Taken",
-                    "There were no mods to move!",
-                    "",
-                    undefined,
-                    "info",
-                  )
-                } else {
-                  modMoveActive = true;
-                  // Show the progress modal 'mod-move-progress'
-                  dialog$.show(modProgressModal(response.taskId, sessionId, 0, dispatch));
-                  // Start polling for udpates
-                  return pollForModMoveStatus(response.taskId, sessionId, dispatch);
-                }
-                break;
-            }
-          }
-        })
-        .catch(error => {
-          dialog$.hide();
-          dialog$.showError(error.message);
-        })
-        .finally(() => {
-          isBusy$.set(false);
-        })
-    }
-  }
-
-  function pollForModMoveStatus(taskId: number, sessionId: string, dispatch: ThunkDispatch) {
-    return new Promise((resolve, reject) => {
-      post(
-        "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-        {
-          action: "checkmovestatus",
-          sessionId: sessionId,
-          payload: {
-            taskId: taskId
-          }
-        }
-      ).then(response => {
-        if (response.errorMessage) {
-          reject(new Error(response.errorMessage))
-        } else {
-          switch (response.responseCode) {
-            case 0:
-              reject(new Error(response.responseMessage));
-              break;
-            default:
-              if (!response.running) {
-                modMoveActive = false;
-                const updatedMods = response.mods.profiles[0].mods.map(Mod.fromHotUtils);
-                dispatch(App.thunks.updateProfile(profile => profile.withMods(updatedMods)));
-
-                dialog$.hide();
-                if (response.progress.index === response.progress.count) {
-                  dialog$.showFlash(
-                    "Mods successfully moved",
-                    "Your mods have been moved. You may log into Galaxy of Heroes to see your characters.",
-                    "",
-                    undefined,
-                    "success",
-                  );
-                } else {
-                  dialog$.showFlash(
-                    "Mod move cancelled",
-                    `Your mod move has been cancelled. ${response.progress.index} characters have already been updated.`,
-                    "",
-                    undefined,
-                    "info",
-                  );
-                }
-              } else {
-                // Update the modal
-                if (modMoveActive) {
-                  const progress = 100 * response.progress.index / response.progress.count;
-                  // 'mod-move-progress'
-                  dialog$.show(modProgressModal(taskId, sessionId, progress, dispatch));
-                }
-                // If the move is still ongoing, then poll again after a few seconds.
-                setTimeout(
-                  () => resolve(pollForModMoveStatus(taskId, sessionId, dispatch)),
-                  2000
-                );
-              }
-              break;
-          }
-        }
-      }).catch(error => reject(error))
-    });
-  }
-
-  export function setHotUtilsSessionId(allyCode: string, sessionId: string): ThunkResult<Promise<void>> {
-    return async (dispatch) => {
-      const db = getDatabase();
-      try {
-        const profile: PlayerProfile = await db.getProfile(allyCode);
-        if (!profile) {
-          // If there's no profile to put the Session ID into, then do a pull of data and pass in the session ID
-          dispatch(refreshPlayerData(allyCode, false, sessionId, false));
-        } else {
-          const newProfile = profile.withHotUtilsSessionId(sessionId);
-          db.saveProfile(
-            newProfile,
-            () => {
-              dispatch(Storage.actions.setProfile(newProfile));
-              profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
-            },
-            error => dialog$.showFlash(
-              "Storage Error",
-              "Error applying HotUtils session ID to your profile. Please try again.",
-              "",
-              undefined,
-              "error",
-            )
-          )
-        }
-      }
-      catch (error) {
-        dialog$.showError((error as DOMException).message);
-      }
-    };
   }
 }

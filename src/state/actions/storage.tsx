@@ -65,13 +65,6 @@ export namespace actions {
     } as const;
   }
 
-  export function setHotUtilsSubscription(hasAccess: boolean) {
-    return {
-      type: actionNames.SET_HOTUTILS_SUBSCRIPTION,
-      subscription: hasAccess
-    } as const;
-  }
-
   export function setProfile(profile: PlayerProfile) {
     return {
       type: actionNames.SET_PROFILE,
@@ -83,6 +76,5 @@ export namespace actions {
 export namespace actionNames {
   export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS' as const;
   export const SET_CHARACTER_TEMPLATES = 'SET_CHARACTER_TEMPLATES' as const;
-  export const SET_HOTUTILS_SUBSCRIPTION = 'SET_HOTUTILS_SUBSCRIPTION' as const;
   export const SET_PROFILE = 'SET_PROFILE' as const;
 };

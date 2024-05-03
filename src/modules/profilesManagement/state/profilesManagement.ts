@@ -39,11 +39,14 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				profilesManagement$.profiles.activeAllycode.get()
 			].get(),
 		),
-		activeProfile: computed<PlayerProfile>(() =>
-			profilesManagement$.profiles.profilesByAllycode[
+		activeProfile: computed<PlayerProfile>(() => {
+			if (!profilesManagement$.hasProfiles.get()) {
+				return {} as PlayerProfile; // PlayerProfile.Default
+			}
+			return profilesManagement$.profiles.profilesByAllycode[
 				profilesManagement$.profiles.activeAllycode.get()
-			].get(),
-		),
+			].get();
+		}),
 		hasProfiles: computed<boolean>(
 			() =>
 				Object.keys(profilesManagement$.profiles.profilesByAllycode.get())
@@ -52,7 +55,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		addProfile: (profile: PlayerProfile) => {
 			profilesManagement$.profiles.profilesByAllycode.set({
 				...profilesManagement$.profiles.profilesByAllycode.peek(),
-				[profile.allyCode]: {} as PlayerProfile, // TODO save the profile once PlayerProfiles are serializable
+				[profile.allyCode]: { allyCode: profile.allyCode } as PlayerProfile, // TODO save the profile once PlayerProfiles are serializable
 			});
 			profilesManagement$.profiles.playernameByAllycode.set({
 				...profilesManagement$.profiles.playernameByAllycode.peek(),
