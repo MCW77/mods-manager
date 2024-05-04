@@ -30,6 +30,7 @@ import type * as Character from "#/domain/Character";
 import type { CharacterSettings } from "#/domain/CharacterSettings";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { ModSuggestion } from "#/domain/PlayerProfile";
+import type { SetRestrictions } from "#/domain/SetRestrictions";
 import type { SetStats } from "#/domain/Stats";
 import { type TargetStat, createTargetStat } from "#/domain/TargetStat";
 
@@ -85,10 +86,13 @@ const CharacterEditForm = observer(({
     target: cloneOptimizationPlan(),
     addSetBonus: (setName: SetStats.GIMOStatNames) => {
       const restrictions = target$.target.setRestrictions.peek();
-      const newRestrictions = setName in restrictions ?
-        {...restrictions, [setName]: restrictions[setName]!+1} // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
-      :
-        {...restrictions, [setName]: 1};
+
+      let newRestrictions: SetRestrictions;
+      if (restrictions[setName] !== undefined) {
+        newRestrictions = {...restrictions, [setName]: restrictions[setName]+1};
+      } else {
+        newRestrictions = {...restrictions, [setName]: 1};
+      }
       const newRestrictionsKVs = Object.entries(newRestrictions) as [SetStats.GIMOStatNames, number][];
       const requiredSlots = newRestrictionsKVs.reduce((acc, [setName, count]: [SetStats.GIMOStatNames, number]) =>
         acc + setBonuses[setName].numberOfModsRequired * count, 0);
@@ -102,8 +106,8 @@ const CharacterEditForm = observer(({
     removeSetBonus: (setName: SetStats.GIMOStatNames) => {
       const restrictions = target$.target.setRestrictions.peek();
       if (restrictions[setName] !== undefined) {
-        if (restrictions[setName]! > 0) { // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
-          target$.target.setRestrictions[setName].set(restrictions[setName]! -1); // TODO: Use hasRestrictionOn typeguard when ts 5.5 is released
+        if (restrictions[setName] > 0) {
+          target$.target.setRestrictions[setName].set(restrictions[setName] -1);
         } else {
           target$.target.setRestrictions[setName].delete();
         }
