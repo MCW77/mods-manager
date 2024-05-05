@@ -10,6 +10,7 @@ type ComponentProps = {
 
 const Pips = React.memo(({ pips }: ComponentProps) => {
 	const pipElements = Array.from(Array(pips).keys()).map((_, index) => (
+		// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 		<span key={index} className="pip" />
 	));
 

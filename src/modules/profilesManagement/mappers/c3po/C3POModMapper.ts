@@ -52,9 +52,9 @@ export class ModMapper {
 			if (mod[`secondaryStat-${pos}-Name`] !== undefined) {
 				secondaryStats.push(
 					C3POMappers.SecondaryStatMapper.fromC3PO({
-						name: mod[`secondaryStat-${pos}-Name`]!,
+						name: mod[`secondaryStat-${pos}-Name`],
 						value: mod[`secondaryStat-${pos}-Value`],
-						rolls: mod[`secondaryStat-${pos}-Roll`]!,
+						rolls: mod[`secondaryStat-${pos}-Roll`],
 					}),
 				);
 			}

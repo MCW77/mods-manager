@@ -326,15 +326,17 @@ export class Mod {
     type secondaryPos = 1 | 2 | 3 | 4;
     const secondaryStats: SecondaryStats.SecondaryStat[] = [];
     for (const pos of [1, 2, 3, 4] as secondaryPos[]) {
+      const typeKey = `secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer;
+      const rollKey = `secondaryRoll_${pos}` as keyof ModTypes.FlatModRollIndexer;
       if (
-        flatMod[`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer] !== undefined &&
-        flatMod[`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer] !== null &&
-        flatMod[`secondaryRoll_${pos}` as keyof ModTypes.FlatModRollIndexer] !== null
+        flatMod[typeKey] !== undefined &&
+        flatMod[typeKey] !== null &&
+        flatMod[rollKey] !== null
       ) {
         secondaryStats.push(SecondaryStats.SecondaryStat.fromHotUtils(
-          flatMod[`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer],
+          flatMod[typeKey],
           flatMod[`secondaryValue_${pos}` as keyof ModTypes.FlatModValueIndexer],
-          flatMod[`secondaryRoll_${pos}` as keyof ModTypes.FlatModRollIndexer],
+          flatMod[rollKey],
         ));
       }
     }
