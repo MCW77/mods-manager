@@ -101,9 +101,7 @@ const ActionsWidget = () => {
 					size={"sm"}
 					onClick={() =>
 						dialog$.show(
-							TextualReview({
-								modAssignments: movingModsByAssignedCharacter,
-							}),
+							<TextualReview modAssignments={movingModsByAssignedCharacter} />,
 						)
 					}
 				>
