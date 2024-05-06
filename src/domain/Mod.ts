@@ -60,6 +60,25 @@ export class Mod {
     });
   }
 
+  static setupCalibrationAccessors() {
+    Object.defineProperty(Mod.prototype, 'TotalCalibrations', {
+      get: function(): number {
+        if ((this as Mod).pips < 6) return 0;
+        return (this as Mod).tier+1;
+      },
+      configurable: true,
+    });
+    Object.defineProperty(Mod.prototype, 'CalibrationPrice', {
+      get: function(): number {
+        if ((this as Mod).pips < 6) return 0;
+        const totalCalibrations = (this as Mod).tier+1;
+        if ((this as Mod).reRolledCount >= totalCalibrations) return 0;
+        return Mod.reRollPrices[(this as Mod).reRolledCount];
+      },
+      configurable: true,
+    });
+  }
+
   static setupStatAccessors() {
     for (const stat of SecondaryStats.SecondaryStat.statNames) {
       Object.defineProperty(Mod.prototype, `StatScore${stat}`, {
@@ -419,3 +438,4 @@ export class Mod {
 
 Mod.setupSetAccessor();
 Mod.setupStatAccessors();
+Mod.setupCalibrationAccessors();

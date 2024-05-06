@@ -586,6 +586,9 @@ class ModFilter extends React.PureComponent<Props> {
             <option value={'set'}>Set</option>
             <option value={'rolls'}># of Stat Upgrades</option>
             <option value={'character'}>Character</option>
+            <option value={'reRolledCount'}>Calibrations</option>
+            <option value={'TotalCalibrations'}>Total Calibrations</option>
+            <option value={'CalibrationPrice'}>Calibration price</option>
           </optgroup>
           <optgroup label="Stats">
             {statOptions}
