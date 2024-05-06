@@ -79,7 +79,6 @@
 
 html, body {
   height: 100%;
-  font-size: clamp(0.8rem, 0.8rem + 0.5vw, 1.2rem);
   box-sizing: border-box;
 }
 
