@@ -72,6 +72,7 @@ export class ModMapper {
 			}),
 			secondaryStats,
 			"null",
+			0,
 			ModMapper.C3PO2GIMOTiersMap[mod.tier],
 		);
 	}

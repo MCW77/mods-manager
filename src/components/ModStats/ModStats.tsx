@@ -23,6 +23,7 @@ import type { SecondaryStats, Stats } from "../../domain/Stats";
 // components
 import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
 import { SellModButton } from "../SellModButton/SellModButton";
+import { Separator } from "#ui/separator";
 
 type ComponentProps = {
 	mod: Mod;
@@ -132,7 +133,7 @@ const ModStats = React.memo(
 						<h4>{t("Score_plural")}</h4>
 						<ul className="secondary-scores">
 							{statsScoresDisplay}
-							<li>----------</li>
+							<Separator className={"m-y-1 bg-white"} decorative/>
 							{allStatsScoreDisplay}
 						</ul>
 					</div>

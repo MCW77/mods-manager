@@ -51,6 +51,7 @@ export type HUFlatMod = {
   pips: Pips,
   tier: ModTiersEnum,
   characterID: CharacterNames | 'null',
+  reRolledCount: number,
 } & FlatHUModTypeIndexer & FlatModValueIndexer & FlatModRollIndexer
 
 export type GIMOFlatMod = {
@@ -77,4 +78,5 @@ export type GIMOFlatMod = {
   pips: Pips,
   tier: ModTiersEnum,
   characterID: CharacterNames | 'null',
+  reRolledCount: number,
 } & FlatGIMOModTypeIndexer & FlatModValueIndexer & FlatModRollIndexer

@@ -20,6 +20,7 @@ import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { ModImage } from "#/components/ModImage/ModImage";
 import { ModStats } from "#/components/ModStats/ModStats";
 import { SellModButton } from "#/components/SellModButton/SellModButton";
+import { Label } from "../ui/label";
 
 type ComponentProps = {
 	assignedCharacter: Character.Character | null;
@@ -45,10 +46,18 @@ const ModDetail = React.memo(
 
 		return (
 			<div className={"mod-detail"} key={mod.id}>
-				<ModImage mod={mod} />
+				<div className={"flex flex-col gap-6"}>
+					<ModImage mod={mod} />
+					{mod.pips === 6 &&
+						<div className={" row-start-1 row-end-auto col-start-1 col-end-auto flex flex-col gap-1"}>
+							<Label>Calibrations:</Label>
+							<span className={"text-sm"}>{mod.reRolledCount}/{mod.tier+1} at {mod.reRollPrice()}</span>
+						</div>
+					}
+				</div>
 				{character && <CharacterAvatar character={character} />}
 				{character && (
-					<h4 className={"character-name"}>
+					<h4 className={"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"}>
 						{baseCharacters[character.baseID]
 							? baseCharacters[character.baseID].name
 							: character.baseID}
@@ -61,8 +70,8 @@ const ModDetail = React.memo(
 						assignedTarget={assignedTarget}
 					/>
 					{showAssigned && assignedCharacter && (
-						<div className={"assigned"}>
-							<Arrow />
+						<div className={"flex justify-between"}>
+							<Arrow className={"w-[4em] h-[4em]"} />
 							<CharacterAvatar character={assignedCharacter} />
 						</div>
 					)}

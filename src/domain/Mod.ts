@@ -46,9 +46,11 @@ export class Mod {
     [key: string]: number
   } = {};
   assignedID: CharacterNames | "null";
+  reRolledCount: number;
 
   static firstTimeSetupOfAccessors = true;
 
+  static reRollPrices = [15, 25, 40, 75, 100, 150];
   static setupSetAccessor() {
     Object.defineProperty(Mod.prototype, 'Set', {
       get: function(): SetStats.GIMOStatNames {
@@ -97,7 +99,7 @@ export class Mod {
     Mod.setupModScoreAccessors();
   }
 
-  constructor(id: string, slot: ModTypes.GIMOSlots, set: SetStats.GIMOStatNames, level: ModTypes.Levels, pips: ModTypes.Pips, primaryStat: PrimaryStats.PrimaryStat, secondaryStats: SecondaryStats.SecondaryStat[], characterID: CharacterNames | 'null', tier: ModTiersEnum = 1) {
+  constructor(id: string, slot: ModTypes.GIMOSlots, set: SetStats.GIMOStatNames, level: ModTypes.Levels, pips: ModTypes.Pips, primaryStat: PrimaryStats.PrimaryStat, secondaryStats: SecondaryStats.SecondaryStat[], characterID: CharacterNames | 'null', reRolledCount: number, tier: ModTiersEnum = 1) {
     this.id = id;
     this.slot = slot;
     this.set = set;
@@ -106,6 +108,7 @@ export class Mod {
     this.primaryStat = primaryStat;
     this.secondaryStats = secondaryStats;
     this.characterID = characterID;
+    this.reRolledCount = reRolledCount;
     this.tier = tier;
     for (const stat of this.secondaryStats) {
       if (this.pips === 6) {
@@ -142,6 +145,7 @@ export class Mod {
       this.primaryStat,
       this.secondaryStats,
       characterID,
+      this.reRolledCount,
       this.tier
     );
   }
@@ -156,6 +160,7 @@ export class Mod {
       this.primaryStat,
       this.secondaryStats,
       "null",
+      this.reRolledCount,
       this.tier
     );
   }
@@ -175,6 +180,7 @@ export class Mod {
       this.primaryStat.upgrade(this.pips),
       this.secondaryStats,
       this.characterID,
+      this.reRolledCount,
       this.tier
     );
   }
@@ -193,6 +199,7 @@ export class Mod {
       this.primaryStat.upgrade(6),
       this.secondaryStats.map(stat => stat.upgrade()),
       this.characterID,
+      this.reRolledCount,
       1
     );
   }
@@ -255,6 +262,12 @@ export class Mod {
     return summary;
   }
 
+  reRollPrice() {
+    const totalCalibrations = this.tier+1;
+    if (this.reRolledCount >= totalCalibrations) return 0;
+    return Mod.reRollPrices[this.reRolledCount];
+  }
+
   /**
    * Convert this mod to a simple JSON object so that it can be stringified
    */
@@ -269,6 +282,7 @@ export class Mod {
       pips: this.pips,
       characterID: this.characterID,
       tier: this.tier,
+      reRolledCount: this.reRolledCount,
       primaryBonusType: pBT,
       primaryBonusValue: pBV,
       secondaryType_1: "Health",
@@ -350,6 +364,7 @@ export class Mod {
       PrimaryStats.PrimaryStat.fromHotUtils(flatMod.primaryBonusType, flatMod.primaryBonusValue),
       secondaryStats,
       flatMod.characterID ?? "null",
+      flatMod.reRolledCount,
       flatMod.tier
     );
   }
@@ -396,6 +411,7 @@ export class Mod {
       primaryStat,
       secondaryStats,
       mod.characterID,
+      mod.reRolledCount,
       mod.tier
     )
   }

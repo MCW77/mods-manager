@@ -48,19 +48,3 @@
   grid-column: 2 / span 2;
   font-size: .9em;
 }
-
-.mod-detail > .stats > .assigned {
-  float: right;
-  font-size: .6em;
-}
-
-.mod-detail > .stats > .assigned .arrow {
-  width: 4em;
-  height: 4em;
-}
-
-.mod-detail button.delete-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-}

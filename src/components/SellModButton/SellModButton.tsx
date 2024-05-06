@@ -18,6 +18,7 @@ import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { ModImage } from "#/components/ModImage/ModImage";
 import { ModStats } from "#/components/ModStats/ModStats";
 import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 type ComponentProps = {
 	mod: Mod;
@@ -38,7 +39,15 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
 			<div>
 				<h2>Delete Mod</h2>
 				<div className={"delete-mod-display"}>
-					<ModImage mod={mod} />
+					<div className={"flex flex-col gap-6"}>
+						<ModImage mod={mod} />
+						{mod.pips === 6 &&
+							<div className={" row-start-1 row-end-auto col-start-1 col-end-auto flex flex-col gap-1"}>
+								<Label>Calibrations:</Label>
+								<span className={"text-sm"}>{mod.reRolledCount}/{mod.tier+1} at {mod.reRollPrice()}</span>
+							</div>
+						}
+					</div>
 					{character && <CharacterAvatar character={character} />}
 					{character && (
 						<h4 className={"character-name"}>
