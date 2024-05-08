@@ -26,10 +26,7 @@ type AppActions =
   | ReturnType<typeof App.actions.resetState>
   | ReturnType<typeof App.actions.setState>
   | ReturnType<typeof App.actions.toggleSidebar>
-  | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
   | ReturnType<typeof CharacterEdit.actions.setTemplatesAddingMode>
-  | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
-  | ReturnType<typeof CharacterEdit.actions.toggleHideSelectedCharacters>
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
@@ -63,20 +60,8 @@ const modsOptimizer: RootReducer = (state: IAppState | undefined, action: AppAct
         App.reducers.toggleSidebar(state)
       );
 
-    case CharacterEdit.actionNames.CHANGE_CHARACTER_FILTER:
-      return AppState.save(
-        CharacterEdit.reducers.changeCharacterFilter(state, action)
-      );
     case CharacterEdit.actionNames.SET_TEMPLATES_ADDING_MODE:
       return CharacterEdit.reducers.setTemplatesAddingMode(state, action);
-    case CharacterEdit.actionNames.TOGGLE_CHARACTER_EDIT_SORT_VIEW:
-      return AppState.save(
-        CharacterEdit.reducers.toggleCharacterEditSortView(state)
-      );
-    case CharacterEdit.actionNames.TOGGLE_HIDE_SELECTED_CHARACTERS:
-      return AppState.save(
-        CharacterEdit.reducers.toggleHideSelectedCharacters(state)
-      );
 
     case Explore.actionNames.CHANGE_MODS_VIEW_OPTIONS:
       return AppState.save(

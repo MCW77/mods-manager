@@ -18,18 +18,6 @@ export namespace actions {
   }
 
   /**
-   * Update the filter that is used to highlight available characters
-   * @param newFilter string
-   * @returns {{type: string, filter: *}}
-   */
-  export function changeCharacterFilter(newFilter: string) {
-    return {
-      type: actionNames.CHANGE_CHARACTER_FILTER,
-      filter: newFilter
-    } as const;
-  }
-
-  /**
    * Fill the target stats to display on the character edit form
    *
    * @param targetStats {Array<TargetStat>}
@@ -61,26 +49,11 @@ export namespace actions {
       mode
     } as const;
   }
-
-  export function toggleCharacterEditSortView() {
-    return {
-      type: actionNames.TOGGLE_CHARACTER_EDIT_SORT_VIEW
-    } as const;
-  }
-
-  export function toggleHideSelectedCharacters() {
-    return {
-      type: actionNames.TOGGLE_HIDE_SELECTED_CHARACTERS
-    } as const;
-  }
 }
 
 export namespace actionNames {
   export const ADD_TARGET_STAT = 'ADD_TARGET_STAT' as const;
-  export const CHANGE_CHARACTER_FILTER = 'CHANGE_CHARACTER_FILTER' as const;
   export const CHANGE_TARGET_STATS = 'CHANGE_TARGET_STATS' as const;
   export const REMOVE_TARGET_STAT = 'REMOVE_TARGET_STAT' as const;
   export const SET_TEMPLATES_ADDING_MODE = 'SET_TEMPLATES_ADDING_MODE' as const;
-  export const TOGGLE_CHARACTER_EDIT_SORT_VIEW = 'TOGGLE_CHARACTER_EDIT_SORT_VIEW' as const;
-  export const TOGGLE_HIDE_SELECTED_CHARACTERS = 'TOGGLE_HIDE_SELECTED_CHARACTERS' as const;
 }

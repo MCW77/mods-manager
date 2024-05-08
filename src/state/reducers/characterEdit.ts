@@ -9,30 +9,12 @@ import type { actions } from "#/state/actions/characterEdit";
 import { Storage } from '#/state/modules/storage';
 
 export namespace reducers {
-  export function changeCharacterFilter(state: IAppState, action: ReturnType<typeof actions.changeCharacterFilter>): IAppState {
-    return Object.assign({}, state, {
-      characterFilter: action.filter
-    });
-  }
-
   export function setTemplatesAddingMode(state: IAppState, action: ReturnType<typeof actions.setTemplatesAddingMode>): IAppState {
     return Object.assign({}, state, {
       templates: {
         templatesAddingMode: action.mode,
         userTemplatesByName: state.templates.userTemplatesByName,
       }
-    });
-  }
-
-  export function toggleCharacterEditSortView(state: IAppState): IAppState {
-    return Object.assign({}, state, {
-      characterEditSortView: !state.characterEditSortView
-    });
-  }
-
-  export function toggleHideSelectedCharacters(state: IAppState): IAppState {
-    return Object.assign({}, state, {
-      hideSelectedCharacters: !state.hideSelectedCharacters
     });
   }
 }

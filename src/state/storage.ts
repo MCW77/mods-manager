@@ -17,9 +17,6 @@ import type { Templates } from "../domain/Templates";
 
 export interface IAppState {
 	baseCharacters: BaseCharactersById;
-	characterEditSortView: boolean;
-	characterFilter: string;
-	hideSelectedCharacters: boolean;
 	modListFilter: ModListFilter;
 	modsViewOptions: ModsViewOptions;
 	profile: PlayerProfile; // All the data about the current character
@@ -32,9 +29,6 @@ export interface IAppState {
 
 export class AppState {
 	static readonly keysToSave = [
-		"characterEditSortView",
-		"characterFilter",
-		"hideSelectedCharacters",
 		"modListFilter",
 		"modsViewOptions",
 		"showSidebar",
@@ -44,9 +38,6 @@ export class AppState {
 
 	static readonly Default: IAppState = {
 		baseCharacters: {} as BaseCharactersById,
-		characterEditSortView: false,
-		characterFilter: "",
-		hideSelectedCharacters: true,
 		modListFilter: {
 			view: "sets",
 			show: "all",
@@ -130,11 +121,6 @@ export function deserializeState(state: IAppState): IAppState {
 	const version: string = String(import.meta.env.VITE_VERSION) || "local";
 
 	return Object.assign({}, AppState.Default, {
-		characterEditSortView:
-			state.characterEditSortView || AppState.Default.characterEditSortView,
-		characterFilter: state.characterFilter || AppState.Default.characterFilter,
-		hideSelectedCharacters:
-			state.hideSelectedCharacters || AppState.Default.hideSelectedCharacters,
 		modsViewOptions: Object.assign(
 			{},
 			AppState.Default.modsViewOptions,
