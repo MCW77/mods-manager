@@ -9,12 +9,6 @@ import type { actions } from "#/state/actions/characterEdit";
 import { Storage } from '#/state/modules/storage';
 
 export namespace reducers {
-  export function changeCharacterEditMode(state: IAppState, action: ReturnType<typeof actions.changeCharacterEditMode>): IAppState {
-    return Object.assign({}, state, {
-      characterEditMode: action.mode
-    });
-  }
-
   export function changeCharacterFilter(state: IAppState, action: ReturnType<typeof actions.changeCharacterFilter>): IAppState {
     return Object.assign({}, state, {
       characterFilter: action.filter
@@ -44,7 +38,6 @@ export namespace reducers {
 }
 
 export namespace selectors {
-  export const selectCharacterEditMode = (state: IAppState) => state.characterEditMode;
   export const selectTemplates = (state: IAppState) => state.templates;
   export const selectSelectedCharactersInActiveProfile = createSelector(
     [Storage.selectors.selectActiveProfile],

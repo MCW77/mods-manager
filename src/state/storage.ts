@@ -5,7 +5,6 @@ import type { ElementType } from "../utils/typeHelper";
 
 // domain
 import type { BaseCharactersById } from "../domain/BaseCharacter";
-import type { CharacterEditMode } from "../domain/CharacterEditMode";
 import type { ModListFilter } from "../domain/ModListFilter";
 import {
 	type ModsViewOptions,
@@ -18,7 +17,6 @@ import type { Templates } from "../domain/Templates";
 
 export interface IAppState {
 	baseCharacters: BaseCharactersById;
-	characterEditMode: CharacterEditMode;
 	characterEditSortView: boolean;
 	characterFilter: string;
 	hideSelectedCharacters: boolean;
@@ -34,7 +32,6 @@ export interface IAppState {
 
 export class AppState {
 	static readonly keysToSave = [
-		"characterEditMode",
 		"characterEditSortView",
 		"characterFilter",
 		"hideSelectedCharacters",
@@ -47,7 +44,6 @@ export class AppState {
 
 	static readonly Default: IAppState = {
 		baseCharacters: {} as BaseCharactersById,
-		characterEditMode: "basic",
 		characterEditSortView: false,
 		characterFilter: "",
 		hideSelectedCharacters: true,
@@ -134,8 +130,6 @@ export function deserializeState(state: IAppState): IAppState {
 	const version: string = String(import.meta.env.VITE_VERSION) || "local";
 
 	return Object.assign({}, AppState.Default, {
-		characterEditMode:
-			state.characterEditMode || AppState.Default.characterEditMode,
 		characterEditSortView:
 			state.characterEditSortView || AppState.Default.characterEditSortView,
 		characterFilter: state.characterFilter || AppState.Default.characterFilter,

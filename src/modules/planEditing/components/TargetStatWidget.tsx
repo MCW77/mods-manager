@@ -3,7 +3,7 @@ import type React from "react";
 import { Switch, observer, reactive } from "@legendapp/state/react";
 
 // state
-import type { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
+import type { ObservableOptimizationPlan } from "#/modules/planEditing/pages/CharacterEditForm";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";

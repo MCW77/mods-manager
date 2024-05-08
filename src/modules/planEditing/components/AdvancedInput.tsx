@@ -2,12 +2,12 @@
 import { observer, reactive } from "@legendapp/state/react";
 
 // domain
-import type { StatWeightsInputProps } from "#/components/StatWeightsWidget/StatWeightsInputProps";
+import type { StatWeightsInputProps } from "./StatWeightsInputProps";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { Input } from "#ui/input";
-import { Label } from "../ui/label";
+import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
 

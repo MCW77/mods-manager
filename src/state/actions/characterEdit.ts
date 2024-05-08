@@ -18,18 +18,6 @@ export namespace actions {
   }
 
   /**
-   * Switch between basic and advanced edit mode
-   * @param mode
-   * @returns {{type: string, mode: *}}
-   */
-  export function changeCharacterEditMode(mode: 'basic' | 'advanced') {
-    return {
-      type: actionNames.CHANGE_CHARACTER_EDIT_MODE,
-      mode: mode
-    } as const;
-  }
-
-  /**
    * Update the filter that is used to highlight available characters
    * @param newFilter string
    * @returns {{type: string, filter: *}}
@@ -89,7 +77,6 @@ export namespace actions {
 
 export namespace actionNames {
   export const ADD_TARGET_STAT = 'ADD_TARGET_STAT' as const;
-  export const CHANGE_CHARACTER_EDIT_MODE = 'CHANGE_CHARACTER_EDIT_MODE' as const;
   export const CHANGE_CHARACTER_FILTER = 'CHANGE_CHARACTER_FILTER' as const;
   export const CHANGE_TARGET_STATS = 'CHANGE_TARGET_STATS' as const;
   export const REMOVE_TARGET_STAT = 'REMOVE_TARGET_STAT' as const;

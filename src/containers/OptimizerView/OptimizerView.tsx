@@ -12,7 +12,7 @@ import { Storage } from "#/state/modules/storage";
 import { Switch } from "@legendapp/state/react";
 
 // containers
-import { CharacterEditForm } from "#/containers/CharacterEditForm/CharacterEditForm";
+import { CharacterEditForm } from "#/modules/planEditing/pages/CharacterEditForm";
 import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
 import Review from "#/containers/Review/Review";
 

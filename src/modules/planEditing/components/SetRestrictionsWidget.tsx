@@ -1,8 +1,8 @@
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { reactive, reactiveObserver } from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
-import type { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
+import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // domain
 import setBonuses from "#/constants/setbonuses";
@@ -14,13 +14,9 @@ import type { SetStats } from "#/domain/Stats";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 
-type ComponentProps = {
-	target$: ObservableOptimizationPlan;
-};
-
 const ReactiveInput = reactive(Input);
 
-const SetRestrictionsWidget = observer(({ target$ }: ComponentProps) => {
+const SetRestrictionsWidget = reactiveObserver(() => {
 	const setRestrictions$ = target$.target.setRestrictions;
 
 	const selectedSets$ = computed(() => {

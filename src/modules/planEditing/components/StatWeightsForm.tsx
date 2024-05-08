@@ -5,7 +5,7 @@ import type { ComponentType } from "react";
 import { observer } from "@legendapp/state/react";
 
 // domain
-import type { PlanEditing } from "#/modules/planEditing/domain/PlanEditing";
+import type { PlanEditing } from "../domain/PlanEditing";
 import type { StatWeightsInputProps } from "./StatWeightsInputProps";
 
 type ComponentProps = {

@@ -1,26 +1,24 @@
 // react
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { Computed, observer } from "@legendapp/state/react";
+import { Computed, reactiveObserver } from "@legendapp/state/react";
 
 // state
-import type { ObservableOptimizationPlan } from "#/containers/CharacterEditForm/CharacterEditForm";
+import { target$ } from "../state/planEditing";
 
 // modules
 import { Data } from "#/state/modules/data";
 
+// domain
 import type { BaseCharacters } from "#/domain/BaseCharacter";
 
 // components
-import { TargetStatWidget } from "#/components/TargetStatWidget/TargetStatWidget";
+import { TargetStatWidget } from "./TargetStatWidget";
+
 import { Button } from "#ui/button";
-import { Card } from "../ui/card";
+import { Card } from "#ui/card";
 
-type ComponentProps = {
-	target$: ObservableOptimizationPlan;
-};
-
-const TargetStatsWidget = observer(({ target$ }: ComponentProps) => {
+const TargetStatsWidget = reactiveObserver(() => {
 	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 
 	const baseCharacters2 = useMemo(

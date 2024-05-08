@@ -26,7 +26,6 @@ type AppActions =
   | ReturnType<typeof App.actions.resetState>
   | ReturnType<typeof App.actions.setState>
   | ReturnType<typeof App.actions.toggleSidebar>
-  | ReturnType<typeof CharacterEdit.actions.changeCharacterEditMode>
   | ReturnType<typeof CharacterEdit.actions.changeCharacterFilter>
   | ReturnType<typeof CharacterEdit.actions.setTemplatesAddingMode>
   | ReturnType<typeof CharacterEdit.actions.toggleCharacterEditSortView>
@@ -64,10 +63,6 @@ const modsOptimizer: RootReducer = (state: IAppState | undefined, action: AppAct
         App.reducers.toggleSidebar(state)
       );
 
-    case CharacterEdit.actionNames.CHANGE_CHARACTER_EDIT_MODE:
-      return AppState.save(
-        CharacterEdit.reducers.changeCharacterEditMode(state, action)
-      );
     case CharacterEdit.actionNames.CHANGE_CHARACTER_FILTER:
       return AppState.save(
         CharacterEdit.reducers.changeCharacterFilter(state, action)
