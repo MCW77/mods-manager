@@ -1,7 +1,6 @@
 // react
-import React from "react";
-import { connect, type ConnectedProps } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
+import { memo } from "react";
+import { useSelector } from "react-redux";
 
 // styles
 import "./Review.css";
@@ -13,12 +12,13 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import type { IAppState } from "#/state/storage";
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { Show } from "@legendapp/state/react";
 import { review$ } from "#/modules/review/state/review";
 
 // modules
 import { Data } from "#/state/modules/data";
+import { Storage } from "#/state/modules/storage";
 
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
@@ -159,62 +159,16 @@ const modUpgradeCosts: {
 	},
 };
 
-class Review extends React.PureComponent<Props> {
-	render() {
-		return (
-			<div className={"review flex flex-col flex-grow-1 overflow-y-auto"}>
-				<div
-					className={
-						"flex flex-col justify-around items-stretch p-y-2 min-h-min"
-					}
-				>
-					<div className="flex flex-wrap justify-around items-stretch p-y-2">
-            <DefaultCollapsibleCard title="Display">
-              <DisplayWidget />
-            </DefaultCollapsibleCard>
-            <DefaultCollapsibleCard title="Actions">
-              <ActionsWidget />
-            </DefaultCollapsibleCard>
-            <DefaultCollapsibleCard className="" title="Summary">
-              <SummaryWidget
-                currentSetValue={this.props.currentSetValue}
-                newSetValue={this.props.newSetValue}
-                modRemovalCost={this.props.modRemovalCost}
-                modUpgradeCost={this.props.modUpgradeCost}
-                numMovingMods={this.props.numMovingMods}
-              />
-            </DefaultCollapsibleCard>
-					</div>
-					<div className="overflow-y-auto">
-						<Show
-							if={() => 0 === this.props.displayedMods.length}
-							else={
-								<div className={"flex flex-col min-h-min"}>
-									<Show if={this.props.filter.view} else={<SetsView modAssignments={this.props.displayedMods} />}>
-										<ListView displayedMods={this.props.displayedMods} />
-									</Show>
-								</div>
-							}
-						>
-							<Show
-								if={() => 0 === this.props.numMovingMods}
-								else={<h3>No more mods to move under that filter. Try a different filter now!</h3>}
-							>
-								<div>
-									<h2>You don't have any mods left to move! Great job!</h2>
-									<h3>Don't forget to assign mods to all your pilots!</h3>
-								</div>
-							</Show>
-						</Show>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}
-
-const mapStateToProps = (state: IAppState) => {
-	const baseCharacters = Data.selectors.selectBaseCharacters(state);
+const Review = memo(() => {
+	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const characters = useSelector(
+		Storage.selectors.selectCharactersInActiveProfile,
+	);
+	const filter = useLegendSelector(review$.modListFilter);
+	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const modAssignments = useSelector(
+		Storage.selectors.selectModAssignmentsInActiveProfile,
+	);
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: ModAssignments,
@@ -236,10 +190,7 @@ const mapStateToProps = (state: IAppState) => {
 				assignment.assignedMods = assignment.assignedMods.filter(
 					(mod) =>
 						mod.shouldLevel(assignment.target) ||
-						mod.shouldSlice(
-							profile.characters[assignment.id],
-							assignment.target,
-						),
+						mod.shouldSlice(characters[assignment.id], assignment.target),
 				);
 			}
 		}
@@ -269,10 +220,8 @@ const mapStateToProps = (state: IAppState) => {
 		return result;
 	};
 
-	const profile = state.profile;
-	const filter = review$.modListFilter.get();
-	const modsById = groupByKey(profile.mods, (mod) => mod.id);
-	const modAssignments: ModAssignments = profile.modAssignments
+	const modsById = groupByKey(mods, (mod) => mod.id);
+	const modAssignments2: ModAssignments = modAssignments
 		.filter((x) => null !== x)
 		.map(({ id, target, assignedMods, missedGoals }) => ({
 			id: id,
@@ -283,59 +232,26 @@ const mapStateToProps = (state: IAppState) => {
 			missedGoals: missedGoals || [],
 		})) as ModAssignments;
 
-	const currentModsByCharacter: {
-		[key in CharacterNames]: Mod[];
-	} = collectByKey(
-		profile.mods.filter((mod) => mod.characterID !== "null"),
-		(mod: Mod) => mod.characterID,
-	);
-	const numMovingMods = modAssignments.reduce(
-		(count, { id, assignedMods }) =>
-			assignedMods.filter((mod) => mod.characterID !== id).length + count,
-		0,
-	);
-
-	const currentLoadoutValue = modAssignments
-		.map(({ id, target }) =>
-			Object.keys(currentModsByCharacter).includes(id)
-				? new ModLoadout(currentModsByCharacter[id]).getOptimizationValue(
-						profile.characters[id],
-						target,
-						false,
-					)
-				: 0,
-		)
-		.reduce((a, b) => a + b, 0);
-	const newLoadoutValue = modAssignments
-		.map(({ id, target, assignedMods }) =>
-			new ModLoadout(assignedMods).getOptimizationValue(
-				profile.characters[id],
-				target,
-				true,
-			),
-		)
-		.reduce((a, b) => a + b, 0);
-
 	let displayedMods: ModAssignments;
 	switch (filter.view) {
 		case ModListFilter.viewOptions.list:
 			if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
-				displayedMods = modAssignments
+				displayedMods = modAssignments2
 					.map(({ id, target, assignedMods }) => ({
 						id: id,
 						target: target,
 						assignedMods: assignedMods.filter(
 							(mod) =>
 								mod.shouldLevel(target) ||
-								mod.shouldSlice(profile.characters[id], target),
+								mod.shouldSlice(characters[id], target),
 						),
 						missedGoals: [],
 					}))
 					.filter(({ assignedMods }) => assignedMods.length > 0);
 			} else {
 				// If we're not showing upgrades, then only show mods that aren't already assigned to that character
-				displayedMods = modAssignments.map(({ id, target, assignedMods }) => ({
+				displayedMods = modAssignments2.map(({ id, target, assignedMods }) => ({
 					id: id,
 					target: target,
 					assignedMods: assignedMods
@@ -349,23 +265,23 @@ const mapStateToProps = (state: IAppState) => {
 			// If we're displaying as sets, but sorting by current character, we need to rework the modAssignments
 			// so that they're organized by current character rather than assigned character
 			if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
-				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments);
+				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments2);
 			} else if (ModListFilter.showOptions.change === filter.show) {
 				// If we're only showing changes, then filter out any character that isn't changing
-				displayedMods = modAssignments.filter(({ id, assignedMods }) =>
+				displayedMods = modAssignments2.filter(({ id, assignedMods }) =>
 					assignedMods.some((mod) => mod.characterID !== id),
 				);
 			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
-				displayedMods = modAssignments.filter(({ id, target, assignedMods }) =>
+				displayedMods = modAssignments2.filter(({ id, target, assignedMods }) =>
 					assignedMods.some(
 						(mod) =>
 							mod.shouldLevel(target) ||
-							mod.shouldSlice(profile.characters[id], target),
+							mod.shouldSlice(characters[id], target),
 					),
 				);
 			} else {
-				displayedMods = modAssignments;
+				displayedMods = modAssignments2;
 			}
 
 			// Filter out any characters that we're not going to display based on the selected tag
@@ -377,12 +293,45 @@ const mapStateToProps = (state: IAppState) => {
 			}
 	}
 
-	const movingModsByAssignedCharacter = modAssignments
+	const numMovingMods = modAssignments2.reduce(
+		(count, { id, assignedMods }) =>
+			assignedMods.filter((mod) => mod.characterID !== id).length + count,
+		0,
+	);
+
+	const currentModsByCharacter: {
+		[key in CharacterNames]: Mod[];
+	} = collectByKey(
+		mods.filter((mod) => mod.characterID !== "null"),
+		(mod: Mod) => mod.characterID,
+	);
+	const currentLoadoutValue = modAssignments2
+		.map(({ id, target }) =>
+			Object.keys(currentModsByCharacter).includes(id)
+				? new ModLoadout(currentModsByCharacter[id]).getOptimizationValue(
+						characters[id],
+						target,
+						false,
+					)
+				: 0,
+		)
+		.reduce((a, b) => a + b, 0);
+	const newLoadoutValue = modAssignments2
+		.map(({ id, target, assignedMods }) =>
+			new ModLoadout(assignedMods).getOptimizationValue(
+				characters[id],
+				target,
+				true,
+			),
+		)
+		.reduce((a, b) => a + b, 0);
+
+	const movingModsByAssignedCharacter = modAssignments2
 		.map(({ id, target, assignedMods }) => ({
 			id: id,
 			target: target,
 			assignedMods: assignedMods.filter((mod) => mod.characterID !== id),
-      missedGoals: [],
+			missedGoals: [],
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);
 
@@ -412,7 +361,7 @@ const mapStateToProps = (state: IAppState) => {
 		0,
 	);
 
-	const modsBeingUpgraded = modAssignments
+	const modsBeingUpgraded = modAssignments2
 		.filter(({ target }) => OptimizationPlan.shouldUpgradeMods(target))
 		.map(({ id, assignedMods }) =>
 			assignedMods.filter((mod) => 15 !== mod.level),
@@ -424,31 +373,63 @@ const mapStateToProps = (state: IAppState) => {
 		0,
 	);
 
-	/**
-	 * {{
-	 *   displayedMods: [[CharacterID, Mod]]
-	 * }}
-	 */
-	return {
-		assignedMods: profile.modAssignments ?? [],
-		currentSetValue: currentLoadoutValue,
-		newSetValue: newLoadoutValue,
-		characters: profile.characters ?? {},
-		baseCharacters: baseCharacters,
-		currentModsByCharacter: currentModsByCharacter,
-		displayedMods: displayedMods,
-		movingModAssignments: movingModsByAssignedCharacter,
-		modRemovalCost: modRemovalCost,
-		modUpgradeCost: modUpgradeCost,
-		numMovingMods: numMovingMods,
-		filter: review$.modListFilter.get(),
-	};
-};
+	return (
+		<div className={"review flex flex-col flex-grow-1 overflow-y-auto"}>
+			<div
+				className={"flex flex-col justify-around items-stretch p-y-2 min-h-min"}
+			>
+				<div className="flex flex-wrap justify-around items-stretch p-y-2">
+					<DefaultCollapsibleCard title="Display">
+						<DisplayWidget />
+					</DefaultCollapsibleCard>
+					<DefaultCollapsibleCard title="Actions">
+						<ActionsWidget />
+					</DefaultCollapsibleCard>
+					<DefaultCollapsibleCard className="" title="Summary">
+						<SummaryWidget
+							currentSetValue={currentLoadoutValue}
+							newSetValue={newLoadoutValue}
+							modRemovalCost={modRemovalCost}
+							modUpgradeCost={modUpgradeCost}
+							numMovingMods={numMovingMods}
+						/>
+					</DefaultCollapsibleCard>
+				</div>
+				<div className="overflow-y-auto">
+					<Show
+						if={() => 0 === displayedMods.length}
+						else={
+							<div className={"flex flex-col min-h-min"}>
+								<Show
+									if={filter.view}
+									else={<SetsView modAssignments={displayedMods} />}
+								>
+									<ListView displayedMods={displayedMods} />
+								</Show>
+							</div>
+						}
+					>
+						<Show
+							if={() => 0 === numMovingMods}
+							else={
+								<h3>
+									No more mods to move under that filter. Try a different filter
+									now!
+								</h3>
+							}
+						>
+							<div>
+								<h2>You don't have any mods left to move! Great job!</h2>
+								<h3>Don't forget to assign mods to all your pilots!</h3>
+							</div>
+						</Show>
+					</Show>
+				</div>
+			</div>
+		</div>
+	);
+});
 
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({});
+Review.displayName = "Review";
 
-type Props = PropsFromRedux;
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-export default connector(Review);
+export { Review };

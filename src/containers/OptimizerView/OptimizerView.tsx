@@ -13,7 +13,7 @@ import { Switch } from "@legendapp/state/react";
 
 // containers
 import { CharacterEditForm } from "#/modules/planEditing/pages/CharacterEditForm";
-import Review from "#/modules/review/pages/Review";
+import { Review } from "#/modules/review/pages/Review";
 import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
 
 const OptimizerView = React.memo(() => {
