@@ -66,8 +66,8 @@ dependencies:
     specifier: ^0.59.4
     version: 0.59.4
   '@unocss/reset':
-    specifier: ^0.59.4
-    version: 0.59.4
+    specifier: ^0.60.0
+    version: 0.60.0
   '@vitejs/plugin-react':
     specifier: ^4.2.1
     version: 4.2.1(vite@5.2.11)
@@ -3498,13 +3498,8 @@ packages:
       '@unocss/rule-utils': 0.60.0
     dev: true
 
-  /@unocss/reset@0.59.4:
-    resolution: {integrity: sha512-Upy4xzdWl4RChbLAXBq1BoR4WqxXMoIfjvtcwSZcZK2sylXCFAseSWnyzJFdSiXPqNfmMuNgPXgiSxiQB+cmNA==}
-    dev: false
-
   /@unocss/reset@0.60.0:
     resolution: {integrity: sha512-r4NUPb/je10ZUrdncSuHipeDqBn7gY5HEcdAx2Rse+O/yWJimVsBkb5sGU1na9fhUwxv0cYIiFiqoQaKzcnCpQ==}
-    dev: true
 
   /@unocss/rule-utils@0.59.4:
     resolution: {integrity: sha512-1qoLJlBWAkS4D4sg73990S1MT7E8E5md/YhopKjTQuEC9SyeVmEg+5pR/Xd8xhPKMqbcuBPl/DS8b6l/GQO56A==}
