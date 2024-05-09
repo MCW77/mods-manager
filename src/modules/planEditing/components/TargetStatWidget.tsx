@@ -2,11 +2,10 @@
 import type React from "react";
 import { Switch, observer, reactive } from "@legendapp/state/react";
 
-// state
-import type { ObservableOptimizationPlan } from "#/modules/planEditing/pages/CharacterEditForm";
-
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
+
+import type { PlanEditing } from "../domain/PlanEditing";
 
 import type { BaseCharacters } from "#/domain/BaseCharacter";
 import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
@@ -33,7 +32,7 @@ const ReactiveSwitch = reactive(ShadSwitch);
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
 type ComponentProps = {
-	target$: ObservableOptimizationPlan;
+	target$: PlanEditing;
 	id: string;
 	baseCharacters: BaseCharacters;
 };
