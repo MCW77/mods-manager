@@ -14,6 +14,7 @@ import groupByKey from "#/utils/groupByKey";
 
 // state
 import type { IAppState } from "#/state/storage";
+import { Show } from "@legendapp/state/react";
 import { review$ } from "#/modules/review/state/review";
 
 // modules
@@ -160,45 +161,6 @@ const modUpgradeCosts: {
 
 class Review extends React.PureComponent<Props> {
 	render() {
-		let modRows: React.ReactNode;
-
-		switch (this.props.filter.view) {
-			case ModListFilter.viewOptions.list:
-				modRows = <ListView displayedMods={this.props.displayedMods} />;
-				break;
-			default:
-				modRows = <SetsView modAssignments={this.props.displayedMods} />;
-		}
-
-		let reviewContent: React.ReactNode;
-
-		if (0 === this.props.numMovingMods) {
-			if (0 === this.props.displayedMods.length) {
-				reviewContent = (
-					<div>
-						<h2>You don't have any mods left to move! Great job!</h2>
-						<h3>Don't forget to assign mods to all your pilots!</h3>
-					</div>
-				);
-			} else {
-				reviewContent = (
-					<div className={"flex flex-col min-h-min"}>{modRows}</div>
-				);
-			}
-		} else {
-			if (0 === this.props.displayedMods.length) {
-				reviewContent = (
-					<h3>
-						No more mods to move under that filter. Try a different filter now!
-					</h3>
-				);
-			} else {
-				reviewContent = (
-					<div className={"flex flex-col min-h-min"}>{modRows}</div>
-				);
-			}
-		}
-
 		return (
 			<div className={"review flex flex-col flex-grow-1 overflow-y-auto"}>
 				<div
@@ -223,43 +185,29 @@ class Review extends React.PureComponent<Props> {
               />
             </DefaultCollapsibleCard>
 					</div>
-					<div className="overflow-y-auto">{reviewContent}</div>
+					<div className="overflow-y-auto">
+						<Show
+							if={() => 0 === this.props.displayedMods.length}
+							else={
+								<div className={"flex flex-col min-h-min"}>
+									<Show if={this.props.filter.view} else={<SetsView modAssignments={this.props.displayedMods} />}>
+										<ListView displayedMods={this.props.displayedMods} />
+									</Show>
+								</div>
+							}
+						>
+							<Show
+								if={() => 0 === this.props.numMovingMods}
+								else={<h3>No more mods to move under that filter. Try a different filter now!</h3>}
+							>
+								<div>
+									<h2>You don't have any mods left to move! Great job!</h2>
+									<h3>Don't forget to assign mods to all your pilots!</h3>
+								</div>
+							</Show>
+						</Show>
+					</div>
 				</div>
-			</div>
-		);
-	}
-
-	hotUtilsHelp() {
-		return (
-			<div className={"help"}>
-				<p>
-					HotUtils is another tool for SWGOH that allows you to directly modify
-					your game account. By importing the recommendation from Grandivory's
-					Mods Optimizer, you can instantly rearrange mods in-game and create
-					profiles that you can switch back-and-forth between quickly.
-				</p>
-				<p>
-					<strong>Use at your own risk!</strong> HotUtils functionality breaks
-					the terms of service for Star Wars: Galaxy of Heroes. You assume all
-					risk in using this tool. Grandivory's Mods Optimizer is not associated
-					with HotUtils.
-				</p>
-				<p>
-					<a
-						href={"https://www.hotutils.com/"}
-						target={"_blank"}
-						rel={"noopener noreferrer"}
-					>
-						https://www.hotutils.com/
-					</a>
-				</p>
-				<p>
-					<img
-						className={"fit"}
-						src={"/img/hotsauce512.png"}
-						alt={"hotsauce"}
-					/>
-				</p>
 			</div>
 		);
 	}
