@@ -14,9 +14,7 @@ import groupByKey from "#/utils/groupByKey";
 
 // state
 import type { IAppState } from "#/state/storage";
-
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { review$ } from "#/modules/review/state/review";
 
 // modules
 import { Data } from "#/state/modules/data";
@@ -30,13 +28,13 @@ import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
 import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
 import { ModLoadout } from "#/domain/ModLoadout";
-import type { ModsByCharacterNames } from "#/domain/ModsByCharacterNames";
+import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { DisplayWidget } from "./DisplayWidget";
-import { SummaryWidget } from "./SummaryWidget";
-import { TextualReview } from "./TextualReview";
+import { ActionsWidget } from "../components/ActionsWidget";
+import { DisplayWidget } from "../components/DisplayWidget";
+import { SummaryWidget } from "../components/SummaryWidget";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
@@ -44,11 +42,6 @@ import { ModDetail } from "#/components/ModDetail/ModDetail";
 import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail";
 import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
 import { Button } from "#ui/button";
-import { Label } from "#ui/label";
-import { CreateProfileModal } from "#/modules/hotUtils/components/CreateProfileModal";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { MoveModsModal } from "#/modules/hotUtils/components/MoveModsModal";
-import { ActionsWidget } from "./ActionsWidget";
 
 interface HUModsProfile {
 	id: CharacterNames;
@@ -558,7 +551,7 @@ const mapStateToProps = (state: IAppState) => {
 	};
 
 	const profile = state.profile;
-	const filter = state.modListFilter;
+	const filter = review$.modListFilter.get();
 	const modsById = groupByKey(profile.mods, (mod) => mod.id);
 	const modAssignments: ModAssignments = profile.modAssignments
 		.filter((x) => null !== x)
@@ -729,7 +722,7 @@ const mapStateToProps = (state: IAppState) => {
 		modRemovalCost: modRemovalCost,
 		modUpgradeCost: modUpgradeCost,
 		numMovingMods: numMovingMods,
-		filter: ReviewModule.selectors.selectModListFilter(state),
+		filter: review$.modListFilter.get(),
 	};
 };
 

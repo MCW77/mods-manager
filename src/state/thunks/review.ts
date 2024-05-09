@@ -1,19 +1,13 @@
-// react
-import type { ThunkResult } from "../reducers/modsOptimizer";
-
 // utils
 import groupByKey from "../../utils/groupByKey";
 
 // modules
 import { App } from '../modules/app';
-import { actions } from '../actions/review';
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
 
 import type { Mod } from "../../domain/Mod";
-import type { ModListFilter } from "../../domain/ModListFilter";
-
 
 export namespace thunks {
 
@@ -52,7 +46,7 @@ export namespace thunks {
       const modsById = groupByKey(profile.mods, mod => mod.id);
       const oldMods = modIDs.map(modID => modsById[modID]);
       const currentlyEquippedMods =
-        (oldMods.map(oldMod => profile.mods.find(mod => mod.slot === oldMod.slot && mod.characterID === characterID))!
+        (oldMods.map(oldMod => profile.mods.find(mod => mod.slot === oldMod.slot && mod.characterID === characterID))
           .filter(mod => mod)) as Mod[];
 
       const modsUpdate = groupByKey(
@@ -95,20 +89,5 @@ export namespace thunks {
 
       return profile.withMods(Object.values(Object.assign({}, modsById, modsUpdate)));
     });
-  }
-
-  /**
-   * Replace parts of the mod list filter, leaving the rest as-is
-   * @param newFilter {Object}
-   * @returns {Function}
-   */
-  export function updateModListFilter(newFilter: Partial<ModListFilter>): ThunkResult<void> {
-    return (dispatch, getState) => {
-      const state = getState();
-
-      dispatch(actions.changeModListFilter(
-        Object.assign({}, state.modListFilter, newFilter)
-      ));
-    }
   }
 };

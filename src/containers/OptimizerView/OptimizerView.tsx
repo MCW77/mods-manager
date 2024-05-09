@@ -13,30 +13,32 @@ import { Switch } from "@legendapp/state/react";
 
 // containers
 import { CharacterEditForm } from "#/modules/planEditing/pages/CharacterEditForm";
+import Review from "#/modules/review/pages/Review";
 import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
-import Review from "#/containers/Review/Review";
 
+const OptimizerView = React.memo(() => {
+	const characters = useSelector(
+		Storage.selectors.selectCharactersInActiveProfile,
+	);
 
-const OptimizerView = React.memo(
-  () => {
-    const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
+	return (
+		<div className={"flex items-stretch overflow-hidden flex-grow-1"}>
+			<Switch value={optimizerView$.view}>
+				{{
+					basic: () => <CharacterEditView />,
+					edit: () => (
+						<CharacterEditForm
+							character={characters[optimizerView$.currentCharacter.id.get()]}
+							target={optimizerView$.currentCharacter.target.get()}
+						/>
+					),
+					review: () => <Review />,
+				}}
+			</Switch>
+		</div>
+	);
+});
 
-    return (
-      <div className={'flex items-stretch overflow-hidden flex-grow-1'}>
-        <Switch value={optimizerView$.view}>
-          {{
-            basic: () => <CharacterEditView/>,
-            edit: () => <CharacterEditForm
-              character={characters[optimizerView$.currentCharacter.id.get()]}
-              target={optimizerView$.currentCharacter.target.get()}/>,
-            review: () => <Review/>,
-          }}
-        </Switch>
-      </div>
-    )
-  }
-);
-
-OptimizerView.displayName = 'OptimizerView';
+OptimizerView.displayName = "OptimizerView";
 
 export { OptimizerView };

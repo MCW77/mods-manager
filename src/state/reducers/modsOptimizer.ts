@@ -30,7 +30,6 @@ type AppActions =
   | ReturnType<typeof Explore.actions.changeModsViewOptions>
   | ReturnType<typeof Optimize.actions.startModOptimization>
   | ReturnType<typeof Optimize.actions.updateProgress>
-  | ReturnType<typeof Review.actions.changeModListFilter>
   | ReturnType<typeof Storage.actions.setBaseCharacters>
   | ReturnType<typeof Storage.actions.setCharacterTemplates>
   | ReturnType<typeof Storage.actions.setProfile>
@@ -70,11 +69,6 @@ const modsOptimizer: RootReducer = (state: IAppState | undefined, action: AppAct
 
     case Optimize.actionNames.UPDATE_PROGRESS:
         return Optimize.reducers.updateProgress(state, action);
-
-    case Review.actionNames.CHANGE_MODLIST_FILTER:
-      return AppState.save(
-        Review.reducers.changeModListFilter(state, action)
-      );
 
     case Storage.actionNames.SET_BASE_CHARACTERS:
       return Storage.reducers.setBaseCharacters(state, action);

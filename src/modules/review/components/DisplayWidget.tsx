@@ -6,9 +6,11 @@ import { flatten, mapValues, uniq } from "lodash-es";
 import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
+// state
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+
 // modules
 import { Data } from "#/state/modules/data";
-import { Review as ReviewModule } from "#/state/modules/review";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -17,7 +19,7 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import type { Mod } from "#/domain/Mod";
 import { ModLoadout } from "#/domain/ModLoadout";
 import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
-import type { ModsByCharacterNames } from "#/domain/ModsByCharacterNames";
+import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
@@ -31,28 +33,18 @@ import {
 	SelectValue,
 } from "#ui/select";
 import { Switch } from "#ui/switch";
+import { reactive } from "@legendapp/state/react";
+import { review$ } from "#/modules/review/state/review";
+import * as ModListFilter from "#/modules/review/domain/ModListFilter";
+
+const ReactiveSelect = reactive(Select);
+const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
 	const dispatch = useDispatch();
 	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 	const profile = useSelector(Storage.selectors.selectActiveProfile);
-	const filter = useSelector(ReviewModule.selectors.selectModListFilter);
-
-	const sortOptions = {
-		currentCharacter: "currentCharacter",
-		assignedCharacter: "assignedCharacter",
-	};
-
-	const viewOptions = {
-		list: "list",
-		sets: "sets",
-	};
-
-	const showOptions = {
-		upgrades: "upgrades",
-		change: "change",
-		all: "all",
-	};
+	const filter = useLegendSelector(review$.modListFilter);
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: ModAssignments,
@@ -60,7 +52,7 @@ const DisplayWidget = () => {
 		const tempAssignments = modAssignments;
 
 		// If we're only showing upgrades, then filter out any mod that isn't being upgraded
-		if (showOptions.upgrades === filter.show) {
+		if (ModListFilter.showOptions.upgrades === filter.show) {
 			/*
       tempAssignments = modAssignments.map(({ id, target, assignedMods, missedGoals }) => ({
         id: id,
@@ -122,8 +114,8 @@ const DisplayWidget = () => {
 	let displayedMods: ModAssignments;
 	let tags: string[];
 	switch (filter.view) {
-		case viewOptions.list:
-			if (showOptions.upgrades === filter.show) {
+		case ModListFilter.viewOptions.list:
+			if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
 				displayedMods = modAssignments
 					.map(({ id, target, assignedMods }) => ({
@@ -149,7 +141,7 @@ const DisplayWidget = () => {
 				}));
 			}
 
-			if (sortOptions.currentCharacter === filter.sort) {
+			if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
 				// collectByKey
 				const removedMods: ModsByCharacterNames = groupBy(
 					flatten(
@@ -180,14 +172,14 @@ const DisplayWidget = () => {
 		default:
 			// If we're displaying as sets, but sorting by current character, we need to rework the modAssignments
 			// so that they're organized by current character rather than assigned character
-			if (sortOptions.currentCharacter === filter.sort) {
+			if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
 				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments);
-			} else if (showOptions.change === filter.show) {
+			} else if (ModListFilter.showOptions.change === filter.show) {
 				// If we're only showing changes, then filter out any character that isn't changing
 				displayedMods = modAssignments.filter(({ id, assignedMods }) =>
 					assignedMods.some((mod) => mod.characterID !== id),
 				);
-			} else if (showOptions.upgrades === filter.show) {
+			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
 				displayedMods = modAssignments.filter(({ id, target, assignedMods }) =>
 					assignedMods.some(
@@ -233,19 +225,18 @@ const DisplayWidget = () => {
 			</Label>
 			<div className={`${inputCSS} flex gap-2 items-center`} id="sort-options">
 				<Label htmlFor="sort-options-value">current</Label>
-				<Switch
+				<ReactiveSwitch
 					className="mr-2 ml-2"
 					id={"sort-options-value"}
-					checked={filter.sort === sortOptions.assignedCharacter}
+					$checked={() =>
+						review$.modListFilter.sort.get() ===
+						ModListFilter.sortOptions.assignedCharacter
+					}
 					onCheckedChange={(checked) =>
-						dispatch(
-							ReviewModule.actions.changeModListFilter(
-								Object.assign({}, filter, {
-									sort: checked
-										? sortOptions.assignedCharacter
-										: sortOptions.currentCharacter,
-								}),
-							),
+						review$.modListFilter.sort.set(
+							checked
+								? ModListFilter.sortOptions.assignedCharacter
+								: ModListFilter.sortOptions.currentCharacter,
 						)
 					}
 				/>
@@ -257,33 +248,33 @@ const DisplayWidget = () => {
 				Show mods as:
 			</Label>
 			<div className={`${inputCSS} flex gap-2 items-center`} id="view-options">
-				<Label htmlFor="view-options-value">{viewOptions.sets}</Label>
-				<Switch
+				<Label htmlFor="view-options-value">
+					{ModListFilter.viewOptions.sets}
+				</Label>
+				<ReactiveSwitch
 					id={"view-options-value"}
-					checked={filter.view === viewOptions.list}
+					$checked={() =>
+						review$.modListFilter.view.get() === ModListFilter.viewOptions.list
+					}
 					onCheckedChange={(checked) =>
-						dispatch(
-							ReviewModule.actions.changeModListFilter(
-								Object.assign({}, filter, {
-									view: checked ? viewOptions.list : viewOptions.sets,
-								}),
-							),
+						review$.modListFilter.view.set(
+							checked
+								? ModListFilter.viewOptions.list
+								: ModListFilter.viewOptions.sets,
 						)
 					}
 				/>
-				<Label htmlFor="view-options-value">{viewOptions.list}</Label>
+				<Label htmlFor="view-options-value">
+					{ModListFilter.viewOptions.list}
+				</Label>
 			</div>
 			<Label className={labelCSS} htmlFor={"show"}>
 				Show me:
 			</Label>
-			<Select
-				value={filter.show}
-				onValueChange={(value) =>
-					dispatch(
-						ReviewModule.actions.changeModListFilter(
-							Object.assign({}, filter, { show: value }),
-						),
-					)
+			<ReactiveSelect
+				$value={review$.modListFilter.show}
+				onValueChange={(value: ModListFilter.ShowOptions) =>
+					review$.modListFilter.show.set(value)
 				}
 			>
 				<SelectTrigger className={inputCSS} id={"show"}>
@@ -291,24 +282,22 @@ const DisplayWidget = () => {
 				</SelectTrigger>
 				<SelectContent className={"max-h-[50%]"}>
 					<SelectGroup>
-						<SelectItem value={showOptions.all}>All assignments</SelectItem>
-						<SelectItem value={showOptions.change}>
+						<SelectItem value={ModListFilter.showOptions.all}>
+							All assignments
+						</SelectItem>
+						<SelectItem value={ModListFilter.showOptions.change}>
 							Changing characters
 						</SelectItem>
-						<SelectItem value={showOptions.upgrades}>Mod upgrades</SelectItem>
+						<SelectItem value={ModListFilter.showOptions.upgrades}>
+							Mod upgrades
+						</SelectItem>
 					</SelectGroup>
 				</SelectContent>
-			</Select>
+			</ReactiveSelect>
 			<Label htmlFor={"tag"}>Show characters by tag:</Label>
-			<Select
-				value={filter.tag}
-				onValueChange={(value) =>
-					dispatch(
-						ReviewModule.actions.changeModListFilter(
-							Object.assign({}, filter, { tag: value }),
-						),
-					)
-				}
+			<ReactiveSelect
+				$value={review$.modListFilter.tag}
+				onValueChange={(value) => review$.modListFilter.tag.set(value)}
 			>
 				<SelectTrigger className={inputCSS} id={"tag"}>
 					<SelectValue />
@@ -323,7 +312,7 @@ const DisplayWidget = () => {
 						))}
 					</SelectGroup>
 				</SelectContent>
-			</Select>
+			</ReactiveSelect>
 		</div>
 	);
 };

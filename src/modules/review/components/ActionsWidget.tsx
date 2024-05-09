@@ -21,8 +21,8 @@ import type { ModAssignments } from "#/domain/ModAssignment";
 
 // components
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { CreateProfileModal } from "../../modules/hotUtils/components/CreateProfileModal";
-import { MoveModsModal } from "../../modules/hotUtils/components/MoveModsModal";
+import { CreateProfileModal } from "../../hotUtils/components/CreateProfileModal";
+import { MoveModsModal } from "../../hotUtils/components/MoveModsModal";
 import { TextualReview } from "./TextualReview";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";

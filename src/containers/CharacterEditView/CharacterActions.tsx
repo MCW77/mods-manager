@@ -9,12 +9,12 @@ import { incrementalOptimization$ } from "#/modules/incrementalOptimization/stat
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { review$ } from "#/modules/review/state/review";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
 import { Data } from "#/state/modules/data";
 import { Optimize } from "#/state/modules/optimize";
-import { Review } from "#/state/modules/review";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -117,12 +117,8 @@ const CharacterActions = () => {
 				<Button
 					type={"button"}
 					onClick={() => {
-						dispatch(
-							Review.thunks.updateModListFilter({
-								view: "sets",
-								sort: "assignedCharacter",
-							}),
-						);
+						review$.modListFilter.view.set("sets");
+						review$.modListFilter.sort.set("assignedCharacter");
 						optimizerView$.view.set("review");
 					}}
 				>

@@ -28,6 +28,7 @@ import type { ModSuggestion } from "#/domain/PlayerProfile";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Button } from "#/components/ui/button";
 import { DialogClose } from "#/components/ui/dialog";
+import { review$ } from "#/modules/review/state/review";
 
 let optimizationWorker: Worker | null = null;
 
@@ -73,12 +74,9 @@ export namespace thunks {
 					return true;
 				}
 
-				dispatch(
-					Review.thunks.updateModListFilter({
-						view: "sets",
-						sort: "assignedCharacter",
-					}),
-				);
+				review$.modListFilter.view.set("sets");
+				review$.modListFilter.sort.set("assignedCharacter");
+
 				dialog$.hide()
 				optimizerView$.view.set("review");
 

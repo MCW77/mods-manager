@@ -5,7 +5,6 @@ import type { ElementType } from "../utils/typeHelper";
 
 // domain
 import type { BaseCharactersById } from "../domain/BaseCharacter";
-import type { ModListFilter } from "../domain/ModListFilter";
 import {
 	type ModsViewOptions,
 	defaultOptions,
@@ -17,7 +16,6 @@ import type { Templates } from "../domain/Templates";
 
 export interface IAppState {
 	baseCharacters: BaseCharactersById;
-	modListFilter: ModListFilter;
 	modsViewOptions: ModsViewOptions;
 	profile: PlayerProfile; // All the data about the current character
 	progress: OptimizationStatus;
@@ -29,7 +27,6 @@ export interface IAppState {
 
 export class AppState {
 	static readonly keysToSave = [
-		"modListFilter",
 		"modsViewOptions",
 		"showSidebar",
 		"templates",
@@ -38,12 +35,6 @@ export class AppState {
 
 	static readonly Default: IAppState = {
 		baseCharacters: {} as BaseCharactersById,
-		modListFilter: {
-			view: "sets",
-			show: "all",
-			sort: "assignedCharacter",
-			tag: "All",
-		},
 		modsViewOptions: defaultOptions,
 		profile: PlayerProfile.Default, // All the data about the current character
 		progress: {
@@ -126,7 +117,6 @@ export function deserializeState(state: IAppState): IAppState {
 			AppState.Default.modsViewOptions,
 			state.modsViewOptions,
 		),
-		modListFilter: state.modListFilter || AppState.Default.modListFilter,
 		showSidebar:
 			"undefined" !== typeof state.showSidebar
 				? state.showSidebar
