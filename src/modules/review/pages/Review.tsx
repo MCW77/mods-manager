@@ -18,65 +18,25 @@ import { review$ } from "#/modules/review/state/review";
 
 // modules
 import { Data } from "#/state/modules/data";
-import { Review as ReviewModule } from "#/state/modules/review";
 
 // domain
+import * as ModListFilter from "../domain/ModListFilter";
+import type { ModsByCharacterNames } from "../domain/ModsByCharacterNames";
 import type { CharacterNames } from "#/constants/characterSettings";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
-import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
 import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
 import { ModLoadout } from "#/domain/ModLoadout";
-import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { ActionsWidget } from "../components/ActionsWidget";
 import { DisplayWidget } from "../components/DisplayWidget";
+import { ListView } from "../components/ListView";
+import { SetsView } from "../components/SetsView";
 import { SummaryWidget } from "../components/SummaryWidget";
-import { Arrow } from "#/components/Arrow/Arrow";
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { ModDetail } from "#/components/ModDetail/ModDetail";
-import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail";
-import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
-import { Button } from "#ui/button";
-
-interface HUModsProfile {
-	id: CharacterNames;
-	modIds: string[];
-	target: string;
-}
-
-type HUModsProfiles = HUModsProfile[];
-export interface HUModsMoveProfile {
-	units: HUModsProfiles;
-}
-
-export interface HUProfileCreationData {
-	set: {
-		category: string;
-		name: string;
-		units: HUModsProfiles;
-	};
-}
-
-const sortOptions = {
-	currentCharacter: "currentCharacter",
-	assignedCharacter: "assignedCharacter",
-};
-
-const viewOptions = {
-	list: "list",
-	sets: "sets",
-};
-
-const showOptions = {
-	upgrades: "upgrades",
-	change: "change",
-	all: "all",
-};
 
 // A map from number of pips that a mod has to the cost to remove it
 const modRemovalCosts = {
@@ -203,11 +163,11 @@ class Review extends React.PureComponent<Props> {
 		let modRows: React.ReactNode;
 
 		switch (this.props.filter.view) {
-			case viewOptions.list:
-				modRows = this.listView(this.props.displayedMods);
+			case ModListFilter.viewOptions.list:
+				modRows = <ListView displayedMods={this.props.displayedMods} />;
 				break;
 			default:
-				modRows = this.setsView(this.props.displayedMods);
+				modRows = <SetsView modAssignments={this.props.displayedMods} />;
 		}
 
 		let reviewContent: React.ReactNode;
@@ -269,195 +229,6 @@ class Review extends React.PureComponent<Props> {
 		);
 	}
 
-	/**
-	 * Convert a list of displayed mods into the renderable elements to display them as a list of individual mods
-	 * @param displayedMods {Array<Object>}
-	 * @returns {Array<*>}
-	 */
-	listView(displayedMods: ModAssignments) {
-		let individualMods: {
-			id: CharacterNames;
-			mod: Mod;
-			target: OptimizationPlan.OptimizationPlan;
-		}[] = flatten(
-			displayedMods.map(({ id, target, assignedMods }) =>
-				assignedMods.map((mod) => ({ id: id, target: target, mod: mod })),
-			),
-		);
-
-		if (sortOptions.currentCharacter === this.props.filter.sort) {
-			individualMods.sort(({ mod: leftMod }, { mod: rightMod }) => {
-				const leftCharacter =
-					leftMod.characterID !== "null"
-						? this.props.characters[leftMod.characterID]
-						: null;
-				const rightCharacter =
-					rightMod.characterID !== "null"
-						? this.props.characters[rightMod.characterID]
-						: null;
-
-				if (!leftCharacter) {
-					return -1;
-				}
-				if (!rightCharacter) {
-					return 1;
-				}
-				return (
-					Character.compareGP(leftCharacter, rightCharacter) ||
-					ModLoadout.slotSort(leftMod, rightMod)
-				);
-			});
-
-			if (this.props.filter.tag !== "All") {
-				individualMods = individualMods.filter(({ mod }) => {
-					let tags: string[];
-					if (mod.characterID === "null") {
-						tags = [];
-					} else {
-						tags = this.props.baseCharacters[mod.characterID].categories;
-					}
-					return tags.includes(this.props.filter.tag);
-				});
-			}
-		} else if (this.props.filter.tag !== "All") {
-			individualMods = individualMods.filter(({ id, mod }) => {
-				const tags = this.props.baseCharacters[id]
-					? this.props.baseCharacters[id].categories
-					: [];
-				return tags.includes(this.props.filter.tag);
-			});
-		}
-
-		return individualMods.map(({ id: characterID, target, mod }) => {
-			const character = this.props.characters[characterID];
-
-			return (
-				<div className={"mod-row individual"} key={mod.id}>
-					<ModDetail
-						mod={mod}
-						assignedCharacter={character}
-						assignedTarget={target}
-					/>
-					<div className={"character-id"}>
-						<Arrow />
-						<CharacterAvatar character={character} />
-						<h3>
-							{this.props.baseCharacters[character.baseID]
-								? this.props.baseCharacters[character.baseID].name
-								: character.baseID}
-						</h3>
-						<h4>{target.name}</h4>
-					</div>
-					<div className={"actions"}>
-						<Button
-							type={"button"}
-							onClick={this.props.unequipMod.bind(this, mod.id)}
-						>
-							I removed this mod
-						</Button>
-						<Button
-							type={"button"}
-							onClick={this.props.reassignMod.bind(this, mod.id, characterID)}
-						>
-							I reassigned this mod
-						</Button>
-					</div>
-				</div>
-			);
-		});
-	}
-
-	/***
-	 * Convert a list of displayed mods into the renderable elements to display them as sets
-	 * @param modAssignments {array<Object>} An array of objects containing `id`, `target`, and `assignedMods` keys
-	 * @returns array[JSX Element]
-	 */
-	setsView(modAssignments: ModAssignments) {
-		// Iterate over each character to render a full mod set
-		return modAssignments.map(
-			({ id: characterID, target, assignedMods: mods, missedGoals }, index) => {
-				const character = this.props.characters[characterID];
-
-				if (!character) {
-					return null;
-				}
-
-				return (
-					<div className={"mod-row set"} key={characterID}>
-						<div className={"character-id"}>
-							<CharacterAvatar character={character} />
-							<Arrow />
-							<h3 className={missedGoals?.length ? "red-text" : ""}>
-								{this.props.baseCharacters[characterID]
-									? this.props.baseCharacters[characterID].name
-									: characterID}
-							</h3>
-							{target && (
-								<h4 className={missedGoals?.length ? "red-text" : ""}>
-									{target.name}
-								</h4>
-							)}
-							<div className={"actions"}>
-								{sortOptions.currentCharacter === this.props.filter.sort && (
-									<Button
-										type={"button"}
-										onClick={this.props.unequipMods.bind(
-											this,
-											mods.map((mod) => mod.id),
-										)}
-									>
-										I removed these mods
-									</Button>
-								)}
-								{sortOptions.assignedCharacter === this.props.filter.sort && (
-									<Button
-										type={"button"}
-										onClick={this.props.reassignMods.bind(
-											this,
-											mods.map((mod) => mod.id),
-											characterID,
-										)}
-									>
-										I reassigned these mods
-									</Button>
-								)}
-							</div>
-						</div>
-						{sortOptions.assignedCharacter === this.props.filter.sort && (
-							<ModLoadoutDetail
-								newLoadout={new ModLoadout(mods)}
-								oldLoadout={
-									new ModLoadout(
-										this.props.currentModsByCharacter[characterID] || [],
-									)
-								}
-								showAvatars={
-									sortOptions.currentCharacter !== this.props.filter.sort
-								}
-								character={character}
-								target={target}
-								useUpgrades={true}
-								assignedCharacter={character}
-								assignedTarget={target}
-								missedGoals={missedGoals}
-							/>
-						)}
-						{sortOptions.currentCharacter === this.props.filter.sort && (
-							<div className={"mod-set-block"}>
-								<ModLoadoutView
-									modLoadout={new ModLoadout(mods)}
-									showAvatars={
-										sortOptions.currentCharacter !== this.props.filter.sort
-									}
-								/>
-							</div>
-						)}
-					</div>
-				);
-			},
-		);
-	}
-
 	hotUtilsHelp() {
 		return (
 			<div className={"help"}>
@@ -503,7 +274,7 @@ const mapStateToProps = (state: IAppState) => {
 		const tempAssignments = modAssignments;
 
 		// If we're only showing upgrades, then filter out any mod that isn't being upgraded
-		if (showOptions.upgrades === filter.show) {
+		if (ModListFilter.showOptions.upgrades === filter.show) {
 			/*
       tempAssignments = modAssignments.map(({ id, target, assignedMods, missedGoals }) => ({
         id: id,
@@ -599,8 +370,8 @@ const mapStateToProps = (state: IAppState) => {
 
 	let displayedMods: ModAssignments;
 	switch (filter.view) {
-		case viewOptions.list:
-			if (showOptions.upgrades === filter.show) {
+		case ModListFilter.viewOptions.list:
+			if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
 				displayedMods = modAssignments
 					.map(({ id, target, assignedMods }) => ({
@@ -629,14 +400,14 @@ const mapStateToProps = (state: IAppState) => {
 		default:
 			// If we're displaying as sets, but sorting by current character, we need to rework the modAssignments
 			// so that they're organized by current character rather than assigned character
-			if (sortOptions.currentCharacter === filter.sort) {
+			if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
 				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments);
-			} else if (showOptions.change === filter.show) {
+			} else if (ModListFilter.showOptions.change === filter.show) {
 				// If we're only showing changes, then filter out any character that isn't changing
 				displayedMods = modAssignments.filter(({ id, assignedMods }) =>
 					assignedMods.some((mod) => mod.characterID !== id),
 				);
-			} else if (showOptions.upgrades === filter.show) {
+			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
 				displayedMods = modAssignments.filter(({ id, target, assignedMods }) =>
 					assignedMods.some(
@@ -726,16 +497,7 @@ const mapStateToProps = (state: IAppState) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch) => ({
-	unequipMod: (modID: string) =>
-		dispatch(ReviewModule.thunks.unequipMod(modID)),
-	reassignMod: (modID: string, characterID: CharacterNames) =>
-		dispatch(ReviewModule.thunks.reassignMod(modID, characterID)),
-	unequipMods: (modIDs: string[]) =>
-		dispatch(ReviewModule.thunks.unequipMods(modIDs)),
-	reassignMods: (modIDs: string[], characterID: CharacterNames) =>
-		dispatch(ReviewModule.thunks.reassignMods(modIDs, characterID)),
-});
+const mapDispatchToProps = (dispatch: ThunkDispatch) => ({});
 
 type Props = PropsFromRedux;
 type PropsFromRedux = ConnectedProps<typeof connector>;
