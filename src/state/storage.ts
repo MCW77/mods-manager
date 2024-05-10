@@ -22,7 +22,6 @@ export interface IAppState {
 	showSidebar: boolean;
 	targetStats: TargetStats;
 	templates: Templates;
-	version: string;
 }
 
 export class AppState {
@@ -30,7 +29,6 @@ export class AppState {
 		"modsViewOptions",
 		"showSidebar",
 		"templates",
-		"version",
 	] as const;
 
 	static readonly Default: IAppState = {
@@ -48,7 +46,6 @@ export class AppState {
 			templatesAddingMode: "replace",
 			userTemplatesByName: {},
 		},
-		version: String(import.meta.env.VITE_VERSION) || "local",
 	};
 
 	/**
@@ -109,8 +106,6 @@ export class AppState {
  * @param state {IAppState}
  */
 export function deserializeState(state: IAppState): IAppState {
-	const version: string = String(import.meta.env.VITE_VERSION) || "local";
-
 	return Object.assign({}, AppState.Default, {
 		modsViewOptions: Object.assign(
 			{},
@@ -122,6 +117,5 @@ export function deserializeState(state: IAppState): IAppState {
 				? state.showSidebar
 				: AppState.Default.showSidebar,
 		templates: state.templates,
-		version: version,
 	});
 }

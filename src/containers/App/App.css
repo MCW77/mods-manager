@@ -138,15 +138,6 @@ html, body {
   will-change: transform;
   z-index: -1;
 }
-.app-body a {
-  color: white;
-  text-decoration: underline;
-}
-
-.app-body a.call-out {
-  font-weight: bold;
-  color: #eeca44;
-}
 
 button2, .button {
   display: inline-block;

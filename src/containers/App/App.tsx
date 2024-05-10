@@ -16,6 +16,7 @@ import {
 
 // state
 import { Show, observer, reactive } from "@legendapp/state/react";
+import { about$ } from "#/modules/about/state/about";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { ui$ } from "#/modules/ui/state/ui";
@@ -92,7 +93,7 @@ const App = observer(
 			);
 
 			// Check the current version of the app against the API
-			dispatch(Data.thunks.checkVersion());
+			about$.checkVersion();
 			ui$.currentSection.set(firstSection);
 		}, [firstSection, dispatch]);
 
