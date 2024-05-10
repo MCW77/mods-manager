@@ -10,6 +10,7 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
+import { about$ } from "#/modules/about/state/about";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
@@ -40,7 +41,7 @@ import { Separator } from "#ui/separator";
 
 const GeneralSettingsView = observer(() => {
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
-	const version = useSelector(App.selectors.selectVersion);
+	const version = about$.version.get();
 	const dispatch: ThunkDispatch = useDispatch();
 	const [t, i18n] = useTranslation("settings-ui");
 

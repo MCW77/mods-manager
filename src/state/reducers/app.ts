@@ -24,5 +24,4 @@ export namespace reducers {
 
 export namespace selectors {
 	export const selectShowSidebar = (state: IAppState) => state.showSidebar;
-	export const selectVersion = (state: IAppState) => state.version;
 }
