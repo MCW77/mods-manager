@@ -14,14 +14,6 @@ export namespace reducers {
 	): IAppState {
 		return Object.assign({}, action.state);
 	}
-
-	export function toggleSidebar(state: IAppState): IAppState {
-		return Object.assign({}, state, {
-			showSidebar: !state.showSidebar,
-		});
-	}
 }
 
-export namespace selectors {
-	export const selectShowSidebar = (state: IAppState) => state.showSidebar;
-}
+

@@ -19,17 +19,12 @@ export interface IAppState {
 	modsViewOptions: ModsViewOptions;
 	profile: PlayerProfile; // All the data about the current character
 	progress: OptimizationStatus;
-	showSidebar: boolean;
 	targetStats: TargetStats;
 	templates: Templates;
 }
 
 export class AppState {
-	static readonly keysToSave = [
-		"modsViewOptions",
-		"showSidebar",
-		"templates",
-	] as const;
+	static readonly keysToSave = ["modsViewOptions", "templates"] as const;
 
 	static readonly Default: IAppState = {
 		baseCharacters: {} as BaseCharactersById,
@@ -40,7 +35,6 @@ export class AppState {
 			progress: 0,
 			step: "1",
 		},
-		showSidebar: true,
 		targetStats: [] as TargetStats,
 		templates: {
 			templatesAddingMode: "replace",
@@ -112,10 +106,6 @@ export function deserializeState(state: IAppState): IAppState {
 			AppState.Default.modsViewOptions,
 			state.modsViewOptions,
 		),
-		showSidebar:
-			"undefined" !== typeof state.showSidebar
-				? state.showSidebar
-				: AppState.Default.showSidebar,
 		templates: state.templates,
 	});
 }

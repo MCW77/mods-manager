@@ -14,16 +14,9 @@ export namespace actions {
 			state: state,
 		} as const;
 	}
-
-	export function toggleSidebar() {
-		return {
-			type: actionNames.TOGGLE_SIDEBAR,
-		} as const;
-	}
 }
 
 export namespace actionNames {
 	export const RESET_STATE = "RESET_STATE" as const;
 	export const SET_STATE = "SET_STATE" as const;
-	export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR" as const;
 }
