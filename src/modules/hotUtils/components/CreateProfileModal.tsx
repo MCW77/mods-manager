@@ -26,7 +26,7 @@ import { Label } from "#/components/ui/label";
 
 const ReactiveInput = reactive(Input);
 
-const CreateProfileModal = observer(() => {
+const CreateProfileModal: React.FC = observer(() => {
 	const profile = useSelector(Storage.selectors.selectActiveProfile);
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(

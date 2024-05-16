@@ -18,7 +18,7 @@ import { TargetStatWidget } from "./TargetStatWidget";
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 
-const TargetStatsWidget = reactiveObserver(() => {
+const TargetStatsWidget: React.FC = reactiveObserver(() => {
 	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
 
 	const baseCharacters2 = useMemo(

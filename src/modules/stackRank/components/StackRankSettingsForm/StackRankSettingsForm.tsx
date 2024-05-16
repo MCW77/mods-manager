@@ -23,7 +23,7 @@ const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);
 const ReactiveInput = reactive(Input);
 
-const StackRankSettingsForm = observer(() => {
+const StackRankSettingsForm: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");
 
 	const global =

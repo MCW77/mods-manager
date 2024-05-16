@@ -11,12 +11,11 @@ import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSli
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 
-const OptimizationSettingsForm = observer(() => {
+const OptimizationSettingsForm: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
 
 	const ReactiveInput = reactive(Input);
-	const ReactiveSlider = reactive(SingleValueSlider);
 
 	const globalCSS =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
@@ -29,16 +28,16 @@ const OptimizationSettingsForm = observer(() => {
 				{t("optimizer.global.Threshold")}:
 			</Label>
 			<div className={`${inputCSS} flex gap-2`}>
-				<ReactiveSlider
+				<SingleValueSlider
 					className={"min-w-[120px]"}
 					id="threshold1"
 					min={0}
 					max={100}
 					step={1}
-					$value={
+					singleValue$={
 						optimizationSettings$.settingsByProfile[allycode].modChangeThreshold
 					}
-					onChange={(threshold: number) => {
+					onSingleChange={(threshold: number) => {
 						optimizationSettings$.settingsByProfile[
 							allycode
 						].modChangeThreshold.set(threshold);

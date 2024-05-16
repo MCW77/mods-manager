@@ -22,7 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralSettingsView from "#/modules/settings/components/GeneralSettingsView";
 import OptimizerSettingsView from "#/modules/settings/components/OptimizerSettingsView";
 
-const SettingsView = observer(() => {
+const SettingsView: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");
 
 	const renderSection = (sectionName: SettingsSections) => {

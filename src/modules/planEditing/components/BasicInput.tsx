@@ -11,24 +11,22 @@ import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
-const ReactiveSlider = reactive(SingleValueSlider);
 
-const BasicInput = observer(({ target$, stat }: StatWeightsInputProps) => {
+const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }: StatWeightsInputProps) => {
 	return (
 		<>
 			<Label htmlFor={`${stat}-stat-basic`}>{`${stat}: `}:</Label>
-			<ReactiveSlider
-				id={`${stat}-stat-basic`}
-				min={-100}
+			<SingleValueSlider
 				max={100}
+				min={-100}
 				step={1}
-				$value={target$.target[stat]}
-				onChange={(weight: number) => {
+				singleValue$={target$.target[stat]}
+				onSingleChange={(weight: number) => {
 					target$.target[stat].set(weight);
 				}}
 			/>
 			<ReactiveInput
-				id={`${stat}-stat-basic2`}
+				id={`${stat}-stat-basic`}
 				max={100}
 				min={-100}
 				step={1}

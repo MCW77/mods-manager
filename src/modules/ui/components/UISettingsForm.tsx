@@ -18,7 +18,7 @@ import {
 
 const ReactiveSelect = reactive(Select);
 
-const UISettingsForm = observer(() => {
+const UISettingsForm: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");
 
 	const globalCSS =

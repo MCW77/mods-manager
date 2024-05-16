@@ -10,7 +10,7 @@ import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
-const PrimaryStatRestrictionsWidget = reactiveObserver(() => {
+const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 	return (
 		<div className="grid gap-4">
 			<div className={""}>

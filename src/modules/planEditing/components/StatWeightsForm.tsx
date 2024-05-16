@@ -13,7 +13,7 @@ type ComponentProps = {
 	StatInput: ComponentType<StatWeightsInputProps>;
 };
 
-const StatWeightsForm = observer(({ target$, StatInput }: ComponentProps) => {
+const StatWeightsForm: React.FC<ComponentProps> = observer(({ target$, StatInput }: ComponentProps) => {
 	return (
 		<div className="flex flex-wrap gap-4">
 			<div>

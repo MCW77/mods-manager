@@ -6,7 +6,7 @@ import { Label } from "#/components/ui/label";
 import { Switch } from "#/components/ui/switch";
 import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
-const CharacterFilters = observer(() => {
+const CharacterFilters: React.FC = observer(() => {
 	return (
 		<div className="p2 flex flex-col">
 			<input

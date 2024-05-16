@@ -37,7 +37,7 @@ type ComponentProps = {
 	baseCharacters: BaseCharacters;
 };
 
-const TargetStatWidget = observer(
+const TargetStatWidget: React.FC<ComponentProps> = observer(
 	({ target$, id, baseCharacters }: ComponentProps) => {
 		const targetStat$ = target$.target.targetStats.find(
 			(ts) => ts.peek().id === id,

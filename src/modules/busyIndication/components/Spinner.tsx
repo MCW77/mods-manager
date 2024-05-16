@@ -5,7 +5,7 @@ import { isBusy$ } from "../state/isBusy";
 // styles
 import "./Spinner.css";
 
-const Spinner = observer(() => {
+const Spinner: React.FC = observer(() => {
 	return (
 		<Show if={isBusy$.get()}>
 			<div

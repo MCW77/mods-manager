@@ -8,7 +8,7 @@ import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { Button } from "#ui/button";
 import { Progress } from "#ui/progress";
 
-const ModMoveProgress = observer(() => {
+const ModMoveProgress: React.FC = observer(() => {
 	return (
 		<div className={"flex flex-col gap-2"}>
 			<h3>Moving Your Mods...</h3>

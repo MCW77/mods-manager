@@ -16,7 +16,7 @@ import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
 
-const SetRestrictionsWidget = reactiveObserver(() => {
+const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 	const setRestrictions$ = target$.target.setRestrictions;
 
 	const selectedSets$ = computed(() => {

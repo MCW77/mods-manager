@@ -21,10 +21,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
 
-const HelpView = observer(() => {
+const HelpView: React.FC = observer(() => {
 	const helpSection = help$.section.get();
 	const helpTopic = help$.topic.get();
-	const [t, i18n] = useTranslation("help-ui");
+	const [t] = useTranslation("help-ui");
 	const [currentSection, changeCurrentSection] = useState(helpSection);
 	const [currentTopic, changeCurrentTopic] = useState(helpTopic);
 
@@ -75,6 +75,11 @@ const HelpView = observer(() => {
 				<h1
 					key={`${currentSection}-${topic}`}
 					onClick={() => changeCurrentTopic(topic)}
+					onKeyUp={(event) => {
+						if (event.code === "Enter") {
+							changeCurrentTopic(topic);
+						}
+					}}
 				>
 					{t(`${currentSection}.topics.${topic}`, "")}
 				</h1>
@@ -113,7 +118,7 @@ const HelpView = observer(() => {
 					<div className={topicCSS}>
 						{title !== "" && <h2>{title}</h2>}
 						{paragraphs.map((p, index: number) => (
-							<p key={`help-topic-paragraph-${index}`}>{p}</p>
+							<p key={p}>{p}</p>
 						))}
 					</div>
 				);
@@ -121,7 +126,7 @@ const HelpView = observer(() => {
 	};
 
 	const renderOptimizationPlanEditorWeightsTopic = () => {
-		const topicPath = `editor.topicById.3.`;
+		const topicPath = "editor.topicById.3.";
 		return (
 			<div className={topicCSS}>
 				<h2>{t(`${topicPath}Headline`)}</h2>
@@ -140,13 +145,13 @@ const HelpView = observer(() => {
 		return (
 			<div className={topicCSS}>
 				<p>
-					{t(`profiles.topicById.4.1`)} {t(`profiles.topicById.4.2`)}
+					{t("profiles.topicById.4.1")} {t("profiles.topicById.4.2")}
 				</p>
 				<p>
-					<strong>{t(`profiles.topicById.4.3`)}</strong>
+					<strong>{t("profiles.topicById.4.3")}</strong>
 					<br />
-					{t(`profiles.topicById.4.4`)} {t(`profiles.topicById.4.5`)}{" "}
-					{t(`profiles.topicById.4.6`)}
+					{t("profiles.topicById.4.4")} {t("profiles.topicById.4.5")}{" "}
+					{t("profiles.topicById.4.6")}
 				</p>
 				<p>
 					<a
@@ -171,20 +176,20 @@ const HelpView = observer(() => {
 	const renderGlobalOptimizationSettingsTopic = () => {
 		return (
 			<div className={topicCSS}>
-				<h2>{t(`optimizer.topicById.1.Headline`)}</h2>
-				<div>{t(`optimizer.topicById.1.1`)}</div>
+				<h2>{t("optimizer.topicById.1.Headline")}</h2>
+				<div>{t("optimizer.topicById.1.1")}</div>
 				<div>
 					<p>
-						<strong>{t(`optimizer.topicById.1.2`)}</strong> -{" "}
-						{t(`optimizer.topicById.1.3`)}
+						<strong>{t("optimizer.topicById.1.2")}</strong> -{" "}
+						{t("optimizer.topicById.1.3")}
 					</p>
 					<p>
-						<strong>{t(`optimizer.topicById.1.4`)}</strong> -{" "}
-						{t(`optimizer.topicById.1.5`)}
+						<strong>{t("optimizer.topicById.1.4")}</strong> -{" "}
+						{t("optimizer.topicById.1.5")}
 					</p>
 					<p>
-						<strong>{t(`optimizer.topicById.1.6`)}</strong> -{" "}
-						{t(`optimizer.topicById.1.7`)}
+						<strong>{t("optimizer.topicById.1.6")}</strong> -{" "}
+						{t("optimizer.topicById.1.7")}
 					</p>
 				</div>
 			</div>
@@ -194,38 +199,38 @@ const HelpView = observer(() => {
 	const renderCharacterTemplatesTopic = () => {
 		return (
 			<div className={topicCSS}>
-				<h2>{t(`optimizer.topicById.2.Headline`)}</h2>
+				<h2>{t("optimizer.topicById.2.Headline")}</h2>
 				<p>
-					{t(`optimizer.topicById.2.1`)}
-					<strong>{t(`optimizer.topicById.2.2`)}</strong>
-					{t(`optimizer.topicById.2.3`)}
-					<strong>{t(`optimizer.topicById.2.4`)}</strong>
-					{t(`optimizer.topicById.2.5`)}
+					{t("optimizer.topicById.2.1")}
+					<strong>{t("optimizer.topicById.2.2")}</strong>
+					{t("optimizer.topicById.2.3")}
+					<strong>{t("optimizer.topicById.2.4")}</strong>
+					{t("optimizer.topicById.2.5")}
 				</p>
-				<h3>{t(`optimizer.topicById.2.6`)}</h3>
+				<h3>{t("optimizer.topicById.2.6")}</h3>
 				<p>
-					<strong>{t(`optimizer.topicById.2.7`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.8`)}
+					<strong>{t("optimizer.topicById.2.7")}</strong> -{" "}
+					{t("optimizer.topicById.2.8")}
 					<br />
-					<strong>{t(`optimizer.topicById.2.9`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.10`)}
+					<strong>{t("optimizer.topicById.2.9")}</strong> -{" "}
+					{t("optimizer.topicById.2.10")}
 					<br />
-					<strong>{t(`optimizer.topicById.2.11`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.12`)}
+					<strong>{t("optimizer.topicById.2.11")}</strong> -{" "}
+					{t("optimizer.topicById.2.12")}
 					<br />
-					<strong>{t(`optimizer.topicById.2.13`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.14`)}
+					<strong>{t("optimizer.topicById.2.13")}</strong> -{" "}
+					{t("optimizer.topicById.2.14")}
 				</p>
-				<h3>{t(`optimizer.topicById.2.15`)}</h3>
+				<h3>{t("optimizer.topicById.2.15")}</h3>
 				<p>
-					<strong>{t(`optimizer.topicById.2.16`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.17`)}
+					<strong>{t("optimizer.topicById.2.16")}</strong> -{" "}
+					{t("optimizer.topicById.2.17")}
 					<br />
-					<strong>{t(`optimizer.topicById.2.18`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.19`)}
+					<strong>{t("optimizer.topicById.2.18")}</strong> -{" "}
+					{t("optimizer.topicById.2.19")}
 					<br />
-					<strong>{t(`optimizer.topicById.2.20`)}</strong> -{" "}
-					{t(`optimizer.topicById.2.21`)}
+					<strong>{t("optimizer.topicById.2.20")}</strong> -{" "}
+					{t("optimizer.topicById.2.21")}
 				</p>
 			</div>
 		);
@@ -234,18 +239,18 @@ const HelpView = observer(() => {
 	const renderAutoGenerationTopic = () => {
 		return (
 			<div className={topicCSS}>
-				<h1>{t(`optimizer.topicById.3.Headline`)}</h1>
-				<p>{t(`optimizer.topicById.3.1`)}</p>
-				<h2>{t(`optimizer.topicById.3.2`)}</h2>
+				<h1>{t("optimizer.topicById.3.Headline")}</h1>
+				<p>{t("optimizer.topicById.3.1")}</p>
+				<h2>{t("optimizer.topicById.3.2")}</h2>
 				<section>
-					<Label>{t(`optimizer.topicById.3.3`)}:</Label>
-					<p>{t(`optimizer.topicById.3.4`)}</p>
-					<Label>{t(`optimizer.topicById.3.5`)}:</Label>
-					<p>{t(`optimizer.topicById.3.6`)}</p>
-					<Label>{t(`optimizer.topicById.3.7`)}:</Label>
-					<p>{t(`optimizer.topicById.3.8`)}</p>
-					<Label>{t(`optimizer.topicById.3.9`)}:</Label>
-					<p>{t(`optimizer.topicById.3.10`)}</p>
+					<Label>{t("optimizer.topicById.3.3")}:</Label>
+					<p>{t("optimizer.topicById.3.4")}</p>
+					<Label>{t("optimizer.topicById.3.5")}:</Label>
+					<p>{t("optimizer.topicById.3.6")}</p>
+					<Label>{t("optimizer.topicById.3.7")}:</Label>
+					<p>{t("optimizer.topicById.3.8")}</p>
+					<Label>{t("optimizer.topicById.3.9")}:</Label>
+					<p>{t("optimizer.topicById.3.10")}</p>
 				</section>
 			</div>
 		);
@@ -258,7 +263,7 @@ const HelpView = observer(() => {
 					<div className="m-1 p-2 rounded-xl">
 						<FontAwesomeIcon
 							icon={faCircleLeft}
-							title={`Go back`}
+							title={"Go back"}
 							onClick={() => {
 								ui$.goToPreviousSection();
 							}}
@@ -272,7 +277,7 @@ const HelpView = observer(() => {
 				{renderSection("optimizer")}
 				{renderSection("editor")}
 			</nav>
-			<div className={topicCSS + " text-center"}>
+			<div className={`${topicCSS} text-center`}>
 				{currentTopic === 0 ? renderTopics() : null}
 			</div>
 			<div className={"overflow-y-auto"}>

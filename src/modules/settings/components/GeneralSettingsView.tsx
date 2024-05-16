@@ -39,7 +39,7 @@ import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";
 
-const GeneralSettingsView = observer(() => {
+const GeneralSettingsView: React.FC = observer(() => {
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
 	const version = about$.version.get();
 	const dispatch: ThunkDispatch = useDispatch();

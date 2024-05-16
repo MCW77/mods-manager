@@ -11,7 +11,7 @@ import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
 
-const AdvancedInput = observer(({ target$, stat }: StatWeightsInputProps) => {
+const AdvancedInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }: StatWeightsInputProps) => {
 	return (
 		<>
 			<Label htmlFor={`${stat}-stat-advanced`}>{`${stat}: `}:</Label>

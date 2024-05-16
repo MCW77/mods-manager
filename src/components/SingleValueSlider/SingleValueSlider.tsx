@@ -1,51 +1,36 @@
 // react
-import React, { useEffect, useState } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 
 // components
 import { Slider } from "#ui/slider";
+import type { Observable } from "@legendapp/state";
+import { reactiveObserver, type ShapeWith$ } from "@legendapp/state/react";
 
-interface SingleValueSliderProps {
-	className?: string;
-	id?: string;
-	min: number;
-	max: number;
-	step: number;
-	value: number;
-	onChange: (newValue: number) => void;
+interface SingleValueSliderProps extends ComponentPropsWithoutRef<typeof Slider> {
+	singleValue$: Observable<number>;
+	onSingleChange: (newValue: number) => void;
 }
 
-const SingleValueSlider = ({
-	className = "",
-	id = "",
-	min,
-	max,
-	step,
-	value,
-	onChange,
+const SingleValueSlider: React.FC<SingleValueSliderProps> | React.FC<ShapeWith$<SingleValueSliderProps>> = reactiveObserver(({
+	singleValue$,
+	onSingleChange,
+	...props
 }: SingleValueSliderProps) => {
-	const [sliderValue, setSliderValue] = useState<number>(value);
-
-	useEffect(() => {
-		setSliderValue(value);
-	}, [value]);
 
 	const handleSliderChange = (newValue: number[]) => {
-		setSliderValue(newValue[0]);
-		value = newValue[0];
-		onChange(newValue[0]);
+		singleValue$.set(newValue[0]);
+		onSingleChange(newValue[0]);
 	};
 
 	return (
 		<Slider
-			className={className}
-			id={id}
-			min={min}
-			max={max}
-			step={step}
-			value={[sliderValue]}
+			{...props}
+			value={[singleValue$.get()]}
 			onValueChange={handleSliderChange}
 		/>
 	);
-};
+});
+
+SingleValueSlider.displayName = "SingleValueSlider";
 
 export { SingleValueSlider };

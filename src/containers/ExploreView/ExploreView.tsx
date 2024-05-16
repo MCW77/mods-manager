@@ -79,4 +79,6 @@ const sidebar = () => (
   </div>
 );
 
+ExploreView.displayName = "ExploreView";
+
 export default ExploreView;

@@ -68,7 +68,7 @@ type ComponentProps = {
 	target: OptimizationPlan.OptimizationPlan;
 };
 
-const CharacterEditForm = observer(({ character, target }: ComponentProps) => {
+const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, target }: ComponentProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
 	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
