@@ -71,7 +71,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "5.5.0-beta",
-    "unocss": "^0.60.2",
+    "unocss": "^0.60.3",
     "unocss-preset-animations": "^1.0.2",
     "vite": "^5.2.11",
     "vite-plugin-pwa": "^0.20.0"
