@@ -54,7 +54,7 @@ const ProfileSelector = observer(
 					<SelectGroup className="accent-blue">
 						{Object.entries(profiles).map(([allyCode, playerName]) => (
 							<SelectItem key={allyCode} value={allyCode}>
-								{profilesManagement$.activePlayer.get()}
+								{playerName}
 							</SelectItem>
 						))}
 					</SelectGroup>
