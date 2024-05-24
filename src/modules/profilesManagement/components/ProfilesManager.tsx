@@ -22,8 +22,9 @@ import { Data } from "#/state/modules/data";
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ProfileAdder } from "#/components/ProfileAdder/ProfileAdder";
-import { ProfileSelector } from "#/components/ProfileSelector/ProfileSelector";
+import { ProfileAdder } from "./ProfileAdder";
+import { ProfileSelector } from "./ProfileSelector";
+
 import { Button } from "#ui/button";
 
 const ProfilesManager = observer(
@@ -37,62 +38,62 @@ const ProfilesManager = observer(
 		);
 
 		return (
-			<div className="flex items-center">
-				<FontAwesomeIcon icon={faUser} className="m-r-1" />
+			<div className="flex items-center gap-2">
+				<FontAwesomeIcon icon={faUser} />
 				{isAddingAProfile ? (
 					<ProfileAdder setAddMode={setIsAddingAProfile} />
 				) : (
 					<ProfileSelector setAddMode={setIsAddingAProfile} />
 				)}
-				{allycode && (
-					<>
-						<div className="flex gap-1">
+				<Show if={profilesManagement$.profiles.activeAllycode}>
+					<div className="flex gap-1">
+						<Button
+							type={"button"}
+							variant={"outline"}
+							size={"icon"}
+							onClick={() => {
+								dispatch(Data.thunks.refreshPlayerData(allycode, true, null));
+							}}
+						>
+							<FontAwesomeIcon
+								icon={faArrowsRotate}
+								title={`${t("header.Fetch")}`}
+							/>
+						</Button>
+						<Show if={hotutils$.hasActiveSession}>
 							<Button
-								className={"m-l-2"}
+								size={"icon"}
 								type={"button"}
 								variant={"outline"}
-								size={"icon"}
-								onClick={() => {
-									dispatch(Data.thunks.refreshPlayerData(allycode, true, null));
-								}}
+								onClick={() =>
+									dispatch(
+										Data.thunks.refreshPlayerData(
+											allycode,
+											true,
+											hotutils$.activeSessionId.get() ?? null,
+										),
+									)
+								}
 							>
-								<FontAwesomeIcon
-									icon={faArrowsRotate}
-									title={`${t("header.Fetch")}`}
-								/>
+								<span className="fa-layers">
+									<FontAwesomeIcon
+										icon={faArrowsRotate}
+										title={`${t("header.FetchHot")}`}
+									/>
+									<FontAwesomeIcon
+										icon={faFire}
+										size="sm"
+										transform="shrink-1 right-14 down-15"
+										color="Red"
+									/>
+								</span>
 							</Button>
-							<Show if={hotutils$.hasActiveSession}>
-								<Button
-									size={"icon"}
-									type={"button"}
-									variant={"outline"}
-									onClick={() =>
-										dispatch(
-											Data.thunks.refreshPlayerData(
-												allycode,
-												true,
-												hotutils$.activeSessionId.get() ?? null,
-											),
-										)
-									}
-								>
-									<span className="fa-layers">
-										<FontAwesomeIcon
-											icon={faArrowsRotate}
-											title={`${t("header.FetchHot")}`}
-										/>
-										<FontAwesomeIcon
-											icon={faFire}
-											size="sm"
-											transform="shrink-1 right-14 down-15"
-											color="Red"
-										/>
-									</span>
-								</Button>
-							</Show>
-						</div>
-					</>
-				)}
+						</Show>
+						<span>
+							Last updated: {profilesManagement$.activeLastUpdated.get()}
+						</span>
+					</div>
+				</Show>
 			</div>
 		);
 	}),

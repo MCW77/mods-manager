@@ -31,11 +31,12 @@ import type { SectionNames } from "#/modules/ui/domain/SectionNames";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ProfilesManager } from "#/components/ProfilesManager/ProfilesManager";
-import { Toaster } from "#ui/sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
+import { ProfilesManager } from "#/modules/profilesManagement/components/ProfilesManager";
+
+import { Toaster } from "#ui/sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
 // containers
 import { AboutView } from "#/containers/AboutView/AboutView";

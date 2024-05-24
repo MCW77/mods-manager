@@ -1,12 +1,12 @@
-import { configureObservablePersistence } from "@legendapp/state/persist";
+import { configureObservableSync } from "@legendapp/state/sync";
 import { ObservablePersistIndexedDB } from "@legendapp/state/persist-plugins/indexeddb";
 
-configureObservablePersistence({
-	pluginLocal: ObservablePersistIndexedDB,
-	localOptions: {
+configureObservableSync({
+	persist: {
+		plugin: ObservablePersistIndexedDB,
 		indexedDB: {
 			databaseName: "GIMO",
-			version: 5,
+			version: 6,
 			tableNames: [
 				"OptimizationSettings",
 				"IncrementalOptimization",
@@ -14,6 +14,7 @@ configureObservablePersistence({
 				"CharactersManagement",
 				"HotUtils",
 				"About",
+				"ProfilesUpdates",
 			],
 		},
 	},

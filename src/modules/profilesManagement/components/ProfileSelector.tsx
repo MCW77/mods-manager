@@ -47,7 +47,7 @@ const ProfileSelector = observer(
 					}
 				}}
 			>
-				<SelectTrigger className="w-[180px] accent-blue">
+				<SelectTrigger className="w-60 accent-blue">
 					<SelectValue placeholder={allycode} />
 				</SelectTrigger>
 				<SelectContent className="accent-blue">

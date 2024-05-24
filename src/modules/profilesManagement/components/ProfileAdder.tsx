@@ -39,6 +39,7 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 
 	return (
 		<Input
+			className="w-60"
 			type={"text"}
 			inputMode={"numeric"}
 			placeholder={t("header.ProfileSelectionPlaceholder")}

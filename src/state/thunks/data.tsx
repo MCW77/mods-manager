@@ -400,6 +400,7 @@ export namespace thunks {
 				beginBatch();
 				profilesManagement$.addProfile(newProfile);
 				profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
+				profilesManagement$.updateProfile(newProfile);
 				endBatch();
 				hotutils$.checkSubscriptionStatus();
 				//        dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
