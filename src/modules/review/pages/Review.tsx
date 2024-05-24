@@ -401,7 +401,7 @@ const Review = memo(() => {
 						else={
 							<div className={"flex flex-col min-h-min"}>
 								<Show
-									if={filter.view}
+									if={filter.view === ModListFilter.viewOptions.list}
 									else={<SetsView modAssignments={displayedMods} />}
 								>
 									<ListView displayedMods={displayedMods} />
