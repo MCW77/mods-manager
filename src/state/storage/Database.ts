@@ -3,14 +3,10 @@ import { defer } from "#/utils/defer";
 import nothing from "#/utils/nothing";
 
 // domain
+import type {	CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
 import type { BaseCharacters } from "#/domain/BaseCharacter";
-import type {
-	CharacterTemplate,
-	CharacterTemplates,
-} from "#/domain/CharacterTemplates";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile, type IFlatPlayerProfile } from "#/domain/PlayerProfile";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 type DBError = DOMException | null;
 
@@ -235,28 +231,6 @@ export class Database {
 		});
 	}
 
-	deleteCharacterTemplate(
-		name: string,
-		onsuccess = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const deleteTemplateRequest = db
-				.transaction("characterTemplates", "readwrite")
-				.objectStore("characterTemplates")
-				.delete(name);
-
-			deleteTemplateRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			deleteTemplateRequest.onsuccess = (event) => {
-				onsuccess();
-			};
-		});
-	}
-
 	/**
 	 * Get all of the basecharacters from the database and return them as an object
 	 * @param onsuccess {function(Array<BaseCharacter>)}
@@ -377,66 +351,6 @@ export class Database {
 			};
 
 			profilesRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-		});
-	}
-
-	/**
-	 * Retrieve a character template from the database by name
-	 * @param name {string}
-	 * @param onsuccess {function(Object)}
-	 * @param onerror {function(error)}
-	 */
-	getCharacterTemplate(
-		name: string,
-		onsuccess: (template: CharacterTemplate) => void = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const templateRequest = db
-				.transaction("characterTemplates", "readwrite")
-				.objectStore("characterTemplates")
-				.get(name);
-
-			templateRequest.onsuccess = (event) => {
-				if (event !== null && event.target instanceof IDBRequest) {
-					const template: CharacterTemplate = event.target.result;
-					onsuccess(template);
-				}
-			};
-
-			templateRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-		});
-	}
-
-	/**
-	 * Get all of the saved character templates from the database
-	 * @param onsuccess {function(CharacterTemplates)}
-	 * @param onerror {function(error)}
-	 */
-	getCharacterTemplates(
-		onsuccess: (charTemplates: CharacterTemplates) => void = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const templatesRequest = db
-				.transaction("characterTemplates", "readwrite")
-				.objectStore("characterTemplates")
-				.getAll();
-
-			templatesRequest.onsuccess = (event) => {
-				if (event !== null && event.target instanceof IDBRequest) {
-					const templates: CharacterTemplates = event.target.result;
-					onsuccess(templates);
-				}
-			};
-
-			templatesRequest.onerror = (event: Event) => {
 				if (event !== null && event.target instanceof IDBRequest)
 					onerror(event.target.error);
 			};
@@ -597,83 +511,6 @@ export class Database {
 				const singleRequest = saveLastRunsRequest
 					.objectStore("lastRuns")
 					.put(lastRun);
-			}
-		});
-	}
-
-	saveCharacterTemplate(
-		name: string,
-		category: string,
-		selectedCharacters: SelectedCharacters,
-		onsuccess = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const templateObject = {
-				id: name,
-				category: category,
-				selectedCharacters: selectedCharacters.map(({ id, target }) => ({
-					id: id,
-					target: target,
-				})),
-			};
-
-			const saveTemplateRequest = db
-				.transaction(["characterTemplates"], "readwrite")
-				.objectStore("characterTemplates")
-				.put(templateObject);
-
-			saveTemplateRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			saveTemplateRequest.onsuccess = (event) => {
-				if (event !== null && event.target instanceof IDBRequest) onsuccess();
-			};
-		});
-	}
-
-	saveCharacterTemplates(
-		templates: CharacterTemplates,
-		onsuccess = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const saveTemplatesRequest = db.transaction(
-				["characterTemplates"],
-				"readwrite",
-			);
-			const keys: string[] = [];
-
-			saveTemplatesRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			saveTemplatesRequest.oncomplete = (event) => {
-				onsuccess();
-			};
-
-			for (const template of templates) {
-				const templateObject = {
-					id: template.id,
-					selectedCharacters: template.selectedCharacters.map(
-						({ id, target }) => ({
-							id: id,
-							target: target,
-						}),
-					),
-				};
-
-				const singleRequest = saveTemplatesRequest
-					.objectStore("characterTemplates")
-					.put(templateObject);
-
-				singleRequest.onsuccess = (event) => {
-					if (event !== null && event.target instanceof IDBRequest)
-						keys.push(event.target.result);
-				};
 			}
 		});
 	}

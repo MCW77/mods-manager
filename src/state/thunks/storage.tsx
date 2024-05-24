@@ -2,7 +2,6 @@
 import type { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // utils
-import { mapValues } from "lodash-es";
 import groupByKey from "#/utils/groupByKey";
 import nothing from "#/utils/nothing";
 
@@ -10,6 +9,7 @@ import nothing from "#/utils/nothing";
 import getDatabase, { type IUserData } from "#/state/storage/Database";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // actions
@@ -17,20 +17,12 @@ import { actions } from "#/state/actions/storage";
 
 // modules
 import { App } from "#/state/modules/app";
-import { Data } from "#/state/modules/data";
 
 // domain
 import type { BaseCharactersById, BaseCharacters } from "#/domain/BaseCharacter";
-import type {
-	CharacterTemplate,
-	CharacterTemplates,
-	CharacterTemplatesByName,
-} from "#/domain/CharacterTemplates";
 import type { Mod } from "#/domain/Mod";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile } from "#/domain/PlayerProfile";
-import type { SelectedCharactersByTemplateName } from "#/domain/SelectedCharacters";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 export namespace thunks {
 	/**
@@ -105,34 +97,6 @@ export namespace thunks {
 		);
 	}
 
-	export function exportCharacterTemplate(
-		name: string,
-		callback: (template: CharacterTemplate) => void,
-	): ThunkResult<void> {
-		return (dispatch) => {
-			const db = getDatabase();
-			db.getCharacterTemplate(name, callback, (error) => {
-				if (error instanceof Error)
-					dialog$.showError(
-						`Error fetching data from the database: ${error.message}`,
-					);
-			});
-		};
-	}
-
-	export function exportCharacterTemplates(
-		callback: (templates: CharacterTemplates) => void,
-	): ThunkResult<void> {
-		return (dispatch) => {
-			const db = getDatabase();
-			db.getCharacterTemplates(callback, (error) =>
-				dialog$.showError(
-					`Error fetching data from the database: ${error?.message}`,
-				),
-			);
-		};
-	}
-
 	/**
 	 * Export all of the data in the database
 	 * @param callback {function(Object)}
@@ -188,55 +152,6 @@ export namespace thunks {
 		};
 	}
 
-	export function loadCharacterTemplates(): ThunkResult<void> {
-		return (dispatch) => {
-			const db = getDatabase();
-
-			try {
-				db.getCharacterTemplates(
-					(characterTemplates: CharacterTemplates) => {
-						const templatesObject: SelectedCharactersByTemplateName = mapValues(
-							groupByKey(
-								characterTemplates,
-								(template) => template.id,
-							) as CharacterTemplatesByName,
-							({ selectedCharacters }: CharacterTemplate) => selectedCharacters,
-						);
-
-						let characterTemplatesKVPs = Object.entries(characterTemplates);
-						characterTemplatesKVPs = characterTemplatesKVPs.map(
-							([key, value]) => {
-								return [value.id, value];
-							},
-						);
-						const characterTemplatesByName = Object.fromEntries(
-							Object.entries(characterTemplates).map(([key, value]) => {
-								return [value.id, value];
-							}),
-						);
-
-						dispatch(actions.setCharacterTemplates(characterTemplatesByName));
-					},
-					(error) =>
-						dialog$.showFlash(
-							"Storage Error",
-							`Error loading character templates: ${error?.message}.`,
-							"",
-							undefined,
-							"error",
-						),
-				);
-			} catch (e) {
-				dialog$.showError([
-					<p key={1}>
-						Unable to load database: {(e as Error).message} Please fix the
-						problem and try again, or ask for help in the discord server below.
-					</p>,
-				]);
-			}
-		};
-	}
-
 	/**
 	 * Read Game settings and player profiles from the database and load them into the app state
 	 * @param allyCode
@@ -246,7 +161,6 @@ export namespace thunks {
 		return (dispatch) => {
 			dispatch(loadBaseCharacters());
 			dispatch(loadProfiles(allyCode));
-			dispatch(loadCharacterTemplates());
 		};
 	}
 

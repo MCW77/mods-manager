@@ -1,6 +1,5 @@
 // domain
 import type { BaseCharactersById } from "#/domain/BaseCharacter";
-import type { CharacterTemplatesByName } from "#/domain/CharacterTemplates";
 import type { PlayerProfile } from "#/domain/PlayerProfile";
 
 
@@ -58,13 +57,6 @@ export namespace actions {
     } as const;
   }
 
-  export function setCharacterTemplates(templates: CharacterTemplatesByName) {
-    return {
-      type: actionNames.SET_CHARACTER_TEMPLATES,
-      templates: templates
-    } as const;
-  }
-
   export function setProfile(profile: PlayerProfile) {
     return {
       type: actionNames.SET_PROFILE,
@@ -75,6 +67,5 @@ export namespace actions {
 
 export namespace actionNames {
   export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS' as const;
-  export const SET_CHARACTER_TEMPLATES = 'SET_CHARACTER_TEMPLATES' as const;
   export const SET_PROFILE = 'SET_PROFILE' as const;
 };

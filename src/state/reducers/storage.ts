@@ -26,18 +26,6 @@ export namespace reducers {
 			profile: action.profile,
 		});
 	}
-
-	export function setCharacterTemplates(
-		state: IAppState,
-		action: ReturnType<typeof actions.setCharacterTemplates>,
-	): IAppState {
-		return Object.assign({}, state, {
-			templates: {
-				userTemplatesByName: action.templates,
-				templatesAddingMode: state.templates.templatesAddingMode,
-			},
-		}) as IAppState;
-	}
 }
 
 export namespace selectors {

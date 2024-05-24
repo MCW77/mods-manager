@@ -117,9 +117,6 @@ self.onmessage = (message) => {
       db.createObjectStore('profiles', { keyPath: 'allyCode' });
       db.createObjectStore('lastRuns', { keyPath: 'allyCode' });
     }
-    if (event.oldVersion < 2) {
-      db.createObjectStore('characterTemplates', { keyPath: 'name' });
-    }
   };
 
   openDbRequest.onsuccess = (event) => {

@@ -12,7 +12,6 @@ import {
 import type { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerProfile } from "../domain/PlayerProfile";
 import type { TargetStats } from "../domain/TargetStat";
-import type { Templates } from "../domain/Templates";
 
 export interface IAppState {
 	baseCharacters: BaseCharactersById;
@@ -20,11 +19,10 @@ export interface IAppState {
 	profile: PlayerProfile; // All the data about the current character
 	progress: OptimizationStatus;
 	targetStats: TargetStats;
-	templates: Templates;
 }
 
 export class AppState {
-	static readonly keysToSave = ["modsViewOptions", "templates"] as const;
+	static readonly keysToSave = ["modsViewOptions"] as const;
 
 	static readonly Default: IAppState = {
 		baseCharacters: {} as BaseCharactersById,
@@ -36,10 +34,6 @@ export class AppState {
 			step: "1",
 		},
 		targetStats: [] as TargetStats,
-		templates: {
-			templatesAddingMode: "replace",
-			userTemplatesByName: {},
-		},
 	};
 
 	/**
@@ -106,6 +100,5 @@ export function deserializeState(state: IAppState): IAppState {
 			AppState.Default.modsViewOptions,
 			state.modsViewOptions,
 		),
-		templates: state.templates,
 	});
 }

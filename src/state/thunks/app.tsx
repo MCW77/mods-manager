@@ -4,9 +4,6 @@ import type {
 	ThunkResult,
 } from "#/state/reducers/modsOptimizer";
 
-// utils
-import groupByKey from "#/utils/groupByKey";
-
 // state
 import type { IAppState } from "#/state/storage";
 import getDatabase, { type IUserData } from "#/state/storage/Database";
@@ -15,10 +12,10 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { templates$ } from "#/modules/templates/state/templates";
 
 // modules
 import { actions } from "#/state/actions/app";
-import { CharacterEdit } from "#/state/modules/characterEdit";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -131,9 +128,7 @@ export namespace thunks {
 					dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
 					dispatch(Storage.thunks.saveLastRuns(stateObj.lastRuns));
 					if (stateObj.characterTemplates) {
-						dispatch(
-							CharacterEdit.thunks.saveTemplates(stateObj.characterTemplates),
-						);
+						templates$.userTemplatesByName.set(templates$.groupTemplatesById(stateObj.characterTemplates));
 					}
 					if (stateObj.allyCode !== "") {
 						dispatch(Storage.thunks.loadProfile(stateObj.allyCode));

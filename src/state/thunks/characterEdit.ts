@@ -10,24 +10,20 @@ import groupByKey from "../../utils/groupByKey";
 import getDatabase from "../storage/Database";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { templates$ } from "#/modules/templates/state/templates";
 
 // modules
 import { App } from "../../state/modules/app";
 import { Data } from "../../state/modules/data";
-import { Storage } from "../../state/modules/storage";
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
-import templatesJSON from "../../constants/characterTemplates.json";
-
+import type { CharacterTemplate } from "../../modules/templates/domain/CharacterTemplates";
 import * as Character from "#/domain/Character";
-import type { CharacterTemplate, CharacterTemplates } from "../../domain/CharacterTemplates";
 import { type OptimizationPlan, type OptimizationPlansById, createOptimizationPlan } from "../../domain/OptimizationPlan";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import type { PlayerProfile } from "../../domain/PlayerProfile";
 import type { SelectedCharacters } from "../../domain/SelectedCharacters";
-
-const defaultTemplates = groupByKey(templatesJSON as unknown as CharacterTemplates, ({ id: name }) => name);
 
 function getTargetsById(template: CharacterTemplate): OptimizationPlansById {
   return mapValues(
@@ -85,28 +81,8 @@ export namespace thunks {
     }
 
     return (dispatch, getState) => {
-      if (Object.keys(defaultTemplates).includes(name)) {
-        const template: CharacterTemplate = {
-          id: defaultTemplates[name].id,
-          category: defaultTemplates[name].category,
-          selectedCharacters: defaultTemplates[name].selectedCharacters.map(
-            ({ id, target }) => ({ id: id, target: target })
-          )
-        };
-        updateFunction(template)(dispatch, getState, null);
-      } else {
-        db.getCharacterTemplate(
-          name,
-          template => updateFunction(template)(dispatch, getState, null),
-          error => dialog$.showFlash(
-            "Storage Error",
-            `Error retrieving your template from the database: ${(error as Error).message}.`,
-            "",
-            undefined,
-            "error",
-          )
-        );
-      }
+      const template = templates$.builtinTemplates.get().find(({ id }) => id === name) ?? templates$.userTemplatesByName[name].get();
+      updateFunction(template)(dispatch, getState, null);
     }
   }
 
@@ -159,28 +135,8 @@ export namespace thunks {
     }
 
     return (dispatch, getState) => {
-      if (Object.keys(defaultTemplates).includes(name)) {
-        const template: CharacterTemplate = {
-          id: defaultTemplates[name].id,
-          category: defaultTemplates[name].category,
-          selectedCharacters: defaultTemplates[name].selectedCharacters.map(
-            ({ id, target }) => ({ id: id, target: target })
-          )
-        };
-        updateFunction(template)(dispatch, getState, null);
-      } else {
-        db.getCharacterTemplate(
-          name,
-          template => updateFunction(template)(dispatch, getState, null),
-          error => dialog$.showFlash(
-            "Storage Error",
-            `Error retrieving your template from the database: ${(error as Error).message}.`,
-            "",
-            undefined,
-            "error",
-          )
-        );
-      }
+      const template = templates$.builtinTemplates.get().find(({ id }) => id === name) ?? templates$.userTemplatesByName[name].get();
+      updateFunction(template)(dispatch, getState, null);
     }
 
   }
@@ -259,29 +215,6 @@ export namespace thunks {
         dialog$.hide();
       }
     );
-  }
-
-  export function deleteTemplate(name: string) :ThunkResult<void> {
-    const db = getDatabase();
-
-    return (dispatch) => {
-      db.deleteCharacterTemplate(
-        name,
-        () => {
-          dispatch(Storage.thunks.loadCharacterTemplates());
-          dialog$.hide();
-        },
-        error => {
-          if (error instanceof Error) dialog$.showFlash(
-            "Storage Error",
-            `Error deleting the character template '${name}'. Error message: ${error.message}`,
-            "",
-            undefined,
-            "error",
-          )
-        }
-      );
-    }
   }
 
   /**
@@ -439,28 +372,8 @@ export namespace thunks {
     }
 
     return (dispatch, getState) => {
-      if (Object.keys(defaultTemplates).includes(templateName)) {
-        const template: CharacterTemplate = {
-          id: defaultTemplates[templateName].id,
-          category: defaultTemplates[templateName].category,
-          selectedCharacters: defaultTemplates[templateName].selectedCharacters.map(
-            ({ id, target }) => ({ id: id, target: target })
-          )
-        };
-        updateFunction(template)(dispatch, getState, null);
-      } else {
-        db.getCharacterTemplate(
-          templateName,
-          template => updateFunction(template)(dispatch, getState, null),
-          error => dialog$.showFlash(
-            "Storage Error",
-            `Error retrieving your template from the database: ${(error as Error).message}.`,
-            "",
-            undefined,
-            "error",
-          )
-        );
-      }
+      const template = templates$.builtinTemplates.get().find(({ id }) => id === templateName) ?? templates$.userTemplatesByName[templateName].get();
+      updateFunction(template)(dispatch, getState, null);
     }
   }
 
@@ -525,40 +438,11 @@ export namespace thunks {
       const state = getState();
       const selectedCharacters = state.profile.selectedCharacters;
 
-      db.saveCharacterTemplate(templateName, category, selectedCharacters,
-        () => {
-          dispatch(Storage.thunks.loadCharacterTemplates());
-          dialog$.hide();
-        },
-        error => dialog$.showFlash(
-          "Storage Error",
-          `Error saving the character template: ${(error as Error).message}. Please try again.`,
-          "",
-          undefined,
-          "error",
-        )
-      );
-    };
-  }
-
-  export function saveTemplates(templates: CharacterTemplates): ThunkResult<void> {
-    const db = getDatabase();
-
-    return (dispatch) => {
-      db.saveCharacterTemplates(
-        templates,
-        () => {
-          dispatch(Storage.thunks.loadCharacterTemplates());
-          dialog$.hide();
-        },
-        error => dialog$.showFlash(
-          "Storage Error",
-          `Error saving the character templates: ${(error as Error).message}.`,
-          "",
-          undefined,
-          "error",
-        )
-      );
+      templates$.userTemplatesByName[templateName].set({
+        id: templateName,
+        category: category,
+        selectedCharacters: selectedCharacters
+      });
     };
   }
 

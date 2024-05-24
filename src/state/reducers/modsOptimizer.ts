@@ -7,10 +7,8 @@ import { type IAppState, AppState } from "../storage";
 
 // #region modules
 import { App } from "../modules/app";
-import { CharacterEdit } from "../modules/characterEdit";
 import { Explore } from "../modules/explore";
 import { Optimize } from "../modules/optimize";
-import { Review } from "../modules/review";
 import { Storage } from "../modules/storage";
 // #endregion
 
@@ -23,12 +21,10 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 type AppActions =
 	| ReturnType<typeof App.actions.resetState>
 	| ReturnType<typeof App.actions.setState>
-	| ReturnType<typeof CharacterEdit.actions.setTemplatesAddingMode>
 	| ReturnType<typeof Explore.actions.changeModsViewOptions>
 	| ReturnType<typeof Optimize.actions.startModOptimization>
 	| ReturnType<typeof Optimize.actions.updateProgress>
 	| ReturnType<typeof Storage.actions.setBaseCharacters>
-	| ReturnType<typeof Storage.actions.setCharacterTemplates>
 	| ReturnType<typeof Storage.actions.setProfile>;
 // #endregion
 
@@ -51,9 +47,6 @@ const modsOptimizer: RootReducer = (
 		case App.actionNames.SET_STATE:
 			return AppState.save(App.reducers.setState(action));
 
-		case CharacterEdit.actionNames.SET_TEMPLATES_ADDING_MODE:
-			return CharacterEdit.reducers.setTemplatesAddingMode(state, action);
-
 		case Explore.actionNames.CHANGE_MODS_VIEW_OPTIONS:
 			return AppState.save(
 				Explore.reducers.changeModsViewOptions(state, action),
@@ -66,10 +59,6 @@ const modsOptimizer: RootReducer = (
 			return Storage.reducers.setBaseCharacters(state, action);
 		case Storage.actionNames.SET_PROFILE:
 			return AppState.save(Storage.reducers.setProfile(state, action));
-		case Storage.actionNames.SET_CHARACTER_TEMPLATES:
-			return AppState.save(
-				Storage.reducers.setCharacterTemplates(state, action),
-			);
 
 		default:
 			return state;

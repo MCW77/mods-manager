@@ -1,17 +1,13 @@
 // react
 import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
-import { observer } from "@legendapp/state/react";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
+import { observer, reactive, useSelector } from "@legendapp/state/react";
+import { templates$ } from "#/modules/templates/state/templates";
 
 // domain
-import type { TemplatesAddingMode } from "#/domain/TemplatesAddingMode";
+import type { TemplatesAddingMode } from "#/modules/templates/domain/TemplatesAddingMode";
 
 // components
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
@@ -30,12 +26,11 @@ import { TemplatesManager } from "#/containers/TemplatesManager/TemplatesManager
 import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
 import { OptimizationSettingsForm } from "#/modules/optimizationSettings/components/OptimizationSettingsForm";
 
-const OptimizerSettingsView = observer(() => {
-	const templatesAddingMode = useSelector(
-		CharacterEdit.selectors.selectTemplatesAddingMode,
-	);
-	const dispatch: ThunkDispatch = useDispatch();
-	const [t, i18n] = useTranslation("settings-ui");
+const ReactiveSelect = reactive(Select);
+
+const OptimizerSettingsView: React.FC = observer(() => {
+	const templatesAddingMode = useSelector(templates$.templatesAddingMode);
+	const [t] = useTranslation("settings-ui");
 
 	const global =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
@@ -61,10 +56,10 @@ const OptimizerSettingsView = observer(() => {
 						{t("optimizer.templates.AddingMode")}:
 					</Label>
 					<FormInput>
-						<Select
-							value={templatesAddingMode}
-							onValueChange={(value: TemplatesAddingMode) => {
-								dispatch(CharacterEdit.actions.setTemplatesAddingMode(value));
+						<ReactiveSelect
+							$value={templates$.templatesAddingMode}
+							onValueChange={async (value: TemplatesAddingMode) => {
+								templates$.templatesAddingMode.set(value);
 							}}
 						>
 							<SelectTrigger className="w-[180px] accent-blue">
@@ -83,7 +78,7 @@ const OptimizerSettingsView = observer(() => {
 									</SelectItem>
 								</SelectGroup>
 							</SelectContent>
-						</Select>
+						</ReactiveSelect>
 					</FormInput>
 					<Label className={`${labelCSS} self-start`}>
 						{t("optimizer.templates.Own")}:

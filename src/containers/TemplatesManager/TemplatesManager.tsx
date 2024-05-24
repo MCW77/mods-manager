@@ -1,8 +1,6 @@
 // react
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import {
@@ -16,13 +14,12 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
+import { observer } from "@legendapp/state/react";
 import { dialog$ } from "#/modules/dialog/state/dialog";
-
-// modules
-import { CharacterEdit } from '#/state/modules/characterEdit';
+import { templates$ } from "#/modules/templates/state/templates";
 
 // domain
-import { CharacterTemplates } from "#/domain/CharacterTemplates";
+import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,12 +27,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FileInput } from "#/components/FileInput/FileInput";
 import { Button } from "#ui/button";
 
-const TemplatesManager = React.memo(
+const TemplatesManager = observer(React.memo(
   () => {
-    const dispatch: ThunkDispatch = useDispatch();
-    const userCharacterTemplates = useSelector(CharacterEdit.selectors.selectUserTemplates);
     const [selectedTemplates, setSelectedTemplates] = useState([] as CharacterTemplates);
-    const [t, i18n] = useTranslation('settings-ui');
+    const [t] = useTranslation('settings-ui');
 
     return (
       <div className={'templates-manager'}>
@@ -49,8 +44,8 @@ const TemplatesManager = React.memo(
                 file,
                 (templatesString) => {
                   try {
-                    const templates = JSON.parse(templatesString);
-                    dispatch(CharacterEdit.thunks.saveTemplates(templates));
+                    const templates: CharacterTemplates = JSON.parse(templatesString);
+                    templates$.userTemplatesByName.set(templates$.groupTemplatesById(templates));
                   } catch (e) {
                     throw new Error(
                       "Unable to read templates from file. Make sure that you've selected a character templates file"
@@ -64,18 +59,7 @@ const TemplatesManager = React.memo(
           <Button
             disabled={selectedTemplates.length === 0}
             onClick={() => {
-              const templatesSaveObject = selectedTemplates.map(
-                ({ id: name, selectedCharacters }) => ({
-                  name: name,
-                  selectedCharacters: selectedCharacters.map(
-                    ({ id, target }) => ({
-                      id: id,
-                      target: target,
-                    })
-                  ),
-                })
-              );
-              const templatesSerialized = JSON.stringify(templatesSaveObject);
+              const templatesSerialized = JSON.stringify(selectedTemplates);
               const userData = new Blob([templatesSerialized], {
                 type: "application/json;charset=utf-8",
               });
@@ -88,7 +72,7 @@ const TemplatesManager = React.memo(
 
             }}
           >
-            <FontAwesomeIcon className="m-r-2" icon={faFileExport} title={`Export`}/>
+            <FontAwesomeIcon className="m-r-2" icon={faFileExport} title={"Export"}/>
             Export
           </Button>
           <Button
@@ -97,18 +81,18 @@ const TemplatesManager = React.memo(
             disabled={selectedTemplates.length === 0}
             onClick={() => {
               for (const template of selectedTemplates.values()) {
-                dispatch(CharacterEdit.thunks.deleteTemplate(template.id));
+                templates$.userTemplatesByName[template.id].delete();
               }
               setSelectedTemplates([]);
             }}
           >
             <FontAwesomeIcon className="m-r-2" icon={faTrashCan} title={`${t('optimizer.TemplateDelete')}`}/>
-            {t('optimizer.templates.Delete')} {" " + selectedTemplates.length}
+            {t('optimizer.templates.Delete')} {` ${selectedTemplates.length}`}
           </Button>
 
         </div>
         <div className={'templates'}>
-          {userCharacterTemplates.map(
+          {templates$.userTemplates.get().map(
             (template) => (
               <div
                 className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
@@ -121,13 +105,33 @@ const TemplatesManager = React.memo(
                     const templateName = target.dataset.template;
                     const selectedTemplate = selectedTemplates.find(template => template.id === templateName);
                     const wasSelected = selectedTemplate !== undefined;
-                    const template = userCharacterTemplates.find(template => template.id === templateName);
+                    const template = templates$.userTemplates.get().find(template => template.id === templateName);
                     target.classList.toggle('selected');
                     target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
                     if (wasSelected) {
                       setSelectedTemplates(selectedTemplates.toSpliced(selectedTemplates.indexOf(selectedTemplate), 1));
                     } else {
-                      setSelectedTemplates([...selectedTemplates, template!]);
+                      if (template !== undefined)
+                        setSelectedTemplates([...selectedTemplates, template]);
+                    }
+                  }
+                }}
+                onKeyUp={(event) => {
+                  if (event.code === "Enter") {
+                    const target = event.currentTarget as HTMLDivElement;
+                    if (target.dataset.template !== undefined && target.dataset.template !== null) {
+                      const templateName = target.dataset.template;
+                      const selectedTemplate = selectedTemplates.find(template => template.id === templateName);
+                      const wasSelected = selectedTemplate !== undefined;
+                      const template = templates$.userTemplates.get().find(template => template.id === templateName);
+                      target.classList.toggle('selected');
+                      target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
+                      if (wasSelected) {
+                        setSelectedTemplates(selectedTemplates.toSpliced(selectedTemplates.indexOf(selectedTemplate), 1));
+                      } else {
+                        if (template !== undefined)
+                          setSelectedTemplates([...selectedTemplates, template]);
+                      }
                     }
                   }
                 }}
@@ -141,7 +145,7 @@ const TemplatesManager = React.memo(
       </div>
     )
   }
-);
+));
 
 TemplatesManager.displayName = 'TemplatesManager';
 
