@@ -17,21 +17,17 @@ const target = OptimizationPlan.createOptimizationPlan("");
 const target$: PlanEditing = observable({
 	character: {} as Character.Character,
 	target: target,
-	isDefaultTarget: computed(
-		() =>
-			(
-				characterSettings[target$.character.get().baseID] as CharacterSettings
-			)?.targets.find((target) => target.name === target$.target.get().name) !==
-			undefined,
-	),
+	isDefaultTarget: () =>
+		(
+			characterSettings[target$.character.get().baseID] as CharacterSettings
+		)?.targets.find((target) => target.name === target$.target.get().name) !==
+		undefined,
 	isInAdvancedEditMode: false,
-	isTargetChanged: computed(
-		() =>
-			!OptimizationPlan.equals(
-				target$.uneditedTarget.get() ?? target$.target.get(),
-				target$.target.get(),
-			),
-	),
+	isTargetChanged: () =>
+		!OptimizationPlan.equals(
+			target$.uneditedTarget.get() ?? target$.target.get(),
+			target$.target.get(),
+		),
 	uneditedTarget: { ...target },
 	addSetBonus: (setName: SetStats.GIMOStatNames) => {
 		const restrictions = target$.target.setRestrictions.peek();

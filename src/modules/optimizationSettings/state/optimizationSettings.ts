@@ -1,13 +1,11 @@
 // state
 import {
-	type ObservableComputed,
 	type ObservableObject,
-	computed,
 	observable,
 } from "@legendapp/state";
-import { persistObservable } from "@legendapp/state/persist";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { syncObservable } from "@legendapp/state/sync";
 
 export interface ProfileOptimizationSettings {
 	forceCompleteSets: boolean;
@@ -20,7 +18,7 @@ export interface ProfileOptimizationSettings {
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 
 interface OptimizationSettings {
-	activeSettings: ObservableComputed<ProfileOptimizationSettings>;
+	activeSettings: () => ProfileOptimizationSettings;
 	settingsByProfile: SettingsByProfile;
 	addProfile: (allyCode: string) => void;
 	clearProfiles: () => void;
@@ -29,12 +27,11 @@ interface OptimizationSettings {
 
 export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 	observable<OptimizationSettings>({
-		activeSettings: computed<ProfileOptimizationSettings>(
-			() =>
-				optimizationSettings$.settingsByProfile[
+		activeSettings: () => {
+			return	optimizationSettings$.settingsByProfile[
 					profilesManagement$.profiles.activeAllycode.get()
-				].get() as ProfileOptimizationSettings,
-		),
+				].get() as ProfileOptimizationSettings
+		},
 		settingsByProfile: {},
 		addProfile: (allyCode: string) => {
 			return optimizationSettings$.settingsByProfile.set({
@@ -56,8 +53,8 @@ export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 		},
 	});
 
-persistObservable(optimizationSettings$.settingsByProfile, {
-	local: {
+syncObservable(optimizationSettings$.settingsByProfile, {
+	persist: {
 		name: "OptimizationSettings",
 		indexedDB: {
 			itemID: "settingsByProfile",

@@ -1,6 +1,6 @@
 // state
 import { type ObservableObject, observable } from "@legendapp/state";
-import { persistObservable } from "@legendapp/state/persist";
+import { syncObservable } from "@legendapp/state/sync";
 
 export interface Filters {
 	characterFilter: string;
@@ -19,8 +19,8 @@ export const charactersManagement$: ObservableObject<CharactersManagement> =
 		},
 	});
 
-persistObservable(charactersManagement$.filters, {
-	local: {
+syncObservable(charactersManagement$.filters, {
+	persist: {
 		name: "CharactersManagement",
 		indexedDB: {
 			itemID: "filters",

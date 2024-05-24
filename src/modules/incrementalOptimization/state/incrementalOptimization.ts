@@ -1,13 +1,13 @@
 // state
-import { type ObservableObject, computed, observable } from "@legendapp/state";
-import { persistObservable } from "@legendapp/state/persist";
+import { type ObservableObject, observable } from "@legendapp/state";
+import { syncObservable } from "@legendapp/state/sync";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
-type indicesByProfile = Record<string, number | null>;
+type IndicesByProfile = Record<string, number | null>;
 interface IncrementalOptimization {
-	activeIndex: number | null;
-	indicesByProfile: indicesByProfile;
+	activeIndex: () => number | null;
+	indicesByProfile: IndicesByProfile;
 	addProfile: (allyCode: string) => void;
 	clearProfiles: () => void;
 	deleteProfile: (allyCode: string) => void;
@@ -15,13 +15,11 @@ interface IncrementalOptimization {
 
 export const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
 	observable<IncrementalOptimization>({
-		activeIndex: computed<number | null>(
-			() =>
-				incrementalOptimization$.indicesByProfile[
+		activeIndex: () => {
+			return incrementalOptimization$.indicesByProfile[
 					profilesManagement$.profiles.activeAllycode.get()
-				].get() as number | null,
-		),
-
+				].get();
+		},
 		indicesByProfile: {},
 		addProfile: (allyCode: string) => {
 			incrementalOptimization$.indicesByProfile.set({
@@ -37,8 +35,8 @@ export const incrementalOptimization$: ObservableObject<IncrementalOptimization>
 		},
 	});
 
-persistObservable(incrementalOptimization$.indicesByProfile, {
-	local: {
+syncObservable(incrementalOptimization$.indicesByProfile, {
+	persist: {
 		name: "IncrementalOptimization",
 		indexedDB: {
 			itemID: "indicesByProfile",

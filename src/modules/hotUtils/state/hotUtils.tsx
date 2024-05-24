@@ -3,14 +3,11 @@ import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
 import {
-	type ObservableComputed,
+	type Observable,
 	type ObservableObject,
-	computed,
 	observable,
-	observe,
 } from "@legendapp/state";
-import { persistObservable } from "@legendapp/state/persist";
-
+import { syncObservable } from "@legendapp/state/sync";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -37,10 +34,10 @@ type SessionIdsByProfile = Record<string, string>;
 
 interface HotUtils {
 	moveStatus: MoveStatus;
-	activeSessionId: ObservableComputed<string>;
-	hasActiveSession: ObservableComputed<boolean>;
+	activeSessionId: () => Observable<string>;
+	hasActiveSession: () => Observable<boolean>;
 	isMoving: boolean;
-	isSubscribed: ObservableComputed<Promise<boolean>>;
+	isSubscribed: () => Observable<Promise<boolean>>;
 	sessionIdsByProfile: SessionIdsByProfile;
 	cancelModMove: () => Promise<void>;
 	checkSubscriptionStatus: () => Promise<boolean>;
@@ -78,19 +75,17 @@ const post = async (url = "", data = {}, extras = {}) => {
 		.then((errorText) => Promise.reject(new Error(errorText)));
 };
 
-export const hotutils$: ObservableObject<HotUtils> = observable<HotUtils>({
-	activeSessionId: computed<string>(() => {
+export const hotutils$ = observable({
+	activeSessionId: () => {
 		const allyCode = profilesManagement$.profiles.activeAllycode.get();
 		return hotutils$.sessionIdsByProfile[allyCode].get() || "";
-	}),
-	hasActiveSession: computed<boolean>(
-		() =>
-			hotutils$.activeSessionId.get() !== "" && hotutils$.isSubscribed.get(),
-	),
+	},
+	hasActiveSession: () => {
+		return (hotutils$.activeSessionId.get() !== "") && hotutils$.isSubscribed.get()
+	},
+
 	isMoving: false,
-	isSubscribed: computed<Promise<boolean>>(() =>
-		hotutils$.checkSubscriptionStatus(),
-	),
+	isSubscribed: () => hotutils$.checkSubscriptionStatus(),
 	moveStatus: {
 		taskId: 0,
 		progress: {
@@ -101,7 +96,7 @@ export const hotutils$: ObservableObject<HotUtils> = observable<HotUtils>({
 		},
 		message: "",
 	},
-	sessionIdsByProfile: {},
+	sessionIdsByProfile: {} as SessionIdsByProfile,
 	cancelModMove: async () => {
 		isBusy$.set(true);
 		try {
@@ -435,8 +430,8 @@ export const hotutils$: ObservableObject<HotUtils> = observable<HotUtils>({
 	},
 });
 
-persistObservable(hotutils$.sessionIdsByProfile, {
-	local: {
+syncObservable(hotutils$.sessionIdsByProfile, {
+	persist: {
 		name: "HotUtils",
 		indexedDB: {
 			itemID: "sessionIdsByProfile",
