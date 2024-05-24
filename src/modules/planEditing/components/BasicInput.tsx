@@ -20,7 +20,7 @@ const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }:
 				max={100}
 				min={-100}
 				step={1}
-				singleValue$={target$.target[stat]}
+				singleValue={target$.target[stat].get()}
 				onSingleChange={(weight: number) => {
 					target$.target[stat].set(weight);
 				}}

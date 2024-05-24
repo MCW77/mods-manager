@@ -34,8 +34,8 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					min={0}
 					max={100}
 					step={1}
-					singleValue$={
-						optimizationSettings$.settingsByProfile[allycode].modChangeThreshold
+					singleValue={
+						optimizationSettings$.settingsByProfile[allycode].modChangeThreshold.get()
 					}
 					onSingleChange={(threshold: number) => {
 						optimizationSettings$.settingsByProfile[
