@@ -29,7 +29,7 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@reduxjs/toolkit": "^2.2.5",
-    "@unocss/preset-mini": "^0.61.0",
+    "@unocss/preset-mini": "^0.60.2",
     "@unocss/reset": "^0.61.0",
     "@vitejs/plugin-react": "^4.3.1",
     "big.js": "^6.2.1",
