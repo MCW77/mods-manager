@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
-    "@iconify-json/logos": "^1.1.42",
+    "@iconify-json/logos": "^1.1.43",
     "@iconify-json/skill-icons": "^1.1.8",
     "@types/big.js": "^6.2.2",
     "@types/file-saver": "^2.0.7",
