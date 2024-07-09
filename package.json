@@ -73,7 +73,7 @@
     "typescript": "5.5.0-beta",
     "unocss": "^0.60.3",
     "unocss-preset-animations": "^1.0.2",
-    "vite": "^5.2.13",
+    "vite": "^5.3.3",
     "vite-plugin-pwa": "^0.20.0"
   },
   "config": {
