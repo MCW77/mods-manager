@@ -173,13 +173,13 @@ importers:
         version: 0.60.2
       autoprefixer:
         specifier: ^10.4.19
-        version: 10.4.19(postcss@8.4.38)
+        version: 10.4.19(postcss@8.4.39)
       cz-conventional-changelog:
         specifier: ^3.0.1
         version: 3.0.1(@types/node@20.14.10)(typescript@5.5.0-beta)
       postcss:
-        specifier: ^8.4.38
-        version: 8.4.38
+        specifier: ^8.4.39
+        version: 8.4.39
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
@@ -188,10 +188,10 @@ importers:
         version: 5.5.0-beta
       unocss:
         specifier: ^0.60.3
-        version: 0.60.3(postcss@8.4.38)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))
+        version: 0.60.3(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))
       unocss-preset-animations:
         specifier: ^1.0.2
-        version: 1.0.2(@unocss/preset-wind@0.61.3)(unocss@0.60.3(postcss@8.4.38)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1)))
+        version: 1.0.2(@unocss/preset-wind@0.61.3)(unocss@0.60.3(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1)))
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@20.14.10)(terser@5.31.1)
@@ -3134,10 +3134,6 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
-  postcss@8.4.38:
-    resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.4.39:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
     engines: {node: ^10 || ^12 || >=14}
@@ -5726,7 +5722,7 @@ snapshots:
       gzip-size: 6.0.0
       sirv: 2.0.4
 
-  '@unocss/postcss@0.60.3(postcss@8.4.38)':
+  '@unocss/postcss@0.60.3(postcss@8.4.39)':
     dependencies:
       '@unocss/config': 0.60.3
       '@unocss/core': 0.60.3
@@ -5734,7 +5730,7 @@ snapshots:
       css-tree: 2.3.1
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      postcss: 8.4.38
+      postcss: 8.4.39
 
   '@unocss/preset-attributify@0.60.3':
     dependencies:
@@ -5948,14 +5944,14 @@ snapshots:
 
   at-least-node@1.0.0: {}
 
-  autoprefixer@10.4.19(postcss@8.4.38):
+  autoprefixer@10.4.19(postcss@8.4.39):
     dependencies:
       browserslist: 4.23.0
       caniuse-lite: 1.0.30001600
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
-      postcss: 8.4.38
+      postcss: 8.4.39
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -6948,28 +6944,28 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
-  postcss-import@15.1.0(postcss@8.4.38):
+  postcss-import@15.1.0(postcss@8.4.39):
     dependencies:
-      postcss: 8.4.38
+      postcss: 8.4.39
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.8
 
-  postcss-js@4.0.1(postcss@8.4.38):
+  postcss-js@4.0.1(postcss@8.4.39):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.38
+      postcss: 8.4.39
 
-  postcss-load-config@4.0.2(postcss@8.4.38):
+  postcss-load-config@4.0.2(postcss@8.4.39):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.4.5
     optionalDependencies:
-      postcss: 8.4.38
+      postcss: 8.4.39
 
-  postcss-nested@6.0.1(postcss@8.4.38):
+  postcss-nested@6.0.1(postcss@8.4.39):
     dependencies:
-      postcss: 8.4.38
+      postcss: 8.4.39
       postcss-selector-parser: 6.1.0
 
   postcss-selector-parser@6.1.0:
@@ -6978,12 +6974,6 @@ snapshots:
       util-deprecate: 1.0.2
 
   postcss-value-parser@4.2.0: {}
-
-  postcss@8.4.38:
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.0.0
-      source-map-js: 1.2.0
 
   postcss@8.4.39:
     dependencies:
@@ -7369,11 +7359,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.1
-      postcss: 8.4.38
-      postcss-import: 15.1.0(postcss@8.4.38)
-      postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)
-      postcss-nested: 6.0.1(postcss@8.4.38)
+      postcss: 8.4.39
+      postcss-import: 15.1.0(postcss@8.4.39)
+      postcss-js: 4.0.1(postcss@8.4.39)
+      postcss-load-config: 4.0.2(postcss@8.4.39)
+      postcss-nested: 6.0.1(postcss@8.4.39)
       postcss-selector-parser: 6.1.0
       resolve: 1.22.8
       sucrase: 3.35.0
@@ -7494,18 +7484,18 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.0.2(@unocss/preset-wind@0.61.3)(unocss@0.60.3(postcss@8.4.38)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))):
+  unocss-preset-animations@1.0.2(@unocss/preset-wind@0.61.3)(unocss@0.60.3(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))):
     dependencies:
       '@unocss/preset-wind': 0.61.3
-      unocss: 0.60.3(postcss@8.4.38)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))
+      unocss: 0.60.3(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))
 
-  unocss@0.60.3(postcss@8.4.38)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1)):
+  unocss@0.60.3(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1)):
     dependencies:
       '@unocss/astro': 0.60.3(rollup@2.79.1)(vite@5.3.3(@types/node@20.14.10)(terser@5.31.1))
       '@unocss/cli': 0.60.3(rollup@2.79.1)
       '@unocss/core': 0.60.3
       '@unocss/extractor-arbitrary-variants': 0.60.3
-      '@unocss/postcss': 0.60.3(postcss@8.4.38)
+      '@unocss/postcss': 0.60.3(postcss@8.4.39)
       '@unocss/preset-attributify': 0.60.3
       '@unocss/preset-icons': 0.60.3
       '@unocss/preset-mini': 0.60.3
