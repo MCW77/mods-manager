@@ -7,14 +7,12 @@ import {
 	reactive,
 	Show,
 	useMount,
-	useObservable,
 } from "@legendapp/state/react";
 
 // utils
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
 // state
-import type { ObservableObject } from "@legendapp/state";
 import { Reactive } from "@legendapp/state/react";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
@@ -84,13 +82,13 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 	const cloneOptimizationPlan = () => structuredClone(target);
 
 	useMount(() => {
-		target$.character.set(cloneCharacter());
-		target$.target.set(
+		target$.character.assign(cloneCharacter());
+		target$.target.assign(
 			target$.isInAdvancedEditMode.peek()
 				? OptimizationPlan.normalize(cloneOptimizationPlan())
 				: cloneOptimizationPlan(),
 		);
-		target$.uneditedTarget.set(cloneOptimizationPlan());
+		target$.uneditedTarget.assign(cloneOptimizationPlan());
 		const defaultTarget = characterSettings[character.baseID]
 			? (characterSettings[character.baseID] as CharacterSettings).targets.find(
 					(defaultTarget) => defaultTarget.name === target.name,
@@ -334,12 +332,11 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 										$value={() =>
 											target$.character.optimizerSettings.minimumModDots
 												.get()
-												?.toString() ?? 5
+												?.toString() ?? "5"
 										}
 										onValueChange={(value) => {
-											target$.character.optimizerSettings.minimumModDots.set(
-												Number.parseInt(value),
-											);
+											const numberValue = value === "" ? 5 : Number.parseInt(value);
+											target$.character.optimizerSettings.minimumModDots.set(numberValue);
 										}}
 									>
 										<SelectTrigger
