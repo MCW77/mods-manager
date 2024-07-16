@@ -16,6 +16,8 @@ export const Dialog = observer(() => (
 		onOpenChange={(open) => dialog$.open.set(open)}
 	>
 		<DialogPrimitive.DialogContent>
+			<DialogPrimitive.DialogTitle />
+			<DialogPrimitive.DialogDescription />
 			{dialog$.content.get()}
 		</DialogPrimitive.DialogContent>
 	</ReactiveDialog>
