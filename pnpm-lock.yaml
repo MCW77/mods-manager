@@ -169,8 +169,8 @@ importers:
         specifier: ^18.3.0
         version: 18.3.0
       '@unocss/preset-typography':
-        specifier: ^0.60.2
-        version: 0.60.2
+        specifier: ^0.61.5
+        version: 0.61.5
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.39)
@@ -1868,9 +1868,6 @@ packages:
 
   '@unocss/preset-tagify@0.61.5':
     resolution: {integrity: sha512-kxO20pV7Bwg7U3hPpxShFSn6CXH+EMaTFC+WXsh2wTOEs43Tta7L6kCSUPzrZ9pX/Pq4oInRQY9gqiZqlGETmQ==}
-
-  '@unocss/preset-typography@0.60.2':
-    resolution: {integrity: sha512-QKJi1LbC/f8RwwSwV6yQCXu/8wlBcrNyKiUSe7o9I2NYP+mzINlp64pXEP43UtUQo6x8Dil/TuzpRqMFPG/pMA==}
 
   '@unocss/preset-typography@0.61.5':
     resolution: {integrity: sha512-CQIleFkmfk/dAOlY7nPA1SOYHzXA6ia7+BCqGrTKxQVFOyBL7iHeNl0yV7lFtKFQn8zyFNEiBVW+fYi0QrouYw==}
@@ -5552,11 +5549,6 @@ snapshots:
   '@unocss/preset-tagify@0.61.5':
     dependencies:
       '@unocss/core': 0.61.5
-
-  '@unocss/preset-typography@0.60.2':
-    dependencies:
-      '@unocss/core': 0.60.2
-      '@unocss/preset-mini': 0.60.2
 
   '@unocss/preset-typography@0.61.5':
     dependencies:
