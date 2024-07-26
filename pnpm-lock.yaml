@@ -73,7 +73,7 @@ importers:
         version: 0.61.5
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))
+        version: 4.3.1(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))
       big.js:
         specifier: ^6.2.1
         version: 6.2.1
@@ -188,16 +188,16 @@ importers:
         version: 5.5.4
       unocss:
         specifier: ^0.61.5
-        version: 0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))
+        version: 0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))
       unocss-preset-animations:
         specifier: ^1.1.0
-        version: 1.1.0(@unocss/preset-wind@0.61.5)(unocss@0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3)))
+        version: 1.1.0(@unocss/preset-wind@0.61.5)(unocss@0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3)))
       vite:
-        specifier: ^5.3.4
-        version: 5.3.4(@types/node@20.14.12)(terser@5.31.3)
+        specifier: ^5.3.5
+        version: 5.3.5(@types/node@20.14.12)(terser@5.31.3)
       vite-plugin-pwa:
         specifier: ^0.20.0
-        version: 0.20.0(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0)
+        version: 0.20.0(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0)
 
 packages:
 
@@ -3601,8 +3601,8 @@ packages:
       '@vite-pwa/assets-generator':
         optional: true
 
-  vite@5.3.4:
-    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
+  vite@5.3.5:
+    resolution: {integrity: sha512-MdjglKR6AQXQb9JGiS7Rc2wC6uMjcm7Go/NHNO63EwiJXfuk9PgqiP/n5IDJCziMkfw9n4Ubp7lttNwz+8ZVKA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -5592,13 +5592,13 @@ snapshots:
 
   '@types/use-sync-external-store@0.0.3': {}
 
-  '@unocss/astro@0.61.5(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))':
+  '@unocss/astro@0.61.5(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))':
     dependencies:
       '@unocss/core': 0.61.5
       '@unocss/reset': 0.61.5
-      '@unocss/vite': 0.61.5(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))
+      '@unocss/vite': 0.61.5(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))
     optionalDependencies:
-      vite: 5.3.4(@types/node@20.14.12)(terser@5.31.3)
+      vite: 5.3.5(@types/node@20.14.12)(terser@5.31.3)
     transitivePeerDependencies:
       - rollup
 
@@ -5729,7 +5729,7 @@ snapshots:
     dependencies:
       '@unocss/core': 0.61.5
 
-  '@unocss/vite@0.61.5(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))':
+  '@unocss/vite@0.61.5(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
@@ -5741,18 +5741,18 @@ snapshots:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       magic-string: 0.30.10
-      vite: 5.3.4(@types/node@20.14.12)(terser@5.31.3)
+      vite: 5.3.5(@types/node@20.14.12)(terser@5.31.3)
     transitivePeerDependencies:
       - rollup
 
-  '@vitejs/plugin-react@4.3.1(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))':
+  '@vitejs/plugin-react@4.3.1(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-transform-react-jsx-self': 7.24.7(@babel/core@7.24.7)
       '@babel/plugin-transform-react-jsx-source': 7.24.7(@babel/core@7.24.7)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.4(@types/node@20.14.12)(terser@5.31.3)
+      vite: 5.3.5(@types/node@20.14.12)(terser@5.31.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -7380,14 +7380,14 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.1.0(@unocss/preset-wind@0.61.5)(unocss@0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))):
+  unocss-preset-animations@1.1.0(@unocss/preset-wind@0.61.5)(unocss@0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))):
     dependencies:
       '@unocss/preset-wind': 0.61.5
-      unocss: 0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))
+      unocss: 0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))
 
-  unocss@0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3)):
+  unocss@0.61.5(postcss@8.4.39)(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3)):
     dependencies:
-      '@unocss/astro': 0.61.5(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))
+      '@unocss/astro': 0.61.5(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))
       '@unocss/cli': 0.61.5(rollup@2.79.1)
       '@unocss/core': 0.61.5
       '@unocss/extractor-arbitrary-variants': 0.61.5
@@ -7406,9 +7406,9 @@ snapshots:
       '@unocss/transformer-compile-class': 0.61.5
       '@unocss/transformer-directives': 0.61.5
       '@unocss/transformer-variant-group': 0.61.5
-      '@unocss/vite': 0.61.5(rollup@2.79.1)(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))
+      '@unocss/vite': 0.61.5(rollup@2.79.1)(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))
     optionalDependencies:
-      vite: 5.3.4(@types/node@20.14.12)(terser@5.31.3)
+      vite: 5.3.5(@types/node@20.14.12)(terser@5.31.3)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -7460,18 +7460,18 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite-plugin-pwa@0.20.0(vite@5.3.4(@types/node@20.14.12)(terser@5.31.3))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.0(vite@5.3.5(@types/node@20.14.12)(terser@5.31.3))(workbox-build@7.1.1(@types/babel__core@7.20.5))(workbox-window@7.1.0):
     dependencies:
       debug: 4.3.4
       fast-glob: 3.3.2
       pretty-bytes: 6.1.1
-      vite: 5.3.4(@types/node@20.14.12)(terser@5.31.3)
+      vite: 5.3.5(@types/node@20.14.12)(terser@5.31.3)
       workbox-build: 7.1.1(@types/babel__core@7.20.5)
       workbox-window: 7.1.0
     transitivePeerDependencies:
       - supports-color
 
-  vite@5.3.4(@types/node@20.14.12)(terser@5.31.3):
+  vite@5.3.5(@types/node@20.14.12)(terser@5.31.3):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
