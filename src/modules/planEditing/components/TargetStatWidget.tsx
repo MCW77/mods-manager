@@ -148,7 +148,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							<SelectTrigger>
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent className={"max-h-[50%]"} position={"popper"}>
+							<SelectContent position={"popper"}>
 								<SelectGroup>
 									{targetStatsNames.map((stat) => (
 										<SelectItem key={stat} value={stat}>
@@ -208,7 +208,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							<SelectTrigger>
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent className={"max-h-[50%]"} position={"popper"}>
+							<SelectContent position={"popper"}>
 								<SelectGroup>
 									<SelectItem value={"null"}>No one</SelectItem>
 									{baseCharacters.map((gs) => (
