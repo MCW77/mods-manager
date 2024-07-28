@@ -28,6 +28,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.2",
     "@reduxjs/toolkit": "^2.2.6",
     "@unocss/preset-mini": "^0.61.5",
     "@unocss/reset": "^0.61.5",
