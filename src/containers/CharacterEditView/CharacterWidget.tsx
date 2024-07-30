@@ -44,6 +44,8 @@ const CharacterWidget: React.FC<CharacterBlockProps> = ({
 			(selectedCharacter) => selectedCharacter.id === characterID,
 		);
 
+	const isDraggable = isCharacterSelected(character.baseID) ? undefined : true;
+
 	const toggleCharacterLock = (characterID: CharacterNames) => {
 		dispatch(CharacterEdit.thunks.toggleCharacterLock(characterID));
 	};
@@ -71,7 +73,8 @@ const CharacterWidget: React.FC<CharacterBlockProps> = ({
 				}}
 			/>
 			<div
-				draggable={isCharacterSelected(character.baseID) ? undefined : true}
+				className={`${isDraggable ? "cursor-grab" : ""}`}
+				draggable={isDraggable}
 				onDragStart={
 					isCharacterSelected(character.baseID)
 						? undefined

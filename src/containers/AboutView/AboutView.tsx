@@ -16,7 +16,7 @@ const AboutView = observer(
 		const [t] = useTranslation("global-ui");
 
 		return (
-			<div className={"flex flex-col gap-20 justify-center items-center"}>
+			<div className={"p-y-4 flex flex-col gap-20 items-center grow-1"}>
 				<div>
 					<div className={"flex justify-center items-center gap-1"}>
 						<img

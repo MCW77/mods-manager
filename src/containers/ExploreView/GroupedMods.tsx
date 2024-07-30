@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
 // state
+import { reactive } from "@legendapp/state/react";
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
@@ -25,7 +26,6 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 import { ModDetail } from "#/components/ModDetail/ModDetail";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
-import { reactive } from "@legendapp/state/react";
 import DeleteModsModal from "./DeleteModsModal";
 
 interface GroupedModsProps {
@@ -110,7 +110,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col grow-1">
       <div className="flex justify-between">
         <div className="flex gap-2 p-l-2 items-center text-sm align-middle">
           {t("ModsShown", {
@@ -172,7 +172,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
         </span>
       </div>
       <div
-        className="flex flex-col overflow-y-auto overscroll-y-contain h-full"
+        className="flex flex-col overflow-y-auto overscroll-y-contain grow-1"
         ref={modGroupsElement}
       >
 

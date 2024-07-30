@@ -129,7 +129,7 @@ const MoveModsModal = () => {
 			<h3>
 				Moving your mods will cost
 				<br />
-				<span className={"box"}>
+				<span className={"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"}>
 					<strong className={"white"}>{formatNumber(modRemovalCost)}</strong>{" "}
 					<Credits />
 				</span>

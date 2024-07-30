@@ -188,7 +188,7 @@ const CharacterList = observer(
 				}
 			};
 
-			const baseClass = `character-block ${character.baseID}`;
+			const baseClass = `character-block cursor-grab ${character.baseID}`;
 
 			return (
 				<div

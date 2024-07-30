@@ -100,13 +100,15 @@ const App = observer(
 
 		return (
 			<Suspense fallback={<Spinner />}>
-				<div className={"App"}>
-					<div className={"app-body"}>
+				<div className={"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif] text-left"}>
+					<div className={`flex grow-1 justify-stretch overflow-hidden text-white
+													before:content-["_"] before:fixed before:w-full before:h-full before:top-0 before:left-0 before:z-[-1] before:will-change-transform
+												  before:bg-cover before:bg-[url('../../img/cantina-background.webp')] before:bg-no-repeat before:bg-center`}>
 						<Dialog />
 						<Spinner />
 						<Toaster toastOptions={{ duration: 8000 }} />
 						<ReactiveTabs
-							className="h-full w-full"
+							className="flex flex-col grow-1 min-w-1"
 							$value={ui$.currentSection}
 							onValueChange={(section) =>
 								ui$.currentSection.set(section as SectionNames)
@@ -181,19 +183,19 @@ const App = observer(
 								</div>
 								<ProfilesManager />
 							</div>
-							<TabsContent className={"flex max-h-full"} value="explore">
+							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="explore">
 								<ExploreView />
 							</TabsContent>
-							<TabsContent className={"flex max-h-full"} value="optimize">
+							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="optimize">
 								<OptimizerView />
 							</TabsContent>
-							<TabsContent value="settings">
+							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="settings">
 								<SettingsView />
 							</TabsContent>
-							<TabsContent value="help">
+							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="help">
 								<HelpView />
 							</TabsContent>
-							<TabsContent value="about">
+							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="about">
 								<AboutView />
 							</TabsContent>
 						</ReactiveTabs>

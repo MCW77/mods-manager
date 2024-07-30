@@ -74,7 +74,7 @@ const ExploreView = () => {
 };
 
 const sidebar = () => (
-  <div className={"filters"} key={"filters"}>
+  <div className={"w-28vw m-l-2 rounded-lg border-2 border-solid border-slate-200 dark:border-slate-800"} >
     <ModFilter />
   </div>
 );
