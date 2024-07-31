@@ -1,5 +1,5 @@
 export type SectionNames =
-	| "explore"
+	| "mods"
 	| "optimize"
 	| "settings"
 	| "help"
