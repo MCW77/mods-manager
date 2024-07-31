@@ -130,6 +130,7 @@ export const characterNames = [
   'GREEDO',
   'GREEFKARGA',
   'GRIEVOUS',
+  'GUNGANPHALANX',
   'HANSOLO',
   'HERASYNDULLAS3',
   'HERMITYODA',
@@ -150,6 +151,7 @@ export const characterNames = [
   'IMPERIALSUPERCOMMANDO',
   'JABBATHEHUTT',
   'JANGOFETT',
+  'JARJARBINKS',
   'JAWA',
   'JAWAENGINEER',
   'JAWASCAVENGER',
@@ -178,11 +180,13 @@ export const characterNames = [
   'LORDVADER',
   'LUKESKYWALKER',
   'LUMINARAUNDULI',
+  'LUTHENRAEL',
   'MACEWINDU',
   'MAGMATROOPER',
   'MAGNAGUARD',
   'MANDALORBOKATAN',
   'MARAJADE',
+  'MASTERQUIGON',
   'MAUL',
   'MAULS7',
   'MERRIN',
@@ -190,14 +194,17 @@ export const characterNames = [
   'MOFFGIDEONS1',
   'MOFFGIDEONS3',
   'MONMOTHMA',
+  'MORGANELSBETH',
   'MOTHERTALZIN',
   'NIGHTSISTERACOLYTE',
   'NIGHTSISTERINITIATE',
   'NIGHTSISTERSPIRIT',
   'NIGHTSISTERZOMBIE',
+  'NIGHTTROOPER',
   'NINTHSISTER',
   'NUTEGUNRAY',
   'OLDBENKENOBI',
+  'PADAWANOBIWAN',
   'PADMEAMIDALA',
   'PAO',
   'PAPLOO',
@@ -209,6 +216,7 @@ export const characterNames = [
   'PRINCESSKNEESAA',
   'PRINCESSLEIA',
   'QIRA',
+  'QUEENAMIDALA',
   'QUIGONJINN',
   'R2D2_LEGENDARY',
   'RANGETROOPER',
@@ -535,7 +543,7 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
   ),
   C3POCHEWBACCA: createCharacterSettings(
-    [createOptimizationPlan('PvP', 0, 0, 100, 80, 10, 0, 50, 0, 25, 0, 0, 0, 0)]
+    [createOptimizationPlan('PvP', 0, 0, 100, 80, 10, 0, 50, 0, 25, 0, 0, 0, 0)],
   ),
   C3POLEGENDARY: createCharacterSettings(
     [
@@ -917,7 +925,7 @@ const characterSettings: CharacterSettingsIndexer = {
   EMBO: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 20, 100, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 50, 25, 0, 0, 75, 0, 100, 0, 0, 0, 0)
+      createOptimizationPlan('hSTR Phase 3', 0, 0, 50, 25, 0, 0, 75, 0, 100, 0, 0, 0, 0),
     ]
   ),
   EMPERORPALPATINE: createCharacterSettings(
@@ -1016,7 +1024,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       toRenamed(optimizationStrategy["Slow Crit, Physical Damage, Potency"], 'PvP'),
       createOptimizationPlan('Tanky', 30, 100, 100, 0, 5, 5, 50, 0, 0, 10, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 0, -5, 80, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0)
+      createOptimizationPlan('hSTR Phase 1', 0, -5, 80, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0),
     ],
     ['Zinn']
   ),
@@ -1112,10 +1120,10 @@ const characterSettings: CharacterSettingsIndexer = {
     ]
   ),
   GEONOSIANSOLDIER: createCharacterSettings(
-    [createOptimizationPlan('PvP', 0, 0, 80, 90, 0, 0, 50, 0, 100, 0, 0, 0, 0)]
+    [createOptimizationPlan('PvP', 0, 0, 80, 90, 0, 0, 50, 0, 100, 0, 0, 0, 0)],
   ),
   GEONOSIANSPY: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')]
+    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'PvP')],
   ),
   GLLEIA: createCharacterSettings(
     [
@@ -1191,6 +1199,9 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['GG'],
   ),
+  GUNGANPHALANX: createCharacterSettings(
+    [createOptimizationPlan('PvP', 12, 44, 100, 0, 15, 0, 0, 0, 0, 5, 5, 0, 0, true)],
+  ),
   HANSOLO: createCharacterSettings(
     [
       createOptimizationPlan('Fast Han', 0, 0, 100, 100, 10, 0, 25, 0, 0, 0, 0, 0, 0),
@@ -1223,7 +1234,7 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   HK47: createCharacterSettings(
     [
-      createOptimizationPlan('PvP', 0, 0, 100, 75, 0, 0, 50, 0, 25, 0, 0, 0, 0)
+      createOptimizationPlan('PvP', 0, 0, 100, 75, 0, 0, 50, 0, 25, 0, 0, 0, 0),
     ]
   ),
   HONDO: createCharacterSettings(
@@ -1282,7 +1293,7 @@ const characterSettings: CharacterSettingsIndexer = {
   IG88: createCharacterSettings(
     [
       toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Damage'),
-      createOptimizationPlan('Nuke', 0, 0, 100, 25, 50, 0, 25, 0, 75, 0, 0, 0, 0)
+      createOptimizationPlan('Nuke', 0, 0, 100, 25, 50, 0, 25, 0, 75, 0, 0, 0, 0),
     ]
   ),
   IMAGUNDI: createCharacterSettings(
@@ -1293,7 +1304,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Tanky', 50, 50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('Offense', 0, 0, 100, 80, 50, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 50, 50, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)
+      createOptimizationPlan('Nuke', 50, 50, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
     ],
     ['IPD']
   ),
@@ -1324,6 +1335,11 @@ const characterSettings: CharacterSettingsIndexer = {
   ),
   JANGOFETT: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvP')],
+  ),
+  JARJARBINKS: createCharacterSettings(
+    [createOptimizationPlan('PvP', 0, 20, 100, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    [],
+    DamageType.special
   ),
   JAWA: createCharacterSettings(
     [
@@ -1404,7 +1420,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('PvP', 50, 0, 75, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100),
       createOptimizationPlan('Health and Speed', 100, 0, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Healer', 30, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0)
+      createOptimizationPlan('Healer', 30, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0),
     ]
   ),
   JUHANI: createCharacterSettings(
@@ -1472,7 +1488,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Balanced', 10, 10, 100, 50, 20, 0, 50, 0, 25, 10, 10, 0, 0),
       createOptimizationPlan('Offense', 0, 0, 100, 50, 20, 0, 75, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Defense', 20, 20, 100, 0, 20, 10, 0, 0, 0, 15, 15, 0, 0)
+      createOptimizationPlan('Defense', 20, 20, 100, 0, 20, 10, 0, 0, 0, 15, 15, 0, 0),
     ]
   ),
   KITFISTO: createCharacterSettings(
@@ -1505,7 +1521,7 @@ const characterSettings: CharacterSettingsIndexer = {
   L3_37: createCharacterSettings(
     [
       createOptimizationPlan('Tanky', 40, 20, 50, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-      createOptimizationPlan('Speedy', 40, 20, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0)
+      createOptimizationPlan('Speedy', 40, 20, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
     ],
     ['solo']
   ),
@@ -1533,14 +1549,19 @@ const characterSettings: CharacterSettingsIndexer = {
     ['Murderbears'],
   ),
   LORDVADER: createCharacterSettings(
-    [createOptimizationPlan('PvP', 0, 15, 100, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0)]
+    [createOptimizationPlan('PvP', 0, 15, 100, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0)],
   ),
   LUKESKYWALKER: createCharacterSettings(
     [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'PvE')],
     ['farmboi']
   ),
   LUMINARAUNDULI: createCharacterSettings(
-    [createOptimizationPlan('PvE', 40, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)]
+    [createOptimizationPlan('PvE', 40, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)],
+  ),
+  LUTHENRAEL: createCharacterSettings(
+    [createOptimizationPlan('PvP', 5, 10, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    ['Luthen'],
+    DamageType.mixed
   ),
   MACEWINDU: createCharacterSettings(
     [
@@ -1587,6 +1608,11 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Survivability', 0, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
     ],
     [],
+    DamageType.special
+  ),
+  MASTERQUIGON: createCharacterSettings(
+    [createOptimizationPlan('PvP', 15, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    ['MQG', 'Quadme', 'Queeni'],
     DamageType.special
   ),
   MAUL: createCharacterSettings(
@@ -1640,6 +1666,10 @@ const characterSettings: CharacterSettingsIndexer = {
     [createOptimizationPlan('Leader', 5, 5, 100, 0, 0, 25, 10, 0, 0, 0, 0, 0, 0)],
     ['MM']
   ),
+  MORGANELSBETH: createCharacterSettings(
+    [createOptimizationPlan('PvP', 10, 20, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    ['Morgan', 'NS']
+  ),
   MOTHERTALZIN: createCharacterSettings(
     [
       createOptimizationPlan('PvP', 0, 0, 100, 0, 50, 0, 0, 25, 10, 0, 0, 0, 0),
@@ -1682,6 +1712,10 @@ const characterSettings: CharacterSettingsIndexer = {
     ],
     ['NS', 'hSTR NS']
   ),
+  NIGHTTROOPER: createCharacterSettings(
+    [createOptimizationPlan('PvP', 50, 0, 100, 10, 0, 10, 25, 0, 0, 0, 0, 0, 0, true)],
+    ['NS', 'NT']
+  ),
   NINTHSISTER: createCharacterSettings(
     [createOptimizationPlan('PvP', 40, 50, 100, 0, 0, 40, 0, 0, 0, 30, 0, 0, 0)],
   ),
@@ -1694,6 +1728,10 @@ const characterSettings: CharacterSettingsIndexer = {
   OLDBENKENOBI: createCharacterSettings(
     [createOptimizationPlan('Speed', 10, 10, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
     ['OB']
+  ),
+  PADAWANOBIWAN: createCharacterSettings(
+    [createOptimizationPlan('PvE', 0, 0, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    ['POW', 'Quadme', 'Queeni'],
   ),
   PADMEAMIDALA: createCharacterSettings(
     [
@@ -1794,6 +1832,10 @@ const characterSettings: CharacterSettingsIndexer = {
   QIRA: createCharacterSettings(
     [createOptimizationPlan('PvP', 0, 0, 100, 50, 10, 0, 50, 0, 25, 0, 0, 0, 0)],
     ['solo'],
+  ),
+  QUEENAMIDALA: createCharacterSettings(
+    [createOptimizationPlan('PvP', 20, 10, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true)],
+    ['Quadme', 'Queeni']
   ),
   QUIGONJINN: createCharacterSettings(
     [
