@@ -55,7 +55,7 @@ const SettingsView: React.FC = observer(() => {
 	};
 
 	return (
-		<div className={"Settings-page flex flex-col w-full"} key={"settings"}>
+		<div className={"Settings-page flex flex-col grow-1"} key={"settings"}>
 			<nav className="sections flex flex-wrap justify-evenly">
 				{ui$.previousSection.get() !== "settings" && (
 					<div className="returnTo m-[0.2em] p-[0.4em]">
