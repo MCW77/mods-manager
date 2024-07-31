@@ -1,7 +1,7 @@
 // react
 import React, { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
@@ -23,7 +23,6 @@ import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
 import { Data } from "#/state/modules/data";
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { SectionNames } from "#/modules/ui/domain/SectionNames";
@@ -40,9 +39,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
 // containers
 import { AboutView } from "#/containers/AboutView/AboutView";
-import ExploreView from "#/containers/ExploreView/ExploreView";
-import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
 import { HelpView } from "#/modules/help/pages/HelpView";
+import { ModsView } from "#/modules/modsView/pages/ModsView";
+import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
 import { SettingsView } from "#/modules/settings/pages/SettingsView";
 
 const ReactiveTabs = reactive(Tabs);
@@ -51,7 +50,6 @@ const App = observer(
 	React.memo(() => {
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
-		const profile = useSelector(Storage.selectors.selectActiveProfile);
 		const firstSection = profilesManagement$.hasProfiles.peek()
 			? "explore"
 			: "help";
@@ -124,13 +122,13 @@ const App = observer(
 									<TabsList>
 										<Show if={profilesManagement$.hasProfiles}>
 											{() => (
-												<TabsTrigger value="explore">
+												<TabsTrigger value="mods">
 													<div className={"flex flex-gap-1 items-center"}>
 														<FontAwesomeIcon
 															icon={faMagnifyingGlass}
-															title={t("header.NavExploreMods")}
+															title={t("header.NavMods")}
 														/>
-														{t("header.NavExploreMods")}
+														{t("header.NavMods")}
 													</div>
 												</TabsTrigger>
 											)}
@@ -183,8 +181,8 @@ const App = observer(
 								</div>
 								<ProfilesManager />
 							</div>
-							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="explore">
-								<ExploreView />
+							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="mods">
+								<ModsView />
 							</TabsContent>
 							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="optimize">
 								<OptimizerView />

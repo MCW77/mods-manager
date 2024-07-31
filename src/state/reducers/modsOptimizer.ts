@@ -7,7 +7,6 @@ import { type IAppState, AppState } from "../storage";
 
 // #region modules
 import { App } from "../modules/app";
-import { Explore } from "../modules/explore";
 import { Optimize } from "../modules/optimize";
 import { Storage } from "../modules/storage";
 // #endregion
@@ -21,7 +20,6 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 type AppActions =
 	| ReturnType<typeof App.actions.resetState>
 	| ReturnType<typeof App.actions.setState>
-	| ReturnType<typeof Explore.actions.changeModsViewOptions>
 	| ReturnType<typeof Optimize.actions.startModOptimization>
 	| ReturnType<typeof Optimize.actions.updateProgress>
 	| ReturnType<typeof Storage.actions.setBaseCharacters>
@@ -35,7 +33,7 @@ const modsOptimizer: RootReducer = (
 	action: AppActions,
 ): IAppState => {
 	if (!state) {
-		return AppState.save(AppState.restore());
+		return structuredClone(AppState.Default);
 	}
 
 	switch (action.type) {
@@ -46,11 +44,6 @@ const modsOptimizer: RootReducer = (
 		}
 		case App.actionNames.SET_STATE:
 			return AppState.save(App.reducers.setState(action));
-
-		case Explore.actionNames.CHANGE_MODS_VIEW_OPTIONS:
-			return AppState.save(
-				Explore.reducers.changeModsViewOptions(state, action),
-			);
 
 		case Optimize.actionNames.UPDATE_PROGRESS:
 			return Optimize.reducers.updateProgress(state, action);

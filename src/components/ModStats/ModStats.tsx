@@ -6,9 +6,12 @@ import { useSelector } from "react-redux";
 // styles
 import "./ModStats.css";
 
+// state
+import { useSelector as useLegendSelector} from "@legendapp/state/react";
+import { modsView$ } from "#/modules/modsView/state/modsView";
+
 // modules
 import { Data } from "../../state/modules/data";
-import { Explore } from "../../state/modules/explore";
 import { Storage } from "../../state/modules/storage";
 
 // domain
@@ -44,9 +47,9 @@ const ModStats = React.memo(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);
 		const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
-		const scoreName = useSelector(
-			Explore.selectors.selectModsViewOptions,
-		).modScore;
+		const scoreName = useLegendSelector(() =>
+			modsView$.activeViewSetupInActiveCategory.modScore.get()
+		);
 
 		const translateStat = (displayText: Stats.DisplayedStat) => {
 			const seperatorPos = displayText.indexOf(" ");

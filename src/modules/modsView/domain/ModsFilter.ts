@@ -7,9 +7,10 @@ import { orderBy, mapValues } from "lodash-es";
 import type {
 	EquippedSettings,
 	FilterKeys,
-	FilterOptions,
+	Filter,
 	LevelSettings,
-	ModsViewOptions,
+	ViewSetup,
+	PartialFilter,
 	PrimarySettings,
 	RaritySettings,
 	SecondariesScoreTierSettings,
@@ -17,25 +18,46 @@ import type {
 	SetSettings,
 	SlotSettings,
 	TierSettings,
-} from "../../../domain/types/ModsViewOptionsTypes";
+} from "../../modsView/domain/ModsViewOptions";
 import { Mod } from "../../../domain/Mod";
 import type { OptimizerSettings } from "../../../domain/OptimizerSettings";
 
-type AnyFilterOptions = {
-	[key in keyof FilterOptions]: any[];
+type ModFilterPredicate = (mod: Mod) => boolean;
+
+const combineFilters: (
+	filters: ModFilterPredicate[],
+) => ModFilterPredicate = (filters) => (item: Mod) => {
+	return filters.map((filter) => filter(item)).every((x) => x === true);
 };
 
 class ModsFilter {
-	selectedOptions: AnyFilterOptions;
-	unselectedOptions: AnyFilterOptions;
+	selectedOptions: PartialFilter = {
+		slot: [],
+		modset: [],
+		rarity: [],
+		tier: [],
+		level: [],
+		equipped: [],
+		primary: [],
+		secondary: [],
+		assigned: [],
+		secondariesscoretier: [],
+	};
+
+	unselectedOptions: PartialFilter = structuredClone(this.selectedOptions);
+	filters: ModFilterPredicate[] = [];
 
 	sortOptions: string[];
 	isGroupingEnabled: boolean;
 
-	constructor(modsViewOptions: ModsViewOptions) {
+	constructor(modsViewOptions: ViewSetup) {
+		console.log("inside ModsFilter constructor");
 		Mod.setupAccessors();
-		[this.selectedOptions, this.unselectedOptions] =
-			this.extractSelectedAndUnselectedOptions(modsViewOptions.filtering);
+		for (const filter of Object.values(modsViewOptions.filterById)) {
+			[this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(filter);
+			this.filters.push(combineFilters([this.selectedOptionsFilter(this.selectedOptions), this.unselectedOptionsFilter(this.unselectedOptions)]));
+		}
+
 
 		this.isGroupingEnabled = modsViewOptions.isGroupingEnabled;
 
@@ -48,29 +70,29 @@ class ModsFilter {
 		}
 	}
 
-	extractSelectedAndUnselectedOptions(filters: FilterOptions) {
-		const selectedOptions: { [key in FilterKeys]: any[] } = {
+	extractSelectedAndUnselectedOptions(filters: Filter) {
+		const selectedOptions: PartialFilter = {
 			slot: [],
-			set: [],
+			modset: [],
 			rarity: [],
 			tier: [],
 			level: [],
 			equipped: [],
 			primary: [],
 			secondary: [],
-			optimizer: [],
+			assigned: [],
 			secondariesscoretier: [],
 		};
-		const unselectedOptions: { [key in FilterKeys]: any[] } = {
+		const unselectedOptions: PartialFilter = {
 			slot: [],
-			set: [],
+			modset: [],
 			rarity: [],
 			tier: [],
 			level: [],
 			equipped: [],
 			primary: [],
 			secondary: [],
-			optimizer: [],
+			assigned: [],
 			secondariesscoretier: [],
 		};
 
@@ -89,10 +111,18 @@ class ModsFilter {
 		// #endregion
 
 		type FilterKV = [FilterKeys, CombinedSettings];
+		type FilterKV2 = [FilterKeys, Filter[FilterKeys]];
 
 		const entries = Object.entries(filters) as FilterKV[];
+		const entries2 = Object.entries(filters) as FilterKV2[];
+		const entries3 = Object.entries(filters);
 
-		for (const [type, values] of entries) {
+		const test = Object.entries(entries[0]);
+		const test2 = Object.entries(entries2[0]);
+		const test3 = Object.entries(entries3[0]);
+
+		for (const [type, values] of entries2) {
+			const t = Object.entries(values);
 			selectedOptions[type] = Object.entries(values)
 				.filter(([option, value]) => 1 === value)
 				.map(([option]) => (Number.isNaN(Number(option)) ? option : +option));
@@ -104,111 +134,113 @@ class ModsFilter {
 		return [selectedOptions, unselectedOptions];
 	}
 
-	selectedOptionsFilter = (mod: Mod) => {
+	selectedOptionsFilter = (selectedOptions: PartialFilter) =>(mod: Mod) => {
 		if (
-			this.selectedOptions.slot.length > 0 &&
-			!this.selectedOptions.slot.every((slot) => mod.slot === slot)
+			selectedOptions.slot.length > 0 &&
+			!selectedOptions.slot.every((slot) => mod.slot === slot)
 		)
 			return false;
 		if (
-			this.selectedOptions.set.length > 0 &&
-			!this.selectedOptions.set.every((set) => mod.set === set)
+			selectedOptions.modset.length > 0 &&
+			!selectedOptions.modset.every((set) => mod.set === set)
 		)
 			return false;
 		if (
-			this.selectedOptions.rarity.length > 0 &&
-			!this.selectedOptions.rarity.every((pips) => mod.pips === pips)
+			selectedOptions.rarity.length > 0 &&
+			!selectedOptions.rarity.every((pips) => mod.pips === pips)
 		)
 			return false;
 		if (
-			this.selectedOptions.tier.length > 0 &&
-			!this.selectedOptions.tier.every((tier) => mod.tier === tier)
+			selectedOptions.tier.length > 0 &&
+			!selectedOptions.tier.every((tier) => mod.tier === tier)
 		)
 			return false;
 		if (
-			this.selectedOptions.level.length > 0 &&
-			!this.selectedOptions.level.every((level) => mod.level === level)
+			selectedOptions.level.length > 0 &&
+			!selectedOptions.level.every((level) => mod.level === level)
 		)
 			return false;
-		if (this.selectedOptions.equipped.length > 0 && mod.characterID === "null")
+		if (selectedOptions.equipped.length > 0 && mod.characterID === "null")
 			return false;
 		if (
-			this.selectedOptions.primary.length > 0 &&
-			!this.selectedOptions.primary.every(
+			selectedOptions.primary.length > 0 &&
+			!selectedOptions.primary.every(
 				(primary) => mod.primaryStat.type === primary,
 			)
 		)
 			return false;
 		if (
-			this.selectedOptions.secondary.length > 0 &&
-			!this.selectedOptions.secondary.every((secondary) =>
+			selectedOptions.secondary.length > 0 &&
+			!selectedOptions.secondary.every((secondary) =>
 				mod.secondaryStats.some(
 					(modSecondary) => modSecondary.type === secondary,
 				),
 			)
 		)
 			return false;
-		if (this.selectedOptions.optimizer.length > 0 && !mod.isAssigned())
+		if (selectedOptions.assigned.length > 0 && !mod.isAssigned())
 			return false;
 		return true;
 	};
 
-	unselectedOptionsFilter = (mod: Mod) => {
+	unselectedOptionsFilter = (unselectedOptions: PartialFilter) => (mod: Mod) => {
 		if (
-			this.unselectedOptions.slot.length > 0 &&
-			!this.unselectedOptions.slot.every((slot) => mod.slot !== slot)
+			unselectedOptions.slot.length > 0 &&
+			!unselectedOptions.slot.every((slot) => mod.slot !== slot)
 		)
 			return false;
 		if (
-			this.unselectedOptions.set.length > 0 &&
-			!this.unselectedOptions.set.every((set) => mod.set !== set)
+			unselectedOptions.modset.length > 0 &&
+			!unselectedOptions.modset.every((set) => mod.set !== set)
 		)
 			return false;
 		if (
-			this.unselectedOptions.rarity.length > 0 &&
-			!this.unselectedOptions.rarity.every((pips) => mod.pips !== pips)
+			unselectedOptions.rarity.length > 0 &&
+			!unselectedOptions.rarity.every((pips) => mod.pips !== pips)
 		)
 			return false;
 		if (
-			this.unselectedOptions.tier.length > 0 &&
-			!this.unselectedOptions.tier.every((tier) => mod.tier !== tier)
+			unselectedOptions.tier.length > 0 &&
+			!unselectedOptions.tier.every((tier) => mod.tier !== tier)
 		)
 			return false;
 		if (
-			this.unselectedOptions.level.length > 0 &&
-			!this.unselectedOptions.level.every((level) => mod.level !== level)
+			unselectedOptions.level.length > 0 &&
+			!unselectedOptions.level.every((level) => mod.level !== level)
 		)
 			return false;
 		if (
-			this.unselectedOptions.equipped.length > 0 &&
+			unselectedOptions.equipped.length > 0 &&
 			mod.characterID !== "null"
 		)
 			return false;
 		if (
-			this.unselectedOptions.primary.length > 0 &&
-			!this.unselectedOptions.primary.every(
+			unselectedOptions.primary.length > 0 &&
+			!unselectedOptions.primary.every(
 				(primary) => mod.primaryStat.type !== primary,
 			)
 		)
 			return false;
 		if (
-			this.unselectedOptions.secondary.length > 0 &&
-			!this.unselectedOptions.secondary.every((secondary) =>
+			unselectedOptions.secondary.length > 0 &&
+			!unselectedOptions.secondary.every((secondary) =>
 				mod.secondaryStats.every(
 					(modSecondary) => modSecondary.type !== secondary,
 				),
 			)
 		)
 			return false;
-		if (this.unselectedOptions.optimizer.length > 0 && mod.isAssigned())
+		if (unselectedOptions.assigned.length > 0 && mod.isAssigned())
 			return false;
 		return true;
 	};
 
 	filterMods(mods: Mod[]) {
-		return mods
-			.filter(this.selectedOptionsFilter)
-			.filter(this.unselectedOptionsFilter);
+		let result = mods;
+		for (const filter of this.filters) {
+			result = result.filter(filter);
+		}
+		return result;
 	}
 
 	filterGroupedMods(groupedMods: Record<string, Mod[]>): Record<string, Mod[]> {
