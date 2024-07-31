@@ -51,7 +51,7 @@ const App = observer(
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
 		const firstSection = profilesManagement$.hasProfiles.peek()
-			? "explore"
+			? "mods"
 			: "help";
 
 		console.log("rendering APP");
