@@ -61,7 +61,7 @@ const SlotFilter = observer(
 					{Object.keys(slotConfig).map((slot: keyof SlotSettings) => {
 						const inputName = `slot-filter-${slot}`;
 						const value = slotConfig[slot] || 0;
-						const slotCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('../../img/empty-mod-shapes.png')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
+						const slotCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('../../img/empty-mod-shapes.webp')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
             const stateCSS =
               value === 0
 								? "opacity-50"
