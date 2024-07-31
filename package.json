@@ -66,7 +66,7 @@
     "@types/node": "^20.14.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@unocss/preset-typography": "^0.61.7",
+    "@unocss/preset-typography": "^0.61.8",
     "autoprefixer": "^10.4.19",
     "cz-conventional-changelog": "^3.0.1",
     "postcss": "^8.4.40",
