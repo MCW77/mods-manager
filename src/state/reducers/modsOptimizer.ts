@@ -7,7 +7,7 @@ import { type IAppState, AppState } from "../storage";
 
 // #region modules
 import { App } from "../modules/app";
-import { Optimize } from "../modules/optimize";
+import type { Optimize } from "../modules/optimize";
 import { Storage } from "../modules/storage";
 // #endregion
 
@@ -21,7 +21,6 @@ type AppActions =
 	| ReturnType<typeof App.actions.resetState>
 	| ReturnType<typeof App.actions.setState>
 	| ReturnType<typeof Optimize.actions.startModOptimization>
-	| ReturnType<typeof Optimize.actions.updateProgress>
 	| ReturnType<typeof Storage.actions.setBaseCharacters>
 	| ReturnType<typeof Storage.actions.setProfile>;
 // #endregion
@@ -44,9 +43,6 @@ const modsOptimizer: RootReducer = (
 		}
 		case App.actionNames.SET_STATE:
 			return AppState.save(App.reducers.setState(action));
-
-		case Optimize.actionNames.UPDATE_PROGRESS:
-			return Optimize.reducers.updateProgress(state, action);
 
 		case Storage.actionNames.SET_BASE_CHARACTERS:
 			return Storage.reducers.setBaseCharacters(state, action);

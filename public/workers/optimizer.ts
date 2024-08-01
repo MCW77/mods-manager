@@ -202,12 +202,20 @@ function optimizationSuccessMessage(result: ModSuggestion[]) {
   });
 }
 
-function progressMessage(character: Character.Character, step: string, progress = 100) {
+function progressMessage(
+  characterId: CharacterNames,
+  characterCount: number,
+  characterIndex: number,
+  step: string,
+  progress = 100,
+) {
   postMessage({
-    type: 'Progress',
-    character: character,
+    character: characterId,
+    characterCount: characterCount,
+    characterIndex: characterIndex,
+    progress: progress,
     step: step,
-    progress: progress
+    type: 'Progress',
   });
 }
 
@@ -1371,7 +1379,7 @@ function optimizeMods(
     const realTarget = combineTargetStats(absoluteTarget, character);
 
     const { modSet: newModSetForCharacter, messages: characterMessages } =
-      findBestModSetForCharacter(usableMods, character, realTarget);
+      findBestModSetForCharacter(usableMods, character, order.length, index, realTarget);
 
     const oldModSetForCharacter = usableMods.filter(mod => mod.characterID === character.baseID);
 
@@ -1581,6 +1589,8 @@ function combineTargetStats(
 function findBestModSetForCharacter(
   mods: Mod[],
   character: Character.Character,
+  characterCount: number,
+  characterIndex: number,
   target: OptimizationPlan,
 ) {
 
@@ -1613,7 +1623,7 @@ function findBestModSetForCharacter(
     // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
     case true: {
       // If so, create an array of potential mod sets that could fill it
-      let potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, mutableTarget);
+      let potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, characterCount, characterIndex, mutableTarget);
 
       ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, mutableTarget));
 
@@ -1629,7 +1639,7 @@ function findBestModSetForCharacter(
         if (mutableTarget.useOnlyFullSets) {
           extraMessages.push('Could not fill the target stat with full sets, so the full sets restriction was dropped');
 
-          potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, mutableTarget);
+          potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, characterCount, characterIndex, mutableTarget);
           ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, reducedTarget));
         }
       }
@@ -1655,7 +1665,7 @@ function findBestModSetForCharacter(
     // Intentional fall-through
     case false:
       // If not, simply iterate over all levels of restrictions until a suitable set is found.
-      progressMessage(character, 'Finding the best mod set');
+      progressMessage(character.baseID, characterCount, characterIndex, 'Finding the best mod set', 0);
       ({ modSet, messages } =
         findBestModSetByLooseningSetRestrictions(usableMods, character, mutableTarget, setRestrictions));
 
@@ -1691,6 +1701,8 @@ function findBestModSetForCharacter(
 function* getPotentialModsToSatisfyTargetStats(
   allMods: Mod[],
   character: Character.Character,
+  characterCount: number,
+  characterIndex: number,
   target: OptimizationPlan,
 ) {
   const setRestrictions = target.setRestrictions;
@@ -1746,7 +1758,9 @@ function* getPotentialModsToSatisfyTargetStats(
           targetStat.maximum - nonModValue,
           progressMin,
           progressMax,
-          character
+          character,
+          characterCount,
+          characterIndex,
         );
       }
     } else {
@@ -1757,7 +1771,9 @@ function* getPotentialModsToSatisfyTargetStats(
           targetStat.maximum - characterValues[targetStat.stat],
           0,
           100,
-          character
+          character,
+          characterCount,
+          characterIndex,
         )
       };
     }
@@ -1820,7 +1836,7 @@ function* getPotentialModsToSatisfyTargetStats(
       const [mods, setRestrictions] = modGroup;
       const setValue = setValues[currentTarget.stat];
 
-      progressMessage(character, 'Step 2/2: Calculating mod sets to meet target value', 0);
+      progressMessage(character.baseID, characterCount, characterIndex,'Step 2/2: Calculating mod sets to meet target value', 0);
 
       // Find any collection of values that will sum up to the target stat
       // If there is a setValue, repeat finding mods to fill the target for as many sets as can be used
@@ -1860,7 +1876,7 @@ function* getPotentialModsToSatisfyTargetStats(
             // Send progress messages as we iterate over the possible values
             if (++currentIteration % onePercent === 0) {
               const progressPercent = (currentIteration / numConfigurations) * 100;
-              progressMessage(character, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
+              progressMessage(character.baseID, characterCount, characterIndex, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
             }
 
             yield* targetStatRecursor([modsThatFitGivenValues, updatedSetRestriction], updatedTargetStats, false);
@@ -1885,7 +1901,7 @@ function* getPotentialModsToSatisfyTargetStats(
           // Send progress messages as we iterate over the possible values
           if (currentIteration++ % onePercent === 0) {
             const progressPercent = (currentIteration / numConfigurations) * 100;
-            progressMessage(character, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
+            progressMessage(character.baseID, characterCount, characterIndex, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
           }
 
           yield* targetStatRecursor([modsThatFitGivenValues, setRestrictions], updatedTargetStats, false);
@@ -2060,6 +2076,8 @@ function findStatValuesThatMeetTarget(
   progressMin: number,
   progressMax: number,
   character: Character.Character,
+  characterCount: number,
+  characterIndex: number,
 ) {
   const onePercent = Math.floor((
     valuesBySlot.square.size *
@@ -2073,7 +2091,7 @@ function findStatValuesThatMeetTarget(
   let abort = [false, false, false, false, false, false];
   const firstOfSlot = [true, true, true, true, true, true];
 
-  progressMessage(character, 'Step 1/2: Finding stat values to meet targets', progressMin);
+  progressMessage(character.baseID, characterCount, characterIndex, 'Step 1/2: Finding stat values to meet targets', progressMin);
 
   // This is essentially a fancy nested for loop iterating over each value in each slot.
   // That means this is O(n^6) for 6 mod slots (which is terrible!).
@@ -2094,7 +2112,7 @@ function findStatValuesThatMeetTarget(
       }
     } else {
       if (iterations++ % onePercent === 0) {
-        progressMessage(character, 'Step 1/2: Finding stat values to meet targets', progressMin + iterations / onePercent);
+        progressMessage(character.baseID, characterCount, characterIndex, 'Step 1/2: Finding stat values to meet targets', progressMin + iterations / onePercent);
       }
 
       const statValue = Object.values(valuesObject).reduce((acc, value) => acc + value, 0);

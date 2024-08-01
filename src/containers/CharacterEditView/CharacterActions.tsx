@@ -31,7 +31,7 @@ import {
 
 import { ResetAllCharacterTargetsModal } from "./ResetAllCharacterTargetsModal";
 
-import { OptimizerProgress } from "#/components/OptimizerProgress/OptimizerProgress";
+import { OptimizerProgress } from "#/modules/progress/components/OptimizerProgress";
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
 import { SettingsLink } from "#/modules/settings/components/SettingsLink";

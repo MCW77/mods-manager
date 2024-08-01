@@ -8,27 +8,23 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-
-// actions
-import { actions } from "#/state/actions/optimize";
+import { progress$ } from "#/modules/progress/state/progress";
+import { review$ } from "#/modules/review/state/review";
 
 // modules
 import { App } from "#/state/modules/app";
 import { Data } from "#/state/modules/data";
-import { Review } from "#/state/modules/review";
 
 // domain
 import * as Character from "#/domain/Character";
-import type { OptimizationStatus } from "#/domain/OptimizationStatus";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import type { ModSuggestion } from "#/domain/PlayerProfile";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { Button } from "#/components/ui/button";
-import { DialogClose } from "#/components/ui/dialog";
-import { review$ } from "#/modules/review/state/review";
+import { Button } from "#ui/button";
+import { DialogClose } from "#ui/dialog";
 
 let optimizationWorker: Worker | null = null;
 
@@ -36,7 +32,7 @@ export namespace thunks {
 	export function cancelOptimizer(): ThunkResult<void> {
 		return (dispatch) => {
 			optimizationWorker?.terminate();
-			dispatch(actions.updateProgress({} as OptimizationStatus));
+			progress$.optimizationStatus.assign({character: "", characterCount: 0, characterIndex: 0, message: "", progress: 0 });
 		};
 	}
 
@@ -67,7 +63,7 @@ export namespace thunks {
 				);
 
 				isBusy$.set(false);
-				dispatch(actions.updateProgress({} as OptimizationStatus));
+				progress$.optimizationStatus.assign({character: "", characterCount: 0, characterIndex: 0, message: "", progress: 0});
 
 				// If this was an incremental optimization, leave the user on their current page
 				if (incrementalOptimization$.indicesByProfile[newProfile.allyCode].peek() !== null) {
@@ -233,13 +229,7 @@ export namespace thunks {
 				switch (message.data.type) {
 					case "OptimizationSuccess":
 						isBusy$.set(false);
-						dispatch(
-							actions.updateProgress({
-								character: null,
-								step: "Rendering your results",
-								progress: 100,
-							}),
-						);
+						progress$.optimizationStatus.assign({character: "", characterCount: 100, characterIndex: 100, message: "Rendering your results", progress: 0});
 						dispatch(
 							finishModOptimization(
 								message.data.result,
@@ -249,7 +239,7 @@ export namespace thunks {
 						break;
 					case "Progress":
 						isBusy$.set(false);
-						dispatch(actions.updateProgress(message.data));
+						progress$.optimizationStatus.assign({character: message.data.character, characterCount: message.data.characterCount, characterIndex: message.data.characterIndex, message: message.data.step, progress: message.data.progress});
 						break;
 					default:
 					// Do nothing

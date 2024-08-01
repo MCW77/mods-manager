@@ -9,9 +9,6 @@ import {
 	useMount,
 } from "@legendapp/state/react";
 
-// utils
-import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
-
 // state
 import { Reactive } from "@legendapp/state/react";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
@@ -20,6 +17,7 @@ import { incrementalOptimization$ } from "#/modules/incrementalOptimization/stat
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { progress$ } from "#/modules/progress/state/progress";
 import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // modules
@@ -39,7 +37,7 @@ import type { TargetStat } from "#/domain/TargetStat";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { OptimizerProgress } from "#/components/OptimizerProgress/OptimizerProgress";
+import { OptimizerProgress } from "#/modules/progress/components/OptimizerProgress";
 import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
 import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
 import { TargetStatsWidget } from "#/modules/planEditing/components/TargetStatsWidget";
@@ -70,7 +68,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 	const dispatch: ThunkDispatch = useDispatch();
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
 	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
-	const progress = useSelector(Optimize.selectors.selectProgress);
+	const progress = progress$.optimizationStatus.get();
 	const modAssignments = useSelector(
 		Storage.selectors.selectModAssignmentsInActiveProfile,
 	);
@@ -102,7 +100,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 		}
 
 		const resultsInner = (() => {
-			if (!areObjectsEquivalent(progress, {})) {
+			if (progress.message !== "") {
 				return <OptimizerProgress />;
 			}
 
@@ -153,6 +151,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 					</div>
 				),
 			);
+
 			<div id={"missed-form"}>
 				{targetStatRows}
 				{rerunButton}
@@ -368,15 +367,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 					</div>
 				</TabsContent>
 				<TabsContent value="Weights">
-					<div>
-						<StatWeightsWidget />
-						{missedGoalsSection(
-							modAssignments.find(
-								(modAssignment: ModSuggestion) =>
-									modAssignment.id === character.baseID,
-							) ?? null,
-						)}
-					</div>
+					<StatWeightsWidget />
 				</TabsContent>
 				<TabsContent value="Primaries">
 					<PrimaryStatRestrictionsWidget />
@@ -385,7 +376,15 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(({ character, targe
 					<SetRestrictionsWidget />
 				</TabsContent>
 				<TabsContent value="Stat Targets">
-					<TargetStatsWidget />
+					<div className={"flex flex-wrap gap-2"}>
+						<TargetStatsWidget />
+							{missedGoalsSection(
+							modAssignments.find(
+								(modAssignment: ModSuggestion) =>
+									modAssignment.id === character.baseID,
+							) ?? null,
+						)}
+					</div>
 				</TabsContent>
 			</Tabs>
 		</Reactive.form>

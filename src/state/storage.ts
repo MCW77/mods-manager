@@ -1,13 +1,11 @@
 // domain
 import type { BaseCharactersById } from "../domain/BaseCharacter";
-import type { OptimizationStatus } from "../domain/OptimizationStatus";
 import { PlayerProfile } from "../domain/PlayerProfile";
 import type { TargetStats } from "../domain/TargetStat";
 
 export interface IAppState {
 	baseCharacters: BaseCharactersById;
 	profile: PlayerProfile; // All the data about the current character
-	progress: OptimizationStatus;
 	targetStats: TargetStats;
 }
 
@@ -17,11 +15,6 @@ export class AppState {
 	static readonly Default: IAppState = {
 		baseCharacters: {} as BaseCharactersById,
 		profile: PlayerProfile.Default, // All the data about the current character
-		progress: {
-			character: null,
-			progress: 0,
-			step: "1",
-		},
 		targetStats: [] as TargetStats,
 	};
 
