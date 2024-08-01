@@ -1785,6 +1785,7 @@ function* getPotentialModsToSatisfyTargetStats(
 
     const modsWithPrimaries = modsInSets.filter(mod => {
       if (["square", "diamond"].includes(mod.slot)) return true;
+      if (target.primaryStatRestrictions[mod.slot as ModTypes.VariablePrimarySlots] === undefined) return true;
 
       return mod.primaryStat.type === target.primaryStatRestrictions[mod.slot as ModTypes.VariablePrimarySlots]
     })
