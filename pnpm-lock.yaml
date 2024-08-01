@@ -72,8 +72,8 @@ importers:
         specifier: ^0.61.8
         version: 0.61.8
       '@unocss/reset':
-        specifier: ^0.61.8
-        version: 0.61.8
+        specifier: ^0.61.9
+        version: 0.61.9
       '@vitejs/plugin-react':
         specifier: ^4.3.1
         version: 4.3.1(vite@5.3.5(@types/node@22.0.2)(terser@5.31.3))
@@ -2066,9 +2066,6 @@ packages:
 
   '@unocss/preset-wind@0.61.9':
     resolution: {integrity: sha512-AzbjJrNL9Rb2BzTiREyssd8v7KFVVLERQ/PNILGzo6yYelYMl4AhKXZ3jgxWEsIABArVa3UkGBigG4h/L+2JHA==}
-
-  '@unocss/reset@0.61.8':
-    resolution: {integrity: sha512-tG2FhdT3OXDM+tLZj9vXKlloHYxeXVxLR5TKpNjD/WQr4p6/xUFKGHvNfLHpiz4EsXLugEn0prqTxASB4c5gNg==}
 
   '@unocss/reset@0.61.9':
     resolution: {integrity: sha512-A1KtJiFgLM0N3FqJ9r5M3mVULcwsn+14tq5WkvSPF9ik3zQeJh8/NhxKdJImWClwBOzn795NQFXXFB70Ja+2RA==}
@@ -5933,8 +5930,6 @@ snapshots:
       '@unocss/core': 0.61.9
       '@unocss/preset-mini': 0.61.9
       '@unocss/rule-utils': 0.61.9
-
-  '@unocss/reset@0.61.8': {}
 
   '@unocss/reset@0.61.9': {}
 
