@@ -11,12 +11,14 @@ import "./CharacterList.css";
 import groupByKey from "#/utils/groupByKey";
 
 // state
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Data } from "#/state/modules/data";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -37,7 +39,7 @@ const CharacterList = observer(
 	React.memo(() => {
 		const dispatch: ThunkDispatch = useDispatch();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+		const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 		const characters = useSelector(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);
@@ -214,8 +216,8 @@ const CharacterList = observer(
 						{renderCharacterIcons(character, target, index)}
 						<CharacterAvatar character={character} />
 						<div className={"character-name"}>
-							{baseCharacters[character.baseID]
-								? baseCharacters[character.baseID].name
+							{baseCharactersById[character.baseID]
+								? baseCharactersById[character.baseID].name
 								: character.baseID}
 						</div>
 						<div className={"target"}>

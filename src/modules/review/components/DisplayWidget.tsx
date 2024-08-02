@@ -7,10 +7,14 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import {
+	reactive,
+	useSelector as useLegendSelector,
+} from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
+import { review$ } from "#/modules/review/state/review";
 
 // modules
-import { Data } from "#/state/modules/data";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -33,8 +37,6 @@ import {
 	SelectValue,
 } from "#ui/select";
 import { Switch } from "#ui/switch";
-import { reactive } from "@legendapp/state/react";
-import { review$ } from "#/modules/review/state/review";
 import * as ModListFilter from "#/modules/review/domain/ModListFilter";
 
 const ReactiveSelect = reactive(Select);
@@ -42,7 +44,7 @@ const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
 	const dispatch = useDispatch();
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 	const profile = useSelector(Storage.selectors.selectActiveProfile);
 	const filter = useLegendSelector(review$.modListFilter);
 
@@ -155,7 +157,7 @@ const DisplayWidget = () => {
 				tags = uniq(
 					flatten(
 						(Object.keys(removedMods) as CharacterNames[]).map((id) =>
-							id in baseCharacters ? baseCharacters[id].categories : [],
+							id in baseCharactersById ? baseCharactersById[id].categories : [],
 						) as string[][],
 					),
 				);
@@ -163,7 +165,7 @@ const DisplayWidget = () => {
 				tags = uniq(
 					flatten(
 						displayedMods.map(({ id }) =>
-							id in baseCharacters ? baseCharacters[id].categories : [],
+							id in baseCharactersById ? baseCharactersById[id].categories : [],
 						),
 					),
 				);
@@ -197,7 +199,7 @@ const DisplayWidget = () => {
 				new Set(
 					flatten(
 						displayedMods.map(({ id }) =>
-							baseCharacters[id] ? baseCharacters[id].categories : [],
+							baseCharactersById[id] ? baseCharactersById[id].categories : [],
 						),
 					),
 				),
@@ -206,7 +208,9 @@ const DisplayWidget = () => {
 			// Filter out any characters that we're not going to display based on the selected tag
 			if (filter.tag !== "All") {
 				displayedMods = displayedMods.filter(({ id }) => {
-					const tags = baseCharacters[id] ? baseCharacters[id].categories : [];
+					const tags = baseCharactersById[id]
+						? baseCharactersById[id].categories
+						: [];
 					return tags.includes(filter.tag);
 				});
 			}

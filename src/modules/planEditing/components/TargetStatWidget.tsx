@@ -3,11 +3,9 @@ import type React from "react";
 import { Switch, observer, reactive } from "@legendapp/state/react";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
-
 import type { PlanEditing } from "../domain/PlanEditing";
-
-import type { BaseCharacters } from "#/domain/BaseCharacter";
+import type { BaseCharacters } from "#/modules/characters/domain/BaseCharacter";
+import type { CharacterNames } from "#/constants/characterSettings";
 import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
 
 // components

@@ -9,19 +9,19 @@ import "./CharacterEditView.css";
 
 // state
 import { observable } from "@legendapp/state";
-import { observer } from "@legendapp/state/react";
+import { observer, useSelector as useLegendSelector } from "@legendapp/state/react";
 
+import { characters$ } from "#/modules/characters/state/characters";
 import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Data } from "#/state/modules/data";
 import { Storage } from "#/state/modules/storage";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
 
-import { defaultBaseCharacter } from "#/domain/BaseCharacter";
+import { defaultBaseCharacter } from "#/modules/characters/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
 
 // components
@@ -44,7 +44,8 @@ const CharacterEditView = observer(() => {
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+
 	const selectedCharacters = useSelector(
 		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
 	);
@@ -68,7 +69,7 @@ const CharacterEditView = observer(() => {
 	 * @returns boolean
 	 */
 	const filterCharacters = (character: Character.Character) => {
-		const baseCharacter = baseCharacters[character.baseID] ?? {
+		const baseCharacter = baseCharactersById[character.baseID] ?? {
 			...defaultBaseCharacter,
 			baseID: character.baseID,
 			name: character.baseID,

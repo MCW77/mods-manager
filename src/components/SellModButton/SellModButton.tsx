@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // modules
-import { Data } from "#/state/modules/data";
+
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -29,7 +31,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 
 	const deleteModal = () => {
 		const character =
@@ -51,8 +53,8 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
 					{character && <CharacterAvatar character={character} />}
 					{character && (
 						<h4 className={"character-name"}>
-							{baseCharacters[character.baseID]
-								? baseCharacters[character.baseID].name
+							{baseCharactersById[character.baseID]
+								? baseCharactersById[character.baseID].name
 								: character.baseID}
 						</h4>
 					)}

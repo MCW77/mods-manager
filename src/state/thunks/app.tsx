@@ -125,7 +125,7 @@ export namespace thunks {
 						(profile: IFlatPlayerProfile) => PlayerProfile.deserialize(profile),
 					);
 					dispatch(Storage.thunks.saveProfiles(profiles, stateObj.allyCode));
-					dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
+//					dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
 					dispatch(Storage.thunks.saveLastRuns(stateObj.lastRuns));
 					if (stateObj.characterTemplates) {
 						templates$.userTemplatesByName.set(templates$.groupTemplatesById(stateObj.characterTemplates));

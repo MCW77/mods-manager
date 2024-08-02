@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 import "./ModStats.css";
 
 // state
-import { useSelector as useLegendSelector} from "@legendapp/state/react";
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 import { modsView$ } from "#/modules/modsView/state/modsView";
 
 // modules
-import { Data } from "../../state/modules/data";
 import { Storage } from "../../state/modules/storage";
 
 // domain
@@ -46,7 +46,7 @@ const ModStats = React.memo(
 		const characters = useSelector(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);
-		const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+		const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 		const scoreName = useLegendSelector(() =>
 			modsView$.activeViewSetupInActiveCategory.modScore.get()
 		);
@@ -146,8 +146,8 @@ const ModStats = React.memo(
 						<h4>Assigned To</h4>
 						<CharacterAvatar character={character} />
 						<span className="avatar-name">
-							{baseCharacters[character.baseID]
-								? baseCharacters[character.baseID].name
+							{baseCharactersById[character.baseID]
+								? baseCharactersById[character.baseID].name
 								: character.baseID}
 						</span>
 					</div>

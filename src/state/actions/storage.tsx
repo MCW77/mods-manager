@@ -1,7 +1,6 @@
 // domain
-import type { BaseCharactersById } from "#/domain/BaseCharacter";
+import type { BaseCharactersById } from "#/modules/characters/domain/BaseCharacter";
 import type { PlayerProfile } from "#/domain/PlayerProfile";
-
 
 /*
 export function addModsToProfiles(newProfiles) {
@@ -50,22 +49,14 @@ export function addModsToProfiles(newProfiles) {
 }
 */
 export namespace actions {
-  export function setBaseCharacters(baseCharacters: BaseCharactersById) {
-    return {
-      type: actionNames.SET_BASE_CHARACTERS,
-      baseCharacters: baseCharacters
-    } as const;
-  }
-
-  export function setProfile(profile: PlayerProfile) {
-    return {
-      type: actionNames.SET_PROFILE,
-      profile: profile
-    } as const;
-  }
-};
+	export function setProfile(profile: PlayerProfile) {
+		return {
+			type: actionNames.SET_PROFILE,
+			profile: profile,
+		} as const;
+	}
+}
 
 export namespace actionNames {
-  export const SET_BASE_CHARACTERS = 'SET_BASE_CHARACTERS' as const;
-  export const SET_PROFILE = 'SET_PROFILE' as const;
-};
+	export const SET_PROFILE = "SET_PROFILE" as const;
+}

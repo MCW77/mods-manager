@@ -1,16 +1,17 @@
 // react
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { Computed, reactiveObserver } from "@legendapp/state/react";
+import {
+	Computed,
+	reactiveObserver,
+	useSelector,
+} from "@legendapp/state/react";
 
 // state
+import { characters$ } from "#/modules/characters/state/characters";
 import { target$ } from "../state/planEditing";
 
-// modules
-import { Data } from "#/state/modules/data";
-
 // domain
-import type { BaseCharacters } from "#/domain/BaseCharacter";
+import type { BaseCharacters } from "#/modules/characters/domain/BaseCharacter";
 
 // components
 import { TargetStatWidget } from "./TargetStatWidget";
@@ -19,14 +20,14 @@ import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 
 const TargetStatsWidget: React.FC = reactiveObserver(() => {
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useSelector(characters$.baseCharactersById);
 
 	const baseCharacters2 = useMemo(
 		() =>
-			(Object.values(baseCharacters).slice(0) as BaseCharacters).sort((a, b) =>
-				a.name.localeCompare(b.name),
+			(Object.values(baseCharactersById).slice(0) as BaseCharacters).sort(
+				(a, b) => a.name.localeCompare(b.name),
 			),
-		[baseCharacters],
+		[baseCharactersById],
 	);
 
 	return (

@@ -21,7 +21,6 @@ type AppActions =
 	| ReturnType<typeof App.actions.resetState>
 	| ReturnType<typeof App.actions.setState>
 	| ReturnType<typeof Optimize.actions.startModOptimization>
-	| ReturnType<typeof Storage.actions.setBaseCharacters>
 	| ReturnType<typeof Storage.actions.setProfile>;
 // #endregion
 
@@ -44,8 +43,6 @@ const modsOptimizer: RootReducer = (
 		case App.actionNames.SET_STATE:
 			return AppState.save(App.reducers.setState(action));
 
-		case Storage.actionNames.SET_BASE_CHARACTERS:
-			return Storage.reducers.setBaseCharacters(state, action);
 		case Storage.actionNames.SET_PROFILE:
 			return AppState.save(Storage.reducers.setProfile(state, action));
 

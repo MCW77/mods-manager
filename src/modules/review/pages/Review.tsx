@@ -12,12 +12,11 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
-import { Show } from "@legendapp/state/react";
+import { Show, useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 import { review$ } from "#/modules/review/state/review";
 
 // modules
-import { Data } from "#/state/modules/data";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -160,7 +159,7 @@ const modUpgradeCosts: {
 };
 
 const Review = memo(() => {
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
@@ -287,7 +286,9 @@ const Review = memo(() => {
 			// Filter out any characters that we're not going to display based on the selected tag
 			if (filter.tag !== "All") {
 				displayedMods = displayedMods.filter(({ id }) => {
-					const tags = baseCharacters[id] ? baseCharacters[id].categories : [];
+					const tags = baseCharactersById[id]
+						? baseCharactersById[id].categories
+						: [];
 					return tags.includes(filter.tag);
 				});
 			}

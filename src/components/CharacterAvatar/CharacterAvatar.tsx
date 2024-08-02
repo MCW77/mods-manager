@@ -1,18 +1,18 @@
 // react
 import * as React from "react";
-import { useSelector } from "react-redux";
 
 // styles
 import "./CharacterAvatar.css";
 
-// modules
-import { Data } from "#/state/modules/data";
+// state
+import { useSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 
 // domain
 import {
 	type BaseCharacter,
 	defaultBaseCharacter,
-} from "#/domain/BaseCharacter";
+} from "#/modules/characters/domain/BaseCharacter";
 import type * as Character from "#/domain/Character";
 
 type ComponentProps = {
@@ -31,11 +31,11 @@ const CharacterAvatar = React.memo(
 		displayStars = true,
 		id,
 	}: ComponentProps) => {
-		const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+		const baseCharactersById = useSelector(characters$.baseCharactersById);
 
 		if (character === undefined || character === null) return null;
 
-		const baseCharacter: BaseCharacter = baseCharacters[character.baseID] ?? {
+		const baseCharacter: BaseCharacter = baseCharactersById[character.baseID] ?? {
 			...defaultBaseCharacter,
 			baseID: character.baseID,
 			name: character.baseID,

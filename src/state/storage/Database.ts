@@ -4,7 +4,7 @@ import nothing from "#/utils/nothing";
 
 // domain
 import type {	CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
-import type { BaseCharacters } from "#/domain/BaseCharacter";
+import type { BaseCharacters } from "#/modules/characters/domain/BaseCharacter";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile, type IFlatPlayerProfile } from "#/domain/PlayerProfile";
 
@@ -28,7 +28,6 @@ export interface IUserData {
 	allyCode: string;
 	version: string;
 	profiles: IFlatPlayerProfile[];
-	gameSettings: BaseCharacters;
 	lastRuns: OptimizerRun[];
 	characterTemplates: CharacterTemplates;
 }
@@ -82,7 +81,6 @@ export class Database {
 				if (event.oldVersion < 1) {
 					// Create object stores for: game data about each character, player profiles, and the last run done by each
 					// player
-					db.createObjectStore("gameSettings", { keyPath: "baseID" });
 					db.createObjectStore("profiles", { keyPath: "allyCode" });
 					db.createObjectStore("lastRuns", { keyPath: "allyCode" });
 				}
@@ -104,7 +102,6 @@ export class Database {
 	) {
 		this.database.then((db: IDBDatabase) => {
 			const getDataRequest = db.transaction([
-				"gameSettings",
 				"profiles",
 				"lastRuns",
 				"characterTemplates",
@@ -114,7 +111,6 @@ export class Database {
 				allyCode: "",
 				version: "",
 				profiles: [],
-				gameSettings: [],
 				lastRuns: [],
 				characterTemplates: [],
 			};
@@ -131,13 +127,6 @@ export class Database {
 			const profilesRequest = getDataRequest.objectStore("profiles").getAll();
 			profilesRequest.onsuccess = (event: Event) => {
 				userData.profiles = (event.target as IDBRequest).result;
-			};
-
-			const gameSettingsRequest = getDataRequest
-				.objectStore("gameSettings")
-				.getAll();
-			gameSettingsRequest.onsuccess = (event: Event) => {
-				userData.gameSettings = (event.target as IDBRequest).result;
 			};
 
 			const lastRunsRequest = getDataRequest.objectStore("lastRuns").getAll();
@@ -227,34 +216,6 @@ export class Database {
 
 			deleteLastRunRequest.onsuccess = (event) => {
 				onsuccess();
-			};
-		});
-	}
-
-	/**
-	 * Get all of the basecharacters from the database and return them as an object
-	 * @param onsuccess {function(Array<BaseCharacter>)}
-	 * @param onerror {function(error)}
-	 */
-	getBaseCharacters(
-		onsuccess: (baseCharacters: BaseCharacters) => void = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const getBaseCharactersRequest = db
-				.transaction("gameSettings", "readwrite")
-				.objectStore("gameSettings")
-				.getAll();
-
-			getBaseCharactersRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			getBaseCharactersRequest.onsuccess = (event) => {
-				const baseCharacters: BaseCharacters = (event.target as IDBRequest)
-					.result as BaseCharacters;
-				onsuccess(baseCharacters);
 			};
 		});
 	}
@@ -430,45 +391,6 @@ export class Database {
 				profileRequest.onsuccess = (event) => {
 					if (event !== null && event.target instanceof IDBRequest)
 						keys.push(event.target.result);
-				};
-			}
-		});
-	}
-
-	/**
-	 * Add new gameSettings to the database, or update existing ones
-	 * @param baseCharacters {Array<BaseCharacter>}
-	 * @param onsuccess {function(Array<string>)}
-	 * @param onerror {function(error)}
-	 */
-	saveBaseCharacters(
-		baseCharacters: BaseCharacters,
-		onsuccess: (keys: string[]) => void = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const saveBaseCharactersRequest = db.transaction(
-				["gameSettings"],
-				"readwrite",
-			);
-			const keys: string[] = [];
-
-			saveBaseCharactersRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			saveBaseCharactersRequest.oncomplete = (event) => {
-				onsuccess(keys);
-			};
-
-			for (const baseChar of baseCharacters) {
-				const singleRequest = saveBaseCharactersRequest
-					.objectStore("gameSettings")
-					.put(baseChar);
-
-				singleRequest.onsuccess = (event: Event) => {
-					keys.push((event.target as IDBRequest).result);
 				};
 			}
 		});

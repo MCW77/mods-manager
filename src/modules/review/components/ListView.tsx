@@ -7,10 +7,10 @@ import { flatten } from "lodash-es";
 
 // state
 import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 import { review$ } from "../state/review";
 
 // modules
-import { Data } from "#/state/modules/data";
 import { Review } from "#/state/modules/review";
 import { Storage } from "#/state/modules/storage";
 
@@ -27,7 +27,7 @@ import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { ModDetail } from "#/components/ModDetail/ModDetail";
-import { Button } from "#/components/ui/button";
+import { Button } from "#ui/button";
 
 interface ListViewProps {
 	displayedMods: ModAssignments;
@@ -39,7 +39,7 @@ interface ListViewProps {
  */
 const ListView = ({ displayedMods }: ListViewProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
@@ -83,14 +83,16 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 				if (mod.characterID === "null") {
 					tags = [];
 				} else {
-					tags = baseCharacters[mod.characterID].categories;
+					tags = baseCharactersById[mod.characterID].categories;
 				}
 				return tags.includes(filter.tag);
 			});
 		}
 	} else if (filter.tag !== "All") {
 		individualMods = individualMods.filter(({ id, mod }) => {
-			const tags = baseCharacters[id] ? baseCharacters[id].categories : [];
+			const tags = baseCharactersById[id]
+				? baseCharactersById[id].categories
+				: [];
 			return tags.includes(filter.tag);
 		});
 	}
@@ -109,8 +111,8 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 					<Arrow />
 					<CharacterAvatar character={character} />
 					<h3>
-						{baseCharacters[character.baseID]
-							? baseCharacters[character.baseID].name
+						{baseCharactersById[character.baseID]
+							? baseCharactersById[character.baseID].name
 							: character.baseID}
 					</h3>
 					<h4>{target.name}</h4>

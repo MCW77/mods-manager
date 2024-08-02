@@ -12,6 +12,7 @@ import getDatabase, { type Database } from "#/state/storage/Database";
 
 import { beginBatch, endBatch } from "@legendapp/state";
 
+import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
@@ -30,20 +31,11 @@ import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOPr
 import type * as DTOs from "#/modules/profilesManagement/dtos";
 import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 
-import {
-	type BaseCharactersById,
-	mapAPI2BaseCharactersById,
-} from "#/domain/BaseCharacter";
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
 import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import type { SelectedCharacters } from "#/domain/SelectedCharacters";
-
-interface FetchedPlayerData {
-	baseCharacters: BaseCharactersById;
-	profile: FetchedGIMOProfile;
-}
 
 export namespace thunks {
 	export function applyRanking(ranking: CharacterNames[]): ThunkResult<void> {
@@ -59,19 +51,6 @@ export namespace thunks {
 			}
 			return profile.withSelectedCharacters(rankedSelectedCharacters);
 		});
-	}
-
-	/**
-	 * Fetch base character data from the swgoh.gg API
-	 * @returns {Promise<BaseCharactersById>}
-	 */
-	function fetchCharacters(): Promise<BaseCharactersById> {
-		return fetch("https://api.mods-optimizer.swgoh.grandivory.com/characters/")
-			.then((response) => response.json())
-			.then((response) => {
-				return mapAPI2BaseCharactersById(response.units);
-			})
-			.catch();
 	}
 
 	/*
@@ -132,10 +111,7 @@ export namespace thunks {
 		useSession = true,
 	): ThunkResult<Promise<void>> {
 		const cleanedAllyCode = cleanAllyCode(allycode);
-		const data: FetchedPlayerData = {
-			baseCharacters: {} as BaseCharactersById,
-			profile: {} as FetchedGIMOProfile,
-		};
+		let profile: FetchedGIMOProfile ;
 
 		const messages: string[] = [];
 
@@ -144,8 +120,7 @@ export namespace thunks {
 
 			// First, fetch character definitions from swgoh.gg
 			try {
-				const baseCharacters = await fetchCharacters();
-				data.baseCharacters = baseCharacters;
+				const baseCharacters = await characters$.baseCharactersById();
 			} catch (error) {
 				messages.push(
 					"Error when fetching character definitions from HotUtils. Some characters may not optimize properly until you fetch again.",
@@ -159,42 +134,24 @@ export namespace thunks {
 
 			// Then, fetch the player's data from HotUtils
 			try {
-				const huProfile = await hotutils$.fetchProfile(cleanedAllyCode);
-				data.profile = huProfile;
+				profile = await hotutils$.fetchProfile(cleanedAllyCode);
 
 				// Process all of the data that's been collected
 				const db = getDatabase();
-				if (data.baseCharacters) {
-					await dispatch(
-						Storage.actions.setBaseCharacters(data.baseCharacters),
-					);
-					db.saveBaseCharacters(
-						Object.values(data.baseCharacters),
-						nothing,
-						(error) =>
-							dialog$.showFlash(
-								"Storage Error",
-								`Error saving base character settings: ${error?.message} The optimizer may not function properly for all characters until you fetch again`,
-								"",
-								undefined,
-								"error",
-							),
-					);
-				}
 
 				// If we used a HotUtils session, then the mods returned are all the mods a player has.
 				// In this case, don't keep old mods around, even if the box is checked.
 				await dispatch(
 					updatePlayerData(
 						cleanedAllyCode,
-						data,
+						profile,
 						db,
 						keepOldMods && !(useSession && sessionId),
 					),
 				);
 
 				// Show the success and/or error messages
-				dispatch(showFetchResult(data, messages, !!sessionId && useSession));
+				dispatch(showFetchResult(profile, messages, !!sessionId && useSession));
 			} catch (error) {
 				if (error instanceof Error) {
 					if (error.message === "Player not found") {
@@ -240,13 +197,13 @@ export namespace thunks {
 	/**
 	 * Show messages related to the results of the fetch operation
 	 *
-	 * @param {Object} fetchData The results of the various API calls to gather player and game data
+	 * @param {Object} profile The results of the various API calls to gather player and game data
 	 * @param {Array<string>} errorMessages Any errors that should be shown with the results
 	 * @param {boolean} usedHotUtils Whether HotUtils' API was used to get up-to-date mods
 	 * @param {boolean} usedSession Whether a HotUtils session was used to pull unequipped mods
 	 */
 	function showFetchResult(
-		fetchData: FetchedPlayerData,
+		profile: FetchedGIMOProfile,
 		errorMessages: string[],
 		usedSession: boolean,
 	): ThunkResult<void> {
@@ -270,10 +227,10 @@ export namespace thunks {
 				<p key={100}>
 					Successfully pulled data for{" "}
 					<span className={"gold"}>
-						{Object.keys(fetchData.profile.playerValues).length}
+						{Object.keys(profile.playerValues).length}
 					</span>{" "}
 					characters and{" "}
-					<span className={"gold"}>{fetchData.profile.mods.length}</span> mods.
+					<span className={"gold"}>{profile.mods.length}</span> mods.
 				</p>,
 			);
 
@@ -309,7 +266,7 @@ export namespace thunks {
 
 	function updatePlayerData(
 		allycode: string,
-		fetchData: FetchedPlayerData,
+		profile: FetchedGIMOProfile,
 		db: Database,
 		keepOldMods: boolean,
 	): ThunkResult<Promise<void>> {
@@ -319,8 +276,8 @@ export namespace thunks {
 
 				const oldProfile =
 					dbProfile !== PlayerProfile.Default
-						? dbProfile.withPlayerName(fetchData.profile.name)
-						: new PlayerProfile(allycode, fetchData.profile.name);
+						? dbProfile.withPlayerName(profile.name)
+						: new PlayerProfile(allycode, profile.name);
 				oldProfile.allyCode = allycode;
 				optimizationSettings$.addProfile(allycode);
 				incrementalOptimization$.addProfile(allycode);
@@ -331,7 +288,7 @@ export namespace thunks {
 					PlayerValuesByCharacter,
 					Character.Character
 				>(
-					fetchData.profile.playerValues,
+					profile.playerValues,
 					(
 						playerValues: DTOs.GIMO.PlayerValuesDTO,
 						id: string,
@@ -351,7 +308,7 @@ export namespace thunks {
 							playerValues,
 							createOptimizerSettings(
 								[],
-								fetchData.baseCharacters[Id]?.categories.includes("Crew Member")
+								characters$.baseCharactersById.peek()[Id]?.categories.includes("Crew Member")
 									? 5
 									: 1,
 								false,
@@ -360,7 +317,7 @@ export namespace thunks {
 					},
 				);
 
-				const newMods = groupByKey(fetchData.profile.mods, (mod) => mod.id);
+				const newMods = groupByKey(profile.mods, (mod) => mod.id);
 
 				// If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
 				let finalMods: Mod[];

@@ -3,9 +3,12 @@ import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
+// state
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
+
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Data } from "#/state/modules/data";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -33,7 +36,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = ({
 	const selectedCharacters = useSelector(
 		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
 	);
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	const isLocked = character.optimizerSettings.isLocked;
@@ -93,8 +96,8 @@ const CharacterWidget: React.FC<CharacterBlockProps> = ({
 				<CharacterAvatar character={character} />
 			</div>
 			<div className={"character-name"}>
-				{baseCharacters[character.baseID]
-					? baseCharacters[character.baseID].name
+				{baseCharactersById[character.baseID]
+					? baseCharactersById[character.baseID].name
 					: character.baseID}
 			</div>
 		</div>

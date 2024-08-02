@@ -2,7 +2,6 @@
 import type { ThunkResult } from "#/state/reducers/modsOptimizer";
 
 // utils
-import groupByKey from "#/utils/groupByKey";
 import nothing from "#/utils/nothing";
 
 // state
@@ -19,7 +18,6 @@ import { actions } from "#/state/actions/storage";
 import { App } from "#/state/modules/app";
 
 // domain
-import type { BaseCharactersById, BaseCharacters } from "#/domain/BaseCharacter";
 import type { Mod } from "#/domain/Mod";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile } from "#/domain/PlayerProfile";
@@ -116,50 +114,12 @@ export namespace thunks {
 	}
 
 	/**
-	 * Load game settings from the database and store them in the state
-	 * @returns {Function}
-	 */
-	function loadBaseCharacters(): ThunkResult<void> {
-		return (dispatch) => {
-			const db = getDatabase();
-
-			try {
-				db.getBaseCharacters(
-					(baseCharacters) => {
-						const baseCharsObject: BaseCharactersById = groupByKey(
-							baseCharacters,
-							(baseChar) => baseChar.baseID,
-						) as BaseCharactersById;
-						dispatch(actions.setBaseCharacters(baseCharsObject));
-					},
-					(error) =>
-						dialog$.showFlash(
-							"Storage Error",
-							`Error reading basic character settings: ${error?.message}. The settings will be restored when you next fetch data.`,
-							"",
-							undefined,
-							"error",
-						),
-				);
-			} catch (e) {
-				dialog$.showError([
-					<p key={1}>
-						Unable to load database: {(e as Error).message} Please fix the
-						problem and try again, or ask for help in the discord server below.
-					</p>,
-				]);
-			}
-		};
-	}
-
-	/**
 	 * Read Game settings and player profiles from the database and load them into the app state
 	 * @param allyCode
 	 * @returns {Function}
 	 */
 	export function loadFromDb(allyCode: string): ThunkResult<void> {
 		return (dispatch) => {
-			dispatch(loadBaseCharacters());
 			dispatch(loadProfiles(allyCode));
 		};
 	}
@@ -181,7 +141,10 @@ export namespace thunks {
 					cleanedSelectedCharacters,
 				);
 
-				if (cleanedProfile.allyCode) profilesManagement$.profiles.activeAllycode.set(cleanedProfile.allyCode);
+				if (cleanedProfile.allyCode)
+					profilesManagement$.profiles.activeAllycode.set(
+						cleanedProfile.allyCode,
+					);
 				dispatch(actions.setProfile(cleanedProfile));
 				profilesManagement$.profiles.activeAllycode.set(allyCode);
 				hotutils$.checkSubscriptionStatus();
@@ -231,9 +194,9 @@ export namespace thunks {
 						} else if (profilesManagement$.hasProfiles.get()) {
 							dispatch(App.actions.resetState());
 						}
-            for (const profile of cleanedProfiles) {
-              profilesManagement$.addProfile(profile);
-            }
+						for (const profile of cleanedProfiles) {
+							profilesManagement$.addProfile(profile);
+						}
 					},
 					(error) =>
 						dialog$.showFlash(
@@ -252,30 +215,6 @@ export namespace thunks {
 					</p>,
 				]);
 			}
-		};
-	}
-
-	/**
-	 * Add new BaseCharacter objects to the database, or update existing ones
-	 * @param baseCharacters {Array<BaseCharacter>}
-	 */
-	export function saveBaseCharacters(
-		baseCharacters: BaseCharacters,
-	): ThunkResult<void> {
-		return (dispatch) => {
-			const db = getDatabase();
-			db.saveBaseCharacters(
-				baseCharacters,
-				() => dispatch(loadBaseCharacters()),
-				(error) =>
-					dialog$.showFlash(
-						"Storage Error",
-						`Error saving basic character settings: ${error?.message} The settings will be restored when you next fetch data.`,
-						"",
-						undefined,
-						"error",
-					),
-			);
 		};
 	}
 

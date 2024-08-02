@@ -1,14 +1,10 @@
 // react
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 // state
 import { observer, reactive } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // components
 import { FilterWidget } from "./FilterWidget";
@@ -22,7 +18,6 @@ const ReactiveSwitch = reactive(Switch);
 
 const ViewSetupWidget: React.FC = observer(() => {
   const [t] = useTranslation("explore-ui");
-  const profile = useSelector(Storage.selectors.selectActiveProfile);
 
   return (
     <div className={`w-28vw m-l-2 p-2 flex flex-col justify-between items-center gap-4

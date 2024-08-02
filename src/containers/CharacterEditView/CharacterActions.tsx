@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 // state
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -13,7 +15,6 @@ import { review$ } from "#/modules/review/state/review";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Data } from "#/state/modules/data";
 import { Optimize } from "#/state/modules/optimize";
 import { Storage } from "#/state/modules/storage";
 
@@ -40,7 +41,7 @@ import { Button } from "#ui/button";
 
 const CharacterActions = () => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 	const selectedCharacters = useSelector(
 		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
 	);
@@ -90,7 +91,7 @@ const CharacterActions = () => {
 								,
 								<ul>
 									{invalidTargets.map((id) => (
-										<li key={id}>{baseCharacters[id]?.name ?? id}</li>
+										<li key={id}>{baseCharactersById[id]?.name ?? id}</li>
 									))}
 								</ul>
 							</div>,

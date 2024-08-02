@@ -5,8 +5,11 @@ import { useSelector } from "react-redux";
 // styles
 import "./ModDetail.css";
 
+// state
+import { useSelector as useLegendSelector } from "@legendapp/state/react";
+import { characters$ } from "#/modules/characters/state/characters";
+
 // modules
-import { Data } from "#/state/modules/data";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -20,7 +23,7 @@ import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { ModImage } from "#/components/ModImage/ModImage";
 import { ModStats } from "#/components/ModStats/ModStats";
 import { SellModButton } from "#/components/SellModButton/SellModButton";
-import { Label } from "../ui/label";
+import { Label } from "#ui/label";
 
 type ComponentProps = {
 	assignedCharacter: Character.Character | null;
@@ -36,7 +39,7 @@ const ModDetail = React.memo(
 		mod,
 		showAssigned = false,
 	}: ComponentProps) => {
-		const baseCharacters = useSelector(Data.selectors.selectBaseCharacters);
+		const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
 		const characters = useSelector(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);
@@ -58,8 +61,8 @@ const ModDetail = React.memo(
 				{character && <CharacterAvatar character={character} />}
 				{character && (
 					<h4 className={"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"}>
-						{baseCharacters[character.baseID]
-							? baseCharacters[character.baseID].name
+						{baseCharactersById[character.baseID]
+							? baseCharactersById[character.baseID].name
 							: character.baseID}
 					</h4>
 				)}

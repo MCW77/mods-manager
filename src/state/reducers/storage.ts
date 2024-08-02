@@ -10,13 +10,6 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import type { actions } from "../actions/storage";
 
 export namespace reducers {
-	export function setBaseCharacters(
-		state: IAppState,
-		action: ReturnType<typeof actions.setBaseCharacters>,
-	): IAppState {
-		return Object.assign({}, state, { baseCharacters: action.baseCharacters });
-	}
-
 	export function setProfile(
 		state: IAppState,
 		action: ReturnType<typeof actions.setProfile>,
