@@ -2,13 +2,16 @@
 import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-import { observer, reactive, Show, useMount } from "@legendapp/state/react";
+import {
+	observer,
+	reactive,
+	Reactive,
+	Show,
+	useMount,
+} from "@legendapp/state/react";
 
 // state
-import {
-	Reactive,
-	useSelector as useLegendSelector,
-} from "@legendapp/state/react";
+import { beginBatch, endBatch } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
 import { characters$ } from "#/modules/characters/state/characters";
@@ -66,9 +69,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
 		const dispatch: ThunkDispatch = useDispatch();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		const baseCharactersById = useLegendSelector(
-			characters$.baseCharactersById,
-		);
+		const baseCharactersById = characters$.baseCharactersById.get();
 		const progress = progress$.optimizationStatus.get();
 		const modAssignments = useSelector(
 			Storage.selectors.selectModAssignmentsInActiveProfile,
@@ -81,13 +82,15 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const cloneOptimizationPlan = () => structuredClone(target);
 
 		useMount(() => {
-			target$.character.assign(cloneCharacter());
+			beginBatch();
+			target$.characterId.set(character.baseID);
 			target$.target.assign(
 				target$.isInAdvancedEditMode.peek()
 					? OptimizationPlan.normalize(cloneOptimizationPlan())
 					: cloneOptimizationPlan(),
 			);
 			target$.uneditedTarget.assign(cloneOptimizationPlan());
+			endBatch();
 			const defaultTarget = characterSettings[character.baseID]
 				? (
 						characterSettings[character.baseID] as CharacterSettings
@@ -181,16 +184,17 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			if (target$.isInAdvancedEditMode.peek())
 				newTarget = OptimizationPlan.denormalize(newTarget);
 			const char = target$.character.peek();
+			const charId = target$.characterId.peek();
 
 			dispatch(
 				CharacterEdit.thunks.changeMinimumModDots(
-					char.baseID,
+					charId,
 					char.optimizerSettings.minimumModDots,
 				),
 			);
-			dispatch(CharacterEdit.thunks.unlockCharacter(char.baseID));
+			dispatch(CharacterEdit.thunks.unlockCharacter(charId));
 			dispatch(
-				CharacterEdit.thunks.finishEditCharacterTarget(char.baseID, newTarget),
+				CharacterEdit.thunks.finishEditCharacterTarget(charId, newTarget),
 			);
 		};
 

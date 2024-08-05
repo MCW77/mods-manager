@@ -5,7 +5,6 @@ import { beginBatch, endBatch, observable } from "@legendapp/state";
 import { characterSettings } from "#/constants/characterSettings";
 import setBonuses from "#/constants/setbonuses";
 import type { PlanEditing } from "../domain/PlanEditing";
-import type * as Character from "#/domain/Character";
 import type { CharacterSettings } from "#/domain/CharacterSettings";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { SetRestrictions } from "#/domain/SetRestrictions";
@@ -15,11 +14,11 @@ import { createTargetStat, type TargetStat } from "#/domain/TargetStat";
 const target = OptimizationPlan.createOptimizationPlan("");
 
 const target$: PlanEditing = observable({
-	character: {} as Character.Character,
+	characterId: "PAO",
 	target: target,
 	isDefaultTarget: () =>
 		(
-			characterSettings[target$.character.get().baseID] as CharacterSettings
+			characterSettings[target$.characterId.peek()] as CharacterSettings
 		)?.targets.find((target) => target.name === target$.target.get().name) !==
 		undefined,
 	isInAdvancedEditMode: false,

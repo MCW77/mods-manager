@@ -2,12 +2,12 @@
 import type { ObservableObject } from "@legendapp/state";
 
 // domain
-import type * as Character from "#/domain/Character";
+import type { CharacterNames } from "#/constants/characterSettings";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { SetStats } from "#/domain/Stats";
 
 type PlanEditing = ObservableObject<{
-	character: Character.Character;
+	characterId: CharacterNames;
 	isDefaultTarget: () => boolean;
 	isInAdvancedEditMode: boolean;
 	isTargetChanged: () => boolean;
