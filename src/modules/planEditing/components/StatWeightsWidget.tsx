@@ -20,7 +20,6 @@ import { Switch as ShadSwitch } from "#ui/switch";
 const ReactiveSwitch = reactive(ShadSwitch);
 
 export const StatWeightsWidget: React.FC = reactiveObserver(() => {
-	console.log(`target speed: ${target$.target.Speed.get()}`);
 	return (
 		<div className={""}>
 			<div>
