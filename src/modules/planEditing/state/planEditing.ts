@@ -1,5 +1,5 @@
 // state
-import { beginBatch, computed, endBatch, observable } from "@legendapp/state";
+import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
@@ -94,8 +94,18 @@ const target$: PlanEditing = observable({
 	},
 });
 
-target$.onChange((value) =>
-	console.log("target$ changed to", value ?? typeof value),
+target$.onChange(
+	({ value, getPrevious, changes }) => {
+		const prev = getPrevious();
+		for (const { path, valueAtPath, prevAtPath } of changes) {
+			console.log(`${path} changed from ${prevAtPath} to ${valueAtPath}`);
+		}
+		console.log(`target$ changed
+			`);
+	},
+	{
+		initial: true,
+	},
 );
 
 export { target$ };
