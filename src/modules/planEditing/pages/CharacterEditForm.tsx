@@ -208,9 +208,11 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				}
 				noValidate={target$.isInAdvancedEditMode.get()}
 				onSubmit={(e) => {
-					console.log(
-						`defaultTarget spped: ${target$.uneditedTarget.Speed.peek()}   isEdited: ${target$.isTargetChanged.peek()}`,
-					);
+					console.log(`
+unedited speed: ${target$.uneditedTarget.Speed.peek()}
+edited speed: ${target$.target.Speed.peek()}
+isEdited: ${target$.isTargetChanged.peek()}
+					`);
 					e.preventDefault();
 					saveTarget();
 					incrementalOptimization$.indicesByProfile[allycode].set(null);

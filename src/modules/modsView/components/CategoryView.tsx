@@ -21,30 +21,27 @@ import { useRef } from "react";
 
 const CategoryView: React.FC = observer(() => {
   const counter = useRef(0);
-  console.log(`CategoryView render: (${modsView$.activeCategory.get()})`, counter.current++);
+  console.log(`CategoryView render: (${modsView$.activeCategory.peek()})`, ++counter.current);
 
   const [t] = useTranslation("global-ui");
   const profile = useSelector(Storage.selectors.selectActiveProfile);
   const activeViewSetupInActiveCategory = structuredClone(modsView$.activeViewSetupInActiveCategory.get());
   activeViewSetupInActiveCategory.filterById["*QuickFilter*"] = modsView$.quickFilter.get();
   const modsFilter = new ModsFilter(activeViewSetupInActiveCategory);
-  console.log("modsFilter: ");
-  console.dir(modsFilter);
-  const filterResult = modsFilter.applyModsViewOptions(profile.mods);
-  const filteredMods = filterResult[0];
+  const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(profile.mods);
+
   const mods = [];
   for (const modsInGroup of Object.values(filteredMods)) {
     if (modsInGroup.length > 0) mods.push(modsInGroup);
   }
   const groupedMods = mods.sort((mods1, mods2) => mods1.length - mods2.length);
-  console.log("groupedMods: ", groupedMods);
 
   return (
     <GroupedMods
       groupedMods={groupedMods}
       assignedMods={{} as Record<string, CharacterNames>}
       allModsCount={profile.mods.length}
-      displayedModsCount={filterResult[1]}
+      displayedModsCount={modsCount}
     />
   );
 });

@@ -97,13 +97,13 @@ target$.onChange(
 	({ value, getPrevious, changes }) => {
 		const prev = getPrevious();
 		for (const { path, valueAtPath, prevAtPath } of changes) {
-			console.log(`${path} changed from ${prevAtPath} to ${valueAtPath}`);
+			console.log(`${path} changed from`);
+			console.log(prevAtPath);
+			console.log("to");
+			console.log(valueAtPath);
 		}
 		console.log(`target$ changed
 			`);
-	},
-	{
-		initial: true,
 	},
 );
 

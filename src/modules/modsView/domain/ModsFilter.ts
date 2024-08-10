@@ -51,7 +51,6 @@ class ModsFilter {
 	isGroupingEnabled: boolean;
 
 	constructor(modsViewOptions: ViewSetup) {
-		console.log("inside ModsFilter constructor");
 		Mod.setupAccessors();
 		for (const filter of Object.values(modsViewOptions.filterById)) {
 			[this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(filter);
