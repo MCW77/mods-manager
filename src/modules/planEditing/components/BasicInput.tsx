@@ -19,7 +19,7 @@ const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }:
 			<SingleValueSlider
 				max={100}
 				min={-100}
-				step={1}
+				step={0.5}
 				singleValue={target$.target[stat].get()}
 				onSingleChange={(weight: number) => {
 					target$.target[stat].set(weight);
@@ -29,7 +29,7 @@ const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }:
 				id={`${stat}-stat-basic`}
 				max={100}
 				min={-100}
-				step={1}
+				step={0.5}
 				type={"number"}
 				$value={target$.target[stat]}
 				onChange={(e) => {
