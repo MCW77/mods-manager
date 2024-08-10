@@ -36,15 +36,15 @@ const modsOptimizer: RootReducer = (
 
 	switch (action.type) {
 		case App.actionNames.RESET_STATE: {
-			const result = AppState.save(App.reducers.resetState());
+			const result = App.reducers.resetState();
 			window.location.reload();
 			return result;
 		}
 		case App.actionNames.SET_STATE:
-			return AppState.save(App.reducers.setState(action));
+			return App.reducers.setState(action);
 
 		case Storage.actionNames.SET_PROFILE:
-			return AppState.save(Storage.reducers.setProfile(state, action));
+			return Storage.reducers.setProfile(state, action);
 
 		default:
 			return state;
