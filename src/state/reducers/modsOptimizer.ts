@@ -3,7 +3,7 @@ import type * as Redux from "redux";
 import type { ThunkAction, ThunkDispatch as TD } from "redux-thunk";
 
 // state
-import { type IAppState, AppState } from "../storage";
+import { type IAppState, defaultAppState } from "../storage";
 
 // #region modules
 import { App } from "../modules/app";
@@ -31,7 +31,7 @@ const modsOptimizer: RootReducer = (
 	action: AppActions,
 ): IAppState => {
 	if (!state) {
-		return structuredClone(AppState.Default);
+		return structuredClone(defaultAppState);
 	}
 
 	switch (action.type) {
