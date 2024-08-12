@@ -70,7 +70,7 @@
     "@unocss/preset-typography": "^0.62.1",
     "autoprefixer": "^10.4.19",
     "cz-conventional-changelog": "^3.0.1",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.41",
     "tailwindcss": "^3.4.7",
     "typescript": "5.5.4",
     "unocss": "^0.62.1",
