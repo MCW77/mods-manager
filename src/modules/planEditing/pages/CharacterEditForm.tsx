@@ -3,6 +3,7 @@ import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import {
+	Memo,
 	observer,
 	reactive,
 	Reactive,
@@ -236,14 +237,16 @@ isEdited: ${target$.isTargetChanged.peek()}
 									target$.isTargetChanged.get()
 								}
 							>
-								<Button
-									type={"button"}
-									onClick={() => {
-										target$.target.set({ ...target$.uneditedTarget.peek() });
-									}}
-								>
-									Reset target
-								</Button>
+								{() => (
+									<Button
+										type={"button"}
+										onClick={() => {
+											target$.target.set({ ...target$.uneditedTarget.peek() });
+										}}
+									>
+										Reset target
+									</Button>
+								)}
 							</Show>
 							<Show
 								if={() =>
@@ -251,20 +254,22 @@ isEdited: ${target$.isTargetChanged.peek()}
 									target$.isDefaultTarget.get()
 								}
 							>
-								<Button
-									type={"button"}
-									onClick={() => {
-										dispatch(
-											CharacterEdit.thunks.resetCharacterTargetToDefault(
-												character.baseID,
-												target$.target.name.get(),
-											),
-										);
-										//                  target$.target.set({...target$.uneditedTarget.peek()});
-									}}
-								>
-									Reset to default
-								</Button>
+								{() => (
+									<Button
+										type={"button"}
+										onClick={() => {
+											dispatch(
+												CharacterEdit.thunks.resetCharacterTargetToDefault(
+													character.baseID,
+													target$.target.name.get(),
+												),
+											);
+											//                  target$.target.set({...target$.uneditedTarget.peek()});
+										}}
+									>
+										Reset to default
+									</Button>
+								)}
 							</Show>
 							<Show
 								if={() =>
@@ -273,21 +278,23 @@ isEdited: ${target$.isTargetChanged.peek()}
 									targetsNames.includes(target$.target.name.get())
 								}
 							>
-								<Button
-									type={"button"}
-									id={"delete-button"}
-									variant={"destructive"}
-									onClick={() =>
-										dispatch(
-											CharacterEdit.thunks.deleteTarget(
-												character.baseID,
-												target.name,
-											),
-										)
-									}
-								>
-									Delete target
-								</Button>
+								{() => (
+									<Button
+										type={"button"}
+										id={"delete-button"}
+										variant={"destructive"}
+										onClick={() =>
+											dispatch(
+												CharacterEdit.thunks.deleteTarget(
+													character.baseID,
+													target.name,
+												),
+											)
+										}
+									>
+										Delete target
+									</Button>
+								)}
 							</Show>
 							<Button
 								type={"button"}
@@ -297,12 +304,16 @@ isEdited: ${target$.isTargetChanged.peek()}
 							>
 								Cancel
 							</Button>
-							<ReactiveButton
-								$disabled={() => !target$.isTargetChanged.get()}
-								type={"submit"}
-							>
-								Save
-							</ReactiveButton>
+							<Memo>
+								{() => (
+									<ReactiveButton
+										$disabled={() => !target$.isTargetChanged.get()}
+										type={"submit"}
+									>
+										Save
+									</ReactiveButton>
+								)}
+							</Memo>
 						</div>
 						<Label htmlFor={"plan-name"}>Target Name: </Label>
 						<ReactiveInput
