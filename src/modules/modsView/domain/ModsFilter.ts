@@ -18,9 +18,9 @@ import type {
 	SetSettings,
 	SlotSettings,
 	TierSettings,
+	AssignedSettings,
 } from "../../modsView/domain/ModsViewOptions";
 import { Mod } from "../../../domain/Mod";
-import type { OptimizerSettings } from "../../../domain/OptimizerSettings";
 
 type ModFilterPredicate = (mod: Mod) => boolean;
 
@@ -105,7 +105,7 @@ class ModsFilter {
 			| PrimarySettings
 			| SecondarySettings
 			| EquippedSettings
-			| OptimizerSettings
+			| AssignedSettings
 			| SecondariesScoreTierSettings;
 		// #endregion
 
