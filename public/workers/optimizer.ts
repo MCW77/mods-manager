@@ -759,7 +759,7 @@ function modSetSatisfiesCharacterRestrictions(
   character: Character.Character,
   target: OptimizationPlan,
 ) {
-  const minimumDots = character.optimizerSettings.minimumModDots;
+  const minimumDots = target.minimumModDots;
   const modSetSlots: Partial<Record<ModTypes.GIMOSlots, Mod>> = {};
   for (const mod of modSet) {
     modSetSlots[mod.slot] = mod;
@@ -1332,7 +1332,6 @@ function optimizeMods(
         previousRun.selectedCharacters[index].target
       ) &&
       previousCharacter.optimizerSettings &&
-      character.optimizerSettings.minimumModDots === previousCharacter.optimizerSettings.minimumModDots &&
       character.optimizerSettings.isLocked === previousCharacter.optimizerSettings.isLocked &&
       previousModAssignments[index]
     ) {
@@ -1733,7 +1732,7 @@ function* getPotentialModsToSatisfyTargetStats(
 
   // Filter out any mods that don't meet primary or set restrictions. This can vastly speed up this process
   const usableMods =
-    filterOutUnusableMods(allMods, target, totalModSlotsOpen, character.optimizerSettings.minimumModDots)
+    filterOutUnusableMods(allMods, target, totalModSlotsOpen)
 
   const [modValues, valuesBySlot] = collectModValuesBySlot(usableMods, statNames);
 
@@ -1793,7 +1792,6 @@ function* getPotentialModsToSatisfyTargetStats(
     mods: Mod[],
     target: OptimizationPlan,
     modSlotsOpen: number,
-    minimumDots: number,
   ) {
     const modsInSets = modSlotsOpen > 0 ?
       mods :
@@ -1806,7 +1804,7 @@ function* getPotentialModsToSatisfyTargetStats(
       return mod.primaryStat.type === target.primaryStatRestrictions[mod.slot as ModTypes.VariablePrimarySlots]
     })
 
-    return modsWithPrimaries.filter(mod => mod.pips >= minimumDots)
+    return modsWithPrimaries.filter(mod => mod.pips >= target.minimumModDots)
   }
 
   /**
@@ -2293,42 +2291,42 @@ function findBestModSetWithoutChangingRestrictions(
   ({ mods: squares, messages: subMessages } = filterMods(
     usableMods,
     "square",
-    character.optimizerSettings.minimumModDots,
+    target.minimumModDots,
     "Offense %"
   ));
   messages.push(...subMessages);
   ({ mods: arrows, messages: subMessages } = filterMods(
     usableMods,
     "arrow",
-    character.optimizerSettings.minimumModDots,
+    target.minimumModDots,
     target.primaryStatRestrictions.arrow
   ));
   messages.push(...subMessages);
   ({ mods: diamonds, messages: subMessages } = filterMods(
     usableMods,
     "diamond",
-    character.optimizerSettings.minimumModDots,
+    target.minimumModDots,
     "Defense %"
   ));
   messages.push(...subMessages);
   ({ mods: triangles, messages: subMessages } = filterMods(
     usableMods,
     "triangle",
-    character.optimizerSettings.minimumModDots,
+    target.minimumModDots,
     target.primaryStatRestrictions.triangle
   ));
   messages.push(...subMessages);
   ({ mods: circles, messages: subMessages } = filterMods(
     usableMods,
     "circle",
-    character.optimizerSettings.minimumModDots,
+    target.minimumModDots,
     target.primaryStatRestrictions.circle
   ));
   messages.push(...subMessages);
   ({ mods: crosses, messages: subMessages } = filterMods(
     usableMods,
     "cross",
-    character.optimizerSettings.minimumModDots,
+    target.minimumModDots,
     target.primaryStatRestrictions.cross
   ));
   messages.push(...subMessages);

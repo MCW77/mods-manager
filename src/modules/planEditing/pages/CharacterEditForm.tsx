@@ -184,15 +184,8 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			let newTarget = structuredClone(target$.target.peek());
 			if (target$.isInAdvancedEditMode.peek())
 				newTarget = OptimizationPlan.denormalize(newTarget);
-			const char = target$.character.peek();
 			const charId = target$.characterId.peek();
 
-			dispatch(
-				CharacterEdit.thunks.changeMinimumModDots(
-					charId,
-					char.optimizerSettings.minimumModDots,
-				),
-			);
 			dispatch(CharacterEdit.thunks.unlockCharacter(charId));
 			dispatch(
 				CharacterEdit.thunks.finishEditCharacterTarget(charId, newTarget),
@@ -341,7 +334,6 @@ isEdited: ${target$.isTargetChanged.peek()}
 					</TabsList>
 					<TabsContent value="Mods">
 						<div className={"flex flex-col flex-gap-4"}>
-							<h3>Character-level options</h3>
 							<div>
 								<Label htmlFor="mod-dots" id={"mod-dots-label"}>
 									Use only mods with at least&nbsp;
@@ -349,15 +341,12 @@ isEdited: ${target$.isTargetChanged.peek()}
 										<ReactiveSelect
 											name={"mod-dots"}
 											$value={() =>
-												target$.character.optimizerSettings.minimumModDots
-													.get()
-													?.toString() ?? "5"
+												target$.target.minimumModDots.get()?.toString() ?? "5"
 											}
 											onValueChange={(value) => {
-												const numberValue =
-													value === "" ? 5 : Number.parseInt(value);
-												target$.character.optimizerSettings.minimumModDots.set(
-													numberValue,
+												if (value === "") return;
+												target$.target.minimumModDots.set(
+													Number.parseInt(value),
 												);
 											}}
 										>

@@ -308,9 +308,6 @@ export namespace thunks {
 							playerValues,
 							createOptimizerSettings(
 								[],
-								characters$.baseCharactersById.peek()[Id]?.categories.includes("Crew Member")
-									? 5
-									: 1,
 								false,
 							),
 						);

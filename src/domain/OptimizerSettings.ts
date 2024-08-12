@@ -6,24 +6,20 @@ import type { OptimizationPlan } from "./OptimizationPlan";
 
 export interface OptimizerSettings {
   isLocked: boolean,
-  minimumModDots: number,
   targets: OptimizationPlan[],
 }
 
 export const defaultSettings = {
   targets: [],
-  minimumModDots: 1,
   isLocked: false,
 };
 
 export const createOptimizerSettings = (
   targets: OptimizationPlan[],
-  minimumModDots: number,
   isLocked: boolean,
 ) => {
   return {
     targets,
-    minimumModDots,
     isLocked,
   };
 }
@@ -36,7 +32,6 @@ export const withTarget = (settings: OptimizerSettings, target: OptimizationPlan
 
   return createOptimizerSettings(
     Object.values(newTargetsObject),
-    settings.minimumModDots,
     settings.isLocked,
   );
 }
@@ -47,7 +42,6 @@ export const  withTargetOverrides = (settings: OptimizerSettings, targets: Optim
 
   return createOptimizerSettings(
     Object.values(Object.assign({}, oldTargetsObject, newTargetsObject)),
-    settings.minimumModDots,
     settings.isLocked,
   );
 }
@@ -61,7 +55,6 @@ export const withDeletedTarget = (settings: OptimizerSettings, targetName: strin
 
   return createOptimizerSettings(
     newTargets,
-    settings.minimumModDots,
     settings.isLocked,
   );
 }
@@ -69,7 +62,6 @@ export const withDeletedTarget = (settings: OptimizerSettings, targetName: strin
 export const lock = (settings: OptimizerSettings) => {
   return createOptimizerSettings(
     settings.targets,
-    settings.minimumModDots,
     true,
   );
 }
@@ -77,15 +69,6 @@ export const lock = (settings: OptimizerSettings) => {
 export const unlock = (settings: OptimizerSettings) => {
   return createOptimizerSettings(
     settings.targets,
-    settings.minimumModDots,
     false,
-  );
-}
-
-export const withMinimumModDots = (settings: OptimizerSettings, minimumModDots: number) => {
-  return createOptimizerSettings(
-    settings.targets,
-    minimumModDots,
-    settings.isLocked,
   );
 }

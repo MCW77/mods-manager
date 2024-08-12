@@ -46,6 +46,50 @@ export const statWeights = {
 	"Critical Avoidance %": 10,
 };
 
+interface OptimizationPlanParam {
+	name: string;
+	health?: number;
+	protection?: number;
+	speed?: number;
+	critDmg?: number;
+	potency?: number;
+	tenacity?: number;
+	physDmg?: number;
+	specDmg?: number;
+	critChance?: number;
+	armor?: number;
+	resistance?: number;
+	accuracy?: number;
+	critAvoid?: number;
+	minimumModDots?: number;
+	primaryStatRestrictions?: PrimaryStatRestrictions;
+	setRestrictions?: SetRestrictions;
+	targetStats?: TargetStats;
+	useOnlyFullSets?: boolean;
+}
+
+interface ShortOptimizationPlanParam {
+	name?: string;
+	health?: number;
+	prot?: number;
+	spd?: number;
+	cc?: number;
+	cd?: number;
+	ca?: number;
+	pot?: number;
+	ten?: number;
+	phys?: number;
+	spec?: number;
+	arm?: number;
+	res?: number;
+	acc?: number;
+	minDots?: number;
+	primaryRes?: Partial<PrimaryStatRestrictions>;
+	setRes?: SetRestrictions;
+	targetStats?: TargetStats;
+	fullSets?: boolean;
+}
+
 export const createOptimizationPlan = (
 	name: string,
 	health = 0,
@@ -61,6 +105,7 @@ export const createOptimizationPlan = (
 	resistance = 0,
 	accuracy = 0,
 	critAvoid = 0,
+	minimumModDots = 5,
 	primaryStatRestrictions = {},
 	setRestrictions: SetRestrictions = {},
 	targetStats: TargetStats = [],
@@ -68,6 +113,7 @@ export const createOptimizationPlan = (
 ) => {
 	return {
 		name: name,
+		minimumModDots: minimumModDots,
 		primaryStatRestrictions: primaryStatRestrictions as PrimaryStatRestrictions,
 		setRestrictions: setRestrictions,
 		targetStats: targetStats,
@@ -86,6 +132,52 @@ export const createOptimizationPlan = (
 		Resistance: resistance || 0,
 		"Accuracy %": accuracy || 0,
 		"Critical Avoidance %": critAvoid || 0,
+	};
+};
+
+export const fromShortOptimizationPlan = ({
+	name= "",
+	health = 0,
+	prot = 0,
+	spd = 0,
+	cc = 0,
+	cd = 0,
+	ca = 0,
+	pot = 0,
+	ten = 0,
+	phys = 0,
+	spec = 0,
+	arm = 0,
+	res = 0,
+	acc = 0,
+	minDots = 5,
+	primaryRes = {},
+	setRes = {},
+	targetStats = [],
+	fullSets = false,
+}: ShortOptimizationPlanParam
+) => {
+	return {
+		name: name,
+		minimumModDots: minDots,
+		primaryStatRestrictions: primaryRes as PrimaryStatRestrictions,
+		setRestrictions: setRes,
+		targetStats: targetStats,
+		useOnlyFullSets: fullSets,
+
+		Health: health,
+		Protection: prot,
+		Speed: spd,
+		"Critical Damage %": cd,
+		"Potency %": pot,
+		"Tenacity %": ten,
+		"Physical Damage": phys,
+		"Special Damage": spec,
+		"Critical Chance": cc,
+		Armor: arm,
+		Resistance: res,
+		"Accuracy %": acc,
+		"Critical Avoidance %": ca,
 	};
 };
 
@@ -216,7 +308,8 @@ export const equals = (first: OptimizationPlan, second: OptimizationPlan) => {
 		) &&
 		areObjectsEquivalent(first.setRestrictions, second.setRestrictions) &&
 		areObjectsEquivalent(first.targetStats, second.targetStats) &&
-		first.useOnlyFullSets === second.useOnlyFullSets
+		first.useOnlyFullSets === second.useOnlyFullSets &&
+		first.minimumModDots === second.minimumModDots
 	);
 };
 
@@ -241,7 +334,7 @@ export interface OptimizationPlan extends Record<OptimizableStats, number> {
 	Resistance: number;
 	"Accuracy %": number;
 	"Critical Avoidance %": number;
-
+	minimumModDots: number;
 	primaryStatRestrictions: PrimaryStatRestrictions;
 	setRestrictions: SetRestrictions;
 	targetStats: TargetStats;

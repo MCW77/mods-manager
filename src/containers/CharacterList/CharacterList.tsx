@@ -260,17 +260,19 @@ const CharacterList = observer(
 			const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target)
 				? "active"
 				: "";
-			const minimumDots = character.optimizerSettings.minimumModDots;
+			const minimumDots = target.minimumModDots;
 			const blankTargetActive = OptimizationPlan.isBlank(target)
 				? "active"
 				: "";
 			const lockedActive = character.optimizerSettings.isLocked ? "active" : "";
 
 			let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+				const newTarget = structuredClone(target);
+				newTarget.minimumModDots = Number(event.target.value);
 				dispatch(
-					CharacterEdit.thunks.changeMinimumModDots(
+					CharacterEdit.thunks.finishEditCharacterTarget(
 						character.baseID,
-						Number(event.target.value),
+						newTarget,
 					),
 				);
 				(document?.activeElement as HTMLSelectElement)?.blur();

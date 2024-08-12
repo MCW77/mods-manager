@@ -15,7 +15,6 @@ import { templates$ } from "#/modules/templates/state/templates";
 
 // modules
 import { App } from "../../state/modules/app";
-import { Data } from "../../state/modules/data";
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
@@ -203,33 +202,6 @@ export namespace thunks {
 			newSelectedCharacters.splice(characterIndex, 0, newValue);
 
 			return profile.withSelectedCharacters(newSelectedCharacters);
-		});
-	}
-
-	/**
-	 * Change the minimum dots that a mod needs to be used for a character
-	 * @param characterID string The character ID of the character being updated
-	 * @param minimumModDots Integer
-	 * @returns {Function}
-	 */
-	export function changeMinimumModDots(
-		characterID: CharacterNames,
-		minimumModDots: number,
-	) {
-		return App.thunks.updateProfile((profile: PlayerProfile) => {
-			const oldCharacter = profile.characters[characterID];
-
-			return profile.withCharacters(
-				Object.assign({}, profile.characters, {
-					[characterID]: Character.withOptimizerSettings(
-						oldCharacter,
-						OptimizerSettings.withMinimumModDots(
-							oldCharacter.optimizerSettings,
-							minimumModDots,
-						),
-					),
-				}),
-			);
 		});
 	}
 
