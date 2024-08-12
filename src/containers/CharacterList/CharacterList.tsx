@@ -2,13 +2,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-import { observer } from "@legendapp/state/react";
+import { observer, reactive } from "@legendapp/state/react";
 
 // styles
 import "./CharacterList.css";
-
-// utils
-import groupByKey from "#/utils/groupByKey";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
@@ -21,18 +18,23 @@ import { CharacterEdit } from "#/state/modules/characterEdit";
 import { Storage } from "#/state/modules/storage";
 
 // domain
-import {
-	characterSettings,
-	type CharacterNames,
-} from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { Dropdown } from "#/components/Dropdown/Dropdown";
 import { Button } from "#ui/button";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#ui/select";
+
+const ReactiveSelect = reactive(Select);
 
 const CharacterList = observer(
 	React.memo(() => {
@@ -131,63 +133,17 @@ const CharacterList = observer(
 			index: number,
 		) => {
 			const character = characters[characterId];
-			const defaultTargets = characterSettings[character.baseID]
-				? groupByKey(
-						characterSettings[character.baseID].targets,
-						(target) => target.name,
-					)
-				: {};
-
 			const selectedPlan = target.name;
+
 			const options = Character.targets(character)
 				.map((characterTarget) => characterTarget.name)
-				.filter((targetName) => "custom" !== targetName)
 				.map((targetName) => {
-					const changeIndicator =
-						Object.keys(defaultTargets).includes(targetName) &&
-						character.optimizerSettings.targets
-							.map((target) => target.name)
-							.includes(targetName) &&
-						!OptimizationPlan.equals(
-							defaultTargets[targetName],
-							character.optimizerSettings.targets.find(
-								(target) => target.name === targetName,
-							) ?? ({} as OptimizationPlan.OptimizationPlan),
-						)
-							? "*"
-							: "";
-
 					return (
-						<option value={targetName} key={targetName}>
-							{changeIndicator}
+						<SelectItem className={"w-32"} value={targetName} key={targetName}>
 							{targetName}
-						</option>
+						</SelectItem>
 					);
 				});
-
-			const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-				const optimizationTarget = e.target.value;
-
-				// Don't change the select value unless we explicitly do so through a state change
-				e.target.value = target.name;
-
-				if ("custom" === optimizationTarget) {
-					showEditCharacterModal(
-						character,
-						index,
-						OptimizationPlan.toRenamed(target, "custom"),
-					);
-				} else if ("lock" === optimizationTarget) {
-					dispatch(CharacterEdit.thunks.lockCharacter(character.baseID));
-				} else {
-					const target = Character.targets(character).find(
-						(target) => target.name === optimizationTarget,
-					);
-					if (target !== undefined) {
-						dispatch(CharacterEdit.thunks.changeCharacterTarget(index, target));
-					}
-				}
-			};
 
 			const baseClass = `character-block cursor-grab ${character.baseID}`;
 
@@ -219,13 +175,35 @@ const CharacterList = observer(
 								? baseCharactersById[character.baseID].name
 								: character.baseID}
 						</div>
-						<div className={"target"}>
-							<label>Target:</label>
-							<Dropdown value={selectedPlan} onChange={onSelect.bind(this)}>
-								{options}
-								<option value={"custom"}>Custom</option>
-							</Dropdown>
+						<div className={"target p-y-1 flex items-center flex-wrap gap-2"}>
+							<ReactiveSelect
+								$value={() => selectedPlan}
+								onValueChange={(value) => {
+									const target = Character.targets(character).find(
+										(target) => target.name === value,
+									);
+									if (target !== undefined) {
+										dispatch(
+											CharacterEdit.thunks.changeCharacterTarget(index, target),
+										);
+									}
+								}}
+							>
+								<SelectTrigger
+									className={"min-w-24 w-fit h-6 px-2 inline-flex"}
+								>
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent
+									className={"w-32 min-w-12"}
+									position={"popper"}
+									sideOffset={5}
+								>
+									{options}
+								</SelectContent>
+							</ReactiveSelect>
 							<Button
+								size={"xs"}
 								type={"button"}
 								onClick={() => showEditCharacterModal(character, index, target)}
 							>
@@ -246,13 +224,6 @@ const CharacterList = observer(
 			character: Character.Character,
 			target: OptimizationPlan.OptimizationPlan,
 		) => {
-			const defaultTargets = characterSettings[character.baseID]
-				? groupByKey(
-						characterSettings[character.baseID].targets,
-						(target) => target.name,
-					)
-				: {};
-
 			const restrictionsActive = OptimizationPlan.hasRestrictions(target)
 				? "active"
 				: "";

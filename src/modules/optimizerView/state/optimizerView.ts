@@ -26,17 +26,3 @@ export const optimizerView$ = observable<OptimizerView>({
 		target: OptimizationPlan.createOptimizationPlan("Speed"),
 	},
 });
-
-optimizerView$.onChange(
-	({ value, getPrevious, changes }) => {
-		const prev = getPrevious();
-		for (const { path, valueAtPath, prevAtPath } of changes) {
-			console.log(`${path} changed from`);
-			console.log(prevAtPath);
-			console.log("to");
-			console.log(valueAtPath);
-		}
-		console.log(`optimizerView$ changed
-			`);
-	},
-);

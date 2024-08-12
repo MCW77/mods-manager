@@ -26,9 +26,7 @@ export const createOptimizerSettings = (
 
 export const withTarget = (settings: OptimizerSettings, target: OptimizationPlan) => {
   const targetsObject = groupByKey(settings.targets, target => target.name);
-  const newTargetsObject = ["lock", "custom"].includes(target.name) ?
-    settings.targets :
-    Object.assign({}, targetsObject, { [target.name]: target });
+  const newTargetsObject = Object.assign({}, targetsObject, { [target.name]: target });
 
   return createOptimizerSettings(
     Object.values(newTargetsObject),

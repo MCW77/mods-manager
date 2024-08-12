@@ -16,17 +16,60 @@ const target = OptimizationPlan.createOptimizationPlan("");
 const target$: PlanEditing = observable({
 	characterId: "PAO",
 	target: target,
-	isDefaultTarget: () =>
+	namesOfUserTargets: [] as string[],
+	namesOfBuiltinTargets: () => {
+		const character = characterSettings[
+			target$.characterId.get()
+		] as CharacterSettings;
+		return character.targets.map((target) => target.name);
+	},
+	namesOfAllTargets: () => {
+		return [
+			...target$.namesOfBuiltinTargets.get(),
+			...target$.namesOfUserTargets.get(),
+		];
+	},
+	canDeleteTarget: () => {
+		return (
+			!target$.isBuiltinTarget.get() &&
+			target$.isUsedTargetName.get() &&
+			target$.target.name.get() === target$.uneditedTarget.name.get()
+		);
+	},
+	hasAChangedName: () => {
+		return target$.target.name.get() !== target$.uneditedTarget.name.get();
+	},
+	isUnsaveable: () => {
+		return (
+			(target$.isBuiltinTarget.get() && !target$.hasAChangedName.get()) ||
+			!target$.isTargetChanged.get() ||
+			(target$.isUsedTargetName.get() && target$.hasAChangedName.get())
+		);
+	},
+	isUsedTargetName: () =>
+		target$.namesOfAllTargets.get().includes(target$.target.name.get()),
+	isBuiltinTarget: () =>
 		(
 			characterSettings[target$.characterId.peek()] as CharacterSettings
-		)?.targets.find((target) => target.name === target$.target.get().name) !==
-		undefined,
+		)?.targets.some(
+			(target) => target.name === target$.uneditedTarget.get().name,
+		),
 	isInAdvancedEditMode: false,
-	isTargetChanged: () =>
-		!OptimizationPlan.equals(
+	isTargetChanged: () => {
+		const targetChanged = !OptimizationPlan.equals(
 			target$.uneditedTarget.get() ?? target$.target.get(),
 			target$.target.get(),
-		),
+			true,
+		);
+		if (
+			targetChanged &&
+			target$.isBuiltinTarget.peek() &&
+			target$.isUsedTargetName.peek()
+		) {
+			target$.target.name.set(`${target$.target.name.peek()}*`);
+		}
+		return targetChanged;
+	},
 	uneditedTarget: { ...target },
 	addSetBonus: (setName: SetStats.GIMOStatNames) => {
 		const restrictions = target$.target.setRestrictions.peek();
@@ -92,19 +135,5 @@ const target$: PlanEditing = observable({
 		endBatch();
 	},
 });
-
-target$.onChange(
-	({ value, getPrevious, changes }) => {
-		const prev = getPrevious();
-		for (const { path, valueAtPath, prevAtPath } of changes) {
-			console.log(`${path} changed from`);
-			console.log(prevAtPath);
-			console.log("to");
-			console.log(valueAtPath);
-		}
-		console.log(`target$ changed
-			`);
-	},
-);
 
 export { target$ };

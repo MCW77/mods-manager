@@ -79,7 +79,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			(target) => target.name,
 		);
 
-		const cloneCharacter = () => structuredClone(character);
 		const cloneOptimizationPlan = () => structuredClone(target);
 
 		useMount(() => {
@@ -91,6 +90,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					: cloneOptimizationPlan(),
 			);
 			target$.uneditedTarget.assign(cloneOptimizationPlan());
+			target$.namesOfUserTargets.set(targetsNames);
 			endBatch();
 			const defaultTarget = characterSettings[character.baseID]
 				? (
@@ -186,34 +186,25 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				newTarget = OptimizationPlan.denormalize(newTarget);
 			const charId = target$.characterId.peek();
 
-			dispatch(CharacterEdit.thunks.unlockCharacter(charId));
 			dispatch(
 				CharacterEdit.thunks.finishEditCharacterTarget(charId, newTarget),
 			);
 		};
 
 		return (
-			// Determine whether the current optimization plan is a default (same name exists), user-defined (same name doesn't
-			// exist), or custom (name is 'custom') This determines whether to display a "Reset target to default" button, a
-			// "Delete target" button, or nothing.
 			<Reactive.form
 				className={
 					"character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8"
 				}
 				noValidate={target$.isInAdvancedEditMode.get()}
 				onSubmit={(e) => {
-					console.log(`
-unedited speed: ${target$.uneditedTarget.Speed.peek()}
-edited speed: ${target$.target.Speed.peek()}
-isEdited: ${target$.isTargetChanged.peek()}
-					`);
 					e.preventDefault();
 					saveTarget();
 					incrementalOptimization$.indicesByProfile[allycode].set(null);
 					optimizerView$.view.set("basic");
 				}}
 			>
-				<div className={"flex flex-gap-4 justify-around"}>
+				<div className={"flex flex-gap-4 justify-between"}>
 					<div className={"flex flex-gap-2 items-center"}>
 						<CharacterAvatar character={character} />
 						<Label>
@@ -225,10 +216,7 @@ isEdited: ${target$.isTargetChanged.peek()}
 					<div className={"flex gap-2 justify-center items-center"}>
 						<div className={"actions p-2 flex gap-2 justify-center"}>
 							<Show
-								if={() =>
-									target$.target.name.get() !== "custom" &&
-									target$.isTargetChanged.get()
-								}
+								if={target$.isTargetChanged.get()}
 							>
 								{() => (
 									<Button
@@ -242,48 +230,22 @@ isEdited: ${target$.isTargetChanged.peek()}
 								)}
 							</Show>
 							<Show
-								if={() =>
-									target$.target.name.get() !== "custom" &&
-									target$.isDefaultTarget.get()
-								}
-							>
-								{() => (
-									<Button
-										type={"button"}
-										onClick={() => {
-											dispatch(
-												CharacterEdit.thunks.resetCharacterTargetToDefault(
-													character.baseID,
-													target$.target.name.get(),
-												),
-											);
-											//                  target$.target.set({...target$.uneditedTarget.peek()});
-										}}
-									>
-										Reset to default
-									</Button>
-								)}
-							</Show>
-							<Show
-								if={() =>
-									target$.target.name.get() !== "custom" &&
-									!target$.isDefaultTarget.get() &&
-									targetsNames.includes(target$.target.name.get())
-								}
+								if={target$.canDeleteTarget.get()}
 							>
 								{() => (
 									<Button
 										type={"button"}
 										id={"delete-button"}
 										variant={"destructive"}
-										onClick={() =>
+										onClick={() => {
 											dispatch(
 												CharacterEdit.thunks.deleteTarget(
 													character.baseID,
 													target.name,
 												),
-											)
-										}
+											);
+											optimizerView$.view.set("basic");
+										}}
 									>
 										Delete target
 									</Button>
@@ -300,7 +262,7 @@ isEdited: ${target$.isTargetChanged.peek()}
 							<Memo>
 								{() => (
 									<ReactiveButton
-										$disabled={() => !target$.isTargetChanged.get()}
+										$disabled={target$.isUnsaveable.get()}
 										type={"submit"}
 									>
 										Save

@@ -301,29 +301,6 @@ export namespace thunks {
 	}
 
 	/**
-	 * Lock a character so that their mods won't be assigned to other characters
-	 * @param characterID string the Character ID of the character being locked
-	 * @returns {Function}
-	 */
-	export function lockCharacter(characterID: CharacterNames) {
-		return App.thunks.updateProfile((profile: PlayerProfile) => {
-			const oldCharacter = profile.characters[characterID];
-			const newCharacters: Character.Characters = Object.assign(
-				{},
-				profile.characters,
-				{
-					[characterID]: Character.withOptimizerSettings(
-						oldCharacter,
-						OptimizerSettings.lock(oldCharacter.optimizerSettings),
-					),
-				},
-			);
-
-			return profile.withCharacters(newCharacters);
-		});
-	}
-
-	/**
 	 * Action to lock all characters from the "selected characters" pool
 	 * @returns {Function}
 	 */
@@ -475,48 +452,6 @@ export namespace thunks {
 		);
 	}
 
-	/**
-	 * Reset a given target for a character to its default values
-	 * @param characterID {String} The character ID of the character being reset
-	 * @param targetName {String} The name of the target to reset
-	 * @returns {Function}
-	 */
-	export function resetCharacterTargetToDefault(
-		characterID: CharacterNames,
-		targetName: string,
-	) {
-		return App.thunks.updateProfile(
-			(profile: PlayerProfile) => {
-				const newCharacter = Character.withResetTarget(
-					profile.characters[characterID],
-					targetName,
-				);
-				const resetTarget =
-					newCharacter.optimizerSettings.targets.find(
-						(target) => target.name === targetName,
-					) || createOptimizationPlan("unnamed");
-
-				const newSelectedCharacters = profile.selectedCharacters.map(
-					({ id, target }) =>
-						id === characterID && target.name === targetName
-							? { id: id, target: resetTarget }
-							: { id: id, target: target },
-				);
-
-				return profile
-					.withCharacters(
-						Object.assign({}, profile.characters, {
-							[characterID]: newCharacter,
-						}),
-					)
-					.withSelectedCharacters(newSelectedCharacters);
-			},
-			(dispatch) => {
-				dialog$.hide();
-			},
-		);
-	}
-
 	export function saveTemplate(
 		templateName: string,
 		category: string,
@@ -597,29 +532,6 @@ export namespace thunks {
 				) as Character.Characters,
 			),
 		);
-	}
-
-	/**
-	 * Unlock a character so that their mods can be assigned to other characters
-	 * @param characterID string the Character ID of the character being unlocked
-	 * @returns {Function}
-	 */
-	export function unlockCharacter(characterID: CharacterNames) {
-		return App.thunks.updateProfile((profile: PlayerProfile) => {
-			const oldCharacter = profile.characters[characterID];
-			const newCharacters: Character.Characters = Object.assign(
-				{},
-				profile.characters,
-				{
-					[characterID]: Character.withOptimizerSettings(
-						oldCharacter,
-						OptimizerSettings.unlock(oldCharacter.optimizerSettings),
-					),
-				},
-			);
-
-			return profile.withCharacters(newCharacters);
-		});
 	}
 
 	/**

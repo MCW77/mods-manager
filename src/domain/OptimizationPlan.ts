@@ -286,9 +286,9 @@ export const hasNegativeWeights = (target: OptimizationPlan) => {
 	);
 };
 
-export const equals = (first: OptimizationPlan, second: OptimizationPlan) => {
+export const equals = (first: OptimizationPlan, second: OptimizationPlan, ignoreName = false) => {
 	return (
-		first.name === second.name &&
+		(ignoreName || (first.name === second.name)) &&
 		first.Health === second.Health &&
 		first.Protection === second.Protection &&
 		first.Speed === second.Speed &&
