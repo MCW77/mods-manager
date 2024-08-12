@@ -97,6 +97,17 @@ export const hotutils$ = observable({
 		message: "",
 	},
 	sessionIdsByProfile: {} as SessionIdsByProfile,
+	clearSessionIds: () => {
+		hotutils$.sessionIdsByProfile.set({});
+	},
+	onProfilesChange: () => {
+		const allycodes = Object.keys(profilesManagement$.profiles.profilesByAllycode.get());
+		for (const allycode of allycodes) {
+			if (hotutils$.sessionIdsByProfile[allycode].peek() === undefined) {
+				hotutils$.sessionIdsByProfile[allycode].set("");
+			}
+		}
+	},
 	cancelModMove: async () => {
 		isBusy$.set(true);
 		try {

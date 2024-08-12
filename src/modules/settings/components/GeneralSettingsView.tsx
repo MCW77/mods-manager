@@ -38,6 +38,7 @@ import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 const GeneralSettingsView: React.FC = observer(() => {
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
@@ -66,6 +67,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 							optimizationSettings$.clearProfiles();
 							incrementalOptimization$.clearProfiles();
 							profilesManagement$.clearProfiles();
+							hotutils$.clearSessionIds();
 						}}
 					>
 						{t("general.backup.ResetProceed")}
