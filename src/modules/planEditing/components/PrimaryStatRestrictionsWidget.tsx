@@ -30,7 +30,6 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 							"h-6 gap-1 border-1 border-gray-300 dark:border-gray-700 rounded-2xl"
 						}
 						orientation={"horizontal"}
-						size={"sm"}
 						type={"single"}
 						$value={() =>
 							target$.target.primaryStatRestrictions.arrow.get() ?? ""
@@ -44,25 +43,25 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								);
 						}}
 					>
-						<ToggleGroupItem className={"h-4"} value={"Protection %"}>
+						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
 							Protection
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Health %"}>
+						<ToggleGroupItem className={"h-6"} value={"Health %"}>
 							Health
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Offense %"}>
+						<ToggleGroupItem className={"h-6"} value={"Offense %"}>
 							Offense
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Defense %"}>
+						<ToggleGroupItem className={"h-6"} value={"Defense %"}>
 							Defense
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Speed"}>
+						<ToggleGroupItem className={"h-6"} value={"Speed"}>
 							Speed
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Accuracy %"}>
+						<ToggleGroupItem className={"h-6"} value={"Accuracy %"}>
 							Accuracy
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Critical Avoidance %"}>
+						<ToggleGroupItem className={"h-6"} value={"Critical Avoidance %"}>
 							Critical Avoidance
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
@@ -94,22 +93,22 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								);
 						}}
 					>
-						<ToggleGroupItem className={"h-4"} value={"Protection %"}>
+						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
 							Protection
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Health %"}>
+						<ToggleGroupItem className={"h-6"} value={"Health %"}>
 							Health
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Offense %"}>
+						<ToggleGroupItem className={"h-6"} value={"Offense %"}>
 							Offense
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Defense %"}>
+						<ToggleGroupItem className={"h-6"} value={"Defense %"}>
 							Defense
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Critical Chance %"}>
+						<ToggleGroupItem className={"h-6"} value={"Critical Chance %"}>
 							Critical Chance
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Critical Damage %"}>
+						<ToggleGroupItem className={"h-6"} value={"Critical Damage %"}>
 							Critical Damage
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
@@ -143,22 +142,22 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								);
 						}}
 					>
-						<ToggleGroupItem className={"h-4"} value={"Protection %"}>
+						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
 							Protection
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Health %"}>
+						<ToggleGroupItem className={"h-6"} value={"Health %"}>
 							Health
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Offense %"}>
+						<ToggleGroupItem className={"h-6"} value={"Offense %"}>
 							Offense
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Defense %"}>
+						<ToggleGroupItem className={"h-6"} value={"Defense %"}>
 							Defense
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Potency %"}>
+						<ToggleGroupItem className={"h-6"} value={"Potency %"}>
 							Potency
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Tenacity %"}>
+						<ToggleGroupItem className={"h-6"} value={"Tenacity %"}>
 							Tenacity
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
@@ -192,10 +191,10 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								);
 						}}
 					>
-						<ToggleGroupItem className={"h-4"} value={"Protection %"}>
+						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
 							Protection
 						</ToggleGroupItem>
-						<ToggleGroupItem className={"h-4"} value={"Health %"}>
+						<ToggleGroupItem className={"h-6"} value={"Health %"}>
 							Health
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
