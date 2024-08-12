@@ -11,7 +11,6 @@ import "./CharacterList.css";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -39,7 +38,7 @@ const CharacterList = observer(
 	React.memo(() => {
 		const dispatch: ThunkDispatch = useDispatch();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+		const baseCharactersById = characters$.baseCharactersById.get();
 		const characters = useSelector(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);
@@ -213,7 +212,7 @@ const CharacterList = observer(
 						draggable={true}
 						onDragStart={characterBlockDragStart(index)}
 					>
-						{renderCharacterIcons(character, target, index)}
+						{renderCharacterIcons(character, target)}
 						<CharacterAvatar character={character} />
 						<div className={"character-name"}>
 							{baseCharactersById[character.baseID]
@@ -246,7 +245,6 @@ const CharacterList = observer(
 		const renderCharacterIcons = (
 			character: Character.Character,
 			target: OptimizationPlan.OptimizationPlan,
-			characterIndex: number,
 		) => {
 			const defaultTargets = characterSettings[character.baseID]
 				? groupByKey(
@@ -263,11 +261,6 @@ const CharacterList = observer(
 				? "active"
 				: "";
 			const minimumDots = character.optimizerSettings.minimumModDots;
-			const changedTargetActive =
-				Object.keys(defaultTargets).includes(target.name) &&
-				!OptimizationPlan.equals(defaultTargets[target.name], target)
-					? "active"
-					: "";
 			const blankTargetActive = OptimizationPlan.isBlank(target)
 				? "active"
 				: "";
@@ -325,14 +318,6 @@ const CharacterList = observer(
 							negativeWeightsActive
 								? "This character's target has negative stat weights"
 								: "This character's target has no negative stat weights"
-						}
-					/>
-					<span
-						className={`icon changed-target ${changedTargetActive}`}
-						title={
-							changedTargetActive
-								? "This character's target has been modified from the default"
-								: "This character's target matches the default"
 						}
 					/>
 					<span
