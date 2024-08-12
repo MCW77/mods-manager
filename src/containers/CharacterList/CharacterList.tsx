@@ -362,7 +362,7 @@ const CharacterList = observer(
 				currentCharacter: {
 					id: character.baseID,
 					index: index,
-					target: target,
+					target: structuredClone(target),
 				},
 				view: "edit",
 			});

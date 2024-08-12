@@ -180,7 +180,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		};
 
 		const saveTarget = () => {
-			let newTarget: OptimizationPlan.OptimizationPlan = target$.target.peek();
+			let newTarget = structuredClone(target$.target.peek());
 			if (target$.isInAdvancedEditMode.peek())
 				newTarget = OptimizationPlan.denormalize(newTarget);
 			const char = target$.character.peek();
