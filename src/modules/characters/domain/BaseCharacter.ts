@@ -31,7 +31,7 @@ export interface APIBaseCharacter {
  * interface to hold static settings for each character that the optimizer knows about.
  */
 export interface BaseCharacter {
-	baseID: CharacterNames;
+	id: CharacterNames;
 	name: string;
 	avatarUrl: string;
 	categories: string[];
@@ -72,7 +72,7 @@ export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
 				categories = categories.concat(alignments);
 
 				return {
-					baseID: bc.baseId,
+					id: bc.baseId,
 					name: bc.name,
 					avatarUrl: `https://api.hotutils.com/images${bc.baseImage}`,
 					categories: categories,
@@ -80,7 +80,7 @@ export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
 					alignment: API2BaseCharacterAlignment[bc.alignment],
 				} as BaseCharacter;
 			}),
-		(bc: BaseCharacter) => bc.baseID,
+		(bc: BaseCharacter) => bc.id,
 	) as BaseCharactersById;
 }
 
@@ -89,7 +89,7 @@ export type BaseCharactersById = Record<CharacterNames, BaseCharacter>;
 export type BaseCharacters = BaseCharacter[];
 
 export const defaultBaseCharacter = {
-	baseID: "FINN",
+	id: "FINN",
 	name: "",
 	avatarUrl: "https://swgoh.gg/static/img/assets/blank-character.png",
 	categories: [],

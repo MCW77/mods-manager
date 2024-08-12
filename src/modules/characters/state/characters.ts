@@ -23,9 +23,6 @@ const characters$ = observable<{
 syncObservable(characters$.baseCharactersById, {
 	persist: {
 		name: "Characters",
-		indexedDB: {
-			itemID: "baseCharactersById",
-		},
 	},
 });
 

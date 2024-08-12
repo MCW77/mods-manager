@@ -101,8 +101,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 												)} compared to the ${targetStat$.stat.get()} of ${
 													baseCharacters.find(
 														(bc) =>
-															bc.baseID ===
-															targetStat$.relativeCharacterId.get(),
+															bc.id === targetStat$.relativeCharacterId.get(),
 													)?.name
 												}`}
 											</Label>
@@ -117,8 +116,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 												{`${targetStat$.minimum.get()}% and ${targetStat$.maximum.get()}% of the  ${targetStat$.stat.get()} of ${
 													baseCharacters.find(
 														(bc) =>
-															bc.baseID ===
-															targetStat$.relativeCharacterId.get(),
+															bc.id === targetStat$.relativeCharacterId.get(),
 													)?.name
 												}`}
 											</Label>
@@ -209,9 +207,9 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							<SelectContent position={"popper"}>
 								<SelectGroup>
 									<SelectItem value={"null"}>No one</SelectItem>
-									{baseCharacters.map((gs) => (
-										<SelectItem key={gs.baseID} value={gs.baseID}>
-											{gs.name}
+									{baseCharacters.map((bc) => (
+										<SelectItem key={bc.id} value={bc.id}>
+											{bc.name}
 										</SelectItem>
 									))}
 								</SelectGroup>

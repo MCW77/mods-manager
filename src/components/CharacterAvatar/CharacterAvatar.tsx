@@ -37,7 +37,7 @@ const CharacterAvatar = React.memo(
 
 		const baseCharacter: BaseCharacter = baseCharactersById[character.baseID] ?? {
 			...defaultBaseCharacter,
-			baseID: character.baseID,
+			id: character.baseID,
 			name: character.baseID,
 		};
 		const className = `avatar gear-${

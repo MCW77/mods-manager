@@ -1,5 +1,4 @@
 // domain
-import type { BaseCharactersById } from "#/modules/characters/domain/BaseCharacter";
 import type { PlayerProfile } from "#/domain/PlayerProfile";
 
 /*

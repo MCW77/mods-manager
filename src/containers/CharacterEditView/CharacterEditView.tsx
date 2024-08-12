@@ -71,7 +71,7 @@ const CharacterEditView = observer(() => {
 	const filterCharacters = (character: Character.Character) => {
 		const baseCharacter = baseCharactersById[character.baseID] ?? {
 			...defaultBaseCharacter,
-			baseID: character.baseID,
+			id: character.baseID,
 			name: character.baseID,
 		};
 		const characterFilter = charactersManagement$.filters.characterFilter.get();
