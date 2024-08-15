@@ -32,7 +32,7 @@
     "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@unocss/preset-mini": "^0.62.1",
-    "@unocss/reset": "^0.62.1",
+    "@unocss/reset": "^0.62.2",
     "@vitejs/plugin-react": "^4.3.1",
     "big.js": "^6.2.1",
     "class-variance-authority": "^0.7.0",
