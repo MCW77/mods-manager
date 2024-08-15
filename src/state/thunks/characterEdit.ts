@@ -69,7 +69,7 @@ export namespace thunks {
 								);
 							}
 							return character;
-						}) as Character.Characters,
+						}) as Character.CharactersById,
 					);
 
 					return newProfile.withSelectedCharacters(
@@ -130,7 +130,7 @@ export namespace thunks {
 								);
 							}
 							return character;
-						}) as Character.Characters,
+						}) as Character.CharactersById,
 					);
 
 					const newSelectedCharacters = profile.selectedCharacters.slice(0);
@@ -218,7 +218,7 @@ export namespace thunks {
 		return App.thunks.updateProfile(
 			(profile: PlayerProfile) => {
 				const oldCharacter = profile.characters[characterID];
-				const newCharacters: Character.Characters = Object.assign(
+				const newCharacters: Character.CharactersById = Object.assign(
 					{},
 					profile.characters,
 					{
@@ -287,42 +287,6 @@ export namespace thunks {
 		});
 	}
 
-	export function lockAllCharacters() {
-		return App.thunks.updateProfile((profile: PlayerProfile) =>
-			profile.withCharacters(
-				mapValues(profile.characters, (character: Character.Character) =>
-					Character.withOptimizerSettings(
-						character,
-						OptimizerSettings.lock(character.optimizerSettings),
-					),
-				) as Character.Characters,
-			),
-		);
-	}
-
-	/**
-	 * Action to lock all characters from the "selected characters" pool
-	 * @returns {Function}
-	 */
-	export function lockSelectedCharacters() {
-		return App.thunks.updateProfile((profile: PlayerProfile) => {
-			const selectedCharacterIDs: CharacterNames[] = Object.keys(
-				groupByKey(profile.selectedCharacters, ({ id }) => id),
-			) as CharacterNames[];
-
-			return profile.withCharacters(
-				mapValues(profile.characters, (character: Character.Character) =>
-					selectedCharacterIDs.includes(character.baseID)
-						? Character.withOptimizerSettings(
-								character,
-								OptimizerSettings.lock(character.optimizerSettings),
-							)
-						: character,
-				) as Character.Characters,
-			);
-		});
-	}
-
 	/**
 	 * Move an already-selected character to a new position in the selected list
 	 * @param fromIndex {Number}
@@ -381,7 +345,7 @@ export namespace thunks {
 								);
 							}
 							return character;
-						}) as Character.Characters,
+						}) as Character.CharactersById,
 					);
 
 					return newProfile.withSelectedCharacters(availableCharacters);
@@ -425,11 +389,11 @@ export namespace thunks {
 	export function resetAllCharacterTargets() {
 		return App.thunks.updateProfile(
 			(profile: PlayerProfile) => {
-				const newCharacters: Character.Characters = mapValues(
+				const newCharacters: Character.CharactersById = mapValues(
 					profile.characters,
 					(character: Character.Character) =>
 						Character.withResetTargets(character),
-				) as Character.Characters;
+				) as Character.CharactersById;
 				const newSelectedCharacters = profile.selectedCharacters.map(
 					({ id, target: oldTarget }) => {
 						const resetTarget = newCharacters[
@@ -498,62 +462,6 @@ export namespace thunks {
 			newSelectedCharacters.splice(prevIndex + 1, 0, selectedCharacter);
 
 			return profile.withSelectedCharacters(newSelectedCharacters);
-		});
-	}
-
-	export function toggleCharacterLock(characterID: CharacterNames) {
-		return App.thunks.updateProfile((profile: PlayerProfile) => {
-			const oldCharacter = profile.characters[characterID];
-			const newCharacters: Character.Characters = Object.assign(
-				{},
-				profile.characters,
-				{
-					[characterID]: Character.withOptimizerSettings(
-						oldCharacter,
-						oldCharacter.optimizerSettings.isLocked
-							? OptimizerSettings.unlock(oldCharacter.optimizerSettings)
-							: OptimizerSettings.lock(oldCharacter.optimizerSettings),
-					),
-				},
-			);
-
-			return profile.withCharacters(newCharacters);
-		});
-	}
-
-	export function unlockAllCharacters() {
-		return App.thunks.updateProfile((profile: PlayerProfile) =>
-			profile.withCharacters(
-				mapValues(profile.characters, (character: Character.Character) =>
-					Character.withOptimizerSettings(
-						character,
-						OptimizerSettings.unlock(character.optimizerSettings),
-					),
-				) as Character.Characters,
-			),
-		);
-	}
-
-	/**
-	 * Action to unlock all characters from the "selected characters" pool
-	 * @returns {Function}
-	 */
-	export function unlockSelectedCharacters() {
-		return App.thunks.updateProfile((profile: PlayerProfile) => {
-			const selectedCharacterIDs = Object.keys(
-				groupByKey(profile.selectedCharacters, ({ id }) => id),
-			);
-
-			return profile.withCharacters(
-				mapValues(profile.characters, (character: Character.Character) =>
-					selectedCharacterIDs.includes(character.baseID)
-						? Character.withOptimizerSettings(
-								character,
-								OptimizerSettings.unlock(character.optimizerSettings),
-							)
-						: character,
-				) as Character.Characters,
-			);
 		});
 	}
 

@@ -2,7 +2,7 @@
 import { formatTimespan } from "../utils/formatTimespan";
 
 // state
-import { type ObservableObject, observable } from "@legendapp/state";
+import { type ObservableObject, observable, event } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 
 // domain
@@ -74,11 +74,13 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				...profilesManagement$.profiles.playernameByAllycode.peek(),
 				[profile.allyCode]: profile.playerName,
 			});
+			profilesChanged$.fire();
 		},
 		clearProfiles: () => {
 			profilesManagement$.profiles.profilesByAllycode.set({});
 			profilesManagement$.profiles.playernameByAllycode.set({});
 			profilesManagement$.profiles.activeAllycode.set("");
+			profilesChanged$.fire();
 		},
 		deleteProfile: (allyCode: string) => {
 			profilesManagement$.profiles.profilesByAllycode[allyCode].delete();
@@ -91,6 +93,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 						)[0]
 					: "",
 			);
+			profilesChanged$.fire();
 		},
 		updateProfile: (profile: PlayerProfile) => {
 			profilesManagement$.profiles.profilesByAllycode[profile.allyCode].set(
@@ -100,8 +103,11 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				...profilesManagement$.profiles.lastUpdatedByAllycode.peek(),
 				[profile.allyCode]: { id: profile.allyCode, lastUpdated: Date.now() },
 			});
+			profilesChanged$.fire();
 		},
 	});
+
+export const profilesChanged$ = event();
 
 const nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());

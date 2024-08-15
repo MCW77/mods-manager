@@ -1,13 +1,14 @@
 // react
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // state
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
-import type { Observable } from "@legendapp/state";
+import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show } from "@legendapp/state/react";
 
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
@@ -40,6 +41,8 @@ const SelectionActions = ({
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
+	const selectedCharacters = useSelector(CharacterEdit.selectors.selectSelectedCharactersInActiveProfile);
+
 	return (
 		<div className="flex gap-2">
 			<Button
@@ -52,7 +55,13 @@ const SelectionActions = ({
 			<Button
 				className="flex flex-gap-2"
 				type="button"
-				onClick={() => dispatch(CharacterEdit.thunks.lockSelectedCharacters())}
+				onClick={() => {
+					beginBatch();
+					for (const selectedCharacter of selectedCharacters) {
+						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(true);
+					}
+					endBatch();
+				}}
 			>
 				<FontAwesomeIcon icon={faLock} title="Lock All" />
 				Lock All
@@ -60,9 +69,13 @@ const SelectionActions = ({
 			<Button
 				className="flex flex-gap-2"
 				type="button"
-				onClick={() =>
-					dispatch(CharacterEdit.thunks.unlockSelectedCharacters())
-				}
+				onClick={() => {
+					beginBatch();
+					for (const selectedCharacter of selectedCharacters) {
+						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(false);
+					}
+					endBatch();
+				}}
 			>
 				<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
 				Unlock All

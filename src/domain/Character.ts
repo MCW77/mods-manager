@@ -17,7 +17,7 @@ export interface Character {
 	optimizerSettings: OptimizerSettings.OptimizerSettings;
 }
 
-export type Characters = Record<CharacterNames, Character>;
+export type CharactersById = Record<CharacterNames, Character>;
 
 export const createCharacter = (
 	baseID: CharacterNames,

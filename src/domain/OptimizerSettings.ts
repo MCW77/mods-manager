@@ -5,22 +5,18 @@ import groupByKey from "../utils/groupByKey";
 import type { OptimizationPlan } from "./OptimizationPlan";
 
 export interface OptimizerSettings {
-  isLocked: boolean,
   targets: OptimizationPlan[],
 }
 
 export const defaultSettings = {
   targets: [],
-  isLocked: false,
 };
 
 export const createOptimizerSettings = (
   targets: OptimizationPlan[],
-  isLocked: boolean,
 ) => {
   return {
     targets,
-    isLocked,
   };
 }
 
@@ -30,7 +26,6 @@ export const withTarget = (settings: OptimizerSettings, target: OptimizationPlan
 
   return createOptimizerSettings(
     Object.values(newTargetsObject),
-    settings.isLocked,
   );
 }
 
@@ -40,7 +35,6 @@ export const  withTargetOverrides = (settings: OptimizerSettings, targets: Optim
 
   return createOptimizerSettings(
     Object.values(Object.assign({}, oldTargetsObject, newTargetsObject)),
-    settings.isLocked,
   );
 }
 
@@ -53,20 +47,5 @@ export const withDeletedTarget = (settings: OptimizerSettings, targetName: strin
 
   return createOptimizerSettings(
     newTargets,
-    settings.isLocked,
-  );
-}
-
-export const lock = (settings: OptimizerSettings) => {
-  return createOptimizerSettings(
-    settings.targets,
-    true,
-  );
-}
-
-export const unlock = (settings: OptimizerSettings) => {
-  return createOptimizerSettings(
-    settings.targets,
-    false,
   );
 }

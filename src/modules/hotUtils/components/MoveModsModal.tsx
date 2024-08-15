@@ -12,7 +12,9 @@ import groupByKey from "#/utils/groupByKey";
 import { Storage } from "#/state/modules/storage";
 
 //state
+import { hotutils$ } from "../state/hotUtils";
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -23,7 +25,6 @@ import type { ModAssignments } from "#/domain/ModAssignment";
 // components
 import { Credits } from "#/components/Credits/Credits";
 import { Button } from "#ui/button";
-import { hotutils$ } from "../state/hotUtils";
 
 interface HUModsProfile {
 	id: CharacterNames;
@@ -113,7 +114,7 @@ const MoveModsModal = () => {
 		const lockedMods = (
 			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
 		)
-			.filter(([id]) => profile.characters[id].optimizerSettings.isLocked)
+			.filter(([id]) => lockedStatus$.ofActivePlayerByCharacterId[id])
 			.map(([id, mods]) => ({
 				id: id,
 				modIds: mods.map(({ id }) => id),
@@ -129,7 +130,11 @@ const MoveModsModal = () => {
 			<h3>
 				Moving your mods will cost
 				<br />
-				<span className={"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"}>
+				<span
+					className={
+						"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"
+					}
+				>
 					<strong className={"white"}>{formatNumber(modRemovalCost)}</strong>{" "}
 					<Credits />
 				</span>

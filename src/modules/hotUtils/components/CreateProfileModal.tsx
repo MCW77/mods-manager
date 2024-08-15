@@ -9,6 +9,7 @@ import { observer, reactive, useObservable } from "@legendapp/state/react";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // modules
 import { Storage } from "#/state/modules/storage";
@@ -52,7 +53,7 @@ const CreateProfileModal: React.FC = observer(() => {
 		const lockedMods = (
 			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
 		)
-			.filter(([id]) => profile.characters[id].optimizerSettings.isLocked)
+			.filter(([id]) => lockedStatus$.ofActivePlayerByCharacterId[id])
 			.map(([id, mods]) => ({
 				id: id,
 				modIds: mods.map(({ id }) => id),

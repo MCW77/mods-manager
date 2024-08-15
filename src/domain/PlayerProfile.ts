@@ -1,3 +1,8 @@
+// state
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
+import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+
+
 // domain
 import type { CharacterNames } from "../constants/characterSettings";
 import type { PlayerValuesByCharacter } from "../modules/profilesManagement/domain/PlayerValues";
@@ -9,7 +14,6 @@ import type { OptimizationPlan } from "./OptimizationPlan";
 import * as OptimizerRun from "./OptimizerRun";
 import type { SelectedCharacters } from "./SelectedCharacters";
 import type { TargetStat } from "./TargetStat";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 
 export type MissedGoals = [TargetStat, number][];
 
@@ -24,7 +28,7 @@ export interface ModSuggestion {
 export interface IFlatPlayerProfile {
 	allyCode: string;
 	playerName: string;
-	characters: Character.Characters;
+	characters: Character.CharactersById;
 	mods: ModTypes.GIMOFlatMod[];
 	selectedCharacters: SelectedCharacters;
 	modAssignments: ModSuggestion[];
@@ -36,7 +40,7 @@ export interface IFlatPlayerProfile {
 export class PlayerProfile {
 	allyCode: string;
 	playerName: string;
-	characters: Character.Characters;
+	characters: Character.CharactersById;
 	playerValues: PlayerValuesByCharacter;
 	mods: Mod[];
 	selectedCharacters: SelectedCharacters;
@@ -46,7 +50,7 @@ export class PlayerProfile {
 		"",
 		"",
 		{} as PlayerValuesByCharacter,
-		{} as Character.Characters,
+		{} as Character.CharactersById,
 		[],
 		[],
 		[],
@@ -65,7 +69,7 @@ export class PlayerProfile {
 		allyCode: string,
 		playerName: string,
 		playerValues: PlayerValuesByCharacter = {} as PlayerValuesByCharacter,
-		characters: Character.Characters = {} as Character.Characters,
+		characters: Character.CharactersById = {} as Character.CharactersById,
 		mods: Mod[] = [],
 		selectedCharacters: SelectedCharacters = [],
 		modAssignments: ModSuggestion[] = [],
@@ -94,7 +98,7 @@ export class PlayerProfile {
 		);
 	}
 
-	withCharacters(characters: Character.Characters) {
+	withCharacters(characters: Character.CharactersById) {
 		if (!characters) {
 			return this;
 		}
@@ -168,6 +172,7 @@ export class PlayerProfile {
 		return OptimizerRun.createOptimizerRun(
 			this.allyCode,
 			this.characters,
+			lockedStatus$.ofActivePlayerByCharacterId.peek(),
 			this.mods.map((mod) => mod.serialize()),
 			this.selectedCharacters,
 			optimizationSettings$.settingsByProfile[this.allyCode].peek(),

@@ -17,6 +17,7 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -133,6 +134,10 @@ export namespace thunks {
 			}
 
 			// Then, fetch the player's data from HotUtils
+			const tempProfile = new PlayerProfile(cleanedAllyCode, "");
+			const oldAllycode = profilesManagement$.profiles.activeAllycode.get();
+			profilesManagement$.profiles.activeAllycode.set(tempProfile.allyCode);
+
 			try {
 				profile = await hotutils$.fetchProfile(cleanedAllyCode);
 
@@ -144,6 +149,7 @@ export namespace thunks {
 				await dispatch(
 					updatePlayerData(
 						cleanedAllyCode,
+						oldAllycode,
 						profile,
 						db,
 						keepOldMods && !(useSession && sessionId),
@@ -265,25 +271,27 @@ export namespace thunks {
 	}
 
 	function updatePlayerData(
-		allycode: string,
+		newAllycode: string,
+		oldAllycode: string,
 		profile: FetchedGIMOProfile,
 		db: Database,
 		keepOldMods: boolean,
 	): ThunkResult<Promise<void>> {
 		return async (dispatch) => {
 			try {
-				const dbProfile = await db.getProfile(allycode);
+				const dbProfile = await db.getProfile(newAllycode);
 
 				const oldProfile =
 					dbProfile !== PlayerProfile.Default
 						? dbProfile.withPlayerName(profile.name)
-						: new PlayerProfile(allycode, profile.name);
-				oldProfile.allyCode = allycode;
-				optimizationSettings$.addProfile(allycode);
-				incrementalOptimization$.addProfile(allycode);
+						: new PlayerProfile(newAllycode, profile.name);
+				oldProfile.allyCode = newAllycode;
+				optimizationSettings$.addProfile(newAllycode);
+				incrementalOptimization$.addProfile(newAllycode);
 
 				// Collect the new character objects by combining the default characters with the player values
 				// and the optimizer settings from the current profile.
+				beginBatch()
 				const newCharacters = mapValues<
 					PlayerValuesByCharacter,
 					Character.Character
@@ -294,6 +302,8 @@ export namespace thunks {
 						id: string,
 					): Character.Character => {
 						const Id: CharacterNames = id as CharacterNames;
+						if (lockedStatus$.ofActivePlayerByCharacterId[Id].peek() === undefined)
+							lockedStatus$.ofActivePlayerByCharacterId[Id].set(false);
 						if (Object.hasOwn(oldProfile.characters, Id)) {
 							return Character.withOptimizerSettings(
 								Character.withPlayerValues(
@@ -308,12 +318,11 @@ export namespace thunks {
 							playerValues,
 							createOptimizerSettings(
 								[],
-								false,
 							),
 						);
 					},
 				);
-
+				endBatch();
 				const newMods = groupByKey(profile.mods, (mod) => mod.id);
 
 				// If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
@@ -358,18 +367,14 @@ export namespace thunks {
 						"error",
 					),
 				);
-				if (newProfile.allyCode)
-					profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
 				dispatch(Storage.actions.setProfile(newProfile));
-				beginBatch();
 				profilesManagement$.addProfile(newProfile);
-				profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
 				profilesManagement$.updateProfile(newProfile);
-				endBatch();
 				hotutils$.checkSubscriptionStatus();
 				//        dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
 			} catch (error) {
 				const errorMessage = error instanceof DOMException ? error.message : "";
+				profilesManagement$.profiles.activeAllycode.set(oldAllycode);
 				dialog$.showError(
 					`Error fetching your profile: ${errorMessage} Please try again`,
 				);

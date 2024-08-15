@@ -37,7 +37,7 @@ const setMap = {
 
 const summaryListContent = (
 	baseCharacters: BaseCharactersById,
-	characters: Character.Characters,
+	characters: Character.CharactersById,
 	modAssignments: ModAssignments,
 ) => {
 	return modAssignments
@@ -69,7 +69,7 @@ const summaryListContent = (
  */
 const copySummaryToClipboard = (
 	baseCharacters: BaseCharactersById,
-	characters: Character.Characters,
+	characters: Character.CharactersById,
 	modAssignments: ModAssignments,
 ) => {
 	copyToClipboard(

@@ -9,10 +9,14 @@ import "./CharacterEditView.css";
 
 // state
 import { observable } from "@legendapp/state";
-import { observer, useSelector as useLegendSelector } from "@legendapp/state/react";
+import {
+	observer,
+	useSelector as useLegendSelector,
+} from "@legendapp/state/react";
 
 import { characters$ } from "#/modules/characters/state/characters";
 import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // modules
 import { CharacterEdit } from "#/state/modules/characterEdit";
@@ -80,9 +84,9 @@ const CharacterEditView = observer(() => {
 			characterFilter === "" ||
 			baseCharacter.name.toLowerCase().includes(characterFilter) ||
 			(["lock", "locked"].includes(characterFilter) &&
-				character.optimizerSettings.isLocked) ||
+				lockedStatus$.ofActivePlayerByCharacterId[character.baseID]) ||
 			(["unlock", "unlocked"].includes(characterFilter) &&
-				!character.optimizerSettings.isLocked) ||
+				!lockedStatus$.ofActivePlayerByCharacterId[character.baseID]) ||
 			baseCharacter.categories
 				.concat(
 					characterSettings[character.baseID]

@@ -17,6 +17,7 @@ import type { OptimizableStats, OptimizationPlan } from '../../src/domain/Optimi
 import type { SelectedCharacters } from '../../src/domain/SelectedCharacters';
 import type { SetRestrictions } from '../../src/domain/SetRestrictions';
 import type { TargetStat, TargetStats, TargetStatsNames } from '../../src/domain/TargetStat';
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 
 interface Cache {
@@ -143,7 +144,7 @@ self.onmessage = (message) => {
       }
       const allMods = profile.mods.map(deserializeMod);
 
-      const lastRunCharacters: Partial<Character.Characters> = {};
+      const lastRunCharacters: Partial<Character.CharactersById> = {};
 
       if (lastRun !== undefined && lastRun !== null){
         if (lastRun.characters) {
@@ -151,7 +152,7 @@ self.onmessage = (message) => {
             lastRunCharacters[character.baseID] = character;
           }
 
-          lastRun.characters = lastRunCharacters as Character.Characters;
+          lastRun.characters = lastRunCharacters as Character.CharactersById;
         }
 
         lastRun.selectedCharacters = Array.isArray(lastRun.selectedCharacters) ?
@@ -1252,7 +1253,7 @@ Object.freeze(chooseTwoOptions);
  */
 function optimizeMods(
   availableMods: Mod[],
-  characters: Character.Characters,
+  characters: Character.CharactersById,
   order: SelectedCharacters,
   incrementalOptimizeIndex: number | null,
   globalSettings: ProfileOptimizationSettings,
@@ -1278,7 +1279,7 @@ function optimizeMods(
         continue;
       }
       if (!previousRun?.characters[charID] ||
-        previousRun.characters[charID].optimizerSettings.isLocked !== characters[charID].optimizerSettings.isLocked) {
+        previousRun.lockedStatus[charID] !== lockedStatus$.ofActivePlayerByCharacterId[charID].peek()) {
         recalculateMods = true;
         break;
       }
@@ -1287,7 +1288,7 @@ function optimizeMods(
 
   // Filter out any mods that are on locked characters, including if all unselected characters are locked
   let usableMods = availableMods.filter(mod =>
-    mod.characterID === 'null' || !characters[mod.characterID].optimizerSettings.isLocked
+    mod.characterID === 'null' || !lockedStatus$.ofActivePlayerByCharacterId[mod.characterID].peek()
   );
 
   if (globalSettings.lockUnselectedCharacters) {
@@ -1301,7 +1302,7 @@ function optimizeMods(
     (Object.keys(characters) as CharacterNames[]).filter(characterID => !order.map(({ id }) => id).includes(characterID))
 
   const lockedCharacters: CharacterNames[] = (Object.keys(characters) as CharacterNames[])
-    .filter(id => characters[id].optimizerSettings.isLocked)
+    .filter(id => lockedStatus$.ofActivePlayerByCharacterId[id].peek())
     .concat(globalSettings.lockUnselectedCharacters ? unselectedCharacters : []);
 
   if (incrementalOptimizeIndex !== null && incrementalOptimizeIndex < order.length) {
@@ -1314,7 +1315,7 @@ function optimizeMods(
     const previousCharacter = previousRun?.characters[characterID] ?? null;
 
     // If the character is locked, skip it
-    if (character.optimizerSettings.isLocked) {
+    if (lockedStatus$.ofActivePlayerByCharacterId[character.baseID].peek()) {
       return modSuggestions;
     }
 
@@ -1332,7 +1333,7 @@ function optimizeMods(
         previousRun.selectedCharacters[index].target
       ) &&
       previousCharacter.optimizerSettings &&
-      character.optimizerSettings.isLocked === previousCharacter.optimizerSettings.isLocked &&
+      lockedStatus$.ofActivePlayerByCharacterId[character.baseID].peek() === previousRun.lockedStatus[character.baseID] &&
       previousModAssignments[index]
     ) {
       const assignedMods = previousModAssignments[index].assignedMods;
@@ -1457,7 +1458,7 @@ function optimizeMods(
  */
 function changeRelativeTargetStatsToAbsolute(
   modSuggestions: ModSuggestion[],
-  characters: Character.Characters,
+  characters: Character.CharactersById,
   lockedCharacters: CharacterNames[],
   allMods: Mod[],
   target: OptimizationPlan,

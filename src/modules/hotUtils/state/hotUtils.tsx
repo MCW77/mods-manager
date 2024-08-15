@@ -10,7 +10,7 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { profilesChanged$, profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { App } from "#/state/modules/app";
@@ -81,7 +81,7 @@ export const hotutils$ = observable({
 		return hotutils$.sessionIdsByProfile[allyCode].get() || "";
 	},
 	hasActiveSession: () => {
-		return (hotutils$.activeSessionId.get() !== "") && hotutils$.isSubscribed.get()
+		return (hotutils$.activeSessionId.get() !== "") && hotutils$.isSubscribed()
 	},
 
 	isMoving: false,
@@ -99,14 +99,6 @@ export const hotutils$ = observable({
 	sessionIdsByProfile: {} as SessionIdsByProfile,
 	clearSessionIds: () => {
 		hotutils$.sessionIdsByProfile.set({});
-	},
-	onProfilesChange: () => {
-		const allycodes = Object.keys(profilesManagement$.profiles.profilesByAllycode.get());
-		for (const allycode of allycodes) {
-			if (hotutils$.sessionIdsByProfile[allycode].peek() === undefined) {
-				hotutils$.sessionIdsByProfile[allycode].set("");
-			}
-		}
 	},
 	cancelModMove: async () => {
 		isBusy$.set(true);
@@ -439,6 +431,15 @@ export const hotutils$ = observable({
 			};
 		}
 	},
+});
+
+profilesChanged$.on(() => {
+	const allycodes = Object.keys(profilesManagement$.profiles.profilesByAllycode.peek());
+	for (const allycode of allycodes) {
+		if (hotutils$.sessionIdsByProfile[allycode].peek() === undefined) {
+			hotutils$.sessionIdsByProfile[allycode].set("");
+		}
+	}
 });
 
 syncObservable(hotutils$.sessionIdsByProfile, {

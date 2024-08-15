@@ -9,6 +9,7 @@ import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
@@ -129,14 +130,18 @@ const CharacterActions = () => {
 			<Button
 				type="button"
 				size="icon"
-				onClick={() => dispatch(CharacterEdit.thunks.lockAllCharacters())}
+				onClick={() => {
+					lockedStatus$.lockAll();
+				}}
 			>
 				<FontAwesomeIcon icon={faLock} title="Lock All" />
 			</Button>
 			<Button
 				type="button"
 				size="icon"
-				onClick={() => dispatch(CharacterEdit.thunks.unlockAllCharacters())}
+				onClick={() => {
+					lockedStatus$.unlockAll();
+				}}
 			>
 				<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
 			</Button>
