@@ -31,8 +31,6 @@ import {
 	faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { ResetAllCharacterTargetsModal } from "./ResetAllCharacterTargetsModal";
-
 import { OptimizerProgress } from "#/modules/progress/components/OptimizerProgress";
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
@@ -144,12 +142,6 @@ const CharacterActions = () => {
 				}}
 			>
 				<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
-			</Button>
-			<Button
-				type="button"
-				onClick={() => dialog$.show(<ResetAllCharacterTargetsModal />)}
-			>
-				Reset all targets
 			</Button>
 			<HelpLink
 				title="Global Settings Helppage"

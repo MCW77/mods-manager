@@ -8,13 +8,12 @@ import {
 } from "../constants/characterSettings";
 import type * as DTOs from "../modules/profilesManagement/dtos";
 
-import { createOptimizationPlan } from "./OptimizationPlan";
-import * as OptimizerSettings from "./OptimizerSettings";
+import { createOptimizationPlan, type OptimizationPlan } from "./OptimizationPlan";
 
 export interface Character {
 	baseID: CharacterNames;
 	playerValues: DTOs.GIMO.PlayerValuesDTO;
-	optimizerSettings: OptimizerSettings.OptimizerSettings;
+	targets: OptimizationPlan[];
 }
 
 export type CharactersById = Record<CharacterNames, Character>;
@@ -22,12 +21,12 @@ export type CharactersById = Record<CharacterNames, Character>;
 export const createCharacter = (
 	baseID: CharacterNames,
 	playerValues: DTOs.GIMO.PlayerValuesDTO,
-	optimizerSettings: OptimizerSettings.OptimizerSettings,
+	targets: OptimizationPlan[],
 ): Character => {
 	return {
 		baseID,
 		playerValues,
-		optimizerSettings,
+		targets,
 	};
 };
 
@@ -41,49 +40,42 @@ export const withPlayerValues = (
 	};
 };
 
-export const withOptimizerSettings = (
+export const withTargets = (
 	char: Character,
-	optimizerSettings: OptimizerSettings.OptimizerSettings,
+	targets: OptimizationPlan[],
 ): Character => {
 	return {
 		...char,
-		optimizerSettings,
+		targets,
 	};
 };
 
-export const withResetTarget = (
+export const  withTargetsOverrides = (
 	char: Character,
-	targetName: string,
-): Character => {
-	let target = characterSettings[char.baseID]?.targets.find(
-		(target) => target.name === targetName,
-	);
-	if (target === null || target === undefined)
-		target = createOptimizationPlan(targetName);
+	targets: OptimizationPlan[]
+) => {
+  const oldTargetsObject = groupByKey(char.targets, target => target.name);
+  const newTargetsObject = groupByKey(targets, target => target.name);
 
-	return withOptimizerSettings(
-		char,
-		OptimizerSettings.withTarget(char.optimizerSettings, target),
-	);
-};
-
-export const withResetTargets = (char: Character): Character => {
-	return withOptimizerSettings(
-		char,
-		OptimizerSettings.withTargetOverrides(
-			char.optimizerSettings,
-			characterSettings[char.baseID]?.targets ?? [],
-		),
-	);
-};
+  return {
+		...char,
+    targets: Object.values(Object.assign({}, oldTargetsObject, newTargetsObject)),
+	};
+}
 
 export const withDeletedTarget = (
 	char: Character,
 	targetName: string,
 ): Character => {
-	return withOptimizerSettings(
+	const newTargets = char.targets.slice();
+  const targetIndex = newTargets.findIndex(target => target.name === targetName);
+  if (-1 !== targetIndex) {
+    newTargets.splice(targetIndex, 1);
+  }
+
+	return withTargets(
 		char,
-		OptimizerSettings.withDeletedTarget(char.optimizerSettings, targetName),
+		newTargets,
 	);
 };
 
@@ -93,7 +85,7 @@ export const targets = (char: Character) => {
 		(target) => target.name,
 	);
 	const playerTargets = groupByKey(
-		char.optimizerSettings.targets,
+		char.targets,
 		(target) => target.name,
 	);
 

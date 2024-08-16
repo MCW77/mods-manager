@@ -1332,7 +1332,7 @@ function optimizeMods(
         target,
         previousRun.selectedCharacters[index].target
       ) &&
-      previousCharacter.optimizerSettings &&
+      previousCharacter.targets &&
       lockedStatus$.ofActivePlayerByCharacterId[character.baseID].peek() === previousRun.lockedStatus[character.baseID] &&
       previousModAssignments[index]
     ) {

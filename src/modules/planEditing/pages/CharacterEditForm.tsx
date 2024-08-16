@@ -75,7 +75,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const modAssignments = useSelector(
 			Storage.selectors.selectModAssignmentsInActiveProfile,
 		);
-		const targetsNames = character.optimizerSettings.targets.map(
+		const targetsNames = character.targets.map(
 			(target) => target.name,
 		);
 

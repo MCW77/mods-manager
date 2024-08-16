@@ -34,7 +34,6 @@ import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domai
 
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
-import { createOptimizerSettings } from "#/domain/OptimizerSettings";
 import { PlayerProfile } from "#/domain/PlayerProfile";
 import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
@@ -305,20 +304,18 @@ export namespace thunks {
 						if (lockedStatus$.ofActivePlayerByCharacterId[Id].peek() === undefined)
 							lockedStatus$.ofActivePlayerByCharacterId[Id].set(false);
 						if (Object.hasOwn(oldProfile.characters, Id)) {
-							return Character.withOptimizerSettings(
+							return Character.withTargets(
 								Character.withPlayerValues(
 									oldProfile.characters[Id],
 									playerValues,
 								),
-								oldProfile.characters[Id].optimizerSettings,
+								oldProfile.characters[Id].targets,
 							);
 						}
 						return Character.createCharacter(
 							Id,
 							playerValues,
-							createOptimizerSettings(
-								[],
-							),
+							[],
 						);
 					},
 				);

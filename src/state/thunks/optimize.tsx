@@ -18,7 +18,6 @@ import { App } from "#/state/modules/app";
 // domain
 import * as Character from "#/domain/Character";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
-import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import type { ModSuggestion } from "#/domain/PlayerProfile";
 
 // components
@@ -161,7 +160,7 @@ export namespace thunks {
 																equippedStats: tempStats,
 																relicTier: 0,
 															},
-															OptimizerSettings.defaultSettings,
+															[],
 														);
 
 													return index % 2 === 0 ? (

@@ -4,7 +4,6 @@ import type { ThunkResult } from "../reducers/modsOptimizer";
 // utils
 import { mapValues } from "lodash-es";
 import collectByKey from "../../utils/collectByKey";
-import groupByKey from "../../utils/groupByKey";
 
 // state
 import getDatabase from "../storage/Database";
@@ -25,7 +24,6 @@ import {
 	type OptimizationPlansById,
 	createOptimizationPlan,
 } from "../../domain/OptimizationPlan";
-import * as OptimizerSettings from "#/domain/OptimizerSettings";
 import type { PlayerProfile } from "../../domain/PlayerProfile";
 import type { SelectedCharacters } from "../../domain/SelectedCharacters";
 
@@ -60,12 +58,9 @@ export namespace thunks {
 									.map(({ id }) => id)
 									.includes(character.baseID)
 							) {
-								return Character.withOptimizerSettings(
+								return Character.withTargetsOverrides(
 									character,
-									OptimizerSettings.withTargetOverrides(
-										character.optimizerSettings,
-										templateTargetsById[character.baseID],
-									),
+									templateTargetsById[character.baseID],
 								);
 							}
 							return character;
@@ -121,12 +116,9 @@ export namespace thunks {
 									.map(({ id }) => id)
 									.includes(character.baseID)
 							) {
-								return Character.withOptimizerSettings(
+								return Character.withTargetsOverrides(
 									character,
-									OptimizerSettings.withTargetOverrides(
-										character.optimizerSettings,
-										templateTargetsById[character.baseID],
-									),
+									templateTargetsById[character.baseID],
 								);
 							}
 							return character;
@@ -272,9 +264,9 @@ export namespace thunks {
 				target: newTarget,
 			});
 			const oldCharacter = profile.characters[characterID];
-			const newCharacter = Character.withOptimizerSettings(
+			const newCharacter = Character.withTargetsOverrides(
 				oldCharacter,
-				OptimizerSettings.withTarget(oldCharacter.optimizerSettings, newTarget),
+				[newTarget],
 			);
 
 			return profile
@@ -336,12 +328,9 @@ export namespace thunks {
 									.map(({ id }) => id)
 									.includes(character.baseID)
 							) {
-								return Character.withOptimizerSettings(
+								return Character.withTargetsOverrides(
 									character,
-									OptimizerSettings.withTargetOverrides(
-										character.optimizerSettings,
-										templateTargetsById[character.baseID],
-									),
+									templateTargetsById[character.baseID],
 								);
 							}
 							return character;
@@ -380,40 +369,6 @@ export namespace thunks {
 				templates$.userTemplatesByName[templateName].get();
 			updateFunction(template)(dispatch, getState, null);
 		};
-	}
-
-	/**
-	 * Reset all character targets so that they match the default values
-	 * @returns {Function}
-	 */
-	export function resetAllCharacterTargets() {
-		return App.thunks.updateProfile(
-			(profile: PlayerProfile) => {
-				const newCharacters: Character.CharactersById = mapValues(
-					profile.characters,
-					(character: Character.Character) =>
-						Character.withResetTargets(character),
-				) as Character.CharactersById;
-				const newSelectedCharacters = profile.selectedCharacters.map(
-					({ id, target: oldTarget }) => {
-						const resetTarget = newCharacters[
-							id
-						].optimizerSettings.targets.find(
-							(target) => target.name === oldTarget.name,
-						);
-
-						return resetTarget
-							? { id: id, target: resetTarget }
-							: { id: id, target: oldTarget };
-					},
-				);
-
-				return profile
-					.withCharacters(newCharacters)
-					.withSelectedCharacters(newSelectedCharacters);
-			},
-			(dispatch) => dialog$.hide(),
-		);
 	}
 
 	export function saveTemplate(
