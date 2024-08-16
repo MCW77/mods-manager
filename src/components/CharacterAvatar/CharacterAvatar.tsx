@@ -35,10 +35,10 @@ const CharacterAvatar = React.memo(
 
 		if (character === undefined || character === null) return null;
 
-		const baseCharacter: BaseCharacter = baseCharactersById[character.baseID] ?? {
+		const baseCharacter: BaseCharacter = baseCharactersById[character.id] ?? {
 			...defaultBaseCharacter,
-			id: character.baseID,
-			name: character.baseID,
+			id: character.id,
+			name: character.id,
 		};
 		const className = `avatar gear-${
 			displayGear ? character.playerValues.gearLevel : 0

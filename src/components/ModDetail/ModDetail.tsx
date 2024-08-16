@@ -61,9 +61,9 @@ const ModDetail = React.memo(
 				{character && <CharacterAvatar character={character} />}
 				{character && (
 					<h4 className={"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"}>
-						{baseCharactersById[character.baseID]
-							? baseCharactersById[character.baseID].name
-							: character.baseID}
+						{baseCharactersById[character.id]
+							? baseCharactersById[character.id].name
+							: character.id}
 					</h4>
 				)}
 				<div className="stats">

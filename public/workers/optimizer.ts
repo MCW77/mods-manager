@@ -149,7 +149,7 @@ self.onmessage = (message) => {
       if (lastRun !== undefined && lastRun !== null){
         if (lastRun.characters) {
           for (const character of Object.values(lastRun.characters)) {
-            lastRunCharacters[character.baseID] = character;
+            lastRunCharacters[character.id] = character;
           }
 
           lastRun.characters = lastRunCharacters as Character.CharactersById;
@@ -742,7 +742,7 @@ function flattenStatValues(
         value: stat.value
       };
     }
-    throw new Error(`Stat is given as a percentage, but ${character.baseID} has no base stats`);
+    throw new Error(`Stat is given as a percentage, but ${character.id} has no base stats`);
   });
 
   cache.statValues[cacheKey] = flattenedStats;
@@ -1031,10 +1031,10 @@ function modSort(character: Character.Character) {
   return (left: Mod, right: Mod) => {
     if (cache.modScores[right.id] === cache.modScores[left.id]) {
       // If mods have equal value, then favor the one that's already equipped
-      if (left.characterID !== 'null' && character.baseID === left.characterID) {
+      if (left.characterID !== 'null' && character.id === left.characterID) {
         return -1;
       }
-      if (right.characterID !== 'null' && character.baseID === right.characterID) {
+      if (right.characterID !== 'null' && character.id === right.characterID) {
         return 1;
       }
       return 0;
@@ -1315,7 +1315,7 @@ function optimizeMods(
     const previousCharacter = previousRun?.characters[characterID] ?? null;
 
     // If the character is locked, skip it
-    if (lockedStatus$.ofActivePlayerByCharacterId[character.baseID].peek()) {
+    if (lockedStatus$.ofActivePlayerByCharacterId[character.id].peek()) {
       return modSuggestions;
     }
 
@@ -1333,7 +1333,7 @@ function optimizeMods(
         previousRun.selectedCharacters[index].target
       ) &&
       previousCharacter.targets &&
-      lockedStatus$.ofActivePlayerByCharacterId[character.baseID].peek() === previousRun.lockedStatus[character.baseID] &&
+      lockedStatus$.ofActivePlayerByCharacterId[character.id].peek() === previousRun.lockedStatus[character.id] &&
       previousModAssignments[index]
     ) {
       const assignedMods = previousModAssignments[index].assignedMods;
@@ -1381,7 +1381,7 @@ function optimizeMods(
     const { modSet: newModSetForCharacter, messages: characterMessages } =
       findBestModSetForCharacter(usableMods, character, order.length, index, realTarget);
 
-    const oldModSetForCharacter = usableMods.filter(mod => mod.characterID === character.baseID);
+    const oldModSetForCharacter = usableMods.filter(mod => mod.characterID === character.id);
 
     const newModSetValue = scoreModSet(newModSetForCharacter, character, realTarget);
     const oldModSetValue = scoreModSet(oldModSetForCharacter, character, realTarget);
@@ -1491,7 +1491,7 @@ function changeRelativeTargetStatsToAbsolute(
         if (undefined === characterModsEntry) {
           throw new Error(
             `Could not find suggested mods for ${targetStat.relativeCharacterId}.  ` +
-            `Make sure they are selected above ${character.baseID}`
+            `Make sure they are selected above ${character.id}`
           )
         }
 
@@ -1559,7 +1559,7 @@ function combineTargetStats(
 
       if (newMinimum > newMaximum) {
         throw new Error(`
-          The multiple ${statName} targets on ${character.baseID} don't have any solution. Please adjust the targets.
+          The multiple ${statName} targets on ${character.id} don't have any solution. Please adjust the targets.
           First Target: ${currentStat.minimum}-${currentStat.maximum}.
           Second Target: ${targetStat.minimum}-${targetStat.maximum}.
         `.trim());
@@ -1595,7 +1595,7 @@ function findBestModSetForCharacter(
 ) {
 
   const filteredMods = character.playerValues.gearLevel < 12 ?
-    mods.filter(mod => 6 > mod.pips || mod.characterID === character.baseID) :
+    mods.filter(mod => 6 > mod.pips || mod.characterID === character.id) :
     mods;
   const modsToCache = filteredMods;
   const usableMods = filteredMods;
@@ -1665,7 +1665,7 @@ function findBestModSetForCharacter(
     // Intentional fall-through
     case false:
       // If not, simply iterate over all levels of restrictions until a suitable set is found.
-      progressMessage(character.baseID, characterCount, characterIndex, 'Finding the best mod set', 0);
+      progressMessage(character.id, characterCount, characterIndex, 'Finding the best mod set', 0);
       ({ modSet, messages } =
         findBestModSetByLooseningSetRestrictions(usableMods, character, mutableTarget, setRestrictions));
 
@@ -1835,7 +1835,7 @@ function* getPotentialModsToSatisfyTargetStats(
       const [mods, setRestrictions] = modGroup;
       const setValue = setValues[currentTarget.stat];
 
-      progressMessage(character.baseID, characterCount, characterIndex,'Step 2/2: Calculating mod sets to meet target value', 0);
+      progressMessage(character.id, characterCount, characterIndex,'Step 2/2: Calculating mod sets to meet target value', 0);
 
       // Find any collection of values that will sum up to the target stat
       // If there is a setValue, repeat finding mods to fill the target for as many sets as can be used
@@ -1875,7 +1875,7 @@ function* getPotentialModsToSatisfyTargetStats(
             // Send progress messages as we iterate over the possible values
             if (++currentIteration % onePercent === 0) {
               const progressPercent = (currentIteration / numConfigurations) * 100;
-              progressMessage(character.baseID, characterCount, characterIndex, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
+              progressMessage(character.id, characterCount, characterIndex, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
             }
 
             yield* targetStatRecursor([modsThatFitGivenValues, updatedSetRestriction], updatedTargetStats, false);
@@ -1900,7 +1900,7 @@ function* getPotentialModsToSatisfyTargetStats(
           // Send progress messages as we iterate over the possible values
           if (currentIteration++ % onePercent === 0) {
             const progressPercent = (currentIteration / numConfigurations) * 100;
-            progressMessage(character.baseID, characterCount, characterIndex, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
+            progressMessage(character.id, characterCount, characterIndex, 'Step 2/2: Calculating mod sets to meet target value', progressPercent);
           }
 
           yield* targetStatRecursor([modsThatFitGivenValues, setRestrictions], updatedTargetStats, false);
@@ -2090,7 +2090,7 @@ function findStatValuesThatMeetTarget(
   let abort = [false, false, false, false, false, false];
   const firstOfSlot = [true, true, true, true, true, true];
 
-  progressMessage(character.baseID, characterCount, characterIndex, 'Step 1/2: Finding stat values to meet targets', progressMin);
+  progressMessage(character.id, characterCount, characterIndex, 'Step 1/2: Finding stat values to meet targets', progressMin);
 
   // This is essentially a fancy nested for loop iterating over each value in each slot.
   // That means this is O(n^6) for 6 mod slots (which is terrible!).
@@ -2111,7 +2111,7 @@ function findStatValuesThatMeetTarget(
       }
     } else {
       if (iterations++ % onePercent === 0) {
-        progressMessage(character.baseID, characterCount, characterIndex, 'Step 1/2: Finding stat values to meet targets', progressMin + iterations / onePercent);
+        progressMessage(character.id, characterCount, characterIndex, 'Step 1/2: Finding stat values to meet targets', progressMin + iterations / onePercent);
       }
 
       const statValue = Object.values(valuesObject).reduce((acc, value) => acc + value, 0);
@@ -2191,9 +2191,9 @@ function findBestModSetFromPotentialMods(
         updateBestSet(setAndMessages, setScore, 0); // TODO check if this works. Las param was null
       } else if (setScore === bestSetScore) {
         // If both sets have the same value, choose the set that moves the fewest mods
-        const unmovedMods = setAndMessages.modSet.filter(mod => mod.characterID === character.baseID).length;
+        const unmovedMods = setAndMessages.modSet.filter(mod => mod.characterID === character.id).length;
         if (null === bestUnmovedMods) {
-          bestUnmovedMods = bestModSetAndMessages.modSet.filter(mod => mod.characterID === character.baseID).length;
+          bestUnmovedMods = bestModSetAndMessages.modSet.filter(mod => mod.characterID === character.id).length;
         }
 
         if (unmovedMods > bestUnmovedMods) {
@@ -2254,7 +2254,7 @@ function findBestModSetByLooseningSetRestrictions(
 
   return {
     modSet: [],
-    messages: [`No mod sets could be found for ${character.baseID}`]
+    messages: [`No mod sets could be found for ${character.id}`]
   }
 }
 
@@ -2438,9 +2438,9 @@ function findBestModSetWithoutChangingRestrictions(
       bestUnmovedMods = -1;
     } else if (setScore === bestSetScore) {
       // If both sets have the same value, choose the set that moves the fewest mods
-      const unmovedMods = set.filter(mod => mod.characterID === character.baseID).length;
+      const unmovedMods = set.filter(mod => mod.characterID === character.id).length;
       if (bestUnmovedMods === -1) {
-        bestUnmovedMods = bestModSet.filter(mod => mod.characterID === character.baseID).length;
+        bestUnmovedMods = bestModSet.filter(mod => mod.characterID === character.id).length;
       }
 
       if (unmovedMods > bestUnmovedMods) {

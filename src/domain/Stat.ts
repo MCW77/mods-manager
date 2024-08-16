@@ -215,7 +215,7 @@ export abstract class Stat {
 					return new CSStats.CharacterSummaryStat(statType, this.stringValue);
 				}
         throw new Error(
-          `Stat is given as a percentage, but ${character.baseID} has no base stats`,
+          `Stat is given as a percentage, but ${character.id} has no base stats`,
         );
 			});
 		}

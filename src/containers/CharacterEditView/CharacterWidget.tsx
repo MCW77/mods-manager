@@ -39,7 +39,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
 		const isLocked =
-			lockedStatus$.ofActivePlayerByCharacterId[character.baseID].get();
+			lockedStatus$.ofActivePlayerByCharacterId[character.id].get();
 		const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
 
 		const isCharacterSelected = (characterID: CharacterNames) =>
@@ -47,7 +47,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 				(selectedCharacter) => selectedCharacter.id === characterID,
 			);
 
-		const isDraggable = isCharacterSelected(character.baseID)
+		const isDraggable = isCharacterSelected(character.id)
 			? undefined
 			: true;
 
@@ -59,7 +59,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 			return (event: React.DragEvent<HTMLDivElement>) => {
 				event.dataTransfer.dropEffect = "copy";
 				event.dataTransfer.effectAllowed = "copy";
-				event.dataTransfer.setData("text/plain", character.baseID);
+				event.dataTransfer.setData("text/plain", character.id);
 				// We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
 				const options = {
 					effect: "add",
@@ -69,26 +69,26 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 		};
 
 		return (
-			<div className={classAttr} key={character.baseID}>
+			<div className={classAttr} key={character.id}>
 				<span
 					className={`icon locked ${isLocked ? "active" : ""}`}
-					onClick={() => toggleCharacterLock(character.baseID)}
+					onClick={() => toggleCharacterLock(character.id)}
 					onKeyUp={(e) => {
-						if (e.code === "Enter") toggleCharacterLock(character.baseID);
+						if (e.code === "Enter") toggleCharacterLock(character.id);
 					}}
 				/>
 				<div
 					className={`${isDraggable ? "cursor-grab" : ""}`}
 					draggable={isDraggable}
 					onDragStart={
-						isCharacterSelected(character.baseID)
+						isCharacterSelected(character.id)
 							? undefined
 							: dragStart(character)
 					}
 					onDoubleClick={() =>
 						dispatch(
 							CharacterEdit.thunks.selectCharacter(
-								character.baseID,
+								character.id,
 								Character.defaultTarget(character),
 								lastSelectedCharacter,
 							),
@@ -98,9 +98,9 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 					<CharacterAvatar character={character} />
 				</div>
 				<div className={"character-name"}>
-					{baseCharactersById[character.baseID]
-						? baseCharactersById[character.baseID].name
-						: character.baseID}
+					{baseCharactersById[character.id]
+						? baseCharactersById[character.id].name
+						: character.id}
 				</div>
 			</div>
 		);

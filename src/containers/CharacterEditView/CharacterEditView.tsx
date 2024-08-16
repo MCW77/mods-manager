@@ -63,7 +63,7 @@ const CharacterEditView = observer(() => {
 				!charactersManagement$.filters.hideSelectedCharacters.get() ||
 				!profile.selectedCharacters
 					.map(({ id }) => id)
-					.includes(character.baseID),
+					.includes(character.id),
 		)
 		.sort((left, right) => Character.compareGP(left, right));
 
@@ -73,10 +73,10 @@ const CharacterEditView = observer(() => {
 	 * @returns boolean
 	 */
 	const filterCharacters = (character: Character.Character) => {
-		const baseCharacter = baseCharactersById[character.baseID] ?? {
+		const baseCharacter = baseCharactersById[character.id] ?? {
 			...defaultBaseCharacter,
-			id: character.baseID,
-			name: character.baseID,
+			id: character.id,
+			name: character.id,
 		};
 		const characterFilter = charactersManagement$.filters.characterFilter.get();
 
@@ -84,13 +84,13 @@ const CharacterEditView = observer(() => {
 			characterFilter === "" ||
 			baseCharacter.name.toLowerCase().includes(characterFilter) ||
 			(["lock", "locked"].includes(characterFilter) &&
-				lockedStatus$.ofActivePlayerByCharacterId[character.baseID]) ||
+				lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
 			(["unlock", "unlocked"].includes(characterFilter) &&
-				!lockedStatus$.ofActivePlayerByCharacterId[character.baseID]) ||
+				!lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
 			baseCharacter.categories
 				.concat(
-					characterSettings[character.baseID]
-						? characterSettings[character.baseID].extraTags
+					characterSettings[character.id]
+						? characterSettings[character.id].extraTags
 						: [],
 				)
 				.some((tag) => tag.toLowerCase().includes(characterFilter))
@@ -175,14 +175,14 @@ const CharacterEditView = observer(() => {
 					>
 						{highlightedCharacters.map((character) => (
 							<CharacterWidget
-								key={character.baseID}
+								key={character.id}
 								character={character}
 								className={"active"}
 							/>
 						))}
 						{filteredCharacters.map((character) => (
 							<CharacterWidget
-								key={character.baseID}
+								key={character.id}
 								character={character}
 								className={"inactive"}
 							/>

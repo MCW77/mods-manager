@@ -44,8 +44,8 @@ const summaryListContent = (
 		.map(({ id, target, assignedMods: mods }) => {
 			const assignedCharacter = characters[id];
 			const characterName =
-				baseCharacters[assignedCharacter.baseID]?.name ??
-				assignedCharacter.baseID;
+				baseCharacters[assignedCharacter.id]?.name ??
+				assignedCharacter.id;
 
 			return [`${characterName} - ${target.name}`]
 				.concat(

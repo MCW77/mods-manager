@@ -111,9 +111,9 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 					<Arrow />
 					<CharacterAvatar character={character} />
 					<h3>
-						{baseCharactersById[character.baseID]
-							? baseCharactersById[character.baseID].name
-							: character.baseID}
+						{baseCharactersById[character.id]
+							? baseCharactersById[character.id].name
+							: character.id}
 					</h3>
 					<h4>{target.name}</h4>
 				</div>

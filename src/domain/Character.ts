@@ -11,7 +11,7 @@ import type * as DTOs from "../modules/profilesManagement/dtos";
 import { createOptimizationPlan, type OptimizationPlan } from "./OptimizationPlan";
 
 export interface Character {
-	baseID: CharacterNames;
+	id: CharacterNames;
 	playerValues: DTOs.GIMO.PlayerValuesDTO;
 	targets: OptimizationPlan[];
 }
@@ -19,12 +19,12 @@ export interface Character {
 export type CharactersById = Record<CharacterNames, Character>;
 
 export const createCharacter = (
-	baseID: CharacterNames,
+	id: CharacterNames,
 	playerValues: DTOs.GIMO.PlayerValuesDTO,
 	targets: OptimizationPlan[],
 ): Character => {
 	return {
-		baseID,
+		id,
 		playerValues,
 		targets,
 	};
@@ -81,7 +81,7 @@ export const withDeletedTarget = (
 
 export const targets = (char: Character) => {
 	const defaultTargets = groupByKey(
-		characterSettings[char.baseID]?.targets ?? [],
+		characterSettings[char.id]?.targets ?? [],
 		(target) => target.name,
 	);
 	const playerTargets = groupByKey(
@@ -100,7 +100,7 @@ export const compareGP = (thisChar: Character, thatChar: Character) => {
 	if (
 		thatChar.playerValues.galacticPower === thisChar.playerValues.galacticPower
 	) {
-		return thisChar.baseID.localeCompare(thatChar.baseID);
+		return thisChar.id.localeCompare(thatChar.id);
 	}
 	return (
 		thatChar.playerValues.galacticPower - thisChar.playerValues.galacticPower

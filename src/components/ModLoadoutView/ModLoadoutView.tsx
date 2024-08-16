@@ -49,7 +49,7 @@ const ModLoadoutView = React.memo(
 						showAvatar={showAvatars}
 						className={
 							assignedCharacter &&
-							modLoadout[slot]!.characterID === assignedCharacter.baseID
+							modLoadout[slot]!.characterID === assignedCharacter.id
 								? "no-move"
 								: ""
 						}

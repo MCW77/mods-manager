@@ -146,9 +146,9 @@ const ModStats = React.memo(
 						<h4>Assigned To</h4>
 						<CharacterAvatar character={character} />
 						<span className="avatar-name">
-							{baseCharactersById[character.baseID]
-								? baseCharactersById[character.baseID].name
-								: character.baseID}
+							{baseCharactersById[character.id]
+								? baseCharactersById[character.id].name
+								: character.id}
 						</span>
 					</div>
 				)}

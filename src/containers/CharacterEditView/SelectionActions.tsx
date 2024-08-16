@@ -106,7 +106,7 @@ const SelectionActions = ({
 					visibleCharacters.forEach((character, index) => {
 						dispatch(
 							CharacterEdit.thunks.selectCharacter(
-								character.baseID,
+								character.id,
 								Character.defaultTarget(character),
 								index + lastSelectedCharacterIndex,
 							),

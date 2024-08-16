@@ -83,7 +83,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 
 		useMount(() => {
 			beginBatch();
-			target$.characterId.set(character.baseID);
+			target$.characterId.set(character.id);
 			target$.target.assign(
 				target$.isInAdvancedEditMode.peek()
 					? OptimizationPlan.normalize(cloneOptimizationPlan())
@@ -92,9 +92,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			target$.uneditedTarget.assign(cloneOptimizationPlan());
 			target$.namesOfUserTargets.set(targetsNames);
 			endBatch();
-			const defaultTarget = characterSettings[character.baseID]
+			const defaultTarget = characterSettings[character.id]
 				? (
-						characterSettings[character.baseID] as CharacterSettings
+						characterSettings[character.id] as CharacterSettings
 					).targets.find((defaultTarget) => defaultTarget.name === target.name)
 				: null;
 		});
@@ -208,9 +208,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					<div className={"flex flex-gap-2 items-center"}>
 						<CharacterAvatar character={character} />
 						<Label>
-							{baseCharactersById[character.baseID]
-								? baseCharactersById[character.baseID].name
-								: character.baseID}
+							{baseCharactersById[character.id]
+								? baseCharactersById[character.id].name
+								: character.id}
 						</Label>
 					</div>
 					<div className={"flex gap-2 justify-center items-center"}>
@@ -240,7 +240,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 										onClick={() => {
 											dispatch(
 												CharacterEdit.thunks.deleteTarget(
-													character.baseID,
+													character.id,
 													target.name,
 												),
 											);
@@ -355,7 +355,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							{missedGoalsSection(
 								modAssignments.find(
 									(modAssignment: ModSuggestion) =>
-										modAssignment.id === character.baseID,
+										modAssignment.id === character.id,
 								) ?? null,
 							)}
 						</div>

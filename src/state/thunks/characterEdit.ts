@@ -56,11 +56,11 @@ export namespace thunks {
 							if (
 								template.selectedCharacters
 									.map(({ id }) => id)
-									.includes(character.baseID)
+									.includes(character.id)
 							) {
 								return Character.withTargetsOverrides(
 									character,
-									templateTargetsById[character.baseID],
+									templateTargetsById[character.id],
 								);
 							}
 							return character;
@@ -114,11 +114,11 @@ export namespace thunks {
 							if (
 								template.selectedCharacters
 									.map(({ id }) => id)
-									.includes(character.baseID)
+									.includes(character.id)
 							) {
 								return Character.withTargetsOverrides(
 									character,
-									templateTargetsById[character.baseID],
+									templateTargetsById[character.id],
 								);
 							}
 							return character;
@@ -272,7 +272,7 @@ export namespace thunks {
 			return profile
 				.withCharacters(
 					Object.assign({}, profile.characters, {
-						[newCharacter.baseID]: newCharacter,
+						[newCharacter.id]: newCharacter,
 					}),
 				)
 				.withSelectedCharacters(newSelectedCharacters);
@@ -326,11 +326,11 @@ export namespace thunks {
 							if (
 								template.selectedCharacters
 									.map(({ id }) => id)
-									.includes(character.baseID)
+									.includes(character.id)
 							) {
 								return Character.withTargetsOverrides(
 									character,
-									templateTargetsById[character.baseID],
+									templateTargetsById[character.id],
 								);
 							}
 							return character;

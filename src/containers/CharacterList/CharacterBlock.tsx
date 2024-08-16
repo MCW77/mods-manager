@@ -158,7 +158,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 				? "active"
 				: "";
 			const lockedActive = lockedStatus$.ofActivePlayerByCharacterId[
-				character.baseID
+				character.id
 			].get()
 				? "active"
 				: "";
@@ -168,7 +168,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 				newTarget.minimumModDots = Number(event.target.value);
 				dispatch(
 					CharacterEdit.thunks.finishEditCharacterTarget(
-						character.baseID,
+						character.id,
 						newTarget,
 					),
 				);
@@ -231,13 +231,13 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						className={`icon locked ${lockedActive}`}
 						onClick={() => {
 							lockedStatus$.ofActivePlayerByCharacterId[
-								character.baseID
+								character.id
 							].toggle();
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLSpanElement>) => {
 							if (event.key === "Enter") {
 								lockedStatus$.ofActivePlayerByCharacterId[
-									character.baseID
+									character.id
 								].toggle();
 							}
 						}}
@@ -259,7 +259,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			incrementalOptimization$.indicesByProfile[allycode].set(index);
 			optimizerView$.assign({
 				currentCharacter: {
-					id: character.baseID,
+					id: character.id,
 					index: index,
 					target: structuredClone(target),
 				},
@@ -277,7 +277,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
         );
       });
 
-    const baseClass = `character-block cursor-grab ${character.baseID}`;
+    const baseClass = `character-block cursor-grab ${character.id}`;
 
   return (
     <div
@@ -293,7 +293,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
     >
       <div
         className={
-          lockedStatus$.ofActivePlayerByCharacterId[character.baseID].get()
+          lockedStatus$.ofActivePlayerByCharacterId[character.id].get()
             ? `${baseClass} locked`
             : baseClass
         }
@@ -303,9 +303,9 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
         {renderCharacterIcons(character, target)}
         <CharacterAvatar character={character} />
         <div className={"character-name"}>
-          {baseCharactersById[character.baseID]
-            ? baseCharactersById[character.baseID].name
-            : character.baseID}
+          {baseCharactersById[character.id]
+            ? baseCharactersById[character.id].name
+            : character.id}
         </div>
         <div className={"target p-y-1 flex items-center flex-wrap gap-2"}>
           <ReactiveSelect
