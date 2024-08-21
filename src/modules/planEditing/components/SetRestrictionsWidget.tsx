@@ -1,5 +1,5 @@
 // state
-import { reactive, reactiveObserver } from "@legendapp/state/react";
+import { reactive, reactiveObserver, Show } from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
 import { target$ } from "#/modules/planEditing/state/planEditing";
@@ -16,14 +16,22 @@ import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
 
+interface SetItem {
+	setName: SetStats.GIMOStatNames;
+	key: string;
+}
+
 const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 	const setRestrictions$ = target$.target.setRestrictions;
 
 	const selectedSets$ = computed(() => {
-		const selectedSets: SetStats.GIMOStatNames[] = [];
+		const selectedSets: SetItem[] = [];
 		for (const [setName, count] of Object.entries(setRestrictions$.get())) {
 			for (let i = 0; i < count; i++) {
-				selectedSets.push(setName as SetStats.GIMOStatNames);
+				selectedSets.push({
+					setName: setName as SetStats.GIMOStatNames,
+					key: `${setName}${i}`,
+				});
 			}
 		}
 		return selectedSets;
@@ -38,7 +46,8 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 			selectedSets$
 				.get()
 				.reduce(
-					(acc, setName) => acc + setBonuses[setName].numberOfModsRequired / 2,
+					(acc, setData) =>
+						acc + setBonuses[setData.setName].numberOfModsRequired / 2,
 					0,
 				),
 	);
@@ -100,23 +109,28 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 				<div className={"selected-sets"}>
 					<p>Selected Sets:</p>
 					<div className="flex gap-2 min-h-[5rem]">
-						{selectedSets$.get().map((setName, index) => (
+						{selectedSets$.get().map(({ setName, key }, index) => (
 							<img
 								src={`/img/icon_buff_${setName
 									.replace(/\s|%/g, "")
 									.toLowerCase()}.png`}
 								alt={setName}
-								key={setName}
+								key={key}
 								onClick={() => target$.removeSetBonus(setName)}
 								onKeyUp={(e) =>
 									e.key === "Enter" && target$.removeSetBonus(setName)
 								}
 							/>
 						))}
-						{Array.from({ length: emptySlots$.get() }, (_, index) => (
-							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-							<span className={"empty-set"} key={index} />
-						))}
+						<Show if={() => emptySlots$.get() > 0}>
+							<span className={"empty-set"} />
+						</Show>
+						<Show if={() => emptySlots$.get() > 1}>
+							<span className={"empty-set"} />
+						</Show>
+						<Show if={() => emptySlots$.get() === 3}>
+							<span className={"empty-set"} />
+						</Show>
 					</div>
 				</div>
 			</div>
