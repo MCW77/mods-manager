@@ -47,7 +47,8 @@ export const statWeights = {
 };
 
 interface OptimizationPlanParam {
-	name: string;
+	id: string;
+	description: string;
 	health?: number;
 	protection?: number;
 	speed?: number;
@@ -69,7 +70,8 @@ interface OptimizationPlanParam {
 }
 
 interface ShortOptimizationPlanParam {
-	name?: string;
+	id?: string;
+	desc?: string;
 	health?: number;
 	prot?: number;
 	spd?: number;
@@ -91,7 +93,8 @@ interface ShortOptimizationPlanParam {
 }
 
 export const createOptimizationPlan = (
-	name: string,
+	id: string,
+	description = "",
 	health = 0,
 	protection = 0,
 	speed = 0,
@@ -112,7 +115,8 @@ export const createOptimizationPlan = (
 	useOnlyFullSets = false,
 ) => {
 	return {
-		name: name,
+		id: id,
+		description: description,
 		minimumModDots: minimumModDots,
 		primaryStatRestrictions: primaryStatRestrictions as PrimaryStatRestrictions,
 		setRestrictions: setRestrictions,
@@ -136,7 +140,8 @@ export const createOptimizationPlan = (
 };
 
 export const fromShortOptimizationPlan = ({
-	name= "",
+	id = "",
+	desc = "",
 	health = 0,
 	prot = 0,
 	spd = 0,
@@ -158,7 +163,8 @@ export const fromShortOptimizationPlan = ({
 }: ShortOptimizationPlanParam
 ) => {
 	return {
-		name: name,
+		id: id,
+		description: desc,
 		minimumModDots: minDots,
 		primaryStatRestrictions: primaryRes as PrimaryStatRestrictions,
 		setRestrictions: setRes,
@@ -229,9 +235,10 @@ export const denormalize = (plan: OptimizationPlan) => {
 	};
 };
 
-export const toRenamed = (plan: OptimizationPlan, name: string) => {
+export const toRenamed = (plan: OptimizationPlan, name: string, description = "") => {
 	return {
 		...plan,
+		description: description,
 		name: name,
 	};
 };
@@ -288,7 +295,7 @@ export const hasNegativeWeights = (target: OptimizationPlan) => {
 
 export const equals = (first: OptimizationPlan, second: OptimizationPlan, ignoreName = false) => {
 	return (
-		(ignoreName || (first.name === second.name)) &&
+		(ignoreName || (first.id === second.id)) &&
 		first.Health === second.Health &&
 		first.Protection === second.Protection &&
 		first.Speed === second.Speed &&
@@ -319,7 +326,8 @@ export type PrimaryStatRestrictions = Record<
 >;
 
 export interface OptimizationPlan extends Record<OptimizableStats, number> {
-	name: string;
+	id: string;
+	description: string;
 
 	Health: number;
 	Protection: number;

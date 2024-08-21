@@ -334,7 +334,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 20, 0, 100, 50, 0, 0, 25, 0, 10, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 20,
         spd: 100,
         cd: 50,
@@ -448,7 +448,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 50, 0, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 50,
         spd: 100,
         ten: 25,
@@ -463,7 +463,7 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
       createOptimizationPlan('Default Slow', 50, 0, 20, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
       fromShortOptimizationPlan({
-        name: "Default Slow w/ Primaries",
+        id: "Default Slow w/ Primaries",
         health: 50,
         spd: 20,
         ten: 25,
@@ -540,7 +540,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 5, 0, 100, 0, 10, 0, 0, 20, 0, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 5,
         spd: 100,
         pot: 10,
@@ -552,7 +552,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Sets',
+        id: 'Default w/ Primaries & Sets',
         health: 5,
         spd: 100,
         spec: 20,
@@ -574,7 +574,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 0, 0, 100, 100, 5, 0, 80, 0, 10, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         spd: 100,
         cd: 50,
         pot: 5,
@@ -606,7 +606,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 40,
         pot: -10,
         ten: 15,
@@ -621,7 +621,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Set',
+        id: 'Default w/ Primaries & Set',
         health: 40,
         pot: -10,
         ten: 15,
@@ -651,7 +651,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 10, 0, 100, 0, 10, 10, 0, 70, 20, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 10,
         spd: 100,
         pot: 10,
@@ -666,7 +666,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Set',
+        id: 'Default w/ Primaries & Set',
         health: 10,
         spd: 100,
         pot: 10,
@@ -692,7 +692,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 20,
         spd: 100,
         pot: 60,
@@ -706,7 +706,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Set',
+        id: 'Default w/ Primaries & Set',
         health: 20,
         spd: 100,
         pot: 60,
@@ -743,7 +743,7 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Default', 0, 20, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0),
       createOptimizationPlan('AdRad', 10, 20, 100, 0, 25, 0, 0, 10, 0, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'AdRad w/ Primaries',
+        id: 'AdRad w/ Primaries',
         health: 10,
         prot: 20,
         spd: 100,
@@ -771,7 +771,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 40,
         prot: 15,
         spd: 20,
@@ -787,7 +787,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Set',
+        id: 'Default w/ Primaries & Set',
         health: 40,
         prot: 15,
         spd: 20,
@@ -821,7 +821,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 12, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 12,
         spd: 100,
         primaryRes: {
@@ -831,7 +831,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Sets',
+        id: 'Default w/ Primaries & Sets',
         health: 12,
         spd: 100,
         primaryRes: {
@@ -846,7 +846,7 @@ const characterSettings: CharacterSettingsIndexer = {
       }),
       toRenamed(optimizationStrategy.Speed, 'Speed'),
       fromShortOptimizationPlan({
-        name: 'Speed w/ Primaries',
+        id: 'Speed w/ Primaries',
         spd: 100,
         primaryRes: {
           triangle: "Critical Chance %",
@@ -875,7 +875,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 50, 0, 100, 0, 20, 20, 0, 0, 0, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 50,
         spd: 100,
         pot: 20,
@@ -887,7 +887,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Sets',
+        id: 'Default w/ Primaries & Sets',
         health: 50,
         spd: 100,
         pot: 20,
@@ -1045,7 +1045,7 @@ const characterSettings: CharacterSettingsIndexer = {
       createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 25, 0, 25, 0, 0, 0, 0),
       createOptimizationPlan('Iden Lead', 10, 10, 100, 100, 40, 0, 25, 0, 0, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'hSTR Phase 3',
+        id: 'hSTR Phase 3',
         phys: 100,
         targetStats: [
           createTargetStat('Speed', '+', 175, 179, 'null'),
@@ -1123,7 +1123,7 @@ const characterSettings: CharacterSettingsIndexer = {
     [
       createOptimizationPlan('Default', 25, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries',
+        id: 'Default w/ Primaries',
         health: 25,
         spd: 100,
         ten: 50,
@@ -1134,7 +1134,7 @@ const characterSettings: CharacterSettingsIndexer = {
         },
       }),
       fromShortOptimizationPlan({
-        name: 'Default w/ Primaries & Sets',
+        id: 'Default w/ Primaries & Sets',
         health: 25,
         spd: 100,
         ten: 50,
@@ -1907,7 +1907,7 @@ const characterSettings: CharacterSettingsIndexer = {
   PADAWANOBIWAN: createCharacterSettings(
     [
       fromShortOptimizationPlan({
-        name: "Default",
+        id: "Default",
         spd: 30,
         cd: 100,
       }),

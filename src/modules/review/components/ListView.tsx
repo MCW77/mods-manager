@@ -115,7 +115,7 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 							? baseCharactersById[character.id].name
 							: character.id}
 					</h3>
-					<h4>{target.name}</h4>
+					<h4>{target.id}</h4>
 				</div>
 				<div className={"actions"}>
 					<Button

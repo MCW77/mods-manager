@@ -76,7 +76,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			Storage.selectors.selectModAssignmentsInActiveProfile,
 		);
 		const targetsNames = character.targets.map(
-			(target) => target.name,
+			(target) => target.id,
 		);
 
 		const cloneOptimizationPlan = () => structuredClone(target);
@@ -95,7 +95,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			const defaultTarget = characterSettings[character.id]
 				? (
 						characterSettings[character.id] as CharacterSettings
-					).targets.find((defaultTarget) => defaultTarget.name === target.name)
+					).targets.find((defaultTarget) => defaultTarget.id === target.id)
 				: null;
 		});
 
@@ -275,9 +275,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							className={"w-fit"}
 							id={"plan-name"}
 							type={"text"}
-							$value={target$.target.name}
+							$value={target$.target.id}
 							onChange={(e: React.FormEvent<HTMLInputElement>) => {
-								target$.target.name.set(e.currentTarget.value);
+								target$.target.id.set(e.currentTarget.value);
 							}}
 						/>
 					</div>

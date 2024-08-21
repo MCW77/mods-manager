@@ -179,7 +179,7 @@ export namespace thunks {
 															key={`${id}-Messages`}
 															className="grid gap-1 p-4"
 														>
-															<h4>{target.name}:</h4>
+															<h4>{target.id}:</h4>
 															<ul>
 																{messages?.map((message) => (
 																	<li key={message}>{message}</li>

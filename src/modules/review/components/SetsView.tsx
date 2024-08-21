@@ -74,7 +74,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 						</h3>
 						{target && (
 							<h4 className={missedGoals?.length ? "red-text" : ""}>
-								{target.name}
+								{target.id}
 							</h4>
 						)}
 						<div className={"actions"}>

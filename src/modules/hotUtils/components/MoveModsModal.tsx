@@ -108,7 +108,7 @@ const MoveModsModal = () => {
 			.map(({ id, assignedMods, target }) => ({
 				id: id,
 				modIds: assignedMods,
-				target: target.name,
+				target: target.id,
 			}));
 
 		const lockedMods = (

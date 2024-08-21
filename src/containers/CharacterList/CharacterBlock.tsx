@@ -90,7 +90,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
     const baseCharactersById = characters$.baseCharactersById.get();
     const character = characters[characterId];
-    const selectedPlan = target.name;
+    const selectedPlan = target.id;
 
     /**
      * @param dropCharacterIndex The index of the character on which the drop is occurring or null (No characters in the list)
@@ -268,7 +268,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		};
 
     const options = Character.targets(character)
-      .map((characterTarget) => characterTarget.name)
+      .map((characterTarget) => characterTarget.id)
       .map((targetName) => {
         return (
           <SelectItem className={"w-32"} value={targetName} key={targetName}>
@@ -312,7 +312,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
             $value={() => selectedPlan}
             onValueChange={(value) => {
               const target = Character.targets(character).find(
-                (target) => target.name === value,
+                (target) => target.id === value,
               );
               if (target !== undefined) {
                 dispatch(

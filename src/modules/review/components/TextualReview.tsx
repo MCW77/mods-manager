@@ -47,7 +47,7 @@ const summaryListContent = (
 				baseCharacters[assignedCharacter.id]?.name ??
 				assignedCharacter.id;
 
-			return [`${characterName} - ${target.name}`]
+			return [`${characterName} - ${target.id}`]
 				.concat(
 					mods.map((mod) => {
 						const moveFrom =

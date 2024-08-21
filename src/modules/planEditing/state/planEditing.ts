@@ -21,7 +21,7 @@ const target$: PlanEditing = observable({
 		const character = characterSettings[
 			target$.characterId.get()
 		] as CharacterSettings;
-		return character.targets.map((target) => target.name);
+		return character.targets.map((target) => target.id);
 	},
 	namesOfAllTargets: () => {
 		return [
@@ -33,11 +33,11 @@ const target$: PlanEditing = observable({
 		return (
 			!target$.isBuiltinTarget.get() &&
 			target$.isUsedTargetName.get() &&
-			target$.target.name.get() === target$.uneditedTarget.name.get()
+			target$.target.id.get() === target$.uneditedTarget.id.get()
 		);
 	},
 	hasAChangedName: () => {
-		return target$.target.name.get() !== target$.uneditedTarget.name.get();
+		return target$.target.id.get() !== target$.uneditedTarget.id.get();
 	},
 	isUnsaveable: () => {
 		return (
@@ -47,12 +47,12 @@ const target$: PlanEditing = observable({
 		);
 	},
 	isUsedTargetName: () =>
-		target$.namesOfAllTargets.get().includes(target$.target.name.get()),
+		target$.namesOfAllTargets.get().includes(target$.target.id.get()),
 	isBuiltinTarget: () =>
 		(
 			characterSettings[target$.characterId.peek()] as CharacterSettings
 		)?.targets.some(
-			(target) => target.name === target$.uneditedTarget.get().name,
+			(target) => target.id === target$.uneditedTarget.get().id,
 		),
 	isInAdvancedEditMode: false,
 	isTargetChanged: () => {
@@ -66,7 +66,7 @@ const target$: PlanEditing = observable({
 			target$.isBuiltinTarget.peek() &&
 			target$.isUsedTargetName.peek()
 		) {
-			target$.target.name.set(`${target$.target.name.peek()}*`);
+			target$.target.id.set(`${target$.target.id.peek()}*`);
 		}
 		return targetChanged;
 	},

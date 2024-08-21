@@ -54,8 +54,8 @@ export const  withTargetsOverrides = (
 	char: Character,
 	targets: OptimizationPlan[]
 ) => {
-  const oldTargetsObject = groupByKey(char.targets, target => target.name);
-  const newTargetsObject = groupByKey(targets, target => target.name);
+  const oldTargetsObject = groupByKey(char.targets, target => target.id);
+  const newTargetsObject = groupByKey(targets, target => target.id);
 
   return {
 		...char,
@@ -68,7 +68,7 @@ export const withDeletedTarget = (
 	targetName: string,
 ): Character => {
 	const newTargets = char.targets.slice();
-  const targetIndex = newTargets.findIndex(target => target.name === targetName);
+  const targetIndex = newTargets.findIndex(target => target.id === targetName);
   if (-1 !== targetIndex) {
     newTargets.splice(targetIndex, 1);
   }
@@ -82,11 +82,11 @@ export const withDeletedTarget = (
 export const targets = (char: Character) => {
 	const defaultTargets = groupByKey(
 		characterSettings[char.id]?.targets ?? [],
-		(target) => target.name,
+		(target) => target.id,
 	);
 	const playerTargets = groupByKey(
 		char.targets,
-		(target) => target.name,
+		(target) => target.id,
 	);
 
 	return Object.values(Object.assign({}, defaultTargets, playerTargets));
