@@ -50,7 +50,7 @@ const App = observer(
 	React.memo(() => {
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
-		const firstSection = profilesManagement$.hasProfiles.peek()
+		const firstSection = profilesManagement$.hasProfiles.get()
 			? "mods"
 			: "help";
 
@@ -64,7 +64,7 @@ const App = observer(
 			if (allycode) {
 				if (sessionId) {
 					if (queryParams.has("NoPull")) {
-						if (profilesManagement$.profiles.activeAllycode.get() === "")
+						if (profilesManagement$.profiles.activeAllycode.peek() === "")
 							dispatch(
 								Data.thunks.refreshPlayerData(
 									allycode,
@@ -181,15 +181,27 @@ const App = observer(
 								</div>
 								<ProfilesManager />
 							</div>
-							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="mods">
-								<ModsView />
-							</TabsContent>
-							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="optimize">
-								<OptimizerView />
-							</TabsContent>
-							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="settings">
-								<SettingsView />
-							</TabsContent>
+							<Show if={profilesManagement$.hasProfiles}>
+								{() => (
+									<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="mods">
+										<ModsView />
+									</TabsContent>
+								)}
+							</Show>
+							<Show if={profilesManagement$.hasProfiles}>
+								{() => (
+									<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="optimize">
+										<OptimizerView />
+									</TabsContent>
+								)}
+							</Show>
+							<Show if={profilesManagement$.hasProfiles}>
+								{() => (
+									<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="settings">
+										<SettingsView />
+									</TabsContent>
+								)}
+							</Show>
 							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="help">
 								<HelpView />
 							</TabsContent>
