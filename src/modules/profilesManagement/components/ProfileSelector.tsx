@@ -37,7 +37,7 @@ const ProfileSelector = observer(
 
 		return (
 			<ReactiveSelect
-				value={allycode}
+				value={allycode ?? ""}
 				onValueChange={(value) => {
 					if (value === "new") {
 						setAddMode(true);
