@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 
 // state
-import { observer, useObservable } from "@legendapp/state/react";
+import { observer } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
 
 // modules
@@ -24,11 +24,11 @@ const CategoryView: React.FC = observer(() => {
   console.log(`CategoryView render: (${modsView$.activeCategory.peek()})`, ++counter.current);
 
   const [t] = useTranslation("global-ui");
-  const profile = useSelector(Storage.selectors.selectActiveProfile);
+  const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
   const activeViewSetupInActiveCategory = structuredClone(modsView$.activeViewSetupInActiveCategory.get());
   activeViewSetupInActiveCategory.filterById["*QuickFilter*"] = modsView$.quickFilter.get();
   const modsFilter = new ModsFilter(activeViewSetupInActiveCategory);
-  const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(profile.mods);
+  const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(profileMods);
 
   const mods = [];
   for (const modsInGroup of Object.values(filteredMods)) {
@@ -40,7 +40,7 @@ const CategoryView: React.FC = observer(() => {
     <GroupedMods
       groupedMods={groupedMods}
       assignedMods={{} as Record<string, CharacterNames>}
-      allModsCount={profile.mods.length}
+      allModsCount={profileMods.length}
       displayedModsCount={modsCount}
     />
   );
