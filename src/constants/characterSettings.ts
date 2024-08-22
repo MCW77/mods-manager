@@ -10,7 +10,6 @@ import {
 	DamageType,
 } from "#/domain/CharacterSettings";
 import {
-	createOptimizationPlan,
 	fromShortOptimizationPlan,
 	toRenamed,
 } from "#/domain/OptimizationPlan";
@@ -297,2203 +296,5491 @@ export type CharacterSettingsIndexer = {
 	[key in CharacterNames]: CharacterSettings;
 };
 const characterSettings: CharacterSettingsIndexer = {
-  '50RT': createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 20, 0, 0, 0, 0, 25, 0, 0, 0)],
-  ),
-  AAYLASECURA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 0, 75, 0, 10, 0, 100, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-    ]
-  ),
-  ADMINISTRATORLANDO: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 50, 0, 0, 25, 0, 75, 0, 0, 0, 0)]
-  ),
-  ADMIRALACKBAR: createCharacterSettings(
-    [
-      createOptimizationPlan('Survivability', 20, 20, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0),
-      optimizationStrategy.Speed
-    ],
-    ['AA', 'Snackbar', 'ABC']
-  ),
-  ADMIRALPIETT: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0)]
-  ),
-  ADMIRALRADDUS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 10, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Protection', 10, 20, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Protection w/ Primaries', 10, 20, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 5, {
-        triangle: "Protection %",
-        cross: "Protection %",
-        circle: "Protection %",
-      }),
-      createOptimizationPlan('Health', 20, 10, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Health w/ Primaries', 20, 10, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 5, {
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }),
-    ],
-    [],
-    DamageType.special
-  ),
-  AHSOKATANO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 0, 100, 50, 0, 0, 25, 0, 10, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 20,
-        spd: 100,
-        cd: 50,
-        phys: 25,
-        cc: 10,
-        primaryRes: {
-          triangle: "Critical Damage %",
-          cross: "Offense %",
-          circle: "Health %",
-        }
-      }),
-      createOptimizationPlan('Padme Lead', 10, 0, 100, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0),
-      createOptimizationPlan('Slow Damage', 25, 0, 0, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0)
-    ],
-    ['Snips']
-  ),
-  AMILYNHOLDO: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 50, 25, 0, 0, 0, 5, 5, 0, 0)],
-    ['Hodor'],
-    DamageType.mixed
-  ),
-  ANAKINKNIGHT: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 75, 25, 0, 25, 0, 80, 0, 0, 0, 0),
-      createOptimizationPlan('Padme Lead', 10, 0, 80, 100, 25, 0, 25, 0, 40, 0, 0, 0, 0),
-      createOptimizationPlan('oQGJ Lead', 0, 0, 100, 100, 10, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Chex Mix', 0, 0, 50, 0, 0, 0, 100, 0, 25, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P1 Jedi', 0, -5, 20, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Slow Damage', 25, 0, 0, 100, 25, 0, 25, 0, 40, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 0, 0, 0, 100, 20, 0, 40, 0, 25, 0, 0, 0, 0),
-    ],
-    ['JKA']
-  ),
-  ARCTROOPER501ST: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 0, 0, 0, 50, 0, 15, 0, 0, 0, 0),
-      createOptimizationPlan('KAM', 10, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('KAM/CA', 10, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 100),
-    ],
-  ),
-  ARMORER: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 10, 100, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  ASAJVENTRESS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 10, 10, 20, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 100, 0, 0, 25, 25, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 15, 0, 50, 100, 0, 0, 30, 30, 0, 0, 0, 0, 0),
-    ],
-    ['AV', 'Zen', 'NS', 'hSTR NS', 'ABC'],
-    DamageType.mixed
-  ),
-  AURRA_SING: createCharacterSettings(
-    [
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 75, 100, 0, 0, 50, 0, 10, 0, 0, 0, 0),
-      createOptimizationPlan('Default', 0, 0, 100, 80, 20, 0, 50, 0, 25, 0, 0, 0, 0)
-    ]
-  ),
-  BADBATCHECHO: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speedy debuffer"], 'Default')],
-  ),
-  BADBATCHHUNTER: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 15, 0, 25, 0, 0, 0, 0, 0, 0)],
-  ),
-  BADBATCHOMEGA: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 50, 0, 25, 0, 100, 0, 0, 0, 0, 0, 0)]
-  ),
-  BADBATCHTECH: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speedy debuffer"], 'Default')],
-    [],
-    DamageType.special
-  ),
-  BADBATCHWRECKER: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 30, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0)]
-  ),
-  B1BATTLEDROIDV2: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0)]
-  ),
-  B2SUPERBATTLEDROID: createCharacterSettings(
-    [
-      createOptimizationPlan('Survival', 50, 50, 0, 0, 50, 25, 0, 0, 0, 0, 0, 50, 0),
-      createOptimizationPlan('Tenacity', 50, 50, 0, 0, 50, 100, 0, 0, 0, 0, 0, 0, 100),
-      createOptimizationPlan('Potency', 50, 50, 0, 0, 100, 50, 0, 0, 0, 0, 0, 0, 100),
-    ]
-  ),
-  BARRISSOFFEE: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 70, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P1 Jedi', 75, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  BASTILASHAN: createCharacterSettings(
-    [
-      createOptimizationPlan('Leader', 10, 0, 100, 0, 50, 0, 0, 25, 0, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Special Damage with Potency"], 'Non-leader'),
-      toRenamed(optimizationStrategy["Special Damage"], 'JKR Lead'),
-      createOptimizationPlan('hSTR P2 Jedi', 0, 0, 100, 50, 0, 0, 0, 25, 50, 0, 0, 0, 0)
-    ],
-    [],
-    DamageType.special
-  ),
-  BASTILASHANDARK: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Offensive', 0, 0, 100, 50, 5, 0, 0, 25, 0, 0, 0, 0, 0),
-    ],
-    [],
-    DamageType.special
-  ),
-  BAZEMALBUS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 50, 0, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 50,
-        spd: 100,
-        ten: 25,
-        arm: 12.5,
-        res: 12.5,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Health %",
-          circle: "Health %",
-          cross: "Health %",
-        },
-      }),
-      createOptimizationPlan('Default Slow', 50, 0, 20, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-      fromShortOptimizationPlan({
-        id: "Default Slow w/ Primaries",
-        health: 50,
-        spd: 20,
-        ten: 25,
-        arm: 12.5,
-        res: 12.5,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Health %",
-          circle: "Health %",
-          cross: "Health %",
-        },
-      }),
-      createOptimizationPlan('Slow Tank', 50, 50, 0, 0, 10, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-      createOptimizationPlan('hSTR Phase 4', 10, 10, -100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    ],
-    ['Rogue 1', 'Chaze', 'Chiggs']
-  ),
-  BB8: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 5, 100, 0, 0, 10, 0, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 10, -5, 100, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0),
-      optimizationStrategy.Speed,
-      createOptimizationPlan('Tanky', 5, 25, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0)
-    ],
-    ['bb8', 'Wampanader', 'ABC']
-  ),
-  BENSOLO: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 0, 100, 0, 10, 0, 0, 70, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  BIGGSDARKLIGHTER: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default')],
-    ['Wiggs', 'Chiggs']
-  ),
-  BISTAN: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['Rogue 1', 'SuperStar2D2']
-  ),
-  BOBAFETT: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 50, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('hSTR Phase 2', 0, 0, 100, 75, 0, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3 Greedo', 0, 0, 20, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0)
-    ]
-  ),
-  BOBAFETTSCION: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
-    ]
-  ),
-  BODHIROOK: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 10, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['Rogue 1']
-  ),
-  BOKATAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 10, 0, 50, 0, 0, 0, 0)],
-  ),
-  BOOMADIER: createCharacterSettings(
-    [createOptimizationPlan('Default', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3)],
-  ),
-  BOSSK: createCharacterSettings(
-    [
-      createOptimizationPlan('Leader', 10, 10, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Non-leader', 10, 0, 100, 0, 10, 25, 0, 0, 0, 0, 0, 0, 0),
-    ]
-  ),
-  BOSSNASS: createCharacterSettings(
-    [createOptimizationPlan('Default', 4, 22, 100, 0, 28, 15, 2, 3, 2, 2, 2, 0, 0)],
-  ),
-  BOUSHH: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 0, 100, 0, 10, 0, 0, 20, 0, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 5,
-        spd: 100,
-        pot: 10,
-        spec: 20,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Offense %",
-          cross: "Offense %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Sets',
-        health: 5,
-        spd: 100,
-        spec: 20,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Offense %",
-          cross: "Offense %",
-        },
-        setRes: {
-          "Speed %": 1,
-          "Potency %": 1,
-        }
-      }),
-    ],
-    [],
-    DamageType.special
-  ),
-  BT1: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 5, 0, 80, 0, 10, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        spd: 100,
-        cd: 50,
-        pot: 5,
-        phys: 50,
-        cc: 10,
-        primaryRes: {
-          arrow: "Offense %",
-          triangle: "Critical Damage %",
-          cross: "Offense %",
-        },
-      }),
-    ],
-  ),
-  C3POCHEWBACCA: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 80, 10, 0, 50, 0, 25, 0, 0, 0, 0)],
-  ),
-  C3POLEGENDARY: createCharacterSettings(
-    [
-      optimizationStrategy["Speedy debuffer"],
-      optimizationStrategy.Speed,
-      createOptimizationPlan('hSTR Phase 1', 0, 0, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Anti-Malak', 10, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
-    ]
-  ),
-  CADBANE: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-  ),
-  CALKESTIS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 40, 0, 0, 0, -10, 15, 10, 0, 0, 12.5, 12.5, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 40,
-        pot: -10,
-        ten: 15,
-        phys: 10,
-        arm: 12.5,
-        res: 12.5,
-        primaryRes: {
-          arrow: "Health %",
-          triangle: "Health %",
-          cross: "Health %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Set',
-        health: 40,
-        pot: -10,
-        ten: 15,
-        phys: 10,
-        arm: 12.5,
-        res: 12.5,
-        primaryRes: {
-          arrow: "Health %",
-          triangle: "Health %",
-          cross: "Health %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Health %": 2,
-          "Defense %": 1,
-        }
-      }),
-    ],
-  ),
-  CANDEROUSORDO: createCharacterSettings(
-    [
-      createOptimizationPlan('Maul Lead', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-    ],
-  ),
-  CAPTAINDROGAN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 0, 10, 10, 0, 70, 20, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 10,
-        spd: 100,
-        pot: 10,
-        ten: 10,
-        spec: 70,
-        cc: 20,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Offense %",
-          cross: "Offense %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Set',
-        health: 10,
-        spd: 100,
-        pot: 10,
-        ten: 10,
-        spec: 70,
-        cc: 20,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Offense %",
-          cross: "Offense %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Offense %": 1,
-          "Health %": 1,
-        }
-      }),
-    ],
-    [],
-    DamageType.special
-  ),
-  CAPTAINREX: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 0, 100, 0, 60, 10, 0, 0, 100, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 20,
-        spd: 100,
-        pot: 60,
-        ten: 10,
-        cc: 100,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Critical Chance %",
-          cross: "Potency %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Set',
-        health: 20,
-        spd: 100,
-        pot: 60,
-        ten: 10,
-        cc: 100,
-        primaryRes: {
-          arrow: "Speed",
-          triangle: "Critical Chance %",
-          cross: "Potency %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Potency %": 1,
-          "Critical Chance %": 1,
-          "Health %": 1,
-        },
-      }),
-    ],
-  ),
-  CAPTAINTARPALS: createCharacterSettings(
-    [createOptimizationPlan('Default', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3)],
-  ),
-  CARADUNE: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 80, 100, 20, 0, 25, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Mothma Lead', 10, 10, 100, 0, 20, 20, 5, 0, 0, 5, 0, 0, 0),
-    ]
-  ),
-  CARTHONASI: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-  ),
-  CASSIANANDOR: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 20, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('AdRad', 10, 20, 100, 0, 25, 0, 0, 10, 0, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'AdRad w/ Primaries',
-        health: 10,
-        prot: 20,
-        spd: 100,
-        pot: 25,
-        spec: 10,
-        primaryRes: {
-          triangle: "Critical Chance %",
-          cross: "Potency %",
-          circle: "Protection %",
-        },
-      }),
-    ],
-    ['Rogue 1', 'SuperStar2D2'],
-    DamageType.mixed
-  ),
-  CC2224: createCharacterSettings(
-    [
-      createOptimizationPlan('Leader', 0, 0, 100, 50, 25, 0, 25, 0, 50, 12.5, 12.5, 0, 0),
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Non-leader'),
-    ],
-    ['zody'],
-    DamageType.mixed
-  ),
-  CEREJUNDA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 40, 15, 20, 0, 0, 10, 10, 0, 0, 12.5, 12.5, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 40,
-        prot: 15,
-        spd: 20,
-        ten: 10,
-        phys: 10,
-        arm: 12.5,
-        res: 12.5,
-        primaryRes: {
-          arrow: "Health %",
-          triangle: "Health %",
-          cross: "Health %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Set',
-        health: 40,
-        prot: 15,
-        spd: 20,
-        ten: 10,
-        phys: 10,
-        arm: 12.5,
-        res: 12.5,
-        primaryRes: {
-          arrow: "Health %",
-          triangle: "Health %",
-          cross: "Health %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Health %": 2,
-          "Defense %": 1,
-        },
-      }),
-    ],
-  ),
-  CHEWBACCALEGENDARY: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default'),
-      createOptimizationPlan('Tenacity', 25, 25, 100, 0, 0, 80, 10, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Chew Mix', 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3 Greedo', 0, 0, 75, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0)
-    ],
-    ['Chex Mix']
-  ),
-  CHIEFCHIRPA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 12, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 12,
-        spd: 100,
-        primaryRes: {
-          triangle: "Health %",
-          cross: "Health %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Sets',
-        health: 12,
-        spd: 100,
-        primaryRes: {
-          triangle: "Health %",
-          cross: "Health %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Speed %": 1,
-          "Health %": 1,
-        },
-      }),
-      toRenamed(optimizationStrategy.Speed, 'Speed'),
-      fromShortOptimizationPlan({
-        id: 'Speed w/ Primaries',
-        spd: 100,
-        primaryRes: {
-          triangle: "Critical Chance %",
-          cross: "Protection %",
-          circle: "Protection %",
-        },
-      }),
-    ],
-    ['Murderbears']
-  ),
-  CHIEFNEBIT: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 50, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Detonator', 60, 60, 100, 0, 0, 0, 0, 0, 0, 50, 0, 0, 25),
-    ],
-    ['nebs'],
-  ),
-  CHIRRUTIMWE: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 0, 20, 25, 0, 50, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speedy Chex Mix"], 'Chex Mix')
-    ],
-    ['Rogue 1', 'Chaze', 'Chiggs', 'Chex Mix']
-  ),
-  CHOPPERS3: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 50, 0, 100, 0, 20, 20, 0, 0, 0, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 50,
-        spd: 100,
-        pot: 20,
-        ten: 20,
-        primaryRes: {
-          arrow: "Speed",
-          cross: "Tenacity %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Sets',
-        health: 50,
-        spd: 100,
-        pot: 20,
-        ten: 20,
-        primaryRes: {
-          arrow: "Speed",
-          cross: "Tenacity %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Health %": 3,
-        },
-      }),
-    ],
-  ),
-  CLONESERGEANTPHASEI: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['Sarge']
-  ),
-  CLONEWARSCHEWBACCA: createCharacterSettings(
-    [createOptimizationPlan('Tanky', 50, 50, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0)],
-    ['CWC']
-  ),
-  COLONELSTARCK: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 10, 5, 0, 5, 0, 5, 0, 0, 0, 0)],
-    ['Tony Stark', 'Troopers']
-  ),
-  COMMANDERAHSOKA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 0, 100, 50, 0, 0, 0, 30, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Health', 10, 0, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Crit.Dmg', 5, 0, 25, 100, 0, 0, 0, 30, 0, 0, 0, 0, 0),
-    ],
-    ['CAT'],
-    DamageType.special
-  ),
-  COMMANDERLUKESKYWALKER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Chewpio', 10, 10, 100, 0, 10, 50, 50, 0, 0, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speedy Chex Mix"], 'Chex Mix'),
-      createOptimizationPlan('Raids', 0, 0, 100, 0, 25, 0, 25, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Slow and Strong', 0, 0, 0, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
-    ],
-    ['CLS', 'Wampanader', 'Chex Mix', 'ABC', 'Titans'],
-  ),
-  CORUSCANTUNDERWORLDPOLICE: createCharacterSettings(
-    [createOptimizationPlan('Why?', 0, 0, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['CUP']
-  ),
-  COUNTDOOKU: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 50, 50, 25, 25, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.mixed
-  ),
-  CT5555: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 15, 30, 50, 0, 15, 0, 25, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('KAM', 30, 15, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('KAM/CA', 30, 15, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100),
-    ],
-  ),
-  CT7567: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 0, 100, 0, 5, 10, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('KAM', 10, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy.Speed, 'Chex Mix'),
-    ],
-    ['Titans'],
-  ),
-  CT210408: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 50, 0, 75, 75, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 0, 0, 50, 100, 0, 0, 75, 75, 25, 0, 0, 0, 0),
-      createOptimizationPlan('KAM', 5, 0, 50, 100, 0, 0, 20, 20, 50, 0, 0, 0, 0),
-      createOptimizationPlan('KAM/CA', 5, 0, 50, 100, 0, 0, 20, 20, 50, 0, 0, 0, 100),
-    ],
-    [],
-    DamageType.mixed
-  ),
-  DAKA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 0, 100, 0, 25, 15, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Tanky', 75, 0, 100, 0, 30, 15, 0, 0, 0, 0, 0, 0, 100),
-      createOptimizationPlan('hSTR Phase 4', 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 50, 0, 75, 0, 15, 0, 5, 0, 0, 0, 0, 0, 0),
-    ],
-    ['NS', 'hSTR NS']
-  ),
-  DARKTROOPER: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 10, 50, 0, 0, 5, 60, 0, 0, 2.5, 2.5, 0, 0)],
-  ),
-  DARTHBANE: createCharacterSettings(
-    [createOptimizationPlan('Default', 50, 3, 100, 9, 3, 10, 25, 10, 0, 2, 2, 3, 3)],
-  ),
-  DARTHMALAK: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 50, 100, 0, 10, 0, 10, 0, 0, 10, 0, 0, 0),
-      createOptimizationPlan('Tenacity', 0, 50, 100, 0, 10, 100, 10, 0, 0, 10, 0, 0, 0),
-    ],
-  ),
-  DARTHMALGUS: createCharacterSettings(
-    [createOptimizationPlan('Default', 50, 10, 100, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0)],
-  ),
-  DARTHNIHILUS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 30, 0, 100, 0, 50, 60, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Tanky', 40, 0, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 100),
-    ],
-    ['Nightmare'],
-    DamageType.special
-  ),
-  DARTHREVAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 0, 100, 50, 5, 0, 0, 10, 5, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  DARTHSIDIOUS: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 25, 0, 50, 0, 0, 0, 0, 0, 0)],
-    ['Auto Lightzader']
-  ),
-  DARTHSION: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 30, 100, 0, 5, 0, 0, 0, 0, 20, 0, 0, 0),
-      createOptimizationPlan('Default/CA', 25, 30, 100, 0, 5, 0, 0, 0, 0, 20, 0, 0, 100),
-    ],
-    ['Nightmare']
-  ),
-  DARTHTALON: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 15, 25, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  DARTHTRAYA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 15, 10, 100, 0, 5, 0, 0, 15, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Tanky', 25, 75, 65, 0, 0, 65, 0, 0, 0, 0, 0, 0, 100)
-    ],
-    [],
-    DamageType.special
-  ),
-  DASHRENDAR: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 0, 100, 60, 5, 0, 50, 0, 10, 0, 0, 0, 0)],
-  ),
-  DATHCHA: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100),
-    ],
-    [],
-    DamageType.mixed
-  ),
-  DEATHTROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 25, 0, 25, 0, 0, 0, 0),
-      createOptimizationPlan('Iden Lead', 10, 10, 100, 100, 40, 0, 25, 0, 0, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'hSTR Phase 3',
-        phys: 100,
-        targetStats: [
-          createTargetStat('Speed', '+', 175, 179, 'null'),
-        ],
-      }),
-    ],
-    ['Troopers', 'Chex Mix'],
-  ),
-  DENGAR: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 0, 60, 0, 0, 0, 100, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 50, 0, 0, 100, 0, 25, 0, 0, 0, 0),
-    ]
-  ),
-  DIRECTORKRENNIC: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Special Damage, Potency"], 'Default')],
-    ['Imperial Grancor Maneuver'],
-    DamageType.special
-  ),
-  DOCTORAPHRA: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 90, 0, 100, 0, 0, 20, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  DROIDEKA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 10, 0, 0, 10, 20, 100, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Maul Kickstarter', 0, 5, 100, 0, 5, 5, 20, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  EETHKOTH: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Special Damage, Potency"], 'Default')],
-    [],
-    DamageType.mixed
-  ),
-  EIGHTHBROTHER: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 5, 100, 50, 0, 0, 30, 0, 5, 0, 0, 0, 0)],
-  ),
-  EMBO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 20, 100, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 50, 25, 0, 0, 75, 0, 100, 0, 0, 0, 0),
-    ]
-  ),
-  EMPERORPALPATINE: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Special Damage with Potency"], 'Default'),
-      createOptimizationPlan('Tanky', 0, 100, 70, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['EP', 'Palp', 'EzPz', 'Nightmare'],
-    DamageType.special
-  ),
-  ENFYSNEST: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 50, 25, 100, 10, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Speedy', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Offense'),
-      createOptimizationPlan('Tenacity', 10, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 25, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0),
-    ],
-    ['Nesty', 'Baby Wampa', 'solo'],
-    DamageType.special
-  ),
-  EPIXFINN: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 50, 0, 0, 0, 25, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  EPIXPOE: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 0, 20, 20, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  EWOKELDER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries',
-        health: 25,
-        spd: 100,
-        ten: 50,
-        primaryRes: {
-          triangle: "Health %",
-          cross: "Tenacity %",
-          circle: "Health %",
-        },
-      }),
-      fromShortOptimizationPlan({
-        id: 'Default w/ Primaries & Sets',
-        health: 25,
-        spd: 100,
-        ten: 50,
-        primaryRes: {
-          triangle: "Health %",
-          cross: "Tenacity %",
-          circle: "Health %",
-        },
-        setRes: {
-          "Health %": 3,
-        },
-      }),
-    ],
-    ['EE', 'Murderbears'],
-  ),
-  EWOKSCOUT: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 15, 0, 100, 0, 50, 0, 50, 0, 20, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 15, 0, 100, 0, 50, 0, 50, 0, 20, 0, 0, 0, 0, 5, {
-        triangle: "Offense %",
-        cross: "Potency %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 15, 0, 100, 0, 50, 0, 50, 0, 20, 0, 0, 0, 0, 5, {
-        triangle: "Offense %",
-        cross: "Potency %",
-        circle: "Health %",
-      }, {
-        "Offense %": 1,
-        "Potency %": 1,
-      }),
-      createOptimizationPlan('hSTR Phase 2', 0, 0, 50, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0),
-    ],
-    ['Murderbears'],
-  ),
-  EZRABRIDGERS3: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 0, 100, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 5, 0, 100, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        cross: "Offense %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P2 Jedi', 0, 0, 60, 100, 0, 0, 75, 0, 75, 0, 0, 0, 0),
-    ],
-  ),
-  FENNECSHAND: createCharacterSettings(
-    [
-      createOptimizationPlan('Default - Offense', 0, 0, 100, 0, 0, 0, 0, 75, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default - Crit.Dmg', 0, 0, 100, 100, 0, 0, 0, 100, 50, 0, 0, 0, 0),
-    ],
-    [],
-    DamageType.special
-  ),
-  FIFTHBROTHER: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  FINN: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Slow Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Tanky', 30, 100, 100, 0, 5, 5, 50, 0, 0, 10, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 0, -5, 80, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0),
-    ],
-    ['Zinn']
-  ),
-  FIRSTORDEREXECUTIONER: createCharacterSettings(
-    [createOptimizationPlan('Default', 25, 0, 100, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0)],
-    ['Fox', 'Panda', 'Foe', 'FO']
-  ),
-  FIRSTORDEROFFICERMALE: createCharacterSettings(
-    [toRenamed(optimizationStrategy.Speed, 'Speed')],
-    ['Foo', 'FO']
-  ),
-  FIRSTORDERSPECIALFORCESPILOT: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'Default')],
-    ['SFTP', 'FO'],
-    DamageType.mixed
-  ),
-  FIRSTORDERTIEPILOT: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 0, 100, 100, 10, 0, 50, 0, 0, 0, 0, 0, 0)],
-    ['FOTP', 'FO'],
-  ),
-  FIRSTORDERTROOPER: createCharacterSettings(
-    [createOptimizationPlan('Default', 30, 40, 100, 0, 0, 10, 0, 0, 0, 30, 0, 0, 0)],
-    ['FOST', 'FO'],
-  ),
-  FOSITHTROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 25, 100, 0, 0, 80, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Tanky', 40, 0, 100, 50, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  FULCRUMAHSOKA: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default'),
-      createOptimizationPlan('Omicron', 10, 0, 50, 100, 0, -30, 75, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Omicron w/ Primaries', 10, 0, 50, 0, 0, -30, 100, 0, 50, 0, 0, 0, 0, 5, {
-        arrow: "Offense %",
-        triangle: "Critical Damage %",
-        cross: "Offense %",
-      }),
-    ],
-    ['ATF', 'FAT'],
-  ),
-  GAMORREANGUARD: createCharacterSettings(
-    [createOptimizationPlan('Default', 75, 0, 100, 0, 75, 100, 0, 0, 0, 50, 0, 0, 0)],
-    ['Piggy']
-  ),
-  GARSAXON: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Offense %",
-        cross: "Offense %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 0, 0, 100, 0, 25, 0, 75, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Offense %",
-        cross: "Offense %",
-      }, {
-        "Offense %": 1,
-        "Potency %": 1,
-      }),
-    ],
-  ),
-  GENERALHUX: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 10, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 15)],
-    [],
-    DamageType.special
-  ),
-  GENERALKENOBI: createCharacterSettings(
-    [
-      createOptimizationPlan('Speedy Tank', 25, 50, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-      createOptimizationPlan('Balanced', 50, 100, 50, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0),
-      createOptimizationPlan('Slow Tank', 50, 100, 0, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0),
-      createOptimizationPlan('Padme Lead', 100, 0, 50, 0, 0, 50, 0, 0, 0, 25, 25, 0, 0),
-      createOptimizationPlan('JMK Lead', 100, 0, 0, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0),
-      createOptimizationPlan('hSTR P2 Jedi', 0, 100, 50, 0, 0, 0, 10, 0, 25, 100, 0, 0, 0),
-    ],
-    ['GK', 'Titans']
-  ),
-  GENERALSKYWALKER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default - Defense', 10, 25, 100, 0, 20, 0, 10, 0, 0, 10, 10, 0, 0),
-      createOptimizationPlan('Default - Offense', 0, 0, 100, 100, 20, 0, 20, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default - Parry', 0, 75, 100, 0, 25, 0, 50, 0, 0, 10, 0, 0, 0),
-    ],
-    ['GAS']
-  ),
-  GEONOSIANBROODALPHA: createCharacterSettings(
-    [
-      createOptimizationPlan('Tanky', 20, 20, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Offense', 0, 0, 100, 50, 0, 10, 20, 0, 20, 0, 0, 0, 0),
-    ]
-  ),
-  GEONOSIANSOLDIER: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 80, 90, 0, 0, 50, 0, 100, 0, 0, 0, 0)],
-  ),
-  GEONOSIANSPY: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default')],
-  ),
-  GLLEIA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 15, 100, 0, 15, 0, 5, 0, 0, 10, 10, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 20, 15, 100, 0, 15, 0, 5, 0, 0, 10, 10, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Health %",
-        circle: "Health %",
-        cross: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 20, 15, 100, 0, 15, 0, 5, 0, 0, 10, 10, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Health %",
-        circle: "Health %",
-        cross: "Health %",
-      }, {
-        "Speed %": 1,
-      }),
-    ],
-    ['Murderbears']
-  ),
-  GLREY: createCharacterSettings(
-    [
-      createOptimizationPlan('Default - Health', 50, 0, 100, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default - Offense', 15, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-    ]
-  ),
-  GRANDADMIRALTHRAWN: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 20, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0)],
-    ['GAT', 'Imperial Grancor Maneuver', 'Wampanader', 'ABC', 'Titans'],
-    DamageType.special
-  ),
-  GRANDINQUISITOR: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 5, 100, 50, 0, 0, 30, 0, 5, 0, 0, 0, 0)],
-  ),
-  GRANDMASTERLUKE: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 25, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['GMLS', 'JMLS', 'GLLS'],
-    DamageType.special
-  ),
-  GRANDMASTERYODA: createCharacterSettings(
-    [
-      createOptimizationPlan('Speedy', 0, 0, 100, 50, 25, 0, 0, 80, 25, 0, 0, 0, 0),
-      createOptimizationPlan('Offense', 0, 0, 50, 100, 0, 0, 0, 100, 25, 0, 0, 0, 0),
-      createOptimizationPlan('Health', 20, 0, 100, 0, 5, 0, 0, 20, 5, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P1 Yodalicious', 0, -5, 100, 100, 0, 0, 0, 100, 50, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P2 Bastila', 0, 0, 60, 100, 0, 0, 0, 75, 80, 0, 0, 0, 0),
-    ],
-    ['GMY'],
-    DamageType.special
-  ),
-  GRANDMOFFTARKIN: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 100, 25, 0, 15, 15, 50, 0, 0, 0, 0)],
-    ['GMT', 'Auto Lightzader', 'Imperial Grancor Maneuver'],
-    DamageType.mixed
-  ),
-  GREEDO: createCharacterSettings(
-    [
-      createOptimizationPlan('Crits', 0, 0, 100, 50, 25, 0, 25, 0, 100, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, 5, {}, {},
-        [createTargetStat('Speed', '+', 170, 174, 'null')]
-      )
-    ]
-  ),
-  GREEFKARGA: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 5, 100, 0, 5, 10, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  GRIEVOUS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 100, 0, 80, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Fast', 20, 0, 100, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 100, 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['GG'],
-  ),
-  GUNGANPHALANX: createCharacterSettings(
-    [createOptimizationPlan('Default', 12, 44, 100, 0, 15, 0, 0, 0, 0, 5, 5, 0, 0, 5, true)],
-  ),
-  HANSOLO: createCharacterSettings(
-    [
-      createOptimizationPlan('Fast Han', 0, 0, 100, 100, 10, 0, 25, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Slow Han', 0, 0, 0, 100, 25, 0, 50, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Non-relic', 0, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Chex Mix', 0, 0, 0, 100, 0, 0, 50, 0, 50, 0, 0, 0, 0, 5, {}, {},
-        [createTargetStat('Speed', '+', 170, 174, 'null')],
-      ),
-    ],
-    ['Raid Han', 'rHan', 'OG Han', 'Zolo', 'Chex Mix', 'Titans'],
-  ),
-  HERASYNDULLAS3: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0, 5, {
-        cross: "Potency %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 20, 0, 100, 0, 25, 20, 0, 0, 0, 0, 0, 0, 0, 5, {
-        cross: "Potency %",
-      }, {
-        "Speed %": 1,
-        "Health %": 1,
-      }),
-    ],
-  ),
-  HERMITYODA: createCharacterSettings(
-    [optimizationStrategy.Speed],
-    ['Hyoda', 'Hoboda', 'Hobo', 'HY'],
-    DamageType.mixed
-  ),
-  HK47: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 75, 0, 0, 50, 0, 25, 0, 0, 0, 0),
-    ]
-  ),
-  HONDO: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 5, 100, 75, 0, 0, 0, 75, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  HOTHHAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['CHS', 'CHolo', 'Snolo', 'Hoth Han']
-  ),
-  HOTHLEIA: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 50, 50, 0, 25, 0, 30, 0, 0, 0, 0)],
-    ['ROLO']
-  ),
-  HOTHREBELSCOUT: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Mothma Lead', 5, 10, 100, 0, 5, 5, 75, 0, 100, 5, 0, 0, 0),
-    ],
-    ['HRS', 'Hoth Bros']
-  ),
-  HOTHREBELSOLDIER: createCharacterSettings(
-    [createOptimizationPlan('Default', 25, 25, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['HRS', 'Hoth Bros']
-  ),
-  HUMANTHUG: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-  ),
-  IDENVERSIOEMPIRE: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 50, 0, 25, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Wampa Slayer', 0, 0, 100, 30, 100, 0, 10, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  IG11: createCharacterSettings(
-    [createOptimizationPlan('Tanky', 25, 0, 50, 0, 0, 10, 5, 0, 5, 5, 5, 0, 0)],
-  ),
-  IG12: createCharacterSettings(
-    [
-      createOptimizationPlan('GIMO Default', 20, 5, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default', 20, 5, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }, {
-        "Health %": 1,
-        "Speed %": 1,
-      }),
-    ],
-  ),
-  IG86SENTINELDROID: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default')],
-  ),
-  IG88: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Damage'),
-      createOptimizationPlan('Nuke', 0, 0, 100, 25, 50, 0, 25, 0, 75, 0, 0, 0, 0),
-    ]
-  ),
-  IMAGUNDI: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['IGD']
-  ),
-  IMPERIALPROBEDROID: createCharacterSettings(
-    [
-      createOptimizationPlan('Tanky', 50, 50, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Offense', 0, 0, 100, 80, 50, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 50, 50, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['IPD']
-  ),
-  IMPERIALSUPERCOMMANDO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 15, 100, 0, 20, 0, 100, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 0, 15, 100, 0, 20, 0, 100, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Offense %",
-        triangle: "Offense %",
-        circle: "Protection %",
-        cross: "Offense %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 0, 15, 100, 0, 20, 0, 100, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Offense %",
-        triangle: "Offense %",
-        circle: "Protection %",
-        cross: "Offense %",
-      }, {
-        "Offense %": 1,
-      }),
-    ],
-    ['ISC']
-  ),
-  JABBATHEHUTT: createCharacterSettings(
-    [createOptimizationPlan('Default', 15, 0, 100, 0, 25, 50, 0, 0, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  JANGOFETT: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-  ),
-  JARJARBINKS: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 20, 100, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 5, true)],
-    [],
-    DamageType.special
-  ),
-  JAWA: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'Default'),
-      createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100),
-    ],
-    [],
-    DamageType.mixed
-  ),
-  JAWAENGINEER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 0, 50, 10, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Detonator', 20, 10, 100, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0),
-    ],
-    [],
-    DamageType.mixed
-  ),
-  JAWASCAVENGER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 25, 50, 0, 25, 0, 100, 0, 0, 0, 0),
-      createOptimizationPlan('Detonator', 100, 100, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 100),
-    ],
-  ),
-  JEDIKNIGHTCAL: createCharacterSettings(
-    [
-      createOptimizationPlan('GIMO Default', 25, 0, 100, 25, 0, 0, 75, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default', 25, 0, 100, 98, 2, 2, 3, 6, 2, 1, 1, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Critical Damage %",
-        circle: "Health %",
-        cross: "Offense %",
-        }, {
-          "Health %": 1,
-          "Offense %": 1,
-        },
-      ),
-      createOptimizationPlan('Debuffer', 5, 0, 100, 0, 35, 0, 20, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Offense %",
-        cross: "Potency %",
-        circle: "Health %",
-      }, {
-        "Potency %": 1,
-      }),
-    ],
-    ['JKCK'],
-  ),
-  JEDIKNIGHTCONSULAR: createCharacterSettings(
-    [createOptimizationPlan('Healer', 50, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['JC'],
-    DamageType.mixed
-  ),
-  JEDIKNIGHTGUARDIAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 40, 20, 100, 0, 50, 25, 0, 0, 0, 12.5, 12.5, 0, 0)],
-    ['JKG']
-  ),
-  JEDIKNIGHTLUKE: createCharacterSettings(
-    [
-      createOptimizationPlan('Leader', 5, 5, 0, 100, 25, 0, 50, 0, 15, 0, 0, 0, 0),
-      createOptimizationPlan('Non-leader', 5, 5, 25, 100, 25, 0, 50, 0, 15, 0, 0, 0, 0),
-    ],
-    ['JKL']
-  ),
-  JEDIKNIGHTREVAN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 50, 0, 0, 0, 10, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Health', 10, 0, 100, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0),
-    ],
-    [],
-    DamageType.special
-  ),
-  JEDIMASTERKENOBI: createCharacterSettings(
-
-    [createOptimizationPlan('Default', 5, 0, 100, 25, 0, 0, 10, 0, 0, 0, 0, 0, 0)],
-    ['JMK'],
-  ),
-  JOLEEBINDO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 50, 0, 75, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100),
-      createOptimizationPlan('Health and Speed', 100, 0, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Healer', 30, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0),
-    ]
-  ),
-  JUHANI: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 100, 90, 0, 5, 0, 0, 0, 0, 15, 0, 0, 0)],
-  ),
-  JYNERSO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 50, 50, 0, 20, 0, 75, 0, 0, 0, 0),
-      createOptimizationPlan('AdRad', 10, 0, 100, 100, 25, 0, 20, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('AdRad w/ Primaries', 10, 0, 100, 0, 25, 0, 20, 0, 50, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        cross: "Potency %",
-        circle: "Health %",
-      }),
-    ],
-    ['Rogue 1', 'Auto Lightzader', 'Imperial Grancor Maneuver', 'SuperStar2D2'],
-  ),
-  K2SO: createCharacterSettings(
-    [
-      createOptimizationPlan('Tanky', 20, 20, 100, 0, 50, 50, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('AdRad', 20, 40, 50, 0, 50, 50, 0, 0, 0, 10, 10, 0, 0),
-      createOptimizationPlan('AdRad w/ Primaries', 20, 40, 50, 0, 50, 50, 0, 0, 0, 10, 10, 0, 0, 5, {
-        arrow: "Protection %",
-        triangle: "Protection %",
-        cross: "Tenacity %",
-        circle: "Protection %",
-      }),
-    ],
-    ['Rogue 1', 'Cass-2SO', 'K2'],
-  ),
-  KANANJARRUSS3: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 40, 0, 100, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 40, 0, 100, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 40, 0, 100, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }, {
-        "Health %": 2,
-        "Tenacity %": 1,
-      }),
-    ],
-  ),
-  KELLERANBEQ: createCharacterSettings(
-    [
-      createOptimizationPlan('GIMO Default', 20, 100, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default', 20, 100, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Protection %",
-        triangle: "Protection %",
-        cross: "Protection %",
-        circle: "Protection %",
-      }, {
-        "Health %": 3,
-      }),
-    ],
-  ),
-  KIADIMUNDI: createCharacterSettings(
-    [
-      createOptimizationPlan('Balanced', 10, 10, 100, 50, 20, 0, 50, 0, 25, 10, 10, 0, 0),
-      createOptimizationPlan('Offense', 0, 0, 100, 50, 20, 0, 75, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Defense', 20, 20, 100, 0, 20, 10, 0, 0, 0, 15, 15, 0, 0),
-    ]
-  ),
-  KITFISTO: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default')],
-    ['Fisty', 'Fister']
-  ),
-  KRRSANTAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 30, 30, 100, 0, 10, 10, 0, 0, 0, 25, 0, 0, 0)],
-  ),
-  KUIIL: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 10, 100, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  KYLEKATARN: createCharacterSettings(
-    [createOptimizationPlan('Mothma Lead', 5, 0, 100, 0, 5, 5, 50, 0, 0, 5, 0, 0, 0)],
-  ),
-  KYLOREN: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 50, 0, 0, 25, 0, 25, 0, 0, 0, 0)],
-    ['Old Kylo', 'zylo', 'FO']
-  ),
-  KYLORENUNMASKED: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 75, 50, 100, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0),
-      createOptimizationPlan('Tanky', 100, 100, 50, 0, 0, 75, 0, 0, 0, 37.5, 37.5, 0, 0),
-      createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['kru', 'matt', 'Snape', 'FO']
-  ),
-  L3_37: createCharacterSettings(
-    [
-      createOptimizationPlan('Tanky', 40, 20, 50, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-      createOptimizationPlan('Speedy', 40, 20, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-    ],
-    ['solo']
-  ),
-  LOBOT: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0)]
-  ),
-  LOGRAY: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 40, 50, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 10, 0, 100, 40, 50, 0, 0, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        cross: "Potency %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 10, 0, 100, 40, 50, 0, 0, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        cross: "Potency %",
-        circle: "Health %",
-      }, {
-        "Potency %": 1,
-        "Health %": 2,
-      }),
-      createOptimizationPlan('hSTR Phase 2', 5, 5, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['Murderbears'],
-  ),
-  LORDVADER: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 15, 100, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0)],
-  ),
-  LUKESKYWALKER: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['farmboi']
-  ),
-  LUMINARAUNDULI: createCharacterSettings(
-    [createOptimizationPlan('Default', 40, 0, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  LUTHENRAEL: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 10, 100, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 5, true)],
-    ['Luthen'],
-    DamageType.mixed
-  ),
-  MACEWINDU: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 15, 0, 100, 0, 50, 0, 0, 50, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Slow/Tanky', 100, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    [],
-    DamageType.special
-  ),
-  MAGMATROOPER: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Anti-Traya', 0, 0, 25, 25, 50, 0, 25, 0, 25, 0, 0, 0, 0),
-    ]
-  ),
-  MAGNAGUARD: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 30, 30, 100, 0, 20, 20, 0, 0, 0, 25, 0, 0, 100),
-      createOptimizationPlan('Balanced', 20, 20, 100, 25, 50, 25, 25, 0, 25, 12.5, 12.5, 0, 0),
-    ],
-  ),
-  MANDALORBOKATAN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 80, 0, 0, 0, 100, 0, 0, 12.5, 12.5, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 10, 0, 80, 0, 0, 0, 100, 0, 0, 12.5, 12.5, 0, 0, 5, {
-        arrow: "Offense %",
-        triangle: "Offense %",
-        cross: "Offense %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 10, 0, 80, 0, 0, 0, 100, 0, 0, 12.5, 12.5, 0, 0, 5, {
-        arrow: "Offense %",
-        triangle: "Offense %",
-        cross: "Offense %",
-        circle: "Health %",
-      }, {
-        "Offense %": 1,
-      }),
-    ],
-  ),
-  MARAJADE: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 10, 100, 25, 25, 0, 0, 25, 10, 0, 0, 0, 0),
-      createOptimizationPlan('Survivability', 0, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    [],
-    DamageType.special
-  ),
-  MASTERQUIGON: createCharacterSettings(
-    [createOptimizationPlan('Default', 15, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, true)],
-    ['MQG', 'Quadme', 'Queeni'],
-    DamageType.special
-  ),
-  MAUL: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Special Damage with Potency"], 'Default')]
-  ),
-  MAULS7: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 25, 100, 0, 15, 0, 50, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('DS Mando', 0, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-    ]
-  ),
-  MERRIN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, 5, {
-        cross: "Potency %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Set', 15, 0, 0, 0, 100, 0, 0, 40, 0, 0, 0, 0, 0, 5, {
-        cross: "Potency %",
-        circle: "Health %",
-      }, {
-        "Potency %": 3,
-      }),
-      createOptimizationPlan('Tenacity', 15, 0, 0, 0, 20, 60, 0, 30, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Tenacity w/ Primaries', 15, 0, 0, 0, 20, 60, 0, 30, 0, 0, 0, 0, 0, 5, {
-        cross: "Tenacity %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Tenacity w/ Primaries & Sets', 15, 0, 0, 0, 0, 60, 0, 30, 0, 0, 0, 0, 0, 5, {
-        cross: "Tenacity %",
-        circle: "Health %",
-      }, {
-        "Tenacity %": 2,
-        "Potency %": 1,
-      }),
-    ],
-    [],
-    DamageType.special,
-  ),
-  MISSIONVAO: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 100, 0, 0, 75, 0, 50, 0, 0, 0, 0)],
-  ),
-  MOFFGIDEONS1: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  MOFFGIDEONS3: createCharacterSettings(
-    [createOptimizationPlan('Default', 3, 20, 100, 0, 4, 3, 2, 3, 4, 4, 4, 0, 0)],
-  ),
-  MONMOTHMA: createCharacterSettings(
-    [createOptimizationPlan('Leader', 5, 5, 100, 0, 0, 25, 10, 0, 0, 0, 0, 0, 0)],
-    ['MM']
-  ),
-  MORGANELSBETH: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 20, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, true)],
-    ['Morgan', 'NS']
-  ),
-  MOTHERTALZIN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 0, 50, 0, 0, 25, 10, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 100, 0, 0, 0, 75, 25, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 0, -5, 0, 0, 10, 0, 0, 100, 0, 0, 0, 0, 0),
-    ],
-    ['MT', 'NS', 'hSTR NS'],
-    DamageType.special
-  ),
-  NIGHTSISTERACOLYTE: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 0, 0, 50, 50, 80, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 2', 0, 0, 100, 100, 0, 0, 100, 100, 100, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 100, 0, 0, 50, 50, 100, 0, 0, 0, 0),
-    ],
-    ['NA', 'NS'],
-    DamageType.mixed
-  ),
-  NIGHTSISTERINITIATE: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default'),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0),
-    ],
-    ['NI', 'NS']
-  ),
-  NIGHTSISTERSPIRIT: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 50, 25, 0, 75, 0, 50, 0, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('hSTR Phase 3', 0, 0, 0, 40, 0, 0, 100, 0, 0, 0, 0, 0, 0),
-    ],
-    ['NS']
-  ),
-  NIGHTSISTERZOMBIE: createCharacterSettings(
-    [
-      createOptimizationPlan('Strong Zombie', 20, 20, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Weak Zombie', 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, false),
-      createOptimizationPlan('hSTR Phase 4', 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 3', 20, 0, 100, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0),
-    ],
-    ['NS', 'hSTR NS']
-  ),
-  NIGHTTROOPER: createCharacterSettings(
-    [createOptimizationPlan('Default', 50, 0, 100, 10, 0, 10, 25, 0, 0, 0, 0, 0, 0, 5, true)],
-    ['NS', 'NT']
-  ),
-  NINTHSISTER: createCharacterSettings(
-    [createOptimizationPlan('Default', 40, 50, 100, 0, 0, 40, 0, 0, 0, 30, 0, 0, 0)],
-  ),
-  NUTEGUNRAY: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed with survivability"], 'Default'),
-      toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Damage')
-    ]
-  ),
-  OLDBENKENOBI: createCharacterSettings(
-    [createOptimizationPlan('Speed', 10, 10, 100, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['OB']
-  ),
-  PADAWANOBIWAN: createCharacterSettings(
-    [
+	"50RT": createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      health: 20,
+      prot: 10,
+      spd: 100,
+      pot: 20,
+      arm: 25,
+    }),
+	]),
+	AAYLASECURA: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      spd: 100,
+      pot: 75,
+      phys: 10,
+      cc: 100,
+    }),
+    fromShortOptimizationPlan({
+      id: "hSTR P1 Jedi",
+      prot: -5,
+      spd: 100,
+      cd: 75,
+      phys: 50,
+    }),
+	]),
+	ADMINISTRATORLANDO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 50,
+			phys: 25,
+			cc: 75,
+		}),
+	]),
+	ADMIRALACKBAR: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Survivability",
+				health: 20,
+				prot: 20,
+				spd: 100,
+				ten: 25,
+			}),
+			optimizationStrategy.Speed,
+		],
+		["AA", "Snackbar", "ABC"],
+	),
+	ADMIRALPIETT: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 25,
+			pot: 15,
+			phys: 10,
+			cc: 10,
+		}),
+	]),
+	ADMIRALRADDUS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				spec: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Protection",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				spec: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Protection w/ Primaries",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				spec: 10,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Protection %",
+					cross: "Protection %",
+					circle: "Protection %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Health",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				spec: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Health w/ Primaries",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				spec: 10,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	AHSOKATANO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				cd: 50,
+				phys: 25,
+				cc: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 20,
+				spd: 100,
+				cd: 50,
+				phys: 25,
+				cc: 10,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Padme Lead",
+				health: 10,
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow Damage",
+				health: 25,
+				cd: 100,
+				phys: 50,
+				cc: 25,
+			}),
+		],
+		["Snips"],
+	),
+	AMILYNHOLDO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				pot: 50,
+				ten: 25,
+				arm: 5,
+				res: 5,
+			}),
+		],
+		["Hodor"],
+		DamageType.mixed,
+	),
+	ANAKINKNIGHT: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 75,
+				pot: 25,
+				phys: 25,
+				cc: 80,
+			}),
+			fromShortOptimizationPlan({
+				id: "Padme Lead",
+				health: 10,
+				spd: 80,
+				cd: 100,
+				pot: 25,
+				phys: 25,
+				cc: 40,
+			}),
+			fromShortOptimizationPlan({
+				id:"oQGJ Lead",
+				spd: 100,
+				cd: 100,
+				pot: 10,
+				phys: 25,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Chex Mix",
+				spd: 50,
+				phys: 100,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR P1 Jedi",
+				prot: -5,
+				spd: 20,
+				cd: 100,
+				phys: 50,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow Damage",
+				health: 25,
+				cd: 100,
+				pot: 25,
+				phys: 25,
+				cc: 40,
+			}),
+			fromShortOptimizationPlan({
+				id: "Nuke",
+				cd: 100,
+				pot: 20,
+				phys: 40,
+				cc: 25,
+			}),
+		],
+		["JKA"],
+	),
+	ARCTROOPER501ST: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			phys: 50,
+			cc: 15,
+		}),
+		fromShortOptimizationPlan({
+			id: "KAM",
+			health: 10,
+			spd: 100,
+			phys: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "KAM/CA",
+			health: 10,
+			spd: 100,
+			phys: 50,
+			ca: 100,
+		}),
+	]),
+	ARMORER: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      health: 10,
+      prot: 10,
+      spd: 100,
+      ten: 5,
+    }),
+	]),
+	ASAJVENTRESS: createCharacterSettings(
+		[
       fromShortOptimizationPlan({
         id: "Default",
-        spd: 30,
+        spd: 100,
         cd: 100,
+        pot: 25,
+        phys: 10,
+        spec: 10,
+        cc: 20,
       }),
-    ],
-    ['POW', 'Quadme', 'Queeni'],
-  ),
-  PADMEAMIDALA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 35, 0, 100, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0),
-      createOptimizationPlan('Slow', 50, 0, 0, 25, 15, 0, 10, 0, 10, 0, 0, 0, 0),
-    ],
-    ['Padme']
-  ),
-  PAO: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Mothma Lead', 10, 30, 100, 0, 5, 5, 100, 0, 0, 5, 0, 0, 0),
-      toRenamed(optimizationStrategy["Speedy Chex Mix"], 'Chex Mix')
-    ],
-    ['Rogue 1', 'Chex Mix']
-  ),
-  PAPLOO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 0, 100, 0, 0, 10, 0, 0, 0, 5, 5, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 20, 0, 100, 0, 0, 10, 0, 0, 0, 5, 5, 0, 0, 5, {
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 20, 0, 100, 0, 0, 10, 0, 0, 0, 5, 5, 0, 0, 5, {
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }, {
-        "Health %": 3,
-      }),
-      createOptimizationPlan('Fast Tank', 25, 25, 100, 0, 0, 25, 0, 0, 0, 12.5, 12.5, 0, 0),
-    ],
-    ['Murderbears'],
-  ),
-  PAZVIZSLA: createCharacterSettings(
-    [
-      createOptimizationPlan('GIMO Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0),
-      createOptimizationPlan('Health', 75, 50, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, 5, {
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }, {
-        "Health %": 3,
-      }),
-      createOptimizationPlan('Protection', 50, 75, 100, 0, 0, 0, 0, 0, 0, 10, 10, 0, 0, 5, {
-        triangle: "Protection %",
-        cross: "Protection %",
-        circle: "Protection %",
-      }, {
-        "Health %": 3,
-      }),
-    ]
-  ),
-  PHASMA: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0)],
-    ['FO'],
-  ),
-  PLOKOON: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    [],
-    DamageType.mixed
-  ),
-  POE: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 10, 100, 0, 40, 20, 0, 0, 0, 5, 0, 0, 0)],
-  ),
-  POGGLETHELESSER: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speedy debuffer"], 'Default')]
-  ),
-  PRINCESSKNEESAA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Critical Damage %",
-        cross: "Potency %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Set', 20, 0, 100, 50, 40, 0, 10, 0, 80, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Critical Damage %",
-        cross: "Potency %",
-        circle: "Health %",
-      }, {
-        "Potency %": 1,
-        "Critical Chance %": 1,
-        "Health %": 1,
-      }),
-    ],
-  ),
-  PRINCESSLEIA: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default'),
-      createOptimizationPlan('hSTR Phase 2', 0, 0, 50, 100, 0, 0, 25, 0, 50, 0, 0, 0, 0)
-    ],
-    ['Machine Gun']
-  ),
-  QIRA: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 50, 10, 0, 50, 0, 25, 0, 0, 0, 0)],
-    ['solo'],
-  ),
-  QUEENAMIDALA: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, true)],
-    ['Quadme', 'Queeni']
-  ),
-  QUIGONJINN: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Special Damage, Potency"], 'Default'),
-      createOptimizationPlan('Omicron', 0, 0, 0, 0, 0, 0, 100, 100, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR P1 Jedi', 0, -5, 100, 75, 0, 0, 25, 25, 50, 0, 0, 0, 0),
-    ],
-    ['QGJ'],
-    DamageType.mixed
-  ),
-  R2D2_LEGENDARY: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 5, 100, 0, 25, 10, 0, 0, 25, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 10, -5, 100, 25, 25, 0, 25, 0, 50, 0, 0, 0, 0)
-    ],
-    ['Trashcan', 'R2z2', 'SuperStar2D2'],
-    DamageType.mixed
-  ),
-  RANGETROOPER: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default')],
-    ['Troopers']
-  ),
-  RESISTANCEPILOT: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Slow Crit, Physical Damage, Potency"], 'Default')],
-    ['RP']
-  ),
-  RESISTANCETROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 10, 100, 25, 0, 50, 0, 100, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 0, -5, 0, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0)
-    ],
-    ['RT', 'res trooper']
-  ),
-  REY: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 0, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 0, -5, 90, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0)
-    ],
-    ['scav rey']
-  ),
-  REYJEDITRAINING: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 20, 0, 20, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 0, -5, 90, 100, 50, 0, 50, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR p1 C3PO', 0, -5, 90, 100, 60, 60, 50, 0, 0, 0, 0, 0, 0)
-    ],
-    ['JTR', 'RJT', 'Jedi Rey', 'Jey Z']
-  ),
-  ROSETICO: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 5, 100, 50, 30, 0, 20, 20, 25, 0, 0, 0, 0)],
-    [],
-    DamageType.mixed
-  ),
-  ROYALGUARD: createCharacterSettings(
-    [
-      createOptimizationPlan('Tanky', 50, 50, 25, 0, 0, 25, 0, 0, 0, 5, 5, 0, 0),
-      createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['RG', 'Red Guard']
-  ),
-  SABINEWRENS3: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('hSTR Phase 2', 20, 20, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    ]
-  ),
-  SANASTARROS: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 50, 5, 0, 0, 20, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  SAVAGEOPRESS: createCharacterSettings(
-    [
-      createOptimizationPlan('Default/Omicron', 100, 0, 0, 0, 0, 0, 10, 0, 0, 50, 0, 0, 0),
-      createOptimizationPlan('Balanced', 50, 0, 100, 25, 25, 25, 25, 0, 25, 12.5, 12.5, 0, 0),
-    ],
-    ['zavage']
-  ),
-  SAWGERRERA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 20, 0, 100, 0, 20, 0, 20, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  SCARIFREBEL: createCharacterSettings(
-    [
-      createOptimizationPlan('GIMO Default', 30, 10, 100, 0, 25, 10, 0, 0, 0, 10, 10, 0, 0),
-      createOptimizationPlan('Health', 8, 12, 50, 0, 8, 12, 0, 0, 0, 10, 10, 0, 45, 5, {
-        triangle: "Health %",
-        cross: "Health %",
-      }),
-      createOptimizationPlan('Protection', 30, 20, 100, 0, 25, 10, 0, 0, 0, 10, 0, 0, 0, 5, {
-        triangle: "Protection %",
-        cross: "Protection %",
-      }),
-      createOptimizationPlan('hSTR Phase 2', 20, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-    ],
-    ['Rogue 1', 'SRP'],
-  ),
-  SCOUTTROOPER_V3: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 10, 100, 0, 30, 10, 15, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 5, 10, 100, 0, 30, 10, 15, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Offense %",
-        cross: "Potency %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Set', 5, 10, 100, 0, 30, 10, 15, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        triangle: "Offense %",
-        cross: "Potency %",
-      }, {
-        "Speed %": 1,
-        "Potency %": 1,
-      }),
-    ],
-    ['Rogue 1', 'SRP']
-  ),
-  SECONDSISTER: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 5, 100, 75, 0, 0, 0, 100, 30, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  SEVENTHSISTER: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  SHAAKTI: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 25, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 25, 25, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('KAM', 20, 10, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('KAM/CA', 20, 10, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100),
-    ],
-  ),
-  SHORETROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Speedy Tank', 50, 50, 100, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    ],
-    ['ShT', 'Troopers', 'Imperial Grancor Maneuver']
-  ),
-  SITHASSASSIN: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Special Damage with Potency"], 'Default')],
-    ['SA', 'Sassy']
-  ),
-  SITHMARAUDER: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['SM']
-  ),
-  SITHPALPATINE: createCharacterSettings(
-    [createOptimizationPlan('Default', 40, 5, 100, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0)],
-    ['SEE'],
-    DamageType.special
-  ),
-  SITHTROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 25, 50, 0, 0, 15, 0, 0, 0, 25, 25, 0, 0),
-      createOptimizationPlan('DR Lead', 25, 50, 15, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0)
-    ],
-    ['SiT', 'Nightmare']
-  ),
-  SMUGGLERCHEWBACCA: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Default', 0, 0, 100, 80, 25, 0, 60, 0, 25, 0, 0, 0, 0)
-    ],
-    ['Vets']
-  ),
-  SMUGGLERHAN: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default'),
-      createOptimizationPlan('Default', 0, 0, 100, 80, 25, 0, 60, 0, 0, 0, 0, 0, 0)
-    ],
-    ['Vets']
-  ),
-  SNOWTROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 0, 0, 50, 0, 25, 0, 0, 0, 0),
-      createOptimizationPlan('Iden Lead', 10, 10, 50, 100, 10, 0, 30, 0, 25, 0, 0, 0, 0),
-    ],
-    ['Troopers'],
-  ),
-  STAP: createCharacterSettings(
-    [
-      createOptimizationPlan('GIMO Default', 0, 0, 100, 10, 10, 0, 50, 0, 10, 0, 0, 0, 0),
-      createOptimizationPlan('Default', 0, 0, 100, 10, 10, 0, 50, 0, 10, 0, 0, 0, 0, 5, {
-          arrow: "Speed",
-          triangle: "Critical Damage %",
-          cross: "Offense %",
-        }, {
-          "Speed %": 1,
-        }
-      ),
-    ],
-  ),
-  STARKILLER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 0, 100, 75, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 25, 0, 100, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-      }),
-      createOptimizationPlan('Speedy', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Speedy w/ Primaries', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-      }),
-    ],
-  ),
-  STORMTROOPER: createCharacterSettings(
-    [
-      createOptimizationPlan('Speedy Tank', 25, 25, 50, 0, 0, 25, 0, 0, 0, 25, 25, 0, 0),
-      createOptimizationPlan('LV Lead', 100, 75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Iden Lead', 0, 75, 50, 0, 0, 0, 0, 0, 0, 100, 0, 0, 0),
-      createOptimizationPlan('Iden Lead w/ Primaries', 0, 100, 50, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 5, {
-        arrow: "Defense %",
-        triangle: "Defense %",
-        cross: "Defense %",
-      }),
-    ],
-    ['Troopers'],
-  ),
-  STORMTROOPERHAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 25, 50, 50, 0, 100, 10, 0, 0, 0, 20, 0, 0, 0)],
-    ['STHan']
-  ),
-  SUNFAC: createCharacterSettings(
-    [createOptimizationPlan('Tanky', 40, 40, 100, 0, 25, 25, 0, 0, 0, 12.5, 12.5, 0, 0)]
-  ),
-  SUPREMELEADERKYLOREN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default - Speed', 10, 0, 100, 50, 0, 0, 30, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default - Offense', 20, 0, 100, 100, 0, 0, 40, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  T3_M4: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 10, 100, 0, 25, 10, 0, 10, 10, 0, 0, 0, 0),
-      createOptimizationPlan('Damage', 10, 20, 100, 50, 50, 10, 0, 20, 25, 0, 0, 0, 0),
-      createOptimizationPlan('Nuke', 10, 50, 100, 0, 25, 10, 0, 0, 10, 0, 0, 0, 0),
-    ],
-    [],
-    DamageType.special
-  ),
-  TALIA: createCharacterSettings(
-    [
-      toRenamed(optimizationStrategy["Speed, Crit, and Mixed Damage"], 'Default'),
-      createOptimizationPlan('hSTR Phase 4', 0, 0, 0, 0, 0, 0, 100, 100, 100, 0, 0, 0, 0),
-    ],
-    ['NS', 'hSTR NS'],
-    DamageType.mixed
-  ),
-  TARFFUL: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, 5, {
-        arrow: "Health %",
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Set', 30, 0, 100, 0, 0, 0, 0, 0, 0, 50, 50, 0, 0, 5, {
-        arrow: "Health %",
-        triangle: "Health %",
-        cross: "Health %",
-        circle: "Health %",
-      }, {
-        "Defense %": 3,
-      }),
-    ],
-  ),
-  TARONMALICOS: createCharacterSettings(
-    [
-      createOptimizationPlan('Fast Build', 20, 0, 100, 50, 0, 0, 40, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Fast Build w/ Primaries', 20, 0, 100, 50, 0, 0, 40, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-      }),
-      createOptimizationPlan('Fast Build w/ Primaries & Sets', 20, 0, 100, 50, 0, 0, 40, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-      }, {
-        "Offense %": 1,
-        "Health %": 1,
-      }),
-      createOptimizationPlan('Slow Build', 40, 0, 100, 50, 0, 0, 60, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Slow Build w/ Primaries', 40, 0, 100, 50, 0, 0, 60, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-      }),
-      createOptimizationPlan('Slow Build w/ Primaries & Sets', 40, 0, 100, 50, 0, 0, 60, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-      }, {
-        "Offense %": 1,
-        "Health %": 1,
-      }),
-    ],
-  ),
-  TEEBO: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 10, 0, 100, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Health %",
-        cross: "Potency %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 10, 0, 100, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 5, {
-        triangle: "Health %",
-        cross: "Potency %",
-        circle: "Health %",
-      }, {
-        "Potency %": 3,
-      }),
-    ],
-    ['Teebotine', 'Murderbears']
-  ),
-  THEMANDALORIAN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 5, 100, 15, 0, 0, 5, 0, 30, 0, 0, 0, 0),
-      createOptimizationPlan('Relic 7', 0, 0, 100, 80, 0, 0, 20, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Non-relic', 0, 0, 100, 80, 0, 0, 10, 0, 20, 0, 0, 0, 0),
-    ],
-  ),
-  THEMANDALORIANBESKARARMOR: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 5, 100, 0, 15, 0, 30, 0, 0, 0, 0, 0, 0)],
-  ),
-  THIRDSISTER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 30, 5, 100, 50, 0, 0, 50, 0, 0, 5, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 30, 5, 100, 0, 0, 0, 50, 0, 0, 5, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        circle: "Health %",
-        cross: "Health %",
-      }),
-    ],
-  ),
-  TIEFIGHTERPILOT: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['TFP', 'Auto Lightzader']
-  ),
-  TRENCH: createCharacterSettings(
-    [createOptimizationPlan('Default', 20, 10, 100, 0, 30, 0, 0, 20, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  TRIPLEZERO: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 0, 30, 0, 0, 20, 0, 0, 0, 0, 0)],
-    [],
-    DamageType.special
-  ),
-  TUSKENCHIEFTAIN: createCharacterSettings(
-    [createOptimizationPlan('Default', 15, 10, 100, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  TUSKENHUNTRESS: createCharacterSettings(
-    [createOptimizationPlan('Default', 0, 0, 100, 75, 10, 0, 40, 0, 10, 0, 0, 0, 0)],
-  ),
-  TUSKENRAIDER: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-  ),
-  TUSKENSHAMAN: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 5, 100, 0, 30, 10, 0, 0, 0, 0, 0, 0, 0)],
-  ),
-  UGNAUGHT: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'Default')],
-    [],
-    DamageType.mixed
-  ),
-  UNDERCOVERLANDO: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 0, 100, 50, 0, 0, 25, 0, 25, 0, 0, 0, 0)],
-  ),
-  URORRURRR: createCharacterSettings(
-    [createOptimizationPlan('Default', 10, 20, 100, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0)],
-  ),
-  VADER: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 100, 40, 0, 20, 0, 20, 0, 0, 0, 0),
-      createOptimizationPlan('Raids', 0, 0, 100, 50, 25, 0, 25, 0, 25, 0, 0, 0, 0),
-    ],
-    ['Auto Lightzader', 'Wampanader', 'Nightmare'],
-  ),
-  VEERS: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Mixed Damage, Potency"], 'Default')],
-    ['Troopers'],
-    DamageType.mixed
-  ),
-  VISASMARR: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 25, 0, 100, 50, 0, 25, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Healer', 50, 0, 100, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('hSTR Phase 1', 25, -5, 0, 100, 0, 0, 50, 0, 75, 0, 0, 0, 0),
-    ],
-  ),
-  WAMPA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 80, 100, 10, 0, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Omicron', 100, 0, 75, 0, 0, 75, 50, 0, 0, 20, 0, 0, 0),
-      createOptimizationPlan('Omicron/Health', 100, 0, 75, 0, 0, 10, 10, 0, 0, 10, 0, 0, 0),
-      createOptimizationPlan('Omicron/Tenacity', 30, 0, 15, 0, 0, 100, 30, 0, 0, 20, 0, 0, 0),
-      createOptimizationPlan('Raids', 10, 0, 80, 100, 10, 0, 50, 0, 0, 0, 0, 0, 0),
-    ],
-    ['beast', 'Wampanader'],
-  ),
-  WATTAMBOR: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 30, 0, 100, 0, 25, 10, 0, 0, 0, 0, 0, 0, 0)
-    ]
-  ),
-  WEDGEANTILLES: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, and Physical Damage"], 'Default')],
-    ['Wiggs', 'chiggs', 'SuperStar2D2']
-  ),
-  WICKET: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 5, 0, 100, 100, 0, 0, 40, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 5, 0, 100, 100, 0, 0, 40, 0, 50, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        cross: "Offense %",
-        circle: "Health %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 5, 0, 100, 100, 0, 0, 60, 0, 50, 0, 0, 0, 0, 5, {
-        triangle: "Critical Damage %",
-        cross: "Offense %",
-        circle: "Health %",
-      }, {
-        "Critical Damage %": 1,
-        "Health %": 1,
-      }),
-      createOptimizationPlan('hSTR Phase 2', 0, 0, 80, 50, 0, 0, 100, 0, 10, 0, 0, 0, 0),
-    ],
-    ['Murderbears'],
-  ),
-  YOUNGCHEWBACCA: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 50, 0, 100, 50, 0, 0, 25, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('Tanky', 100, 0, 50, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0),
-    ],
-    ['Dwight', 'solo'],
-  ),
-  YOUNGHAN: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 10, 0, 100, 100, 25, 0, 50, 0, 50, 0, 0, 0, 0),
-      createOptimizationPlan('HAAT', 0, 0, 80, 100, 0, 0, 50, 0, 0, 0, 0, 0, 0),
-    ],
-    ['YOLO', 'solo', 'Jim'],
-  ),
-  YOUNGLANDO: createCharacterSettings(
-    [toRenamed(optimizationStrategy["Speed, Crit, Physical Damage, Potency"], 'Default')],
-    ['solo']
-  ),
-  ZAALBAR: createCharacterSettings(
-    [createOptimizationPlan('Default', 50, 50, 25, 0, 25, 50, 0, 0, 0, 0, 0, 0, 50)],
-  ),
-  ZAMWESELL: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 0, 0, 100, 40, 50, 0, 25, 0, 40, 0, 0, 0, 0),
-      createOptimizationPlan('Omicron', 10, 10, 100, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0),
-    ],
-  ),
-  ZEBS3: createCharacterSettings(
-    [
-      createOptimizationPlan('Default', 40, 0, 100, 0, 50, 0, 20, 0, 0, 0, 0, 0, 0),
-      createOptimizationPlan('Default w/ Primaries', 40, 0, 100, 0, 50, 0, 20, 0, 0, 0, 0, 0, 0, 5, {
-        cross: "Potency %",
-      }),
-      createOptimizationPlan('Default w/ Primaries & Sets', 40, 0, 100, 0, 50, 0, 20, 0, 0, 0, 0, 0, 0, 5, {
-        arrow: "Speed",
-        cross: "Potency %",
-      }, {
-        "Health %": 3,
-      }),
-    ],
-  ),
-  ZORIIBLISS_V2: createCharacterSettings(
-    [createOptimizationPlan('Default', 5, 10, 100, 50, 10, 0, 20, 0, 0, 0, 0, 0, 0)],
-  ),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				cd: 100,
+				phys: 25,
+				spec: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				health: 15,
+				spd: 50,
+				cd: 100,
+				phys: 30,
+				spec: 25,
+			}),
+		],
+		["AV", "Zen", "NS", "hSTR NS", "ABC"],
+		DamageType.mixed,
+	),
+	AURRA_SING: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      spd: 100,
+      cd: 80,
+      pot: 20,
+      phys: 50,
+      cc:25,
+    }),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 3",
+			spd: 75,
+			cd: 100,
+			phys: 50,
+			cc: 10,
+		}),
+	]),
+	BADBATCHECHO: createCharacterSettings([
+		toRenamed(optimizationStrategy["Speedy debuffer"], "Default"),
+	]),
+	BADBATCHHUNTER: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      spd: 100,
+      pot: 15,
+      phys: 25,
+    }),
+	]),
+	BADBATCHOMEGA: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      spd: 50,
+      pot: 25,
+      phys: 100,
+    }),
+	]),
+	BADBATCHTECH: createCharacterSettings(
+		[toRenamed(optimizationStrategy["Speedy debuffer"], "Default")],
+		[],
+		DamageType.special,
+	),
+	BADBATCHWRECKER: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      health: 10,
+      prot: 30,
+      spd: 100,
+      pot: 15,
+    }),
+	]),
+	B1BATTLEDROIDV2: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      spd: 100,
+      pot: 25,
+      phys: 75,
+    }),
+	]),
+	B2SUPERBATTLEDROID: createCharacterSettings([
+    fromShortOptimizationPlan({
+      id: "Default",
+      desc: "Survival",
+      health: 50,
+      prot: 50,
+      pot: 50,
+      ten: 25,
+      acc: 50,
+    }),
+    fromShortOptimizationPlan({
+      id: "Tenacity",
+      health: 50,
+      prot: 50,
+      pot: 50,
+      ten: 100,
+      ca: 100,
+    }),
+    fromShortOptimizationPlan({
+      id: "Potency",
+      health: 50,
+      prot: 50,
+      pot: 100,
+      ten: 50,
+      ca: 190,
+    }),
+	]),
+	BARRISSOFFEE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 70,
+			spd: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR P1 Jedi",
+			health: 75,
+			spd: 100,
+		}),
+	]),
+	BASTILASHAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc:"Leader",
+				health: 10,
+				spd: 100,
+				pot: 50,
+				spec: 25,
+			}),
+			toRenamed(
+				optimizationStrategy["Special Damage with Potency"],
+				"Non-leader",
+			),
+			toRenamed(optimizationStrategy["Special Damage"], "JKR Lead"),
+			fromShortOptimizationPlan({
+				id: "hSTR P2 Jedi",
+				spd: 100,
+				cd: 50,
+				spec:25,
+				cc: 50,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	BASTILASHANDARK: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Offensive",
+				spd: 100,
+				cd: 50,
+				pot: 5,
+				spec: 25,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	BAZEMALBUS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 50,
+				spd: 100,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 50,
+				spd: 100,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default Slow",
+				health: 50,
+				spd: 20,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default Slow w/ Primaries",
+				health: 50,
+				spd: 20,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow Tank",
+				health: 50,
+				prot: 50,
+				pot: 10,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				health: 10,
+				prot: 10,
+				spd: -100,
+			}),
+		],
+		["Rogue 1", "Chaze", "Chiggs"],
+	),
+	BB8: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				ten: 10,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 1",
+				health: 10,
+				prot: -5,
+				spd: 100,
+				phys: 25,
+			}),
+			optimizationStrategy.Speed,
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 5,
+				prot: 25,
+				spd: 100,
+				ten: 10,
+			}),
+		],
+		["bb8", "Wampanader", "ABC"],
+	),
+	BENSOLO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				pot: 10,
+				spec: 70,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	BIGGSDARKLIGHTER: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+		],
+		["Wiggs", "Chiggs"],
+	),
+	BISTAN: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["Rogue 1", "SuperStar2D2"],
+	),
+	BOBAFETT: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 50,
+			cd: 100,
+			pot: 25,
+			phys: 50,
+			cc: 50,
+		}),
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 2",
+			spd: 100,
+			cd: 75,
+			phys: 25,
+			cc: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 3",
+			cd: 50,
+			phys: 100,
+			cc: 25,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 3 Greedo",
+			spd: 20,
+			phys: 100,
+		}),
+	]),
+	BOBAFETTSCION: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			pot: 25,
+			phys: 50,
+			cc: 50,
+		}),
+	]),
+	BODHIROOK: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 50,
+			}),
+		],
+		["Rogue 1"],
+	),
+	BOKATAN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			pot: 25,
+			phys: 10,
+			cc: 50,
+		}),
+	]),
+	BOOMADIER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			prot: 3,
+			spd: 100,
+			cd: 9,
+			pot: 3,
+			ten: 10,
+			phys: 25,
+			spec: 10,
+			arm: 2,
+			res: 2,
+			acc: 3,
+			ca: 3,
+		}),
+	]),
+	BOSSK: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Leader",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			pot: 10,
+			ten: 25,
+		}),
+		fromShortOptimizationPlan({
+			id: "Non-leader",
+			health: 10,
+			spd: 100,
+			pot: 10,
+			ten: 25,
+		}),
+	]),
+	BOSSNASS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 4,
+			prot: 22,
+			spd: 100,
+			pot: 28,
+			ten: 15,
+			phys: 2,
+			spec: 3,
+			cc: 2,
+			arm: 2,
+			res: 2,
+		}),
+	]),
+	BOUSHH: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				spd: 100,
+				pot: 10,
+				spec: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 5,
+				spd: 100,
+				pot: 10,
+				spec: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Offense %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 5,
+				spd: 100,
+				spec: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Potency %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	BT1: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			pot: 5,
+			phys: 80,
+			cc: 10,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			spd: 100,
+			cd: 50,
+			pot: 5,
+			phys: 50,
+			cc: 10,
+			primaryRes: {
+				arrow: "Offense %",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+		}),
+	]),
+	C3POCHEWBACCA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 80,
+			pot: 10,
+			phys: 50,
+			cc: 25,
+		}),
+	]),
+	C3POLEGENDARY: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speedy debuffer"],
+			"Default",
+		),
+		optimizationStrategy.Speed,
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 1",
+			spd: 100,
+			pot: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Anti-Malak",
+			health: 10,
+			spd: 25,
+			pot: 25,
+		}),
+	]),
+	CADBANE: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+	]),
+	CALKESTIS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			pot: -10,
+			ten: 15,
+			phys: 10,
+			arm: 12.5,
+			res: 12.5,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 40,
+			pot: -10,
+			ten: 15,
+			phys: 10,
+			arm: 12.5,
+			res: 12.5,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Set",
+			health: 40,
+			pot: -10,
+			ten: 15,
+			phys: 10,
+			arm: 12.5,
+			res: 12.5,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+	]),
+	CANDEROUSORDO: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+		fromShortOptimizationPlan({
+			id: "Maul Lead",
+			cd: 50,
+			phys: 100,
+			cc: 25,
+		}),
+	]),
+	CAPTAINDROGAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				pot: 10,
+				ten: 10,
+				spec: 70,
+				cc: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 10,
+				spd: 100,
+				pot: 10,
+				ten: 10,
+				spec: 70,
+				cc: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Offense %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Set",
+				health: 10,
+				spd: 100,
+				pot: 10,
+				ten: 10,
+				spec: 70,
+				cc: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Offense %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Health %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	CAPTAINREX: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			pot: 60,
+			ten: 10,
+			cc: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 20,
+			spd: 100,
+			pot: 60,
+			ten: 10,
+			cc: 100,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Chance %",
+				cross: "Potency %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Set",
+			health: 20,
+			spd: 100,
+			pot: 60,
+			ten: 10,
+			cc: 100,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Chance %",
+				cross: "Potency %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Critical Chance %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
+	CAPTAINTARPALS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			prot: 3,
+			spd: 100,
+			cd: 9,
+			pot: 3,
+			ten: 10,
+			phys: 25,
+			spec: 10,
+			arm: 2,
+			res: 2,
+			acc: 3,
+			ca: 3,
+		}),
+	]),
+	CARADUNE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			spd: 80,
+			cd: 100,
+			pot: 20,
+			phys: 25,
+		}),
+		fromShortOptimizationPlan({
+			id: "Mothma Lead",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			pot: 20,
+			ten: 20,
+			phys: 5,
+			arm: 5,
+		}),
+	]),
+	CARTHONASI: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+	]),
+	CASSIANANDOR: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				prot: 20,
+				spd: 100,
+				pot: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "AdRad",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				pot: 25,
+				spec: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "AdRad w/ Primaries",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				pot: 25,
+				spec: 10,
+				primaryRes: {
+					triangle: "Critical Chance %",
+					cross: "Potency %",
+					circle: "Protection %",
+				},
+			}),
+		],
+		["Rogue 1", "SuperStar2D2"],
+		DamageType.mixed,
+	),
+	CC2224: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Leader",
+				spd: 100,
+				cd: 50,
+				pot: 25,
+				phys: 25,
+				cc: 50,
+				arm: 12.5,
+				res: 12.5,
+			}),
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Non-leader",
+			),
+		],
+		["zody"],
+		DamageType.mixed,
+	),
+	CEREJUNDA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			prot: 15,
+			spd: 20,
+			ten: 10,
+			phys: 10,
+			arm: 12.5,
+			res: 12.5,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 40,
+			prot: 15,
+			spd: 20,
+			ten: 10,
+			phys: 10,
+			arm: 12.5,
+			res: 12.5,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Set",
+			health: 40,
+			prot: 15,
+			spd: 20,
+			ten: 10,
+			phys: 10,
+			arm: 12.5,
+			res: 12.5,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+	]),
+	CHEWBACCALEGENDARY: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Tenacity",
+				health: 25,
+				prot: 25,
+				spd: 100,
+				ten: 80,
+				phys: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Chew Mix",
+				phys: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3 Greedo",
+				spd: 75,
+				phys: 100,
+			}),
+		],
+		["Chex Mix"],
+	),
+	CHIEFCHIRPA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 12,
+				spd: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 12,
+				spd: 100,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 12,
+				spd: 100,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Health %": 1,
+				},
+			}),
+			toRenamed(optimizationStrategy.Speed, "Speed"),
+			fromShortOptimizationPlan({
+				id: "Speed w/ Primaries",
+				spd: 100,
+				primaryRes: {
+					triangle: "Critical Chance %",
+					cross: "Protection %",
+					circle: "Protection %",
+				},
+			}),
+		],
+		["Murderbears"],
+	),
+	CHIEFNEBIT: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 50,
+				spd: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Detonator",
+				health: 60,
+				prot: 60,
+				spd: 100,
+				arm: 50,
+				ca: 25,
+			}),
+		],
+		["nebs"],
+	),
+	CHIRRUTIMWE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				ten: 20,
+				phys: 25,
+				cc: 50,
+			}),
+			toRenamed(optimizationStrategy["Speedy Chex Mix"], "Chex Mix"),
+		],
+		["Rogue 1", "Chaze", "Chiggs", "Chex Mix"],
+	),
+	CHOPPERS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			spd: 100,
+			pot: 20,
+			ten: 20,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 50,
+			spd: 100,
+			pot: 20,
+			ten: 20,
+			primaryRes: {
+				arrow: "Speed",
+				cross: "Tenacity %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			health: 50,
+			spd: 100,
+			pot: 20,
+			ten: 20,
+			primaryRes: {
+				arrow: "Speed",
+				cross: "Tenacity %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
+	]),
+	CLONESERGEANTPHASEI: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["Sarge"],
+	),
+	CLONEWARSCHEWBACCA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Tanky",
+				health: 50,
+				prot: 50,
+				spd: 100,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+		],
+		["CWC"],
+	),
+	COLONELSTARCK: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 10,
+				pot: 5,
+				phys: 5,
+				cc: 5,
+			}),
+		],
+		["Tony Stark", "Troopers"],
+	),
+	COMMANDERAHSOKA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				spd: 100,
+				cd: 50,
+				spec: 30,
+			}),
+			fromShortOptimizationPlan({
+				id: "Health",
+				health: 10,
+				spd: 100,
+				spec: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Crit.Dmg",
+				health: 5,
+				spd: 25,
+				cd: 100,
+				spec: 30,
+			}),
+		],
+		["CAT"],
+		DamageType.special,
+	),
+	COMMANDERLUKESKYWALKER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 25,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Chewpio",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 10,
+				ten: 50,
+				phys: 50,
+			}),
+			toRenamed(optimizationStrategy["Speedy Chex Mix"], "Chex Mix"),
+			fromShortOptimizationPlan({
+				id: "Raids",
+				spd: 100,
+				pot: 25,
+				phys: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow and Strong",
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 50,
+			}),
+		],
+		["CLS", "Wampanader", "Chex Mix", "ABC", "Titans"],
+	),
+	CORUSCANTUNDERWORLDPOLICE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Why?",
+				spd: 100,
+				pot: 50,
+			}),
+		],
+		["CUP"],
+	),
+	COUNTDOOKU: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				pot: 50,
+				ten: 50,
+				phys: 25,
+				spec: 25,
+			}),
+		],
+		[],
+		DamageType.mixed,
+	),
+	CT5555: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 15,
+			prot: 30,
+			spd: 50,
+			pot: 15,
+			phys: 25,
+		}),
+		fromShortOptimizationPlan({
+			id: "KAM",
+			health: 30,
+			prot: 15,
+			spd: 70,
+		}),
+		fromShortOptimizationPlan({
+			id: "KAM/CA",
+			health: 30,
+			prot: 15,
+			spd: 70,
+			ca: 100,
+		}),
+	]),
+	CT7567: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				spd: 100,
+				pot: 5,
+				ten: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "KAM",
+				health: 10,
+				spd: 100,
+			}),
+			toRenamed(optimizationStrategy.Speed, "Chex Mix"),
+		],
+		["Titans"],
+	),
+	CT210408: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 50,
+				phys: 75,
+				spec: 75,
+			}),
+			fromShortOptimizationPlan({
+				id: "Nuke",
+				spd: 50,
+				cd: 100,
+				phys: 75,
+				spec: 75,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "KAM",
+				health: 5,
+				spd: 50,
+				cd: 100,
+				phys: 20,
+				spec: 20,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "KAM/CA",
+				health: 5,
+				spd: 50,
+				cd: 100,
+				phys: 20,
+				spec: 20,
+				cc: 50,
+				ca: 100,
+			}),
+		],
+		[],
+		DamageType.mixed,
+	),
+	DAKA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				spd: 100,
+				pot: 25,
+				ten: 15,
+			}),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 75,
+				spd: 100,
+				pot: 30,
+				ten: 15,
+				ca: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				health: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				health: 50,
+				spd: 75,
+				pot: 15,
+				phys: 5,
+			}),
+		],
+		["NS", "hSTR NS"],
+	),
+	DARKTROOPER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 10,
+			spd: 50,
+			ten: 5,
+			phys: 60,
+			arm: 2.5,
+			res: 2.5,
+		}),
+	]),
+	DARTHBANE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			prot: 3,
+			spd: 100,
+			cd: 9,
+			pot: 3,
+			ten: 10,
+			phys: 25,
+			spec: 10,
+			arm: 2,
+			res: 2,
+			acc: 3,
+			ca: 3,
+		}),
+	]),
+	DARTHMALAK: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 50,
+			spd: 100,
+			pot: 10,
+			phys: 10,
+			arm: 10,
+		}),
+		fromShortOptimizationPlan({
+			id: "Tenacity",
+			prot: 50,
+			spd: 100,
+			pot: 10,
+			ten: 100,
+			phys: 10,
+			arm: 10,
+		}),
+	]),
+	DARTHMALGUS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			prot: 10,
+			spd: 100,
+			arm: 20,
+		}),
+	]),
+	DARTHNIHILUS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 30,
+				spd: 100,
+				pot: 50,
+				ten: 60,
+			}),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 40,
+				spd: 100,
+				ten: 20,
+				ca: 100,
+			}),
+		],
+		["Nightmare"],
+		DamageType.special,
+	),
+	DARTHREVAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				spd: 100,
+				cd: 50,
+				pot: 5,
+				spec: 10,
+				cc: 5,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	DARTHSIDIOUS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				pot: 25,
+				phys: 50,
+			}),
+		],
+		["Auto Lightzader"],
+	),
+	DARTHSION: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				prot: 30,
+				spd: 100,
+				pot: 5,
+				arm: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default/CA",
+				health: 25,
+				prot: 30,
+				spd: 100,
+				pot: 5,
+				arm: 20,
+				ca: 100,
+			}),
+		],
+		["Nightmare"],
+	),
+	DARTHTALON: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 15,
+			prot: 25,
+			spd: 100,
+			phys: 50,
+		}),
+	]),
+	DARTHTRAYA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 15,
+				prot: 10,
+				spd: 100,
+				pot: 5,
+				spec: 15,
+			}),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 25,
+				prot: 75,
+				spd: 65,
+				ten: 65,
+				ca: 100,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	DASHRENDAR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			spd: 100,
+			cd: 60,
+			pot: 5,
+			phys: 50,
+			cc: 10,
+		}),
+	]),
+	DATHCHA: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Detonator",
+				health: 100,
+				prot: 100,
+				arm: 80,
+				ca: 100,
+			}),
+		],
+		[],
+		DamageType.mixed,
+	),
+	DEATHTROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 25,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Iden Lead",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				cd: 100,
+				pot: 40,
+				phys: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				phys: 100,
+				targetStats: [createTargetStat("Speed", "+", 175, 179, "null")],
+			}),
+		],
+		["Troopers", "Chex Mix"],
+	),
+	DENGAR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 60,
+			cc: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 3",
+			cd: 50,
+			phys: 100,
+			cc: 25,
+		}),
+	]),
+	DIRECTORKRENNIC: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Special Damage, Potency"],
+				"Default",
+			),
+		],
+		["Imperial Grancor Maneuver"],
+		DamageType.special,
+	),
+	DOCTORAPHRA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 90,
+				pot: 100,
+				spec: 20,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	DROIDEKA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 10,
+			pot: 10,
+			ten: 20,
+			phys: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Maul Kickstarter",
+			prot: 5,
+			spd: 100,
+			pot: 5,
+			ten: 5,
+			phys: 20,
+		}),
+	]),
+	EETHKOTH: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Special Damage, Potency"],
+				"Default",
+			),
+		],
+		[],
+		DamageType.mixed,
+	),
+	EIGHTHBROTHER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 5,
+			spd: 100,
+			cd: 50,
+			phys: 30,
+			cc: 5,
+		}),
+	]),
+	EMBO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 20,
+			spd: 100,
+			phys: 10,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 3",
+			spd: 50,
+			cd: 25,
+			phys: 75,
+			cc: 100,
+		}),
+	]),
+	EMPERORPALPATINE: createCharacterSettings(
+		[
+			toRenamed(optimizationStrategy["Special Damage with Potency"], "Default"),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				prot: 100,
+				spd: 70,
+				pot: 80,
+			}),
+		],
+		["EP", "Palp", "EzPz", "Nightmare"],
+		DamageType.special,
+	),
+	ENFYSNEST: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				cd: 50,
+				pot: 25,
+				ten: 100,
+				phys: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Speedy",
+				spd: 100,
+				pot: 10,
+			}),
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Offense",
+			),
+			fromShortOptimizationPlan({
+				id: "Tenacity",
+				health: 10,
+				ten: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				health: 25,
+				phys: 100,
+			}),
+		],
+		["Nesty", "Baby Wampa", "solo"],
+		DamageType.special,
+	),
+	EPIXFINN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				spec: 25,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	EPIXPOE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				spec: 20,
+				cc: 20,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	EWOKELDER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				spd: 100,
+				ten: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 25,
+				spd: 100,
+				ten: 50,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Tenacity %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 25,
+				spd: 100,
+				ten: 50,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Tenacity %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
+		],
+		["EE", "Murderbears"],
+	),
+	EWOKSCOUT: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 15,
+				spd: 100,
+				pot: 50,
+				phys: 50,
+				cc: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 15,
+				spd: 100,
+				pot: 50,
+				phys: 50,
+				cc: 20,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Offense %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 15,
+				spd: 100,
+				pot: 50,
+				phys: 50,
+				cc: 20,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Offense %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 2",
+				spd: 50,
+				cd: 100,
+				phys: 50,
+				cc: 25,
+			}),
+		],
+		["Murderbears"],
+	),
+	EZRABRIDGERS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			spd: 100,
+			cd: 100,
+			phys: 50,
+			cc: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 5,
+			spd: 100,
+			cd: 100,
+			phys: 50,
+			cc: 50,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR P1 Jedi",
+			prot: -5,
+			spd: 100,
+			cd: 75,
+			phys: 50,
+			cc: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR P2 Jedi",
+			spd: 60,
+			cd: 100,
+			phys: 75,
+			cc: 75,
+		}),
+	]),
+	FENNECSHAND: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Offense",
+				spd: 100,
+				spec: 75,
+			}),
+			fromShortOptimizationPlan({
+				id: "Crit. Dmg",
+				spd: 100,
+				cd: 100,
+				spec: 100,
+				cc: 50,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	FIFTHBROTHER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				ten: 20,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	FINN: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Slow Crit, Physical Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 30,
+				prot: 100,
+				spd: 100,
+				pot: 5,
+				ten: 5,
+				phys: 50,
+				arm: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 1",
+				prot: -5,
+				spd: 80,
+				cd: 100,
+				phys: 50,
+				cc: 75,
+			}),
+		],
+		["Zinn"],
+	),
+	FIRSTORDEREXECUTIONER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				cc: 50,
+			}),
+		],
+		["Fox", "Panda", "Foe", "FO"],
+	),
+	FIRSTORDEROFFICERMALE: createCharacterSettings(
+		[toRenamed(optimizationStrategy.Speed, "Default", "Speed")],
+		["Foo", "FO"],
+	),
+	FIRSTORDERSPECIALFORCESPILOT: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
+				"Default",
+			),
+		],
+		["SFTP", "FO"],
+		DamageType.mixed,
+	),
+	FIRSTORDERTIEPILOT: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				cd: 100,
+				pot: 10,
+				phys: 50,
+			}),
+		],
+		["FOTP", "FO"],
+	),
+	FIRSTORDERTROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 30,
+				prot: 40,
+				spd: 100,
+				ten: 10,
+				arm: 30,
+			}),
+		],
+		["FOST", "FO"],
+	),
+	FOSITHTROOPER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 25,
+			cd: 100,
+			phys: 80,
+		}),
+		fromShortOptimizationPlan({
+			id: "Tanky",
+			health: 40,
+			spd: 100,
+			cd: 50,
+			phys: 50,
+		}),
+	]),
+	FULCRUMAHSOKA: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Omicron",
+				health: 10,
+				spd: 50,
+				cd: 100,
+				ten: -30,
+				phys: 75,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Omicron w/ Primaries",
+				health: 10,
+				spd: 50,
+				ten: -30,
+				phys: 100,
+				cc: 50,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Offense %",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+			}),
+		],
+		["ATF", "FAT"],
+	),
+	GAMORREANGUARD: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 75,
+				spd: 100,
+				pot: 75,
+				ten: 100,
+				arm: 50,
+			}),
+		],
+		["Piggy"],
+	),
+	GARSAXON: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 25,
+			phys: 75,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			spd: 100,
+			pot: 25,
+			phys: 75,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				cross: "Offense %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			spd: 100,
+			pot: 25,
+			phys: 75,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Potency %": 1,
+			},
+		}),
+	]),
+	GENERALHUX: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				ten: 10,
+				ca: 15,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	GENERALKENOBI: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Speedy Tank",
+				health: 25,
+				prot: 50,
+				spd: 100,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+			fromShortOptimizationPlan({
+				id: "Balanced",
+				health: 50,
+				prot: 100,
+				spd: 50,
+				ten: 50,
+				arm: 25,
+				res: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow Tank",
+				health: 50,
+				prot: 100,
+				ten: 50,
+				arm: 25,
+				res: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Padme Lead",
+				health: 100,
+				spd: 50,
+				ten: 50,
+				arm: 25,
+				res: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "JMK Lead",
+				health: 100,
+				ten: 50,
+				arm: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR P2 Jedi",
+				prot: 100,
+				spd: 50,
+				phys: 10,
+				cc: 25,
+				arm: 100,
+			}),
+		],
+		["GK", "Titans"],
+	),
+	GENERALSKYWALKER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Defense",
+				health: 10,
+				prot: 25,
+				spd: 100,
+				pot: 20,
+				phys: 10,
+				arm: 10,
+				res: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Offense",
+				spd: 100,
+				cd: 100,
+				pot: 20,
+				phys: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Parry",
+				prot: 75,
+				spd: 100,
+				pot: 25,
+				phys: 50,
+				arm: 10,
+			}),
+		],
+		["GAS"],
+	),
+	GEONOSIANBROODALPHA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Tanky",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			ten: 20,
+		}),
+		fromShortOptimizationPlan({
+			id: "Offense",
+			spd: 100,
+			cd: 50,
+			ten: 10,
+			phys: 20,
+			cc: 20,
+		}),
+	]),
+	GEONOSIANSOLDIER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 80,
+			cd: 90,
+			phys: 50,
+			cc: 100,
+		}),
+	]),
+	GEONOSIANSPY: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, and Physical Damage"],
+			"Default",
+		),
+	]),
+	GLLEIA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 15,
+				spd: 100,
+				pot: 15,
+				phys: 5,
+				arm: 10,
+				res: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 20,
+				prot: 15,
+				spd: 100,
+				pot: 15,
+				phys: 5,
+				arm: 10,
+				res: 10,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 20,
+				prot: 15,
+				spd: 100,
+				pot: 15,
+				phys: 5,
+				arm: 10,
+				res: 10,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Speed %": 1,
+				},
+			}),
+		],
+		["Murderbears"],
+	),
+	GLREY: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Health",
+			health: 50,
+			spd: 100,
+			phys: 15,
+		}),
+		fromShortOptimizationPlan({
+			id: "Offense",
+			health: 15,
+			spd: 100,
+			phys: 50,
+		}),
+	]),
+	GRANDADMIRALTHRAWN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				ten: 10,
+			}),
+		],
+		["GAT", "Imperial Grancor Maneuver", "Wampanader", "ABC", "Titans"],
+		DamageType.special,
+	),
+	GRANDINQUISITOR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 5,
+			spd: 100,
+			cd: 50,
+			phys: 30,
+			cc: 5,
+		}),
+	]),
+	GRANDMASTERLUKE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				prot: 25,
+				spd: 100,
+				pot: 15,
+			}),
+		],
+		["GMLS", "JMLS", "GLLS"],
+		DamageType.special,
+	),
+	GRANDMASTERYODA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Speedy",
+				spd: 100,
+				cd: 50,
+				pot: 25,
+				spec: 80,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Offense",
+				spd: 50,
+				cd: 100,
+				spec: 100,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Health",
+				health: 20,
+				spd: 100,
+				pot: 5,
+				spec: 20,
+				cc: 5,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR P1 Yodalicious",
+				prot: -5,
+				spd: 100,
+				cd: 100,
+				spec: 100,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR P2 Bastila",
+				spd: 60,
+				cd: 100,
+				spec: 75,
+				cc: 80,
+			}),
+		],
+		["GMY"],
+		DamageType.special,
+	),
+	GRANDMOFFTARKIN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 15,
+				spec: 15,
+				cc: 50,
+			}),
+		],
+		["GMT", "Auto Lightzader", "Imperial Grancor Maneuver"],
+		DamageType.mixed,
+	),
+	GREEDO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Crits",
+			spd: 100,
+			cd: 50,
+			pot: 25,
+			phys: 25,
+			cc: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 3",
+			cd: 100,
+			phys: 50,
+			cc: 50,
+			minDots: 5,
+			targetStats: [createTargetStat("Speed", "+", 170, 174, "null")],
+		}),
+	]),
+	GREEFKARGA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 5,
+			spd: 100,
+			pot: 5,
+			ten: 10,
+		}),
+	]),
+	GRIEVOUS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 100,
+				spd: 80,
+				cd: 80,
+			}),
+			fromShortOptimizationPlan({
+				id: "Fast",
+				health: 20,
+				spd: 100,
+				cd: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Nuke",
+				health: 100,
+				cd: 80,
+			}),
+		],
+		["GG"],
+	),
+	GUNGANPHALANX: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 12,
+			prot: 44,
+			spd: 100,
+			pot: 15,
+			arm: 5,
+			res: 5,
+			minDots: 5,
+			fullSets: true,
+		}),
+	]),
+	HANSOLO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Fast Han",
+				spd: 100,
+				cd: 100,
+				pot: 10,
+				phys: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow Han",
+				cd: 100,
+				pot: 25,
+				phys: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Non-relic",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Chex Mix",
+				cd: 100,
+				phys: 50,
+				cc: 50,
+				minDots: 5,
+				targetStats: [createTargetStat("Speed", "+", 170, 174, "null")],
+			}),
+		],
+		["Raid Han", "rHan", "OG Han", "Zolo", "Chex Mix", "Titans"],
+	),
+	HERASYNDULLAS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			pot: 25,
+			ten: 20,
+		}),
+		fromShortOptimizationPlan({
+			id: " Default w/ Primaries",
+			health: 20,
+			spd: 100,
+			pot: 25,
+			ten: 20,
+			minDots: 5,
+			primaryRes: {
+				cross: "Potency %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			health: 20,
+			spd: 100,
+			pot: 25,
+			ten: 20,
+			minDots: 5,
+			primaryRes: {
+				cross: "Potency %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
+	HERMITYODA: createCharacterSettings(
+		[
+			toRenamed(optimizationStrategy.Speed, "Default"),
+		],
+		["Hyoda", "Hoboda", "Hobo", "HY"],
+		DamageType.mixed,
+	),
+	HK47: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 75,
+			phys: 50,
+			cc: 25,
+		}),
+	]),
+	HONDO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 5,
+				spd: 100,
+				cd: 75,
+				spec: 75,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	HOTHHAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				pot: 25,
+			}),
+		],
+		["CHS", "CHolo", "Snolo", "Hoth Han"],
+	),
+	HOTHLEIA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				pot: 50,
+				phys: 25,
+				cc: 30,
+			}),
+		],
+		["ROLO"],
+	),
+	HOTHREBELSCOUT: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Mothma Lead",
+				health: 5,
+				prot: 10,
+				spd: 100,
+				pot: 5,
+				ten: 5,
+				phys: 75,
+				cc: 100,
+				arm: 5,
+			}),
+		],
+		["HRS", "Hoth Bros"],
+	),
+	HOTHREBELSOLDIER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				prot: 25,
+				spd: 100,
+			}),
+		],
+		["HRS", "Hoth Bros"],
+	),
+	HUMANTHUG: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+	]),
+	IDENVERSIOEMPIRE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			pot: 50,
+			phys: 25,
+		}),
+		fromShortOptimizationPlan({
+			id: "Wampa Slayer",
+			spd: 100,
+			cd: 30,
+			pot: 100,
+			phys: 10,
+		}),
+	]),
+	IG11: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Tanky",
+			health: 25,
+			spd: 50,
+			ten: 10,
+			phys: 5,
+			cc: 5,
+			arm: 5,
+			res: 5,
+		}),
+	]),
+	IG12: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 5,
+			spd: 100,
+			pot: 5,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
+	IG86SENTINELDROID: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, and Physical Damage"],
+			"Default",
+		),
+	]),
+	IG88: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, and Physical Damage"],
+			"Default",
+			"Damage",
+		),
+		fromShortOptimizationPlan({
+			id: "Nuke",
+			spd: 100,
+			cd: 25,
+			pot: 50,
+			phys: 25,
+			cc: 75,
+		}),
+	]),
+	IMAGUNDI: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["IGD"],
+	),
+	IMPERIALPROBEDROID: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Tanky",
+				health: 50,
+				prot: 50,
+				spd: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Offense",
+				spd: 100,
+				cd: 80,
+				pot: 50,
+				phys: 25,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Nuke",
+				health: 50,
+				prot: 50,
+				spd: 100,
+				pot: 25,
+			}),
+		],
+		["IPD"],
+	),
+	IMPERIALSUPERCOMMANDO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				prot: 15,
+				spd: 100,
+				pot: 20,
+				phys: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				prot: 15,
+				spd: 100,
+				pot: 20,
+				phys: 100,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Offense %",
+					triangle: "Offense %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				prot: 15,
+				spd: 100,
+				pot: 20,
+				phys: 100,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Offense %",
+					triangle: "Offense %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Offense %": 1,
+				},
+			}),
+		],
+		["ISC"],
+	),
+	JABBATHEHUTT: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 15,
+				spd: 100,
+				pot: 25,
+				ten: 50,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	JANGOFETT: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+	]),
+	JARJARBINKS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 0,
+				prot: 20,
+				spd: 100,
+				cd: 0,
+				pot: 40,
+				ten: 0,
+				phys: 0,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: true,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	JAWA: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Detonator",
+				health: 100,
+				prot: 100,
+				arm: 80,
+				ca: 100,
+			}),
+		],
+		[],
+		DamageType.mixed,
+	),
+	JAWAENGINEER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				pot: 50,
+				ten: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Detonator",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				arm: 5,
+			}),
+		],
+		[],
+		DamageType.mixed,
+	),
+	JAWASCAVENGER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 25,
+			pot: 50,
+			phys: 25,
+			cc: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Detonator",
+			health: 100,
+			prot: 100,
+			arm: 80,
+			ca: 100,
+		}),
+	]),
+	JEDIKNIGHTCAL: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				spd: 100,
+				cd: 25,
+				phys: 75,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Debuffer",
+				health: 5,
+				spd: 100,
+				pot: 35,
+				phys: 20,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Potency %": 1,
+				},
+			}),
+		],
+		["JKCK"],
+	),
+	JEDIKNIGHTCONSULAR: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Healer",
+				health: 50,
+				spd: 100,
+			}),
+		],
+		["JC"],
+		DamageType.mixed,
+	),
+	JEDIKNIGHTGUARDIAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 40,
+				prot: 20,
+				spd: 100,
+				pot: 50,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+		],
+		["JKG"],
+	),
+	JEDIKNIGHTLUKE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Leader",
+				health: 5,
+				prot: 5,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 15,
+			}),
+			fromShortOptimizationPlan({
+				id: "Non-leader",
+				health: 5,
+				prot: 5,
+				spd: 25,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 15,
+			}),
+		],
+		["JKL"],
+	),
+	JEDIKNIGHTREVAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				spec: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Health",
+				health: 10,
+				spd: 100,
+				spec: 10,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	JEDIMASTERKENOBI: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				spd: 100,
+				cd: 25,
+				phys: 10,
+			}),
+		],
+		["JMK"],
+	),
+	JOLEEBINDO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			spd: 75,
+			ten: 100,
+			ca: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Health and Speed",
+			health: 100,
+			spd: 75,
+		}),
+		fromShortOptimizationPlan({
+			id: "Healer",
+			health: 30,
+			spd: 100,
+			ten: 50,
+		}),
+	]),
+	JUHANI: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 100,
+			spd: 90,
+			pot: 5,
+			arm: 15,
+		}),
+	]),
+	JYNERSO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				pot: 50,
+				phys: 20,
+				cc: 75,
+			}),
+			fromShortOptimizationPlan({
+				id: "AdRad",
+				health: 10,
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 20,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "AdRad w/ Primaries",
+				health: 10,
+				spd: 100,
+				pot: 25,
+				phys: 20,
+				cc: 50,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+			}),
+		],
+		["Rogue 1", "Auto Lightzader", "Imperial Grancor Maneuver", "SuperStar2D2"],
+	),
+	K2SO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Tanky",
+				health: 20,
+				prot: 20,
+				spd: 100,
+				pot: 50,
+				ten: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "AdRad",
+				health: 20,
+				prot: 40,
+				spd: 50,
+				pot: 50,
+				ten: 50,
+				arm: 10,
+				res: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "AdRad w/ Primaries",
+				health: 20,
+				prot: 40,
+				spd: 50,
+				pot: 50,
+				ten: 50,
+				arm: 10,
+				res: 10,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					cross: "Tenacity %",
+					circle: "Protection %",
+				},
+			}),
+		],
+		["Rogue 1", "Cass-2SO", "K2"],
+	),
+	KANANJARRUSS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			spd: 100,
+			phys: 10,
+			cc: 30,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 40,
+			spd: 100,
+			phys: 10,
+			cc: 30,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			health: 40,
+			spd: 100,
+			phys: 10,
+			cc: 30,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 2,
+				"Tenacity %": 1,
+			},
+		}),
+	]),
+	KELLERANBEQ: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 100,
+			spd: 50,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				cross: "Protection %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
+	]),
+	KIADIMUNDI: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Balanced",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			cd: 50,
+			pot: 20,
+			phys: 50,
+			cc: 25,
+			arm: 10,
+			res: 10,
+		}),
+		fromShortOptimizationPlan({
+			id: "Offense",
+			spd: 100,
+			cd: 50,
+			pot: 20,
+			phys: 75,
+			cc: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Defense",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			pot: 20,
+			ten: 10,
+			arm: 15,
+			res: 15,
+		}),
+	]),
+	KITFISTO: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+		],
+		["Fisty", "Fister"],
+	),
+	KRRSANTAN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			prot: 30,
+			spd: 100,
+			pot: 10,
+			ten: 10,
+			arm: 25,
+		}),
+	]),
+	KUIIL: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 15,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	KYLEKATARN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Mothma Lead",
+			health: 5,
+			spd: 100,
+			pot: 5,
+			ten: 5,
+			phys: 50,
+			arm: 5,
+		}),
+	]),
+	KYLOREN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				phys: 25,
+				cc: 25,
+			}),
+		],
+		["Old Kylo", "zylo", "FO"],
+	),
+	KYLORENUNMASKED: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 75,
+				prot: 50,
+				spd: 100,
+				arm: 30,
+			}),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 100,
+				prot: 100,
+				spd: 50,
+				ten: 75,
+				arm: 37.5,
+				res: 37.5,
+			}),
+			fromShortOptimizationPlan({
+				id: "LV Lead",
+				health: 100,
+				prot: 75,
+			}),
+		],
+		["kru", "matt", "Snape", "FO"],
+	),
+	L3_37: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Tanky",
+				health: 40,
+				prot: 20,
+				spd: 100,
+				pot: 25,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+			fromShortOptimizationPlan({
+				id: "Speedy",
+				health: 40,
+				prot: 20,
+				spd: 50,
+				pot: 25,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+		],
+		["solo"],
+	),
+	LOBOT: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 25,
+			ten: 25,
+			arm: 12.5,
+			res: 12.5,
+		}),
+	]),
+	LOGRAY: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				cd: 40,
+				pot: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 10,
+				spd: 100,
+				cd: 40,
+				pot: 50,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 10,
+				spd: 100,
+				cd: 40,
+				pot: 50,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Health %": 2,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 2",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				pot: 10,
+			}),
+		],
+		["Murderbears"],
+	),
+	LORDVADER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 15,
+			spd: 100,
+			phys: 5,
+		}),
+	]),
+	LUKESKYWALKER: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["farmboi"],
+	),
+	LUMINARAUNDULI: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			spd: 100,
+			pot: 25,
+		}),
+	]),
+	LUTHENRAEL: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 10,
+				spd: 100,
+				cd: 0,
+				pot: 5,
+				ten: 0,
+				phys: 0,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: true,
+			}),
+		],
+		["Luthen"],
+		DamageType.mixed,
+	),
+	MACEWINDU: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 15,
+				spd: 100,
+				pot: 50,
+				spec: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow/Tanky",
+				health: 100,
+				prot: 25,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	MAGMATROOPER: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+		fromShortOptimizationPlan({
+			id: "Anti-Traya",
+			spd: 25,
+			cd: 25,
+			pot: 50,
+			phys: 25,
+			cc: 25,
+		}),
+	]),
+	MAGNAGUARD: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			prot: 30,
+			spd: 100,
+			pot: 20,
+			ten: 20,
+			arm: 25,
+			ca: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Balanced",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			cd: 25,
+			pot: 50,
+			ten: 25,
+			phys: 25,
+			cc: 25,
+			arm: 12.5,
+			res: 12.5,
+		}),
+	]),
+	MANDALORBOKATAN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			spd: 80,
+			phys: 100,
+			arm: 12.5,
+			res: 12.5,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 10,
+			spd: 80,
+			phys: 100,
+			arm: 12.5,
+			res: 12.5,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Offense %",
+				triangle: "Offense %",
+				cross: "Offense %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			health: 10,
+			spd: 80,
+			phys: 100,
+			arm: 12.5,
+			res: 12.5,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Offense %",
+				triangle: "Offense %",
+				cross: "Offense %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Offense %": 1,
+			},
+		}),
+	]),
+	MARAJADE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				prot: 10,
+				spd: 100,
+				cd: 25,
+				pot: 25,
+				spec: 25,
+				cc: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Survivability",
+				prot: 10,
+				spd: 100,
+				pot: 25,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	MASTERQUIGON: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 15,
+				prot: 0,
+				spd: 100,
+				cd: 0,
+				pot: 0,
+				ten: 0,
+				phys: 0,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: true,
+			}),
+		],
+		["MQG", "Quadme", "Queeni"],
+		DamageType.special,
+	),
+	MAUL: createCharacterSettings([
+		toRenamed(optimizationStrategy["Special Damage with Potency"], "Default"),
+	]),
+	MAULS7: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 25,
+			prot: 25,
+			spd: 100,
+			pot: 15,
+			phys: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "DS Mando",
+			spd: 100,
+			phys: 50,
+		}),
+	]),
+	MERRIN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 15,
+				pot: 100,
+				spec: 40,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 15,
+				pot: 100,
+				spec: 40,
+				minDots: 5,
+				primaryRes: {
+					cross: "Potency %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 15,
+				pot: 100,
+				spec: 40,
+				minDots: 5,
+				primaryRes: {
+					cross: "Potency %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Potency %": 3,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Tenacity",
+				health: 15,
+				pot: 20,
+				ten: 60,
+				spec: 30,
+			}),
+			fromShortOptimizationPlan({
+				id: "Tenacity w/ Primaries",
+				health: 15,
+				pot: 20,
+				ten: 60,
+				spec: 30,
+				minDots: 5,
+				primaryRes: {
+					cross: "Tenacity %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Tenacity w/ Primaries & Sets",
+				health: 15,
+				pot: 20,
+				ten: 60,
+				spec: 30,
+				minDots: 5,
+				primaryRes: {
+					cross: "Tenacity %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Tenacity %": 2,
+					"Potency %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	MISSIONVAO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			phys: 75,
+			cc: 50,
+		}),
+	]),
+	MOFFGIDEONS1: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 10,
+		}),
+	]),
+	MOFFGIDEONS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 3,
+			prot: 20,
+			spd: 100,
+			pot: 4,
+			ten: 3,
+			phys: 2,
+			spec: 3,
+			cc: 4,
+			arm: 4,
+			res: 4,
+		}),
+	]),
+	MONMOTHMA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Leader",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				ten: 25,
+				phys: 10,
+			}),
+		],
+		["MM"],
+	),
+	MORGANELSBETH: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				cd: 0,
+				pot: 0,
+				ten: 0,
+				phys: 0,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: true,
+			}),
+		],
+		["Morgan", "NS"],
+	),
+	MOTHERTALZIN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				pot: 50,
+				spec: 25,
+				cc: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				cd: 100,
+				spec: 75,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				prot: -5,
+				pot: 10,
+				spec: 100,
+			}),
+		],
+		["MT", "NS", "hSTR NS"],
+		DamageType.special,
+	),
+	NIGHTSISTERACOLYTE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				spec: 50,
+				cc: 80,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 2",
+				spd: 100,
+				cd: 100,
+				phys: 100,
+				spec: 100,
+				cc: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				cd: 100,
+				phys: 50,
+				spec: 50,
+				cc: 100,
+			}),
+		],
+		["NA", "NS"],
+		DamageType.mixed,
+	),
+	NIGHTSISTERINITIATE: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				cc: 100,
+			}),
+		],
+		["NI", "NS"],
+	),
+	NIGHTSISTERSPIRIT: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				pot: 25,
+				phys: 75,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				cd: 40,
+				phys: 100,
+			}),
+		],
+		["NS"],
+	),
+	NIGHTSISTERZOMBIE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Strong Zombie",
+				health: 20,
+				prot: 20,
+				spd: 100,
+				ten: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Weak Zombie",
+				health: 0,
+				prot: 0,
+				spd: 100,
+				cd: 0,
+				pot: 0,
+				ten: 0,
+				phys: 0,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: false,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				health: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 3",
+				health: 20,
+				spd: 100,
+				res: 20,
+			}),
+		],
+		["NS", "hSTR NS"],
+	),
+	NIGHTTROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 50,
+				prot: 0,
+				spd: 100,
+				cd: 10,
+				pot: 0,
+				ten: 10,
+				phys: 25,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: true,
+			}),
+		],
+		["NS", "NT"],
+	),
+	NINTHSISTER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			prot: 50,
+			spd: 100,
+			ten: 40,
+			arm: 30,
+		}),
+	]),
+	NUTEGUNRAY: createCharacterSettings([
+		toRenamed(optimizationStrategy["Speed with survivability"], "Default"),
+		toRenamed(
+			optimizationStrategy["Speed, Crit, and Physical Damage"],
+			"Damage",
+		),
+	]),
+	OLDBENKENOBI: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Speed",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 50,
+			}),
+		],
+		["OB"],
+	),
+	PADAWANOBIWAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 30,
+				cd: 100,
+			}),
+		],
+		["POW", "Quadme", "Queeni"],
+	),
+	PADMEAMIDALA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 35,
+				spd: 100,
+				cd: 25,
+				pot: 15,
+				phys: 10,
+				cc: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Slow",
+				health: 50,
+				cd: 25,
+				pot: 15,
+				phys: 10,
+				cc: 10,
+			}),
+		],
+		["Padme"],
+	),
+	PAO: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Mothma Lead",
+				health: 10,
+				prot: 30,
+				spd: 100,
+				pot: 5,
+				ten: 5,
+				phys: 100,
+				arm: 5,
+			}),
+			toRenamed(optimizationStrategy["Speedy Chex Mix"], "Chex Mix"),
+		],
+		["Rogue 1", "Chex Mix"],
+	),
+	PAPLOO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				ten: 10,
+				arm: 5,
+				res: 5,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 20,
+				spd: 100,
+				ten: 10,
+				arm: 5,
+				res: 5,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 20,
+				spd: 100,
+				ten: 10,
+				arm: 5,
+				res: 5,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Fast Tank",
+				health: 25,
+				prot: 25,
+				spd: 100,
+				ten: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+		],
+		["Murderbears"],
+	),
+	PAZVIZSLA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Health",
+			health: 75,
+			prot: 50,
+			spd: 100,
+			arm: 10,
+			res: 10,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Protection",
+			health: 75,
+			prot: 50,
+			spd: 100,
+			arm: 10,
+			res: 10,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Protection %",
+				cross: "Protection %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
+	]),
+	PHASMA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				pot: 25,
+			}),
+		],
+		["FO"],
+	),
+	PLOKOON: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		[],
+		DamageType.mixed,
+	),
+	POE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 10,
+			spd: 100,
+			pot: 40,
+			ten: 20,
+			arm: 5,
+		}),
+	]),
+	POGGLETHELESSER: createCharacterSettings([
+		toRenamed(optimizationStrategy["Speedy debuffer"], "Default"),
+	]),
+	PRINCESSKNEESAA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			cd: 50,
+			pot: 40,
+			phys: 10,
+			cc: 80,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 20,
+			spd: 100,
+			cd: 50,
+			pot: 40,
+			phys: 10,
+			cc: 80,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Potency %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Set",
+			health: 20,
+			spd: 100,
+			cd: 50,
+			pot: 40,
+			phys: 10,
+			cc: 80,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Potency %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Critical Chance %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
+	PRINCESSLEIA: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 2",
+				spd: 50,
+				cd: 100,
+				phys: 25,
+				cc: 50,
+			}),
+		],
+		["Machine Gun"],
+	),
+	QIRA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				pot: 10,
+				phys: 50,
+				cc: 25,
+			}),
+		],
+		["solo"],
+	),
+	QUEENAMIDALA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				cd: 0,
+				pot: 0,
+				ten: 0,
+				phys: 0,
+				spec: 0,
+				cc: 0,
+				arm: 0,
+				res: 0,
+				acc: 0,
+				ca: 0,
+				minDots: 5,
+				fullSets: true,
+			}),
+		],
+		["Quadme", "Queeni"],
+	),
+	QUIGONJINN: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Special Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Omicron",
+				phys: 100,
+				spec: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR P1 Jedi",
+				prot: -5,
+				spd: 100,
+				cd: 75,
+				phys: 25,
+				spec: 25,
+				cc: 50,
+			}),
+		],
+		["QGJ"],
+		DamageType.mixed,
+	),
+	R2D2_LEGENDARY: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				pot: 25,
+				ten: 10,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 1",
+				health: 10,
+				prot: -5,
+				spd: 100,
+				cd: 25,
+				pot: 25,
+				phys: 25,
+				cc: 50,
+			}),
+		],
+		["Trashcan", "R2z2", "SuperStar2D2"],
+		DamageType.mixed,
+	),
+	RANGETROOPER: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+		],
+		["Troopers"],
+	),
+	RESISTANCEPILOT: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Slow Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["RP"],
+	),
+	RESISTANCETROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 10,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 1",
+				prot: -5,
+				cd: 100,
+				phys: 50,
+			}),
+		],
+		["RT", "res trooper"],
+	),
+	REY: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				phys: 25,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 1",
+				prot: -5,
+				spd: 90,
+				cd: 100,
+				phys: 50,
+			}),
+		],
+		["scav rey"],
+	),
+	REYJEDITRAINING: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 20,
+				phys: 20,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 1",
+				prot: -5,
+				spd: 90,
+				cd: 100,
+				pot: 50,
+				phys: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR p1 C3PO",
+				prot: -5,
+				spd: 90,
+				cd: 100,
+				pot: 60,
+				ten: 60,
+				phys: 50,
+			}),
+		],
+		["JTR", "RJT", "Jedi Rey", "Jey Z"],
+	),
+	ROSETICO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				cd: 50,
+				pot: 30,
+				phys: 20,
+				spec: 20,
+				cc: 25,
+			}),
+		],
+		[],
+		DamageType.mixed,
+	),
+	ROYALGUARD: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Tanky",
+				health: 50,
+				prot: 50,
+				spd: 25,
+				ten: 25,
+				arm: 5,
+				res: 5,
+			}),
+			fromShortOptimizationPlan({
+				id: "LV Lead",
+				health: 100,
+				prot: 75,
+			}),
+		],
+		["RG", "Red Guard"],
+	),
+	SABINEWRENS3: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 2",
+			health: 20,
+			prot: 20,
+			spd: 100,
+		}),
+	]),
+	SANASTARROS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 50,
+				pot: 5,
+				spec: 20,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	SAVAGEOPRESS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 100,
+				phys: 10,
+				arm: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Balanced",
+				health: 50,
+				spd: 100,
+				cd: 25,
+				pot: 25,
+				ten: 25,
+				phys: 25,
+				cc: 25,
+				arm: 12.5,
+				res: 12.5,
+			}),
+		],
+		["zavage"],
+	),
+	SAWGERRERA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			pot: 20,
+			phys: 20,
+		}),
+	]),
+	SCARIFREBEL: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Health",
+				health: 30,
+				prot: 10,
+				spd: 100,
+				pot: 25,
+				ten: 10,
+				arm: 10,
+				res: 10,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Protection",
+				health: 30,
+				prot: 20,
+				spd: 100,
+				pot: 25,
+				ten: 10,
+				arm: 10,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Protection %",
+					cross: "Protection %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 2",
+				health: 20,
+				spd: 100,
+			}),
+		],
+		["Rogue 1", "SRP"],
+	),
+	SCOUTTROOPER_V3: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 10,
+				spd: 100,
+				pot: 30,
+				ten: 10,
+				phys: 15,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 5,
+				prot: 10,
+				spd: 100,
+				pot: 30,
+				ten: 10,
+				phys: 15,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Potency %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Set",
+				health: 5,
+				prot: 10,
+				spd: 100,
+				pot: 30,
+				ten: 10,
+				phys: 15,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Potency %": 1,
+				},
+			}),
+		],
+		["Rogue 1", "SRP"],
+	),
+	SECONDSISTER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				cd: 75,
+				spec: 100,
+				cc: 30,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	SEVENTHSISTER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 10,
+			spd: 100,
+			ten: 20,
+		}),
+	]),
+	SHAAKTI: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 25,
+			prot: 25,
+			spd: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Nuke",
+			health: 25,
+			prot: 25,
+			spd: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "KAM",
+			health: 20,
+			prot: 10,
+			spd: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "KAM/CA",
+			health: 20,
+			prot: 10,
+			spd: 100,
+			ca: 100,
+		}),
+	]),
+	SHORETROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Speedy Tank",
+				health: 50,
+				prot: 50,
+				spd: 100,
+				ten: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "LV Lead",
+				health: 100,
+				prot: 75,
+			}),
+		],
+		["ShT", "Troopers", "Imperial Grancor Maneuver"],
+	),
+	SITHASSASSIN: createCharacterSettings(
+		[toRenamed(optimizationStrategy["Special Damage with Potency"], "Default")],
+		["SA", "Sassy"],
+	),
+	SITHMARAUDER: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["SM"],
+	),
+	SITHPALPATINE: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 40,
+				prot: 5,
+				spd: 100,
+				spec: 5,
+			}),
+		],
+		["SEE"],
+		DamageType.special,
+	),
+	SITHTROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				prot: 25,
+				spd: 50,
+				ten: 15,
+				arm: 25,
+				res: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "DR Lead",
+				health: 25,
+				prot: 50,
+				spd: 15,
+				ten: 15,
+			}),
+		],
+		["SiT", "Nightmare"],
+	),
+	SMUGGLERCHEWBACCA: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "DefaultSpeedy Critter",
+				spd: 100,
+				cd: 80,
+				pot: 25,
+				phys: 60,
+				cc: 25,
+			}),
+		],
+		["Vets"],
+	),
+	SMUGGLERHAN: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "Speedy Critter",
+				spd: 100,
+				cd: 80,
+				pot: 25,
+				phys: 60,
+			}),
+		],
+		["Vets"],
+	),
+	SNOWTROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Iden Lead",
+				health: 10,
+				prot: 10,
+				spd: 50,
+				cd: 100,
+				pot: 10,
+				phys: 30,
+				cc: 25,
+			}),
+		],
+		["Troopers"],
+	),
+	STAP: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 10,
+			pot: 10,
+			phys: 50,
+			cc: 10,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Speed %": 1,
+			},
+		}),
+	]),
+	STARKILLER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 25,
+			spd: 100,
+			cd: 75,
+			phys: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 25,
+			spd: 100,
+			phys: 50,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Speedy",
+			health: 10,
+			spd: 100,
+			cd: 50,
+			phys: 30,
+		}),
+		fromShortOptimizationPlan({
+			id: "Speedy w/ Primaries",
+			health: 10,
+			spd: 100,
+			cd: 50,
+			phys: 30,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+			},
+		}),
+	]),
+	STORMTROOPER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				desc: "Speedy Tank",
+				health: 25,
+				prot: 25,
+				spd: 50,
+				ten: 25,
+				arm: 25,
+				res: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "LV Lead",
+				health: 100,
+				prot: 75,
+			}),
+			fromShortOptimizationPlan({
+				id: "Iden Lead",
+				prot: 75,
+				spd: 50,
+				arm: 100,
+			}),
+			// TODO: Check differing values
+			fromShortOptimizationPlan({
+				id: "Iden Lead w/ Primaries",
+				prot: 100,
+				spd: 50,
+				arm: 50,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Defense %",
+					triangle: "Defense %",
+					cross: "Defense %",
+				},
+			}),
+		],
+		["Troopers"],
+	),
+	STORMTROOPERHAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				prot: 50,
+				spd: 50,
+				pot: 100,
+				ten: 10,
+				arm: 20,
+			}),
+		],
+		["STHan"],
+	),
+	SUNFAC: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Tanky",
+			health: 40,
+			prot: 40,
+			spd: 100,
+			pot: 25,
+			ten: 25,
+			arm: 12.5,
+			res: 12.5,
+		}),
+	]),
+	SUPREMELEADERKYLOREN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Speed",
+			health: 10,
+			spd: 100,
+			cd: 50,
+			phys: 30,
+		}),
+		fromShortOptimizationPlan({
+			id: "Offense",
+			health: 20,
+			spd: 100,
+			cd: 100,
+			phys: 40,
+		}),
+	]),
+	T3_M4: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 25,
+				ten: 10,
+				spec: 10,
+				cc: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Damage",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				cd: 50,
+				pot: 50,
+				ten: 10,
+				spec: 20,
+				cc: 25,
+			}),
+			fromShortOptimizationPlan({
+				id: "Nuke",
+				health: 10,
+				prot: 50,
+				spd: 100,
+				pot: 25,
+				ten: 10,
+				cc: 10,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	TALIA: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Mixed Damage"],
+				"Default",
+			),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 4",
+				phys: 100,
+				spec: 100,
+				cc: 100,
+			}),
+		],
+		["NS", "hSTR NS"],
+		DamageType.mixed,
+	),
+	TARFFUL: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			spd: 100,
+			arm: 50,
+			res: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 30,
+			spd: 100,
+			arm: 50,
+			res: 50,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			health: 30,
+			spd: 100,
+			arm: 50,
+			res: 50,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Defense %": 3,
+			},
+		}),
+	]),
+	TARONMALICOS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Fast Build",
+			health: 20,
+			spd: 100,
+			cd: 50,
+			phys: 40,
+		}),
+		fromShortOptimizationPlan({
+			id: "Fast Build w/ Primaries",
+			health: 20,
+			spd: 100,
+			cd: 50,
+			phys: 40,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Fast Build w/ Primaries & Sets",
+			health: 20,
+			spd: 100,
+			cd: 50,
+			phys: 40,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Slow Build",
+			health: 40,
+			spd: 100,
+			cd: 50,
+			phys: 60,
+		}),
+		fromShortOptimizationPlan({
+			id: "Slow Build w/ Primaries",
+			health: 40,
+			spd: 100,
+			cd: 50,
+			phys: 60,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Slow Build w/ Primaries & Sets",
+			health: 40,
+			spd: 100,
+			cd: 50,
+			phys: 60,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
+	TEEBO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				pot: 100,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 10,
+				spd: 100,
+				pot: 100,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 10,
+				spd: 100,
+				pot: 100,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Potency %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Potency %": 3,
+				},
+			}),
+		],
+		["Teebotine", "Murderbears"],
+	),
+	THEMANDALORIAN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 5,
+			spd: 100,
+			cd: 15,
+			phys: 5,
+			cc: 30,
+		}),
+		fromShortOptimizationPlan({
+			id: "Relic 7",
+			spd: 100,
+			cd: 80,
+			phys: 20,
+		}),
+		fromShortOptimizationPlan({
+			id: "Non-relic",
+			spd: 100,
+			cd: 80,
+			phys: 10,
+			cc: 20,
+		}),
+	]),
+	THEMANDALORIANBESKARARMOR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 5,
+			spd: 100,
+			pot: 15,
+			phys: 30,
+		}),
+	]),
+	THIRDSISTER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			prot: 5,
+			spd: 100,
+			cd: 50,
+			phys: 50,
+			arm: 5,
+		}),
+		// TODO: Check differing values
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 30,
+			prot: 5,
+			spd: 100,
+			phys: 50,
+			arm: 5,
+			minDots: 5,
+			primaryRes: {
+				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+		}),
+	]),
+	TIEFIGHTERPILOT: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["TFP", "Auto Lightzader"],
+	),
+	TRENCH: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				pot: 30,
+				spec: 20,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	TRIPLEZERO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				pot: 30,
+				spec: 20,
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	TUSKENCHIEFTAIN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 15,
+			prot: 10,
+			spd: 100,
+			ten: 30,
+		}),
+	]),
+	TUSKENHUNTRESS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 75,
+			pot: 10,
+			phys: 40,
+			cc: 10,
+		}),
+	]),
+	TUSKENRAIDER: createCharacterSettings([
+		toRenamed(
+			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+			"Default",
+		),
+	]),
+	TUSKENSHAMAN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 5,
+			spd: 100,
+			pot: 30,
+			ten: 10,
+		}),
+	]),
+	UGNAUGHT: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
+				"Default",
+			),
+		],
+		[],
+		DamageType.mixed,
+	),
+	UNDERCOVERLANDO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			spd: 100,
+			cd: 50,
+			phys: 25,
+			cc: 25,
+		}),
+	]),
+	URORRURRR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 20,
+			spd: 100,
+			pot: 10,
+			arm: 10,
+		}),
+	]),
+	VADER: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 40,
+				phys: 20,
+				cc: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Raids",
+				spd: 100,
+				cd: 50,
+				pot: 25,
+				phys: 25,
+				cc: 25,
+			}),
+		],
+		["Auto Lightzader", "Wampanader", "Nightmare"],
+	),
+	VEERS: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
+				"Default",
+			),
+		],
+		["Troopers"],
+		DamageType.mixed,
+	),
+	VISASMARR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 25,
+			spd: 100,
+			cd: 50,
+			ten: 25,
+			phys: 50,
+			cc: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Healer",
+			health: 50,
+			spd: 100,
+			ten: 10,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR Phase 1",
+			health: 25,
+			prot: -5,
+			cd: 100,
+			phys: 50,
+			cc: 75,
+		}),
+	]),
+	WAMPA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 80,
+				cd: 100,
+				pot: 10,
+				phys: 50,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Omicron",
+				health: 100,
+				spd: 75,
+				ten: 75,
+				phys: 50,
+				arm: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Omicron/Health",
+				health: 100,
+				spd: 75,
+				ten: 10,
+				phys: 10,
+				arm: 10,
+			}),
+			fromShortOptimizationPlan({
+				id: "Omicron/Tenacity",
+				health: 30,
+				spd: 15,
+				ten: 100,
+				phys: 30,
+				arm: 20,
+			}),
+			fromShortOptimizationPlan({
+				id: "Raids",
+				health: 10,
+				spd: 80,
+				cd: 100,
+				pot: 10,
+				phys: 50,
+			}),
+		],
+		["beast", "Wampanader"],
+	),
+	WATTAMBOR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			spd: 100,
+			pot: 25,
+			ten: 10,
+		}),
+	]),
+	WEDGEANTILLES: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, and Physical Damage"],
+				"Default",
+			),
+		],
+		["Wiggs", "chiggs", "SuperStar2D2"],
+	),
+	WICKET: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				spd: 100,
+				cd: 100,
+				phys: 40,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries",
+				health: 5,
+				spd: 100,
+				cd: 100,
+				phys: 40,
+				cc: 50,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+			}),
+			// TODO: Check differing values
+			fromShortOptimizationPlan({
+				id: "Default w/ Primaries & Sets",
+				health: 5,
+				spd: 100,
+				cd: 100,
+				phys: 60,
+				cc: 50,
+				minDots: 5,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Damage %": 1,
+					"Health %": 1,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "hSTR Phase 2",
+				spd: 80,
+				cd: 50,
+				phys: 100,
+				cc: 10,
+			}),
+		],
+		["Murderbears"],
+	),
+	YOUNGCHEWBACCA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 50,
+				spd: 100,
+				cd: 50,
+				phys: 25,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "Tanky",
+				health: 100,
+				spd: 50,
+				ten: 5,
+				arm: 5,
+			}),
+		],
+		["Dwight", "solo"],
+	),
+	YOUNGHAN: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 50,
+			}),
+			fromShortOptimizationPlan({
+				id: "HAAT",
+				spd: 80,
+				cd: 100,
+				phys: 50,
+			}),
+		],
+		["YOLO", "solo", "Jim"],
+	),
+	YOUNGLANDO: createCharacterSettings(
+		[
+			toRenamed(
+				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
+				"Default",
+			),
+		],
+		["solo"],
+	),
+	ZAALBAR: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			prot: 50,
+			spd: 25,
+			pot: 25,
+			ten: 50,
+			ca: 50,
+		}),
+	]),
+	ZAMWESELL: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 40,
+			pot: 50,
+			phys: 25,
+			cc: 40,
+		}),
+		fromShortOptimizationPlan({
+			id: "Omicron",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			phys: 10,
+		}),
+	]),
+	ZEBS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			spd: 100,
+			pot: 50,
+			phys: 20,
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries",
+			health: 40,
+			spd: 100,
+			pot: 50,
+			phys: 20,
+			minDots: 5,
+			primaryRes: {
+				cross: "Potency %",
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Default w/ Primaries & Sets",
+			health: 40,
+			spd: 100,
+			pot: 50,
+			phys: 20,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
+	]),
+	ZORIIBLISS_V2: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 10,
+			spd: 100,
+			cd: 50,
+			pot: 10,
+			phys: 20,
+		}),
+	]),
 };
 
 for (const charID in characterSettings) {
