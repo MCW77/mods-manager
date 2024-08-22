@@ -53,7 +53,9 @@ export namespace thunks {
 	): ThunkResult<void> {
 		isBusy$.set(true);
 		return App.thunks.updateProfile(
-			(profile) => profile.withModAssignments(result),
+			(profile) => {
+				return profile.withModAssignments(result);
+			},
 			(dispatch, getState, newProfile) => {
 				const db = getDatabase();
 				db.saveLastRun(settings, (error) =>
