@@ -115,25 +115,25 @@ export namespace thunks {
 
 	/**
 	 * Read Game settings and player profiles from the database and load them into the app state
-	 * @param allyCode
+	 * @param allycode
 	 * @returns {Function}
 	 */
-	export function loadFromDb(allyCode: string): ThunkResult<void> {
+	export function loadFromDb(allycode: string): ThunkResult<void> {
 		return (dispatch) => {
-			dispatch(loadProfiles(allyCode));
+			dispatch(loadProfiles(allycode));
 		};
 	}
 
 	/**
 	 * Load a single player profile from the database and set it in the state
-	 * @param allyCode {string}
+	 * @param allycode {string}
 	 * @returns {*}
 	 */
-	export function loadProfile(allyCode: string): ThunkResult<Promise<void>> {
+	export function loadProfile(allycode: string): ThunkResult<Promise<void>> {
 		return async (dispatch) => {
 			try {
 				const db = getDatabase();
-				const profile: PlayerProfile = await db.getProfile(allyCode);
+				const profile: PlayerProfile = await db.getProfile(allycode);
 				const cleanedSelectedCharacters = profile.selectedCharacters.filter(
 					({ id }) => Object.keys(profile.characters).includes(id),
 				);
@@ -146,7 +146,7 @@ export namespace thunks {
 						cleanedProfile.allyCode,
 					);
 				dispatch(actions.setProfile(cleanedProfile));
-				profilesManagement$.profiles.activeAllycode.set(allyCode);
+				profilesManagement$.profiles.activeAllycode.set(allycode);
 				hotutils$.checkSubscriptionStatus();
 			} catch (error) {
 				dialog$.showError(

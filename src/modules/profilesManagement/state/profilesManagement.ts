@@ -68,11 +68,11 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		addProfile: (profile: PlayerProfile) => {
 			profilesManagement$.profiles.profilesByAllycode.set({
 				...profilesManagement$.profiles.profilesByAllycode.peek(),
-				[profile.allyCode]: { allyCode: profile.allyCode } as PlayerProfile, // TODO save the profile once PlayerProfiles are serializable
+				[profile.allycode]: { allycode: profile.allycode } as PlayerProfile, // TODO save the profile once PlayerProfiles are serializable
 			});
 			profilesManagement$.profiles.playernameByAllycode.set({
 				...profilesManagement$.profiles.playernameByAllycode.peek(),
-				[profile.allyCode]: profile.playerName,
+				[profile.allycode]: profile.playerName,
 			});
 			profilesChanged$.fire();
 		},
@@ -96,12 +96,12 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 			profilesChanged$.fire();
 		},
 		updateProfile: (profile: PlayerProfile) => {
-			profilesManagement$.profiles.profilesByAllycode[profile.allyCode].set(
+			profilesManagement$.profiles.profilesByAllycode[profile.allycode].set(
 				{} as PlayerProfile,
 			); // TODO save the profile once PlayerProfiles are serializable
 			profilesManagement$.profiles.lastUpdatedByAllycode.set({
 				...profilesManagement$.profiles.lastUpdatedByAllycode.peek(),
-				[profile.allyCode]: { id: profile.allyCode, lastUpdated: Date.now() },
+				[profile.allycode]: { id: profile.allycode, lastUpdated: Date.now() },
 			});
 			profilesChanged$.fire();
 		},

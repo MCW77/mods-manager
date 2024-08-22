@@ -8,7 +8,7 @@ import type {
 } from "#/state/reducers/modsOptimizer";
 
 // utils
-import formatAllyCode from "#/utils/formatAllyCode";
+import formatAllycode from "#/utils/formatAllycode";
 
 // modules
 import { Data } from "#/state/modules/data";
@@ -65,7 +65,7 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 				}
 
 				// Format the input field
-				(e.target as HTMLInputElement).value = formatAllyCode(
+				(e.target as HTMLInputElement).value = formatAllycode(
 					(e.target as HTMLInputElement).value,
 				);
 			}}

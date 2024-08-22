@@ -2,7 +2,7 @@
 import type { ThunkResult } from "../reducers/modsOptimizer";
 
 // utils
-import cleanAllyCode from "#/utils/cleanAllyCode";
+import cleanAllycode from "#/utils/cleanAllycode";
 import groupByKey from "#/utils/groupByKey";
 import nothing from "#/utils/nothing";
 import { mapValues } from "lodash-es";
@@ -110,7 +110,7 @@ export namespace thunks {
 		sessionId: string | null,
 		useSession = true,
 	): ThunkResult<Promise<void>> {
-		const cleanedAllyCode = cleanAllyCode(allycode);
+		const cleanedAllycode = cleanAllycode(allycode);
 		let profile: FetchedGIMOProfile ;
 
 		const messages: string[] = [];
@@ -133,12 +133,12 @@ export namespace thunks {
 			}
 
 			// Then, fetch the player's data from HotUtils
-			const tempProfile = new PlayerProfile(cleanedAllyCode, "");
+			const tempProfile = new PlayerProfile(cleanedAllycode, "");
 			const oldAllycode = profilesManagement$.profiles.activeAllycode.get();
 			profilesManagement$.profiles.activeAllycode.set(tempProfile.allyCode);
 
 			try {
-				profile = await hotutils$.fetchProfile(cleanedAllyCode);
+				profile = await hotutils$.fetchProfile(cleanedAllycode);
 
 				// Process all of the data that's been collected
 				const db = getDatabase();
@@ -147,7 +147,7 @@ export namespace thunks {
 				// In this case, don't keep old mods around, even if the box is checked.
 				await dispatch(
 					updatePlayerData(
-						cleanedAllyCode,
+						cleanedAllycode,
 						oldAllycode,
 						profile,
 						db,
@@ -162,7 +162,7 @@ export namespace thunks {
 					if (error.message === "Player not found") {
 						dialog$.showError(
 							"Sorry we couldn't fetch your data from hotutils",
-							`Player with allycode ${cleanedAllyCode} not found`,
+							`Player with allycode ${cleanedAllycode} not found`,
 							"Please check the allycode you entered and try again.",
 						);
 						return;

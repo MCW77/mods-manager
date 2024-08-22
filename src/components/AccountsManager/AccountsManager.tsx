@@ -8,7 +8,7 @@ import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { faFileImport, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import formatAllyCode from "#/utils/formatAllyCode";
+import formatAllycode from "#/utils/formatAllycode";
 import { readFile } from "#/utils/readFile";
 
 // state
@@ -38,12 +38,12 @@ const AccountsManager = React.memo(() => {
 	/**
 	 * Renders the "Are you sure?" modal for deleting an ally code
 	 */
-	const deleteAllyCodeModal = () => {
+	const deleteAllycodeModal = () => {
 		return (
 			<div>
 				<h2>
 					{t("general.accounts.Delete")}{" "}
-					<strong>{formatAllyCode(selectedProfile)}</strong>?
+					<strong>{formatAllycode(selectedProfile)}</strong>?
 				</h2>
 				<p>{t("general.accounts.DeletionConfirmation")}</p>
 				<p>
@@ -93,14 +93,14 @@ const AccountsManager = React.memo(() => {
 					disabled={selectedProfile === ""}
 					type={"button"}
 					variant={"destructive"}
-					onClick={() => dialog$.show(deleteAllyCodeModal())}
+					onClick={() => dialog$.show(deleteAllycodeModal())}
 				>
 					<FontAwesomeIcon
 						className="m-r-2"
 						icon={faTrashCan}
 						title={`${t("general.accounts.Delete")}`}
 					/>
-					{`${t("general.accounts.Delete")} ${formatAllyCode(selectedProfile)}`}
+					{`${t("general.accounts.Delete")} ${formatAllycode(selectedProfile)}`}
 				</Button>
 			</div>
 			<div className={"accounts"}>
@@ -112,7 +112,7 @@ const AccountsManager = React.memo(() => {
 					{Object.entries(playerProfiles).map((profile, index) => (
 						<div className="flex items-center space-x-2" key={profile[0]}>
 							<RadioGroupItem value={profile[0]} id={`profile-${index}`} />
-							<Label htmlFor={`profile-${index}`}>{`${formatAllyCode(
+							<Label htmlFor={`profile-${index}`}>{`${formatAllycode(
 								profile[0],
 							)} - ${profile[1]}`}</Label>
 						</div>

@@ -1,3 +1,3 @@
-export default function cleanAllyCode(allyCode: string) {
-  return allyCode.replace(/[^\d]/g, '');
+export default function cleanAllycode(allycode: string) {
+  return allycode.replace(/[^\d]/g, '');
 }

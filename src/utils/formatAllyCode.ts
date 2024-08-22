@@ -1,19 +1,19 @@
 // utils
-import cleanAllyCode from "./cleanAllyCode";
+import cleanAllycode from "./cleanAllycode";
 
 /**
  * Format an ally code to follow the ###-###-### format shown in-game
- * @param allyCode string
+ * @param allycode string
  */
-export default function formatAllyCode(allyCode: string) {
+export default function formatAllycode(allycode: string) {
   // Take only numbers
-  const cleanedAllyCode = cleanAllyCode(allyCode)
+  const cleanedAllycode = cleanAllycode(allycode)
   // Take only the first 9 digits
     .substr(0, 9);
 
   // Split the numbers into chunks of 3
-  const allyCodeChunks = cleanedAllyCode.match(/\d{1,3}/g) || [];
+  const allycodeChunks = cleanedAllycode.match(/\d{1,3}/g) || [];
 
   // Add dashes between each and set the value back on the field
-  return allyCodeChunks.join('\u2011');
+  return allycodeChunks.join('\u2011');
 }
