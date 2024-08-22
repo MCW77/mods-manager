@@ -13,6 +13,7 @@ export interface ProfileOptimizationSettings {
 	modChangeThreshold: number;
 	simulate6EModSlice: boolean;
 	simulateLevel15Mods: boolean;
+	optimizeWithPrimaryAndSetRestrictions: boolean;
 }
 
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
@@ -42,6 +43,7 @@ export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 					modChangeThreshold: 0,
 					simulate6EModSlice: false,
 					simulateLevel15Mods: true,
+					optimizeWithPrimaryAndSetRestrictions: false,
 				},
 			});
 		},

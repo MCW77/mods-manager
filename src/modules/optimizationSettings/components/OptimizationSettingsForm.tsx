@@ -124,6 +124,23 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					].simulateLevel15Mods.set(event.target.checked)
 				}
 			/>
+			<Label className="p-r-2" htmlFor={"optimize-with-restrictions-toggle"}>
+				Optimize with primary and set restrictions
+			</Label>
+			<ReactiveInput
+				className={inputCSS}
+				id="optimize-with-restrictions-toggle"
+				type="checkbox"
+				$checked={
+					optimizationSettings$.settingsByProfile[allycode]
+						.optimizeWithPrimaryAndSetRestrictions
+				}
+				onChange={(event) =>
+					optimizationSettings$.settingsByProfile[
+						allycode
+					].optimizeWithPrimaryAndSetRestrictions.set(event.target.checked)
+				}
+			/>
 		</div>
 	);
 });

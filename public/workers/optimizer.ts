@@ -1,7 +1,9 @@
 // state
 import "../../src/utils/globalLegendPersistSettings";
 import { incrementalOptimization$ } from '../../src/modules/incrementalOptimization/state/incrementalOptimization';
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizationSettings$, type ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from '../../src/constants/characterSettings';
@@ -13,11 +15,11 @@ import type { WithoutCC } from "../../src/modules/profilesManagement/domain/Char
 import type { OptimizerRun } from '../../src/domain/OptimizerRun';
 import type { IFlatPlayerProfile, MissedGoals, ModSuggestion } from '../../src/domain/PlayerProfile';
 import { PrimaryStats, SecondaryStats, type SetStats, Stats } from '../../src/domain/Stats';
-import type { OptimizableStats, OptimizationPlan } from '../../src/domain/OptimizationPlan';
+import type { OptimizableStats, OptimizationPlan, PrimaryStatRestrictions } from '../../src/domain/OptimizationPlan';
 import type { SelectedCharacters } from '../../src/domain/SelectedCharacters';
 import type { SetRestrictions } from '../../src/domain/SetRestrictions';
 import type { TargetStat, TargetStats, TargetStatsNames } from '../../src/domain/TargetStat';
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
+import type { PlayerProfile as LegendPlayerProfile } from "../../src/modules/profilesManagement/domain/PlayerProfile";
 
 
 interface Cache {
@@ -139,9 +141,11 @@ self.onmessage = (message) => {
     };
 
     getDataTransaction.oncomplete = () => {
+      debugger;
       if (!profile) {
         throw new Error('Unable to read your profile for optimization. Please clear your cache and try again.');
       }
+      const legendProfile: LegendPlayerProfile = profilesManagement$.activeProfile.peek();
       const allMods = profile.mods.map(deserializeMod);
 
       const lastRunCharacters: Partial<Character.CharactersById> = {};
@@ -160,18 +164,18 @@ self.onmessage = (message) => {
           lastRun.selectedCharacters;
       }
 
-      const selectedCharacters: SelectedCharacters = profile.selectedCharacters.map(({ id, target }) =>
+      const selectedCharacters: SelectedCharacters = profilesManagement$.activeProfile.selectedCharacters.peek().map(({ id, target }) =>
         ({ id: id, target: deserializeTarget(target) })
       );
 
       const optimizerResults = optimizeMods(
         allMods,
-        profile.characters,
+        legendProfile.charactersById,
         selectedCharacters,
-        incrementalOptimization$.indicesByProfile[profile.allyCode].peek(),
-        optimizationSettings$.settingsByProfile.peek()[profile.allyCode],
+        incrementalOptimization$.indicesByProfile[legendProfile.allycode].peek(),
+        optimizationSettings$.settingsByProfile.peek()[legendProfile.allycode],
         lastRun,
-        profile.modAssignments,
+        legendProfile.modAssignments,
       );
 
       optimizationSuccessMessage(optimizerResults);
@@ -1270,6 +1274,7 @@ function optimizeMods(
     globalSettings.modChangeThreshold !== previousRun.globalSettings.modChangeThreshold ||
     globalSettings.simulate6EModSlice !== previousRun.globalSettings.simulate6EModSlice ||
     globalSettings.simulateLevel15Mods !== previousRun.globalSettings.simulateLevel15Mods ||
+    globalSettings.optimizeWithPrimaryAndSetRestrictions !== previousRun.globalSettings.optimizeWithPrimaryAndSetRestrictions ||
     availableMods.length !== previousRun.mods.length;
 
   if (!recalculateMods) {
@@ -1339,6 +1344,7 @@ function optimizeMods(
       const assignedMods = previousModAssignments[index].assignedMods;
       const messages = previousModAssignments[index].messages;
       const missedGoals = previousModAssignments[index].missedGoals || [];
+
       // Remove any assigned mods from the available pool
       for (let i = usableMods.length - 1; i >= 0; i--) {
         if (assignedMods.includes(usableMods[i].id)) {
@@ -1357,6 +1363,10 @@ function optimizeMods(
     }
     recalculateMods = true;
 
+    if (globalSettings.optimizeWithPrimaryAndSetRestrictions === false) {
+      target.setRestrictions = {};
+      target.primaryStatRestrictions = {} as PrimaryStatRestrictions;
+    }
     if (globalSettings.forceCompleteSets) {
       target.useOnlyFullSets = true;
     }
@@ -1495,6 +1505,7 @@ function changeRelativeTargetStatsToAbsolute(
           )
         }
 
+        //characterMods = characterModsEntry.assignedMods.map(modId => allMods.find(mod => mod.id === modId)).filter((mod: Mod | undefined): mod is Mod => !!mod);
         characterMods = characterModsEntry.assignedMods.map(modId => allMods.find(mod => mod.id === modId)!);
       }
 
