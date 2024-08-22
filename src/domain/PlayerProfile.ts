@@ -5,7 +5,6 @@ import { optimizationSettings$ } from "#/modules/optimizationSettings/state/opti
 
 // domain
 import type { CharacterNames } from "../constants/characterSettings";
-import type { PlayerValuesByCharacter } from "../modules/profilesManagement/domain/PlayerValues";
 import type * as ModTypes from "./types/ModTypes";
 
 import type * as Character from "./Character";
@@ -41,7 +40,6 @@ export class PlayerProfile {
 	allyCode: string;
 	playerName: string;
 	characters: Character.CharactersById;
-	playerValues: PlayerValuesByCharacter;
 	mods: Mod[];
 	selectedCharacters: SelectedCharacters;
 	modAssignments: ModSuggestion[];
@@ -49,7 +47,6 @@ export class PlayerProfile {
 	static Default: PlayerProfile = new PlayerProfile(
 		"",
 		"",
-		{} as PlayerValuesByCharacter,
 		{} as Character.CharactersById,
 		[],
 		[],
@@ -59,7 +56,6 @@ export class PlayerProfile {
 	/**
 	 * @param allyCode {string} The ally code for the player whose data this is
 	 * @param playerName {string} The player name associated with this profile
-	 * @param playerValues {Object<string, PlayerValues>} A map from character IDs to PlayerValues
 	 * @param characters {Object<string, Character>} A map from character IDs to character objects
 	 * @param mods {Array<Mod>} An array of Mods
 	 * @param selectedCharacters {Array<ISelectedCharacter>} An array of Objects with Character IDs and OptimizationPlans
@@ -68,7 +64,6 @@ export class PlayerProfile {
 	constructor(
 		allyCode: string,
 		playerName: string,
-		playerValues: PlayerValuesByCharacter = {} as PlayerValuesByCharacter,
 		characters: Character.CharactersById = {} as Character.CharactersById,
 		mods: Mod[] = [],
 		selectedCharacters: SelectedCharacters = [],
@@ -76,7 +71,6 @@ export class PlayerProfile {
 	) {
 		this.allyCode = allyCode;
 		this.playerName = playerName;
-		this.playerValues = playerValues;
 		this.characters = characters;
 		this.mods = mods;
 		this.selectedCharacters = selectedCharacters;
@@ -90,7 +84,6 @@ export class PlayerProfile {
 		return new PlayerProfile(
 			this.allyCode,
 			name,
-			this.playerValues,
 			this.characters,
 			this.mods,
 			this.selectedCharacters,
@@ -105,7 +98,6 @@ export class PlayerProfile {
 		return new PlayerProfile(
 			this.allyCode,
 			this.playerName,
-			this.playerValues,
 			characters,
 			this.mods,
 			this.selectedCharacters,
@@ -120,7 +112,6 @@ export class PlayerProfile {
 		return new PlayerProfile(
 			this.allyCode,
 			this.playerName,
-			this.playerValues,
 			this.characters,
 			mods,
 			this.selectedCharacters,
@@ -135,7 +126,6 @@ export class PlayerProfile {
 		return new PlayerProfile(
 			this.allyCode,
 			this.playerName,
-			this.playerValues,
 			this.characters,
 			this.mods,
 			selectedCharacters,
@@ -156,7 +146,6 @@ export class PlayerProfile {
 		return new PlayerProfile(
 			this.allyCode,
 			this.playerName,
-			this.playerValues,
 			this.characters,
 			this.mods,
 			this.selectedCharacters,
@@ -185,10 +174,7 @@ export class PlayerProfile {
 			playerName: this.playerName,
 			characters: this.characters,
 			mods: this.mods.map((mod) => mod.serialize()),
-			selectedCharacters: this.selectedCharacters.map(({ id, target }) => ({
-				id: id,
-				target: target,
-			})),
+			selectedCharacters: this.selectedCharacters,
 			modAssignments: this.modAssignments,
 		};
 	}
@@ -200,7 +186,6 @@ export class PlayerProfile {
 		return new PlayerProfile(
 			flatPlayerProfile.allyCode,
 			flatPlayerProfile.playerName,
-			{} as PlayerValuesByCharacter,
 			flatPlayerProfile.characters,
 			flatPlayerProfile.mods.map(Mod.deserialize),
 			flatPlayerProfile.selectedCharacters,
