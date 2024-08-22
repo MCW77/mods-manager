@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import "./ModStats.css";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { modsView$ } from "#/modules/modsView/state/modsView";
 
@@ -46,10 +45,8 @@ const ModStats = React.memo(
 		const characters = useSelector(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);
-		const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
-		const scoreName = useLegendSelector(() =>
-			modsView$.activeViewSetupInActiveCategory.modScore.get()
-		);
+		const baseCharactersById = characters$.baseCharactersById.get();
+		const scoreName = modsView$.activeViewSetupInActiveCategory.modScore.get();
 
 		const translateStat = (displayText: Stats.DisplayedStat) => {
 			const seperatorPos = displayText.indexOf(" ");

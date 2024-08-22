@@ -7,10 +7,7 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import {
-	reactive,
-	useSelector as useLegendSelector,
-} from "@legendapp/state/react";
+import { reactive } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { review$ } from "#/modules/review/state/review";
 
@@ -44,9 +41,9 @@ const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
 	const dispatch = useDispatch();
-	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+	const baseCharactersById = characters$.baseCharactersById.get();
 	const profile = useSelector(Storage.selectors.selectActiveProfile);
-	const filter = useLegendSelector(review$.modListFilter);
+	const filter = review$.modListFilter.get();
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: ModAssignments,

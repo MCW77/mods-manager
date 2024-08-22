@@ -9,10 +9,7 @@ import "./CharacterEditView.css";
 
 // state
 import { observable } from "@legendapp/state";
-import {
-	observer,
-	useSelector as useLegendSelector,
-} from "@legendapp/state/react";
+import { observer } from "@legendapp/state/react";
 
 import { characters$ } from "#/modules/characters/state/characters";
 import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
@@ -48,7 +45,7 @@ const CharacterEditView = observer(() => {
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
-	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+	const baseCharactersById = characters$.baseCharactersById.get();
 
 	const selectedCharacters = useSelector(
 		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,

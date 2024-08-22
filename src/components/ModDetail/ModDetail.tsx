@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import "./ModDetail.css";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 
 // modules
@@ -39,7 +38,7 @@ const ModDetail = React.memo(
 		mod,
 		showAssigned = false,
 	}: ComponentProps) => {
-		const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+		const baseCharactersById = characters$.baseCharactersById.get();
 		const characters = useSelector(
 			Storage.selectors.selectCharactersInActiveProfile,
 		);

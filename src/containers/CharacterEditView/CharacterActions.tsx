@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 // state
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
@@ -40,7 +39,7 @@ import { Button } from "#ui/button";
 
 const CharacterActions = () => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+	const baseCharactersById = characters$.baseCharactersById.get();
 	const selectedCharacters = useSelector(
 		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
 	);

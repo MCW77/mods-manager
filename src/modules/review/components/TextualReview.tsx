@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import copyToClipboard from "#/utils/clipboard";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
@@ -86,7 +85,7 @@ type TextualReviewProps = {
  * @returns Array[JSX Element]
  */
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
-	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+	const baseCharactersById = characters$.baseCharactersById.get();
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);

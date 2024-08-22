@@ -12,7 +12,7 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { Show, useSelector as useLegendSelector } from "@legendapp/state/react";
+import { Show } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { review$ } from "#/modules/review/state/review";
 
@@ -159,11 +159,11 @@ const modUpgradeCosts: {
 };
 
 const Review = memo(() => {
-	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+	const baseCharactersById = characters$.baseCharactersById.get();
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
-	const filter = useLegendSelector(review$.modListFilter);
+	const filter = review$.modListFilter.get();
 	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
 	const modAssignments = useSelector(
 		Storage.selectors.selectModAssignmentsInActiveProfile,

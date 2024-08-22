@@ -6,7 +6,6 @@ import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import collectByKey from "#/utils/collectByKey";
 
 // state
-import { useSelector as useLegendSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { review$ } from "../state/review";
 
@@ -39,11 +38,11 @@ type SetsViewProps = {
  */
 const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharactersById = useLegendSelector(characters$.baseCharactersById);
+	const baseCharactersById = characters$.baseCharactersById.get();
 	const characters = useSelector(
 		Storage.selectors.selectCharactersInActiveProfile,
 	);
-	const filter = useLegendSelector(review$.modListFilter);
+	const filter = review$.modListFilter.get();
 	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
 
 	const currentModsByCharacter: {
