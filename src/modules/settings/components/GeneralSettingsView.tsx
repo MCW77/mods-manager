@@ -12,6 +12,7 @@ import { readFile } from "#/utils/readFile";
 // state
 import { about$ } from "#/modules/about/state/about";
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -38,7 +39,6 @@ import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 const GeneralSettingsView: React.FC = observer(() => {
 	const allycode = profilesManagement$.profiles.activeAllycode.get();
@@ -134,7 +134,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 								dispatch(
 									Storage.thunks.exportDatabase((progressData: IUserData) => {
 										progressData.version = version;
-										progressData.allyCode = allycode;
+										progressData.allycode = allycode;
 										const progressDataSerialized = JSON.stringify(progressData);
 										const userData = new Blob([progressDataSerialized], {
 											type: "application/json;charset=utf-8",

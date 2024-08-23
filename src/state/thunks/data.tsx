@@ -135,7 +135,7 @@ export namespace thunks {
 			// Then, fetch the player's data from HotUtils
 			const tempProfile = new PlayerProfile(cleanedAllycode, "");
 			const oldAllycode = profilesManagement$.profiles.activeAllycode.get();
-			profilesManagement$.profiles.activeAllycode.set(tempProfile.allyCode);
+			profilesManagement$.profiles.activeAllycode.set(tempProfile.allycode);
 
 			try {
 				profile = await hotutils$.fetchProfile(cleanedAllycode);
@@ -284,7 +284,7 @@ export namespace thunks {
 					dbProfile !== PlayerProfile.Default
 						? dbProfile.withPlayerName(profile.name)
 						: new PlayerProfile(newAllycode, profile.name);
-				oldProfile.allyCode = newAllycode;
+				oldProfile.allycode = newAllycode;
 				optimizationSettings$.addProfile(newAllycode);
 				incrementalOptimization$.addProfile(newAllycode);
 
@@ -355,7 +355,7 @@ export namespace thunks {
 							"error",
 						),
 				);
-				db.deleteLastRun(newProfile.allyCode, nothing, (error) =>
+				db.deleteLastRun(newProfile.allycode, nothing, (error) =>
 					dialog$.showFlash(
 						"Storage Error",
 						`Error updating your data: ${error?.message} The optimizer may not recalculate correctly until you fetch again`,
@@ -368,7 +368,7 @@ export namespace thunks {
 				profilesManagement$.addProfile(newProfile);
 				profilesManagement$.updateProfile(newProfile);
 				hotutils$.checkSubscriptionStatus();
-				//        dispatch(thunks.fetchHotUtilsStatus(newProfile.allyCode));
+				//        dispatch(thunks.fetchHotUtilsStatus(newProfile.allycode));
 			} catch (error) {
 				const errorMessage = error instanceof DOMException ? error.message : "";
 				profilesManagement$.profiles.activeAllycode.set(oldAllycode);

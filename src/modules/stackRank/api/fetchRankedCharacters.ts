@@ -21,7 +21,7 @@ const post = async (url = "", data = {}) => {
 };
 
 export const fetchRankedCharacters = async (
-	allyCode: string,
+	allycode: string,
 	mode: string,
 	parameters: StackRankParameters,
 ): Promise<CharacterNames[]> => {
@@ -29,7 +29,7 @@ export const fetchRankedCharacters = async (
 		const response = await post(
 			"https://api.mods-optimizer.swgoh.grandivory.com/characterlist",
 			{
-				allyCode: allyCode,
+				allyCode: allycode,
 				mode: mode,
 				parameters: parameters,
 			},

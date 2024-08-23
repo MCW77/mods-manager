@@ -52,8 +52,8 @@ const ProfileSelector = observer(
 				</SelectTrigger>
 				<SelectContent className="accent-blue">
 					<SelectGroup className="accent-blue">
-						{Object.entries(profiles).map(([allyCode, playerName]) => (
-							<SelectItem key={allyCode} value={allyCode}>
+						{Object.entries(profiles).map(([allycode, playerName]) => (
+							<SelectItem key={allycode} value={allycode}>
 								{playerName}
 							</SelectItem>
 						))}

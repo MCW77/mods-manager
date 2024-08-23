@@ -77,8 +77,8 @@ const post = async (url = "", data = {}, extras = {}) => {
 
 export const hotutils$ = observable({
 	activeSessionId: () => {
-		const allyCode = profilesManagement$.profiles.activeAllycode.get();
-		return hotutils$.sessionIdsByProfile[allyCode].get() || "";
+		const allycode = profilesManagement$.profiles.activeAllycode.get();
+		return hotutils$.sessionIdsByProfile[allycode].get() || "";
 	},
 	hasActiveSession: () => {
 		return (hotutils$.activeSessionId.get() !== "") && hotutils$.isSubscribed()

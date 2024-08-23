@@ -8,9 +8,9 @@ type IndicesByProfile = Record<string, number | null>;
 interface IncrementalOptimization {
 	activeIndex: () => number | null;
 	indicesByProfile: IndicesByProfile;
-	addProfile: (allyCode: string) => void;
+	addProfile: (allycode: string) => void;
 	clearProfiles: () => void;
-	deleteProfile: (allyCode: string) => void;
+	deleteProfile: (allycode: string) => void;
 }
 
 export const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
@@ -21,17 +21,17 @@ export const incrementalOptimization$: ObservableObject<IncrementalOptimization>
 				].get();
 		},
 		indicesByProfile: {},
-		addProfile: (allyCode: string) => {
+		addProfile: (allycode: string) => {
 			incrementalOptimization$.indicesByProfile.set({
 				...incrementalOptimization$.indicesByProfile.peek(),
-				[allyCode]: null,
+				[allycode]: null,
 			});
 		},
 		clearProfiles: () => {
 			incrementalOptimization$.indicesByProfile.set({});
 		},
-		deleteProfile: (allyCode: string) => {
-			incrementalOptimization$.indicesByProfile[allyCode].delete();
+		deleteProfile: (allycode: string) => {
+			incrementalOptimization$.indicesByProfile[allycode].delete();
 		},
 	});
 

@@ -3,7 +3,7 @@ import type { PlayerProfile } from "#/domain/PlayerProfile";
 
 /*
 export function addModsToProfiles(newProfiles) {
-  const newProfilesObject = groupByKey(newProfiles, profile => profile.allyCode);
+  const newProfilesObject = groupByKey(newProfiles, profile => profile.allycode);
 
   return function (dispatch, getState) {
     const state = getState();
@@ -11,12 +11,12 @@ export function addModsToProfiles(newProfiles) {
     db.getProfiles(
       profiles => {
         const updatedProfiles = profiles.map(profile => {
-          if (!newProfilesObject.hasOwnProperty(profile.allyCode)) {
+          if (!newProfilesObject.hasOwnProperty(profile.allycode)) {
             return profile;
           }
 
           const profileModsObject = groupByKey(profile.mods, mod => mod.id);
-          const newProfileMods = newProfilesObject[profile.allyCode].mods.map(mod => Mod.fromHotUtils(mod));
+          const newProfileMods = newProfilesObject[profile.allycode].mods.map(mod => Mod.fromHotUtils(mod));
           const newProfileModsObject = groupByKey(newProfileMods, mod => mod.id)
           return profile.withMods(Object.values(Object.assign({}, profileModsObject, newProfileModsObject)));
         });
@@ -26,7 +26,7 @@ export function addModsToProfiles(newProfiles) {
         db.saveProfiles(
           updatedProfiles,
           () => {
-            dispatch(loadProfiles(state.allyCode));
+            dispatch(loadProfiles(state.allycode));
             dispatch(showFlash(
               'Success!',
               <p>

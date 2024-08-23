@@ -24,7 +24,7 @@ interface ProfilesManagement {
 	hasProfiles: () => boolean;
 	addProfile: (profile: PlayerProfile) => void;
 	clearProfiles: () => void;
-	deleteProfile: (allyCode: string) => void;
+	deleteProfile: (allycode: string) => void;
 	updateProfile: (profile: PlayerProfile) => void;
 }
 
@@ -82,9 +82,9 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 			profilesManagement$.profiles.activeAllycode.set("");
 			profilesChanged$.fire();
 		},
-		deleteProfile: (allyCode: string) => {
-			profilesManagement$.profiles.profilesByAllycode[allyCode].delete();
-			profilesManagement$.profiles.playernameByAllycode[allyCode].delete();
+		deleteProfile: (allycode: string) => {
+			profilesManagement$.profiles.profilesByAllycode[allycode].delete();
+			profilesManagement$.profiles.playernameByAllycode[allycode].delete();
 			profilesManagement$.profiles.activeAllycode.set(
 				Object.keys(profilesManagement$.profiles.profilesByAllycode.peek())
 					.length > 0

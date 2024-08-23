@@ -25,13 +25,13 @@ import type { Mod } from "#/domain/Mod";
 import { PlayerProfile, type IFlatPlayerProfile } from "#/domain/PlayerProfile";
 
 export namespace thunks {
-	export function deleteProfile(allyCode: string): ThunkResult<void> {
+	export function deleteProfile(allycode: string): ThunkResult<void> {
 		return (dispatch) => {
 			const db = getDatabase();
-			optimizationSettings$.deleteProfile(allyCode);
-			incrementalOptimization$.deleteProfile(allyCode);
+			optimizationSettings$.deleteProfile(allycode);
+			incrementalOptimization$.deleteProfile(allycode);
 			db.deleteProfile(
-				allyCode,
+				allycode,
 				() => dispatch(Storage.thunks.loadProfiles(null)),
 				(error) =>
 					dialog$.showFlash(
@@ -124,14 +124,14 @@ export namespace thunks {
 					const profiles: PlayerProfile[] = stateObj.profiles.map(
 						(profile: IFlatPlayerProfile) => PlayerProfile.deserialize(profile),
 					);
-					dispatch(Storage.thunks.saveProfiles(profiles, stateObj.allyCode));
+					dispatch(Storage.thunks.saveProfiles(profiles, stateObj.allycode));
 //					dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
 					dispatch(Storage.thunks.saveLastRuns(stateObj.lastRuns));
 					if (stateObj.characterTemplates) {
 						templates$.userTemplatesByName.set(templates$.groupTemplatesById(stateObj.characterTemplates));
 					}
-					if (stateObj.allyCode !== "") {
-						dispatch(Storage.thunks.loadProfile(stateObj.allyCode));
+					if (stateObj.allycode !== "") {
+						dispatch(Storage.thunks.loadProfile(stateObj.allycode));
 					}
 				}
 			} catch (e) {
@@ -183,7 +183,7 @@ export namespace thunks {
 					),
 			);
 			dispatch(Storage.actions.setProfile(newProfile));
-			profilesManagement$.profiles.activeAllycode.set(newProfile.allyCode);
+			profilesManagement$.profiles.activeAllycode.set(newProfile.allycode);
 			auxiliaryChanges(dispatch, getState, newProfile);
 		};
 	}

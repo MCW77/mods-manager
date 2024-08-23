@@ -25,7 +25,7 @@ export interface ModSuggestion {
 }
 
 export interface IFlatPlayerProfile {
-	allyCode: string;
+	allycode: string;
 	playerName: string;
 	characters: Character.CharactersById;
 	mods: ModTypes.GIMOFlatMod[];
@@ -37,7 +37,7 @@ export interface IFlatPlayerProfile {
  * Class to hold information about how a particular player is using the optimizer - their character setup and mods
  */
 export class PlayerProfile {
-	allyCode: string;
+	allycode: string;
 	playerName: string;
 	characters: Character.CharactersById;
 	mods: Mod[];
@@ -54,7 +54,7 @@ export class PlayerProfile {
 	);
 
 	/**
-	 * @param allyCode {string} The ally code for the player whose data this is
+	 * @param allycode {string} The ally code for the player whose data this is
 	 * @param playerName {string} The player name associated with this profile
 	 * @param characters {Object<string, Character>} A map from character IDs to character objects
 	 * @param mods {Array<Mod>} An array of Mods
@@ -62,14 +62,14 @@ export class PlayerProfile {
 	 * @param modAssignments {Array<Object>} An array of character definitions and assigned mods
 	 */
 	constructor(
-		allyCode: string,
+		allycode: string,
 		playerName: string,
 		characters: Character.CharactersById = {} as Character.CharactersById,
 		mods: Mod[] = [],
 		selectedCharacters: SelectedCharacters = [],
 		modAssignments: ModSuggestion[] = [],
 	) {
-		this.allyCode = allyCode;
+		this.allycode = allycode;
 		this.playerName = playerName;
 		this.characters = characters;
 		this.mods = mods;
@@ -82,7 +82,7 @@ export class PlayerProfile {
 			return this;
 		}
 		return new PlayerProfile(
-			this.allyCode,
+			this.allycode,
 			name,
 			this.characters,
 			this.mods,
@@ -96,7 +96,7 @@ export class PlayerProfile {
 			return this;
 		}
 		return new PlayerProfile(
-			this.allyCode,
+			this.allycode,
 			this.playerName,
 			characters,
 			this.mods,
@@ -110,7 +110,7 @@ export class PlayerProfile {
 			return this;
 		}
 		return new PlayerProfile(
-			this.allyCode,
+			this.allycode,
 			this.playerName,
 			this.characters,
 			mods,
@@ -124,7 +124,7 @@ export class PlayerProfile {
 			return this;
 		}
 		return new PlayerProfile(
-			this.allyCode,
+			this.allycode,
 			this.playerName,
 			this.characters,
 			this.mods,
@@ -144,7 +144,7 @@ export class PlayerProfile {
 		});
 */
 		return new PlayerProfile(
-			this.allyCode,
+			this.allycode,
 			this.playerName,
 			this.characters,
 			this.mods,
@@ -159,18 +159,18 @@ export class PlayerProfile {
 	 */
 	toOptimizerRun() {
 		return OptimizerRun.createOptimizerRun(
-			this.allyCode,
+			this.allycode,
 			this.characters,
 			lockedStatus$.ofActivePlayerByCharacterId.peek(),
 			this.mods.map((mod) => mod.serialize()),
 			this.selectedCharacters,
-			optimizationSettings$.settingsByProfile[this.allyCode].peek(),
+			optimizationSettings$.settingsByProfile[this.allycode].peek(),
 		);
 	}
 
 	serialize() {
 		return {
-			allyCode: this.allyCode,
+			allycode: this.allycode,
 			playerName: this.playerName,
 			characters: this.characters,
 			mods: this.mods.map((mod) => mod.serialize()),
@@ -184,7 +184,7 @@ export class PlayerProfile {
 			return PlayerProfile.Default;
 		}
 		return new PlayerProfile(
-			flatPlayerProfile.allyCode,
+			flatPlayerProfile.allycode,
 			flatPlayerProfile.playerName,
 			flatPlayerProfile.characters,
 			flatPlayerProfile.mods.map(Mod.deserialize),

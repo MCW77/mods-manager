@@ -28,10 +28,10 @@ export namespace thunks {
 	 * @param state {Object} The current state of the application, used to populate the database
 	 * @returns {Function}
 	 */
-	export function databaseReady(allyCode: string): ThunkResult<void> {
+	export function databaseReady(allycode: string): ThunkResult<void> {
 		return (dispatch, getState): void => {
 			// Load the data from the database and store it in the state
-			dispatch(loadFromDb(allyCode));
+			dispatch(loadFromDb(allycode));
 		};
 	}
 
@@ -51,7 +51,7 @@ export namespace thunks {
 				const profile = getState().profile;
 				const db = getDatabase();
 
-				db.deleteLastRun(profile.allyCode, nothing, (error) =>
+				db.deleteLastRun(profile.allycode, nothing, (error) =>
 					dialog$.showFlash(
 						"Storage Error",
 						`Error updating your saved results: ${error?.message}. The optimizer may not recalculate correctly until you fetch data again`,
@@ -82,7 +82,7 @@ export namespace thunks {
 				const profile = getState().profile;
 				const db = getDatabase();
 
-				db.deleteLastRun(profile.allyCode, nothing, (error) =>
+				db.deleteLastRun(profile.allycode, nothing, (error) =>
 					dialog$.showFlash(
 						"Storage Error",
 						`Error updating your saved results: ${error?.message}. The optimizer may not recalculate correctly until you fetch data again`,
@@ -141,9 +141,9 @@ export namespace thunks {
 					cleanedSelectedCharacters,
 				);
 
-				if (cleanedProfile.allyCode)
+				if (cleanedProfile.allycode)
 					profilesManagement$.profiles.activeAllycode.set(
-						cleanedProfile.allyCode,
+						cleanedProfile.allycode,
 					);
 				dispatch(actions.setProfile(cleanedProfile));
 				profilesManagement$.profiles.activeAllycode.set(allycode);
@@ -182,12 +182,12 @@ export namespace thunks {
 
 						// Set the active profile
 						const profile = allycode
-							? cleanedProfiles.find((profile) => profile.allyCode === allycode)
+							? cleanedProfiles.find((profile) => profile.allycode === allycode)
 							: cleanedProfiles.find((profile, index) => index === 0);
 
 						dispatch(actions.setProfile(profile ?? PlayerProfile.Default));
 						profilesManagement$.profiles.activeAllycode.set(
-							profile?.allyCode ?? "",
+							profile?.allycode ?? "",
 						);
 						if (profile !== undefined) {
 							hotutils$.checkSubscriptionStatus();
@@ -237,18 +237,18 @@ export namespace thunks {
 	/**
 	 * Add new Profiles to the database, or update existing ones.
 	 * @param profiles {Array<PlayerProfile>}
-	 * @param allyCode {string}
+	 * @param allycode {string}
 	 * @returns {Function}
 	 */
 	export function saveProfiles(
 		profiles: PlayerProfile[],
-		allyCode: string,
+		allycode: string,
 	): ThunkResult<void> {
 		return (dispatch) => {
 			const db = getDatabase();
 			db.saveProfiles(
 				profiles,
-				() => dispatch(loadProfiles(allyCode)),
+				() => dispatch(loadProfiles(allycode)),
 				(error) =>
 					dialog$.showError(`Error saving player profiles: ${error?.message}`),
 			);

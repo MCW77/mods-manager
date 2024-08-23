@@ -7,7 +7,7 @@ import type { SelectedCharacters } from "./SelectedCharacters";
 import type { LockedStatusByCharacterId } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
 
 export interface OptimizerRun {
-	allyCode: string;
+	allycode: string;
 	characters: CharactersById;
 	lockedStatus: LockedStatusByCharacterId;
 	mods: GIMOFlatMod[];
@@ -16,7 +16,7 @@ export interface OptimizerRun {
 }
 
 export const createOptimizerRun = (
-	allyCode: string,
+	allycode: string,
 	characters: CharactersById,
 	lockedStatus: LockedStatusByCharacterId,
 	mods: GIMOFlatMod[],
@@ -24,7 +24,7 @@ export const createOptimizerRun = (
 	globalSettings: ProfileOptimizationSettings,
 ): OptimizerRun => {
 	return {
-		allyCode,
+		allycode: allycode,
 		characters,
 		lockedStatus,
 		mods,

@@ -58,7 +58,7 @@ const App = observer(
 
 		useEffect(() => {
 			const queryParams = new URLSearchParams(document.location.search);
-			const allycode = queryParams.get("allyCode");
+			const allycode = queryParams.get("Allycode");
 			const sessionId = queryParams.get("SessionID");
 
 			if (allycode) {

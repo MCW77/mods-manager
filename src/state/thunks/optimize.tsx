@@ -80,7 +80,7 @@ export namespace thunks {
 				// If this was an incremental optimization, leave the user on their current page
 				if (
 					incrementalOptimization$.indicesByProfile[
-						newProfile.allyCode
+						newProfile.allycode
 					].peek() !== null
 				) {
 					return true;
@@ -289,7 +289,7 @@ export namespace thunks {
 				dialog$.showError(error.message);
 			};
 
-			optimizationWorker.postMessage(profile.allyCode);
+			optimizationWorker.postMessage(profile.allycode);
 		};
 	}
 }

@@ -14,7 +14,7 @@ export namespace reducers {
 		state: IAppState,
 		action: ReturnType<typeof actions.setProfile>,
 	): IAppState {
-		if (action.profile) profilesManagement$.profiles.activeAllycode.set(action.profile.allyCode);
+		if (action.profile) profilesManagement$.profiles.activeAllycode.set(action.profile.allycode);
 		return Object.assign({}, state, {
 			profile: action.profile,
 		});

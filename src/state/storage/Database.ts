@@ -4,7 +4,6 @@ import nothing from "#/utils/nothing";
 
 // domain
 import type {	CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
-import type { BaseCharacters } from "#/modules/characters/domain/BaseCharacter";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile, type IFlatPlayerProfile } from "#/domain/PlayerProfile";
 
@@ -25,7 +24,7 @@ const dbtransactionSuccessFunc: DBTransactionSuccessFunc = (
 ) => {};
 
 export interface IUserData {
-	allyCode: string;
+	allycode: string;
 	version: string;
 	profiles: IFlatPlayerProfile[];
 	lastRuns: OptimizerRun[];
@@ -81,8 +80,8 @@ export class Database {
 				if (event.oldVersion < 1) {
 					// Create object stores for: game data about each character, player profiles, and the last run done by each
 					// player
-					db.createObjectStore("profiles", { keyPath: "allyCode" });
-					db.createObjectStore("lastRuns", { keyPath: "allyCode" });
+					db.createObjectStore("profiles", { keyPath: "allycode" });
+					db.createObjectStore("lastRuns", { keyPath: "allycode" });
 				}
 				if (event.oldVersion < 2) {
 					db.createObjectStore("characterTemplates", { keyPath: "id" });
@@ -108,7 +107,7 @@ export class Database {
 			]);
 
 			const userData: IUserData = {
-				allyCode: "",
+				allycode: "",
 				version: "",
 				profiles: [],
 				lastRuns: [],
@@ -165,12 +164,12 @@ export class Database {
 
 	/**
 	 * Delete a profile from the database
-	 * @param allyCode {string}
+	 * @param allycode {string}
 	 * @param onsuccess {function()}
 	 * @param onerror {function(error)}
 	 */
 	deleteProfile(
-		allyCode: string,
+		allycode: string,
 		onsuccess = nothing,
 		onerror: DBErrorFunc = dbErrorFunc,
 	) {
@@ -178,7 +177,7 @@ export class Database {
 			const deleteProfileRequest = db
 				.transaction("profiles", "readwrite")
 				.objectStore("profiles")
-				.delete(allyCode);
+				.delete(allycode);
 
 			deleteProfileRequest.onerror = (event: Event) => {
 				if (event !== null && event.target instanceof IDBRequest)
@@ -186,7 +185,7 @@ export class Database {
 			};
 
 			deleteProfileRequest.onsuccess = () => {
-				this.deleteLastRun(allyCode);
+				this.deleteLastRun(allycode);
 				onsuccess();
 			};
 		});
@@ -194,12 +193,12 @@ export class Database {
 
 	/**
 	 * Delete an Optimizer Run from the database
-	 * @param allyCode {string}
+	 * @param allycode {string}
 	 * @param onsuccess {function()}
 	 * @param onerror {function(error)}
 	 */
 	deleteLastRun(
-		allyCode: string,
+		allycode: string,
 		onsuccess = nothing,
 		onerror: DBErrorFunc = dbErrorFunc,
 	) {
@@ -207,7 +206,7 @@ export class Database {
 			const deleteLastRunRequest = db
 				.transaction("lastRuns", "readwrite")
 				.objectStore("lastRuns")
-				.delete(allyCode);
+				.delete(allycode);
 
 			deleteLastRunRequest.onerror = (event: Event) => {
 				if (event !== null && event.target instanceof IDBRequest)
@@ -221,13 +220,13 @@ export class Database {
 	}
 
 	/**
-	 * Get a single profile. If no allyCode is given, the first profile in the database will be returned.
-	 * @param allyCode {string}
+	 * Get a single profile. If no allycode is given, the first profile in the database will be returned.
+	 * @param allycode {string}
 	 */
-	async getProfile(allyCode: string) {
+	async getProfile(allycode: string) {
 		const db = await this.database;
 
-		if (allyCode !== "") {
+		if (allycode !== "") {
 			return new Promise(
 				(
 					successCallback: (profile: PlayerProfile) => void,
@@ -238,7 +237,7 @@ export class Database {
 						db
 							.transaction("profiles", "readwrite")
 							.objectStore("profiles")
-							.get(allyCode);
+							.get(allycode);
 
 					getProfileRequest.onsuccess = (event) => {
 						if (event !== null && event.target instanceof IDBRequest) {

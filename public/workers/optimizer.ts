@@ -117,8 +117,8 @@ self.onmessage = (message) => {
     if (event.oldVersion < 1) {
       // Create object stores for: game data about each character, player profiles, and the last run done by each player
       db.createObjectStore('gameSettings', { keyPath: 'baseID' });
-      db.createObjectStore('profiles', { keyPath: 'allyCode' });
-      db.createObjectStore('lastRuns', { keyPath: 'allyCode' });
+      db.createObjectStore('profiles', { keyPath: 'allycode' });
+      db.createObjectStore('lastRuns', { keyPath: 'allycode' });
     }
   };
 

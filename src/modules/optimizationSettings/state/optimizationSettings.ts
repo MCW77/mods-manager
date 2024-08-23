@@ -21,9 +21,9 @@ type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 interface OptimizationSettings {
 	activeSettings: () => ProfileOptimizationSettings;
 	settingsByProfile: SettingsByProfile;
-	addProfile: (allyCode: string) => void;
+	addProfile: (allycode: string) => void;
 	clearProfiles: () => void;
-	deleteProfile: (allyCode: string) => void;
+	deleteProfile: (allycode: string) => void;
 }
 
 export const optimizationSettings$: ObservableObject<OptimizationSettings> =
@@ -34,10 +34,10 @@ export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 				].get() as ProfileOptimizationSettings
 		},
 		settingsByProfile: {},
-		addProfile: (allyCode: string) => {
+		addProfile: (allycode: string) => {
 			return optimizationSettings$.settingsByProfile.set({
 				...optimizationSettings$.settingsByProfile.peek(),
-				[allyCode]: {
+				[allycode]: {
 					forceCompleteSets: false,
 					lockUnselectedCharacters: false,
 					modChangeThreshold: 0,
@@ -50,8 +50,8 @@ export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 		clearProfiles: () => {
 			optimizationSettings$.settingsByProfile.set({});
 		},
-		deleteProfile: (allyCode: string) => {
-			optimizationSettings$.settingsByProfile[allyCode].delete();
+		deleteProfile: (allycode: string) => {
+			optimizationSettings$.settingsByProfile[allycode].delete();
 		},
 	});
 
