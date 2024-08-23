@@ -3,7 +3,6 @@ import "../../src/utils/globalLegendPersistSettings";
 import { incrementalOptimization$ } from '../../src/modules/incrementalOptimization/state/incrementalOptimization';
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizationSettings$, type ProfileOptimizationSettings } from '../../src/modules/optimizationSettings/state/optimizationSettings';
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from '../../src/constants/characterSettings';
@@ -19,7 +18,6 @@ import type { OptimizableStats, OptimizationPlan, PrimaryStatRestrictions } from
 import type { SelectedCharacters } from '../../src/domain/SelectedCharacters';
 import type { SetRestrictions } from '../../src/domain/SetRestrictions';
 import type { TargetStat, TargetStats, TargetStatsNames } from '../../src/domain/TargetStat';
-import type { PlayerProfile as LegendPlayerProfile } from "../../src/modules/profilesManagement/domain/PlayerProfile";
 
 
 interface Cache {
@@ -141,11 +139,9 @@ self.onmessage = (message) => {
     };
 
     getDataTransaction.oncomplete = () => {
-      debugger;
       if (!profile) {
         throw new Error('Unable to read your profile for optimization. Please clear your cache and try again.');
       }
-      const legendProfile: LegendPlayerProfile = profilesManagement$.activeProfile.peek();
       const allMods = profile.mods.map(deserializeMod);
 
       const lastRunCharacters: Partial<Character.CharactersById> = {};
@@ -164,18 +160,18 @@ self.onmessage = (message) => {
           lastRun.selectedCharacters;
       }
 
-      const selectedCharacters: SelectedCharacters = profilesManagement$.activeProfile.selectedCharacters.peek().map(({ id, target }) =>
+      const selectedCharacters: SelectedCharacters = profile.selectedCharacters.map(({ id, target }) =>
         ({ id: id, target: deserializeTarget(target) })
       );
 
       const optimizerResults = optimizeMods(
         allMods,
-        legendProfile.charactersById,
+        profile.characters,
         selectedCharacters,
-        incrementalOptimization$.indicesByProfile[legendProfile.allycode].peek(),
-        optimizationSettings$.settingsByProfile.peek()[legendProfile.allycode],
+        incrementalOptimization$.indicesByProfile[profile.allycode].peek(),
+        optimizationSettings$.settingsByProfile.peek()[profile.allycode],
         lastRun,
-        legendProfile.modAssignments,
+        profile.modAssignments,
       );
 
       optimizationSuccessMessage(optimizerResults);
