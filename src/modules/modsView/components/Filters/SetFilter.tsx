@@ -71,7 +71,7 @@ const SetFilter = observer(
 					{Object.keys(setConfig).map((set: keyof SetSettings) => {
 						const inputName = `set-filter-${set}`;
 						const value = setConfig[set] || 0;
-						const setCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('../../img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
+						const setCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
             const stateCSS =
               value === 0
 								? "opacity-50"

@@ -101,7 +101,7 @@ const App = observer(
 				<div className={"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif] text-left"}>
 					<div className={`flex grow-1 justify-stretch overflow-hidden text-white
 													before:content-["_"] before:fixed before:w-full before:h-full before:top-0 before:left-0 before:z-[-1] before:will-change-transform
-												  before:bg-cover before:bg-[url('../../img/cantina-background.webp')] before:bg-no-repeat before:bg-center`}>
+												  before:bg-cover before:bg-[url('/img/cantina-background.webp')] before:bg-no-repeat before:bg-center`}>
 						<Dialog />
 						<Spinner />
 						<Toaster toastOptions={{ duration: 8000 }} />
