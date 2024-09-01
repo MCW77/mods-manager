@@ -157,8 +157,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@iconify-json/skill-icons':
-        specifier: ^1.1.10
-        version: 1.1.10
+        specifier: ^1.2.0
+        version: 1.2.0
       '@types/big.js':
         specifier: ^6.2.2
         version: 6.2.2
@@ -1324,8 +1324,8 @@ packages:
   '@iconify-json/logos@1.2.0':
     resolution: {integrity: sha512-VkU9QSqeZR2guWbecdqkcoZEAJfgJJTUm6QAsypuZQ7Cve6zy39wOXDjp2H31I8QyQy4O3Cz96+pNji6UQFg4w==}
 
-  '@iconify-json/skill-icons@1.1.10':
-    resolution: {integrity: sha512-zAs3zb3wwH3uExbFadBdxidx7keXO5Wuk4tqsCJuo/3qWjJlqabxzfzcCE+L6bkItORzN1QxmHUC9MU42xGAcQ==}
+  '@iconify-json/skill-icons@1.2.0':
+    resolution: {integrity: sha512-5zlPrzF5pelV1wut7C88zmAiYONvGxvFw11dXW1Pr1oIhUOtYhC7x3zkErSTFkyZ3m5fEgcEUrcO1W3UhNJVpw==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -5070,7 +5070,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/skill-icons@1.1.10':
+  '@iconify-json/skill-icons@1.2.0':
     dependencies:
       '@iconify/types': 2.0.0
 
