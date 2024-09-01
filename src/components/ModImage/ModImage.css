@@ -31,7 +31,7 @@
 
 .mod-slot-image {
   position: relative;
-  background-image: url('../../img/mod-shape-atlas.png');
+  background-image: url('/img/mod-shape-atlas.webp');
   background-size: 48em 20em;
   width: 3.99em;
   height: 3.99em;
@@ -112,7 +112,7 @@
   content: '';
   display: block;
   position: absolute;
-  background-image: url('../../img/mod-icon-atlas.png');
+  background-image: url('/img/mod-icon-atlas.webp');
   background-size: 8em 5em;
   width: 1em;
   height: 1em;

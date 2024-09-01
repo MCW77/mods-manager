@@ -22,7 +22,7 @@ const AboutView = observer(
 						<img
 							className={"h-[3.75em] p-2"}
 							alt={"Logo"}
-							src={"../../img/gold-crit-dmg-arrow-mod-cropped.png"}
+							src={"/img/gold-crit-dmg-arrow-mod-cropped.webp"}
 						/>
 						<h1 className={"leading-tight"}>
 							Grandivory's Mods Optimizer

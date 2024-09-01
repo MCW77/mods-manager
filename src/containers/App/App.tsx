@@ -117,7 +117,7 @@ const App = observer(
 									<img
 										alt={"Logo"}
 										className={"h-6"}
-										src={"../../img/gold-crit-dmg-arrow-mod-cropped.png"}
+										src={"/img/gold-crit-dmg-arrow-mod-cropped.webp"}
 									/>
 									<TabsList>
 										<Show if={profilesManagement$.hasProfiles}>

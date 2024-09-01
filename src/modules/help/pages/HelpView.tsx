@@ -165,7 +165,7 @@ const HelpView: React.FC = observer(() => {
 				<p>
 					<img
 						className={"w-full"}
-						src={"/img/hotsauce512.png"}
+						src={"/img/hotsauce512.webp"}
 						alt={"hotsauce"}
 					/>
 				</p>

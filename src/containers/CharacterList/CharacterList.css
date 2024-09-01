@@ -43,7 +43,7 @@
 
 .character-block .character-icons .icon {
   font-size: .75em;
-  background-image: url('../../img/character_icons.png');
+  background-image: url('/img/character_icons.webp');
   background-size: 15em 3em;
   background-position-y: -1.5em;
   width: 1.5em;

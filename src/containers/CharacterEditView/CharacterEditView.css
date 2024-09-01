@@ -42,7 +42,7 @@
 }
 
 .character-edit .available-characters .character .icon.locked {
-  background-image: url('../../img/character_icons.png');
+  background-image: url('/img/character_icons.webp');
   background-position-x: -9.6em;
   background-position-y: -1.2em;
   background-size: 12em 2.4em;

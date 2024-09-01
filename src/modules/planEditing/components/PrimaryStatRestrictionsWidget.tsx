@@ -21,7 +21,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 					<div
 						className={`
           w-[4em] h-[4em]
-          bg-[url(/img/mod-shape-atlas.png)]
+          bg-[url(/img/mod-shape-atlas.webp)]
           bg-[length:48em_20em] [background-position-x:-4em]
         `}
 					/>
@@ -70,7 +70,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 					<div
 						className={`
           w-[4em] h-[4em]
-          bg-[url(/img/mod-shape-atlas.png)]
+          bg-[url(/img/mod-shape-atlas.webp)]
           bg-[length:48em_20em] [background-position-x:-12em]
         `}
 					/>
@@ -118,7 +118,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						className={`
             left-[17px]
             w-[4em] h-[4em]
-            bg-[url(/img/mod-shape-atlas.png)]
+            bg-[url(/img/mod-shape-atlas.webp)]
             bg-[length:48em_20em]
             [background-position-x:-20em]
           `}
@@ -167,7 +167,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						className={`
             left-[17px]
             w-[4em] h-[4em]
-            bg-[url(/img/mod-shape-atlas.png)]
+            bg-[url(/img/mod-shape-atlas.webp)]
             bg-[length:48em_20em]
             [background-position-x:-16em]
           `}

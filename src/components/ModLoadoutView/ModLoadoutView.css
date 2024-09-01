@@ -2,7 +2,7 @@
   width: 12em;
   height: calc(12em * 701 / 400);
   display: inline-block;
-  background-image: url('../../img/modset-background.png');
+  background-image: url('/img/modset-background.webp');
   background-size: 100%;
   position: relative;
 }
@@ -12,11 +12,11 @@
 }
 
 .mod-set-view .mod .no-move .mod-slot-image {
-  background-image: url('../../img/mod-shape-atlas-faded.png');
+  background-image: url('/img/mod-shape-atlas-faded.webp');
 }
 
 .mod-set-view .mod .no-move .mod-slot-image::after {
-  background-image: url('../../img/mod-icon-atlas-faded.png');
+  background-image: url('/img/mod-icon-atlas-faded.webp');
 }
 
 .mod-set-view .mod .no-move .avatar::after {
@@ -29,7 +29,7 @@
   position: absolute;
   width: 1.5em;
   height: 1.5em;
-  background-image: url('../../img/character_icons.png');
+  background-image: url('/img/character_icons.webp');
   background-size: 15em 3em;
   font-size: .9em;
   z-index: 11;
