@@ -1,17 +1,8 @@
-// react
-import { useDispatch } from "react-redux";
-
 // state
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Data } from "#/state/modules/data";
 
 // domain
 import * as Character from "#/domain/Character";
@@ -38,7 +29,6 @@ const TemplatesActions = ({
 	visibleCharacters,
 	lastSelectedCharacterIndex,
 }: TemplatesActionsProps) => {
-	const dispatch: ThunkDispatch = useDispatch();
 	return (
 		<div className={"flex gap-2"}>
 			<Button size="sm" onClick={() => dialog$.show(<AddTemplateModal />)}>
@@ -52,12 +42,10 @@ const TemplatesActions = ({
 						if (hasNoSelectedCharacters) {
 							isBusy$.set(true);
 							visibleCharacters.forEach((character, index) => {
-								dispatch(
-									CharacterEdit.thunks.selectCharacter(
-										character.id,
-										Character.defaultTarget(character),
-										index + lastSelectedCharacterIndex,
-									),
+								profilesManagement$.selectCharacter(
+									character.id,
+									Character.defaultTarget(character),
+									index + lastSelectedCharacterIndex,
 								);
 							});
 							isBusy$.set(false);
@@ -65,7 +53,7 @@ const TemplatesActions = ({
 						const ranking = await stackRank$.fetch(
 							profilesManagement$.profiles.activeAllycode.get(),
 						);
-						dispatch(Data.thunks.applyRanking(ranking));
+						profilesManagement$.applyRanking(ranking);
 					} catch (error) {
 						if (error instanceof Error) dialog$.showError(error.message);
 					} finally {

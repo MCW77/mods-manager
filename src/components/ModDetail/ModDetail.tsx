@@ -1,15 +1,12 @@
 // react
 import * as React from "react";
-import { useSelector } from "react-redux";
 
 // styles
 import "./ModDetail.css";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
-
-// modules
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type * as Character from "#/domain/Character";
@@ -39,9 +36,7 @@ const ModDetail = React.memo(
 		showAssigned = false,
 	}: ComponentProps) => {
 		const baseCharactersById = characters$.baseCharactersById.get();
-		const characters = useSelector(
-			Storage.selectors.selectCharactersInActiveProfile,
-		);
+		const characters = profilesManagement$.activeProfile.charactersById.get();
 
 		const character: Character.Character | null =
 			mod.characterID !== "null" ? characters[mod.characterID] : null;

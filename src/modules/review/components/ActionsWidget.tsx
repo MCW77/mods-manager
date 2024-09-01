@@ -8,7 +8,9 @@ import groupByKey from "#/utils/groupByKey";
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { Storage } from "#/state/modules/storage";
@@ -20,13 +22,11 @@ import type { Mod } from "#/domain/Mod";
 import type { ModAssignments } from "#/domain/ModAssignment";
 
 // components
-import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { CreateProfileModal } from "../../hotUtils/components/CreateProfileModal";
 import { MoveModsModal } from "../../hotUtils/components/MoveModsModal";
 import { TextualReview } from "./TextualReview";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 // A map from number of pips that a mod has to the cost to remove it
 const modRemovalCosts = {
@@ -39,10 +39,11 @@ const modRemovalCosts = {
 };
 
 const ActionsWidget = () => {
-	const profile = useSelector(Storage.selectors.selectActiveProfile);
+	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
 
-	const modsById = groupByKey(profile.mods, (mod) => mod.id);
-	const modAssignments: ModAssignments = profile.modAssignments
+	const modsById = groupByKey(profileMods, (mod) => mod.id);
+	const modAssignments2: ModAssignments = modAssignments
 		.filter((x) => null !== x)
 		.map(({ id, target, assignedMods, missedGoals }) => ({
 			id: id,
@@ -54,11 +55,11 @@ const ActionsWidget = () => {
 		})) as ModAssignments;
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		profile.mods.filter((mod) => mod.characterID !== "null"),
+		profileMods.filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 
-	const movingModsByAssignedCharacter: ModAssignments = modAssignments
+	const movingModsByAssignedCharacter: ModAssignments = modAssignments2
 		.map(({ id, target, assignedMods }) => ({
 			id: id,
 			target: target,

@@ -1,15 +1,11 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
 import { observer, reactive } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
-
-// modules
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { Categories } from "../domain/Categories";
@@ -25,7 +21,7 @@ const ReactiveTabs = reactive(Tabs);
 const ModsView = observer(
 	React.memo(() => {
 		const [t] = useTranslation("global-ui");
-		const profile = useSelector(Storage.selectors.selectActiveProfile);
+		const profile = profilesManagement$.activeProfile.get();
 
 		return (
       <FlexSidebar

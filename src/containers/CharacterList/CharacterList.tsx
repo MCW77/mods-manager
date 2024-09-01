@@ -1,15 +1,12 @@
 // react
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer } from "@legendapp/state/react";
 
 // styles
 import "./CharacterList.css";
 
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Storage } from "#/state/modules/storage";
+// state
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -19,16 +16,10 @@ import * as Character from "#/domain/Character";
 // components
 import { CharacterBlock } from "./CharacterBlock";
 
-
 const CharacterList = observer(
 	React.memo(() => {
-		const dispatch: ThunkDispatch = useDispatch();
-		const characters = useSelector(
-			Storage.selectors.selectCharactersInActiveProfile,
-		);
-		const selectedCharacters = useSelector(
-			CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
-		);
+		const characters = profilesManagement$.activeProfile.charactersById.get();
+		const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
 
 		const characterBlockDragEnter = () => {
 			return (event: React.DragEvent<HTMLDivElement>) => {
@@ -68,6 +59,12 @@ const CharacterList = observer(
 						const movingCharacterID: CharacterNames =
 							event.dataTransfer.getData("text/plain") as CharacterNames;
 						const movingCharacter = characters[movingCharacterID];
+						profilesManagement$.selectCharacter(
+							movingCharacterID,
+							Character.defaultTarget(movingCharacter),
+							dropCharacterIndex,
+						);
+/*
 						dispatch(
 							CharacterEdit.thunks.selectCharacter(
 								movingCharacterID,
@@ -75,17 +72,24 @@ const CharacterList = observer(
 								dropCharacterIndex,
 							),
 						);
+*/
 						break;
 					}
 					case "move": {
 						const movingCharacterIndex =
 							+event.dataTransfer.getData("text/plain");
+						profilesManagement$.moveSelectedCharacter(
+							movingCharacterIndex,
+							dropCharacterIndex,
+						);
+/*
 						dispatch(
 							CharacterEdit.thunks.moveSelectedCharacter(
 								movingCharacterIndex,
 								dropCharacterIndex,
 							),
 						);
+*/
 						break;
 					}
 					default:

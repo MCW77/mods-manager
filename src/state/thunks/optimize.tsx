@@ -24,6 +24,7 @@ import type { ModSuggestion } from "#/domain/PlayerProfile";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Button } from "#ui/button";
 import { DialogClose } from "#ui/dialog";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 let optimizationWorker: Worker | null = null;
 
@@ -54,7 +55,8 @@ export namespace thunks {
 		isBusy$.set(true);
 		return App.thunks.updateProfile(
 			(profile) => {
-				return profile.withModAssignments(result);
+				profilesManagement$.activeProfile.modAssignments.set(result);
+				return profile;
 			},
 			(dispatch, getState, newProfile) => {
 				const db = getDatabase();
@@ -149,7 +151,7 @@ export namespace thunks {
 														"Special Critical Chance %": 0,
 													};
 													const character =
-														newProfile.characters[id] ||
+														profilesManagement$.activeProfile.charactersById[id].peek() ||
 														Character.createCharacter(
 															id,
 															{
@@ -229,13 +231,9 @@ export namespace thunks {
 			const profile = getState().profile;
 
 			// If any of the characters being optimized don't have stats, then show an error message
-			if (
-				Object.values(profile.characters).filter(
-					(char) =>
-						null === char.playerValues.baseStats ||
-						null === char.playerValues.equippedStats,
-				).length > 0
-			) {
+			if (Object.values(profilesManagement$.activeProfile.charactersById.peek()).some((character) => {
+				return null === character.playerValues.baseStats || null === character.playerValues.equippedStats;
+			})) {
 				dialog$.showError(
 					"Missing character data required to optimize. Try fetching your data and trying again.",
 				);

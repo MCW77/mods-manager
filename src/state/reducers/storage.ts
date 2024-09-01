@@ -23,14 +23,6 @@ export namespace reducers {
 
 export namespace selectors {
 	export const selectActiveProfile = (state: IAppState) => state.profile;
-	export const selectCharactersInActiveProfile = createSelector(
-		[selectActiveProfile],
-		(activeProfile) => activeProfile.characters,
-	);
-	export const selectModAssignmentsInActiveProfile = createSelector(
-		[selectActiveProfile],
-		(activeProfile) => activeProfile.modAssignments,
-	);
 	export const selectModsInActiveProfile = createSelector(
 		[selectActiveProfile],
 		(activeProfile) => activeProfile.mods,

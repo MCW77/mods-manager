@@ -1,5 +1,5 @@
 // react
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 // utils
 import { flatten, mapValues, uniq } from "lodash-es";
@@ -9,6 +9,7 @@ import groupByKey from "#/utils/groupByKey";
 // state
 import { reactive } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
 
 // modules
@@ -40,9 +41,9 @@ const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
-	const dispatch = useDispatch();
+	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const legendProfile = profilesManagement$.activeProfile.get();
 	const baseCharactersById = characters$.baseCharactersById.get();
-	const profile = useSelector(Storage.selectors.selectActiveProfile);
 	const filter = review$.modListFilter.get();
 
 	const getModAssignmentsByCurrentCharacter = (
@@ -66,7 +67,7 @@ const DisplayWidget = () => {
 					(mod) =>
 						mod.shouldLevel(assignment.target) ||
 						mod.shouldSlice(
-							profile.characters[assignment.id],
+							legendProfile.charactersById[assignment.id],
 							assignment.target,
 						),
 				);
@@ -98,8 +99,8 @@ const DisplayWidget = () => {
 		return result;
 	};
 
-	const modsById = groupByKey(profile.mods, (mod) => mod.id);
-	const modAssignments: ModAssignments = profile.modAssignments
+	const modsById = groupByKey(profileMods, (mod) => mod.id);
+	const modAssignments: ModAssignments = legendProfile.modAssignments
 		.filter((x) => null !== x)
 		.map(({ id, target, assignedMods, missedGoals }) => ({
 			id: id,
@@ -123,7 +124,7 @@ const DisplayWidget = () => {
 						assignedMods: assignedMods.filter(
 							(mod) =>
 								mod.shouldLevel(target) ||
-								mod.shouldSlice(profile.characters[id], target),
+								mod.shouldSlice(legendProfile.charactersById[id], target),
 						),
 						missedGoals: [],
 					}))
@@ -184,7 +185,7 @@ const DisplayWidget = () => {
 					assignedMods.some(
 						(mod) =>
 							mod.shouldLevel(target) ||
-							mod.shouldSlice(profile.characters[id], target),
+							mod.shouldSlice(legendProfile.charactersById[id], target),
 					),
 				);
 			} else {

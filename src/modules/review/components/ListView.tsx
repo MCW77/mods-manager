@@ -7,6 +7,7 @@ import { flatten } from "lodash-es";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "../state/review";
 
 // modules
@@ -39,9 +40,7 @@ interface ListViewProps {
 const ListView = ({ displayedMods }: ListViewProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
 	const baseCharactersById = characters$.baseCharactersById.get();
-	const characters = useSelector(
-		Storage.selectors.selectCharactersInActiveProfile,
-	);
+	const characters = profilesManagement$.activeProfile.charactersById.get();
 	const filter = review$.modListFilter.get();
 	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
 

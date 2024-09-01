@@ -19,7 +19,6 @@ export type ThunkDispatchNoParam = TD<IAppState, void, AppActions>;
 // #region AppActions
 type AppActions =
 	| ReturnType<typeof App.actions.resetState>
-	| ReturnType<typeof App.actions.setState>
 	| ReturnType<typeof Optimize.actions.startModOptimization>
 	| ReturnType<typeof Storage.actions.setProfile>;
 // #endregion
@@ -40,8 +39,6 @@ const modsOptimizer: RootReducer = (
 			window.location.reload();
 			return result;
 		}
-		case App.actionNames.SET_STATE:
-			return App.reducers.setState(action);
 
 		case Storage.actionNames.SET_PROFILE:
 			return Storage.reducers.setProfile(state, action);

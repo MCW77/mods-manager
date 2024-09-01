@@ -91,6 +91,83 @@ export class Database {
 	}
 
 	/**
+	 * Delete everything from the database, and the database itself
+	 * @param onsuccess {function()}
+	 * @param onerror {function(error)}
+	 */
+	delete(onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
+		this.database.then(() => {
+			const deleteDataRequest = indexedDB.deleteDatabase(this.dbName);
+
+			deleteDataRequest.onerror = (event: Event) => {
+				if (event !== null && event.target instanceof IDBRequest)
+					onerror(event.target.error);
+			};
+
+			deleteDataRequest.onsuccess = () => {
+				onsuccess();
+			};
+		});
+	}
+
+	/**
+	 * Delete an Optimizer Run from the database
+	 * @param allycode {string}
+	 * @param onsuccess {function()}
+	 * @param onerror {function(error)}
+	 */
+	deleteLastRun(
+		allycode: string,
+		onsuccess = nothing,
+		onerror: DBErrorFunc = dbErrorFunc,
+	) {
+		this.database.then((db) => {
+			const deleteLastRunRequest = db
+				.transaction("lastRuns", "readwrite")
+				.objectStore("lastRuns")
+				.delete(allycode);
+
+			deleteLastRunRequest.onerror = (event: Event) => {
+				if (event !== null && event.target instanceof IDBRequest)
+					onerror(event.target.error);
+			};
+
+			deleteLastRunRequest.onsuccess = (event) => {
+				onsuccess();
+			};
+		});
+	}
+
+	/**
+	 * Delete a profile from the database
+	 * @param allycode {string}
+	 * @param onsuccess {function()}
+	 * @param onerror {function(error)}
+	 */
+	deleteProfile(
+		allycode: string,
+		onsuccess = nothing,
+		onerror: DBErrorFunc = dbErrorFunc,
+	) {
+		this.database.then((db) => {
+			const deleteProfileRequest = db
+				.transaction("profiles", "readwrite")
+				.objectStore("profiles")
+				.delete(allycode);
+
+			deleteProfileRequest.onerror = (event: Event) => {
+				if (event !== null && event.target instanceof IDBRequest)
+					onerror(event.target.error);
+			};
+
+			deleteProfileRequest.onsuccess = () => {
+				this.deleteLastRun(allycode);
+				onsuccess();
+			};
+		});
+	}
+
+	/**
 	 * Export all the data from the database, calling the callback with the result
 	 * @param onsuccess {function(Object)}
 	 * @param onerror {function(error)}
@@ -143,136 +220,28 @@ export class Database {
 	}
 
 	/**
-	 * Delete everything from the database, and the database itself
-	 * @param onsuccess {function()}
-	 * @param onerror {function(error)}
-	 */
-	delete(onsuccess = nothing, onerror: DBErrorFunc = dbErrorFunc) {
-		this.database.then(() => {
-			const deleteDataRequest = indexedDB.deleteDatabase(this.dbName);
-
-			deleteDataRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			deleteDataRequest.onsuccess = () => {
-				onsuccess();
-			};
-		});
-	}
-
-	/**
-	 * Delete a profile from the database
-	 * @param allycode {string}
-	 * @param onsuccess {function()}
-	 * @param onerror {function(error)}
-	 */
-	deleteProfile(
-		allycode: string,
-		onsuccess = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const deleteProfileRequest = db
-				.transaction("profiles", "readwrite")
-				.objectStore("profiles")
-				.delete(allycode);
-
-			deleteProfileRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			deleteProfileRequest.onsuccess = () => {
-				this.deleteLastRun(allycode);
-				onsuccess();
-			};
-		});
-	}
-
-	/**
-	 * Delete an Optimizer Run from the database
-	 * @param allycode {string}
-	 * @param onsuccess {function()}
-	 * @param onerror {function(error)}
-	 */
-	deleteLastRun(
-		allycode: string,
-		onsuccess = nothing,
-		onerror: DBErrorFunc = dbErrorFunc,
-	) {
-		this.database.then((db) => {
-			const deleteLastRunRequest = db
-				.transaction("lastRuns", "readwrite")
-				.objectStore("lastRuns")
-				.delete(allycode);
-
-			deleteLastRunRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			deleteLastRunRequest.onsuccess = (event) => {
-				onsuccess();
-			};
-		});
-	}
-
-	/**
 	 * Get a single profile. If no allycode is given, the first profile in the database will be returned.
 	 * @param allycode {string}
 	 */
 	async getProfile(allycode: string) {
 		const db = await this.database;
 
-		if (allycode !== "") {
-			return new Promise(
-				(
-					successCallback: (profile: PlayerProfile) => void,
-					errorCallback: (error: DOMException | null) => void,
-				) => {
-					const getProfileRequest =
-						// Using a read/write transaction forces the database to finish loading profiles before reading from here
-						db
-							.transaction("profiles", "readwrite")
-							.objectStore("profiles")
-							.get(allycode);
-
-					getProfileRequest.onsuccess = (event) => {
-						if (event !== null && event.target instanceof IDBRequest) {
-							const profile = PlayerProfile.deserialize(event.target.result);
-							successCallback(profile);
-						}
-					};
-
-					getProfileRequest.onerror = (event: Event) => {
-						if (event !== null && event.target instanceof IDBRequest)
-							errorCallback(event.target.error);
-					};
-				},
-			);
-		}
 		return new Promise(
 			(
 				successCallback: (profile: PlayerProfile) => void,
 				errorCallback: (error: DOMException | null) => void,
 			) => {
-				const getProfileRequest = db
-					.transaction("profiles", "readwrite")
-					.objectStore("profiles")
-					.openCursor();
+				const getProfileRequest =
+					// Using a read/write transaction forces the database to finish loading profiles before reading from here
+					db
+						.transaction("profiles", "readwrite")
+						.objectStore("profiles")
+						.get(allycode);
 
 				getProfileRequest.onsuccess = (event) => {
 					if (event !== null && event.target instanceof IDBRequest) {
-						const cursor = event.target.result;
-
-						if (cursor) {
-							const profile = PlayerProfile.deserialize(cursor.value);
-							successCallback(profile);
-						} else {
-							successCallback(PlayerProfile.Default);
-						}
+						const profile = PlayerProfile.deserialize(event.target.result);
+						successCallback(profile);
 					}
 				};
 
@@ -318,10 +287,51 @@ export class Database {
 	}
 
 	/**
-	 * Add or update a single profile in the database
-	 * param profile {PlayerProfile}
-	 * param onerror {function(error)}
+	 * Save an optimizer run to the database, or update an existing one
+	 * @param lastRun {OptimizerRun}
+	 * @param onerror {function(error)}
 	 */
+	saveLastRun(lastRun: OptimizerRun, onerror: DBErrorFunc = dbErrorFunc) {
+		this.database.then((db) => {
+			const saveLastRunRequest = db
+				.transaction(["lastRuns"], "readwrite")
+				.objectStore("lastRuns")
+				.put(lastRun);
+
+			saveLastRunRequest.onerror = (event: Event) => {
+				if (event !== null && event.target instanceof IDBRequest)
+					onerror(event.target.error);
+			};
+		});
+	}
+
+	/**
+	 * Save a group of last runs
+	 * @param lastRuns {Array<OptimizerRun>}
+	 * @param onerror {function(error)}
+	 */
+	saveLastRuns(lastRuns: OptimizerRun[], onerror: DBErrorFunc = dbErrorFunc) {
+		this.database.then((db) => {
+			const saveLastRunsRequest = db.transaction(["lastRuns"], "readwrite");
+
+			saveLastRunsRequest.onerror = (event: Event) => {
+				if (event !== null && event.target instanceof IDBRequest)
+					onerror(event.target.error);
+			};
+
+			for (const lastRun of lastRuns) {
+				const singleRequest = saveLastRunsRequest
+					.objectStore("lastRuns")
+					.put(lastRun);
+			}
+		});
+	}
+
+	/**
+		 * Add or update a single profile in the database
+		 * param profile {PlayerProfile}
+		 * param onerror {function(error)}
+		 */
 	saveProfile(
 		profile: PlayerProfile | IFlatPlayerProfile,
 		onsuccess: () => void = nothing,
@@ -391,47 +401,6 @@ export class Database {
 					if (event !== null && event.target instanceof IDBRequest)
 						keys.push(event.target.result);
 				};
-			}
-		});
-	}
-
-	/**
-	 * Save an optimizer run to the database, or update an existing one
-	 * @param lastRun {OptimizerRun}
-	 * @param onerror {function(error)}
-	 */
-	saveLastRun(lastRun: OptimizerRun, onerror: DBErrorFunc = dbErrorFunc) {
-		this.database.then((db) => {
-			const saveLastRunRequest = db
-				.transaction(["lastRuns"], "readwrite")
-				.objectStore("lastRuns")
-				.put(lastRun);
-
-			saveLastRunRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-		});
-	}
-
-	/**
-	 * Save a group of last runs
-	 * @param lastRuns {Array<OptimizerRun>}
-	 * @param onerror {function(error)}
-	 */
-	saveLastRuns(lastRuns: OptimizerRun[], onerror: DBErrorFunc = dbErrorFunc) {
-		this.database.then((db) => {
-			const saveLastRunsRequest = db.transaction(["lastRuns"], "readwrite");
-
-			saveLastRunsRequest.onerror = (event: Event) => {
-				if (event !== null && event.target instanceof IDBRequest)
-					onerror(event.target.error);
-			};
-
-			for (const lastRun of lastRuns) {
-				const singleRequest = saveLastRunsRequest
-					.objectStore("lastRuns")
-					.put(lastRun);
 			}
 		});
 	}

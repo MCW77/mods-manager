@@ -42,6 +42,7 @@ const ProfileSelector = observer(
 					if (value === "new") {
 						setAddMode(true);
 					} else {
+						if (value === "") return;
 						dispatch(Storage.thunks.loadProfile(value));
 						profilesManagement$.profiles.activeAllycode.set(value);
 					}

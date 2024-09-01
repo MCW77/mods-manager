@@ -1,14 +1,9 @@
 // react
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { Computed, Show, observer, reactive } from "@legendapp/state/react";
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { templates$ } from "#/modules/templates/state/templates";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
 
 // components
 import { Button } from "#ui/button";
@@ -26,8 +21,6 @@ const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 
 const SaveTemplateModal: React.FC = observer(() => {
-	const dispatch: ThunkDispatch = useDispatch();
-
 	return (
 		<div className={"flex flex-col gap-2"}>
 			<h3>Please enter a name for this character template</h3>
@@ -94,12 +87,7 @@ const SaveTemplateModal: React.FC = observer(() => {
 					disabled={!templates$.isUnique.get() || templates$.id.get() === ""}
 					onClick={() => {
 						dialog$.hide();
-						dispatch(
-							CharacterEdit.thunks.saveTemplate(
-								templates$.id.get(),
-								templates$.category.get(),
-							),
-						);
+						templates$.saveTemplate();
 					}}
 				>
 					Save

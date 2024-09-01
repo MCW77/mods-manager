@@ -15,6 +15,7 @@ import { Storage } from "#/state/modules/storage";
 import { hotutils$ } from "../state/hotUtils";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -48,15 +49,16 @@ const modRemovalCosts = {
 
 const MoveModsModal = () => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const profile = useSelector(Storage.selectors.selectActiveProfile);
+	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const legendProfile = profilesManagement$.activeProfile.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		profile.mods.filter((mod) => mod.characterID !== "null"),
+		profileMods.filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 
-	const modsById = groupByKey(profile.mods, (mod) => mod.id);
-	const modAssignments: ModAssignments = profile.modAssignments
+	const modsById = groupByKey(profileMods, (mod) => mod.id);
+	const modAssignments: ModAssignments = legendProfile.modAssignments
 		.filter((x) => null !== x)
 		.map(({ id, target, assignedMods, missedGoals }) => ({
 			id: id,
@@ -102,9 +104,9 @@ const MoveModsModal = () => {
 	);
 
 	const generateHotUtilsProfile = () => {
-		const assignedMods = profile.modAssignments
+		const assignedMods = legendProfile.modAssignments
 			.filter((x) => null !== x)
-			.filter(({ id }) => profile.characters[id].playerValues.level >= 50)
+			.filter(({ id }) => legendProfile.charactersById[id].playerValues.level >= 50)
 			.map(({ id, assignedMods, target }) => ({
 				id: id,
 				modIds: assignedMods,

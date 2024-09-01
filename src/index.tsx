@@ -48,7 +48,7 @@ getDatabase(
 	(db) => {
 		const dispatch: ThunkDispatch = store.dispatch;
 		dispatch(
-			Storage.thunks.databaseReady(
+			Storage.thunks.loadProfiles(
 				profilesManagement$.profiles.activeAllycode.get(),
 			),
 		);

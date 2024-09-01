@@ -1,7 +1,5 @@
 // react
 import type React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer, reactive } from "@legendapp/state/react";
 
 // styles
@@ -13,10 +11,6 @@ import { incrementalOptimization$ } from "#/modules/incrementalOptimization/stat
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -83,10 +77,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
     target,
     index,
   }: CharacterBlockProps) => {
-    const dispatch: ThunkDispatch = useDispatch();
-		const characters = useSelector(
-			Storage.selectors.selectCharactersInActiveProfile,
-		);
+		const characters = profilesManagement$.activeProfile.charactersById.get();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
     const baseCharactersById = characters$.baseCharactersById.get();
     const character = characters[characterId];
@@ -109,23 +100,19 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
             const movingCharacterID: CharacterNames =
               event.dataTransfer.getData("text/plain") as CharacterNames;
             const movingCharacter = characters[movingCharacterID];
-            dispatch(
-              CharacterEdit.thunks.selectCharacter(
-                movingCharacterID,
-                Character.defaultTarget(movingCharacter),
-                dropCharacterIndex,
-              ),
+            profilesManagement$.selectCharacter(
+              movingCharacterID,
+              Character.defaultTarget(movingCharacter),
+              dropCharacterIndex,
             );
             break;
           }
           case "move": {
             const movingCharacterIndex =
               +event.dataTransfer.getData("text/plain");
-            dispatch(
-              CharacterEdit.thunks.moveSelectedCharacter(
-                movingCharacterIndex,
-                dropCharacterIndex,
-              ),
+            profilesManagement$.moveSelectedCharacter(
+              movingCharacterIndex,
+              dropCharacterIndex,
             );
             break;
           }
@@ -166,12 +153,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 				const newTarget = structuredClone(target);
 				newTarget.minimumModDots = Number(event.target.value);
-				dispatch(
-					CharacterEdit.thunks.finishEditCharacterTarget(
-						character.id,
-						newTarget,
-					),
-				);
+        profilesManagement$.saveTarget(character.id, newTarget);
 				(document?.activeElement as HTMLSelectElement)?.blur();
 			};
 			handleChange = handleChange.bind(this);
@@ -277,18 +259,18 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
         );
       });
 
-    const baseClass = `character-block cursor-grab ${character.id}`;
+    const baseClass = "character-block cursor-grab";
 
   return (
     <div
       className={"character-block-wrapper"}
-      key={index}
+      key={character.id}
       onDragEnter={characterBlockDragEnter()}
       onDragOver={characterBlockDragOver()}
       onDragLeave={characterBlockDragLeave()}
       onDrop={characterBlockDrop(index)}
       onDoubleClick={() =>
-        dispatch(CharacterEdit.thunks.unselectCharacter(index))
+        profilesManagement$.unselectCharacter(index)
       }
     >
       <div
@@ -315,9 +297,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
                 (target) => target.id === value,
               );
               if (target !== undefined) {
-                dispatch(
-                  CharacterEdit.thunks.changeCharacterTarget(index, target),
-                );
+                profilesManagement$.changeTarget(index, target);
               }
             }}
           >

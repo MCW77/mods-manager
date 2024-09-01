@@ -1,6 +1,6 @@
 // react
 import type React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import {
 	Memo,
@@ -24,9 +24,7 @@ import { progress$ } from "#/modules/progress/state/progress";
 import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
 import { Optimize } from "#/state/modules/optimize";
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
@@ -72,10 +70,8 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
 		const baseCharactersById = characters$.baseCharactersById.get();
 		const progress = progress$.optimizationStatus.get();
-		const modAssignments = useSelector(
-			Storage.selectors.selectModAssignmentsInActiveProfile,
-		);
-		const targetsNames = character.targets.map(
+		const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
+		const targetsNames = profilesManagement$.activeProfile.charactersById[character.id].targets.peek().map(
 			(target) => target.id,
 		);
 
@@ -186,9 +182,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				newTarget = OptimizationPlan.denormalize(newTarget);
 			const charId = target$.characterId.peek();
 
-			dispatch(
-				CharacterEdit.thunks.finishEditCharacterTarget(charId, newTarget),
-			);
+			profilesManagement$.saveTarget(charId, newTarget);
 		};
 
 		return (
@@ -238,12 +232,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 										id={"delete-button"}
 										variant={"destructive"}
 										onClick={() => {
-											dispatch(
-												CharacterEdit.thunks.deleteTarget(
-													character.id,
-													target.name,
-												),
-											);
+											profilesManagement$.deleteTarget(character.id, target.id);
 											optimizerView$.view.set("basic");
 										}}
 									>

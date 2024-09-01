@@ -1,8 +1,6 @@
 // react
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector, useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import "./CharacterEditView.css";
@@ -14,10 +12,7 @@ import { observer } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
@@ -39,17 +34,10 @@ import { CharacterList } from "#/containers/CharacterList/CharacterList";
 const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
-	const dispatch: ThunkDispatch = useDispatch();
 	const [t] = useTranslation("optimize-ui");
-	const profile = useSelector(Storage.selectors.selectActiveProfile);
-	const characters = useSelector(
-		Storage.selectors.selectCharactersInActiveProfile,
-	);
+	const characters = profilesManagement$.activeProfile.charactersById.get();
 	const baseCharactersById = characters$.baseCharactersById.get();
-
-	const selectedCharacters = useSelector(
-		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
-	);
+	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	let availableCharacters = [] as Character.Character[];
@@ -58,7 +46,7 @@ const CharacterEditView = observer(() => {
 		.filter(
 			(character) =>
 				!charactersManagement$.filters.hideSelectedCharacters.get() ||
-				!profile.selectedCharacters
+				!selectedCharacters
 					.map(({ id }) => id)
 					.includes(character.id),
 		)
@@ -121,7 +109,7 @@ const CharacterEditView = observer(() => {
 			case "move": {
 				// This is coming from the selected characters - remove the character from the list
 				const characterIndex = +event.dataTransfer.getData("text/plain");
-				dispatch(CharacterEdit.thunks.unselectCharacter(characterIndex));
+				profilesManagement$.unselectCharacter(characterIndex);
 				break;
 			}
 			default:

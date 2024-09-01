@@ -1,16 +1,13 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 // state
 import { reactive } from "@legendapp/state/react";
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
-
-// modules
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -42,7 +39,7 @@ const ReactiveCollapsible = reactive(Collapsible.Root);
 const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCount }: GroupedModsProps) => {
   const [t] = useTranslation("explore-ui");
   const [tDomain] = useTranslation("domain");
-  const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
+  const characters = profilesManagement$.activeProfile.charactersById.get();
 
   const modGroupsElement = React.createRef<HTMLDivElement>();
 

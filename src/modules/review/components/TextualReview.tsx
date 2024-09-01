@@ -1,15 +1,10 @@
-// react
-import { useSelector } from "react-redux";
-
 // utils
 import copyToClipboard from "#/utils/clipboard";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
 import { dialog$ } from "#/modules/dialog/state/dialog";
-
-// modules
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { BaseCharactersById } from "#/modules/characters/domain/BaseCharacter";
@@ -86,9 +81,7 @@ type TextualReviewProps = {
  */
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 	const baseCharactersById = characters$.baseCharactersById.get();
-	const characters = useSelector(
-		Storage.selectors.selectCharactersInActiveProfile,
-	);
+	const characters = profilesManagement$.activeProfile.charactersById.get();
 
 	return (
 		<div>

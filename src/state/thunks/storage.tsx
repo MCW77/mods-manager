@@ -21,19 +21,9 @@ import { App } from "#/state/modules/app";
 import type { Mod } from "#/domain/Mod";
 import type { OptimizerRun } from "#/domain/OptimizerRun";
 import { PlayerProfile } from "#/domain/PlayerProfile";
+import type { PlayerProfile as LegendPlayerProfile } from "#/modules/profilesManagement/domain/PlayerProfile";
 
 export namespace thunks {
-	/**
-	 * Handle setting up everything once the database is ready to use.
-	 * @param state {Object} The current state of the application, used to populate the database
-	 * @returns {Function}
-	 */
-	export function databaseReady(allycode: string): ThunkResult<void> {
-		return (dispatch, getState): void => {
-			// Load the data from the database and store it in the state
-			dispatch(loadFromDb(allycode));
-		};
-	}
 
 	/**
 	 * Remove a mod from a player's profile
@@ -114,17 +104,6 @@ export namespace thunks {
 	}
 
 	/**
-	 * Read Game settings and player profiles from the database and load them into the app state
-	 * @param allycode
-	 * @returns {Function}
-	 */
-	export function loadFromDb(allycode: string): ThunkResult<void> {
-		return (dispatch) => {
-			dispatch(loadProfiles(allycode));
-		};
-	}
-
-	/**
 	 * Load a single player profile from the database and set it in the state
 	 * @param allycode {string}
 	 * @returns {*}
@@ -134,18 +113,8 @@ export namespace thunks {
 			try {
 				const db = getDatabase();
 				const profile: PlayerProfile = await db.getProfile(allycode);
-				const cleanedSelectedCharacters = profile.selectedCharacters.filter(
-					({ id }) => Object.keys(profile.characters).includes(id),
-				);
-				const cleanedProfile = profile.withSelectedCharacters(
-					cleanedSelectedCharacters,
-				);
-
-				if (cleanedProfile.allycode)
-					profilesManagement$.profiles.activeAllycode.set(
-						cleanedProfile.allycode,
-					);
-				dispatch(actions.setProfile(cleanedProfile));
+				profilesManagement$.ensureSelectedCharactersExistInProfile(allycode);
+				dispatch(actions.setProfile(profile));
 				profilesManagement$.profiles.activeAllycode.set(allycode);
 				hotutils$.checkSubscriptionStatus();
 			} catch (error) {
@@ -157,6 +126,29 @@ export namespace thunks {
 			}
 		};
 	}
+/*
+	export function loadProfile(allycode: string): ThunkResult<Promise<void>> {
+		return async (dispatch) => {
+			try {
+				const db = getDatabase();
+				const profile: PlayerProfile = await db.getProfile(allycode);
+				selectedCharacters$.filterUnfetchedCharacters(profile);
+
+				if (profile.allycode)
+					profilesManagement$.profiles.activeAllycode.set(profile.allycode);
+				dispatch(actions.setProfile(profile));
+				profilesManagement$.profiles.activeAllycode.set(allycode);
+				hotutils$.checkSubscriptionStatus();
+			} catch (error) {
+				dialog$.showError(
+					`Error loading your profile from the database: ${
+						(error as DOMException).message
+					}`,
+				);
+			}
+		};
+	}
+*/
 
 	/**
 	 * Load profiles from the database and store them in the state. Only keep the full profile for the current active
@@ -169,21 +161,15 @@ export namespace thunks {
 			const db = getDatabase();
 
 			try {
+				// Clean up profiles to make sure that every selected character actually exists in the profile
+				profilesManagement$.ensureSelectedCharactersExist();
 				db.getProfiles(
 					(profiles: PlayerProfile[]) => {
-						// Clean up profiles to make sure that every selected character actually exists in the profile
-						const cleanedProfiles = profiles.map((profile) => {
-							const cleanedSelectedCharacters =
-								profile.selectedCharacters.filter(({ id }) =>
-									Object.keys(profile.characters).includes(id),
-								);
-							return profile.withSelectedCharacters(cleanedSelectedCharacters);
-						});
 
 						// Set the active profile
 						const profile = allycode
-							? cleanedProfiles.find((profile) => profile.allycode === allycode)
-							: cleanedProfiles.find((profile, index) => index === 0);
+							? profiles.find((profile) => profile.allycode === allycode)
+							: profiles.find((profile, index) => index === 0);
 
 						dispatch(actions.setProfile(profile ?? PlayerProfile.Default));
 						profilesManagement$.profiles.activeAllycode.set(
@@ -193,9 +179,6 @@ export namespace thunks {
 							hotutils$.checkSubscriptionStatus();
 						} else if (profilesManagement$.hasProfiles.get()) {
 							dispatch(App.actions.resetState());
-						}
-						for (const profile of cleanedProfiles) {
-							profilesManagement$.addProfile(profile);
 						}
 					},
 					(error) =>

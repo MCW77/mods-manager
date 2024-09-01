@@ -1,5 +1,6 @@
 // state
 import { observable, when } from "@legendapp/state";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import defaultTemplates from "#/constants/characterTemplates.json";
@@ -70,6 +71,13 @@ const templates$ = observable({
 				(template) => template.category === templates$.selectedCategory.get(),
 			);
 		return templates;
+	},
+	saveTemplate: () => {
+		templates$.userTemplatesByName[templates$.id.peek()].set({
+			id: templates$.id.peek(),
+			category: templates$.category.peek(),
+			selectedCharacters: structuredClone(profilesManagement$.activeProfile.selectedCharacters.peek()),
+		});
 	},
 	reset: () => {
 		syncStatus1$.reset();

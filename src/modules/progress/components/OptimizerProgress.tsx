@@ -1,5 +1,5 @@
 // react
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
@@ -7,11 +7,11 @@ import { observer, reactive, Show, useObservable } from "@legendapp/state/react"
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { progress$ } from "../state/progress";
 
 // modules
 import { Optimize } from "#/state/modules/optimize";
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type * as Character from "#/domain/Character";
@@ -26,7 +26,7 @@ const ReactiveProgress = reactive(Progress);
 
 const OptimizerProgress: React.FC = observer(() => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const characters = useSelector(Storage.selectors.selectCharactersInActiveProfile);
+	const characters = profilesManagement$.activeProfile.charactersById.get();
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
 		return charId === "" ? undefined : characters[charId]

@@ -1,17 +1,10 @@
-// react
-import { useDispatch, useSelector } from "react-redux";
-
 // state
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show } from "@legendapp/state/react";
 
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import * as Character from "#/domain/Character";
@@ -40,15 +33,16 @@ const SelectionActions = ({
 	lastSelectedCharacterIndex,
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
-	const dispatch: ThunkDispatch = useDispatch();
-	const selectedCharacters = useSelector(CharacterEdit.selectors.selectSelectedCharactersInActiveProfile);
+	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
 
 	return (
 		<div className="flex gap-2">
 			<Button
 				className="flex flex-gap-2"
 				type="button"
-				onClick={() => dispatch(CharacterEdit.thunks.unselectAllCharacters())}
+				onClick={() =>
+					profilesManagement$.unselectAllCharacters()
+				}
 			>
 				<FontAwesomeIcon icon={faBan} title="Clear" /> Clear
 			</Button>
@@ -104,12 +98,10 @@ const SelectionActions = ({
 				onClick={() => {
 					isBusy$.set(true);
 					visibleCharacters.forEach((character, index) => {
-						dispatch(
-							CharacterEdit.thunks.selectCharacter(
-								character.id,
-								Character.defaultTarget(character),
-								index + lastSelectedCharacterIndex,
-							),
+						profilesManagement$.selectCharacter(
+							character.id,
+							Character.defaultTarget(character),
+							index + lastSelectedCharacterIndex,
 						);
 					});
 					isBusy$.set(false);

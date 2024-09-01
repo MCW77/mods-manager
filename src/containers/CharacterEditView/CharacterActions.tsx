@@ -1,5 +1,5 @@
 // react
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // state
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
@@ -14,9 +14,7 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import { review$ } from "#/modules/review/state/review";
 
 // modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
 import { Optimize } from "#/state/modules/optimize";
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -40,12 +38,8 @@ import { Button } from "#ui/button";
 const CharacterActions = () => {
 	const dispatch: ThunkDispatch = useDispatch();
 	const baseCharactersById = characters$.baseCharactersById.get();
-	const selectedCharacters = useSelector(
-		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
-	);
-	const modAssignments = useSelector(
-		Storage.selectors.selectModAssignmentsInActiveProfile,
-	);
+	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
+	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
 
 	return (
 		<div className={"flex gap-2"}>

@@ -1,12 +1,11 @@
 // react
 import * as React from "react";
-import { useSelector } from "react-redux";
 
 // styles
 import "./ModImage.css";
 
-// modules
-import { Storage } from "../../state/modules/storage";
+// state
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
@@ -41,9 +40,7 @@ const getModColor = (mod: Mod) => {
 
 const ModImage = React.memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
-		const characters = useSelector(
-			Storage.selectors.selectCharactersInActiveProfile,
-		);
+		const characters = profilesManagement$.activeProfile.charactersById.get();
 		const modColor = getModColor(mod);
 		const character = mod.characterID
 			? characters[mod.characterID as CharacterNames]

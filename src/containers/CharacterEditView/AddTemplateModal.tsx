@@ -1,14 +1,10 @@
 // react
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer } from "@legendapp/state/react";
 
 // state
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { templates$ } from "#/modules/templates/state/templates";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
 
 // domain
 import type { CharacterTemplate } from "#/modules/templates/domain/CharacterTemplates";
@@ -20,10 +16,7 @@ import { Label } from "#ui/label";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const AddTemplateModal: React.FC = observer(() => {
-	const dispatch: ThunkDispatch = useDispatch();
-	const selectedCharacters = useSelector(
-		CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
-	);
+	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
 
 	return (
 		<div className={"flex flex-col gap-4"}>
@@ -108,7 +101,7 @@ const AddTemplateModal: React.FC = observer(() => {
 							if (template === undefined) return;
 
 							const selectedCharactersIDs = template.selectedCharacters.map(
-								({ id, target }) => id,
+								({ id }) => id,
 							);
 							if (
 								selectedCharactersIDs.some((id) =>
@@ -119,12 +112,12 @@ const AddTemplateModal: React.FC = observer(() => {
 							) {
 								return;
 							}
-							dispatch(CharacterEdit.thunks.appendTemplate(templateName));
+							profilesManagement$.appendTemplate(templateName);
 						}
 						if (templates$.templatesAddingMode.get() === "replace")
-							dispatch(CharacterEdit.thunks.replaceTemplate(templateName));
+							profilesManagement$.replaceWithTemplate(templateName);
 						if (templates$.templatesAddingMode.get() === "apply targets only")
-							dispatch(CharacterEdit.thunks.applyTemplateTargets(templateName));
+							profilesManagement$.applyTemplateTargets(templateName);
 					}}
 				>
 					Add

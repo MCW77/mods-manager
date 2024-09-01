@@ -7,6 +7,7 @@ import type {
 // state
 import type { IAppState } from "#/state/storage";
 import getDatabase, { type IUserData } from "#/state/storage/Database";
+import { beginBatch, endBatch } from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
@@ -23,6 +24,7 @@ import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
 import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po";
 import type { Mod } from "#/domain/Mod";
 import { PlayerProfile, type IFlatPlayerProfile } from "#/domain/PlayerProfile";
+import type { PlayerProfile as LegendPlayerProfile } from "#/modules/profilesManagement/domain/PlayerProfile";
 
 export namespace thunks {
 	export function deleteProfile(allycode: string): ThunkResult<void> {
@@ -62,7 +64,6 @@ export namespace thunks {
 		mods: C3POMods.C3POModDTO[],
 	): ThunkResult<Promise<void>> {
 		return async (dispatch, getState) => {
-			const state = getState();
 			const db = getDatabase();
 			let profile = await db.getProfile(
 				profilesManagement$.profiles.activeAllycode.get(),
@@ -88,7 +89,7 @@ export namespace thunks {
 						<p>
 							Successfully imported <span className={"gold"}>{totalMods}</span>{" "}
 							mods for player{" "}
-							<span className={"gold"}>{state.profile.playerName}</span>
+							<span className={"gold"}>{profilesManagement$.activeProfile.playerName.peek()}</span>
 						</p>,
 						"",
 						"",
@@ -125,7 +126,6 @@ export namespace thunks {
 						(profile: IFlatPlayerProfile) => PlayerProfile.deserialize(profile),
 					);
 					dispatch(Storage.thunks.saveProfiles(profiles, stateObj.allycode));
-//					dispatch(Storage.thunks.saveBaseCharacters(stateObj.gameSettings));
 					dispatch(Storage.thunks.saveLastRuns(stateObj.lastRuns));
 					if (stateObj.characterTemplates) {
 						templates$.userTemplatesByName.set(templates$.groupTemplatesById(stateObj.characterTemplates));

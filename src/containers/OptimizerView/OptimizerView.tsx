@@ -1,12 +1,9 @@
 // react
 import React from "react";
-import { useSelector } from "react-redux";
 
 // state
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-
-// modules
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // components
 import { Switch } from "@legendapp/state/react";
@@ -17,9 +14,7 @@ import { Review } from "#/modules/review/pages/Review";
 import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
 
 const OptimizerView = React.memo(() => {
-	const characters = useSelector(
-		Storage.selectors.selectCharactersInActiveProfile,
-	);
+	const characters = profilesManagement$.activeProfile.charactersById.get();
 
 	return (
 		<div className={"flex items-stretch overflow-hidden flex-grow-1"}>

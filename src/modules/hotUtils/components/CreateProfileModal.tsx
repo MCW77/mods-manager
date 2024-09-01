@@ -10,6 +10,7 @@ import { observer, reactive, useObservable } from "@legendapp/state/react";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { Storage } from "#/state/modules/storage";
@@ -28,10 +29,12 @@ import { Label } from "#/components/ui/label";
 const ReactiveInput = reactive(Input);
 
 const CreateProfileModal: React.FC = observer(() => {
-	const profile = useSelector(Storage.selectors.selectActiveProfile);
+	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
+	const characters = profilesManagement$.activeProfile.charactersById.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		profile.mods.filter((mod) => mod.characterID !== "null"),
+		profileMods.filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 
@@ -41,9 +44,9 @@ const CreateProfileModal: React.FC = observer(() => {
 	});
 
 	const generateHotUtilsProfile = () => {
-		const assignedMods = profile.modAssignments
+		const assignedMods = modAssignments
 			.filter((x) => null !== x)
-			.filter(({ id }) => profile.characters[id].playerValues.level >= 50)
+			.filter(({ id }) => characters[id].playerValues.level >= 50)
 			.map(({ id, assignedMods, target }) => ({
 				id: id,
 				modIds: assignedMods,

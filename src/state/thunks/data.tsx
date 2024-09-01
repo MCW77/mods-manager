@@ -23,7 +23,6 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
-import { App } from "#/state/modules/app";
 import { Storage } from "#/state/modules/storage";
 
 // domain
@@ -31,28 +30,14 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 import type * as DTOs from "#/modules/profilesManagement/dtos";
 import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
+import { createPlayerProfile, type PlayerProfile as LegendPlayerProfile } from "#/modules/profilesManagement/domain/PlayerProfile";
 
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
 import { PlayerProfile } from "#/domain/PlayerProfile";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+import { objectEntries } from "#/utils/objectEntries";
 
 export namespace thunks {
-	export function applyRanking(ranking: CharacterNames[]): ThunkResult<void> {
-		return App.thunks.updateProfile((profile) => {
-			const rankedSelectedCharacters: SelectedCharacters = [];
-			for (const characterID of ranking) {
-				const currentSelectedCharacter = profile.selectedCharacters.find(
-					(selectedCharacter) => selectedCharacter.id === characterID,
-				);
-				if (currentSelectedCharacter) {
-					rankedSelectedCharacters.push(currentSelectedCharacter);
-				}
-			}
-			return profile.withSelectedCharacters(rankedSelectedCharacters);
-		});
-	}
-
 	/*
   function fetchCharacterStats(characters = null) {
     if (null !== characters) {
@@ -133,15 +118,13 @@ export namespace thunks {
 			}
 
 			// Then, fetch the player's data from HotUtils
-			const tempProfile = new PlayerProfile(cleanedAllycode, "");
 			const oldAllycode = profilesManagement$.profiles.activeAllycode.get();
-			profilesManagement$.profiles.activeAllycode.set(tempProfile.allycode);
+			profilesManagement$.profiles.activeAllycode.set(cleanedAllycode);
 
 			try {
 				profile = await hotutils$.fetchProfile(cleanedAllycode);
 
 				// Process all of the data that's been collected
-				const db = getDatabase();
 
 				// If we used a HotUtils session, then the mods returned are all the mods a player has.
 				// In this case, don't keep old mods around, even if the box is checked.
@@ -150,7 +133,6 @@ export namespace thunks {
 						cleanedAllycode,
 						oldAllycode,
 						profile,
-						db,
 						keepOldMods && !(useSession && sessionId),
 					),
 				);
@@ -273,53 +255,47 @@ export namespace thunks {
 		newAllycode: string,
 		oldAllycode: string,
 		profile: FetchedGIMOProfile,
-		db: Database,
 		keepOldMods: boolean,
 	): ThunkResult<Promise<void>> {
 		return async (dispatch) => {
 			try {
+				const db = getDatabase();
 				const dbProfile = await db.getProfile(newAllycode);
-
-				const oldProfile =
-					dbProfile !== PlayerProfile.Default
-						? dbProfile.withPlayerName(profile.name)
-						: new PlayerProfile(newAllycode, profile.name);
+				const oldProfile = dbProfile !== PlayerProfile.Default ? dbProfile : new PlayerProfile(newAllycode);
 				oldProfile.allycode = newAllycode;
+
+				if (!profilesManagement$.hasProfileWithAllycode(newAllycode)) {
+						const legendProfile = createPlayerProfile(
+							newAllycode,
+							profile.name,
+						);
+						profilesManagement$.addProfile(legendProfile);
+				}
 				optimizationSettings$.addProfile(newAllycode);
 				incrementalOptimization$.addProfile(newAllycode);
+
 
 				// Collect the new character objects by combining the default characters with the player values
 				// and the optimizer settings from the current profile.
 				beginBatch()
-				const newCharacters = mapValues<
-					PlayerValuesByCharacter,
-					Character.Character
-				>(
-					profile.playerValues,
-					(
-						playerValues: DTOs.GIMO.PlayerValuesDTO,
-						id: string,
-					): Character.Character => {
-						const Id: CharacterNames = id as CharacterNames;
-						if (lockedStatus$.ofActivePlayerByCharacterId[Id].peek() === undefined)
-							lockedStatus$.ofActivePlayerByCharacterId[Id].set(false);
-						if (Object.hasOwn(oldProfile.characters, Id)) {
-							return Character.withTargets(
-								Character.withPlayerValues(
-									oldProfile.characters[Id],
-									playerValues,
-								),
-								oldProfile.characters[Id].targets,
-							);
-						}
-						return Character.createCharacter(
-							Id,
+				for (const [id, playerValues] of objectEntries(profile.playerValues)) {
+					if (lockedStatus$.ofActivePlayerByCharacterId[id].peek() === undefined)
+						lockedStatus$.ofActivePlayerByCharacterId[id].set(false);
+
+					const charactersById$ = profilesManagement$.activeProfile.charactersById;
+					if (Object.hasOwn(charactersById$.peek(), id)) {
+						charactersById$[id].playerValues.set(playerValues);
+					} else {
+						charactersById$[id].set(Character.createCharacter(
+							id,
 							playerValues,
 							[],
-						);
-					},
-				);
+						));
+					}
+				}
+				profilesManagement$.profiles.lastUpdatedByAllycode[newAllycode].set({ id: newAllycode, lastUpdated: Date.now() });
 				endBatch();
+
 				const newMods = groupByKey(profile.mods, (mod) => mod.id);
 
 				// If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
@@ -340,9 +316,8 @@ export namespace thunks {
 					finalMods = Object.values(newMods);
 				}
 
-				const newProfile = oldProfile
-					.withCharacters(newCharacters)
-					.withMods(finalMods);
+				const newProfile = oldProfile.withMods(finalMods);
+
 				db.saveProfile(
 					newProfile,
 					() => {},
@@ -365,10 +340,7 @@ export namespace thunks {
 					),
 				);
 				dispatch(Storage.actions.setProfile(newProfile));
-				profilesManagement$.addProfile(newProfile);
-				profilesManagement$.updateProfile(newProfile);
 				hotutils$.checkSubscriptionStatus();
-				//        dispatch(thunks.fetchHotUtilsStatus(newProfile.allycode));
 			} catch (error) {
 				const errorMessage = error instanceof DOMException ? error.message : "";
 				profilesManagement$.profiles.activeAllycode.set(oldAllycode);

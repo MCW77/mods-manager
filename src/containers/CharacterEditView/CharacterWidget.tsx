@@ -1,15 +1,11 @@
 // react
 import type React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer } from "@legendapp/state/react";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-
-// modules
-import { CharacterEdit } from "#/state/modules/characterEdit";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -31,10 +27,7 @@ type CharacterBlockProps = {
  */
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
-		const dispatch: ThunkDispatch = useDispatch();
-		const selectedCharacters = useSelector(
-			CharacterEdit.selectors.selectSelectedCharactersInActiveProfile,
-		);
+		const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
 		const baseCharactersById = characters$.baseCharactersById.get();
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
@@ -86,12 +79,10 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 							: dragStart(character)
 					}
 					onDoubleClick={() =>
-						dispatch(
-							CharacterEdit.thunks.selectCharacter(
-								character.id,
-								Character.defaultTarget(character),
-								lastSelectedCharacter,
-							),
+						profilesManagement$.selectCharacter(
+							character.id,
+							Character.defaultTarget(character),
+							lastSelectedCharacter,
 						)
 					}
 				>

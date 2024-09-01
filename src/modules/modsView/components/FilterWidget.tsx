@@ -1,14 +1,11 @@
 // react
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 // state
 import { observer } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
-
-// modules
-import { Storage } from "#/state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // components
 import { FilterManager } from "./FilterManager";
@@ -25,7 +22,7 @@ import { EquippedFilter } from "./Filters/EquippedFilter";
 
 const FilterWidget: React.FC = observer(() => {
   const [t] = useTranslation("explore-ui");
-  const profile = useSelector(Storage.selectors.selectActiveProfile);
+  const profile = profilesManagement$.activeProfile.get();
 
   return (
     <div className={"flex flex-col justify-between items-center gap-2"}>
