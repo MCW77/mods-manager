@@ -25,7 +25,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
 		<Button
 			type={"button"}
 			variant={"destructive"}
-			size={"xs"}
+			size={"xxs"}
 			className={"absolute top-0 right-0 m-2"}
 			onClick={() => {
 				dispatch(Storage.thunks.deleteMod(mod));
