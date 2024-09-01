@@ -71,12 +71,14 @@ export class SecondaryStat extends Stats.Stat {
 			"Tenacity %": 1.33,
 		};
 
+		id: string;
 		type: GIMOStatNames;
 		rolls: Rolls;
 		score!: StatScore;
 
-		constructor(type: GIMOStatNames, value: string, rolls: Rolls = 1) {
+		constructor(id: string, type: GIMOStatNames, value: string, rolls: Rolls = 1) {
 			super(value);
+			this.id = id;
 			this.type = type;
 			this.rolls = rolls;
 			this.displayModifier = this.type.endsWith("%") ? "%" : "";
@@ -86,15 +88,17 @@ export class SecondaryStat extends Stats.Stat {
 		}
 
 		clone(): this {
-			return new SecondaryStat(this.type, this.stringValue, this.rolls) as this;
+			return new SecondaryStat(this.id, this.type, this.stringValue, this.rolls) as this;
 		}
 
 		static fromHotUtils(
+			id: string,
 			type: HUStatNames,
 			value: string,
 			rolls: StrRolls = "1",
 		) {
 			return new SecondaryStat(
+				id,
 				SecondaryStat.HU2GIMOStatNamesMap[type],
 				value,
 				+rolls as Rolls,
@@ -111,6 +115,7 @@ export class SecondaryStat extends Stats.Stat {
 		 */
 		upgrade(): SecondaryStat {
 			const result = new SecondaryStat(
+				this.id,
 				this.type,
 				`${this.bigValue.mul(SecondaryStat.upgradeFactors[this.type])}`,
 				this.rolls,
@@ -124,6 +129,7 @@ export class SecondaryStat extends Stats.Stat {
 
 		downgrade(): SecondaryStat {
 			const result = new SecondaryStat(
+				this.id,
 				this.type,
 				`${this.bigValue.div(SecondaryStat.upgradeFactors[this.type])}`,
 				this.rolls,

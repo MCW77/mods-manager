@@ -1,7 +1,6 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 // styles
 import "./ModStats.css";
@@ -9,9 +8,7 @@ import "./ModStats.css";
 // state
 import { characters$ } from "#/modules/characters/state/characters";
 import { modsView$ } from "#/modules/modsView/state/modsView";
-
-// modules
-import { Storage } from "../../state/modules/storage";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
@@ -26,6 +23,7 @@ import type { SecondaryStats, Stats } from "../../domain/Stats";
 import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
 import { SellModButton } from "../SellModButton/SellModButton";
 import { Separator } from "#ui/separator";
+import { ModScores } from "../ModScores/ModScores";
 
 type ComponentProps = {
 	mod: Mod;
@@ -42,9 +40,7 @@ const ModStats = React.memo(
 		assignedTarget,
 	}: ComponentProps) => {
 		const [t, i18n] = useTranslation("domain");
-		const characters = useSelector(
-			Storage.selectors.selectCharactersInActiveProfile,
-		);
+		const characters = profilesManagement$.activeProfile.charactersById.get();
 		const baseCharactersById = characters$.baseCharactersById.get();
 		const scoreName = modsView$.activeViewSetupInActiveCategory.modScore.get();
 
@@ -129,14 +125,7 @@ const ModStats = React.memo(
 						<h4>{t("Secondary_plural")}</h4>
 						<ul className="secondary">{statsDisplay}</ul>
 					</div>
-					<div>
-						<h4>{t("Score_plural")}</h4>
-						<ul className="secondary-scores">
-							{statsScoresDisplay}
-							<Separator className={"m-y-1 bg-white"} decorative/>
-							{allStatsScoreDisplay}
-						</ul>
-					</div>
+					<ModScores mod={mod}/>
 				</div>
 				{showAvatar && character && (
 					<div className={"assigned-character"}>

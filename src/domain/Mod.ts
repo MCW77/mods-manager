@@ -356,9 +356,9 @@ export class Mod {
   }
 
   static fromHotUtils(flatMod: ModTypes.HUFlatMod) {
-    type secondaryPos = 1 | 2 | 3 | 4;
+    type secondaryPos = "1" | "2" | "3" | "4";
     const secondaryStats: SecondaryStats.SecondaryStat[] = [];
-    for (const pos of [1, 2, 3, 4] as secondaryPos[]) {
+    for (const pos of ["1", "2", "3", "4"] as secondaryPos[]) {
       const typeKey = `secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer;
       const rollKey = `secondaryRoll_${pos}` as keyof ModTypes.FlatModRollIndexer;
       if (
@@ -367,6 +367,7 @@ export class Mod {
         flatMod[rollKey] !== null
       ) {
         secondaryStats.push(SecondaryStats.SecondaryStat.fromHotUtils(
+          pos,
           flatMod[typeKey],
           flatMod[`secondaryValue_${pos}` as keyof ModTypes.FlatModValueIndexer],
           flatMod[rollKey],
@@ -394,6 +395,7 @@ export class Mod {
 
     if (null !== mod.secondaryType_1 && "" !== mod.secondaryValue_1) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
+        "1",
         mod.secondaryType_1,
         mod.secondaryValue_1,
         +(mod.secondaryRoll_1 ?? 1) as SecondaryStats.Rolls
@@ -401,6 +403,7 @@ export class Mod {
     }
     if (null !== mod.secondaryType_2 && "" !== mod.secondaryValue_2) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
+        "2",
         mod.secondaryType_2,
         mod.secondaryValue_2,
         +(mod.secondaryRoll_2 ?? 1) as SecondaryStats.Rolls
@@ -408,6 +411,7 @@ export class Mod {
     }
     if (null !== mod.secondaryType_3 && "" !== mod.secondaryValue_3) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
+        "3",
         mod.secondaryType_3,
         mod.secondaryValue_3,
         +(mod.secondaryRoll_3 ?? 1) as SecondaryStats.Rolls
@@ -415,6 +419,7 @@ export class Mod {
     }
     if (null !== mod.secondaryType_4 && "" !== mod.secondaryValue_4) {
       secondaryStats.push(new SecondaryStats.SecondaryStat(
+        "4",
         mod.secondaryType_4,
         mod.secondaryValue_4,
         +(mod.secondaryRoll_4 ?? 1) as SecondaryStats.Rolls

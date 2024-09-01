@@ -43,19 +43,22 @@ export class ModMapper {
 	}
 
 	fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
-		type secondaryPos = 1 | 2 | 3 | 4;
+		type secondaryPos = "1" | "2" | "3" | "4";
 		const secondaryStats: GIMOStats.SecondaryStats.SecondaryStat[] = [];
 
-		const secondaryPosArray: secondaryPos[] = [1, 2, 3, 4];
+		const secondaryPosArray: secondaryPos[] = ["1", "2", "3", "4"];
 
 		for (const pos of secondaryPosArray) {
 			if (mod[`secondaryStat-${pos}-Name`] !== undefined) {
 				secondaryStats.push(
-					C3POMappers.SecondaryStatMapper.fromC3PO({
-						name: mod[`secondaryStat-${pos}-Name`],
-						value: mod[`secondaryStat-${pos}-Value`],
-						rolls: mod[`secondaryStat-${pos}-Roll`],
-					}),
+					C3POMappers.SecondaryStatMapper.fromC3PO(
+						pos,
+						{
+							name: mod[`secondaryStat-${pos}-Name`],
+							value: mod[`secondaryStat-${pos}-Value`],
+							rolls: mod[`secondaryStat-${pos}-Roll`],
+						},
+					),
 				);
 			}
 		}
