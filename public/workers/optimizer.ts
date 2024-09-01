@@ -683,8 +683,8 @@ function getSetBonusStatsFromModSet(
 
     setBonusCounts[setName] = {
       setBonus: mod.set,
-      lowCount: setBonusCounts[setName]?.lowCount ?? 0 + 1,
-      highCount: setBonusCounts[setName]?.highCount ?? 0 + highCountValue,
+      lowCount: (setBonusCounts[setName]?.lowCount ?? 0) + 1,
+      highCount: (setBonusCounts[setName]?.highCount ?? 0) + highCountValue,
     }
   }
 
