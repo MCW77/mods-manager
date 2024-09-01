@@ -1,8 +1,5 @@
 // state
-import {
-	type ObservableObject,
-	observable,
-} from "@legendapp/state";
+import { type ObservableObject, observable, when } from "@legendapp/state";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { syncObservable } from "@legendapp/state/sync";
@@ -22,16 +19,16 @@ interface OptimizationSettings {
 	activeSettings: () => ProfileOptimizationSettings;
 	settingsByProfile: SettingsByProfile;
 	addProfile: (allycode: string) => void;
-	clearProfiles: () => void;
+	reset: () => void;
 	deleteProfile: (allycode: string) => void;
 }
 
 export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 	observable<OptimizationSettings>({
 		activeSettings: () => {
-			return	optimizationSettings$.settingsByProfile[
-					profilesManagement$.profiles.activeAllycode.get()
-				].get() as ProfileOptimizationSettings
+			return optimizationSettings$.settingsByProfile[
+				profilesManagement$.profiles.activeAllycode.get()
+			].get() as ProfileOptimizationSettings;
 		},
 		settingsByProfile: {},
 		addProfile: (allycode: string) => {
@@ -47,19 +44,23 @@ export const optimizationSettings$: ObservableObject<OptimizationSettings> =
 				},
 			});
 		},
-		clearProfiles: () => {
-			optimizationSettings$.settingsByProfile.set({});
+		reset: () => {
+			syncStatus$.reset();
 		},
 		deleteProfile: (allycode: string) => {
 			optimizationSettings$.settingsByProfile[allycode].delete();
 		},
 	});
 
-syncObservable(optimizationSettings$.settingsByProfile, {
+const syncStatus$ = syncObservable(optimizationSettings$.settingsByProfile, {
 	persist: {
 		name: "OptimizationSettings",
 		indexedDB: {
 			itemID: "settingsByProfile",
 		},
 	},
+	initial: {},
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();

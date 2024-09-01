@@ -2,7 +2,12 @@
 import { formatTimespan } from "../utils/formatTimespan";
 
 // state
-import { type ObservableObject, observable, event } from "@legendapp/state";
+import {
+	type ObservableObject,
+	observable,
+	event,
+	when,
+} from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 
 // domain
@@ -28,15 +33,19 @@ interface ProfilesManagement {
 	updateProfile: (profile: PlayerProfile) => void;
 }
 
+const getInitialProfiles = () => {
+	return structuredClone({
+	 activeAllycode: "",
+	 playernameByAllycode: {},
+	 profilesByAllycode: {},
+	 lastUpdatedByAllycode: {},
+ });
+};
+
 export const profilesManagement$: ObservableObject<ProfilesManagement> =
 	observable<ProfilesManagement>({
 		now: Date.now(),
-		profiles: {
-			activeAllycode: "",
-			playernameByAllycode: {},
-			profilesByAllycode: {},
-			lastUpdatedByAllycode: {},
-		},
+		profiles: getInitialProfiles(),
 		activeLastUpdated: () => {
 			const allycode = profilesManagement$.profiles.activeAllycode.get();
 			const elapsedTime =
@@ -113,17 +122,16 @@ const nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());
 }, 500);
 
-syncObservable(profilesManagement$.profiles, {
+const syncStatus$ = syncObservable(profilesManagement$.profiles, {
 	persist: {
 		name: "Profiles",
 		indexedDB: {
 			itemID: "profiles",
 		},
 	},
+	initial: getInitialProfiles(),
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();
 
-syncObservable(profilesManagement$.profiles.lastUpdatedByAllycode, {
-	persist: {
-		name: "ProfilesUpdates",
-	},
-});

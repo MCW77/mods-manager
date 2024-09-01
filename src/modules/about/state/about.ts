@@ -1,5 +1,5 @@
 // state
-import { type ObservableObject, observable } from "@legendapp/state";
+import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
@@ -40,7 +40,7 @@ export const about$: ObservableObject<About> = observable<About>({
 	},
 });
 
-syncObservable(about$.version, {
+const syncStatus$ = syncObservable(about$.version, {
 	persist: {
 		name: "About",
 		indexedDB: {
@@ -48,3 +48,6 @@ syncObservable(about$.version, {
 		},
 	},
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();

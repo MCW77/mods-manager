@@ -1,5 +1,5 @@
 // state
-import { type ObservableObject, observable } from "@legendapp/state";
+import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -9,7 +9,7 @@ interface IncrementalOptimization {
 	activeIndex: () => number | null;
 	indicesByProfile: IndicesByProfile;
 	addProfile: (allycode: string) => void;
-	clearProfiles: () => void;
+	reset: () => void;
 	deleteProfile: (allycode: string) => void;
 }
 
@@ -27,19 +27,23 @@ export const incrementalOptimization$: ObservableObject<IncrementalOptimization>
 				[allycode]: null,
 			});
 		},
-		clearProfiles: () => {
-			incrementalOptimization$.indicesByProfile.set({});
+		reset: () => {
+			syncStatus$.reset();
 		},
 		deleteProfile: (allycode: string) => {
 			incrementalOptimization$.indicesByProfile[allycode].delete();
 		},
 	});
 
-syncObservable(incrementalOptimization$.indicesByProfile, {
+const syncStatus$ = syncObservable(incrementalOptimization$.indicesByProfile, {
 	persist: {
 		name: "IncrementalOptimization",
 		indexedDB: {
 			itemID: "indicesByProfile",
 		},
 	},
+	initial: {},
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();

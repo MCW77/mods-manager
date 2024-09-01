@@ -1,12 +1,12 @@
 // state
-import { observable } from "@legendapp/state";
+import { observable, when } from "@legendapp/state";
+import { syncObservable } from "@legendapp/state/sync";
 
 // api
 import { fetchCharacters } from "../api/fetchBaseCharacters";
 
 // domain
 import type { BaseCharactersById } from "../domain/BaseCharacter";
-import { syncObservable } from "@legendapp/state/sync";
 
 const characters$ = observable<{
 	baseCharactersById: () => Promise<BaseCharactersById>;
@@ -20,10 +20,14 @@ const characters$ = observable<{
 	},
 });
 
-syncObservable(characters$.baseCharactersById, {
+const syncStatus$ = syncObservable(characters$.baseCharactersById, {
 	persist: {
 		name: "Characters",
 	},
+	initial: {} as BaseCharactersById,
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();
 
 export { characters$ };

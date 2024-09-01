@@ -1,5 +1,5 @@
 // state
-import { beginBatch, endBatch, type Observable, observable } from "@legendapp/state";
+import { beginBatch, endBatch, type Observable, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
@@ -12,6 +12,7 @@ const lockedStatus$ = observable<{
 	ofActivePlayerByCharacterId: () => Observable<LockedStatusByCharacterId>;
   lockAll: () => void;
   unlockAll: () => void;
+  reset: () => void;
 }>({
 	lockedStatusByCharacterIdByAllycode: {} as LockedStatusByCharacterIdByAllycode,
   ofActivePlayerByCharacterId: ():Observable<LockedStatusByCharacterId> => {
@@ -33,15 +34,22 @@ const lockedStatus$ = observable<{
     }
     endBatch();
   },
+  reset: () => {
+    syncStatus$.reset();
+  },
 });
 
-syncObservable(lockedStatus$.lockedStatusByCharacterIdByAllycode, {
+const syncStatus$ = syncObservable(lockedStatus$.lockedStatusByCharacterIdByAllycode, {
 	persist: {
 		name: "LockedStatus",
 		indexedDB: {
 			itemID: "lockedStatus",
 		},
 	},
+  initial: {} as LockedStatusByCharacterIdByAllycode,
 });
+(async () => {
+  await when(syncStatus$.isPersistLoaded);
+})();
 
 export { lockedStatus$ };

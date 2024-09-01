@@ -1,6 +1,6 @@
 // react
 import type { ComponentProps } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer } from "@legendapp/state/react";
@@ -14,8 +14,12 @@ import { about$ } from "#/modules/about/state/about";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
+import { modsView$ } from "#/modules/modsView/state/modsView";
 import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { templates$ } from "#/modules/templates/state/templates";
+import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
 import { App } from "#/state/modules/app";
@@ -63,11 +67,16 @@ const GeneralSettingsView: React.FC = observer(() => {
 						type={"button"}
 						variant={"destructive"}
 						onClick={() => {
+							dialog$.hide();
+							ui$.currentSection.set("help");
+							optimizationSettings$.reset();
+							incrementalOptimization$.reset();
+							lockedStatus$.reset();
+							templates$.reset();
+							profilesManagement$.reset();
+							hotutils$.reset();
+							modsView$.reset();
 							dispatch(App.thunks.reset());
-							optimizationSettings$.clearProfiles();
-							incrementalOptimization$.clearProfiles();
-							profilesManagement$.clearProfiles();
-							hotutils$.clearSessionIds();
 						}}
 					>
 						{t("general.backup.ResetProceed")}

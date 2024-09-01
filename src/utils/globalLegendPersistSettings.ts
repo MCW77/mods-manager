@@ -6,7 +6,7 @@ configureObservableSync({
 		plugin: ObservablePersistIndexedDB,
 		indexedDB: {
 			databaseName: "GIMO",
-			version: 13,
+			version: 14,
 			tableNames: [
 				"OptimizationSettings",
 				"IncrementalOptimization",
@@ -16,7 +16,6 @@ configureObservableSync({
 				"About",
 				"Templates",
 				"TemplatesAddingMode",
-				"ProfilesUpdates",
 				"ViewSetup",
 				"Characters",
 				"LockedStatus",

@@ -71,9 +71,13 @@ const templates$ = observable({
 			);
 		return templates;
 	},
+	reset: () => {
+		syncStatus1$.reset();
+		syncStatus2$.reset();
+	},
 });
 
-const status1$ = syncObservable(templates$.templatesAddingMode, {
+const syncStatus1$ = syncObservable(templates$.templatesAddingMode, {
 	persist: {
 		name: "TemplatesAddingMode",
 		indexedDB: {
@@ -81,13 +85,18 @@ const status1$ = syncObservable(templates$.templatesAddingMode, {
 		},
 	},
 });
-await when(status1$.isPersistLoaded);
+(async () => {
+	await when(syncStatus1$.isPersistLoaded);
+})();
 
-const status2$ = syncObservable(templates$.userTemplatesByName, {
+const syncStatus2$ = syncObservable(templates$.userTemplatesByName, {
 	persist: {
 		name: "Templates",
 	},
+	initial: {},
 });
-await when(status2$.isPersistLoaded);
+(async () => {
+	await when(syncStatus2$.isPersistLoaded);
+})();
 
 export { templates$ };

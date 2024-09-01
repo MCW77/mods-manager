@@ -6,11 +6,15 @@ import {
 	type Observable,
 	type ObservableObject,
 	observable,
+	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { profilesChanged$, profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import {
+	profilesChanged$,
+	profilesManagement$,
+} from "#/modules/profilesManagement/state/profilesManagement";
 
 // modules
 import { App } from "#/state/modules/app";
@@ -47,7 +51,8 @@ interface HotUtils {
 	pollForModMoveStatus: (dispatch: ThunkDispatch) => Promise<void>;
 }
 
-const hotutilsv2baseurl = "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
+const hotutilsv2baseurl =
+	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
 const hotutilsv2mockbaseurl = "http://localhost:3001/humock";
 
 const post = async (url = "", data = {}, extras = {}) => {
@@ -81,7 +86,7 @@ export const hotutils$ = observable({
 		return hotutils$.sessionIdsByProfile[allycode].get() || "";
 	},
 	hasActiveSession: () => {
-		return (hotutils$.activeSessionId.get() !== "") && hotutils$.isSubscribed()
+		return hotutils$.activeSessionId.get() !== "" && hotutils$.isSubscribed();
 	},
 
 	isMoving: false,
@@ -97,8 +102,8 @@ export const hotutils$ = observable({
 		message: "",
 	},
 	sessionIdsByProfile: {} as SessionIdsByProfile,
-	clearSessionIds: () => {
-		hotutils$.sessionIdsByProfile.set({});
+	reset: () => {
+		syncStatus$.reset();
 	},
 	cancelModMove: async () => {
 		isBusy$.set(true);
@@ -155,15 +160,12 @@ export const hotutils$ = observable({
 	checkSubscriptionStatus: async () => {
 		isBusy$.set(true);
 		try {
-			const response = await post(
-				hotutilsv2baseurl,
-				{
-					action: "checksubscription",
-					payload: {
-						allyCode: profilesManagement$.profiles.activeAllycode.get(),
-					},
+			const response = await post(hotutilsv2baseurl, {
+				action: "checksubscription",
+				payload: {
+					allyCode: profilesManagement$.profiles.activeAllycode.get(),
 				},
-			);
+			});
 
 			if (response.errorMessage) {
 				dialog$.showFlash(
@@ -230,14 +232,11 @@ export const hotutils$ = observable({
 	createProfile: async (profile: ProfileCreationData) => {
 		isBusy$.set(true);
 		try {
-			const response = await post(
-				hotutilsv2baseurl,
-				{
-					action: "createprofile",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: profile,
-				},
-			);
+			const response = await post(hotutilsv2baseurl, {
+				action: "createprofile",
+				sessionId: hotutils$.activeSessionId.get(),
+				payload: profile,
+			});
 
 			if (response.errorMessage) {
 				dialog$.showError(response.errorMessage);
@@ -313,14 +312,11 @@ export const hotutils$ = observable({
 	moveMods: async (profile: Loadout, dispatch: ThunkDispatch) => {
 		isBusy$.set(true);
 		try {
-			const response = await post(
-				hotutilsv2mockbaseurl,
-				{
-					action: "movemods",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: profile,
-				},
-			);
+			const response = await post(hotutilsv2mockbaseurl, {
+				action: "movemods",
+				sessionId: hotutils$.activeSessionId.get(),
+				payload: profile,
+			});
 
 			if (response.errorMessage) {
 				dialog$.hide();
@@ -364,16 +360,13 @@ export const hotutils$ = observable({
 	},
 	pollForModMoveStatus: async (dispatch: ThunkDispatch) => {
 		try {
-			const response = await post(
-				hotutilsv2mockbaseurl,
-				{
-					action: "checkmovestatus",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: {
-						taskId: hotutils$.moveStatus.taskId.get(),
-					},
+			const response = await post(hotutilsv2mockbaseurl, {
+				action: "checkmovestatus",
+				sessionId: hotutils$.activeSessionId.get(),
+				payload: {
+					taskId: hotutils$.moveStatus.taskId.get(),
 				},
-			);
+			});
 
 			if (response.errorMessage) {
 				dialog$.hide();
@@ -434,7 +427,9 @@ export const hotutils$ = observable({
 });
 
 profilesChanged$.on(() => {
-	const allycodes = Object.keys(profilesManagement$.profiles.profilesByAllycode.peek());
+	const allycodes = Object.keys(
+		profilesManagement$.profiles.profilesByAllycode.peek(),
+	);
 	for (const allycode of allycodes) {
 		if (hotutils$.sessionIdsByProfile[allycode].peek() === undefined) {
 			hotutils$.sessionIdsByProfile[allycode].set("");
@@ -442,11 +437,15 @@ profilesChanged$.on(() => {
 	}
 });
 
-syncObservable(hotutils$.sessionIdsByProfile, {
+const syncStatus$ = syncObservable(hotutils$.sessionIdsByProfile, {
 	persist: {
 		name: "HotUtils",
 		indexedDB: {
 			itemID: "sessionIdsByProfile",
 		},
 	},
+	initial: {} as SessionIdsByProfile,
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();

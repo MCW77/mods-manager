@@ -13,7 +13,8 @@ import {
 	type TriState,
 } from "../domain/ModsViewOptions";
 
-const clonedQuickFilter = structuredClone(quickFilter);
+const cloneQuickFilter = () => structuredClone(quickFilter);
+const clonedQuickFilter = cloneQuickFilter();
 const defaultRevealViewSetup = structuredClone(
 	defaultViewSetupByCategory.Reveal,
 );
@@ -131,6 +132,12 @@ const modsView$ = observable({
 		if (value === 0) filter.set(1);
 		if (value === 1) filter.set(-1);
 	},
+	reset: () => {
+		beginBatch();
+		syncStatus$.reset();
+		modsView$.quickFilter.assign(cloneQuickFilter());
+		endBatch();
+	},
 });
 
 const filters$ = observable({
@@ -138,12 +145,15 @@ const filters$ = observable({
 	filtersByCategory: {} as Record<Categories, Filter>,
 });
 
-const status$ = syncObservable(modsView$.viewSetupByIdByCategory, {
+const syncStatus$ = syncObservable(modsView$.viewSetupByIdByCategory, {
 	persist: {
 		name: "ViewSetup",
 	},
+	initial: structuredClone(defaultViewSetup),
 });
-await when(status$.isPersistLoaded);
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();
 
 modsView$.activeCategory.onChange(({ value, getPrevious }) => {
 	console.log(`activeCategory changed from ${getPrevious()} to ${value}`);

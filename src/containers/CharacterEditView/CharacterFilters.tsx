@@ -1,10 +1,10 @@
 // state
 import { observer } from "@legendapp/state/react";
+import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
 // components
 import { Label } from "#/components/ui/label";
 import { Switch } from "#/components/ui/switch";
-import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
 const CharacterFilters: React.FC = observer(() => {
 	return (

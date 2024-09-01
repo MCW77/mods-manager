@@ -1,5 +1,5 @@
 // state
-import { type ObservableObject, observable } from "@legendapp/state";
+import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 
 export interface Filters {
@@ -10,20 +10,27 @@ export interface Filters {
 interface CharactersManagement {
 	filters: Filters;
 }
+const getDefaultFilters = () => {
+	return {
+		characterFilter: "",
+		hideSelectedCharacters: true,
+	};
+};
 
 export const charactersManagement$: ObservableObject<CharactersManagement> =
 	observable<CharactersManagement>({
-		filters: {
-			characterFilter: "",
-			hideSelectedCharacters: true,
-		},
+		filters: getDefaultFilters(),
 	});
 
-syncObservable(charactersManagement$.filters, {
+const syncStatus$ = syncObservable(charactersManagement$.filters, {
 	persist: {
 		name: "CharactersManagement",
 		indexedDB: {
 			itemID: "filters",
 		},
 	},
+	initial: getDefaultFilters(),
 });
+(async () => {
+	await when(syncStatus$.isPersistLoaded);
+})();

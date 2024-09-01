@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Debug in Chrome",
-      "type": "msedge",
+      "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/src",
