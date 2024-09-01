@@ -154,8 +154,8 @@ importers:
         specifier: 1.8.3
         version: 1.8.3
       '@iconify-json/logos':
-        specifier: ^1.1.44
-        version: 1.1.44
+        specifier: ^1.2.0
+        version: 1.2.0
       '@iconify-json/skill-icons':
         specifier: ^1.1.10
         version: 1.1.10
@@ -1321,8 +1321,8 @@ packages:
       '@fortawesome/fontawesome-svg-core': ~1 || ~6
       react: '>=16.3'
 
-  '@iconify-json/logos@1.1.44':
-    resolution: {integrity: sha512-sIc355/sSq4GihU4eFTDVbXoeg2rZD3yH6tNOJTNouDu9Fx259BSWH+XEEQwm/YImDIllcGqmJuNBjAu4UVs2g==}
+  '@iconify-json/logos@1.2.0':
+    resolution: {integrity: sha512-VkU9QSqeZR2guWbecdqkcoZEAJfgJJTUm6QAsypuZQ7Cve6zy39wOXDjp2H31I8QyQy4O3Cz96+pNji6UQFg4w==}
 
   '@iconify-json/skill-icons@1.1.10':
     resolution: {integrity: sha512-zAs3zb3wwH3uExbFadBdxidx7keXO5Wuk4tqsCJuo/3qWjJlqabxzfzcCE+L6bkItORzN1QxmHUC9MU42xGAcQ==}
@@ -5066,7 +5066,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  '@iconify-json/logos@1.1.44':
+  '@iconify-json/logos@1.2.0':
     dependencies:
       '@iconify/types': 2.0.0
 
