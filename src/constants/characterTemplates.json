@@ -7,6 +7,7 @@
 				"id": "MAGNAGUARD",
 				"target": {
 					"id": "Forest Moon",
+					"description": "",
 					"Health": 50,
 					"Protection": 100,
 					"Speed": 0,
@@ -20,6 +21,7 @@
 					"Resistance": 5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -29,7 +31,8 @@
 			{
 				"id": "GRANDADMIRALTHRAWN",
 				"target": {
-					"id": "PvP",
+					"id": "Forest Moon",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -43,6 +46,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -53,6 +57,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "Forest Moon",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -66,6 +71,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -75,7 +81,8 @@
 			{
 				"id": "B1BATTLEDROIDV2",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -89,6 +96,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -99,6 +107,7 @@
 				"id": "B2SUPERBATTLEDROID",
 				"target": {
 					"id": "Forest Moon",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -112,6 +121,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -127,7 +137,8 @@
 			{
 				"id": "GENERALSKYWALKER",
 				"target": {
-					"id": "PvP - Defense",
+					"id": "Default",
+					"description": "Defense",
 					"Health": 10,
 					"Protection": 25,
 					"Speed": 100,
@@ -141,6 +152,7 @@
 					"Resistance": 10,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -150,7 +162,8 @@
 			{
 				"id": "AHSOKATANO",
 				"target": {
-					"id": "PvP",
+					"id": "Ground War",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -164,6 +177,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -173,7 +187,8 @@
 			{
 				"id": "GRANDMASTERYODA",
 				"target": {
-					"id": "Speedy",
+					"id": "Default",
+					"description": "Speedy",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -187,6 +202,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -196,7 +212,8 @@
 			{
 				"id": "SHAAKTI",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 100,
@@ -210,6 +227,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -220,6 +238,7 @@
 				"id": "HERMITYODA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -233,6 +252,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -248,7 +268,8 @@
 			{
 				"id": "EMPERORPALPATINE",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -262,6 +283,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -271,7 +293,8 @@
 			{
 				"id": "BASTILASHANDARK",
 				"target": {
-					"id": "7-star",
+					"id": "Places of Power",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -285,6 +308,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -294,7 +318,8 @@
 			{
 				"id": "DARTHREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -308,6 +333,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -317,7 +343,8 @@
 			{
 				"id": "DARTHNIHILUS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -331,6 +358,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -340,7 +368,8 @@
 			{
 				"id": "DARTHMALAK",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 15,
 					"Protection": 25,
 					"Speed": 100,
@@ -354,6 +383,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -369,7 +399,8 @@
 			{
 				"id": "DAKA",
 				"target": {
-					"id": "Healthy",
+					"id": "Secrets and Shadows",
+					"description": "Healthy",
 					"Health": 50,
 					"Protection": 0,
 					"Speed": 50,
@@ -383,6 +414,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -392,7 +424,8 @@
 			{
 				"id": "MOTHERTALZIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -406,6 +439,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -415,7 +449,8 @@
 			{
 				"id": "ASAJVENTRESS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -429,6 +464,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -438,7 +474,8 @@
 			{
 				"id": "TALIA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -452,6 +489,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -462,6 +500,7 @@
 				"id": "NIGHTSISTERZOMBIE",
 				"target": {
 					"id": "Strong Zombie",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -475,6 +514,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -491,6 +531,7 @@
 				"id": "CHIEFCHIRPA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -504,6 +545,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -513,7 +555,8 @@
 			{
 				"id": "EWOKELDER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -527,6 +570,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -536,7 +580,8 @@
 			{
 				"id": "WICKET",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -550,6 +595,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -559,7 +605,8 @@
 			{
 				"id": "LOGRAY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -573,6 +620,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -583,6 +631,7 @@
 				"id": "PAPLOO",
 				"target": {
 					"id": "Fast Tank",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 100,
@@ -596,6 +645,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -611,7 +661,8 @@
 			{
 				"id": "C3POLEGENDARY",
 				"target": {
-					"id": "Speedy debuffer",
+					"id": "Default",
+					"description": "Speedy debuffer",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -625,6 +676,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -634,7 +686,8 @@
 			{
 				"id": "PADMEAMIDALA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 35,
 					"Protection": 0,
 					"Speed": 100,
@@ -648,6 +701,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -657,7 +711,8 @@
 			{
 				"id": "AHSOKATANO",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -671,6 +726,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -680,7 +736,8 @@
 			{
 				"id": "SHAAKTI",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 100,
@@ -694,6 +751,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -703,7 +761,8 @@
 			{
 				"id": "GENERALKENOBI",
 				"target": {
-					"id": "Speedy Tank",
+					"id": "Default",
+					"description": "Speedy Tank",
 					"Health": 25,
 					"Protection": 50,
 					"Speed": 100,
@@ -717,6 +776,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -732,7 +792,8 @@
 			{
 				"id": "B1BATTLEDROIDV2",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -746,6 +807,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -755,7 +817,8 @@
 			{
 				"id": "DROIDEKA",
 				"target": {
-					"id": "GAS",
+					"id": "GAS Phase 4",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -769,6 +832,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -778,7 +842,8 @@
 			{
 				"id": "B2SUPERBATTLEDROID",
 				"target": {
-					"id": "Survival",
+					"id": "Default",
+					"description": "Survival",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -792,6 +857,7 @@
 					"Resistance": 0,
 					"Accuracy %": 50,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -801,7 +867,8 @@
 			{
 				"id": "MAGNAGUARD",
 				"target": {
-					"id": "Survival",
+					"id": "GAS Phase 4",
+					"description": "Survival",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 0,
@@ -815,6 +882,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -825,6 +893,7 @@
 				"id": "ASAJVENTRESS",
 				"target": {
 					"id": "GAS Phase 4",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 20,
@@ -838,6 +907,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -853,7 +923,8 @@
 			{
 				"id": "DARTHREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -867,6 +938,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -876,7 +948,8 @@
 			{
 				"id": "BASTILASHANDARK",
 				"target": {
-					"id": "7-star",
+					"id": "Malak (DS)",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -890,6 +963,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -899,7 +973,8 @@
 			{
 				"id": "HK47",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -913,6 +988,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -922,7 +998,8 @@
 			{
 				"id": "CARTHONASI",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -936,6 +1013,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -945,7 +1023,8 @@
 			{
 				"id": "CANDEROUSORDO",
 				"target": {
-					"id": "PvE",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -959,6 +1038,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -974,7 +1054,8 @@
 			{
 				"id": "JEDIKNIGHTREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -988,6 +1069,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -998,6 +1080,7 @@
 				"id": "BASTILASHAN",
 				"target": {
 					"id": "JKR Lead",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1011,6 +1094,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1021,6 +1105,7 @@
 				"id": "JOLEEBINDO",
 				"target": {
 					"id": "Health and Speed",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 75,
@@ -1034,6 +1119,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1043,7 +1129,8 @@
 			{
 				"id": "ZAALBAR",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 25,
@@ -1057,6 +1144,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 50,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1066,7 +1154,8 @@
 			{
 				"id": "MISSIONVAO",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1080,6 +1169,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1095,7 +1185,8 @@
 			{
 				"id": "GRIEVOUS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 80,
@@ -1109,6 +1200,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1118,7 +1210,8 @@
 			{
 				"id": "B1BATTLEDROIDV2",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1132,6 +1225,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1141,7 +1235,8 @@
 			{
 				"id": "DROIDEKA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 50,
@@ -1155,6 +1250,7 @@
 					"Resistance": 20,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1165,6 +1261,7 @@
 				"id": "MAGNAGUARD",
 				"target": {
 					"id": "Balanced",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -1178,6 +1275,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1187,7 +1285,8 @@
 			{
 				"id": "B2SUPERBATTLEDROID",
 				"target": {
-					"id": "Survival",
+					"id": "Default",
+					"description": "Survival",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -1201,6 +1300,7 @@
 					"Resistance": 0,
 					"Accuracy %": 50,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1216,7 +1316,8 @@
 			{
 				"id": "GEONOSIANBROODALPHA",
 				"target": {
-					"id": "Tanky",
+					"id": "Default",
+					"description": "Tanky",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -1230,6 +1331,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1239,7 +1341,8 @@
 			{
 				"id": "GEONOSIANSPY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1253,6 +1356,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1262,7 +1366,8 @@
 			{
 				"id": "GEONOSIANSOLDIER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 80,
@@ -1276,6 +1381,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1285,7 +1391,8 @@
 			{
 				"id": "SUNFAC",
 				"target": {
-					"id": "Tanky",
+					"id": "Default",
+					"description": "Tanky",
 					"Health": 40,
 					"Protection": 40,
 					"Speed": 100,
@@ -1299,6 +1406,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1308,7 +1416,8 @@
 			{
 				"id": "POGGLETHELESSER",
 				"target": {
-					"id": "PvE",
+					"id": "Default",
+					"description": "Speedy debuffer",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1322,6 +1431,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1337,7 +1447,8 @@
 			{
 				"id": "GRIEVOUS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 80,
@@ -1351,6 +1462,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1360,7 +1472,8 @@
 			{
 				"id": "ASAJVENTRESS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1374,6 +1487,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1383,7 +1497,8 @@
 			{
 				"id": "COUNTDOOKU",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1397,6 +1512,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1407,6 +1523,7 @@
 				"id": "MAGNAGUARD",
 				"target": {
 					"id": "Balanced",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -1420,6 +1537,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1429,7 +1547,8 @@
 			{
 				"id": "B2SUPERBATTLEDROID",
 				"target": {
-					"id": "Survival",
+					"id": "Default",
+					"description": "Survival",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -1443,6 +1562,7 @@
 					"Resistance": 0,
 					"Accuracy %": 50,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1452,13 +1572,14 @@
 		]
 	},
 	{
-		"id": "Leia - Tier 2",
+		"id": "Leia Organa - Tier 2",
 		"category": "GL unlock",
 		"selectedCharacters": [
 			{
 				"id": "HOTHLEIA",
 				"target": {
-					"id": "GL Leia - Tier 2",
+					"id": "Leia Organa - Tier 2",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1488,7 +1609,8 @@
 			{
 				"id": "HOTHHAN",
 				"target": {
-					"id": "GL Leia - Tier 2",
+					"id": "Leia Organa - Tier 2",
+					"description": "",
 					"Health": 20,
 					"Protection": 0,
 					"Speed": 100,
@@ -1524,7 +1646,8 @@
 			{
 				"id": "BB8",
 				"target": {
-					"id": "Speed",
+					"id": "ABC",
+					"description": "Speed",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1538,6 +1661,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1547,7 +1671,8 @@
 			{
 				"id": "GRANDADMIRALTHRAWN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -1561,6 +1686,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1571,6 +1697,7 @@
 				"id": "COMMANDERLUKESKYWALKER",
 				"target": {
 					"id": "Raids",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1584,6 +1711,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1594,6 +1722,7 @@
 				"id": "YOUNGHAN",
 				"target": {
 					"id": "HAAT",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 80,
@@ -1607,6 +1736,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1617,6 +1747,7 @@
 				"id": "ADMIRALACKBAR",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1630,6 +1761,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1646,6 +1778,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1659,6 +1792,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1668,7 +1802,8 @@
 			{
 				"id": "REYJEDITRAINING",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1682,6 +1817,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1692,6 +1828,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1705,6 +1842,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1714,7 +1852,8 @@
 			{
 				"id": "FINN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 10,
@@ -1728,6 +1867,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1737,7 +1877,8 @@
 			{
 				"id": "R2D2_LEGENDARY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -1751,6 +1892,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1767,6 +1909,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1780,6 +1923,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1789,7 +1933,8 @@
 			{
 				"id": "REYJEDITRAINING",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1803,6 +1948,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1813,6 +1959,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1826,6 +1973,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1835,7 +1983,8 @@
 			{
 				"id": "RESISTANCETROOPER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 10,
@@ -1849,6 +1998,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1858,7 +2008,8 @@
 			{
 				"id": "R2D2_LEGENDARY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -1872,6 +2023,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1888,6 +2040,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1901,6 +2054,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1910,7 +2064,8 @@
 			{
 				"id": "GRANDADMIRALTHRAWN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -1924,6 +2079,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1934,6 +2090,7 @@
 				"id": "WAMPA",
 				"target": {
 					"id": "Raids",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 80,
@@ -1947,6 +2104,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1957,6 +2115,7 @@
 				"id": "VADER",
 				"target": {
 					"id": "Raids",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1970,6 +2129,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -1980,6 +2140,7 @@
 				"id": "COMMANDERLUKESKYWALKER",
 				"target": {
 					"id": "Raids",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -1993,6 +2154,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2008,7 +2170,8 @@
 			{
 				"id": "CADBANE",
 				"target": {
-					"id": "Krayt",
+					"id": "Cad T6 (Fatal based)",
+					"description": "Krayt",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2022,16 +2185,17 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {
-						"Speed": 1
+						"Speed %": 1
 					},
 					"targetStats": [
 						{
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 310,
-							"maximum": 100000000,
+							"maximum": 325,
 							"relativeCharacterId": "null",
 							"optimizeForTarget": false
 						}
@@ -2043,6 +2207,7 @@
 				"id": "BOUSHH",
 				"target": {
 					"id": "Krayt",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2056,9 +2221,10 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {
-						"offense": 1
+						"Offense %": 1
 					},
 					"targetStats": [
 						{
@@ -2085,6 +2251,7 @@
 				"id": "KRRSANTAN",
 				"target": {
 					"id": "Krayt",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 45,
@@ -2098,6 +2265,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -2125,6 +2293,7 @@
 				"id": "BOBAFETT",
 				"target": {
 					"id": "Krayt",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2138,14 +2307,15 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {
 						"arrow": "Offense %",
 						"triangle": "Critical Damage %",
 						"cross": "Offense %"
 					},
 					"setRestrictions": {
-						"critdamage": 1,
-						"Health": 1
+						"Critical Damage %": 1,
+						"Health %": 1
 					},
 					"targetStats": [
 						{
@@ -2164,6 +2334,7 @@
 				"id": "GREEDO",
 				"target": {
 					"id": "Krayt",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -2177,6 +2348,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {
 						"cross": "Potency %"
 					},
@@ -2214,6 +2386,7 @@
 				"id": "CT210408",
 				"target": {
 					"id": "50 KAM",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 40,
@@ -2227,6 +2400,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -2262,6 +2436,7 @@
 				"id": "SHAAKTI",
 				"target": {
 					"id": "50 KAM",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -2275,6 +2450,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -2302,6 +2478,7 @@
 				"id": "CT7567",
 				"target": {
 					"id": "50 KAM",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -2315,6 +2492,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -2342,6 +2520,7 @@
 				"id": "ARCTROOPER501ST",
 				"target": {
 					"id": "50 KAM",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2355,6 +2534,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -2382,6 +2562,7 @@
 				"id": "CT5555",
 				"target": {
 					"id": "50 KAM",
+					"description": "",
 					"Health": 30,
 					"Protection": 0,
 					"Speed": 50,
@@ -2395,6 +2576,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -2427,7 +2609,8 @@
 			{
 				"id": "SHAAKTI",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 100,
@@ -2441,6 +2624,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2450,7 +2634,8 @@
 			{
 				"id": "CT7567",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -2464,6 +2649,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2473,7 +2659,8 @@
 			{
 				"id": "ARCTROOPER501ST",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 80,
@@ -2487,6 +2674,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2496,7 +2684,8 @@
 			{
 				"id": "CT210408",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 50,
@@ -2510,6 +2699,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2519,7 +2709,8 @@
 			{
 				"id": "CT5555",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 30,
 					"Protection": 30,
 					"Speed": 50,
@@ -2533,6 +2724,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2549,6 +2741,7 @@
 				"id": "BOSSK",
 				"target": {
 					"id": "Leader",
+					"description": "",
 					"Health": 10,
 					"Protection": 10,
 					"Speed": 100,
@@ -2562,6 +2755,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2571,7 +2765,8 @@
 			{
 				"id": "BOBAFETT",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2585,6 +2780,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2594,7 +2790,8 @@
 			{
 				"id": "DENGAR",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2608,6 +2805,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2617,7 +2815,8 @@
 			{
 				"id": "ZAMWESELL",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2631,6 +2830,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2640,7 +2840,8 @@
 			{
 				"id": "CADBANE",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2654,6 +2855,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2670,6 +2872,7 @@
 				"id": "BOSSK",
 				"target": {
 					"id": "Non-leader",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -2683,6 +2886,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2692,7 +2896,8 @@
 			{
 				"id": "JANGOFETT",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2706,6 +2911,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2715,7 +2921,8 @@
 			{
 				"id": "BOBAFETT",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2729,6 +2936,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2738,7 +2946,8 @@
 			{
 				"id": "DENGAR",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2752,6 +2961,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2761,7 +2971,8 @@
 			{
 				"id": "ZAMWESELL",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2775,6 +2986,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2790,7 +3002,8 @@
 			{
 				"id": "COMMANDERLUKESKYWALKER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2804,6 +3017,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2813,7 +3027,8 @@
 			{
 				"id": "CHEWBACCALEGENDARY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2827,6 +3042,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2836,7 +3052,8 @@
 			{
 				"id": "R2D2_LEGENDARY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -2850,6 +3067,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2860,6 +3078,7 @@
 				"id": "HANSOLO",
 				"target": {
 					"id": "Fast Han",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2873,6 +3092,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2883,6 +3103,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speedy debuffer",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2896,6 +3117,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2911,7 +3133,8 @@
 			{
 				"id": "COMMANDERLUKESKYWALKER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2925,6 +3148,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2934,7 +3158,8 @@
 			{
 				"id": "CHEWBACCALEGENDARY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2948,6 +3173,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2958,6 +3184,7 @@
 				"id": "HANSOLO",
 				"target": {
 					"id": "Fast Han",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2971,6 +3198,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -2980,7 +3208,8 @@
 			{
 				"id": "CHIRRUTIMWE",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -2994,6 +3223,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3004,6 +3234,7 @@
 				"id": "BAZEMALBUS",
 				"target": {
 					"id": "Slow Tank",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -3017,6 +3248,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3032,7 +3264,8 @@
 			{
 				"id": "CARTHONASI",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3046,6 +3279,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3056,6 +3290,7 @@
 				"id": "CANDEROUSORDO",
 				"target": {
 					"id": "PvE",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3069,6 +3304,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3078,7 +3314,8 @@
 			{
 				"id": "MISSIONVAO",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3092,6 +3329,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3101,7 +3339,8 @@
 			{
 				"id": "ZAALBAR",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 25,
@@ -3115,6 +3354,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 50,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3125,6 +3365,7 @@
 				"id": "JUHANI",
 				"target": {
 					"id": "Tank",
+					"description": "",
 					"Health": 50,
 					"Protection": 25,
 					"Speed": 100,
@@ -3138,6 +3379,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3154,6 +3396,7 @@
 				"id": "GRANDMASTERYODA",
 				"target": {
 					"id": "Speedy",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3167,6 +3410,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3176,7 +3420,8 @@
 			{
 				"id": "DARTHREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3190,6 +3435,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3200,6 +3446,7 @@
 				"id": "BASTILASHANDARK",
 				"target": {
 					"id": "7-star",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3213,6 +3460,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3222,7 +3470,8 @@
 			{
 				"id": "HK47",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3236,6 +3485,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3246,6 +3496,7 @@
 				"id": "SITHTROOPER",
 				"target": {
 					"id": "DR Lead",
+					"description": "",
 					"Health": 25,
 					"Protection": 50,
 					"Speed": 15,
@@ -3259,6 +3510,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3274,7 +3526,8 @@
 			{
 				"id": "DARTHREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3288,6 +3541,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3298,6 +3552,7 @@
 				"id": "BASTILASHANDARK",
 				"target": {
 					"id": "7-star",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3311,6 +3566,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3320,7 +3576,8 @@
 			{
 				"id": "DARTHMALAK",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 15,
 					"Protection": 25,
 					"Speed": 100,
@@ -3334,6 +3591,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3343,7 +3601,8 @@
 			{
 				"id": "HK47",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3357,6 +3616,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3367,6 +3627,7 @@
 				"id": "SITHTROOPER",
 				"target": {
 					"id": "DR Lead",
+					"description": "",
 					"Health": 25,
 					"Protection": 50,
 					"Speed": 15,
@@ -3380,6 +3641,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3395,7 +3657,8 @@
 			{
 				"id": "DARTHREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3409,6 +3672,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3419,6 +3683,7 @@
 				"id": "BASTILASHANDARK",
 				"target": {
 					"id": "7-star",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3432,6 +3697,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3441,7 +3707,8 @@
 			{
 				"id": "SITHMARAUDER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3455,6 +3722,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3464,7 +3732,8 @@
 			{
 				"id": "HK47",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3478,6 +3747,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3488,6 +3758,7 @@
 				"id": "SITHTROOPER",
 				"target": {
 					"id": "DR Lead",
+					"description": "",
 					"Health": 25,
 					"Protection": 50,
 					"Speed": 15,
@@ -3501,6 +3772,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3516,7 +3788,8 @@
 			{
 				"id": "VADER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3530,6 +3803,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3540,6 +3814,7 @@
 				"id": "SHORETROOPER",
 				"target": {
 					"id": "Speedy Tank",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 100,
@@ -3553,6 +3828,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3562,7 +3838,8 @@
 			{
 				"id": "EMPERORPALPATINE",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3576,6 +3853,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3585,7 +3863,8 @@
 			{
 				"id": "TIEFIGHTERPILOT",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3599,6 +3878,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3608,7 +3888,8 @@
 			{
 				"id": "GRANDMOFFTARKIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3622,6 +3903,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3637,7 +3919,8 @@
 			{
 				"id": "WICKET",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3651,6 +3934,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3661,6 +3945,7 @@
 				"id": "CHIEFCHIRPA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3674,6 +3959,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3683,7 +3969,8 @@
 			{
 				"id": "EWOKELDER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -3697,6 +3984,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3706,7 +3994,8 @@
 			{
 				"id": "LOGRAY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3720,6 +4009,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3730,6 +4020,7 @@
 				"id": "PAPLOO",
 				"target": {
 					"id": "Fast Tank",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 100,
@@ -3743,6 +4034,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3758,7 +4050,8 @@
 			{
 				"id": "CT7567",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -3772,6 +4065,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3782,6 +4076,7 @@
 				"id": "GENERALSKYWALKER",
 				"target": {
 					"id": "PvP - Defense",
+					"description": "",
 					"Health": 10,
 					"Protection": 25,
 					"Speed": 100,
@@ -3795,6 +4090,7 @@
 					"Resistance": 10,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3804,7 +4100,8 @@
 			{
 				"id": "ARCTROOPER501ST",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 80,
@@ -3818,6 +4115,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3827,7 +4125,8 @@
 			{
 				"id": "CT210408",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 50,
@@ -3841,6 +4140,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3850,7 +4150,8 @@
 			{
 				"id": "CT5555",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 30,
 					"Protection": 30,
 					"Speed": 50,
@@ -3864,6 +4165,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3879,7 +4181,8 @@
 			{
 				"id": "GRIEVOUS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 80,
@@ -3893,6 +4196,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3902,7 +4206,8 @@
 			{
 				"id": "B1BATTLEDROIDV2",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -3916,6 +4221,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3925,7 +4231,8 @@
 			{
 				"id": "DROIDEKA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 50,
@@ -3939,6 +4246,7 @@
 					"Resistance": 20,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3949,6 +4257,7 @@
 				"id": "B2SUPERBATTLEDROID",
 				"target": {
 					"id": "Survival",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -3962,6 +4271,7 @@
 					"Resistance": 0,
 					"Accuracy %": 50,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -3972,6 +4282,7 @@
 				"id": "MAGNAGUARD",
 				"target": {
 					"id": "Balanced",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -3985,6 +4296,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4001,6 +4313,7 @@
 				"id": "GRIEVOUS",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 0,
@@ -4035,6 +4348,7 @@
 				"id": "T3_M4",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 10,
 					"Protection": 50,
 					"Speed": 100,
@@ -4048,6 +4362,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -4067,6 +4382,7 @@
 				"id": "IG88",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4080,6 +4396,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -4099,6 +4416,7 @@
 				"id": "IMPERIALPROBEDROID",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 100,
@@ -4112,6 +4430,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -4131,6 +4450,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 5,
 					"Protection": 25,
 					"Speed": 100,
@@ -4144,6 +4464,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4160,6 +4481,7 @@
 				"id": "GEONOSIANBROODALPHA",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -4173,6 +4495,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4182,7 +4505,8 @@
 			{
 				"id": "GEONOSIANSPY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4196,6 +4520,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4205,7 +4530,8 @@
 			{
 				"id": "GEONOSIANSOLDIER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4219,6 +4545,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4229,6 +4556,7 @@
 				"id": "SUNFAC",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 40,
 					"Protection": 40,
 					"Speed": 100,
@@ -4242,6 +4570,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4252,6 +4581,7 @@
 				"id": "POGGLETHELESSER",
 				"target": {
 					"id": "PvE",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4265,6 +4595,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4280,7 +4611,8 @@
 			{
 				"id": "COLONELSTARCK",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4294,6 +4626,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4303,7 +4636,8 @@
 			{
 				"id": "VEERS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4317,6 +4651,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4326,7 +4661,8 @@
 			{
 				"id": "RANGETROOPER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4340,6 +4676,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4350,6 +4687,7 @@
 				"id": "DEATHTROOPER",
 				"target": {
 					"id": "Damage",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 80,
@@ -4363,6 +4701,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4372,7 +4711,8 @@
 			{
 				"id": "SNOWTROOPER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -4386,6 +4726,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4401,7 +4742,8 @@
 			{
 				"id": "CT7567",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -4415,6 +4757,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -4434,6 +4777,7 @@
 				"id": "ANAKINKNIGHT",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -4447,6 +4791,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -4466,6 +4811,7 @@
 				"id": "SHAAKTI",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 50,
@@ -4479,6 +4825,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -4497,7 +4844,8 @@
 			{
 				"id": "CT5555",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 30,
 					"Protection": 30,
 					"Speed": 50,
@@ -4511,6 +4859,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4521,6 +4870,7 @@
 				"id": "CT210408",
 				"target": {
 					"id": "Nuke",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 50,
@@ -4534,6 +4884,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4549,7 +4900,8 @@
 			{
 				"id": "JEDIKNIGHTREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4563,6 +4915,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4573,6 +4926,7 @@
 				"id": "GRANDMASTERYODA",
 				"target": {
 					"id": "Offense",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 50,
@@ -4586,6 +4940,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4596,6 +4951,7 @@
 				"id": "BASTILASHAN",
 				"target": {
 					"id": "JKR Lead",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4609,6 +4965,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4619,6 +4976,7 @@
 				"id": "JOLEEBINDO",
 				"target": {
 					"id": "Healer",
+					"description": "",
 					"Health": 30,
 					"Protection": 0,
 					"Speed": 100,
@@ -4632,6 +4990,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4642,6 +5001,7 @@
 				"id": "GENERALKENOBI",
 				"target": {
 					"id": "Balanced",
+					"description": "",
 					"Health": 50,
 					"Protection": 100,
 					"Speed": 50,
@@ -4655,6 +5015,7 @@
 					"Resistance": 25,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4670,7 +5031,8 @@
 			{
 				"id": "JEDIKNIGHTREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4684,6 +5046,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4694,6 +5057,7 @@
 				"id": "HERMITYODA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4707,6 +5071,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4717,6 +5082,7 @@
 				"id": "GRANDMASTERYODA",
 				"target": {
 					"id": "Offense",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 50,
@@ -4730,6 +5096,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4740,6 +5107,7 @@
 				"id": "BASTILASHAN",
 				"target": {
 					"id": "JKR Lead",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4753,6 +5121,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4763,6 +5132,7 @@
 				"id": "JOLEEBINDO",
 				"target": {
 					"id": "Healer",
+					"description": "",
 					"Health": 30,
 					"Protection": 0,
 					"Speed": 100,
@@ -4776,6 +5146,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4791,7 +5162,8 @@
 			{
 				"id": "KYLORENUNMASKED",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4805,6 +5177,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4814,7 +5187,8 @@
 			{
 				"id": "KYLOREN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4828,6 +5202,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4838,6 +5213,7 @@
 				"id": "FIRSTORDEROFFICERMALE",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4851,6 +5227,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4860,7 +5237,8 @@
 			{
 				"id": "FIRSTORDEREXECUTIONER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -4874,6 +5252,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4883,7 +5262,8 @@
 			{
 				"id": "FIRSTORDERTROOPER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -4897,6 +5277,7 @@
 					"Resistance": 5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4913,6 +5294,7 @@
 				"id": "ENFYSNEST",
 				"target": {
 					"id": "Speedy",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4926,6 +5308,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4935,7 +5318,8 @@
 			{
 				"id": "ASAJVENTRESS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4949,6 +5333,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4958,7 +5343,8 @@
 			{
 				"id": "MOTHERTALZIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -4972,6 +5358,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -4981,7 +5368,8 @@
 			{
 				"id": "DAKA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -4995,6 +5383,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5005,6 +5394,7 @@
 				"id": "NIGHTSISTERZOMBIE",
 				"target": {
 					"id": "Strong Zombie",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -5018,6 +5408,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5033,7 +5424,8 @@
 			{
 				"id": "ASAJVENTRESS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5047,6 +5439,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5056,7 +5449,8 @@
 			{
 				"id": "MOTHERTALZIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5070,6 +5464,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5079,7 +5474,8 @@
 			{
 				"id": "DAKA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -5093,6 +5489,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5103,6 +5500,7 @@
 				"id": "NIGHTSISTERZOMBIE",
 				"target": {
 					"id": "Strong Zombie",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -5116,6 +5514,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5125,7 +5524,8 @@
 			{
 				"id": "NIGHTSISTERSPIRIT",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5139,6 +5539,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5154,7 +5555,8 @@
 			{
 				"id": "ASAJVENTRESS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5168,6 +5570,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5177,7 +5580,8 @@
 			{
 				"id": "MOTHERTALZIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5191,6 +5595,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5200,7 +5605,8 @@
 			{
 				"id": "DAKA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -5214,6 +5620,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5224,6 +5631,7 @@
 				"id": "NIGHTSISTERZOMBIE",
 				"target": {
 					"id": "Strong Zombie",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -5237,6 +5645,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5246,7 +5655,8 @@
 			{
 				"id": "NIGHTSISTERACOLYTE",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5260,6 +5670,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5275,7 +5686,8 @@
 			{
 				"id": "COUNTDOOKU",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5289,6 +5701,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5298,7 +5711,8 @@
 			{
 				"id": "NUTEGUNRAY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -5312,6 +5726,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5321,7 +5736,8 @@
 			{
 				"id": "B1BATTLEDROIDV2",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5335,6 +5751,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5344,7 +5761,8 @@
 			{
 				"id": "GEONOSIANSOLDIER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5358,6 +5776,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5368,6 +5787,7 @@
 				"id": "SUNFAC",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 40,
 					"Protection": 40,
 					"Speed": 100,
@@ -5381,6 +5801,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5397,6 +5818,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Anti-Malak",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 25,
@@ -5410,6 +5832,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5420,6 +5843,7 @@
 				"id": "GENERALKENOBI",
 				"target": {
 					"id": "Padme Lead",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 50,
@@ -5433,6 +5857,7 @@
 					"Resistance": 25,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5443,6 +5868,7 @@
 				"id": "AHSOKATANO",
 				"target": {
 					"id": "Slow Damage",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 0,
@@ -5456,6 +5882,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5466,6 +5893,7 @@
 				"id": "ANAKINKNIGHT",
 				"target": {
 					"id": "Slow Damage",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 0,
@@ -5479,6 +5907,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5489,6 +5918,7 @@
 				"id": "PADMEAMIDALA",
 				"target": {
 					"id": "Slow",
+					"description": "",
 					"Health": 50,
 					"Protection": 0,
 					"Speed": 0,
@@ -5502,6 +5932,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5517,7 +5948,8 @@
 			{
 				"id": "PADMEAMIDALA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 35,
 					"Protection": 0,
 					"Speed": 100,
@@ -5531,6 +5963,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5541,6 +5974,7 @@
 				"id": "ANAKINKNIGHT",
 				"target": {
 					"id": "Padme Lead",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 80,
@@ -5554,6 +5988,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5564,6 +5999,7 @@
 				"id": "AHSOKATANO",
 				"target": {
 					"id": "Padme Lead",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -5577,6 +6013,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5587,6 +6024,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speedy debuffer",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5600,6 +6038,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5610,6 +6049,7 @@
 				"id": "GENERALKENOBI",
 				"target": {
 					"id": "Balanced",
+					"description": "",
 					"Health": 50,
 					"Protection": 100,
 					"Speed": 50,
@@ -5623,6 +6063,7 @@
 					"Resistance": 25,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5639,6 +6080,7 @@
 				"id": "HERASYNDULLAS3",
 				"target": {
 					"id": "PvP - Phoenix",
+					"description": "",
 					"Health": 20,
 					"Protection": 0,
 					"Speed": 100,
@@ -5664,6 +6106,7 @@
 				"id": "ZEBS3",
 				"target": {
 					"id": "PvP - Phoenix",
+					"description": "",
 					"Health": 40,
 					"Protection": 0,
 					"Speed": 100,
@@ -5689,6 +6132,7 @@
 				"id": "EZRABRIDGERS3",
 				"target": {
 					"id": "PvP - Phoenix",
+					"description": "",
 					"Health": 5,
 					"Protection": 0,
 					"Speed": 100,
@@ -5716,6 +6160,7 @@
 				"id": "KANANJARRUSS3",
 				"target": {
 					"id": "PvP - Phoenix",
+					"description": "",
 					"Health": 40,
 					"Protection": 0,
 					"Speed": 100,
@@ -5743,6 +6188,7 @@
 				"id": "CHOPPERS3",
 				"target": {
 					"id": "PvP - Phoenix",
+					"description": "",
 					"Health": 50,
 					"Protection": 0,
 					"Speed": 100,
@@ -5756,6 +6202,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5772,6 +6219,7 @@
 				"id": "ENFYSNEST",
 				"target": {
 					"id": "Speedy",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5785,6 +6233,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5795,6 +6244,7 @@
 				"id": "YOUNGHAN",
 				"target": {
 					"id": "PvE",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5808,6 +6258,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5818,6 +6269,7 @@
 				"id": "L3_37",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 40,
 					"Protection": 20,
 					"Speed": 50,
@@ -5831,6 +6283,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5840,7 +6293,8 @@
 			{
 				"id": "QIRA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5854,6 +6308,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5864,6 +6319,7 @@
 				"id": "YOUNGLANDO",
 				"target": {
 					"id": "PvE",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5877,6 +6333,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5893,6 +6350,7 @@
 				"id": "ENFYSNEST",
 				"target": {
 					"id": "Speedy",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5906,6 +6364,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5916,6 +6375,7 @@
 				"id": "L3_37",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 40,
 					"Protection": 20,
 					"Speed": 50,
@@ -5929,6 +6389,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5938,7 +6399,8 @@
 			{
 				"id": "MISSIONVAO",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5952,6 +6414,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5961,7 +6424,8 @@
 			{
 				"id": "ZAALBAR",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 25,
@@ -5975,6 +6439,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 50,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -5984,7 +6449,8 @@
 			{
 				"id": "QIRA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -5998,6 +6464,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6013,7 +6480,8 @@
 			{
 				"id": "BB8",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -6027,6 +6495,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6036,7 +6505,8 @@
 			{
 				"id": "REYJEDITRAINING",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6050,6 +6520,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6060,6 +6531,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speedy debuffer",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6073,6 +6545,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6082,7 +6555,8 @@
 			{
 				"id": "R2D2_LEGENDARY",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -6096,6 +6570,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6105,7 +6580,8 @@
 			{
 				"id": "RESISTANCETROOPER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 10,
@@ -6119,6 +6595,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6134,7 +6611,8 @@
 			{
 				"id": "CHIRRUTIMWE",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6148,6 +6626,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6157,7 +6636,8 @@
 			{
 				"id": "CASSIANANDOR",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 20,
 					"Speed": 100,
@@ -6171,6 +6651,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6180,7 +6661,8 @@
 			{
 				"id": "JYNERSO",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6194,6 +6676,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6204,6 +6687,7 @@
 				"id": "K2SO",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -6217,6 +6701,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6227,6 +6712,7 @@
 				"id": "BAZEMALBUS",
 				"target": {
 					"id": "Slow Tank",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -6240,6 +6726,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6255,7 +6742,8 @@
 			{
 				"id": "SHAAKTI",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 25,
 					"Speed": 100,
@@ -6269,6 +6757,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6278,7 +6767,8 @@
 			{
 				"id": "CT7567",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -6292,6 +6782,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6301,7 +6792,8 @@
 			{
 				"id": "CT5555",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 10,
 					"Speed": 100,
@@ -6315,6 +6807,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6325,6 +6818,7 @@
 				"id": "CC2224",
 				"target": {
 					"id": "Non-leader",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6338,6 +6832,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6347,7 +6842,8 @@
 			{
 				"id": "CT210408",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6361,6 +6857,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6376,7 +6873,8 @@
 			{
 				"id": "GRANDADMIRALTHRAWN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -6390,6 +6888,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6399,7 +6898,8 @@
 			{
 				"id": "DARTHNIHILUS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -6413,6 +6913,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6422,7 +6923,8 @@
 			{
 				"id": "DARTHSION",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 15,
 					"Protection": 15,
 					"Speed": 100,
@@ -6436,6 +6938,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6446,6 +6949,7 @@
 				"id": "DARTHTRAYA",
 				"target": {
 					"id": "Tanky",
+					"description": "",
 					"Health": 25,
 					"Protection": 75,
 					"Speed": 65,
@@ -6459,6 +6963,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 100,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6468,7 +6973,8 @@
 			{
 				"id": "SITHASSASSIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6482,6 +6988,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6497,7 +7004,8 @@
 			{
 				"id": "DARTHNIHILUS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -6511,6 +7019,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6520,7 +7029,8 @@
 			{
 				"id": "DARTHSION",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 15,
 					"Protection": 15,
 					"Speed": 100,
@@ -6534,6 +7044,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6543,7 +7054,8 @@
 			{
 				"id": "DARTHTRAYA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6557,6 +7069,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6566,7 +7079,8 @@
 			{
 				"id": "SITHASSASSIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6580,6 +7094,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6589,7 +7104,8 @@
 			{
 				"id": "COUNTDOOKU",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6603,6 +7119,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6619,6 +7136,7 @@
 				"id": "SEVENTHSISTER",
 				"target": {
 					"id": "Reva Mission/8th",
+					"description": "",
 					"Health": 0,
 					"Protection": 20,
 					"Speed": 100,
@@ -6661,6 +7179,7 @@
 				"id": "FIFTHBROTHER",
 				"target": {
 					"id": "Reva Mission/8th",
+					"description": "",
 					"Health": 0,
 					"Protection": 20,
 					"Speed": 100,
@@ -6711,6 +7230,7 @@
 				"id": "GRANDINQUISITOR",
 				"target": {
 					"id": "Reva Mission/8th",
+					"description": "",
 					"Health": 0,
 					"Protection": 30,
 					"Speed": 100,
@@ -6769,6 +7289,7 @@
 				"id": "EIGHTHBROTHER",
 				"target": {
 					"id": "Reva Mission/8th",
+					"description": "",
 					"Health": 0,
 					"Protection": 50,
 					"Speed": 100,
@@ -6827,6 +7348,7 @@
 				"id": "NINTHSISTER",
 				"target": {
 					"id": "Reva Mission/8th",
+					"description": "",
 					"Health": 0,
 					"Protection": 70,
 					"Speed": 40,
@@ -6891,6 +7413,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 10,
 					"Protection": -5,
 					"Speed": 100,
@@ -6904,6 +7427,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6914,6 +7438,7 @@
 				"id": "REYJEDITRAINING",
 				"target": {
 					"id": "hSTR p1 C3PO",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 90,
@@ -6927,6 +7452,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6937,6 +7463,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -6950,6 +7477,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6960,6 +7488,7 @@
 				"id": "FINN",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 80,
@@ -6973,6 +7502,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -6983,6 +7513,7 @@
 				"id": "R2D2_LEGENDARY",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 10,
 					"Protection": -5,
 					"Speed": 100,
@@ -6996,6 +7527,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7012,6 +7544,7 @@
 				"id": "BB8",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 10,
 					"Protection": -5,
 					"Speed": 100,
@@ -7025,6 +7558,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7035,6 +7569,7 @@
 				"id": "REYJEDITRAINING",
 				"target": {
 					"id": "hSTR p1 C3PO",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 90,
@@ -7048,6 +7583,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7058,6 +7594,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7071,6 +7608,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7081,6 +7619,7 @@
 				"id": "RESISTANCETROOPER",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 0,
@@ -7094,6 +7633,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7104,6 +7644,7 @@
 				"id": "R2D2_LEGENDARY",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 10,
 					"Protection": -5,
 					"Speed": 100,
@@ -7117,6 +7658,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7133,6 +7675,7 @@
 				"id": "GRANDMASTERYODA",
 				"target": {
 					"id": "hSTR P1 Yodalicious",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 100,
@@ -7146,6 +7689,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7156,6 +7700,7 @@
 				"id": "HERMITYODA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7169,6 +7714,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7179,6 +7725,7 @@
 				"id": "EZRABRIDGERS3",
 				"target": {
 					"id": "hSTR P1 Jedi",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 100,
@@ -7192,6 +7739,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7202,6 +7750,7 @@
 				"id": "AAYLASECURA",
 				"target": {
 					"id": "hSTR P1 Jedi",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 100,
@@ -7215,6 +7764,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7225,6 +7775,7 @@
 				"id": "VISASMARR",
 				"target": {
 					"id": "hSTR Phase 1",
+					"description": "",
 					"Health": 25,
 					"Protection": -5,
 					"Speed": 0,
@@ -7238,6 +7789,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7254,6 +7806,7 @@
 				"id": "HERMITYODA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7267,6 +7820,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7277,6 +7831,7 @@
 				"id": "WAMPA",
 				"target": {
 					"id": "Raids",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 80,
@@ -7290,6 +7845,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7299,7 +7855,8 @@
 			{
 				"id": "GRANDADMIRALTHRAWN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 5,
 					"Protection": 5,
 					"Speed": 100,
@@ -7313,6 +7870,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7323,6 +7881,7 @@
 				"id": "BOBAFETT",
 				"target": {
 					"id": "hSTR Phase 2",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7336,6 +7895,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7346,6 +7906,7 @@
 				"id": "SABINEWRENS3",
 				"target": {
 					"id": "hSTR Phase 2",
+					"description": "",
 					"Health": 20,
 					"Protection": 20,
 					"Speed": 100,
@@ -7359,6 +7920,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7374,7 +7936,8 @@
 			{
 				"id": "JEDIKNIGHTREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7388,6 +7951,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7398,6 +7962,7 @@
 				"id": "HERMITYODA",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7411,6 +7976,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7421,6 +7987,7 @@
 				"id": "GRANDMASTERYODA",
 				"target": {
 					"id": "hSTR P2 Jedi",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 60,
@@ -7434,6 +8001,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7444,6 +8012,7 @@
 				"id": "BASTILASHAN",
 				"target": {
 					"id": "hSTR P2 Jedi",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7457,6 +8026,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7467,6 +8037,7 @@
 				"id": "JOLEEBINDO",
 				"target": {
 					"id": "Health and Speed",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 75,
@@ -7480,6 +8051,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7496,6 +8068,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speedy debuffer",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7509,6 +8082,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7518,7 +8092,8 @@
 			{
 				"id": "PADMEAMIDALA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 35,
 					"Protection": 0,
 					"Speed": 100,
@@ -7532,6 +8107,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7542,6 +8118,7 @@
 				"id": "GENERALKENOBI",
 				"target": {
 					"id": "Speedy Tank",
+					"description": "",
 					"Health": 25,
 					"Protection": 50,
 					"Speed": 100,
@@ -7555,6 +8132,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7564,7 +8142,8 @@
 			{
 				"id": "AHSOKATANO",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7578,6 +8157,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7587,7 +8167,8 @@
 			{
 				"id": "ANAKINKNIGHT",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7601,6 +8182,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7617,6 +8199,7 @@
 				"id": "CHEWBACCALEGENDARY",
 				"target": {
 					"id": "hSTR Phase 3 Greedo",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 75,
@@ -7630,6 +8213,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7640,6 +8224,7 @@
 				"id": "BOBAFETT",
 				"target": {
 					"id": "hSTR Phase 3 Greedo",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 20,
@@ -7653,6 +8238,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7663,6 +8249,7 @@
 				"id": "PAO",
 				"target": {
 					"id": "Chex Mix",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 50,
@@ -7676,6 +8263,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7686,6 +8274,7 @@
 				"id": "DEATHTROOPER",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -7699,6 +8288,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -7718,6 +8308,7 @@
 				"id": "GREEDO",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -7731,6 +8322,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [
@@ -7755,7 +8347,8 @@
 			{
 				"id": "DARTHREVAN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7769,6 +8362,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7779,6 +8373,7 @@
 				"id": "BASTILASHANDARK",
 				"target": {
 					"id": "7-star",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7792,6 +8387,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7801,7 +8397,8 @@
 			{
 				"id": "HK47",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7815,6 +8412,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7824,7 +8422,8 @@
 			{
 				"id": "SITHMARAUDER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -7838,6 +8437,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7847,7 +8447,8 @@
 			{
 				"id": "DARTHMALAK",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 15,
 					"Protection": 25,
 					"Speed": 100,
@@ -7861,6 +8462,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7877,6 +8479,7 @@
 				"id": "ASAJVENTRESS",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 15,
 					"Protection": 0,
 					"Speed": 50,
@@ -7890,6 +8493,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7900,6 +8504,7 @@
 				"id": "DAKA",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 50,
 					"Protection": 0,
 					"Speed": 75,
@@ -7913,6 +8518,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7923,6 +8529,7 @@
 				"id": "MOTHERTALZIN",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 0,
 					"Protection": -5,
 					"Speed": 0,
@@ -7936,6 +8543,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7946,6 +8554,7 @@
 				"id": "NIGHTSISTERINITIATE",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -7959,6 +8568,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7969,6 +8579,7 @@
 				"id": "NIGHTSISTERZOMBIE",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 20,
 					"Protection": 0,
 					"Speed": 100,
@@ -7982,6 +8593,7 @@
 					"Resistance": 20,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -7997,7 +8609,8 @@
 			{
 				"id": "ASAJVENTRESS",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -8011,6 +8624,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8020,7 +8634,8 @@
 			{
 				"id": "DAKA",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 100,
@@ -8034,6 +8649,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8043,7 +8659,8 @@
 			{
 				"id": "MOTHERTALZIN",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -8057,6 +8674,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8067,6 +8685,7 @@
 				"id": "NIGHTSISTERINITIATE",
 				"target": {
 					"id": "hSTR Phase 3",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -8080,6 +8699,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8090,6 +8710,7 @@
 				"id": "ANAKINKNIGHT",
 				"target": {
 					"id": "Slow Damage",
+					"description": "",
 					"Health": 25,
 					"Protection": 0,
 					"Speed": 0,
@@ -8103,6 +8724,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8119,6 +8741,7 @@
 				"id": "ASAJVENTRESS",
 				"target": {
 					"id": "hSTR Phase 4",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -8132,6 +8755,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8142,6 +8766,7 @@
 				"id": "TALIA",
 				"target": {
 					"id": "hSTR Phase 4",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -8155,6 +8780,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8165,6 +8791,7 @@
 				"id": "MOTHERTALZIN",
 				"target": {
 					"id": "hSTR Phase 4",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 0,
@@ -8178,6 +8805,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8188,6 +8816,7 @@
 				"id": "DAKA",
 				"target": {
 					"id": "hSTR Phase 4",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 0,
@@ -8201,6 +8830,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8211,6 +8841,7 @@
 				"id": "NIGHTSISTERZOMBIE",
 				"target": {
 					"id": "hSTR Phase 4",
+					"description": "",
 					"Health": 100,
 					"Protection": 0,
 					"Speed": 0,
@@ -8224,6 +8855,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8240,6 +8872,7 @@
 				"id": "C3POLEGENDARY",
 				"target": {
 					"id": "Speed",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -8253,6 +8886,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8262,7 +8896,8 @@
 			{
 				"id": "CT7567",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 10,
 					"Protection": 0,
 					"Speed": 100,
@@ -8276,6 +8911,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8285,7 +8921,8 @@
 			{
 				"id": "BIGGSDARKLIGHTER",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -8299,6 +8936,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8308,7 +8946,8 @@
 			{
 				"id": "WEDGEANTILLES",
 				"target": {
-					"id": "PvP",
+					"id": "Default",
+					"description": "",
 					"Health": 0,
 					"Protection": 0,
 					"Speed": 100,
@@ -8322,6 +8961,7 @@
 					"Resistance": 0,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],
@@ -8332,6 +8972,7 @@
 				"id": "BAZEMALBUS",
 				"target": {
 					"id": "Slow Tank",
+					"description": "",
 					"Health": 50,
 					"Protection": 50,
 					"Speed": 0,
@@ -8345,6 +8986,7 @@
 					"Resistance": 12.5,
 					"Accuracy %": 0,
 					"Critical Avoidance %": 0,
+					"minimumModDots": 5,
 					"primaryStatRestrictions": {},
 					"setRestrictions": {},
 					"targetStats": [],

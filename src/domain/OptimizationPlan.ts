@@ -235,11 +235,11 @@ export const denormalize = (plan: OptimizationPlan) => {
 	};
 };
 
-export const toRenamed = (plan: OptimizationPlan, name: string, description = "") => {
+export const toRenamed = (plan: OptimizationPlan, id: string, description = "") => {
 	return {
 		...plan,
-		description: description,
-		name: name,
+		description,
+		id,
 	};
 };
 
