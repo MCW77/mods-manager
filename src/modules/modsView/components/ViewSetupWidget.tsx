@@ -28,7 +28,7 @@ const ViewSetupWidget: React.FC = observer(() => {
           <Label htmlFor={"group-mods"}>Group mods: </Label>
           <ReactiveSwitch
             id={"group-mods"}
-            $checked={modsView$.activeViewSetupInActiveCategory.get().isGroupingEnabled}
+            $checked={() => modsView$.activeViewSetupInActiveCategory.isGroupingEnabled.get()}
             onCheckedChange={() =>
               modsView$.activeViewSetupInActiveCategory.isGroupingEnabled.toggle()
             }

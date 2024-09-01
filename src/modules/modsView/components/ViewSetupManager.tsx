@@ -1,15 +1,10 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // state
 import { For, observer, reactive } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // components
 import {
@@ -19,16 +14,12 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { FilterWidget } from "./FilterWidget";
 
 const ReactiveSelect = reactive(Select);
 
 const ViewSetupManager = observer(
 	React.memo(() => {
-		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
-		const profile = useSelector(Storage.selectors.selectActiveProfile);
-    const activeViewSetupInActiveCategory = modsView$.activeViewSetupInActiveCategory.get();
 
 		return (
       <div className={""}>

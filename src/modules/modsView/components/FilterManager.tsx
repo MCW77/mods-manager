@@ -21,12 +21,12 @@ const FilterManager = observer(
 	React.memo(() => {
 		const [t] = useTranslation("global-ui");
     const activeViewSetupInActiveCategory = modsView$.activeViewSetupInActiveCategory.get();
-    const activeFilter = modsView$.activeFilter.get();
+
 
 		return (
       <div className={"filters"}>
         <ReactiveSelect
-          $value={modsView$.activeFilter.id}
+          $value={() => modsView$.idOfSelectedFilterInActiveCategory.get()}
           onValueChange={(value) => {
             modsView$.idOfSelectedFilterInActiveCategory.set(value);
           }}
@@ -46,7 +46,7 @@ const FilterManager = observer(
 
               <For each={modsView$.activeViewSetupInActiveCategory.filterById}>
                 {(filter$) => {
-                  const id = filter$.id.peek();
+                  const id = filter$.id.get();
                   return (
                   <SelectItem
                   className={"w-40"}

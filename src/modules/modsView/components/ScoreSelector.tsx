@@ -22,7 +22,7 @@ const ScoreSelector: React.FC = observer(() => {
     <div >
       <Label htmlFor={"score-select"}>{t("filter.ScoreHeadline")}</Label>
       <ReactiveSelect
-        $value={modsView$.activeViewSetupInActiveCategory.get().modScore}
+        $value={() => modsView$.activeViewSetupInActiveCategory.modScore.get()}
         onValueChange={(value) => {
           modsView$.activeViewSetupInActiveCategory.modScore.set(value);
         }}

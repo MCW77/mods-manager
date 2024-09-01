@@ -4,54 +4,91 @@ import { syncObservable } from "@legendapp/state/sync";
 
 // domain
 import type { Categories } from "../domain/Categories";
-import { defaultViewSetupByCategory, quickFilter, type ViewSetupById, type Filter, type FilterKeys, type TriState } from "../domain/ModsViewOptions";
+import {
+	defaultViewSetupByCategory,
+	quickFilter,
+	type ViewSetupById,
+	type Filter,
+	type FilterKeys,
+	type TriState,
+} from "../domain/ModsViewOptions";
 
 const clonedQuickFilter = structuredClone(quickFilter);
-const defaultRevealViewSetup = structuredClone(defaultViewSetupByCategory.Reveal);
-const defaultLevelViewSetup = structuredClone(defaultViewSetupByCategory.Level);
-const defaultSlice5DotViewSetup = structuredClone(defaultViewSetupByCategory.Slice5Dot);
-const defaultSlice6EViewSetup = structuredClone(defaultViewSetupByCategory.Slice6E);
-const defaultSlice6DotViewSetup = structuredClone(defaultViewSetupByCategory.Slice6Dot);
-const defaultCalibrateViewSetup = structuredClone(defaultViewSetupByCategory.Calibrate);
+const defaultRevealViewSetup = structuredClone(
+	defaultViewSetupByCategory.Reveal,
+);
+const defaultLevelViewSetup = structuredClone(
+	defaultViewSetupByCategory.Level,
+);
+const defaultSlice5DotViewSetup = structuredClone(
+	defaultViewSetupByCategory.Slice5Dot,
+);
+const defaultSlice6EViewSetup = structuredClone(
+	defaultViewSetupByCategory.Slice6E,
+);
+const defaultSlice6DotViewSetup = structuredClone(
+	defaultViewSetupByCategory.Slice6Dot,
+);
+const defaultCalibrateViewSetup = structuredClone(
+	defaultViewSetupByCategory.Calibrate,
+);
+const defaultViewSetup = {
+	Reveal: {
+		[defaultRevealViewSetup.id]: defaultRevealViewSetup,
+	} as ViewSetupById,
+	Level: { [defaultLevelViewSetup.id]: defaultLevelViewSetup } as ViewSetupById,
+	Slice5Dot: {
+		[defaultSlice5DotViewSetup.id]: defaultSlice5DotViewSetup,
+	} as ViewSetupById,
+	Slice6E: {
+		[defaultSlice6EViewSetup.id]: defaultSlice6EViewSetup,
+	} as ViewSetupById,
+	Slice6Dot: {
+		[defaultSlice6DotViewSetup.id]: defaultSlice6DotViewSetup,
+	} as ViewSetupById,
+	Calibrate: {
+		[defaultCalibrateViewSetup.id]: defaultCalibrateViewSetup,
+	} as ViewSetupById,
+};
 
 const modsView$ = observable({
-  activeCategory: "Reveal" as Categories,
-  idOfActiveViewSetupByCategory: {
-    Reveal: "*DefaultReveal*",
-    Level: "*DefaultLevel*",
-    Slice5Dot: "*DefaultSlice5Dot*",
-    Slice6E: "*DefaultSlice6E*",
-    Slice6Dot: "*DefaultSlice6Dot*",
-    Calibrate: "*DefaultCalibrate*",
-  },
-  idOfSelectedFilterByCategory: {
-    Reveal: "*QuickFilter*",
-    Level: "*QuickFilter*",
-    Slice5Dot: "*QuickFilter*",
-    Slice6E: "*QuickFilter*",
-    Slice6Dot: "*QuickFilter*",
-    Calibrate: "*QuickFilter*",
-  },
-  viewSetupByIdByCategory: {
-    Reveal: {[defaultRevealViewSetup.id]: defaultRevealViewSetup} as ViewSetupById,
-		Level: {[defaultLevelViewSetup.id]: defaultLevelViewSetup} as ViewSetupById,
-		Slice5Dot: {[defaultSlice5DotViewSetup.id]: defaultSlice5DotViewSetup} as ViewSetupById,
-		Slice6E: {[defaultSlice6EViewSetup.id]: defaultSlice6EViewSetup} as ViewSetupById,
-		Slice6Dot: {[defaultSlice6DotViewSetup.id]: defaultSlice6DotViewSetup} as ViewSetupById,
-		Calibrate: {[defaultCalibrateViewSetup.id]: defaultCalibrateViewSetup} as ViewSetupById,
-  },
+	activeCategory: "Reveal" as Categories,
+	idOfActiveViewSetupByCategory: {
+		Reveal: "*DefaultReveal*",
+		Level: "*DefaultLevel*",
+		Slice5Dot: "*DefaultSlice5Dot*",
+		Slice6E: "*DefaultSlice6E*",
+		Slice6Dot: "*DefaultSlice6Dot*",
+		Calibrate: "*DefaultCalibrate*",
+	},
+	idOfSelectedFilterByCategory: {
+		Reveal: "*QuickFilter*",
+		Level: "*QuickFilter*",
+		Slice5Dot: "*QuickFilter*",
+		Slice6E: "*QuickFilter*",
+		Slice6Dot: "*QuickFilter*",
+		Calibrate: "*QuickFilter*",
+	},
+	viewSetupByIdByCategory: structuredClone(defaultViewSetup),
 	quickFilter: clonedQuickFilter,
-	viewSetupByIdInActiveCategory: () => modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
+	viewSetupByIdInActiveCategory: () =>
+		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
 	idOfActiveViewSetupInActiveCategory: () => {
 		const category = modsView$.activeCategory.get();
 		const result = modsView$.idOfActiveViewSetupByCategory[category];
 		return result;
 	},
-	idOfSelectedFilterInActiveCategory: () => modsView$.idOfSelectedFilterByCategory[modsView$.activeCategory.get()],
+	idOfSelectedFilterInActiveCategory: () =>
+		modsView$.idOfSelectedFilterByCategory[modsView$.activeCategory.get()],
 	activeViewSetupInActiveCategory: () => {
-		console.log("compute activeViewSetupInActiveCategory: ", modsView$.activeViewSetupInActiveCategory.peek());
-    const filter = modsView$.activeFilter.get();
-		const viewSetup = modsView$.viewSetupByIdInActiveCategory[modsView$.idOfActiveViewSetupInActiveCategory.get()];
+		console.log(
+			"compute activeViewSetupInActiveCategory: ",
+			modsView$.activeViewSetupInActiveCategory.peek(),
+		);
+		const viewSetup =
+			modsView$.viewSetupByIdInActiveCategory[
+				modsView$.idOfActiveViewSetupInActiveCategory.get()
+			];
 		if (viewSetup !== undefined) {
 			return viewSetup;
 		}
@@ -59,17 +96,22 @@ const modsView$ = observable({
 	},
 	activeFilter: () => {
 		console.log("compute activeFilter");
-		const idOfSelectedFilterInActiveCategory = modsView$.idOfSelectedFilterInActiveCategory.get();
-		const filter = modsView$.activeViewSetupInActiveCategory.filterById[idOfSelectedFilterInActiveCategory].primary.get();
-		const quick = modsView$.quickFilter.primary.get();
+		const idOfSelectedFilterInActiveCategory =
+			modsView$.idOfSelectedFilterInActiveCategory.get();
 
 		if (idOfSelectedFilterInActiveCategory === "*QuickFilter*") {
 			return modsView$.quickFilter;
 		}
-		return modsView$.activeViewSetupInActiveCategory.filterById[idOfSelectedFilterInActiveCategory] ?? modsView$.quickFilter;
+		return modsView$.activeViewSetupInActiveCategory.filterById[
+			idOfSelectedFilterInActiveCategory
+		];
 	},
 	resetActiveViewSetup: () => {
-		modsView$.activeViewSetupInActiveCategory.set(structuredClone(defaultViewSetupByCategory[modsView$.activeCategory.peek()]));
+		modsView$.activeViewSetupInActiveCategory.set(
+			structuredClone(
+				defaultViewSetupByCategory[modsView$.activeCategory.peek()],
+			),
+		);
 	},
 	setFilterId: (filterId: string) => {
 		modsView$.idOfSelectedFilterInActiveCategory.set(filterId);
@@ -103,34 +145,46 @@ const status$ = syncObservable(modsView$.viewSetupByIdByCategory, {
 });
 await when(status$.isPersistLoaded);
 
-modsView$.activeCategory.onChange(({value, getPrevious}) => {
+modsView$.activeCategory.onChange(({ value, getPrevious }) => {
 	console.log(`activeCategory changed from ${getPrevious()} to ${value}`);
 });
 
-modsView$.idOfActiveViewSetupByCategory.onChange(({value, getPrevious}) => {
-	console.log(`idOfActiveViewSetupByCategory changed from ${getPrevious()} to ${value}`);
+modsView$.idOfActiveViewSetupByCategory.onChange(({ value, getPrevious }) => {
+	console.log(
+		`idOfActiveViewSetupByCategory changed from ${getPrevious()} to ${value}`,
+	);
 });
 
-modsView$.idOfSelectedFilterByCategory.onChange(({value, getPrevious}) => {
-	console.log(`idOfSelectedFilterByCategory changed from ${getPrevious()} to ${value}`);
+modsView$.idOfSelectedFilterByCategory.onChange(({ value, getPrevious }) => {
+	console.log(
+		`idOfSelectedFilterByCategory changed from ${getPrevious()} to ${value}`,
+	);
 });
 
-modsView$.idOfActiveViewSetupInActiveCategory.onChange(({value, getPrevious}) => {
-	console.log(`idOfActiveViewSetupInActiveCategory changed from ${getPrevious()} to ${value}`);
-});
+modsView$.idOfActiveViewSetupInActiveCategory.onChange(
+	({ value, getPrevious }) => {
+		console.log(
+			`idOfActiveViewSetupInActiveCategory changed from ${getPrevious()} to ${value}`,
+		);
+	},
+);
 
-modsView$.idOfSelectedFilterInActiveCategory.onChange(({value, getPrevious}) => {
-	console.log(`idOfSelectedFilterInActiveCategory changed from ${getPrevious()} to ${value}`);
-});
+modsView$.idOfSelectedFilterInActiveCategory.onChange(
+	({ value, getPrevious }) => {
+		console.log(
+			`idOfSelectedFilterInActiveCategory changed from ${getPrevious()} to ${value}`,
+		);
+	},
+);
 
-modsView$.activeViewSetupInActiveCategory.onChange(({value, getPrevious}) => {
+modsView$.activeViewSetupInActiveCategory.onChange(({ value, getPrevious }) => {
 	console.log("activeViewSetupInActiveCategory changed from ");
 	console.dir(getPrevious());
 	console.log("to ");
 	console.dir(value);
 });
 
-modsView$.activeFilter.onChange(({value, getPrevious}) => {
+modsView$.activeFilter.onChange(({ value, getPrevious }) => {
 	console.log("activeFilter changed from ");
 	console.dir(getPrevious());
 	console.log("to ");
