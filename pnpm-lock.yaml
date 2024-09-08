@@ -182,13 +182,13 @@ importers:
         version: 0.62.3
       autoprefixer:
         specifier: ^10.4.20
-        version: 10.4.20(postcss@8.4.42)
+        version: 10.4.20(postcss@8.4.45)
       cz-conventional-changelog:
         specifier: ^3.0.1
         version: 3.0.1(@types/node@22.5.4)(typescript@5.5.4)
       postcss:
-        specifier: ^8.4.42
-        version: 8.4.42
+        specifier: ^8.4.45
+        version: 8.4.45
       tailwindcss:
         specifier: ^3.4.10
         version: 3.4.10
@@ -197,10 +197,10 @@ importers:
         version: 5.5.4
       unocss:
         specifier: ^0.62.3
-        version: 0.62.3(postcss@8.4.42)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))
+        version: 0.62.3(postcss@8.4.45)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))
       unocss-preset-animations:
         specifier: ^1.1.0
-        version: 1.1.0(@unocss/preset-wind@0.62.3)(unocss@0.62.3(postcss@8.4.42)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6)))
+        version: 1.1.0(@unocss/preset-wind@0.62.3)(unocss@0.62.3(postcss@8.4.45)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6)))
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@22.5.4)(terser@5.31.6)
@@ -3143,6 +3143,9 @@ packages:
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
+  picocolors@1.1.0:
+    resolution: {integrity: sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==}
+
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
@@ -3203,8 +3206,8 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
-  postcss@8.4.42:
-    resolution: {integrity: sha512-hywKUQB9Ra4dR1mGhldy5Aj1X3MWDSIA1cEi+Uy0CjheLvP6Ual5RlwMCh8i/X121yEDLDIKBsrCQ8ba3FDMfQ==}
+  postcss@8.4.45:
+    resolution: {integrity: sha512-7KTLTdzdZZYscUc65XmjFiB73vBhBfbPztCYdUNvlaso9PrzjzcmjqBPR0lNGkcVlcO4BjiO5rK/qNz+XAen1Q==}
     engines: {node: ^10 || ^12 || >=14}
 
   pretty-bytes@5.6.0:
@@ -3451,6 +3454,10 @@ packages:
 
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
+    engines: {node: '>=0.10.0'}
+
+  source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
   source-map-support@0.5.21:
@@ -3891,7 +3898,7 @@ snapshots:
   '@babel/code-frame@7.24.2':
     dependencies:
       '@babel/highlight': 7.24.2
-      picocolors: 1.0.1
+      picocolors: 1.1.0
     optional: true
 
   '@babel/code-frame@7.24.7':
@@ -4143,7 +4150,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.1
+      picocolors: 1.1.0
     optional: true
 
   '@babel/highlight@7.24.7':
@@ -5829,14 +5836,14 @@ snapshots:
       gzip-size: 6.0.0
       sirv: 2.0.4
 
-  '@unocss/postcss@0.62.3(postcss@8.4.42)':
+  '@unocss/postcss@0.62.3(postcss@8.4.45)':
     dependencies:
       '@unocss/config': 0.62.3
       '@unocss/core': 0.62.3
       '@unocss/rule-utils': 0.62.3
       css-tree: 2.3.1
       magic-string: 0.30.11
-      postcss: 8.4.42
+      postcss: 8.4.45
       tinyglobby: 0.2.5
     transitivePeerDependencies:
       - supports-color
@@ -6017,14 +6024,14 @@ snapshots:
 
   at-least-node@1.0.0: {}
 
-  autoprefixer@10.4.20(postcss@8.4.42):
+  autoprefixer@10.4.20(postcss@8.4.45):
     dependencies:
       browserslist: 4.23.3
       caniuse-lite: 1.0.30001651
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.42
+      postcss: 8.4.45
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -7019,6 +7026,8 @@ snapshots:
 
   picocolors@1.0.1: {}
 
+  picocolors@1.1.0: {}
+
   picomatch@2.3.1: {}
 
   picomatch@4.0.2: {}
@@ -7035,28 +7044,28 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
-  postcss-import@15.1.0(postcss@8.4.42):
+  postcss-import@15.1.0(postcss@8.4.45):
     dependencies:
-      postcss: 8.4.42
+      postcss: 8.4.45
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.8
 
-  postcss-js@4.0.1(postcss@8.4.42):
+  postcss-js@4.0.1(postcss@8.4.45):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.42
+      postcss: 8.4.45
 
-  postcss-load-config@4.0.2(postcss@8.4.42):
+  postcss-load-config@4.0.2(postcss@8.4.45):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.5.0
     optionalDependencies:
-      postcss: 8.4.42
+      postcss: 8.4.45
 
-  postcss-nested@6.2.0(postcss@8.4.42):
+  postcss-nested@6.2.0(postcss@8.4.45):
     dependencies:
-      postcss: 8.4.42
+      postcss: 8.4.45
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -7066,11 +7075,11 @@ snapshots:
 
   postcss-value-parser@4.2.0: {}
 
-  postcss@8.4.42:
+  postcss@8.4.45:
     dependencies:
       nanoid: 3.3.7
-      picocolors: 1.0.1
-      source-map-js: 1.2.0
+      picocolors: 1.1.0
+      source-map-js: 1.2.1
 
   pretty-bytes@5.6.0: {}
 
@@ -7329,6 +7338,8 @@ snapshots:
 
   source-map-js@1.2.0: {}
 
+  source-map-js@1.2.1: {}
+
   source-map-support@0.5.21:
     dependencies:
       buffer-from: 1.1.2
@@ -7446,11 +7457,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.1
-      postcss: 8.4.42
-      postcss-import: 15.1.0(postcss@8.4.42)
-      postcss-js: 4.0.1(postcss@8.4.42)
-      postcss-load-config: 4.0.2(postcss@8.4.42)
-      postcss-nested: 6.2.0(postcss@8.4.42)
+      postcss: 8.4.45
+      postcss-import: 15.1.0(postcss@8.4.45)
+      postcss-js: 4.0.1(postcss@8.4.45)
+      postcss-load-config: 4.0.2(postcss@8.4.45)
+      postcss-nested: 6.2.0(postcss@8.4.45)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.8
       sucrase: 3.35.0
@@ -7587,18 +7598,18 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.1.0(@unocss/preset-wind@0.62.3)(unocss@0.62.3(postcss@8.4.42)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))):
+  unocss-preset-animations@1.1.0(@unocss/preset-wind@0.62.3)(unocss@0.62.3(postcss@8.4.45)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))):
     dependencies:
       '@unocss/preset-wind': 0.62.3
-      unocss: 0.62.3(postcss@8.4.42)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))
+      unocss: 0.62.3(postcss@8.4.45)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))
 
-  unocss@0.62.3(postcss@8.4.42)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6)):
+  unocss@0.62.3(postcss@8.4.45)(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6)):
     dependencies:
       '@unocss/astro': 0.62.3(rollup@2.79.1)(vite@5.4.2(@types/node@22.5.4)(terser@5.31.6))
       '@unocss/cli': 0.62.3(rollup@2.79.1)
       '@unocss/core': 0.62.3
       '@unocss/extractor-arbitrary-variants': 0.62.3
-      '@unocss/postcss': 0.62.3(postcss@8.4.42)
+      '@unocss/postcss': 0.62.3(postcss@8.4.45)
       '@unocss/preset-attributify': 0.62.3
       '@unocss/preset-icons': 0.62.3
       '@unocss/preset-mini': 0.62.3
@@ -7627,7 +7638,7 @@ snapshots:
     dependencies:
       browserslist: 4.23.1
       escalade: 3.1.2
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   update-browserslist-db@1.1.0(browserslist@4.23.3):
     dependencies:
@@ -7675,7 +7686,7 @@ snapshots:
   vite@5.4.2(@types/node@22.5.4)(terser@5.31.6):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.42
+      postcss: 8.4.45
       rollup: 4.21.0
     optionalDependencies:
       '@types/node': 22.5.4
