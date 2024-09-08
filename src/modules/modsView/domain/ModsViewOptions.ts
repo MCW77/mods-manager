@@ -1,5 +1,9 @@
-import type * as UtilityTypes from "../../../utils/typeHelper";
+// utils
+import type * as UtilityTypes from "#/utils/typeHelper";
+
+// domain
 import type { Categories } from "./Categories";
+import type { SortConfigById } from "./SortConfig";
 
 export type TriState = -1 | 0 | 1;
 
@@ -144,7 +148,7 @@ export interface ViewSetup {
 	category: Categories;
 	description: string;
 	filterById: Record<string, Filter>;
-	sort: string[];
+	sort: SortConfigById;
 	isGroupingEnabled: boolean;
 	modScore: string;
 }
@@ -275,7 +279,7 @@ const defaultRevealSetup: ViewSetup = {
 	category: "Reveal",
 	description: "Reveal",
 	filterById: {[defaultRevealFilter.id]: defaultRevealFilter},
-	sort: ["", "", "", ""],
+	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
@@ -285,7 +289,7 @@ const defaultLevelSetup: ViewSetup = {
 	category: "Level",
 	description: "Level",
 	filterById: {[defaultLevelFilter.id]: defaultLevelFilter},
-	sort: ["", "", "", ""],
+	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
@@ -295,7 +299,7 @@ const defaultSlice5DotSetup: ViewSetup = {
 	category: "Slice5Dot",
 	description: "Slice5Dot",
 	filterById: {[defaultSlice5DotFilter.id]: defaultSlice5DotFilter},
-	sort: ["", "", "", ""],
+	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
@@ -305,7 +309,7 @@ const defaultSlice6ESetup: ViewSetup = {
 	category: "Slice6E",
 	description: "Slice6E",
 	filterById: {[defaultSlice6EFilter.id]: defaultSlice6EFilter},
-	sort: ["", "", "", ""],
+	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
@@ -315,7 +319,7 @@ const defaultSlice6DotSetup: ViewSetup = {
 	category: "Slice6Dot",
 	description: "Slice6Dot",
 	filterById: {[defaultSlice6DotFilter.id]: defaultSlice6DotFilter},
-	sort: ["", "", "", ""],
+	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
@@ -325,7 +329,7 @@ const defaultCalibrateSetup: ViewSetup = {
 	category: "Calibrate",
 	description: "Calibrate",
 	filterById: {[defaultCalibrateFilter.id]: defaultCalibrateFilter},
-	sort: ["", "", "", ""],
+	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };

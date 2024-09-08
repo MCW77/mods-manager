@@ -138,6 +138,14 @@ const modsView$ = observable({
 		modsView$.quickFilter.assign(cloneQuickFilter());
 		endBatch();
 	},
+	addSortConfig: () => {
+		const id = crypto.randomUUID();
+		modsView$.activeViewSetupInActiveCategory.sort.set(id, {
+			id,
+			sortBy: "characterID",
+			sortOrder: "asc",
+		});
+	},
 });
 
 const filters$ = observable({

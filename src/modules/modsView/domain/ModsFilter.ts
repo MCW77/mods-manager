@@ -1,5 +1,5 @@
 // utils
-import { groupBy } from "../../../utils/groupBy";
+import { groupBy } from "#/utils/groupBy";
 import memoizeOne from "memoize-one";
 import { orderBy, mapValues } from "lodash-es";
 
@@ -19,8 +19,9 @@ import type {
 	SlotSettings,
 	TierSettings,
 	AssignedSettings,
-} from "../../modsView/domain/ModsViewOptions";
-import { Mod } from "../../../domain/Mod";
+} from "./ModsViewOptions";
+import type { SortConfigById } from "./SortConfig";
+import { Mod } from "#/domain/Mod";
 
 type ModFilterPredicate = (mod: Mod) => boolean;
 
@@ -47,7 +48,7 @@ class ModsFilter {
 	unselectedOptions: PartialFilter = structuredClone(this.selectedOptions);
 	filters: ModFilterPredicate[] = [];
 
-	sortOptions: string[];
+	sortOptions: SortConfigById;
 	isGroupingEnabled: boolean;
 
 	constructor(modsViewOptions: ViewSetup) {
@@ -57,15 +58,17 @@ class ModsFilter {
 			this.filters.push(combineFilters([this.selectedOptionsFilter(this.selectedOptions), this.unselectedOptionsFilter(this.unselectedOptions)]));
 		}
 
-
 		this.isGroupingEnabled = modsViewOptions.isGroupingEnabled;
 
-		this.sortOptions = modsViewOptions.sort;
-		this.sortOptions = this.sortOptions.filter((option) => option !== "");
+		this.sortOptions = structuredClone(modsViewOptions.sort);
 
-		if (!this.sortOptions.includes("character")) {
-			this.sortOptions.push("character");
-			this.sortOptions.push("characterID");
+		if (this.sortOptions.size === 0) {
+			const id = crypto.randomUUID();
+			this.sortOptions.set(id, {
+				id,
+				sortBy: "characterID",
+				sortOrder: "asc",
+			});
 		}
 	}
 
@@ -273,11 +276,17 @@ class ModsFilter {
 	}
 
 	sortGroupedMods(groupedMods: Record<string, Mod[]>): Record<string, Mod[]> {
+		const sortBys: string[] = [];
+		const sortDirections: ("asc" | "desc")[] = [];
+		for (const sortConfig of this.sortOptions.values()) {
+			sortBys.push(sortConfig.sortBy);
+			sortDirections.push(sortConfig.sortOrder);
+		}
 		return mapValues(groupedMods, (mods: Mod[]) =>
 			orderBy(
 				mods,
-				this.sortOptions,
-				this.sortOptions.map((opt) => "desc"),
+				sortBys,
+				sortDirections,
 			),
 		);
 	}
