@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { Memo, observer, reactive } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
@@ -56,24 +56,48 @@ const ModsView = observer(
               Calibrate
             </TabsTrigger>
           </TabsList>
-          <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Reveal">
-            <CategoryView />
-          </TabsContent>
-          <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Level">
-            <CategoryView />
-          </TabsContent>
-          <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Slice5Dot">
-            <CategoryView />
-          </TabsContent>
-          <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Slice6E">
-            <CategoryView />
-          </TabsContent>
-          <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Slice6Dot">
-            <CategoryView />
-          </TabsContent>
-          <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Calibrate">
-            <CategoryView />
-          </TabsContent>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Reveal">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Level">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Slice5Dot">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Slice6E">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Slice6Dot">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Calibrate">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
         </ReactiveTabs>
       }
     />

@@ -1,5 +1,5 @@
 // react
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { Show, observer, reactive } from "@legendapp/state/react";
+import { Memo, Show, observer, reactive, useMount } from "@legendapp/state/react";
 import { about$ } from "#/modules/about/state/about";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -48,14 +48,17 @@ const ReactiveTabs = reactive(Tabs);
 
 const App = observer(
 	React.memo(() => {
+		const counter = ++useRef(0).current;
+		console.log(`App render: ${counter}`);
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
 		const firstSection = profilesManagement$.hasProfiles.get()
 			? "mods"
 			: "help";
 
-		console.log("rendering APP");
-
+		useMount(() => {
+			console.log("App mounted");
+		});
 		useEffect(() => {
 			const queryParams = new URLSearchParams(document.location.search);
 			const allycode = queryParams.get("Allycode");
@@ -183,23 +186,35 @@ const App = observer(
 							</div>
 							<Show if={profilesManagement$.hasProfiles}>
 								{() => (
-									<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="mods">
-										<ModsView />
-									</TabsContent>
+									<Memo>
+										{() =>
+											<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="mods">
+												<ModsView />
+											</TabsContent>
+										}
+									</Memo>
 								)}
 							</Show>
 							<Show if={profilesManagement$.hasProfiles}>
 								{() => (
-									<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="optimize">
-										<OptimizerView />
-									</TabsContent>
+									<Memo>
+										{() =>
+											<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="optimize">
+												<OptimizerView />
+											</TabsContent>
+										}
+									</Memo>
 								)}
 							</Show>
 							<Show if={profilesManagement$.hasProfiles}>
 								{() => (
-									<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="settings">
-										<SettingsView />
-									</TabsContent>
+									<Memo>
+										{() =>
+											<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="settings">
+												<SettingsView />
+											</TabsContent>
+										}
+									</Memo>
 								)}
 							</Show>
 							<TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="help">

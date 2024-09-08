@@ -1,9 +1,9 @@
 // react
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-import { Show, observer } from "@legendapp/state/react";
+import { Memo, Show, observer, useMount } from "@legendapp/state/react";
 
 // styles
 import {
@@ -29,13 +29,18 @@ import { Button } from "#ui/button";
 
 const ProfilesManager = observer(
 	React.memo(() => {
+		const counter = useRef(0);
+		console.log(`ProfilesManager render: ${++counter.current}`);
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
-		const allycode = profilesManagement$.profiles.activeAllycode.get();
 		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
 		const [isAddingAProfile, setIsAddingAProfile] = useState(
 			Object.keys(profiles).length === 0,
 		);
+
+		useMount(() => {
+			console.log("ProfilesManager mounted");
+		});
 
 		return (
 			<div className="flex items-center gap-2">
@@ -47,51 +52,69 @@ const ProfilesManager = observer(
 				)}
 				<Show if={profilesManagement$.profiles.activeAllycode}>
 					<div className="flex gap-1">
-						<Button
-							type={"button"}
-							variant={"outline"}
-							size={"icon"}
-							onClick={() => {
-								dispatch(Data.thunks.refreshPlayerData(allycode, true, null));
-							}}
-						>
-							<FontAwesomeIcon
-								icon={faArrowsRotate}
-								title={`${t("header.Fetch")}`}
-							/>
-						</Button>
-						<Show if={hotutils$.hasActiveSession}>
-							<Button
-								size={"icon"}
-								type={"button"}
-								variant={"outline"}
-								onClick={() =>
-									dispatch(
-										Data.thunks.refreshPlayerData(
-											allycode,
-											true,
-											hotutils$.activeSessionId.get() ?? null,
-										),
-									)
-								}
-							>
-								<span className="fa-layers">
+						<Memo>
+							{() => (
+								<Button
+									size={"icon"}
+									type={"button"}
+									variant={"outline"}
+									onClick={() => {
+										dispatch(
+											Data.thunks.refreshPlayerData(
+												profilesManagement$.profiles.activeAllycode.get(),
+												true,
+												null,
+											),
+										);
+									}}
+								>
 									<FontAwesomeIcon
 										icon={faArrowsRotate}
-										title={`${t("header.FetchHot")}`}
+										title={`${t("header.Fetch")}`}
 									/>
-									<FontAwesomeIcon
-										icon={faFire}
-										size="sm"
-										transform="shrink-1 right-14 down-15"
-										color="Red"
-									/>
-								</span>
-							</Button>
+								</Button>
+							)}
+						</Memo>
+						<Show if={hotutils$.hasActiveSession}>
+							<Memo>
+								{() =>
+									<Button
+										size={"icon"}
+										type={"button"}
+										variant={"outline"}
+										onClick={() =>
+											dispatch(
+												Data.thunks.refreshPlayerData(
+													profilesManagement$.profiles.activeAllycode.get(),
+													true,
+													hotutils$.activeSessionId.get() ?? null,
+												),
+											)
+										}
+									>
+										<span className="fa-layers">
+											<FontAwesomeIcon
+												icon={faArrowsRotate}
+												title={`${t("header.FetchHot")}`}
+											/>
+											<FontAwesomeIcon
+												icon={faFire}
+												size="sm"
+												transform="shrink-1 right-14 down-15"
+												color="Red"
+											/>
+										</span>
+									</Button>
+								}
+							</Memo>
 						</Show>
-						<span>
-							Last updated: {profilesManagement$.activeLastUpdated.get()}
-						</span>
+						<Memo>
+							{() =>
+								<span>
+									Last updated: {profilesManagement$.activeLastUpdated.get()}
+								</span>
+							}
+						</Memo>
 					</div>
 				</Show>
 			</div>
