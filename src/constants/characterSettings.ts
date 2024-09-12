@@ -298,30 +298,30 @@ export type CharacterSettingsIndexer = {
 };
 const characterSettings: CharacterSettingsIndexer = {
 	"50RT": createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      health: 20,
-      prot: 10,
-      spd: 100,
-      pot: 20,
-      arm: 25,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 10,
+			spd: 100,
+			pot: 20,
+			arm: 25,
+		}),
 	]),
 	AAYLASECURA: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      spd: 100,
-      pot: 75,
-      phys: 10,
-      cc: 100,
-    }),
-    fromShortOptimizationPlan({
-      id: "hSTR P1 Jedi",
-      prot: -5,
-      spd: 100,
-      cd: 75,
-      phys: 50,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 75,
+			phys: 10,
+			cc: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "hSTR P1 Jedi",
+			prot: -5,
+			spd: 100,
+			cd: 75,
+			phys: 50,
+		}),
 	]),
 	ADMINISTRATORLANDO: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -464,7 +464,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 40,
 			}),
 			fromShortOptimizationPlan({
-				id:"oQGJ Lead",
+				id: "oQGJ Lead",
 				spd: 100,
 				cd: 100,
 				pot: 10,
@@ -525,25 +525,25 @@ const characterSettings: CharacterSettingsIndexer = {
 		}),
 	]),
 	ARMORER: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      health: 10,
-      prot: 10,
-      spd: 100,
-      ten: 5,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			ten: 5,
+		}),
 	]),
 	ASAJVENTRESS: createCharacterSettings(
 		[
-      fromShortOptimizationPlan({
-        id: "Default",
-        spd: 100,
-        cd: 100,
-        pot: 25,
-        phys: 10,
-        spec: 10,
-        cc: 20,
-      }),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 10,
+				spec: 10,
+				cc: 20,
+			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 4",
 				cd: 100,
@@ -563,14 +563,14 @@ const characterSettings: CharacterSettingsIndexer = {
 		DamageType.mixed,
 	),
 	AURRA_SING: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      spd: 100,
-      cd: 80,
-      pot: 20,
-      phys: 50,
-      cc:25,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 80,
+			pot: 20,
+			phys: 50,
+			cc: 25,
+		}),
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 3",
 			spd: 75,
@@ -583,20 +583,20 @@ const characterSettings: CharacterSettingsIndexer = {
 		toRenamed(optimizationStrategy["Speedy debuffer"], "Default"),
 	]),
 	BADBATCHHUNTER: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      spd: 100,
-      pot: 15,
-      phys: 25,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 15,
+			phys: 25,
+		}),
 	]),
 	BADBATCHOMEGA: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      spd: 50,
-      pot: 25,
-      phys: 100,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 50,
+			pot: 25,
+			phys: 100,
+		}),
 	]),
 	BADBATCHTECH: createCharacterSettings(
 		[toRenamed(optimizationStrategy["Speedy debuffer"], "Default")],
@@ -604,48 +604,48 @@ const characterSettings: CharacterSettingsIndexer = {
 		DamageType.special,
 	),
 	BADBATCHWRECKER: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      health: 10,
-      prot: 30,
-      spd: 100,
-      pot: 15,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 30,
+			spd: 100,
+			pot: 15,
+		}),
 	]),
 	B1BATTLEDROIDV2: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      spd: 100,
-      pot: 25,
-      phys: 75,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			pot: 25,
+			phys: 75,
+		}),
 	]),
 	B2SUPERBATTLEDROID: createCharacterSettings([
-    fromShortOptimizationPlan({
-      id: "Default",
-      desc: "Survival",
-      health: 50,
-      prot: 50,
-      pot: 50,
-      ten: 25,
-      acc: 50,
-    }),
-    fromShortOptimizationPlan({
-      id: "Tenacity",
-      health: 50,
-      prot: 50,
-      pot: 50,
-      ten: 100,
-      ca: 100,
-    }),
-    fromShortOptimizationPlan({
-      id: "Potency",
-      health: 50,
-      prot: 50,
-      pot: 100,
-      ten: 50,
-      ca: 190,
-    }),
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Survival",
+			health: 50,
+			prot: 50,
+			pot: 50,
+			ten: 25,
+			acc: 50,
+		}),
+		fromShortOptimizationPlan({
+			id: "Tenacity",
+			health: 50,
+			prot: 50,
+			pot: 50,
+			ten: 100,
+			ca: 100,
+		}),
+		fromShortOptimizationPlan({
+			id: "Potency",
+			health: 50,
+			prot: 50,
+			pot: 100,
+			ten: 50,
+			ca: 190,
+		}),
 	]),
 	BARRISSOFFEE: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -663,7 +663,7 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				desc:"Leader",
+				desc: "Leader",
 				health: 10,
 				spd: 100,
 				pot: 50,
@@ -678,7 +678,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "hSTR P2 Jedi",
 				spd: 100,
 				cd: 50,
-				spec:25,
+				spec: 25,
 				cc: 50,
 			}),
 		],
@@ -980,10 +980,7 @@ const characterSettings: CharacterSettingsIndexer = {
 		}),
 	]),
 	C3POLEGENDARY: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speedy debuffer"],
-			"Default",
-		),
+		toRenamed(optimizationStrategy["Speedy debuffer"], "Default"),
 		optimizationStrategy.Speed,
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 1",
@@ -2582,9 +2579,7 @@ const characterSettings: CharacterSettingsIndexer = {
 		}),
 	]),
 	HERMITYODA: createCharacterSettings(
-		[
-			toRenamed(optimizationStrategy.Speed, "Default"),
-		],
+		[toRenamed(optimizationStrategy.Speed, "Default")],
 		["Hyoda", "Hoboda", "Hobo", "HY"],
 		DamageType.mixed,
 	),
@@ -3804,9 +3799,10 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				spd: 24,
-				cd: 50,
-				phys: 100,
+				spd: 40,
+				cd: 78,
+				pot: 5,
+				phys: 65,
 				primaryRes: {
 					triangle: "Critical Damage %",
 					cross: "Offense %",
