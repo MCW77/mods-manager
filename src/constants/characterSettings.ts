@@ -134,6 +134,7 @@ export const characterNames = [
 	"GRANDMASTERLUKE",
 	"GRANDMASTERYODA",
 	"GRANDMOFFTARKIN",
+	"GREATMOTHERS",
 	"GREEDO",
 	"GREEFKARGA",
 	"GRIEVOUS",
@@ -2440,6 +2441,29 @@ const characterSettings: CharacterSettingsIndexer = {
 			}),
 		],
 		["GMT", "Auto Lightzader", "Imperial Grancor Maneuver"],
+		DamageType.mixed,
+	),
+	GREATMOTHERS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 5,
+				spd: 100,
+				pot: 5,
+				ca: 16,
+				primaryRes: {
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
+		],
+		["NS"],
 		DamageType.mixed,
 	),
 	GREEDO: createCharacterSettings([
