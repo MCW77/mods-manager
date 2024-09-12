@@ -3805,7 +3805,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				spd: 24,
-				cd: 100,
+				cd: 50,
+				phys: 100,
+				primaryRes: {
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
 			}),
 		],
 		["POW", "Quadme", "Queeni"],
