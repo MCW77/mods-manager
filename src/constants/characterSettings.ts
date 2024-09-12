@@ -2461,7 +2461,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			}),
 		],
 		["NS"],
-		DamageType.mixed,
+		DamageType.special,
 	),
 	GREEDO: createCharacterSettings([
 		fromShortOptimizationPlan({
