@@ -3,10 +3,15 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { For, observer, reactive } from "@legendapp/state/react";
+import { For, observer, reactive, Show } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
 
+// domain
+import { builtinFilters } from "../domain/ModsViewOptions";
+
 // components
+import { TrashIcon } from "lucide-react";
+import { Button } from "#ui/button";
 import {
 	Select,
 	SelectContent,
@@ -14,6 +19,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { RenameButton } from "#/components/RenameButton";
 
 const ReactiveSelect = reactive(Select);
 
@@ -24,7 +30,7 @@ const FilterManager = observer(
 
 
 		return (
-      <div className={"filters"}>
+      <div className={"flex items-center"}>
         <ReactiveSelect
           $value={() => modsView$.idOfSelectedFilterInActiveCategory.get()}
           onValueChange={(value) => {
@@ -32,13 +38,12 @@ const FilterManager = observer(
           }}
         >
           <SelectTrigger
-            className={"w-40 h-4 px-2 mx-2 inline-flex"}
+            className={"h-4 px-2 mx-2 inline-flex"}
             id={"selected-filter"}
           >
             <SelectValue />
           </SelectTrigger>
           <SelectContent
-            className={"w-8 min-w-40"}
             position={"popper"}
             sideOffset={5}
           >
@@ -48,25 +53,47 @@ const FilterManager = observer(
                 {(filter$) => {
                   const id = filter$.id.get();
                   return (
-                  <SelectItem
-                  className={"w-40"}
-                  key={id}
-                  value={id}
-                >
-                  {id}
-                </SelectItem>
-                )}}
+                    <div className="flex items-center">
+                      <SelectItem
+                        key={id}
+                        value={id}
+                      >
+                        {id}
+                      </SelectItem>
+                      <Show if={() => !builtinFilters.includes(id)}>
+                        <RenameButton itemId={id} itemName={id} onRename={modsView$.renameFilter}/>
+                        <Button
+                          size={"icon"}
+                          variant={"ghost"}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            modsView$.removeFilter(id)
+                          }}
+                        >
+                          <TrashIcon className="h-3 w-3 text-slate-500" />
+                        </Button>
+                      </Show>
+                    </div>
+                  )
+                }}
               </For>
             }
             <SelectItem
                 className={"w-40"}
-                key={"*QuickFilter*"}
-                value={"*QuickFilter*"}
+                key={"QuickFilter"}
+                value={"QuickFilter"}
               >
                 {"QuickEdit"}
               </SelectItem>
           </SelectContent>
         </ReactiveSelect>
+        <Button
+          size={"xs"}
+          variant={"outline"}
+          onClick={() => modsView$.addFilter()}
+        >
+          +
+        </Button>
       </div>
 		);
 	}),

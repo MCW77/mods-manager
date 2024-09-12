@@ -138,6 +138,7 @@ const SortManager = observer(
 									</ReactiveSelect>
 									<Button
 										size={"xxs"}
+										variant={"outline"}
 										onClick={() => {
 											if (sortConfig$.sortOrder.get() === "asc") {
 												sortConfig$.sortOrder.set("desc")
@@ -157,6 +158,7 @@ const SortManager = observer(
 									</Button>
 									<Button
 										size={"xxs"}
+										variant={"outline"}
 										onClick={() => modsView$.activeViewSetupInActiveCategory.sort.get().delete(sortConfig$.id.peek())}
 									>
 										x

@@ -26,7 +26,7 @@ const CategoryView: React.FC = observer(() => {
   const [t] = useTranslation("global-ui");
   const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
   const activeViewSetupInActiveCategory = structuredClone(modsView$.activeViewSetupInActiveCategory.get());
-  activeViewSetupInActiveCategory.filterById["*QuickFilter*"] = modsView$.quickFilter.get();
+  activeViewSetupInActiveCategory.filterById["QuickFilter"] = modsView$.quickFilter.get();
   const modsFilter = new ModsFilter(activeViewSetupInActiveCategory);
   const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(profileMods);
 

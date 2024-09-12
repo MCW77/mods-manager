@@ -5,7 +5,7 @@
     "OptimizerHeadline": "Used By Optimizer",
     "ScoreHeadline": "Mod Score",
     "SortHeadline": "Sort By",
-    "Reset": "Reset all filters",
+    "Reset": "Reset",
     "Group": "Group Mods"
   },
   "ModsShown": "Showing {{actual}} out of {{max}} mods.",

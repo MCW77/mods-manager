@@ -55,20 +55,20 @@ const defaultViewSetup = {
 const modsView$ = observable({
 	activeCategory: "Reveal" as Categories,
 	idOfActiveViewSetupByCategory: {
-		Reveal: "*DefaultReveal*",
-		Level: "*DefaultLevel*",
-		Slice5Dot: "*DefaultSlice5Dot*",
-		Slice6E: "*DefaultSlice6E*",
-		Slice6Dot: "*DefaultSlice6Dot*",
-		Calibrate: "*DefaultCalibrate*",
+		Reveal: "DefaultReveal",
+		Level: "DefaultLevel",
+		Slice5Dot: "DefaultSlice5Dot",
+		Slice6E: "DefaultSlice6E",
+		Slice6Dot: "DefaultSlice6Dot",
+		Calibrate: "DefaultCalibrate",
 	},
 	idOfSelectedFilterByCategory: {
-		Reveal: "*QuickFilter*",
-		Level: "*QuickFilter*",
-		Slice5Dot: "*QuickFilter*",
-		Slice6E: "*QuickFilter*",
-		Slice6Dot: "*QuickFilter*",
-		Calibrate: "*QuickFilter*",
+		Reveal: "QuickFilter",
+		Level: "QuickFilter",
+		Slice5Dot: "QuickFilter",
+		Slice6E: "QuickFilter",
+		Slice6Dot: "QuickFilter",
+		Calibrate: "QuickFilter",
 	},
 	viewSetupByIdByCategory: structuredClone(defaultViewSetup),
 	quickFilter: clonedQuickFilter,
@@ -100,7 +100,7 @@ const modsView$ = observable({
 		const idOfSelectedFilterInActiveCategory =
 			modsView$.idOfSelectedFilterInActiveCategory.get();
 
-		if (idOfSelectedFilterInActiveCategory === "*QuickFilter*") {
+		if (idOfSelectedFilterInActiveCategory === "QuickFilter") {
 			return modsView$.quickFilter;
 		}
 		return modsView$.activeViewSetupInActiveCategory.filterById[
@@ -113,6 +113,13 @@ const modsView$ = observable({
 				defaultViewSetupByCategory[modsView$.activeCategory.peek()],
 			),
 		);
+	},
+	resetActiveFilter: () => {
+		const id = modsView$.idOfSelectedFilterInActiveCategory.peek();
+		beginBatch();
+		modsView$.activeFilter.set(cloneQuickFilter());
+		modsView$.activeFilter.id.set(id);
+		endBatch();
 	},
 	setFilterId: (filterId: string) => {
 		modsView$.idOfSelectedFilterInActiveCategory.set(filterId);
@@ -138,6 +145,49 @@ const modsView$ = observable({
 		modsView$.quickFilter.assign(cloneQuickFilter());
 		endBatch();
 	},
+	addViewSetup: () => {
+		const oldId = modsView$.idOfActiveViewSetupInActiveCategory.peek();
+		let id = oldId;
+		while (
+			id in
+			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()].peek()
+		) {
+			id += "*";
+		}
+		beginBatch();
+		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()][id].set(
+			structuredClone(modsView$.activeViewSetupInActiveCategory.peek()),
+		);
+		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()][
+			id
+		].id.set(id);
+		modsView$.idOfActiveViewSetupByCategory[
+			modsView$.activeCategory.peek()
+		].set(id);
+		endBatch();
+	},
+	removeViewSetup: (id: string) => {
+		const category = modsView$.activeCategory.peek();
+		const isIdActive = modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
+		beginBatch();
+		modsView$.viewSetupByIdByCategory[category][id].delete();
+		if (isIdActive) modsView$.idOfActiveViewSetupByCategory[category].set(`Default${category}`);
+		endBatch();
+	},
+	renameViewSetup: (id: string, newName: string) => {
+		const category = modsView$.activeCategory.peek();
+		const isIdActive = modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
+		const viewSetup = modsView$.viewSetupByIdByCategory[category][id];
+
+		beginBatch();
+		viewSetup.id.set(newName);
+		modsView$.viewSetupByIdByCategory[category][newName].set(structuredClone(viewSetup.peek()));
+		modsView$.viewSetupByIdByCategory[category][id].delete();
+		if (isIdActive) {
+			modsView$.idOfActiveViewSetupByCategory[category].set(newName);
+		}
+		endBatch();
+	},
 	addSortConfig: () => {
 		const id = crypto.randomUUID();
 		modsView$.activeViewSetupInActiveCategory.sort.set(id, {
@@ -145,6 +195,40 @@ const modsView$ = observable({
 			sortBy: "characterID",
 			sortOrder: "asc",
 		});
+	},
+	addFilter: () => {
+		beginBatch();
+		modsView$.activeViewSetupInActiveCategory.filterById[
+			`${modsView$.activeFilter.id.peek()}*`
+		].set(structuredClone(modsView$.activeFilter.peek()));
+		modsView$.activeViewSetupInActiveCategory.filterById[
+			`${modsView$.activeFilter.id.peek()}*`
+		].id.set(`${modsView$.activeFilter.id.peek()}*`);
+		modsView$.idOfSelectedFilterInActiveCategory.set(
+			`${modsView$.activeFilter.id.peek()}*`,
+		);
+		endBatch();
+	},
+	removeFilter: (id: string) => {
+		const isIdActive = modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
+		beginBatch();
+		modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
+		if (isIdActive)
+			modsView$.idOfSelectedFilterInActiveCategory.set("QuickFilter");
+		endBatch();
+	},
+	renameFilter: (id: string, newName: string) => {
+		const isIdActive = modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
+		const filter = modsView$.activeViewSetupInActiveCategory.filterById[id];
+
+		beginBatch();
+		filter.id.set(newName);
+		modsView$.activeViewSetupInActiveCategory.filterById[newName].set(structuredClone(filter.peek()));
+		modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
+		if (isIdActive) {
+			modsView$.idOfSelectedFilterInActiveCategory.set(newName);
+		}
+		endBatch();
 	},
 });
 

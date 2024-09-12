@@ -3,10 +3,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { For, observer, reactive } from "@legendapp/state/react";
+import { For, observer, reactive, Show } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
 
 // components
+import { Button } from "#ui/button";
 import {
 	Select,
 	SelectContent,
@@ -14,6 +15,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { builtinViewSetups } from "../domain/ModsViewOptions";
+import { RenameButton } from "#/components/RenameButton";
+import { TrashIcon } from "lucide-react";
 
 const ReactiveSelect = reactive(Select);
 
@@ -22,7 +26,7 @@ const ViewSetupManager = observer(
 		const [t] = useTranslation("global-ui");
 
 		return (
-      <div className={""}>
+      <div className={"flex items-center"}>
         <ReactiveSelect
           $value={modsView$.idOfActiveViewSetupInActiveCategory}
           onValueChange={(value) => {
@@ -30,13 +34,12 @@ const ViewSetupManager = observer(
           }}
         >
           <SelectTrigger
-            className={"w-40 h-4 px-2 mx-2 inline-flex"}
+            className={"h-4 px-2 mx-2 inline-flex"}
             id={"view-setup"}
           >
             <SelectValue />
           </SelectTrigger>
           <SelectContent
-            className={"w-8 min-w-40"}
             position={"popper"}
             sideOffset={5}
           >
@@ -44,17 +47,38 @@ const ViewSetupManager = observer(
               {(setup$) => {
                 const id = setup$.id.peek();
                 return (
-                <SelectItem
-                className={"w-40"}
-                key={id}
-                value={id}
-              >
-                {id}
-              </SelectItem>
+                  <div className="flex items-center">
+                    <SelectItem
+                      key={id}
+                      value={id}
+                    >
+                      {id}
+                    </SelectItem>
+                    <Show if={() => !builtinViewSetups.includes(id)}>
+                      <RenameButton itemId={id} itemName={id} onRename={modsView$.renameViewSetup}/>
+                      <Button
+                        size={"icon"}
+                        variant={"ghost"}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          modsView$.removeViewSetup(id)
+                        }}
+                      >
+                        <TrashIcon className="h-3 w-3 text-slate-500" />
+                      </Button>
+                    </Show>
+                  </div>
               )}}
             </For>
           </SelectContent>
         </ReactiveSelect>
+        <Button
+          size={"xs"}
+          variant={"outline"}
+          onClick={() => modsView$.addViewSetup()}
+        >
+          +
+        </Button>
       </div>
 		);
 	}),

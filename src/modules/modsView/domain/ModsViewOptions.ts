@@ -158,7 +158,7 @@ export type ViewSetupById = Record<string, ViewSetup>;
 export type ViewSetupByIdByCategory = Record<Categories, ViewSetupById>;
 
 export const quickFilter: Filter = {
-	id: "*QuickFilter*",
+	id: "QuickFilter",
 	slot: {
 		square: 0,
 		arrow: 0,
@@ -240,7 +240,7 @@ export const quickFilter: Filter = {
 };
 
 export const defaultRevealFilter: Filter = structuredClone(quickFilter);
-defaultRevealFilter.id = "*DefaultRevealFilter*";
+defaultRevealFilter.id = "DefaultReveal";
 defaultRevealFilter.rarity[6] = -1;
 defaultRevealFilter.tier[5] = -1;
 defaultRevealFilter.level[12] = -1;
@@ -249,86 +249,85 @@ defaultRevealFilter.level[14] = -1;
 defaultRevealFilter.level[15] = -1;
 
 export const defaultLevelFilter: Filter = structuredClone(quickFilter);
-defaultLevelFilter.id = "*DefaultLevelFilter*";
+defaultLevelFilter.id = "DefaultLevel";
 defaultLevelFilter.level[15] = -1;
 
 export const defaultSlice5DotFilter: Filter = structuredClone(quickFilter);
-defaultSlice5DotFilter.id = "*DefaultSlice5DotFilter*";
+defaultSlice5DotFilter.id = "DefaultSlice5Dot";
 defaultSlice5DotFilter.rarity[5] = 1;
 defaultSlice5DotFilter.tier[5] = -1;
 defaultSlice5DotFilter.level[15] = 1;
 
-
 export const defaultSlice6EFilter: Filter = structuredClone(quickFilter);
-defaultSlice6EFilter.id = "*DefaultSlice6EFilter*";
+defaultSlice6EFilter.id = "DefaultSlice6E";
 defaultSlice6EFilter.rarity[5] = 1;
 defaultSlice6EFilter.tier[5] = 1;
 defaultSlice6EFilter.level[15] = 1;
 
 export const defaultSlice6DotFilter: Filter = structuredClone(quickFilter);
-defaultSlice6DotFilter.id = "*DefaultSlice6DotFilter*";
+defaultSlice6DotFilter.id = "DefaultSlice6Dot";
 defaultSlice6DotFilter.rarity[6] = 1;
 defaultSlice6DotFilter.tier[5] = -1;
 
 export const defaultCalibrateFilter: Filter = structuredClone(quickFilter);
-defaultCalibrateFilter.id = "Calibrate";
+defaultCalibrateFilter.id = "DefaultCalibrate";
 defaultCalibrateFilter.rarity[6] = 1;
 
 const defaultRevealSetup: ViewSetup = {
-	id: "*DefaultReveal*",
+	id: "DefaultReveal",
 	category: "Reveal",
 	description: "Reveal",
-	filterById: {[defaultRevealFilter.id]: defaultRevealFilter},
+	filterById: { [defaultRevealFilter.id]: defaultRevealFilter },
 	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
 
 const defaultLevelSetup: ViewSetup = {
-	id: "*DefaultLevel*",
+	id: "DefaultLevel",
 	category: "Level",
 	description: "Level",
-	filterById: {[defaultLevelFilter.id]: defaultLevelFilter},
+	filterById: { [defaultLevelFilter.id]: defaultLevelFilter },
 	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
 
 const defaultSlice5DotSetup: ViewSetup = {
-	id: "*DefaultSlice5Dot*",
+	id: "DefaultSlice5Dot",
 	category: "Slice5Dot",
 	description: "Slice5Dot",
-	filterById: {[defaultSlice5DotFilter.id]: defaultSlice5DotFilter},
+	filterById: { [defaultSlice5DotFilter.id]: defaultSlice5DotFilter },
 	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
 
 const defaultSlice6ESetup: ViewSetup = {
-	id: "*DefaultSlice6E*",
+	id: "DefaultSlice6E",
 	category: "Slice6E",
 	description: "Slice6E",
-	filterById: {[defaultSlice6EFilter.id]: defaultSlice6EFilter},
+	filterById: { [defaultSlice6EFilter.id]: defaultSlice6EFilter },
 	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
 
 const defaultSlice6DotSetup: ViewSetup = {
-	id: "*DefaultSlice6Dot*",
+	id: "DefaultSlice6Dot",
 	category: "Slice6Dot",
 	description: "Slice6Dot",
-	filterById: {[defaultSlice6DotFilter.id]: defaultSlice6DotFilter},
+	filterById: { [defaultSlice6DotFilter.id]: defaultSlice6DotFilter },
 	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
 
 const defaultCalibrateSetup: ViewSetup = {
-	id: "*DefaultCalibrate*",
+	id: "DefaultCalibrate",
 	category: "Calibrate",
 	description: "Calibrate",
-	filterById: {[defaultCalibrateFilter.id]: defaultCalibrateFilter},
+	filterById: { [defaultCalibrateFilter.id]: defaultCalibrateFilter },
 	sort: new Map(),
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
@@ -356,3 +355,22 @@ export const createFilter = (allycode: string) => {
 	createdFilter.id = `${allycode}-${crypto.randomUUID()}`;
 	return createdFilter;
 };
+
+export const builtinFilters = [
+	"QuickFilter",
+	"DefaultReveal",
+	"DefaultLevel",
+	"DefaultSlice5Dot",
+	"DefaultSlice6E",
+	"DefaultSlice6Dot",
+	"DefaultCalibrate",
+];
+
+export const builtinViewSetups = [
+	"DefaultReveal",
+	"DefaultLevel",
+	"DefaultSlice5Dot",
+	"DefaultSlice6E",
+	"DefaultSlice6Dot",
+	"DefaultCalibrate",
+];
