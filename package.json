@@ -59,7 +59,7 @@
     "ts-pattern": "^5.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.0",
     "@iconify-json/logos": "^1.2.0",
     "@iconify-json/skill-icons": "^1.2.0",
     "@types/big.js": "^6.2.2",
