@@ -1504,8 +1504,7 @@ function changeRelativeTargetStatsToAbsolute(
           )
         }
 
-        //characterMods = characterModsEntry.assignedMods.map(modId => allMods.find(mod => mod.id === modId)).filter((mod: Mod | undefined): mod is Mod => !!mod);
-        characterMods = characterModsEntry.assignedMods.map(modId => allMods.find(mod => mod.id === modId)!);
+        characterMods = characterModsEntry.assignedMods.map(modId => allMods.find(mod => mod.id === modId)).filter((mod: Mod | undefined): mod is Mod => !!mod);
       }
 
       // Because we so heavily rely on the cache, we need to make sure the mod values are cached here.
@@ -1729,7 +1728,23 @@ function* getPotentialModsToSatisfyTargetStats(
 
   // Determine the sets of values for each target stat that will satisfy it
   // {statName: {setCount: [{slot: slotValue}]}}
-  const modConfigurationsByStat: Partial<Record<TargetStatsNames, Record<number, Record<string, number>[]>>> = {};
+  const modConfigurationsByStat: Record<TargetStatsNames, Record<number, Record<string, number>[]>> = {
+    "Accuracy": {},
+    "Armor": {},
+    "Critical Avoidance": {},
+    "Critical Damage": {},
+    "Health": {},
+    "Health+Protection": {},
+    "Physical Critical Chance": {},
+    "Physical Damage": {},
+    "Potency": {},
+    "Protection": {},
+    "Resistance": {},
+    "Special Critical Chance": {},
+    "Special Damage": {},
+    "Speed": {},
+    "Tenacity": {},
+  };
 
   const totalModSlotsOpen =
 			6 -
@@ -1745,13 +1760,12 @@ function* getPotentialModsToSatisfyTargetStats(
   const usableMods =
     filterOutUnusableMods(allMods, target, totalModSlotsOpen)
 
-  const [modValues, valuesBySlot] = collectModValuesBySlot(usableMods, statNames);
+  const [modValues, valuesBySlotByStat] = collectModValuesBySlot(usableMods, statNames);
 
   for (const targetStat of targetStats) {
     const setValue = setValues[targetStat.stat];
 
     if (setValue) {
-      modConfigurationsByStat[targetStat.stat] = {};
       const minSets = setRestrictions[setValue.set.name] || 0;
       const maxSets = (setRestrictions[setValue.set.name] || 0) +
         Math.floor(totalModSlotsOpen / setValue.set.numberOfModsRequired);
@@ -1762,8 +1776,8 @@ function* getPotentialModsToSatisfyTargetStats(
         const progressMin = (numSetsUsed - minSets) / (maxSets - minSets + 1) * 100;
         const progressMax = (numSetsUsed - minSets + 1) / (maxSets - minSets + 1) * 100;
 
-        modConfigurationsByStat[targetStat.stat]![numSetsUsed] = findStatValuesThatMeetTarget(
-          valuesBySlot[targetStat.stat]!,
+        modConfigurationsByStat[targetStat.stat][numSetsUsed] = findStatValuesThatMeetTarget(
+          valuesBySlotByStat[targetStat.stat],
           targetStat.minimum - nonModValue,
           targetStat.maximum - nonModValue,
           progressMin,
@@ -1776,7 +1790,7 @@ function* getPotentialModsToSatisfyTargetStats(
     } else {
       modConfigurationsByStat[targetStat.stat] = {
         0: findStatValuesThatMeetTarget(
-          valuesBySlot[targetStat.stat]!,
+          valuesBySlotByStat[targetStat.stat],
           targetStat.minimum - characterValues[targetStat.stat],
           targetStat.maximum - characterValues[targetStat.stat],
           0,
@@ -1841,7 +1855,9 @@ function* getPotentialModsToSatisfyTargetStats(
       yield modGroup;
     } else {
       const updatedTargetStats = targetStats.slice(0);
-      const currentTarget = updatedTargetStats.pop()!;
+      const currentTarget = updatedTargetStats.pop();
+      if (currentTarget === undefined) return;
+
       const [mods, setRestrictions] = modGroup;
       const setValue = setValues[currentTarget.stat];
 
@@ -1859,7 +1875,7 @@ function* getPotentialModsToSatisfyTargetStats(
         const maxSets = (setRestrictions[setValue.set.name] || 0) +
           Math.floor(modSlotsOpen / setValue.set.numberOfModsRequired)
 
-        const numConfigurations = Object.values(modConfigurationsByStat[currentTarget.stat]!)
+        const numConfigurations = Object.values(modConfigurationsByStat[currentTarget.stat])
           .reduce((totalConfigurations, configuration) => totalConfigurations + configuration.length, 0);
         const onePercent = Math.floor(numConfigurations / 100);
         let currentIteration = 0;
@@ -1870,14 +1886,14 @@ function* getPotentialModsToSatisfyTargetStats(
             [setValue.set.name]: numSetsUsed === 0 ? -1 : numSetsUsed
           });
 
-          const potentialModValues = modConfigurationsByStat[currentTarget.stat]![numSetsUsed];
+          const potentialModValues = modConfigurationsByStat[currentTarget.stat][numSetsUsed];
 
           // Filter out mods into only those that have those values
           for (const potentialModValuesObject of potentialModValues) {
             const modsThatFitGivenValues: Mod[] = [];
 
             for (const mod of mods) {
-              if (modValues[currentTarget.stat]![mod.id] === potentialModValuesObject[mod.slot]) {
+              if (modValues[currentTarget.stat][mod.id] === potentialModValuesObject[mod.slot]) {
                 modsThatFitGivenValues.push(mod);
               }
             }
@@ -1892,7 +1908,7 @@ function* getPotentialModsToSatisfyTargetStats(
           }
         }
       } else {
-        const potentialModValues = modConfigurationsByStat[currentTarget.stat]![0];
+        const potentialModValues = modConfigurationsByStat[currentTarget.stat][0];
         const numConfigurations = potentialModValues.length;
         const onePercent = Math.floor(numConfigurations / 100);
         let currentIteration = 0;
@@ -1902,7 +1918,7 @@ function* getPotentialModsToSatisfyTargetStats(
           const modsThatFitGivenValues: Mod[] = [];
 
           for (const mod of mods) {
-            if (modValues[currentTarget.stat]![mod.id] === potentialModValuesObject[mod.slot]) {
+            if (modValues[currentTarget.stat][mod.id] === potentialModValuesObject[mod.slot]) {
               modsThatFitGivenValues.push(mod);
             }
           }
@@ -2013,11 +2029,43 @@ function collectModValuesBySlot(
   mods: Mod[],
   stats: TargetStatsNames[],
 ): [
-  Partial<Record<TargetStatsNames, Record<string, number>>>,
-  Partial<Record<TargetStatsNames, Record<string, Set<number>>>>
+  Record<TargetStatsNames, Record<string, number>>,
+  Record<TargetStatsNames, Record<string, Set<number>>>
 ] {
-  const modValues: Partial<Record<TargetStatsNames, Record<string, number>>> = {};
-  const valuesBySlot: Partial<Record<TargetStatsNames, Record<string, Set<number>>>> = {};
+  const modValues: Record<TargetStatsNames, Record<string, number>> = {
+    "Accuracy": {},
+    "Armor": {},
+    "Critical Avoidance": {},
+    "Critical Damage": {},
+    "Health": {},
+    "Health+Protection": {},
+    "Physical Critical Chance": {},
+    "Physical Damage": {},
+    "Potency": {},
+    "Protection": {},
+    "Resistance": {},
+    "Special Critical Chance": {},
+    "Special Damage": {},
+    "Speed": {},
+    "Tenacity": {},
+  };
+  const valuesBySlotByStat: Record<TargetStatsNames, Record<string, Set<number>>> = {
+    "Accuracy": {},
+    "Armor": {},
+    "Critical Avoidance": {},
+    "Critical Damage": {},
+    "Health": {},
+    "Health+Protection": {},
+    "Physical Critical Chance": {},
+    "Physical Damage": {},
+    "Potency": {},
+    "Protection": {},
+    "Resistance": {},
+    "Special Critical Chance": {},
+    "Special Damage": {},
+    "Speed": {},
+    "Tenacity": {},
+  };
 
   // Initialize the sub-objects in each of the above
   for (const stat of stats) {
@@ -2025,7 +2073,7 @@ function collectModValuesBySlot(
     for (const slot of gimoSlots) {
       slotValuesForTarget[slot] = new Set([0]);
     }
-    valuesBySlot[stat] = slotValuesForTarget;
+    valuesBySlotByStat[stat] = slotValuesForTarget;
     modValues[stat] = {};
   }
 
@@ -2051,8 +2099,9 @@ function collectModValuesBySlot(
         const statForTarget = combinedModSummary[stat];
         const statValue = statForTarget ? statForTarget.value : 0;
 
-        modValues[stat]![mod.id] = statValue;
-        valuesBySlot[stat]![mod.slot].add(statValue);
+        modValues[stat][mod.id] = statValue;
+
+        valuesBySlotByStat[stat][mod.slot].add(statValue);
       }
     }
   }
@@ -2060,11 +2109,11 @@ function collectModValuesBySlot(
   // sort the values in each slot descending
   for (const stat of stats) {
     for (const slot of gimoSlots) {
-      valuesBySlot[stat]![slot] = new Set(Array.from(valuesBySlot[stat]![slot]).sort((a, b) => b - a));
+      valuesBySlotByStat[stat][slot] = new Set(Array.from(valuesBySlotByStat[stat][slot]).sort((a, b) => b - a));
     }
   }
 
-  return [modValues, valuesBySlot];
+  return [modValues, valuesBySlotByStat];
 }
 
 /**
