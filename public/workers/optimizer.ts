@@ -1770,7 +1770,7 @@ function* getPotentialModsToSatisfyTargetStats(
       const maxSets = (setRestrictions[setValue.set.name] || 0) +
         Math.floor(totalModSlotsOpen / setValue.set.numberOfModsRequired);
 
-      for (let numSetsUsed = minSets; numSetsUsed <= maxSets; numSetsUsed++) {
+      for (let numSetsUsed = maxSets; numSetsUsed >= 0; numSetsUsed--) {
         const nonModValue = characterValues[targetStat.stat] + setValue.value * numSetsUsed;
 
         const progressMin = (numSetsUsed - minSets) / (maxSets - minSets + 1) * 100;
@@ -1786,6 +1786,7 @@ function* getPotentialModsToSatisfyTargetStats(
           characterCount,
           characterIndex,
         );
+        if ((targetStat.stat !== "Speed") && (modConfigurationsByStat[targetStat.stat][numSetsUsed].length === 0)) break;
       }
     } else {
       modConfigurationsByStat[targetStat.stat] = {
