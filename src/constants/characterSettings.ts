@@ -59,6 +59,7 @@ export const characterNames = [
 	"CALKESTIS",
 	"CANDEROUSORDO",
 	"CAPTAINDROGAN",
+	"CAPTAINENOCH",
 	"CAPTAINREX",
 	"CAPTAINTARPALS",
 	"CARADUNE",
@@ -95,6 +96,7 @@ export const characterNames = [
 	"DASHRENDAR",
 	"DATHCHA",
 	"DEATHTROOPER",
+	"DEATHTROOPERPERIDEA",
 	"DENGAR",
 	"DIRECTORKRENNIC",
 	"DOCTORAPHRA",
@@ -1056,6 +1058,28 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	CAPTAINENOCH: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 20,
+				spd: 100,
+				arm: 10,
+				res: 10,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					cross: "Protection %",
+					circle: "Protection %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Defense %": 1,
+				},
+			}),
+		],
+	),
 	CAPTAINREX: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -1739,6 +1763,24 @@ const characterSettings: CharacterSettingsIndexer = {
 			}),
 		],
 		["Troopers", "Chex Mix"],
+	),
+	DEATHTROOPERPERIDEA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 24,
+				cd: 100,
+				pot: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Damage %": 1,
+				},
+			}),
+		],
 	),
 	DENGAR: createCharacterSettings([
 		fromShortOptimizationPlan({
