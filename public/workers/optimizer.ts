@@ -96,9 +96,9 @@ type SetValues = Record<TargetStatsNames, {
   set: SetBonus,
   value: number,
 }>;
-type ModsBySlot = Record<ModTypes.GIMOSlots, Mod | null>;
-type PartialModsBySlot = Partial<ModsBySlot>;
-type NullablePartialModsBySlot = PartialModsBySlot | null;
+type ModBySlot = Record<ModTypes.GIMOSlots, Mod | null>;
+type PartialModBySlot = Partial<ModBySlot>;
+type NullablePartialModBySlot = PartialModBySlot | null;
 type SetRestrictionsEntries = [SetStats.GIMOStatNames, number][];
 
 /*********************************************************************************************************************
@@ -1628,71 +1628,66 @@ function findBestModSetForCharacter(
   let reducedTarget: OptimizationPlan = mutableTarget;
 
   // First, check to see if there is any target stat
-  switch (0 < targetStats.length) {
-    // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
-    case true: {
-      // If so, create an array of potential mod sets that could fill it
-      let potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, characterCount, characterIndex, mutableTarget);
+  if (0 < targetStats.length) {
+    // If so, create an array of potential mod sets that could fill it
+    let potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, characterCount, characterIndex, mutableTarget);
 
-      ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, mutableTarget));
+    ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, mutableTarget));
 
-      // If we couldn't find a mod set that would fulfill the target stat, but we're limiting to only full sets, then
-      // try again without that limitation
-      if (modSet.length === 0) {
-        reducedTarget = mutableTarget.useOnlyFullSets
-									? Object.assign({}, mutableTarget, {
-											useOnlyFullSets: false,
-										})
-									: mutableTarget;
+    // If we couldn't find a mod set that would fulfill the target stat, but we're limiting to only full sets, then
+    // try again without that limitation
+    if (modSet.length === 0) {
+      reducedTarget = mutableTarget.useOnlyFullSets
+                ? Object.assign({}, mutableTarget, {
+                    useOnlyFullSets: false,
+                  })
+                : mutableTarget;
 
-        if (mutableTarget.useOnlyFullSets) {
-          extraMessages.push('Could not fill the target stat with full sets, so the full sets restriction was dropped');
+      if (mutableTarget.useOnlyFullSets) {
+        extraMessages.push('Could not fill the target stat with full sets, so the full sets restriction was dropped');
 
-          potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, characterCount, characterIndex, mutableTarget);
-          ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, reducedTarget));
-        }
+        potentialModSets = getPotentialModsToSatisfyTargetStats(usableMods, character, characterCount, characterIndex, mutableTarget);
+        ({ modSet, messages } = findBestModSetFromPotentialMods(potentialModSets, character, reducedTarget));
       }
-      if (modSet.length === 0) {
-        ({ modSet, messages } =
-          findBestModSetByLooseningSetRestrictions(usableMods, character, reducedTarget, setRestrictions));
-
-        extraMessages.push('Could not fill the target stats as given, so the target stat restriction was dropped');
-      }
-
-
-      if (modSet.length) {
-        // Return the best set and set of messages
-        return {
-          modSet: modSet,
-          messages: messages.concat(extraMessages)
-        };
-      }
-
-      extraMessages = ['Could not fulfill the target stat as given, so the target stat restriction was dropped'];
     }
-//      mutableTarget.targetStat = null;
-    // Intentional fall-through
-    case false:
-      // If not, simply iterate over all levels of restrictions until a suitable set is found.
-      progressMessage(character.id, characterCount, characterIndex, 'Finding the best mod set', 0);
+    if (modSet.length === 0) {
       ({ modSet, messages } =
-        findBestModSetByLooseningSetRestrictions(usableMods, character, mutableTarget, setRestrictions));
+        findBestModSetByLooseningSetRestrictions(usableMods, character, reducedTarget, setRestrictions));
 
-      if (modSet.length === 0 && mutableTarget.useOnlyFullSets) {
-        reducedTarget = Object.assign({}, mutableTarget, {
-          useOnlyFullSets: false
-        });
-        extraMessages.push('Could not find a mod set using only full sets, so the full sets restriction was dropped');
+      extraMessages.push('Could not fill the target stats as given, so the target stat restriction was dropped');
+    }
 
-        ({ modSet, messages } =
-          findBestModSetByLooseningSetRestrictions(usableMods, character, reducedTarget, setRestrictions));
-      }
-
+    if (modSet.length) {
+      // Return the best set and set of messages
       return {
         modSet: modSet,
         messages: messages.concat(extraMessages)
       };
+    }
+
+    extraMessages = ['Could not fulfill the target stat as given, so the target stat restriction was dropped'];
   }
+
+  //    mutableTarget.targetStat = null;
+  // If not, simply iterate over all levels of restrictions until a suitable set is found.
+  progressMessage(character.id, characterCount, characterIndex, 'Finding the best mod set', 0);
+  ({ modSet, messages } =
+    findBestModSetByLooseningSetRestrictions(usableMods, character, mutableTarget, setRestrictions));
+
+  if (modSet.length === 0 && mutableTarget.useOnlyFullSets) {
+    reducedTarget = Object.assign({}, mutableTarget, {
+      useOnlyFullSets: false
+    });
+    extraMessages.push('Could not find a mod set using only full sets, so the full sets restriction was dropped');
+
+    ({ modSet, messages } =
+      findBestModSetByLooseningSetRestrictions(usableMods, character, reducedTarget, setRestrictions));
+  }
+
+  return {
+    modSet: modSet,
+    messages: messages.concat(extraMessages)
+  };
 }
 
 /**
@@ -2334,7 +2329,7 @@ function findBestModSetWithoutChangingRestrictions(
   setsToUse: SetRestrictions,
 ) {
   const potentialUsedSets = new Set<SetBonus>();
-  const baseSets: Partial<Record<SetStats.GIMOStatNames, ModsBySlot>> = {};
+  const baseSets: Partial<Record<SetStats.GIMOStatNames, ModBySlot>> = {};
   const messages: string[] = [];
   let squares: Mod[] = [];
   let arrows: Mod[] = [];
@@ -2342,7 +2337,7 @@ function findBestModSetWithoutChangingRestrictions(
   let triangles: Mod[] = [];
   let circles: Mod[] = [];
   let crosses: Mod[] = [];
-  let setlessMods: NullablePartialModsBySlot;
+  let setlessMods: NullablePartialModBySlot;
   let subMessages: string[];
 
   // Sort all the mods by score, then break them into sets.
@@ -2533,8 +2528,8 @@ function findBestModSetWithoutChangingRestrictions(
  */
 function* getCandidateSetsGenerator(
   potentialUsedSets: Set<SetBonus>,
-  baseSets: Partial<Record<SetStats.GIMOStatNames, ModsBySlot>>,
-  setlessMods: NullablePartialModsBySlot,
+  baseSets: Partial<Record<SetStats.GIMOStatNames, ModBySlot>>,
+  setlessMods: NullablePartialModBySlot,
   setsToUse: SetRestrictions,
 ): Generator<Mod[]> {
   /**
@@ -2567,12 +2562,15 @@ function* getCandidateSetsGenerator(
   } = { 4: [], 2: [] };
   let setName: SetStats.GIMOStatNames;
   for (setName in setsToUse) {
-    for (let i = 0; i < setsToUse[setName]!; i++) {
-      forcedSets[setBonuses[setName].numberOfModsRequired].push(setName);
+    const count = setsToUse[setName];
+    if (count !== undefined) {
+      for (let i = 0; i < count; i++) {
+        forcedSets[setBonuses[setName].numberOfModsRequired].push(setName);
+      }
     }
   }
   Object.freeze(forcedSets);
-  const setObject: PartialModsBySlot = {};
+  const setObject: PartialModBySlot = {};
 
   /**
    * Convert nextSetObject from Object(slot: mod) format to Array<Mod> format, storing the result in nextSet
@@ -2581,7 +2579,7 @@ function* getCandidateSetsGenerator(
     const modArray: Mod[] = [];
     for (const slot of gimoSlots) {
       if (setObject[slot]) {
-        modArray.push(setObject[slot]!);
+        modArray.push(setObject[slot]);
       }
     }
 
@@ -2599,9 +2597,9 @@ function* getCandidateSetsGenerator(
    * @param allowSecondSetNulls {boolean} Whether to allow null values in the second set
    */
   function* combineSetsGenerator(
-    firstSet: NullablePartialModsBySlot,
-    secondSet: NullablePartialModsBySlot,
-    thirdSet?: NullablePartialModsBySlot,
+    firstSet: NullablePartialModBySlot,
+    secondSet: NullablePartialModBySlot,
+    thirdSet?: NullablePartialModBySlot,
     allowFirstSetNulls = false,
     allowSecondSetNulls = false,
   ) {
@@ -2651,17 +2649,26 @@ function* getCandidateSetsGenerator(
     }
   }
 
-  let firstSet: Record<string, Mod | null>;
-  let secondSet: Record<string, Mod | null>;
-  let thirdSet: Record<string, Mod | null>;
+  let firstSet: ModBySlot;
+  let secondSet: ModBySlot;
+  let thirdSet: ModBySlot;
+  const emptySet: ModBySlot = {
+    square: null,
+    arrow: null,
+    diamond: null,
+    triangle: null,
+    circle: null,
+    cross: null,
+  };
 
   // If there's a forced 4-mod set
   if (forcedSets[4].length > 0) {
-    firstSet = baseSets[forcedSets[4][0]]!;
+
+    firstSet = baseSets[forcedSets[4][0]] ?? emptySet;
 
     if (forcedSets[2].length > 0) {
       // Every set is completely deterministic. Combine the first and second sets in every way possible
-      secondSet = baseSets[forcedSets[2][0]]!;
+      secondSet = baseSets[forcedSets[2][0]] ?? emptySet;
       yield* combineSetsGenerator(firstSet, secondSet);
     } else {
       // The sets aren't completely deterministic. We need to check...
@@ -2670,26 +2677,26 @@ function* getCandidateSetsGenerator(
 
       // The four-mod set plus any two-mod sets with value
       for (const secondSetType of twoModSets) {
-        secondSet = baseSets[secondSetType]!;
+        secondSet = baseSets[secondSetType] ?? emptySet;
         yield* combineSetsGenerator(firstSet, secondSet);
       }
     }
   } else if (1 === forcedSets[2].length) {
     // If there's exactly one forced 2-mod set, there should be 4 slots open
-    firstSet = baseSets[forcedSets[2][0]]!;
+    firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
 
     // The two-mod set plus setless mods
     yield* combineSetsGenerator(setlessMods, firstSet, null, true);
 
     // The two-mod set plus any two two-mod sets with value
     for (let i = 0; i < twoModSets.length; i++) {
-      secondSet = baseSets[twoModSets[i]]!;
+      secondSet = baseSets[twoModSets[i]] ?? emptySet;
 
       // The forced set plus the second set plus setless mods
       yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
 
       for (let j = i; j < twoModSets.length; j++) {
-        thirdSet = baseSets[twoModSets[j]]!;
+        thirdSet = baseSets[twoModSets[j]] ?? emptySet;
 
         // The forced set plus the two other sets
         yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
@@ -2697,22 +2704,22 @@ function* getCandidateSetsGenerator(
     }
   } else if (2 === forcedSets[2].length) {
     // With 2 forced 2-mod sets, there should be 2 slots open
-    firstSet = baseSets[forcedSets[2][0]]!;
-    secondSet = baseSets[forcedSets[2][1]]!;
+    firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
+    secondSet = baseSets[forcedSets[2][1]] ?? emptySet;
 
     // The two sets plus setless mods
     yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
 
     // The two sets plus any two-mod sets with value
     for (const thirdSetType of twoModSets) {
-      thirdSet = baseSets[thirdSetType]!;
+      thirdSet = baseSets[thirdSetType] ?? emptySet;
       yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
     }
   } else if (3 === forcedSets[2].length) {
     // Every set is deterministic
-    firstSet = baseSets[forcedSets[2][0]]!;
-    secondSet = baseSets[forcedSets[2][1]]!;
-    thirdSet = baseSets[forcedSets[2][2]]!;
+    firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
+    secondSet = baseSets[forcedSets[2][1]] ?? emptySet;
+    thirdSet = baseSets[forcedSets[2][2]] ?? emptySet;
     yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
   } else {
     // If no sets are forced, we can check every possible combination
@@ -2721,41 +2728,41 @@ function* getCandidateSetsGenerator(
       for (const slot of gimoSlots) {
         // TODO check if the null check an not null bang are ok
         if (setlessMods[slot] !== null) {
-          setObject[slot] = setlessMods[slot]!;
+          setObject[slot] = setlessMods[slot];
         }
       }
       yield setObjectToArray();
     }
 
     for (const firstSetType of fourModSets) {
-      const firstSet = baseSets[firstSetType]!; // TODO check if the not undefined bang is ok
+      const firstSet = baseSets[firstSetType] ?? null; // TODO check if the not undefined bang is ok
 
       // the whole set plus setless mods
       yield* combineSetsGenerator(firstSet, setlessMods, null, false, true);
 
       // the whole set plus any 2-mod set
       for (const secondSetType of twoModSets) {
-        const secondSet = baseSets[secondSetType]!; // TODO check if the not undefined bang is ok
+        const secondSet = baseSets[secondSetType] ?? null; // TODO check if the not undefined bang is ok
         yield* combineSetsGenerator(firstSet, secondSet);
       }
     }
 
     for (let i = 0; i < twoModSets.length; i++) {
-      const firstSet = baseSets[twoModSets[i]]!; // TODO check if the not undefined bang is ok
+      const firstSet = baseSets[twoModSets[i]] ?? null; // TODO check if the not undefined bang is ok
 
       // the whole set plus setless mods
       yield* combineSetsGenerator(setlessMods, firstSet, null, true);
 
       // the whole set plus a set of 4 from any 2-mod sets and the base set
       for (let j = i; j < twoModSets.length; j++) {
-        const secondSet = baseSets[twoModSets[j]]!; // TODO check if the not undefined bang is ok
+        const secondSet = baseSets[twoModSets[j]] ?? null; // TODO check if the not undefined bang is ok
 
         // the first set plus the second set plus setless mods
         yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
 
         // the first set plus the second set plus another set
         for (let k = j; k < twoModSets.length; k++) {
-          const thirdSet = baseSets[twoModSets[k]]!; // TODO check if the not undefined bang is ok
+          const thirdSet = baseSets[twoModSets[k]] ?? null; // TODO check if the not undefined bang is ok
 
           yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
         }
