@@ -4,6 +4,8 @@ type Categories =
 	| "Slice5Dot"
 	| "Slice6E"
 	| "Slice6Dot"
-	| "Calibrate";
+	| "Calibrate"
+	| "AllMods"
+;
 
 export type { Categories };

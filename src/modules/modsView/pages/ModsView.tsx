@@ -55,6 +55,9 @@ const ModsView = observer(
             <TabsTrigger value="Calibrate">
               Calibrate
             </TabsTrigger>
+            <TabsTrigger value="AllMods">
+              All Mods
+            </TabsTrigger>
           </TabsList>
           <Memo>
             {() =>
@@ -94,6 +97,13 @@ const ModsView = observer(
           <Memo>
             {() =>
               <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="Calibrate">
+                <CategoryView />
+              </TabsContent>
+            }
+          </Memo>
+          <Memo>
+            {() =>
+              <TabsContent className={"flex data-[state=active]:grow-1 min-h-0"} value="AllMods">
                 <CategoryView />
               </TabsContent>
             }

@@ -33,6 +33,9 @@ const defaultSlice6DotViewSetup = structuredClone(
 const defaultCalibrateViewSetup = structuredClone(
 	defaultViewSetupByCategory.Calibrate,
 );
+const defaultAllModsViewSetup = structuredClone(
+	defaultViewSetupByCategory.AllMods,
+);
 const defaultViewSetup = {
 	Reveal: {
 		[defaultRevealViewSetup.id]: defaultRevealViewSetup,
@@ -50,6 +53,9 @@ const defaultViewSetup = {
 	Calibrate: {
 		[defaultCalibrateViewSetup.id]: defaultCalibrateViewSetup,
 	} as ViewSetupById,
+	AllMods: {
+		[defaultAllModsViewSetup.id]: defaultAllModsViewSetup,
+	} as ViewSetupById,
 };
 
 const modsView$ = observable({
@@ -61,6 +67,7 @@ const modsView$ = observable({
 		Slice6E: "DefaultSlice6E",
 		Slice6Dot: "DefaultSlice6Dot",
 		Calibrate: "DefaultCalibrate",
+		AllMods: "DefaultAllMods",
 	},
 	idOfSelectedFilterByCategory: {
 		Reveal: "QuickFilter",
@@ -69,6 +76,7 @@ const modsView$ = observable({
 		Slice6E: "QuickFilter",
 		Slice6Dot: "QuickFilter",
 		Calibrate: "QuickFilter",
+		AllMods: "QuickFilter",
 	},
 	viewSetupByIdByCategory: structuredClone(defaultViewSetup),
 	quickFilter: clonedQuickFilter,

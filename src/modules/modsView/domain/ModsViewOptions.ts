@@ -332,13 +332,15 @@ const defaultCalibrateSetup: ViewSetup = {
 	isGroupingEnabled: true,
 	modScore: "PureSecondaries",
 };
-export const defaultFilterByCategory: Record<Categories, Filter> = {
-	Reveal: defaultRevealFilter,
-	Level: defaultLevelFilter,
-	Slice5Dot: defaultSlice5DotFilter,
-	Slice6E: defaultSlice6EFilter,
-	Slice6Dot: defaultSlice6DotFilter,
-	Calibrate: defaultCalibrateFilter,
+
+const defaultAllModsSetup: ViewSetup = {
+	id: "DefaultAllMods",
+	category: "AllMods",
+	description: "All Mods",
+	filterById: {},
+	sort: new Map(),
+	isGroupingEnabled: true,
+	modScore: "PureSecondaries",
 };
 
 export const defaultViewSetupByCategory: Record<Categories, ViewSetup> = {
@@ -348,6 +350,7 @@ export const defaultViewSetupByCategory: Record<Categories, ViewSetup> = {
 	Slice6E: defaultSlice6ESetup,
 	Slice6Dot: defaultSlice6DotSetup,
 	Calibrate: defaultCalibrateSetup,
+	AllMods: defaultAllModsSetup,
 };
 
 export const createFilter = (allycode: string) => {
@@ -373,4 +376,5 @@ export const builtinViewSetups = [
 	"DefaultSlice6E",
 	"DefaultSlice6Dot",
 	"DefaultCalibrate",
+	"DefaultAllMods",
 ];
