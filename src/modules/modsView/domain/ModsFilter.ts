@@ -47,12 +47,15 @@ class ModsFilter {
 
 	unselectedOptions: PartialFilter = structuredClone(this.selectedOptions);
 	filters: ModFilterPredicate[] = [];
+	quickFilter: ModFilterPredicate;
 
 	sortOptions: SortConfigById;
 	isGroupingEnabled: boolean;
 
-	constructor(modsViewOptions: ViewSetup) {
+	constructor(modsViewOptions: ViewSetup, quickFilter: Filter) {
 		Mod.setupAccessors();
+		[this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(quickFilter);
+		this.quickFilter = combineFilters([this.selectedOptionsFilter(this.selectedOptions), this.unselectedOptionsFilter(this.unselectedOptions)]);
 		for (const filter of Object.values(modsViewOptions.filterById)) {
 			[this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(filter);
 			this.filters.push(combineFilters([this.selectedOptionsFilter(this.selectedOptions), this.unselectedOptionsFilter(this.unselectedOptions)]));
@@ -231,7 +234,7 @@ class ModsFilter {
 	};
 
 	filterMods(mods: Mod[]) {
-		const result: Mod[] = [];
+		let result: Mod[] = this.filters.length === 0 ? mods : [];
 		let filteredMods: Mod[] = [];
 		for (const filter of this.filters) {
 			filteredMods = mods.filter(filter);
@@ -239,6 +242,7 @@ class ModsFilter {
 				if (!result.includes(mod)) result.push(mod);
 			}
 		}
+		result = result.filter(this.quickFilter);
 		return result;
 	}
 
