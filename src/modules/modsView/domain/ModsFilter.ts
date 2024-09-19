@@ -112,16 +112,9 @@ class ModsFilter {
 			| SecondariesScoreTierSettings;
 		// #endregion
 
-		type FilterKV = [FilterKeys, CombinedSettings];
-		type FilterKV2 = [FilterKeys, Filter[FilterKeys]];
+		type FilterKV = [FilterKeys, Filter[FilterKeys]];
 
-		const entries = Object.entries(filters) as FilterKV[];
-		const entries2 = Object.entries(filters) as FilterKV2[];
-		const entries3 = Object.entries(filters);
-
-		const test = Object.entries(entries[0]);
-		const test2 = Object.entries(entries2[0]);
-		const test3 = Object.entries(entries3[0]);
+		const entries2 = Object.entries(filters) as FilterKV[];
 
 		for (const [type, values] of entries2) {
 			const t = Object.entries(values);
@@ -238,9 +231,13 @@ class ModsFilter {
 	};
 
 	filterMods(mods: Mod[]) {
-		let result = mods;
+		const result: Mod[] = [];
+		let filteredMods: Mod[] = [];
 		for (const filter of this.filters) {
-			result = result.filter(filter);
+			filteredMods = mods.filter(filter);
+			for (const mod of filteredMods) {
+				if (!result.includes(mod)) result.push(mod);
+			}
 		}
 		return result;
 	}
