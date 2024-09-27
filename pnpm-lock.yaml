@@ -24,8 +24,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2(@fortawesome/fontawesome-svg-core@6.6.0)(react@18.3.1)
       '@legendapp/state':
-        specifier: 3.0.0-alpha.40
-        version: 3.0.0-alpha.40(react@18.3.1)
+        specifier: 3.0.0-beta.3
+        version: 3.0.0-beta.3(react@18.3.1)
       '@radix-ui/react-collapsible':
         specifier: ^1.1.0
         version: 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1246,8 +1246,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@legendapp/state@3.0.0-alpha.40':
-    resolution: {integrity: sha512-R4/B0VOoiGz/FHL8s55CYcCvDsk+SiSq+jQ0ljz7DLXLRrPdmrBc3M7PWocgxWc+tv4htfoa8rCuOcR9iiv1BQ==}
+  '@legendapp/state@3.0.0-beta.3':
+    resolution: {integrity: sha512-g0YIs0dmMTOtfHa4CVHcfH4kCrPFPQcz8LWBERl0k7IasmBhn6guN3434+Zod+YvltM3C79Yo+J9dxJ+cDS3GQ==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4807,7 +4807,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@legendapp/state@3.0.0-alpha.40(react@18.3.1)':
+  '@legendapp/state@3.0.0-beta.3(react@18.3.1)':
     dependencies:
       use-sync-external-store: 1.2.2(react@18.3.1)
     transitivePeerDependencies:
