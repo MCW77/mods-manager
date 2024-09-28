@@ -8,8 +8,7 @@ Move Speed(Protection %) Cross from Grand Admiral Thrawn.
 
 Jedi Master Kenobi - Default
 Move Speed(Offense %) Square from Commander Ahsoka Tano.
-Move Speed(Defense %) Diamond from Commander Ahsoka Tano.
-Move Health(Offense %) Cross from Commander Ahsoka Tano.
+Move Health(Health %) Cross from Darth Bane.
 
 Lord Vader - Default
 Move Health(Protection %) Triangle from Commander Ahsoka Tano.
@@ -18,23 +17,24 @@ Move Speed(Protection %) Circle from Grand Admiral Thrawn.
 Rey - Default
 Move Health(Offense %) Square from Leia Organa.
 Move Health(Health %) Arrow from Darth Bane.
-Move Health(Defense %) Diamond from Jedi Master Kenobi.
+Move Health(Defense %) Diamond from R2-D2.
 Move Health(Health %) Triangle from Sith Eternal Emperor.
 Move Health(Health %) Circle from Sith Eternal Emperor.
 Move Health(Health %) Cross from R2-D2.
 
 Jabba the Hutt - Default
-Move Speed(Offense %) Square from Mara Jade, The Emperor's Hand.
+Move Speed(Offense %) Square from Echo.
 Move Tenacity(Health %) Arrow from Darth Malgus.
 Move Speed(Defense %) Diamond from Seventh Sister.
 Move Speed(Health %) Triangle from Captain Drogan.
+Move Tenacity(Health %) Circle from Seventh Sister.
 
 Supreme Leader Kylo Ren - Default
 Move Offense(Offense %) Square from Darth Bane.
 Move Offense(Offense %) Arrow from Maul.
-Move Offense(Defense %) Diamond from Starkiller.
+Move Offense(Defense %) Diamond from Grand Inquisitor.
 Move Offense(Health %) Triangle from Darth Bane.
-Move Health(Offense %) Cross from Bo-Katan (Mand'alor).
+Move Health(Offense %) Cross from Ben Solo.
 
 Leia Organa - Default
 Move Defense(Offense %) Square from Darth Malgus.
@@ -54,37 +54,39 @@ General Skywalker - Default
 Move Defense(Offense %) Square from Darth Revan.
 Move Defense(Speed) Arrow from Grand Admiral Thrawn.
 Move Defense(Defense %) Diamond from Darth Malgus.
-Move Defense(Protection %) Circle from Darth Malak.
+Move Defense(Protection %) Circle from Echo.
+Move Defense(Protection %) Cross from The Armorer.
 
 Darth Revan - Default
 Move Speed(Offense %) Square from Jedi Master Kenobi.
-Move Health(Defense %) Diamond from Echo.
+Move Health(Defense %) Diamond from Commander Ahsoka Tano.
 Move Health(Critical Damage %) Triangle from Lord Vader.
 Move Speed(Health %) Circle from Commander Ahsoka Tano.
+Move Speed(Health %) Cross from Commander Ahsoka Tano.
 
 Jedi Knight Luke Skywalker - Default
 Move Offense(Offense %) Square from Maul.
 Move Health(Offense %) Arrow from Dark Trooper.
-Move Critdamage(Defense %) Diamond from Ben Solo.
+Move Critdamage(Defense %) Diamond from Darth Vader.
 Move Offense(Critical Damage %) Triangle from Ahsoka Tano (Fulcrum).
 Move Offense(Health %) Circle from Dark Trooper.
-Move Offense(Offense %) Cross from Grand Inquisitor.
+Move Offense(Offense %) Cross from Bo-Katan (Mand'alor).
 
 Darth Malgus - Default
-Move Health(Offense %) Square from R2-D2.
+Move Health(Offense %) Square from Captain Drogan.
 Move Health(Health %) Arrow from Rey.
 Move Health(Defense %) Diamond from Rey.
 Move Health(Health %) Triangle from General Kenobi.
-Move Health(Health %) Circle from Barriss Offee.
+Move Health(Health %) Circle from Cal Kestis.
 Move Health(Health %) Cross from Jedi Knight Revan.
 
 Jedi Knight Revan - Default
 Move Speed(Offense %) Square from Scout Trooper.
-Move Speed(Speed) Arrow from Fifth Brother.
+Move Speed(Speed) Arrow from Kuiil.
 Move Speed(Defense %) Diamond from Jedi Master Luke Skywalker.
 Move Offense(Critical Damage %) Triangle from Han Solo.
-Move Speed(Health %) Circle from Echo.
-Move Critdamage(Offense %) Cross from Supreme Leader Kylo Ren.
+Move Speed(Health %) Circle from Scout Trooper.
+Move Health(Offense %) Cross from Jedi Master Kenobi.
 
 Third Sister - Default
 Move Offense(Offense %) Square from Grand Inquisitor.
@@ -92,29 +94,27 @@ Move Offense(Speed) Arrow from General Skywalker.
 Move Offense(Defense %) Diamond from Maul.
 Move Health(Health %) Triangle from Rey.
 Move Offense(Health %) Circle from Bo-Katan (Mand'alor).
-Move Health(Health %) Cross from Darth Bane.
+Move Health(Health %) Cross from Rey.
 
 Bo-Katan (Mand'alor) - Default
-Move Defense(Offense %) Square from Kylo Ren (Unmasked).
 Move Offense(Offense %) Arrow from Range Trooper.
-Move Defense(Defense %) Diamond from General Kenobi.
 Move Offense(Offense %) Triangle from Dark Trooper.
 Move Offense(Health %) Circle from Darth Bane.
-Move Offense(Offense %) Cross from Jedi Knight Luke Skywalker.
+Move Offense(Offense %) Cross from Grand Inquisitor.
 
 Taron Malicos - Default
 Move Offense(Offense %) Square from General Skywalker.
 Move Offense(Speed) Arrow from Bo-Katan (Mand'alor).
 Move Speed(Defense %) Diamond from Captain Drogan.
-Move Offense(Health %) Triangle from Bastila Shan (Fallen).
-Move Offense(Health %) Circle from Grand Inquisitor.
+Move Offense(Health %) Triangle from CT-7567 "Rex".
+Move Offense(Health %) Circle from B1 Battle Droid.
 Move Critchance(Health %) Cross from Bastila Shan (Fallen).
 
 Maul - Default
 Move Health(Offense %) Square from Third Sister.
 Move Offense(Speed) Arrow from Admiral Raddus.
 Move Health(Defense %) Diamond from Dark Trooper.
-Move Offense(Health %) Triangle from Grand Master Yoda.
+Move Offense(Health %) Triangle from Taron Malicos.
 Move Offense(Protection %) Circle from General Skywalker.
 
 Darth Bane - Default
@@ -123,411 +123,410 @@ Move Health(Speed) Arrow from Jedi Knight Revan.
 Move Health(Defense %) Diamond from Jedi Knight Revan.
 Move Health(Health %) Triangle from R2-D2.
 Move Health(Health %) Circle from Rey.
-Move Health(Health %) Cross from Rey.
+Move Health(Health %) Cross from General Grievous.
 
 Commander Ahsoka Tano - Default
-Move Health(Offense %) Square from Padmé Amidala.
+Move Health(Offense %) Square from Bastila Shan (Fallen).
 Move Speed(Speed) Arrow from Count Dooku.
 Move Speed(Defense %) Diamond from Darth Revan.
-Move Speed(Critical Damage %) Triangle from Jedi Knight Luke Skywalker.
-Move Speed(Health %) Circle from Seventh Sister.
+Move Speed(Critical Damage %) Triangle from Dash Rendar.
+Move Speed(Health %) Circle from Luthen Rael.
 Move Health(Offense %) Cross from Boushh (Leia Organa).
 
 Darth Malak - Default
-Move Critchance(Offense %) Square from The Mandalorian (Beskar Armor).
-Move Health(Protection %) Arrow from The Mandalorian (Beskar Armor).
-Move Offense(Defense %) Diamond from General Skywalker.
+Move Defense(Protection %) Arrow from General Veers.
+Move Health(Defense %) Diamond from Kelleran Beq.
 Move Health(Protection %) Triangle from Leia Organa.
 Move Defense(Protection %) Circle from Jedi Master Luke Skywalker.
-Move Defense(Protection %) Cross from Jedi Master Luke Skywalker.
+Move Defense(Protection %) Cross from General Skywalker.
 
 Starkiller - Default
-Move Health(Offense %) Square from Darth Traya.
+Move Health(Offense %) Square from R2-D2.
 Move Critdamage(Offense %) Arrow from Jedi Knight Luke Skywalker.
-Move Health(Defense %) Diamond from Bo-Katan (Mand'alor).
 Move Critdamage(Critical Damage %) Triangle from Supreme Leader Kylo Ren.
-Move Critdamage(Health %) Cross from Ben Solo.
 
 Commander Luke Skywalker - Default
 Move Critchance(Offense %) Square from Doctor Aphra.
-Move Critchance(Speed) Arrow from 0-0-0.
-Move Potency(Defense %) Diamond from Jar Jar Binks.
-Move Critchance(Critical Damage %) Triangle from Visas Marr.
-Move Critchance(Protection %) Circle from The Mandalorian (Beskar Armor).
+Move Critchance(Speed) Arrow from Resistance Hero Finn.
+Move Potency(Defense %) Diamond from Admiral Piett.
+Move Critchance(Critical Damage %) Triangle from Jedi Knight Luke Skywalker.
+Move Critchance(Protection %) Circle from Jedi Knight Luke Skywalker.
 Move Potency(Potency %) Cross from Mara Jade, The Emperor's Hand.
 
 Darth Vader - Default
 Move Critdamage(Offense %) Square from Boushh (Leia Organa).
 Move Critdamage(Offense %) Arrow from Ben Solo.
 Move Critdamage(Defense %) Diamond from Supreme Leader Kylo Ren.
-Move Potency(Health %) Circle from B1 Battle Droid.
-Move Potency(Potency %) Cross from Nute Gunray.
+Move Critdamage(Protection %) Circle from Maul.
+Move Potency(Potency %) Cross from Admiral Piett.
 
 C-3PO - Default
-Move Potency(Offense %) Square from Luthen Rael.
+Move Potency(Offense %) Square from Mara Jade, The Emperor's Hand.
 Move Speed(Speed) Arrow from Mara Jade, The Emperor's Hand.
 Move Speed(Defense %) Diamond from Mara Jade, The Emperor's Hand.
 Move Speed(Offense %) Triangle from Moff Gideon.
-Move Speed(Protection %) Circle from Mara Jade, The Emperor's Hand.
-Move Potency(Potency %) Cross from Jar Jar Binks.
+Move Speed(Health %) Circle from Jabba the Hutt.
+Move Potency(Potency %) Cross from Scout Trooper.
 
 Admiral Piett - Default
-Move Health(Offense %) Square from Echo.
+Move Health(Offense %) Square from Greef Karga.
 Move Speed(Speed) Arrow from Eighth Brother.
 Move Speed(Defense %) Diamond from Moff Gideon.
 Move Tenacity(Critical Damage %) Triangle from Seventh Sister.
 Move Speed(Health %) Circle from Darth Revan.
-Move Speed(Potency %) Cross from Scout Trooper.
+Move Speed(Potency %) Cross from Nute Gunray.
 
 Emperor Palpatine - Default
 Move Offense(Offense %) Square from Admiral Raddus.
-Move Offense(Speed) Arrow from Jedi Knight Anakin.
-Move Health(Defense %) Diamond from Boushh (Leia Organa).
+Move Offense(Speed) Arrow from B1 Battle Droid.
+Move Offense(Defense %) Diamond from General Skywalker.
 Move Offense(Offense %) Triangle from Bo-Katan (Mand'alor).
-Move Health(Protection %) Circle from Maul.
-Move Offense(Potency %) Cross from Doctor Aphra.
+Move Health(Protection %) Circle from The Mandalorian (Beskar Armor).
+Move Critdamage(Offense %) Cross from Supreme Leader Kylo Ren.
 
 Padmé Amidala - Default
-Move Health(Offense %) Square from Captain Drogan.
 Move Speed(Health %) Arrow from Captain Drogan.
 Move Health(Defense %) Diamond from Darth Traya.
 Move Critchance(Health %) Triangle from Darth Malgus.
 Move Health(Health %) Cross from Sith Eternal Emperor.
 
 Moff Gideon - Default
-Move Critdamage(Offense %) Square from Visas Marr.
-Move Speed(Speed) Arrow from IG-12 & Grogu.
+Move Critchance(Offense %) Square from Queen Amidala.
+Move Speed(Speed) Arrow from Master Qui-Gon.
 Move Speed(Defense %) Diamond from Jabba the Hutt.
-Move Speed(Defense %) Triangle from Echo.
+Move Speed(Offense %) Triangle from Jar Jar Binks.
 Move Health(Protection %) Circle from Third Sister.
-Move Speed(Potency %) Cross from Admiral Piett.
+Move Speed(Potency %) Cross from Echo.
 
 Chewbacca - Default
-Move Health(Offense %) Square from Bastila Shan (Fallen).
+Move Health(Offense %) Square from Starkiller.
 Move Offense(Speed) Arrow from ARC Trooper.
-Move Speed(Defense %) Diamond from Count Dooku.
+Move Health(Defense %) Diamond from Boushh (Leia Organa).
 Move Offense(Critical Damage %) Triangle from Grand Inquisitor.
 Move Offense(Protection %) Circle from Fennec Shand.
 Move Offense(Offense %) Cross from Dark Trooper.
 
 Mara Jade, The Emperor's Hand - Default
 Move Speed(Offense %) Square from Jedi Master Luke Skywalker.
-Move Potency(Speed) Arrow from Admiral Piett.
-Move Speed(Defense %) Diamond from Admiral Piett.
+Move Potency(Speed) Arrow from Nute Gunray.
+Move Speed(Defense %) Diamond from Scout Trooper.
 Move Potency(Protection %) Triangle from Maul.
-Move Speed(Protection %) Circle from Bossk.
-Move Speed(Potency %) Cross from Echo.
+Move Speed(Potency %) Cross from Jar Jar Binks.
 
 Bastila Shan - Default
-Move Health(Offense %) Square from B1 Battle Droid.
-Move Potency(Speed) Arrow from Nute Gunray.
+Move Health(Offense %) Square from Taron Malicos.
+Move Potency(Speed) Arrow from Jar Jar Binks.
 Move Potency(Defense %) Diamond from Doctor Aphra.
 Move Potency(Health %) Triangle from Rey (Jedi Training).
-Move Health(Health %) Circle from Bastila Shan (Fallen).
-Move Potency(Health %) Cross from Rey (Jedi Training).
+Move Potency(Health %) Circle from First Order Officer.
+Move Health(Potency %) Cross from First Order Officer.
 
 General Kenobi - Default
-Move Defense(Offense %) Square from Darth Malak.
-Move Defense(Protection %) Arrow from General Veers.
+Move Defense(Offense %) Square from CT-7567 "Rex".
+Move Health(Protection %) Arrow from Gungan Phalanx.
 Move Defense(Defense %) Diamond from Kylo Ren (Unmasked).
 Move Health(Protection %) Triangle from Hermit Yoda.
 Move Health(Protection %) Circle from Kelleran Beq.
-Move Defense(Protection %) Cross from Darth Malak.
+Move Health(Protection %) Cross from Kuiil.
 
 Han Solo - Default
 Move Critdamage(Offense %) Square from Supreme Leader Kylo Ren.
 Move Critdamage(Speed) Arrow from Starkiller.
 Move Critdamage(Defense %) Diamond from Jedi Knight Luke Skywalker.
-Move Potency(Critical Damage %) Triangle from Starkiller.
-Move Critchance(Health %) Circle from Nute Gunray.
-Move Critdamage(Offense %) Cross from Starkiller.
+Move Potency(Critical Damage %) Triangle from Count Dooku.
+Move Critchance(Health %) Circle from Visas Marr.
+Move Critdamage(Offense %) Cross from Jedi Knight Luke Skywalker.
 
 Bastila Shan (Fallen) - Default
 Move Health(Offense %) Square from Jedi Knight Revan.
 Move Speed(Speed) Arrow from Commander Ahsoka Tano.
 Move Health(Defense %) Diamond from Third Sister.
-Move Speed(Health %) Triangle from Scout Trooper.
-Move Speed(Health %) Circle from Luthen Rael.
-Move Speed(Health %) Cross from Jedi Master Kenobi.
+Move Speed(Health %) Triangle from Echo.
+Move Speed(Health %) Circle from Master Qui-Gon.
+Move Speed(Health %) Cross from Darth Revan.
 
 Ben Solo - Default
-Move Health(Offense %) Square from Rebel Officer Leia Organa.
+Move Health(Offense %) Square from Grand Master Yoda.
 Move Offense(Speed) Arrow from Ahsoka Tano (Snips).
 Move Offense(Defense %) Diamond from Darth Bane.
-Move Offense(Offense %) Triangle from Taron Malicos.
-Move Offense(Health %) Circle from Taron Malicos.
-Move Health(Offense %) Cross from Dash Rendar.
+Move Offense(Offense %) Triangle from BT-1.
+Move Offense(Health %) Circle from Admiral Raddus.
+Move Health(Offense %) Cross from Taron Malicos.
 
 Captain Drogan - Default
-Move Offense(Offense %) Square from Taron Malicos.
-Move Offense(Offense %) Arrow from BT-1.
-Move Health(Defense %) Diamond from Jedi Knight Cal Kestis.
-Move Health(Offense %) Triangle from Pao.
-Move Offense(Health %) Circle from ARC Trooper.
-Move Offense(Tenacity %) Cross from Admiral Raddus.
+Move Speed(Offense %) Square from Nute Gunray.
+Move Potency(Offense %) Arrow from Droideka.
+Move Speed(Defense %) Diamond from Paz Vizsla.
+Move Speed(Offense %) Triangle from Luthen Rael.
+Move Critchance(Health %) Circle from BT-1.
+Move Speed(Offense %) Cross from Luthen Rael.
 
 Boushh (Leia Organa) - Default
-Move Speed(Offense %) Square from Admiral Piett.
-Move Health(Speed) Arrow from Jedi Knight Cal Kestis.
-Move Speed(Defense %) Diamond from IG-11.
-Move Speed(Offense %) Triangle from Jar Jar Binks.
-Move Health(Health %) Circle from Captain Drogan.
-Move Speed(Offense %) Cross from Luthen Rael.
+Move Critdamage(Offense %) Square from Visas Marr.
+Move Speed(Speed) Arrow from Jedi Master Luke Skywalker.
+Move Speed(Defense %) Diamond from Fifth Brother.
+Move Speed(Offense %) Triangle from Admiral Piett.
+Move Critchance(Health %) Circle from Eighth Brother.
+Move Speed(Health %) Cross from Captain Drogan.
 
 Grand Inquisitor - Default
 Move Critdamage(Offense %) Square from Jedi Knight Luke Skywalker.
 Move Critdamage(Speed) Arrow from Visas Marr.
+Move Health(Defense %) Diamond from Jedi Knight Cal Kestis.
 Move Critdamage(Offense %) Triangle from Wat Tambor.
-Move Critdamage(Protection %) Circle from Boushh (Leia Organa).
-Move Potency(Offense %) Cross from ARC Trooper.
+Move Health(Protection %) Circle from Gungan Boomadier.
+Move Critdamage(Offense %) Cross from STAP.
 
 General Grievous - Default
+Move Speed(Offense %) Square from General Kenobi.
 Move Health(Defense %) Diamond from Cal Kestis.
 Move Health(Health %) Triangle from Darth Traya.
+Move Health(Health %) Cross from Darth Traya.
 
 Shaak Ti - Default
 Move Health(Speed) Arrow from Padmé Amidala.
 Move Health(Defense %) Diamond from Padmé Amidala.
-Move Health(Health %) Triangle from Barriss Offee.
-Move Health(Health %) Circle from Darth Traya.
-Move Health(Health %) Cross from Darth Traya.
+Move Offense(Health %) Triangle from Bastila Shan (Fallen).
+Move Health(Health %) Circle from Captain Drogan.
+Move Defense(Health %) Cross from Dark Trooper Moff Gideon.
 
 CT-7567 "Rex" - Default
-Move Critchance(Offense %) Square from Nute Gunray.
-Move Speed(Speed) Arrow from Jabba the Hutt.
-Move Speed(Defense %) Diamond from Luthen Rael.
-Move Offense(Health %) Triangle from Greef Karga.
+Move Tenacity(Offense %) Square from Jabba the Hutt.
+Move Speed(Speed) Arrow from Fifth Brother.
+Move Speed(Defense %) Diamond from Nute Gunray.
+Move Tenacity(Health %) Triangle from Amilyn Holdo.
 Move Speed(Health %) Circle from Count Dooku.
 Move Speed(Tenacity %) Cross from Seventh Sister.
 
 Jedi Knight Anakin - Default
-Move Critchance(Offense %) Square from Ki-Adi-Mundi.
-Move Critchance(Speed) Arrow from Embo.
+Move Critchance(Offense %) Square from Rebel Officer Leia Organa.
+Move Critchance(Speed) Arrow from Fennec Shand.
 Move Critchance(Defense %) Diamond from Sabine Wren.
-Move Critchance(Critical Chance %) Triangle from Hera Syndulla.
-Move Critchance(Health %) Circle from Darth Talon.
-Move Critchance(Health %) Cross from Visas Marr.
+Move Critchance(Critical Chance %) Triangle from Boss Nass.
+Move Critchance(Health %) Circle from Resistance Hero Finn.
+Move Critchance(Health %) Cross from CT-7567 "Rex".
 
 Echo - Default
-Move Speed(Offense %) Square from Moff Gideon.
-Move Potency(Speed) Arrow from Scout Trooper.
-Move Potency(Defense %) Diamond from Scout Trooper.
-Move Speed(Critical Chance %) Triangle from Jabba the Hutt.
+Move Potency(Offense %) Square from Luthen Rael.
+Move Speed(Speed) Arrow from 0-0-0.
+Move Potency(Defense %) Diamond from Luthen Rael.
+Move Speed(Defense %) Triangle from Mara Jade, The Emperor's Hand.
 Move Speed(Protection %) Circle from Moff Gideon.
 Move Speed(Potency %) Cross from Queen Amidala.
 
 Jedi Knight Cal Kestis - Default
-Move Health(Offense %) Square from Pao.
-Move Potency(Offense %) Arrow from Droideka.
+Move Offense(Offense %) Square from Padawan Obi-Wan.
+Move Offense(Offense %) Arrow from Taron Malicos.
 Move Health(Defense %) Diamond from Grand Master Yoda.
-Move Critchance(Offense %) Triangle from Saw Gerrera.
-Move Health(Health %) Circle from R2-D2.
-Move Health(Offense %) Cross from Taron Malicos.
+Move Offense(Health %) Triangle from Grand Master Yoda.
+Move Health(Health %) Circle from Ben Solo.
+Move Offense(Offense %) Cross from Jedi Knight Anakin.
 
 Dark Trooper - Default
-Move Offense(Offense %) Square from Bo-Katan (Mand'alor).
-Move Potency(Offense %) Arrow from B1 Battle Droid.
-Move Offense(Defense %) Diamond from BT-1.
+Move Offense(Offense %) Square from Range Trooper.
+Move Potency(Offense %) Arrow from Canderous Ordo.
+Move Offense(Defense %) Diamond from Taron Malicos.
 Move Offense(Offense %) Triangle from Droideka.
-Move Critchance(Health %) Circle from Ahsoka Tano (Snips).
-Move Offense(Offense %) Cross from Ahsoka Tano (Snips).
+Move Offense(Health %) Circle from Taron Malicos.
+Move Potency(Offense %) Cross from 0-0-0.
 
 R2-D2 - Default
-Move Speed(Offense %) Square from Bossk.
-Move Speed(Speed) Arrow from Kuiil.
-Move Critchance(Defense %) Diamond from Nute Gunray.
-Move Critchance(Critical Chance %) Triangle from Nute Gunray.
-Move Speed(Health %) Circle from Scout Trooper.
-Move Speed(Health %) Cross from Captain Drogan.
+Move Potency(Offense %) Square from B1 Battle Droid.
+Move Potency(Speed) Arrow from Scout Trooper.
+Move Critchance(Defense %) Diamond from IG-11.
+Move Critchance(Critical Chance %) Triangle from Hoth Rebel Scout.
+Move Health(Health %) Circle from Bastila Shan (Fallen).
+Move Health(Tenacity %) Cross from Fifth Brother.
 
 Scout Trooper - Default
-Move Tenacity(Offense %) Square from Jabba the Hutt.
-Move Speed(Speed) Arrow from Jedi Master Luke Skywalker.
-Move Speed(Defense %) Diamond from Fifth Brother.
-Move Speed(Offense %) Triangle from IG-11.
-Move Tenacity(Protection %) Circle from Greef Karga.
+Move Health(Offense %) Square from Kuiil.
+Move Speed(Speed) Arrow from Death Trooper.
+Move Speed(Defense %) Diamond from Jar Jar Binks.
+Move Speed(Offense %) Triangle from Master Qui-Gon.
+Move Health(Protection %) Circle from Leia Organa.
 Move Speed(Potency %) Cross from Count Dooku.
 
 Rey (Jedi Training) - Default
-Move Critdamage(Offense %) Square from Starkiller.
+Move Critdamage(Offense %) Square from Han Solo.
 Move Critdamage(Speed) Arrow from Boushh (Leia Organa).
-Move Critchance(Defense %) Diamond from The Mandalorian (Beskar Armor).
-Move Critchance(Critical Damage %) Triangle from Ben Solo.
-Move Critdamage(Protection %) Circle from Jedi Knight Luke Skywalker.
+Move Critchance(Defense %) Diamond from Hermit Yoda.
+Move Critchance(Critical Damage %) Triangle from Visas Marr.
+Move Critdamage(Protection %) Circle from Boushh (Leia Organa).
 Move Critdamage(Potency %) Cross from CT-21-0408 "Echo".
 
 Ahsoka Tano (Snips) - Default
-Move Critchance(Offense %) Square from Jedi Knight Cal Kestis.
-Move Offense(Speed) Arrow from Bo-Katan Kryze.
-Move Offense(Defense %) Diamond from Taron Malicos.
-Move Offense(Critical Damage %) Triangle from STAP.
-Move Offense(Health %) Circle from IG-12 & Grogu.
-Move Critchance(Health %) Cross from CT-7567 "Rex".
+Move Health(Offense %) Square from Darth Traya.
+Move Health(Speed) Arrow from Grand Master Yoda.
+Move Health(Defense %) Diamond from Rey (Jedi Training).
+Move Critchance(Offense %) Triangle from Saw Gerrera.
+Move Health(Health %) Circle from Rey (Jedi Training).
+Move Potency(Health %) Cross from Rey (Jedi Training).
 
 General Hux - Default
-Move Tenacity(Offense %) Square from Seventh Sister.
+Move Tenacity(Offense %) Square from Chewbacca.
 Move Health(Speed) Arrow from CT-7567 "Rex".
 Move Health(Defense %) Diamond from Dark Trooper Moff Gideon.
-Move Tenacity(Health %) Triangle from Luthen Rael.
+Move Tenacity(Health %) Triangle from Queen Amidala.
 Move Health(Health %) Circle from Grand Master Yoda.
+Move Health(Tenacity %) Cross from Master Qui-Gon.
 
 Resistance Hero Poe - Default
 Move Critdamage(Offense %) Square from Darth Vader.
 Move Critdamage(Speed) Arrow from STAP.
-Move Potency(Defense %) Diamond from Darth Vader.
-Move Critdamage(Critical Damage %) Triangle from Boushh (Leia Organa).
-Move Critdamage(Protection %) Circle from Darth Vader.
-Move Potency(Defense %) Cross from IG-11.
+Move Critdamage(Defense %) Diamond from Visas Marr.
+Move Critdamage(Critical Damage %) Triangle from Starkiller.
+Move Defense(Health %) Circle from CT-7567 "Rex".
+Move Offense(Potency %) Cross from Doctor Aphra.
 
 General Veers - Default
 Move Offense(Offense %) Square from Dark Trooper.
-Move Critchance(Offense %) Arrow from Kyle Katarn.
+Move Critchance(Offense %) Arrow from IG-88.
 Move Critchance(Defense %) Diamond from ARC Trooper.
-Move Offense(Critical Damage %) Triangle from Ahsoka Tano (Snips).
-Move Offense(Protection %) Circle from Droideka.
+Move Offense(Critical Damage %) Triangle from Ki-Adi-Mundi.
+Move Offense(Health %) Circle from IG-12 & Grogu.
 Move Offense(Offense %) Cross from BT-1.
 
 Resistance Hero Finn - Default
-Move Speed(Offense %) Square from Kuiil.
-Move Speed(Speed) Arrow from Luthen Rael.
+Move Speed(Offense %) Square from Moff Gideon.
+Move Defense(Speed) Arrow from Sana Starros.
 Move Speed(Defense %) Diamond from Queen Amidala.
-Move Defense(Critical Damage %) Triangle from Darth Revan.
-Move Health(Protection %) Circle from Leia Organa.
+Move Offense(Critical Damage %) Triangle from STAP.
+Move Speed(Protection %) Circle from Bossk.
 Move Speed(Offense %) Cross from Eighth Brother.
 
 Wrecker - Default
-Move Health(Offense %) Square from Dark Trooper Moff Gideon.
+Move Critchance(Offense %) Square from The Mandalorian (Beskar Armor).
 Move Health(Speed) Arrow from Third Sister.
-Move Health(Defense %) Diamond from Shaak Ti.
+Move Critchance(Defense %) Diamond from The Mandalorian (Beskar Armor).
 Move Health(Protection %) Triangle from Third Sister.
 Move Health(Protection %) Circle from Dark Trooper Moff Gideon.
 Move Health(Protection %) Cross from Leia Organa.
 
-Hermit Yoda - Default
-Move Health(Offense %) Square from Queen Amidala.
+Grand Admiral Thrawn - Default
+Move Health(Offense %) Square from Dark Trooper Moff Gideon.
 Move Speed(Speed) Arrow from Queen Amidala.
 Move Speed(Defense %) Diamond from Bossk.
-Move Speed(Offense %) Triangle from Master Qui-Gon.
-Move Defense(Health %) Circle from Amilyn Holdo.
-Move Speed(Defense %) Cross from Bossk.
-
-Grand Admiral Thrawn - Default
-Move Tenacity(Offense %) Square from Commander Luke Skywalker.
-Move Health(Speed) Arrow from Shaak Ti.
-Move Health(Defense %) Diamond from Bastila Shan (Fallen).
-Move Tenacity(Protection %) Triangle from The Mandalorian (Beskar Armor).
-Move Health(Protection %) Circle from Shaak Ti.
+Move Speed(Health %) Triangle from Scout Trooper.
+Move Speed(Protection %) Circle from Queen Amidala.
 Move Health(Protection %) Cross from Third Sister.
 
+Hermit Yoda - Default
+Move Defense(Offense %) Square from IG-11.
+Move Speed(Speed) Arrow from Luthen Rael.
+Move Health(Defense %) Diamond from Bastila Shan (Fallen).
+Move Speed(Critical Chance %) Triangle from Jabba the Hutt.
+Move Speed(Protection %) Circle from Admiral Piett.
+Move Speed(Defense %) Cross from Bossk.
+
 Kylo Ren (Unmasked) - Default
-Move Defense(Offense %) Square from Greef Karga.
+Move Critdamage(Offense %) Square from Kelleran Beq.
 Move Potency(Health %) Arrow from General Kenobi.
 Move Defense(Defense %) Diamond from Greef Karga.
 Move Health(Protection %) Triangle from Cere Junda.
-Move Speed(Health %) Circle from Cal Kestis.
 Move Health(Health %) Cross from Cal Kestis.
 
 Dash Rendar - Default
-Move Critdamage(Offense %) Square from Han Solo.
-Move Critdamage(Speed) Arrow from Jango Fett.
-Move Potency(Critical Damage %) Triangle from Count Dooku.
-Move Critchance(Health %) Circle from Ben Solo.
-Move Critdamage(Offense %) Cross from STAP.
+Move Health(Offense %) Square from Ahsoka Tano (Snips).
+Move Offense(Speed) Arrow from Bistan.
+Move Health(Defense %) Diamond from Admiral Raddus.
+Move Offense(Critical Damage %) Triangle from ARC Trooper.
+Move Offense(Health %) Circle from ARC Trooper.
+Move Offense(Tenacity %) Cross from Admiral Raddus.
 
 Bossk - Default
-Move Health(Offense %) Square from STAP.
+Move Tenacity(Offense %) Square from Wat Tambor.
 Move Tenacity(Speed) Arrow from C-3PO.
-Move Health(Defense %) Diamond from CT-7567 "Rex".
-Move Tenacity(Health %) Triangle from CT-7567 "Rex".
-Move Health(Health %) Circle from Rey (Jedi Training).
-Move Health(Tenacity %) Cross from Fifth Brother.
+Move Tenacity(Defense %) Diamond from Krrsantan.
+Move Tenacity(Protection %) Triangle from The Mandalorian (Beskar Armor).
+Move Defense(Health %) Circle from IG-11.
+Move Defense(Tenacity %) Cross from Greef Karga.
 
 Geonosian Brood Alpha - Default
-Move Critdamage(Offense %) Square from Kelleran Beq.
-Move Health(Speed) Arrow from Dark Trooper Moff Gideon.
-Move Health(Defense %) Diamond from Rey (Jedi Training).
-Move Critdamage(Health %) Triangle from Tusken Chieftain.
-Move Health(Health %) Circle from Sith Marauder.
+Move Health(Offense %) Square from Cere Junda.
+Move Health(Speed) Arrow from Greef Karga.
+Move Health(Defense %) Diamond from CT-7567 "Rex".
+Move Health(Health %) Triangle from Barriss Offee.
+Move Health(Health %) Circle from Darth Traya.
 Move Health(Health %) Cross from General Kenobi.
 
 Dark Trooper Moff Gideon - Default
 Move Defense(Offense %) Square from Sana Starros.
-Move Health(Speed) Arrow from Bossk.
+Move Defense(Speed) Arrow from Moff Gideon.
 Move Defense(Defense %) Diamond from Darth Malak.
-Move Potency(Protection %) Triangle from Admiral Piett.
-Move Potency(Protection %) Circle from Doctor Aphra.
-Move Health(Protection %) Cross from The Mandalorian (Beskar Armor).
+Move Potency(Protection %) Triangle from Bossk.
+Move Potency(Protection %) Circle from Jar Jar Binks.
+Move Defense(Protection %) Cross from Jedi Master Luke Skywalker.
 
 BB-8 - Default
-Move Critchance(Offense %) Square from Ahsoka Tano (Snips).
-Move Critchance(Speed) Arrow from Finn.
+Move Speed(Offense %) Square from Bossk.
+Move Speed(Speed) Arrow from Saw Gerrera.
 Move Critchance(Defense %) Diamond from Eighth Brother.
-Move Critchance(Critical Chance %) Triangle from IG-12 & Grogu.
-Move Defense(Health %) Circle from Paz Vizsla.
-Move Defense(Tenacity %) Cross from Greef Karga.
+Move Speed(Critical Chance %) Triangle from Kuiil.
+Move Speed(Health %) Circle from Mon Mothma.
+Move Critchance(Health %) Cross from Grand Master Yoda.
 
 Captain Rex - Default
-Move Health(Offense %) Square from Barriss Offee.
+Move Health(Offense %) Square from Hera Syndulla.
 Move Critchance(Health %) Arrow from Barriss Offee.
 Move Health(Defense %) Diamond from Hera Syndulla.
-Move Critchance(Critical Chance %) Triangle from Boss Nass.
-Move Defense(Health %) Circle from First Order Officer.
-Move Defense(Health %) Cross from Dark Trooper Moff Gideon.
+Move Critchance(Critical Chance %) Triangle from Sith Assassin.
+Move Potency(Health %) Circle from Doctor Aphra.
+Move Potency(Potency %) Cross from T3-M4.
 
 The Armorer - Default
-Move Speed(Offense %) Square from IG-12 & Grogu.
-Move Speed(Speed) Arrow from Master Qui-Gon.
-Move Health(Defense %) Diamond from Master Qui-Gon.
-Move Speed(Health %) Triangle from Queen Amidala.
-Move Health(Health %) Circle from CT-7567 "Rex".
-Move Speed(Health %) Cross from Barriss Offee.
+Move Critchance(Offense %) Square from Ki-Adi-Mundi.
+Move Health(Speed) Arrow from Dark Trooper Moff Gideon.
+Move Health(Defense %) Diamond from Shaak Ti.
+Move Critdamage(Health %) Triangle from Jolee Bindo.
+Move Health(Health %) Circle from Barriss Offee.
+Move Health(Protection %) Cross from The Mandalorian (Beskar Armor).
 
 Obi-Wan Kenobi (Old Ben) - Default
-Move Potency(Offense %) Square from Count Dooku.
+Move Potency(Offense %) Square from Captain Rex.
 Move Potency(Speed) Arrow from Doctor Aphra.
-Move Health(Defense %) Diamond from Hermit Yoda.
+Move Potency(Defense %) Diamond from Count Dooku.
 Move Potency(Protection %) Triangle from Doctor Aphra.
 Move Potency(Health %) Circle from Captain Rex.
-Move Health(Potency %) Cross from B1 Battle Droid.
+Move Potency(Potency %) Cross from Captain Rex.
 
 Doctor Aphra - Default
-Move Potency(Offense %) Square from Emperor Palpatine.
-Move Potency(Offense %) Arrow from CT-21-0408 "Echo".
-Move Defense(Defense %) Diamond from The Armorer.
+Move Potency(Offense %) Square from First Order Officer.
+Move Potency(Speed) Arrow from First Order Officer.
+Move Defense(Defense %) Diamond from Echo.
 Move Potency(Offense %) Triangle from Captain Rex.
-Move Critchance(Protection %) Circle from Boss Nass.
+Move Critchance(Protection %) Circle from Bastila Shan.
 Move Potency(Potency %) Cross from Bastila Shan.
 
 Ninth Sister - Default
-Move Health(Offense %) Square from Cere Junda.
+Move Defense(Offense %) Square from The Armorer.
 Move Defense(Defense %) Arrow from Darth Malak.
-Move Health(Defense %) Diamond from Kelleran Beq.
+Move Health(Defense %) Diamond from Cere Junda.
 Move Health(Protection %) Triangle from Shaak Ti.
-Move Defense(Health %) Circle from Kylo Ren (Unmasked).
-Move Health(Protection %) Cross from Kuiil.
+Move Defense(Health %) Circle from General Kenobi.
+Move Defense(Protection %) Cross from Darth Malak.
 
 Cere Junda - Default
 Move Health(Offense %) Square from Cal Kestis.
-Move Health(Speed) Arrow from IG-11.
+Move Health(Speed) Arrow from Bossk.
 Move Health(Defense %) Diamond from General Grievous.
-Move Defense(Health %) Triangle from Amilyn Holdo.
+Move Defense(Health %) Triangle from Cal Kestis.
 Move Defense(Health %) Circle from Sana Starros.
 Move Health(Health %) Cross from Padawan Obi-Wan.
 
 The Mandalorian (Beskar Armor) - Default
-Move Speed(Offense %) Square from Death Trooper.
-Move Defense(Speed) Arrow from Greef Karga.
-Move Speed(Defense %) Diamond from Death Trooper.
-Move Speed(Offense %) Triangle from Admiral Trench.
-Move Speed(Health %) Circle from Resistance Hero Finn.
-Move Defense(Offense %) Cross from Paz Vizsla.
+Move Health(Offense %) Square from Barriss Offee.
+Move Health(Speed) Arrow from Jedi Knight Cal Kestis.
+Move Critdamage(Defense %) Diamond from Ben Solo.
+Move Health(Offense %) Triangle from Pao.
+Move Health(Protection %) Circle from BB-8.
+Move Defense(Offense %) Cross from Captain Tarpals.
 
 Krrsantan - Default
-Move Health(Offense %) Square from CT-7567 "Rex".
-Move Defense(Speed) Arrow from Moff Gideon.
+Move Speed(Offense %) Square from Kylo Ren (Unmasked).
+Move Health(Speed) Arrow from Hermit Yoda.
 Move Defense(Defense %) Diamond from Sana Starros.
-Move Health(Defense %) Triangle from Bossk.
-Move Defense(Health %) Circle from General Kenobi.
+Move Health(Defense %) Triangle from The Armorer.
+Move Speed(Health %) Circle from CT-5555 "Fives".
 Move Defense(Defense %) Cross from Moff Gideon.
 
 Old Daka - Default
@@ -539,777 +538,789 @@ Move Health(Health %) Circle from Padawan Obi-Wan.
 Move Health(Health %) Cross from Jedi Knight Cal Kestis.
 
 50R-T - Default
-Move Speed(Offense %) Square from General Kenobi.
-Move Speed(Speed) Arrow from Echo.
-Move Speed(Defense %) Diamond from Kuiil.
-Move Health(Defense %) Triangle from CT-5555 "Fives".
-Move Speed(Health %) Circle from IG-11.
-Move Health(Defense %) Cross from The Armorer.
+Move Defense(Offense %) Square from Hermit Yoda.
+Move Health(Speed) Arrow from IG-11.
+Move Health(Defense %) Diamond from The Armorer.
+Move Health(Defense %) Triangle from IG-12 & Grogu.
+Move Defense(Health %) Circle from General Hux.
+Move Health(Defense %) Cross from CT-5555 "Fives".
 
 Merrin - Default
-Move Potency(Offense %) Square from 50R-T.
-Move Potency(Accuracy %) Arrow from Darth Vader.
+Move Potency(Offense %) Square from T3-M4.
+Move Potency(Offense %) Arrow from CT-21-0408 "Echo".
 Move Potency(Defense %) Diamond from your unassigned mods.
-Move Health(Offense %) Triangle from your unassigned mods.
-Move Health(Health %) Circle from Jedi Knight Anakin.
-Move Potency(Potency %) Cross from T3-M4.
+Move Potency(Health %) Triangle from your unassigned mods.
+Move Health(Health %) Circle from R2-D2.
+Move Health(Potency %) Cross from Emperor Palpatine.
 
 Mother Talzin - Default
-Move Potency(Offense %) Square from Captain Rex.
-Move Offense(Speed) Arrow from Fennec Shand.
-Move Potency(Defense %) Diamond from B1 Battle Droid.
-Move Offense(Critical Chance %) Triangle from Sith Assassin.
-Move Offense(Health %) Circle from Admiral Raddus.
-Move Offense(Potency %) Cross from Boss Nass.
+Move Speed(Offense %) Square from Count Dooku.
+Move Potency(Speed) Arrow from Captain Rex.
+Move Speed(Defense %) Diamond from Death Trooper.
+Move Potency(Critical Chance %) Triangle from Nute Gunray.
+Move Speed(Health %) Circle from Nute Gunray.
+Move Speed(Potency %) Cross from Death Trooper.
 
 STAP - Default
-Move Speed(Offense %) Square from Eighth Brother.
-Move Speed(Speed) Arrow from Jar Jar Binks.
+Move Speed(Offense %) Square from Death Trooper.
+Move Critdamage(Offense %) Arrow from Ahsoka Tano (Fulcrum).
 Move Critchance(Defense %) Diamond from Ahsoka Tano (Fulcrum).
-Move Speed(Offense %) Triangle from 0-0-0.
-Move Health(Protection %) Circle from Kuiil.
-Move Speed(Offense %) Cross from Droideka.
+Move Speed(Offense %) Triangle from Paz Vizsla.
+Move Speed(Health %) Circle from Tusken Chieftain.
+Move Speed(Offense %) Cross from Resistance Hero Finn.
 
 Seventh Sister - Default
-Move Health(Offense %) Square from Grand Master Yoda.
-Move Health(Speed) Arrow from Rey (Jedi Training).
-Move Health(Defense %) Diamond from Admiral Raddus.
+Move Health(Offense %) Square from IG-12 & Grogu.
+Move Health(Speed) Arrow from Kyle Katarn.
+Move Health(Defense %) Diamond from General Hux.
 Move Offense(Health %) Triangle from Padawan Obi-Wan.
 Move Health(Health %) Circle from Hoth Rebel Scout.
-Move Critdamage(Health %) Cross from Grand Master Yoda.
+Move Critdamage(Health %) Cross from Visas Marr.
 
 Fifth Brother - Default
-Move Health(Offense %) Square from Paz Vizsla.
-Move Health(Speed) Arrow from Grand Master Yoda.
-Move Health(Defense %) Diamond from General Hux.
-Move Critdamage(Health %) Triangle from Wampa.
+Move Health(Offense %) Square from Hoth Rebel Scout.
+Move Health(Speed) Arrow from Rey (Jedi Training).
+Move Health(Defense %) Diamond from Pao.
+Move Critdamage(Health %) Triangle from Baze Malbus.
 Move Health(Health %) Circle from Jedi Knight Cal Kestis.
-Move Critdamage(Protection %) Cross from Kelleran Beq.
+Move Speed(Health %) Cross from Barriss Offee.
 
 Eighth Brother - Default
 Move Offense(Offense %) Square from ARC Trooper.
-Move Offense(Speed) Arrow from Sith Assassin.
-Move Health(Defense %) Diamond from Padawan Obi-Wan.
-Move Offense(Critical Damage %) Triangle from ARC Trooper.
-Move Health(Protection %) Circle from Hera Syndulla.
+Move Offense(Speed) Arrow from Jedi Knight Anakin.
+Move Health(Defense %) Diamond from Master Qui-Gon.
+Move Offense(Critical Damage %) Triangle from First Order Officer.
+Move Health(Protection %) Circle from Jango Fett.
 Move Offense(Tenacity %) Cross from Han Solo.
 
 First Order Officer - Default
-Move Speed(Offense %) Square from Fifth Brother.
-Move Speed(Speed) Arrow from Death Trooper.
-Move Critdamage(Defense %) Diamond from Visas Marr.
-Move Speed(Critical Chance %) Triangle from Kuiil.
-Move Speed(Protection %) Circle from Admiral Piett.
+Move Speed(Offense %) Square from Seventh Sister.
+Move Speed(Speed) Arrow from Admiral Piett.
+Move Speed(Defense %) Diamond from Kuiil.
+Move Offense(Critical Chance %) Triangle from B1 Battle Droid.
+Move Speed(Protection %) Circle from Fifth Brother.
 Move Offense(Tenacity %) Cross from Wat Tambor.
 
 Grand Master Yoda - Default
-Move Critdamage(Offense %) Square from Ahsoka Tano (Fulcrum).
-Move Critdamage(Offense %) Arrow from Ahsoka Tano (Fulcrum).
+Move Critdamage(Offense %) Square from STAP.
+Move Critdamage(Offense %) Arrow from your unassigned mods.
 Move Critdamage(Defense %) Diamond from Han Solo.
 Move Critchance(Offense %) Triangle from Iden Versio.
-Move Critdamage(Protection %) Circle from STAP.
-Move Critchance(Offense %) Cross from Jango Fett.
+Move Critdamage(Protection %) Circle from Grand Inquisitor.
+Move Critchance(Offense %) Cross from ARC Trooper.
 
 Wat Tambor - Default
-Move Potency(Offense %) Square from Padawan Obi-Wan.
-Move Offense(Health %) Arrow from Cal Kestis.
-Move Health(Defense %) Diamond from R2-D2.
+Move Potency(Offense %) Square from General Grievous.
+Move Offense(Health %) Arrow from Padawan Obi-Wan.
+Move Health(Defense %) Diamond from Eeth Koth.
 Move Offense(Health %) Triangle from Mon Mothma.
-Move Health(Health %) Circle from Resistance Hero Poe.
+Move Health(Health %) Circle from Darth Talon.
 Move Potency(Health %) Cross from 50R-T.
 
 Darth Traya - Default
-Move Defense(Offense %) Square from First Order Officer.
-Move Health(Speed) Arrow from Hondo Ohnaka.
-Move Health(Defense %) Diamond from Cere Junda.
+Move Critdamage(Offense %) Square from Ben Solo.
+Move Health(Speed) Arrow from Hera Syndulla.
+Move Critdamage(Defense %) Diamond from Rebel Officer Leia Organa.
 Move Health(Offense %) Triangle from Admiral Raddus.
-Move Critchance(Health %) Circle from Wat Tambor.
-Move Health(Protection %) Cross from Shaak Ti.
+Move Critchance(Health %) Circle from Hera Syndulla.
+Move Critdamage(Protection %) Cross from Kelleran Beq.
 
 Barriss Offee - Default
-Move Health(Offense %) Square from Mon Mothma.
+Move Health(Offense %) Square from Jedi Knight Cal Kestis.
 Move Health(Health %) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Old Daka.
-Move Speed(Health %) Triangle from Baze Malbus.
+Move Health(Defense %) Diamond from Bastila Shan.
+Move Speed(Health %) Triangle from Tusken Chieftain.
 Move Health(Health %) Circle from Baze Malbus.
 Move Defense(Health %) Cross from Baze Malbus.
 
 B2 Super Battle Droid - Default
-Move Health(Offense %) Square from Hondo Ohnaka.
-Move Health(Protection %) Arrow from Director Krennic.
-Move Health(Defense %) Diamond from your unassigned mods.
+Move Health(Offense %) Square from Tusken Chieftain.
+Move Potency(Accuracy %) Arrow from Darth Vader.
+Move Potency(Defense %) Diamond from 50R-T.
 Move Health(Protection %) Triangle from Kelleran Beq.
 Move Health(Protection %) Circle from Shoretrooper.
-Move Health(Protection %) Cross from Luminara Unduli.
+Move Health(Protection %) Cross from Captain Han Solo.
 
 Enfys Nest - Default
-Move Tenacity(Offense %) Square from Krrsantan.
-Move Tenacity(Speed) Arrow from Krrsantan.
-Move Tenacity(Defense %) Diamond from Krrsantan.
+Move Tenacity(Offense %) Square from Commander Luke Skywalker.
+Move Tenacity(Speed) Arrow from Jabba the Hutt.
+Move Tenacity(Defense %) Diamond from Chewbacca.
 Move Tenacity(Critical Damage %) Triangle from Chewbacca.
 Move Tenacity(Health %) Circle from Commander Luke Skywalker.
+Move Tenacity(Tenacity %) Cross from Pao.
 
 Threepio & Chewie - Default
-Move Defense(Offense %) Square from The Armorer.
-Move Offense(Speed) Arrow from Canderous Ordo.
-Move Offense(Defense %) Diamond from Ahsoka Tano (Snips).
-Move Offense(Critical Damage %) Triangle from Ki-Adi-Mundi.
-Move Health(Protection %) Circle from Rebel Officer Leia Organa.
-Move Offense(Offense %) Cross from Fennec Shand.
-
-Kelleran Beq - Default
-Move Critchance(Offense %) Square from Gungan Phalanx.
-Move Critchance(Defense %) Diamond from Gungan Phalanx.
-Move Speed(Protection %) Triangle from Jedi Master Luke Skywalker.
-Move Tenacity(Protection %) Circle from Chewbacca.
-Move Health(Protection %) Cross from Stormtrooper.
-
-Jango Fett - Default
-Move Critdamage(Offense %) Square from Dash Rendar.
-Move Critdamage(Speed) Arrow from Grand Inquisitor.
-Move Critdamage(Critical Damage %) Triangle from Dash Rendar.
-Move Critchance(Protection %) Circle from Bo-Katan Kryze.
+Move Critchance(Offense %) Square from Sabine Wren.
+Move Offense(Speed) Arrow from IG-12 & Grogu.
+Move Offense(Defense %) Diamond from Padawan Obi-Wan.
+Move Offense(Critical Damage %) Triangle from your unassigned mods.
+Move Offense(Health %) Circle from Ahsoka Tano (Snips).
 Move Critchance(Offense %) Cross from Hera Syndulla.
 
+Kelleran Beq - Default
+Move Critchance(Offense %) Square from Sith Assassin.
+Move Critchance(Defense %) Diamond from Range Trooper.
+Move Speed(Protection %) Triangle from Jedi Master Luke Skywalker.
+Move Tenacity(Protection %) Circle from Chewbacca.
+Move Health(Protection %) Cross from Shoretrooper.
+
+Jango Fett - Default
+Move Critchance(Offense %) Square from Emperor Palpatine.
+Move Offense(Speed) Arrow from Sith Assassin.
+Move Offense(Defense %) Diamond from Sith Assassin.
+Move Offense(Critical Damage %) Triangle from Ahsoka Tano (Snips).
+Move Critchance(Protection %) Circle from Bo-Katan Kryze.
+Move Offense(Offense %) Cross from Fennec Shand.
+
 CT-5555 "Fives" - Default
-Move Critdamage(Offense %) Square from Ben Solo.
-Move Offense(Protection %) Arrow from your unassigned mods.
-Move Critdamage(Defense %) Diamond from Rebel Officer Leia Organa.
+Move Health(Offense %) Square from Jedi Knight Anakin.
+Move Health(Protection %) Arrow from The Mandalorian (Beskar Armor).
+Move Potency(Defense %) Diamond from T3-M4.
 Move Offense(Protection %) Triangle from Dark Trooper Moff Gideon.
-Move Offense(Protection %) Circle from Sith Assassin.
-Move Offense(Protection %) Cross from Sith Assassin.
+Move Health(Protection %) Circle from Cere Junda.
+Move Health(Protection %) Cross from Shaak Ti.
 
 Cal Kestis - Default
 Move Defense(Offense %) Square from L3-37.
-Move Health(Offense %) Arrow from Taron Malicos.
-Move Defense(Defense %) Diamond from Amilyn Holdo.
+Move Health(Offense %) Arrow from First Order Stormtrooper.
+Move Defense(Defense %) Diamond from General Kenobi.
 Move Defense(Defense %) Triangle from Kylo Ren (Unmasked).
 Move Defense(Health %) Circle from B2 Super Battle Droid.
-Move Health(Defense %) Cross from Kanan Jarrus.
+Move Health(Defense %) Cross from Plo Koon.
 
 Nute Gunray - Default
 Move Speed(Offense %) Square from Master Qui-Gon.
 Move Speed(Speed) Arrow from Seventh Sister.
-Move Health(Defense %) Diamond from Paz Vizsla.
+Move Health(Defense %) Diamond from IG-12 & Grogu.
 Move Speed(Critical Damage %) Triangle from Eighth Brother.
-Move Speed(Protection %) Circle from Jar Jar Binks.
-Move Health(Tenacity %) Cross from Hoth Rebel Scout.
+Move Speed(Health %) Circle from 0-0-0.
+Move Health(Tenacity %) Cross from General Hux.
 
 Fennec Shand - Default
-Move Offense(Offense %) Square from Jedi Knight Anakin.
-Move Offense(Speed) Arrow from Mother Talzin.
-Move Offense(Defense %) Diamond from CT-5555 "Fives".
-Move Potency(Offense %) Triangle from B1 Battle Droid.
-Move Defense(Protection %) Circle from Range Trooper.
-Move Offense(Offense %) Cross from Sith Trooper.
+Move Offense(Speed) Arrow from your unassigned mods.
+Move Offense(Defense %) Diamond from Ahsoka Tano (Snips).
+Move Potency(Offense %) Triangle from 0-0-0.
+Move Offense(Protection %) Circle from Jedi Knight Anakin.
+Move Health(Offense %) Cross from Ahsoka Tano (Snips).
 
 Count Dooku - Default
-Move Potency(Offense %) Square from T3-M4.
+Move Tenacity(Offense %) Square from Krrsantan.
 Move Tenacity(Speed) Arrow from Chewbacca.
 Move Tenacity(Defense %) Diamond from Wat Tambor.
-Move Tenacity(Offense %) Triangle from C-3PO.
-Move Potency(Health %) Circle from 50R-T.
+Move Tenacity(Offense %) Triangle from Krrsantan.
+Move Tenacity(Protection %) Circle from Greef Karga.
 Move Tenacity(Tenacity %) Cross from Chewbacca.
 
 CT-21-0408 "Echo" - Default
-Move Offense(Offense %) Square from Droideka.
-Move Offense(Offense %) Arrow from Imperial Super Commando.
-Move Offense(Defense %) Diamond from Fennec Shand.
-Move Offense(Offense %) Triangle from Jedi Knight Anakin.
-Move Health(Protection %) Circle from Hunter.
-Move Speed(Potency %) Cross from Death Trooper.
+Move Critdamage(Offense %) Square from Ahsoka Tano (Fulcrum).
+Move Offense(Offense %) Arrow from BT-1.
+Move Offense(Defense %) Diamond from BT-1.
+Move Offense(Offense %) Triangle from Canderous Ordo.
+Move Health(Protection %) Circle from Droideka.
+Move Offense(Offense %) Cross from your unassigned mods.
 
 Kylo Ren - Default
-Move Critchance(Offense %) Square from Wat Tambor.
-Move Critdamage(Speed) Arrow from Commander Luke Skywalker.
+Move Critdamage(Offense %) Square from Dash Rendar.
+Move Critdamage(Speed) Arrow from Jango Fett.
 Move Critdamage(Defense %) Diamond from Commander Luke Skywalker.
-Move Critdamage(Critical Damage %) Triangle from Rebel Officer Leia Organa.
-Move Critdamage(Health %) Circle from Visas Marr.
-Move Critchance(Tenacity %) Cross from Pao.
+Move Defense(Critical Damage %) Triangle from Darth Revan.
+Move Critdamage(Health %) Circle from Han Solo.
+Move Potency(Defense %) Cross from IG-11.
 
 Canderous Ordo - Default
-Move Offense(Offense %) Square from your unassigned mods.
-Move Critchance(Offense %) Arrow from IG-88.
-Move Offense(Defense %) Diamond from Imperial Super Commando.
-Move Offense(Critical Chance %) Triangle from Cad Bane.
-Move Critchance(Protection %) Circle from BT-1.
+Move Offense(Offense %) Square from Droideka.
+Move Critchance(Offense %) Arrow from Jyn Erso.
+Move Offense(Defense %) Diamond from Gar Saxon.
+Move Offense(Critical Chance %) Triangle from Bistan.
+Move Critchance(Protection %) Circle from IG-88.
 Move Offense(Offense %) Cross from Imperial Super Commando.
 
 ARC Trooper - Default
-Move Offense(Offense %) Square from Bo-Katan Kryze.
-Move Offense(Speed) Arrow from Qui-Gon Jinn.
-Move Offense(Defense %) Diamond from Lobot.
+Move Offense(Offense %) Square from Mace Windu.
+Move Offense(Speed) Arrow from Mother Talzin.
+Move Offense(Defense %) Diamond from CT-5555 "Fives".
 Move Critchance(Offense %) Triangle from Fennec Shand.
 Move Potency(Protection %) Circle from Sabine Wren.
-Move Offense(Offense %) Cross from your unassigned mods.
+Move Offense(Offense %) Cross from Droideka.
 
 Sith Empire Trooper - Default
-Move Speed(Offense %) Square from Hermit Yoda.
+Move Defense(Offense %) Square from B2 Super Battle Droid.
 Move Defense(Critical Avoidance %) Arrow from B2 Super Battle Droid.
 Move Defense(Defense %) Diamond from B2 Super Battle Droid.
 Move Defense(Defense %) Triangle from Sana Starros.
-Move Defense(Health %) Circle from General Hux.
+Move Speed(Health %) Circle from Paz Vizsla.
 Move Tenacity(Defense %) Cross from Kylo Ren (Unmasked).
 
 Sith Marauder - Default
 Move Critchance(Offense %) Square from BT-1.
-Move Offense(Speed) Arrow from Wedge Antilles.
-Move Offense(Defense %) Diamond from Mace Windu.
-Move Offense(Critical Damage %) Triangle from Jedi Knight Cal Kestis.
-Move Critchance(Protection %) Circle from Gungan Boomadier.
-Move Offense(Offense %) Cross from your unassigned mods.
+Move Critdamage(Speed) Arrow from Grand Inquisitor.
+Move Critdamage(Defense %) Diamond from Dash Rendar.
+Move Critdamage(Critical Damage %) Triangle from Ben Solo.
+Move Critchance(Protection %) Circle from Iden Versio.
+Move Critdamage(Offense %) Cross from Dash Rendar.
 
 Greef Karga - Default
-Move Speed(Offense %) Square from IG-11.
-Move Speed(Speed) Arrow from Cara Dune.
-Move Speed(Defense %) Diamond from 0-0-0.
+Move Speed(Offense %) Square from Admiral Piett.
+Move Speed(Speed) Arrow from Echo.
+Move Speed(Defense %) Diamond from Boss Nass.
 Move Health(Critical Damage %) Triangle from Fifth Brother.
-Move Speed(Health %) Circle from 0-0-0.
-Move Health(Tenacity %) Cross from Krrsantan.
+Move Health(Protection %) Circle from Shaak Ti.
+Move Speed(Tenacity %) Cross from Admiral Trench.
 
 Mon Mothma - Default
 Move Tenacity(Offense %) Square from General Hux.
 Move Tenacity(Speed) Arrow from General Hux.
 Move Tenacity(Defense %) Diamond from Hoth Rebel Scout.
-Move Tenacity(Critical Chance %) Triangle from Hoth Rebel Scout.
-Move Health(Protection %) Circle from Queen Amidala.
+Move Tenacity(Critical Chance %) Triangle from Greef Karga.
+Move Health(Protection %) Circle from STAP.
 Move Health(Tenacity %) Cross from Jolee Bindo.
 
 The Mandalorian - Default
-Move Speed(Offense %) Square from 0-0-0.
-Move Speed(Speed) Arrow from Resistance Hero Finn.
-Move Speed(Defense %) Diamond from IG-12 & Grogu.
-Move Potency(Critical Chance %) Triangle from Mara Jade, The Emperor's Hand.
-Move Speed(Protection %) Circle from Fifth Brother.
-Move Tenacity(Defense %) Cross from CT-5555 "Fives".
+Move Speed(Offense %) Square from Eighth Brother.
+Move Speed(Speed) Arrow from Tusken Chieftain.
+Move Speed(Defense %) Diamond from 0-0-0.
+Move Critchance(Critical Chance %) Triangle from IG-11.
+Move Critchance(Health %) Circle from Pao.
+Move Speed(Protection %) Cross from Saw Gerrera.
 
 Embo - Default
-Move Speed(Offense %) Square from Jar Jar Binks.
-Move Speed(Speed) Arrow from Saw Gerrera.
-Move Potency(Defense %) Diamond from Captain Rex.
+Move Speed(Offense %) Square from BB-8.
+Move Potency(Defense %) Diamond from B1 Battle Droid.
 Move Critdamage(Protection %) Triangle from Emperor Palpatine.
-Move Speed(Protection %) Circle from General Veers.
-Move Speed(Protection %) Cross from Saw Gerrera.
+Move Speed(Protection %) Circle from Kuiil.
+Move Speed(Protection %) Cross from BB-8.
 
 Asajj Ventress - Default
 Move Critdamage(Offense %) Square from CT-21-0408 "Echo".
-Move Critdamage(Speed) Arrow from Rebel Officer Leia Organa.
-Move Critdamage(Defense %) Diamond from STAP.
-Move Health(Critical Damage %) Triangle from First Order Officer.
-Move Health(Protection %) Circle from Death Trooper.
+Move Potency(Speed) Arrow from Emperor Palpatine.
+Move Potency(Defense %) Diamond from First Order Officer.
+Move Critdamage(Critical Damage %) Triangle from Boushh (Leia Organa).
+Move Critdamage(Protection %) Circle from Darth Vader.
 Move Critdamage(Potency %) Cross from Darth Vader.
 
 Boba Fett, Scion of Jango - Default
 Move Critdamage(Offense %) Square from The Mandalorian.
-Move Potency(Speed) Arrow from Emperor Palpatine.
-Move Critdamage(Defense %) Diamond from Range Trooper.
-Move Critdamage(Critical Chance %) Triangle from First Order Stormtrooper.
+Move Critdamage(Speed) Arrow from Commander Luke Skywalker.
+Move Critdamage(Defense %) Diamond from STAP.
+Move Critdamage(Critical Damage %) Triangle from Rebel Officer Leia Organa.
 Move Potency(Protection %) Circle from T3-M4.
-Move Critdamage(Offense %) Cross from Ahsoka Tano (Fulcrum).
+Move Defense(Offense %) Cross from Royal Guard.
 
 Jolee Bindo - Default
 Move Tenacity(Offense %) Square from Amilyn Holdo.
-Move Health(Critical Avoidance %) Arrow from Kanan Jarrus.
-Move Health(Defense %) Diamond from Boss Nass.
+Move Health(Critical Avoidance %) Arrow from Sith Marauder.
+Move Health(Defense %) Diamond from C-3PO.
 Move Health(Health %) Triangle from your unassigned mods.
-Move Health(Health %) Circle from Darth Nihilus.
-Move Tenacity(Tenacity %) Cross from C-3PO.
+Move Tenacity(Tenacity %) Cross from Enfys Nest.
 
 L3-37 - Default
-Move Health(Offense %) Square from CT-5555 "Fives".
-Move Health(Speed) Arrow from CT-5555 "Fives".
-Move Defense(Defense %) Diamond from General Veers.
-Move Health(Defense %) Triangle from Cal Kestis.
-Move Defense(Health %) Circle from Royal Guard.
-Move Health(Defense %) Cross from Chopper.
+Move Health(Offense %) Square from Paz Vizsla.
+Move Defense(Health %) Arrow from Cal Kestis.
+Move Health(Defense %) Diamond from BB-8.
+Move Health(Defense %) Triangle from Kanan Jarrus.
+Move Defense(Health %) Circle from Amilyn Holdo.
+Move Health(Tenacity %) Cross from Krrsantan.
 
 Vandor Chewbacca - Default
-Move Health(Offense %) Square from Sabine Wren.
-Move Health(Speed) Arrow from Padawan Obi-Wan.
-Move Critchance(Defense %) Diamond from Pao.
-Move Health(Critical Chance %) Triangle from Hondo Ohnaka.
-Move Critchance(Health %) Circle from Pao.
-Move Health(Offense %) Cross from Jedi Knight Anakin.
+Move Health(Offense %) Square from Baze Malbus.
+Move Health(Defense %) Diamond from Darth Talon.
+Move Health(Critical Chance %) Triangle from Eeth Koth.
+Move Health(Health %) Circle from Enfys Nest.
+Move Health(Offense %) Cross from Bo-Katan Kryze.
 
 Finn - Default
 Move Critdamage(Offense %) Square from Jango Fett.
 Move Critdamage(Offense %) Arrow from your unassigned mods.
-Move Critdamage(Defense %) Diamond from First Order SF TIE Pilot.
+Move Critdamage(Defense %) Diamond from Ki-Adi-Mundi.
 Move Speed(Critical Damage %) Triangle from Resistance Hero Finn.
 Move Critdamage(Health %) Circle from Dash Rendar.
-Move Defense(Offense %) Cross from Bo-Katan Kryze.
+Move Speed(Potency %) Cross from your unassigned mods.
 
 Geonosian Spy - Default
-Move Offense(Offense %) Square from Qui-Gon Jinn.
+Move Tenacity(Offense %) Square from Pao.
 Move Offense(Speed) Arrow from your unassigned mods.
 Move Offense(Defense %) Diamond from Sith Trooper.
 Move Offense(Critical Damage %) Triangle from General Hux.
-Move Defense(Protection %) Circle from The Armorer.
+Move Offense(Protection %) Circle from Sith Assassin.
 Move Health(Offense %) Cross from Hunter.
 
 Darth Nihilus - Default
-Move Tenacity(Offense %) Square from Chewbacca.
-Move Tenacity(Speed) Arrow from Wat Tambor.
-Move Potency(Defense %) Diamond from First Order Officer.
-Move Health(Defense %) Triangle from Paz Vizsla.
-Move Potency(Health %) Circle from Bastila Shan.
+Move Tenacity(Offense %) Square from C-3PO.
+Move Tenacity(Speed) Arrow from Krrsantan.
+Move Potency(Defense %) Diamond from Captain Rex.
+Move Health(Defense %) Triangle from Hera Syndulla.
+Move Potency(Health %) Circle from 50R-T.
 
 Darth Sion - Default
-Move Health(Offense %) Square from Hera Syndulla.
-Move Health(Speed) Arrow from Kylo Ren (Unmasked).
-Move Health(Defense %) Diamond from Chopper.
+Move Health(Offense %) Square from Lobot.
+Move Health(Speed) Arrow from Shaak Ti.
+Move Health(Defense %) Diamond from Gungan Phalanx.
 Move Defense(Protection %) Triangle from Darth Malak.
-Move Health(Protection %) Circle from CT-5555 "Fives".
+Move Health(Protection %) Circle from Range Trooper.
 Move Defense(Protection %) Cross from Hermit Yoda.
 
 Poggle the Lesser - Default
-Move Speed(Offense %) Square from Saw Gerrera.
-Move Speed(Speed) Arrow from Captain Enoch.
-Move Tenacity(Defense %) Diamond from C-3PO.
+Move Speed(Offense %) Square from Jar Jar Binks.
+Move Speed(Speed) Arrow from Boss Nass.
+Move Critdamage(Defense %) Diamond from Jango Fett.
 Move Speed(Critical Chance %) Triangle from BB-8.
-Move Health(Protection %) Circle from Saw Gerrera.
-Move Speed(Potency %) Cross from IG-12 & Grogu.
+Move Health(Protection %) Circle from Death Trooper.
+Move Speed(Potency %) Cross from Paz Vizsla.
 
 Mace Windu - Default
-Move Health(Offense %) Square from Jolee Bindo.
+Move Health(Offense %) Square from Eeth Koth.
 Move Health(Speed) Arrow from Paz Vizsla.
 Move Critdamage(Defense %) Diamond from CT-21-0408 "Echo".
-Move Health(Offense %) Triangle from Tech.
+Move Health(Offense %) Triangle from Jedi Knight Anakin.
 Move Critdamage(Health %) Circle from Ahsoka Tano (Fulcrum).
-Move Health(Potency %) Cross from Emperor Palpatine.
+Move Health(Potency %) Cross from IG-12 & Grogu.
 
 Ki-Adi-Mundi - Default
-Move Health(Offense %) Square from Fennec Shand.
+Move Speed(Offense %) Square from General Veers.
 Move Offense(Speed) Arrow from Lobot.
-Move Offense(Defense %) Diamond from Jedi Knight Anakin.
-Move Offense(Critical Chance %) Triangle from Royal Guard.
-Move Health(Protection %) Circle from Cere Junda.
-Move Offense(Offense %) Cross from your unassigned mods.
+Move Offense(Defense %) Diamond from Kanan Jarrus.
+Move Offense(Critical Chance %) Triangle from First Order Stormtrooper.
+Move Defense(Protection %) Circle from General Veers.
+Move Offense(Protection %) Cross from Sith Assassin.
 
 Qi'ra - Default
-Move Tenacity(Offense %) Square from Hoth Rebel Scout.
-Move Health(Speed) Arrow from Cad Bane.
-Move Potency(Defense %) Diamond from Emperor Palpatine.
-Move Critchance(Offense %) Triangle from Kyle Katarn.
-Move Critchance(Protection %) Circle from Eighth Brother.
-Move Health(Offense %) Cross from Resistance Hero Finn.
+Move Speed(Offense %) Square from Fifth Brother.
+Move Speed(Speed) Arrow from Zam Wesell.
+Move Speed(Defense %) Diamond from Saw Gerrera.
+Move Speed(Offense %) Triangle from Admiral Trench.
+Move Defense(Protection %) Circle from The Armorer.
+Move Health(Offense %) Cross from Lobot.
 
 Zorii Bliss - Default
-Move Speed(Offense %) Square from BB-8.
-Move Speed(Speed) Arrow from Omega.
-Move Speed(Defense %) Diamond from Saw Gerrera.
-Move Health(Critical Damage %) Triangle from Sabine Wren.
-Move Health(Protection %) Circle from Master Qui-Gon.
-Move Speed(Protection %) Cross from Master Qui-Gon.
-
-B1 Battle Droid - Default
-Move Critchance(Offense %) Square from Darth Talon.
-Move Offense(Speed) Arrow from your unassigned mods.
-Move Offense(Defense %) Diamond from Canderous Ordo.
-Move Critdamage(Offense %) Triangle from IG-88.
-Move Offense(Health %) Circle from Enfys Nest.
-Move Offense(Offense %) Cross from Veteran Smuggler Chewbacca.
-
-Skiff Guard (Lando Calrissian) - Default
-Move Speed(Offense %) Square from Resistance Hero Finn.
-Move Speed(Speed) Arrow from Bistan.
-Move Speed(Defense %) Diamond from Jolee Bindo.
-Move Health(Critical Chance %) Triangle from Lobot.
-Move Speed(Health %) Circle from Jolee Bindo.
+Move Speed(Offense %) Square from 0-0-0.
+Move Health(Speed) Arrow from Cad Bane.
+Move Tenacity(Defense %) Diamond from Emperor Palpatine.
+Move Health(Critical Damage %) Triangle from Jango Fett.
+Move Health(Protection %) Circle from Wat Tambor.
 Move Health(Offense %) Cross from Resistance Hero Poe.
 
-Baze Malbus - Default
-Move Health(Offense %) Square from Lobot.
-Move Health(Speed) Arrow from Hera Syndulla.
-Move Critdamage(Defense %) Diamond from The Mandalorian.
-Move Health(Defense %) Triangle from The Armorer.
-Move Critdamage(Health %) Circle from CT-21-0408 "Echo".
-Move Health(Tenacity %) Cross from Lobot.
+B1 Battle Droid - Default
+Move Health(Offense %) Square from Jolee Bindo.
+Move Offense(Speed) Arrow from Omega.
+Move Offense(Defense %) Diamond from Jedi Knight Anakin.
+Move Critdamage(Offense %) Triangle from Jyn Erso.
+Move Offense(Health %) Circle from your unassigned mods.
+Move Offense(Offense %) Cross from Sith Trooper.
 
-Range Trooper - Default
-Move Critdamage(Offense %) Square from Skiff Guard (Lando Calrissian).
-Move Critdamage(Speed) Arrow from Hunter.
-Move Health(Defense %) Diamond from Resistance Hero Finn.
-Move Tenacity(Critical Damage %) Triangle from Captain Tarpals.
-Move Critdamage(Protection %) Circle from Jango Fett.
-Move Critdamage(Offense %) Cross from The Mandalorian.
-
-Second Sister - Default
-Move Offense(Offense %) Square from Mother Talzin.
-Move Offense(Speed) Arrow from your unassigned mods.
-Move Offense(Defense %) Diamond from Bo-Katan Kryze.
-Move Critdamage(Offense %) Triangle from Death Trooper.
-Move Offense(Protection %) Circle from Canderous Ordo.
-Move Defense(Tenacity %) Cross from Sana Starros.
-
-Colonel Starck - Default
-Move Potency(Offense %) Square from Bastila Shan.
-Move Critchance(Speed) Arrow from First Order Stormtrooper.
-Move Tenacity(Defense %) Diamond from Chewbacca.
-Move Potency(Critical Chance %) Triangle from T3-M4.
-Move Critchance(Protection %) Circle from Chopper.
-Move Health(Potency %) Cross from First Order Officer.
-
-Hunter - Default
-Move Speed(Offense %) Square from Cara Dune.
-Move Speed(Speed) Arrow from Nightsister Spirit.
-Move Speed(Defense %) Diamond from Embo.
-Move Speed(Offense %) Triangle from Jolee Bindo.
-Move Health(Protection %) Circle from Admiral Trench.
-Move Tenacity(Potency %) Cross from 0-0-0.
+Skiff Guard (Lando Calrissian) - Default
+Move Health(Offense %) Square from Bo-Katan Kryze.
+Move Critchance(Speed) Arrow from Iden Versio.
+Move Critchance(Defense %) Diamond from Amilyn Holdo.
+Move Health(Critical Chance %) Triangle from Bastila Shan.
+Move Critchance(Protection %) Circle from Rebel Officer Leia Organa.
+Move Critchance(Tenacity %) Cross from Hoth Rebel Scout.
 
 BT-1 - Default
-Move Tenacity(Offense %) Square from Captain Tarpals.
+Move Tenacity(Offense %) Square from K-2SO.
+Move Offense(Speed) Arrow from your unassigned mods.
+Move Offense(Defense %) Diamond from Fennec Shand.
+Move Critchance(Offense %) Triangle from IG-88.
+Move Offense(Protection %) Circle from Canderous Ordo.
+Move Offense(Offense %) Cross from your unassigned mods.
+
+Baze Malbus - Default
+Move Health(Offense %) Square from Admiral Trench.
+Move Health(Speed) Arrow from Zaalbar.
+Move Critdamage(Defense %) Diamond from The Mandalorian.
+Move Health(Defense %) Triangle from CT-5555 "Fives".
+Move Critdamage(Health %) Circle from CT-21-0408 "Echo".
+Move Health(Defense %) Cross from Kanan Jarrus.
+
+Range Trooper - Default
+Move Critchance(Offense %) Square from Bastila Shan.
+Move Critchance(Speed) Arrow from Tusken Warrior.
+Move Critdamage(Defense %) Diamond from Hunter.
+Move Critdamage(Critical Chance %) Triangle from Cad Bane.
+Move Critdamage(Protection %) Circle from Ki-Adi-Mundi.
+Move Critdamage(Offense %) Cross from Jango Fett.
+
+Second Sister - Default
+Move Speed(Offense %) Square from Saw Gerrera.
 Move Offense(Speed) Arrow from Mace Windu.
 Move Offense(Defense %) Diamond from Droideka.
-Move Offense(Health %) Circle from your unassigned mods.
-Move Critdamage(Offense %) Cross from Ki-Adi-Mundi.
+Move Tenacity(Critical Damage %) Triangle from Sabine Wren.
+Move Offense(Protection %) Circle from Bistan.
+Move Offense(Offense %) Cross from Veteran Smuggler Chewbacca.
+
+Colonel Starck - Default
+Move Speed(Offense %) Square from Boss Nass.
+Move Speed(Speed) Arrow from Cara Dune.
+Move Speed(Defense %) Diamond from Admiral Trench.
+Move Potency(Critical Chance %) Triangle from T3-M4.
+Move Health(Protection %) Circle from Saw Gerrera.
+Move Speed(Potency %) Cross from Poe Dameron.
+
+Hunter - Default
+Move Potency(Offense %) Square from Colonel Starck.
+Move Health(Speed) Arrow from Bo-Katan Kryze.
+Move Potency(Defense %) Diamond from Iden Versio.
+Move Critdamage(Offense %) Triangle from Death Trooper.
+Move Critchance(Protection %) Circle from Lobot.
+Move Tenacity(Potency %) Cross from Sabine Wren.
 
 0-0-0 - Default
-Move Potency(Offense %) Square from Boss Nass.
-Move Potency(Speed) Arrow from First Order Officer.
-Move Health(Defense %) Diamond from Sith Assassin.
-Move Critdamage(Critical Chance %) Triangle from Bastila Shan.
-Move Health(Protection %) Circle from BB-8.
-Move Critchance(Potency %) Cross from Sabine Wren.
+Move Speed(Offense %) Square from Resistance Hero Finn.
+Move Speed(Speed) Arrow from Colonel Starck.
+Move Speed(Defense %) Diamond from Resistance Hero Finn.
+Move Critdamage(Critical Chance %) Triangle from Lobot.
+Move Speed(Protection %) Circle from Boss Nass.
+Move Critchance(Potency %) Cross from Boss Nass.
 
 Tech - Default
-Move Speed(Offense %) Square from Colonel Starck.
-Move Speed(Speed) Arrow from Zam Wesell.
-Move Health(Defense %) Diamond from BB-8.
+Move Health(Offense %) Square from Mon Mothma.
+Move Potency(Speed) Arrow from 50R-T.
+Move Critchance(Defense %) Diamond from Lobot.
 Move Tenacity(Protection %) Triangle from General Veers.
-Move Speed(Protection %) Circle from Cara Dune.
-Move Speed(Potency %) Cross from Merrin.
+Move Health(Protection %) Circle from Resistance Hero Poe.
+Move Potency(Potency %) Cross from Colonel Starck.
 
 Paz Vizsla - Default
-Move Health(Offense %) Square from Darth Sion.
-Move Health(Protection %) Arrow from Gungan Phalanx.
-Move Health(Defense %) Diamond from Vandor Chewbacca.
+Move Health(Offense %) Square from Plo Koon.
+Move Health(Protection %) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from Captain Han Solo.
 Move Health(Protection %) Triangle from Stormtrooper.
-Move Health(Protection %) Circle from Tusken Chieftain.
+Move Health(Protection %) Circle from Darth Sion.
 Move Health(Protection %) Cross from Princess Leia.
 
 Bo-Katan Kryze - Default
-Move Critdamage(Offense %) Square from Resistance Hero Poe.
-Move Critdamage(Speed) Arrow from Boba Fett, Scion of Jango.
-Move Critchance(Defense %) Diamond from Bastila Shan.
-Move Critchance(Critical Damage %) Triangle from Jango Fett.
+Move Critdamage(Offense %) Square from Gungan Boomadier.
+Move Critdamage(Speed) Arrow from Rebel Officer Leia Organa.
+Move Critchance(Defense %) Diamond from Wrecker.
+Move Critchance(Critical Damage %) Triangle from The Mandalorian.
 Move Critdamage(Health %) Circle from The Mandalorian.
 Move Critdamage(Potency %) Cross from Darth Talon.
 
 Shoretrooper - Default
-Move Health(Offense %) Square from Geonosian Brood Alpha.
-Move Health(Protection %) Arrow from Stormtrooper.
-Move Health(Defense %) Diamond from Merrin.
+Move Health(Offense %) Square from URoRRuR'R'R.
+Move Health(Protection %) Arrow from Ninth Sister.
+Move Health(Defense %) Diamond from Vandor Chewbacca.
 Move Health(Protection %) Circle from Tech.
-Move Health(Protection %) Cross from Captain Han Solo.
+Move Health(Protection %) Cross from your unassigned mods.
 
 Sun Fac - Default
-Move Health(Offense %) Square from Tusken Chieftain.
-Move Health(Speed) Arrow from Darth Sion.
-Move Defense(Defense %) Diamond from Darth Sion.
+Move Health(Offense %) Square from Darth Sion.
+Move Health(Speed) Arrow from Wat Tambor.
+Move Defense(Defense %) Diamond from General Veers.
 Move Defense(Protection %) Triangle from Gungan Phalanx.
-Move Defense(Protection %) Circle from Darth Sion.
-Move Defense(Protection %) Cross from Darth Sion.
+Move Defense(Protection %) Circle from Gungan Phalanx.
+Move Defense(Protection %) Cross from Sith Empire Trooper.
 
 Admiral Trench - Default
-Move Health(Offense %) Square from Sith Assassin.
-Move Health(Speed) Arrow from Tusken Chieftain.
-Move Health(Defense %) Diamond from Hondo Ohnaka.
-Move Offense(Protection %) Triangle from Cara Dune.
-Move Critdamage(Health %) Circle from Ki-Adi-Mundi.
-Move Health(Potency %) Cross from Cara Dune.
+Move Potency(Offense %) Square from 50R-T.
+Move Potency(Speed) Arrow from T3-M4.
+Move Health(Defense %) Diamond from Bo-Katan Kryze.
+Move Health(Critical Damage %) Triangle from Jedi Knight Cal Kestis.
+Move Critdamage(Health %) Circle from Sith Marauder.
+Move Offense(Potency %) Cross from B1 Battle Droid.
 
 Saw Gerrera - Default
-Move Health(Offense %) Square from Admiral Trench.
-Move Health(Speed) Arrow from Princess Kneesaa.
-Move Health(Defense %) Diamond from Boba Fett, Scion of Jango.
+Move Health(Offense %) Square from Old Daka.
+Move Critdamage(Speed) Arrow from Darth Talon.
+Move Health(Defense %) Diamond from Mace Windu.
 Move Health(Health %) Triangle from Old Daka.
-Move Critchance(Health %) Circle from Wampa.
-Move Critchance(Potency %) Cross from Iden Versio.
+Move Critchance(Health %) Circle from Old Daka.
+Move Health(Potency %) Cross from Tech.
 
 Sith Trooper - Default
-Move Offense(Offense %) Square from your unassigned mods.
+Move Offense(Offense %) Square from Imperial Super Commando.
 Move Speed(Offense %) Arrow from your unassigned mods.
-Move Offense(Defense %) Diamond from your unassigned mods.
-Move Defense(Offense %) Triangle from Range Trooper.
-Move Offense(Health %) Circle from your unassigned mods.
-Move Offense(Offense %) Cross from Gar Saxon.
+Move Offense(Defense %) Diamond from Imperial Super Commando.
+Move Offense(Critical Damage %) Triangle from Mission Vao.
+Move Defense(Protection %) Circle from Chopper.
+Move Offense(Offense %) Cross from your unassigned mods.
 
 Darth Talon - Default
-Move Offense(Offense %) Square from Kit Fisto.
-Move Offense(Speed) Arrow from Kit Fisto.
-Move Health(Defense %) Diamond from Kit Fisto.
-Move Offense(Offense %) Triangle from Mother Talzin.
-Move Health(Protection %) Circle from Hondo Ohnaka.
-Move Offense(Protection %) Cross from Qui-Gon Jinn.
+Move Offense(Offense %) Square from your unassigned mods.
+Move Offense(Speed) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from Mother Talzin.
+Move Offense(Protection %) Triangle from Stormtrooper Han.
+Move Health(Protection %) Circle from Admiral Trench.
+Move Offense(Protection %) Cross from Tusken Warrior.
 
 IG-100 MagnaGuard - Default
-Move Defense(Offense %) Square from General Veers.
-Move Defense(Critical Avoidance %) Arrow from Amilyn Holdo.
-Move Health(Defense %) Diamond from Savage Opress.
-Move Defense(Protection %) Triangle from Darth Sion.
-Move Health(Protection %) Circle from Gungan Phalanx.
-Move Defense(Protection %) Cross from Range Trooper.
+Move Defense(Offense %) Square from CT-5555 "Fives".
+Move Defense(Critical Avoidance %) Arrow from CT-5555 "Fives".
+Move Tenacity(Defense %) Diamond from Enfys Nest.
+Move Defense(Protection %) Triangle from Obi-Wan Kenobi (Old Ben).
+Move Defense(Health %) Circle from Plo Koon.
+Move Tenacity(Defense %) Cross from Chopper.
 
 Cara Dune - Default
 Move Health(Offense %) Square from Royal Guard.
-Move Critdamage(Speed) Arrow from Darth Talon.
-Move Health(Defense %) Diamond from Tusken Chieftain.
+Move Critdamage(Speed) Arrow from Hunter.
+Move Health(Defense %) Diamond from Jolee Bindo.
 Move Critdamage(Critical Damage %) Triangle from Commander Luke Skywalker.
-Move Critdamage(Protection %) Circle from Han Solo.
-Move Critdamage(Potency %) Cross from IG-88.
+Move Critdamage(Protection %) Circle from Krrsantan.
+Move Critdamage(Offense %) Cross from Ki-Adi-Mundi.
 
 Kyle Katarn - Default
-Move Tenacity(Offense %) Square from C-3PO.
+Move Offense(Offense %) Square from Bistan.
 Move Offense(Speed) Arrow from Veteran Smuggler Chewbacca.
-Move Offense(Defense %) Diamond from your unassigned mods.
-Move Offense(Offense %) Triangle from your unassigned mods.
+Move Offense(Defense %) Diamond from Canderous Ordo.
+Move Defense(Offense %) Triangle from Range Trooper.
 Move Offense(Health %) Circle from your unassigned mods.
-Move Critchance(Offense %) Cross from your unassigned mods.
+Move Defense(Tenacity %) Cross from Amilyn Holdo.
 
 Nightsister Spirit - Default
-Move Tenacity(Offense %) Square from Darth Nihilus.
-Move Critchance(Speed) Arrow from Tusken Warrior.
-Move Critchance(Defense %) Diamond from Wedge Antilles.
-Move Critchance(Defense %) Triangle from Chopper.
-Move Health(Protection %) Circle from Lobot.
-Move Critchance(Offense %) Cross from Geonosian Spy.
+Move Offense(Offense %) Square from Tusken Warrior.
+Move Offense(Speed) Arrow from your unassigned mods.
+Move Critchance(Defense %) Diamond from your unassigned mods.
+Move Offense(Offense %) Triangle from Mother Talzin.
+Move Offense(Protection %) Circle from Sith Trooper.
+Move Critchance(Offense %) Cross from your unassigned mods.
 
 Droideka - Default
-Move Offense(Offense %) Square from your unassigned mods.
+Move Offense(Offense %) Square from Omega.
 Move Critdamage(Offense %) Arrow from IG-86 Sentinel Droid.
 Move Offense(Defense %) Diamond from your unassigned mods.
 Move Offense(Offense %) Triangle from your unassigned mods.
 Move Offense(Protection %) Circle from Gar Saxon.
-Move Critdamage(Offense %) Cross from Kylo Ren.
+Move Critdamage(Offense %) Cross from Ahsoka Tano (Fulcrum).
 
 Zaalbar - Default
 Move Health(Offense %) Square from Luminara Unduli.
 Move Speed(Critical Avoidance %) Arrow from Jolee Bindo.
-Move Health(Defense %) Diamond from Stormtrooper.
+Move Health(Defense %) Diamond from your unassigned mods.
 Move Health(Protection %) Triangle from Jawa Engineer.
-Move Speed(Protection %) Circle from Kyle Katarn.
-Move Health(Protection %) Cross from Kit Fisto.
+Move Speed(Protection %) Circle from Cad Bane.
+Move Health(Protection %) Cross from Dengar.
 
 Mission Vao - Default
 Move Offense(Offense %) Square from your unassigned mods.
 Move Offense(Speed) Arrow from your unassigned mods.
-Move Offense(Defense %) Diamond from your unassigned mods.
-Move Critchance(Critical Damage %) Triangle from The Mandalorian.
-Move Offense(Protection %) Circle from Qui-Gon Jinn.
-Move Critchance(Offense %) Cross from Boba Fett.
+Move Critchance(Defense %) Diamond from Greedo.
+Move Offense(Critical Damage %) Triangle from Sith Trooper.
+Move Offense(Protection %) Circle from Tusken Warrior.
+Move Critchance(Offense %) Cross from First Order TIE Pilot.
 
 Boba Fett - Default
 Move Offense(Offense %) Square from Canderous Ordo.
 Move Critchance(Offense %) Arrow from your unassigned mods.
-Move Critchance(Defense %) Diamond from Qi'ra.
-Move Offense(Critical Damage %) Triangle from Kit Fisto.
-Move Offense(Protection %) Circle from Sith Trooper.
-Move Offense(Potency %) Cross from Mother Talzin.
+Move Offense(Defense %) Diamond from your unassigned mods.
+Move Offense(Critical Damage %) Triangle from your unassigned mods.
+Move Offense(Health %) Circle from your unassigned mods.
 
 Captain Phasma - Default
-Move Health(Offense %) Square from Baze Malbus.
+Move Health(Offense %) Square from Vandor Chewbacca.
 Move Health(Speed) Arrow from Imperial Probe Droid.
-Move Health(Defense %) Diamond from Geonosian Brood Alpha.
+Move Health(Defense %) Diamond from Boba Fett, Scion of Jango.
 Move Health(Critical Damage %) Triangle from Sith Marauder.
-Move Potency(Protection %) Circle from Iden Versio.
-Move Potency(Potency %) Cross from Captain Rex.
+Move Speed(Health %) Circle from Royal Guard.
+Move Critchance(Potency %) Cross from Iden Versio.
 
 Royal Guard - Default
 Move Health(Offense %) Square from Director Krennic.
 Move Health(Protection %) Arrow from Cere Junda.
 Move Health(Defense %) Diamond from Director Krennic.
 Move Health(Protection %) Triangle from Clone Wars Chewbacca.
-Move Health(Protection %) Circle from URoRRuR'R'R.
+Move Health(Protection %) Circle from Wrecker.
 Move Health(Protection %) Cross from Cere Junda.
 
+Paploo - Default
+Move Health(Offense %) Square from Geonosian Brood Alpha.
+Move Health(Speed) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from Geonosian Brood Alpha.
+Move Health(Defense %) Triangle from Vandor Chewbacca.
+Move Health(Health %) Circle from Mace Windu.
+Move Health(Tenacity %) Cross from Tusken Chieftain.
+
 First Order Stormtrooper - Default
-Move Defense(Offense %) Square from Range Trooper.
+Move Defense(Offense %) Square from Gungan Phalanx.
 Move Defense(Speed) Arrow from The Armorer.
-Move Defense(Defense %) Diamond from Kanan Jarrus.
-Move Defense(Protection %) Triangle from Sith Empire Trooper.
-Move Defense(Protection %) Circle from L3-37.
-Move Defense(Protection %) Cross from L3-37.
+Move Defense(Defense %) Diamond from Plo Koon.
+Move Defense(Protection %) Triangle from Darth Sion.
+Move Defense(Protection %) Circle from Darth Malak.
+Move Defense(Protection %) Cross from Range Trooper.
 
 Nightsister Zombie - Default
-Move Health(Offense %) Square from Vandor Chewbacca.
-Move Potency(Speed) Arrow from Captain Rex.
-Move Tenacity(Defense %) Diamond from Enfys Nest.
-Move Tenacity(Protection %) Triangle from Ninth Sister.
-Move Health(Protection %) Circle from Krrsantan.
-Move Critdamage(Protection %) Cross from Rebel Officer Leia Organa.
+Move Health(Offense %) Square from Captain Han Solo.
+Move Tenacity(Speed) Arrow from Mon Mothma.
+Move Health(Defense %) Diamond from Embo.
+Move Tenacity(Protection %) Triangle from C-3PO.
+Move Health(Protection %) Circle from C-3PO.
+Move Health(Protection %) Cross from Hondo Ohnaka.
 
 Geonosian Soldier - Default
-Move Critchance(Offense %) Square from First Order TIE Pilot.
+Move Critchance(Offense %) Square from First Order SF TIE Pilot.
 Move Critchance(Speed) Arrow from Aayla Secura.
-Move Critchance(Defense %) Diamond from Greedo.
-Move Critchance(Critical Damage %) Triangle from First Order TIE Pilot.
-Move Critchance(Protection %) Circle from Second Sister.
+Move Critchance(Defense %) Diamond from Qi'ra.
+Move Critchance(Critical Damage %) Triangle from Gungan Boomadier.
+Move Critchance(Protection %) Circle from First Order TIE Pilot.
 Move Critchance(Offense %) Cross from your unassigned mods.
 
 Snowtrooper - Default
-Move Critdamage(Offense %) Square from Sith Marauder.
+Move Critdamage(Offense %) Square from Boba Fett, Scion of Jango.
 Move Critdamage(Speed) Arrow from Gungan Boomadier.
-Move Critdamage(Defense %) Diamond from Captain Tarpals.
-Move Tenacity(Critical Damage %) Triangle from Gungan Boomadier.
-Move Health(Protection %) Circle from First Order Stormtrooper.
-Move Critdamage(Offense %) Cross from Captain Tarpals.
+Move Critdamage(Defense %) Diamond from Gungan Boomadier.
+Move Tenacity(Critical Damage %) Triangle from Captain Tarpals.
+Move Health(Protection %) Circle from Hunter.
+Move Critdamage(Offense %) Cross from Boba Fett, Scion of Jango.
 
 Tusken Warrior - Default
-Move Speed(Offense %) Square from Kyle Katarn.
-Move Speed(Speed) Arrow from your unassigned mods.
-Move Speed(Defense %) Diamond from TIE Fighter Pilot.
-Move Potency(Critical Damage %) Triangle from CT-21-0408 "Echo".
-Move Potency(Protection %) Circle from Hermit Yoda.
-Move Speed(Offense %) Cross from your unassigned mods.
+Move Speed(Offense %) Square from Cara Dune.
+Move Speed(Speed) Arrow from Qui-Gon Jinn.
+Move Defense(Defense %) Diamond from Chopper.
+Move Speed(Critical Damage %) Triangle from Embo.
+Move Health(Protection %) Circle from Cara Dune.
+Move Speed(Offense %) Cross from Qui-Gon Jinn.
 
 Tusken Chieftain - Default
-Move Speed(Offense %) Square from TIE Fighter Pilot.
+Move Health(Offense %) Square from Tusken Shaman.
 Move Health(Speed) Arrow from Old Daka.
-Move Speed(Defense %) Diamond from Admiral Trench.
-Move Health(Defense %) Triangle from Vandor Chewbacca.
-Move Speed(Health %) Circle from Mon Mothma.
-Move Speed(Tenacity %) Cross from Admiral Trench.
+Move Health(Defense %) Diamond from Nightsister Zombie.
+Move Tenacity(Health %) Triangle from Wampa.
+Move Health(Protection %) Circle from Darth Nihilus.
+Move Tenacity(Tenacity %) Cross from C-3PO.
 
 Ahsoka Tano (Fulcrum) - Default
-Move Critdamage(Offense %) Square from Sith Trooper.
+Move Critdamage(Offense %) Square from Sith Marauder.
 Move Critdamage(Speed) Arrow from Han Solo.
-Move Critchance(Defense %) Diamond from Tusken Warrior.
-Move Critchance(Critical Damage %) Triangle from Skiff Guard (Lando Calrissian).
+Move Critchance(Defense %) Diamond from Aayla Secura.
+Move Critchance(Critical Damage %) Triangle from Bo-Katan Kryze.
 Move Critdamage(Protection %) Circle from Captain Tarpals.
 Move Critdamage(Offense %) Cross from Sith Marauder.
 
 Amilyn Holdo - Default
-Move Health(Offense %) Square from Old Daka.
+Move Potency(Offense %) Square from Darth Sidious.
 Move Tenacity(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Darth Maul.
-Move Tenacity(Defense %) Triangle from Krrsantan.
-Move Potency(Health %) Circle from IG-88.
-Move Potency(Potency %) Cross from Colonel Starck.
+Move Defense(Defense %) Diamond from Obi-Wan Kenobi (Old Ben).
+Move Tenacity(Defense %) Triangle from Chopper.
+Move Potency(Health %) Circle from Kyle Katarn.
+Move Defense(Potency %) Cross from Obi-Wan Kenobi (Old Ben).
 
 Hondo Ohnaka - Default
-Move Health(Offense %) Square from Mace Windu.
+Move Offense(Offense %) Square from Mother Talzin.
 Move Health(Critical Avoidance %) Arrow from Bastila Shan (Fallen).
-Move Health(Defense %) Diamond from Mother Talzin.
-Move Health(Critical Damage %) Triangle from Boba Fett, Scion of Jango.
-Move Health(Protection %) Circle from Geonosian Brood Alpha.
+Move Offense(Defense %) Diamond from your unassigned mods.
+Move Offense(Critical Damage %) Triangle from Tusken Warrior.
+Move Offense(Protection %) Circle from your unassigned mods.
 Move Health(Offense %) Cross from TIE Fighter Pilot.
 
 Dengar - Default
 Move Critchance(Offense %) Square from Aayla Secura.
-Move Potency(Speed) Arrow from Boss Nass.
-Move Potency(Defense %) Diamond from Grand Moff Tarkin.
+Move Potency(Speed) Arrow from Bastila Shan.
 Move Potency(Critical Chance %) Triangle from Logray.
-Move Critchance(Protection %) Circle from Embo.
+Move Potency(Protection %) Circle from Obi-Wan Kenobi (Old Ben).
 Move Potency(Potency %) Cross from Grand Moff Tarkin.
 
 HK-47 - Default
-Move Potency(Offense %) Square from Iden Versio.
-Move Critdamage(Speed) Arrow from Captain Tarpals.
-Move Critdamage(Defense %) Diamond from Ki-Adi-Mundi.
-Move Critdamage(Offense %) Triangle from your unassigned mods.
-Move Potency(Protection %) Circle from Emperor Palpatine.
-Move Critdamage(Offense %) Cross from Boba Fett, Scion of Jango.
+Move Tenacity(Offense %) Square from Darth Nihilus.
+Move Speed(Speed) Arrow from your unassigned mods.
+Move Speed(Defense %) Diamond from TIE Fighter Pilot.
+Move Speed(Critical Damage %) Triangle from Chirrut Îmwe.
+Move Health(Protection %) Circle from Eeth Koth.
+Move Speed(Offense %) Cross from Great Mothers.
 
 Zam Wesell - Default
-Move Potency(Offense %) Square from First Order SF TIE Pilot.
-Move Potency(Speed) Arrow from Bastila Shan.
-Move Speed(Defense %) Diamond from Colonel Starck.
-Move Speed(Critical Damage %) Triangle from Colonel Starck.
-Move Speed(Protection %) Circle from Colonel Starck.
-Move Speed(Potency %) Cross from First Order Stormtrooper.
+Move Potency(Offense %) Square from Tech.
+Move Potency(Speed) Arrow from Tech.
+Move Critchance(Defense %) Diamond from Bistan.
+Move Critchance(Defense %) Triangle from Royal Guard.
+Move Potency(Protection %) Circle from Hermit Yoda.
+Move Potency(Potency %) Cross from Tusken Shaman.
 
 Cad Bane - Default
-Move Offense(Offense %) Square from your unassigned mods.
-Move Potency(Speed) Arrow from Grand Moff Tarkin.
-Move Potency(Defense %) Diamond from Tech.
-Move Offense(Critical Damage %) Triangle from Bo-Katan Kryze.
-Move Offense(Protection %) Circle from Wedge Antilles.
-Move Offense(Potency %) Cross from your unassigned mods.
+Move Potency(Offense %) Square from Iden Versio.
+Move Critdamage(Speed) Arrow from Boba Fett, Scion of Jango.
+Move Critdamage(Defense %) Diamond from Captain Tarpals.
+Move Potency(Critical Damage %) Triangle from CT-21-0408 "Echo".
+Move Critdamage(Protection %) Circle from Second Sister.
+Move Critdamage(Offense %) Cross from The Mandalorian.
 
 IG-88 - Default
-Move Critdamage(Offense %) Square from Biggs Darklighter.
-Move Critchance(Speed) Arrow from Rose Tico.
-Move Critdamage(Defense %) Diamond from Hunter.
+Move Critdamage(Offense %) Square from Hunter.
+Move Critdamage(Speed) Arrow from Captain Tarpals.
+Move Critdamage(Defense %) Diamond from First Order TIE Pilot.
 Move Critdamage(Critical Damage %) Triangle from Resistance Hero Poe.
-Move Critdamage(Protection %) Circle from First Order TIE Pilot.
+Move Critchance(Protection %) Circle from First Order Stormtrooper.
 Move Critchance(Offense %) Cross from your unassigned mods.
 
 CC-2224 "Cody" - Default
-Move Defense(Offense %) Square from Kanan Jarrus.
-Move Critchance(Speed) Arrow from Greedo.
-Move Critchance(Defense %) Diamond from Sith Empire Trooper.
-Move Defense(Critical Damage %) Triangle from Captain Phasma.
-Move Defense(Health %) Circle from Captain Phasma.
-Move Defense(Potency %) Cross from Tech.
+Move Speed(Offense %) Square from Cad Bane.
+Move Critchance(Speed) Arrow from Baze Malbus.
+Move Speed(Defense %) Diamond from Cad Bane.
+Move Speed(Critical Damage %) Triangle from Colonel Starck.
+Move Speed(Protection %) Circle from Colonel Starck.
+Move Critchance(Potency %) Cross from Greedo.
 
 Juhani - Default
-Move Defense(Offense %) Square from Shoretrooper.
-Move Potency(Protection %) Arrow from 50R-T.
-Move Potency(Defense %) Diamond from Iden Versio.
-Move Health(Protection %) Triangle from URoRRuR'R'R.
-Move Health(Protection %) Circle from Aurra Sing.
+Move Defense(Offense %) Square from Stormtrooper Han.
+Move Potency(Protection %) Arrow from Stormtrooper Han.
+Move Potency(Defense %) Diamond from URoRRuR'R'R.
+Move Tenacity(Protection %) Triangle from Ninth Sister.
+Move Potency(Protection %) Circle from Emperor Palpatine.
 Move Defense(Protection %) Cross from Gungan Phalanx.
 
 Kanan Jarrus - Default
-Move Health(Offense %) Square from Greedo.
+Move Health(Offense %) Square from Zaalbar.
 Move Health(Speed) Arrow from Geonosian Brood Alpha.
-Move Health(Defense %) Diamond from Nightsister Zombie.
+Move Health(Defense %) Diamond from Savage Opress.
 Move Health(Health %) Triangle from your unassigned mods.
-Move Health(Health %) Circle from Mace Windu.
+Move Health(Health %) Circle from Vandor Chewbacca.
 Move Health(Health %) Cross from Vandor Chewbacca.
 
 Death Trooper - Default
-Move Critchance(Offense %) Square from Rose Tico.
+Move Critchance(Offense %) Square from Zam Wesell.
 Move Critdamage(Speed) Arrow from Captain Phasma.
-Move Critdamage(Defense %) Diamond from Darth Talon.
+Move Critdamage(Defense %) Diamond from Sith Marauder.
 Move Critdamage(Critical Damage %) Triangle from Darth Talon.
 Move Critdamage(Protection %) Circle from Boba Fett, Scion of Jango.
 Move Critchance(Potency %) Cross from Bistan.
 
 Ezra Bridger - Default
-Move Speed(Offense %) Square from Zorii Bliss.
+Move Speed(Offense %) Square from TIE Fighter Pilot.
 Move Health(Speed) Arrow from Kylo Ren.
-Move Health(Defense %) Diamond from Chirrut Îmwe.
-Move Speed(Critical Damage %) Triangle from Bistan.
+Move Health(Defense %) Diamond from Skiff Guard (Lando Calrissian).
+Move Speed(Critical Damage %) Triangle from TIE Fighter Pilot.
 Move Speed(Health %) Circle from TIE Fighter Pilot.
 Move Speed(Offense %) Cross from your unassigned mods.
 
 Aayla Secura - Default
 Move Critchance(Offense %) Square from Dengar.
-Move Potency(Speed) Arrow from Colonel Starck.
-Move Critchance(Defense %) Diamond from Dengar.
+Move Potency(Speed) Arrow from Tusken Shaman.
+Move Potency(Defense %) Diamond from IG-88.
 Move Critchance(Critical Chance %) Triangle from Young Lando Calrissian.
 Move Critchance(Health %) Circle from your unassigned mods.
-Move Potency(Potency %) Cross from Darth Sidious.
+
+Ewok Elder - Default
+Move Health(Offense %) Square from your unassigned mods.
+Move Critchance(Speed) Arrow from Pao.
+Move Tenacity(Defense %) Diamond from Darth Nihilus.
+Move Tenacity(Critical Chance %) Triangle from Darth Nihilus.
+Move Health(Health %) Circle from your unassigned mods.
+Move Critdamage(Tenacity %) Cross from Commander Luke Skywalker.
 
 Young Lando Calrissian - Default
 Move Potency(Offense %) Square from your unassigned mods.
-Move Speed(Speed) Arrow from Admiral Trench.
-Move Speed(Defense %) Diamond from Poe Dameron.
-Move Speed(Critical Damage %) Triangle from TIE Fighter Pilot.
+Move Potency(Speed) Arrow from Logray.
+Move Speed(Defense %) Diamond from Colonel Starck.
+Move Speed(Critical Damage %) Triangle from Hondo Ohnaka.
 Move Speed(Health %) Circle from your unassigned mods.
-Move Potency(Offense %) Cross from Rey (Scavenger).
+Move Speed(Potency %) Cross from IG-88.
 
 Hera Syndulla - Default
-Move Health(Offense %) Square from Tusken Shaman.
+Move Health(Offense %) Square from Finn.
 Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Luminara Unduli.
-Move Tenacity(Critical Chance %) Triangle from Darth Nihilus.
-Move Health(Health %) Circle from Vandor Chewbacca.
-Move Tenacity(Tenacity %) Cross from Amilyn Holdo.
+Move Health(Defense %) Diamond from Merrin.
+Move Health(Health %) Triangle from your unassigned mods.
+Move Health(Health %) Circle from Ewok Elder.
+Move Health(Tenacity %) Cross from Geonosian Brood Alpha.
 
 Sabine Wren - Default
-Move Speed(Offense %) Square from Bistan.
-Move Critchance(Speed) Arrow from HK-47.
-Move Speed(Defense %) Diamond from Kyle Katarn.
-Move Speed(Critical Damage %) Triangle from Embo.
-Move Critchance(Protection %) Circle from Ezra Bridger.
-Move Speed(Offense %) Cross from your unassigned mods.
+Move Offense(Offense %) Square from your unassigned mods.
+Move Critchance(Speed) Arrow from Rose Tico.
+Move Critchance(Defense %) Diamond from Tusken Warrior.
+Move Offense(Critical Damage %) Triangle from Ezra Bridger.
+Move Offense(Protection %) Circle from your unassigned mods.
+Move Offense(Potency %) Cross from Mother Talzin.
 
 Garazeb "Zeb" Orrelios - Default
-Move Health(Offense %) Square from First Order Executioner.
+Move Health(Offense %) Square from First Order Stormtrooper.
 Move Health(Speed) Arrow from Night Trooper.
 Move Health(Defense %) Diamond from Ima-Gun Di.
 Move Health(Health %) Triangle from your unassigned mods.
@@ -1317,145 +1328,152 @@ Move Health(Health %) Circle from Princess Kneesaa.
 Move Health(Potency %) Cross from Mission Vao.
 
 Pao - Default
-Move Critchance(Offense %) Square from Mission Vao.
+Move Critdamage(Offense %) Square from Sith Trooper.
 Move Critdamage(Speed) Arrow from Sith Trooper.
-Move Critdamage(Defense %) Diamond from First Order TIE Pilot.
-Move Critdamage(Critical Damage %) Triangle from Darth Sidious.
-Move Critchance(Protection %) Circle from your unassigned mods.
-Move Critdamage(Tenacity %) Cross from Commander Luke Skywalker.
+Move Critdamage(Defense %) Diamond from Jyn Erso.
+Move Critchance(Critical Damage %) Triangle from First Order SF TIE Pilot.
+Move Critchance(Protection %) Circle from Imperial Super Commando.
+Move Critdamage(Protection %) Cross from Rebel Officer Leia Organa.
 
 Jawa Scavenger - Default
-Move Critchance(Offense %) Square from your unassigned mods.
-Move Critchance(Speed) Arrow from Dengar.
-Move Critchance(Defense %) Diamond from Bistan.
+Move Critchance(Offense %) Square from CC-2224 "Cody".
+Move Critchance(Speed) Arrow from Greedo.
+Move Critchance(Defense %) Diamond from Old Daka.
 Move Critchance(Critical Chance %) Triangle from your unassigned mods.
-Move Critchance(Health %) Circle from your unassigned mods.
-Move Critchance(Potency %) Cross from Aayla Secura.
+Move Potency(Protection %) Circle from Greedo.
+Move Potency(Potency %) Cross from your unassigned mods.
 
 Chief Nebit - Default
 Move Health(Offense %) Square from Savage Opress.
-Move Health(Speed) Arrow from Vandor Chewbacca.
+Move Health(Speed) Arrow from Captain Han Solo.
 Move Health(Defense %) Diamond from Zaalbar.
-Move Health(Health %) Triangle from Captain Han Solo.
-Move Health(Health %) Circle from Old Daka.
+Move Health(Health %) Triangle from Ewok Elder.
+Move Health(Health %) Circle from Ugnaught.
 Move Health(Health %) Cross from Princess Kneesaa.
 
 Admiral Raddus - Default
-Move Speed(Offense %) Square from Merrin.
-Move Speed(Speed) Arrow from BB-8.
-Move Speed(Defense %) Diamond from Cara Dune.
-Move Health(Protection %) Triangle from Zorii Bliss.
-Move Speed(Protection %) Circle from Zorii Bliss.
-Move Health(Protection %) Cross from Hondo Ohnaka.
+Move Speed(Offense %) Square from Hondo Ohnaka.
+Move Speed(Speed) Arrow from Hondo Ohnaka.
+Move Speed(Defense %) Diamond from Tusken Chieftain.
+Move Health(Protection %) Triangle from Cara Dune.
+Move Health(Protection %) Circle from Merrin.
+Move Speed(Protection %) Cross from Cara Dune.
 
 Iden Versio - Default
-Move Potency(Offense %) Square from Grand Moff Tarkin.
-Move Potency(Speed) Arrow from Obi-Wan Kenobi (Old Ben).
-Move Potency(Defense %) Diamond from your unassigned mods.
-Move Potency(Critical Damage %) Triangle from First Order SF TIE Pilot.
-Move Potency(Health %) Circle from your unassigned mods.
+Move Potency(Offense %) Square from IG-88.
+Move Potency(Speed) Arrow from Teebo.
+Move Potency(Defense %) Diamond from Death Trooper (Peridea).
+Move Potency(Critical Damage %) Triangle from Darth Sidious.
+Move Potency(Health %) Circle from Death Trooper (Peridea).
 Move Potency(Potency %) Cross from Canderous Ordo.
 
 Wampa - Default
-Move Critdamage(Offense %) Square from Kylo Ren.
-Move Critdamage(Speed) Arrow from Resistance Hero Poe.
-Move Critdamage(Defense %) Diamond from Captain Phasma.
-Move Critdamage(Critical Damage %) Triangle from Threepio & Chewie.
+Move Critchance(Offense %) Square from Mission Vao.
+Move Critchance(Speed) Arrow from HK-47.
+Move Health(Defense %) Diamond from Snowtrooper.
+Move Health(Critical Damage %) Triangle from Boba Fett, Scion of Jango.
 Move Health(Health %) Circle from Nightsister Spirit.
 Move Health(Offense %) Cross from your unassigned mods.
 
 Sana Starros - Default
-Move Speed(Offense %) Square from First Order Stormtrooper.
-Move Speed(Speed) Arrow from Tarfful.
-Move Critchance(Defense %) Diamond from Skiff Guard (Lando Calrissian).
-Move Speed(Critical Damage %) Triangle from Tusken Warrior.
-Move Health(Protection %) Circle from Cad Bane.
-Move Speed(Potency %) Cross from Zam Wesell.
+Move Speed(Offense %) Square from Kyle Katarn.
+Move Potency(Speed) Arrow from Eeth Koth.
+Move Speed(Defense %) Diamond from Cara Dune.
+Move Speed(Critical Damage %) Triangle from Kyle Katarn.
+Move Speed(Protection %) Circle from Embo.
+Move Potency(Protection %) Cross from Eeth Koth.
 
 Kuiil - Default
-Move Speed(Offense %) Square from Darth Maul.
+Move Speed(Offense %) Square from Merrin.
 Move Speed(Speed) Arrow from Darth Maul.
-Move Speed(Defense %) Diamond from Resistance Pilot.
-Move Potency(Offense %) Triangle from Canderous Ordo.
-Move Speed(Protection %) Circle from Poe Dameron.
-Move Potency(Protection %) Cross from Tusken Chieftain.
+Move Health(Defense %) Diamond from Zorii Bliss.
+Move Speed(Health %) Triangle from your unassigned mods.
+Move Health(Protection %) Circle from Hondo Ohnaka.
+Move Speed(Potency %) Cross from Zam Wesell.
 
 IG-11 - Default
 Move Health(Offense %) Square from Nightsister Acolyte.
-Move Health(Speed) Arrow from Zaalbar.
+Move Health(Speed) Arrow from Princess Kneesaa.
 Move Health(Defense %) Diamond from Jawa Scavenger.
-Move Health(Health %) Triangle from Ewok Elder.
+Move Health(Health %) Triangle from your unassigned mods.
 Move Health(Health %) Circle from Nightsister Zombie.
 Move Health(Health %) Cross from Chief Nebit.
 
 Darth Maul - Default
-Move Potency(Offense %) Square from Obi-Wan Kenobi (Old Ben).
-Move Speed(Speed) Arrow from Snowtrooper.
-Move Speed(Defense %) Diamond from your unassigned mods.
-Move Speed(Offense %) Triangle from Merrin.
-Move Speed(Protection %) Circle from Bistan.
+Move Speed(Offense %) Square from Chirrut Îmwe.
+Move Speed(Speed) Arrow from Nightsister Spirit.
+Move Speed(Defense %) Diamond from Kit Fisto.
+Move Potency(Offense %) Triangle from Tech.
+Move Speed(Protection %) Circle from Zorii Bliss.
 Move Potency(Potency %) Cross from your unassigned mods.
 
 Cassian Andor - Default
-Move Potency(Offense %) Square from Tech.
-Move Potency(Speed) Arrow from T3-M4.
-Move Potency(Defense %) Diamond from Obi-Wan Kenobi (Old Ben).
-Move Potency(Protection %) Triangle from Tusken Shaman.
-Move Potency(Protection %) Circle from Obi-Wan Kenobi (Old Ben).
-Move Potency(Potency %) Cross from Logray.
+Move Potency(Offense %) Square from Obi-Wan Kenobi (Old Ben).
+Move Potency(Speed) Arrow from URoRRuR'R'R.
+Move Potency(Defense %) Diamond from Tech.
+Move Potency(Protection %) Triangle from 50R-T.
+Move Potency(Protection %) Circle from Poe Dameron.
+
+Princess Kneesaa - Default
+Move Potency(Offense %) Square from Greedo.
+Move Critchance(Speed) Arrow from Dengar.
+Move Health(Defense %) Diamond from Tusken Shaman.
+Move Health(Critical Chance %) Triangle from Jedi Consular.
+Move Critchance(Health %) Circle from your unassigned mods.
+Move Potency(Potency %) Cross from Qi'ra.
 
 Sith Assassin - Default
-Move Speed(Offense %) Square from Chirrut Îmwe.
-Move Speed(Speed) Arrow from Morgan Elsbeth.
-Move Speed(Defense %) Diamond from Zorii Bliss.
+Move Speed(Offense %) Square from Zorii Bliss.
+Move Speed(Speed) Arrow from Snowtrooper.
+Move Speed(Defense %) Diamond from Hondo Ohnaka.
 Move Potency(Offense %) Triangle from Imperial Probe Droid.
-Move Speed(Protection %) Circle from your unassigned mods.
-Move Potency(Defense %) Cross from Sith Empire Trooper.
+Move Speed(Protection %) Circle from Zam Wesell.
+Move Potency(Defense %) Cross from First Order Stormtrooper.
 
 Savage Opress - Default
 Move Health(Offense %) Square from Princess Kneesaa.
-Move Defense(Health %) Arrow from Sith Empire Trooper.
-Move Defense(Defense %) Diamond from Gar Saxon.
+Move Health(Health %) Arrow from your unassigned mods.
+Move Defense(Defense %) Diamond from Royal Guard.
 Move Health(Health %) Triangle from Zaalbar.
-Move Health(Health %) Circle from Night Trooper.
+Move Defense(Health %) Circle from Scarif Rebel Pathfinder.
 Move Health(Health %) Cross from your unassigned mods.
 
 Chirrut Îmwe - Default
 Move Critdamage(Offense %) Square from Threepio & Chewie.
-Move Critdamage(Speed) Arrow from Ki-Adi-Mundi.
-Move Critdamage(Defense %) Diamond from Sith Marauder.
-Move Health(Critical Damage %) Triangle from Aurra Sing.
-Move Health(Protection %) Circle from Aayla Secura.
+Move Tenacity(Speed) Arrow from Wedge Antilles.
+Move Critdamage(Defense %) Diamond from Resistance Hero Poe.
+Move Critdamage(Critical Damage %) Triangle from Threepio & Chewie.
+Move Tenacity(Protection %) Circle from Resistance Pilot.
 Move Critdamage(Tenacity %) Cross from Threepio & Chewie.
 
 T3-M4 - Default
 Move Speed(Offense %) Square from Embo.
-Move Speed(Speed) Arrow from Eeth Koth.
-Move Speed(Defense %) Diamond from Zam Wesell.
-Move Health(Critical Chance %) Triangle from Jedi Consular.
-Move Health(Protection %) Circle from Merrin.
-Move Speed(Potency %) Cross from Darth Maul.
+Move Health(Speed) Arrow from your unassigned mods.
+Move Speed(Defense %) Diamond from Resistance Pilot.
+Move Speed(Offense %) Triangle from Merrin.
+Move Health(Protection %) Circle from Ninth Sister.
+Move Speed(Potency %) Cross from your unassigned mods.
 
 Qui-Gon Jinn - Default
-Move Critdamage(Offense %) Square from Hunter.
+Move Critdamage(Offense %) Square from Darth Talon.
 Move Critdamage(Speed) Arrow from Darth Sidious.
-Move Critchance(Defense %) Diamond from Aayla Secura.
-Move Critdamage(Critical Damage %) Triangle from Hunter.
-Move Critdamage(Health %) Circle from Geonosian Soldier.
-Move Critchance(Potency %) Cross from Greedo.
+Move Critdamage(Defense %) Diamond from Boba Fett.
+Move Health(Critical Damage %) Triangle from Captain Phasma.
+Move Health(Protection %) Circle from Aayla Secura.
+Move Critdamage(Potency %) Cross from Darth Sidious.
 
 Princess Leia - Default
-Move Critchance(Offense %) Square from Tusken Raider.
-Move Critchance(Speed) Arrow from Ezra Bridger.
-Move Critdamage(Defense %) Diamond from Gungan Boomadier.
-Move Critdamage(Critical Damage %) Triangle from Second Sister.
-Move Critdamage(Health %) Circle from Jyn Erso.
+Move Critdamage(Offense %) Square from Kylo Ren.
+Move Critdamage(Speed) Arrow from Skiff Guard (Lando Calrissian).
+Move Critchance(Defense %) Diamond from Ezra Bridger.
+Move Critdamage(Critical Damage %) Triangle from First Order TIE Pilot.
+Move Critchance(Protection %) Circle from Ezra Bridger.
 Move Critdamage(Offense %) Cross from Skiff Guard (Lando Calrissian).
 
 First Order TIE Pilot - Default
 Move Health(Offense %) Square from Coruscant Underworld Police.
 Move Health(Speed) Arrow from Talia.
-Move Health(Defense %) Diamond from Qui-Gon Jinn.
+Move Health(Defense %) Diamond from Chirrut Îmwe.
 Move Health(Critical Damage %) Triangle from Asajj Ventress.
 Move Health(Health %) Circle from your unassigned mods.
 Move Health(Offense %) Cross from Captain Enoch.
@@ -1463,351 +1481,374 @@ Move Health(Offense %) Cross from Captain Enoch.
 Omega - Default
 Move Offense(Offense %) Square from Gar Saxon.
 Move Critdamage(Offense %) Arrow from your unassigned mods.
+Move Speed(Defense %) Diamond from Great Mothers.
 Move Offense(Offense %) Triangle from your unassigned mods.
-Move Offense(Protection %) Circle from Kit Fisto.
+Move Offense(Protection %) Circle from your unassigned mods.
 Move Offense(Potency %) Cross from your unassigned mods.
 
 Carth Onasi - Default
-Move Critchance(Offense %) Square from Wedge Antilles.
-Move Speed(Speed) Arrow from your unassigned mods.
-Move Critchance(Defense %) Diamond from Death Trooper (Peridea).
+Move Critchance(Offense %) Square from your unassigned mods.
+Move Critchance(Speed) Arrow from Ezra Bridger.
+Move Speed(Defense %) Diamond from Kyle Katarn.
 Move Speed(Critical Damage %) Triangle from Zam Wesell.
 Move Speed(Health %) Circle from Bodhi Rook.
 Move Speed(Potency %) Cross from your unassigned mods.
 
 Stormtrooper - Default
-Move Defense(Offense %) Square from B2 Super Battle Droid.
-Move Defense(Critical Avoidance %) Arrow from Sana Starros.
-Move Defense(Defense %) Diamond from Wrecker.
+Move Defense(Offense %) Square from Chopper.
+Move Defense(Critical Avoidance %) Arrow from Kylo Ren (Unmasked).
+Move Defense(Defense %) Diamond from L3-37.
 Move Defense(Defense %) Triangle from B2 Super Battle Droid.
-Move Defense(Protection %) Circle from Kanan Jarrus.
-Move Defense(Defense %) Cross from B2 Super Battle Droid.
-
-Chopper - Default
-Move Health(Offense %) Square from Zaalbar.
-Move Health(Speed) Arrow from Captain Han Solo.
-Move Health(Defense %) Diamond from your unassigned mods.
-Move Health(Health %) Triangle from your unassigned mods.
-Move Health(Health %) Circle from Ugnaught.
-Move Health(Health %) Cross from your unassigned mods.
-
-URoRRuR'R'R - Default
-Move Health(Offense %) Square from Cad Bane.
-Move Potency(Speed) Arrow from Iden Versio.
-Move Health(Defense %) Diamond from First Order Stormtrooper.
-Move Potency(Protection %) Triangle from 50R-T.
-Move Health(Protection %) Circle from Tusken Shaman.
-Move Health(Protection %) Cross from Zorii Bliss.
-
-Clone Sergeant - Phase I - Default
-Move Critdamage(Offense %) Square from IG-88.
-Move Critdamage(Speed) Arrow from Skiff Guard (Lando Calrissian).
-Move Critdamage(Defense %) Diamond from Resistance Hero Poe.
-Move Critchance(Critical Damage %) Triangle from Geonosian Soldier.
-Move Critchance(Protection %) Circle from Magmatrooper.
-Move Critdamage(Offense %) Cross from Jyn Erso.
-
-Tusken Raider - Default
-Move Potency(Offense %) Square from your unassigned mods.
-Move Offense(Protection %) Arrow from your unassigned mods.
-Move Potency(Defense %) Diamond from your unassigned mods.
-Move Offense(Critical Damage %) Triangle from Sith Trooper.
-Move Offense(Protection %) Circle from your unassigned mods.
-Move Offense(Potency %) Cross from Wedge Antilles.
-
-Tusken Shaman - Default
-Move Potency(Offense %) Square from Darth Sidious.
-Move Potency(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Plo Koon.
-Move Potency(Health %) Triangle from your unassigned mods.
-Move Health(Protection %) Circle from Mother Talzin.
-Move Potency(Potency %) Cross from Imperial Probe Droid.
+Move Defense(Protection %) Circle from L3-37.
+Move Defense(Defense %) Cross from Sana Starros.
 
 K-2SO - Default
 Move Tenacity(Offense %) Square from Ninth Sister.
 Move Tenacity(Speed) Arrow from Wampa.
 Move Tenacity(Defense %) Diamond from Mon Mothma.
-Move Tenacity(Protection %) Triangle from your unassigned mods.
-Move Health(Protection %) Circle from Tusken Raider.
-Move Health(Tenacity %) Cross from Geonosian Brood Alpha.
+Move Tenacity(Protection %) Triangle from Sun Fac.
+Move Tenacity(Protection %) Circle from Sun Fac.
+
+Chopper - Default
+Move Health(Offense %) Square from First Order Executioner.
+Move Health(Speed) Arrow from Jawa Engineer.
+Move Health(Defense %) Diamond from Luminara Unduli.
+Move Health(Defense %) Triangle from Nightsister Zombie.
+Move Health(Health %) Circle from Captain Enoch.
+Move Health(Health %) Cross from your unassigned mods.
+
+URoRRuR'R'R - Default
+Move Speed(Offense %) Square from Qui-Gon Jinn.
+Move Speed(Speed) Arrow from BB-8.
+Move Health(Defense %) Diamond from Captain Phasma.
+Move Speed(Protection %) Triangle from Zorii Bliss.
+Move Health(Protection %) Circle from Finn.
+Move Speed(Protection %) Cross from Kyle Katarn.
+
+Clone Sergeant - Phase I - Default
+Move Potency(Offense %) Square from Death Trooper (Peridea).
+Move Critdamage(Speed) Arrow from Resistance Hero Poe.
+Move Critdamage(Defense %) Diamond from Darth Sidious.
+Move Critdamage(Critical Damage %) Triangle from Hunter.
+Move Critdamage(Health %) Circle from Jyn Erso.
+Move Potency(Offense %) Cross from Rey (Scavenger).
+
+Tusken Raider - Default
+Move Critdamage(Offense %) Square from First Order TIE Pilot.
+Move Critdamage(Speed) Arrow from Ki-Adi-Mundi.
+Move Critdamage(Defense %) Diamond from Asajj Ventress.
+Move Critchance(Critical Damage %) Triangle from Geonosian Soldier.
+Move Critchance(Protection %) Circle from CC-2224 "Cody".
+Move Critdamage(Offense %) Cross from Geonosian Spy.
+
+Tusken Shaman - Default
+Move Potency(Offense %) Square from Poe Dameron.
+Move Speed(Speed) Arrow from Captain Enoch.
+Move Speed(Defense %) Diamond from Rose Tico.
+Move Speed(Health %) Triangle from Great Mothers.
+Move Potency(Health %) Circle from your unassigned mods.
+Move Speed(Potency %) Cross from your unassigned mods.
 
 Scarif Rebel Pathfinder - Default
-Move Defense(Offense %) Square from Chopper.
-Move Defense(Speed) Arrow from Savage Opress.
+Move Defense(Offense %) Square from Kanan Jarrus.
+Move Defense(Speed) Arrow from Darth Sion.
 Move Defense(Defense %) Diamond from Baze Malbus.
-Move Defense(Defense %) Triangle from L3-37.
-Move Defense(Health %) Circle from IG-100 MagnaGuard.
+Move Defense(Defense %) Triangle from Plo Koon.
+Move Defense(Health %) Circle from Savage Opress.
 Move Defense(Health %) Cross from IG-100 MagnaGuard.
 
 Hoth Rebel Scout - Default
-Move Speed(Offense %) Square from Eeth Koth.
-Move Speed(Speed) Arrow from Princess Leia.
-Move Speed(Defense %) Diamond from Bodhi Rook.
+Move Speed(Offense %) Square from Rose Tico.
+Move Speed(Speed) Arrow from your unassigned mods.
+Move Speed(Defense %) Diamond from Poe Dameron.
 Move Potency(Critical Damage %) Triangle from Grand Moff Tarkin.
-Move Speed(Protection %) Circle from Tusken Warrior.
-Move Potency(Potency %) Cross from your unassigned mods.
+Move Speed(Protection %) Circle from Snowtrooper.
+Move Potency(Offense %) Cross from Ezra Bridger.
 
 Dathcha - Default
-Move Critdamage(Offense %) Square from Gungan Boomadier.
-Move Critchance(Speed) Arrow from Luke Skywalker (Farmboy).
-Move Critdamage(Defense %) Diamond from Boba Fett.
-Move Critdamage(Critical Damage %) Triangle from Biggs Darklighter.
-Move Critdamage(Protection %) Circle from Skiff Guard (Lando Calrissian).
+Move Critchance(Offense %) Square from Jyn Erso.
+Move Critdamage(Speed) Arrow from First Order TIE Pilot.
+Move Critdamage(Defense %) Diamond from Aurra Sing.
+Move Critdamage(Critical Damage %) Triangle from Second Sister.
+Move Critdamage(Health %) Circle from Geonosian Soldier.
 Move Critchance(Potency %) Cross from your unassigned mods.
 
 Jedi Knight Guardian - Default
-Move Health(Offense %) Square from Stormtrooper Han.
-Move Health(Speed) Arrow from Jawa Engineer.
-Move Health(Defense %) Diamond from Scarif Rebel Pathfinder.
-Move Health(Defense %) Triangle from Savage Opress.
-Move Health(Protection %) Circle from Luminara Unduli.
+Move Health(Offense %) Square from your unassigned mods.
+Move Potency(Speed) Arrow from Ugnaught.
+Move Health(Defense %) Diamond from Juhani.
+Move Potency(Protection %) Triangle from URoRRuR'R'R.
+Move Health(Protection %) Circle from Geonosian Brood Alpha.
 Move Health(Potency %) Cross from Jawa Scavenger.
 
 Visas Marr - Default
 Move Health(Offense %) Square from Princess Leia.
 Move Health(Speed) Arrow from Asajj Ventress.
-Move Health(Defense %) Diamond from Snowtrooper.
+Move Health(Defense %) Diamond from CC-2224 "Cody".
 Move Health(Critical Chance %) Triangle from Geonosian Brood Alpha.
-Move Health(Health %) Circle from Ewok Elder.
+Move Health(Health %) Circle from Teebo.
 Move Health(Health %) Cross from Nightsister Acolyte.
 
 Imperial Probe Droid - Default
-Move Health(Offense %) Square from Zam Wesell.
+Move Health(Offense %) Square from Stormtrooper.
 Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from your unassigned mods.
-Move Health(Protection %) Triangle from Tusken Raider.
-Move Health(Protection %) Circle from Darth Maul.
+Move Health(Defense %) Diamond from Night Trooper.
+Move Health(Protection %) Triangle from Luminara Unduli.
+Move Health(Protection %) Circle from Captain Han Solo.
 Move Health(Protection %) Cross from Jedi Consular.
 
 Greedo - Default
 Move Critchance(Offense %) Square from Carth Onasi.
 Move Critchance(Speed) Arrow from Geonosian Soldier.
-Move Critchance(Defense %) Diamond from Tusken Raider.
+Move Critchance(Defense %) Diamond from Zam Wesell.
 Move Critchance(Critical Chance %) Triangle from CC-2224 "Cody".
 Move Critchance(Health %) Circle from your unassigned mods.
 Move Critchance(Protection %) Cross from Second Sister.
 
+Logray - Default
+Move Potency(Offense %) Square from Grand Moff Tarkin.
+Move Potency(Speed) Arrow from your unassigned mods.
+Move Potency(Defense %) Diamond from your unassigned mods.
+Move Health(Critical Damage %) Triangle from Geonosian Spy.
+Move Health(Protection %) Circle from Mother Talzin.
+
 IG-12 & Grogu - Default
 Move Health(Offense %) Square from Chief Nebit.
 Move Health(Speed) Arrow from Dathcha.
-Move Health(Defense %) Diamond from Night Trooper.
+Move Health(Defense %) Diamond from Qui-Gon Jinn.
 Move Health(Offense %) Triangle from Princess Kneesaa.
-Move Health(Health %) Circle from Captain Enoch.
+Move Health(Health %) Circle from Coruscant Underworld Police.
 Move Health(Health %) Cross from Zaalbar.
 
 Biggs Darklighter - Default
-Move Critchance(Offense %) Square from Finn.
-Move Critdamage(Speed) Arrow from Second Sister.
-Move Critdamage(Defense %) Diamond from Jyn Erso.
-Move Critchance(Critical Damage %) Triangle from Boba Fett.
-Move Critdamage(Protection %) Circle from Boba Fett.
-Move Critdamage(Offense %) Cross from First Order SF TIE Pilot.
+Move Critchance(Offense %) Square from Second Sister.
+Move Critchance(Speed) Arrow from Luke Skywalker (Farmboy).
+Move Critdamage(Defense %) Diamond from First Order SF TIE Pilot.
+Move Critdamage(Critical Damage %) Triangle from Skiff Guard (Lando Calrissian).
+Move Critdamage(Protection %) Circle from Captain Phasma.
+Move Critdamage(Offense %) Cross from Kylo Ren.
 
 Jawa Engineer - Default
-Move Potency(Offense %) Square from Cassian Andor.
-Move Potency(Speed) Arrow from Tusken Shaman.
-Move Potency(Defense %) Diamond from your unassigned mods.
+Move Potency(Offense %) Square from your unassigned mods.
+Move Potency(Speed) Arrow from Grand Moff Tarkin.
+Move Potency(Defense %) Diamond from Logray.
 Move Potency(Health %) Triangle from Mob Enforcer.
-Move Potency(Health %) Circle from your unassigned mods.
+Move Potency(Health %) Circle from Ima-Gun Di.
 Move Potency(Potency %) Cross from Nightsister Spirit.
 
-Aurra Sing - hSTR Phase 3
-Move Critdamage(Offense %) Square from Boba Fett, Scion of Jango.
-Move Critdamage(Speed) Arrow from Boba Fett.
-Move Critdamage(Defense %) Diamond from Cassian Andor.
-Move Tenacity(Critical Damage %) Triangle from Omega.
-Move Tenacity(Protection %) Circle from Resistance Pilot.
-Move Critdamage(Offense %) Cross from HK-47.
+Aurra Sing - Default
+Move Critdamage(Offense %) Square from Captain Tarpals.
+Move Critdamage(Speed) Arrow from Cassian Andor.
+Move Potency(Defense %) Diamond from your unassigned mods.
+Move Critdamage(Offense %) Triangle from your unassigned mods.
+Move Critdamage(Protection %) Circle from Cassian Andor.
+Move Potency(Offense %) Cross from your unassigned mods.
 
 Rebel Officer Leia Organa - Default
 Move Potency(Offense %) Square from Logray.
-Move Potency(Speed) Arrow from Logray.
-Move Potency(Defense %) Diamond from T3-M4.
+Move Potency(Speed) Arrow from your unassigned mods.
+Move Potency(Defense %) Diamond from Grand Moff Tarkin.
 Move Potency(Critical Damage %) Triangle from Cassian Andor.
 Move Potency(Protection %) Circle from Logray.
 Move Potency(Potency %) Cross from your unassigned mods.
 
 Poe Dameron - Default
-Move Potency(Speed) Arrow from URoRRuR'R'R.
-Move Potency(Defense %) Diamond from Logray.
-Move Speed(Protection %) Circle from your unassigned mods.
-Move Speed(Potency %) Cross from your unassigned mods.
+Move Speed(Offense %) Square from Admiral Ackbar.
+Move Speed(Speed) Arrow from Tusken Raider.
+Move Speed(Defense %) Diamond from your unassigned mods.
+Move Potency(Protection %) Circle from Grand Moff Tarkin.
+Move Potency(Potency %) Cross from Imperial Probe Droid.
 
 First Order SF TIE Pilot - Default
-Move Critdamage(Offense %) Square from Captain Phasma.
-Move Critchance(Speed) Arrow from Ewok Scout.
-Move Critdamage(Defense %) Diamond from IG-88.
-Move Critdamage(Offense %) Triangle from your unassigned mods.
-Move Critdamage(Protection %) Circle from Cassian Andor.
-Move Critchance(Offense %) Cross from your unassigned mods.
+Move Critchance(Offense %) Square from Rey (Scavenger).
+Move Offense(Protection %) Arrow from your unassigned mods.
+Move Critchance(Defense %) Diamond from Wicket.
+Move Offense(Critical Damage %) Triangle from Omega.
+Move Offense(Protection %) Circle from Mission Vao.
+Move Offense(Potency %) Cross from your unassigned mods.
 
 Resistance Trooper - Default
-Move Critchance(Offense %) Square from Young Lando Calrissian.
-Move Critchance(Offense %) Arrow from your unassigned mods.
-Move Critdamage(Defense %) Diamond from Geonosian Soldier.
+Move Critdamage(Offense %) Square from Boba Fett.
+Move Critchance(Offense %) Arrow from Imperial Super Commando.
+Move Critdamage(Defense %) Diamond from your unassigned mods.
 Move Critchance(Critical Chance %) Triangle from Nightsister Initiate.
-Move Critchance(Protection %) Circle from your unassigned mods.
-Move Health(Offense %) Cross from Talia.
+Move Critdamage(Protection %) Circle from Boba Fett.
+Move Critdamage(Offense %) Cross from HK-47.
 
 Magmatrooper - Default
-Move Potency(Offense %) Square from CC-2224 "Cody".
-Move Critchance(Speed) Arrow from Death Trooper (Peridea).
-Move Health(Defense %) Diamond from Tusken Shaman.
+Move Critdamage(Offense %) Square from Captain Phasma.
+Move Critdamage(Speed) Arrow from Second Sister.
+Move Critdamage(Defense %) Diamond from Kylo Ren.
 Move Critchance(Critical Damage %) Triangle from Greedo.
-Move Health(Protection %) Circle from Dengar.
-Move Potency(Offense %) Cross from Ezra Bridger.
+Move Critdamage(Protection %) Circle from First Order SF TIE Pilot.
+Move Critchance(Offense %) Cross from your unassigned mods.
 
 Talia - Default
-Move Speed(Offense %) Square from Omega.
-Move Critchance(Speed) Arrow from Nightsister Initiate.
-Move Speed(Defense %) Diamond from Veteran Smuggler Han Solo.
-Move Speed(Critical Damage %) Triangle from Darth Maul.
-Move Critchance(Health %) Circle from Nightsister Initiate.
-Move Speed(Defense %) Cross from Royal Guard.
+Move Speed(Offense %) Square from your unassigned mods.
+Move Speed(Speed) Arrow from Tarfful.
+Move Speed(Defense %) Diamond from Bodhi Rook.
+Move Speed(Critical Damage %) Triangle from Kit Fisto.
+Move Defense(Protection %) Circle from Stormtrooper Han.
 
 Nightsister Acolyte - Default
-Move Critchance(Offense %) Square from Rey (Scavenger).
-Move Critchance(Speed) Arrow from Young Lando Calrissian.
-Move Critchance(Defense %) Diamond from Wicket.
+Move Speed(Offense %) Square from your unassigned mods.
+Move Critchance(Speed) Arrow from Ewok Scout.
+Move Speed(Defense %) Diamond from Tusken Raider.
 Move Critchance(Critical Damage %) Triangle from HK-47.
-Move Defense(Health %) Circle from your unassigned mods.
-Move Health(Offense %) Cross from your unassigned mods.
+Move Speed(Protection %) Circle from Rose Tico.
+Move Speed(Defense %) Cross from Cad Bane.
 
 Bistan - Default
-Move Speed(Offense %) Square from Tusken Warrior.
-Move Potency(Speed) Arrow from Teebo.
-Move Speed(Defense %) Diamond from your unassigned mods.
-Move Speed(Critical Damage %) Triangle from Chirrut Îmwe.
-Move Speed(Protection %) Circle from Young Han Solo.
-Move Potency(Offense %) Cross from your unassigned mods.
+Move Critdamage(Offense %) Square from Resistance Hero Poe.
+Move Critchance(Speed) Arrow from Death Trooper (Peridea).
+Move Critdamage(Defense %) Diamond from Cassian Andor.
+Move Critchance(Critical Damage %) Triangle from Rose Tico.
+Move Critdamage(Health %) Circle from Asajj Ventress.
+Move Critdamage(Potency %) Cross from Resistance Trooper.
 
 Jawa - Default
-Move Critdamage(Offense %) Square from Asajj Ventress.
-Move Critdamage(Speed) Arrow from Aurra Sing.
-Move Critdamage(Defense %) Diamond from Darth Sidious.
-Move Health(Critical Damage %) Triangle from Aayla Secura.
-Move Critdamage(Health %) Circle from Asajj Ventress.
-Move Defense(Offense %) Cross from your unassigned mods.
+Move Speed(Offense %) Square from Nightsister Spirit.
+Move Speed(Speed) Arrow from Kit Fisto.
+Move Speed(Defense %) Diamond from Veteran Smuggler Han Solo.
+Move Speed(Critical Damage %) Triangle from Rey (Scavenger).
+Move Health(Protection %) Circle from Kit Fisto.
+Move Health(Offense %) Cross from your unassigned mods.
+
+Ewok Scout - Default
+Move Speed(Offense %) Square from Darth Maul.
+Move Potency(Speed) Arrow from Ima-Gun Di.
+Move Potency(Defense %) Diamond from Hoth Rebel Soldier.
+Move Speed(Offense %) Triangle from Dathcha.
+Move Speed(Health %) Circle from your unassigned mods.
+Move Speed(Potency %) Cross from your unassigned mods.
 
 Gar Saxon - Default
-Move Potency(Offense %) Square from Veteran Smuggler Chewbacca.
-Move Potency(Speed) Arrow from Ima-Gun Di.
-Move Health(Defense %) Diamond from Morgan Elsbeth.
+Move Speed(Offense %) Square from Tarfful.
+Move Speed(Speed) Arrow from Princess Leia.
+Move Speed(Defense %) Diamond from Darth Maul.
 Move Health(Offense %) Triangle from Night Trooper.
-Move Defense(Protection %) Circle from Biggs Darklighter.
-Move Tenacity(Offense %) Cross from your unassigned mods.
+Move Speed(Protection %) Circle from Luke Skywalker (Farmboy).
+Move Defense(Offense %) Cross from your unassigned mods.
 
 Imperial Super Commando - Default
-Move Speed(Offense %) Square from Nightsister Spirit.
-Move Speed(Speed) Arrow from Poggle the Lesser.
-Move Speed(Defense %) Diamond from Tarfful.
-Move Health(Offense %) Triangle from your unassigned mods.
-Move Speed(Protection %) Circle from Luke Skywalker (Farmboy).
-Move Tenacity(Offense %) Cross from your unassigned mods.
+Move Health(Offense %) Square from your unassigned mods.
+Move Offense(Protection %) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from Morgan Elsbeth.
+Move Offense(Offense %) Triangle from your unassigned mods.
+Move Offense(Protection %) Circle from Omega.
+Move Offense(Potency %) Cross from your unassigned mods.
 
 Young Han Solo - Default
 Move Critdamage(Offense %) Square from Geonosian Spy.
-Move Critdamage(Speed) Arrow from First Order TIE Pilot.
-Move Health(Defense %) Diamond from CC-2224 "Cody".
-Move Health(Critical Damage %) Triangle from Resistance Trooper.
-Move Critdamage(Health %) Circle from Death Trooper (Peridea).
-Move Critdamage(Potency %) Cross from Cassian Andor.
+Move Critchance(Speed) Arrow from Nightsister Initiate.
+Move Critdamage(Defense %) Diamond from Resistance Trooper.
+Move Critchance(Critical Damage %) Triangle from Boba Fett.
+Move Critdamage(Health %) Circle from Wedge Antilles.
+Move Critdamage(Offense %) Cross from Death Trooper (Peridea).
 
 Captain Han Solo - Default
 Move Health(Offense %) Square from Nightsister Zombie.
-Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Admiral Ackbar.
+Move Health(Speed) Arrow from Great Mothers.
+Move Health(Defense %) Diamond from Jedi Consular.
 Move Health(Critical Chance %) Triangle from Jawa Scavenger.
-Move Health(Health %) Circle from Teebo.
+Move Health(Health %) Circle from your unassigned mods.
 Move Health(Potency %) Cross from Coruscant Underworld Police.
 
 Darth Sidious - Default
-Move Potency(Offense %) Square from URoRRuR'R'R.
-Move Speed(Speed) Arrow from your unassigned mods.
+Move Speed(Offense %) Square from Resistance Pilot.
+Move Speed(Speed) Arrow from Poggle the Lesser.
 Move Speed(Defense %) Diamond from Lando Calrissian.
-Move Speed(Offense %) Triangle from Dathcha.
-Move Potency(Health %) Circle from Ima-Gun Di.
-Move Speed(Potency %) Cross from Bodhi Rook.
+Move Speed(Offense %) Triangle from Princess Leia.
+Move Health(Protection %) Circle from Skiff Guard (Lando Calrissian).
+Move Tenacity(Offense %) Cross from your unassigned mods.
 
 Lando Calrissian - Default
-Move Speed(Offense %) Square from Young Han Solo.
-Move Critchance(Speed) Arrow from Young Han Solo.
-Move Speed(Defense %) Diamond from Rose Tico.
+Move Critchance(Offense %) Square from Ezra Bridger.
+Move Health(Speed) Arrow from CC-2224 "Cody".
+Move Critchance(Defense %) Diamond from Chief Chirpa.
 Move Critchance(Critical Chance %) Triangle from Dengar.
-Move Speed(Health %) Circle from your unassigned mods.
-Move Speed(Protection %) Cross from Embo.
+Move Health(Protection %) Circle from Qui-Gon Jinn.
+Move Critchance(Tenacity %) Cross from CC-2224 "Cody".
 
 Tarfful - Default
 Move Defense(Offense %) Square from Wrecker.
 Move Defense(Speed) Arrow from L3-37.
-Move Defense(Defense %) Diamond from Royal Guard.
-Move Defense(Defense %) Triangle from Kanan Jarrus.
-Move Defense(Health %) Circle from Savage Opress.
-Move Defense(Protection %) Cross from General Veers.
+Move Defense(Defense %) Diamond from Sith Empire Trooper.
+Move Defense(Defense %) Triangle from L3-37.
+Move Defense(Health %) Circle from IG-100 MagnaGuard.
+Move Defense(Defense %) Cross from B2 Super Battle Droid.
 
 Wedge Antilles - Default
-Move Critdamage(Offense %) Square from Second Sister.
-Move Critchance(Speed) Arrow from Mission Vao.
-Move Critdamage(Defense %) Diamond from Aurra Sing.
-Move Critchance(Critical Damage %) Triangle from Geonosian Spy.
-Move Critdamage(Protection %) Circle from First Order SF TIE Pilot.
-Move Critdamage(Offense %) Cross from Death Trooper (Peridea).
+Move Critdamage(Offense %) Square from Biggs Darklighter.
+Move Critdamage(Speed) Arrow from First Order SF TIE Pilot.
+Move Critdamage(Defense %) Diamond from Geonosian Spy.
+Move Defense(Critical Damage %) Triangle from Biggs Darklighter.
+Move Critdamage(Health %) Circle from HK-47.
+Move Tenacity(Offense %) Cross from your unassigned mods.
+
+Teebo - Default
+Move Potency(Offense %) Square from Imperial Probe Droid.
+Move Potency(Critical Avoidance %) Arrow from Sabine Wren.
+Move Potency(Defense %) Diamond from your unassigned mods.
+Move Potency(Critical Chance %) Triangle from your unassigned mods.
+Move Potency(Health %) Circle from your unassigned mods.
+Move Potency(Potency %) Cross from Garazeb "Zeb" Orrelios.
 
 Rose Tico - Default
 Move Speed(Offense %) Square from Captain Enoch.
 Move Speed(Speed) Arrow from Merrin.
 Move Speed(Defense %) Diamond from Captain Enoch.
-Move Speed(Critical Damage %) Triangle from Resistance Pilot.
-Move Health(Protection %) Circle from Chirrut Îmwe.
-Move Health(Potency %) Cross from your unassigned mods.
+Move Speed(Critical Damage %) Triangle from Qui-Gon Jinn.
+Move Health(Protection %) Circle from Geonosian Spy.
+Move Health(Potency %) Cross from Darth Maul.
 
 Plo Koon - Default
-Move Critdamage(Offense %) Square from Boba Fett.
-Move Critdamage(Speed) Arrow from Geonosian Spy.
+Move Critdamage(Offense %) Square from Cassian Andor.
+Move Critdamage(Speed) Arrow from Boba Fett.
 Move Critdamage(Defense %) Diamond from Second Sister.
-Move Health(Critical Damage %) Triangle from Qui-Gon Jinn.
-Move Critdamage(Protection %) Circle from Kylo Ren.
-Move Defense(Potency %) Cross from Finn.
+Move Health(Critical Damage %) Triangle from Aurra Sing.
+Move Health(Protection %) Circle from Dengar.
+Move Critdamage(Potency %) Cross from your unassigned mods.
 
 Ima-Gun Di - Default
 Move Speed(Offense %) Square from your unassigned mods.
-Move Speed(Speed) Arrow from Veteran Smuggler Han Solo.
-Move Speed(Defense %) Diamond from Jawa Engineer.
-Move Speed(Critical Damage %) Triangle from Rose Tico.
-Move Potency(Protection %) Circle from CC-2224 "Cody".
-Move Potency(Potency %) Cross from Qi'ra.
-
-Veteran Smuggler Han Solo - Default
-Move Speed(Offense %) Square from Resistance Pilot.
-Move Critchance(Speed) Arrow from Pao.
-Move Critchance(Defense %) Diamond from Ezra Bridger.
-Move Speed(Critical Damage %) Triangle from Rey (Scavenger).
-Move Speed(Health %) Circle from your unassigned mods.
+Move Critchance(Speed) Arrow from Mission Vao.
+Move Speed(Defense %) Diamond from Tarfful.
+Move Speed(Critical Damage %) Triangle from Resistance Pilot.
+Move Critchance(Health %) Circle from Nightsister Initiate.
 Move Speed(Potency %) Cross from Mob Enforcer.
 
-Grand Moff Tarkin - Default
+Veteran Smuggler Han Solo - Default
 Move Critdamage(Offense %) Square from Aurra Sing.
-Move Critdamage(Speed) Arrow from Threepio & Chewie.
-Move Critdamage(Defense %) Diamond from Geonosian Spy.
+Move Critdamage(Speed) Arrow from Geonosian Spy.
+Move Critdamage(Defense %) Diamond from Geonosian Soldier.
 Move Defense(Critical Damage %) Triangle from Finn.
-Move Health(Protection %) Circle from Greedo.
-Move Critdamage(Defense %) Cross from Captain Phasma.
+Move Critdamage(Protection %) Circle from Kylo Ren.
+Move Defense(Potency %) Cross from Finn.
+
+Grand Moff Tarkin - Default
+Move Speed(Offense %) Square from Young Han Solo.
+Move Speed(Speed) Arrow from Veteran Smuggler Han Solo.
+Move Health(Defense %) Diamond from Carth Onasi.
+Move Health(Critical Damage %) Triangle from Resistance Trooper.
+Move Speed(Health %) Circle from your unassigned mods.
+Move Speed(Potency %) Cross from Lando Calrissian.
 
 Chief Chirpa - Default
-Move Health(Offense %) Square from Scarif Rebel Pathfinder.
-Move Speed(Speed) Arrow from Chirrut Îmwe.
-Move Health(Defense %) Diamond from Paploo.
-Move Speed(Health %) Triangle from your unassigned mods.
-Move Speed(Health %) Circle from your unassigned mods.
-Move Speed(Defense %) Cross from Chirrut Îmwe.
+Move Health(Offense %) Square from Juhani.
+Move Health(Speed) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from Scarif Rebel Pathfinder.
+Move Health(Critical Chance %) Triangle from Captain Han Solo.
+Move Health(Protection %) Circle from Jedi Consular.
+Move Health(Health %) Cross from Clone Wars Chewbacca.
 
 Admiral Ackbar - Default
-Move Health(Offense %) Square from Stormtrooper.
-Move Tenacity(Speed) Arrow from Mon Mothma.
-Move Health(Defense %) Diamond from Captain Han Solo.
-Move Tenacity(Health %) Triangle from Poggle the Lesser.
-Move Health(Protection %) Circle from Zam Wesell.
-Move Health(Protection %) Cross from Tusken Shaman.
+Move Health(Offense %) Square from Shoretrooper.
+Move Health(Speed) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from your unassigned mods.
+Move Health(Protection %) Triangle from Tusken Shaman.
+Move Health(Protection %) Circle from Tusken Shaman.
+Move Health(Protection %) Cross from Embo.
 
 Jyn Erso - Default
 Move Critchance(Offense %) Square from Luke Skywalker (Farmboy).
@@ -1815,109 +1856,78 @@ Move Potency(Speed) Arrow from Hoth Rebel Soldier.
 Move Critchance(Defense %) Diamond from Young Han Solo.
 Move Potency(Critical Chance %) Triangle from Qi'ra.
 Move Potency(Health %) Circle from your unassigned mods.
-Move Potency(Potency %) Cross from Obi-Wan Kenobi (Old Ben).
+Move Potency(Potency %) Cross from your unassigned mods.
 
-Paploo - Default
-Move Health(Offense %) Square from Night Trooper.
-Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Jedi Consular.
-Move Health(Defense %) Triangle from Nightsister Zombie.
-Move Health(Health %) Circle from Coruscant Underworld Police.
-Move Health(Health %) Cross from Clone Wars Chewbacca.
+Stormtrooper Han - Default
+Move Potency(Offense %) Square from Magmatrooper.
+Move Defense(Protection %) Arrow from Sith Empire Trooper.
+Move Potency(Defense %) Diamond from Magmatrooper.
+Move Potency(Protection %) Triangle from your unassigned mods.
+Move Potency(Protection %) Circle from Magmatrooper.
+Move Defense(Potency %) Cross from Scarif Rebel Pathfinder.
 
 First Order Executioner - Default
 Move Health(Offense %) Square from Resistance Trooper.
 Move Health(Speed) Arrow from Nightsister Acolyte.
 Move Health(Defense %) Diamond from your unassigned mods.
-Move Health(Critical Damage %) Triangle from Jyn Erso.
-Move Health(Health %) Circle from your unassigned mods.
+Move Health(Critical Damage %) Triangle from Aayla Secura.
+Move Health(Health %) Circle from Night Trooper.
 
 Wicket - Default
-Move Critdamage(Speed) Arrow from First Order SF TIE Pilot.
-Move Critdamage(Defense %) Diamond from Asajj Ventress.
+Move Critdamage(Offense %) Square from Skiff Guard (Lando Calrissian).
+Move Health(Speed) Arrow from Jawa Scavenger.
+Move Critdamage(Defense %) Diamond from Wedge Antilles.
 Move Health(Critical Damage %) Triangle from Kylo Ren.
-Move Critdamage(Health %) Circle from your unassigned mods.
-Move Critdamage(Tenacity %) Cross from First Order TIE Pilot.
-
-Stormtrooper Han - Default
-Move Potency(Offense %) Square from Magmatrooper.
-Move Defense(Protection %) Arrow from Shoretrooper.
-Move Potency(Defense %) Diamond from Magmatrooper.
-Move Potency(Protection %) Triangle from your unassigned mods.
-Move Potency(Protection %) Circle from Grand Moff Tarkin.
-Move Defense(Potency %) Cross from Poe Dameron.
-
-Ewok Elder - Default
-Move Health(Offense %) Square from Chief Chirpa.
-Move Tenacity(Speed) Arrow from Darth Nihilus.
-Move Tenacity(Defense %) Diamond from Darth Nihilus.
-Move Tenacity(Health %) Triangle from your unassigned mods.
-Move Tenacity(Health %) Circle from Poggle the Lesser.
-Move Health(Tenacity %) Cross from Mon Mothma.
-
-Princess Kneesaa - Default
-Move Health(Offense %) Square from Jawa Scavenger.
-Move Health(Speed) Arrow from Jyn Erso.
-Move Health(Defense %) Diamond from Carth Onasi.
-Move Health(Critical Chance %) Triangle from Luminara Unduli.
-Move Health(Health %) Circle from your unassigned mods.
-Move Health(Potency %) Cross from your unassigned mods.
-
-Logray - Default
-Move Potency(Offense %) Square from Imperial Probe Droid.
-Move Potency(Speed) Arrow from your unassigned mods.
-Move Potency(Defense %) Diamond from Clone Sergeant - Phase I.
-Move Offense(Critical Damage %) Triangle from Wedge Antilles.
-Move Potency(Protection %) Circle from your unassigned mods.
-Move Offense(Potency %) Cross from Mace Windu.
+Move Critdamage(Health %) Circle from First Order Executioner.
+Move Critdamage(Defense %) Cross from Captain Phasma.
 
 Gamorrean Guard - Default
 Move Health(Offense %) Square from your unassigned mods.
-Move Defense(Speed) Arrow from Admiral Ackbar.
-Move Defense(Defense %) Diamond from Finn.
-Move Defense(Defense %) Triangle from Wrecker.
-Move Defense(Health %) Circle from Scarif Rebel Pathfinder.
-Move Health(Tenacity %) Cross from Dathcha.
+Move Defense(Speed) Arrow from Juhani.
+Move Defense(Defense %) Diamond from Stormtrooper Han.
+Move Defense(Defense %) Triangle from Sith Empire Trooper.
+Move Defense(Health %) Circle from your unassigned mods.
+Move Health(Tenacity %) Cross from Mon Mothma.
 
 Luminara Unduli - Default
-Move Health(Offense %) Square from Captain Han Solo.
+Move Health(Offense %) Square from your unassigned mods.
 Move Health(Speed) Arrow from your unassigned mods.
 Move Health(Defense %) Diamond from Young Lando Calrissian.
 Move Health(Offense %) Triangle from Ugnaught.
-Move Health(Health %) Circle from Zaalbar.
+Move Health(Health %) Circle from your unassigned mods.
 Move Health(Health %) Cross from Jedi Knight Guardian.
 
 Nightsister Initiate - Default
-Move Critchance(Offense %) Square from Ezra Bridger.
-Move Critdamage(Speed) Arrow from Cassian Andor.
-Move Critdamage(Defense %) Diamond from Kylo Ren.
-Move Critchance(Critical Damage %) Triangle from Coruscant Underworld Police.
-Move Critdamage(Health %) Circle from your unassigned mods.
-Move Critdamage(Protection %) Cross from Biggs Darklighter.
-
-Hoth Rebel Soldier - Default
-Move Health(Offense %) Square from Jedi Consular.
-Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Garazeb "Zeb" Orrelios.
-Move Health(Protection %) Triangle from Eeth Koth.
-Move Health(Protection %) Circle from Eeth Koth.
-Move Health(Protection %) Cross from Chief Chirpa.
-
-IG-86 Sentinel Droid - Default
 Move Health(Offense %) Square from your unassigned mods.
-Move Health(Speed) Arrow from Jawa Scavenger.
-Move Tenacity(Defense %) Diamond from Threepio & Chewie.
-Move Offense(Critical Damage %) Triangle from Snowtrooper.
-Move Defense(Protection %) Circle from Wrecker.
+Move Critchance(Speed) Arrow from Young Lando Calrissian.
+Move Critchance(Defense %) Diamond from First Order Stormtrooper.
+Move Tenacity(Critical Damage %) Triangle from Wedge Antilles.
+Move Defense(Protection %) Circle from Kanan Jarrus.
 Move Health(Defense %) Cross from Nightsister Zombie.
 
+Hoth Rebel Soldier - Default
+Move Health(Offense %) Square from Chief Chirpa.
+Move Health(Speed) Arrow from Jawa.
+Move Health(Defense %) Diamond from Stormtrooper.
+Move Health(Protection %) Triangle from Tusken Raider.
+Move Health(Protection %) Circle from Chirrut Îmwe.
+Move Health(Protection %) Cross from Zorii Bliss.
+
+IG-86 Sentinel Droid - Default
+Move Critdamage(Offense %) Square from Asajj Ventress.
+Move Critdamage(Speed) Arrow from Threepio & Chewie.
+Move Critdamage(Defense %) Diamond from your unassigned mods.
+Move Critchance(Critical Damage %) Triangle from Coruscant Underworld Police.
+Move Critchance(Protection %) Circle from your unassigned mods.
+Move Critdamage(Protection %) Cross from Biggs Darklighter.
+
 TIE Fighter Pilot - Default
-Move Speed(Offense %) Square from Tarfful.
-Move Tenacity(Speed) Arrow from K-2SO.
-Move Speed(Defense %) Diamond from Mob Enforcer.
-Move Offense(Critical Damage %) Triangle from Mission Vao.
-Move Speed(Health %) Circle from Lando Calrissian.
-Move Speed(Potency %) Cross from Lando Calrissian.
+Move Potency(Offense %) Square from Veteran Smuggler Chewbacca.
+Move Speed(Speed) Arrow from Admiral Ackbar.
+Move Speed(Defense %) Diamond from Jawa Engineer.
+Move Potency(Critical Damage %) Triangle from your unassigned mods.
+Move Speed(Protection %) Circle from Young Han Solo.
+Move Speed(Potency %) Cross from Poggle the Lesser.
 
 Resistance Pilot - Default
 Move Health(Offense %) Square from your unassigned mods.
@@ -1925,226 +1935,220 @@ Move Critdamage(Offense %) Arrow from your unassigned mods.
 Move Critdamage(Defense %) Diamond from HK-47.
 Move Tenacity(Critical Damage %) Triangle from Enfys Nest.
 Move Critdamage(Protection %) Circle from your unassigned mods.
-Move Critdamage(Potency %) Cross from Resistance Trooper.
+Move Critdamage(Potency %) Cross from your unassigned mods.
 
 Rey (Scavenger) - Default
-Move Speed(Offense %) Square from Poggle the Lesser.
-Move Tenacity(Speed) Arrow from Sun Fac.
-Move Speed(Defense %) Diamond from Dathcha.
-Move Health(Critical Damage %) Triangle from your unassigned mods.
-Move Speed(Health %) Circle from your unassigned mods.
-Move Speed(Defense %) Cross from your unassigned mods.
+Move Health(Offense %) Square from Wicket.
+Move Speed(Speed) Arrow from Zorii Bliss.
+Move Speed(Defense %) Diamond from Mob Enforcer.
+Move Health(Critical Damage %) Triangle from Darth Maul.
+Move Speed(Health %) Circle from Lando Calrissian.
+Move Speed(Defense %) Cross from Juhani.
 
 Mob Enforcer - Default
 Move Speed(Offense %) Square from Garazeb "Zeb" Orrelios.
-Move Speed(Speed) Arrow from Zorii Bliss.
-Move Potency(Defense %) Diamond from Hoth Rebel Soldier.
-Move Potency(Critical Damage %) Triangle from Ezra Bridger.
-Move Speed(Protection %) Circle from Tarfful.
-Move Speed(Potency %) Cross from Poggle the Lesser.
+Move Speed(Speed) Arrow from Chirrut Îmwe.
+Move Speed(Defense %) Diamond from Dathcha.
+Move Offense(Critical Damage %) Triangle from Snowtrooper.
+Move Defense(Health %) Circle from your unassigned mods.
+Move Speed(Potency %) Cross from Veteran Smuggler Han Solo.
 
 Veteran Smuggler Chewbacca - Default
 Move Potency(Offense %) Square from Veteran Smuggler Han Solo.
-Move Critchance(Speed) Arrow from Qi'ra.
+Move Critdamage(Speed) Arrow from Aurra Sing.
 Move Potency(Defense %) Diamond from Gamorrean Guard.
-Move Potency(Critical Damage %) Triangle from Veteran Smuggler Han Solo.
-Move Critchance(Protection %) Circle from Carth Onasi.
-Move Potency(Potency %) Cross from your unassigned mods.
+Move Critdamage(Offense %) Triangle from your unassigned mods.
+Move Critdamage(Protection %) Circle from Aurra Sing.
+Move Critdamage(Tenacity %) Cross from Jyn Erso.
 
 Jar Jar Binks - Default
-Move Speed(Offense %) Square from Morgan Elsbeth.
-Move Potency(Speed) Arrow from your unassigned mods.
-Move Potency(Defense %) Diamond from URoRRuR'R'R.
-Move Speed(Protection %) Triangle from Morgan Elsbeth.
+Move Speed(Offense %) Square from Kit Fisto.
+Move Speed(Speed) Arrow from Admiral Trench.
+Move Potency(Defense %) Diamond from Jawa.
+Move Potency(Protection %) Triangle from your unassigned mods.
 Move Speed(Protection %) Circle from Morgan Elsbeth.
-Move Speed(Protection %) Cross from Tusken Warrior.
+Move Speed(Protection %) Cross from Merrin.
 
 Queen Amidala - Default
-Move Speed(Offense %) Square from your unassigned mods.
+Move Health(Offense %) Square from Jedi Consular.
 Move Health(Speed) Arrow from Rey (Scavenger).
-Move Speed(Defense %) Diamond from Stormtrooper Han.
-Move Speed(Health %) Triangle from your unassigned mods.
-Move Health(Protection %) Circle from Jedi Consular.
-Move Speed(Protection %) Cross from BB-8.
+Move Health(Defense %) Diamond from Paploo.
+Move Health(Protection %) Triangle from Paploo.
+Move Health(Protection %) Circle from Luminara Unduli.
+Move Health(Protection %) Cross from Chief Chirpa.
 
 Boss Nass - Default
-Move Speed(Offense %) Square from K-2SO.
-Move Speed(Speed) Arrow from your unassigned mods.
-Move Speed(Defense %) Diamond from Eeth Koth.
-Move Tenacity(Protection %) Triangle from Sun Fac.
-Move Speed(Protection %) Circle from Rose Tico.
-Move Tenacity(Protection %) Cross from Ninth Sister.
+Move Speed(Offense %) Square from Tusken Raider.
+Move Tenacity(Speed) Arrow from Sun Fac.
+Move Tenacity(Defense %) Diamond from Ninth Sister.
+Move Speed(Protection %) Triangle from Morgan Elsbeth.
+Move Speed(Protection %) Circle from Admiral Ackbar.
+Move Speed(Protection %) Cross from Tusken Raider.
 
 Captain Tarpals - Default
 Move Health(Offense %) Square from IG-86 Sentinel Droid.
 Move Health(Speed) Arrow from your unassigned mods.
 Move Health(Defense %) Diamond from Princess Kneesaa.
 Move Health(Offense %) Triangle from your unassigned mods.
-Move Health(Health %) Circle from your unassigned mods.
+Move Health(Health %) Circle from Zaalbar.
 Move Health(Health %) Cross from your unassigned mods.
 
 Gungan Phalanx - Default
-Move Speed(Offense %) Square from Mob Enforcer.
+Move Health(Offense %) Square from Paploo.
 Move Speed(Protection %) Arrow from Royal Guard.
-Move Defense(Defense %) Diamond from Shoretrooper.
-Move Speed(Protection %) Triangle from your unassigned mods.
-Move Speed(Protection %) Circle from your unassigned mods.
-Move Defense(Protection %) Cross from Shoretrooper.
+Move Defense(Defense %) Diamond from Darth Sion.
+Move Tenacity(Protection %) Triangle from K-2SO.
+Move Health(Protection %) Circle from URoRRuR'R'R.
+Move Defense(Protection %) Cross from General Veers.
 
-Padawan Obi-Wan - GIMO Default
-Move Speed(Offense %) Square from Jawa Engineer.
-Move Potency(Critical Avoidance %) Arrow from Sabine Wren.
-Move Potency(Defense %) Diamond from Imperial Probe Droid.
-Move Speed(Defense %) Triangle from Juhani.
-Move Speed(Protection %) Circle from Mob Enforcer.
-Move Speed(Potency %) Cross from Veteran Smuggler Han Solo.
+Padawan Obi-Wan - Default
+Move Critdamage(Offense %) Square from HK-47.
+Move Critdamage(Offense %) Arrow from your unassigned mods.
+Move Health(Defense %) Diamond from Mission Vao.
+Move Health(Offense %) Triangle from your unassigned mods.
+Move Critdamage(Health %) Circle from your unassigned mods.
+Move Critdamage(Health %) Cross from your unassigned mods.
 
 Gungan Boomadier - Default
-Move Health(Offense %) Square from your unassigned mods.
+Move Health(Offense %) Square from Night Trooper.
 Move Health(Speed) Arrow from your unassigned mods.
 Move Health(Defense %) Diamond from Talia.
 Move Health(Offense %) Triangle from Talia.
-Move Health(Health %) Circle from Jedi Knight Guardian.
+Move Health(Health %) Circle from your unassigned mods.
 Move Health(Health %) Cross from your unassigned mods.
 
 Master Qui-Gon - Default
-Move Speed(Offense %) Square from Snowtrooper.
+Move Speed(Offense %) Square from your unassigned mods.
 Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Mission Vao.
-Move Speed(Offense %) Triangle from Captain Enoch.
-Move Speed(Health %) Circle from Snowtrooper.
+Move Speed(Defense %) Diamond from your unassigned mods.
+Move Health(Defense %) Triangle from Savage Opress.
+Move Speed(Health %) Circle from Darth Maul.
 Move Speed(Health %) Cross from Jawa Engineer.
 
 Luthen Rael - Default
-Move Speed(Offense %) Square from your unassigned mods.
-Move Speed(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Coruscant Underworld Police.
+Move Speed(Offense %) Square from Morgan Elsbeth.
+Move Speed(Speed) Arrow from Morgan Elsbeth.
+Move Health(Defense %) Diamond from Admiral Ackbar.
 Move Speed(Protection %) Triangle from Director Krennic.
-Move Health(Protection %) Circle from Admiral Ackbar.
-Move Speed(Protection %) Cross from Eeth Koth.
+Move Health(Protection %) Circle from Tusken Raider.
+Move Speed(Protection %) Cross from Rose Tico.
 
 Luke Skywalker (Farmboy) - Default
-Move Critdamage(Offense %) Square from Jyn Erso.
-Move Health(Speed) Arrow from CC-2224 "Cody".
-Move Critdamage(Defense %) Diamond from Resistance Trooper.
-Move Health(Critical Damage %) Triangle from Nightsister Spirit.
-Move Critdamage(Protection %) Circle from Geonosian Spy.
-Move Critdamage(Potency %) Cross from your unassigned mods.
-
-Teebo - Default
-Move Potency(Offense %) Square from Qi'ra.
-Move Potency(Speed) Arrow from Ugnaught.
-Move Potency(Defense %) Diamond from 50R-T.
-Move Potency(Critical Chance %) Triangle from your unassigned mods.
-Move Potency(Health %) Circle from your unassigned mods.
-Move Potency(Potency %) Cross from Garazeb "Zeb" Orrelios.
-
-Ewok Scout - Default
-Move Potency(Offense %) Square from your unassigned mods.
-Move Potency(Speed) Arrow from Jedi Knight Guardian.
-Move Potency(Defense %) Diamond from Jawa.
-Move Health(Offense %) Triangle from your unassigned mods.
-Move Potency(Health %) Circle from your unassigned mods.
+Move Health(Offense %) Square from your unassigned mods.
+Move Critchance(Speed) Arrow from your unassigned mods.
+Move Potency(Defense %) Diamond from your unassigned mods.
+Move Potency(Critical Damage %) Triangle from your unassigned mods.
+Move Critchance(Protection %) Circle from Carth Onasi.
 Move Health(Potency %) Cross from Nightsister Initiate.
 
 Clone Wars Chewbacca - Default
-Move Health(Offense %) Square from Admiral Ackbar.
-Move Health(Protection %) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Chief Nebit.
-Move Health(Protection %) Triangle from Paploo.
+Move Health(Offense %) Square from your unassigned mods.
+Move Health(Protection %) Arrow from Stormtrooper.
+Move Health(Defense %) Diamond from Garazeb "Zeb" Orrelios.
+Move Defense(Health %) Triangle from IG-100 MagnaGuard.
 Move Health(Protection %) Circle from Stormtrooper.
-Move Health(Protection %) Cross from Paploo.
+Move Defense(Protection %) Cross from Darth Sion.
 
 Director Krennic - Default
-Move Speed(Offense %) Square from your unassigned mods.
-Move Speed(Speed) Arrow from your unassigned mods.
-Move Speed(Defense %) Diamond from Ewok Scout.
-Move Potency(Critical Damage %) Triangle from Carth Onasi.
+Move Potency(Offense %) Square from your unassigned mods.
+Move Potency(Speed) Arrow from Mob Enforcer.
+Move Tenacity(Defense %) Diamond from Threepio & Chewie.
+Move Potency(Critical Damage %) Triangle from Veteran Smuggler Han Solo.
 Move Potency(Protection %) Circle from Qi'ra.
-Move Speed(Potency %) Cross from your unassigned mods.
+Move Offense(Potency %) Cross from Mace Windu.
 
 Kit Fisto - Default
-Move Health(Offense %) Square from Bodhi Rook.
-Move Critchance(Speed) Arrow from your unassigned mods.
-Move Tenacity(Defense %) Diamond from Ninth Sister.
-Move Tenacity(Offense %) Triangle from your unassigned mods.
+Move Health(Offense %) Square from Jawa Scavenger.
+Move Critchance(Speed) Arrow from Young Han Solo.
+Move Health(Defense %) Diamond from Luke Skywalker (Farmboy).
+Move Health(Critical Damage %) Triangle from Nightsister Spirit.
 Move Critchance(Health %) Circle from your unassigned mods.
-Move Health(Protection %) Cross from Dengar.
+Move Health(Protection %) Cross from Aurra Sing.
+
+Eeth Koth - Default
+Move Speed(Offense %) Square from Poggle the Lesser.
+Move Health(Speed) Arrow from your unassigned mods.
+Move Speed(Defense %) Diamond from Ewok Scout.
+Move Offense(Critical Damage %) Triangle from Garazeb "Zeb" Orrelios.
+Move Speed(Health %) Circle from your unassigned mods.
+Move Speed(Potency %) Cross from your unassigned mods.
 
 Lobot - Default
 Move Speed(Offense %) Square from your unassigned mods.
-Move Defense(Speed) Arrow from Wrecker.
-Move Defense(Defense %) Diamond from IG-100 MagnaGuard.
-Move Speed(Defense %) Triangle from your unassigned mods.
-Move Speed(Protection %) Circle from Omega.
-Move Speed(Tenacity %) Cross from Kyle Katarn.
-
-Eeth Koth - Default
-Move Critdamage(Offense %) Square from Geonosian Soldier.
-Move Critchance(Speed) Arrow from Magmatrooper.
-Move Critchance(Defense %) Diamond from Chief Chirpa.
-Move Critdamage(Critical Chance %) Triangle from your unassigned mods.
-Move Critdamage(Health %) Circle from First Order Executioner.
-Move Critdamage(Protection %) Cross from Gungan Boomadier.
+Move Defense(Speed) Arrow from Plo Koon.
+Move Defense(Defense %) Diamond from Finn.
+Move Speed(Defense %) Triangle from Juhani.
+Move Speed(Protection %) Circle from your unassigned mods.
+Move Speed(Defense %) Cross from Chirrut Îmwe.
 
 Jedi Consular - Healer
-Move Health(Offense %) Square from your unassigned mods.
-Move Health(Speed) Arrow from your unassigned mods.
+Move Health(Offense %) Square from Ewok Elder.
+Move Health(Speed) Arrow from Nightsister Zombie.
 Move Health(Defense %) Diamond from First Order Executioner.
 Move Offense(Health %) Triangle from Mace Windu.
-Move Health(Health %) Circle from your unassigned mods.
-Move Defense(Health %) Cross from Admiral Ackbar.
+Move Health(Health %) Circle from Jedi Knight Guardian.
+Move Defense(Health %) Cross from Savage Opress.
 
 Ugnaught - Default
-Move Potency(Offense %) Square from Jawa.
-Move Critchance(Speed) Arrow from Wicket.
+Move Health(Offense %) Square from Talia.
+Move Critchance(Speed) Arrow from Qi'ra.
 Move Potency(Defense %) Diamond from Veteran Smuggler Chewbacca.
 Move Critchance(Offense %) Triangle from your unassigned mods.
-Move Health(Protection %) Circle from Imperial Super Commando.
+Move Potency(Health %) Circle from your unassigned mods.
 Move Health(Potency %) Cross from Ima-Gun Di.
 
 Coruscant Underworld Police - Default
-Move Potency(Offense %) Square from Juhani.
-Move Potency(Speed) Arrow from Mob Enforcer.
-Move Health(Defense %) Diamond from Ewok Elder.
-Move Health(Defense %) Triangle from Scarif Rebel Pathfinder.
+Move Potency(Offense %) Square from Qi'ra.
+Move Potency(Speed) Arrow from your unassigned mods.
+Move Potency(Defense %) Diamond from Imperial Probe Droid.
+Move Potency(Defense %) Triangle from Gamorrean Guard.
 Move Potency(Protection %) Circle from your unassigned mods.
 Move Potency(Potency %) Cross from Magmatrooper.
 
 Bodhi Rook - Default
-Move Potency(Offense %) Square from Clone Sergeant - Phase I.
+Move Potency(Offense %) Square from Jawa.
 Move Health(Speed) Arrow from your unassigned mods.
-Move Health(Defense %) Diamond from Nightsister Spirit.
-Move Potency(Protection %) Triangle from Obi-Wan Kenobi (Old Ben).
+Move Potency(Defense %) Diamond from Clone Sergeant - Phase I.
+Move Health(Defense %) Triangle from Scarif Rebel Pathfinder.
 Move Health(Protection %) Circle from Imperial Probe Droid.
 Move Health(Potency %) Cross from Hoth Rebel Soldier.
 
 Night Trooper - Default
-Move Health(Offense %) Square from your unassigned mods.
-Move Health(Speed) Arrow from your unassigned mods.
+Move Speed(Offense %) Square from Jawa Engineer.
+Move Tenacity(Speed) Arrow from your unassigned mods.
 Move Speed(Defense %) Diamond from Poggle the Lesser.
-Move Speed(Critical Chance %) Triangle from your unassigned mods.
-Move Speed(Health %) Circle from Princess Leia.
+Move Speed(Offense %) Triangle from Captain Enoch.
+Move Tenacity(Health %) Circle from Poggle the Lesser.
 Move Speed(Tenacity %) Cross from Wicket.
 
-Captain Enoch - unnamed
-Move Critchance(Offense %) Square from Ewok Scout.
-Move Defense(Speed) Arrow from Hermit Yoda.
-Move Defense(Defense %) Diamond from L3-37.
-Move Potency(Defense %) Triangle from Magmatrooper.
-Move Health(Protection %) Circle from Garazeb "Zeb" Orrelios.
-Move Speed(Tenacity %) Cross from Ewok Scout.
+Great Mothers - Default
+Move Speed(Offense %) Square from Snowtrooper.
+Move Speed(Speed) Arrow from Poe Dameron.
+Move Health(Defense %) Diamond from Ewok Elder.
+Move Speed(Critical Chance %) Triangle from your unassigned mods.
+Move Speed(Protection %) Circle from Tarfful.
+Move Health(Tenacity %) Cross from Old Daka.
 
-Death Trooper (Peridea) - unnamed
-Move Potency(Critical Avoidance %) Arrow from Garazeb "Zeb" Orrelios.
-Move Tenacity(Defense %) Diamond from K-2SO.
-Move Health(Protection %) Circle from Jawa Scavenger.
-Move Tenacity(Tenacity %) Cross from K-2SO.
+Captain Enoch - Default
+Move Speed(Offense %) Square from Lando Calrissian.
+Move Health(Speed) Arrow from Savage Opress.
+Move Health(Defense %) Diamond from Chief Nebit.
+Move Speed(Protection %) Triangle from your unassigned mods.
+Move Speed(Protection %) Circle from Veteran Smuggler Han Solo.
+Move Speed(Protection %) Cross from Bodhi Rook.
+
+Death Trooper (Peridea) - Default
+Move Critdamage(Offense %) Square from Geonosian Soldier.
+Move Critdamage(Critical Avoidance %) Arrow from Biggs Darklighter.
+Move Potency(Defense %) Diamond from Teebo.
+Move Potency(Critical Damage %) Triangle from Carth Onasi.
+Move Critdamage(Health %) Circle from your unassigned mods.
+Move Critdamage(Protection %) Cross from Gungan Boomadier.
 
 Morgan Elsbeth - Default
-Move Speed(Offense %) Square from Lando Calrissian.
-Move Tenacity(Speed) Arrow from Tusken Raider.
-Move Defense(Defense %) Diamond from Cad Bane.
-Move Speed(Protection %) Triangle from Stormtrooper Han.
-Move Speed(Protection %) Circle from Veteran Smuggler Han Solo.
-Move Speed(Protection %) Cross from Rose Tico.
+Move Speed(Offense %) Square from Mob Enforcer.
+Move Health(Speed) Arrow from Chief Chirpa.
+Move Health(Defense %) Diamond from your unassigned mods.
+Move Speed(Defense %) Triangle from your unassigned mods.
+Move Speed(Protection %) Circle from Great Mothers.
+Move Speed(Protection %) Cross from Snowtrooper.
