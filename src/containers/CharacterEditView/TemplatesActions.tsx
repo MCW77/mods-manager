@@ -1,4 +1,5 @@
 // state
+import { beginBatch, endBatch } from "@legendapp/state";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -39,8 +40,8 @@ const TemplatesActions = ({
 				onClick={async () => {
 					try {
 						isBusy$.set(true);
+						beginBatch();
 						if (hasNoSelectedCharacters) {
-							isBusy$.set(true);
 							visibleCharacters.forEach((character, index) => {
 								profilesManagement$.selectCharacter(
 									character.id,
@@ -48,12 +49,12 @@ const TemplatesActions = ({
 									index + lastSelectedCharacterIndex,
 								);
 							});
-							isBusy$.set(false);
 						}
 						const ranking = await stackRank$.fetch(
 							profilesManagement$.profiles.activeAllycode.get(),
 						);
 						profilesManagement$.applyRanking(ranking);
+						endBatch();
 					} catch (error) {
 						if (error instanceof Error) dialog$.showError(error.message);
 					} finally {
