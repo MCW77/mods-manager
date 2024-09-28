@@ -125,7 +125,6 @@ const GeneralSettingsView: React.FC = observer(() => {
 					<div className={"flex flex-col gap-2 items-stretch justify-center"}>
 						<FileInput
 							accept=".json"
-							className={""}
 							icon={faFileImport}
 							label={t("general.backup.Restore")}
 							handler={(file) =>

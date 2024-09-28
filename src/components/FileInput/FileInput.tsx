@@ -1,6 +1,8 @@
 // react
 import React, { useRef } from "react";
 
+import { cn } from "#lib/shadcn"
+
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +23,7 @@ const FileInput = React.memo(
 	({ accept = "", className = "", icon, label, handler }: ComponentProps) => {
 		const fileInput = useRef<HTMLInputElement>(null);
 		return (
-			<div className={className}>
+			<div className={cn("relative", className)}>
 				<Label
 					htmlFor="file-input"
 					className={"cursor-pointer w-full block group"}
