@@ -18,9 +18,7 @@ const clonedQuickFilter = cloneQuickFilter();
 const defaultRevealViewSetup = structuredClone(
 	defaultViewSetupByCategory.Reveal,
 );
-const defaultLevelViewSetup = structuredClone(
-	defaultViewSetupByCategory.Level,
-);
+const defaultLevelViewSetup = structuredClone(defaultViewSetupByCategory.Level);
 const defaultSlice5DotViewSetup = structuredClone(
 	defaultViewSetupByCategory.Slice5Dot,
 );
@@ -84,6 +82,7 @@ const modsView$ = observable({
 		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
 	idOfActiveViewSetupInActiveCategory: () => {
 		const category = modsView$.activeCategory.get();
+		const reactivity = modsView$.idOfActiveViewSetupByCategory[category].get();
 		const result = modsView$.idOfActiveViewSetupByCategory[category];
 		return result;
 	},
@@ -176,20 +175,27 @@ const modsView$ = observable({
 	},
 	removeViewSetup: (id: string) => {
 		const category = modsView$.activeCategory.peek();
-		const isIdActive = modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
+		const isIdActive =
+			modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
 		beginBatch();
 		modsView$.viewSetupByIdByCategory[category][id].delete();
-		if (isIdActive) modsView$.idOfActiveViewSetupByCategory[category].set(`Default${category}`);
+		if (isIdActive)
+			modsView$.idOfActiveViewSetupByCategory[category].set(
+				`Default${category}`,
+			);
 		endBatch();
 	},
 	renameViewSetup: (id: string, newName: string) => {
 		const category = modsView$.activeCategory.peek();
-		const isIdActive = modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
+		const isIdActive =
+			modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
 		const viewSetup = modsView$.viewSetupByIdByCategory[category][id];
 
 		beginBatch();
 		viewSetup.id.set(newName);
-		modsView$.viewSetupByIdByCategory[category][newName].set(structuredClone(viewSetup.peek()));
+		modsView$.viewSetupByIdByCategory[category][newName].set(
+			structuredClone(viewSetup.peek()),
+		);
 		modsView$.viewSetupByIdByCategory[category][id].delete();
 		if (isIdActive) {
 			modsView$.idOfActiveViewSetupByCategory[category].set(newName);
@@ -218,7 +224,8 @@ const modsView$ = observable({
 		endBatch();
 	},
 	removeFilter: (id: string) => {
-		const isIdActive = modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
+		const isIdActive =
+			modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
 		beginBatch();
 		modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
 		if (isIdActive)
@@ -226,12 +233,15 @@ const modsView$ = observable({
 		endBatch();
 	},
 	renameFilter: (id: string, newName: string) => {
-		const isIdActive = modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
+		const isIdActive =
+			modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
 		const filter = modsView$.activeViewSetupInActiveCategory.filterById[id];
 
 		beginBatch();
 		filter.id.set(newName);
-		modsView$.activeViewSetupInActiveCategory.filterById[newName].set(structuredClone(filter.peek()));
+		modsView$.activeViewSetupInActiveCategory.filterById[newName].set(
+			structuredClone(filter.peek()),
+		);
 		modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
 		if (isIdActive) {
 			modsView$.idOfSelectedFilterInActiveCategory.set(newName);
@@ -255,6 +265,7 @@ const syncStatus$ = syncObservable(modsView$.viewSetupByIdByCategory, {
 	await when(syncStatus$.isPersistLoaded);
 })();
 
+/*
 modsView$.activeCategory.onChange(({ value, getPrevious }) => {
 	console.log(`activeCategory changed from ${getPrevious()} to ${value}`);
 });
@@ -300,5 +311,6 @@ modsView$.activeFilter.onChange(({ value, getPrevious }) => {
 	console.log("to ");
 	console.dir(value);
 });
+*/
 
 export { modsView$ };
