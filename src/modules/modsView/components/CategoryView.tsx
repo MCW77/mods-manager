@@ -24,9 +24,7 @@ const CategoryView: React.FC = observer(() => {
   useRenderCount(`CategoryView (${modsView$.activeCategory.peek()})`);
   const [t] = useTranslation("global-ui");
   const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
-  const activeViewSetupInActiveCategory = structuredClone(modsView$.activeViewSetupInActiveCategory.get());
-  activeViewSetupInActiveCategory.filterById.QuickFilter = modsView$.quickFilter.get();
-  const modsFilter = new ModsFilter(activeViewSetupInActiveCategory);
+  const modsFilter = new ModsFilter(modsView$.activeViewSetupInActiveCategory.get(), modsView$.quickFilter.get());
   const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(profileMods);
 
   const mods = [];
