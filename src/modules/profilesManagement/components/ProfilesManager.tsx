@@ -40,6 +40,7 @@ const ProfilesManager = observer(
 		);
 
 		useMount(() => {
+			hotutils$.isSubscribed();
 			console.log("ProfilesManager mounted");
 		});
 
