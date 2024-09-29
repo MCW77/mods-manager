@@ -1,5 +1,6 @@
 // react
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
@@ -30,99 +31,97 @@ import { ProfileSelector } from "./ProfileSelector";
 
 import { Button } from "#ui/button";
 
-const ProfilesManager = observer(
-	React.memo(() => {
-		useRenderCount("ProfilesManager");
-		const dispatch: ThunkDispatch = useDispatch();
-		const [t] = useTranslation("global-ui");
-		const [isAddingAProfile, setIsAddingAProfile] = useState(
-			!profilesManagement$.hasProfiles.get(),
-		);
+const ProfilesManager: React.FC = observer(() => {
+	useRenderCount("ProfilesManager");
+	const dispatch: ThunkDispatch = useDispatch();
+	const [t] = useTranslation("global-ui");
+	const [isAddingAProfile, setIsAddingAProfile] = useState(
+		!profilesManagement$.hasProfiles.get(),
+	);
 
-		useMount(() => {
-			hotutils$.isSubscribed();
-			console.log("ProfilesManager mounted");
-		});
+	useMount(() => {
+		hotutils$.isSubscribed();
+		console.log("ProfilesManager mounted");
+	});
 
-		return (
-			<div className="flex items-center gap-2">
-				<FontAwesomeIcon icon={faUser} />
-				{isAddingAProfile ? (
-					<ProfileAdder setAddMode={setIsAddingAProfile} />
-				) : (
-					<ProfileSelector setAddMode={setIsAddingAProfile} />
-				)}
-				<Show if={profilesManagement$.profiles.activeAllycode}>
-					<div className="flex gap-1">
+	return (
+		<div className="flex items-center gap-2">
+			<FontAwesomeIcon icon={faUser} />
+			{isAddingAProfile ? (
+				<ProfileAdder setAddMode={setIsAddingAProfile} />
+			) : (
+				<ProfileSelector setAddMode={setIsAddingAProfile} />
+			)}
+			<Show if={profilesManagement$.profiles.activeAllycode}>
+				<div className="flex gap-1">
+					<Memo>
+						{() => (
+							<Button
+								size={"icon"}
+								type={"button"}
+								variant={"outline"}
+								onClick={() => {
+									dispatch(
+										Data.thunks.refreshPlayerData(
+											profilesManagement$.profiles.activeAllycode.get(),
+											true,
+											null,
+										),
+									);
+								}}
+							>
+								<FontAwesomeIcon
+									icon={faArrowsRotate}
+									title={`${t("header.Fetch")}`}
+								/>
+							</Button>
+						)}
+					</Memo>
+					<Show if={hotutils$.hasActiveSession}>
 						<Memo>
 							{() => (
 								<Button
 									size={"icon"}
 									type={"button"}
 									variant={"outline"}
-									onClick={() => {
+									onClick={() =>
 										dispatch(
 											Data.thunks.refreshPlayerData(
 												profilesManagement$.profiles.activeAllycode.get(),
 												true,
-												null,
+												hotutils$.activeSessionId.get() ?? null,
 											),
-										);
-									}}
+										)
+									}
 								>
-									<FontAwesomeIcon
-										icon={faArrowsRotate}
-										title={`${t("header.Fetch")}`}
-									/>
+									<span className="fa-layers">
+										<FontAwesomeIcon
+											icon={faArrowsRotate}
+											title={`${t("header.FetchHot")}`}
+										/>
+										<FontAwesomeIcon
+											icon={faFire}
+											size="sm"
+											transform="shrink-1 right-14 down-15"
+											color="Red"
+										/>
+									</span>
 								</Button>
 							)}
 						</Memo>
-						<Show if={hotutils$.hasActiveSession}>
-							<Memo>
-								{() =>
-									<Button
-										size={"icon"}
-										type={"button"}
-										variant={"outline"}
-										onClick={() =>
-											dispatch(
-												Data.thunks.refreshPlayerData(
-													profilesManagement$.profiles.activeAllycode.get(),
-													true,
-													hotutils$.activeSessionId.get() ?? null,
-												),
-											)
-										}
-									>
-										<span className="fa-layers">
-											<FontAwesomeIcon
-												icon={faArrowsRotate}
-												title={`${t("header.FetchHot")}`}
-											/>
-											<FontAwesomeIcon
-												icon={faFire}
-												size="sm"
-												transform="shrink-1 right-14 down-15"
-												color="Red"
-											/>
-										</span>
-									</Button>
-								}
-							</Memo>
-						</Show>
-						<Memo>
-							{() =>
-								<span>
-									Last updated: {profilesManagement$.activeLastUpdated.get()}
-								</span>
-							}
-						</Memo>
-					</div>
-				</Show>
-			</div>
-		);
-	}),
-);
+					</Show>
+					<Memo>
+						{() => (
+							<span>
+								Last updated: {profilesManagement$.activeLastUpdated.get()}
+							</span>
+						)}
+					</Memo>
+				</div>
+			</Show>
+		</div>
+	);
+});
 
 ProfilesManager.displayName = "ProfilesManager";
 
