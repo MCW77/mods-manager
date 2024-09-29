@@ -21,7 +21,7 @@ import {
 	type CharacterNames,
 } from "#/constants/characterSettings";
 import type * as Character from "#/domain/Character";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { fromShortOptimizationPlan, type OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 interface Profiles {
@@ -273,14 +273,15 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		applyRanking: (ranking: CharacterNames[]) => {
 			const selectedCharacters =
 				profilesManagement$.activeProfile.selectedCharacters.peek();
-			const newSelectedCharacters = ranking.map((characterId) => {
+			const rankingForSelected = ranking.filter((characterId) => selectedCharacters.some((selectedCharacter) => selectedCharacter.id === characterId));
+			const newSelectedCharacters = rankingForSelected.map((characterId) => {
 				const selectedCharacter = selectedCharacters.find(
 					(selectedCharacter) => selectedCharacter.id === characterId,
 				);
 				return (
 					selectedCharacter ?? {
 						id: characterId,
-						target: characterSettings[characterId].targets[0],
+						target: fromShortOptimizationPlan({id: "none"}),
 					}
 				);
 			});
