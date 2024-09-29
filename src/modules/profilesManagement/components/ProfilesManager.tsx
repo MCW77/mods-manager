@@ -35,9 +35,8 @@ const ProfilesManager = observer(
 		useRenderCount("ProfilesManager");
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
-		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
 		const [isAddingAProfile, setIsAddingAProfile] = useState(
-			Object.keys(profiles).length === 0,
+			!profilesManagement$.hasProfiles.get(),
 		);
 
 		useMount(() => {
