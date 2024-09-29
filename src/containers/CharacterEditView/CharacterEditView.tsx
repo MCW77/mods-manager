@@ -18,6 +18,7 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import { characterSettings } from "#/constants/characterSettings";
 
 import { defaultBaseCharacter } from "#/modules/characters/domain/BaseCharacter";
+import type { CharacterFilter } from "#/modules/charactersManagement/domain/CharacterFilterById";
 import * as Character from "#/domain/Character";
 
 // components
@@ -37,7 +38,8 @@ const CharacterEditView = observer(() => {
 	const [t] = useTranslation("optimize-ui");
 	const characters = profilesManagement$.activeProfile.charactersById.get();
 	const baseCharactersById = characters$.baseCharactersById.get();
-	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
+	const selectedCharacters =
+		profilesManagement$.activeProfile.selectedCharacters.get();
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	let availableCharacters = [] as Character.Character[];
@@ -45,46 +47,84 @@ const CharacterEditView = observer(() => {
 		.filter((character) => character.playerValues.level >= 50)
 		.filter(
 			(character) =>
-				!charactersManagement$.filters.hideSelectedCharacters.get() ||
-				!selectedCharacters
-					.map(({ id }) => id)
-					.includes(character.id),
+				!charactersManagement$.filterSetup.hideSelectedCharacters.get() ||
+				!selectedCharacters.map(({ id }) => id).includes(character.id),
 		)
 		.sort((left, right) => Character.compareGP(left, right));
 
-	/**
-	 * Checks whether a character matches the filter string in name or tags
-	 * @param character {Character} The character to check
-	 * @returns boolean
-	 */
-	const filterCharacters = (character: Character.Character) => {
-		const baseCharacter = baseCharactersById[character.id] ?? {
-			...defaultBaseCharacter,
-			id: character.id,
-			name: character.id,
-		};
-		const characterFilter = charactersManagement$.filters.characterFilter.get();
+	const createFilterFunction = (characterFilter: CharacterFilter) => {
+		/**
+		 * Checks whether a character matches the filter string in name or tags
+		 * @param character {Character} The character to check
+		 * @returns boolean
+		 */
+		const filterCharacters = (character: Character.Character) => {
+			const baseCharacter = baseCharactersById[character.id] ?? {
+				...defaultBaseCharacter,
+				id: character.id,
+				name: character.id,
+			};
+			const filter = characterFilter.filter;
 
-		return (
-			characterFilter === "" ||
-			baseCharacter.name.toLowerCase().includes(characterFilter) ||
-			(["lock", "locked"].includes(characterFilter) &&
-				lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
-			(["unlock", "unlocked"].includes(characterFilter) &&
-				!lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
-			baseCharacter.categories
-				.concat(
-					characterSettings[character.id]
-						? characterSettings[character.id].extraTags
-						: [],
-				)
-				.some((tag) => tag.toLowerCase().includes(characterFilter))
-		);
+			return (
+				filter === "" ||
+				baseCharacter.name.toLowerCase().includes(filter) ||
+				(["lock", "locked"].includes(filter) &&
+					lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
+				(["unlock", "unlocked"].includes(filter) &&
+					!lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
+				baseCharacter.categories
+					.concat(
+						characterSettings[character.id]
+							? characterSettings[character.id].extraTags
+							: [],
+					)
+					.some((tag) => tag.toLowerCase().includes(filter))
+			);
+		};
+
+		switch (characterFilter.type) {
+			case "text":
+				return filterCharacters;
+			case "custom":
+				return characterFilter.filterPredicate;
+			default:
+				return () => true;
+		}
 	};
 
-	const highlightedCharacters = availableCharacters.filter(filterCharacters);
-	const filteredCharacters =
-		availableCharacters.filter((c) => !filterCharacters(c)) ?? [];
+	let highlightedCharacters = availableCharacters.filter(
+		createFilterFunction(charactersManagement$.filterSetup.quickFilter.get()),
+	);
+	for (const filter of charactersManagement$.filterSetup.filtersById
+		.get()
+		.values()) {
+		if (filter !== undefined)
+			highlightedCharacters = highlightedCharacters.filter(
+				createFilterFunction(filter),
+			);
+	}
+	const starsReactivity = charactersManagement$.filterSetup.starsRange.get();
+	const levelReactivity = charactersManagement$.filterSetup.levelRange.get();
+	const gearLevelReactivity =
+		charactersManagement$.filterSetup.gearLevelRange.get();
+	highlightedCharacters = highlightedCharacters.filter(
+		charactersManagement$.filterSetup.permanentFilterById.peek().get("stars")
+			?.filterPredicate ?? ((character: Character.Character) => true),
+	);
+	highlightedCharacters = highlightedCharacters.filter(
+		charactersManagement$.filterSetup.permanentFilterById.peek().get("level")
+			?.filterPredicate ?? ((character: Character.Character) => true),
+	);
+	highlightedCharacters = highlightedCharacters.filter(
+		charactersManagement$.filterSetup.permanentFilterById
+			.peek()
+			.get("gearLevel")?.filterPredicate ??
+			((character: Character.Character) => true),
+	);
+	const filteredCharacters = availableCharacters.filter(
+		(character) => !highlightedCharacters.includes(character),
+	);
 
 	const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
@@ -119,11 +159,11 @@ const CharacterEditView = observer(() => {
 
 	return (
 		<div
-			className={`character-edit flex flex-col flex-grow-1 ${
+			className={`character-edit flex flex-col flex-grow-1 gap-2 ${
 				isSelectionExpanded$.get() ? "sort-view" : ""
 			}`}
 		>
-			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2">
+			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
 				<DefaultCollapsibleCard title="Filters">
 					<CharacterFilters />
 				</DefaultCollapsibleCard>
@@ -145,7 +185,7 @@ const CharacterEditView = observer(() => {
 					/>
 				</DefaultCollapsibleCard>
 			</div>
-			<div className="flex h-full">
+			<div className="flex h-[83%]">
 				<div
 					className="available-characters"
 					onDragEnter={availableCharactersDragEnter}
