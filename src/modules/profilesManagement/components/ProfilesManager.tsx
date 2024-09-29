@@ -1,5 +1,5 @@
 // react
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
@@ -19,6 +19,9 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 // modules
 import { Data } from "#/state/modules/data";
 
+// hooks
+import { useRenderCount } from "#/hooks/useRenderCount";
+
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -29,8 +32,7 @@ import { Button } from "#ui/button";
 
 const ProfilesManager = observer(
 	React.memo(() => {
-		const counter = useRef(0);
-		console.log(`ProfilesManager render: ${++counter.current}`);
+		useRenderCount("ProfilesManager");
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
 		const profiles = profilesManagement$.profiles.playernameByAllycode.get();

@@ -1,5 +1,5 @@
 // react
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
@@ -15,7 +15,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { Memo, Show, observer, reactive, useMount } from "@legendapp/state/react";
+import {
+	Memo,
+	Show,
+	observer,
+	reactive,
+	useMount,
+} from "@legendapp/state/react";
 import { about$ } from "#/modules/about/state/about";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -23,6 +29,9 @@ import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
 import { Data } from "#/state/modules/data";
+
+// hooks
+import { useRenderCount } from "#/hooks/useRenderCount";
 
 // domain
 import type { SectionNames } from "#/modules/ui/domain/SectionNames";
@@ -48,8 +57,7 @@ const ReactiveTabs = reactive(Tabs);
 
 const App = observer(
 	React.memo(() => {
-		const counter = ++useRef(0).current;
-		console.log(`App render: ${counter}`);
+		useRenderCount("App");
 		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
 		const firstSection = profilesManagement$.hasProfiles.get()
