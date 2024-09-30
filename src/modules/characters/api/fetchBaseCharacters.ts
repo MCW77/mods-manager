@@ -1,13 +1,13 @@
 import {
-	type BaseCharactersById,
-	mapAPI2BaseCharactersById,
+	type BaseCharacterById,
+	mapAPI2BaseCharacterById,
 } from "../domain/BaseCharacter";
 
-export async function fetchCharacters(): Promise<BaseCharactersById> {
+export async function fetchCharacters(): Promise<BaseCharacterById> {
 	return fetch("https://api.mods-optimizer.swgoh.grandivory.com/characters/")
 		.then((response) => response.json())
 		.then((response) => {
-			return mapAPI2BaseCharactersById(response.units);
+			return mapAPI2BaseCharacterById(response.units);
 		})
 		.catch();
 }

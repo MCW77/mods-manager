@@ -46,7 +46,7 @@ const API2BaseCharacterAlignment = {
 	3: "dark",
 };
 
-export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
+export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 	return groupByKey(
 		baseCharacters
 			.filter((bc) => bc.combatType === 1)
@@ -81,10 +81,10 @@ export function mapAPI2BaseCharactersById(baseCharacters: APIBaseCharacter[]) {
 				} as BaseCharacter;
 			}),
 		(bc: BaseCharacter) => bc.id,
-	) as BaseCharactersById;
+	) as BaseCharacterById;
 }
 
-export type BaseCharactersById = Record<CharacterNames, BaseCharacter>;
+export type BaseCharacterById = Record<CharacterNames, BaseCharacter>;
 
 export type BaseCharacters = BaseCharacter[];
 

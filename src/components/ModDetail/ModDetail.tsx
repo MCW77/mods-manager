@@ -35,28 +35,38 @@ const ModDetail = React.memo(
 		mod,
 		showAssigned = false,
 	}: ComponentProps) => {
-		const baseCharactersById = characters$.baseCharactersById.get();
-		const characters = profilesManagement$.activeProfile.charactersById.get();
+		const baseCharacterById = characters$.baseCharacterById.get();
+		const characterById = profilesManagement$.activeProfile.characterById.get();
 
 		const character: Character.Character | null =
-			mod.characterID !== "null" ? characters[mod.characterID] : null;
+			mod.characterID !== "null" ? characterById[mod.characterID] : null;
 
 		return (
 			<div className={"mod-detail"} key={mod.id}>
 				<div className={"flex flex-col gap-6"}>
 					<ModImage mod={mod} />
-					{mod.pips === 6 &&
-						<div className={" row-start-1 row-end-auto col-start-1 col-end-auto flex flex-col gap-1"}>
+					{mod.pips === 6 && (
+						<div
+							className={
+								" row-start-1 row-end-auto col-start-1 col-end-auto flex flex-col gap-1"
+							}
+						>
 							<Label>Calibrations:</Label>
-							<span className={"text-sm"}>{mod.reRolledCount}/{mod.tier+1} at {mod.reRollPrice()}</span>
+							<span className={"text-sm"}>
+								{mod.reRolledCount}/{mod.tier + 1} at {mod.reRollPrice()}
+							</span>
 						</div>
-					}
+					)}
 				</div>
 				{character && <CharacterAvatar character={character} />}
 				{character && (
-					<h4 className={"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"}>
-						{baseCharactersById[character.id]
-							? baseCharactersById[character.id].name
+					<h4
+						className={
+							"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"
+						}
+					>
+						{baseCharacterById[character.id]
+							? baseCharacterById[character.id].name
 							: character.id}
 					</h4>
 				)}

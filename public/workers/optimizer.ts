@@ -147,15 +147,15 @@ self.onmessage = (message) => {
       const legendProfile: LegendPlayerProfile = profilesManagement$.activeProfile.peek();
       const allMods = profile.mods.map(deserializeMod);
 
-      const lastRunCharacters: Partial<Character.CharactersById> = {};
+      const lastRunCharacterById: Partial<Character.CharacterById> = {};
 
       if (lastRun !== undefined && lastRun !== null){
-        if (lastRun.characters) {
-          for (const character of Object.values(lastRun.characters)) {
-            lastRunCharacters[character.id] = character;
+        if (lastRun.characterById) {
+          for (const character of Object.values(lastRun.characterById)) {
+            lastRunCharacterById[character.id] = character;
           }
 
-          lastRun.characters = lastRunCharacters as Character.CharactersById;
+          lastRun.characterById = lastRunCharacterById as Character.CharacterById;
         }
 
         lastRun.selectedCharacters = Array.isArray(lastRun.selectedCharacters) ?
@@ -169,7 +169,7 @@ self.onmessage = (message) => {
 
       const optimizerResults = optimizeMods(
         allMods,
-        legendProfile.charactersById,
+        legendProfile.characterById,
         selectedCharacters,
         incrementalOptimization$.indicesByProfile[legendProfile.allycode].peek(),
         optimizationSettings$.settingsByProfile.peek()[legendProfile.allycode],
@@ -1245,7 +1245,7 @@ Object.freeze(chooseTwoOptions);
  * optimizing mods for the second character after removing those used for the first, etc.
  *
  * @param availableMods {Array<Mod>} An array of mods that could potentially be assign to each character
- * @param characters {Object<String, Character>} A set of characters keyed by base ID that might be optimized
+ * @param characterById {Object<String, Character>} A set of characters keyed by base ID that might be optimized
  * @param order {Array<Object>} The characters to optimize, in order, as {id, target}
  * @param incrementalOptimizeIndex {number} index of character to stop optimization at for incremental runs
  * @param globalSettings {Object} The settings to apply to every character being optimized
@@ -1256,7 +1256,7 @@ Object.freeze(chooseTwoOptions);
  */
 function optimizeMods(
   availableMods: Mod[],
-  characters: Character.CharactersById,
+  characterById: Character.CharacterById,
   order: SelectedCharacters,
   incrementalOptimizeIndex: number | null,
   globalSettings: ProfileOptimizationSettings,
@@ -1278,11 +1278,11 @@ function optimizeMods(
 
   if (!recalculateMods) {
     let charID: CharacterNames;
-    for (charID in characters) {
-      if (!Object.hasOwn(characters, charID)) {
+    for (charID in characterById) {
+      if (!Object.hasOwn(characterById, charID)) {
         continue;
       }
-      if (!previousRun?.characters[charID] ||
+      if (!previousRun?.characterById[charID] ||
         previousRun.lockedStatus[charID] !== lockedStatus$.ofActivePlayerByCharacterId[charID].peek()) {
         recalculateMods = true;
         break;
@@ -1303,9 +1303,9 @@ function optimizeMods(
   }
 
   const unselectedCharacters: CharacterNames[] =
-    (Object.keys(characters) as CharacterNames[]).filter(characterID => !order.map(({ id }) => id).includes(characterID))
+    (Object.keys(characterById) as CharacterNames[]).filter(characterID => !order.map(({ id }) => id).includes(characterID))
 
-  const lockedCharacters: CharacterNames[] = (Object.keys(characters) as CharacterNames[])
+  const lockedCharacters: CharacterNames[] = (Object.keys(characterById) as CharacterNames[])
     .filter(id => lockedStatus$.ofActivePlayerByCharacterId[id].peek())
     .concat(globalSettings.lockUnselectedCharacters ? unselectedCharacters : []);
 
@@ -1315,8 +1315,8 @@ function optimizeMods(
 
   // For each not-locked character in the list, find the best mod set for that character
   const optimizerResults = order.reduce((modSuggestions: ModSuggestion[], { id: characterID, target }, index) => {
-    const character = characters[characterID];
-    const previousCharacter = previousRun?.characters[characterID] ?? null;
+    const character = characterById[characterID];
+    const previousCharacter = previousRun?.characterById[characterID] ?? null;
 
     // If the character is locked, skip it
     if (lockedStatus$.ofActivePlayerByCharacterId[character.id].peek()) {
@@ -1373,7 +1373,7 @@ function optimizeMods(
     const absoluteTarget =
       changeRelativeTargetStatsToAbsolute(
         modSuggestions,
-        characters,
+        characterById,
         lockedCharacters,
         availableMods,
         target,
@@ -1467,7 +1467,7 @@ function optimizeMods(
  */
 function changeRelativeTargetStatsToAbsolute(
   modSuggestions: ModSuggestion[],
-  characters: Character.CharactersById,
+  characterById: Character.CharacterById,
   lockedCharacters: CharacterNames[],
   allMods: Mod[],
   target: OptimizationPlan,
@@ -1484,7 +1484,7 @@ function changeRelativeTargetStatsToAbsolute(
         return targetStat;
       }
 
-      const relativeCharacter = characters[targetStat.relativeCharacterId];
+      const relativeCharacter = characterById[targetStat.relativeCharacterId];
       let characterMods: Mod[];
 
       if (lockedCharacters.includes(targetStat.relativeCharacterId)) {
@@ -1781,6 +1781,7 @@ function* getPotentialModsToSatisfyTargetStats(
           characterCount,
           characterIndex,
         );
+
         if ((targetStat.stat !== "Speed") && (modConfigurationsByStat[targetStat.stat][numSetsUsed].length === 0)) break;
       }
     } else {

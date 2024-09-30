@@ -106,7 +106,7 @@ const MoveModsModal = () => {
 	const generateHotUtilsProfile = () => {
 		const assignedMods = legendProfile.modAssignments
 			.filter((x) => null !== x)
-			.filter(({ id }) => legendProfile.charactersById[id].playerValues.level >= 50)
+			.filter(({ id }) => legendProfile.characterById[id].playerValues.level >= 50)
 			.map(({ id, assignedMods, target }) => ({
 				id: id,
 				modIds: assignedMods,

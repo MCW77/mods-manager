@@ -40,10 +40,10 @@ const getModColor = (mod: Mod) => {
 
 const ModImage = React.memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
-		const characters = profilesManagement$.activeProfile.charactersById.get();
+		const characterById = profilesManagement$.activeProfile.characterById.get();
 		const modColor = getModColor(mod);
 		const character = mod.characterID
-			? characters[mod.characterID as CharacterNames]
+			? characterById[mod.characterID as CharacterNames]
 			: null;
 
 		return (

@@ -18,7 +18,7 @@ import { CharacterBlock } from "./CharacterBlock";
 
 const CharacterList = observer(
 	React.memo(() => {
-		const characters = profilesManagement$.activeProfile.charactersById.get();
+		const characterById = profilesManagement$.activeProfile.characterById.get();
 		const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
 
 		const characterBlockDragEnter = () => {
@@ -58,7 +58,7 @@ const CharacterList = observer(
 					case "add": {
 						const movingCharacterID: CharacterNames =
 							event.dataTransfer.getData("text/plain") as CharacterNames;
-						const movingCharacter = characters[movingCharacterID];
+						const movingCharacter = characterById[movingCharacterID];
 						profilesManagement$.selectCharacter(
 							movingCharacterID,
 							Character.defaultTarget(movingCharacter),

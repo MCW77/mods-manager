@@ -31,11 +31,11 @@ const CharacterAvatar = React.memo(
 		displayStars = true,
 		id,
 	}: ComponentProps) => {
-		const baseCharactersById = useSelector(characters$.baseCharactersById);
+		const baseCharacterById = useSelector(characters$.baseCharacterById);
 
 		if (character === undefined || character === null) return null;
 
-		const baseCharacter: BaseCharacter = baseCharactersById[character.id] ?? {
+		const baseCharacter: BaseCharacter = baseCharacterById[character.id] ?? {
 			...defaultBaseCharacter,
 			id: character.id,
 			name: character.id,

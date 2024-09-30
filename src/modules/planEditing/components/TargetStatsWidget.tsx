@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import {
 	Computed,
 	reactiveObserver,
-	useSelector,
 } from "@legendapp/state/react";
 
 // state
@@ -15,19 +14,18 @@ import type { BaseCharacters } from "#/modules/characters/domain/BaseCharacter";
 
 // components
 import { TargetStatWidget } from "./TargetStatWidget";
-
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 
 const TargetStatsWidget: React.FC = reactiveObserver(() => {
-	const baseCharactersById = useSelector(characters$.baseCharactersById);
+	const baseCharacterById = characters$.baseCharacterById.get();
 
 	const baseCharacters2 = useMemo(
 		() =>
-			(Object.values(baseCharactersById).slice(0) as BaseCharacters).sort(
+			(Object.values(baseCharacterById).slice(0) as BaseCharacters).sort(
 				(a, b) => a.name.localeCompare(b.name),
 			),
-		[baseCharactersById],
+		[baseCharacterById],
 	);
 
 	return (

@@ -26,10 +26,10 @@ const ReactiveProgress = reactive(Progress);
 
 const OptimizerProgress: React.FC = observer(() => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
-		return charId === "" ? undefined : characters[charId]
+		return charId === "" ? undefined : characterById[charId]
 	});
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 

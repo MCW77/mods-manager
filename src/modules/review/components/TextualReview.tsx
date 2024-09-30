@@ -7,7 +7,7 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
-import type { BaseCharactersById } from "#/modules/characters/domain/BaseCharacter";
+import type { BaseCharacterById } from "#/modules/characters/domain/BaseCharacter";
 import type * as Character from "#/domain/Character";
 import type { ModAssignments } from "#/domain/ModAssignment";
 
@@ -30,23 +30,22 @@ const setMap = {
 };
 
 const summaryListContent = (
-	baseCharacters: BaseCharactersById,
-	characters: Character.CharactersById,
+	baseCharacterById: BaseCharacterById,
+	characterById: Character.CharacterById,
 	modAssignments: ModAssignments,
 ) => {
 	return modAssignments
 		.map(({ id, target, assignedMods: mods }) => {
-			const assignedCharacter = characters[id];
+			const assignedCharacter = characterById[id];
 			const characterName =
-				baseCharacters[assignedCharacter.id]?.name ??
-				assignedCharacter.id;
+				baseCharacterById[assignedCharacter.id]?.name ?? assignedCharacter.id;
 
 			return [`${characterName} - ${target.id}`]
 				.concat(
 					mods.map((mod) => {
 						const moveFrom =
 							mod.characterID !== "null"
-								? baseCharacters[mod.characterID].name
+								? baseCharacterById[mod.characterID].name
 								: "your unassigned mods";
 						return `Move ${setMap[mod.set]}(${
 							mod.primaryStat.type
@@ -62,12 +61,12 @@ const summaryListContent = (
  * Copies the summary display text into the clipboard
  */
 const copySummaryToClipboard = (
-	baseCharacters: BaseCharactersById,
-	characters: Character.CharactersById,
+	baseCharacterById: BaseCharacterById,
+	characterById: Character.CharacterById,
 	modAssignments: ModAssignments,
 ) => {
 	copyToClipboard(
-		summaryListContent(baseCharacters, characters, modAssignments),
+		summaryListContent(baseCharacterById, characterById, modAssignments),
 	);
 };
 
@@ -80,22 +79,22 @@ type TextualReviewProps = {
  * @returns Array[JSX Element]
  */
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
-	const baseCharactersById = characters$.baseCharactersById.get();
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 
 	return (
 		<div>
 			<h2>Move Summary</h2>
 			<pre id="summary_pre" className={"summary"}>
-				{summaryListContent(baseCharactersById, characters, modAssignments)}
+				{summaryListContent(baseCharacterById, characterById, modAssignments)}
 			</pre>
 			<div className={"flex justify-center gap-2"}>
 				<Button
 					type={"button"}
 					onClick={() =>
 						copySummaryToClipboard(
-							baseCharactersById,
-							characters,
+							baseCharacterById,
+							characterById,
 							modAssignments,
 						)
 					}

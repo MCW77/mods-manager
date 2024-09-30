@@ -37,8 +37,9 @@ import { Button } from "#ui/button";
 
 const CharacterActions = () => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharactersById = characters$.baseCharactersById.get();
-	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
+	const selectedCharacters =
+		profilesManagement$.activeProfile.selectedCharacters.get();
 	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
 
 	return (
@@ -83,7 +84,7 @@ const CharacterActions = () => {
 								,
 								<ul>
 									{invalidTargets.map((id) => (
-										<li key={id}>{baseCharactersById[id]?.name ?? id}</li>
+										<li key={id}>{baseCharacterById[id]?.name ?? id}</li>
 									))}
 								</ul>
 							</div>,

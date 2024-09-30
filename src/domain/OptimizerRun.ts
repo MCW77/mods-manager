@@ -2,13 +2,13 @@
 import type { GIMOFlatMod } from "./types/ModTypes";
 import type { ProfileOptimizationSettings } from "#/modules/optimizationSettings/state/optimizationSettings";
 
-import type { CharactersById } from "./Character";
+import type { CharacterById } from "./Character";
 import type { SelectedCharacters } from "./SelectedCharacters";
 import type { LockedStatusByCharacterId } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
 
 export interface OptimizerRun {
 	allycode: string;
-	characters: CharactersById;
+	characterById: CharacterById;
 	lockedStatus: LockedStatusByCharacterId;
 	mods: GIMOFlatMod[];
 	selectedCharacters: SelectedCharacters;
@@ -17,15 +17,15 @@ export interface OptimizerRun {
 
 export const createOptimizerRun = (
 	allycode: string,
-	characters: CharactersById,
+	characterById: CharacterById,
 	lockedStatus: LockedStatusByCharacterId,
 	mods: GIMOFlatMod[],
 	selectedCharacters: SelectedCharacters,
 	globalSettings: ProfileOptimizationSettings,
 ): OptimizerRun => {
 	return {
-		allycode: allycode,
-		characters,
+		allycode,
+		characterById,
 		lockedStatus,
 		mods,
 		selectedCharacters,

@@ -31,7 +31,7 @@ const ReactiveInput = reactive(Input);
 const CreateProfileModal: React.FC = observer(() => {
 	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
 	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
 		profileMods.filter((mod) => mod.characterID !== "null"),
@@ -46,7 +46,7 @@ const CreateProfileModal: React.FC = observer(() => {
 	const generateHotUtilsProfile = () => {
 		const assignedMods = modAssignments
 			.filter((x) => null !== x)
-			.filter(({ id }) => characters[id].playerValues.level >= 50)
+			.filter(({ id }) => characterById[id].playerValues.level >= 50)
 			.map(({ id, assignedMods, target }) => ({
 				id: id,
 				modIds: assignedMods,

@@ -5,10 +5,9 @@ import type { ThunkResult } from "../reducers/modsOptimizer";
 import cleanAllycode from "#/utils/cleanAllycode";
 import groupByKey from "#/utils/groupByKey";
 import nothing from "#/utils/nothing";
-import { mapValues } from "lodash-es";
 
 // state
-import getDatabase, { type Database } from "#/state/storage/Database";
+import getDatabase from "#/state/storage/Database";
 
 import { beginBatch, endBatch } from "@legendapp/state";
 
@@ -26,11 +25,9 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import { Storage } from "#/state/modules/storage";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
-import type * as DTOs from "#/modules/profilesManagement/dtos";
-import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
-import { createPlayerProfile, type PlayerProfile as LegendPlayerProfile } from "#/modules/profilesManagement/domain/PlayerProfile";
+import { createPlayerProfile } from "#/modules/profilesManagement/domain/PlayerProfile";
 
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
@@ -105,7 +102,7 @@ export namespace thunks {
 
 			// First, fetch character definitions from swgoh.gg
 			try {
-				const baseCharacters = await characters$.baseCharactersById();
+				const baseCharacterById = await characters$.baseCharacterById();
 			} catch (error) {
 				messages.push(
 					"Error when fetching character definitions from HotUtils. Some characters may not optimize properly until you fetch again.",
@@ -282,11 +279,11 @@ export namespace thunks {
 					if (lockedStatus$.ofActivePlayerByCharacterId[id].peek() === undefined)
 						lockedStatus$.ofActivePlayerByCharacterId[id].set(false);
 
-					const charactersById$ = profilesManagement$.activeProfile.charactersById;
-					if (Object.hasOwn(charactersById$.peek(), id)) {
-						charactersById$[id].playerValues.set(playerValues);
+					const characterById$ = profilesManagement$.activeProfile.characterById;
+					if (Object.hasOwn(characterById$.peek(), id)) {
+						characterById$[id].playerValues.set(playerValues);
 					} else {
-						charactersById$[id].set(Character.createCharacter(
+						characterById$[id].set(Character.createCharacter(
 							id,
 							playerValues,
 							[],

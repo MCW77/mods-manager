@@ -39,7 +39,7 @@ const ReactiveCollapsible = reactive(Collapsible.Root);
 const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCount }: GroupedModsProps) => {
   const [t] = useTranslation("explore-ui");
   const [tDomain] = useTranslation("domain");
-  const characters = profilesManagement$.activeProfile.charactersById.get();
+  const characterById = profilesManagement$.activeProfile.characterById.get();
 
   const modGroupsElement = React.createRef<HTMLDivElement>();
 
@@ -86,7 +86,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
   const modElements = (mods: Mod[]) => {
     return mods.map((mod) => {
       const assignedCharacter = assignedMods[mod.id]
-        ? characters[assignedMods[mod.id]]
+        ? characterById[assignedMods[mod.id]]
         : null;
       return (
         <RenderIfVisible

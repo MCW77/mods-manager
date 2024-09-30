@@ -59,7 +59,7 @@ export class PlayerProfile {
 	toOptimizerRun() {
 		return OptimizerRun.createOptimizerRun(
 			this.allycode,
-			profilesManagement$.activeProfile.charactersById.peek(),
+			profilesManagement$.activeProfile.characterById.peek(),
 			lockedStatus$.ofActivePlayerByCharacterId.peek(),
 			this.mods.map((mod) => mod.serialize()),
 			profilesManagement$.activeProfile.selectedCharacters.peek(),

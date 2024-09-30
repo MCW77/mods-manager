@@ -40,8 +40,8 @@ const ModStats = React.memo(
 		assignedTarget,
 	}: ComponentProps) => {
 		const [t, i18n] = useTranslation("domain");
-		const characters = profilesManagement$.activeProfile.charactersById.get();
-		const baseCharactersById = characters$.baseCharactersById.get();
+		const characterById = profilesManagement$.activeProfile.characterById.get();
+		const baseCharacterById = characters$.baseCharacterById.get();
 		const scoreName = modsView$.activeViewSetupInActiveCategory.modScore.get();
 
 		const translateStat = (displayText: Stats.DisplayedStat) => {
@@ -95,7 +95,7 @@ const ModStats = React.memo(
 
 		const character: Character.Character | null =
 			mod.characterID !== null
-				? characters[mod.characterID as CharacterNames]
+				? characterById[mod.characterID as CharacterNames]
 				: null;
 		const statsDisplay =
 			mod.secondaryStats.length > 0
@@ -125,15 +125,15 @@ const ModStats = React.memo(
 						<h4>{t("Secondary_plural")}</h4>
 						<ul className="secondary">{statsDisplay}</ul>
 					</div>
-					<ModScores mod={mod}/>
+					<ModScores mod={mod} />
 				</div>
 				{showAvatar && character && (
 					<div className={"assigned-character"}>
 						<h4>Assigned To</h4>
 						<CharacterAvatar character={character} />
 						<span className="avatar-name">
-							{baseCharactersById[character.id]
-								? baseCharactersById[character.id].name
+							{baseCharacterById[character.id]
+								? baseCharacterById[character.id].name
 								: character.id}
 						</span>
 					</div>

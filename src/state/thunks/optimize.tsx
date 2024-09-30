@@ -104,7 +104,7 @@ export namespace thunks {
 					);
 
 				if (resultsWithMessages.length) {
-					const baseCharactersById = characters$.baseCharactersById.peek();
+					const baseCharacterById = characters$.baseCharacterById.peek();
 					const doubledResultsWithMessages = [];
 					for (const item of resultsWithMessages) {
 						doubledResultsWithMessages.push(item);
@@ -151,7 +151,7 @@ export namespace thunks {
 														"Special Critical Chance %": 0,
 													};
 													const character =
-														profilesManagement$.activeProfile.charactersById[id].peek() ||
+														profilesManagement$.activeProfile.characterById[id].peek() ||
 														Character.createCharacter(
 															id,
 															{
@@ -174,8 +174,8 @@ export namespace thunks {
 														>
 															<CharacterAvatar character={character} />
 															<br />
-															{baseCharactersById[id]
-																? baseCharactersById[id].name
+															{baseCharacterById[id]
+																? baseCharacterById[id].name
 																: id}
 														</div>
 													) : (
@@ -231,7 +231,7 @@ export namespace thunks {
 			const profile = getState().profile;
 
 			// If any of the characters being optimized don't have stats, then show an error message
-			if (Object.values(profilesManagement$.activeProfile.charactersById.peek()).some((character) => {
+			if (Object.values(profilesManagement$.activeProfile.characterById.peek()).some((character) => {
 				return null === character.playerValues.baseStats || null === character.playerValues.equippedStats;
 			})) {
 				dialog$.showError(

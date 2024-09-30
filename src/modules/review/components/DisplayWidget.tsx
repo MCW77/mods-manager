@@ -43,7 +43,7 @@ const ReactiveSwitch = reactive(Switch);
 const DisplayWidget = () => {
 	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
 	const legendProfile = profilesManagement$.activeProfile.get();
-	const baseCharactersById = characters$.baseCharactersById.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
 	const filter = review$.modListFilter.get();
 
 	const getModAssignmentsByCurrentCharacter = (
@@ -67,7 +67,7 @@ const DisplayWidget = () => {
 					(mod) =>
 						mod.shouldLevel(assignment.target) ||
 						mod.shouldSlice(
-							legendProfile.charactersById[assignment.id],
+							legendProfile.characterById[assignment.id],
 							assignment.target,
 						),
 				);
@@ -124,7 +124,7 @@ const DisplayWidget = () => {
 						assignedMods: assignedMods.filter(
 							(mod) =>
 								mod.shouldLevel(target) ||
-								mod.shouldSlice(legendProfile.charactersById[id], target),
+								mod.shouldSlice(legendProfile.characterById[id], target),
 						),
 						missedGoals: [],
 					}))
@@ -155,7 +155,7 @@ const DisplayWidget = () => {
 				tags = uniq(
 					flatten(
 						(Object.keys(removedMods) as CharacterNames[]).map((id) =>
-							id in baseCharactersById ? baseCharactersById[id].categories : [],
+							id in baseCharacterById ? baseCharacterById[id].categories : [],
 						) as string[][],
 					),
 				);
@@ -163,7 +163,7 @@ const DisplayWidget = () => {
 				tags = uniq(
 					flatten(
 						displayedMods.map(({ id }) =>
-							id in baseCharactersById ? baseCharactersById[id].categories : [],
+							id in baseCharacterById ? baseCharacterById[id].categories : [],
 						),
 					),
 				);
@@ -185,7 +185,7 @@ const DisplayWidget = () => {
 					assignedMods.some(
 						(mod) =>
 							mod.shouldLevel(target) ||
-							mod.shouldSlice(legendProfile.charactersById[id], target),
+							mod.shouldSlice(legendProfile.characterById[id], target),
 					),
 				);
 			} else {
@@ -197,7 +197,7 @@ const DisplayWidget = () => {
 				new Set(
 					flatten(
 						displayedMods.map(({ id }) =>
-							baseCharactersById[id] ? baseCharactersById[id].categories : [],
+							baseCharacterById[id] ? baseCharacterById[id].categories : [],
 						),
 					),
 				),
@@ -206,8 +206,8 @@ const DisplayWidget = () => {
 			// Filter out any characters that we're not going to display based on the selected tag
 			if (filter.tag !== "All") {
 				displayedMods = displayedMods.filter(({ id }) => {
-					const tags = baseCharactersById[id]
-						? baseCharactersById[id].categories
+					const tags = baseCharacterById[id]
+						? baseCharacterById[id].categories
 						: [];
 					return tags.includes(filter.tag);
 				});

@@ -83,7 +83,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 			playerName: "",
 			selectedCharacters: [],
 			modAssignments: [],
-			charactersById: {} as Character.CharactersById,
+			characterById: {} as Character.CharacterById,
 		},
 		now: Date.now(),
 		profiles: getInitialProfiles(),
@@ -223,14 +223,14 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 			);
 		},
 		deleteTarget: (characterId: CharacterNames, targetName: string) => {
-			const targetIndex = profilesManagement$.activeProfile.charactersById[
+			const targetIndex = profilesManagement$.activeProfile.characterById[
 				characterId
 			].targets
 				.peek()
 				.findIndex((target) => target.id === targetName);
 			if (targetIndex >= 0) {
 				beginBatch();
-				profilesManagement$.activeProfile.charactersById[
+				profilesManagement$.activeProfile.characterById[
 					characterId
 				].targets.splice(targetIndex, 1);
 				const selectedCharacter =
@@ -245,7 +245,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		},
 		saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => {
 			const character =
-				profilesManagement$.activeProfile.charactersById[characterId];
+				profilesManagement$.activeProfile.characterById[characterId];
 			const characterTarget = character.targets.find(
 				(t) => t.peek().id === newTarget.id,
 			);
@@ -299,7 +299,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				template.selectedCharacters,
 				(selectedCharacter) =>
 					Object.keys(
-						profilesManagement$.activeProfile.charactersById.peek(),
+						profilesManagement$.activeProfile.characterById.peek(),
 					).includes(selectedCharacter.id)
 						? "existing"
 						: "missing",
@@ -323,7 +323,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 					selectedCharacter.target.set(selectedCharacterInTemplate.target);
 				}
 				const character =
-					profilesManagement$.activeProfile.charactersById[
+					profilesManagement$.activeProfile.characterById[
 						selectedCharacterInTemplate.id
 					];
 				if (character === undefined) continue;
@@ -355,7 +355,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				template.selectedCharacters,
 				(selectedCharacter) =>
 					Object.keys(
-						profilesManagement$.activeProfile.charactersById.peek(),
+						profilesManagement$.activeProfile.characterById.peek(),
 					).includes(selectedCharacter.id)
 						? "existing"
 						: "missing",
@@ -368,7 +368,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 			for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
 				const target = structuredClone(selectedCharacterInTemplate.target);
 				const character =
-					profilesManagement$.activeProfile.charactersById[
+					profilesManagement$.activeProfile.characterById[
 						selectedCharacterInTemplate.id
 					];
 				if (character === undefined) continue;
@@ -441,7 +441,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				index,
 				selectedCharacter,
 			] of profile.selectedCharacters.entries()) {
-				if (profile.charactersById[selectedCharacter.id].peek() === undefined) {
+				if (profile.characterById[selectedCharacter.id].peek() === undefined) {
 					profile.selectedCharacters.splice(index, 1);
 				}
 			}

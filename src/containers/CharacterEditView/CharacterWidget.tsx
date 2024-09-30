@@ -27,8 +27,9 @@ type CharacterBlockProps = {
  */
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
-		const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
-		const baseCharactersById = characters$.baseCharactersById.get();
+		const selectedCharacters =
+			profilesManagement$.activeProfile.selectedCharacters.get();
+		const baseCharacterById = characters$.baseCharacterById.get();
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
 		const isLocked =
@@ -40,9 +41,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 				(selectedCharacter) => selectedCharacter.id === characterID,
 			);
 
-		const isDraggable = isCharacterSelected(character.id)
-			? undefined
-			: true;
+		const isDraggable = isCharacterSelected(character.id) ? undefined : true;
 
 		const toggleCharacterLock = (characterID: CharacterNames) => {
 			lockedStatus$.ofActivePlayerByCharacterId[characterID].toggle();
@@ -74,9 +73,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 					className={`${isDraggable ? "cursor-grab" : ""}`}
 					draggable={isDraggable}
 					onDragStart={
-						isCharacterSelected(character.id)
-							? undefined
-							: dragStart(character)
+						isCharacterSelected(character.id) ? undefined : dragStart(character)
 					}
 					onDoubleClick={() =>
 						profilesManagement$.selectCharacter(
@@ -89,8 +86,8 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 					<CharacterAvatar character={character} />
 				</div>
 				<div className={"character-name"}>
-					{baseCharactersById[character.id]
-						? baseCharactersById[character.id].name
+					{baseCharacterById[character.id]
+						? baseCharacterById[character.id].name
 						: character.id}
 				</div>
 			</div>

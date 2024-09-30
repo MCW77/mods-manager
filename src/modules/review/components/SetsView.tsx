@@ -39,8 +39,8 @@ type SetsViewProps = {
  */
 const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharactersById = characters$.baseCharactersById.get();
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
 	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
 
@@ -54,7 +54,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 	// Iterate over each character to render a full mod set
 	return modAssignments.map(
 		({ id: characterID, target, assignedMods: mods, missedGoals }, index) => {
-			const character = characters[characterID];
+			const character = characterById[characterID];
 
 			if (!character) {
 				return null;
@@ -66,8 +66,8 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 						<CharacterAvatar character={character} />
 						<Arrow />
 						<h3 className={missedGoals?.length ? "red-text" : ""}>
-							{baseCharactersById[characterID]
-								? baseCharactersById[characterID].name
+							{baseCharacterById[characterID]
+								? baseCharacterById[characterID].name
 								: characterID}
 						</h3>
 						{target && (

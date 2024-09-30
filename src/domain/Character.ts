@@ -16,7 +16,7 @@ export interface Character {
 	targets: OptimizationPlan[];
 }
 
-export type CharactersById = Record<CharacterNames, Character>;
+export type CharacterById = Record<CharacterNames, Character>;
 
 export const createCharacter = (
 	id: CharacterNames,

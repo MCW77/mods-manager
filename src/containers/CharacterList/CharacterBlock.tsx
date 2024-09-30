@@ -38,91 +38,87 @@ type CharacterBlockProps = {
 };
 
 const characterBlockDragStart = (index: number) => {
-  return (event: React.DragEvent<HTMLDivElement>) => {
-    event.dataTransfer.dropEffect = "move";
-    event.dataTransfer.effectAllowed = "move";
-    event.dataTransfer.setData("text/plain", `${index}`);
-    // We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
-    const options = {
-      effect: "move",
-    };
-    event.dataTransfer.setData("application/json", JSON.stringify(options));
-  };
+	return (event: React.DragEvent<HTMLDivElement>) => {
+		event.dataTransfer.dropEffect = "move";
+		event.dataTransfer.effectAllowed = "move";
+		event.dataTransfer.setData("text/plain", `${index}`);
+		// We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
+		const options = {
+			effect: "move",
+		};
+		event.dataTransfer.setData("application/json", JSON.stringify(options));
+	};
 };
 
 const characterBlockDragEnter = () => {
-  return (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
+	return (event: React.DragEvent<HTMLDivElement>) => {
+		event.preventDefault();
 
-    (event.target as HTMLDivElement).classList.add("drop-character");
-  };
+		(event.target as HTMLDivElement).classList.add("drop-character");
+	};
 };
 
 const characterBlockDragOver = () => {
-  return (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
+	return (event: React.DragEvent<HTMLDivElement>) => {
+		event.preventDefault();
+	};
 };
 
 const characterBlockDragLeave = () => {
-  return (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    (event.target as HTMLDivElement).classList.remove("drop-character");
-  };
+	return (event: React.DragEvent<HTMLDivElement>) => {
+		event.preventDefault();
+		(event.target as HTMLDivElement).classList.remove("drop-character");
+	};
 };
 
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
-  ({
-    characterId,
-    target,
-    index,
-  }: CharacterBlockProps) => {
-		const characters = profilesManagement$.activeProfile.charactersById.get();
+	({ characterId, target, index }: CharacterBlockProps) => {
+		const characterById = profilesManagement$.activeProfile.characterById.get();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
-    const baseCharactersById = characters$.baseCharactersById.get();
-    const character = characters[characterId];
-    const selectedPlan = target.id;
+		const baseCharacterById = characters$.baseCharacterById.get();
+		const character = characterById[characterId];
+		const selectedPlan = target.id;
 
-    /**
-     * @param dropCharacterIndex The index of the character on which the drop is occurring or null (No characters in the list)
-     * @returns {Function}
-     */
-    const characterBlockDrop = (dropCharacterIndex: number | null) => {
-      return (event: React.DragEvent<HTMLDivElement>) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const options = JSON.parse(
-          event.dataTransfer.getData("application/json"),
-        );
+		/**
+		 * @param dropCharacterIndex The index of the character on which the drop is occurring or null (No characters in the list)
+		 * @returns {Function}
+		 */
+		const characterBlockDrop = (dropCharacterIndex: number | null) => {
+			return (event: React.DragEvent<HTMLDivElement>) => {
+				event.preventDefault();
+				event.stopPropagation();
+				const options = JSON.parse(
+					event.dataTransfer.getData("application/json"),
+				);
 
-        switch (options.effect) {
-          case "add": {
-            const movingCharacterID: CharacterNames =
-              event.dataTransfer.getData("text/plain") as CharacterNames;
-            const movingCharacter = characters[movingCharacterID];
-            profilesManagement$.selectCharacter(
-              movingCharacterID,
-              Character.defaultTarget(movingCharacter),
-              dropCharacterIndex,
-            );
-            break;
-          }
-          case "move": {
-            const movingCharacterIndex =
-              +event.dataTransfer.getData("text/plain");
-            profilesManagement$.moveSelectedCharacter(
-              movingCharacterIndex,
-              dropCharacterIndex,
-            );
-            break;
-          }
-          default:
-          // Do nothing
-        }
+				switch (options.effect) {
+					case "add": {
+						const movingCharacterID: CharacterNames =
+							event.dataTransfer.getData("text/plain") as CharacterNames;
+						const movingCharacter = characterById[movingCharacterID];
+						profilesManagement$.selectCharacter(
+							movingCharacterID,
+							Character.defaultTarget(movingCharacter),
+							dropCharacterIndex,
+						);
+						break;
+					}
+					case "move": {
+						const movingCharacterIndex =
+							+event.dataTransfer.getData("text/plain");
+						profilesManagement$.moveSelectedCharacter(
+							movingCharacterIndex,
+							dropCharacterIndex,
+						);
+						break;
+					}
+					default:
+					// Do nothing
+				}
 
-        (event.target as HTMLDivElement).classList.remove("drop-character");
-      };
-    };
+				(event.target as HTMLDivElement).classList.remove("drop-character");
+			};
+		};
 
 		/**
 		 * Renders the set of 10 icons that show the state of a selected character
@@ -153,7 +149,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 				const newTarget = structuredClone(target);
 				newTarget.minimumModDots = Number(event.target.value);
-        profilesManagement$.saveTarget(character.id, newTarget);
+				profilesManagement$.saveTarget(character.id, newTarget);
 				(document?.activeElement as HTMLSelectElement)?.blur();
 			};
 			handleChange = handleChange.bind(this);
@@ -212,9 +208,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					<span
 						className={`icon locked ${lockedActive}`}
 						onClick={() => {
-							lockedStatus$.ofActivePlayerByCharacterId[
-								character.id
-							].toggle();
+							lockedStatus$.ofActivePlayerByCharacterId[character.id].toggle();
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLSpanElement>) => {
 							if (event.key === "Enter") {
@@ -249,83 +243,80 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			});
 		};
 
-    const options = Character.targets(character)
-      .map((characterTarget) => characterTarget.id)
-      .map((targetName) => {
-        return (
-          <SelectItem className={"w-32"} value={targetName} key={targetName}>
-            {targetName}
-          </SelectItem>
-        );
-      });
+		const options = Character.targets(character)
+			.map((characterTarget) => characterTarget.id)
+			.map((targetName) => {
+				return (
+					<SelectItem className={"w-32"} value={targetName} key={targetName}>
+						{targetName}
+					</SelectItem>
+				);
+			});
 
-    const baseClass = "character-block cursor-grab";
+		const baseClass = "character-block cursor-grab";
 
-  return (
-    <div
-      className={"character-block-wrapper"}
-      key={character.id}
-      onDragEnter={characterBlockDragEnter()}
-      onDragOver={characterBlockDragOver()}
-      onDragLeave={characterBlockDragLeave()}
-      onDrop={characterBlockDrop(index)}
-      onDoubleClick={() =>
-        profilesManagement$.unselectCharacter(index)
-      }
-    >
-      <div
-        className={
-          lockedStatus$.ofActivePlayerByCharacterId[character.id].get()
-            ? `${baseClass} locked`
-            : baseClass
-        }
-        draggable={true}
-        onDragStart={characterBlockDragStart(index)}
-      >
-        {renderCharacterIcons(character, target)}
-        <CharacterAvatar character={character} />
-        <div className={"character-name"}>
-          {baseCharactersById[character.id]
-            ? baseCharactersById[character.id].name
-            : character.id}
-        </div>
-        <div className={"target p-y-1 flex items-center flex-wrap gap-2"}>
-          <ReactiveSelect
-            $value={() => selectedPlan}
-            onValueChange={(value) => {
-              const target = Character.targets(character).find(
-                (target) => target.id === value,
-              );
-              if (target !== undefined) {
-                profilesManagement$.changeTarget(index, target);
-              }
-            }}
-          >
-            <SelectTrigger
-              className={"min-w-24 w-fit h-6 px-2 inline-flex"}
-            >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent
-              className={"w-32 min-w-12"}
-              position={"popper"}
-              sideOffset={5}
-            >
-              {options}
-            </SelectContent>
-          </ReactiveSelect>
-          <Button
-            size={"xs"}
-            type={"button"}
-            onClick={() => showEditCharacterModal(character, index, target)}
-          >
-            Edit
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-});
+		return (
+			<div
+				className={"character-block-wrapper"}
+				key={character.id}
+				onDragEnter={characterBlockDragEnter()}
+				onDragOver={characterBlockDragOver()}
+				onDragLeave={characterBlockDragLeave()}
+				onDrop={characterBlockDrop(index)}
+				onDoubleClick={() => profilesManagement$.unselectCharacter(index)}
+			>
+				<div
+					className={
+						lockedStatus$.ofActivePlayerByCharacterId[character.id].get()
+							? `${baseClass} locked`
+							: baseClass
+					}
+					draggable={true}
+					onDragStart={characterBlockDragStart(index)}
+				>
+					{renderCharacterIcons(character, target)}
+					<CharacterAvatar character={character} />
+					<div className={"character-name"}>
+						{baseCharacterById[character.id]
+							? baseCharacterById[character.id].name
+							: character.id}
+					</div>
+					<div className={"target p-y-1 flex items-center flex-wrap gap-2"}>
+						<ReactiveSelect
+							$value={() => selectedPlan}
+							onValueChange={(value) => {
+								const target = Character.targets(character).find(
+									(target) => target.id === value,
+								);
+								if (target !== undefined) {
+									profilesManagement$.changeTarget(index, target);
+								}
+							}}
+						>
+							<SelectTrigger className={"min-w-24 w-fit h-6 px-2 inline-flex"}>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent
+								className={"w-32 min-w-12"}
+								position={"popper"}
+								sideOffset={5}
+							>
+								{options}
+							</SelectContent>
+						</ReactiveSelect>
+						<Button
+							size={"xs"}
+							type={"button"}
+							onClick={() => showEditCharacterModal(character, index, target)}
+						>
+							Edit
+						</Button>
+					</div>
+				</div>
+			</div>
+		);
+	},
+);
 
 CharacterBlock.displayName = "CharacterBlock";
 

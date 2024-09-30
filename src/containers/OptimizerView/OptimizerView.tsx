@@ -14,7 +14,7 @@ import { Review } from "#/modules/review/pages/Review";
 import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
 
 const OptimizerView = React.memo(() => {
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 
 	return (
 		<div className={"flex items-stretch overflow-hidden flex-grow-1"}>
@@ -23,7 +23,7 @@ const OptimizerView = React.memo(() => {
 					basic: () => <CharacterEditView />,
 					edit: () => (
 						<CharacterEditForm
-							character={characters[optimizerView$.currentCharacter.id.get()]}
+							character={characterById[optimizerView$.currentCharacter.id.get()]}
 							target={optimizerView$.currentCharacter.target.get()}
 						/>
 					),

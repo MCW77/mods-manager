@@ -5,7 +5,7 @@ import type { ModSuggestion } from "#/domain/PlayerProfile";
 export interface PlayerProfile {
 	allycode: string;
 	playerName: string;
-	charactersById: Character.CharactersById;
+	characterById: Character.CharacterById;
 	selectedCharacters: SelectedCharacters;
 	modAssignments: ModSuggestion[];
 }
@@ -17,7 +17,7 @@ export const createPlayerProfile = (
 	return {
 		allycode,
 		playerName,
-		charactersById: {} as Character.CharactersById,
+		characterById: {} as Character.CharacterById,
 		selectedCharacters: [],
 		modAssignments: [],
 	};

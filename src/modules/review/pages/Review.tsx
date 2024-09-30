@@ -160,8 +160,8 @@ const modUpgradeCosts: {
 };
 
 const Review = memo(() => {
-	const baseCharactersById = characters$.baseCharactersById.get();
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
 	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
 	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
@@ -186,7 +186,7 @@ const Review = memo(() => {
 				assignment.assignedMods = assignment.assignedMods.filter(
 					(mod) =>
 						mod.shouldLevel(assignment.target) ||
-						mod.shouldSlice(characters[assignment.id], assignment.target),
+						mod.shouldSlice(characterById[assignment.id], assignment.target),
 				);
 			}
 		}
@@ -240,7 +240,7 @@ const Review = memo(() => {
 						assignedMods: assignedMods.filter(
 							(mod) =>
 								mod.shouldLevel(target) ||
-								mod.shouldSlice(characters[id], target),
+								mod.shouldSlice(characterById[id], target),
 						),
 						missedGoals: [],
 					}))
@@ -273,7 +273,7 @@ const Review = memo(() => {
 					assignedMods.some(
 						(mod) =>
 							mod.shouldLevel(target) ||
-							mod.shouldSlice(characters[id], target),
+							mod.shouldSlice(characterById[id], target),
 					),
 				);
 			} else {
@@ -283,8 +283,8 @@ const Review = memo(() => {
 			// Filter out any characters that we're not going to display based on the selected tag
 			if (filter.tag !== "All") {
 				displayedMods = displayedMods.filter(({ id }) => {
-					const tags = baseCharactersById[id]
-						? baseCharactersById[id].categories
+					const tags = baseCharacterById[id]
+						? baseCharacterById[id].categories
 						: [];
 					return tags.includes(filter.tag);
 				});
@@ -307,7 +307,7 @@ const Review = memo(() => {
 		.map(({ id, target }) =>
 			Object.keys(currentModsByCharacter).includes(id)
 				? new ModLoadout(currentModsByCharacter[id]).getOptimizationValue(
-						characters[id],
+						characterById[id],
 						target,
 						false,
 					)
@@ -317,7 +317,7 @@ const Review = memo(() => {
 	const newLoadoutValue = modAssignments2
 		.map(({ id, target, assignedMods }) =>
 			new ModLoadout(assignedMods).getOptimizationValue(
-				characters[id],
+				characterById[id],
 				target,
 				true,
 			),

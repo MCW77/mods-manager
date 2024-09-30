@@ -68,12 +68,15 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
 		const dispatch: ThunkDispatch = useDispatch();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		const baseCharactersById = characters$.baseCharactersById.get();
+		const baseCharacterById = characters$.baseCharacterById.get();
 		const progress = progress$.optimizationStatus.get();
-		const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
-		const targetsNames = profilesManagement$.activeProfile.charactersById[character.id].targets.peek().map(
-			(target) => target.id,
-		);
+		const modAssignments =
+			profilesManagement$.activeProfile.modAssignments.get();
+		const targetsNames = profilesManagement$.activeProfile.characterById[
+			character.id
+		].targets
+			.peek()
+			.map((target) => target.id);
 
 		const cloneOptimizationPlan = () => structuredClone(target);
 
@@ -89,9 +92,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			target$.namesOfUserTargets.set(targetsNames);
 			endBatch();
 			const defaultTarget = characterSettings[character.id]
-				? (
-						characterSettings[character.id] as CharacterSettings
-					).targets.find((defaultTarget) => defaultTarget.id === target.id)
+				? (characterSettings[character.id] as CharacterSettings).targets.find(
+						(defaultTarget) => defaultTarget.id === target.id,
+					)
 				: null;
 		});
 
@@ -148,7 +151,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 								({targetStat.minimum})-({targetStat.maximum})
 							</span>
 							<span>
-								{targetStat.minimum ?? 0 > resultValue ? " ↓ " : " ↑ "}
+								{(targetStat.minimum ?? 0 > resultValue) ? " ↓ " : " ↑ "}
 							</span>
 							<span>{resultValue}</span>
 						</div>
@@ -202,16 +205,14 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					<div className={"flex flex-gap-2 items-center"}>
 						<CharacterAvatar character={character} />
 						<Label>
-							{baseCharactersById[character.id]
-								? baseCharactersById[character.id].name
+							{baseCharacterById[character.id]
+								? baseCharacterById[character.id].name
 								: character.id}
 						</Label>
 					</div>
 					<div className={"flex gap-2 justify-center items-center"}>
 						<div className={"actions p-2 flex gap-2 justify-center"}>
-							<Show
-								if={target$.isTargetChanged.get()}
-							>
+							<Show if={target$.isTargetChanged.get()}>
 								{() => (
 									<Button
 										type={"button"}
@@ -223,9 +224,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									</Button>
 								)}
 							</Show>
-							<Show
-								if={target$.canDeleteTarget.get()}
-							>
+							<Show if={target$.canDeleteTarget.get()}>
 								{() => (
 									<Button
 										type={"button"}

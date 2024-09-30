@@ -36,14 +36,14 @@ const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
 	const [t] = useTranslation("optimize-ui");
-	const characters = profilesManagement$.activeProfile.charactersById.get();
-	const baseCharactersById = characters$.baseCharactersById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
 	const selectedCharacters =
 		profilesManagement$.activeProfile.selectedCharacters.get();
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	let availableCharacters = [] as Character.Character[];
-	availableCharacters = Object.values(characters)
+	availableCharacters = Object.values(characterById)
 		.filter((character) => character.playerValues.level >= 50)
 		.filter(
 			(character) =>
@@ -59,7 +59,7 @@ const CharacterEditView = observer(() => {
 		 * @returns boolean
 		 */
 		const filterCharacters = (character: Character.Character) => {
-			const baseCharacter = baseCharactersById[character.id] ?? {
+			const baseCharacter = baseCharacterById[character.id] ?? {
 				...defaultBaseCharacter,
 				id: character.id,
 				name: character.id,

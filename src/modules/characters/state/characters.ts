@@ -6,12 +6,12 @@ import { syncObservable } from "@legendapp/state/sync";
 import { fetchCharacters } from "../api/fetchBaseCharacters";
 
 // domain
-import type { BaseCharactersById } from "../domain/BaseCharacter";
+import type { BaseCharacterById } from "../domain/BaseCharacter";
 
 const characters$ = observable<{
-	baseCharactersById: () => Promise<BaseCharactersById>;
+	baseCharacterById: () => Promise<BaseCharacterById>;
 }>({
-	baseCharactersById: async () => {
+	baseCharacterById: async () => {
 		try {
 			return await fetchCharacters();
 		} catch (error) {
@@ -20,11 +20,11 @@ const characters$ = observable<{
 	},
 });
 
-const syncStatus$ = syncObservable(characters$.baseCharactersById, {
+const syncStatus$ = syncObservable(characters$.baseCharacterById, {
 	persist: {
 		name: "Characters",
 	},
-	initial: {} as BaseCharactersById,
+	initial: {} as BaseCharacterById,
 });
 (async () => {
 	await when(syncStatus$.isPersistLoaded);

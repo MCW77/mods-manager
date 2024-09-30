@@ -39,8 +39,8 @@ interface ListViewProps {
  */
 const ListView = ({ displayedMods }: ListViewProps) => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const baseCharactersById = characters$.baseCharactersById.get();
-	const characters = profilesManagement$.activeProfile.charactersById.get();
+	const baseCharacterById = characters$.baseCharacterById.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
 	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
 
@@ -57,10 +57,10 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 	if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
 		individualMods.sort(({ mod: leftMod }, { mod: rightMod }) => {
 			const leftCharacter =
-				leftMod.characterID !== "null" ? characters[leftMod.characterID] : null;
+				leftMod.characterID !== "null" ? characterById[leftMod.characterID] : null;
 			const rightCharacter =
 				rightMod.characterID !== "null"
-					? characters[rightMod.characterID]
+					? characterById[rightMod.characterID]
 					: null;
 
 			if (!leftCharacter) {
@@ -81,22 +81,22 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 				if (mod.characterID === "null") {
 					tags = [];
 				} else {
-					tags = baseCharactersById[mod.characterID].categories;
+					tags = baseCharacterById[mod.characterID].categories;
 				}
 				return tags.includes(filter.tag);
 			});
 		}
 	} else if (filter.tag !== "All") {
 		individualMods = individualMods.filter(({ id, mod }) => {
-			const tags = baseCharactersById[id]
-				? baseCharactersById[id].categories
+			const tags = baseCharacterById[id]
+				? baseCharacterById[id].categories
 				: [];
 			return tags.includes(filter.tag);
 		});
 	}
 
 	return individualMods.map(({ id: characterID, target, mod }) => {
-		const character = characters[characterID];
+		const character = characterById[characterID];
 
 		return (
 			<div className={"mod-row individual"} key={mod.id}>
@@ -109,8 +109,8 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 					<Arrow />
 					<CharacterAvatar character={character} />
 					<h3>
-						{baseCharactersById[character.id]
-							? baseCharactersById[character.id].name
+						{baseCharacterById[character.id]
+							? baseCharacterById[character.id].name
 							: character.id}
 					</h3>
 					<h4>{target.id}</h4>
