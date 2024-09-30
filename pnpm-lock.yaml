@@ -78,8 +78,8 @@ importers:
         specifier: ^2.2.7
         version: 2.2.7(react-redux@9.1.2(@types/react@18.3.10)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
       '@unocss/preset-mini':
-        specifier: ^0.62.4
-        version: 0.62.4
+        specifier: ^0.63.1
+        version: 0.63.1
       '@unocss/reset':
         specifier: ^0.62.4
         version: 0.62.4
