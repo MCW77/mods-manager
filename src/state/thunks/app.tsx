@@ -69,9 +69,8 @@ export namespace thunks {
 				profilesManagement$.profiles.activeAllycode.get(),
 			);
 			const unequippedMods = mods.filter((mod) => mod.equippedUnit === "none");
-			const mapper = new C3POMappers.ModMapper();
 			const newMods: Mod[] = unequippedMods
-				.map((mod) => mapper.fromC3PO(mod))
+				.map((mod) => C3POMappers.ModMapper.fromC3PO(mod))
 				.concat(profile.mods.filter((mod) => mod.characterID !== "null"));
 
 			profile = profile.withMods(newMods);

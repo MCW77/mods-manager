@@ -19,7 +19,7 @@ import * as ModListFilter from "../domain/ModListFilter";
 import type { CharacterNames } from "#/constants/characterSettings";
 import type { Mod } from "#/domain/Mod";
 import type { ModAssignments } from "#/domain/ModAssignment";
-import { ModLoadout } from "#/domain/ModLoadout";
+import { createModLoadout } from "#/domain/ModLoadout";
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
@@ -107,10 +107,10 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 					</div>
 					{ModListFilter.sortOptions.assignedCharacter === filter.sort && (
 						<ModLoadoutDetail
-							newLoadout={new ModLoadout(mods)}
-							oldLoadout={
-								new ModLoadout(currentModsByCharacter[characterID] || [])
-							}
+							newLoadout={createModLoadout(mods)}
+							oldLoadout={createModLoadout(
+								currentModsByCharacter[characterID] || [],
+							)}
 							showAvatars={true}
 							character={character}
 							target={target}
@@ -123,7 +123,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 					{ModListFilter.sortOptions.currentCharacter === filter.sort && (
 						<div className={"mod-set-block"}>
 							<ModLoadoutView
-								modLoadout={new ModLoadout(mods)}
+								modLoadout={createModLoadout(mods)}
 								showAvatars={
 									ModListFilter.sortOptions.currentCharacter !== filter.sort
 								}

@@ -19,7 +19,7 @@ import { Storage } from "#/state/modules/storage";
 import type { CharacterNames } from "#/constants/characterSettings";
 
 import type { Mod } from "#/domain/Mod";
-import { ModLoadout } from "#/domain/ModLoadout";
+import * as ModLoadout from "#/domain/ModLoadout";
 import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
 import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";

@@ -20,7 +20,7 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
 import type { ModAssignments } from "#/domain/ModAssignment";
-import { ModLoadout } from "#/domain/ModLoadout";
+import * as ModLoadout from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components

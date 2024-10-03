@@ -28,7 +28,7 @@ import type * as ModTypes from "#/domain/types/ModTypes";
 
 import type { Mod } from "#/domain/Mod";
 import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
-import { ModLoadout } from "#/domain/ModLoadout";
+import * as ModLoadout from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
@@ -306,7 +306,8 @@ const Review = memo(() => {
 	const currentLoadoutValue = modAssignments2
 		.map(({ id, target }) =>
 			Object.keys(currentModsByCharacter).includes(id)
-				? new ModLoadout(currentModsByCharacter[id]).getOptimizationValue(
+				? ModLoadout.getOptimizationValue(
+						ModLoadout.createModLoadout(currentModsByCharacter[id]),
 						characterById[id],
 						target,
 						false,
@@ -316,7 +317,8 @@ const Review = memo(() => {
 		.reduce((a, b) => a + b, 0);
 	const newLoadoutValue = modAssignments2
 		.map(({ id, target, assignedMods }) =>
-			new ModLoadout(assignedMods).getOptimizationValue(
+			ModLoadout.getOptimizationValue(
+				ModLoadout.createModLoadout(assignedMods),
 				characterById[id],
 				target,
 				true,

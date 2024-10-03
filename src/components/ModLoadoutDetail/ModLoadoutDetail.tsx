@@ -6,7 +6,7 @@ import './ModLoadoutDetail.css';
 
 // domain
 import type * as Character from "#/domain/Character";
-import type { ModLoadout } from "#/domain/ModLoadout";
+import * as ModLoadout from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { MissedGoals } from "#/domain/PlayerProfile";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
@@ -35,8 +35,8 @@ type PlayerStats = {
 };
 
 type ComponentProps = {
-  oldLoadout: ModLoadout;
-  newLoadout: ModLoadout;
+  oldLoadout: ModLoadout.ModLoadout;
+  newLoadout: ModLoadout.ModLoadout;
   showAvatars: boolean;
   character: Character.Character;
   target: OptimizationPlan.OptimizationPlan;
@@ -186,8 +186,8 @@ const ModLoadoutDetail = React.memo(
     }
 
 
-    const newSummary = newLoadout.getSummary(character, target, useUpgrades);
-    const oldSummary = oldLoadout.getSummary(character, target, false);
+    const newSummary = ModLoadout.getSummary(newLoadout, character, target, useUpgrades);
+    const oldSummary = ModLoadout.getSummary(oldLoadout, character, target, false);
 
     // Pull all the player's stats into an object that can be displayed without further calculation.
     const playerStats: PlayerStat[] = Object.values(newSummary).map( (stat: CSStats.CharacterSummaryStat) => {
@@ -290,8 +290,8 @@ const ModLoadoutDetail = React.memo(
       </tr>;
     });
 
-    const oldValue = oldLoadout.getOptimizationValue(character, target, false);
-    const newValue = newLoadout.getOptimizationValue(character, target, useUpgrades);
+    const oldValue = ModLoadout.getOptimizationValue(oldLoadout, character, target, false);
+    const newValue = ModLoadout.getOptimizationValue(newLoadout, character, target, useUpgrades);
     const valueChange = oldValue === 0 ?
         Number.POSITIVE_INFINITY
       :
