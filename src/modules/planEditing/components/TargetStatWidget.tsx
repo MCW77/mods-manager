@@ -1,14 +1,24 @@
 // react
 import type React from "react";
-import { Switch, observer, reactive } from "@legendapp/state/react";
+import {
+	Switch,
+	observer,
+	reactive,
+	useObservable,
+} from "@legendapp/state/react";
+
+// state
+import { characters$ } from "#/modules/characters/state/characters";
 
 // domain
 import type { PlanEditing } from "../domain/PlanEditing";
-import type { BaseCharacters } from "#/modules/characters/domain/BaseCharacter";
-import type { CharacterNames } from "#/constants/characterSettings";
 import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
 
 // components
+import {
+	type Group,
+	ReactiveMultiColumnSelect,
+} from "#/components/ReactiveMultiColumnSelect";
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 import { Input } from "#ui/input";
@@ -32,7 +42,7 @@ const ReactiveToggleGroup = reactive(ToggleGroup);
 type ComponentProps = {
 	target$: PlanEditing;
 	id: string;
-	baseCharacters: BaseCharacters;
+	baseCharacters: Group[];
 };
 
 const TargetStatWidget: React.FC<ComponentProps> = observer(
@@ -40,8 +50,14 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 		const targetStat$ = target$.target.targetStats.find(
 			(ts) => ts.peek().id === id,
 		);
-
 		if (targetStat$ === undefined) return;
+
+		const baseCharacterById$ = characters$.baseCharacterById;
+		const relativeCharacterName$ = useObservable(() => {
+			const relativeCharacterId = targetStat$.relativeCharacterId.get();
+			if (relativeCharacterId === "null") return "";
+			return baseCharacterById$[relativeCharacterId].name.get();
+		});
 
 		return (
 			<Card className={"flex flex-col flex-gap-2 w-fit"}>
@@ -98,12 +114,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 													signDisplay: "exceptZero",
 												}).format(
 													targetStat$.maximum.get(),
-												)} compared to the ${targetStat$.stat.get()} of ${
-													baseCharacters.find(
-														(bc) =>
-															bc.id === targetStat$.relativeCharacterId.get(),
-													)?.name
-												}`}
+												)} compared to the ${targetStat$.stat.get()} of ${relativeCharacterName$.get()}`}
 											</Label>
 										</div>
 									),
@@ -113,12 +124,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 												{`The ${targetStat$.stat.get()} must be between`}
 											</Label>
 											<Label>
-												{`${targetStat$.minimum.get()}% and ${targetStat$.maximum.get()}% of the  ${targetStat$.stat.get()} of ${
-													baseCharacters.find(
-														(bc) =>
-															bc.id === targetStat$.relativeCharacterId.get(),
-													)?.name
-												}`}
+												{`${targetStat$.minimum.get()}% and ${targetStat$.maximum.get()}% of the  ${targetStat$.stat.get()} of ${relativeCharacterName$.get()}`}
 											</Label>
 										</div>
 									),
@@ -195,26 +201,10 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						>
 							Compare to:
 						</Label>
-						<ReactiveSelect
-							$value={targetStat$.relativeCharacterId}
-							onValueChange={(value) => {
-								targetStat$.relativeCharacterId.set(value as CharacterNames);
-							}}
-						>
-							<SelectTrigger>
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent position={"popper"}>
-								<SelectGroup>
-									<SelectItem value={"null"}>No one</SelectItem>
-									{baseCharacters.map((bc) => (
-										<SelectItem key={bc.id} value={bc.id}>
-											{bc.name}
-										</SelectItem>
-									))}
-								</SelectGroup>
-							</SelectContent>
-						</ReactiveSelect>
+						<ReactiveMultiColumnSelect
+							groups={baseCharacters}
+							selectedValue$={targetStat$.relativeCharacterId}
+						/>
 					</div>
 					<div className="flex flex-col items-start justify-center gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-type${id}`}>
@@ -258,4 +248,3 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 TargetStatWidget.displayName = "TargetStatWidget";
 
 export { TargetStatWidget };
-// {baseCharacters.find(bc => bc.baseID === targetStat$.relativeCharacterId.get())?.name}
