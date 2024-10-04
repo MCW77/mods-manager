@@ -104,6 +104,10 @@ const CharacterEditView = observer(() => {
 				createFilterFunction(filter),
 			);
 	}
+	if (charactersManagement$.filterSetup.customFilterId.get() !== "None") {
+		highlightedCharacters = highlightedCharacters.filter(charactersManagement$.activeCustomFilter());
+	}
+
 	const starsReactivity = charactersManagement$.filterSetup.starsRange.get();
 	const levelReactivity = charactersManagement$.filterSetup.levelRange.get();
 	const gearLevelReactivity =

@@ -12,6 +12,7 @@ import {
 } from "../domain/CharacterFilterById";
 import type { CharacterFilterSetup } from "../domain/CharacterFilterSetup";
 import type { Character } from "#/domain/Character";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 interface CharactersManagement {
 	filterSetup: CharacterFilterSetup;
@@ -21,7 +22,159 @@ interface CharactersManagement {
 
 const getDefaultFilterSetup = () => {
 	return {
-		customFilterById: new Map<string, CustomFilter>(),
+		customFilterById: new Map<string, CustomFilter>([
+			[
+				"None",
+				{
+					id: "None",
+					type: "custom",
+					filter: "None",
+					filterPredicate: (character: Character) => true,
+				},
+			],
+			[
+				"Has stat targets",
+				{
+					id: "Has stat targets",
+					type: "custom",
+					filter: "Has stat targets",
+					filterPredicate: (character: Character) => {
+						const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.peek();
+						const selectedCharacter = selectedCharacters.find((c) => c.id === character.id);
+						if (selectedCharacter === undefined) return false;
+						return selectedCharacter.target.targetStats.length > 0;
+					},
+				},
+			],
+			[
+				"Missing Mods",
+				{
+					id: "Missing Mods",
+					type: "custom",
+					filter: "Missing Mods",
+					filterPredicate: (character: Character) => {
+						const modAssignments = profilesManagement$.activeProfile.modAssignments.peek();
+						const modsAssignedToCharacter = modAssignments.find((ma) => ma.id === character.id);
+						if (modsAssignedToCharacter === undefined) return false;
+						return modsAssignedToCharacter.assignedMods.length < 6;
+					},
+				},
+			],
+			[
+				"Needs Leveling",
+				{
+					id: "Needs Leveling",
+					type: "custom",
+					filter: "Needs Leveling",
+					filterPredicate: (character: Character) => {
+						const modAssignments = profilesManagement$.activeProfile.modAssignments.peek();
+						const modsAssignedToCharacter = modAssignments.find((ma) => ma.id === character.id);
+						if (modsAssignedToCharacter === undefined) return false;
+//						const mods = profilesManagement$.activeProfile.mods.peek();
+//						return modsAssignedToCharacter.assignedMods.some((mod) => mod.level < 15);
+						return true;
+					},
+				},
+			],
+			[
+				"QA",
+				{
+					id: "QA",
+					type: "custom",
+					filter: "QA",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "QUEENAMIDALA" ||
+							character.id === "MASTERQUIGON" ||
+							character.id === "PADAWANOBIWAN"
+						);
+					},
+				},
+			],
+			[
+				"Maul/Sidious/Nute",
+				{
+					id: "Maul/Sidious/Nute",
+					type: "custom",
+					filter: "Maul/Sidious/Nute",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "MAUL" ||
+							character.id === "DARTHSIDIOUS" ||
+							character.id === "NUTEGUNRAY"
+						);
+					},
+				},
+			],
+			[
+				"Gungans",
+				{
+					id: "Gungans",
+					type: "custom",
+					filter: "Gungans",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "JARJARBINKS" ||
+							character.id === "BOSSNASS" ||
+							character.id === "CAPTAINTARPALS" ||
+							character.id === "GUNGANPHALANX" ||
+							character.id === "BOOMADIER"
+						);
+					},
+				},
+			],
+			[
+				"KB",
+				{
+					id: "KB",
+					type: "custom",
+					filter: "KB",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "KELLERANBEQ" ||
+							character.id === "KIADIMUNDI" ||
+							character.id === "MACEWINDU" ||
+							character.id === "SHAAKTI" ||
+							character.id === "GRANDMASTERYODA"
+						);
+					},
+				},
+			],
+			[
+				"Lumi",
+				{
+					id: "Lumi",
+					type: "custom",
+					filter: "Lumi",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "LUMINARAUNDULI" ||
+							character.id === "KITFISTO" ||
+							character.id === "PLOKOON" ||
+							character.id === "GRANDMASTERYODA" ||
+							character.id === "QUIGONJINN"
+						);
+					},
+				},
+			],
+			[
+				"B2",
+				{
+					id: "B2",
+					type: "custom",
+					filter: "B2",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "B2SUPERBATTLEDROID" ||
+							character.id === "MAGNAGUARD" ||
+							character.id === "DROIDEKA" ||
+							character.id === "B1BATTLEDROIDV2" ||
+							character.id === "STAP"
+						);
+					},
+				},
+			],
+		]),
 		permanentFilterById: new Map<string, CustomFilter>([
 			[
 				"stars",
@@ -82,7 +235,7 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 		]),
-		customFilterId: "",
+		customFilterId: "None",
 		filtersById: new Map<string, CharacterFilter>(),
 		hideSelectedCharacters: true,
 		quickFilter: {
@@ -101,11 +254,9 @@ export const charactersManagement$: ObservableObject<CharactersManagement> =
 		filterSetup: getDefaultFilterSetup(),
 		activeCustomFilter: () => {
 			const id = charactersManagement$.filterSetup.customFilterId.get();
-			const filter = charactersManagement$.filterSetup.customFilterById
-				.get()
-				.get(id);
-			if (filter === undefined) return (character: Character) => true;
-			return filter.filterPredicate;
+			const customFilterById = charactersManagement$.filterSetup.customFilterById.get();
+			if (customFilterById.has(id) === false) return (character: Character) => true;
+			return customFilterById.get(id)?.filterPredicate ?? ((character: Character) => true);
 		},
 		addTextFilter: () => {
 			const newFilter = createTextCharacterFilter(

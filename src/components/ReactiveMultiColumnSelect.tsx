@@ -1,3 +1,6 @@
+// react
+import type { ComponentPropsWithoutRef } from "react";
+
 // state
 import { computed, type Observable } from "@legendapp/state";
 import { Memo, reactive } from "@legendapp/state/react";
@@ -14,12 +17,12 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "#
 
 const ReactiveSelect = reactive(Select);
 
-interface Group {
+export interface Group {
 	label: string;
 	items: { value: string; label: string }[];
 }
 
-interface MultiColumnSelectProps {
+interface MultiColumnSelectProps extends ComponentPropsWithoutRef<typeof SelectTrigger>{
 	groups: Group[];
 	selectedValue$: Observable<string>;
 }
@@ -27,6 +30,7 @@ interface MultiColumnSelectProps {
 const ReactiveMultiColumnSelect: React.FC<MultiColumnSelectProps> = ({
 	groups,
 	selectedValue$,
+  ...props
 }) => {
   const items = groups.flatMap((group) => group.items);
 	const selectedValue = selectedValue$.get();
@@ -38,7 +42,7 @@ const ReactiveMultiColumnSelect: React.FC<MultiColumnSelectProps> = ({
 
 	return (
 		<ReactiveSelect $value={selectedValue$} onValueChange={handleChange}>
-			<SelectTrigger className={"w-auto h-4 px-2 mx-2 inline-flex"}>
+			<SelectTrigger className={"w-auto h-4 px-2 mx-2 inline-flex"}  {...props}>
         <Memo>
           {() =>
             <SelectValue>

@@ -8,6 +8,242 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Slider } from "#ui/slider";
 import { Switch } from "#ui/switch";
+import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
+const customCharacterFilterGroups = [
+	{
+		label: "misc",
+		items:[
+			{
+				label: "None",
+				value: "None",
+			},
+			{
+				label: "Has Stat Targets",
+				value: "Has Stat Targets",
+			},
+			{
+				label: "Missing Mods",
+				value: "Missing Mods",
+			},
+		],
+	},
+	{
+		label: "Faction",
+		items: [
+			{
+				label: "501ST",
+				value: "501ST",
+			},
+			{
+				label: "Bad Batch",
+				value: "Bad Batch",
+			},
+			{
+				label: "Droid",
+				value: "Droid",
+			},
+			{
+				label: "Bounty Hunter",
+				value: "Bounty Hunter",
+			},
+			{
+				label: "Clone Trooper",
+				value: "Clone Trooper",
+			},
+			{
+				label: "Empire",
+				value: "Empire",
+			},
+			{
+				label: "Ewok",
+				value: "Ewok",
+			},
+			{
+				label: "First Order",
+				value: "First Order",
+			},
+			{
+				label: "Galactic Republic",
+				value: "Galactic Republic",
+			},
+			{
+				label: "Geonosian",
+				value: "Geonosian",
+			},
+			{
+				label: "Gungan",
+				value: "Gungan",
+			},
+			{
+				label: "Hutt Cartel",
+				value: "Hutt Cartel",
+			},
+			{
+				label: "Imperial Remnant",
+				value: "Imperial Remnant",
+			},
+			{
+				label: "Imperial Trooper",
+				value: "Imperial Trooper",
+			},
+			{
+				label: "Inquisitorius",
+				value: "Inquisitorius",
+			},
+			{
+				label: "Jawa",
+				value: "Jawa",
+			},
+			{
+				label: "Jedi",
+				value: "Jedi",
+			},
+			{
+				label: "Mandalorian",
+				value: "Mandalorian",
+			},
+			{
+				label: "Mercenary",
+				value: "Mercenary",
+			},
+			{
+				label: "Nightsister",
+				value: "Nightsister",
+			},
+			{
+				label: "Old Republic",
+				value: "Old Republic",
+			},
+			{
+				label: "Phoenix",
+				value: "Phoenix",
+			},
+			{
+				label: "Rebel",
+				value: "Rebel",
+			},
+			{
+				label: "Rebel Fighter",
+				value: "Rebel Fighter",
+			},
+			{
+				label: "Resistance",
+				value: "Resistance",
+			},
+			{
+				label: "Rogue One",
+				value: "Rogue One",
+			},
+			{
+				label: "Scoundrel",
+				value: "Scoundrel",
+			},
+			{
+				label: "Separatist",
+				value: "Separatist",
+			},
+			{
+				label: "Sith",
+				value: "Sith",
+			},
+			{
+				label: "Sith Empire",
+				value: "Sith Empire",
+			},
+			{
+				label: "Smuggler",
+				value: "Smuggler",
+			},
+			{
+				label: "Spectre",
+				value: "Spectre",
+			},
+			{
+				label: "Tusken",
+				value: "Tusken",
+			},
+			{
+				label: "Unaligned Force User",
+				value: "Unaligned Force User",
+			},
+			{
+				label: "Wookiee",
+				value: "Wookiee",
+			},
+		],
+	},
+	{
+		label: "Role",
+		items: [
+			{
+				label: "Attacker",
+				value: "Attacker",
+			},
+			{
+				label: "Fleet Commander",
+				value: "Fleet Commander",
+			},
+			{
+				label: "Galactic Legend",
+				value: "Galactic Legend",
+			},
+			{
+				label: "Healer",
+				value: "Healer",
+			},
+			{
+				label: "Leader",
+				value: "Leader",
+			},
+			{
+				label: "Pilot",
+				value: "Pilot",
+			},
+			{
+				label: "Support",
+				value: "Support",
+			},
+			{
+				label: "Tank",
+				value: "Tank",
+			},
+
+		],
+	},
+	{
+		label: "Naboo Raid",
+		items:[
+			{
+				label: "All",
+				value: "All",
+			},
+			{
+				label: "QA",
+				value: "QA",
+			},
+			{
+				label: "Maul/Sidious/Nute",
+				value: "Maul/Sidious/Nute",
+			},
+			{
+				label: "KB",
+				value: "KB",
+			},
+			{
+				label: "Gungans",
+				value: "Gungans",
+			},
+			{
+				label: "Lumi",
+				value: "Lumi",
+			},
+			{
+				label: "B2",
+				value: "B2",
+			},
+		],
+	},
+];
 
 const CharacterFilters: React.FC = observer(() => {
 	return (
@@ -93,6 +329,16 @@ const CharacterFilters: React.FC = observer(() => {
 							]);
 						}
 					}}
+				/>
+			</div>
+			<div className={"flex flex-col gap-1"}>
+				<Label className="p-r-2" htmlFor={"custom-character-filter"}>
+					Custom filter
+				</Label>
+				<ReactiveMultiColumnSelect
+					id={"custom-character-filter"}
+					groups={customCharacterFilterGroups}
+					selectedValue$={charactersManagement$.filterSetup.customFilterId}
 				/>
 			</div>
 			<div className={"flex gap-2 m-t-2"}>
