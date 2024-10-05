@@ -1,12 +1,26 @@
 // domain
 import type { Mod } from "./Mod";
 
-export default class ModScore {
-	constructor(
-		public name: string,
-		public displayName: string,
-		public description: string,
-		public isFlatOrPercentage: "IsPercentage" | "IsFlat",
-		public scoringAlgorithm: (mod: Mod) => number,
-	) {}
+export interface ModScore {
+	name: string;
+	displayName: string;
+	description: string;
+	isFlatOrPercentage: "IsPercentage" | "IsFlat";
+	scoringAlgorithm: (mod: Mod) => number;
+}
+
+export function createModScore(
+	name: string,
+	displayName: string,
+	description: string,
+	isFlatOrPercentage: "IsPercentage" | "IsFlat",
+	scoringAlgorithm: (mod: Mod) => number,
+): ModScore {
+	return {
+		name,
+		displayName,
+		description,
+		isFlatOrPercentage,
+		scoringAlgorithm,
+	};
 }

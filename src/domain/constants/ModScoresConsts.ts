@@ -1,12 +1,12 @@
 import type { Mod } from "../Mod";
-import ModScore from "../ModScore";
+import { type ModScore, createModScore } from "../ModScore";
 import type { PrimaryStats, SecondaryStats } from "../Stats";
 import Big from "big.js";
 
 export const modScores: ModScore[] = [];
 
 modScores.push(
-	new ModScore(
+	createModScore(
 		"PureSecondaries",
 		"Pure secondaries",
 		`This score is the simple average of the secondary stat's scores
@@ -30,7 +30,7 @@ modScores.push(
 );
 
 modScores.push(
-	new ModScore(
+	createModScore(
 		"RollWeightedSecondaries",
 		"Roll weighted secondaries",
 		`This score is the roll-weighted average of the secondary stat's scores
@@ -57,7 +57,7 @@ modScores.push(
 );
 
 modScores.push(
-	new ModScore(
+	createModScore(
 		"GIMOOffense",
 		"GIMO Offense",
 		`This score is the 'Offense Score' that GIMO provides for a long time to sort your mods.
@@ -137,7 +137,7 @@ modScores.push(
 );
 
 modScores.push(
-	new ModScore(
+	createModScore(
 		"Pure6EOffense",
 		"Pure 6E Offense",
 		`
@@ -197,7 +197,7 @@ modScores.push(
 );
 
 modScores.push(
-	new ModScore(
+	createModScore(
 		"Pure6EDEfense",
 		"Pure 6E Defense",
 		`
