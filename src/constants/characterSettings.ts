@@ -196,6 +196,7 @@ export const characterNames = [
 	"MAGNAGUARD",
 	"MANDALORBOKATAN",
 	"MARAJADE",
+	"MARROK",
 	"MASTERQUIGON",
 	"MAUL",
 	"MAULS7",
@@ -245,6 +246,7 @@ export const characterNames = [
 	"SECONDSISTER",
 	"SEVENTHSISTER",
 	"SHAAKTI",
+	"SHINHATI",
 	"SHORETROOPER",
 	"SITHASSASSIN",
 	"SITHMARAUDER",
@@ -1058,28 +1060,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
-	CAPTAINENOCH: createCharacterSettings(
-		[
-			fromShortOptimizationPlan({
-				id: "Default",
-				health: 10,
-				prot: 20,
-				spd: 100,
-				arm: 10,
-				res: 10,
-				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					cross: "Protection %",
-					circle: "Protection %",
-				},
-				setRes: {
-					"Speed %": 1,
-					"Defense %": 1,
-				},
-			}),
-		],
-	),
+	CAPTAINENOCH: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 20,
+			spd: 100,
+			arm: 10,
+			res: 10,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				cross: "Protection %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Defense %": 1,
+			},
+		}),
+	]),
 	CAPTAINREX: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -1764,24 +1764,22 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Troopers", "Chex Mix"],
 	),
-	DEATHTROOPERPERIDEA: createCharacterSettings(
-		[
-			fromShortOptimizationPlan({
-				id: "Default",
-				spd: 24,
-				cd: 100,
-				pot: 10,
-				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
-				},
-				setRes: {
-					"Critical Damage %": 1,
-				},
-			}),
-		],
-	),
+	DEATHTROOPERPERIDEA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 24,
+			cd: 100,
+			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Damage %": 1,
+			},
+		}),
+	]),
 	DENGAR: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -3516,6 +3514,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	MARROK: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 10,
+				spd: 100,
+				cc: 25,
+				primaryRes: {
+					arrow: "Speed",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Critical Chance %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
 	MASTERQUIGON: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -4421,6 +4439,28 @@ const characterSettings: CharacterSettingsIndexer = {
 			ca: 100,
 		}),
 	]),
+	SHINHATI: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 50,
+				spd: 100,
+				cd: 10,
+				ten: 10,
+				phys: 25,
+				primaryRes: {
+					arrow: "Critical Avoidance %",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
+			}),
+		],
+		[],
+	),
 	SHORETROOPER: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
