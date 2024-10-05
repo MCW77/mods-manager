@@ -2192,6 +2192,7 @@
 					},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 310,
@@ -2228,6 +2229,7 @@
 					},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 311,
@@ -2270,6 +2272,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 289,
@@ -2319,6 +2322,7 @@
 					},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 266,
@@ -2357,6 +2361,7 @@
 					},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 224,
@@ -2374,6 +2379,289 @@
 						}
 					],
 					"useOnlyFullSets": false
+				}
+			}
+		]
+	},
+	{
+		"id": "Naboo-QA",
+		"category": "Raid - Naboo",
+		"selectedCharacters": [
+			{
+				"id": "QUEENAMIDALA",
+				"target": {
+					"id": "Naboo-QA",
+					"description": "Naboo Raid with Queen Amidala, Padawan Obi-Wan and Master Qui-Gon",
+					"Health": 0,
+					"Protection": 0,
+					"Speed": 100,
+					"Critical Damage %": 0,
+					"Potency %": 9,
+					"Tenacity %": 0,
+					"Physical Damage": 54,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {},
+					"setRestrictions": {
+						"Offense %": 1,
+						"Health %": 1
+					},
+					"targetStats": [
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": 342,
+							"maximum": 344,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "MASTERQUIGON",
+				"target": {
+					"id": "Naboo-QA",
+					"description": "Naboo Raid with Queen Amidala, Padawan Obi-Wan and Master Qui-Gon",
+					"Health": 0,
+					"Protection": 0,
+					"Speed": 37,
+					"Critical Damage %": 0,
+					"Potency %": 0,
+					"Tenacity %": 0,
+					"Physical Damage": 100,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {},
+					"setRestrictions": {
+						"Offense %": 1
+					},
+					"targetStats": [
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": -30,
+							"maximum": -20,
+							"relativeCharacterId": "QUEENAMIDALA",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "PADAWANOBIWAN",
+				"target": {
+					"id": "Naboo-QA",
+					"description": "Naboo Raid with Queen Amidala, Padawan Obi-Wan and Master Qui-Gon",
+					"Health": 0,
+					"Protection": 0,
+					"Speed": 100,
+					"Critical Damage %": 0,
+					"Potency %": 9,
+					"Tenacity %": 0,
+					"Physical Damage": 54,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {
+						"triangle": "Critical Damage %"
+					},
+					"setRestrictions": {
+						"Offense %": 1,
+						"Critical Chance %": 1
+					},
+					"targetStats": [
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": -3,
+							"maximum": -1,
+							"relativeCharacterId": "MASTERQUIGON",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			}
+		]
+	},
+	{
+		"id": "Naboo-Maul/Sidious/Nute",
+		"category": "Raid - Naboo",
+		"selectedCharacters": [
+			{
+				"id": "MAUL",
+				"target": {
+					"id": "Naboo-Maul/Sidious/Nute",
+					"description": "Naboo Raid with Darth Maul, Darth Sidious and Nute Gunray",
+					"Health": 0,
+					"Protection": 0,
+					"Speed": 30,
+					"Critical Damage %": 20,
+					"Potency %": 0,
+					"Tenacity %": 0,
+					"Physical Damage": 32,
+					"Special Damage": 0,
+					"Critical Chance": 56,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {
+						"arrow": "Offense %",
+						"triangle": "Critical Damage %",
+						"cross": "Offense %"
+					},
+					"setRestrictions": {},
+					"targetStats": [
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": 260,
+							"maximum": 260,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Physical Damage-1",
+							"stat": "Physical Damage",
+							"type": "+",
+							"minimum": 9000,
+							"maximum": 9100,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Physical Critical Chance-1",
+							"stat": "Physical Critical Chance",
+							"type": "+",
+							"minimum": 120,
+							"maximum": 125,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "DARTHSIDIOUS",
+				"target": {
+					"id": "Naboo-Maul/Sidious/Nute",
+					"description": "Naboo Raid with Darth Maul, Darth Sidious and Nute Gunray",
+					"Health": 10,
+					"Protection": 6,
+					"Speed": 68,
+					"Critical Damage %": 52,
+					"Potency %": 25,
+					"Tenacity %": 0,
+					"Physical Damage": 10,
+					"Special Damage": 0,
+					"Critical Chance": 4,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {
+						"triangle": "Critical Damage %"
+					},
+					"setRestrictions": {},
+					"targetStats": [
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": 304,
+							"maximum": 304,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Physical Damage-1",
+							"stat": "Physical Damage",
+							"type": "+",
+							"minimum": 8500,
+							"maximum": 8600,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Physical Critical Chance-1",
+							"stat": "Physical Critical Chance",
+							"type": "+",
+							"minimum": 90,
+							"maximum": 93,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Potency-1",
+							"stat": "Potency",
+							"type": "+",
+							"minimum": 90,
+							"maximum": 93,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "NUTEGUNRAY",
+				"target": {
+					"id": "Naboo-Maul/Sidious/Nute",
+					"description": "Naboo Raid with Darth Maul, Darth Sidious and Nute Gunray",
+					"Health": 0,
+					"Protection": 0,
+					"Speed": 100,
+					"Critical Damage %": 0,
+					"Potency %": 16,
+					"Tenacity %": 0,
+					"Physical Damage": 0,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {},
+					"setRestrictions": {},
+					"targetStats": [
+						{
+							"id": "Potency-1",
+							"stat": "Potency",
+							"type": "+",
+							"minimum": 100,
+							"maximum": 105,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
 				}
 			}
 		]
@@ -2405,6 +2693,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 180,
@@ -2455,6 +2744,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 315,
@@ -2497,6 +2787,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 300,
@@ -2539,6 +2830,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 280,
@@ -2581,6 +2873,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 215,
@@ -4333,6 +4626,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 210,
@@ -4367,6 +4661,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 1,
@@ -4401,6 +4696,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 1,
@@ -4435,6 +4731,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 1,
@@ -4762,6 +5059,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 282,
@@ -4796,6 +5094,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "%",
 							"minimum": 88,
@@ -4830,6 +5129,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "%",
 							"minimum": 85,
@@ -7156,6 +7456,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 350,
@@ -7199,6 +7500,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 345,
@@ -7250,6 +7552,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 310,
@@ -7309,6 +7612,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 270,
@@ -7368,6 +7672,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 230,
@@ -8293,6 +8598,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 175,
@@ -8327,6 +8633,7 @@
 					"setRestrictions": {},
 					"targetStats": [
 						{
+							"id": "Speed-1",
 							"stat": "Speed",
 							"type": "+",
 							"minimum": 170,
