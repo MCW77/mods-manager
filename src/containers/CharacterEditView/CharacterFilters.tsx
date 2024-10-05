@@ -215,31 +215,31 @@ const customCharacterFilterGroups = [
 		items:[
 			{
 				label: "All",
-				value: "All",
+				value: "Naboo-All",
 			},
 			{
 				label: "QA",
-				value: "QA",
+				value: "Naboo-QA",
 			},
 			{
 				label: "Maul/Sidious/Nute",
-				value: "Maul/Sidious/Nute",
+				value: "Namboo-Maul/Sidious/Nute",
 			},
 			{
 				label: "KB",
-				value: "KB",
+				value: "Naboo-KB",
 			},
 			{
 				label: "Gungans",
-				value: "Gungans",
+				value: "Naboo-Gungans",
 			},
 			{
 				label: "Lumi",
-				value: "Lumi",
+				value: "Naboo-Lumi",
 			},
 			{
 				label: "B2",
-				value: "B2",
+				value: "Naboo-B2",
 			},
 		],
 	},

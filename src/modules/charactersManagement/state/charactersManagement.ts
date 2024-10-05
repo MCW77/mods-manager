@@ -77,9 +77,51 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 			[
-				"QA",
+				"Naboo-All",
 				{
-					id: "QA",
+					id: "Naboo-All",
+					type: "custom",
+					filter: "All",
+					filterPredicate: (character: Character) => {
+						return (
+							character.id === "QUEENAMIDALA" ||
+							character.id === "MASTERQUIGON" ||
+							character.id === "PADAWANOBIWAN" ||
+							character.id === "MAUL" ||
+							character.id === "DARTHSIDIOUS" ||
+							character.id === "NUTEGUNRAY" ||
+							character.id === "JARJARBINKS" ||
+							character.id === "BOSSNASS" ||
+							character.id === "CAPTAINTARPALS" ||
+							character.id === "GUNGANPHALANX" ||
+							character.id === "BOOMADIER" ||
+							character.id === "KELLERANBEQ" ||
+							character.id === "KIADIMUNDI" ||
+							character.id === "MACEWINDU" ||
+							character.id === "SHAAKTI" ||
+							character.id === "GRANDMASTERYODA" ||
+							character.id === "LUMINARAUNDULI" ||
+							character.id === "KITFISTO" ||
+							character.id === "PLOKOON" ||
+							character.id === "QUIGONJINN" ||
+							character.id === "AAYLASECURA" ||
+							character.id === "B2SUPERBATTLEDROID" ||
+							character.id === "MAGNAGUARD" ||
+							character.id === "DROIDEKA" ||
+							character.id === "B1BATTLEDROIDV2" ||
+							character.id === "STAP" ||
+							character.id === "R2D2_LEGENDARY" ||
+							character.id === "JEDIKNIGHTGUARDIAN" ||
+							character.id === "EETHKOTH" ||
+							character.id === "JEDIKNIGHTCONSULAR"
+						);
+					},
+				},
+			],
+			[
+				"Naboo-QA",
+				{
+					id: "Naboo-QA",
 					type: "custom",
 					filter: "QA",
 					filterPredicate: (character: Character) => {
@@ -92,9 +134,9 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 			[
-				"Maul/Sidious/Nute",
+				"Naboo-Maul/Sidious/Nute",
 				{
-					id: "Maul/Sidious/Nute",
+					id: "Naboo-Maul/Sidious/Nute",
 					type: "custom",
 					filter: "Maul/Sidious/Nute",
 					filterPredicate: (character: Character) => {
@@ -107,9 +149,9 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 			[
-				"Gungans",
+				"Naboo-Gungans",
 				{
-					id: "Gungans",
+					id: "Naboo-Gungans",
 					type: "custom",
 					filter: "Gungans",
 					filterPredicate: (character: Character) => {
@@ -124,9 +166,9 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 			[
-				"KB",
+				"Naboo-KB",
 				{
-					id: "KB",
+					id: "Naboo-KB",
 					type: "custom",
 					filter: "KB",
 					filterPredicate: (character: Character) => {
@@ -141,9 +183,9 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 			[
-				"Lumi",
+				"Naboo-Lumi",
 				{
-					id: "Lumi",
+					id: "Naboo-Lumi",
 					type: "custom",
 					filter: "Lumi",
 					filterPredicate: (character: Character) => {
@@ -158,9 +200,9 @@ const getDefaultFilterSetup = () => {
 				},
 			],
 			[
-				"B2",
+				"Naboo-B2",
 				{
-					id: "B2",
+					id: "Naboo-B2",
 					type: "custom",
 					filter: "B2",
 					filterPredicate: (character: Character) => {
