@@ -1,6 +1,6 @@
 // react
-import { memo } from "react";
 import { useSelector } from "react-redux";
+import { observer, Show } from "@legendapp/state/react";
 
 // styles
 import "./Review.css";
@@ -12,7 +12,6 @@ import { groupBy } from "#/utils/groupBy";
 import groupByKey from "#/utils/groupByKey";
 
 // state
-import { Show } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
@@ -159,7 +158,7 @@ const modUpgradeCosts: {
 	},
 };
 
-const Review = memo(() => {
+const Review: React.FC = observer(() => {
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();

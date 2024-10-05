@@ -27,6 +27,7 @@ import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { Arrow } from "#/components/Arrow/Arrow";
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { ModDetail } from "#/components/ModDetail/ModDetail";
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 
 interface ListViewProps {
@@ -57,7 +58,9 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 	if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
 		individualMods.sort(({ mod: leftMod }, { mod: rightMod }) => {
 			const leftCharacter =
-				leftMod.characterID !== "null" ? characterById[leftMod.characterID] : null;
+				leftMod.characterID !== "null"
+					? characterById[leftMod.characterID]
+					: null;
 			const rightCharacter =
 				rightMod.characterID !== "null"
 					? characterById[rightMod.characterID]
@@ -95,45 +98,55 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 		});
 	}
 
-	return individualMods.map(({ id: characterID, target, mod }) => {
-		const character = characterById[characterID];
+	return (
+		<div>
+			{individualMods.map(({ id: characterID, target, mod }) => {
+				const character = characterById[characterID];
 
-		return (
-			<div className={"mod-row individual"} key={mod.id}>
-				<ModDetail
-					mod={mod}
-					assignedCharacter={character}
-					assignedTarget={target}
-				/>
-				<div className={"character-id"}>
-					<Arrow />
-					<CharacterAvatar character={character} />
-					<h3>
-						{baseCharacterById[character.id]
-							? baseCharacterById[character.id].name
-							: character.id}
-					</h3>
-					<h4>{target.id}</h4>
-				</div>
-				<div className={"actions"}>
-					<Button
-						type={"button"}
-						onClick={() => dispatch(Review.thunks.unequipMod(mod.id))}
+				return (
+					<RenderIfVisible
+						defaultHeight={625}
+						key={`RIV-${mod.id}`}
+						visibleOffset={4000}
 					>
-						I removed this mod
-					</Button>
-					<Button
-						type={"button"}
-						onClick={() =>
-							dispatch(Review.thunks.reassignMod(mod.id, characterID))
-						}
-					>
-						I reassigned this mod
-					</Button>
-				</div>
-			</div>
-		);
-	});
+						<div className={"mod-row individual"}>
+							<ModDetail
+								mod={mod}
+								assignedCharacter={character}
+								assignedTarget={target}
+							/>
+							<div className={"character-id"}>
+								<Arrow />
+								<CharacterAvatar character={character} />
+								<h3>
+									{baseCharacterById[character.id]
+										? baseCharacterById[character.id].name
+										: character.id}
+								</h3>
+								<h4>{target.id}</h4>
+							</div>
+							<div className={"actions"}>
+								<Button
+									type={"button"}
+									onClick={() => dispatch(Review.thunks.unequipMod(mod.id))}
+								>
+									I removed this mod
+								</Button>
+								<Button
+									type={"button"}
+									onClick={() =>
+										dispatch(Review.thunks.reassignMod(mod.id, characterID))
+									}
+								>
+									I reassigned this mod
+								</Button>
+							</div>
+						</div>
+					</RenderIfVisible>
+				);
+			})}
+		</div>
+	);
 };
 
 ListView.displayName = "ListView";
