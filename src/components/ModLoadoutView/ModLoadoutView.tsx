@@ -6,7 +6,6 @@ import "./ModLoadoutView.css";
 
 // domain
 import type * as Character from "#/domain/Character";
-import * as Mod from "#/domain/Mod";
 import * as ModLoadout from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
@@ -31,21 +30,14 @@ const ModLoadoutView = React.memo(
 		const usedSlots = ModLoadout.getUsedSlots(modLoadout);
 		let modDetails = null;
 		if (ModLoadout.hasSlots(modLoadout, usedSlots)) {
-			modDetails = usedSlots
-			.map((slot) => (
+			modDetails = usedSlots.map((slot) => (
 				<div className={`mod ${slot}`} key={modLoadout[slot]?.id}>
-					{assignedCharacter &&
-						assignedTarget &&
-						Mod.shouldLevel(modLoadout[slot], assignedTarget) && (
-							<span className={"icon level active"} />
-						)}
-					{assignedCharacter &&
-						assignedTarget &&
-						Mod.shouldSlice(
-							modLoadout[slot],
-							assignedCharacter,
-							assignedTarget,
-						) && <span className={"icon slice active"} />}
+					{assignedTarget && modLoadout[slot].shouldLevel(assignedTarget) && (
+						<span className={"icon level active"} />
+					)}
+					{assignedTarget && modLoadout[slot].shouldSlice(assignedTarget) && (
+						<span className={"icon slice active"} />
+					)}
 					<ModImage
 						mod={modLoadout[slot]}
 						showAvatar={showAvatars}
@@ -59,7 +51,6 @@ const ModLoadoutView = React.memo(
 					<ModStats
 						mod={modLoadout[slot]}
 						showAvatar
-						assignedCharacter={assignedCharacter}
 						assignedTarget={assignedTarget}
 					/>
 				</div>

@@ -66,10 +66,7 @@ const DisplayWidget = () => {
 				assignment.assignedMods = assignment.assignedMods.filter(
 					(mod) =>
 						mod.shouldLevel(assignment.target) ||
-						mod.shouldSlice(
-							legendProfile.characterById[assignment.id],
-							assignment.target,
-						),
+						mod.shouldSlice(assignment.target),
 				);
 			}
 		}
@@ -122,9 +119,7 @@ const DisplayWidget = () => {
 						id: id,
 						target: target,
 						assignedMods: assignedMods.filter(
-							(mod) =>
-								mod.shouldLevel(target) ||
-								mod.shouldSlice(legendProfile.characterById[id], target),
+							(mod) => mod.shouldLevel(target) || mod.shouldSlice(target),
 						),
 						missedGoals: [],
 					}))
@@ -183,9 +178,7 @@ const DisplayWidget = () => {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
 				displayedMods = modAssignments.filter(({ id, target, assignedMods }) =>
 					assignedMods.some(
-						(mod) =>
-							mod.shouldLevel(target) ||
-							mod.shouldSlice(legendProfile.characterById[id], target),
+						(mod) => mod.shouldLevel(target) || mod.shouldSlice(target),
 					),
 				);
 			} else {

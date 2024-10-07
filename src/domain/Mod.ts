@@ -247,10 +247,7 @@ export class Mod {
 		return OptimizationPlan.shouldUpgradeMods(target) && this.level < 15;
 	}
 
-	shouldSlice(
-		character: Character.Character,
-		target: OptimizationPlan.OptimizationPlan,
-	) {
+	shouldSlice(target: OptimizationPlan.OptimizationPlan) {
 		return (
 			optimizationSettings$.activeSettings.simulate6EModSlice.peek() &&
 			this.pips === 5 &&
@@ -516,22 +513,3 @@ export class Mod {
 
 Mod.setupStatAccessors();
 Mod.setupCalibrationAccessors();
-
-export const shouldLevel = (
-	mod: Mod,
-	target: OptimizationPlan.OptimizationPlan,
-) => {
-	return OptimizationPlan.shouldUpgradeMods(target) && mod.level < 15;
-};
-
-export const shouldSlice = (
-	mod: Mod,
-	character: Character.Character,
-	target: OptimizationPlan.OptimizationPlan,
-) => {
-	return (
-		optimizationSettings$.activeSettings.simulate6EModSlice.peek() &&
-		mod.pips === 5 &&
-		(mod.level === 15 || shouldLevel(mod, target))
-	);
-};

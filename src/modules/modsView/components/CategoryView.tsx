@@ -36,7 +36,6 @@ const CategoryView: React.FC = observer(() => {
   return (
     <GroupedMods
       groupedMods={groupedMods}
-      assignedMods={{} as Record<string, CharacterNames>}
       allModsCount={profileMods.length}
       displayedModsCount={modsCount}
     />

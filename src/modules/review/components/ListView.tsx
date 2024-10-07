@@ -110,11 +110,7 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 						visibleOffset={4000}
 					>
 						<div className={"mod-row individual"}>
-							<ModDetail
-								mod={mod}
-								assignedCharacter={character}
-								assignedTarget={target}
-							/>
+							<ModDetail mod={mod} assignedTarget={target} />
 							<div className={"character-id"}>
 								<Arrow />
 								<CharacterAvatar character={character} />

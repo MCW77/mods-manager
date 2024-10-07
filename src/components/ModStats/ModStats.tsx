@@ -28,17 +28,11 @@ import { ModScores } from "../ModScores/ModScores";
 type ComponentProps = {
 	mod: Mod;
 	showAvatar?: boolean;
-	assignedCharacter?: Character.Character | null;
 	assignedTarget?: OptimizationPlan;
 };
 
 const ModStats = React.memo(
-	({
-		mod,
-		showAvatar = false,
-		assignedCharacter,
-		assignedTarget,
-	}: ComponentProps) => {
+	({ mod, showAvatar = false, assignedTarget }: ComponentProps) => {
 		const [t, i18n] = useTranslation("domain");
 		const characterById = profilesManagement$.activeProfile.characterById.get();
 		const baseCharacterById = characters$.baseCharacterById.get();
@@ -139,16 +133,12 @@ const ModStats = React.memo(
 					</div>
 				)}
 				{showAvatar && <SellModButton mod={mod} />}
-				{assignedCharacter &&
-					assignedTarget &&
-					mod.shouldLevel(assignedTarget) && (
-						<h4 className={"gold"}>Level mod to 15!</h4>
-					)}
-				{assignedCharacter &&
-					assignedTarget &&
-					mod.shouldSlice(assignedCharacter, assignedTarget) && (
-						<h4 className={"gold"}>Slice mod to 6E!</h4>
-					)}
+				{assignedTarget && mod.shouldLevel(assignedTarget) && (
+					<h4 className={"gold"}>Level mod to 15!</h4>
+				)}
+				{assignedTarget && mod.shouldSlice(assignedTarget) && (
+					<h4 className={"gold"}>Slice mod to 6E!</h4>
+				)}
 			</div>
 		);
 	},

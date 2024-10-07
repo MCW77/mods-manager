@@ -185,7 +185,7 @@ const Review: React.FC = observer(() => {
 				assignment.assignedMods = assignment.assignedMods.filter(
 					(mod) =>
 						mod.shouldLevel(assignment.target) ||
-						mod.shouldSlice(characterById[assignment.id], assignment.target),
+						mod.shouldSlice(assignment.target),
 				);
 			}
 		}
@@ -239,7 +239,7 @@ const Review: React.FC = observer(() => {
 						assignedMods: assignedMods.filter(
 							(mod) =>
 								mod.shouldLevel(target) ||
-								mod.shouldSlice(characterById[id], target),
+								mod.shouldSlice(target),
 						),
 						missedGoals: [],
 					}))
@@ -272,7 +272,7 @@ const Review: React.FC = observer(() => {
 					assignedMods.some(
 						(mod) =>
 							mod.shouldLevel(target) ||
-							mod.shouldSlice(characterById[id], target),
+							mod.shouldSlice(target),
 					),
 				);
 			} else {
