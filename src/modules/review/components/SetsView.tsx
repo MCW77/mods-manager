@@ -1,5 +1,5 @@
 // react
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { For, useMount, useObservable } from "@legendapp/state/react";
 
@@ -13,7 +13,6 @@ import { review$ } from "../state/review";
 
 // modules
 import { Review } from "#/state/modules/review";
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
@@ -44,7 +43,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
-	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const mods = profilesManagement$.activeProfile.mods.get();
 
 	const currentModsByCharacter: {
 		[key in CharacterNames]: Mod[];

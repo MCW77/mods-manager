@@ -1,6 +1,3 @@
-// react
-import { useSelector } from "react-redux";
-
 // utils
 import collectByKey from "#/utils/collectByKey";
 
@@ -11,9 +8,6 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -29,7 +23,7 @@ import { Label } from "#/components/ui/label";
 const ReactiveInput = reactive(Input);
 
 const CreateProfileModal: React.FC = observer(() => {
-	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const profileMods = profilesManagement$.activeProfile.mods.get();
 	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 

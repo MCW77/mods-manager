@@ -15,20 +15,36 @@ import { syncObservable } from "@legendapp/state/sync";
 import { templates$ } from "#/modules/templates/state/templates";
 
 // domain
-import type { PlayerProfile } from "../domain/PlayerProfile";
+import type {
+	PersistedPlayerProfile,
+	PlayerProfile,
+} from "../domain/PlayerProfile";
 import {
 	characterSettings,
 	type CharacterNames,
 } from "#/constants/characterSettings";
 import type * as Character from "#/domain/Character";
-import { fromShortOptimizationPlan, type OptimizationPlan } from "#/domain/OptimizationPlan";
+import {
+	fromShortOptimizationPlan,
+	type OptimizationPlan,
+} from "#/domain/OptimizationPlan";
 import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+import { Mod } from "#/domain/Mod";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
+import { objectEntries } from "#/utils/objectEntries";
 
 interface Profiles {
 	activeAllycode: string;
 	lastUpdatedByAllycode: Record<string, { id: string; lastUpdated: number }>;
 	playernameByAllycode: Record<string, string>;
 	profilesByAllycode: Record<string, PlayerProfile>;
+}
+
+interface PersistedProfiles {
+	activeAllycode: string;
+	lastUpdatedByAllycode: Record<string, { id: string; lastUpdated: number }>;
+	playernameByAllycode: Record<string, string>;
+	profilesByAllycode: Record<string, PersistedPlayerProfile>;
 }
 
 interface ProfilesManagement {
@@ -69,21 +85,22 @@ interface ProfilesManagement {
 
 const getInitialProfiles = () => {
 	return structuredClone({
-	 activeAllycode: "",
-	 playernameByAllycode: {},
-	 profilesByAllycode: {},
-	 lastUpdatedByAllycode: {},
- });
+		activeAllycode: "",
+		playernameByAllycode: {},
+		profilesByAllycode: {},
+		lastUpdatedByAllycode: {},
+	});
 };
 
 export const profilesManagement$: ObservableObject<ProfilesManagement> =
 	observable<ProfilesManagement>({
 		defaultProfile: {
 			allycode: "",
+			characterById: {} as Character.CharacterById,
+			mods: [],
+			modAssignments: [],
 			playerName: "",
 			selectedCharacters: [],
-			modAssignments: [],
-			characterById: {} as Character.CharacterById,
 		},
 		now: Date.now(),
 		profiles: getInitialProfiles(),
@@ -273,7 +290,11 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		applyRanking: (ranking: CharacterNames[]) => {
 			const selectedCharacters =
 				profilesManagement$.activeProfile.selectedCharacters.peek();
-			const rankingForSelected = ranking.filter((characterId) => selectedCharacters.some((selectedCharacter) => selectedCharacter.id === characterId));
+			const rankingForSelected = ranking.filter((characterId) =>
+				selectedCharacters.some(
+					(selectedCharacter) => selectedCharacter.id === characterId,
+				),
+			);
 			const newSelectedCharacters = rankingForSelected.map((characterId) => {
 				const selectedCharacter = selectedCharacters.find(
 					(selectedCharacter) => selectedCharacter.id === characterId,
@@ -281,7 +302,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 				return (
 					selectedCharacter ?? {
 						id: characterId,
-						target: fromShortOptimizationPlan({id: "none"}),
+						target: fromShortOptimizationPlan({ id: "none" }),
 					}
 				);
 			});
@@ -461,11 +482,58 @@ const nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());
 }, 500);
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const hasMods = (obj: any): obj is { mods: GIMOFlatMod[] } => {
+	return Object.hasOwn(obj, "mods");
+};
 const syncStatus$ = syncObservable(profilesManagement$.profiles, {
 	persist: {
 		name: "Profiles",
 		indexedDB: {
 			itemID: "profiles",
+		},
+
+		transform: {
+			load: (value) => {
+				const profiles = Object.values(value.profilesByAllycode);
+				const allycodes = Object.keys(value.profilesByAllycode);
+				if (profiles.length > 0) {
+					const profile = profiles[0] as object;
+					const allycode = allycodes[0];
+					if (hasMods(profile)) {
+						const mods = profile.mods.map((mod) => Mod.deserialize(mod));
+						profile.mods = [];
+						// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+						const result: any = structuredClone(value);
+						result.profilesByAllycode[allycode].mods = mods;
+						return result;
+					}
+				}
+
+				if (Object.hasOwn(value, "mod_uid")) {
+					return Mod.deserialize(value);
+				}
+				return value;
+			},
+			save: (value) => {
+				if (Object.hasOwn(value, "profilesByAllycode")) {
+					const profiles = Object.values(value.profilesByAllycode);
+					const allycodes = Object.keys(value.profilesByAllycode);
+					if (profiles.length > 0) {
+						const profile = profiles[0] as PlayerProfile;
+						const allycode = allycodes[0];
+						if (Object.hasOwn(profile, "mods")) {
+							const mods = profile.mods.map((mod) => mod.serialize());
+							profile.mods = [];
+							// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+							const result: any = structuredClone(value);
+							result.profilesByAllycode[allycode].mods = mods;
+							return result;
+						}
+					}
+				}
+				return value;
+			},
 		},
 	},
 	initial: getInitialProfiles(),
@@ -473,4 +541,3 @@ const syncStatus$ = syncObservable(profilesManagement$.profiles, {
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
-

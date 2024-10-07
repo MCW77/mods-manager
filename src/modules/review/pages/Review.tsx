@@ -1,5 +1,4 @@
 // react
-import { useSelector } from "react-redux";
 import { observer, Show } from "@legendapp/state/react";
 
 // styles
@@ -15,9 +14,6 @@ import groupByKey from "#/utils/groupByKey";
 import { characters$ } from "#/modules/characters/state/characters";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
@@ -162,7 +158,7 @@ const Review: React.FC = observer(() => {
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
-	const mods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const mods = profilesManagement$.activeProfile.mods.get();
 	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
 
 	const getModAssignmentsByCurrentCharacter = (

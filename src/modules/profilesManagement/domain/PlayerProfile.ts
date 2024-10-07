@@ -1,24 +1,37 @@
+// domain
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 import type * as Character from "#/domain/Character";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+import type { Mod } from "#/domain/Mod";
 import type { ModSuggestion } from "#/domain/PlayerProfile";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 export interface PlayerProfile {
 	allycode: string;
-	playerName: string;
 	characterById: Character.CharacterById;
-	selectedCharacters: SelectedCharacters;
+	mods: Mod[];
 	modAssignments: ModSuggestion[];
+	playerName: string;
+	selectedCharacters: SelectedCharacters;
 }
 
+export interface PersistedPlayerProfile {
+	allycode: string;
+	characterById: Character.CharacterById;
+	mods: GIMOFlatMod[];
+	modAssignments: ModSuggestion[];
+	playerName: string;
+	selectedCharacters: SelectedCharacters;
+}
 export const createPlayerProfile = (
 	allycode: string,
 	playerName: string,
 ): PlayerProfile => {
 	return {
 		allycode,
-		playerName,
 		characterById: {} as Character.CharacterById,
-		selectedCharacters: [],
+		mods: [],
 		modAssignments: [],
+		playerName,
+		selectedCharacters: [],
 	};
 };

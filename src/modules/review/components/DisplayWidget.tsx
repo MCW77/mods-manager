@@ -1,6 +1,3 @@
-// react
-import { useSelector } from "react-redux";
-
 // utils
 import { flatten, mapValues, uniq } from "lodash-es";
 import { groupBy } from "#/utils/groupBy";
@@ -11,9 +8,6 @@ import { reactive } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -41,8 +35,7 @@ const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
-	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
-	const legendProfile = profilesManagement$.activeProfile.get();
+	const activeProfile = profilesManagement$.activeProfile.get();
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const filter = review$.modListFilter.get();
 
@@ -96,8 +89,8 @@ const DisplayWidget = () => {
 		return result;
 	};
 
-	const modsById = groupByKey(profileMods, (mod) => mod.id);
-	const modAssignments: ModAssignments = legendProfile.modAssignments
+	const modsById = groupByKey(activeProfile.mods, (mod) => mod.id);
+	const modAssignments: ModAssignments = activeProfile.modAssignments
 		.filter((x) => null !== x)
 		.map(({ id, target, assignedMods, missedGoals }) => ({
 			id: id,

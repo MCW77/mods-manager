@@ -93,7 +93,7 @@ export namespace thunks {
 		useSession = true,
 	): ThunkResult<Promise<void>> {
 		const cleanedAllycode = cleanAllycode(allycode);
-		let profile: FetchedGIMOProfile ;
+		let profile: FetchedGIMOProfile;
 
 		const messages: string[] = [];
 
@@ -116,7 +116,6 @@ export namespace thunks {
 
 			// Then, fetch the player's data from HotUtils
 			const oldAllycode = profilesManagement$.profiles.activeAllycode.get();
-			profilesManagement$.profiles.activeAllycode.set(cleanedAllycode);
 
 			try {
 				profile = await hotutils$.fetchProfile(cleanedAllycode);
@@ -213,8 +212,8 @@ export namespace thunks {
 					<span className={"gold"}>
 						{Object.keys(profile.playerValues).length}
 					</span>{" "}
-					characters and{" "}
-					<span className={"gold"}>{profile.mods.length}</span> mods.
+					characters and <span className={"gold"}>{profile.mods.length}</span>{" "}
+					mods.
 				</p>,
 			);
 
@@ -258,40 +257,43 @@ export namespace thunks {
 			try {
 				const db = getDatabase();
 				const dbProfile = await db.getProfile(newAllycode);
-				const oldProfile = dbProfile !== PlayerProfile.Default ? dbProfile : new PlayerProfile(newAllycode);
+				const oldProfile =
+					dbProfile !== PlayerProfile.Default
+						? dbProfile
+						: new PlayerProfile(newAllycode);
 				oldProfile.allycode = newAllycode;
 
 				if (!profilesManagement$.hasProfileWithAllycode(newAllycode)) {
-						const legendProfile = createPlayerProfile(
-							newAllycode,
-							profile.name,
-						);
-						profilesManagement$.addProfile(legendProfile);
+					const legendProfile = createPlayerProfile(newAllycode, profile.name);
+					profilesManagement$.addProfile(legendProfile);
 				}
 				optimizationSettings$.addProfile(newAllycode);
 				incrementalOptimization$.addProfile(newAllycode);
 
-
 				// Collect the new character objects by combining the default characters with the player values
 				// and the optimizer settings from the current profile.
-				beginBatch()
+				beginBatch();
 				for (const [id, playerValues] of objectEntries(profile.playerValues)) {
-					if (lockedStatus$.ofActivePlayerByCharacterId[id].peek() === undefined)
+					if (
+						lockedStatus$.ofActivePlayerByCharacterId[id].peek() === undefined
+					)
 						lockedStatus$.ofActivePlayerByCharacterId[id].set(false);
 
-					const characterById$ = profilesManagement$.activeProfile.characterById;
+					const characterById$ =
+						profilesManagement$.profiles.profilesByAllycode[newAllycode]
+							.characterById;
 					if (Object.hasOwn(characterById$.peek(), id)) {
 						characterById$[id].playerValues.set(playerValues);
 					} else {
-						characterById$[id].set(Character.createCharacter(
-							id,
-							playerValues,
-							[],
-						));
+						characterById$[id].set(
+							Character.createCharacter(id, playerValues, []),
+						);
 					}
 				}
-				profilesManagement$.profiles.lastUpdatedByAllycode[newAllycode].set({ id: newAllycode, lastUpdated: Date.now() });
-				endBatch();
+				profilesManagement$.profiles.lastUpdatedByAllycode[newAllycode].set({
+					id: newAllycode,
+					lastUpdated: Date.now(),
+				});
 
 				const newMods = groupByKey(profile.mods, (mod) => mod.id);
 
@@ -313,6 +315,10 @@ export namespace thunks {
 					finalMods = Object.values(newMods);
 				}
 
+				profilesManagement$.profiles.profilesByAllycode[newAllycode].mods.set(
+					finalMods,
+				);
+				endBatch();
 				const newProfile = oldProfile.withMods(finalMods);
 
 				db.saveProfile(
@@ -338,9 +344,9 @@ export namespace thunks {
 				);
 				dispatch(Storage.actions.setProfile(newProfile));
 				hotutils$.checkSubscriptionStatus();
+				profilesManagement$.profiles.activeAllycode.set(newAllycode);
 			} catch (error) {
 				const errorMessage = error instanceof DOMException ? error.message : "";
-				profilesManagement$.profiles.activeAllycode.set(oldAllycode);
 				dialog$.showError(
 					`Error fetching your profile: ${errorMessage} Please try again`,
 				);

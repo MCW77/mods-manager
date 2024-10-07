@@ -1,6 +1,3 @@
-// react
-import { useSelector } from "react-redux";
-
 // utils
 import { flatten } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
@@ -11,9 +8,6 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -39,7 +33,7 @@ const modRemovalCosts = {
 };
 
 const ActionsWidget = () => {
-	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
+	const profileMods = profilesManagement$.activeProfile.mods.get();
 	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
 
 	const modsById = groupByKey(profileMods, (mod) => mod.id);

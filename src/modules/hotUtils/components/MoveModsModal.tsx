@@ -1,5 +1,5 @@
 // react
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // utils
@@ -7,9 +7,6 @@ import { flatten } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
 import { formatNumber } from "#/utils/formatNumber";
 import groupByKey from "#/utils/groupByKey";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 //state
 import { hotutils$ } from "../state/hotUtils";
@@ -49,8 +46,8 @@ const modRemovalCosts = {
 
 const MoveModsModal = () => {
 	const dispatch: ThunkDispatch = useDispatch();
-	const profileMods = useSelector(Storage.selectors.selectModsInActiveProfile);
-	const legendProfile = profilesManagement$.activeProfile.get();
+	const profileMods = profilesManagement$.activeProfile.mods.get();
+	const activeProfile = profilesManagement$.activeProfile.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
 		profileMods.filter((mod) => mod.characterID !== "null"),
@@ -58,7 +55,7 @@ const MoveModsModal = () => {
 	);
 
 	const modsById = groupByKey(profileMods, (mod) => mod.id);
-	const modAssignments: ModAssignments = legendProfile.modAssignments
+	const modAssignments: ModAssignments = activeProfile.modAssignments
 		.filter((x) => null !== x)
 		.map(({ id, target, assignedMods, missedGoals }) => ({
 			id: id,
@@ -104,9 +101,11 @@ const MoveModsModal = () => {
 	);
 
 	const generateHotUtilsProfile = () => {
-		const assignedMods = legendProfile.modAssignments
+		const assignedMods = activeProfile.modAssignments
 			.filter((x) => null !== x)
-			.filter(({ id }) => legendProfile.characterById[id].playerValues.level >= 50)
+			.filter(
+				({ id }) => activeProfile.characterById[id].playerValues.level >= 50,
+			)
 			.map(({ id, assignedMods, target }) => ({
 				id: id,
 				modIds: assignedMods,
