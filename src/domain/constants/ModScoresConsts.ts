@@ -128,7 +128,7 @@ modScores.push(
 					.concat([mod.primaryStat])
 					.reduce(
 						(acc, stat) => acc.plus(stat.bigValue.mul(statScore[stat.type])),
-						Big(setScore[mod.set]),
+						Big(setScore[mod.modset]),
 					)
 					.toFixed(2),
 			);
@@ -150,7 +150,7 @@ modScores.push(
 
 			if (
 				!["Offense %", "Critical Chance %", "Critical Damage %"].includes(
-					mod.set,
+					mod.modset,
 				)
 			)
 				return 0;
@@ -208,7 +208,7 @@ modScores.push(
 				return ["Health %", "Defense %", "Protection %"].includes(statType);
 			};
 
-			if (!["Defense %", "Health %"].includes(mod.set)) return 0;
+			if (!["Defense %", "Health %"].includes(mod.modset)) return 0;
 			if (
 				["arrow", "triangle", "cross"].includes(mod.slot) &&
 				(

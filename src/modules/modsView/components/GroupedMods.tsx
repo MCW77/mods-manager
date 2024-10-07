@@ -16,7 +16,11 @@ import type { Mod } from "#/domain/Mod";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesDown, faAnglesUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+	faAnglesDown,
+	faAnglesUp,
+	faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 
 import * as Collapsible from "@radix-ui/react-collapsible";
 
@@ -52,7 +56,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
   for (const modGroup of groupedMods) {
     modGroups.push({
       isOpen: true,
-      key: `${modGroup[0].slot}-${modGroup[0].set}-${modGroup[0].primaryStat.getDisplayType()}`,
+			key: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
       mods: modGroup,
     });
   }
@@ -65,7 +69,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
   const modGroups$ = observable<ObservableModGroups>({
     modGroups: modGroups,
     closeAll: () => {
-      beginBatch()
+			beginBatch();
       // biome-ignore lint/complexity/noForEach: <explanation>
       modGroups$.modGroups.forEach((group) => {
         group.isOpen.set(false);
@@ -73,7 +77,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
       endBatch();
     },
     openAll: () => {
-      beginBatch()
+			beginBatch();
       // biome-ignore lint/complexity/noForEach: <explanation>
       modGroups$.modGroups.forEach((group) => {
         group.isOpen.set(true);
@@ -81,7 +85,6 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
       endBatch();
     },
   });
-
 
   const modElements = (mods: Mod[]) => {
     return mods.map((mod) => {
@@ -123,10 +126,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
               dialog$.show(<DeleteModsModal groupedMods={groupedMods} />);
             }}
           >
-            <FontAwesomeIcon
-              icon={faTrashCan}
-              title={t("DeleteButton")}
-            />
+						<FontAwesomeIcon icon={faTrashCan} title={t("DeleteButton")} />
           </Button>
         </div>
         <div className="flex gap-2 justify-center items-center p-t-2 p-r-6">
@@ -136,10 +136,7 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
               modGroups$.openAll();
             }}
           >
-            <FontAwesomeIcon
-              icon={faAnglesDown}
-              title={t("Expand")}
-            />
+						<FontAwesomeIcon icon={faAnglesDown} title={t("Expand")} />
           </Button>
           <Button
             size={"sm"}
@@ -147,58 +144,51 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
               modGroups$.closeAll();
             }}
           >
-            <FontAwesomeIcon
-              icon={faAnglesUp}
-              title={t("Collapse")}
-            />
+						<FontAwesomeIcon icon={faAnglesUp} title={t("Collapse")} />
           </Button>
         </div>
       </div>
       <div className={"flex"}>
-        <span className="basis-20%">
-          {tDomain("Slot")}:{" "}
-        </span>
-        <span className="basis-30%">
-          {tDomain("Set")}:{" "}
-        </span>
-        <span className="basis-30%">
-          {tDomain("Primary")}:{" "}
-        </span>
-        <span className="basis-20%">
-          {"#"}
-        </span>
+				<span className="basis-20%">{tDomain("Slot")}: </span>
+				<span className="basis-30%">{tDomain("Set")}: </span>
+				<span className="basis-30%">{tDomain("Primary")}: </span>
+				<span className="basis-20%">{"#"}</span>
       </div>
       <div
         className="flex flex-col overflow-y-auto overscroll-y-contain grow-1"
         ref={modGroupsElement}
       >
-
-        {
-
-          modGroups$.modGroups.map((modGroup) => {
+				{modGroups$.modGroups.map((modGroup) => {
           return (
             <ReactiveCollapsible
-              key={`modgroup-${modGroup.key.get()}` }
+							key={`modgroup-${modGroup.key.get()}`}
               $open={modGroup.isOpen}
               onOpenChange={(isOpen) => {
                 modGroup.isOpen.set(isOpen);
               }}
             >
-              <Collapsible.Trigger className="flex hover:cursor-pointer" asChild>
+							<Collapsible.Trigger
+								className="flex hover:cursor-pointer"
+								asChild
+							>
                 <div>
                   <span className="basis-20%">
                     {tDomain(`slots.name.${modGroup.mods[0].slot.get()}`)}
                   </span>
                   <span className="basis-30%">
-                    {tDomain(`stats.${modGroup.mods[0].get().set}`)}
+										{tDomain(`stats.${modGroup.mods[0].get().modset}`)}
                   </span>
                   <span className="basis-30%">
                     {tDomain(
-                      `stats.${modGroup.mods[0].primaryStat.get().getDisplayType()}`
+											`stats.${modGroup.mods[0].primaryStat.get().getDisplayType()}`,
                     )}
                   </span>
                   <span className="basis-20%">
-                    ({tDomain("ModWithCount", { count: modGroup.get().mods.length })})
+										(
+										{tDomain("ModWithCount", {
+											count: modGroup.get().mods.length,
+										})}
+										)
                   </span>
                 </div>
               </Collapsible.Trigger>
@@ -210,10 +200,9 @@ const GroupedMods = ({ groupedMods, assignedMods, allModsCount, displayedModsCou
 		    })}
       </div>
     </div>
-
   );
-}
+};
 
 GroupedMods.displayName = "GroupedMods";
 
-export { GroupedMods }
+export { GroupedMods };

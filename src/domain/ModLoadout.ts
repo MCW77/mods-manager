@@ -110,7 +110,7 @@ export function getSummary(
 		if (null === mod) {
 			continue;
 		}
-		const set: SetBonus = setBonuses[mod.set];
+		const set: SetBonus = setBonuses[mod.modset];
 
 		const modStats = mod.getStatSummaryForCharacter(
 			character,

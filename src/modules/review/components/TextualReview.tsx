@@ -47,7 +47,7 @@ const summaryListContent = (
 							mod.characterID !== "null"
 								? baseCharacterById[mod.characterID].name
 								: "your unassigned mods";
-						return `Move ${setMap[mod.set]}(${
+						return `Move ${setMap[mod.modset]}(${
 							mod.primaryStat.type
 						}) ${capitalize(mod.slot)} from ${moveFrom}.`;
 					}),

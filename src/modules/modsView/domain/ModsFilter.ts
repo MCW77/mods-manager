@@ -25,11 +25,10 @@ import { Mod } from "#/domain/Mod";
 
 type ModFilterPredicate = (mod: Mod) => boolean;
 
-const combineFilters: (
-	filters: ModFilterPredicate[],
-) => ModFilterPredicate = (filters) => (item: Mod) => {
-	return filters.map((filter) => filter(item)).every((x) => x === true);
-};
+const combineFilters: (filters: ModFilterPredicate[]) => ModFilterPredicate =
+	(filters) => (item: Mod) => {
+		return filters.map((filter) => filter(item)).every((x) => x === true);
+	};
 
 class ModsFilter {
 	selectedOptions: PartialFilter = {
@@ -54,11 +53,21 @@ class ModsFilter {
 
 	constructor(modsViewOptions: ViewSetup, quickFilter: Filter) {
 		Mod.setupAccessors();
-		[this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(quickFilter);
-		this.quickFilter = combineFilters([this.selectedOptionsFilter(this.selectedOptions), this.unselectedOptionsFilter(this.unselectedOptions)]);
+		[this.selectedOptions, this.unselectedOptions] =
+			this.extractSelectedAndUnselectedOptions(quickFilter);
+		this.quickFilter = combineFilters([
+			this.selectedOptionsFilter(this.selectedOptions),
+			this.unselectedOptionsFilter(this.unselectedOptions),
+		]);
 		for (const filter of Object.values(modsViewOptions.filterById)) {
-			[this.selectedOptions, this.unselectedOptions] = this.extractSelectedAndUnselectedOptions(filter);
-			this.filters.push(combineFilters([this.selectedOptionsFilter(this.selectedOptions), this.unselectedOptionsFilter(this.unselectedOptions)]));
+			[this.selectedOptions, this.unselectedOptions] =
+				this.extractSelectedAndUnselectedOptions(filter);
+			this.filters.push(
+				combineFilters([
+					this.selectedOptionsFilter(this.selectedOptions),
+					this.unselectedOptionsFilter(this.unselectedOptions),
+				]),
+			);
 		}
 
 		this.isGroupingEnabled = modsViewOptions.isGroupingEnabled;
@@ -132,7 +141,7 @@ class ModsFilter {
 		return [selectedOptions, unselectedOptions];
 	}
 
-	selectedOptionsFilter = (selectedOptions: PartialFilter) =>(mod: Mod) => {
+	selectedOptionsFilter = (selectedOptions: PartialFilter) => (mod: Mod) => {
 		if (
 			selectedOptions.slot.length > 0 &&
 			!selectedOptions.slot.every((slot) => mod.slot === slot)
@@ -140,7 +149,7 @@ class ModsFilter {
 			return false;
 		if (
 			selectedOptions.modset.length > 0 &&
-			!selectedOptions.modset.every((set) => mod.set === set)
+			!selectedOptions.modset.every((set) => mod.modset === set)
 		)
 			return false;
 		if (
@@ -176,62 +185,59 @@ class ModsFilter {
 			)
 		)
 			return false;
-		if (selectedOptions.assigned.length > 0 && !mod.isAssigned())
-			return false;
+		if (selectedOptions.assigned.length > 0 && !mod.isAssigned()) return false;
 		return true;
 	};
 
-	unselectedOptionsFilter = (unselectedOptions: PartialFilter) => (mod: Mod) => {
-		if (
-			unselectedOptions.slot.length > 0 &&
-			!unselectedOptions.slot.every((slot) => mod.slot !== slot)
-		)
-			return false;
-		if (
-			unselectedOptions.modset.length > 0 &&
-			!unselectedOptions.modset.every((set) => mod.set !== set)
-		)
-			return false;
-		if (
-			unselectedOptions.rarity.length > 0 &&
-			!unselectedOptions.rarity.every((pips) => mod.pips !== pips)
-		)
-			return false;
-		if (
-			unselectedOptions.tier.length > 0 &&
-			!unselectedOptions.tier.every((tier) => mod.tier !== tier)
-		)
-			return false;
-		if (
-			unselectedOptions.level.length > 0 &&
-			!unselectedOptions.level.every((level) => mod.level !== level)
-		)
-			return false;
-		if (
-			unselectedOptions.equipped.length > 0 &&
-			mod.characterID !== "null"
-		)
-			return false;
-		if (
-			unselectedOptions.primary.length > 0 &&
-			!unselectedOptions.primary.every(
-				(primary) => mod.primaryStat.type !== primary,
+	unselectedOptionsFilter =
+		(unselectedOptions: PartialFilter) => (mod: Mod) => {
+			if (
+				unselectedOptions.slot.length > 0 &&
+				!unselectedOptions.slot.every((slot) => mod.slot !== slot)
 			)
-		)
-			return false;
-		if (
-			unselectedOptions.secondary.length > 0 &&
-			!unselectedOptions.secondary.every((secondary) =>
-				mod.secondaryStats.every(
-					(modSecondary) => modSecondary.type !== secondary,
-				),
+				return false;
+			if (
+				unselectedOptions.modset.length > 0 &&
+				!unselectedOptions.modset.every((set) => mod.modset !== set)
 			)
-		)
-			return false;
-		if (unselectedOptions.assigned.length > 0 && mod.isAssigned())
-			return false;
-		return true;
-	};
+				return false;
+			if (
+				unselectedOptions.rarity.length > 0 &&
+				!unselectedOptions.rarity.every((pips) => mod.pips !== pips)
+			)
+				return false;
+			if (
+				unselectedOptions.tier.length > 0 &&
+				!unselectedOptions.tier.every((tier) => mod.tier !== tier)
+			)
+				return false;
+			if (
+				unselectedOptions.level.length > 0 &&
+				!unselectedOptions.level.every((level) => mod.level !== level)
+			)
+				return false;
+			if (unselectedOptions.equipped.length > 0 && mod.characterID !== "null")
+				return false;
+			if (
+				unselectedOptions.primary.length > 0 &&
+				!unselectedOptions.primary.every(
+					(primary) => mod.primaryStat.type !== primary,
+				)
+			)
+				return false;
+			if (
+				unselectedOptions.secondary.length > 0 &&
+				!unselectedOptions.secondary.every((secondary) =>
+					mod.secondaryStats.every(
+						(modSecondary) => modSecondary.type !== secondary,
+					),
+				)
+			)
+				return false;
+			if (unselectedOptions.assigned.length > 0 && mod.isAssigned())
+				return false;
+			return true;
+		};
 
 	filterMods(mods: Mod[]) {
 		let result: Mod[] = this.filters.length === 0 ? mods : [];
@@ -267,7 +273,7 @@ class ModsFilter {
 		const groupedMods = memoizeOne((mods: Mod[]) => {
 			return groupBy(
 				mods,
-				(mod: Mod) => `${mod.slot}-${mod.set}-${mod.primaryStat.type}`,
+				(mod: Mod) => `${mod.slot}-${mod.modset}-${mod.primaryStat.type}`,
 			);
 		});
 
@@ -284,11 +290,7 @@ class ModsFilter {
 			sortDirections.push(sortConfig.sortOrder);
 		}
 		return mapValues(groupedMods, (mods: Mod[]) =>
-			orderBy(
-				mods,
-				sortBys,
-				sortDirections,
-			),
+			orderBy(mods, sortBys, sortDirections),
 		);
 	}
 

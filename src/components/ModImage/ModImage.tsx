@@ -50,7 +50,7 @@ const ModImage = React.memo(
 			<div
 				className={`mod-image dots-${mod.pips} ${
 					mod.slot
-				} ${SetStats.SetStat.getClassName(mod.set)} ${modColor} ${className}`}
+				} ${SetStats.SetStat.getClassName(mod.modset)} ${modColor} ${className}`}
 			>
 				<Pips pips={mod.pips} />
 				<div className={"mod-slot-image"} />

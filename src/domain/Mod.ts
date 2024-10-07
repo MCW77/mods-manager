@@ -38,7 +38,7 @@ const HU2GIMOSlotsMap: {
 export class Mod {
 	id: string;
 	slot: ModTypes.GIMOSlots;
-	set: SetStats.GIMOStatNames;
+	modset: SetStats.GIMOStatNames;
 	level: ModTypes.Levels;
 	pips: ModTypes.Pips;
 	primaryStat: PrimaryStats.PrimaryStat;
@@ -56,14 +56,6 @@ export class Mod {
 	static firstTimeSetupOfAccessors = true;
 
 	static reRollPrices = [15, 25, 40, 75, 100, 150];
-	static setupSetAccessor() {
-		Object.defineProperty(Mod.prototype, "Set", {
-			get: function (): SetStats.GIMOStatNames {
-				return (this as Mod).set;
-			},
-			configurable: true,
-		});
-	}
 
 	static setupCalibrationAccessors() {
 		Object.defineProperty(Mod.prototype, "TotalCalibrations", {
@@ -131,7 +123,7 @@ export class Mod {
 	constructor(
 		id: string,
 		slot: ModTypes.GIMOSlots,
-		set: SetStats.GIMOStatNames,
+		modset: SetStats.GIMOStatNames,
 		level: ModTypes.Levels,
 		pips: ModTypes.Pips,
 		primaryStat: PrimaryStats.PrimaryStat,
@@ -142,7 +134,7 @@ export class Mod {
 	) {
 		this.id = id;
 		this.slot = slot;
-		this.set = set;
+		this.modset = modset;
 		this.level = level;
 		this.pips = pips;
 		this.primaryStat = primaryStat;
@@ -186,7 +178,7 @@ export class Mod {
 		return new Mod(
 			this.id,
 			this.slot,
-			this.set,
+			this.modset,
 			this.level,
 			this.pips,
 			this.primaryStat,
@@ -201,7 +193,7 @@ export class Mod {
 		return new Mod(
 			this.id,
 			this.slot,
-			this.set,
+			this.modset,
 			this.level,
 			this.pips,
 			this.primaryStat,
@@ -221,7 +213,7 @@ export class Mod {
 		return new Mod(
 			this.id,
 			this.slot,
-			this.set,
+			this.modset,
 			15,
 			this.pips,
 			this.primaryStat.upgrade(this.pips),
@@ -240,7 +232,7 @@ export class Mod {
 		return new Mod(
 			this.id,
 			this.slot,
-			this.set,
+			this.modset,
 			this.level,
 			6,
 			this.primaryStat.upgrade(6),
@@ -347,7 +339,7 @@ export class Mod {
 		const modObject: ModTypes.GIMOFlatMod = {
 			mod_uid: this.id,
 			slot: this.slot,
-			set: this.set,
+			set: this.modset,
 			level: this.level,
 			pips: this.pips,
 			characterID: this.characterID,
@@ -522,7 +514,6 @@ export class Mod {
 	}
 }
 
-Mod.setupSetAccessor();
 Mod.setupStatAccessors();
 Mod.setupCalibrationAccessors();
 

@@ -3,12 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import {
-	Computed,
-	For,
-	observer,
-	Show,
-} from "@legendapp/state/react";
+import { Computed, For, observer, Show } from "@legendapp/state/react";
 import { modsView$ } from "../state/modsView";
 
 // domain
@@ -33,7 +28,7 @@ const SortManager = observer(
 				items: [
 					{ value: "characterID", label: "CharacterId (default)" },
 					{ value: "slot", label: "Slot" },
-					{ value: "set", label: "Set" },
+					{ value: "modset", label: "Set" },
 					{ value: "rolls", label: "# of Stat Upgrades" },
 					{ value: "character", label: "Character" },
 					{ value: "reRolledCount", label: "Calibrations" },
