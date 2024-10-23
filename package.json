@@ -34,7 +34,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@unocss/preset-mini": "^0.63.4",
     "@unocss/reset": "^0.63.4",
-    "@vitejs/plugin-react": "^4.3.2",
+    "@vitejs/plugin-react": "^4.3.3",
     "big.js": "^6.2.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
