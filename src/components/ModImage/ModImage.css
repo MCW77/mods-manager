@@ -57,7 +57,6 @@
   font-size: 1.1em;
 }
 
-.mod-image.square .mod-slot-image {}
 .mod-image.arrow .mod-slot-image {
   background-position-x: -4em;
 }
@@ -197,7 +196,7 @@
 }
 
 .mod-level.square {
-  background-image: url('../../img/modlevel-square.png');
+  background-image: url('/img/modlevel-square.webp');
   width: 2.08em;
   height: 1.5em;
   left: -1.45em;
@@ -206,7 +205,7 @@
 }
 
 .mod-level.arrow {
-  background-image: url('../../img/modlevel-arrow.png');
+  background-image: url('/img/modlevel-arrow.webp');
   width: 1.56em;
   height: 1.71em;
   bottom: -.85em;
@@ -215,7 +214,7 @@
 }
 
 .mod-level.diamond {
-  background-image: url('../../img/modlevel-diamond.png');
+  background-image: url('/img/modlevel-diamond.webp');
   width: 1.71em;
   height: 2.64em;
   bottom: -.86em;
@@ -224,7 +223,7 @@
 }
 
 .mod-level.triangle {
-  background-image: url('../../img/modlevel-triangle.png');
+  background-image: url('/img/modlevel-triangle.webp');
   width: 2.29em;
   height: 1.57em;
   bottom: 1.06em;
@@ -233,7 +232,7 @@
 }
 
 .mod-level.circle {
-  background-image: url('../../img/modlevel-circle.png');
+  background-image: url('/img/modlevel-circle.webp');
   width: 2.5em;
   height: 1.57em;
   left: -1.24em;
@@ -242,7 +241,7 @@
 }
 
 .mod-level.cross {
-  background-image: url('../../img/modlevel-cross.png');
+  background-image: url('/img/modlevel-cross.webp');
   width: 1.79em;
   height: 2.21em;
   left: -.2em;

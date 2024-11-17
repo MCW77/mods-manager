@@ -55,51 +55,51 @@
 }
 
 .avatar.gear-2::after {
-  background-image: url('../../img/g2-overlay.png');
+  background-image: url('/img/g2-overlay.webp');
 }
 
 .avatar.gear-3::after {
-  background-image: url('../../img/g3-overlay.png');
+  background-image: url('/img/g3-overlay.webp');
 }
 
 .avatar.gear-4::after {
-  background-image: url('../../img/g4-overlay.png');
+  background-image: url('/img/g4-overlay.webp');
 }
 
 .avatar.gear-5::after {
-  background-image: url('../../img/g5-overlay.png');
+  background-image: url('/img/g5-overlay.webp');
 }
 
 .avatar.gear-6::after {
-  background-image: url('../../img/g6-overlay.png');
+  background-image: url('/img/g6-overlay.webp');
 }
 
 .avatar.gear-7::after {
-  background-image: url('../../img/g7-overlay.png');
+  background-image: url('/img/g7-overlay.webp');
 }
 
 .avatar.gear-8::after {
-  background-image: url('../../img/g8-overlay.png');
+  background-image: url('/img/g8-overlay.webp');
 }
 
 .avatar.gear-9::after {
-  background-image: url('../../img/g9-overlay.png');
+  background-image: url('/img/g9-overlay.webp');
 }
 
 .avatar.gear-10::after {
-  background-image: url('../../img/g10-overlay.png');
+  background-image: url('/img/g10-overlay.webp');
 }
 
 .avatar.gear-11::after {
-  background-image: url('../../img/g11-overlay.png');
+  background-image: url('/img/g11-overlay.webp');
 }
 
 .avatar.gear-12::after {
-  background-image: url('../../img/g12-overlay.png');
+  background-image: url('/img/g12-overlay.webp');
 }
 
 .avatar.gear-13::after {
-  background-image: url('../../img/g13-overlay.png');
+  background-image: url('/img/g13-overlay.webp');
 }
 
 .avatar.gear-13.align-light::after,
@@ -109,10 +109,10 @@
   height: 120%;
   left: -10%;
   top: -10%;
-  background-image: url('../../img/g13-frame-atlas.png');
+  background-image: url('/img/g13-frame-atlas.webp');
   background-size: 100% 300%;
   background-position-x: center;
-}
+}s
 
 .avatar.gear-13.align-dark::after {
   background-position-y: 50%
@@ -123,7 +123,7 @@
 }
 
 .avatar .star {
-  background: url('../../img/star-passive.png') no-repeat;
+  background: url('/img/star-passive.webp') no-repeat;
   background-size: contain;
   display: block;
   width: 16.66%;
@@ -135,7 +135,7 @@
 }
 
 .avatar .star.active {
-  background-image: url('../../img/star-active.png');
+  background-image: url('/img/star-active.webp');
 }
 
 .avatar .star-1 {
