@@ -9,7 +9,9 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
 
 // domain
 import type {

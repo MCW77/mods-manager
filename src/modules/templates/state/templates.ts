@@ -3,7 +3,7 @@ import { observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { compilations$ } = await import("#/modules/compilations/state/compilations");
 
 // domain
 import defaultTemplates from "#/constants/characterTemplates.json";

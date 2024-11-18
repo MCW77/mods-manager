@@ -11,7 +11,7 @@ interface Help {
 	setHelpPosition: (section: HelpSections, topic: number) => void;
 }
 
-export const help$ = observable<Help>({
+const help$ = observable<Help>({
 	section: "general",
 	topic: 1,
 	setHelpPosition: (section, topic) => {
@@ -22,3 +22,5 @@ export const help$ = observable<Help>({
 		endBatch();
 	},
 });
+
+export { help$ };

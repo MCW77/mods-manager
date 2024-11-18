@@ -10,8 +10,10 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { templates$ } from "#/modules/templates/state/templates";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { templates$ } = await import("#/modules/templates/state/templates");
 
 // domain
 import { getDefaultCompilation, type Compilation } from "../domain/Compilation";

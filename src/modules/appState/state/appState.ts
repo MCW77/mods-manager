@@ -9,28 +9,34 @@ import {
 	observable,
 } from "@legendapp/state";
 
-import { about$ } from "#/modules/about/state/about";
+const { about$ } = await import("#/modules/about/state/about");
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { modsView$ } from "#/modules/modsView/state/modsView";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-import {
-	type PersistedProfiles,
-	profilesManagement$,
-} from "#/modules/profilesManagement/state/profilesManagement";
-import { templates$ } from "#/modules/templates/state/templates";
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+const { incrementalOptimization$ } = await import(
+	"#/modules/incrementalOptimization/state/incrementalOptimization"
+);
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
+const { modsView$ } = await import("#/modules/modsView/state/modsView");
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { templates$ } = await import("#/modules/templates/state/templates");
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
+import type { OptimizerRun } from "#/domain/OptimizerRun";
 import {
 	type PlayerProfile,
 	type PersistedPlayerProfile,
 	getProfileFromPersisted,
 } from "#/modules/profilesManagement/domain/PlayerProfile";
+import type { PersistedProfiles } from "#/modules/profilesManagement/state/profilesManagement";
 import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
-import type { OptimizerRun } from "#/domain/OptimizerRun";
 
 type AppState = {
 	reset: () => void;

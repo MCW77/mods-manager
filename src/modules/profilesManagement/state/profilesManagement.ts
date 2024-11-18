@@ -14,10 +14,10 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { compilations$ } = await import("#/modules/compilations/state/compilations");
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+const { incrementalOptimization$ } = await import("#/modules/incrementalOptimization/state/incrementalOptimization");
+const { optimizationSettings$ } = await import("#/modules/optimizationSettings/state/optimizationSettings");
 
 // domain
 import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
