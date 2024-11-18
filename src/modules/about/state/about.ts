@@ -11,7 +11,7 @@ interface About {
 	checkVersion: () => void;
 }
 
-export const about$: ObservableObject<About> = observable<About>({
+const about$: ObservableObject<About> = observable<About>({
 	version: String(import.meta.env.VITE_VERSION) || "local",
 	checkVersion: async () => {
 		try {
@@ -51,3 +51,5 @@ const syncStatus$ = syncObservable(about$.version, {
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+
+export { about$ };

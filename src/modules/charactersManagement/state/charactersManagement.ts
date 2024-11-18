@@ -2,6 +2,8 @@
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
 // domain
 import {
 	createTextCharacterFilter,
@@ -12,7 +14,6 @@ import {
 } from "../domain/CharacterFilterById";
 import type { CharacterFilterSetup } from "../domain/CharacterFilterSetup";
 import type { Character } from "#/domain/Character";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 interface CharactersManagement {
 	filterSetup: CharacterFilterSetup;
@@ -291,7 +292,7 @@ const getDefaultFilterSetup = () => {
 	};
 };
 
-export const charactersManagement$: ObservableObject<CharactersManagement> =
+const charactersManagement$: ObservableObject<CharactersManagement> =
 	observable<CharactersManagement>({
 		filterSetup: getDefaultFilterSetup(),
 		activeCustomFilter: () => {
@@ -323,3 +324,5 @@ const syncStatus$ = syncObservable(charactersManagement$.filterSetup, {
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+
+export { charactersManagement$ };

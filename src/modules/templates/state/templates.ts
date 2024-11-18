@@ -1,5 +1,7 @@
 // state
 import { observable, when } from "@legendapp/state";
+import { syncObservable } from "@legendapp/state/sync";
+
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
@@ -11,7 +13,6 @@ import type {
 	CharacterTemplatesByName,
 } from "../domain/CharacterTemplates";
 import type { TemplatesAddingMode } from "../domain/TemplatesAddingMode";
-import { syncObservable } from "@legendapp/state/sync";
 import type { TemplateTypes } from "../domain/TemplateTypes";
 
 const templates$ = observable({

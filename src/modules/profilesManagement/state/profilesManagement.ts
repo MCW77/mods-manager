@@ -92,7 +92,7 @@ const getInitialProfiles = () => {
 	});
 };
 
-export const profilesManagement$: ObservableObject<ProfilesManagement> =
+const profilesManagement$: ObservableObject<ProfilesManagement> =
 	observable<ProfilesManagement>({
 		defaultProfile: {
 			allycode: "",
@@ -476,7 +476,7 @@ export const profilesManagement$: ObservableObject<ProfilesManagement> =
 		},
 	});
 
-export const profilesChanged$ = event();
+const profilesChanged$ = event();
 
 const nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());
@@ -541,3 +541,5 @@ const syncStatus$ = syncObservable(profilesManagement$.profiles, {
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+
+export { profilesManagement$, profilesChanged$ };

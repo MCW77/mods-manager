@@ -8,7 +8,7 @@ interface Progress {
 	optimizationStatus: OptimizationStatus;
 }
 
-export const progress$: ObservableObject<Progress> = observable<Progress>({
+const progress$: ObservableObject<Progress> = observable<Progress>({
 	optimizationStatus: {
     character: "",
 		characterCount: 0,
@@ -17,3 +17,5 @@ export const progress$: ObservableObject<Progress> = observable<Progress>({
     message: "",
   },
 });
+
+export { progress$ };

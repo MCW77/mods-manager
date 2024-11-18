@@ -1,8 +1,8 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
+import { syncObservable } from "@legendapp/state/sync";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { syncObservable } from "@legendapp/state/sync";
 
 export interface ProfileOptimizationSettings {
 	forceCompleteSets: boolean;
@@ -23,7 +23,7 @@ interface OptimizationSettings {
 	deleteProfile: (allycode: string) => void;
 }
 
-export const optimizationSettings$: ObservableObject<OptimizationSettings> =
+const optimizationSettings$: ObservableObject<OptimizationSettings> =
 	observable<OptimizationSettings>({
 		activeSettings: () => {
 			return optimizationSettings$.settingsByProfile[
@@ -64,3 +64,5 @@ const syncStatus$ = syncObservable(optimizationSettings$.settingsByProfile, {
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+
+export { optimizationSettings$ };

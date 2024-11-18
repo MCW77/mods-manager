@@ -13,7 +13,7 @@ interface IncrementalOptimization {
 	deleteProfile: (allycode: string) => void;
 }
 
-export const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
+const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
 	observable<IncrementalOptimization>({
 		activeIndex: () => {
 			return incrementalOptimization$.indicesByProfile[
@@ -35,15 +35,20 @@ export const incrementalOptimization$: ObservableObject<IncrementalOptimization>
 		},
 	});
 
-const syncStatus$ = syncObservable(incrementalOptimization$.indicesByProfile, {
-	persist: {
-		name: "IncrementalOptimization",
-		indexedDB: {
-			itemID: "indicesByProfile",
+const syncStatus$ = syncObservable(
+	incrementalOptimization$.indicesByProfile,
+	{
+		persist: {
+			name: "IncrementalOptimization",
+			indexedDB: {
+				itemID: "indicesByProfile",
+			},
 		},
-	},
-	initial: {},
-});
+		initial: {},
+	}
+);
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+
+export { incrementalOptimization$ };
