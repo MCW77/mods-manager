@@ -112,7 +112,7 @@
   background-image: url('/img/g13-frame-atlas.webp');
   background-size: 100% 300%;
   background-position-x: center;
-}s
+}
 
 .avatar.gear-13.align-dark::after {
   background-position-y: 50%
