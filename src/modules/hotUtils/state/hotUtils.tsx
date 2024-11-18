@@ -80,7 +80,7 @@ const post = async (url = "", data = {}, extras = {}) => {
 		.then((errorText) => Promise.reject(new Error(errorText)));
 };
 
-export const hotutils$ = observable({
+const hotutils$ = observable({
 	activeSessionId: () => {
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
 		return hotutils$.sessionIdByProfile[allycode].get() || "";
@@ -452,3 +452,5 @@ const syncStatus$ = syncObservable(
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+
+export { hotutils$ };
