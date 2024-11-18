@@ -58,7 +58,7 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 		const setBonusName = setBonus.name.replace(/\s|%/g, "").toLowerCase();
 		return (
 			<img
-				src={`/img/icon_buff_${setBonusName}.png`}
+				src={`/img/icon_buff_${setBonusName}.webp`}
 				alt={setBonus.name}
 				key={index}
 				className={className}
@@ -113,7 +113,7 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 							<img
 								src={`/img/icon_buff_${setName
 									.replace(/\s|%/g, "")
-									.toLowerCase()}.png`}
+									.toLowerCase()}.webp`}
 								alt={setName}
 								key={key}
 								onClick={() => target$.removeSetBonus(setName)}
