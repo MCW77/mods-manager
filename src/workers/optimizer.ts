@@ -1,4 +1,5 @@
 // utils
+debugger;
 await import("../utils/globalLegendPersistSettings");
 import * as perf from "../utils/performance";
 
