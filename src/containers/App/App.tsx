@@ -77,7 +77,7 @@ const App: React.FC = observer(() => {
 						dispatch(
 							Data.thunks.refreshPlayerData(allycode, false, sessionId, false),
 						);
-					else hotutils$.sessionIdsByProfile[allycode].set(sessionId);
+					else hotutils$.sessionIdByProfile[allycode].set(sessionId);
 				} else {
 					dispatch(
 						Data.thunks.refreshPlayerData(allycode, true, sessionId, false),

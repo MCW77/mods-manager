@@ -34,7 +34,7 @@ import { Mod } from "#/domain/Mod";
 import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
 import { ModMoveProgress } from "../components/ModMoveProgress";
 
-type SessionIdsByProfile = Record<string, string>;
+type SessionIdByProfile = Record<string, string>;
 
 interface HotUtils {
 	moveStatus: MoveStatus;
@@ -42,7 +42,7 @@ interface HotUtils {
 	hasActiveSession: () => Observable<boolean>;
 	isMoving: boolean;
 	isSubscribed: () => Observable<Promise<boolean>>;
-	sessionIdsByProfile: SessionIdsByProfile;
+	sessionIdByProfile: SessionIdByProfile;
 	cancelModMove: () => Promise<void>;
 	checkSubscriptionStatus: () => Promise<boolean>;
 	createProfile: (profile: ProfileCreationData) => Promise<void>;
@@ -83,7 +83,7 @@ const post = async (url = "", data = {}, extras = {}) => {
 export const hotutils$ = observable({
 	activeSessionId: () => {
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		return hotutils$.sessionIdsByProfile[allycode].get() || "";
+		return hotutils$.sessionIdByProfile[allycode].get() || "";
 	},
 	hasActiveSession: () => {
 		return hotutils$.activeSessionId.get() !== "" && hotutils$.isSubscribed();
@@ -101,7 +101,7 @@ export const hotutils$ = observable({
 		},
 		message: "",
 	},
-	sessionIdsByProfile: {} as SessionIdsByProfile,
+	sessionIdByProfile: {} as SessionIdByProfile,
 	reset: () => {
 		syncStatus$.reset();
 	},
@@ -431,21 +431,24 @@ profilesChanged$.on(() => {
 		profilesManagement$.profiles.profilesByAllycode.peek(),
 	);
 	for (const allycode of allycodes) {
-		if (hotutils$.sessionIdsByProfile[allycode].peek() === undefined) {
-			hotutils$.sessionIdsByProfile[allycode].set("");
+		if (hotutils$.sessionIdByProfile[allycode].peek() === undefined) {
+			hotutils$.sessionIdByProfile[allycode].set("");
 		}
 	}
 });
 
-const syncStatus$ = syncObservable(hotutils$.sessionIdsByProfile, {
-	persist: {
-		name: "HotUtils",
-		indexedDB: {
-			itemID: "sessionIdsByProfile",
+const syncStatus$ = syncObservable(
+	hotutils$.sessionIdByProfile,
+	{
+		persist: {
+			name: "HotUtils",
+			indexedDB: {
+				itemID: "sessionIdByProfile",
+			},
 		},
-	},
-	initial: {} as SessionIdsByProfile,
-});
+		initial: {} as SessionIdByProfile,
+	}
+);
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();

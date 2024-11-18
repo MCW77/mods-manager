@@ -36,9 +36,9 @@ const HotutilsSettingsForm: React.FC = observer(() => {
 						placeholder={t("general.hotutils.SessionIdPrompt")}
 						size={20}
 						type="text"
-						$value={hotutils$.sessionIdsByProfile[allycode]}
+						$value={hotutils$.sessionIdByProfile[allycode]}
 						onChange={(event) =>
-							hotutils$.sessionIdsByProfile[allycode].set(event.target.value)
+							hotutils$.sessionIdByProfile[allycode].set(event.target.value)
 						}
 					/>
 				</Fragment>
