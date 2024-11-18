@@ -433,13 +433,6 @@ const syncStatus$ = syncObservable(
 		initial: {} as SessionIdByProfile,
 	}),
 );
-console.log("Waiting for HotUtils to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("HotUtils loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
 
 export { hotutils$ };

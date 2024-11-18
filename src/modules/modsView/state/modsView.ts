@@ -265,61 +265,6 @@ const syncStatus$ = syncObservable(
 		initial: structuredClone(defaultViewSetup),
 	}),
 );
-console.log("Waiting for ViewSetup to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("ViewSetup loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
-
-/*
-modsView$.activeCategory.onChange(({ value, getPrevious }) => {
-	console.log(`activeCategory changed from ${getPrevious()} to ${value}`);
-});
-
-modsView$.idOfActiveViewSetupByCategory.onChange(({ value, getPrevious }) => {
-	console.log(
-		`idOfActiveViewSetupByCategory changed from ${getPrevious()} to ${value}`,
-	);
-});
-
-modsView$.idOfSelectedFilterByCategory.onChange(({ value, getPrevious }) => {
-	console.log(
-		`idOfSelectedFilterByCategory changed from ${getPrevious()} to ${value}`,
-	);
-});
-
-modsView$.idOfActiveViewSetupInActiveCategory.onChange(
-	({ value, getPrevious }) => {
-		console.log(
-			`idOfActiveViewSetupInActiveCategory changed from ${getPrevious()} to ${value}`,
-		);
-	},
-);
-
-modsView$.idOfSelectedFilterInActiveCategory.onChange(
-	({ value, getPrevious }) => {
-		console.log(
-			`idOfSelectedFilterInActiveCategory changed from ${getPrevious()} to ${value}`,
-		);
-	},
-);
-
-modsView$.activeViewSetupInActiveCategory.onChange(({ value, getPrevious }) => {
-	console.log("activeViewSetupInActiveCategory changed from ");
-	console.dir(getPrevious());
-	console.log("to ");
-	console.dir(value);
-});
-
-modsView$.activeFilter.onChange(({ value, getPrevious }) => {
-	console.log("activeFilter changed from ");
-	console.dir(getPrevious());
-	console.log("to ");
-	console.dir(value);
-});
-*/
 
 export { modsView$ };

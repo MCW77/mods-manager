@@ -99,11 +99,11 @@ export const dialog$: ObservableObject<Dialog> = observable({
 					onClick: actionHandler,
 				},
 				description: description,
-			}
+			};
 		} else {
 			options = {
 				description: description,
-			}
+			};
 		}
 
 		switch (type) {

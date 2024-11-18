@@ -29,9 +29,7 @@ import {
 	getProfileFromPersisted,
 	getProfileToPersist,
 } from "../domain/PlayerProfile";
-import type {
-	CharacterNames,
-} from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/characterSettings";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
@@ -80,7 +78,9 @@ const isMod = (mod: Mod | undefined): mod is Mod => {
 	return mod !== undefined;
 };
 
-const isObservableMod = (mod: Observable<Mod | undefined> | Observable<Mod>): mod is Observable<Mod> => {
+const isObservableMod = (
+	mod: Observable<Mod | undefined> | Observable<Mod>,
+): mod is Observable<Mod> => {
 	return mod.peek() !== undefined;
 };
 
@@ -133,7 +133,8 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 			return profilesManagement$.profiles.profileByAllycode[activeAllycode];
 		},
 		hasProfileWithAllycode: (allycode: string) => {
-			const profile = profilesManagement$.profiles.profileByAllycode[allycode].peek();
+			const profile =
+				profilesManagement$.profiles.profileByAllycode[allycode].peek();
 			return profile !== undefined;
 		},
 		hasProfiles: () => {
@@ -297,20 +298,34 @@ const hasModById = (obj: any): obj is { modById: Map<string, GIMOFlatMod> } => {
 	return Object.hasOwn(obj, "modById");
 };
 
-const hasProfileByAllycode = (obj: object): obj is { profileByAllycode: Record<string, Partial<PlayerProfile>> } => {
+const hasProfileByAllycode = (
+	obj: object,
+): obj is { profileByAllycode: Record<string, Partial<PlayerProfile>> } => {
 	return Object.hasOwn(obj, "profileByAllycode");
-}
-
-const hasPersistedProfileByAllycode = (obj: object): obj is { profileByAllycode: Record<string, PersistedPlayerProfile> } => {
-	return Object.hasOwn(obj, "profileByAllycode");
-}
-
-const isFullPlayerProfile = (obj: object): obj is PlayerProfile => {
-	return Object.hasOwn(obj, "allycode") && Object.hasOwn(obj, "modById") && Object.hasOwn(obj, "characterById");
 };
 
-const isFullPersistedPlayerProfile = (obj: object): obj is PersistedPlayerProfile => {
-	return Object.hasOwn(obj, "allycode") && Object.hasOwn(obj, "modById") && Object.hasOwn(obj, "characterById");
+const hasPersistedProfileByAllycode = (
+	obj: object,
+): obj is { profileByAllycode: Record<string, PersistedPlayerProfile> } => {
+	return Object.hasOwn(obj, "profileByAllycode");
+};
+
+const isFullPlayerProfile = (obj: object): obj is PlayerProfile => {
+	return (
+		Object.hasOwn(obj, "allycode") &&
+		Object.hasOwn(obj, "modById") &&
+		Object.hasOwn(obj, "characterById")
+	);
+};
+
+const isFullPersistedPlayerProfile = (
+	obj: object,
+): obj is PersistedPlayerProfile => {
+	return (
+		Object.hasOwn(obj, "allycode") &&
+		Object.hasOwn(obj, "modById") &&
+		Object.hasOwn(obj, "characterById")
+	);
 };
 
 const syncStatus$ = syncObservable(
@@ -332,7 +347,8 @@ const syncStatus$ = syncObservable(
 								const newProfileByAllycode: Record<string, PlayerProfile> = {};
 								for (const profile of profiles) {
 									if (hasModById(profile)) {
-										newProfileByAllycode[profile.allycode] = getProfileFromPersisted(profile);
+										newProfileByAllycode[profile.allycode] =
+											getProfileFromPersisted(profile);
 									}
 								}
 								const result = {
@@ -370,16 +386,19 @@ const syncStatus$ = syncObservable(
 							}
 							if (hasModById(profiles[0])) {
 								const allycode = Object.keys(value.profileByAllycode)[0];
-								const modId = Object.keys(value.profileByAllycode[allycode].modById)[0];
-								const modById = value.profileByAllycode[allycode].modById as Map<string, Mod> & Record<string, Mod>;
+								const modId = Object.keys(
+									value.profileByAllycode[allycode].modById,
+								)[0];
+								const modById = value.profileByAllycode[allycode]
+									.modById as Map<string, Mod> & Record<string, Mod>;
 								return {
 									profileByAllycode: {
 										[allycode]: {
 											modById: {
 												[modId]: modById[modId]?.serialize(),
-											}
-										}
-									}
+											},
+										},
+									},
 								};
 							}
 						}
@@ -391,15 +410,6 @@ const syncStatus$ = syncObservable(
 		initial: getInitialProfiles(),
 	}),
 );
-console.log("Waiting for Profiles to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("Profiles loaded");
-
-profilesManagement$.activeProfile.modById.onChange(({value, getPrevious}) => {
-	console.log("modById changed from");
-	console.dir(getPrevious());
-	console.log("to");
-	console.dir(value);
-});
 
 export { profilesManagement$, profilesChanged$ };

@@ -41,8 +41,11 @@ const getDefaultFilterSetup = () => {
 					type: "custom",
 					filter: "Has stat targets",
 					filterPredicate: (character: Character) => {
-						const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.peek();
-						const selectedCharacter = selectedCharacters.find((c) => c.id === character.id);
+						const selectedCharacters =
+							compilations$.defaultCompilation.selectedCharacters.peek();
+						const selectedCharacter = selectedCharacters.find(
+							(c) => c.id === character.id,
+						);
 						if (selectedCharacter === undefined) return false;
 						return selectedCharacter.target.targetStats.length > 0;
 					},
@@ -55,8 +58,11 @@ const getDefaultFilterSetup = () => {
 					type: "custom",
 					filter: "Missing Mods",
 					filterPredicate: (character: Character) => {
-						const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.peek();
-						const modsAssignedToCharacter = modAssignments.find((ma) => ma.characterId === character.id);
+						const modAssignments =
+							compilations$.defaultCompilation.flatCharacterModdings.peek();
+						const modsAssignedToCharacter = modAssignments.find(
+							(ma) => ma.characterId === character.id,
+						);
 						if (modsAssignedToCharacter === undefined) return false;
 						return modsAssignedToCharacter.assignedMods.length < 6;
 					},
@@ -69,11 +75,14 @@ const getDefaultFilterSetup = () => {
 					type: "custom",
 					filter: "Needs Leveling",
 					filterPredicate: (character: Character) => {
-						const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.peek();
-						const modsAssignedToCharacter = modAssignments.find((ma) => ma.characterId === character.id);
+						const modAssignments =
+							compilations$.defaultCompilation.flatCharacterModdings.peek();
+						const modsAssignedToCharacter = modAssignments.find(
+							(ma) => ma.characterId === character.id,
+						);
 						if (modsAssignedToCharacter === undefined) return false;
-//						const mods = profilesManagement$.activeProfile.mods.peek();
-//						return modsAssignedToCharacter.assignedMods.some((mod) => mod.level < 15);
+						//						const mods = profilesManagement$.activeProfile.mods.peek();
+						//						return modsAssignedToCharacter.assignedMods.some((mod) => mod.level < 15);
 						return true;
 					},
 				},
@@ -298,9 +307,14 @@ const charactersManagement$: ObservableObject<CharactersManagement> =
 		filterSetup: getDefaultFilterSetup(),
 		activeCustomFilter: () => {
 			const id = charactersManagement$.filterSetup.customFilterId.get();
-			const customFilterById = charactersManagement$.filterSetup.customFilterById.get();
-			if (customFilterById.has(id) === false) return (character: Character) => true;
-			return customFilterById.get(id)?.filterPredicate ?? ((character: Character) => true);
+			const customFilterById =
+				charactersManagement$.filterSetup.customFilterById.get();
+			if (customFilterById.has(id) === false)
+				return (character: Character) => true;
+			return (
+				customFilterById.get(id)?.filterPredicate ??
+				((character: Character) => true)
+			);
 		},
 		addTextFilter: () => {
 			const newFilter = createTextCharacterFilter(
@@ -325,13 +339,6 @@ const syncStatus$ = syncObservable(
 		initial: getDefaultFilterSetup(),
 	}),
 );
-console.log("Waiting for CharactersManagement to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("CharactersManagement loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
 
 export { charactersManagement$ };

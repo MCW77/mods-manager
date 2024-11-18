@@ -48,13 +48,6 @@ const syncStatus$ = syncObservable(
 		initial: {},
 	}),
 );
-console.log("Waiting for IncrementalOptimization to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("IncrementalOptimization loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
 
 export { incrementalOptimization$ };

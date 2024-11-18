@@ -59,13 +59,6 @@ const syncStatus$ = syncObservable(
 		initial: {},
 	}),
 );
-console.log("Waiting for OptimizationSettings to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("OptimizationSettings loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
 
 export { optimizationSettings$ };

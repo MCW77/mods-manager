@@ -51,9 +51,7 @@ const target$: PlanEditing = observable({
 	isBuiltinTarget: () =>
 		(
 			characterSettings[target$.characterId.peek()] as CharacterSettings
-		)?.targets.some(
-			(target) => target.id === target$.uneditedTarget.get().id,
-		),
+		)?.targets.some((target) => target.id === target$.uneditedTarget.get().id),
 	isInAdvancedEditMode: false,
 	isTargetChanged: () => {
 		const targetChanged = !OptimizationPlan.equals(

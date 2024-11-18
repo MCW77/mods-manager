@@ -78,7 +78,9 @@ const templates$ = observable({
 		templates$.userTemplatesByName[templates$.id.peek()].set({
 			id: templates$.id.peek(),
 			category: templates$.category.peek(),
-			selectedCharacters: structuredClone(compilations$.defaultCompilation.selectedCharacters.peek()),
+			selectedCharacters: structuredClone(
+				compilations$.defaultCompilation.selectedCharacters.peek(),
+			),
 		});
 	},
 	reset: () => {
@@ -98,14 +100,7 @@ const syncStatus1$ = syncObservable(
 		},
 	}),
 );
-console.log("Waiting for TemplatesAddingMode to load");
 await when(syncStatus1$.isPersistLoaded);
-console.log("TemplatesAddingMode loaded");
-/*
-(async () => {
-	await when(syncStatus1$.isPersistLoaded);
-})();
-*/
 
 const syncStatus2$ = syncObservable(
 	templates$.userTemplatesByName,
@@ -116,13 +111,6 @@ const syncStatus2$ = syncObservable(
 		initial: {},
 	}),
 );
-console.log("Waiting for Templates to load");
 await when(syncStatus2$.isPersistLoaded);
-console.log("Templates loaded");
-/*
-(async () => {
-	await when(syncStatus2$.isPersistLoaded);
-})();
-*/
 
 export { templates$ };

@@ -53,13 +53,6 @@ const syncStatus$ = syncObservable(
 		},
 	}),
 );
-console.log("Waiting for about$ to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("about$ loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
 
 export { about$ };

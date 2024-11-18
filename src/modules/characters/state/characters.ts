@@ -30,13 +30,6 @@ const syncStatus$ = syncObservable(
 		initial: {} as BaseCharacterById,
 	}),
 );
-console.log("Waiting for characters$ to load");
 await when(syncStatus$.isPersistLoaded);
-console.log("characters$ loaded");
-/*
-(async () => {
-	await when(syncStatus$.isPersistLoaded);
-})();
-*/
 
 export { characters$ };
