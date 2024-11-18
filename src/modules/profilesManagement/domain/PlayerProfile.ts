@@ -1,26 +1,20 @@
 // domain
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 import type * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
-import type { ModSuggestion } from "#/domain/PlayerProfile";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+import { Mod } from "#/domain/Mod";
 
 export interface PlayerProfile {
 	allycode: string;
 	characterById: Character.CharacterById;
-	mods: Mod[];
-	modAssignments: ModSuggestion[];
+	modById: Map<string, Mod>;
 	playerName: string;
-	selectedCharacters: SelectedCharacters;
 }
 
 export interface PersistedPlayerProfile {
 	allycode: string;
 	characterById: Character.CharacterById;
-	mods: GIMOFlatMod[];
-	modAssignments: ModSuggestion[];
+	modById: Record<string, GIMOFlatMod>;
 	playerName: string;
-	selectedCharacters: SelectedCharacters;
 }
 export const createPlayerProfile = (
 	allycode: string,
@@ -29,9 +23,49 @@ export const createPlayerProfile = (
 	return {
 		allycode,
 		characterById: {} as Character.CharacterById,
-		mods: [],
-		modAssignments: [],
+		modById: new Map<string, Mod>(),
 		playerName,
-		selectedCharacters: [],
+	};
+};
+
+export const getProfileFromPersisted = (
+	profile: PersistedPlayerProfile,
+): PlayerProfile => {
+/*
+	const modById = new Map<string, Mod>(
+		profile.modById.map((mod) => [mod.mod_uid, Mod.deserialize(mod)]),
+	);
+*/
+	const modById = new Map<string, Mod>();
+	for (const [modUid, mod] of Object.entries(profile.modById)) {
+		if (mod !== undefined)
+			modById.set(modUid, Mod.deserialize(mod));
+	}
+
+	return {
+		allycode: profile.allycode,
+		characterById: profile.characterById,
+		modById,
+		playerName: profile.playerName,
+	};
+}
+
+export const getProfileToPersist = (profile: PlayerProfile): PersistedPlayerProfile => {
+/*
+	const modById =
+		profile.modById.size > 0
+			? Array.from(profile.modById.values()).map((value) => value.serialize())
+			: Object.values(profile.modById).map((value) => value.serialize());
+*/
+	const modById: Record<string, GIMOFlatMod> = {};
+	for (const [modUid, mod] of profile.modById) {
+		modById[modUid] = mod.serialize();
+	}
+
+	return {
+		allycode: profile.allycode,
+		characterById: profile.characterById,
+		modById,
+		playerName: profile.playerName,
 	};
 };

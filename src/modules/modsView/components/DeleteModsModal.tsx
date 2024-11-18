@@ -1,20 +1,15 @@
 // react
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-
-// state
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // domain
 import type { Mod } from "#/domain/Mod";
 
 // components
 import { Button } from "#ui/button";
+import { beginBatch, endBatch } from "@legendapp/state";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 type ComponentProps = {
   groupedMods: Mod[][];
@@ -22,7 +17,6 @@ type ComponentProps = {
 
 const DeleteModsModal = ({groupedMods}:ComponentProps) => {
   const [t] = useTranslation("explore-ui");
-  const dispatch: ThunkDispatch = useDispatch();
 
   return (
     <div>
@@ -45,9 +39,11 @@ const DeleteModsModal = ({groupedMods}:ComponentProps) => {
           type={"button"}
           variant={"destructive"}
           onClick={() => {
+            beginBatch();
             for (const mods of groupedMods) {
-              dispatch(Storage.thunks.deleteMods(mods));
+                profilesManagement$.deleteMods(mods);
             }
+            endBatch();
             dialog$.hide();
           }}
         >

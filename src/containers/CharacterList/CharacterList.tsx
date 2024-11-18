@@ -6,6 +6,7 @@ import { observer } from "@legendapp/state/react";
 import "./CharacterList.css";
 
 // state
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
@@ -19,7 +20,7 @@ import { CharacterBlock } from "./CharacterBlock";
 const CharacterList = observer(
 	React.memo(() => {
 		const characterById = profilesManagement$.activeProfile.characterById.get();
-		const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
+		const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
 
 		const characterBlockDragEnter = () => {
 			return (event: React.DragEvent<HTMLDivElement>) => {
@@ -59,7 +60,7 @@ const CharacterList = observer(
 						const movingCharacterID: CharacterNames =
 							event.dataTransfer.getData("text/plain") as CharacterNames;
 						const movingCharacter = characterById[movingCharacterID];
-						profilesManagement$.selectCharacter(
+						compilations$.selectCharacter(
 							movingCharacterID,
 							Character.defaultTarget(movingCharacter),
 							dropCharacterIndex,
@@ -78,7 +79,7 @@ const CharacterList = observer(
 					case "move": {
 						const movingCharacterIndex =
 							+event.dataTransfer.getData("text/plain");
-						profilesManagement$.moveSelectedCharacter(
+						compilations$.moveSelectedCharacter(
 							movingCharacterIndex,
 							dropCharacterIndex,
 						);

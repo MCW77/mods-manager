@@ -1,9 +1,9 @@
 // utils
 import { flatten } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
-import groupByKey from "#/utils/groupByKey";
 
 // state
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -13,7 +13,8 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import type { CharacterNames } from "#/constants/characterSettings";
 
 import type { Mod } from "#/domain/Mod";
-import type { ModAssignments } from "#/domain/ModAssignment";
+
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { CreateProfileModal } from "../../hotUtils/components/CreateProfileModal";
@@ -33,31 +34,30 @@ const modRemovalCosts = {
 };
 
 const ActionsWidget = () => {
-	const profileMods = profilesManagement$.activeProfile.mods.get();
-	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
+	const modById = profilesManagement$.activeProfile.modById.get();
+	const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.get();
 
-	const modsById = groupByKey(profileMods, (mod) => mod.id);
-	const modAssignments2: ModAssignments = modAssignments
+	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)
-		.map(({ id, target, assignedMods, missedGoals }) => ({
-			id: id,
-			target: target,
+		.map(({ characterId, target, assignedMods, missedGoals }) => ({
+			characterId,
+			target,
 			assignedMods: assignedMods
-				? assignedMods.map((id) => modsById[id]).filter((mod) => !!mod)
+				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
 				: [],
 			missedGoals: missedGoals || [],
-		})) as ModAssignments;
+		})) as CharacterModdings;
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		profileMods.filter((mod) => mod.characterID !== "null"),
+		modById.values().filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 
-	const movingModsByAssignedCharacter: ModAssignments = modAssignments2
-		.map(({ id, target, assignedMods }) => ({
-			id: id,
-			target: target,
-			assignedMods: assignedMods.filter((mod) => mod.characterID !== id),
+	const movingModsByAssignedCharacter: CharacterModdings = modAssignments2
+		.map(({ characterId, target, assignedMods }) => ({
+			characterId,
+			target,
+			assignedMods: assignedMods.filter((mod) => mod.characterID !== characterId),
 			missedGoals: [],
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);
@@ -71,7 +71,7 @@ const ActionsWidget = () => {
 	// being removed from that character. Then, any mods that used to be equipped
 	// are also being removed.
 	const removedMods = flatten(
-		movingModsByAssignedCharacter.map(({ id, assignedMods }) => {
+		movingModsByAssignedCharacter.map(({ characterId: id, assignedMods }) => {
 			const changingSlots = assignedMods.map((mod) => mod.slot);
 			return currentModsByCharacter[id]
 				? currentModsByCharacter[id].filter((mod) =>

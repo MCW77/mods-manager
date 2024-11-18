@@ -1,15 +1,10 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer, reactive } from "@legendapp/state/react";
 
 // state
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-
-// modules
-import { Storage } from "#/state/modules/storage";
 
 // components
 import {
@@ -30,7 +25,6 @@ type ComponentProps = {
 
 const ProfileSelector = observer(
 	React.memo(({ setAddMode }: ComponentProps) => {
-		const dispatch: ThunkDispatch = useDispatch();
 		const [t] = useTranslation("global-ui");
 		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
@@ -43,7 +37,7 @@ const ProfileSelector = observer(
 						setAddMode(true);
 					} else {
 						if (value === "") return;
-						dispatch(Storage.thunks.loadProfile(value));
+//						dispatch(Storage.thunks.loadProfile(value));
 						profilesManagement$.profiles.activeAllycode.set(value);
 					}
 				}}

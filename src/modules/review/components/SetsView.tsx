@@ -1,6 +1,4 @@
 // react
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { For, useMount, useObservable } from "@legendapp/state/react";
 
 // utils
@@ -11,15 +9,13 @@ import { characters$ } from "#/modules/characters/state/characters";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "../state/review";
 
-// modules
-import { Review } from "#/state/modules/review";
-
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
 import type { CharacterNames } from "#/constants/characterSettings";
 import type { Mod } from "#/domain/Mod";
-import type { ModAssignments } from "#/domain/ModAssignment";
 import { createModLoadout } from "#/domain/ModLoadout";
+
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
@@ -28,8 +24,9 @@ import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail
 import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
+
 type SetsViewProps = {
-	modAssignments: ModAssignments;
+	modAssignments: CharacterModdings;
 };
 
 /***
@@ -38,17 +35,16 @@ type SetsViewProps = {
  * @returns array[JSX Element]
  */
 const SetsView = ({ modAssignments }: SetsViewProps) => {
-	const dispatch: ThunkDispatch = useDispatch();
 	const modAssignments$ = useObservable(modAssignments);
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
-	const mods = profilesManagement$.activeProfile.mods.get();
+	const modById = profilesManagement$.activeProfile.modById.get();
 
 	const currentModsByCharacter: {
 		[key in CharacterNames]: Mod[];
 	} = collectByKey(
-		mods.filter((mod) => mod.characterID !== "null"),
+		modById.values().filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 
@@ -62,18 +58,18 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 			<For each={modAssignments$}>
 				{(value, id) => {
 					const {
-						id: characterID,
+						characterId: characterID,
 						missedGoals,
 						assignedMods: mods,
 						target,
 					} = value.get();
-					const character = characterById[value.id.peek()];
+					const character = characterById[value.characterId.peek()];
 					if (character === undefined) return <></>;
 
 					return (
 						<RenderIfVisible
 							defaultHeight={625}
-							key={`RIV-${value.id.peek()}`}
+							key={`RIV-${value.characterId.peek()}`}
 							visibleOffset={4000}
 						>
 							<div className={"mod-row set"}>
@@ -95,13 +91,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 											filter.sort && (
 											<Button
 												type={"button"}
-												onClick={() =>
-													dispatch(
-														Review.thunks.unequipMods(
-															mods.map((mod) => mod.id),
-														),
-													)
-												}
+												onClick={() => profilesManagement$.unequipMods(mods)}
 											>
 												I removed these mods
 											</Button>
@@ -111,12 +101,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 											<Button
 												type={"button"}
 												onClick={() =>
-													dispatch(
-														Review.thunks.reassignMods(
-															mods.map((mod) => mod.id),
-															characterID,
-														),
-													)
+													profilesManagement$.reassignMods(mods, characterID)
 												}
 											>
 												I reassigned these mods

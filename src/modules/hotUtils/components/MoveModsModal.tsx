@@ -1,16 +1,12 @@
-// react
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
 // utils
 import { flatten } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
 import { formatNumber } from "#/utils/formatNumber";
-import groupByKey from "#/utils/groupByKey";
 
 //state
-import { hotutils$ } from "../state/hotUtils";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { hotutils$ } from "../state/hotUtils";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
@@ -18,7 +14,8 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import type { CharacterNames } from "#/constants/characterSettings";
 
 import type { Mod } from "#/domain/Mod";
-import type { ModAssignments } from "#/domain/ModAssignment";
+
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { Credits } from "#/components/Credits/Credits";
@@ -45,32 +42,31 @@ const modRemovalCosts = {
 };
 
 const MoveModsModal = () => {
-	const dispatch: ThunkDispatch = useDispatch();
-	const profileMods = profilesManagement$.activeProfile.mods.get();
-	const activeProfile = profilesManagement$.activeProfile.get();
+	const modById = profilesManagement$.activeProfile.modById.get();
+	const flatCharacterModdings = compilations$.defaultCompilation.flatCharacterModdings.get();
+	const characterById = profilesManagement$.activeProfile.characterById.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		profileMods.filter((mod) => mod.characterID !== "null"),
+		modById.values().filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 
-	const modsById = groupByKey(profileMods, (mod) => mod.id);
-	const modAssignments: ModAssignments = activeProfile.modAssignments
+	const modAssignments: CharacterModdings = flatCharacterModdings
 		.filter((x) => null !== x)
-		.map(({ id, target, assignedMods, missedGoals }) => ({
-			id: id,
-			target: target,
+		.map(({ characterId, target, assignedMods, missedGoals }) => ({
+			characterId,
+			target,
 			assignedMods: assignedMods
-				? assignedMods.map((id) => modsById[id]).filter((mod) => !!mod)
+				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
 				: [],
 			missedGoals: missedGoals || [],
-		})) as ModAssignments;
+		})) as CharacterModdings;
 
 	const movingModsByAssignedCharacter = modAssignments
-		.map(({ id, target, assignedMods }) => ({
-			id: id,
-			target: target,
-			assignedMods: assignedMods.filter((mod) => mod.characterID !== id),
+		.map(({ characterId, target, assignedMods }) => ({
+			characterId,
+			target,
+			assignedMods: assignedMods.filter((mod) => mod.characterID !== characterId),
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);
 
@@ -83,10 +79,10 @@ const MoveModsModal = () => {
 	// being removed from that character. Then, any mods that used to be equipped
 	// are also being removed.
 	const removedMods = flatten(
-		movingModsByAssignedCharacter.map(({ id, assignedMods }) => {
+		movingModsByAssignedCharacter.map(({ characterId, assignedMods }) => {
 			const changingSlots = assignedMods.map((mod) => mod.slot);
-			return currentModsByCharacter[id]
-				? currentModsByCharacter[id].filter((mod) =>
+			return currentModsByCharacter[characterId]
+				? currentModsByCharacter[characterId].filter((mod) =>
 						changingSlots.includes(mod.slot),
 					)
 				: [];
@@ -101,13 +97,13 @@ const MoveModsModal = () => {
 	);
 
 	const generateHotUtilsProfile = () => {
-		const assignedMods = activeProfile.modAssignments
+		const assignedMods = flatCharacterModdings
 			.filter((x) => null !== x)
 			.filter(
-				({ id }) => activeProfile.characterById[id].playerValues.level >= 50,
+				({ characterId }) => characterById[characterId].playerValues.level >= 50,
 			)
-			.map(({ id, assignedMods, target }) => ({
-				id: id,
+			.map(({ characterId, assignedMods, target }) => ({
+				id: characterId,
 				modIds: assignedMods,
 				target: target.id,
 			}));
@@ -115,9 +111,9 @@ const MoveModsModal = () => {
 		const lockedMods = (
 			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
 		)
-			.filter(([id]) => lockedStatus$.ofActivePlayerByCharacterId[id])
-			.map(([id, mods]) => ({
-				id: id,
+			.filter(([characterId]) => lockedStatus$.ofActivePlayerByCharacterId[characterId])
+			.map(([characterId, mods]) => ({
+				id: characterId,
 				modIds: mods.map(({ id }) => id),
 				target: "locked",
 			}));
@@ -174,7 +170,7 @@ const MoveModsModal = () => {
 						const profile: HUModsMoveProfile = {
 							units: generateHotUtilsProfile(),
 						};
-						hotutils$.moveMods(profile, dispatch);
+						hotutils$.moveMods(profile);
 					}}
 				>
 					Move my mods

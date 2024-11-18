@@ -7,9 +7,10 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
-import type { BaseCharacterById } from "#/modules/characters/domain/BaseCharacter";
 import type * as Character from "#/domain/Character";
-import type { ModAssignments } from "#/domain/ModAssignment";
+
+import type { BaseCharacterById } from "#/modules/characters/domain/BaseCharacter";
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { Button } from "#ui/button";
@@ -32,10 +33,10 @@ const setMap = {
 const summaryListContent = (
 	baseCharacterById: BaseCharacterById,
 	characterById: Character.CharacterById,
-	modAssignments: ModAssignments,
+	modAssignments: CharacterModdings,
 ) => {
 	return modAssignments
-		.map(({ id, target, assignedMods: mods }) => {
+		.map(({ characterId: id, target, assignedMods: mods }) => {
 			const assignedCharacter = characterById[id];
 			const characterName =
 				baseCharacterById[assignedCharacter.id]?.name ?? assignedCharacter.id;
@@ -63,7 +64,7 @@ const summaryListContent = (
 const copySummaryToClipboard = (
 	baseCharacterById: BaseCharacterById,
 	characterById: Character.CharacterById,
-	modAssignments: ModAssignments,
+	modAssignments: CharacterModdings,
 ) => {
 	copyToClipboard(
 		summaryListContent(baseCharacterById, characterById, modAssignments),
@@ -71,7 +72,7 @@ const copySummaryToClipboard = (
 };
 
 type TextualReviewProps = {
-	modAssignments: ModAssignments;
+	modAssignments: CharacterModdings;
 };
 
 /**

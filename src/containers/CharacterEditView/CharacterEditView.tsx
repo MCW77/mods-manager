@@ -11,6 +11,7 @@ import { observer } from "@legendapp/state/react";
 
 import { characters$ } from "#/modules/characters/state/characters";
 import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
@@ -38,8 +39,7 @@ const CharacterEditView = observer(() => {
 	const [t] = useTranslation("optimize-ui");
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const baseCharacterById = characters$.baseCharacterById.get();
-	const selectedCharacters =
-		profilesManagement$.activeProfile.selectedCharacters.get();
+	const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	let availableCharacters = [] as Character.Character[];
@@ -153,7 +153,7 @@ const CharacterEditView = observer(() => {
 			case "move": {
 				// This is coming from the selected characters - remove the character from the list
 				const characterIndex = +event.dataTransfer.getData("text/plain");
-				profilesManagement$.unselectCharacter(characterIndex);
+				compilations$.unselectCharacter(characterIndex);
 				break;
 			}
 			default:

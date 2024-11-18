@@ -1,7 +1,3 @@
-// react
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
 // utils
 import { flatten } from "lodash-es";
 
@@ -10,17 +6,15 @@ import { characters$ } from "#/modules/characters/state/characters";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "../state/review";
 
-// modules
-import { Review } from "#/state/modules/review";
-
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
 import type { CharacterNames } from "#/constants/characterSettings";
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
-import type { ModAssignments } from "#/domain/ModAssignment";
 import * as ModLoadout from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
@@ -30,7 +24,7 @@ import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 
 interface ListViewProps {
-	displayedMods: ModAssignments;
+	displayedMods: CharacterModdings;
 }
 /**
  * Convert a list of displayed mods into the renderable elements to display them as a list of individual mods
@@ -38,18 +32,17 @@ interface ListViewProps {
  * @returns {Array<*>}
  */
 const ListView = ({ displayedMods }: ListViewProps) => {
-	const dispatch: ThunkDispatch = useDispatch();
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
-	const mods = profilesManagement$.activeProfile.mods.get();
+	const modById = profilesManagement$.activeProfile.modById.get();
 
 	let individualMods: {
 		id: CharacterNames;
 		mod: Mod;
 		target: OptimizationPlan.OptimizationPlan;
 	}[] = flatten(
-		displayedMods.map(({ id, target, assignedMods }) =>
+		displayedMods.map(({ characterId: id, target, assignedMods }) =>
 			assignedMods.map((mod) => ({ id: id, target: target, mod: mod })),
 		),
 	);
@@ -123,14 +116,14 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 							<div className={"actions"}>
 								<Button
 									type={"button"}
-									onClick={() => dispatch(Review.thunks.unequipMod(mod.id))}
+									onClick={() => profilesManagement$.unequipMod(mod.id)}
 								>
 									I removed this mod
 								</Button>
 								<Button
 									type={"button"}
 									onClick={() =>
-										dispatch(Review.thunks.reassignMod(mod.id, characterID))
+										profilesManagement$.reassignMod(mod.id, characterID)
 									}
 								>
 									I reassigned this mod

@@ -1,7 +1,3 @@
-// react
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
 // state
 import { observer, reactive, Show, useObservable } from "@legendapp/state/react";
 import { dialog$ } from "#/modules/dialog/state/dialog";
@@ -25,7 +21,6 @@ import { Progress } from "#ui/progress";
 const ReactiveProgress = reactive(Progress);
 
 const OptimizerProgress: React.FC = observer(() => {
-	const dispatch: ThunkDispatch = useDispatch();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
@@ -34,7 +29,7 @@ const OptimizerProgress: React.FC = observer(() => {
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
-		dispatch(Optimize.thunks.cancelOptimizer());
+		Optimize.thunks.cancelOptimizer();
 		isBusy$.set(false);
 		if (closeModal) {
 			dialog$.hide();
@@ -54,7 +49,15 @@ const OptimizerProgress: React.FC = observer(() => {
 					<ReactiveProgress $value={() => Math.trunc(100*((progress$.optimizationStatus.characterIndex.get()+1) / progress$.optimizationStatus.characterCount.get()))} />
 				</div>
 				<div>
-					<Label>TargetStats progress</Label>
+					<Label>Sets progress: {progress$.optimizationStatus.sets.get().join(" - ")}</Label>
+					<ReactiveProgress $value={() => Math.trunc(100*((progress$.optimizationStatus.setsIndex.get()) / progress$.optimizationStatus.setsCount.get()))} />
+				</div>
+				<div>
+					<Label>TargetStats progress: {progress$.optimizationStatus.targetStat.get()}</Label>
+					<ReactiveProgress $value={() => Math.trunc(100*((progress$.optimizationStatus.targetStatIndex.get()) / progress$.optimizationStatus.targetStatCount.get()))} />
+				</div>
+				<div>
+					<Label>permutations progress</Label>
 					<ReactiveProgress $value={progress$.optimizationStatus.progress} />
 				</div>
 			</div>

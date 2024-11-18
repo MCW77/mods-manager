@@ -1,17 +1,12 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
-export interface ProfileOptimizationSettings {
-	forceCompleteSets: boolean;
-	lockUnselectedCharacters: boolean;
-	modChangeThreshold: number;
-	simulate6EModSlice: boolean;
-	simulateLevel15Mods: boolean;
-	optimizeWithPrimaryAndSetRestrictions: boolean;
-}
+// domain
+import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
 
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 
@@ -52,17 +47,25 @@ const optimizationSettings$: ObservableObject<OptimizationSettings> =
 		},
 	});
 
-const syncStatus$ = syncObservable(optimizationSettings$.settingsByProfile, {
-	persist: {
-		name: "OptimizationSettings",
-		indexedDB: {
-			itemID: "settingsByProfile",
+const syncStatus$ = syncObservable(
+	optimizationSettings$.settingsByProfile,
+	persistOptions({
+		persist: {
+			name: "OptimizationSettings",
+			indexedDB: {
+				itemID: "settingsByProfile",
+			},
 		},
-	},
-	initial: {},
-});
+		initial: {},
+	}),
+);
+console.log("Waiting for OptimizationSettings to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("OptimizationSettings loaded");
+/*
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 export { optimizationSettings$ };

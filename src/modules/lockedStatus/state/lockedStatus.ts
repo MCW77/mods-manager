@@ -1,6 +1,8 @@
 // state
 import { beginBatch, endBatch, type Observable, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
+
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
@@ -39,17 +41,25 @@ const lockedStatus$ = observable<{
   },
 });
 
-const syncStatus$ = syncObservable(lockedStatus$.lockedStatusByCharacterIdByAllycode, {
-	persist: {
-		name: "LockedStatus",
-		indexedDB: {
-			itemID: "lockedStatus",
+const syncStatus$ = syncObservable(
+	lockedStatus$.lockedStatusByCharacterIdByAllycode,
+	persistOptions({
+		persist: {
+			name: "LockedStatus",
+			indexedDB: {
+				itemID: "lockedStatus",
+			},
 		},
-	},
-  initial: {} as LockedStatusByCharacterIdByAllycode,
-});
+		initial: {} as LockedStatusByCharacterIdByAllycode,
+	}),
+);
+console.log("Waiting for LockedStatus to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("LockedStatus loaded");
+/*
 (async () => {
   await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 export { lockedStatus$ };

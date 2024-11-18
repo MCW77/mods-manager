@@ -1,7 +1,5 @@
 // react
 import type React from "react";
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import {
 	Memo,
 	observer,
@@ -16,6 +14,7 @@ import { beginBatch, endBatch } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
 import { characters$ } from "#/modules/characters/state/characters";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -32,8 +31,9 @@ import { characterSettings } from "#/constants/characterSettings";
 import type * as Character from "#/domain/Character";
 import type { CharacterSettings } from "#/domain/CharacterSettings";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
-import type { ModSuggestion } from "#/domain/PlayerProfile";
 import type { TargetStat } from "#/domain/TargetStat";
+
+import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
@@ -66,12 +66,11 @@ type ComponentProps = {
 
 const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
-		const dispatch: ThunkDispatch = useDispatch();
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
 		const baseCharacterById = characters$.baseCharacterById.get();
 		const progress = progress$.optimizationStatus.get();
-		const modAssignments =
-			profilesManagement$.activeProfile.modAssignments.get();
+		const modAssignments =	compilations$.defaultCompilation.flatCharacterModdings.get();
+
 		const targetsNames = profilesManagement$.activeProfile.characterById[
 			character.id
 		].targets
@@ -98,7 +97,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				: null;
 		});
 
-		const missedGoalsSection = (modAssignments: ModSuggestion | null) => {
+		const missedGoalsSection = (modAssignments: FlatCharacterModding | null) => {
 			if ((target$.target.targetStats.peek() || []).length === 0) {
 				return;
 			}
@@ -176,7 +175,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const runIncrementalCalc = () => {
 			saveTarget();
 			isBusy$.set(true);
-			dispatch(Optimize.thunks.optimizeMods());
+			Optimize.thunks.optimizeMods();
 		};
 
 		const saveTarget = () => {
@@ -185,7 +184,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				newTarget = OptimizationPlan.denormalize(newTarget);
 			const charId = target$.characterId.peek();
 
-			profilesManagement$.saveTarget(charId, newTarget);
+			compilations$.saveTarget(charId, newTarget);
 		};
 
 		return (
@@ -231,7 +230,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 										id={"delete-button"}
 										variant={"destructive"}
 										onClick={() => {
-											profilesManagement$.deleteTarget(character.id, target.id);
+											compilations$.deleteTarget(character.id, target.id);
 											optimizerView$.view.set("basic");
 										}}
 									>
@@ -342,8 +341,8 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							<TargetStatsWidget />
 							{missedGoalsSection(
 								modAssignments.find(
-									(modAssignment: ModSuggestion) =>
-										modAssignment.id === character.id,
+									(modAssignment) =>
+										modAssignment.characterId === character.id,
 								) ?? null,
 							)}
 						</div>

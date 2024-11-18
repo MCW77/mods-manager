@@ -1,6 +1,7 @@
 // state
 import { beginBatch, endBatch, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 // domain
 import type { Categories } from "../domain/Categories";
@@ -255,15 +256,23 @@ const filters$ = observable({
 	filtersByCategory: {} as Record<Categories, Filter>,
 });
 
-const syncStatus$ = syncObservable(modsView$.viewSetupByIdByCategory, {
-	persist: {
-		name: "ViewSetup",
-	},
-	initial: structuredClone(defaultViewSetup),
-});
+const syncStatus$ = syncObservable(
+	modsView$.viewSetupByIdByCategory,
+	persistOptions({
+		persist: {
+			name: "ViewSetup",
+		},
+		initial: structuredClone(defaultViewSetup),
+	}),
+);
+console.log("Waiting for ViewSetup to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("ViewSetup loaded");
+/*
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 /*
 modsView$.activeCategory.onChange(({ value, getPrevious }) => {

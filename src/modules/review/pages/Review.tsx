@@ -8,10 +8,10 @@ import "./Review.css";
 import { flatten, mapValues } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
-import groupByKey from "#/utils/groupByKey";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
 
@@ -22,9 +22,10 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
 import type { Mod } from "#/domain/Mod";
-import type { ModAssignment, ModAssignments } from "#/domain/ModAssignment";
 import * as ModLoadout from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
+
+import type { CharacterModding, CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { ActionsWidget } from "../components/ActionsWidget";
@@ -158,12 +159,12 @@ const Review: React.FC = observer(() => {
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
-	const mods = profilesManagement$.activeProfile.mods.get();
-	const modAssignments = profilesManagement$.activeProfile.modAssignments.get();
+	const modById = profilesManagement$.activeProfile.modById.get();
+	const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.get();
 
 	const getModAssignmentsByCurrentCharacter = (
-		modAssignments: ModAssignments,
-	): ModAssignments => {
+		modAssignments: CharacterModdings,
+	): CharacterModdings => {
 		const tempAssignments = modAssignments;
 
 		// If we're only showing upgrades, then filter out any mod that isn't being upgraded
@@ -186,7 +187,7 @@ const Review: React.FC = observer(() => {
 			}
 		}
 		// Filter out any mods that aren't moving
-		const mods = tempAssignments.map(({ id, assignedMods }) =>
+		const mods = tempAssignments.map(({ characterId: id, assignedMods }) =>
 			assignedMods.filter((mod) => mod.characterID !== id),
 		);
 
@@ -196,11 +197,11 @@ const Review: React.FC = observer(() => {
 		);
 
 		// Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
-		const result: ModAssignments = Object.values(
-			mapValues<ModsByCharacterNames, ModAssignment>(
+		const result: CharacterModdings = Object.values(
+			mapValues<ModsByCharacterNames, CharacterModding>(
 				modsByCharacterNames,
-				(mods: Mod[], id: string): ModAssignment => ({
-					id: id as CharacterNames,
+				(mods: Mod[], id: string): CharacterModding => ({
+					characterId: id as CharacterNames,
 					assignedMods: mods,
 					target: OptimizationPlan.createOptimizationPlan("xyz"),
 					missedGoals: [],
@@ -211,27 +212,26 @@ const Review: React.FC = observer(() => {
 		return result;
 	};
 
-	const modsById = groupByKey(mods, (mod) => mod.id);
-	const modAssignments2: ModAssignments = modAssignments
+	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)
-		.map(({ id, target, assignedMods, missedGoals }) => ({
-			id: id,
-			target: target,
+		.map(({ characterId, target, assignedMods, missedGoals }) => ({
+			characterId,
+			target,
 			assignedMods: assignedMods
-				? assignedMods.map((id) => modsById[id]).filter((mod) => !!mod)
+				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
 				: [],
 			missedGoals: missedGoals || [],
-		})) as ModAssignments;
+		})) as CharacterModdings;
 
-	let displayedMods: ModAssignments;
+	let displayedMods: CharacterModdings;
 	switch (filter.view) {
 		case ModListFilter.viewOptions.list:
 			if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
 				displayedMods = modAssignments2
-					.map(({ id, target, assignedMods }) => ({
-						id: id,
-						target: target,
+					.map(({ characterId, target, assignedMods }) => ({
+						characterId,
+						target,
 						assignedMods: assignedMods.filter(
 							(mod) =>
 								mod.shouldLevel(target) ||
@@ -242,11 +242,11 @@ const Review: React.FC = observer(() => {
 					.filter(({ assignedMods }) => assignedMods.length > 0);
 			} else {
 				// If we're not showing upgrades, then only show mods that aren't already assigned to that character
-				displayedMods = modAssignments2.map(({ id, target, assignedMods }) => ({
-					id: id,
+				displayedMods = modAssignments2.map(({ characterId, target, assignedMods }) => ({
+					characterId,
 					target: target,
 					assignedMods: assignedMods
-						.filter((mod) => mod.characterID !== id)
+						.filter((mod) => mod.characterID !== characterId)
 						.sort(ModLoadout.slotSort),
 					missedGoals: [],
 				}));
@@ -259,12 +259,12 @@ const Review: React.FC = observer(() => {
 				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments2);
 			} else if (ModListFilter.showOptions.change === filter.show) {
 				// If we're only showing changes, then filter out any character that isn't changing
-				displayedMods = modAssignments2.filter(({ id, assignedMods }) =>
+				displayedMods = modAssignments2.filter(({ characterId: id, assignedMods }) =>
 					assignedMods.some((mod) => mod.characterID !== id),
 				);
 			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
-				displayedMods = modAssignments2.filter(({ id, target, assignedMods }) =>
+				displayedMods = modAssignments2.filter(({ characterId: id, target, assignedMods }) =>
 					assignedMods.some(
 						(mod) =>
 							mod.shouldLevel(target) ||
@@ -277,7 +277,7 @@ const Review: React.FC = observer(() => {
 
 			// Filter out any characters that we're not going to display based on the selected tag
 			if (filter.tag !== "All") {
-				displayedMods = displayedMods.filter(({ id }) => {
+				displayedMods = displayedMods.filter(({ characterId: id }) => {
 					const tags = baseCharacterById[id]
 						? baseCharacterById[id].categories
 						: [];
@@ -287,7 +287,7 @@ const Review: React.FC = observer(() => {
 	}
 
 	const numMovingMods = modAssignments2.reduce(
-		(count, { id, assignedMods }) =>
+		(count, { characterId: id, assignedMods }) =>
 			assignedMods.filter((mod) => mod.characterID !== id).length + count,
 		0,
 	);
@@ -295,11 +295,11 @@ const Review: React.FC = observer(() => {
 	const currentModsByCharacter: {
 		[key in CharacterNames]: Mod[];
 	} = collectByKey(
-		mods.filter((mod) => mod.characterID !== "null"),
+		modById.values().filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
 	const currentLoadoutValue = modAssignments2
-		.map(({ id, target }) =>
+		.map(({ characterId: id, target }) =>
 			Object.keys(currentModsByCharacter).includes(id)
 				? ModLoadout.getOptimizationValue(
 						ModLoadout.createModLoadout(currentModsByCharacter[id]),
@@ -311,7 +311,7 @@ const Review: React.FC = observer(() => {
 		)
 		.reduce((a, b) => a + b, 0);
 	const newLoadoutValue = modAssignments2
-		.map(({ id, target, assignedMods }) =>
+		.map(({ characterId: id, target, assignedMods }) =>
 			ModLoadout.getOptimizationValue(
 				ModLoadout.createModLoadout(assignedMods),
 				characterById[id],
@@ -322,7 +322,7 @@ const Review: React.FC = observer(() => {
 		.reduce((a, b) => a + b, 0);
 
 	const movingModsByAssignedCharacter = modAssignments2
-		.map(({ id, target, assignedMods }) => ({
+		.map(({ characterId: id, target, assignedMods }) => ({
 			id: id,
 			target: target,
 			assignedMods: assignedMods.filter((mod) => mod.characterID !== id),
@@ -358,7 +358,7 @@ const Review: React.FC = observer(() => {
 
 	const modsBeingUpgraded = modAssignments2
 		.filter(({ target }) => OptimizationPlan.shouldUpgradeMods(target))
-		.map(({ id, assignedMods }) =>
+		.map(({ characterId: id, assignedMods }) =>
 			assignedMods.filter((mod) => 15 !== mod.level),
 		)
 		.reduce((allMods, characterMods) => allMods.concat(characterMods), []);

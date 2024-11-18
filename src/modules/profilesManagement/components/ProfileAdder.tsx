@@ -1,11 +1,6 @@
 // react
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import type {
-	ThunkDispatch,
-	ThunkResult,
-} from "#/state/reducers/modsOptimizer";
 
 // utils
 import formatAllycode from "#/utils/formatAllycode";
@@ -21,7 +16,6 @@ type ComponentProps = {
 };
 
 const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
-	const dispatch: ThunkDispatch = useDispatch();
 	const [t] = useTranslation("global-ui");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [isFetchFinished, setIsFetchFinished] = useState(false);
@@ -30,11 +24,10 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 		if (isFetchFinished === true) setAddMode(false);
 	}, [isFetchFinished, setAddMode]);
 
-	const fetch = (allycode: string): ThunkResult<Promise<void>> => {
-		return async (dispatch) => {
-			await dispatch(Data.thunks.refreshPlayerData(allycode, true, null));
-			setIsFetchFinished(true);
-		};
+	const fetch = async (allycode: string): Promise<void> => {
+		const result = await Data.thunks.refreshPlayerData(allycode, true, null);
+		setIsFetchFinished(true);
+		return result;
 	};
 
 	return (
@@ -50,7 +43,7 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 					setAddMode(false);
 				}
 				if (e.key === "Enter") {
-					dispatch(fetch((e.target as HTMLInputElement).value));
+					fetch((e.target as HTMLInputElement).value);
 				}
 				// Don't change the input if the user is trying to select something
 				const windowSelection = window.getSelection();

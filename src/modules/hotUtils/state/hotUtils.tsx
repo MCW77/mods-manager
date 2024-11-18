@@ -1,23 +1,20 @@
-// react
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
-
 // state
 import {
+	beginBatch,
+	endBatch,
 	type Observable,
-	type ObservableObject,
 	observable,
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import {
 	profilesChanged$,
 	profilesManagement$,
 } from "#/modules/profilesManagement/state/profilesManagement";
-
-// modules
-import { App } from "#/state/modules/app";
 
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
@@ -35,21 +32,6 @@ import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
 import { ModMoveProgress } from "../components/ModMoveProgress";
 
 type SessionIdByProfile = Record<string, string>;
-
-interface HotUtils {
-	moveStatus: MoveStatus;
-	activeSessionId: () => Observable<string>;
-	hasActiveSession: () => Observable<boolean>;
-	isMoving: boolean;
-	isSubscribed: () => Observable<Promise<boolean>>;
-	sessionIdByProfile: SessionIdByProfile;
-	cancelModMove: () => Promise<void>;
-	checkSubscriptionStatus: () => Promise<boolean>;
-	createProfile: (profile: ProfileCreationData) => Promise<void>;
-	fetchProfile(allycode: string): Promise<FetchedGIMOProfile>;
-	moveMods: (profile: Loadout, dispatch: ThunkDispatch) => Promise<void>;
-	pollForModMoveStatus: (dispatch: ThunkDispatch) => Promise<void>;
-}
 
 const hotutilsv2baseurl =
 	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
@@ -88,7 +70,9 @@ const hotutils$ = observable({
 	hasActiveSession: () => {
 		return hotutils$.activeSessionId.get() !== "" && hotutils$.isSubscribed();
 	},
-
+	getSessionIdOfProfile: (allycode: string) => {
+		return hotutils$.sessionIdByProfile[allycode].peek() || "";
+	},
 	isMoving: false,
 	isSubscribed: () => hotutils$.checkSubscriptionStatus(),
 	moveStatus: {
@@ -272,7 +256,7 @@ const hotutils$ = observable({
 			"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/",
 			{
 				action: "getprofile",
-				sessionId: hotutils$.activeSessionId.get(),
+				sessionId: hotutils$.getSessionIdOfProfile(allycode),
 				payload: {
 					allyCode: allycode,
 				},
@@ -309,7 +293,7 @@ const hotutils$ = observable({
 			updated: playerProfile.updated ?? false,
 		} as FetchedGIMOProfile;
 	},
-	moveMods: async (profile: Loadout, dispatch: ThunkDispatch) => {
+	moveMods: async (profile: Loadout) => {
 		isBusy$.set(true);
 		try {
 			const response = await post(hotutilsv2mockbaseurl, {
@@ -346,7 +330,7 @@ const hotutils$ = observable({
 					dialog$.hide();
 					isBusy$.set(false);
 					dialog$.show(<ModMoveProgress />, true);
-					return hotutils$.pollForModMoveStatus(dispatch);
+					return hotutils$.pollForModMoveStatus();
 				}
 			}
 		} catch {
@@ -358,7 +342,7 @@ const hotutils$ = observable({
 			isBusy$.set(false);
 		}
 	},
-	pollForModMoveStatus: async (dispatch: ThunkDispatch) => {
+	pollForModMoveStatus: async () => {
 		try {
 			const response = await post(hotutilsv2mockbaseurl, {
 				action: "checkmovestatus",
@@ -383,14 +367,14 @@ const hotutils$ = observable({
 					hotutils$.moveStatus.message.set(response.responseMessage);
 					if (!response.running) {
 						hotutils$.isMoving.set(false);
-						const updatedMods = response.mods.profiles[0].mods.map(
+						const updatedMods: Mod[] = response.mods.profiles[0].mods.map(
 							Mod.fromHotUtils,
 						);
-						dispatch(
-							App.thunks.updateProfile((profile) =>
-								profile.withMods(updatedMods),
-							),
-						);
+						beginBatch();
+						for (const mod of updatedMods) {
+							profilesManagement$.activeProfile.modById[mod.id].set(mod);
+						}
+						endBatch();
 						dialog$.hide();
 						if (response.progress.index === response.progress.count) {
 							dialog$.showFlash(
@@ -415,7 +399,7 @@ const hotutils$ = observable({
 					}
 
 					// If the move is still ongoing, then poll again after a few seconds.
-					setTimeout(() => hotutils$.pollForModMoveStatus(dispatch), 2000);
+					setTimeout(() => hotutils$.pollForModMoveStatus(), 2000);
 			}
 		} catch {
 			(error: Error) => {
@@ -428,7 +412,7 @@ const hotutils$ = observable({
 
 profilesChanged$.on(() => {
 	const allycodes = Object.keys(
-		profilesManagement$.profiles.profilesByAllycode.peek(),
+		profilesManagement$.profiles.profileByAllycode.peek(),
 	);
 	for (const allycode of allycodes) {
 		if (hotutils$.sessionIdByProfile[allycode].peek() === undefined) {
@@ -439,7 +423,7 @@ profilesChanged$.on(() => {
 
 const syncStatus$ = syncObservable(
 	hotutils$.sessionIdByProfile,
-	{
+	persistOptions({
 		persist: {
 			name: "HotUtils",
 			indexedDB: {
@@ -447,10 +431,15 @@ const syncStatus$ = syncObservable(
 			},
 		},
 		initial: {} as SessionIdByProfile,
-	}
+	}),
 );
+console.log("Waiting for HotUtils to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("HotUtils loaded");
+/*
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 export { hotutils$ };

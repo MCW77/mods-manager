@@ -4,8 +4,8 @@ import { observer } from "@legendapp/state/react";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -27,8 +27,7 @@ type CharacterBlockProps = {
  */
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
-		const selectedCharacters =
-			profilesManagement$.activeProfile.selectedCharacters.get();
+		const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
 		const baseCharacterById = characters$.baseCharacterById.get();
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
@@ -76,7 +75,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 						isCharacterSelected(character.id) ? undefined : dragStart(character)
 					}
 					onDoubleClick={() =>
-						profilesManagement$.selectCharacter(
+						compilations$.selectCharacter(
 							character.id,
 							Character.defaultTarget(character),
 							lastSelectedCharacter,

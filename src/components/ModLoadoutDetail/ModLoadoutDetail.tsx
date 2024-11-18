@@ -8,10 +8,10 @@ import './ModLoadoutDetail.css';
 import type * as Character from "#/domain/Character";
 import * as ModLoadout from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
-import type { MissedGoals } from "#/domain/PlayerProfile";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
 import type { TargetStat } from "#/domain/TargetStat";
 
+import type { MissedGoals } from "#/modules/compilations/domain/MissedGoals";
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components

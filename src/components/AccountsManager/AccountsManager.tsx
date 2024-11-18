@@ -1,8 +1,6 @@
 // react
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import { faFileImport, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -15,9 +13,6 @@ import { readFile } from "#/utils/readFile";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
-// modules
-import { App } from "#/state/modules/app";
-
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -27,7 +22,6 @@ import { Label } from "#ui/label";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
 const AccountsManager = React.memo(() => {
-	const dispatch: ThunkDispatch = useDispatch();
 	const playerProfiles =
 		profilesManagement$.profiles.playernameByAllycode.get();
 	const [selectedProfile, setSelectedProfile] = useState(
@@ -60,8 +54,8 @@ const AccountsManager = React.memo(() => {
 						variant={"destructive"}
 						className={""}
 						onClick={() => {
+							profilesManagement$.deleteProfile(selectedProfile);
 							dialog$.hide();
-							dispatch(App.thunks.deleteProfile(selectedProfile));
 						}}
 					>
 						{t("general.accounts.Proceed")}
@@ -82,8 +76,22 @@ const AccountsManager = React.memo(() => {
 					handler={(file) =>
 						readFile(
 							file,
-							(textInFile) =>
-								dispatch(App.thunks.importC3POProfile(textInFile)),
+							(textInFile) => {
+								const importedModsCount = profilesManagement$.importModsFromC3PO(textInFile);
+								if (importedModsCount > 0) {
+									dialog$.showFlash(
+										<p>
+											Successfully imported <span className={"gold"}>{importedModsCount}</span>{" "}
+											mods for player{" "}
+											<span className={"gold"}>{profilesManagement$.activeProfile.playerName.peek()}</span>
+										</p>,
+										"",
+										"",
+										undefined,
+										"success",
+									);
+								};
+							},
 							(error) => dialog$.showError(error.message),
 						)
 					}

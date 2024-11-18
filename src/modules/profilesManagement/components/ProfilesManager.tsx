@@ -2,8 +2,6 @@
 import type React from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { Memo, Show, observer, useMount } from "@legendapp/state/react";
 
 // styles
@@ -33,7 +31,6 @@ import { Button } from "#ui/button";
 
 const ProfilesManager: React.FC = observer(() => {
 	useRenderCount("ProfilesManager");
-	const dispatch: ThunkDispatch = useDispatch();
 	const [t] = useTranslation("global-ui");
 	const [isAddingAProfile, setIsAddingAProfile] = useState(
 		!profilesManagement$.hasProfiles.get(),
@@ -61,12 +58,10 @@ const ProfilesManager: React.FC = observer(() => {
 								type={"button"}
 								variant={"outline"}
 								onClick={() => {
-									dispatch(
-										Data.thunks.refreshPlayerData(
-											profilesManagement$.profiles.activeAllycode.get(),
-											true,
-											null,
-										),
+									Data.thunks.refreshPlayerData(
+										profilesManagement$.profiles.activeAllycode.get(),
+										true,
+										null,
 									);
 								}}
 							>
@@ -85,12 +80,10 @@ const ProfilesManager: React.FC = observer(() => {
 									type={"button"}
 									variant={"outline"}
 									onClick={() =>
-										dispatch(
-											Data.thunks.refreshPlayerData(
-												profilesManagement$.profiles.activeAllycode.get(),
-												true,
-												hotutils$.activeSessionId.get() ?? null,
-											),
+										Data.thunks.refreshPlayerData(
+											profilesManagement$.profiles.activeAllycode.get(),
+											true,
+											hotutils$.activeSessionId.get() ?? null,
 										)
 									}
 								>

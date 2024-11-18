@@ -5,7 +5,6 @@ import * as React from "react";
 import "./CharacterAvatar.css";
 
 // state
-import { useSelector } from "@legendapp/state/react";
 import { characters$ } from "#/modules/characters/state/characters";
 
 // domain
@@ -31,7 +30,7 @@ const CharacterAvatar = React.memo(
 		displayStars = true,
 		id,
 	}: ComponentProps) => {
-		const baseCharacterById = useSelector(characters$.baseCharacterById);
+		const baseCharacterById = characters$.baseCharacterById.get();
 
 		if (character === undefined || character === null) return null;
 

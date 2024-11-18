@@ -1,8 +1,9 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 
 // domain
 import {
@@ -40,7 +41,7 @@ const getDefaultFilterSetup = () => {
 					type: "custom",
 					filter: "Has stat targets",
 					filterPredicate: (character: Character) => {
-						const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.peek();
+						const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.peek();
 						const selectedCharacter = selectedCharacters.find((c) => c.id === character.id);
 						if (selectedCharacter === undefined) return false;
 						return selectedCharacter.target.targetStats.length > 0;
@@ -54,8 +55,8 @@ const getDefaultFilterSetup = () => {
 					type: "custom",
 					filter: "Missing Mods",
 					filterPredicate: (character: Character) => {
-						const modAssignments = profilesManagement$.activeProfile.modAssignments.peek();
-						const modsAssignedToCharacter = modAssignments.find((ma) => ma.id === character.id);
+						const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.peek();
+						const modsAssignedToCharacter = modAssignments.find((ma) => ma.characterId === character.id);
 						if (modsAssignedToCharacter === undefined) return false;
 						return modsAssignedToCharacter.assignedMods.length < 6;
 					},
@@ -68,8 +69,8 @@ const getDefaultFilterSetup = () => {
 					type: "custom",
 					filter: "Needs Leveling",
 					filterPredicate: (character: Character) => {
-						const modAssignments = profilesManagement$.activeProfile.modAssignments.peek();
-						const modsAssignedToCharacter = modAssignments.find((ma) => ma.id === character.id);
+						const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.peek();
+						const modsAssignedToCharacter = modAssignments.find((ma) => ma.characterId === character.id);
 						if (modsAssignedToCharacter === undefined) return false;
 //						const mods = profilesManagement$.activeProfile.mods.peek();
 //						return modsAssignedToCharacter.assignedMods.some((mod) => mod.level < 15);
@@ -312,17 +313,25 @@ const charactersManagement$: ObservableObject<CharactersManagement> =
 		},
 	});
 
-const syncStatus$ = syncObservable(charactersManagement$.filterSetup, {
-	persist: {
-		name: "CharactersManagement",
-		indexedDB: {
-			itemID: "filterSetup",
+const syncStatus$ = syncObservable(
+	charactersManagement$.filterSetup,
+	persistOptions({
+		persist: {
+			name: "CharactersManagement",
+			indexedDB: {
+				itemID: "filterSetup",
+			},
 		},
-	},
-	initial: getDefaultFilterSetup(),
-});
+		initial: getDefaultFilterSetup(),
+	}),
+);
+console.log("Waiting for CharactersManagement to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("CharactersManagement loaded");
+/*
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 export { charactersManagement$ };

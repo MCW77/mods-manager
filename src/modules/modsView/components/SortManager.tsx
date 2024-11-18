@@ -14,6 +14,7 @@ import { SecondaryStats } from "#/domain/Stats";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
+import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
@@ -79,7 +80,7 @@ const SortManager = observer(
 									{(sortConfig$) => {
 										const sortBy = sortConfig$.sortBy.get();
 										return (
-											<div className={"flex items-center"}>
+											<Badge variant={"outline"} className={"flex items-center"}>
 												<ReactiveMultiColumnSelect
 													key={`sort-option-${sortConfig$.id.get()}`}
 													groups={sortOptions}
@@ -118,13 +119,12 @@ const SortManager = observer(
 													variant={"outline"}
 													onClick={() =>
 														modsView$.activeViewSetupInActiveCategory.sort
-															.get()
 															.delete(sortConfig$.id.peek())
 													}
 												>
 													x
 												</Button>
-											</div>
+											</Badge>
 										);
 									}}
 								</For>

@@ -11,7 +11,6 @@ import { profilesManagement$ } from "#/modules/profilesManagement/state/profiles
 import { useRenderCount } from "#/hooks/useRenderCount";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
 import { ModsFilter } from "../domain/ModsFilter";
 
 // components
@@ -20,13 +19,13 @@ import { GroupedMods } from "#/modules/modsView/components/GroupedMods";
 const CategoryView: React.FC = observer(() => {
 	useRenderCount(`CategoryView (${modsView$.activeCategory.peek()})`);
 	const [t] = useTranslation("global-ui");
-	const profileMods = profilesManagement$.activeProfile.mods.get();
+	const modById = profilesManagement$.activeProfile.modById.get();
 	const modsFilter = new ModsFilter(
 		modsView$.activeViewSetupInActiveCategory.get(),
 		modsView$.quickFilter.get(),
 	);
 	const [filteredMods, modsCount] =
-		modsFilter.applyModsViewOptions(profileMods);
+		modsFilter.applyModsViewOptions(Array.from(modById.values()));
 
 	const mods = [];
 	for (const modsInGroup of Object.values(filteredMods)) {
@@ -37,7 +36,7 @@ const CategoryView: React.FC = observer(() => {
 	return (
 		<GroupedMods
 			groupedMods={groupedMods}
-			allModsCount={profileMods.length}
+			allModsCount={modById.size}
 			displayedModsCount={modsCount}
 		/>
 	);

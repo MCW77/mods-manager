@@ -2667,6 +2667,200 @@
 		]
 	},
 	{
+		"id": "Naboo-KB (R8)",
+		"category": "Raid - Naboo",
+		"selectedCharacters": [
+			{
+				"id": "KELLERANBEQ",
+				"target": {
+					"id": "Naboo-KB (R8)",
+					"description": "Naboo Raid with Kelleran Beq, Ki-Adi-Mundi, Mace Windu, Grand Master Yoda and Shaak Ti",
+					"Health": 10,
+					"Protection": 63,
+					"Speed": 100,
+					"Critical Damage %": 0,
+					"Potency %": 0,
+					"Tenacity %": 0,
+					"Physical Damage": 0,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {
+						"arrow": "Protection %",
+						"triangle": "Protection %",
+						"circle": "Protection %",
+						"cross": "Protection %"
+					},
+					"setRestrictions": {},
+					"targetStats": [
+						{
+							"id": "Protection1-1",
+							"stat": "Protection",
+							"type": "+",
+							"minimum": 140000,
+							"maximum": 150000,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": 330,
+							"maximum": 350,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "SHAAKTI",
+				"target": {
+					"id": "Naboo-KB (R8)",
+					"description": "Naboo Raid with Kelleran Beq, Ki-Adi-Mundi, Mace Windu, Grand Master Yoda and Shaak Ti",
+					"Health": 28,
+					"Protection": 0,
+					"Speed": 100,
+					"Critical Damage %": 0,
+					"Potency %": 0,
+					"Tenacity %": 0,
+					"Physical Damage": 0,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {},
+					"setRestrictions": {
+					},
+					"targetStats": [
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "GRANDMASTERYODA",
+				"target": {
+					"id": "Naboo-KB (R8)",
+					"description": "Naboo Raid with Kelleran Beq, Ki-Adi-Mundi, Mace Windu, Grand Master Yoda and Shaak Ti",
+					"Health": 51,
+					"Protection": 0,
+					"Speed": 100,
+					"Critical Damage %": 0,
+					"Potency %": 0,
+					"Tenacity %": 0,
+					"Physical Damage": 0,
+					"Special Damage": 0,
+					"Critical Chance": 4,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {},
+					"setRestrictions": {
+						"Health %" : 3
+					},
+					"targetStats": [
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "KIADIMUNDI",
+				"target": {
+					"id": "Naboo-KB (R8)",
+					"description": "Naboo Raid with Kelleran Beq, Ki-Adi-Mundi, Mace Windu, Grand Master Yoda and Shaak Ti",
+					"Health": 0,
+					"Protection": 0,
+					"Speed": 26,
+					"Critical Damage %": 100,
+					"Potency %": 0,
+					"Tenacity %": 0,
+					"Physical Damage": 66,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {
+						"arrow": "Offense %",
+						"triangle": "Offense %",
+						"cross": "Offense %"
+					},
+					"setRestrictions": {},
+					"targetStats": [
+						{
+							"id": "PhysicalDamage-1",
+							"stat": "Physical Damage",
+							"type": "+",
+							"minimum": 12700,
+							"maximum": 12800,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						},
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": 280,
+							"maximum": 285,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			},
+			{
+				"id": "MACEWINDU",
+				"target": {
+					"id": "Naboo-KB (R8)",
+					"description": "Naboo Raid with Kelleran Beq, Ki-Adi-Mundi, Mace Windu, Grand Master Yoda and Shaak Ti",
+					"Health": 21,
+					"Protection": 0,
+					"Speed": 53,
+					"Critical Damage %": 0,
+					"Potency %": 15,
+					"Tenacity %": 0,
+					"Physical Damage": 100,
+					"Special Damage": 0,
+					"Critical Chance": 0,
+					"Armor": 0,
+					"Resistance": 0,
+					"Accuracy %": 0,
+					"Critical Avoidance %": 0,
+					"minimumModDots": 6,
+					"primaryStatRestrictions": {
+					},
+					"setRestrictions": {},
+					"targetStats": [
+						{
+							"id": "Speed-1",
+							"stat": "Speed",
+							"type": "+",
+							"minimum": 270,
+							"maximum": 275,
+							"relativeCharacterId": "null",
+							"optimizeForTarget": true
+						}
+					],
+					"useOnlyFullSets": true
+				}
+			}
+		]
+	},
+	{
 		"id": "50 Shards of KAM",
 		"category": "TB - LS Geonosis",
 		"selectedCharacters": [

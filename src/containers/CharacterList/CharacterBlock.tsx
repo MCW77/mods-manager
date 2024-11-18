@@ -7,6 +7,7 @@ import "./CharacterList.css";
 
 // state
 import { characters$ } from "#/modules/characters/state/characters";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -96,7 +97,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						const movingCharacterID: CharacterNames =
 							event.dataTransfer.getData("text/plain") as CharacterNames;
 						const movingCharacter = characterById[movingCharacterID];
-						profilesManagement$.selectCharacter(
+						compilations$.selectCharacter(
 							movingCharacterID,
 							Character.defaultTarget(movingCharacter),
 							dropCharacterIndex,
@@ -106,7 +107,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					case "move": {
 						const movingCharacterIndex =
 							+event.dataTransfer.getData("text/plain");
-						profilesManagement$.moveSelectedCharacter(
+						compilations$.moveSelectedCharacter(
 							movingCharacterIndex,
 							dropCharacterIndex,
 						);
@@ -149,7 +150,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 				const newTarget = structuredClone(target);
 				newTarget.minimumModDots = Number(event.target.value);
-				profilesManagement$.saveTarget(character.id, newTarget);
+				compilations$.saveTarget(character.id, newTarget);
 				(document?.activeElement as HTMLSelectElement)?.blur();
 			};
 			handleChange = handleChange.bind(this);
@@ -263,7 +264,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 				onDragOver={characterBlockDragOver()}
 				onDragLeave={characterBlockDragLeave()}
 				onDrop={characterBlockDrop(index)}
-				onDoubleClick={() => profilesManagement$.unselectCharacter(index)}
+				onDoubleClick={() => compilations$.unselectCharacter(index)}
 			>
 				<div
 					className={
@@ -289,7 +290,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 									(target) => target.id === value,
 								);
 								if (target !== undefined) {
-									profilesManagement$.changeTarget(index, target);
+									compilations$.changeTarget(index, target);
 								}
 							}}
 						>

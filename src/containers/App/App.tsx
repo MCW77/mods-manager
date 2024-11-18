@@ -2,8 +2,6 @@
 import type React from "react";
 import { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 
 // styles
 import "./App.css";
@@ -49,6 +47,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
 // containers
 import { AboutView } from "#/containers/AboutView/AboutView";
+import { CompilationsView } from "#/modules/compilations/pages/CompilationsView";
 import { HelpView } from "#/modules/help/pages/HelpView";
 import { ModsView } from "#/modules/modsView/pages/ModsView";
 import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
@@ -58,7 +57,6 @@ const ReactiveTabs = reactive(Tabs);
 
 const App: React.FC = observer(() => {
 	useRenderCount("App");
-	const dispatch: ThunkDispatch = useDispatch();
 	const [t] = useTranslation("global-ui");
 	const firstSection = profilesManagement$.hasProfiles.get() ? "mods" : "help";
 
@@ -74,17 +72,13 @@ const App: React.FC = observer(() => {
 			if (sessionId) {
 				if (queryParams.has("NoPull")) {
 					if (profilesManagement$.profiles.activeAllycode.peek() === "")
-						dispatch(
-							Data.thunks.refreshPlayerData(allycode, false, sessionId, false),
-						);
+						Data.thunks.refreshPlayerData(allycode, false, sessionId, false);
 					else hotutils$.sessionIdByProfile[allycode].set(sessionId);
 				} else {
-					dispatch(
-						Data.thunks.refreshPlayerData(allycode, true, sessionId, false),
-					);
+					Data.thunks.refreshPlayerData(allycode, true, sessionId, false);
 				}
 			} else if (!queryParams.has("NoPull")) {
-				dispatch(Data.thunks.refreshPlayerData(allycode, true, null));
+				Data.thunks.refreshPlayerData(allycode, true, null, false);
 			}
 		}
 
@@ -98,7 +92,7 @@ const App: React.FC = observer(() => {
 		// Check the current version of the app against the API
 		about$.checkVersion();
 		ui$.currentSection.set(firstSection);
-	}, [firstSection, dispatch]);
+	}, [firstSection]);
 
 	return (
 		<Suspense fallback={<Spinner />}>
@@ -139,6 +133,19 @@ const App: React.FC = observer(() => {
 														title={t("header.NavMods")}
 													/>
 													{t("header.NavMods")}
+												</div>
+											</TabsTrigger>
+										)}
+									</Show>
+									<Show if={profilesManagement$.hasProfiles}>
+										{() => (
+											<TabsTrigger value="mod compilations">
+												<div className={"flex flex-gap-1 items-center"}>
+													<FontAwesomeIcon
+														icon={faMagnifyingGlass}
+														title={t("header.NavModCompilations")}
+													/>
+													{t("header.NavModCompilations")}
 												</div>
 											</TabsTrigger>
 										)}
@@ -200,6 +207,20 @@ const App: React.FC = observer(() => {
 											value="mods"
 										>
 											<ModsView />
+										</TabsContent>
+									)}
+								</Memo>
+							)}
+						</Show>
+						<Show if={profilesManagement$.hasProfiles}>
+							{() => (
+								<Memo>
+									{() => (
+										<TabsContent
+											className={"flex data-[state=active]:grow-1 min-h-0"}
+											value="mod compilations"
+										>
+											<CompilationsView />
 										</TabsContent>
 									)}
 								</Memo>

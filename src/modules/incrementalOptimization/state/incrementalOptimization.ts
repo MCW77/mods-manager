@@ -1,6 +1,7 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
@@ -17,8 +18,8 @@ const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
 	observable<IncrementalOptimization>({
 		activeIndex: () => {
 			return incrementalOptimization$.indicesByProfile[
-					profilesManagement$.profiles.activeAllycode.get()
-				].get();
+				profilesManagement$.profiles.activeAllycode.get()
+			].get();
 		},
 		indicesByProfile: {},
 		addProfile: (allycode: string) => {
@@ -37,7 +38,7 @@ const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
 
 const syncStatus$ = syncObservable(
 	incrementalOptimization$.indicesByProfile,
-	{
+	persistOptions({
 		persist: {
 			name: "IncrementalOptimization",
 			indexedDB: {
@@ -45,10 +46,15 @@ const syncStatus$ = syncObservable(
 			},
 		},
 		initial: {},
-	}
+	}),
 );
+console.log("Waiting for IncrementalOptimization to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("IncrementalOptimization loaded");
+/*
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 export { incrementalOptimization$ };

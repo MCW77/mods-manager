@@ -2,9 +2,9 @@
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show } from "@legendapp/state/react";
 
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import * as Character from "#/domain/Character";
@@ -33,7 +33,7 @@ const SelectionActions = ({
 	lastSelectedCharacterIndex,
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
-	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
+	const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
 
 	return (
 		<div className="flex gap-2">
@@ -41,7 +41,7 @@ const SelectionActions = ({
 				className="flex flex-gap-2"
 				type="button"
 				onClick={() =>
-					profilesManagement$.unselectAllCharacters()
+					compilations$.unselectAllCharacters()
 				}
 			>
 				<FontAwesomeIcon icon={faBan} title="Clear" /> Clear
@@ -98,7 +98,7 @@ const SelectionActions = ({
 				onClick={() => {
 					isBusy$.set(true);
 					visibleCharacters.forEach((character, index) => {
-						profilesManagement$.selectCharacter(
+						compilations$.selectCharacter(
 							character.id,
 							Character.defaultTarget(character),
 							index + lastSelectedCharacterIndex,

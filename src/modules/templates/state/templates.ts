@@ -1,8 +1,9 @@
 // state
 import { observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 
 // domain
 import defaultTemplates from "#/constants/characterTemplates.json";
@@ -77,7 +78,7 @@ const templates$ = observable({
 		templates$.userTemplatesByName[templates$.id.peek()].set({
 			id: templates$.id.peek(),
 			category: templates$.category.peek(),
-			selectedCharacters: structuredClone(profilesManagement$.activeProfile.selectedCharacters.peek()),
+			selectedCharacters: structuredClone(compilations$.defaultCompilation.selectedCharacters.peek()),
 		});
 	},
 	reset: () => {
@@ -86,26 +87,42 @@ const templates$ = observable({
 	},
 });
 
-const syncStatus1$ = syncObservable(templates$.templatesAddingMode, {
-	persist: {
-		name: "TemplatesAddingMode",
-		indexedDB: {
-			itemID: "templatesAddingMode",
+const syncStatus1$ = syncObservable(
+	templates$.templatesAddingMode,
+	persistOptions({
+		persist: {
+			name: "TemplatesAddingMode",
+			indexedDB: {
+				itemID: "TemplatesAddingMode",
+			},
 		},
-	},
-});
+	}),
+);
+console.log("Waiting for TemplatesAddingMode to load");
+await when(syncStatus1$.isPersistLoaded);
+console.log("TemplatesAddingMode loaded");
+/*
 (async () => {
 	await when(syncStatus1$.isPersistLoaded);
 })();
+*/
 
-const syncStatus2$ = syncObservable(templates$.userTemplatesByName, {
-	persist: {
-		name: "Templates",
-	},
-	initial: {},
-});
+const syncStatus2$ = syncObservable(
+	templates$.userTemplatesByName,
+	persistOptions({
+		persist: {
+			name: "Templates",
+		},
+		initial: {},
+	}),
+);
+console.log("Waiting for Templates to load");
+await when(syncStatus2$.isPersistLoaded);
+console.log("Templates loaded");
+/*
 (async () => {
 	await when(syncStatus2$.isPersistLoaded);
 })();
+*/
 
 export { templates$ };

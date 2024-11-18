@@ -1,6 +1,8 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // api
@@ -40,16 +42,24 @@ const about$: ObservableObject<About> = observable<About>({
 	},
 });
 
-const syncStatus$ = syncObservable(about$.version, {
-	persist: {
-		name: "About",
-		indexedDB: {
-			itemID: "version",
+const syncStatus$ = syncObservable(
+	about$.version,
+	persistOptions({
+		persist: {
+			name: "About",
+			indexedDB: {
+				itemID: "version",
+			},
 		},
-	},
-});
+	}),
+);
+console.log("Waiting for about$ to load");
+await when(syncStatus$.isPersistLoaded);
+console.log("about$ loaded");
+/*
 (async () => {
 	await when(syncStatus$.isPersistLoaded);
 })();
+*/
 
 export { about$ };

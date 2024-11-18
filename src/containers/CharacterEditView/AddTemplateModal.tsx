@@ -2,8 +2,8 @@
 import { observer } from "@legendapp/state/react";
 
 // state
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { templates$ } from "#/modules/templates/state/templates";
 
 // domain
@@ -16,7 +16,7 @@ import { Label } from "#ui/label";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const AddTemplateModal: React.FC = observer(() => {
-	const selectedCharacters = profilesManagement$.activeProfile.selectedCharacters.get();
+	const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
 
 	return (
 		<div className={"flex flex-col gap-4"}>
@@ -112,12 +112,12 @@ const AddTemplateModal: React.FC = observer(() => {
 							) {
 								return;
 							}
-							profilesManagement$.appendTemplate(templateName);
+							compilations$.appendTemplate(templateName);
 						}
 						if (templates$.templatesAddingMode.get() === "replace")
-							profilesManagement$.replaceWithTemplate(templateName);
+							compilations$.replaceWithTemplate(templateName);
 						if (templates$.templatesAddingMode.get() === "apply targets only")
-							profilesManagement$.applyTemplateTargets(templateName);
+							compilations$.applyTemplateTargets(templateName);
 					}}
 				>
 					Add

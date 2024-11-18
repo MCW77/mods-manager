@@ -1,5 +1,6 @@
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
+import { compilations$ } from "#/modules/compilations/state/compilations";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
@@ -43,7 +44,7 @@ const TemplatesActions = ({
 						beginBatch();
 						if (hasNoSelectedCharacters) {
 							visibleCharacters.forEach((character, index) => {
-								profilesManagement$.selectCharacter(
+								compilations$.selectCharacter(
 									character.id,
 									Character.defaultTarget(character),
 									index + lastSelectedCharacterIndex,
@@ -53,7 +54,7 @@ const TemplatesActions = ({
 						const ranking = await stackRank$.fetch(
 							profilesManagement$.profiles.activeAllycode.get(),
 						);
-						profilesManagement$.applyRanking(ranking);
+						compilations$.applyRanking(ranking);
 						endBatch();
 					} catch (error) {
 						if (error instanceof Error) dialog$.showError(error.message);

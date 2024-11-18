@@ -1,32 +1,14 @@
 // react
 import type { ComponentProps } from "react";
-import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import type { ThunkDispatch } from "#/state/reducers/modsOptimizer";
 import { observer } from "@legendapp/state/react";
 
 // utils
-import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
-import { about$ } from "#/modules/about/state/about";
+import { appState$ } from "#/modules/appState/state/appState";
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { modsView$ } from "#/modules/modsView/state/modsView";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { templates$ } from "#/modules/templates/state/templates";
-import { ui$ } from "#/modules/ui/state/ui";
-
-// modules
-import { App } from "#/state/modules/app";
-import { Storage } from "#/state/modules/storage";
-
-// domain
-import type { IUserData } from "#/state/storage/Database";
 
 // components
 import {
@@ -45,9 +27,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";
 
 const GeneralSettingsView: React.FC = observer(() => {
-	const allycode = profilesManagement$.profiles.activeAllycode.get();
-	const version = about$.version.get();
-	const dispatch: ThunkDispatch = useDispatch();
 	const [t, i18n] = useTranslation("settings-ui");
 
 	/**
@@ -66,18 +45,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 					<Button
 						type={"button"}
 						variant={"destructive"}
-						onClick={() => {
-							dialog$.hide();
-							ui$.currentSection.set("help");
-							optimizationSettings$.reset();
-							incrementalOptimization$.reset();
-							lockedStatus$.reset();
-							templates$.reset();
-							profilesManagement$.reset();
-							hotutils$.reset();
-							modsView$.reset();
-							dispatch(App.thunks.reset());
-						}}
+						onClick={() => appState$.reset()}
 					>
 						{t("general.backup.ResetProceed")}
 					</Button>
@@ -130,32 +98,14 @@ const GeneralSettingsView: React.FC = observer(() => {
 							handler={(file) =>
 								readFile(
 									file,
-									(textInFile) =>
-										dispatch(App.thunks.restoreProgress(textInFile)),
+									(textInFile) => appState$.loadBackup(textInFile),
 									(error) => dialog$.showError(error.message),
 								)
 							}
 						/>
 						<Button
 							className={""}
-							onClick={() => {
-								dispatch(
-									Storage.thunks.exportDatabase((progressData: IUserData) => {
-										progressData.version = version;
-										progressData.allycode = allycode;
-										const progressDataSerialized = JSON.stringify(progressData);
-										const userData = new Blob([progressDataSerialized], {
-											type: "application/json;charset=utf-8",
-										});
-										saveAs(
-											userData,
-											`modsOptimizer-${new Date()
-												.toISOString()
-												.slice(0, 10)}.json`,
-										);
-									}),
-								);
-							}}
+							onClick={() => appState$.saveBackup()}
 						>
 							<FontAwesomeIcon icon={faSave} title={t("general.backup.Save")} />
 							<span className={"p-l-2"}>{t("general.backup.Save")}</span>

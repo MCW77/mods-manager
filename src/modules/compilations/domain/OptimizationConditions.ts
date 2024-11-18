@@ -1,34 +1,32 @@
 // domain
-import type { GIMOFlatMod } from "./types/ModTypes";
+import type { CharacterById } from "#/domain/Character";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+
+import type { LockedStatusByCharacterId } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
 import type { ProfileOptimizationSettings } from "#/modules/optimizationSettings/domain/ProfileOptimizationSettings";
 
-import type { CharacterById } from "./Character";
-import type { SelectedCharacters } from "./SelectedCharacters";
-import type { LockedStatusByCharacterId } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
-
-export interface OptimizerRun {
-	allycode: string;
+type OptimizationConditions = {
 	characterById: CharacterById;
 	lockedStatus: LockedStatusByCharacterId;
-	mods: GIMOFlatMod[];
+	modCount: number;
 	selectedCharacters: SelectedCharacters;
 	globalSettings: ProfileOptimizationSettings;
-}
+} | null;
 
-export const createOptimizerRun = (
-	allycode: string,
+const createOptimizationConditions = (
 	characterById: CharacterById,
 	lockedStatus: LockedStatusByCharacterId,
-	mods: GIMOFlatMod[],
+	modCount: number,
 	selectedCharacters: SelectedCharacters,
 	globalSettings: ProfileOptimizationSettings,
-): OptimizerRun => {
+): OptimizationConditions => {
 	return {
-		allycode,
 		characterById,
 		lockedStatus,
-		mods,
+		modCount,
 		selectedCharacters,
 		globalSettings,
 	};
 };
+
+export { type OptimizationConditions, createOptimizationConditions };
