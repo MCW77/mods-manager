@@ -39,6 +39,7 @@ export const characterNames = [
 	"BARRISSOFFEE",
 	"BASTILASHAN",
 	"BASTILASHANDARK",
+	"BAYLANSKOLL",
 	"BAZEMALBUS",
 	"BB8",
 	"BENSOLO",
@@ -111,6 +112,7 @@ export const characterNames = [
 	"EWOKELDER",
 	"EWOKSCOUT",
 	"EZRABRIDGERS3",
+	"EZRAEXILE",
 	"FENNECSHAND",
 	"FIFTHBROTHER",
 	"FINN",
@@ -707,6 +709,14 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	BAYLANSKOLL: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 20,
+			spd: 100,
+		}),
+	]),
 	BAZEMALBUS: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -2020,6 +2030,20 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			phys: 75,
 			cc: 75,
+		}),
+	]),
+	EZRAEXILE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 10,
+			spd: 100,
+			pot: 5,
+			minDots: 5,
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
 		}),
 	]),
 	FENNECSHAND: createCharacterSettings(
