@@ -1,3 +1,4 @@
+debugger;
 // react
 import type React from "react";
 import { Suspense, useEffect } from "react";
@@ -27,6 +28,7 @@ const { profilesManagement$ } = await import(
 );
 const { about$ } = await import("#/modules/about/state/about");
 const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+
 import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
@@ -67,6 +69,7 @@ const App: React.FC = observer(() => {
 		console.log("App mounted");
 	});
 	useEffect(() => {
+		console.log("Inside App useEffect");
 		const queryParams = new URLSearchParams(document.location.search);
 		const allycode = queryParams.get("Allycode");
 		const sessionId = queryParams.get("SessionID");
@@ -98,7 +101,14 @@ const App: React.FC = observer(() => {
 	}, [firstSection]);
 
 	return (
-		<Suspense fallback={<Spinner />}>
+		<Suspense
+			fallback={
+				<div>
+					App
+					<Spinner />
+				</div>
+			}
+		>
 			<div
 				className={
 					"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif] text-left"
