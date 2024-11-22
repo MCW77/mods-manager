@@ -4,12 +4,15 @@ import { Fragment } from "react/jsx-runtime";
 
 // state
 import { observer, reactive } from "@legendapp/state/react";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { hotutils$ } = await import("../state/hotUtils");
 
 // components
 import { Input } from "#/components/ui/input";
 import { Label } from "#/components/ui/label";
-import { hotutils$ } from "../state/hotUtils";
 
 const ReactiveInput = reactive(Input);
 

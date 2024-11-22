@@ -5,8 +5,11 @@ import { For, useMount, useObservable } from "@legendapp/state/react";
 import collectByKey from "#/utils/collectByKey";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+
 import { review$ } from "../state/review";
 
 // domain

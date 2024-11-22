@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { modsView$ } from "../../state/modsView";
+
+const { modsView$ } = await import("../../state/modsView");
 
 // domain
 import type { RaritySettings } from "../../domain/ModsViewOptions";
@@ -23,7 +24,10 @@ const RarityFilter = observer(
 				<Label className="p-r-2" htmlFor={"rarity-filter1"}>
 					Rarity
 				</Label>
-				<div id={"rarity-filter1"} className="flex flex-col gap-2 justify-center flex-wrap">
+				<div
+					id={"rarity-filter1"}
+					className="flex flex-col gap-2 justify-center flex-wrap"
+				>
 					{Object.keys(rarityConfig).map((rarity: keyof RaritySettings) => {
 						const inputName = `rarity-filter-${rarity}`;
 						const value = rarityConfig[rarity] || 0;
@@ -40,7 +44,9 @@ const RarityFilter = observer(
 								key={inputName}
 								size="xs"
 								variant={"outline"}
-								onClick={() => modsView$.cycleState("rarity", rarity.toString())}
+								onClick={() =>
+									modsView$.cycleState("rarity", rarity.toString())
+								}
 							>
 								{"•".repeat(Number(rarity))}
 							</Button>

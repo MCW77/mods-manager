@@ -3,11 +3,16 @@ import { flatten } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
 
 // state
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -35,7 +40,8 @@ const modRemovalCosts = {
 
 const ActionsWidget = () => {
 	const modById = profilesManagement$.activeProfile.modById.get();
-	const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.get();
+	const modAssignments =
+		compilations$.defaultCompilation.flatCharacterModdings.get();
 
 	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)
@@ -57,7 +63,9 @@ const ActionsWidget = () => {
 		.map(({ characterId, target, assignedMods }) => ({
 			characterId,
 			target,
-			assignedMods: assignedMods.filter((mod) => mod.characterID !== characterId),
+			assignedMods: assignedMods.filter(
+				(mod) => mod.characterID !== characterId,
+			),
 			missedGoals: [],
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);

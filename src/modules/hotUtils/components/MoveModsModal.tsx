@@ -4,11 +4,18 @@ import collectByKey from "#/utils/collectByKey";
 import { formatNumber } from "#/utils/formatNumber";
 
 //state
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { hotutils$ } = await import("../state/hotUtils");
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "../state/hotUtils";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -43,7 +50,8 @@ const modRemovalCosts = {
 
 const MoveModsModal = () => {
 	const modById = profilesManagement$.activeProfile.modById.get();
-	const flatCharacterModdings = compilations$.defaultCompilation.flatCharacterModdings.get();
+	const flatCharacterModdings =
+		compilations$.defaultCompilation.flatCharacterModdings.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
@@ -66,7 +74,9 @@ const MoveModsModal = () => {
 		.map(({ characterId, target, assignedMods }) => ({
 			characterId,
 			target,
-			assignedMods: assignedMods.filter((mod) => mod.characterID !== characterId),
+			assignedMods: assignedMods.filter(
+				(mod) => mod.characterID !== characterId,
+			),
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);
 
@@ -100,7 +110,8 @@ const MoveModsModal = () => {
 		const assignedMods = flatCharacterModdings
 			.filter((x) => null !== x)
 			.filter(
-				({ characterId }) => characterById[characterId].playerValues.level >= 50,
+				({ characterId }) =>
+					characterById[characterId].playerValues.level >= 50,
 			)
 			.map(({ characterId, assignedMods, target }) => ({
 				id: characterId,
@@ -111,7 +122,10 @@ const MoveModsModal = () => {
 		const lockedMods = (
 			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
 		)
-			.filter(([characterId]) => lockedStatus$.ofActivePlayerByCharacterId[characterId])
+			.filter(
+				([characterId]) =>
+					lockedStatus$.ofActivePlayerByCharacterId[characterId],
+			)
 			.map(([characterId, mods]) => ({
 				id: characterId,
 				modIds: mods.map(({ id }) => id),

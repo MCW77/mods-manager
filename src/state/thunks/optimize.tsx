@@ -1,13 +1,24 @@
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+const { incrementalOptimization$ } = await import(
+	"#/modules/incrementalOptimization/state/incrementalOptimization"
+);
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { progress$ } from "#/modules/progress/state/progress";
 import { review$ } from "#/modules/review/state/review";
 
@@ -15,15 +26,17 @@ import { review$ } from "#/modules/review/state/review";
 import * as Character from "#/domain/Character";
 
 import type { FlatCharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
-import { type OptimizationConditions, createOptimizationConditions } from "#/modules/compilations/domain/OptimizationConditions";
-
+import {
+	type OptimizationConditions,
+	createOptimizationConditions,
+} from "#/modules/compilations/domain/OptimizationConditions";
 
 // components
 import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
 import { Button } from "#ui/button";
 import { DialogClose } from "#ui/dialog";
 
-import OptimizerWorker  from "#/workers/optimizer?worker";
+import OptimizerWorker from "#/workers/optimizer?worker";
 
 let optimizationWorker: Worker | null = null;
 
@@ -117,7 +130,10 @@ export namespace thunks {
 							<div className="h-[70vh] overflow-auto">
 								<div className="grid w-full grid-cols-[1fr_1fr]">
 									{doubledResultsWithMessages.map(
-										({ characterId: id, target, messages, missedGoals }, index) => {
+										(
+											{ characterId: id, target, messages, missedGoals },
+											index,
+										) => {
 											const tempStats = {
 												Health: 0,
 												Protection: 0,
@@ -135,7 +151,9 @@ export namespace thunks {
 												"Special Critical Chance %": 0,
 											};
 											const character =
-												profilesManagement$.activeProfile.characterById[id].peek() ||
+												profilesManagement$.activeProfile.characterById[
+													id
+												].peek() ||
 												Character.createCharacter(
 													id,
 													{
@@ -152,10 +170,7 @@ export namespace thunks {
 												);
 
 											return index % 2 === 0 ? (
-												<div
-													key={`${id}-Avatar`}
-													className="grid gap-1 p-4"
-												>
+												<div key={`${id}-Avatar`} className="grid gap-1 p-4">
 													<CharacterAvatar character={character} />
 													<br />
 													{baseCharacterById[id]
@@ -163,10 +178,7 @@ export namespace thunks {
 														: id}
 												</div>
 											) : (
-												<div
-													key={`${id}-Messages`}
-													className="grid gap-1 p-4"
-												>
+												<div key={`${id}-Messages`} className="grid gap-1 p-4">
 													<h4>{target.id}:</h4>
 													<ul>
 														{messages?.map((message) => (
@@ -212,9 +224,16 @@ export namespace thunks {
 		const allycode = profilesManagement$.profiles.activeAllycode.peek();
 
 		// If any of the characters being optimized don't have stats, then show an error message
-		if (Object.values(profilesManagement$.activeProfile.characterById.peek()).some((character) => {
-			return null === character.playerValues.baseStats || null === character.playerValues.equippedStats;
-		})) {
+		if (
+			Object.values(
+				profilesManagement$.activeProfile.characterById.peek(),
+			).some((character) => {
+				return (
+					null === character.playerValues.baseStats ||
+					null === character.playerValues.equippedStats
+				);
+			})
+		) {
 			dialog$.showError(
 				"Missing character data required to optimize. Try fetching your data and trying again.",
 			);
@@ -252,12 +271,14 @@ export namespace thunks {
 							lockedStatus$.ofActivePlayerByCharacterId.peek(),
 							profilesManagement$.activeProfile.modById.size,
 							compilations$.defaultCompilation.selectedCharacters.peek(),
-							optimizationSettings$.settingsByProfile[profilesManagement$.profiles.activeAllycode.peek()].peek(),
+							optimizationSettings$.settingsByProfile[
+								profilesManagement$.profiles.activeAllycode.peek()
+							].peek(),
 						),
 					);
 					break;
 				case "Progress":
-//					isBusy$.set(false);
+					//					isBusy$.set(false);
 					progress$.optimizationStatus.assign({
 						character: message.data.character,
 						characterCount: message.data.characterCount,
@@ -276,5 +297,5 @@ export namespace thunks {
 				// Do nothing
 			}
 		};
-	};
+	}
 }

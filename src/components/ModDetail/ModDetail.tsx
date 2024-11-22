@@ -5,8 +5,10 @@ import * as React from "react";
 import "./ModDetail.css";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
 
 // domain
 import type * as Character from "#/domain/Character";

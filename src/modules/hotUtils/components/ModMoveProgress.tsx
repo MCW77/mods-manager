@@ -1,8 +1,9 @@
 // state
 import { Memo, observer } from "@legendapp/state/react";
 
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 // components
 import { Button } from "#ui/button";
@@ -16,10 +17,12 @@ const ModMoveProgress: React.FC = observer(() => {
 				<Memo>
 					{() => {
 						console.log(`index: ${hotutils$.moveStatus.progress.index.get()}`);
-						return <Progress
-							value={hotutils$.moveStatus.progress.index.get()}
-							max={hotutils$.moveStatus.progress.count.get()}
-						/>
+						return (
+							<Progress
+								value={hotutils$.moveStatus.progress.index.get()}
+								max={hotutils$.moveStatus.progress.count.get()}
+							/>
+						);
 					}}
 				</Memo>
 				<Memo>{() => <>{hotutils$.moveStatus.message.get()}</>}</Memo>
@@ -42,4 +45,4 @@ const ModMoveProgress: React.FC = observer(() => {
 
 ModMoveProgress.displayName = "ModMoveProgress";
 
-export { ModMoveProgress };
+export default ModMoveProgress;

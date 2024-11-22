@@ -10,8 +10,11 @@ import formatAllycode from "#/utils/formatAllycode";
 import { readFile } from "#/utils/readFile";
 
 // state
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -77,20 +80,24 @@ const AccountsManager = React.memo(() => {
 						readFile(
 							file,
 							(textInFile) => {
-								const importedModsCount = profilesManagement$.importModsFromC3PO(textInFile);
+								const importedModsCount =
+									profilesManagement$.importModsFromC3PO(textInFile);
 								if (importedModsCount > 0) {
 									dialog$.showFlash(
 										<p>
-											Successfully imported <span className={"gold"}>{importedModsCount}</span>{" "}
-											mods for player{" "}
-											<span className={"gold"}>{profilesManagement$.activeProfile.playerName.peek()}</span>
+											Successfully imported{" "}
+											<span className={"gold"}>{importedModsCount}</span> mods
+											for player{" "}
+											<span className={"gold"}>
+												{profilesManagement$.activeProfile.playerName.peek()}
+											</span>
 										</p>,
 										"",
 										"",
 										undefined,
 										"success",
 									);
-								};
+								}
 							},
 							(error) => dialog$.showError(error.message),
 						)

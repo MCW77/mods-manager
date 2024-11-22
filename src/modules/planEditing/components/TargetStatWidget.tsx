@@ -8,7 +8,7 @@ import {
 } from "@legendapp/state/react";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
+const { characters$ } = await import("#/modules/characters/state/characters");
 
 // domain
 import type { PlanEditing } from "../domain/PlanEditing";

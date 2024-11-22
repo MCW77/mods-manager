@@ -1,26 +1,21 @@
+// react
+import { lazy } from "react";
+
 // state
-import {
-	beginBatch,
-	endBatch,
-	type Observable,
-	observable,
-	when,
-} from "@legendapp/state";
+import { beginBatch, endBatch, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import {
-	profilesChanged$,
-	profilesManagement$,
-} from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
 import type { Loadout } from "../domain/Loudout";
-import type { MoveStatus } from "../domain/MoveStatus";
 import type { ProfileCreationData } from "../domain/ProfileCreationData";
 import type * as DTOs from "#/modules/profilesManagement/dtos";
 import * as Mappers from "#/modules/profilesManagement/mappers";
@@ -29,7 +24,8 @@ import { Mod } from "#/domain/Mod";
 
 // components
 import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
-import { ModMoveProgress } from "../components/ModMoveProgress";
+
+const LazyModMoveProgress = lazy(() => import("../components/ModMoveProgress"));
 
 type SessionIdByProfile = Record<string, string>;
 
@@ -86,6 +82,12 @@ const hotutils$ = observable({
 		message: "",
 	},
 	sessionIdByProfile: {} as SessionIdByProfile,
+	addProfile: (allycode: string) => {
+		hotutils$.sessionIdByProfile[allycode].set("");
+	},
+	deleteProfile: (allycode: string) => {
+		hotutils$.sessionIdByProfile[allycode].delete();
+	},
 	reset: () => {
 		syncStatus$.reset();
 	},
@@ -331,7 +333,7 @@ const hotutils$ = observable({
 					hotutils$.isMoving.set(true);
 					dialog$.hide();
 					isBusy$.set(false);
-					dialog$.show(<ModMoveProgress />, true);
+					dialog$.show(<LazyModMoveProgress />, true);
 					return hotutils$.pollForModMoveStatus();
 				}
 			}
@@ -412,15 +414,16 @@ const hotutils$ = observable({
 	},
 });
 
-profilesChanged$.on(() => {
-	const allycodes = Object.keys(
-		profilesManagement$.profiles.profileByAllycode.peek(),
-	);
-	for (const allycode of allycodes) {
-		if (hotutils$.sessionIdByProfile[allycode].peek() === undefined) {
-			hotutils$.sessionIdByProfile[allycode].set("");
-		}
+profilesManagement$.lastProfileAdded.onChange(({ value }) => {
+	hotutils$.addProfile(value);
+});
+
+profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
+	if (value === "all") {
+		hotutils$.reset();
+		return;
 	}
+	hotutils$.deleteProfile(value);
 });
 
 const syncStatus$ = syncObservable(

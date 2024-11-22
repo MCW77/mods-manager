@@ -2,54 +2,74 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { modsView$ } from "../state/modsView";
+const { modsView$ } = await import("../state/modsView");
 
 // domain
 import type { FilterKeys } from "../domain/ModsViewOptions";
 
 // components
-import { Button } from '#ui/button';
+import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "#ui/tooltip";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "#ui/tooltip";
 
 type SetAllButtonGroupProps = {
-  filterKey: FilterKeys;
+	filterKey: FilterKeys;
 };
 
-const SetAllButtonGroup: React.FC<SetAllButtonGroupProps> = ({filterKey}) => {
-  const [t] = useTranslation("explore-ui");
+const SetAllButtonGroup: React.FC<SetAllButtonGroupProps> = ({ filterKey }) => {
+	const [t] = useTranslation("explore-ui");
 
-  return (
-    <div className={'actions flex gap-1 justify-center items-center'}>
-      <Label>All: </Label>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button size="xxs" onClick={() => modsView$.massSetFilter(filterKey, 1)}>+</Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Set all to must be</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button size="xxs" onClick={() => modsView$.massSetFilter(filterKey, 0)}>o</Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Set all to no filter</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button size="xxs" onClick={() => modsView$.massSetFilter(filterKey, -1)}>-</Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Set all to cannot be</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
-  );
+	return (
+		<div className={"actions flex gap-1 justify-center items-center"}>
+			<Label>All: </Label>
+			<TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							size="xxs"
+							onClick={() => modsView$.massSetFilter(filterKey, 1)}
+						>
+							+
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>
+						<p>Set all to must be</p>
+					</TooltipContent>
+				</Tooltip>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							size="xxs"
+							onClick={() => modsView$.massSetFilter(filterKey, 0)}
+						>
+							o
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>
+						<p>Set all to no filter</p>
+					</TooltipContent>
+				</Tooltip>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							size="xxs"
+							onClick={() => modsView$.massSetFilter(filterKey, -1)}
+						>
+							-
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>
+						<p>Set all to cannot be</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+		</div>
+	);
 };
 
 SetAllButtonGroup.displayName = "SetAllButtonGroup";

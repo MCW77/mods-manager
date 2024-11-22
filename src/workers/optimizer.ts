@@ -1,9 +1,11 @@
 // utils
-debugger;
 await import("../utils/globalLegendPersistSettings");
 import * as perf from "../utils/performance";
 
 // state
+const { profilesManagement$ } = await import(
+	"../modules/profilesManagement/state/profilesManagement"
+);
 const { compilations$ } = await import(
 	"../modules/compilations/state/compilations"
 );
@@ -15,9 +17,6 @@ const { lockedStatus$ } = await import(
 );
 const { optimizationSettings$ } = await import(
 	"../modules/optimizationSettings/state/optimizationSettings"
-);
-const { profilesManagement$ } = await import(
-	"../modules/profilesManagement/state/profilesManagement"
 );
 
 // domain
@@ -139,7 +138,7 @@ type NullablePartialModBySlot = PartialModBySlot | null;
 type SetRestrictionsEntries = [SetStats.GIMOStatNames, number][];
 // #endregion types
 
- // #region Messaging
+// #region Messaging
 self.onmessage = (message) => {
 	const lastRun: OptimizationConditions =
 		compilations$.defaultCompilation.optimizationConditions.get();

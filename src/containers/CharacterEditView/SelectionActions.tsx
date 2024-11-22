@@ -2,9 +2,14 @@
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show } from "@legendapp/state/react";
 
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
+
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // domain
 import * as Character from "#/domain/Character";
@@ -33,16 +38,15 @@ const SelectionActions = ({
 	lastSelectedCharacterIndex,
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
-	const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
+	const selectedCharacters =
+		compilations$.defaultCompilation.selectedCharacters.get();
 
 	return (
 		<div className="flex gap-2">
 			<Button
 				className="flex flex-gap-2"
 				type="button"
-				onClick={() =>
-					compilations$.unselectAllCharacters()
-				}
+				onClick={() => compilations$.unselectAllCharacters()}
 			>
 				<FontAwesomeIcon icon={faBan} title="Clear" /> Clear
 			</Button>
@@ -52,7 +56,9 @@ const SelectionActions = ({
 				onClick={() => {
 					beginBatch();
 					for (const selectedCharacter of selectedCharacters) {
-						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(true);
+						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(
+							true,
+						);
 					}
 					endBatch();
 				}}
@@ -66,7 +72,9 @@ const SelectionActions = ({
 				onClick={() => {
 					beginBatch();
 					for (const selectedCharacter of selectedCharacters) {
-						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(false);
+						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(
+							false,
+						);
 					}
 					endBatch();
 				}}

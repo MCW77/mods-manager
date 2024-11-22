@@ -6,8 +6,11 @@ import { useTranslation } from "react-i18next";
 import { reactive } from "@legendapp/state/react";
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";

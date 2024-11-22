@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer, reactive, useSelector } from "@legendapp/state/react";
-import { templates$ } from "#/modules/templates/state/templates";
+
+const { templates$ } = await import("#/modules/templates/state/templates");
 
 // domain
 import type { TemplatesAddingMode } from "#/modules/templates/domain/TemplatesAddingMode";

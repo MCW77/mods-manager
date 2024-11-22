@@ -12,8 +12,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
 
 // modules
 import { Data } from "#/state/modules/data";

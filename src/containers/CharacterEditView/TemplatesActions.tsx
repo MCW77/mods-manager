@@ -1,9 +1,15 @@
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
-import { compilations$ } from "#/modules/compilations/state/compilations";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // domain

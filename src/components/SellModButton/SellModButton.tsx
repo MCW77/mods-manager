@@ -1,12 +1,16 @@
 // react
 import React from "react";
 
+// state
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+
 // domain
 import type { Mod } from "#/domain/Mod";
 
 // components
 import { Button } from "#ui/button";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 type ComponentProps = {
 	mod: Mod;

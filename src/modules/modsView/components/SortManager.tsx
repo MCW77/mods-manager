@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { Computed, For, observer, Show } from "@legendapp/state/react";
-import { modsView$ } from "../state/modsView";
+
+const { modsView$ } = await import("../state/modsView");
 
 // domain
 import * as ModScoresConsts from "#/domain/constants/ModScoresConsts";
@@ -80,7 +81,10 @@ const SortManager = observer(
 									{(sortConfig$) => {
 										const sortBy = sortConfig$.sortBy.get();
 										return (
-											<Badge variant={"outline"} className={"flex items-center"}>
+											<Badge
+												variant={"outline"}
+												className={"flex items-center"}
+											>
 												<ReactiveMultiColumnSelect
 													key={`sort-option-${sortConfig$.id.get()}`}
 													groups={sortOptions}
@@ -118,8 +122,9 @@ const SortManager = observer(
 													size={"xxs"}
 													variant={"outline"}
 													onClick={() =>
-														modsView$.activeViewSetupInActiveCategory.sort
-															.delete(sortConfig$.id.peek())
+														modsView$.activeViewSetupInActiveCategory.sort.delete(
+															sortConfig$.id.peek(),
+														)
 													}
 												>
 													x

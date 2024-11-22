@@ -3,8 +3,13 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer, reactive } from "@legendapp/state/react";
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
 
 // components
 import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
@@ -34,9 +39,9 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					min={0}
 					max={100}
 					step={1}
-					singleValue={
-						optimizationSettings$.settingsByProfile[allycode].modChangeThreshold.get()
-					}
+					singleValue={optimizationSettings$.settingsByProfile[
+						allycode
+					].modChangeThreshold.get()}
 					onSingleChange={(threshold: number) => {
 						optimizationSettings$.settingsByProfile[
 							allycode

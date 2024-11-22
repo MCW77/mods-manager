@@ -21,9 +21,12 @@ import {
 	reactive,
 	useMount,
 } from "@legendapp/state/react";
-import { about$ } from "#/modules/about/state/about";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { about$ } = await import("#/modules/about/state/about");
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
 import { ui$ } from "#/modules/ui/state/ui";
 
 // modules
@@ -275,4 +278,4 @@ const App: React.FC = observer(() => {
 
 App.displayName = "App";
 
-export { App };
+export default App;

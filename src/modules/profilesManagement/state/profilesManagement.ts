@@ -5,7 +5,6 @@ import { formatTimespan } from "../utils/formatTimespan";
 import {
 	type ObservableObject,
 	observable,
-	event,
 	type Observable,
 	beginBatch,
 	endBatch,
@@ -13,11 +12,6 @@ import {
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
-
-const { compilations$ } = await import("#/modules/compilations/state/compilations");
-import { dialog$ } from "#/modules/dialog/state/dialog";
-const { incrementalOptimization$ } = await import("#/modules/incrementalOptimization/state/incrementalOptimization");
-const { optimizationSettings$ } = await import("#/modules/optimizationSettings/state/optimizationSettings");
 
 // domain
 import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
@@ -29,50 +23,14 @@ import {
 	getProfileFromPersisted,
 	getProfileToPersist,
 } from "../domain/PlayerProfile";
+import type { Profiles, PersistedProfiles } from "../domain/Profiles";
+import type { ProfilesManagement } from "../domain/ProfilesManagement";
 import type { CharacterNames } from "#/constants/characterSettings";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
-interface Profiles {
-	activeAllycode: string;
-	lastUpdatedByAllycode: Record<string, { id: string; lastUpdated: number }>;
-	playernameByAllycode: Record<string, string>;
-	profileByAllycode: Record<string, PlayerProfile>;
-}
-
-export interface PersistedProfiles {
-	activeAllycode: string;
-	lastUpdatedByAllycode: Record<string, { id: string; lastUpdated: number }>;
-	playernameByAllycode: Record<string, string>;
-	profileByAllycode: Record<string, PersistedPlayerProfile>;
-}
-
-interface ProfilesManagement {
-	defaultProfile: PlayerProfile;
-	profiles: Profiles;
-	now: number;
-	activeLastUpdated: () => string;
-	activePlayer: () => string;
-	activeProfile: () => Observable<PlayerProfile>;
-	hasProfileWithAllycode: (allycode: string) => boolean;
-	hasProfiles: () => boolean;
-	addProfile: (allycode: string, name: string) => void;
-	clearProfiles: () => void;
-	deleteProfile: (allycode: string) => void;
-	updateProfile: (profile: PlayerProfile) => void;
-	reset: () => void;
-	importModsFromC3PO: (modsJSON: string) => number;
-	toPersistable: () => PersistedProfiles;
-	toJSON: () => string;
-	fromJSON: (profilesManagementJSON: string) => PersistedProfiles;
-	reassignMod: (modId: string, characterId: CharacterNames) => void;
-	reassignMods: (mods: Mod[], characterId: CharacterNames) => void;
-	unequipMod: (modId: string) => void;
-	unequipMods: (mods: Mod[]) => void;
-	deleteMod: (modId: string) => void;
-	deleteMods: (mods: Mod[]) => void;
-}
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 const isMod = (mod: Mod | undefined): mod is Mod => {
 	return mod !== undefined;
@@ -104,6 +62,8 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 		},
 		now: Date.now(),
 		profiles: getInitialProfiles(),
+		lastProfileAdded: "",
+		lastProfileDeleted: "",
 		activeLastUpdated: () => {
 			const allycode = profilesManagement$.profiles.activeAllycode.get();
 			const elapsedTime =
@@ -155,17 +115,14 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 				...profilesManagement$.profiles.playernameByAllycode.peek(),
 				[profile.allycode]: profile.playerName,
 			});
-			optimizationSettings$.addProfile(allycode);
-			incrementalOptimization$.addProfile(allycode);
-			compilations$.addProfile(allycode);
+			profilesManagement$.lastProfileAdded.set(allycode);
 			endBatch();
-			profilesChanged$.fire();
 		},
 		clearProfiles: () => {
 			profilesManagement$.profiles.profileByAllycode.set({});
 			profilesManagement$.profiles.playernameByAllycode.set({});
 			profilesManagement$.profiles.activeAllycode.set("");
-			profilesChanged$.fire();
+			profilesManagement$.lastProfileDeleted.set("all");
 		},
 		deleteProfile: (allycode: string) => {
 			beginBatch();
@@ -181,10 +138,8 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 						: "",
 				);
 			}
-			optimizationSettings$.deleteProfile(allycode);
-			incrementalOptimization$.deleteProfile(allycode);
+			profilesManagement$.lastProfileDeleted.set(allycode);
 			endBatch();
-			profilesChanged$.fire();
 		},
 		updateProfile: (profile: PlayerProfile) => {
 			profilesManagement$.profiles.profileByAllycode[profile.allycode].set(
@@ -194,10 +149,10 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 				...profilesManagement$.profiles.lastUpdatedByAllycode.peek(),
 				[profile.allycode]: { id: profile.allycode, lastUpdated: Date.now() },
 			});
-			profilesChanged$.fire();
 		},
 		reset: () => {
 			syncStatus$.reset();
+			profilesManagement$.lastProfileDeleted.set("all");
 		},
 		importModsFromC3PO: (modsJSON: string) => {
 			try {
@@ -279,8 +234,6 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 			endBatch();
 		},
 	});
-
-const profilesChanged$ = event();
 
 const nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());
@@ -412,4 +365,4 @@ const syncStatus$ = syncObservable(
 );
 await when(syncStatus$.isPersistLoaded);
 
-export { profilesManagement$, profilesChanged$ };
+export { profilesManagement$ };

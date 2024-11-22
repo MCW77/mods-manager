@@ -4,14 +4,23 @@ import { observer, useObservable } from "@legendapp/state/react";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-import { characters$ } from "#/modules/characters/state/characters";
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+const { incrementalOptimization$ } = await import(
+	"#/modules/incrementalOptimization/state/incrementalOptimization"
+);
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { review$ } from "#/modules/review/state/review";
 
 // modules
@@ -42,30 +51,46 @@ import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 
 const CharacterActions: React.FC = observer(() => {
 	const baseCharacterById = characters$.baseCharacterById.get();
-	const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
-	const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.get();
+	const selectedCharacters =
+		compilations$.defaultCompilation.selectedCharacters.get();
+	const modAssignments =
+		compilations$.defaultCompilation.flatCharacterModdings.get();
 
-  const state = useObservable({
-    isOpen: false,
-    name: compilations$.activeCompilation.id.get(),
-    description: compilations$.activeCompilation.description.get(),
-    category: compilations$.activeCompilation.category.get(),
-  });
+	const state = useObservable({
+		isOpen: false,
+		name: compilations$.activeCompilation.id.get(),
+		description: compilations$.activeCompilation.description.get(),
+		category: compilations$.activeCompilation.category.get(),
+	});
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
 		beginBatch();
-		if (!compilations$.compilationByIdForActiveAllycode.has(state.name.peek())) {
-    	compilations$.addCompilation(state.name.peek(), state.description.peek(), state.category.peek());
+		if (
+			!compilations$.compilationByIdForActiveAllycode.has(state.name.peek())
+		) {
+			compilations$.addCompilation(
+				state.name.peek(),
+				state.description.peek(),
+				state.category.peek(),
+			);
 		}
-		compilations$.compilationByIdForActiveAllycode[state.name.peek()].set(structuredClone(compilations$.defaultCompilation.peek()));
-		compilations$.compilationByIdForActiveAllycode[state.name.peek()].id.set(state.name.peek());
-		compilations$.compilationByIdForActiveAllycode[state.name.peek()].description.set(state.description.peek());
-		compilations$.compilationByIdForActiveAllycode[state.name.peek()].category.set(state.category.peek());
+		compilations$.compilationByIdForActiveAllycode[state.name.peek()].set(
+			structuredClone(compilations$.defaultCompilation.peek()),
+		);
+		compilations$.compilationByIdForActiveAllycode[state.name.peek()].id.set(
+			state.name.peek(),
+		);
+		compilations$.compilationByIdForActiveAllycode[
+			state.name.peek()
+		].description.set(state.description.peek());
+		compilations$.compilationByIdForActiveAllycode[
+			state.name.peek()
+		].category.set(state.category.peek());
 		compilations$.activeCompilationId.set(state.name.peek());
 		state.isOpen.set(false);
 		endBatch();
-  };
+	};
 
 	return (
 		<div className={"flex gap-2"}>
@@ -143,10 +168,10 @@ const CharacterActions: React.FC = observer(() => {
 					onPointerDownOutside={(e) => e.preventDefault()}
 				>
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
-						<h4 className="font-medium text-sm text-slate-900">Save compilation</h4>
-						<Label htmlFor={"compilation_save_form_name"}>
-							Name
-						</Label>
+						<h4 className="font-medium text-sm text-slate-900">
+							Save compilation
+						</h4>
+						<Label htmlFor={"compilation_save_form_name"}>Name</Label>
 						<Input
 							id="compilation_save_form_name"
 							value={state.name.get()}
@@ -162,9 +187,7 @@ const CharacterActions: React.FC = observer(() => {
 							onChange={(e) => state.description.set(e.target.value)}
 							className="h-8 text-sm"
 						/>
-						<Label htmlFor={"compilation_save_form_category"}>
-							Category
-						</Label>
+						<Label htmlFor={"compilation_save_form_category"}>Category</Label>
 						<Input
 							id="compilation_save_form_category"
 							value={state.category.get()}

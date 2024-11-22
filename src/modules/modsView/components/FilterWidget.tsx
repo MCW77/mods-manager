@@ -4,8 +4,11 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { modsView$ } from "../state/modsView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { modsView$ } = await import("../state/modsView");
 
 // components
 import { ChevronsUpDown } from "lucide-react";

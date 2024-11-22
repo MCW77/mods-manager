@@ -1,9 +1,6 @@
 // utils
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
-// state
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
 import type * as ModTypes from "#/domain/types/ModTypes";
@@ -160,8 +157,7 @@ export const fromShortOptimizationPlan = ({
 	setRes = {},
 	targetStats = [],
 	fullSets = false,
-}: ShortOptimizationPlanParam
-) => {
+}: ShortOptimizationPlanParam) => {
 	return {
 		id: id,
 		description: desc,
@@ -235,19 +231,16 @@ export const denormalize = (plan: OptimizationPlan) => {
 	};
 };
 
-export const toRenamed = (plan: OptimizationPlan, id: string, description = "") => {
+export const toRenamed = (
+	plan: OptimizationPlan,
+	id: string,
+	description = "",
+) => {
 	return {
 		...plan,
 		description,
 		id,
 	};
-};
-
-export const shouldUpgradeMods = (target: OptimizationPlan) => {
-	return (
-		optimizationSettings$.activeSettings.simulateLevel15Mods.peek() ||
-		target.targetStats.length > 0
-	);
 };
 
 export const hasRestrictions = (target: OptimizationPlan) => {
@@ -293,9 +286,13 @@ export const hasNegativeWeights = (target: OptimizationPlan) => {
 	);
 };
 
-export const equals = (first: OptimizationPlan, second: OptimizationPlan, ignoreName = false) => {
+export const equals = (
+	first: OptimizationPlan,
+	second: OptimizationPlan,
+	ignoreName = false,
+) => {
 	return (
-		(ignoreName || (first.id === second.id)) &&
+		(ignoreName || first.id === second.id) &&
 		first.Health === second.Health &&
 		first.Protection === second.Protection &&
 		first.Speed === second.Speed &&

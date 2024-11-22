@@ -7,7 +7,8 @@ import { observer } from "@legendapp/state/react";
 import { readFile } from "#/utils/readFile";
 
 // state
-import { appState$ } from "#/modules/appState/state/appState";
+const { appState$ } = await import("#/modules/appState/state/appState");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // components
@@ -103,10 +104,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 								)
 							}
 						/>
-						<Button
-							className={""}
-							onClick={() => appState$.saveBackup()}
-						>
+						<Button className={""} onClick={() => appState$.saveBackup()}>
 							<FontAwesomeIcon icon={faSave} title={t("general.backup.Save")} />
 							<span className={"p-l-2"}>{t("general.backup.Save")}</span>
 						</Button>

@@ -1,6 +1,9 @@
 // state
 import { Computed, For, observer } from "@legendapp/state/react";
-import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
+
+const { charactersManagement$ } = await import(
+	"#/modules/charactersManagement/state/charactersManagement"
+);
 
 // components
 import { Badge } from "#ui/badge";
@@ -9,10 +12,11 @@ import { Label } from "#ui/label";
 import { Slider } from "#ui/slider";
 import { Switch } from "#ui/switch";
 import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
+
 const customCharacterFilterGroups = [
 	{
 		label: "misc",
-		items:[
+		items: [
 			{
 				label: "None",
 				value: "None",
@@ -207,12 +211,11 @@ const customCharacterFilterGroups = [
 				label: "Tank",
 				value: "Tank",
 			},
-
 		],
 	},
 	{
 		label: "Naboo Raid",
-		items:[
+		items: [
 			{
 				label: "All",
 				value: "Naboo-All",

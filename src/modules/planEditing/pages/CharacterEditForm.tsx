@@ -13,12 +13,19 @@ import {
 import { beginBatch, endBatch } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
-import { characters$ } from "#/modules/characters/state/characters";
-import { compilations$ } from "#/modules/compilations/state/compilations";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+const { incrementalOptimization$ } = await import(
+	"#/modules/incrementalOptimization/state/incrementalOptimization"
+);
+
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { progress$ } from "#/modules/progress/state/progress";
 import { target$ } from "#/modules/planEditing/state/planEditing";
 
@@ -69,7 +76,8 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const allycode = profilesManagement$.profiles.activeAllycode.get();
 		const baseCharacterById = characters$.baseCharacterById.get();
 		const progress = progress$.optimizationStatus.get();
-		const modAssignments =	compilations$.defaultCompilation.flatCharacterModdings.get();
+		const modAssignments =
+			compilations$.defaultCompilation.flatCharacterModdings.get();
 
 		const targetsNames = profilesManagement$.activeProfile.characterById[
 			character.id
@@ -97,7 +105,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				: null;
 		});
 
-		const missedGoalsSection = (modAssignments: FlatCharacterModding | null) => {
+		const missedGoalsSection = (
+			modAssignments: FlatCharacterModding | null,
+		) => {
 			if ((target$.target.targetStats.peek() || []).length === 0) {
 				return;
 			}
@@ -341,8 +351,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							<TargetStatsWidget />
 							{missedGoalsSection(
 								modAssignments.find(
-									(modAssignment) =>
-										modAssignment.characterId === character.id,
+									(modAssignment) => modAssignment.characterId === character.id,
 								) ?? null,
 							)}
 						</div>

@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { about$ } from "#/modules/about/state/about";
+
+const { about$ } = await import("#/modules/about/state/about");
 
 // components
 import { Github } from "lucide-react";

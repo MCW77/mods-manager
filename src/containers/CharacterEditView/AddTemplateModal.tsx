@@ -2,9 +2,12 @@
 import { observer } from "@legendapp/state/react";
 
 // state
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { templates$ } = await import("#/modules/templates/state/templates");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { templates$ } from "#/modules/templates/state/templates";
 
 // domain
 import type { CharacterTemplate } from "#/modules/templates/domain/CharacterTemplates";
@@ -14,9 +17,15 @@ import type { TemplateTypes } from "#/modules/templates/domain/TemplateTypes";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
+import {
+	appendTemplate,
+	applyTemplateTargets,
+	replaceWithTemplate,
+} from "#/modules/templateToCompilationAdder/templateToCompilationAdder";
 
 const AddTemplateModal: React.FC = observer(() => {
-	const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
+	const selectedCharacters =
+		compilations$.defaultCompilation.selectedCharacters.get();
 
 	return (
 		<div className={"flex flex-col gap-4"}>
@@ -112,12 +121,12 @@ const AddTemplateModal: React.FC = observer(() => {
 							) {
 								return;
 							}
-							compilations$.appendTemplate(templateName);
+							appendTemplate(templateName);
 						}
 						if (templates$.templatesAddingMode.get() === "replace")
-							compilations$.replaceWithTemplate(templateName);
+							replaceWithTemplate(templateName);
 						if (templates$.templatesAddingMode.get() === "apply targets only")
-							compilations$.applyTemplateTargets(templateName);
+							applyTemplateTargets(templateName);
 					}}
 				>
 					Add

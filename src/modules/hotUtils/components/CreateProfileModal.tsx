@@ -4,11 +4,18 @@ import collectByKey from "#/utils/collectByKey";
 // state
 import { observer, reactive, useObservable } from "@legendapp/state/react";
 
-import { compilations$ } from "#/modules/compilations/state/compilations";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -25,7 +32,8 @@ const ReactiveInput = reactive(Input);
 
 const CreateProfileModal: React.FC = observer(() => {
 	const modById = profilesManagement$.activeProfile.modById.get();
-	const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.get();
+	const modAssignments =
+		compilations$.defaultCompilation.flatCharacterModdings.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
@@ -41,7 +49,10 @@ const CreateProfileModal: React.FC = observer(() => {
 	const generateHotUtilsProfile = () => {
 		const assignedMods = modAssignments
 			.filter((x) => null !== x)
-			.filter(({ characterId }) => characterById[characterId].playerValues.level >= 50)
+			.filter(
+				({ characterId }) =>
+					characterById[characterId].playerValues.level >= 50,
+			)
 			.map(({ characterId, assignedMods, target }) => ({
 				id: characterId,
 				modIds: assignedMods,

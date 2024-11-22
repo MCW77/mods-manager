@@ -1,9 +1,11 @@
 // state
 import "#/utils/globalLegendPersistSettings";
+import { stateLoader$ } from "./modules/stateLoader/stateLoader";
 
 // react
-import React, { Suspense } from "react";
+import React, { lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
+import { observer, Show } from "@legendapp/state/react";
 
 // styles
 import "./index.css";
@@ -20,7 +22,9 @@ import { ui$ } from "./modules/ui/state/ui";
 import { Spinner } from "./components/Spinner/Spinner";
 
 // containers
-import { App } from "./containers/App/App";
+const LazyApp = lazy(() => import("./containers/App/App"));
+
+stateLoader$.initialize();
 
 const rootNode = document.getElementById("root");
 document.body.classList.add(
@@ -30,13 +34,24 @@ document.body.classList.add(
 	"text-slate-500",
 	"dark:text-slate-400",
 );
+
+const RootComponent = observer(() => {
+	return (
+		<Show if={stateLoader$.isDone} else={() => <Spinner isVisible={true} />}>
+			{() => (
+				<Suspense fallback={<Spinner isVisible={true} />}>
+					<LazyApp />
+				</Suspense>
+			)}
+		</Show>
+	);
+});
+
 if (rootNode !== null) {
 	const root = createRoot(rootNode);
 	root.render(
 		<React.StrictMode>
-			<Suspense fallback={<Spinner isVisible={true} />}>
-				<App />
-			</Suspense>
+			<RootComponent />
 		</React.StrictMode>,
 	);
 }

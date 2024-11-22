@@ -4,10 +4,15 @@ import React from "react";
 // styles
 import "./ModLoadoutView.css";
 
+// state
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
+
 // domain
 import type * as Character from "#/domain/Character";
 import * as ModLoadout from "#/domain/ModLoadout";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 // components
 import { ModImage } from "#/components/ModImage/ModImage";
@@ -17,7 +22,7 @@ type ComponentProps = {
 	modLoadout: ModLoadout.ModLoadout;
 	showAvatars: boolean;
 	assignedCharacter?: Character.Character;
-	assignedTarget?: OptimizationPlan.OptimizationPlan;
+	assignedTarget?: OptimizationPlan;
 };
 
 const ModLoadoutView = React.memo(
@@ -32,12 +37,16 @@ const ModLoadoutView = React.memo(
 		if (ModLoadout.hasSlots(modLoadout, usedSlots)) {
 			modDetails = usedSlots.map((slot) => (
 				<div className={`mod ${slot}`} key={modLoadout[slot]?.id}>
-					{assignedTarget && modLoadout[slot].shouldLevel(assignedTarget) && (
-						<span className={"icon level active"} />
-					)}
-					{assignedTarget && modLoadout[slot].shouldSlice(assignedTarget) && (
-						<span className={"icon slice active"} />
-					)}
+					{assignedTarget &&
+						optimizationSettings$.shouldLevelMod(
+							modLoadout[slot],
+							assignedTarget,
+						) && <span className={"icon level active"} />}
+					{assignedTarget &&
+						optimizationSettings$.shouldSliceMod(
+							modLoadout[slot],
+							assignedTarget,
+						) && <span className={"icon slice active"} />}
 					<ModImage
 						mod={modLoadout[slot]}
 						showAvatar={showAvatars}

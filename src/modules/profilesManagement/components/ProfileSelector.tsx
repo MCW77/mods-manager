@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 import { observer, reactive } from "@legendapp/state/react";
 
 // state
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
 
 // components
 import {
@@ -37,7 +39,7 @@ const ProfileSelector = observer(
 						setAddMode(true);
 					} else {
 						if (value === "") return;
-//						dispatch(Storage.thunks.loadProfile(value));
+						//						dispatch(Storage.thunks.loadProfile(value));
 						profilesManagement$.profiles.activeAllycode.set(value);
 					}
 				}}

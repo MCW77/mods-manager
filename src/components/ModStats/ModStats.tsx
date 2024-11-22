@@ -6,9 +6,14 @@ import { useTranslation } from "react-i18next";
 import "./ModStats.css";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { modsView$ } from "#/modules/modsView/state/modsView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+const { modsView$ } = await import("#/modules/modsView/state/modsView");
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
@@ -133,12 +138,14 @@ const ModStats = React.memo(
 					</div>
 				)}
 				{showAvatar && <SellModButton mod={mod} />}
-				{assignedTarget && mod.shouldLevel(assignedTarget) && (
-					<h4 className={"gold"}>Level mod to 15!</h4>
-				)}
-				{assignedTarget && mod.shouldSlice(assignedTarget) && (
-					<h4 className={"gold"}>Slice mod to 6E!</h4>
-				)}
+				{assignedTarget &&
+					optimizationSettings$.shouldLevelMod(mod, assignedTarget) && (
+						<h4 className={"gold"}>Level mod to 15!</h4>
+					)}
+				{assignedTarget &&
+					optimizationSettings$.shouldSliceMod(mod, assignedTarget) && (
+						<h4 className={"gold"}>Slice mod to 6E!</h4>
+					)}
 			</div>
 		);
 	},

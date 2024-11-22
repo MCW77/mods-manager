@@ -38,6 +38,18 @@ const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
 		},
 	});
 
+profilesManagement$.lastProfileAdded.onChange(({ value }) => {
+	incrementalOptimization$.addProfile(value);
+});
+
+profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
+	if (value === "all") {
+		incrementalOptimization$.reset();
+		return;
+	}
+	incrementalOptimization$.deleteProfile(value);
+});
+
 const syncStatus$ = syncObservable(
 	incrementalOptimization$.indicesByProfile,
 	persistOptions({

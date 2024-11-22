@@ -2,8 +2,9 @@
 import { Computed, Show, observer, reactive } from "@legendapp/state/react";
 
 // state
+const { templates$ } = await import("#/modules/templates/state/templates");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { templates$ } from "#/modules/templates/state/templates";
 
 // components
 import { Button } from "#ui/button";

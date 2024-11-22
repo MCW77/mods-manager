@@ -4,8 +4,11 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { modsView$ } from "../state/modsView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { modsView$ } = await import("../state/modsView");
 
 // hooks
 import { useRenderCount } from "#/hooks/useRenderCount";
@@ -24,8 +27,9 @@ const CategoryView: React.FC = observer(() => {
 		modsView$.activeViewSetupInActiveCategory.get(),
 		modsView$.quickFilter.get(),
 	);
-	const [filteredMods, modsCount] =
-		modsFilter.applyModsViewOptions(Array.from(modById.values()));
+	const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(
+		Array.from(modById.values()),
+	);
 
 	const mods = [];
 	for (const modsInGroup of Object.values(filteredMods)) {

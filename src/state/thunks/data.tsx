@@ -4,13 +4,20 @@ import cleanAllycode from "#/utils/cleanAllycode";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-import { characters$ } from "#/modules/characters/state/characters";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 
@@ -18,7 +25,6 @@ import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOPr
 
 import * as Character from "#/domain/Character";
 import { objectEntries } from "#/utils/objectEntries";
-import { compilations$ } from "#/modules/compilations/state/compilations";
 
 export namespace thunks {
 	/*
@@ -196,8 +202,8 @@ export namespace thunks {
 				<h3 key={140}>
 					<strong>
 						Remember: The optimizer can only pull data for mods that you
-						currently have equipped, unless you're pulling data using a
-						HotUtils session!
+						currently have equipped, unless you're pulling data using a HotUtils
+						session!
 					</strong>
 				</h3>,
 			);
@@ -230,11 +236,17 @@ export namespace thunks {
 
 			// Collect the new character objects by combining the default characters with the player values
 			// and the optimizer settings from the current profile.
-			for (const [characterId, playerValues] of objectEntries(profile.playerValues)) {
+			for (const [characterId, playerValues] of objectEntries(
+				profile.playerValues,
+			)) {
 				if (
-					lockedStatus$.lockedStatusByCharacterIdByAllycode[newAllycode][characterId].peek() === undefined
+					lockedStatus$.lockedStatusByCharacterIdByAllycode[newAllycode][
+						characterId
+					].peek() === undefined
 				)
-					lockedStatus$.lockedStatusByCharacterIdByAllycode[newAllycode][characterId].set(false);
+					lockedStatus$.lockedStatusByCharacterIdByAllycode[newAllycode][
+						characterId
+					].set(false);
 
 				const characterById$ =
 					profilesManagement$.profiles.profileByAllycode[newAllycode]
@@ -257,13 +269,18 @@ export namespace thunks {
 
 			if (keepOldMods) {
 				// If we're keeping the old mods, that means that any mod we don't see must be unequipped
-				const modById$ = profilesManagement$.profiles.profileByAllycode[newAllycode].modById;
-				for ( const modId of modById$.keys()) {
+				const modById$ =
+					profilesManagement$.profiles.profileByAllycode[newAllycode].modById;
+				for (const modId of modById$.keys()) {
 					modById$[modId].characterID.set("null");
 				}
 			}
-//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
-			for (const mod of profile.mods) profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(mod.id, mod);
+			//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
+			for (const mod of profile.mods)
+				profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
+					mod.id,
+					mod,
+				);
 
 			compilations$.resetOptimizationConditions(newAllycode);
 			profilesManagement$.profiles.activeAllycode.set(newAllycode);

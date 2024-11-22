@@ -2,8 +2,11 @@
 import React from "react";
 
 // state
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // components
 import { Switch } from "@legendapp/state/react";
@@ -23,7 +26,9 @@ const OptimizerView = React.memo(() => {
 					basic: () => <CharacterEditView />,
 					edit: () => (
 						<CharacterEditForm
-							character={characterById[optimizerView$.currentCharacter.id.get()]}
+							character={
+								characterById[optimizerView$.currentCharacter.id.get()]
+							}
 							target={optimizerView$.currentCharacter.target.get()}
 						/>
 					),

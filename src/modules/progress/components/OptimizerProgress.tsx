@@ -1,9 +1,20 @@
 // state
-import { observer, reactive, Show, useObservable } from "@legendapp/state/react";
+import {
+	observer,
+	reactive,
+	Show,
+	useObservable,
+} from "@legendapp/state/react";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { incrementalOptimization$ } = await import(
+	"#/modules/incrementalOptimization/state/incrementalOptimization"
+);
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { incrementalOptimization$ } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { progress$ } from "../state/progress";
 
 // modules
@@ -24,7 +35,7 @@ const OptimizerProgress: React.FC = observer(() => {
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
-		return charId === "" ? undefined : characterById[charId]
+		return charId === "" ? undefined : characterById[charId];
 	});
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
@@ -43,18 +54,49 @@ const OptimizerProgress: React.FC = observer(() => {
 				<Show ifReady={character$}>
 					{(condition) => <CharacterAvatar character={character$.get()} />}
 				</Show>
-				<div className={"step"}>{progress$.optimizationStatus.message.get()}</div>
+				<div className={"step"}>
+					{progress$.optimizationStatus.message.get()}
+				</div>
 				<div>
 					<Label>Character progress</Label>
-					<ReactiveProgress $value={() => Math.trunc(100*((progress$.optimizationStatus.characterIndex.get()+1) / progress$.optimizationStatus.characterCount.get()))} />
+					<ReactiveProgress
+						$value={() =>
+							Math.trunc(
+								100 *
+									((progress$.optimizationStatus.characterIndex.get() + 1) /
+										progress$.optimizationStatus.characterCount.get()),
+							)
+						}
+					/>
 				</div>
 				<div>
-					<Label>Sets progress: {progress$.optimizationStatus.sets.get().join(" - ")}</Label>
-					<ReactiveProgress $value={() => Math.trunc(100*((progress$.optimizationStatus.setsIndex.get()) / progress$.optimizationStatus.setsCount.get()))} />
+					<Label>
+						Sets progress: {progress$.optimizationStatus.sets.get().join(" - ")}
+					</Label>
+					<ReactiveProgress
+						$value={() =>
+							Math.trunc(
+								100 *
+									(progress$.optimizationStatus.setsIndex.get() /
+										progress$.optimizationStatus.setsCount.get()),
+							)
+						}
+					/>
 				</div>
 				<div>
-					<Label>TargetStats progress: {progress$.optimizationStatus.targetStat.get()}</Label>
-					<ReactiveProgress $value={() => Math.trunc(100*((progress$.optimizationStatus.targetStatIndex.get()) / progress$.optimizationStatus.targetStatCount.get()))} />
+					<Label>
+						TargetStats progress:{" "}
+						{progress$.optimizationStatus.targetStat.get()}
+					</Label>
+					<ReactiveProgress
+						$value={() =>
+							Math.trunc(
+								100 *
+									(progress$.optimizationStatus.targetStatIndex.get() /
+										progress$.optimizationStatus.targetStatCount.get()),
+							)
+						}
+					/>
 				</div>
 				<div>
 					<Label>permutations progress</Label>

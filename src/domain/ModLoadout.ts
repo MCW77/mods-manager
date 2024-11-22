@@ -1,5 +1,7 @@
 // state
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
 
 // domain
 import * as ModConsts from "./constants/ModConsts";
@@ -112,9 +114,9 @@ export function getSummary(
 		}
 		const set: SetBonus = setBonuses[mod.modset];
 
-		const modStats = mod.getStatSummaryForCharacter(
+		const modStats = optimizationSettings$.getStatSummaryForCharacter(
+			mod,
 			character,
-			target,
 			withUpgrades,
 		);
 		let stat: CharacterStatNames.All;

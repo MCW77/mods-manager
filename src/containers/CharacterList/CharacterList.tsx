@@ -6,8 +6,12 @@ import { observer } from "@legendapp/state/react";
 import "./CharacterList.css";
 
 // state
-import { compilations$ } from "#/modules/compilations/state/compilations";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -20,7 +24,8 @@ import { CharacterBlock } from "./CharacterBlock";
 const CharacterList = observer(
 	React.memo(() => {
 		const characterById = profilesManagement$.activeProfile.characterById.get();
-		const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
+		const selectedCharacters =
+			compilations$.defaultCompilation.selectedCharacters.get();
 
 		const characterBlockDragEnter = () => {
 			return (event: React.DragEvent<HTMLDivElement>) => {
@@ -65,7 +70,7 @@ const CharacterList = observer(
 							Character.defaultTarget(movingCharacter),
 							dropCharacterIndex,
 						);
-/*
+						/*
 						dispatch(
 							CharacterEdit.thunks.selectCharacter(
 								movingCharacterID,
@@ -83,7 +88,7 @@ const CharacterList = observer(
 							movingCharacterIndex,
 							dropCharacterIndex,
 						);
-/*
+						/*
 						dispatch(
 							CharacterEdit.thunks.moveSelectedCharacter(
 								movingCharacterIndex,
@@ -120,9 +125,14 @@ const CharacterList = observer(
 					/>
 				)}
 				{0 < selectedCharacters.length &&
-					selectedCharacters.map(({ id, target }, index) =>
-						<CharacterBlock key={id} characterId={id} target={target} index={index} />
-					)}
+					selectedCharacters.map(({ id, target }, index) => (
+						<CharacterBlock
+							key={id}
+							characterId={id}
+							target={target}
+							index={index}
+						/>
+					))}
 
 				{0 === selectedCharacters.length && (
 					<div

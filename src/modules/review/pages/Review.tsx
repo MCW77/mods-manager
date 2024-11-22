@@ -10,9 +10,17 @@ import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { compilations$ } from "#/modules/compilations/state/compilations";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { optimizationSettings$ } = await import(
+	"#/modules/optimizationSettings/state/optimizationSettings"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+
 import { review$ } from "#/modules/review/state/review";
 
 // domain
@@ -25,7 +33,10 @@ import type { Mod } from "#/domain/Mod";
 import * as ModLoadout from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
-import type { CharacterModding, CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
+import type {
+	CharacterModding,
+	CharacterModdings,
+} from "#/modules/compilations/domain/CharacterModdings";
 
 // components
 import { ActionsWidget } from "../components/ActionsWidget";
@@ -160,7 +171,8 @@ const Review: React.FC = observer(() => {
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 	const filter = review$.modListFilter.get();
 	const modById = profilesManagement$.activeProfile.modById.get();
-	const modAssignments = compilations$.defaultCompilation.flatCharacterModdings.get();
+	const modAssignments =
+		compilations$.defaultCompilation.flatCharacterModdings.get();
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: CharacterModdings,
@@ -181,8 +193,8 @@ const Review: React.FC = observer(() => {
 			for (const assignment of tempAssignments) {
 				assignment.assignedMods = assignment.assignedMods.filter(
 					(mod) =>
-						mod.shouldLevel(assignment.target) ||
-						mod.shouldSlice(assignment.target),
+						optimizationSettings$.shouldLevelMod(mod, assignment.target) ||
+						optimizationSettings$.shouldSliceMod(mod, assignment.target),
 				);
 			}
 		}
@@ -234,22 +246,24 @@ const Review: React.FC = observer(() => {
 						target,
 						assignedMods: assignedMods.filter(
 							(mod) =>
-								mod.shouldLevel(target) ||
-								mod.shouldSlice(target),
+								optimizationSettings$.shouldLevelMod(mod, target) ||
+								optimizationSettings$.shouldSliceMod(mod, target),
 						),
 						missedGoals: [],
 					}))
 					.filter(({ assignedMods }) => assignedMods.length > 0);
 			} else {
 				// If we're not showing upgrades, then only show mods that aren't already assigned to that character
-				displayedMods = modAssignments2.map(({ characterId, target, assignedMods }) => ({
-					characterId,
-					target: target,
-					assignedMods: assignedMods
-						.filter((mod) => mod.characterID !== characterId)
-						.sort(ModLoadout.slotSort),
-					missedGoals: [],
-				}));
+				displayedMods = modAssignments2.map(
+					({ characterId, target, assignedMods }) => ({
+						characterId,
+						target: target,
+						assignedMods: assignedMods
+							.filter((mod) => mod.characterID !== characterId)
+							.sort(ModLoadout.slotSort),
+						missedGoals: [],
+					}),
+				);
 			}
 			break;
 		default:
@@ -259,17 +273,19 @@ const Review: React.FC = observer(() => {
 				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments2);
 			} else if (ModListFilter.showOptions.change === filter.show) {
 				// If we're only showing changes, then filter out any character that isn't changing
-				displayedMods = modAssignments2.filter(({ characterId: id, assignedMods }) =>
-					assignedMods.some((mod) => mod.characterID !== id),
+				displayedMods = modAssignments2.filter(
+					({ characterId: id, assignedMods }) =>
+						assignedMods.some((mod) => mod.characterID !== id),
 				);
 			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
-				displayedMods = modAssignments2.filter(({ characterId: id, target, assignedMods }) =>
-					assignedMods.some(
-						(mod) =>
-							mod.shouldLevel(target) ||
-							mod.shouldSlice(target),
-					),
+				displayedMods = modAssignments2.filter(
+					({ characterId: id, target, assignedMods }) =>
+						assignedMods.some(
+							(mod) =>
+								optimizationSettings$.shouldLevelMod(mod, target) ||
+								optimizationSettings$.shouldSliceMod(mod, target),
+						),
 				);
 			} else {
 				displayedMods = modAssignments2;
@@ -357,7 +373,7 @@ const Review: React.FC = observer(() => {
 	);
 
 	const modsBeingUpgraded = modAssignments2
-		.filter(({ target }) => OptimizationPlan.shouldUpgradeMods(target))
+		.filter(({ target }) => optimizationSettings$.shouldUpgradeMods(target))
 		.map(({ characterId: id, assignedMods }) =>
 			assignedMods.filter((mod) => 15 !== mod.level),
 		)

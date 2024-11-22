@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { modsView$ } from "../../state/modsView";
+
+const { modsView$ } = await import("../../state/modsView");
 
 // domain
 import type { TierSettings } from "../../domain/ModsViewOptions";
@@ -16,11 +17,11 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const tierColorByTier: Record<keyof TierSettings, string> = {
-  "1": "text-[modgray]",
-  "2": "text-[modgreen]",
-  "3": "text-[modblue]",
-  "4": "text-[modpurple]",
-  "5": "text-[modgold]",
+	"1": "text-[modgray]",
+	"2": "text-[modgreen]",
+	"3": "text-[modblue]",
+	"4": "text-[modpurple]",
+	"5": "text-[modgold]",
 };
 
 const TierFilter = observer(
@@ -33,7 +34,10 @@ const TierFilter = observer(
 				<Label className="p-r-2 text-[modgold]" htmlFor={"tier-filter1"}>
 					Tier
 				</Label>
-				<div id={"tier-filter1"} className="flex flex-row gap-1 justify-center flex-wrap">
+				<div
+					id={"tier-filter1"}
+					className="flex flex-row gap-1 justify-center flex-wrap"
+				>
 					{Object.keys(tierConfig).map((tier: keyof TierSettings) => {
 						const inputName = `tier-filter-${tier}`;
 						const value = tierConfig[tier] || 0;
@@ -43,8 +47,8 @@ const TierFilter = observer(
 								: value === -1
 									? "border-inset bg-[#400000]/100 border-[#800000]/100 text-red-500 dark:bg-[#400000]/100 dark:border-[#800000]/100 dark:text-red-500"
 									: "text-slate-400 opacity-30";
-            const tierColor = ModConsts.tiersMap.get(Number(tier));
-            const className = `${stateCSS} ${tierColor}`;
+						const tierColor = ModConsts.tiersMap.get(Number(tier));
+						const className = `${stateCSS} ${tierColor}`;
 
 						return (
 							<Button
@@ -54,7 +58,7 @@ const TierFilter = observer(
 								variant={"outline"}
 								onClick={() => modsView$.cycleState("tier", tier.toString())}
 							>
-								{String.fromCharCode(70-Number(tier))}
+								{String.fromCharCode(70 - Number(tier))}
 							</Button>
 						);
 					})}

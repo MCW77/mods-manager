@@ -2,9 +2,11 @@
 import copyToClipboard from "#/utils/clipboard";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type * as Character from "#/domain/Character";

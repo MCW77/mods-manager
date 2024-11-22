@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { modsView$ } from "../../state/modsView";
+
+const { modsView$ } = await import("../../state/modsView");
 
 // domain
 import type { PrimarySettings } from "../../domain/ModsViewOptions";

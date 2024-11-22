@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { observer } from "@legendapp/state/react";
-import { modsView$ } from "../../state/modsView";
+
+const { modsView$ } = await import("../../state/modsView");
 
 // domain
 import type { LevelSettings } from "../../domain/ModsViewOptions";
@@ -24,7 +25,10 @@ const LevelFilter = observer(
 				<Label className="p-r-2" htmlFor={"level-filter1"}>
 					Level
 				</Label>
-				<div id={"level-filter1"} className="flex flex-row gap-1 justify-center flex-wrap">
+				<div
+					id={"level-filter1"}
+					className="flex flex-row gap-1 justify-center flex-wrap"
+				>
 					{Object.keys(levelConfig).map((level: keyof LevelSettings) => {
 						const inputName = `level-filter-${level}`;
 						const value = levelConfig[level] || 0;

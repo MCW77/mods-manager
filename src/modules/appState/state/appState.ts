@@ -3,14 +3,16 @@ import saveAs from "file-saver";
 
 // state
 import {
-	type ObservableObject,
 	beginBatch,
 	endBatch,
 	observable,
+	type ObservableObject,
 } from "@legendapp/state";
 
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
 const { about$ } = await import("#/modules/about/state/about");
-import { dialog$ } from "#/modules/dialog/state/dialog";
 const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
 const { incrementalOptimization$ } = await import(
 	"#/modules/incrementalOptimization/state/incrementalOptimization"
@@ -22,10 +24,9 @@ const { modsView$ } = await import("#/modules/modsView/state/modsView");
 const { optimizationSettings$ } = await import(
 	"#/modules/optimizationSettings/state/optimizationSettings"
 );
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
 const { templates$ } = await import("#/modules/templates/state/templates");
+
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
@@ -35,7 +36,7 @@ import {
 	type PersistedPlayerProfile,
 	getProfileFromPersisted,
 } from "#/modules/profilesManagement/domain/PlayerProfile";
-import type { PersistedProfiles } from "#/modules/profilesManagement/state/profilesManagement";
+import type { PersistedProfiles } from "#/modules/profilesManagement/domain/Profiles";
 import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
 
 type AppState = {

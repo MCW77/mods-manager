@@ -3,9 +3,13 @@ import type React from "react";
 import { observer } from "@legendapp/state/react";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { compilations$ } from "#/modules/compilations/state/compilations";
-import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";
@@ -27,7 +31,8 @@ type CharacterBlockProps = {
  */
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
-		const selectedCharacters = compilations$.defaultCompilation.selectedCharacters.get();
+		const selectedCharacters =
+			compilations$.defaultCompilation.selectedCharacters.get();
 		const baseCharacterById = characters$.baseCharacterById.get();
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 

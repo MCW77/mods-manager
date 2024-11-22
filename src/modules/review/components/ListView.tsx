@@ -2,8 +2,11 @@
 import { flatten } from "lodash-es";
 
 // state
-import { characters$ } from "#/modules/characters/state/characters";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { characters$ } = await import("#/modules/characters/state/characters");
+
 import { review$ } from "../state/review";
 
 // domain

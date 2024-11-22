@@ -4,8 +4,11 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { Memo, observer, reactive } from "@legendapp/state/react";
-import { modsView$ } from "../state/modsView";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
+const { modsView$ } = await import("../state/modsView");
 
 // hooks
 import { useRenderCount } from "#/hooks/useRenderCount";

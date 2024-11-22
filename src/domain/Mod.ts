@@ -1,28 +1,12 @@
 // utils
 import Big from "big.js";
 
-// state
-import { optimizationSettings$ } from "#/modules/optimizationSettings/state/optimizationSettings";
-
 // domain
 import type { CharacterNames } from "../constants/characterSettings";
 import type { ModTiersEnum } from "../constants/enums";
 import { modScores } from "./constants/ModScoresConsts";
 import type * as ModTypes from "./types/ModTypes";
-import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
-
-import type * as Character from "./Character";
-import * as OptimizationPlan from "./OptimizationPlan";
-import {
-	type Stats,
-	CharacterSummaryStats as CSStats,
-	PrimaryStats,
-	SecondaryStats,
-	SetStats,
-} from "./Stats";
-
-const CSStat = CSStats.CharacterSummaryStat;
-type CSStat = CSStats.CharacterSummaryStat;
+import { PrimaryStats, SecondaryStats, SetStats } from "./Stats";
 
 const HU2GIMOSlotsMap: {
 	[key in ModTypes.HUSlots]: ModTypes.GIMOSlots;
@@ -241,84 +225,6 @@ export class Mod {
 			this.reRolledCount,
 			1,
 		);
-	}
-
-	shouldLevel(target: OptimizationPlan.OptimizationPlan) {
-		return OptimizationPlan.shouldUpgradeMods(target) && this.level < 15;
-	}
-
-	shouldSlice(target: OptimizationPlan.OptimizationPlan) {
-		return (
-			optimizationSettings$.activeSettings.simulate6EModSlice.peek() &&
-			this.pips === 5 &&
-			(this.level === 15 || this.shouldLevel(target))
-		);
-	}
-
-	/**
-	 * Get a summary of how this mod affects a character's stats
-	 * @param character {Character}
-	 * @param target {OptimizationPlan}
-	 * @param withUpgrades {boolean} Whether to level and slice the mod, if they've been selected for the character
-	 * @returns {Object<String, Number>} A map from stat name to value
-	 */
-	getStatSummaryForCharacter(
-		character: Character.Character,
-		target: OptimizationPlan.OptimizationPlan,
-		withUpgrades = true,
-	) {
-		let workingMod: Mod = this;
-
-		const summary: {
-			[key in CharacterStatNames.All]: CSStats.CharacterSummaryStat;
-		} = {
-			Health: new CSStat("Health", "0"),
-			Protection: new CSStat("Protection", "0"),
-			Speed: new CSStat("Speed", "0"),
-			"Critical Damage %": new CSStat("Critical Damage %", "0"),
-			"Potency %": new CSStat("Potency %", "0"),
-			"Tenacity %": new CSStat("Tenacity %", "0"),
-			"Physical Damage": new CSStat("Physical Damage", "0"),
-			"Physical Critical Chance %": new CSStat(
-				"Physical Critical Chance %",
-				"0",
-			),
-			Armor: new CSStat("Armor", "0"),
-			"Special Damage": new CSStat("Special Damage", "0"),
-			"Special Critical Chance %": new CSStat("Special Critical Chance %", "0"),
-			Resistance: new CSStat("Resistance", "0"),
-			"Accuracy %": new CSStat("Accuracy %", "0"),
-			"Critical Avoidance %": new CSStat("Critical Avoidance %", "0"),
-		};
-
-		if (withUpgrades) {
-			// Upgrade or slice each mod as necessary based on the optimizer settings and level of the mod
-			if (
-				15 > workingMod.level &&
-				optimizationSettings$.activeSettings.simulateLevel15Mods.peek()
-			) {
-				workingMod = workingMod.levelUp();
-			}
-			if (
-				15 === workingMod.level &&
-				5 === workingMod.pips &&
-				optimizationSettings$.activeSettings.simulate6EModSlice.peek()
-			) {
-				workingMod = workingMod.slice();
-			}
-		}
-
-		for (const modStat of [workingMod.primaryStat as Stats.Stat].concat(
-			workingMod.secondaryStats,
-		)) {
-			const flatStats = modStat.getFlatValuesForCharacter(character);
-			for (const stat of flatStats) {
-				summary[stat.type as CharacterStatNames.All] =
-					summary[stat.type as CharacterStatNames.All].plus(stat);
-			}
-		}
-
-		return summary;
 	}
 
 	reRollPrice() {
