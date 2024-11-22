@@ -54,8 +54,8 @@ const TemplatesActions = ({
 						const ranking = await stackRank$.fetch(
 							profilesManagement$.profiles.activeAllycode.get(),
 						);
-						compilations$.applyRanking(ranking);
 						endBatch();
+						compilations$.applyRanking(ranking);
 					} catch (error) {
 						if (error instanceof Error) dialog$.showError(error.message);
 					} finally {
