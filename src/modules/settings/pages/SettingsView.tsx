@@ -19,8 +19,8 @@ import type { SettingsSections } from "#/modules/settings/domain/SettingsSection
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // containers
-import GeneralSettingsView from "#/modules/settings/components/GeneralSettingsView";
-import OptimizerSettingsView from "#/modules/settings/components/OptimizerSettingsView";
+import { GeneralSettingsView } from "#/modules/settings/components/GeneralSettingsView";
+import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSettingsView";
 
 const SettingsView: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");

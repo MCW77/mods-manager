@@ -109,4 +109,4 @@ const FormInput = (props: ComponentProps<"div">) => {
 
 OptimizerSettingsView.displayName = "OptimizerSettingsView";
 
-export default OptimizerSettingsView;
+export { OptimizerSettingsView };

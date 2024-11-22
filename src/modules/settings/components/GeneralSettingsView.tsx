@@ -137,4 +137,4 @@ const FormInput = (props: ComponentProps<"div">) => {
 
 GeneralSettingsView.displayName = "GeneralSettingsView";
 
-export default GeneralSettingsView;
+export { GeneralSettingsView };
