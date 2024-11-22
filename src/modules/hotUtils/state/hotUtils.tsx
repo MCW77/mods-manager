@@ -142,12 +142,14 @@ const hotutils$ = observable({
 		}
 	},
 	checkSubscriptionStatus: async () => {
+		const activeAllycode = profilesManagement$.profiles.activeAllycode.get();
+		if (activeAllycode === "") return false;
 		isBusy$.set(true);
 		try {
 			const response = await post(hotutilsv2baseurl, {
 				action: "checksubscription",
 				payload: {
-					allyCode: profilesManagement$.profiles.activeAllycode.get(),
+					allyCode: activeAllycode,
 				},
 			});
 
