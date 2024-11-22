@@ -376,6 +376,7 @@ const compilations$ = observable({
 	resetOptimizationConditions: (allycode: string) => {
 		compilations$.defaultCompilation.optimizationConditions.set(null);
 		const compilationById$ = compilations$.compilationByIdByAllycode[allycode];
+		if (compilationById$.peek() === undefined) return;
 		for (const compilation of compilationById$.values()) {
 			compilationById$[compilation.id].optimizationConditions.set(null);
 		}
