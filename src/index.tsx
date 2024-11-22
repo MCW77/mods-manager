@@ -37,9 +37,24 @@ document.body.classList.add(
 
 const RootComponent = observer(() => {
 	return (
-		<Show if={stateLoader$.isDone} else={() => <Spinner isVisible={true} />}>
+		<Show
+			if={stateLoader$.isDone}
+			else={() => (
+				<div>
+					Root
+					<Spinner isVisible={true} />
+				</div>
+			)}
+		>
 			{() => (
-				<Suspense fallback={<Spinner isVisible={true} />}>
+				<Suspense
+					fallback={
+						<div>
+							Lazy
+							<Spinner isVisible={true} />
+						</div>
+					}
+				>
 					<LazyApp />
 				</Suspense>
 			)}
