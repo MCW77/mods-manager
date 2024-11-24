@@ -29,7 +29,7 @@ const ModScores = observer(
 
 		return (
 			<div>
-				<h4>{t("Score_plural")}</h4>
+				<h4>{t("Score_other")}</h4>
 				<ul className="p-l-0 text-[#c5f5f5]">
 					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
 						<For each={secondaryStats$}>

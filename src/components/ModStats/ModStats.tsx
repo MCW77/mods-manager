@@ -121,7 +121,7 @@ const ModStats = React.memo(
 				</ul>
 				<div className="secondaries-scores-container">
 					<div>
-						<h4>{t("Secondary_plural")}</h4>
+						<h4>{t("Secondary_other")}</h4>
 						<ul className="secondary">{statsDisplay}</ul>
 					</div>
 					<ModScores mod={mod} />
