@@ -5,7 +5,7 @@ import React from "react";
 import "./ModLoadoutDetail.css";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import "./ModStats.css";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;

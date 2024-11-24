@@ -6,7 +6,7 @@ import { Computed, reactiveObserver } from "@legendapp/state/react";
 import { objectEntries } from "#/utils/objectEntries";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const characters$ = stateLoader$.characters$;
 

@@ -13,7 +13,7 @@ import {
 import { beginBatch, endBatch } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

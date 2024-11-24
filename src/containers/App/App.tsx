@@ -22,7 +22,7 @@ import {
 	useMount,
 } from "@legendapp/state/react";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 import { ui$ } from "#/modules/ui/state/ui";
 

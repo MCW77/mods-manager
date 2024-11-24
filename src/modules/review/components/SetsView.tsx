@@ -5,7 +5,7 @@ import { For, useMount, useObservable } from "@legendapp/state/react";
 import collectByKey from "#/utils/collectByKey";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;

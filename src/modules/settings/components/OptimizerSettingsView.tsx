@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive, useSelector } from "@legendapp/state/react";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const templates$ = stateLoader$.templates$;
 

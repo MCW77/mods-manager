@@ -5,7 +5,7 @@ import { Fragment } from "react/jsx-runtime";
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;

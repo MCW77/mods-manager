@@ -3,7 +3,7 @@ import type React from "react";
 import { observer } from "@legendapp/state/react";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;

@@ -14,6 +14,7 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				main: "src/index.tsx",
+				worker: "src/workers/optimizer.ts",
 			},
 			output: {
 				manualChunks(id) {

@@ -4,7 +4,7 @@ import collectByKey from "#/utils/collectByKey";
 // state
 import { observer, reactive, useObservable } from "@legendapp/state/react";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

@@ -5,7 +5,7 @@ import * as React from "react";
 import "./CharacterAvatar.css";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const characters$ = stateLoader$.characters$;
 

@@ -1,7 +1,7 @@
 // state
 import { Computed, For, observer } from "@legendapp/state/react";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const charactersManagement$ = stateLoader$.charactersManagement$;
 

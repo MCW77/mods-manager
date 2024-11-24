@@ -4,7 +4,7 @@ import { observer, useObservable } from "@legendapp/state/react";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

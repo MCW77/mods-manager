@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 

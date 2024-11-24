@@ -2,7 +2,7 @@
 import { flatten } from "lodash-es";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;

@@ -2,7 +2,7 @@
 import { Computed, Show, observer, reactive } from "@legendapp/state/react";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const templates$ = stateLoader$.templates$;
 

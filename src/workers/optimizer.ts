@@ -1,9 +1,9 @@
 // utils
-await import("../utils/globalLegendPersistSettings");
+import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
 
 // state
-import { stateLoader$ } from "../modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
 await stateLoader$.initialize();
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

@@ -16,7 +16,7 @@ import { readFile } from "#/utils/readFile";
 // state
 import { observer } from "@legendapp/state/react";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const templates$ = stateLoader$.templates$;
 

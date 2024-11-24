@@ -4,7 +4,7 @@ import collectByKey from "#/utils/collectByKey";
 import { formatNumber } from "#/utils/formatNumber";
 
 //state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

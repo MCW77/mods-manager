@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;

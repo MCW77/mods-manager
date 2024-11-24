@@ -10,7 +10,7 @@ import formatAllycode from "#/utils/formatAllycode";
 import { readFile } from "#/utils/readFile";
 
 // state
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 import { dialog$ } from "#/modules/dialog/state/dialog";

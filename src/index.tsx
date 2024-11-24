@@ -1,6 +1,6 @@
 // state
 import "#/utils/globalLegendPersistSettings";
-import { stateLoader$ } from "./modules/stateLoader/stateLoader";
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 // react
 import React, { lazy, Suspense } from "react";
