@@ -2,12 +2,10 @@
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show } from "@legendapp/state/react";
 
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const compilations$ = stateLoader$.compilations$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
 
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 

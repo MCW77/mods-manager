@@ -5,10 +5,10 @@ import { Fragment } from "react/jsx-runtime";
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { hotutils$ } = await import("../state/hotUtils");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const hotutils$ = stateLoader$.hotutils$;
 
 // components
 import { Input } from "#/components/ui/input";

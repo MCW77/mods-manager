@@ -6,12 +6,10 @@ import { observer } from "@legendapp/state/react";
 import "./CharacterList.css";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";

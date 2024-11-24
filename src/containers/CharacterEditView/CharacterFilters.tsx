@@ -1,9 +1,9 @@
 // state
 import { Computed, For, observer } from "@legendapp/state/react";
 
-const { charactersManagement$ } = await import(
-	"#/modules/charactersManagement/state/charactersManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const charactersManagement$ = stateLoader$.charactersManagement$;
 
 // components
 import { Badge } from "#ui/badge";

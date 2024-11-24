@@ -1,5 +1,11 @@
 // state
-import { beginBatch, endBatch, observable, when } from "@legendapp/state";
+import {
+	beginBatch,
+	endBatch,
+	observable,
+	type ObservableObject,
+	when,
+} from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
@@ -13,6 +19,7 @@ import {
 	type FilterKeys,
 	type TriState,
 } from "../domain/ModsViewOptions";
+import type { ModsViewObservable } from "../domain/ModsViewObservable";
 
 const cloneQuickFilter = () => structuredClone(quickFilter);
 const clonedQuickFilter = cloneQuickFilter();
@@ -57,199 +64,203 @@ const defaultViewSetup = {
 	} as ViewSetupById,
 };
 
-const modsView$ = observable({
-	activeCategory: "Reveal" as Categories,
-	idOfActiveViewSetupByCategory: {
-		Reveal: "DefaultReveal",
-		Level: "DefaultLevel",
-		Slice5Dot: "DefaultSlice5Dot",
-		Slice6E: "DefaultSlice6E",
-		Slice6Dot: "DefaultSlice6Dot",
-		Calibrate: "DefaultCalibrate",
-		AllMods: "DefaultAllMods",
-	},
-	idOfSelectedFilterByCategory: {
-		Reveal: "QuickFilter",
-		Level: "QuickFilter",
-		Slice5Dot: "QuickFilter",
-		Slice6E: "QuickFilter",
-		Slice6Dot: "QuickFilter",
-		Calibrate: "QuickFilter",
-		AllMods: "QuickFilter",
-	},
-	viewSetupByIdByCategory: structuredClone(defaultViewSetup),
-	quickFilter: clonedQuickFilter,
-	viewSetupByIdInActiveCategory: () =>
-		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
-	idOfActiveViewSetupInActiveCategory: () => {
-		const category = modsView$.activeCategory.get();
-		const reactivity = modsView$.idOfActiveViewSetupByCategory[category].get();
-		const result = modsView$.idOfActiveViewSetupByCategory[category];
-		return result;
-	},
-	idOfSelectedFilterInActiveCategory: () =>
-		modsView$.idOfSelectedFilterByCategory[modsView$.activeCategory.get()],
-	activeViewSetupInActiveCategory: () => {
-		console.log(
-			"compute activeViewSetupInActiveCategory: ",
-			modsView$.activeViewSetupInActiveCategory.peek(),
-		);
-		const viewSetup =
-			modsView$.viewSetupByIdInActiveCategory[
-				modsView$.idOfActiveViewSetupInActiveCategory.get()
-			];
-		if (viewSetup !== undefined) {
-			return viewSetup;
-		}
-		throw new Error("Active view setup not found");
-	},
-	activeFilter: () => {
-		console.log("compute activeFilter");
-		const idOfSelectedFilterInActiveCategory =
-			modsView$.idOfSelectedFilterInActiveCategory.get();
-
-		if (idOfSelectedFilterInActiveCategory === "QuickFilter") {
-			return modsView$.quickFilter;
-		}
-		return modsView$.activeViewSetupInActiveCategory.filterById[
-			idOfSelectedFilterInActiveCategory
-		];
-	},
-	resetActiveViewSetup: () => {
-		modsView$.activeViewSetupInActiveCategory.set(
-			structuredClone(
-				defaultViewSetupByCategory[modsView$.activeCategory.peek()],
-			),
-		);
-	},
-	resetActiveFilter: () => {
-		const id = modsView$.idOfSelectedFilterInActiveCategory.peek();
-		beginBatch();
-		modsView$.activeFilter.set(cloneQuickFilter());
-		modsView$.activeFilter.id.set(id);
-		endBatch();
-	},
-	setFilterId: (filterId: string) => {
-		modsView$.idOfSelectedFilterInActiveCategory.set(filterId);
-	},
-	massSetFilter: (filterName: FilterKeys, value: TriState) => {
-		const filter = modsView$.activeFilter[filterName];
-		beginBatch();
-		for (const key of Object.keys(filter)) {
-			filter[key].set(value);
-		}
-		endBatch();
-	},
-	cycleState: (filterName: FilterKeys, valueKey: string) => {
-		const filter = modsView$.activeFilter[filterName][valueKey];
-		const value = filter.get();
-		if (value === -1) filter.set(0);
-		if (value === 0) filter.set(1);
-		if (value === 1) filter.set(-1);
-	},
-	reset: () => {
-		beginBatch();
-		syncStatus$.reset();
-		modsView$.quickFilter.assign(cloneQuickFilter());
-		endBatch();
-	},
-	addViewSetup: () => {
-		const oldId = modsView$.idOfActiveViewSetupInActiveCategory.peek();
-		let id = oldId;
-		while (
-			id in
-			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()].peek()
-		) {
-			id += "*";
-		}
-		beginBatch();
-		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()][id].set(
-			structuredClone(modsView$.activeViewSetupInActiveCategory.peek()),
-		);
-		modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()][
-			id
-		].id.set(id);
-		modsView$.idOfActiveViewSetupByCategory[
-			modsView$.activeCategory.peek()
-		].set(id);
-		endBatch();
-	},
-	removeViewSetup: (id: string) => {
-		const category = modsView$.activeCategory.peek();
-		const isIdActive =
-			modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
-		beginBatch();
-		modsView$.viewSetupByIdByCategory[category][id].delete();
-		if (isIdActive)
-			modsView$.idOfActiveViewSetupByCategory[category].set(
-				`Default${category}`,
+const modsView$: ObservableObject<ModsViewObservable> =
+	observable<ModsViewObservable>({
+		activeCategory: "Reveal" as Categories,
+		idOfActiveViewSetupByCategory: {
+			Reveal: "DefaultReveal",
+			Level: "DefaultLevel",
+			Slice5Dot: "DefaultSlice5Dot",
+			Slice6E: "DefaultSlice6E",
+			Slice6Dot: "DefaultSlice6Dot",
+			Calibrate: "DefaultCalibrate",
+			AllMods: "DefaultAllMods",
+		},
+		idOfSelectedFilterByCategory: {
+			Reveal: "QuickFilter",
+			Level: "QuickFilter",
+			Slice5Dot: "QuickFilter",
+			Slice6E: "QuickFilter",
+			Slice6Dot: "QuickFilter",
+			Calibrate: "QuickFilter",
+			AllMods: "QuickFilter",
+		},
+		viewSetupByIdByCategory: structuredClone(defaultViewSetup),
+		quickFilter: clonedQuickFilter,
+		viewSetupByIdInActiveCategory: () =>
+			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
+		idOfActiveViewSetupInActiveCategory: () => {
+			const category = modsView$.activeCategory.get();
+			const reactivity =
+				modsView$.idOfActiveViewSetupByCategory[category].get();
+			const result = modsView$.idOfActiveViewSetupByCategory[category];
+			return result;
+		},
+		idOfSelectedFilterInActiveCategory: () =>
+			modsView$.idOfSelectedFilterByCategory[modsView$.activeCategory.get()],
+		activeViewSetupInActiveCategory: () => {
+			console.log(
+				"compute activeViewSetupInActiveCategory: ",
+				modsView$.activeViewSetupInActiveCategory.peek(),
 			);
-		endBatch();
-	},
-	renameViewSetup: (id: string, newName: string) => {
-		const category = modsView$.activeCategory.peek();
-		const isIdActive =
-			modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
-		const viewSetup = modsView$.viewSetupByIdByCategory[category][id];
+			const viewSetup =
+				modsView$.viewSetupByIdInActiveCategory[
+					modsView$.idOfActiveViewSetupInActiveCategory.get()
+				];
+			if (viewSetup !== undefined) {
+				return viewSetup;
+			}
+			throw new Error("Active view setup not found");
+		},
+		activeFilter: () => {
+			console.log("compute activeFilter");
+			const idOfSelectedFilterInActiveCategory =
+				modsView$.idOfSelectedFilterInActiveCategory.get();
 
-		beginBatch();
-		viewSetup.id.set(newName);
-		modsView$.viewSetupByIdByCategory[category][newName].set(
-			structuredClone(viewSetup.peek()),
-		);
-		modsView$.viewSetupByIdByCategory[category][id].delete();
-		if (isIdActive) {
-			modsView$.idOfActiveViewSetupByCategory[category].set(newName);
-		}
-		endBatch();
-	},
-	addSortConfig: () => {
-		const id = crypto.randomUUID();
-		modsView$.activeViewSetupInActiveCategory.sort.set(id, {
-			id,
-			sortBy: "characterID",
-			sortOrder: "asc",
-		});
-	},
-	addFilter: () => {
-		beginBatch();
-		modsView$.activeViewSetupInActiveCategory.filterById[
-			`${modsView$.activeFilter.id.peek()}*`
-		].set(structuredClone(modsView$.activeFilter.peek()));
-		modsView$.activeViewSetupInActiveCategory.filterById[
-			`${modsView$.activeFilter.id.peek()}*`
-		].id.set(`${modsView$.activeFilter.id.peek()}*`);
-		modsView$.idOfSelectedFilterInActiveCategory.set(
-			`${modsView$.activeFilter.id.peek()}*`,
-		);
-		endBatch();
-	},
-	removeFilter: (id: string) => {
-		const isIdActive =
-			modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
-		beginBatch();
-		modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
-		if (isIdActive)
-			modsView$.idOfSelectedFilterInActiveCategory.set("QuickFilter");
-		endBatch();
-	},
-	renameFilter: (id: string, newName: string) => {
-		const isIdActive =
-			modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
-		const filter = modsView$.activeViewSetupInActiveCategory.filterById[id];
+			if (idOfSelectedFilterInActiveCategory === "QuickFilter") {
+				return modsView$.quickFilter;
+			}
+			return modsView$.activeViewSetupInActiveCategory.filterById[
+				idOfSelectedFilterInActiveCategory
+			];
+		},
+		resetActiveViewSetup: () => {
+			modsView$.activeViewSetupInActiveCategory.set(
+				structuredClone(
+					defaultViewSetupByCategory[modsView$.activeCategory.peek()],
+				),
+			);
+		},
+		resetActiveFilter: () => {
+			const id = modsView$.idOfSelectedFilterInActiveCategory.peek();
+			beginBatch();
+			modsView$.activeFilter.set(cloneQuickFilter());
+			modsView$.activeFilter.id.set(id);
+			endBatch();
+		},
+		setFilterId: (filterId: string) => {
+			modsView$.idOfSelectedFilterInActiveCategory.set(filterId);
+		},
+		massSetFilter: (filterName: FilterKeys, value: TriState) => {
+			const filter = modsView$.activeFilter[filterName];
+			beginBatch();
+			for (const key of Object.keys(filter)) {
+				filter[key].set(value);
+			}
+			endBatch();
+		},
+		cycleState: (filterName: FilterKeys, valueKey: string) => {
+			const filter = modsView$.activeFilter[filterName][valueKey];
+			const value = filter.get();
+			if (value === -1) filter.set(0);
+			if (value === 0) filter.set(1);
+			if (value === 1) filter.set(-1);
+		},
+		reset: () => {
+			beginBatch();
+			syncStatus$.reset();
+			modsView$.quickFilter.assign(cloneQuickFilter());
+			endBatch();
+		},
+		addViewSetup: () => {
+			const oldId = modsView$.idOfActiveViewSetupInActiveCategory.peek();
+			let id = oldId;
+			while (
+				id in
+				modsView$.viewSetupByIdByCategory[
+					modsView$.activeCategory.peek()
+				].peek()
+			) {
+				id += "*";
+			}
+			beginBatch();
+			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()][
+				id
+			].set(structuredClone(modsView$.activeViewSetupInActiveCategory.peek()));
+			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.peek()][
+				id
+			].id.set(id);
+			modsView$.idOfActiveViewSetupByCategory[
+				modsView$.activeCategory.peek()
+			].set(id);
+			endBatch();
+		},
+		removeViewSetup: (id: string) => {
+			const category = modsView$.activeCategory.peek();
+			const isIdActive =
+				modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
+			beginBatch();
+			modsView$.viewSetupByIdByCategory[category][id].delete();
+			if (isIdActive)
+				modsView$.idOfActiveViewSetupByCategory[category].set(
+					`Default${category}`,
+				);
+			endBatch();
+		},
+		renameViewSetup: (id: string, newName: string) => {
+			const category = modsView$.activeCategory.peek();
+			const isIdActive =
+				modsView$.idOfActiveViewSetupByCategory[category].peek() === id;
+			const viewSetup = modsView$.viewSetupByIdByCategory[category][id];
 
-		beginBatch();
-		filter.id.set(newName);
-		modsView$.activeViewSetupInActiveCategory.filterById[newName].set(
-			structuredClone(filter.peek()),
-		);
-		modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
-		if (isIdActive) {
-			modsView$.idOfSelectedFilterInActiveCategory.set(newName);
-		}
-		endBatch();
-	},
-});
+			beginBatch();
+			viewSetup.id.set(newName);
+			modsView$.viewSetupByIdByCategory[category][newName].set(
+				structuredClone(viewSetup.peek()),
+			);
+			modsView$.viewSetupByIdByCategory[category][id].delete();
+			if (isIdActive) {
+				modsView$.idOfActiveViewSetupByCategory[category].set(newName);
+			}
+			endBatch();
+		},
+		addSortConfig: () => {
+			const id = crypto.randomUUID();
+			modsView$.activeViewSetupInActiveCategory.sort.set(id, {
+				id,
+				sortBy: "characterID",
+				sortOrder: "asc",
+			});
+		},
+		addFilter: () => {
+			beginBatch();
+			modsView$.activeViewSetupInActiveCategory.filterById[
+				`${modsView$.activeFilter.id.peek()}*`
+			].set(structuredClone(modsView$.activeFilter.peek()));
+			modsView$.activeViewSetupInActiveCategory.filterById[
+				`${modsView$.activeFilter.id.peek()}*`
+			].id.set(`${modsView$.activeFilter.id.peek()}*`);
+			modsView$.idOfSelectedFilterInActiveCategory.set(
+				`${modsView$.activeFilter.id.peek()}*`,
+			);
+			endBatch();
+		},
+		removeFilter: (id: string) => {
+			const isIdActive =
+				modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
+			beginBatch();
+			modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
+			if (isIdActive)
+				modsView$.idOfSelectedFilterInActiveCategory.set("QuickFilter");
+			endBatch();
+		},
+		renameFilter: (id: string, newName: string) => {
+			const isIdActive =
+				modsView$.idOfSelectedFilterInActiveCategory.peek() === id;
+			const filter = modsView$.activeViewSetupInActiveCategory.filterById[id];
+
+			beginBatch();
+			filter.id.set(newName);
+			modsView$.activeViewSetupInActiveCategory.filterById[newName].set(
+				structuredClone(filter.peek()),
+			);
+			modsView$.activeViewSetupInActiveCategory.filterById[id].delete();
+			if (isIdActive) {
+				modsView$.idOfSelectedFilterInActiveCategory.set(newName);
+			}
+			endBatch();
+		},
+	});
 
 const filters$ = observable({
 	allFilters: [] as Filter[],

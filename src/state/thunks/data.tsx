@@ -4,17 +4,14 @@ import cleanAllycode from "#/utils/cleanAllycode";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const characters$ = stateLoader$.characters$;
+const hotutils$ = stateLoader$.hotutils$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";

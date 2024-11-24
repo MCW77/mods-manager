@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer } from "@legendapp/state/react";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { modsView$ } = await import("../state/modsView");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const modsView$ = stateLoader$.modsView$;
 
 // components
 import { ChevronsUpDown } from "lucide-react";

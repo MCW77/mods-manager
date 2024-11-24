@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 // state
 import { For, observer, Show, useObservable } from "@legendapp/state/react";
 
-const { modsView$ } = await import("#/modules/modsView/state/modsView");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const modsView$ = stateLoader$.modsView$;
 
 // domain
 import { modScores } from "../../domain/constants/ModScoresConsts";

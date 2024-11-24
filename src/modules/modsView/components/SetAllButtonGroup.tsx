@@ -2,7 +2,9 @@
 import { useTranslation } from "react-i18next";
 
 // state
-const { modsView$ } = await import("../state/modsView");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const modsView$ = stateLoader$.modsView$;
 
 // domain
 import type { FilterKeys } from "../domain/ModsViewOptions";

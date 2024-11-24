@@ -4,10 +4,9 @@ import { useTranslation } from "react-i18next";
 import { observer, reactive } from "@legendapp/state/react";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
+const profilesManagement$ = stateLoader$.profilesManagement$;
 // components
 import {
 	Select,

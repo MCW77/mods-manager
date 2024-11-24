@@ -9,22 +9,16 @@ import {
 	type ObservableObject,
 } from "@legendapp/state";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { about$ } = await import("#/modules/about/state/about");
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
-const { incrementalOptimization$ } = await import(
-	"#/modules/incrementalOptimization/state/incrementalOptimization"
-);
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
-const { modsView$ } = await import("#/modules/modsView/state/modsView");
-const { optimizationSettings$ } = await import(
-	"#/modules/optimizationSettings/state/optimizationSettings"
-);
-const { templates$ } = await import("#/modules/templates/state/templates");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const about$ = stateLoader$.about$;
+const hotutils$ = stateLoader$.hotutils$;
+const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
+const modsView$ = stateLoader$.modsView$;
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
+const templates$ = stateLoader$.templates$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { ui$ } from "#/modules/ui/state/ui";

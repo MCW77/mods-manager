@@ -4,12 +4,10 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { optimizationSettings$ } = await import(
-	"#/modules/optimizationSettings/state/optimizationSettings"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // components
 import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";

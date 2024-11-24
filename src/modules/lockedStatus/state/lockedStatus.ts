@@ -1,3 +1,6 @@
+// utils
+import { objectKeys } from "#/utils/objectKeys";
+
 // state
 import {
 	beginBatch,
@@ -9,24 +12,18 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
 
 // domain
 import type {
 	LockedStatusByCharacterIdByAllycode,
 	LockedStatusByCharacterId,
 } from "../domain/LockedStatusByCharacterId";
-import { objectKeys } from "#/utils/objectKeys";
+import type { LockedStatusObservable } from "../domain/LockedStatusObservable";
 
-const lockedStatus$ = observable<{
-	lockedStatusByCharacterIdByAllycode: LockedStatusByCharacterIdByAllycode;
-	ofActivePlayerByCharacterId: () => Observable<LockedStatusByCharacterId>;
-	lockAll: () => void;
-	unlockAll: () => void;
-	reset: () => void;
-}>({
+const lockedStatus$ = observable<LockedStatusObservable>({
 	lockedStatusByCharacterIdByAllycode:
 		{} as LockedStatusByCharacterIdByAllycode,
 	ofActivePlayerByCharacterId: (): Observable<LockedStatusByCharacterId> => {

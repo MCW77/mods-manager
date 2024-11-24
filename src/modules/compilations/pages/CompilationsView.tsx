@@ -4,7 +4,9 @@ import { For, observer, useObservable } from "@legendapp/state/react";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { compilations$ } = await import("../state/compilations");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const compilations$ = stateLoader$.compilations$;
 
 import { ui$ } from "#/modules/ui/state/ui";
 

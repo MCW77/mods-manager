@@ -5,10 +5,9 @@ import * as React from "react";
 import "./ModImage.css";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
+const profilesManagement$ = stateLoader$.profilesManagement$;
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";
 

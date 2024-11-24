@@ -1,4 +1,3 @@
-debugger;
 // react
 import type React from "react";
 import { Suspense, useEffect } from "react";
@@ -23,11 +22,7 @@ import {
 	useMount,
 } from "@legendapp/state/react";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { about$ } = await import("#/modules/about/state/about");
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 import { ui$ } from "#/modules/ui/state/ui";
 
@@ -57,6 +52,10 @@ import { HelpView } from "#/modules/help/pages/HelpView";
 import { ModsView } from "#/modules/modsView/pages/ModsView";
 import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
 import { SettingsView } from "#/modules/settings/pages/SettingsView";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const about$ = stateLoader$.about$;
+const hotutils$ = stateLoader$.hotutils$;
 
 const ReactiveTabs = reactive(Tabs);
 

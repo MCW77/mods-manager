@@ -4,10 +4,9 @@ import { useTranslation } from "react-i18next";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
+const profilesManagement$ = stateLoader$.profilesManagement$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain

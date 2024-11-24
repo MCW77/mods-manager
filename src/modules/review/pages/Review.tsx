@@ -10,16 +10,12 @@ import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { optimizationSettings$ } = await import(
-	"#/modules/optimizationSettings/state/optimizationSettings"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
+const characters$ = stateLoader$.characters$;
 
 import { review$ } from "#/modules/review/state/review";
 
@@ -317,7 +313,7 @@ const Review: React.FC = observer(() => {
 	const currentLoadoutValue = modAssignments2
 		.map(({ characterId: id, target }) =>
 			Object.keys(currentModsByCharacter).includes(id)
-				? ModLoadout.getOptimizationValue(
+				? optimizationSettings$.getOptimizationValue(
 						ModLoadout.createModLoadout(currentModsByCharacter[id]),
 						characterById[id],
 						target,
@@ -328,7 +324,7 @@ const Review: React.FC = observer(() => {
 		.reduce((a, b) => a + b, 0);
 	const newLoadoutValue = modAssignments2
 		.map(({ characterId: id, target, assignedMods }) =>
-			ModLoadout.getOptimizationValue(
+			optimizationSettings$.getOptimizationValue(
 				ModLoadout.createModLoadout(assignedMods),
 				characterById[id],
 				target,

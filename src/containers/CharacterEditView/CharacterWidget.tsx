@@ -3,13 +3,11 @@ import type React from "react";
 import { observer } from "@legendapp/state/react";
 
 // state
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const compilations$ = stateLoader$.compilations$;
+const characters$ = stateLoader$.characters$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
 import type { CharacterNames } from "#/constants/characterSettings";

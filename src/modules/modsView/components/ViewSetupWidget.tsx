@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-const { modsView$ } = await import("../state/modsView");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const modsView$ = stateLoader$.modsView$;
 
 // components
 import { FilterWidget } from "./FilterWidget";

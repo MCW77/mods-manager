@@ -8,12 +8,10 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 // api
 import { fetchVersion } from "../api/fetchVersion";
 
-interface About {
-	version: string;
-	checkVersion: () => void;
-}
+// domain
+import type { AboutObservable } from "../domain/AboutObservable";
 
-const about$: ObservableObject<About> = observable<About>({
+const about$: ObservableObject<AboutObservable> = observable<AboutObservable>({
 	version: String(import.meta.env.VITE_VERSION) || "local",
 	checkVersion: async () => {
 		try {

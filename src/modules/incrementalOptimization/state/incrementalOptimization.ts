@@ -3,21 +3,15 @@ import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-type IndicesByProfile = Record<string, number | null>;
-interface IncrementalOptimization {
-	activeIndex: () => number | null;
-	indicesByProfile: IndicesByProfile;
-	addProfile: (allycode: string) => void;
-	reset: () => void;
-	deleteProfile: (allycode: string) => void;
-}
+const profilesManagement$ = stateLoader$.profilesManagement$;
 
-const incrementalOptimization$: ObservableObject<IncrementalOptimization> =
-	observable<IncrementalOptimization>({
+// domain
+import type { IncrementalOptimizationObservable } from "../domain/IncrementalOptimizationObservable";
+
+const incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable> =
+	observable<IncrementalOptimizationObservable>({
 		activeIndex: () => {
 			return incrementalOptimization$.indicesByProfile[
 				profilesManagement$.profiles.activeAllycode.get()

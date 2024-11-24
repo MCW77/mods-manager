@@ -6,12 +6,10 @@ import {
 	useObservable,
 } from "@legendapp/state/react";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { incrementalOptimization$ } = await import(
-	"#/modules/incrementalOptimization/state/incrementalOptimization"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";

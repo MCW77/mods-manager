@@ -11,6 +11,18 @@ export default defineConfig({
 	},
 	build: {
 		target: "esnext",
+		rollupOptions: {
+			input: {
+				main: "src/index.tsx",
+			},
+			output: {
+				manualChunks(id) {
+					if (id.includes("stateLoader")) {
+						return "stateLoader";
+					}
+				},
+			},
+		},
 	},
 	plugins: [
 		react(),

@@ -2,10 +2,10 @@
 import { observer } from "@legendapp/state/react";
 
 // state
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { templates$ } = await import("#/modules/templates/state/templates");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const compilations$ = stateLoader$.compilations$;
+const templates$ = stateLoader$.templates$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 

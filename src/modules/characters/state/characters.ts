@@ -8,10 +8,9 @@ import { fetchCharacters } from "../api/fetchBaseCharacters";
 
 // domain
 import type { BaseCharacterById } from "../domain/BaseCharacter";
+import type { CharactersObservable } from "../domain/CharactersObservable";
 
-const characters$ = observable<{
-	baseCharacterById: () => Promise<BaseCharacterById>;
-}>({
+const characters$ = observable<CharactersObservable>({
 	baseCharacterById: async () => {
 		try {
 			return await fetchCharacters();

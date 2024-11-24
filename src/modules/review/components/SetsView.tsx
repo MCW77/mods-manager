@@ -5,10 +5,10 @@ import { For, useMount, useObservable } from "@legendapp/state/react";
 import collectByKey from "#/utils/collectByKey";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const characters$ = stateLoader$.characters$;
 
 import { review$ } from "../state/review";
 

@@ -3,21 +3,13 @@ await import("../utils/globalLegendPersistSettings");
 import * as perf from "../utils/performance";
 
 // state
-const { profilesManagement$ } = await import(
-	"../modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"../modules/compilations/state/compilations"
-);
-const { incrementalOptimization$ } = await import(
-	"../modules/incrementalOptimization/state/incrementalOptimization"
-);
-const { lockedStatus$ } = await import(
-	"../modules/lockedStatus/state/lockedStatus"
-);
-const { optimizationSettings$ } = await import(
-	"../modules/optimizationSettings/state/optimizationSettings"
-);
+import { stateLoader$ } from "../modules/stateLoader/stateLoader";
+await stateLoader$.initialize();
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
 import type { CharacterNames } from "../constants/characterSettings";

@@ -9,19 +9,13 @@ import "./CharacterEditView.css";
 import { observable } from "@legendapp/state";
 import { observer } from "@legendapp/state/react";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { charactersManagement$ } = await import(
-	"#/modules/charactersManagement/state/charactersManagement"
-);
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const characters$ = stateLoader$.characters$;
+const charactersManagement$ = stateLoader$.charactersManagement$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";

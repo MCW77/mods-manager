@@ -13,16 +13,12 @@ import {
 import { beginBatch, endBatch } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { incrementalOptimization$ } = await import(
-	"#/modules/incrementalOptimization/state/incrementalOptimization"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const characters$ = stateLoader$.characters$;
+const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";

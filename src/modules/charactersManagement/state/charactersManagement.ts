@@ -3,9 +3,9 @@ import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const compilations$ = stateLoader$.compilations$;
 
 // domain
 import {
@@ -13,16 +13,9 @@ import {
 	type TextFilter,
 	type CharacterFilter,
 	type CustomFilter,
-	type CharacterFilterPredicate,
 } from "../domain/CharacterFilterById";
-import type { CharacterFilterSetup } from "../domain/CharacterFilterSetup";
 import type { Character } from "#/domain/Character";
-
-interface CharactersManagement {
-	filterSetup: CharacterFilterSetup;
-	activeCustomFilter: () => CharacterFilterPredicate;
-	addTextFilter: () => void;
-}
+import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
 
 const getDefaultFilterSetup = () => {
 	return {
@@ -304,8 +297,8 @@ const getDefaultFilterSetup = () => {
 	};
 };
 
-const charactersManagement$: ObservableObject<CharactersManagement> =
-	observable<CharactersManagement>({
+const charactersManagement$: ObservableObject<CharactersManagementObservable> =
+	observable<CharactersManagementObservable>({
 		filterSetup: getDefaultFilterSetup(),
 		activeCustomFilter: () => {
 			const id = charactersManagement$.filterSetup.customFilterId.get();

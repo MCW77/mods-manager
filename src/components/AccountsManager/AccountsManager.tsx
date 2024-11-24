@@ -10,10 +10,9 @@ import formatAllycode from "#/utils/formatAllycode";
 import { readFile } from "#/utils/readFile";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
+const profilesManagement$ = stateLoader$.profilesManagement$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 //components

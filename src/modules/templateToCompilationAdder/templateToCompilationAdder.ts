@@ -1,11 +1,9 @@
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { templates$ } = await import("#/modules/templates/state/templates");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const templates$ = stateLoader$.templates$;
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";

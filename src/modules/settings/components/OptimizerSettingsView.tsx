@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive, useSelector } from "@legendapp/state/react";
 
-const { templates$ } = await import("#/modules/templates/state/templates");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const templates$ = stateLoader$.templates$;
 
 // domain
 import type { TemplatesAddingMode } from "#/modules/templates/domain/TemplatesAddingMode";

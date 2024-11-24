@@ -5,9 +5,9 @@ import React from "react";
 import "./ModLoadoutView.css";
 
 // state
-const { optimizationSettings$ } = await import(
-	"#/modules/optimizationSettings/state/optimizationSettings"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
 import type * as Character from "#/domain/Character";

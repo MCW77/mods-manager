@@ -6,14 +6,12 @@ import { useTranslation } from "react-i18next";
 import "./ModStats.css";
 
 // state
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { optimizationSettings$ } = await import(
-	"#/modules/optimizationSettings/state/optimizationSettings"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { modsView$ } = await import("#/modules/modsView/state/modsView");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
+const characters$ = stateLoader$.characters$;
+const modsView$ = stateLoader$.modsView$;
 
 // domain
 import type { CharacterNames } from "../../constants/characterSettings";

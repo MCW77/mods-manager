@@ -1,7 +1,9 @@
 // state
 import { Memo, observer } from "@legendapp/state/react";
 
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const hotutils$ = stateLoader$.hotutils$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 

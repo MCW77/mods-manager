@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 // state
 import { For, observer, reactive, Show } from "@legendapp/state/react";
 
-const { modsView$ } = await import("../state/modsView");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const modsView$ = stateLoader$.modsView$;
 
 // domain
 import { builtinFilters } from "../domain/ModsViewOptions";

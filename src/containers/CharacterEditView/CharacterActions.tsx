@@ -4,19 +4,13 @@ import { observer, useObservable } from "@legendapp/state/react";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { incrementalOptimization$ } = await import(
-	"#/modules/incrementalOptimization/state/incrementalOptimization"
-);
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const compilations$ = stateLoader$.compilations$;
+const characters$ = stateLoader$.characters$;
+const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const lockedStatus$ = stateLoader$.lockedStatus$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
