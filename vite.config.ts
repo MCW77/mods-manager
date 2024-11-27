@@ -14,8 +14,8 @@ export default defineConfig({
 		rollupOptions: {
 			treeshake: true,
 			input: {
-				main: "src/index.tsx",
-				worker: "src/workers/optimizer.ts",
+				index: "src/index.tsx",
+				optimizer: "src/workers/optimizer.ts",
 			},
 			output: {
 				manualChunks(id) {
