@@ -3,9 +3,14 @@ import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
+/*
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const compilations$ = stateLoader$.compilations$;
+*/
+const { compilations$ } = await import(
+	"#/modules/compilations/state/compilations"
+);
 
 // domain
 import {
