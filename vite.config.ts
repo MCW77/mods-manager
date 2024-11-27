@@ -12,12 +12,16 @@ export default defineConfig({
 	build: {
 		target: "esnext",
 		rollupOptions: {
+			treeshake: true,
 			input: {
 				main: "src/index.tsx",
 				worker: "src/workers/optimizer.ts",
 			},
 			output: {
 				manualChunks(id) {
+					if (id.includes("node_modules")) {
+						return "vendor";
+					}
 					if (id.includes("stateLoader")) {
 						return "stateLoader";
 					}
