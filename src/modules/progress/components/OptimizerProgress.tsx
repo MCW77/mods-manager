@@ -1,3 +1,6 @@
+// react
+import { lazy } from "react";
+
 // state
 import {
 	observer,
@@ -22,7 +25,9 @@ import { Optimize } from "#/state/modules/optimize";
 import type * as Character from "#/domain/Character";
 
 // components
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Progress } from "#ui/progress";
@@ -117,4 +122,4 @@ const OptimizerProgress: React.FC = observer(() => {
 
 OptimizerProgress.displayName = "OptimizerProgress";
 
-export { OptimizerProgress };
+export default OptimizerProgress;

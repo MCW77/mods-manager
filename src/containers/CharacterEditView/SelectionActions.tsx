@@ -122,4 +122,4 @@ const SelectionActions = ({
 
 SelectionActions.displayName = "SelectionActions";
 
-export { SelectionActions };
+export default SelectionActions;

@@ -1,5 +1,6 @@
 // react
 import type React from "react";
+import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -10,12 +11,13 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const modsView$ = stateLoader$.modsView$;
 
 // components
-import { FilterWidget } from "./FilterWidget";
-import { ViewSetupManager } from "./ViewSetupManager";
+const FilterWidget = lazy(() => import("./FilterWidget"));
+const ViewSetupManager = lazy(() => import("./ViewSetupManager"));
+const ScoreSelector = lazy(() => import("./ScoreSelector"));
+const SortManager = lazy(() => import("./SortManager"));
+
 import { Label } from "#ui/label";
 import { Switch } from "#ui/switch";
-import { ScoreSelector } from "./ScoreSelector";
-import { SortManager } from "./SortManager";
 
 const ReactiveSwitch = reactive(Switch);
 
@@ -51,4 +53,4 @@ const ViewSetupWidget: React.FC = observer(() => {
 
 ViewSetupWidget.displayName = "ViewSetupWidget";
 
-export { ViewSetupWidget };
+export default ViewSetupWidget;

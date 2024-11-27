@@ -1,5 +1,5 @@
 // react
-import * as React from "react";
+import { memo, lazy } from "react";
 
 // styles
 import "./ModImage.css";
@@ -15,7 +15,9 @@ import type { Mod } from "../../domain/Mod";
 import { SetStats } from "../../domain/Stats";
 
 // components
-import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
+const CharacterAvatar = lazy(
+	() => import("../CharacterAvatar/CharacterAvatar"),
+);
 import { Pips } from "../Pips/Pips";
 
 type ComponentProps = {
@@ -39,7 +41,7 @@ const getModColor = (mod: Mod) => {
 	}
 };
 
-const ModImage = React.memo(
+const ModImage = memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
 		const characterById = profilesManagement$.activeProfile.characterById.get();
 		const modColor = getModColor(mod);
@@ -77,4 +79,4 @@ const ModImage = React.memo(
 
 ModImage.displayName = "ModImage";
 
-export { ModImage };
+export default ModImage;

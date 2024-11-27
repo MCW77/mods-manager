@@ -101,4 +101,4 @@ const FilterManager = observer(
 
 FilterManager.displayName = "FilterManager";
 
-export { FilterManager };
+export default FilterManager;

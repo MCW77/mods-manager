@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -11,9 +11,13 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { Switch } from "@legendapp/state/react";
 
 // containers
-import { CharacterEditForm } from "#/modules/planEditing/pages/CharacterEditForm";
-import { Review } from "#/modules/review/pages/Review";
-import { CharacterEditView } from "#/containers/CharacterEditView/CharacterEditView";
+const CharacterEditForm = lazy(
+	() => import("#/modules/planEditing/pages/CharacterEditForm"),
+);
+const Review = lazy(() => import("#/modules/review/pages/Review"));
+const CharacterEditView = lazy(
+	() => import("#/containers/CharacterEditView/CharacterEditView"),
+);
 
 const OptimizerView = React.memo(() => {
 	const characterById = profilesManagement$.activeProfile.characterById.get();
@@ -40,4 +44,4 @@ const OptimizerView = React.memo(() => {
 
 OptimizerView.displayName = "OptimizerView";
 
-export { OptimizerView };
+export default OptimizerView;

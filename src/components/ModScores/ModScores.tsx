@@ -67,4 +67,4 @@ const ModScores = observer(
 
 ModScores.displayName = "ModScores";
 
-export { ModScores };
+export default ModScores;

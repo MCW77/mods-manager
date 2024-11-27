@@ -134,4 +134,4 @@ const CreateProfileModal: React.FC = observer(() => {
 
 CreateProfileModal.displayName = "CreateProfileModal";
 
-export { CreateProfileModal };
+export default CreateProfileModal;

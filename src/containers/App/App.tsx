@@ -1,6 +1,6 @@
 // react
 import type React from "react";
-import { Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
@@ -40,18 +40,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
-import { ProfilesManager } from "#/modules/profilesManagement/components/ProfilesManager";
+const ProfilesManager = lazy(
+	() => import("#/modules/profilesManagement/components/ProfilesManager"),
+);
 
 import { Toaster } from "#ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
 // containers
-import { AboutView } from "#/containers/AboutView/AboutView";
-import { CompilationsView } from "#/modules/compilations/pages/CompilationsView";
+const AboutView = lazy(() => import("#/containers/AboutView/AboutView"));
+const CompilationsView = lazy(
+	() => import("#/modules/compilations/pages/CompilationsView"),
+);
 import { HelpView } from "#/modules/help/pages/HelpView";
-import { ModsView } from "#/modules/modsView/pages/ModsView";
-import { OptimizerView } from "#/containers/OptimizerView/OptimizerView";
-import { SettingsView } from "#/modules/settings/pages/SettingsView";
+const ModsView = lazy(() => import("#/modules/modsView/pages/ModsView"));
+const OptimizerView = lazy(
+	() => import("#/containers/OptimizerView/OptimizerView"),
+);
+const SettingsView = lazy(
+	() => import("#/modules/settings/pages/SettingsView"),
+);
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const about$ = stateLoader$.about$;
@@ -100,14 +108,7 @@ const App: React.FC = observer(() => {
 	}, [firstSection]);
 
 	return (
-		<Suspense
-			fallback={
-				<div>
-					App
-					<Spinner />
-				</div>
-			}
-		>
+		<Suspense fallback={<div className={"bg-black h-full w-full"} />}>
 			<div
 				className={
 					"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif] text-left"

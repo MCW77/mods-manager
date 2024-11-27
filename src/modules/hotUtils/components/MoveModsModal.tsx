@@ -192,4 +192,4 @@ const MoveModsModal = () => {
 
 MoveModsModal.displayName = "MoveModsModal";
 
-export { MoveModsModal };
+export default MoveModsModal;

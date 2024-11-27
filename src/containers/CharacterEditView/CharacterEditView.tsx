@@ -1,5 +1,6 @@
 // react
 import type React from "react";
+import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
@@ -25,15 +26,17 @@ import type { CharacterFilter } from "#/modules/charactersManagement/domain/Char
 import * as Character from "#/domain/Character";
 
 // components
-import { SelectionActions } from "./SelectionActions";
-import { TemplatesActions } from "./TemplatesActions";
-import { CharacterActions } from "./CharacterActions";
-import { CharacterFilters } from "./CharacterFilters";
-import { CharacterWidget } from "./CharacterWidget";
+const SelectionActions = lazy(() => import("./SelectionActions"));
+const TemplatesActions = lazy(() => import("./TemplatesActions"));
+const CharacterActions = lazy(() => import("./CharacterActions"));
+const CharacterFilters = lazy(() => import("./CharacterFilters"));
+const CharacterWidget = lazy(() => import("./CharacterWidget"));
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 
-import { CharacterList } from "#/containers/CharacterList/CharacterList";
+const CharacterList = lazy(
+	() => import("#/containers/CharacterList/CharacterList"),
+);
 
 const isSelectionExpanded$ = observable(false);
 
@@ -231,4 +234,4 @@ const CharacterEditView = observer(() => {
 	);
 });
 
-export { CharacterEditView };
+export default CharacterEditView;

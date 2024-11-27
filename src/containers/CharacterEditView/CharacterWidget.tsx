@@ -1,5 +1,7 @@
 // react
 import type React from "react";
+import { lazy } from "react";
+
 import { observer } from "@legendapp/state/react";
 
 // state
@@ -14,7 +16,9 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import * as Character from "#/domain/Character";
 
 // components
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
 
 type CharacterBlockProps = {
 	character: Character.Character;
@@ -99,4 +103,4 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 
 CharacterWidget.displayName = "CharacterWidget";
 
-export { CharacterWidget };
+export default CharacterWidget;

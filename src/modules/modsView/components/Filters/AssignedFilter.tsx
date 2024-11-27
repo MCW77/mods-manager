@@ -52,4 +52,4 @@ const AssignedFilter = observer(
 
 AssignedFilter.displayName = "AssignedFilter";
 
-export { AssignedFilter };
+export default AssignedFilter;

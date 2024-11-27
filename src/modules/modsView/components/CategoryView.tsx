@@ -1,5 +1,6 @@
 // react
 import type React from "react";
+import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -17,7 +18,7 @@ import { useRenderCount } from "#/hooks/useRenderCount";
 import { ModsFilter } from "../domain/ModsFilter";
 
 // components
-import { GroupedMods } from "#/modules/modsView/components/GroupedMods";
+const GroupedMods = lazy(() => import("./GroupedMods"));
 
 const CategoryView: React.FC = observer(() => {
 	useRenderCount(`CategoryView (${modsView$.activeCategory.peek()})`);
@@ -48,4 +49,4 @@ const CategoryView: React.FC = observer(() => {
 
 CategoryView.displayName = "CategoryView";
 
-export { CategoryView };
+export default CategoryView;

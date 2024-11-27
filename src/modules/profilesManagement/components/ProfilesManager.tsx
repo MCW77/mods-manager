@@ -1,6 +1,6 @@
 // react
 import type React from "react";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Memo, Show, observer, useMount } from "@legendapp/state/react";
 
@@ -27,7 +27,7 @@ import { useRenderCount } from "#/hooks/useRenderCount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ProfileAdder } from "./ProfileAdder";
-import { ProfileSelector } from "./ProfileSelector";
+const ProfileSelector = lazy(() => import("./ProfileSelector"));
 
 import { Button } from "#ui/button";
 
@@ -120,4 +120,4 @@ const ProfilesManager: React.FC = observer(() => {
 
 ProfilesManager.displayName = "ProfilesManager";
 
-export { ProfilesManager };
+export default ProfilesManager;

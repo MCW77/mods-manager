@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -13,7 +13,7 @@ const modsView$ = stateLoader$.modsView$;
 import type { LevelSettings } from "../../domain/ModsViewOptions";
 
 // components
-import { SetAllButtonGroup } from "../SetAllButtonGroup";
+const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
@@ -62,4 +62,4 @@ const LevelFilter = observer(
 
 LevelFilter.displayName = "LevelFilter";
 
-export { LevelFilter };
+export default LevelFilter;

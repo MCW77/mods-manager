@@ -149,4 +149,4 @@ const AboutView = observer(
 
 AboutView.displayName = "AboutView";
 
-export { AboutView };
+export default AboutView;

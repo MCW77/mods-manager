@@ -139,4 +139,4 @@ const AccountsManager = React.memo(() => {
 
 AccountsManager.displayName = "AccountsManager";
 
-export { AccountsManager };
+export default AccountsManager;

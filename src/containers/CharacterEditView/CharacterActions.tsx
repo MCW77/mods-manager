@@ -1,4 +1,5 @@
 // react
+import { lazy } from "react";
 import { observer, useObservable } from "@legendapp/state/react";
 
 // state
@@ -33,7 +34,9 @@ import {
 	faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { OptimizerProgress } from "#/modules/progress/components/OptimizerProgress";
+const OptimizerProgress = lazy(
+	() => import("#/modules/progress/components/OptimizerProgress"),
+);
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
 import { SettingsLink } from "#/modules/settings/components/SettingsLink";
@@ -251,4 +254,4 @@ const CharacterActions: React.FC = observer(() => {
 
 CharacterActions.displayName = "CharacterActions";
 
-export { CharacterActions };
+export default CharacterActions;

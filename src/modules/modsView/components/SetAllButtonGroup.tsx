@@ -76,4 +76,4 @@ const SetAllButtonGroup: React.FC<SetAllButtonGroupProps> = ({ filterKey }) => {
 
 SetAllButtonGroup.displayName = "SetAllButtonGroup";
 
-export { SetAllButtonGroup };
+export default SetAllButtonGroup;

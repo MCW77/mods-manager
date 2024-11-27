@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 
 // styles
 import "./ModLoadoutDetail.css";
@@ -20,7 +20,9 @@ import type { MissedGoals } from "#/modules/compilations/domain/MissedGoals";
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
-import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
+const ModLoadoutView = lazy(
+	() => import("#/components/ModLoadoutView/ModLoadoutView"),
+);
 
 interface PlayerStat {
 	name: CSStats.DisplayStatNames;
@@ -437,4 +439,4 @@ const ModLoadoutDetail = React.memo(
 
 ModLoadoutDetail.displayName = "ModLoadoutDetail";
 
-export { ModLoadoutDetail };
+export default ModLoadoutDetail;

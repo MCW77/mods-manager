@@ -1,5 +1,5 @@
 // react
-import { useMemo } from "react";
+import { lazy, useMemo } from "react";
 import { Computed, reactiveObserver } from "@legendapp/state/react";
 
 // utils
@@ -16,7 +16,7 @@ import { target$ } from "../state/planEditing";
 import type { CharacterNames } from "#/constants/characterSettings";
 
 // components
-import { TargetStatWidget } from "./TargetStatWidget";
+const TargetStatWidget = lazy(() => import("./TargetStatWidget"));
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 
@@ -95,7 +95,7 @@ const TargetStatsWidget: React.FC = reactiveObserver(() => {
 
 TargetStatsWidget.displayName = "TargetStatsWidget";
 
-export { TargetStatsWidget };
+export default TargetStatsWidget;
 
 /*<Memo key={id}>
                 {() =>*/

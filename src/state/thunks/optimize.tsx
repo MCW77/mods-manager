@@ -1,3 +1,6 @@
+// react
+import { lazy } from "react";
+
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -24,7 +27,9 @@ import {
 } from "#/modules/compilations/domain/OptimizationConditions";
 
 // components
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
 import { Button } from "#ui/button";
 import { DialogClose } from "#ui/dialog";
 

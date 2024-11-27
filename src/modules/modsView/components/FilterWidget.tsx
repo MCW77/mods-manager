@@ -1,5 +1,6 @@
 // react
 import type React from "react";
+import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -12,17 +13,18 @@ const modsView$ = stateLoader$.modsView$;
 
 // components
 import { ChevronsUpDown } from "lucide-react";
-import { FilterManager } from "./FilterManager";
-import { LevelFilter } from "./Filters/LevelFilter";
-import { PrimaryFilter } from "./Filters/PrimaryFilter";
-import { RarityFilter } from "./Filters/RarityFilter";
-import { SecondaryFilter } from "./Filters/SecondaryFilter";
-import { SetFilter } from "./Filters/SetFilter";
-import { SlotFilter } from "./Filters/SlotFilter";
-import { TierFilter } from "./Filters/TierFilter";
-import { Button } from "#ui/button";
-import { AssignedFilter } from "./Filters/AssignedFilter";
-import { EquippedFilter } from "./Filters/EquippedFilter";
+const FilterManager = lazy(() => import("./FilterManager"));
+const LevelFilter = lazy(() => import("./Filters/LevelFilter"));
+const SlotFilter = lazy(() => import("./Filters/SlotFilter"));
+const SetFilter = lazy(() => import("./Filters/SetFilter"));
+const TierFilter = lazy(() => import("./Filters/TierFilter"));
+const RarityFilter = lazy(() => import("./Filters/RarityFilter"));
+const EquippedFilter = lazy(() => import("./Filters/EquippedFilter"));
+const PrimaryFilter = lazy(() => import("./Filters/PrimaryFilter"));
+const SecondaryFilter = lazy(() => import("./Filters/SecondaryFilter"));
+const AssignedFilter = lazy(() => import("./Filters/AssignedFilter"));
+
+import { Button } from "#/components/ui/button";
 import {
 	CollapsibleCard,
 	CollapsibleCardContent,
@@ -93,4 +95,4 @@ const FilterWidget: React.FC = observer(() => {
 
 FilterWidget.displayName = "FilterWidget";
 
-export { FilterWidget };
+export default FilterWidget;

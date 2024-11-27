@@ -65,4 +65,4 @@ const ScoreSelector: React.FC = observer(() => {
 
 ScoreSelector.displayName = "ScoreSelector";
 
-export { ScoreSelector };
+export default ScoreSelector;

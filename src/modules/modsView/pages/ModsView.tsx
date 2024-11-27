@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -17,8 +17,8 @@ import { useRenderCount } from "#/hooks/useRenderCount";
 import type { Categories } from "../domain/Categories";
 
 // components
-import { CategoryView } from "../components/CategoryView";
-import { ViewSetupWidget } from "../components/ViewSetupWidget";
+const CategoryView = lazy(() => import("../components/CategoryView"));
+const ViewSetupWidget = lazy(() => import("../components/ViewSetupWidget"));
 import { FlexSidebar } from "#/components/FlexSidebar/FlexSidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
@@ -129,4 +129,4 @@ const ModsView = observer(
 
 ModsView.displayName = "ModsView";
 
-export { ModsView };
+export default ModsView;

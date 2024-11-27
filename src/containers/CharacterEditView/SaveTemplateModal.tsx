@@ -102,4 +102,4 @@ const SaveTemplateModal: React.FC = observer(() => {
 
 SaveTemplateModal.displayName = "SaveTemplateModal";
 
-export { SaveTemplateModal };
+export default SaveTemplateModal;

@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -13,7 +13,7 @@ const modsView$ = stateLoader$.modsView$;
 import type { SetSettings, TriState } from "../../domain/ModsViewOptions";
 
 // components
-import { SetAllButtonGroup } from "../SetAllButtonGroup";
+const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
@@ -101,4 +101,4 @@ const SetFilter = observer(
 
 SetFilter.displayName = "SetFilter";
 
-export { SetFilter };
+export default SetFilter;

@@ -1,3 +1,6 @@
+// react
+import { lazy } from "react";
+
 // utils
 import { flatten } from "lodash-es";
 import collectByKey from "#/utils/collectByKey";
@@ -20,9 +23,13 @@ import type { Mod } from "#/domain/Mod";
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { CreateProfileModal } from "../../hotUtils/components/CreateProfileModal";
-import { MoveModsModal } from "../../hotUtils/components/MoveModsModal";
-import { TextualReview } from "./TextualReview";
+const CreateProfileModal = lazy(
+	() => import("#/modules/hotUtils/components/CreateProfileModal"),
+);
+const MoveModsModal = lazy(
+	() => import("#/modules/hotUtils/components/MoveModsModal"),
+);
+const TextualReview = lazy(() => import("./TextualReview"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
@@ -141,4 +148,4 @@ const ActionsWidget = () => {
 
 ActionsWidget.displayName = "ActionsWidget";
 
-export { ActionsWidget };
+export default ActionsWidget;

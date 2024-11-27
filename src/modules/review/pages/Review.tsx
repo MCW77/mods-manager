@@ -1,4 +1,5 @@
 // react
+import { lazy } from "react";
 import { observer, Show } from "@legendapp/state/react";
 
 // styles
@@ -35,10 +36,10 @@ import type {
 } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { ActionsWidget } from "../components/ActionsWidget";
-import { DisplayWidget } from "../components/DisplayWidget";
-import { ListView } from "../components/ListView";
-import { SetsView } from "../components/SetsView";
+const ActionsWidget = lazy(() => import("../components/ActionsWidget"));
+const DisplayWidget = lazy(() => import("../components/DisplayWidget"));
+const ListView = lazy(() => import("../components/ListView"));
+const SetsView = lazy(() => import("../components/SetsView"));
 import { SummaryWidget } from "../components/SummaryWidget";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 
@@ -439,4 +440,4 @@ const Review: React.FC = observer(() => {
 
 Review.displayName = "Review";
 
-export { Review };
+export default Review;

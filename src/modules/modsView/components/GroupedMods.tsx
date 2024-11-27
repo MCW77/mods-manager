@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -23,13 +23,13 @@ import {
 	faAnglesUp,
 	faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-
 import * as Collapsible from "@radix-ui/react-collapsible";
 
-import { ModDetail } from "#/components/ModDetail/ModDetail";
+const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+const DeleteModsModal = lazy(() => import("./DeleteModsModal"));
+
 import { Button } from "#ui/button";
-import DeleteModsModal from "./DeleteModsModal";
 
 interface GroupedModsProps {
 	allModsCount: number;
@@ -203,4 +203,4 @@ const GroupedMods = ({
 
 GroupedMods.displayName = "GroupedMods";
 
-export { GroupedMods };
+export default GroupedMods;

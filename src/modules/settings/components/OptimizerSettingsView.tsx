@@ -1,5 +1,5 @@
 // react
-import type { ComponentProps } from "react";
+import { lazy, type ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -25,9 +25,16 @@ import {
 } from "#ui/select";
 
 // containers
-import { TemplatesManager } from "#/containers/TemplatesManager/TemplatesManager";
+const TemplatesManager = lazy(
+	() => import("#/containers/TemplatesManager/TemplatesManager"),
+);
 import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
-import { OptimizationSettingsForm } from "#/modules/optimizationSettings/components/OptimizationSettingsForm";
+const OptimizationSettingsForm = lazy(
+	() =>
+		import(
+			"#/modules/optimizationSettings/components/OptimizationSettingsForm"
+		),
+);
 
 const ReactiveSelect = reactive(Select);
 

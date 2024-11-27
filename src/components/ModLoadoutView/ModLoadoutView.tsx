@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 
 // styles
 import "./ModLoadoutView.css";
@@ -15,8 +15,8 @@ import * as ModLoadout from "#/domain/ModLoadout";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 // components
-import { ModImage } from "#/components/ModImage/ModImage";
-import { ModStats } from "#/components/ModStats/ModStats";
+const ModImage = lazy(() => import("#/components/ModImage/ModImage"));
+const ModStats = lazy(() => import("#/components/ModStats/ModStats"));
 
 type ComponentProps = {
 	modLoadout: ModLoadout.ModLoadout;
@@ -71,4 +71,4 @@ const ModLoadoutView = React.memo(
 
 ModLoadoutView.displayName = "ModLoadoutView";
 
-export { ModLoadoutView };
+export default ModLoadoutView;

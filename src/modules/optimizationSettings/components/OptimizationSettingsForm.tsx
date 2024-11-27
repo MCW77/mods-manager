@@ -150,4 +150,4 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 
 OptimizationSettingsForm.displayName = "OptimizationSettingsForm";
 
-export { OptimizationSettingsForm };
+export default OptimizationSettingsForm;

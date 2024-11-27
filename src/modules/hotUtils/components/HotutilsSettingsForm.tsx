@@ -52,4 +52,4 @@ const HotutilsSettingsForm: React.FC = observer(() => {
 
 HotutilsSettingsForm.displayName = "HotutilsSettingsForm";
 
-export { HotutilsSettingsForm };
+export default HotutilsSettingsForm;

@@ -62,4 +62,4 @@ const RarityFilter = observer(
 
 RarityFilter.displayName = "RarityFilter";
 
-export { RarityFilter };
+export default RarityFilter;

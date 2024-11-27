@@ -1,5 +1,5 @@
 // react
-import * as React from "react";
+import { memo, lazy } from "react";
 
 // styles
 import "./ModDetail.css";
@@ -17,10 +17,14 @@ import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { ModImage } from "#/components/ModImage/ModImage";
-import { ModStats } from "#/components/ModStats/ModStats";
-import { SellModButton } from "#/components/SellModButton/SellModButton";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
+const ModImage = lazy(() => import("#/components/ModImage/ModImage"));
+const ModStats = lazy(() => import("#/components/ModStats/ModStats"));
+const SellModButton = lazy(
+	() => import("#/components/SellModButton/SellModButton"),
+);
 import { Label } from "#ui/label";
 
 type ComponentProps = {
@@ -28,7 +32,7 @@ type ComponentProps = {
 	mod: Mod;
 };
 
-const ModDetail = React.memo(({ assignedTarget, mod }: ComponentProps) => {
+const ModDetail = memo(({ assignedTarget, mod }: ComponentProps) => {
 	const baseCharacterById = characters$.baseCharacterById.get();
 	const characterById = profilesManagement$.activeProfile.characterById.get();
 
@@ -74,4 +78,4 @@ const ModDetail = React.memo(({ assignedTarget, mod }: ComponentProps) => {
 
 ModDetail.displayName = "ModDetail";
 
-export { ModDetail };
+export default ModDetail;

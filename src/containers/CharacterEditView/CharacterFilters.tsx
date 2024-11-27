@@ -407,4 +407,4 @@ const CharacterFilters: React.FC = observer(() => {
 
 CharacterFilters.displayName = "CharacterFilters";
 
-export { CharacterFilters };
+export default CharacterFilters;

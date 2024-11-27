@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
@@ -23,10 +23,12 @@ import type { OptimizationPlan } from "../../domain/OptimizationPlan";
 import type { SecondaryStats, Stats } from "../../domain/Stats";
 
 // components
-import { CharacterAvatar } from "../CharacterAvatar/CharacterAvatar";
-import { SellModButton } from "../SellModButton/SellModButton";
+const CharacterAvatar = lazy(
+	() => import("../CharacterAvatar/CharacterAvatar"),
+);
+const ModScores = lazy(() => import("../ModScores/ModScores"));
+const SellModButton = lazy(() => import("../SellModButton/SellModButton"));
 import { Separator } from "#ui/separator";
-import { ModScores } from "../ModScores/ModScores";
 
 type ComponentProps = {
 	mod: Mod;
@@ -151,4 +153,4 @@ const ModStats = React.memo(
 
 ModStats.displayName = "ModStats";
 
-export { ModStats };
+export default ModStats;

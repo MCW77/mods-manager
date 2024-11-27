@@ -326,4 +326,4 @@ const DisplayWidget = () => {
 
 DisplayWidget.displayName = "DisplayWidget";
 
-export { DisplayWidget };
+export default DisplayWidget;

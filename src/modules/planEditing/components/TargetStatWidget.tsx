@@ -249,4 +249,4 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 
 TargetStatWidget.displayName = "TargetStatWidget";
 
-export { TargetStatWidget };
+export default TargetStatWidget;

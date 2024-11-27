@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -13,7 +13,9 @@ const modsView$ = stateLoader$.modsView$;
 import type { SecondarySettings } from "../../domain/ModsViewOptions";
 
 // components
-import { SetAllButtonGroup } from "../SetAllButtonGroup";
+const SetAllButtonGroup = lazy(
+	() => import("#/modules/modsView/components/SetAllButtonGroup"),
+);
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
@@ -64,4 +66,4 @@ const SecondaryFilter = observer(
 
 SecondaryFilter.displayName = "SecondaryFilter";
 
-export { SecondaryFilter };
+export default SecondaryFilter;

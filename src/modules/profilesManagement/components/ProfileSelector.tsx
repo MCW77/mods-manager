@@ -68,4 +68,4 @@ const ProfileSelector = observer(
 
 ProfileSelector.displayName = "ProfileSelector";
 
-export { ProfileSelector };
+export default ProfileSelector;

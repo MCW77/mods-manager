@@ -1,3 +1,6 @@
+// react
+import { lazy } from "react";
+
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
@@ -17,8 +20,12 @@ import * as Character from "#/domain/Character";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 
-import { AddTemplateModal } from "./AddTemplateModal";
-import { SaveTemplateModal } from "./SaveTemplateModal";
+const AddTemplateModal = lazy(
+	() => import("#/containers/CharacterEditView/AddTemplateModal"),
+);
+const SaveTemplateModal = lazy(
+	() => import("#/containers/CharacterEditView/SaveTemplateModal"),
+);
 
 import { Button } from "#ui/button";
 
@@ -83,4 +90,4 @@ const TemplatesActions = ({
 
 TemplatesActions.displayName = "TemplatesActions";
 
-export { TemplatesActions };
+export default TemplatesActions;

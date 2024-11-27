@@ -4,7 +4,6 @@ import * as perf from "../utils/performance";
 
 // state
 const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
-await stateLoader$.initialize();
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;

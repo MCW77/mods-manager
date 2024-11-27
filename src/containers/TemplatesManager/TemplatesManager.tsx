@@ -190,4 +190,4 @@ const TemplatesManager = observer(
 
 TemplatesManager.displayName = "TemplatesManager";
 
-export { TemplatesManager };
+export default TemplatesManager;

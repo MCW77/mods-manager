@@ -146,4 +146,4 @@ const SortManager = observer(
 
 SortManager.displayName = "SortManager";
 
-export { SortManager };
+export default SortManager;

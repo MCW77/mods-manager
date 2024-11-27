@@ -1,5 +1,5 @@
 // react
-import type React from "react";
+import { lazy } from "react";
 import {
 	Memo,
 	observer,
@@ -39,11 +39,17 @@ import type { TargetStat } from "#/domain/TargetStat";
 import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { OptimizerProgress } from "#/modules/progress/components/OptimizerProgress";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
+const OptimizerProgress = lazy(
+	() => import("#/modules/progress/components/OptimizerProgress"),
+);
 import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
 import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
-import { TargetStatsWidget } from "#/modules/planEditing/components/TargetStatsWidget";
+const TargetStatsWidget = lazy(
+	() => import("#/modules/planEditing/components/TargetStatsWidget"),
+);
 import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
 import { Button } from "#ui/button";
 import { Input } from "#ui/input";
@@ -360,4 +366,4 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 
 CharacterEditForm.displayName = "CharacterEditForm";
 
-export { CharacterEditForm };
+export default CharacterEditForm;

@@ -1,3 +1,6 @@
+// react
+import { lazy } from "react";
+
 // utils
 import { flatten } from "lodash-es";
 
@@ -21,8 +24,10 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { ModDetail } from "#/components/ModDetail/ModDetail";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
+const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 
@@ -142,4 +147,4 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 
 ListView.displayName = "ListView";
 
-export { ListView };
+export default ListView;

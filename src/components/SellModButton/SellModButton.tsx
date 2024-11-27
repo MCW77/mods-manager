@@ -33,4 +33,4 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
 
 SellModButton.displayName = "SellModButton";
 
-export { SellModButton };
+export default SellModButton;

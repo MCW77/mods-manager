@@ -1,5 +1,6 @@
 // react
 import type React from "react";
+import { lazy } from "react";
 import { observer, reactive } from "@legendapp/state/react";
 
 // styles
@@ -23,7 +24,9 @@ import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
 import { Button } from "#ui/button";
 import {
 	Select,
@@ -324,4 +327,4 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 
 CharacterBlock.displayName = "CharacterBlock";
 
-export { CharacterBlock };
+export default CharacterBlock;

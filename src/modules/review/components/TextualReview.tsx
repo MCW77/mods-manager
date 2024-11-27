@@ -114,4 +114,4 @@ const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 
 TextualReview.displayName = "TextualReview";
 
-export { TextualReview };
+export default TextualReview;

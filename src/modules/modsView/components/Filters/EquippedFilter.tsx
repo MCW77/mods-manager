@@ -52,4 +52,4 @@ const EquippedFilter = observer(
 
 EquippedFilter.displayName = "EquippedFilter";
 
-export { EquippedFilter };
+export default EquippedFilter;

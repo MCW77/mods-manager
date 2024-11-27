@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -14,7 +14,7 @@ import type { TierSettings } from "../../domain/ModsViewOptions";
 import * as ModConsts from "#/domain/constants/ModConsts";
 
 // components
-import { SetAllButtonGroup } from "../SetAllButtonGroup";
+const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
@@ -73,4 +73,4 @@ const TierFilter = observer(
 
 TierFilter.displayName = "TierFilter";
 
-export { TierFilter };
+export default TierFilter;

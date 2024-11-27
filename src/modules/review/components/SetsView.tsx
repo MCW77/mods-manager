@@ -1,4 +1,5 @@
 // react
+import { lazy } from "react";
 import { For, useMount, useObservable } from "@legendapp/state/react";
 
 // utils
@@ -22,9 +23,15 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
-import { CharacterAvatar } from "#/components/CharacterAvatar/CharacterAvatar";
-import { ModLoadoutDetail } from "#/components/ModLoadoutDetail/ModLoadoutDetail";
-import { ModLoadoutView } from "#/components/ModLoadoutView/ModLoadoutView";
+const CharacterAvatar = lazy(
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+);
+const ModLoadoutDetail = lazy(
+	() => import("#/components/ModLoadoutDetail/ModLoadoutDetail"),
+);
+const ModLoadoutView = lazy(
+	() => import("#/components/ModLoadoutView/ModLoadoutView"),
+);
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 
@@ -150,4 +157,4 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 
 SetsView.displayName = "SetsView";
 
-export { SetsView };
+export default SetsView;

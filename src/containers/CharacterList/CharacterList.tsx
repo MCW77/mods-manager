@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { lazy } from "react";
 import { observer } from "@legendapp/state/react";
 
 // styles
@@ -17,7 +17,7 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import * as Character from "#/domain/Character";
 
 // components
-import { CharacterBlock } from "./CharacterBlock";
+const CharacterBlock = lazy(() => import("./CharacterBlock"));
 
 const CharacterList = observer(
 	React.memo(() => {
@@ -148,4 +148,4 @@ const CharacterList = observer(
 
 CharacterList.displayName = "CharacterList";
 
-export { CharacterList };
+export default CharacterList;

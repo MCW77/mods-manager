@@ -9,6 +9,9 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
+// domain
+import { builtinViewSetups } from "../domain/ModsViewOptions";
+
 // components
 import { Button } from "#ui/button";
 import {
@@ -18,7 +21,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { builtinViewSetups } from "../domain/ModsViewOptions";
 import { RenameButton } from "#/components/RenameButton";
 import { TrashIcon } from "lucide-react";
 
@@ -88,4 +90,4 @@ const ViewSetupManager = observer(
 
 ViewSetupManager.displayName = "ViewSetupManager";
 
-export { ViewSetupManager };
+export default ViewSetupManager;

@@ -190,4 +190,4 @@ const CompilationsView: React.FC = observer(() => {
 
 CompilationsView.displayName = "CompilationsView";
 
-export { CompilationsView };
+export default CompilationsView;

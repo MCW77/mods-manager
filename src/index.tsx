@@ -22,11 +22,10 @@ import { ui$ } from "./modules/ui/state/ui";
 import { Spinner } from "./components/Spinner/Spinner";
 
 // containers
-const LazyApp = lazy(() => import("./containers/App/App"));
-
-stateLoader$.initialize();
+const App = lazy(() => import("./containers/App/App"));
 
 const rootNode = document.getElementById("root");
+console.dir(rootNode);
 document.body.classList.add(
 	ui$.theme.get(),
 	"bg-white",
@@ -40,7 +39,7 @@ const RootComponent = observer(() => {
 		<Show
 			if={stateLoader$.isDone}
 			else={() => (
-				<div>
+				<div className={"bg-black"}>
 					Root
 					<Spinner isVisible={true} />
 				</div>
@@ -49,13 +48,13 @@ const RootComponent = observer(() => {
 			{() => (
 				<Suspense
 					fallback={
-						<div>
+						<div className={"bg-black"}>
 							Lazy
 							<Spinner isVisible={true} />
 						</div>
 					}
 				>
-					<LazyApp />
+					<App />
 				</Suspense>
 			)}
 		</Show>
@@ -64,9 +63,12 @@ const RootComponent = observer(() => {
 
 if (rootNode !== null) {
 	const root = createRoot(rootNode);
+	console.log("rendering root");
 	root.render(
 		<React.StrictMode>
-			<RootComponent />
+			<Suspense>
+				<App />
+			</Suspense>
 		</React.StrictMode>,
 	);
 }
