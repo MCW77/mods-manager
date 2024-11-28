@@ -29,8 +29,9 @@ import type { CharacterNames } from "#/constants/characterSettings";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
-
+console.log("pm 1");
 import { dialog$ } from "#/modules/dialog/state/dialog";
+console.log("pm 2");
 
 const isMod = (mod: Mod | undefined): mod is Mod => {
 	return mod !== undefined;
@@ -363,6 +364,8 @@ const syncStatus$ = syncObservable(
 		initial: getInitialProfiles(),
 	}),
 );
+console.log("profilesManagement$ about to sync");
 await when(syncStatus$.isPersistLoaded);
+console.log("profilesManagement$ synced");
 
 export { profilesManagement$ };

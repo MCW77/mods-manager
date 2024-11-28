@@ -5,8 +5,11 @@ import type * as React from "react";
 import { type ObservableObject, observable } from "@legendapp/state";
 
 // components
+console.log("dialog 1");
 import { ErrorMessage } from "../components/ErrorMessage";
+console.log("dialog 2");
 import { toast } from "sonner";
+console.log("dialog 3");
 
 type Dialog = {
 	content: React.ReactNode;

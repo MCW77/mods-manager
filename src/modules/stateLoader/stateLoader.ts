@@ -3,9 +3,11 @@ import { observable } from "@legendapp/state";
 const { profilesManagement$ } = await import(
 	"#/modules/profilesManagement/state/profilesManagement"
 );
+console.log("1");
 const { compilations$ } = await import(
 	"#/modules/compilations/state/compilations"
 );
+console.log("2");
 const { characters$ } = await import("#/modules/characters/state/characters");
 const { charactersManagement$ } = await import(
 	"#/modules/charactersManagement/state/charactersManagement"
