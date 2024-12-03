@@ -1,12 +1,17 @@
+console.log("stateLoader 1");
 import { observable } from "@legendapp/state";
 // Dynamic imports at the top level
+console.log("stateLoader 2");
 const { profilesManagement$ } = await import(
 	"#/modules/profilesManagement/state/profilesManagement"
 );
+console.log("stateLoader 3");
 const { compilations$ } = await import(
 	"#/modules/compilations/state/compilations"
 );
+console.log("stateLoader 4");
 const { characters$ } = await import("#/modules/characters/state/characters");
+console.log("stateLoader 5");
 const { charactersManagement$ } = await import(
 	"#/modules/charactersManagement/state/charactersManagement"
 );

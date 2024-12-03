@@ -1,11 +1,15 @@
 // state
+console.log("index 1");
 import "#/utils/globalLegendPersistSettings";
+console.log("index 2");
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+console.log("index 3");
 
 // react
 import React, { lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { observer, Show } from "@legendapp/state/react";
+console.log("index 4");
 
 // styles
 import "./index.css";
