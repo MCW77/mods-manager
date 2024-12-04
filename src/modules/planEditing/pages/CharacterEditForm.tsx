@@ -20,13 +20,12 @@ const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
+const { optimizeMods } = await import("#/modules/optimize/optimize");
+
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { progress$ } from "#/modules/progress/state/progress";
 import { target$ } from "#/modules/planEditing/state/planEditing";
-
-// modules
-import { Optimize } from "#/state/modules/optimize";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";
@@ -187,7 +186,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const runIncrementalCalc = () => {
 			saveTarget();
 			isBusy$.set(true);
-			Optimize.thunks.optimizeMods();
+			optimizeMods();
 		};
 
 		const saveTarget = () => {

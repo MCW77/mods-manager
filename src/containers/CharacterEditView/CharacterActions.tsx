@@ -13,13 +13,12 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
+const { optimizeMods } = await import("#/modules/optimize/optimize");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { review$ } from "#/modules/review/state/review";
-
-// modules
-import { Optimize } from "#/state/modules/optimize";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
@@ -140,7 +139,7 @@ const CharacterActions: React.FC = observer(() => {
 					} else {
 						dialog$.show(<OptimizerProgress />, true);
 						isBusy$.set(true);
-						Optimize.thunks.optimizeMods();
+						optimizeMods();
 					}
 				}}
 				disabled={selectedCharacters.length === 0}

@@ -14,12 +14,11 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
+const { cancelOptimizer } = await import("#/modules/optimize/optimize");
+
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { progress$ } from "../state/progress";
-
-// modules
-import { Optimize } from "#/state/modules/optimize";
 
 // domain
 import type * as Character from "#/domain/Character";
@@ -43,7 +42,7 @@ const OptimizerProgress: React.FC = observer(() => {
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
-		Optimize.thunks.cancelOptimizer();
+		cancelOptimizer();
 		isBusy$.set(false);
 		if (closeModal) {
 			dialog$.hide();
