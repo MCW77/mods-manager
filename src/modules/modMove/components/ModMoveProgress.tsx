@@ -1,11 +1,8 @@
 // state
 import { Memo, observer } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
-
-const hotutils$ = stateLoader$.hotutils$;
-
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { modMove$ } from "#/modules/modMove/state/modMove";
 
 // components
 import { Button } from "#ui/button";
@@ -18,16 +15,16 @@ const ModMoveProgress: React.FC = observer(() => {
 			<div>
 				<Memo>
 					{() => {
-						console.log(`index: ${hotutils$.moveStatus.progress.index.get()}`);
+						console.log(`index: ${modMove$.status.progress.index.get()}`);
 						return (
 							<Progress
-								value={hotutils$.moveStatus.progress.index.get()}
-								max={hotutils$.moveStatus.progress.count.get()}
+								value={modMove$.status.progress.index.get()}
+								max={modMove$.status.progress.count.get()}
 							/>
 						);
 					}}
 				</Memo>
-				<Memo>{() => <>{hotutils$.moveStatus.message.get()}</>}</Memo>
+				<Memo>{() => <>{modMove$.status.message.get()}</>}</Memo>
 			</div>
 			<div>
 				<Button
@@ -35,7 +32,7 @@ const ModMoveProgress: React.FC = observer(() => {
 					variant={"destructive"}
 					onClick={() => {
 						dialog$.hide();
-						hotutils$.cancelModMove();
+						modMove$.cancelModMove();
 					}}
 				>
 					Cancel

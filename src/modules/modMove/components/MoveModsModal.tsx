@@ -1,5 +1,5 @@
 // utils
-import { flatten } from "lodash-es";
+import flatten from "lodash-es/flatten";
 import collectByKey from "#/utils/collectByKey";
 import { formatNumber } from "#/utils/formatNumber";
 
@@ -8,13 +8,13 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
-const hotutils$ = stateLoader$.hotutils$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { modMove$ } from "#/modules/modMove/state/modMove";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 
@@ -180,7 +180,7 @@ const MoveModsModal = () => {
 						const profile: HUModsMoveProfile = {
 							units: generateHotUtilsProfile(),
 						};
-						hotutils$.moveMods(profile);
+						modMove$.moveMods(profile);
 					}}
 				>
 					Move my mods

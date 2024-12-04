@@ -1,4 +1,4 @@
-import type { CharacterDefinitions } from "./Loudout";
+import type { CharacterDefinitions } from "../../modMove/domain/Loudout";
 
 export interface ProfileCreationData {
 	set: {

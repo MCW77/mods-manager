@@ -29,6 +29,7 @@ import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTem
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FileInput } from "#/components/FileInput/FileInput";
+
 import { Button } from "#ui/button";
 
 const TemplatesManager = observer(

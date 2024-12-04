@@ -27,6 +27,7 @@ const HotutilsSettingsForm = lazy(
 	() => import("#/modules/hotUtils/components/HotutilsSettingsForm"),
 );
 import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
+
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";

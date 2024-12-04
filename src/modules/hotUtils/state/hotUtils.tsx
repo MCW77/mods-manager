@@ -27,7 +27,6 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
-import type { Loadout } from "../domain/Loudout";
 import type { ProfileCreationData } from "../domain/ProfileCreationData";
 import type * as DTOs from "#/modules/profilesManagement/dtos";
 import * as Mappers from "#/modules/profilesManagement/mappers";
@@ -38,14 +37,8 @@ import type {
 	SessionIdByProfile,
 } from "../domain/HotutilsObservable";
 
-// components
-import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
-
-const LazyModMoveProgress = lazy(() => import("../components/ModMoveProgress"));
-
 const hotutilsv2baseurl =
 	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
-const hotutilsv2mockbaseurl = "http://localhost:3001/humock";
 
 const post = async (url = "", data = {}, extras = {}) => {
 	const response = await fetch(
@@ -84,18 +77,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 		getSessionIdOfProfile: (allycode: string) => {
 			return hotutils$.sessionIdByProfile[allycode].peek() || "";
 		},
-		isMoving: false,
 		isSubscribed: () => hotutils$.checkSubscriptionStatus(),
-		moveStatus: {
-			taskId: 0,
-			progress: {
-				index: 0,
-				count: 0,
-				elapsedMs: 0,
-				result: "",
-			},
-			message: "",
-		},
 		sessionIdByProfile: {} as SessionIdByProfile,
 		addProfile: (allycode: string) => {
 			hotutils$.sessionIdByProfile[allycode].set("");
@@ -105,58 +87,6 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 		},
 		reset: () => {
 			syncStatus$.reset();
-		},
-		cancelModMove: async () => {
-			isBusy$.set(true);
-			try {
-				const response = await post(
-					"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-					{
-						action: "cancelmove",
-						sessionId: hotutils$.activeSessionId.get(),
-						payload: {
-							taskId: hotutils$.moveStatus.taskId.get(),
-						},
-					},
-				);
-
-				if (response.errorMessage) {
-					dialog$.showFlash(
-						"Canceling the mod move failed",
-						response.errorMessage,
-						"",
-						undefined,
-						"warning",
-					);
-					return;
-				}
-				switch (response.responseCode) {
-					case 0:
-						dialog$.showFlash(
-							"Canceling the mod move failed",
-							response.responseMessage,
-							"",
-							undefined,
-							"warning",
-						);
-						break;
-					default:
-						hotutils$.isMoving.set(false);
-						dialog$.show(<ModMoveCancelModal />, true);
-				}
-			} catch {
-				(error: Error) => {
-					dialog$.showFlash(
-						"Canceling the mod move failed",
-						error.message,
-						"",
-						undefined,
-						"warning",
-					);
-				};
-			} finally {
-				isBusy$.set(false);
-			}
 		},
 		checkSubscriptionStatus: async (): Promise<boolean> => {
 			const activeAllycode = profilesManagement$.profiles.activeAllycode.get();
@@ -311,124 +241,6 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 				playerValues: profileValues,
 				updated: playerProfile.updated ?? false,
 			} as FetchedGIMOProfile;
-		},
-		moveMods: async (loadout: Loadout) => {
-			isBusy$.set(true);
-			try {
-				const response = await post(hotutilsv2mockbaseurl, {
-					action: "movemods",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: loadout,
-				});
-
-				if (response.errorMessage) {
-					dialog$.hide();
-					dialog$.showError(response.errorMessage);
-					return false;
-				}
-				switch (response.responseCode) {
-					case 0:
-						dialog$.hide();
-						dialog$.showError(response.responseMessage);
-						break;
-					default: {
-						hotutils$.moveStatus.taskId.set(response.taskId);
-						hotutils$.moveStatus.message.set(response.status);
-						if (response.taskId === 0) {
-							dialog$.hide();
-							dialog$.showFlash(
-								"No action taken",
-								"There were no mods to move!",
-								"",
-								undefined,
-								"info",
-							);
-							return true;
-						}
-						hotutils$.isMoving.set(true);
-						dialog$.hide();
-						isBusy$.set(false);
-						dialog$.show(<LazyModMoveProgress />, true);
-						const pollStatus = await hotutils$.pollForModMoveStatus();
-						return true;
-					}
-				}
-				return false;
-			} catch {
-				(error: Error) => {
-					dialog$.showError(error.message);
-					return false;
-				};
-			} finally {
-				isBusy$.set(false);
-			}
-			return false;
-		},
-		pollForModMoveStatus: async () => {
-			try {
-				const response = await post(hotutilsv2mockbaseurl, {
-					action: "checkmovestatus",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: {
-						taskId: hotutils$.moveStatus.taskId.get(),
-					},
-				});
-
-				if (response.errorMessage) {
-					dialog$.hide();
-					dialog$.showError(response.errorMessage);
-					return;
-				}
-				switch (response.responseCode) {
-					case 0:
-						dialog$.hide();
-						dialog$.showError(response.responseCode);
-						break;
-					default:
-						hotutils$.moveStatus.progress.assign(response.progress);
-						hotutils$.moveStatus.message.set(response.responseMessage);
-						if (!response.running) {
-							hotutils$.isMoving.set(false);
-							const updatedMods: Mod[] = response.mods.profiles[0].mods.map(
-								Mod.fromHotUtils,
-							);
-							beginBatch();
-							for (const mod of updatedMods) {
-								profilesManagement$.activeProfile.modById[mod.id].set(mod);
-							}
-							endBatch();
-							dialog$.hide();
-							if (response.progress.index === response.progress.count) {
-								dialog$.showFlash(
-									`Mods successfully moved! (took ${
-										Math.round(response.progress.elapsedMs / 10) / 100
-									}s)`,
-									"You may log into Galaxy of Heroes to see your characters",
-									"",
-									undefined,
-									"success",
-								);
-								return;
-							}
-							dialog$.showFlash(
-								"Mod move cancelled",
-								`${response.progress.index} characters have already been updated.`,
-								"",
-								undefined,
-								"warning",
-							);
-							return;
-						}
-
-						// If the move is still ongoing, then poll again after a few seconds.
-						setTimeout(() => hotutils$.pollForModMoveStatus(), 2000);
-				}
-			} catch {
-				(error: Error) => {
-					dialog$.hide();
-					dialog$.showError(error.message);
-				};
-			}
 		},
 	});
 

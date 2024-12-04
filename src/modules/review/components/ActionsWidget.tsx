@@ -27,7 +27,7 @@ const CreateProfileModal = lazy(
 	() => import("#/modules/hotUtils/components/CreateProfileModal"),
 );
 const MoveModsModal = lazy(
-	() => import("#/modules/hotUtils/components/MoveModsModal"),
+	() => import("#/modules/modMove/components/MoveModsModal"),
 );
 const TextualReview = lazy(() => import("./TextualReview"));
 import { Button } from "#ui/button";
