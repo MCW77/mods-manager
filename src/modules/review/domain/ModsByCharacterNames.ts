@@ -1,5 +1,5 @@
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 

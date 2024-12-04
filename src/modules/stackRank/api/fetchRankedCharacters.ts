@@ -2,7 +2,7 @@
 import type { StackRankParameters } from "../domain/StackRankParameters";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 const post = async (url = "", data = {}) => {
 	const requestInit: RequestInit = {

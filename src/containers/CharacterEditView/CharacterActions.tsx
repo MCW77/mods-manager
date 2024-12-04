@@ -22,7 +22,7 @@ import { review$ } from "#/modules/review/state/review";
 import { Optimize } from "#/state/modules/optimize";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 // component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,4 +1,6 @@
 // domain
+import type { CharacterNames } from "#/constants/CharacterNames";
+
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 export const DamageType = {
@@ -23,4 +25,8 @@ export const createCharacterSettings = (
 		extraTags,
 		damageType,
 	};
+};
+
+export type CharacterSettingsIndexer = {
+	[key in CharacterNames]: CharacterSettings;
 };

@@ -2,8 +2,8 @@
 import Big from "big.js";
 
 // domain
-import type { CharacterNames } from "../constants/characterSettings";
-import type { ModTiersEnum } from "../constants/enums";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type { ModTiersEnum } from "#/constants/enums";
 import { modScores } from "./constants/ModScoresConsts";
 import type * as ModTypes from "./types/ModTypes";
 import { PrimaryStats, SecondaryStats, SetStats } from "./Stats";

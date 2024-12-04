@@ -1,4 +1,4 @@
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 import type { ModTiersEnum } from "../../constants/enums";
 import type { SetStats, PrimaryStats, SecondaryStats } from "../Stats";
 

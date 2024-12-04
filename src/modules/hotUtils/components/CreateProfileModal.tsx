@@ -14,7 +14,7 @@ const lockedStatus$ = stateLoader$.lockedStatus$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 import type { ProfileCreationData } from "#/modules/hotUtils/domain/ProfileCreationData";

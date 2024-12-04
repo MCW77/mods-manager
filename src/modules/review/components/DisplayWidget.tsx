@@ -16,7 +16,7 @@ const characters$ = stateLoader$.characters$;
 import { review$ } from "#/modules/review/state/review";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 import * as ModLoadout from "#/domain/ModLoadout";

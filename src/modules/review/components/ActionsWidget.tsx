@@ -16,7 +16,7 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 

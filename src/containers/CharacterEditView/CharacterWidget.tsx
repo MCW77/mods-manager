@@ -12,7 +12,8 @@ const characters$ = stateLoader$.characters$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
+
 import * as Character from "#/domain/Character";
 
 // components

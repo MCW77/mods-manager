@@ -2,7 +2,7 @@
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
 import type { SetRestrictions } from "#/domain/SetRestrictions";

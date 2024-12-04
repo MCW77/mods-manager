@@ -2,13 +2,14 @@
 import groupByKey from "../utils/groupByKey";
 
 // domain
-import {
-	characterSettings,
-	type CharacterNames,
-} from "../constants/characterSettings";
+import type { CharacterNames } from "../constants/CharacterNames";
+
 import type * as DTOs from "../modules/profilesManagement/dtos";
 
-import { createOptimizationPlan, type OptimizationPlan } from "./OptimizationPlan";
+import {
+	createOptimizationPlan,
+	type OptimizationPlan,
+} from "./OptimizationPlan";
 
 export interface Character {
 	id: CharacterNames;

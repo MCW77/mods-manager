@@ -1,5 +1,8 @@
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 export type LockedStatusByCharacterId = Record<CharacterNames, boolean>;
 
-export type LockedStatusByCharacterIdByAllycode = Record<string, LockedStatusByCharacterId>;
+export type LockedStatusByCharacterIdByAllycode = Record<
+	string,
+	LockedStatusByCharacterId
+>;

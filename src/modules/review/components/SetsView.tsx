@@ -15,7 +15,7 @@ import { review$ } from "../state/review";
 
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
 import { createModLoadout } from "#/domain/ModLoadout";
 

@@ -16,6 +16,9 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 console.log("profilesManagement 3");
 
+import { dialog$ } from "#/modules/dialog/state/dialog";
+console.log("profilesManagement 13");
+
 // domain
 import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
 console.log("profilesManagement 4");
@@ -33,7 +36,7 @@ import type { Profiles, PersistedProfiles } from "../domain/Profiles";
 console.log("profilesManagement 7");
 import type { ProfilesManagement } from "../domain/ProfilesManagement";
 console.log("profilesManagement 8");
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 console.log("profilesManagement 9");
 import type * as Character from "#/domain/Character";
 console.log("profilesManagement 10");
@@ -41,9 +44,6 @@ import { Mod } from "#/domain/Mod";
 console.log("profilesManagement 11");
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 console.log("profilesManagement 12");
-
-import { dialog$ } from "#/modules/dialog/state/dialog";
-console.log("profilesManagement 13");
 
 const isMod = (mod: Mod | undefined): mod is Mod => {
 	return mod !== undefined;

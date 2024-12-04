@@ -13,7 +13,7 @@ const characters$ = stateLoader$.characters$;
 import { target$ } from "../state/planEditing";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 // components
 const TargetStatWidget = lazy(() => import("./TargetStatWidget"));

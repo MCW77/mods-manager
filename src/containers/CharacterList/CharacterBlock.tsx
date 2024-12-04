@@ -18,7 +18,7 @@ const lockedStatus$ = stateLoader$.lockedStatus$;
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";

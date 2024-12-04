@@ -9,10 +9,10 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 // domain
-import type { CharacterNames } from "../../constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { Mod } from "../../domain/Mod";
-import { SetStats } from "../../domain/Stats";
+import type { Mod } from "#/domain/Mod";
+import { SetStats } from "#/domain/Stats";
 
 // components
 const CharacterAvatar = lazy(

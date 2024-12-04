@@ -20,10 +20,8 @@ const { profilesManagement$ } = await import(
 
 // domain
 import { getDefaultCompilation, type Compilation } from "../domain/Compilation";
-import {
-	type CharacterNames,
-	characterSettings,
-} from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import {characterSettings } from "#/constants/characterSettings";
 import {
 	fromShortOptimizationPlan,
 	type OptimizationPlan,

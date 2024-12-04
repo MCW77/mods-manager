@@ -4,7 +4,7 @@ import type { Observable } from "@legendapp/state";
 // domain
 import type { PlayerProfile } from "./PlayerProfile";
 import type { Profiles, PersistedProfiles } from "./Profiles";
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
 
 interface ProfilesManagement {

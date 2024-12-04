@@ -23,7 +23,7 @@ import { review$ } from "#/modules/review/state/review";
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
 import type { ModsByCharacterNames } from "../domain/ModsByCharacterNames";
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
 import type { Mod } from "#/domain/Mod";

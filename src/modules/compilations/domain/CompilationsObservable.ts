@@ -1,4 +1,4 @@
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { Observable } from "@legendapp/state";
 import type { Compilation } from "./Compilation";

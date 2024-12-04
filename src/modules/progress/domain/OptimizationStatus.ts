@@ -1,4 +1,4 @@
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 export interface OptimizationStatus {
 	character: CharacterNames | "";

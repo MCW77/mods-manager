@@ -6,7 +6,7 @@ import type { StackRankParameters } from "../domain/StackRankParameters";
 import { fetchRankedCharacters } from "../api/fetchRankedCharacters";
 
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 const stackRank$ = observable<{
 	parameters: StackRankParameters;

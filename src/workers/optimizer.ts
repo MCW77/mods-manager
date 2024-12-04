@@ -11,7 +11,7 @@ const lockedStatus$ = stateLoader$.lockedStatus$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
-import type { CharacterNames } from "../constants/characterSettings";
+import type { CharacterNames } from "../constants/CharacterNames";
 import { gimoSlots } from "../domain/constants/ModConsts";
 import type * as ModTypes from "../domain/types/ModTypes";
 

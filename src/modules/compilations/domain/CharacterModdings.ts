@@ -1,16 +1,16 @@
 // domain
-import type { CharacterNames } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { MissedGoals } from "./MissedGoals";
 
 interface FlatCharacterModding {
-  characterId: CharacterNames;
-  target: OptimizationPlan;
-  assignedMods: string[];
-  missedGoals: MissedGoals;
-  messages?: string[];
+	characterId: CharacterNames;
+	target: OptimizationPlan;
+	assignedMods: string[];
+	missedGoals: MissedGoals;
+	messages?: string[];
 }
 
 interface CharacterModding {
@@ -38,4 +38,10 @@ const createCharacterModding = (
 type FlatCharacterModdings = FlatCharacterModding[];
 type CharacterModdings = CharacterModding[];
 
-export { type FlatCharacterModding, type FlatCharacterModdings, type CharacterModding, type CharacterModdings, createCharacterModding };
+export {
+	type FlatCharacterModding,
+	type FlatCharacterModdings,
+	type CharacterModding,
+	type CharacterModdings,
+	createCharacterModding,
+};
