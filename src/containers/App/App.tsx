@@ -28,11 +28,13 @@ console.log("App 3");
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 console.log("App 4");
 
-import { ui$ } from "#/modules/ui/state/ui";
+const { refreshPlayerData } = await import(
+	"#/modules/profileFetch/profileFetch"
+);
 console.log("App 5");
 
-// modules
-import { Data } from "#/state/modules/data";
+import { ui$ } from "#/modules/ui/state/ui";
+console.log("App 6");
 
 // hooks
 import { useRenderCount } from "#/hooks/useRenderCount";
@@ -90,13 +92,13 @@ const App: React.FC = observer(() => {
 			if (sessionId) {
 				if (queryParams.has("NoPull")) {
 					if (profilesManagement$.profiles.activeAllycode.peek() === "")
-						Data.thunks.refreshPlayerData(allycode, false, sessionId, false);
+						refreshPlayerData(allycode, false, sessionId, false);
 					else hotutils$.sessionIdByProfile[allycode].set(sessionId);
 				} else {
-					Data.thunks.refreshPlayerData(allycode, true, sessionId, false);
+					refreshPlayerData(allycode, true, sessionId, false);
 				}
 			} else if (!queryParams.has("NoPull")) {
-				Data.thunks.refreshPlayerData(allycode, true, null, false);
+				refreshPlayerData(allycode, true, null, false);
 			}
 		}
 

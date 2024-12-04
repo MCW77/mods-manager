@@ -17,8 +17,9 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;
 
-// modules
-import { Data } from "#/state/modules/data";
+const { refreshPlayerData } = await import(
+	"#/modules/profileFetch/profileFetch"
+);
 
 // hooks
 import { useRenderCount } from "#/hooks/useRenderCount";
@@ -26,7 +27,7 @@ import { useRenderCount } from "#/hooks/useRenderCount";
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ProfileAdder } from "./ProfileAdder";
+const ProfileAdder = lazy(() => import("./ProfileAdder"));
 const ProfileSelector = lazy(() => import("./ProfileSelector"));
 
 import { Button } from "#ui/button";
@@ -60,7 +61,7 @@ const ProfilesManager: React.FC = observer(() => {
 								type={"button"}
 								variant={"outline"}
 								onClick={() => {
-									Data.thunks.refreshPlayerData(
+									refreshPlayerData(
 										profilesManagement$.profiles.activeAllycode.get(),
 										true,
 										null,
@@ -82,7 +83,7 @@ const ProfilesManager: React.FC = observer(() => {
 									type={"button"}
 									variant={"outline"}
 									onClick={() =>
-										Data.thunks.refreshPlayerData(
+										refreshPlayerData(
 											profilesManagement$.profiles.activeAllycode.get(),
 											true,
 											hotutils$.activeSessionId.get() ?? null,

@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 // utils
 import formatAllycode from "#/utils/formatAllycode";
 
-// modules
-import { Data } from "#/state/modules/data";
+// state
+const { refreshPlayerData } = await import(
+	"#/modules/profileFetch/profileFetch"
+);
 
 // components
 import { Input } from "#ui/input";
@@ -25,7 +27,7 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 	}, [isFetchFinished, setAddMode]);
 
 	const fetch = async (allycode: string): Promise<void> => {
-		const result = await Data.thunks.refreshPlayerData(allycode, true, null);
+		const result = await refreshPlayerData(allycode, true, null);
 		setIsFetchFinished(true);
 		return result;
 	};
@@ -68,4 +70,4 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 
 ProfileAdder.displayName = "ProfileAdder";
 
-export { ProfileAdder };
+export default ProfileAdder;
