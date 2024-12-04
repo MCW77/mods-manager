@@ -6,7 +6,8 @@ import { observer, Show } from "@legendapp/state/react";
 import "./Review.css";
 
 // utils
-import { flatten, mapValues } from "lodash-es";
+import flatten from "lodash-es/flatten";
+import mapValues from "lodash-es/mapValues";
 import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
 

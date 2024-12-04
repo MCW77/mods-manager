@@ -2,7 +2,9 @@
 import { reactive } from "@legendapp/state/react";
 
 // utils
-import { flatten, mapValues, uniq } from "lodash-es";
+import flatten from "lodash-es/flatten";
+import mapValues from "lodash-es/mapValues";
+import uniq from "lodash-es/uniq";
 import { groupBy } from "#/utils/groupBy";
 
 // state

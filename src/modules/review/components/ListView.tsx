@@ -2,7 +2,7 @@
 import { lazy } from "react";
 
 // utils
-import { flatten } from "lodash-es";
+import flatten from "lodash-es/flatten";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");

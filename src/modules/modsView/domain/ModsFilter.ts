@@ -1,7 +1,8 @@
 // utils
 import { groupBy } from "#/utils/groupBy";
 import memoizeOne from "memoize-one";
-import { orderBy, mapValues } from "lodash-es";
+import orderBy from "lodash-es/orderBy";
+import mapValues from "lodash-es/mapValues";
 
 // domain
 import type {

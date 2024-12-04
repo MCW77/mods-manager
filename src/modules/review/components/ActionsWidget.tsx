@@ -2,7 +2,7 @@
 import { lazy } from "react";
 
 // utils
-import { flatten } from "lodash-es";
+import flatten from "lodash-es/flatten";
 import collectByKey from "#/utils/collectByKey";
 
 // state
