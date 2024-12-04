@@ -17,11 +17,11 @@ export const getDefaultCompilation = (): Compilation => {
 	return {
 		category: "",
 		description: "Default compilation used until saved under own name",
-		flatCharacterModdings: [],
+		flatCharacterModdings: [] as FlatCharacterModdings,
 		hasSelectionChanged: false,
 		id: "DefaultCompilation",
-		lastOptimized: null,
-		optimizationConditions: null,
-		selectedCharacters: [],
+		lastOptimized: null as Date | null,
+		optimizationConditions: null as OptimizationConditions,
+		selectedCharacters: [] as SelectedCharacters,
 	};
-}
+};
