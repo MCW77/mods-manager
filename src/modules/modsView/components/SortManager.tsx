@@ -10,7 +10,7 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import * as ModScoresConsts from "#/domain/constants/ModScoresConsts";
+import { modScores } from "#/domain/Mod";
 import { SecondaryStats } from "#/domain/Stats";
 
 // components
@@ -56,7 +56,7 @@ const SortManager = observer(
 			},
 			{
 				label: "Mod Scores",
-				items: ModScoresConsts.modScores.map((modScore) => ({
+				items: modScores.map((modScore) => ({
 					value: `ModScore${modScore.name}`,
 					label: modScore.displayName,
 				})),

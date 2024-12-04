@@ -10,8 +10,7 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { modScores } from "../../domain/constants/ModScoresConsts";
-import type { Mod } from "../../domain/Mod";
+import { type Mod, modScores } from "#/domain/Mod";
 
 // components
 import { Separator } from "#ui/separator";

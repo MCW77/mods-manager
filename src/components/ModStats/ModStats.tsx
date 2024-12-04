@@ -15,10 +15,9 @@ const modsView$ = stateLoader$.modsView$;
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
-import { modScores } from "../../domain/constants/ModScoresConsts";
 
 import type * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
+import { type Mod, modScores } from "#/domain/Mod";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { SecondaryStats, Stats } from "#/domain/Stats";
 

@@ -10,7 +10,7 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import * as ModScoresConsts from "#/domain/constants/ModScoresConsts";
+import { modScores } from "#/domain/Mod";
 
 // components
 import { Label } from "#ui/label";
@@ -47,7 +47,7 @@ const ScoreSelector: React.FC = observer(() => {
 					position={"popper"}
 					sideOffset={5}
 				>
-					{ModScoresConsts.modScores.map((modScore) => (
+					{modScores.map((modScore) => (
 						<SelectItem
 							className={"w-40"}
 							key={modScore.name}
