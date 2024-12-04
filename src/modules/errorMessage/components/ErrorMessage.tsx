@@ -3,7 +3,7 @@ import React from "react";
 import { Show, observer } from "@legendapp/state/react";
 
 // state
-import { dialog$ } from "../state/dialog";
+import { errorMessage$ } from "../state/errorMessage";
 
 // components
 import { WarningLabel } from "#/components/WarningLabel/WarningLabel";
@@ -15,13 +15,13 @@ const ErrorMessage = observer(
 			<div className={"flex flex-col gap-4"}>
 				<div className={"flex flex-gap-4 items-center"}>
 					<WarningLabel />
-					<div>{dialog$.error.get()}</div>
+					<div>{errorMessage$.message.get()}</div>
 				</div>
-				<Show if={() => dialog$.reason.get() !== ""}>
-					<div>{dialog$.reason.get()}</div>
+				<Show if={() => errorMessage$.reason.get() !== ""}>
+					<div>{errorMessage$.reason.get()}</div>
 				</Show>
-				<Show if={() => dialog$.solution.get() !== ""}>
-					<div>{dialog$.solution.get()}</div>
+				<Show if={() => errorMessage$.solution.get() !== ""}>
+					<div>{errorMessage$.solution.get()}</div>
 				</Show>
 				<div className={"flex items-center justify-center"}>
 					<DialogClose>Ok</DialogClose>

@@ -4,9 +4,14 @@ import type * as React from "react";
 // state
 import { type ObservableObject, observable } from "@legendapp/state";
 
+import { errorMessage$ } from "#/modules/errorMessage/state/errorMessage";
+
 // components
-import { ErrorMessage } from "../components/ErrorMessage";
+console.log("dialog 1");
 import { toast } from "sonner";
+console.log("dialog 2");
+import { ErrorMessage } from "#/modules/errorMessage/components/ErrorMessage";
+console.log("dialog 3");
 
 type Dialog = {
 	content: React.ReactNode;
@@ -63,9 +68,9 @@ export const dialog$: ObservableObject<Dialog> = observable({
 	) {
 		dialog$.isError.set(true);
 		if (dialog$.open.peek() === false) {
-			dialog$.error.set(error);
-			dialog$.reason.set(reason);
-			dialog$.solution.set(solution);
+			errorMessage$.message.set(error);
+			errorMessage$.reason.set(reason);
+			errorMessage$.solution.set(solution);
 			dialog$.content.set(<ErrorMessage />);
 			dialog$.modal.set(false);
 			dialog$.open.set(true);
@@ -73,9 +78,9 @@ export const dialog$: ObservableObject<Dialog> = observable({
 		}
 		const dispose = dialog$.open.onChange(({ value }) => {
 			if (value === false) {
-				dialog$.error.set("");
-				dialog$.reason.set("");
-				dialog$.solution.set("");
+				errorMessage$.message.set("");
+				errorMessage$.reason.set("");
+				errorMessage$.solution.set("");
 				dialog$.modal.set(false);
 				dialog$.content.set(null);
 				dialog$.open.set(false);
