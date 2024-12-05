@@ -21,7 +21,20 @@ export default defineConfig({
 			},
 			output: {
 				manualChunks(id) {
-					if (id.includes("stateLoader")) {
+					if (
+						id.includes("stateLoader") ||
+						id.includes("modules/profilesManagement") ||
+						id.includes("modules/compilations") ||
+						id.includes("modules/characters") ||
+						id.includes("modules/charactersManagement") ||
+						id.includes("modules/about") ||
+						id.includes("modules/hotUtils") ||
+						id.includes("modules/incrementalOptimization") ||
+						id.includes("modules/lockedStatus") ||
+						id.includes("modules/modsView") ||
+						id.includes("modules/optimizationSettings") ||
+						id.includes("modules/templates")
+					) {
 						return "stateLoader";
 					}
 				},
