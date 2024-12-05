@@ -2,7 +2,8 @@ import type * as ModTypes from "../../../../domain/types/ModTypes";
 import { ModTiersEnum } from "../../../../constants/enums";
 
 import type * as DTOs from "../../dtos";
-import * as C3POMappers from "./";
+import { fromC3PO as fromC3POPrimary } from "./C3POPrimaryStatMapper";
+import { fromC3PO as fromC3POSecondary } from "./C3POSecondaryStatMapper";
 import * as GIMOMods from "../../../../domain/Mod";
 import type * as GIMOStats from "../../../../domain/Stats";
 
@@ -47,7 +48,7 @@ export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
 	for (const pos of secondaryPosArray) {
 		if (mod[`secondaryStat-${pos}-Name`] !== undefined) {
 			secondaryStats.push(
-				C3POMappers.SecondaryStatMapper.fromC3PO(pos, {
+				fromC3POSecondary(pos, {
 					name: mod[`secondaryStat-${pos}-Name`],
 					value: mod[`secondaryStat-${pos}-Value`],
 					rolls: mod[`secondaryStat-${pos}-Roll`],
@@ -62,7 +63,7 @@ export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
 		C3PO2GIMOSetMap[mod.setName],
 		Number(mod.level) as ModTypes.Levels,
 		Number(mod.pips) as ModTypes.Pips,
-		C3POMappers.PrimaryStatMapper.fromC3PO({
+		fromC3POPrimary({
 			primaryStatName: mod.primaryStatName,
 			primaryStatValue: mod.primaryStatValue,
 		}),
