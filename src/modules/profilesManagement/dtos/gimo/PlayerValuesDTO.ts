@@ -1,4 +1,4 @@
-import type * as DTOs from "../";
+import type { CharacterStatsDTO } from "./CharacterStatsDTO";
 
 interface PlayerValuesDTO {
 	level: number;
@@ -6,8 +6,8 @@ interface PlayerValuesDTO {
 	gearLevel: number;
 	gearPieces: string[];
 	galacticPower: number;
-	baseStats: DTOs.GIMO.CharacterStatsDTO;
-	equippedStats: DTOs.GIMO.CharacterStatsDTO;
+	baseStats: CharacterStatsDTO;
+	equippedStats: CharacterStatsDTO;
 	relicTier: number;
 }
 
