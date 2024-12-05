@@ -79,7 +79,7 @@ importers:
         version: 0.65.1
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.3.4(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))
+        version: 4.3.4(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))
       big.js:
         specifier: ^6.2.2
         version: 6.2.2
@@ -191,16 +191,16 @@ importers:
         version: 5.7.2
       unocss:
         specifier: ^0.65.1
-        version: 0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
+        version: 0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
       unocss-preset-animations:
         specifier: ^1.1.0
-        version: 1.1.0(@unocss/preset-wind@0.65.1)(unocss@0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2)))
+        version: 1.1.0(@unocss/preset-wind@0.65.1)(unocss@0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2)))
       vite:
-        specifier: ^6.0.2
-        version: 6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
+        specifier: ^6.0.3
+        version: 6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1)
       vite-plugin-pwa:
         specifier: ^0.21.1
-        version: 0.21.1(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0)
+        version: 0.21.1(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0)
 
 packages:
 
@@ -746,8 +746,8 @@ packages:
     resolution: {integrity: sha512-ZCuvfwOwlz/bawvAuvcj8rrithP2/N55Tzz342AkTvq4qaWbGfmCk/tKhNaV2cthijKrPAA8SRJV5WWe7IBMJw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/traverse@7.26.3':
-    resolution: {integrity: sha512-yTmc8J+Sj8yLzwr4PD5Xb/WF3bOYu2C2OoSZPzbuqRm4n98XirsbzaX+GloeO376UnSYIYJ4NCanwV5/ugZkwA==}
+  '@babel/traverse@7.26.4':
+    resolution: {integrity: sha512-fH+b7Y4p3yqvApJALCPJcwb0/XaOSgtK4pzV6WVjPR5GLFQBRI7pfoX2V2iM48NXvX07NUxxm1Vw98YjqTcU5w==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.26.0':
@@ -3412,8 +3412,8 @@ packages:
     resolution: {integrity: sha512-G13vtMYPT/J8A4X2SjdtBTphZlrp1gKv6hZiOjw14RCWg6GbHuQBGtjlx75xLbYV/wEc0D7G5K4rxKP/cXk8Bw==}
     engines: {node: '>=10'}
 
-  terser@5.36.0:
-    resolution: {integrity: sha512-IYV9eNMuFAV4THUspIRXkLakHnV6XO7FEdtKjf/mDyrnqUg9LnlOn6/RwRvM9SZjR4GUq8Nk8zj67FzVARr74w==}
+  terser@5.37.0:
+    resolution: {integrity: sha512-B8wRRkmre4ERucLM/uXx4MOV5cbnOlVAqUst+1+iLKPI0dOgFO28f84ptoQt9HEI537PMzfYa/d+GEPKTRXmYA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -3597,8 +3597,8 @@ packages:
       '@vite-pwa/assets-generator':
         optional: true
 
-  vite@6.0.2:
-    resolution: {integrity: sha512-XdQ+VsY2tJpBsKGs0wf3U/+azx8BBpYRHFAyKm5VeEZNOJZRB63q7Sc8Iup3k0TrN3KO6QgyzFf+opSbfY1y0g==}
+  vite@6.0.3:
+    resolution: {integrity: sha512-Cmuo5P0ENTN6HxLSo6IHsjCLn/81Vgrp81oaiFFMRa8gGDj5xEjIcEpf2ZymZtZR8oU0P2JX5WuUp/rlXcHkAw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -3866,7 +3866,7 @@ snapshots:
       '@babel/helper-optimise-call-expression': 7.25.9
       '@babel/helper-replace-supers': 7.25.9(@babel/core@7.26.0)
       '@babel/helper-skip-transparent-expression-wrappers': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -3891,7 +3891,7 @@ snapshots:
 
   '@babel/helper-member-expression-to-functions@7.25.9':
     dependencies:
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
       '@babel/types': 7.26.3
     transitivePeerDependencies:
       - supports-color
@@ -3923,7 +3923,7 @@ snapshots:
       '@babel/core': 7.26.0
       '@babel/helper-annotate-as-pure': 7.25.9
       '@babel/helper-wrap-function': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
@@ -3932,13 +3932,13 @@ snapshots:
       '@babel/core': 7.26.0
       '@babel/helper-member-expression-to-functions': 7.25.9
       '@babel/helper-optimise-call-expression': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-skip-transparent-expression-wrappers@7.25.9':
     dependencies:
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
       '@babel/types': 7.26.3
     transitivePeerDependencies:
       - supports-color
@@ -3955,7 +3955,7 @@ snapshots:
   '@babel/helper-wrap-function@7.25.9':
     dependencies:
       '@babel/template': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
       '@babel/types': 7.26.3
     transitivePeerDependencies:
       - supports-color
@@ -3985,7 +3985,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.26.0
       '@babel/helper-plugin-utils': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
@@ -4012,7 +4012,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.26.0
       '@babel/helper-plugin-utils': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
@@ -4046,7 +4046,7 @@ snapshots:
       '@babel/core': 7.26.0
       '@babel/helper-plugin-utils': 7.25.9
       '@babel/helper-remap-async-to-generator': 7.25.9(@babel/core@7.26.0)
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
@@ -4092,7 +4092,7 @@ snapshots:
       '@babel/helper-compilation-targets': 7.25.9
       '@babel/helper-plugin-utils': 7.25.9
       '@babel/helper-replace-supers': 7.25.9(@babel/core@7.26.0)
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -4153,7 +4153,7 @@ snapshots:
       '@babel/core': 7.26.0
       '@babel/helper-compilation-targets': 7.25.9
       '@babel/helper-plugin-utils': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
@@ -4199,7 +4199,7 @@ snapshots:
       '@babel/helper-module-transforms': 7.26.0(@babel/core@7.26.0)
       '@babel/helper-plugin-utils': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
-      '@babel/traverse': 7.26.3
+      '@babel/traverse': 7.26.4
     transitivePeerDependencies:
       - supports-color
 
@@ -4473,7 +4473,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/traverse@7.26.3':
+  '@babel/traverse@7.26.4':
     dependencies:
       '@babel/code-frame': 7.26.2
       '@babel/generator': 7.26.3
@@ -5306,7 +5306,7 @@ snapshots:
     dependencies:
       serialize-javascript: 6.0.2
       smob: 1.5.0
-      terser: 5.36.0
+      terser: 5.37.0
     optionalDependencies:
       rollup: 2.79.2
 
@@ -5445,13 +5445,13 @@ snapshots:
 
   '@types/trusted-types@2.0.7': {}
 
-  '@unocss/astro@0.65.1(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))':
+  '@unocss/astro@0.65.1(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))':
     dependencies:
       '@unocss/core': 0.65.1
       '@unocss/reset': 0.65.1
-      '@unocss/vite': 0.65.1(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
+      '@unocss/vite': 0.65.1(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
     optionalDependencies:
-      vite: 6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
+      vite: 6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -5580,7 +5580,7 @@ snapshots:
     dependencies:
       '@unocss/core': 0.65.1
 
-  '@unocss/vite@0.65.1(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))':
+  '@unocss/vite@0.65.1(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@rollup/pluginutils': 5.1.3(rollup@2.79.2)
@@ -5590,20 +5590,20 @@ snapshots:
       chokidar: 3.6.0
       magic-string: 0.30.14
       tinyglobby: 0.2.10
-      vite: 6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
+      vite: 6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1)
     transitivePeerDependencies:
       - rollup
       - supports-color
       - vue
 
-  '@vitejs/plugin-react@4.3.4(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))':
+  '@vitejs/plugin-react@4.3.4(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.0)
       '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.0)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
+      vite: 6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -7203,7 +7203,7 @@ snapshots:
       type-fest: 0.16.0
       unique-string: 2.0.0
 
-  terser@5.36.0:
+  terser@5.37.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.14.0
@@ -7323,14 +7323,14 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.1.0(@unocss/preset-wind@0.65.1)(unocss@0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))):
+  unocss-preset-animations@1.1.0(@unocss/preset-wind@0.65.1)(unocss@0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))):
     dependencies:
       '@unocss/preset-wind': 0.65.1
-      unocss: 0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
+      unocss: 0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
 
-  unocss@0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2)):
+  unocss@0.65.1(postcss@8.4.49)(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2)):
     dependencies:
-      '@unocss/astro': 0.65.1(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
+      '@unocss/astro': 0.65.1(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
       '@unocss/cli': 0.65.1(rollup@2.79.2)
       '@unocss/core': 0.65.1
       '@unocss/postcss': 0.65.1(postcss@8.4.49)
@@ -7346,9 +7346,9 @@ snapshots:
       '@unocss/transformer-compile-class': 0.65.1
       '@unocss/transformer-directives': 0.65.1
       '@unocss/transformer-variant-group': 0.65.1
-      '@unocss/vite': 0.65.1(rollup@2.79.2)(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
+      '@unocss/vite': 0.65.1(rollup@2.79.2)(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(vue@3.5.13(typescript@5.7.2))
     optionalDependencies:
-      vite: 6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
+      vite: 6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1)
     transitivePeerDependencies:
       - postcss
       - rollup
@@ -7397,18 +7397,18 @@ snapshots:
       fast-glob: 3.3.2
       magic-string: 0.30.14
 
-  vite-plugin-pwa@0.21.1(vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0):
+  vite-plugin-pwa@0.21.1(vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0):
     dependencies:
       debug: 4.3.7
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.10
-      vite: 6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1)
+      vite: 6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1)
       workbox-build: 7.3.0(@types/babel__core@7.20.5)
       workbox-window: 7.3.0
     transitivePeerDependencies:
       - supports-color
 
-  vite@6.0.2(@types/node@22.10.1)(jiti@2.4.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.1):
+  vite@6.0.3(@types/node@22.10.1)(jiti@2.4.0)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1):
     dependencies:
       esbuild: 0.24.0
       postcss: 8.4.49
@@ -7417,7 +7417,7 @@ snapshots:
       '@types/node': 22.10.1
       fsevents: 2.3.3
       jiti: 2.4.0
-      terser: 5.36.0
+      terser: 5.37.0
       tsx: 4.19.2
       yaml: 2.6.1
 
