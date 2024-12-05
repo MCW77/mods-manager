@@ -1,4 +1,5 @@
-import type * as C3PODTOs from "./";
+import type { C3POPrimaryStatDTO } from "./C3POPrimaryStatDTO";
+import type { C3POSecondaryStatsDTO } from "./C3POSecondaryStatDTO";
 
 export type Set =
 	| "Critical Chance"
@@ -42,5 +43,5 @@ export type C3POModDTO = {
 	pips: Pips;
 	tier: Tier;
 	level: Levels;
-} & C3PODTOs.C3POPrimaryStatDTO &
-	C3PODTOs.C3POSecondaryStatsDTO;
+} & C3POPrimaryStatDTO &
+	C3POSecondaryStatsDTO;
