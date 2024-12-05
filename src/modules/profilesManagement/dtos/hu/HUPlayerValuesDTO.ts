@@ -1,6 +1,6 @@
 import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type * as DTOs from "../";
+import type { HUCharacterStatsDTO } from "./HUCharacterStatsDTO";
 
 interface HUPlayerValuesDTO {
 	baseId: CharacterNames;
@@ -12,8 +12,8 @@ interface HUPlayerValuesDTO {
 	rarity: number;
 	relicTier: number;
 	stats: {
-		base: DTOs.HU.HUCharacterStatsDTO;
-		gear?: DTOs.HU.HUCharacterStatsDTO;
+		base: HUCharacterStatsDTO;
+		gear?: HUCharacterStatsDTO;
 	};
 }
 
