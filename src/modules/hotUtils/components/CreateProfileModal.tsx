@@ -68,15 +68,11 @@ const CreateProfileModal: React.FC = observer(() => {
 		return assignedMods.concat(lockedMods);
 	};
 
-	let categoryInput: HTMLInputElement | null;
-	let profileNameInput: HTMLInputElement | null;
-	let error: HTMLParagraphElement | null;
-
 	const createLoudout = () => {
 		const profile: ProfileCreationData = {
 			set: {
-				category: categoryInput?.value ?? "",
-				name: profileNameInput?.value ?? "",
+				category: input$.category.peek(),
+				name: input$.name.peek(),
 				units: generateHotUtilsProfile(),
 			},
 		};
