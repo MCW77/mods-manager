@@ -12,14 +12,15 @@ export default defineConfig({
 	},
 	build: {
 		target: "esnext",
-			/*
 		rollupOptions: {
 			//			treeshake: true,
+			/*
 			input: {
 				index: "src/index.tsx",
 				optimizer: "src/workers/optimizer.ts",
 				//				sw: "src/sw.js",
 			},
+*/
 			output: {
 				manualChunks(id) {
 					if (id.includes("stateLoader")) {
@@ -28,7 +29,6 @@ export default defineConfig({
 				},
 			},
 		},
-*/
 	},
 	plugins: [
 		dynamicImport(),
