@@ -21,6 +21,11 @@ import {
 } from "../domain/CharacterFilterById";
 import type { Character } from "#/domain/Character";
 import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+
+import { Stat } from "#/domain/Stat";
+import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 const getDefaultFilterSetup = () => {
 	return {
@@ -324,6 +329,94 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 				newFilter.id,
 				newFilter,
 			);
+		},
+		/**
+		 * Convert this stat to one or more with flat values, even if it had a percent-based value before
+		 * @param character
+		 * @returns {Array<Stat>}
+		 */
+		getFlatValuesForCharacter: (character: Character, stat: Stat) => {
+			const statPropertyNames =
+				Stat.display2CSGIMOStatNamesMap[stat.getDisplayType()];
+
+			return statPropertyNames.map((statName) => {
+				const displayName = Stat.gimo2DisplayStatNamesMap[statName];
+				const statType: CharacterStatNames.All = (
+					Stat.mixedTypes.includes(displayName)
+						? displayName
+						: `${displayName} %`
+				) as CharacterStatNames.All;
+
+				if (stat.isPercentVersion && character.playerValues?.baseStats) {
+					return new CSStats.CharacterSummaryStat(
+						statType,
+						`${stat.bigValue
+							.mul(character?.playerValues?.baseStats[statName] ?? 0)
+							.div(100)
+							.toNumber()}`,
+					);
+				}
+				if (!stat.isPercentVersion) {
+					return new CSStats.CharacterSummaryStat(statType, stat.valueString);
+				}
+				throw new Error(
+					`Stat is given as a percentage, but ${character.id} has no base stats`,
+				);
+			});
+		},
+		/**
+		 * Get the value of this stat for optimization
+		 *
+		 * @param character {Character}
+		 * @param target {OptimizationPlan}
+		 */
+		getOptimizationValue: (
+			character: Character,
+			target: OptimizationPlan,
+			stat: Stat,
+		) => {
+			// Optimization Plans don't have separate physical and special critical chances, since both are always affected
+			// equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit
+			// chance, ignore it altogether.
+			if (stat.getDisplayType() === "Special Critical Chance") {
+				return 0;
+			}
+
+			type OptStats =
+				| Readonly<CharacterStatNames.WithoutCC[]>
+				| Readonly<"Critical Chance"[]>;
+
+			const statTypes: OptStats =
+				"Physical Critical Chance" === stat.getDisplayType()
+					? ["Critical Chance"]
+					: (Stat.display2CSGIMOStatNamesMap[
+							stat.getDisplayType()
+						] as CharacterStatNames.WithoutCC[]);
+
+			if (!statTypes) {
+				return 0;
+			}
+
+			if (stat.isPercentVersion) {
+				return statTypes
+					.map(
+						(statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
+							target[statType] *
+							Math.floor(
+								(character.playerValues.baseStats[
+									statType as CharacterStatNames.All
+								] *
+									stat.value) /
+									100,
+							),
+					)
+					.reduce((a, b) => a + b, 0);
+			}
+			return statTypes
+				.map((statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
+					stat.bigValue.mul(target[statType]).toNumber(),
+				)
+				.reduce((a, b) => a + b, 0);
 		},
 	});
 

@@ -1,5 +1,5 @@
 // domain
-import { Stats } from "./Stats";
+import { Stat } from "./Stat";
 import StatScore from "./StatScore";
 
 export type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
@@ -27,7 +27,7 @@ export type GIMOStatNames =
 export type Rolls = 1 | 2 | 3 | 4 | 5;
 export type StrRolls = "1" | "2" | "3" | "4" | "5";
 
-export class SecondaryStat extends Stats.Stat {
+export class SecondaryStat extends Stat {
 	static statNames: Readonly<GIMOStatNames[]> = [
 		"Speed",
 		"Potency %",
@@ -91,7 +91,7 @@ export class SecondaryStat extends Stats.Stat {
 		this.displayModifier = this.type.endsWith("%") ? "%" : "";
 		this.isPercentVersion =
 			this.displayModifier === "%" &&
-			Stats.Stat.mixedTypes.includes(this.getDisplayType());
+			Stat.mixedTypes.includes(this.getDisplayType());
 	}
 
 	clone(): this {

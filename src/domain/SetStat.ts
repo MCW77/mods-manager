@@ -1,5 +1,5 @@
 // domain
-import { Stats } from "./Stats";
+import { Stat } from "./Stat";
 
 // #region GIMOStatNames
 export type GIMOStatNames =
@@ -25,7 +25,7 @@ export type HUStatNames =
 	| "Potency";
 // #endregion
 
-export class SetStat extends Stats.Stat {
+export class SetStat extends Stat {
 	static statNames: GIMOStatNames[] = [
 		"Offense %",
 		"Speed %",
@@ -56,7 +56,7 @@ export class SetStat extends Stats.Stat {
 		this.displayModifier = this.type.endsWith("%") ? "%" : "";
 		this.isPercentVersion =
 			this.displayModifier === "%" &&
-			Stats.Stat.mixedTypes.includes(this.getDisplayType());
+			Stat.mixedTypes.includes(this.getDisplayType());
 	}
 
 	static getClassName(set: GIMOStatNames): string {

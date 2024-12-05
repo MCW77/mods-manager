@@ -18,6 +18,7 @@ import type { TargetStat } from "#/domain/TargetStat";
 
 import type { MissedGoals } from "#/modules/compilations/domain/MissedGoals";
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
 // components
 const ModLoadoutView = lazy(
@@ -245,7 +246,11 @@ const ModLoadoutDetail = React.memo(
 				let originalStat = oldSummary[stat.type as CharacterStatNames.All];
 				let originalStatValue =
 					character.playerValues.equippedStats[statName] + originalStat.value;
-				const optimizationValue = stat.getOptimizationValue(character, target);
+				const optimizationValue = charactersManagement$.getOptimizationValue(
+					character,
+					target,
+					stat,
+				);
 
 				if (["Armor", "Resistance"].includes(statName)) {
 					// Convert armor and resistance to percent stats

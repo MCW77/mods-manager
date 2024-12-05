@@ -11,6 +11,9 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 const { profilesManagement$ } = await import(
 	"#/modules/profilesManagement/state/profilesManagement"
 );
+const { charactersManagement$ } = await import(
+	"#/modules/charactersManagement/state/charactersManagement"
+);
 
 // domain
 import * as ModConsts from "#/domain/constants/ModConsts";
@@ -127,7 +130,10 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			for (const modStat of [workingMod.primaryStat as Stats.Stat].concat(
 				workingMod.secondaryStats,
 			)) {
-				const flatStats = modStat.getFlatValuesForCharacter(character);
+				const flatStats = charactersManagement$.getFlatValuesForCharacter(
+					character,
+					modStat,
+				);
 				for (const stat of flatStats) {
 					summary[stat.type as CharacterStatNames.All] =
 						summary[stat.type as CharacterStatNames.All].plus(stat);
@@ -240,8 +246,10 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 						setDescription.numberOfModsRequired,
 				);
 
-				const maxSetStats =
-					setDescription.maxBonus.getFlatValuesForCharacter(character);
+				const maxSetStats = charactersManagement$.getFlatValuesForCharacter(
+					character,
+					setDescription.maxBonus,
+				);
 				for (const stat of maxSetStats) {
 					for (let i = 0; i < maxSetMultiplier; i++) {
 						loadoutSummary[stat.type as CharacterStatNames.All] =
@@ -249,8 +257,10 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 					}
 				}
 
-				const smallSetStats =
-					setDescription.smallBonus.getFlatValuesForCharacter(character);
+				const smallSetStats = charactersManagement$.getFlatValuesForCharacter(
+					character,
+					setDescription.smallBonus,
+				);
 				for (const stat of smallSetStats) {
 					for (let i = 0; i < smallSetMultiplier; i++) {
 						loadoutSummary[stat.type as CharacterStatNames.All] =
@@ -286,7 +296,8 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				optimizationSettings$.getSummary(modLoadout, character, withUpgrades),
 			).reduce(
 				(setValue, stat) =>
-					setValue + stat.getOptimizationValue(character, target),
+					setValue +
+					charactersManagement$.getOptimizationValue(character, target, stat),
 				0,
 			);
 		},
