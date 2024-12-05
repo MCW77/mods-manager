@@ -14,6 +14,7 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // domain
+import { characterSettings } from "#/constants/characterSettings";
 import * as Character from "#/domain/Character";
 
 // component
@@ -27,9 +28,9 @@ const SaveTemplateModal = lazy(
 	() => import("#/containers/CharacterEditView/SaveTemplateModal"),
 );
 
-import { Button } from "#ui/button";
-
 import { HelpLink } from "#/modules/help/components/HelpLink";
+
+import { Button } from "#ui/button";
 
 interface TemplatesActionsProps {
 	hasNoSelectedCharacters: boolean;
@@ -57,7 +58,7 @@ const TemplatesActions = ({
 							visibleCharacters.forEach((character, index) => {
 								compilations$.selectCharacter(
 									character.id,
-									Character.defaultTarget(character),
+									Character.defaultTarget(characterSettings, character),
 									index + lastSelectedCharacterIndex,
 								);
 							});

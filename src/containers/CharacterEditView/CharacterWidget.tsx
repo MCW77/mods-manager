@@ -12,6 +12,7 @@ const characters$ = stateLoader$.characters$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
+import { characterSettings } from "#/constants/characterSettings";
 import type { CharacterNames } from "#/constants/CharacterNames";
 
 import * as Character from "#/domain/Character";
@@ -85,7 +86,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 					onDoubleClick={() =>
 						compilations$.selectCharacter(
 							character.id,
-							Character.defaultTarget(character),
+							Character.defaultTarget(characterSettings, character),
 							lastSelectedCharacter,
 						)
 					}

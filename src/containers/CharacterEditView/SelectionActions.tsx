@@ -10,6 +10,7 @@ const lockedStatus$ = stateLoader$.lockedStatus$;
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // domain
+import { characterSettings } from "#/constants/characterSettings";
 import * as Character from "#/domain/Character";
 
 // component
@@ -106,7 +107,7 @@ const SelectionActions = ({
 					visibleCharacters.forEach((character, index) => {
 						compilations$.selectCharacter(
 							character.id,
-							Character.defaultTarget(character),
+							Character.defaultTarget(characterSettings, character),
 							index + lastSelectedCharacterIndex,
 						);
 					});

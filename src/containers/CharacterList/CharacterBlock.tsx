@@ -19,6 +19,7 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
+import { characterSettings } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
@@ -105,7 +106,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						const movingCharacter = characterById[movingCharacterID];
 						compilations$.selectCharacter(
 							movingCharacterID,
-							Character.defaultTarget(movingCharacter),
+							Character.defaultTarget(characterSettings, movingCharacter),
 							dropCharacterIndex,
 						);
 						break;
@@ -250,7 +251,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			});
 		};
 
-		const options = Character.targets(character)
+		const options = Character.targets(characterSettings, character)
 			.map((characterTarget) => characterTarget.id)
 			.map((targetName) => {
 				return (
@@ -292,9 +293,10 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						<ReactiveSelect
 							$value={() => selectedPlan}
 							onValueChange={(value) => {
-								const target = Character.targets(character).find(
-									(target) => target.id === value,
-								);
+								const target = Character.targets(
+									characterSettings,
+									character,
+								).find((target) => target.id === value);
 								if (target !== undefined) {
 									compilations$.changeTarget(index, target);
 								}

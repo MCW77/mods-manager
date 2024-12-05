@@ -13,6 +13,7 @@ const compilations$ = stateLoader$.compilations$;
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
+import { characterSettings } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 
@@ -65,7 +66,7 @@ const CharacterList = observer(
 						const movingCharacter = characterById[movingCharacterID];
 						compilations$.selectCharacter(
 							movingCharacterID,
-							Character.defaultTarget(movingCharacter),
+							Character.defaultTarget(characterSettings, movingCharacter),
 							dropCharacterIndex,
 						);
 						/*
