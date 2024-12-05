@@ -1,35 +1,32 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "#/*": ["./src/*", "./dist/*", ""],
-      "#lib/*": ["./src/lib/*"],
-      "#ui/*": ["./src/components/ui/*"]
-    },
-    "downlevelIteration": true,
-    "noFallthroughCasesInSwitch": true,
-    "noErrorTruncation": true
-  },
-  "include": ["src/**/*"],
-  "exclude": [
-     "node_modules/**/*",
-     "dist/**/*"
-  ],
-  "typeAcquisition": {
-    "enable": false
-  }
+	"compilerOptions": {
+		"target": "ESNext",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"baseUrl": ".",
+		"paths": {
+			"#/*": ["./src/*", "./dist/*", ""],
+			"#lib/*": ["./src/lib/*"],
+			"#ui/*": ["./src/components/ui/*"]
+		},
+		"downlevelIteration": true,
+		"noFallthroughCasesInSwitch": true,
+		"noErrorTruncation": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules/**/*", "dist/**/*"],
+	"typeAcquisition": {
+		"enable": false
+	}
 }
