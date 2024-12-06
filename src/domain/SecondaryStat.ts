@@ -1,4 +1,5 @@
 // domain
+import type { GIMOSecondaryStatNames } from "./GIMOStatNames";
 import { Stat } from "./Stat";
 import StatScore from "./StatScore";
 
@@ -15,20 +16,11 @@ export type HUDefensiveStats =
 // #endregion
 export type HUStatNames = HUNeutralStats | HUOffensiveStats | HUDefensiveStats;
 
-export type GIMONeutralStats = "Speed" | "Potency %" | "Tenacity %";
-export type GIMOOffensiveStats = "Offense" | "Offense %" | "Critical Chance %";
-export type GIMODefensiveStats = HUDefensiveStats;
-
-export type GIMOStatNames =
-	| GIMONeutralStats
-	| GIMOOffensiveStats
-	| GIMODefensiveStats;
-
 export type Rolls = 1 | 2 | 3 | 4 | 5;
 export type StrRolls = "1" | "2" | "3" | "4" | "5";
 
 export class SecondaryStat extends Stat {
-	static statNames: Readonly<GIMOStatNames[]> = [
+	static statNames: Readonly<GIMOSecondaryStatNames[]> = [
 		"Speed",
 		"Potency %",
 		"Tenacity %",
@@ -43,22 +35,23 @@ export class SecondaryStat extends Stat {
 		"Protection %",
 	] as const;
 
-	static HU2GIMOStatNamesMap: { [key in HUStatNames]: GIMOStatNames } = {
-		"Crit Chance %": "Critical Chance %",
-		Defense: "Defense",
-		"Defense %": "Defense %",
-		Health: "Health",
-		"Health %": "Health %",
-		Offense: "Offense",
-		"Offense %": "Offense %",
-		"Potency %": "Potency %",
-		Protection: "Protection",
-		"Protection %": "Protection %",
-		"Resistance %": "Tenacity %",
-		Speed: "Speed",
-	};
+	static HU2GIMOStatNamesMap: { [key in HUStatNames]: GIMOSecondaryStatNames } =
+		{
+			"Crit Chance %": "Critical Chance %",
+			Defense: "Defense",
+			"Defense %": "Defense %",
+			Health: "Health",
+			"Health %": "Health %",
+			Offense: "Offense",
+			"Offense %": "Offense %",
+			"Potency %": "Potency %",
+			Protection: "Protection",
+			"Protection %": "Protection %",
+			"Resistance %": "Tenacity %",
+			Speed: "Speed",
+		};
 
-	static upgradeFactors: { [key in GIMOStatNames]: number } = {
+	static upgradeFactors: { [key in GIMOSecondaryStatNames]: number } = {
 		"Critical Chance %": 1.045,
 		Defense: 1.63,
 		"Defense %": 2.34,
@@ -74,13 +67,13 @@ export class SecondaryStat extends Stat {
 	};
 
 	id: string;
-	type: GIMOStatNames;
+	type: GIMOSecondaryStatNames;
 	rolls: Rolls;
 	score!: StatScore;
 
 	constructor(
 		id: string,
-		type: GIMOStatNames,
+		type: GIMOSecondaryStatNames,
 		value: string,
 		rolls: Rolls = 1,
 	) {
@@ -153,7 +146,7 @@ export class SecondaryStat extends Stat {
 		return result;
 	}
 
-	serialize(): [GIMOStatNames, string, StrRolls] {
+	serialize(): [GIMOSecondaryStatNames, string, StrRolls] {
 		return [this.type, this.stringValue, `${this.rolls}` as StrRolls];
 	}
 

@@ -5,7 +5,15 @@ import Big from "big.js";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { ModTiersEnum } from "#/constants/enums";
 import type * as ModTypes from "./types/ModTypes";
-import { PrimaryStats, SecondaryStats, SetStats } from "./Stats";
+import type {
+	GIMOPrimaryStatNames,
+	GIMOSecondaryStatNames,
+	GIMOSetStatNames,
+} from "./GIMOStatNames";
+import type { Pips } from "./Pips";
+import { PrimaryStat } from "./PrimaryStat";
+import { type Rolls, SecondaryStat } from "./SecondaryStat";
+import { SetStat } from "./SetStat";
 
 const HU2GIMOSlotsMap: {
 	[key in ModTypes.HUSlots]: ModTypes.GIMOSlots;
@@ -21,11 +29,11 @@ const HU2GIMOSlotsMap: {
 export class Mod {
 	id: string;
 	slot: ModTypes.GIMOSlots;
-	modset: SetStats.GIMOStatNames;
+	modset: GIMOSetStatNames;
 	level: ModTypes.Levels;
-	pips: ModTypes.Pips;
-	primaryStat: PrimaryStats.PrimaryStat;
-	secondaryStats: SecondaryStats.SecondaryStat[];
+	pips: Pips;
+	primaryStat: PrimaryStat;
+	secondaryStats: SecondaryStat[];
 	tier: ModTiersEnum;
 	characterID: CharacterNames | "null";
 	totalRolls: number;
@@ -60,14 +68,13 @@ export class Mod {
 	}
 
 	static setupStatAccessors() {
-		for (const stat of SecondaryStats.SecondaryStat.statNames) {
+		for (const stat of SecondaryStat.statNames) {
 			Object.defineProperty(Mod.prototype, `StatScore${stat}`, {
 				get: function (): number {
-					const foundStat: SecondaryStats.SecondaryStat | undefined = (
+					const foundStat: SecondaryStat | undefined = (
 						this as Mod
 					).secondaryStats.find(
-						(traversedStat: SecondaryStats.SecondaryStat) =>
-							traversedStat.type === stat,
+						(traversedStat: SecondaryStat) => traversedStat.type === stat,
 					);
 					return foundStat ? Number(foundStat.score.value) : 0;
 				},
@@ -75,11 +82,10 @@ export class Mod {
 			});
 			Object.defineProperty(Mod.prototype, `Stat${stat}`, {
 				get: function (): number {
-					const foundStat: SecondaryStats.SecondaryStat | undefined = (
+					const foundStat: SecondaryStat | undefined = (
 						this as Mod
 					).secondaryStats.find(
-						(traversedStat: SecondaryStats.SecondaryStat) =>
-							traversedStat.type === stat,
+						(traversedStat: SecondaryStat) => traversedStat.type === stat,
 					);
 					return foundStat ? foundStat.value : 0;
 				},
@@ -106,11 +112,11 @@ export class Mod {
 	constructor(
 		id: string,
 		slot: ModTypes.GIMOSlots,
-		modset: SetStats.GIMOStatNames,
+		modset: GIMOSetStatNames,
 		level: ModTypes.Levels,
-		pips: ModTypes.Pips,
-		primaryStat: PrimaryStats.PrimaryStat,
-		secondaryStats: SecondaryStats.SecondaryStat[],
+		pips: Pips,
+		primaryStat: PrimaryStat,
+		secondaryStats: SecondaryStat[],
 		characterID: CharacterNames | "null",
 		reRolledCount: number,
 		tier: ModTiersEnum = 1,
@@ -312,7 +318,7 @@ export class Mod {
 
 	static fromHotUtils(flatMod: ModTypes.HUFlatMod) {
 		type secondaryPos = "1" | "2" | "3" | "4";
-		const secondaryStats: SecondaryStats.SecondaryStat[] = [];
+		const secondaryStats: SecondaryStat[] = [];
 		for (const pos of ["1", "2", "3", "4"] as secondaryPos[]) {
 			const typeKey =
 				`secondaryType_${pos}` as keyof ModTypes.FlatHUModTypeIndexer;
@@ -324,7 +330,7 @@ export class Mod {
 				flatMod[rollKey] !== null
 			) {
 				secondaryStats.push(
-					SecondaryStats.SecondaryStat.fromHotUtils(
+					SecondaryStat.fromHotUtils(
 						pos,
 						flatMod[typeKey],
 						flatMod[
@@ -339,10 +345,10 @@ export class Mod {
 		return new Mod(
 			flatMod.mod_uid,
 			HU2GIMOSlotsMap[flatMod.slot],
-			SetStats.SetStat.HU2GIMOStatNamesMap[flatMod.set],
+			SetStat.HU2GIMOStatNamesMap[flatMod.set],
 			flatMod.level,
 			flatMod.pips,
-			PrimaryStats.PrimaryStat.fromHotUtils(
+			PrimaryStat.fromHotUtils(
 				flatMod.primaryBonusType,
 				flatMod.primaryBonusValue,
 			),
@@ -354,49 +360,49 @@ export class Mod {
 	}
 
 	static deserialize(mod: ModTypes.GIMOFlatMod) {
-		const primaryStat = new PrimaryStats.PrimaryStat(
+		const primaryStat = new PrimaryStat(
 			mod.primaryBonusType,
 			mod.primaryBonusValue,
 		);
-		const secondaryStats: SecondaryStats.SecondaryStat[] = [];
+		const secondaryStats: SecondaryStat[] = [];
 
 		if (null !== mod.secondaryType_1 && "" !== mod.secondaryValue_1) {
 			secondaryStats.push(
-				new SecondaryStats.SecondaryStat(
+				new SecondaryStat(
 					"1",
 					mod.secondaryType_1,
 					mod.secondaryValue_1,
-					+(mod.secondaryRoll_1 ?? 1) as SecondaryStats.Rolls,
+					+(mod.secondaryRoll_1 ?? 1) as Rolls,
 				),
 			);
 		}
 		if (null !== mod.secondaryType_2 && "" !== mod.secondaryValue_2) {
 			secondaryStats.push(
-				new SecondaryStats.SecondaryStat(
+				new SecondaryStat(
 					"2",
 					mod.secondaryType_2,
 					mod.secondaryValue_2,
-					+(mod.secondaryRoll_2 ?? 1) as SecondaryStats.Rolls,
+					+(mod.secondaryRoll_2 ?? 1) as Rolls,
 				),
 			);
 		}
 		if (null !== mod.secondaryType_3 && "" !== mod.secondaryValue_3) {
 			secondaryStats.push(
-				new SecondaryStats.SecondaryStat(
+				new SecondaryStat(
 					"3",
 					mod.secondaryType_3,
 					mod.secondaryValue_3,
-					+(mod.secondaryRoll_3 ?? 1) as SecondaryStats.Rolls,
+					+(mod.secondaryRoll_3 ?? 1) as Rolls,
 				),
 			);
 		}
 		if (null !== mod.secondaryType_4 && "" !== mod.secondaryValue_4) {
 			secondaryStats.push(
-				new SecondaryStats.SecondaryStat(
+				new SecondaryStat(
 					"4",
 					mod.secondaryType_4,
 					mod.secondaryValue_4,
-					+(mod.secondaryRoll_4 ?? 1) as SecondaryStats.Rolls,
+					+(mod.secondaryRoll_4 ?? 1) as Rolls,
 				),
 			);
 		}
@@ -560,12 +566,7 @@ modScores.push(
 			};
 
 			return Number.parseFloat(
-				(
-					mod.secondaryStats as (
-						| PrimaryStats.PrimaryStat
-						| SecondaryStats.SecondaryStat
-					)[]
-				)
+				(mod.secondaryStats as (PrimaryStat | SecondaryStat)[])
 					.concat([mod.primaryStat])
 					.reduce(
 						(acc, stat) => acc.plus(stat.bigValue.mul(statScore[stat.type])),
@@ -585,7 +586,7 @@ modScores.push(
   `,
 		"IsPercentage",
 		(mod: Mod) => {
-			const isOffenseSecondary = (statType: SecondaryStats.GIMOStatNames) => {
+			const isOffenseSecondary = (statType: GIMOSecondaryStatNames) => {
 				return ["Offense %", "Critical Chance %"].includes(statType);
 			};
 
@@ -606,7 +607,7 @@ modScores.push(
 						"Potency %",
 						"Tenacity %",
 						"Speed",
-					] as PrimaryStats.GIMOStatNames[]
+					] as GIMOPrimaryStatNames[]
 				).includes(mod.primaryStat.type)
 			)
 				return 0;
@@ -645,7 +646,7 @@ modScores.push(
   `,
 		"IsPercentage",
 		(mod: Mod) => {
-			const isDefenseSecondary = (statType: SecondaryStats.GIMOStatNames) => {
+			const isDefenseSecondary = (statType: GIMOSecondaryStatNames) => {
 				return ["Health %", "Defense %", "Protection %"].includes(statType);
 			};
 
@@ -661,7 +662,7 @@ modScores.push(
 						"Potency %",
 						"Tenacity %",
 						"Speed",
-					] as PrimaryStats.GIMOStatNames[]
+					] as GIMOPrimaryStatNames[]
 				).includes(mod.primaryStat.type)
 			)
 				return 0;

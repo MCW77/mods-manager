@@ -3,20 +3,7 @@ import Big from "big.js";
 
 // domain
 import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
-
-import type {
-	CharacterSummaryStats as CSStats,
-	PrimaryStats,
-	SecondaryStats,
-	SetStats,
-} from "./Stats";
-
-export type NonCalculatedGIMOStatNames =
-	| PrimaryStats.GIMOStatNames
-	| SetStats.GIMOStatNames
-	| SecondaryStats.GIMOStatNames;
-
-type AllGIMOStatNames = NonCalculatedGIMOStatNames | CSStats.GIMOStatNames;
+import type { AllGIMOStatNames } from "./GIMOStatNames";
 
 // #region DisplayStatNames
 export type DisplayStatNames =

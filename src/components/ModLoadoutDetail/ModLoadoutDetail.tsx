@@ -11,6 +11,10 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
 import type * as Character from "#/domain/Character";
+import type {
+	CalculatedCharacterSummaryStatNames,
+	GIMOCharacterSummaryStatNames,
+} from "#/domain/GIMOStatNames";
 import type { ModLoadout } from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
@@ -38,7 +42,9 @@ interface PlayerStat {
 }
 
 type PlayerStats = {
-	[key in CSStats.GIMOStatNames | CSStats.CalculatedStatNames]: PlayerStat;
+	[key in
+		| GIMOCharacterSummaryStatNames
+		| CalculatedCharacterSummaryStatNames]: PlayerStat;
 };
 
 type ComponentProps = {

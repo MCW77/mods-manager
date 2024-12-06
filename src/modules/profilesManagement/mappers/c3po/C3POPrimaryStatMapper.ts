@@ -1,8 +1,9 @@
+import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
 import { PrimaryStats } from "../../../../domain/Stats";
 import type * as C3PODTOs from "../../dtos/c3po";
 
 const c3PO2GIMOPrimaryStatNameMap: {
-	[key in C3PODTOs.PrimaryStatNames]: PrimaryStats.GIMOStatNames;
+	[key in C3PODTOs.PrimaryStatNames]: GIMOPrimaryStatNames;
 } = {
 	Accuracy: "Accuracy %",
 	"Critical Avoidance": "Critical Avoidance %",

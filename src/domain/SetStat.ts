@@ -1,17 +1,6 @@
 // domain
+import type { GIMOSetStatNames } from "./GIMOStatNames";
 import { Stat } from "./Stat";
-
-// #region GIMOStatNames
-export type GIMOStatNames =
-	| "Offense %"
-	| "Speed %"
-	| "Defense %"
-	| "Health %"
-	| "Critical Chance %"
-	| "Critical Damage %"
-	| "Tenacity %"
-	| "Potency %";
-// #endregion
 
 // #region HUStatNames
 export type HUStatNames =
@@ -26,7 +15,7 @@ export type HUStatNames =
 // #endregion
 
 export class SetStat extends Stat {
-	static statNames: GIMOStatNames[] = [
+	static statNames: GIMOSetStatNames[] = [
 		"Offense %",
 		"Speed %",
 		"Defense %",
@@ -37,7 +26,7 @@ export class SetStat extends Stat {
 		"Potency %",
 	];
 
-	static HU2GIMOStatNamesMap: { [key in HUStatNames]: GIMOStatNames } = {
+	static HU2GIMOStatNamesMap: { [key in HUStatNames]: GIMOSetStatNames } = {
 		"Crit Chance": "Critical Chance %",
 		"Crit Damage": "Critical Damage %",
 		Defense: "Defense %",
@@ -48,9 +37,9 @@ export class SetStat extends Stat {
 		Speedpercentadditive: "Speed %",
 	};
 
-	type: GIMOStatNames;
+	type: GIMOSetStatNames;
 
-	constructor(type: GIMOStatNames, value: string) {
+	constructor(type: GIMOSetStatNames, value: string) {
 		super(value);
 		this.type = type;
 		this.displayModifier = this.type.endsWith("%") ? "%" : "";
@@ -59,7 +48,7 @@ export class SetStat extends Stat {
 			Stat.mixedTypes.includes(this.getDisplayType());
 	}
 
-	static getClassName(set: GIMOStatNames): string {
+	static getClassName(set: GIMOSetStatNames): string {
 		let result: string = set;
 		result = result.replace(" %", "").replace(" ", "");
 		result = result[0].toLowerCase() + result.slice(1);
@@ -70,7 +59,7 @@ export class SetStat extends Stat {
 		return new SetStat(this.type, this.stringValue) as this;
 	}
 
-	serialize(): [GIMOStatNames, string] {
+	serialize(): [GIMOSetStatNames, string] {
 		return [this.type, this.stringValue];
 	}
 }

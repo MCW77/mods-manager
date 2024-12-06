@@ -2,14 +2,15 @@
 import Big from "big.js";
 
 // domain
-import type { SecondaryStats } from "./Stats";
+import type { GIMOSecondaryStatNames } from "./GIMOStatNames";
+import type { SecondaryStat } from "./SecondaryStat";
 
 class StatScore {
 	value: Big;
 	valueAsString: string;
 
 	static statInfo: {
-		[key in SecondaryStats.GIMOStatNames]: {
+		[key in GIMOSecondaryStatNames]: {
 			intMin: number;
 			intCount: number;
 			decimalPoints: number;
@@ -77,7 +78,7 @@ class StatScore {
 		},
 	} as const;
 
-	constructor(stat: SecondaryStats.SecondaryStat) {
+	constructor(stat: SecondaryStat) {
 		const currentStatInfo = StatScore.statInfo[stat.type];
 		let statIntValue: Big;
 

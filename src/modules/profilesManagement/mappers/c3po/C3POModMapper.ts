@@ -6,9 +6,11 @@ import { fromC3PO as fromC3POPrimary } from "./C3POPrimaryStatMapper";
 import { fromC3PO as fromC3POSecondary } from "./C3POSecondaryStatMapper";
 import * as GIMOMods from "../../../../domain/Mod";
 import type * as GIMOStats from "../../../../domain/Stats";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
+import type { Pips } from "#/domain/Pips";
 
 const C3PO2GIMOSetMap: {
-	[key in DTOs.C3PO.Set]: GIMOStats.SetStats.GIMOStatNames;
+	[key in DTOs.C3PO.Set]: GIMOSetStatNames;
 } = {
 	"Critical Chance": "Critical Chance %",
 	"Critical Damage": "Critical Damage %",
@@ -62,7 +64,7 @@ export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
 		mod.slot.toLowerCase() as ModTypes.GIMOSlots,
 		C3PO2GIMOSetMap[mod.setName],
 		Number(mod.level) as ModTypes.Levels,
-		Number(mod.pips) as ModTypes.Pips,
+		Number(mod.pips) as Pips,
 		fromC3POPrimary({
 			primaryStatName: mod.primaryStatName,
 			primaryStatValue: mod.primaryStatValue,

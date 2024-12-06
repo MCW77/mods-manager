@@ -16,12 +16,7 @@ import { gimoSlots } from "../domain/constants/ModConsts";
 import type * as ModTypes from "../domain/types/ModTypes";
 
 import type * as Character from "../domain/Character";
-import {
-	PrimaryStats,
-	SecondaryStats,
-	type SetStats,
-	Stats,
-} from "../domain/Stats";
+import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats";
 import type {
 	OptimizableStats,
 	OptimizationPlan,
@@ -42,6 +37,11 @@ import type { MissedGoals } from "../modules/compilations/domain/MissedGoals";
 import type { OptimizationConditions } from "#/modules/compilations/domain/OptimizationConditions";
 import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings";
 import type { WithoutCC } from "../modules/profilesManagement/domain/CharacterStatNames";
+import type {
+	GIMOPrimaryStatNames,
+	GIMOSecondaryStatNames,
+	GIMOSetStatNames,
+} from "#/domain/GIMOStatNames";
 
 // #region types
 interface Cache {
@@ -63,28 +63,28 @@ interface Stat {
 }
 
 interface PrimaryStat {
-	type: PrimaryStats.GIMOStatNames;
+	type: GIMOPrimaryStatNames;
 	displayType: Stats.DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
 }
 
 interface SecondaryStat {
-	type: SecondaryStats.GIMOStatNames;
+	type: GIMOSecondaryStatNames;
 	displayType: Stats.DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
 }
 
 interface SetBonus {
-	name: SetStats.GIMOStatNames;
+	name: GIMOSetStatNames;
 	numberOfModsRequired: 2 | 4;
 	smallBonus: SetStat;
 	maxBonus: SetStat;
 }
 
 interface SetStat {
-	type: SetStats.GIMOStatNames;
+	type: GIMOSetStatNames;
 	displayType: Stats.DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
@@ -126,7 +126,7 @@ type SetValues = Record<
 type ModBySlot = Record<ModTypes.GIMOSlots, Mod | null>;
 type PartialModBySlot = Partial<ModBySlot>;
 type NullablePartialModBySlot = PartialModBySlot | null;
-type SetRestrictionsEntries = [SetStats.GIMOStatNames, number][];
+type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 // #endregion types
 
 // #region Messaging
@@ -238,7 +238,7 @@ const statDisplayNames = Object.freeze({
 	"Special Critical Avoidance": "Special Critical Avoidance",
 });
 
-const setBonuses: Record<SetStats.GIMOStatNames, SetBonus> = Object.freeze({
+const setBonuses: Record<GIMOSetStatNames, SetBonus> = Object.freeze({
 	"Health %": {
 		name: "Health %",
 		numberOfModsRequired: 2,
@@ -464,7 +464,7 @@ const maxStatPrimaries: Readonly<
 });
 
 const statSlicingUpgradeFactors: Readonly<
-	Partial<Record<SecondaryStats.GIMOStatNames, number>>
+	Partial<Record<GIMOSecondaryStatNames, number>>
 > = Object.freeze({
 	"Offense %": 3.02,
 	"Defense %": 2.34,
@@ -496,22 +496,23 @@ const statWeights = Object.freeze({
 	"Critical Avoidance %": 10,
 });
 
-const affectedTargetStatsBySet: Record<
-	SetStats.GIMOStatNames,
-	TargetStatsNames[]
-> = Object.freeze({
-	"Health %": ["Health", "Health+Protection"],
-	"Defense %": ["Armor", "Resistance"],
-	"Critical Damage %": ["Critical Damage"],
-	"Critical Chance %": ["Physical Critical Chance", "Special Critical Chance"],
-	"Tenacity %": ["Tenacity"],
-	"Offense %": ["Physical Damage", "Special Damage"],
-	"Potency %": ["Potency"],
-	"Speed %": ["Speed"],
-});
+const affectedTargetStatsBySet: Record<GIMOSetStatNames, TargetStatsNames[]> =
+	Object.freeze({
+		"Health %": ["Health", "Health+Protection"],
+		"Defense %": ["Armor", "Resistance"],
+		"Critical Damage %": ["Critical Damage"],
+		"Critical Chance %": [
+			"Physical Critical Chance",
+			"Special Critical Chance",
+		],
+		"Tenacity %": ["Tenacity"],
+		"Offense %": ["Physical Damage", "Special Damage"],
+		"Potency %": ["Potency"],
+		"Speed %": ["Speed"],
+	});
 
 const affectedTargetStatsByPtimaryStat: Record<
-	PrimaryStats.GIMOStatNames,
+	GIMOPrimaryStatNames,
 	TargetStatsNames[]
 > = Object.freeze({
 	"Offense %": ["Physical Damage", "Special Damage"],
@@ -528,7 +529,7 @@ const affectedTargetStatsByPtimaryStat: Record<
 });
 
 const affectedTargetStatsBySecondaryStat: Record<
-	SecondaryStats.GIMOStatNames,
+	GIMOSecondaryStatNames,
 	TargetStatsNames[]
 > = Object.freeze({
 	Offense: ["Physical Damage", "Special Damage"],
@@ -613,10 +614,7 @@ function areObjectsEquivalent(left: object, right: object): boolean {
 	});
 }
 
-function deserializePrimaryStat(
-	type: PrimaryStats.GIMOStatNames,
-	value: string,
-) {
+function deserializePrimaryStat(type: GIMOPrimaryStatNames, value: string) {
 	const displayType = PrimaryStats.PrimaryStat.GIMO2DisplayStatNamesMap[type];
 	const rawValue = value.replace(/[+%]/g, "");
 	const realValue = +rawValue;
@@ -632,10 +630,7 @@ function deserializePrimaryStat(
 	} as PrimaryStat;
 }
 
-function deserializeSecondaryStat(
-	type: SecondaryStats.GIMOStatNames,
-	value: string,
-) {
+function deserializeSecondaryStat(type: GIMOSecondaryStatNames, value: string) {
 	const displayType =
 		SecondaryStats.SecondaryStat.gimo2DisplayStatNamesMap[type];
 	const rawValue = value.replace(/[+%]/g, "");
@@ -826,7 +821,7 @@ function getSetBonusStatsFromLoadout(loadout: Mod[]) {
 	const setStats: SetStat[] = [];
 	const setBonusCounts: Partial<
 		Record<
-			SetStats.GIMOStatNames,
+			GIMOSetStatNames,
 			{ setBonus: SetBonus; lowCount: number; highCount: number }
 		>
 	> = {};
@@ -1008,12 +1003,12 @@ function loadoutFulfillsFullSetRestriction(loadout: Mod[]) {
 	);
 
 	//console.log(`setCounts: ${JSON.stringify(setCounts)}`);
-	return (
-		Object.entries(setCounts) as [SetStats.GIMOStatNames, number][]
-	).every(([setName, count]) => {
-		//console.log(`741: setName: ${setName}`);
-		return 0 === count % setBonuses[setName].numberOfModsRequired;
-	});
+	return (Object.entries(setCounts) as [GIMOSetStatNames, number][]).every(
+		([setName, count]) => {
+			//console.log(`741: setName: ${setName}`);
+			return 0 === count % setBonuses[setName].numberOfModsRequired;
+		},
+	);
 }
 
 /**
@@ -1197,7 +1192,7 @@ function filterMods(
 	baseMods: Mod[],
 	slot: ModTypes.GIMOSlots,
 	minDots: number,
-	primaryStat: PrimaryStats.GIMOStatNames,
+	primaryStat: GIMOPrimaryStatNames,
 ) {
 	if (primaryStat) {
 		// Only filter if some primary stat restriction is set
@@ -1368,9 +1363,9 @@ function getUpgradedMod(
 			value: maxStatPrimaries[workingMod.primaryStat.displayType]?.[6] ?? 0,
 		};
 		workingMod.secondaryStats = workingMod.secondaryStats.map((stat) => {
-			const statName: SecondaryStats.GIMOStatNames = stat.isPercentVersion
-				? (`${stat.displayType} %` as SecondaryStats.GIMOStatNames)
-				: (stat.displayType as SecondaryStats.GIMOStatNames);
+			const statName: GIMOSecondaryStatNames = stat.isPercentVersion
+				? (`${stat.displayType} %` as GIMOSecondaryStatNames)
+				: (stat.displayType as GIMOSecondaryStatNames);
 
 			return {
 				displayType: stat.displayType,
@@ -2155,7 +2150,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			.reduce(
 				(filledSlots, [setName, setCount]) =>
 					filledSlots +
-					setBonuses[setName as SetStats.GIMOStatNames].numberOfModsRequired *
+					setBonuses[setName as GIMOSetStatNames].numberOfModsRequired *
 						setCount,
 				0,
 			);
@@ -3045,7 +3040,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	cachedLoadoutScores: (loadout: Mod[], id: string) => number,
 ): LoadoutOrNullAndMessages => {
 	const potentialUsedSets = new Set<SetBonus>();
-	const baseSets: Partial<Record<SetStats.GIMOStatNames, ModBySlot>> = {};
+	const baseSets: Partial<Record<GIMOSetStatNames, ModBySlot>> = {};
 	const messages: string[] = [];
 	let squares: Mod[] = [];
 	let arrows: Mod[] = [];
@@ -3166,7 +3161,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		setlessMods = null;
 	} else if (target.useOnlyFullSets) {
 		// If we're only allowed to use full sets, then add every set to potentialUsedSets, but leave setlessMods null
-		let setName: SetStats.GIMOStatNames;
+		let setName: GIMOSetStatNames;
 		for (setName in setBonuses) {
 			const setBonus = setBonuses[setName];
 			potentialUsedSets.add(setBonus);
@@ -3293,7 +3288,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
  */
 function* getCandidateLoadoutsGenerator(
 	potentialUsedSets: Set<SetBonus>,
-	baseSets: Partial<Record<SetStats.GIMOStatNames, ModBySlot>>,
+	baseSets: Partial<Record<GIMOSetStatNames, ModBySlot>>,
 	setlessMods: NullablePartialModBySlot,
 	setsToUse: SetRestrictions,
 ): Generator<Mod[]> {
@@ -3322,10 +3317,10 @@ function* getCandidateLoadoutsGenerator(
 		.filter((modset) => 2 === modset.numberOfModsRequired)
 		.map((set) => set.name);
 	const forcedSets: {
-		4: SetStats.GIMOStatNames[];
-		2: SetStats.GIMOStatNames[];
+		4: GIMOSetStatNames[];
+		2: GIMOSetStatNames[];
 	} = { 4: [], 2: [] };
-	let setName: SetStats.GIMOStatNames;
+	let setName: GIMOSetStatNames;
 	for (setName in setsToUse) {
 		const count = setsToUse[setName];
 		if (count !== undefined) {

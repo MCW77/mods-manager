@@ -7,6 +7,7 @@ import type { PrimaryStats } from "#/domain/Stats";
 
 // components
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
+import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
 
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
@@ -39,7 +40,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.arrow.delete();
 							else
 								target$.target.primaryStatRestrictions.arrow.set(
-									value as PrimaryStats.GIMOStatNames,
+									value as GIMOPrimaryStatNames,
 								);
 						}}
 					>
@@ -89,7 +90,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.triangle.delete();
 							else
 								target$.target.primaryStatRestrictions.triangle.set(
-									value as PrimaryStats.GIMOStatNames,
+									value as GIMOPrimaryStatNames,
 								);
 						}}
 					>
@@ -138,7 +139,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.cross.delete();
 							else
 								target$.target.primaryStatRestrictions.cross.set(
-									value as PrimaryStats.GIMOStatNames,
+									value as GIMOPrimaryStatNames,
 								);
 						}}
 					>
@@ -187,7 +188,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.circle.delete();
 							else
 								target$.target.primaryStatRestrictions.circle.set(
-									value as PrimaryStats.GIMOStatNames,
+									value as GIMOPrimaryStatNames,
 								);
 						}}
 					>

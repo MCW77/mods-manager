@@ -3,8 +3,9 @@ import type { ObservableObject } from "@legendapp/state";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
+
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
-import type { SetStats } from "#/domain/Stats";
 
 type PlanEditing = ObservableObject<{
 	canDeleteTarget: () => boolean;
@@ -20,9 +21,9 @@ type PlanEditing = ObservableObject<{
 	isUsedTargetName: () => boolean;
 	target: OptimizationPlan.OptimizationPlan;
 	uneditedTarget: OptimizationPlan.OptimizationPlan;
-	addSetBonus: (setName: SetStats.GIMOStatNames) => void;
+	addSetBonus: (setName: GIMOSetStatNames) => void;
 	addTargetStat: () => void;
-	removeSetBonus: (setName: SetStats.GIMOStatNames) => void;
+	removeSetBonus: (setName: GIMOSetStatNames) => void;
 	removeTargetStatById: (id: string) => void;
 	zeroAll: () => void;
 }>;

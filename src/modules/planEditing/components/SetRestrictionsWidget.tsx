@@ -8,7 +8,7 @@ import { target$ } from "#/modules/planEditing/state/planEditing";
 import setBonuses from "#/constants/setbonuses";
 
 import type SetBonus from "#/domain/SetBonus";
-import type { SetStats } from "#/domain/Stats";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 
 // components
 import { Input } from "#ui/input";
@@ -17,7 +17,7 @@ import { Label } from "#ui/label";
 const ReactiveInput = reactive(Input);
 
 interface SetItem {
-	setName: SetStats.GIMOStatNames;
+	setName: GIMOSetStatNames;
 	key: string;
 }
 
@@ -29,7 +29,7 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 		for (const [setName, count] of Object.entries(setRestrictions$.get())) {
 			for (let i = 0; i < count; i++) {
 				selectedSets.push({
-					setName: setName as SetStats.GIMOStatNames,
+					setName: setName as GIMOSetStatNames,
 					key: `${setName}${i}`,
 				});
 			}

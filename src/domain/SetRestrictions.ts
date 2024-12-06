@@ -1,5 +1,6 @@
-import type { SetStats } from "./Stats";
+// domain
+import type { GIMOSetStatNames } from "./GIMOStatNames";
 
-type SetRestrictions = Partial<Record<SetStats.GIMOStatNames, number>>;
+type SetRestrictions = Partial<Record<GIMOSetStatNames, number>>;
 
 export type { SetRestrictions };

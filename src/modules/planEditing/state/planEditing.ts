@@ -6,9 +6,9 @@ import { characterSettings } from "#/constants/characterSettings";
 import setBonuses from "#/constants/setbonuses";
 import type { PlanEditing } from "../domain/PlanEditing";
 import type { CharacterSettings } from "#/domain/CharacterSettings";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { SetRestrictions } from "#/domain/SetRestrictions";
-import type { SetStats } from "#/domain/Stats";
 import { createTargetStat, type TargetStat } from "#/domain/TargetStat";
 
 const target = OptimizationPlan.createOptimizationPlan("");
@@ -69,7 +69,7 @@ const target$: PlanEditing = observable({
 		return targetChanged;
 	},
 	uneditedTarget: { ...target },
-	addSetBonus: (setName: SetStats.GIMOStatNames) => {
+	addSetBonus: (setName: GIMOSetStatNames) => {
 		const restrictions = target$.target.setRestrictions.peek();
 
 		let newRestrictions: SetRestrictions;
@@ -82,11 +82,11 @@ const target$: PlanEditing = observable({
 			newRestrictions = { ...restrictions, [setName]: 1 };
 		}
 		const newRestrictionsKVs = Object.entries(newRestrictions) as [
-			SetStats.GIMOStatNames,
+			GIMOSetStatNames,
 			number,
 		][];
 		const requiredSlots = newRestrictionsKVs.reduce(
-			(acc, [setName, count]: [SetStats.GIMOStatNames, number]) =>
+			(acc, [setName, count]: [GIMOSetStatNames, number]) =>
 				acc + setBonuses[setName].numberOfModsRequired * count,
 			0,
 		);
@@ -97,7 +97,7 @@ const target$: PlanEditing = observable({
 	addTargetStat: () => {
 		target$.target.targetStats.push(createTargetStat("Speed"));
 	},
-	removeSetBonus: (setName: SetStats.GIMOStatNames) => {
+	removeSetBonus: (setName: GIMOSetStatNames) => {
 		const restrictions = target$.target.setRestrictions.peek();
 		if (restrictions[setName] !== undefined) {
 			if (restrictions[setName] > 1) {

@@ -1,9 +1,8 @@
 import { SetStats } from "../domain/Stats";
 import SetBonus from "../domain/SetBonus";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 
-type SetBonuses = {
-	[key in SetStats.GIMOStatNames]: SetBonus;
-};
+type SetBonuses = Record<GIMOSetStatNames, SetBonus>;
 
 const setBonuses: SetBonuses = {
 	"Health %": new SetBonus(

@@ -1,9 +1,6 @@
 // domain
-import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
-
-import { Stats } from "./Stats";
-
-export type GIMOStatNames = CharacterStatNames.All | CalculatedStatNames;
+import type { GIMOCharacterSummaryStatNames } from "./GIMOStatNames";
+import { Stat } from "./Stat";
 
 // #region DisplayStatNames
 export type DisplayStatNames =
@@ -35,9 +32,9 @@ export type CalculatedStatNames =
 	| "Average Damage (special)";
 //#endregion
 
-export class CharacterSummaryStat extends Stats.Stat {
+export class CharacterSummaryStat extends Stat {
 	static csGIMO2DisplayStatNamesMap: {
-		[key in GIMOStatNames]: DisplayStatNames;
+		[key in GIMOCharacterSummaryStatNames]: DisplayStatNames;
 	} = {
 		Health: "Health",
 		Protection: "Protection",
@@ -59,9 +56,9 @@ export class CharacterSummaryStat extends Stats.Stat {
 		"Average Damage (special)": "Average Damage (special)",
 	};
 
-	type: GIMOStatNames;
+	type: GIMOCharacterSummaryStatNames;
 
-	constructor(type: GIMOStatNames, value: string) {
+	constructor(type: GIMOCharacterSummaryStatNames, value: string) {
 		super(value);
 		this.type = type;
 		this.displayModifier = this.type.endsWith("%") ? "%" : "";

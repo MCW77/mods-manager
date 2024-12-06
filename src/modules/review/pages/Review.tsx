@@ -30,6 +30,7 @@ import type * as ModTypes from "#/domain/types/ModTypes";
 import type { Mod } from "#/domain/Mod";
 import * as ModLoadout from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { Pips } from "#/domain/Pips";
 
 import type {
 	CharacterModding,
@@ -56,7 +57,7 @@ const modRemovalCosts = {
 
 // A map from number of pips to a map from current mod level to the total cost to upgrade the mod to level 15
 const modUpgradeCosts: {
-	[key in ModTypes.Pips]: {
+	[key in Pips]: {
 		[key2 in ModTypes.Levels]: number;
 	};
 } = {

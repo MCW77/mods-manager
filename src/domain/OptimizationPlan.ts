@@ -6,8 +6,8 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
 import type { SetRestrictions } from "#/domain/SetRestrictions";
-import type { PrimaryStats } from "#/domain/Stats";
 import type { TargetStats } from "#/domain/TargetStat";
+import type { GIMOPrimaryStatNames } from "./GIMOStatNames";
 
 // #region OptimizableStats
 export type OptimizableStats =
@@ -319,7 +319,7 @@ export const equals = (
 
 export type PrimaryStatRestrictions = Record<
 	ModTypes.VariablePrimarySlots,
-	PrimaryStats.GIMOStatNames
+	GIMOPrimaryStatNames
 >;
 
 export interface OptimizationPlan extends Record<OptimizableStats, number> {
