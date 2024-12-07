@@ -26,18 +26,31 @@ let templates$: ObservableObject<TemplatesObservable>;
 
 const stateLoader$ = observable<{
 	isDone: boolean;
-	profilesManagement$: ObservableObject<ProfilesManagement>;
-	compilations$: ObservableObject<CompilationsObservable>;
-	characters$: ObservableObject<CharactersObservable>;
-	charactersManagement$: ObservableObject<CharactersManagementObservable>;
-	about$: ObservableObject<AboutObservable>;
-	hotutils$: ObservableObject<HotutilsObservable>;
-	incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable>;
-	lockedStatus$: ObservableObject<LockedStatusObservable>;
-	modsView$: ObservableObject<ModsViewObservable>;
-	optimizationSettings$: ObservableObject<OptimizationSettingsObservable>;
-	templates$: ObservableObject<TemplatesObservable>;
-}>();
+	profilesManagement$: ObservableObject<ProfilesManagement> | null;
+	compilations$: ObservableObject<CompilationsObservable> | null;
+	characters$: ObservableObject<CharactersObservable> | null;
+	charactersManagement$: ObservableObject<CharactersManagementObservable> | null;
+	about$: ObservableObject<AboutObservable> | null;
+	hotutils$: ObservableObject<HotutilsObservable> | null;
+	incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable> | null;
+	lockedStatus$: ObservableObject<LockedStatusObservable> | null;
+	modsView$: ObservableObject<ModsViewObservable> | null;
+	optimizationSettings$: ObservableObject<OptimizationSettingsObservable> | null;
+	templates$: ObservableObject<TemplatesObservable> | null;
+}>({
+	isDone: false,
+	profilesManagement$: null,
+	compilations$: null,
+	characters$: null,
+	charactersManagement$: null,
+	about$: null,
+	hotutils$: null,
+	incrementalOptimization$: null,
+	lockedStatus$: null,
+	modsView$: null,
+	optimizationSettings$: null,
+	templates$: null,
+});
 Promise.all([
 	await import("#/modules/profilesManagement/state/profilesManagement")
 		.then((module) => {
