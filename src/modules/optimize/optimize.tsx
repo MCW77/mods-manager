@@ -42,7 +42,7 @@ const CharacterAvatar = lazy(
 import { Button } from "#ui/button";
 import { DialogClose } from "#ui/dialog";
 
-// const OptimizerWorker = await import("#/workers/optimizer?worker");
+const OptimizerWorker = await import("#/workers/optimizer?worker");
 
 let optimizationWorker: Worker | null = null;
 
