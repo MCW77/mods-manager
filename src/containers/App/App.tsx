@@ -62,17 +62,9 @@ const CompilationsView = lazy(
 );
 import { HelpView } from "#/modules/help/pages/HelpView";
 const ModsView = lazy(() => import("#/modules/modsView/pages/ModsView"));
-/*
 const OptimizerView = lazy(
 	() => import("#/containers/OptimizerView/OptimizerView"),
 );
-*/
-const OptimizerView = lazy(async () => {
-	console.log("Loading OptimizerView...");
-	const module = await import("#/containers/OptimizerView/OptimizerView");
-	console.log("OptimizerView loaded");
-	return module;
-});
 const SettingsView = lazy(
 	() => import("#/modules/settings/pages/SettingsView"),
 );
