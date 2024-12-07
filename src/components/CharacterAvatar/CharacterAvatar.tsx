@@ -32,6 +32,7 @@ const CharacterAvatar = React.memo(
 		displayStars = true,
 		id,
 	}: ComponentProps) => {
+		console.log("CharacterAvatar 1");
 		const baseCharacterById = characters$.baseCharacterById.get();
 
 		if (character === undefined || character === null) return null;
@@ -56,12 +57,14 @@ const CharacterAvatar = React.memo(
 			);
 		};
 
+		console.log("CharacterAvatar 2");
+
 		return (
 			<div className={className} id={id}>
 				{displayStars && [1, 2, 3, 4, 5, 6, 7].map(star)}
 				<img
 					src={baseCharacter.avatarUrl}
-					loading={"lazy"}
+					//					loading={"lazy"}
 					alt={baseCharacter.name}
 					title={baseCharacter.name}
 					draggable={false}
