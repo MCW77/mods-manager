@@ -1,6 +1,6 @@
 // react
 import type React from "react";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
@@ -177,24 +177,32 @@ const CharacterEditView = observer(() => {
 		>
 			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
 				<DefaultCollapsibleCard title="Filters">
-					<CharacterFilters />
+					<Suspense fallback={<div>Loading CharacterFilters</div>}>
+						<CharacterFilters />
+					</Suspense>
 				</DefaultCollapsibleCard>
 				<DefaultCollapsibleCard title="Actions">
-					<CharacterActions />
+					<Suspense fallback={<div>Loading CharacterActions</div>}>
+						<CharacterActions />
+					</Suspense>
 				</DefaultCollapsibleCard>
 				<DefaultCollapsibleCard title="Selection">
-					<SelectionActions
-						visibleCharacters={highlightedCharacters}
-						lastSelectedCharacterIndex={lastSelectedCharacter}
-						isSelectionExpanded$={isSelectionExpanded$}
-					/>
+					<Suspense fallback={<div>Loading SelectionActions</div>}>
+						<SelectionActions
+							visibleCharacters={highlightedCharacters}
+							lastSelectedCharacterIndex={lastSelectedCharacter}
+							isSelectionExpanded$={isSelectionExpanded$}
+						/>
+					</Suspense>
 				</DefaultCollapsibleCard>
 				<DefaultCollapsibleCard title="Templates">
-					<TemplatesActions
-						hasNoSelectedCharacters={selectedCharacters.length === 0}
-						visibleCharacters={highlightedCharacters}
-						lastSelectedCharacterIndex={lastSelectedCharacter}
-					/>
+					<Suspense fallback={<div>Loading TemplatesActions</div>}>
+						<TemplatesActions
+							hasNoSelectedCharacters={selectedCharacters.length === 0}
+							visibleCharacters={highlightedCharacters}
+							lastSelectedCharacterIndex={lastSelectedCharacter}
+						/>
+					</Suspense>
 				</DefaultCollapsibleCard>
 			</div>
 			<div className="flex h-[83%]">
@@ -218,16 +226,23 @@ const CharacterEditView = observer(() => {
 							/>
 						))}
 						{filteredCharacters.map((character) => (
-							<CharacterWidget
+							<Suspense
 								key={character.id}
-								character={character}
-								className={"inactive"}
-							/>
+								fallback={<div>Loading CharacterWidget</div>}
+							>
+								<CharacterWidget
+									key={character.id}
+									character={character}
+									className={"inactive"}
+								/>
+							</Suspense>
 						))}
 					</div>
 				</div>
 				<div className="selected-characters">
-					<CharacterList />
+					<Suspense fallback={<div>Loading CharacterList</div>}>
+						<CharacterList />
+					</Suspense>
 				</div>
 			</div>
 		</div>
