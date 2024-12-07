@@ -46,6 +46,7 @@ import type { SectionNames } from "#/modules/ui/domain/SectionNames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
+import { Spinner as SimpleSpinner } from "#ui/spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
 const ProfilesManager = lazy(
 	() => import("#/modules/profilesManagement/components/ProfilesManager"),
@@ -254,7 +255,9 @@ const App: React.FC = observer(() => {
 											className={"flex data-[state=active]:grow-1 min-h-0"}
 											value="optimize"
 										>
-											<OptimizerView />
+											<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+												<OptimizerView />
+											</Suspense>
 										</TabsContent>
 									)}
 								</Memo>
