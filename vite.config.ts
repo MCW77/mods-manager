@@ -55,7 +55,6 @@ export default defineConfig({
 					},
 				],
 			},
-			selfDestroying: true,
 		}),
 		UnoCSS(),
 	],

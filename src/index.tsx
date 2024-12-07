@@ -76,4 +76,3 @@ if (rootNode !== null) {
 		</React.StrictMode>,
 	);
 }
-// registerServiceWorker();
