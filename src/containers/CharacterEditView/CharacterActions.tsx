@@ -13,7 +13,7 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-// const { optimizeMods } = await import("#/modules/optimize/optimize");
+const { optimizeMods } = await import("#/modules/optimize/optimize");
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -139,7 +139,7 @@ const CharacterActions: React.FC = observer(() => {
 					} else {
 						dialog$.show(<OptimizerProgress />, true);
 						isBusy$.set(true);
-						//						optimizeMods();
+						optimizeMods();
 					}
 				}}
 				disabled={selectedCharacters.length === 0}
