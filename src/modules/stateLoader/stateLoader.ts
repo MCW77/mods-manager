@@ -60,7 +60,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load profilesManagement$: ${e}`);
 		}),
 	await import("#/modules/compilations/state/compilations")
 		.then((module) => {
@@ -70,7 +70,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load compilations$: ${e}`);
 		}),
 	await import("#/modules/characters/state/characters")
 		.then((module) => {
@@ -80,7 +80,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load characters$: ${e}`);
 		}),
 	await import("#/modules/charactersManagement/state/charactersManagement")
 		.then((module) => {
@@ -90,7 +90,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load charactersManagement$: ${e}`);
 		}),
 	await import("#/modules/about/state/about")
 		.then((module) => {
@@ -100,7 +100,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load about$: ${e}`);
 		}),
 	await import("#/modules/hotUtils/state/hotUtils")
 		.then((module) => {
@@ -110,7 +110,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load hotutils$: ${e}`);
 		}),
 	await import(
 		"#/modules/incrementalOptimization/state/incrementalOptimization"
@@ -124,7 +124,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load incrementalOptimization$: ${e}`);
 		}),
 	await import("#/modules/lockedStatus/state/lockedStatus")
 		.then((module) => {
@@ -134,7 +134,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load lockedStatus$: ${e}`);
 		}),
 	await import("#/modules/modsView/state/modsView")
 		.then((module) => {
@@ -144,7 +144,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load modsView$: ${e}`);
 		}),
 	await import("#/modules/optimizationSettings/state/optimizationSettings")
 		.then((module) => {
@@ -154,7 +154,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load optimizationSettings$: ${e}`);
 		}),
 	await import("#/modules/templates/state/templates")
 		.then((module) => {
@@ -164,7 +164,7 @@ Promise.all([
 			return module;
 		})
 		.catch((e) => {
-			console.error(e);
+			console.error(`Failed to load templates$: ${e}`);
 		}),
 ]).then(() => {
 	stateLoader$.set({
