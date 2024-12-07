@@ -7,6 +7,7 @@ import "./ModLoadoutDetail.css";
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
+const charactersManagement$ = stateLoader$.charactersManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
@@ -22,7 +23,6 @@ import type { TargetStat } from "#/domain/TargetStat";
 
 import type { MissedGoals } from "#/modules/compilations/domain/MissedGoals";
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
-import { charactersManagement$ } from "#/modules/charactersManagement/state/charactersManagement";
 
 // components
 const ModLoadoutView = lazy(
