@@ -1,3 +1,4 @@
+console.log("optimizer 1");
 // utils
 import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
@@ -131,6 +132,7 @@ type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 
 // #region Messaging
 self.onmessage = (message) => {
+	console.log("optimizer 2");
 	const lastRun: OptimizationConditions =
 		compilations$.defaultCompilation.optimizationConditions.get();
 	const profile = profilesManagement$.activeProfile.get();

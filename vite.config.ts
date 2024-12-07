@@ -14,13 +14,11 @@ export default defineConfig({
 		target: "esnext",
 		rollupOptions: {
 			//			treeshake: true,
-			/*
 			input: {
 				index: "index.html",
 				optimizer: "src/workers/optimizer.ts",
 				//				sw: "src/sw.js",
 			},
-*/
 		},
 	},
 	plugins: [
