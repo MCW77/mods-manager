@@ -13,7 +13,7 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-const { optimizeMods } = await import("#/modules/optimize/optimize");
+// const { optimizeMods } = await import("#/modules/optimize/optimize");
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -52,16 +52,12 @@ const CharacterActions: React.FC = observer(() => {
 	const modAssignments =
 		compilations$.defaultCompilation.flatCharacterModdings.get();
 
-	console.log("CharacterActions 1");
-
 	const state = useObservable({
 		isOpen: false,
 		name: compilations$.activeCompilation.id.get(),
 		description: compilations$.activeCompilation.description.get(),
 		category: compilations$.activeCompilation.category.get(),
 	});
-
-	console.log("CharacterActions 2");
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -92,7 +88,6 @@ const CharacterActions: React.FC = observer(() => {
 		endBatch();
 	};
 
-	console.log("CharacterActions 3");
 	return (
 		<div className={"flex gap-2"}>
 			<Button
@@ -144,7 +139,7 @@ const CharacterActions: React.FC = observer(() => {
 					} else {
 						dialog$.show(<OptimizerProgress />, true);
 						isBusy$.set(true);
-						optimizeMods();
+						//						optimizeMods();
 					}
 				}}
 				disabled={selectedCharacters.length === 0}
