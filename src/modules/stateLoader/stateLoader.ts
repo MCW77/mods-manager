@@ -11,18 +11,6 @@ import type { LockedStatusObservable } from "../lockedStatus/domain/LockedStatus
 import type { ModsViewObservable } from "../modsView/domain/ModsViewObservable";
 import type { OptimizationSettingsObservable } from "../optimizationSettings/domain/OptimizationSettingsObservable";
 import type { TemplatesObservable } from "../templates/domain/TemplatesObservable";
-// Dynamic imports at the top level
-let profilesManagement$: ObservableObject<ProfilesManagement>;
-let compilations$: ObservableObject<CompilationsObservable>;
-let characters$: ObservableObject<CharactersObservable>;
-let charactersManagement$: ObservableObject<CharactersManagementObservable>;
-let about$: ObservableObject<AboutObservable>;
-let hotutils$: ObservableObject<HotutilsObservable>;
-let incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable>;
-let lockedStatus$: ObservableObject<LockedStatusObservable>;
-let modsView$: ObservableObject<ModsViewObservable>;
-let optimizationSettings$: ObservableObject<OptimizationSettingsObservable>;
-let templates$: ObservableObject<TemplatesObservable>;
 
 const stateLoader$ = observable<{
 	isDone: boolean;
@@ -51,129 +39,67 @@ const stateLoader$ = observable<{
 	optimizationSettings$: null,
 	templates$: null,
 });
-await import("#/modules/profilesManagement/state/profilesManagement")
-	.then((module) => {
-		profilesManagement$ = module.profilesManagement$;
-		stateLoader$.profilesManagement$.set(module.profilesManagement$);
-		console.log("profilesManagement$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load profilesManagement$: ${e}`);
-	});
-await import("#/modules/compilations/state/compilations")
-	.then((module) => {
-		compilations$ = module.compilations$;
-		stateLoader$.compilations$.set(module.compilations$);
-		console.log("compilations$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load compilations$: ${e}`);
-	});
-await import("#/modules/characters/state/characters")
-	.then((module) => {
-		characters$ = module.characters$;
-		stateLoader$.characters$.set(module.characters$);
-		console.log("characters$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load characters$: ${e}`);
-	});
-await import("#/modules/charactersManagement/state/charactersManagement")
-	.then((module) => {
-		charactersManagement$ = module.charactersManagement$;
-		stateLoader$.charactersManagement$.set(module.charactersManagement$);
-		console.log("charactersManagement$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load charactersManagement$: ${e}`);
-	});
-await import("#/modules/about/state/about")
-	.then((module) => {
-		about$ = module.about$;
-		stateLoader$.about$.set(module.about$);
-		console.log("about$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load about$: ${e}`);
-	});
-await import("#/modules/hotUtils/state/hotUtils")
-	.then((module) => {
-		hotutils$ = module.hotutils$;
-		stateLoader$.hotutils$.set(module.hotutils$);
-		console.log("hotutils$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load hotutils$: ${e}`);
-	});
-await import("#/modules/incrementalOptimization/state/incrementalOptimization")
-	.then((module) => {
-		incrementalOptimization$ = module.incrementalOptimization$;
-		stateLoader$.incrementalOptimization$.set(module.incrementalOptimization$);
-		console.log("incrementalOptimization$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load incrementalOptimization$: ${e}`);
-	});
-await import("#/modules/lockedStatus/state/lockedStatus")
-	.then((module) => {
-		lockedStatus$ = module.lockedStatus$;
-		stateLoader$.lockedStatus$.set(module.lockedStatus$);
-		console.log("lockedStatus$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load lockedStatus$: ${e}`);
-	});
-await import("#/modules/modsView/state/modsView")
-	.then((module) => {
-		modsView$ = module.modsView$;
-		stateLoader$.modsView$.set(module.modsView$);
-		console.log("modsView$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load modsView$: ${e}`);
-	});
-await import("#/modules/optimizationSettings/state/optimizationSettings")
-	.then((module) => {
-		optimizationSettings$ = module.optimizationSettings$;
-		stateLoader$.optimizationSettings$.set(module.optimizationSettings$);
-		console.log("optimizationSettings$ loaded");
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load optimizationSettings$: ${e}`);
-	});
-await import("#/modules/templates/state/templates")
-	.then((module) => {
-		templates$ = module.templates$;
-		stateLoader$.templates$.set(module.templates$);
-		console.log("templates$ loaded");
-		stateLoader$.set({
-			isDone: true,
-			profilesManagement$,
-			compilations$,
-			characters$,
-			charactersManagement$,
-			about$,
-			hotutils$,
-			incrementalOptimization$,
-			lockedStatus$,
-			modsView$,
-			optimizationSettings$,
-			templates$,
-		});
-		return module;
-	})
-	.catch((e) => {
-		console.error(`Failed to load templates$: ${e}`);
-	});
+
+try {
+	const profilesManagementModule = await import(
+		"#/modules/profilesManagement/state/profilesManagement"
+	);
+	stateLoader$.profilesManagement$.set(
+		profilesManagementModule.profilesManagement$,
+	);
+	console.log("profilesManagement$ loaded");
+	const compilationsModule = await import(
+		"#/modules/compilations/state/compilations"
+	);
+	stateLoader$.compilations$.set(compilationsModule.compilations$);
+	console.log("compilations$ loaded");
+	const charactersModule = await import(
+		"#/modules/characters/state/characters"
+	);
+	stateLoader$.characters$.set(charactersModule.characters$);
+	console.log("characters$ loaded");
+	const charactersManagementModule = await import(
+		"#/modules/charactersManagement/state/charactersManagement"
+	);
+	stateLoader$.charactersManagement$.set(
+		charactersManagementModule.charactersManagement$,
+	);
+	console.log("charactersManagement$ loaded");
+	const aboutModule = await import("#/modules/about/state/about");
+	stateLoader$.about$.set(aboutModule.about$);
+	console.log("about$ loaded");
+	const hotutilsModule = await import("#/modules/hotUtils/state/hotUtils");
+	stateLoader$.hotutils$.set(hotutilsModule.hotutils$);
+	console.log("hotutils$ loaded");
+	const incrementalOptimizationModule = await import(
+		"#/modules/incrementalOptimization/state/incrementalOptimization"
+	);
+	stateLoader$.incrementalOptimization$.set(
+		incrementalOptimizationModule.incrementalOptimization$,
+	);
+	console.log("incrementalOptimization$ loaded");
+	const lockedStatusModule = await import(
+		"#/modules/lockedStatus/state/lockedStatus"
+	);
+	stateLoader$.lockedStatus$.set(lockedStatusModule.lockedStatus$);
+	console.log("lockedStatus$ loaded");
+	const modsViewModule = await import("#/modules/modsView/state/modsView");
+	stateLoader$.modsView$.set(modsViewModule.modsView$);
+	console.log("modsView$ loaded");
+	const optimizationSettingsModule = await import(
+		"#/modules/optimizationSettings/state/optimizationSettings"
+	);
+	stateLoader$.optimizationSettings$.set(
+		optimizationSettingsModule.optimizationSettings$,
+	);
+	console.log("optimizationSettings$ loaded");
+	const templatesModule = await import("#/modules/templates/state/templates");
+	stateLoader$.templates$.set(templatesModule.templates$);
+	console.log("templates$ loaded");
+	stateLoader$.isDone.set(true);
+	console.log("stateLoader$ loaded");
+} catch (error) {
+	console.error(`Error during state loader initialization: ${error}`);
+}
 
 export { stateLoader$ };
