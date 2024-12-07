@@ -15,7 +15,7 @@ export default defineConfig({
 		rollupOptions: {
 			//			treeshake: true,
 			input: {
-				index: "src/index.tsx",
+				index: "index.html",
 				optimizer: "src/workers/optimizer.ts",
 				//				sw: "src/sw.js",
 			},
