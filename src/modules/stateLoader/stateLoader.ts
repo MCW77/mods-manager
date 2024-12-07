@@ -1,4 +1,3 @@
-console.log("stateLoader 1");
 import { observable, type ObservableObject } from "@legendapp/state";
 import type { ProfilesManagement } from "#/modules/profilesManagement/domain/ProfilesManagement";
 import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
