@@ -52,12 +52,16 @@ const CharacterActions: React.FC = observer(() => {
 	const modAssignments =
 		compilations$.defaultCompilation.flatCharacterModdings.get();
 
+	console.log("CharacterActions 1");
+
 	const state = useObservable({
 		isOpen: false,
 		name: compilations$.activeCompilation.id.get(),
 		description: compilations$.activeCompilation.description.get(),
 		category: compilations$.activeCompilation.category.get(),
 	});
+
+	console.log("CharacterActions 2");
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -88,6 +92,7 @@ const CharacterActions: React.FC = observer(() => {
 		endBatch();
 	};
 
+	console.log("CharacterActions 3");
 	return (
 		<div className={"flex gap-2"}>
 			<Button
