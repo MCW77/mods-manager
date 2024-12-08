@@ -18,7 +18,6 @@ import { progress$ } from "#/modules/progress/state/progress";
 import { review$ } from "#/modules/review/state/review";
 
 // domain
-/*
 import * as Character from "#/domain/Character";
 
 import type { FlatCharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
@@ -26,7 +25,7 @@ import {
 	type OptimizationConditions,
 	createOptimizationConditions,
 } from "#/modules/compilations/domain/OptimizationConditions";
-*/
+
 // components
 const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
