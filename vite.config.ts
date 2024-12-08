@@ -1,9 +1,10 @@
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import UnoCSS from "unocss/vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 import dynamicImport from "vite-plugin-dynamic-import";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,7 +18,6 @@ export default defineConfig({
 			input: {
 				index: "index.html",
 				optimizer: "src/workers/optimizer.ts",
-				//				sw: "src/sw.js",
 			},
 		},
 	},
@@ -57,6 +57,10 @@ export default defineConfig({
 			},
 		}),
 		UnoCSS(),
+		visualizer({
+			filename: "./dist/stats.html",
+			open: true,
+		}) as PluginOption,
 	],
 	resolve: {
 		alias: {
