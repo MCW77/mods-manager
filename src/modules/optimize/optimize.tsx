@@ -5,21 +5,17 @@ import { lazy } from "react";
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
-/*
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
-*/
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
-/*
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { progress$ } from "#/modules/progress/state/progress";
 import { review$ } from "#/modules/review/state/review";
-*/
 
 // domain
 /*
