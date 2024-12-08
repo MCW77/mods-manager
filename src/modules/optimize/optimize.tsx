@@ -5,19 +5,24 @@ import { lazy } from "react";
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
+/*
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+*/
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+/*
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { progress$ } from "#/modules/progress/state/progress";
 import { review$ } from "#/modules/review/state/review";
+*/
 
 // domain
+/*
 import * as Character from "#/domain/Character";
 
 import type { FlatCharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
@@ -25,7 +30,7 @@ import {
 	type OptimizationConditions,
 	createOptimizationConditions,
 } from "#/modules/compilations/domain/OptimizationConditions";
-
+*/
 // components
 const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
@@ -57,6 +62,7 @@ export function cancelOptimizer(): void {
  * @param settings {OptimizerRun} The previous settings that were used to get this result
  * @returns {*}
  */
+/*
 const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
@@ -215,6 +221,7 @@ const finishModOptimization = (
 	}
 	return true;
 };
+*/
 
 /**
  * Run the optimization algorithm and update the player's profile with the results
