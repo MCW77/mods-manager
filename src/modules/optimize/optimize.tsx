@@ -36,10 +36,9 @@ import { DialogClose } from "#ui/dialog";
 
 // const OptimizerWorker = await import("#/workers/optimizer?worker");
 
-//let optimizationWorker: Worker | null = null;
+let optimizationWorker: Worker | null = null;
 
 export function cancelOptimizer(): void {
-	/*
 	optimizationWorker?.terminate();
 	progress$.optimizationStatus.assign({
 		character: "",
@@ -48,7 +47,6 @@ export function cancelOptimizer(): void {
 		message: "",
 		progress: 0,
 	});
-	*/
 }
 
 /**
@@ -241,7 +239,6 @@ export function optimizeMods(): void {
 		return;
 	}
 
-	/*
 	optimizationWorker = new Worker(
 		new URL("../../workers/optimizer.ts", import.meta.url),
 		{ type: "module" },
@@ -266,6 +263,7 @@ export function optimizeMods(): void {
 					message: "Rendering your results",
 					progress: 0,
 				});
+				/*
 				finishModOptimization(
 					message.data.result,
 					createOptimizationConditions(
@@ -278,6 +276,7 @@ export function optimizeMods(): void {
 						].peek(),
 					),
 				);
+*/
 				break;
 			case "Progress":
 				//					isBusy$.set(false);
@@ -299,5 +298,4 @@ export function optimizeMods(): void {
 			// Do nothing
 		}
 	};
-*/
 }
