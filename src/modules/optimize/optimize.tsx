@@ -55,7 +55,6 @@ export function cancelOptimizer(): void {
  * @param settings {OptimizerRun} The previous settings that were used to get this result
  * @returns {*}
  */
-/*
 const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
@@ -214,7 +213,6 @@ const finishModOptimization = (
 	}
 	return true;
 };
-*/
 
 /**
  * Run the optimization algorithm and update the player's profile with the results
@@ -238,7 +236,7 @@ export function optimizeMods(): void {
 		);
 		return;
 	}
-
+	/*
 	optimizationWorker = new Worker(
 		new URL("../../workers/optimizer.ts", import.meta.url),
 		{ type: "module" },
@@ -263,7 +261,6 @@ export function optimizeMods(): void {
 					message: "Rendering your results",
 					progress: 0,
 				});
-				/*
 				finishModOptimization(
 					message.data.result,
 					createOptimizationConditions(
@@ -276,7 +273,6 @@ export function optimizeMods(): void {
 						].peek(),
 					),
 				);
-*/
 				break;
 			case "Progress":
 				//					isBusy$.set(false);
@@ -298,4 +294,5 @@ export function optimizeMods(): void {
 			// Do nothing
 		}
 	};
+*/
 }
