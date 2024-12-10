@@ -67,7 +67,6 @@ const finishModOptimization = (
 	compilations$.defaultCompilation.optimizationConditions.set(settings);
 	compilations$.defaultCompilation.lastOptimized.set(new Date());
 	isBusy$.set(false);
-	/*
 	progress$.optimizationStatus.assign({
 		character: "",
 		characterCount: 0,
@@ -75,6 +74,8 @@ const finishModOptimization = (
 		message: "",
 		progress: 0,
 	});
+
+	/*
 
 	// If this was an incremental optimization, leave the user on their current page
 	if (
