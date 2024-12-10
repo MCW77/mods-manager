@@ -67,7 +67,7 @@ const finishModOptimization = (
 	compilations$.defaultCompilation.optimizationConditions.set(settings);
 	compilations$.defaultCompilation.lastOptimized.set(new Date());
 	isBusy$.set(false);
-	progress$.optimizationStatus.assign({
+	progress$.optimizationStatus.set({
 		character: "",
 		characterCount: 0,
 		characterIndex: 0,
