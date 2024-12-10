@@ -36,6 +36,7 @@ import { DialogClose } from "#ui/dialog";
 
 // const OptimizerWorker = await import("#/workers/optimizer?worker");
 
+/*
 let optimizationWorker: Worker | null = null;
 
 export function cancelOptimizer(): void {
@@ -48,6 +49,7 @@ export function cancelOptimizer(): void {
 		progress: 0,
 	});
 }
+*/
 
 /**
  * Take the results of the mod optimization and apply them to the current profile
