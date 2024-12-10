@@ -57,6 +57,7 @@ export function cancelOptimizer(): void {
  * @param settings {OptimizerRun} The previous settings that were used to get this result
  * @returns {*}
  */
+/*
 const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
@@ -106,7 +107,7 @@ const finishModOptimization = (
 			doubledResultsWithMessages.push(item);
 			doubledResultsWithMessages.push(item);
 		}
-		/*
+
 		dialog$.show(
 			<div className={"flex flex-col flex-gap-2"}>
 				<h3 className={"text-center"}>
@@ -212,10 +213,10 @@ const finishModOptimization = (
 				</div>
 			</div>,
 		);
-*/
 	}
 	return true;
 };
+*/
 
 /**
  * Run the optimization algorithm and update the player's profile with the results
