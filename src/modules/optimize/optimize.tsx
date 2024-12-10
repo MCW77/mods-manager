@@ -61,13 +61,13 @@ const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
 ) => {
-	/*
 	isBusy$.set(true);
 	compilations$.defaultCompilation.hasSelectionChanged.set(false);
 	compilations$.defaultCompilation.flatCharacterModdings.set(result);
 	compilations$.defaultCompilation.optimizationConditions.set(settings);
 	compilations$.defaultCompilation.lastOptimized.set(new Date());
 	isBusy$.set(false);
+	/*
 	progress$.optimizationStatus.assign({
 		character: "",
 		characterCount: 0,
