@@ -73,6 +73,12 @@ const finishModOptimization = (
 		characterIndex: 0,
 		message: "",
 		progress: 0,
+		sets: [],
+		setsCount: 0,
+		setsIndex: 0,
+		targetStat: "",
+		targetStatCount: 0,
+		targetStatIndex: 0,
 	});
 
 	/*
