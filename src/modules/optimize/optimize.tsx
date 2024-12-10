@@ -170,7 +170,6 @@ const finishModOptimization = (
 
 										return index % 2 === 0 ? (
 											<div key={`${id}-Avatar`} className="grid gap-1 p-4">
-												<CharacterAvatar character={character} />
 												<br />
 												{baseCharacterById[id]
 													? baseCharacterById[id].name
