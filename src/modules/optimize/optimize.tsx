@@ -57,11 +57,11 @@ export function cancelOptimizer(): void {
  * @param settings {OptimizerRun} The previous settings that were used to get this result
  * @returns {*}
  */
-/*
 const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
 ) => {
+	/*
 	isBusy$.set(true);
 	compilations$.defaultCompilation.hasSelectionChanged.set(false);
 	compilations$.defaultCompilation.flatCharacterModdings.set(result);
@@ -214,9 +214,9 @@ const finishModOptimization = (
 			</div>,
 		);
 	}
+*/
 	return true;
 };
-*/
 
 /**
  * Run the optimization algorithm and update the player's profile with the results
