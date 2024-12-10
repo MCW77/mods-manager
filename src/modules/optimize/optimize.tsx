@@ -106,7 +106,7 @@ const finishModOptimization = (
 			doubledResultsWithMessages.push(item);
 			doubledResultsWithMessages.push(item);
 		}
-
+		/*
 		dialog$.show(
 			<div className={"flex flex-col flex-gap-2"}>
 				<h3 className={"text-center"}>
@@ -170,6 +170,7 @@ const finishModOptimization = (
 
 										return index % 2 === 0 ? (
 											<div key={`${id}-Avatar`} className="grid gap-1 p-4">
+												<CharacterAvatar character={character} />
 												<br />
 												{baseCharacterById[id]
 													? baseCharacterById[id].name
@@ -211,6 +212,7 @@ const finishModOptimization = (
 				</div>
 			</div>,
 		);
+*/
 	}
 	return true;
 };
