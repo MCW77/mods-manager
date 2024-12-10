@@ -24,9 +24,6 @@ import { progress$ } from "../state/progress";
 import type * as Character from "#/domain/Character";
 
 // components
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Progress } from "#ui/progress";
@@ -53,9 +50,6 @@ const OptimizerProgress: React.FC = observer(() => {
 		<div className="w-600px">
 			<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
 			<div className={"flex flex-col gap-2"}>
-				<Show ifReady={character$}>
-					{(condition) => <CharacterAvatar character={character$.get()} />}
-				</Show>
 				<div className={"step"}>
 					{progress$.optimizationStatus.message.get()}
 				</div>
