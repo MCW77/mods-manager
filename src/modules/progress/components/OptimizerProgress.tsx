@@ -14,7 +14,7 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
-// const { cancelOptimizer } = await import("#/modules/optimize/optimize");
+const { cancelOptimizer } = await import("#/modules/optimize/optimize");
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { progress$ } from "../state/progress";
@@ -26,6 +26,7 @@ import type * as Character from "#/domain/Character";
 const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
 );
+
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { Progress } from "#ui/progress";
@@ -41,7 +42,7 @@ const OptimizerProgress: React.FC = observer(() => {
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
-		//		cancelOptimizer();
+		cancelOptimizer();
 		if (closeModal) {
 			dialog$.hide();
 		}
