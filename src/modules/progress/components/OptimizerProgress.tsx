@@ -17,7 +17,6 @@ const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 // const { cancelOptimizer } = await import("#/modules/optimize/optimize");
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { progress$ } from "../state/progress";
 
 // domain
@@ -43,7 +42,6 @@ const OptimizerProgress: React.FC = observer(() => {
 
 	const cancel = (closeModal: boolean) => {
 		//		cancelOptimizer();
-		isBusy$.set(false);
 		if (closeModal) {
 			dialog$.hide();
 		}

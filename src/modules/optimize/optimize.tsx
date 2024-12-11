@@ -12,7 +12,6 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { progress$ } from "#/modules/progress/state/progress";
 import { review$ } from "#/modules/review/state/review";
@@ -61,12 +60,10 @@ const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
 ) => {
-	isBusy$.set(true);
 	compilations$.defaultCompilation.hasSelectionChanged.set(false);
 	compilations$.defaultCompilation.flatCharacterModdings.set(result);
 	compilations$.defaultCompilation.optimizationConditions.set(settings);
 	compilations$.defaultCompilation.lastOptimized.set(new Date());
-	isBusy$.set(false);
 	progress$.optimizationStatus.set({
 		character: "",
 		characterCount: 0,
@@ -257,14 +254,12 @@ export function optimizeMods(): void {
 		console.log(error);
 		optimizationWorker?.terminate();
 		dialog$.hide();
-		isBusy$.set(false);
 		dialog$.showError(error.message);
 	};
 
 	optimizationWorker.onmessage = (message) => {
 		switch (message.data.type) {
 			case "OptimizationSuccess":
-				isBusy$.set(false);
 				progress$.optimizationStatus.assign({
 					character: "",
 					characterCount: 100,
@@ -286,7 +281,6 @@ export function optimizeMods(): void {
 				);
 				break;
 			case "Progress":
-				//					isBusy$.set(false);
 				progress$.optimizationStatus.assign({
 					character: message.data.character,
 					characterCount: message.data.characterCount,
