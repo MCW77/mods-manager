@@ -6,7 +6,11 @@ import * as perf from "../utils/performance";
 
 // state
 import("../modules/stateLoader/stateLoader")
-	.then(({ stateLoader$ }) => {})
+	.then(({ stateLoader$ }) => {
+		console.log(
+			`Player: ${stateLoader$.profilesManagement$.activePlayer.peek()}`,
+		);
+	})
 	.catch((error) => {
 		console.error(error);
 	});
