@@ -5,6 +5,11 @@ import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
 
 // state
+import("../modules/stateLoader/stateLoader")
+	.then(({ stateLoader$ }) => {})
+	.catch((error) => {
+		console.error(error);
+	});
 const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
