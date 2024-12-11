@@ -40,6 +40,7 @@ const stateLoader$ = observable<{
 });
 
 async function loadStateModules() {
+	debugger;
 	try {
 		console.log("Starting state loader initialization");
 
@@ -117,6 +118,7 @@ async function loadStateModules() {
 }
 
 // Load state modules dynamically
+debugger;
 await loadStateModules();
 
 export { stateLoader$ };

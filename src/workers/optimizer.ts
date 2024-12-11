@@ -1,3 +1,4 @@
+debugger;
 console.log("optimizer 1");
 // utils
 import "../utils/globalLegendPersistSettings";
