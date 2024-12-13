@@ -1,25 +1,17 @@
-debugger;
-console.log("optimizer 1");
 // utils
 import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
 
 // state
-import("../modules/stateLoader/stateLoader")
-	.then(({ stateLoader$ }) => {
-		console.log(
-			`Player: ${stateLoader$.profilesManagement$.activePlayer.peek()}`,
-		);
-	})
-	.catch((error) => {
-		console.error(error);
-	});
-const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
-const profilesManagement$ = stateLoader$.profilesManagement$;
-const compilations$ = stateLoader$.compilations$;
-const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
-const lockedStatus$ = stateLoader$.lockedStatus$;
-const optimizationSettings$ = stateLoader$.optimizationSettings$;
+import type { ObservableObject } from "@legendapp/state";
+
+import type { StateLoaderObservable } from "../modules/stateLoader/stateLoader";
+
+import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
+import type { ProfilesManagement } from "#/modules/profilesManagement/domain/ProfilesManagement";
+import type { IncrementalOptimizationObservable } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
+import type { LockedStatusObservable } from "#/modules/lockedStatus/domain/LockedStatusObservable";
+import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
 
 // domain
 import type { CharacterNames } from "../constants/CharacterNames";
@@ -140,8 +132,41 @@ type NullablePartialModBySlot = PartialModBySlot | null;
 type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 // #endregion types
 
+// state
+
+let stateLoader$: ObservableObject<StateLoaderObservable>;
+let profilesManagement$: ObservableObject<ProfilesManagement>;
+let compilations$: ObservableObject<CompilationsObservable>;
+let incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable>;
+let lockedStatus$: ObservableObject<LockedStatusObservable>;
+let optimizationSettings$: ObservableObject<OptimizationSettingsObservable>;
+
 // #region Messaging
 self.onmessage = (message) => {
+	if (message.data.type === "Init") {
+		debugger;
+		console.log("optimizer 1");
+		import("../modules/stateLoader/stateLoader")
+			.then((module) => {
+				stateLoader$ = module.stateLoader$;
+				profilesManagement$ = stateLoader$.profilesManagement$;
+				compilations$ = stateLoader$.compilations$;
+				incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+				lockedStatus$ = stateLoader$.lockedStatus$;
+				optimizationSettings$ = stateLoader$.optimizationSettings$;
+				console.log(
+					`Player: ${stateLoader$.profilesManagement$.activePlayer.peek()}`,
+				);
+				postMessage({
+					type: "Ready",
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		// const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
+	}
+
 	console.log("optimizer 2");
 	const lastRun: OptimizationConditions =
 		compilations$.defaultCompilation.optimizationConditions.get();
@@ -3546,7 +3571,3 @@ function* getCandidateLoadoutsGenerator(
 		}
 	}
 }
-
-postMessage({
-	type: "Ready",
-});

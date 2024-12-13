@@ -11,7 +11,7 @@ import type { ModsViewObservable } from "#/modules/modsView/domain/ModsViewObser
 import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
 import type { TemplatesObservable } from "#/modules/templates/domain/TemplatesObservable";
 
-const stateLoader$ = observable<{
+export interface StateLoaderObservable {
 	isDone: boolean;
 	profilesManagement$: ObservableObject<ProfilesManagement> | null;
 	compilations$: ObservableObject<CompilationsObservable> | null;
@@ -24,7 +24,8 @@ const stateLoader$ = observable<{
 	modsView$: ObservableObject<ModsViewObservable> | null;
 	optimizationSettings$: ObservableObject<OptimizationSettingsObservable> | null;
 	templates$: ObservableObject<TemplatesObservable> | null;
-}>({
+}
+const stateLoader$ = observable<StateLoaderObservable>({
 	isDone: false,
 	profilesManagement$: null,
 	compilations$: null,

@@ -106,6 +106,9 @@ export function optimizeMods(): void {
 		new URL("../../workers/optimizer.ts", import.meta.url),
 		{ type: "module" },
 	);
+	optimizationWorker.postMessage({
+		type: "Init",
+	});
 
 	optimizationWorker.onerror = (errorEvent) => {
 		errorEvent.preventDefault();
