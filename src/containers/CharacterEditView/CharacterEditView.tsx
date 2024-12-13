@@ -33,6 +33,7 @@ const CharacterFilters = lazy(() => import("./CharacterFilters"));
 const CharacterWidget = lazy(() => import("./CharacterWidget"));
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
+import { Spinner } from "#/components/Spinner/Spinner";
 
 const CharacterList = lazy(
 	() => import("#/containers/CharacterList/CharacterList"),
@@ -240,7 +241,7 @@ const CharacterEditView = observer(() => {
 					</div>
 				</div>
 				<div className="selected-characters">
-					<Suspense fallback={<div>Loading CharacterList</div>}>
+					<Suspense fallback={<Spinner isVisible={true} />}>
 						<CharacterList />
 					</Suspense>
 				</div>
