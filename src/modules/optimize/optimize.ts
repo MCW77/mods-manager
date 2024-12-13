@@ -158,7 +158,9 @@ export function optimizeMods(): void {
 				endBatch();
 				break;
 			case "Ready":
-				optimizationWorker?.postMessage(allycode);
+				optimizationWorker?.postMessage({
+					type: "Optimize",
+				});
 				break;
 			default:
 			// Do nothing

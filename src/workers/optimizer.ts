@@ -160,64 +160,65 @@ self.onmessage = (message) => {
 				postMessage({
 					type: "Ready",
 				});
-				return;
 			})
 			.catch((error) => {
 				console.error(error);
-				return;
 			});
 		// const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
 	}
 
-	console.log("optimizer 2");
-	const lastRun: OptimizationConditions =
-		compilations$.defaultCompilation.optimizationConditions.get();
-	const profile = profilesManagement$.activeProfile.get();
-	const allMods = Array.from(
-		profile.modById.values().map((mod) => mod.serialize()),
-		deserializeMod,
-	);
-	//			const allMods = profile.mods.map(deserializeMod);
+	if (message.data.type === "Optimize") {
+		debugger;
+		console.log("optimizer 2");
+		const lastRun: OptimizationConditions =
+			compilations$.defaultCompilation.optimizationConditions.get();
+		const profile = profilesManagement$.activeProfile.get();
+		const allMods = Array.from(
+			profile.modById.values().map((mod) => mod.serialize()),
+			deserializeMod,
+		);
+		//			const allMods = profile.mods.map(deserializeMod);
 
-	const lastRunCharacterById: Partial<Character.CharacterById> = {};
+		const lastRunCharacterById: Partial<Character.CharacterById> = {};
 
-	if (lastRun !== null) {
-		if (lastRun.characterById) {
-			for (const character of Object.values(lastRun.characterById)) {
-				lastRunCharacterById[character.id] = character;
+		if (lastRun !== null) {
+			if (lastRun.characterById) {
+				for (const character of Object.values(lastRun.characterById)) {
+					lastRunCharacterById[character.id] = character;
+				}
+
+				lastRun.characterById = lastRunCharacterById as Character.CharacterById;
 			}
 
-			lastRun.characterById = lastRunCharacterById as Character.CharacterById;
+			lastRun.selectedCharacters = Array.isArray(lastRun.selectedCharacters)
+				? lastRun.selectedCharacters.map(({ id, target }) => ({
+						id: id,
+						target: deserializeTarget(target),
+					}))
+				: lastRun.selectedCharacters;
 		}
 
-		lastRun.selectedCharacters = Array.isArray(lastRun.selectedCharacters)
-			? lastRun.selectedCharacters.map(({ id, target }) => ({
+		const selectedCharacters: SelectedCharacters =
+			compilations$.defaultCompilation.selectedCharacters
+				.peek()
+				.map(({ id, target }) => ({
 					id: id,
 					target: deserializeTarget(target),
-				}))
-			: lastRun.selectedCharacters;
+				}));
+
+		const optimizerResults = optimizeMods(
+			allMods,
+			profile.characterById,
+			selectedCharacters,
+			incrementalOptimization$.indicesByProfile[profile.allycode].peek(),
+			optimizationSettings$.settingsByProfile.peek()[profile.allycode],
+			lastRun,
+			compilations$.defaultCompilation.flatCharacterModdings.peek(),
+		);
+
+		optimizationSuccessMessage(optimizerResults);
+		self.close();
 	}
-
-	const selectedCharacters: SelectedCharacters =
-		compilations$.defaultCompilation.selectedCharacters
-			.peek()
-			.map(({ id, target }) => ({
-				id: id,
-				target: deserializeTarget(target),
-			}));
-
-	const optimizerResults = optimizeMods(
-		allMods,
-		profile.characterById,
-		selectedCharacters,
-		incrementalOptimization$.indicesByProfile[profile.allycode].peek(),
-		optimizationSettings$.settingsByProfile.peek()[profile.allycode],
-		lastRun,
-		compilations$.defaultCompilation.flatCharacterModdings.peek(),
-	);
-
-	optimizationSuccessMessage(optimizerResults);
-	self.close();
 };
 
 function optimizationSuccessMessage(result: FlatCharacterModdings) {
