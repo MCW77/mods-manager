@@ -2046,6 +2046,23 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["GAS"],
 	),
+	GENERALSYNDULLA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 10,
+			spd: 100,
+			pot: 5,
+			primaryRes: {
+				arrow: "Speed",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Potency %": 1,
+			},
+		}),
+	]),
 	GEONOSIANBROODALPHA: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -2441,6 +2458,25 @@ const characterSettings: CharacterSettingsIndexer = {
 			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
 			"Default",
 		),
+	]),
+	HUYANG: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			spd: 100,
+			cd: 50,
+			phys: 25,
+			cc: 10,
+			primaryRes: {
+				arrow: "Offense %",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 	]),
 	IDENVERSIOEMPIRE: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -3610,6 +3646,25 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["POW", "Quadme", "Queeni"],
 	),
+	PADAWANSABINE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 20,
+			phys: 25,
+			cc: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	PADMEAMIDALA: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
