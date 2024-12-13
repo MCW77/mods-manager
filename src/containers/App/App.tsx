@@ -2,7 +2,6 @@
 import type React from "react";
 import { lazy, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-console.log("App 1");
 
 // styles
 import "./App.css";
@@ -13,7 +12,6 @@ import {
 	faQuestion,
 	faWrench,
 } from "@fortawesome/free-solid-svg-icons";
-console.log("App 2");
 
 // state
 import {
@@ -23,18 +21,14 @@ import {
 	reactive,
 	useMount,
 } from "@legendapp/state/react";
-console.log("App 3");
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
-console.log("App 4");
 
 const { refreshPlayerData } = await import(
 	"#/modules/profileFetch/profileFetch"
 );
-console.log("App 5");
 
 import { ui$ } from "#/modules/ui/state/ui";
-console.log("App 6");
 
 // hooks
 import { useRenderCount } from "#/hooks/useRenderCount";
@@ -84,7 +78,6 @@ const App: React.FC = observer(() => {
 		console.log("App mounted");
 	});
 	useEffect(() => {
-		console.log("Inside App useEffect");
 		const queryParams = new URLSearchParams(document.location.search);
 		const allycode = queryParams.get("Allycode");
 		const sessionId = queryParams.get("SessionID");

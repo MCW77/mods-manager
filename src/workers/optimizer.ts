@@ -144,8 +144,6 @@ let optimizationSettings$: ObservableObject<OptimizationSettingsObservable>;
 // #region Messaging
 self.onmessage = (message) => {
 	if (message.data.type === "Init") {
-		debugger;
-		console.log("optimizer 1");
 		import("../modules/stateLoader/stateLoader")
 			.then((module) => {
 				stateLoader$ = module.stateLoader$;
@@ -154,9 +152,6 @@ self.onmessage = (message) => {
 				incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 				lockedStatus$ = stateLoader$.lockedStatus$;
 				optimizationSettings$ = stateLoader$.optimizationSettings$;
-				console.log(
-					`Player: ${stateLoader$.profilesManagement$.activePlayer.peek()}`,
-				);
 				postMessage({
 					type: "Ready",
 				});
@@ -164,12 +159,9 @@ self.onmessage = (message) => {
 			.catch((error) => {
 				console.error(error);
 			});
-		// const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
 	}
 
 	if (message.data.type === "Optimize") {
-		debugger;
-		console.log("optimizer 2");
 		const lastRun: OptimizationConditions =
 			compilations$.defaultCompilation.optimizationConditions.get();
 		const profile = profilesManagement$.activeProfile.get();
