@@ -160,9 +160,11 @@ self.onmessage = (message) => {
 				postMessage({
 					type: "Ready",
 				});
+				return;
 			})
 			.catch((error) => {
 				console.error(error);
+				return;
 			});
 		// const { stateLoader$ } = await import("../modules/stateLoader/stateLoader");
 	}
