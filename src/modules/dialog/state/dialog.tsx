@@ -7,11 +7,8 @@ import { type ObservableObject, observable } from "@legendapp/state";
 import { errorMessage$ } from "#/modules/errorMessage/state/errorMessage";
 
 // components
-console.log("dialog 1");
 import { toast } from "sonner";
-console.log("dialog 2");
 import { ErrorMessage } from "#/modules/errorMessage/components/ErrorMessage";
-console.log("dialog 3");
 
 type Dialog = {
 	content: React.ReactNode;

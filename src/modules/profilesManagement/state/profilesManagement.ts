@@ -1,7 +1,5 @@
-console.log("profilesManagement 1");
 // utils
 import { formatTimespan } from "../utils/formatTimespan";
-console.log("profilesManagement 2");
 
 // state
 import {
@@ -14,16 +12,12 @@ import {
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
-console.log("profilesManagement 3");
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
-console.log("profilesManagement 13");
 
 // domain
 import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
-console.log("profilesManagement 4");
 import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po";
-console.log("profilesManagement 5");
 import {
 	type PersistedPlayerProfile,
 	type PlayerProfile,
@@ -31,31 +25,22 @@ import {
 	getProfileFromPersisted,
 	getProfileToPersist,
 } from "../domain/PlayerProfile";
-console.log("profilesManagement 6");
 import type { Profiles, PersistedProfiles } from "../domain/Profiles";
-console.log("profilesManagement 7");
 import type { ProfilesManagement } from "../domain/ProfilesManagement";
-console.log("profilesManagement 8");
 import type { CharacterNames } from "#/constants/CharacterNames";
-console.log("profilesManagement 9");
 import type * as Character from "#/domain/Character";
-console.log("profilesManagement 10");
 import { Mod } from "#/domain/Mod";
-console.log("profilesManagement 11");
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
-console.log("profilesManagement 12");
 
 const isMod = (mod: Mod | undefined): mod is Mod => {
 	return mod !== undefined;
 };
-console.log("profilesManagement 14");
 
 const isObservableMod = (
 	mod: Observable<Mod | undefined> | Observable<Mod>,
 ): mod is Observable<Mod> => {
 	return mod.peek() !== undefined;
 };
-console.log("profilesManagement 15");
 
 const getInitialProfiles = () => {
 	const initialProfiles: Profiles = {
@@ -66,7 +51,6 @@ const getInitialProfiles = () => {
 	};
 	return structuredClone(initialProfiles);
 };
-console.log("profilesManagement 16");
 
 const profilesManagement$: ObservableObject<ProfilesManagement> =
 	observable<ProfilesManagement>({
@@ -250,7 +234,6 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 			endBatch();
 		},
 	});
-console.log("profilesManagement 17");
 
 const nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());
@@ -262,7 +245,6 @@ when(
 		clearInterval(nowTimer);
 	},
 );
-console.log("profilesManagement 18");
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const hasModById = (obj: any): obj is { modById: Map<string, GIMOFlatMod> } => {
@@ -298,7 +280,6 @@ const isFullPersistedPlayerProfile = (
 		Object.hasOwn(obj, "characterById")
 	);
 };
-console.log("profilesManagement 19");
 
 const syncStatus$ = syncObservable(
 	profilesManagement$.profiles,
@@ -382,8 +363,6 @@ const syncStatus$ = syncObservable(
 		initial: getInitialProfiles(),
 	}),
 );
-console.log("profilesManagement 20");
 await when(syncStatus$.isPersistLoaded);
-console.log("profilesManagement 21");
 
 export { profilesManagement$ };

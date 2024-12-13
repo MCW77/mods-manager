@@ -1,23 +1,17 @@
 // state
-console.log("index 1");
 import "#/utils/globalLegendPersistSettings";
-console.log("index 2");
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
-console.log("index 3");
 
 // react
 import React, { lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { observer, Show } from "@legendapp/state/react";
-console.log("index 4");
 
 // styles
 import "./index.css";
 import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
 import "./i18n";
-
-import registerServiceWorker from "./registerServiceWorker";
 
 // state
 import { ui$ } from "./modules/ui/state/ui";
@@ -29,7 +23,6 @@ import { Spinner } from "./components/Spinner/Spinner";
 const App = lazy(() => import("./containers/App/App"));
 
 const rootNode = document.getElementById("root");
-console.dir(rootNode);
 document.body.classList.add(
 	ui$.theme.get(),
 	"bg-white",
@@ -67,7 +60,6 @@ const RootComponent = observer(() => {
 
 if (rootNode !== null) {
 	const root = createRoot(rootNode);
-	console.log("rendering root");
 	root.render(
 		<React.StrictMode>
 			<Suspense>
@@ -76,4 +68,3 @@ if (rootNode !== null) {
 		</React.StrictMode>,
 	);
 }
-// registerServiceWorker();

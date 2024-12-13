@@ -1,9 +1,10 @@
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import UnoCSS from "unocss/vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 import dynamicImport from "vite-plugin-dynamic-import";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,29 +16,8 @@ export default defineConfig({
 		rollupOptions: {
 			//			treeshake: true,
 			input: {
-				index: "src/index.tsx",
+				index: "index.html",
 				optimizer: "src/workers/optimizer.ts",
-				//				sw: "src/sw.js",
-			},
-			output: {
-				manualChunks(id) {
-					if (
-						id.includes("stateLoader") ||
-						id.includes("modules/profilesManagement") ||
-						id.includes("modules/compilations") ||
-						id.includes("modules/characters") ||
-						id.includes("modules/charactersManagement") ||
-						id.includes("modules/about") ||
-						id.includes("modules/hotUtils") ||
-						id.includes("modules/incrementalOptimization") ||
-						id.includes("modules/lockedStatus") ||
-						id.includes("modules/modsView") ||
-						id.includes("modules/optimizationSettings") ||
-						id.includes("modules/templates")
-					) {
-						return "stateLoader";
-					}
-				},
 			},
 		},
 	},
@@ -75,9 +55,12 @@ export default defineConfig({
 					},
 				],
 			},
-			selfDestroying: true,
 		}),
 		UnoCSS(),
+		visualizer({
+			filename: "./dist/stats.html",
+			open: true,
+		}) as PluginOption,
 	],
 	resolve: {
 		alias: {
