@@ -63,10 +63,10 @@ const TemplatesActions = ({
 								);
 							});
 						}
+						endBatch();
 						const ranking = await stackRank$.fetch(
 							profilesManagement$.profiles.activeAllycode.get(),
 						);
-						endBatch();
 						compilations$.applyRanking(ranking);
 					} catch (error) {
 						if (error instanceof Error) dialog$.showError(error.message);
