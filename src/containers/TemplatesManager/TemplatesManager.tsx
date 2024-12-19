@@ -46,6 +46,7 @@ const TemplatesManager = observer(
 						label={"Import"}
 						className={"small"}
 						icon={faFile}
+						id={"templates-import"}
 						handler={(file) =>
 							readFile(
 								file,

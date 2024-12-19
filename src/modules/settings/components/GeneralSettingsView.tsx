@@ -98,6 +98,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 				<CardContent className={"flex gap-6 items-center"}>
 					<div className={"flex flex-col gap-2 items-stretch justify-center"}>
 						<FileInput
+							id={"backup-import"}
 							accept=".json"
 							icon={faFileImport}
 							label={t("general.backup.Restore")}

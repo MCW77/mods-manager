@@ -75,6 +75,7 @@ const AccountsManager = React.memo(() => {
 					className={"w-max text-balance"}
 					label={t("general.accounts.Import")}
 					icon={faFileImport}
+					id={"c3po-import"}
 					handler={(file) =>
 						readFile(
 							file,

@@ -1,7 +1,7 @@
 // react
 import React, { useRef } from "react";
 
-import { cn } from "#lib/shadcn"
+import { cn } from "#lib/shadcn";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,19 +15,24 @@ type ComponentProps = {
 	accept?: string;
 	className?: string;
 	icon: IconDefinition;
+	id: string;
 	label: string;
 	handler: (f: File) => void;
 };
 
 const FileInput = React.memo(
-	({ accept = "", className = "", icon, label, handler }: ComponentProps) => {
+	({
+		accept = "",
+		className = "",
+		icon,
+		id,
+		label,
+		handler,
+	}: ComponentProps) => {
 		const fileInput = useRef<HTMLInputElement>(null);
 		return (
 			<div className={cn("relative", className)}>
-				<Label
-					htmlFor="file-input"
-					className={"cursor-pointer w-full block group"}
-				>
+				<Label htmlFor={id} className={"cursor-pointer w-full block group"}>
 					<Button
 						className={
 							"pointer-events-none w-full group-hover:bg-slate-900/90 dark:group-hover:bg-slate-50/90"
@@ -40,7 +45,7 @@ const FileInput = React.memo(
 				<Input
 					accept={accept}
 					className={"sr-only"}
-					id="file-input"
+					id={id}
 					ref={fileInput}
 					type="file"
 					onChange={() => {
