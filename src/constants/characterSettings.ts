@@ -2096,6 +2096,25 @@ const characterSettings: CharacterSettingsIndexer = {
 			"Default",
 		),
 	]),
+	GLAHSOKATANO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 15,
+			spd: 100,
+			arm: 18,
+			res: 18,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	GLLEIA: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
