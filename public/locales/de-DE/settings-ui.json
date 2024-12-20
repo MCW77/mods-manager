@@ -1,71 +1,71 @@
 {
-  "explorer": {
-    "Title": "Mod Inventar"
-  },
-  "general": {
-    "Title": "Allgemein",
-    "accounts": {
-      "Title": "Profile",
-      "Delete": "Lösche Profil",
-      "DeletionConfirmation": "Willst du wirklich alle Daten löschen, die für diesen Bündniscode im Browser gespeichert sind? (Mods, Charaktere, Charakterauswahl und Zielwerte)",
-      "DeletionExplanation1": "Die Mod- und Charakterdaten kannst du einfach erneut mit dem Bündniscode abrufen.",
-      "DeletionExplanation2": "Die restlichen Daten sind verloren, falls nicht vorher ein Backup gemacht wurde.",
-      "Cancel": "Abbruch",
-      "Proceed": "Ja, lösche Daten",
-      "Import": "Importiere Profil",
-      "Profile": "Bündniscode - Name im Spiel"
-    },
-    "backup": {
-      "Title": "Sicherheitskopie & Neustart",
-      "Restore": "Lade Dateibackup",
-      "Save": "Speichere Dateibackup",
-      "Reset": "Neustart",
-      "ResetConfirmation": "Mods-Manager zurücksetzen?",
-      "ResetExplanation": "Alle im Browser gespeicherten Daten werden gelöscht. Die gespeicherten Mods-Manager Daten sind verloren, wenn nicht vorher ein Datei-Backup erstellt wird.",
-      "ResetCancel": "Abbruch",
-      "ResetProceed": "Ja, zurücksetzen"
-    },
-    "display": {
-      "Title": "Darstellung",
-      "DarkMode": "Dunkler Modus",
-      "Language": "Sprache"
-    },
-    "hotutils": {
-      "SessionIdPrompt": "HotUtils SessionId hier eingeben"
-    }
-  },
-  "optimizer": {
-    "TemplateDelete": "Lösche Vorlage",
-    "Title": "Mod Optimierer",
-    "global": {
-      "Title": "Globale Optimierungseinstellungen",
-      "Threshold": "Grenzwert für Modtausch",
-      "LockUnselected": "Sperre alle unselektierten Charaktere",
-      "NoModSetsBreak": "Keine Modsets aufbrechen",
-      "Simulate6E": "Simuliere 6E-Mods",
-      "SimulateLevel15": "Simuliere Level 15 Mods"
-    },
-    "templates": {
-      "Title": "Charakter Vorlagen",
-      "AddingMode": "Hinzufügemodus",
-      "Append": "Anhängen",
-      "Apply": "Nur Vorgaben ersetzen",
-      "Delete": "Lösche",
-      "Replace": "Ersetzen",
-      "Own": "Eigene Vorlagen"
-    },
-    "stackrank": {
-      "Title": "Rangreihenfolge",
-      "UseCase": "Verwendungszweck",
-      "IgnoreArena": "Ignoriere Arena",
-      "Alignment": "Gesinnung",
-      "AlignmentAll": "Alle Charaktere",
-      "AlignmentDark": "Dunkle Seite",
-      "AlignmentLight": "Helle Seite",
-      "AlignmentNeutral": "Neutral",
-      "MinimumGear": "Minimales Ausrüstungslevel",
-      "Top": "Maximale Listenlänge",
-      "OmicronBoosts": "Omicron-Verstärkungen"
-    }
-  }
+	"explorer": {
+		"Title": "Mod Inventar"
+	},
+	"general": {
+		"Title": "Allgemein",
+		"accounts": {
+			"Title": "Profile",
+			"Delete": "Lösche Profil",
+			"DeletionConfirmation": "Willst du wirklich alle Daten löschen, die für diesen Bündniscode im Browser gespeichert sind? (Mods, Charaktere, Charakterauswahl und Zielwerte)",
+			"DeletionExplanation1": "Die Mod- und Charakterdaten kannst du einfach erneut mit dem Bündniscode abrufen.",
+			"DeletionExplanation2": "Die restlichen Daten sind verloren, falls nicht vorher ein Backup gemacht wurde.",
+			"Cancel": "Abbruch",
+			"Proceed": "Ja, lösche Daten",
+			"Import": "Importiere C-3PO Inventar",
+			"Profile": "Bündniscode - Name im Spiel"
+		},
+		"backup": {
+			"Title": "Sicherheitskopie & Neustart",
+			"Restore": "Lade Dateibackup",
+			"Save": "Speichere Dateibackup",
+			"Reset": "Neustart",
+			"ResetConfirmation": "Mods-Manager zurücksetzen?",
+			"ResetExplanation": "Alle im Browser gespeicherten Daten werden gelöscht. Die gespeicherten Mods-Manager Daten sind verloren, wenn nicht vorher ein Datei-Backup erstellt wird.",
+			"ResetCancel": "Abbruch",
+			"ResetProceed": "Ja, zurücksetzen"
+		},
+		"display": {
+			"Title": "Darstellung",
+			"DarkMode": "Dunkler Modus",
+			"Language": "Sprache"
+		},
+		"hotutils": {
+			"SessionIdPrompt": "HotUtils SessionId hier eingeben"
+		}
+	},
+	"optimizer": {
+		"TemplateDelete": "Lösche Vorlage",
+		"Title": "Mod Optimierer",
+		"global": {
+			"Title": "Globale Optimierungseinstellungen",
+			"Threshold": "Grenzwert für Modtausch",
+			"LockUnselected": "Sperre alle unselektierten Charaktere",
+			"NoModSetsBreak": "Keine Modsets aufbrechen",
+			"Simulate6E": "Simuliere 6E-Mods",
+			"SimulateLevel15": "Simuliere Level 15 Mods"
+		},
+		"templates": {
+			"Title": "Charakter Vorlagen",
+			"AddingMode": "Hinzufügemodus",
+			"Append": "Anhängen",
+			"Apply": "Nur Vorgaben ersetzen",
+			"Delete": "Lösche",
+			"Replace": "Ersetzen",
+			"Own": "Eigene Vorlagen"
+		},
+		"stackrank": {
+			"Title": "Rangreihenfolge",
+			"UseCase": "Verwendungszweck",
+			"IgnoreArena": "Ignoriere Arena",
+			"Alignment": "Gesinnung",
+			"AlignmentAll": "Alle Charaktere",
+			"AlignmentDark": "Dunkle Seite",
+			"AlignmentLight": "Helle Seite",
+			"AlignmentNeutral": "Neutral",
+			"MinimumGear": "Minimales Ausrüstungslevel",
+			"Top": "Maximale Listenlänge",
+			"OmicronBoosts": "Omicron-Verstärkungen"
+		}
+	}
 }

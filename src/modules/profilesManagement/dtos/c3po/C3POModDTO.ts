@@ -1,24 +1,11 @@
 import type { C3POPrimaryStatDTO } from "./C3POPrimaryStatDTO";
-import type { C3POSecondaryStatsDTO } from "./C3POSecondaryStatDTO";
+import type { C3POSecondaryStatDTO } from "./C3POSecondaryStatDTO";
 
-export type Set =
-	| "Critical Chance"
-	| "Critical Damage"
-	| "Defense %"
-	| "Health %"
-	| "Offense %"
-	| "Potency"
-	| "Speed %"
-	| "Tenacity";
-export type Slots =
-	| "Arrow"
-	| "Circle"
-	| "Cross"
-	| "Diamond"
-	| "Square"
-	| "Triangle";
+export type Set = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
+
+export type Slots = "1" | "2" | "3" | "4" | "5" | "6";
 export type Pips = "1" | "2" | "3" | "4" | "5" | "6";
-export type Tier = "A" | "B" | "C" | "D" | "E";
+export type Tier = "1" | "2" | "3" | "4" | "5";
 export type Levels =
 	| "1"
 	| "2"
@@ -36,12 +23,14 @@ export type Levels =
 	| "14"
 	| "15";
 
+export type DefinitionId = `${Set}${Pips}${Slots}`;
+
 export type C3POModDTO = {
-	equippedUnit: string;
-	setName: Set;
-	slot: Slots;
-	pips: Pips;
+	id: string;
+	definitionId: DefinitionId;
 	tier: Tier;
 	level: Levels;
-} & C3POPrimaryStatDTO &
-	C3POSecondaryStatsDTO;
+	reRolledCount: number;
+} & { primaryStat: C3POPrimaryStatDTO } & {
+	secondaryStat: C3POSecondaryStatDTO[];
+};

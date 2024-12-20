@@ -80,8 +80,12 @@ const AccountsManager = React.memo(() => {
 						readFile(
 							file,
 							(textInFile) => {
-								const importedModsCount =
+								const { error, totalMods: importedModsCount } =
 									profilesManagement$.importModsFromC3PO(textInFile);
+								if (error !== "") {
+									dialog$.showError(error);
+									return;
+								}
 								if (importedModsCount > 0) {
 									dialog$.showFlash(
 										<p>

@@ -13,8 +13,6 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-
 // domain
 import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po";
 import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po";
@@ -155,19 +153,26 @@ const profilesManagement$: ObservableObject<ProfilesManagement> =
 			profilesManagement$.lastProfileDeleted.set("all");
 		},
 		importModsFromC3PO: (modsJSON: string) => {
+			let totalMods = 0;
 			try {
-				const mods: C3POMods.C3POModDTO[] = JSON.parse(modsJSON);
-				const unequippedMods = mods
-					.filter((mod) => mod.equippedUnit === "none")
-					.map((mod) => C3POMappers.ModMapper.fromC3PO(mod));
+				const unequippedC3POMods: C3POMods.C3POModDTO[] =
+					JSON.parse(modsJSON).inventory.unequippedMod;
+				const unequippedMods = unequippedC3POMods.map((mod) =>
+					C3POMappers.ModMapper.fromC3PO(mod),
+				);
 				for (const mod of unequippedMods) {
 					profilesManagement$.activeProfile.modById[mod.id].set(mod);
 				}
-				const totalMods = unequippedMods.length;
-				return totalMods;
+				totalMods = unequippedMods.length;
+				return {
+					error: "",
+					totalMods: totalMods,
+				};
 			} catch (error) {
-				dialog$.showError((error as Error).message);
-				return 0;
+				return {
+					error: (error as Error).message,
+					totalMods: 0,
+				};
 			}
 		},
 		toPersistable: () => {

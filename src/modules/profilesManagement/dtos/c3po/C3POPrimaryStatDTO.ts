@@ -1,17 +1,27 @@
 export type PrimaryStatNames =
-	| "Accuracy"
-	| "Critical Avoidance"
-	| "Critical Chance"
-	| "Critical Damage"
-	| "Defense %"
-	| "Health %"
-	| "Offense %"
-	| "Potency"
-	| "Protection %"
-	| "Speed"
-	| "Tenacity";
+	| 5
+	| 16
+	| 17
+	| 18
+	| 48
+	| 49
+	| 52
+	| 53
+	| 54
+	| 55
+	| 56;
 
 export interface C3POPrimaryStatDTO {
-	primaryStatName: PrimaryStatNames;
-	primaryStatValue: string;
+	roll: string[];
+	unscaledRollValue: number[];
+	stat: {
+		unitStatId: PrimaryStatNames;
+		statValueDecimal: string;
+		unscaledDecimalValue: string;
+		uiDisplayOverrideValue: string;
+		scalar: string;
+	};
+	statRolls: number;
+	statRollerBoundsMax: string;
+	statRollerBoundsMin: string;
 }

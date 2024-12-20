@@ -1,71 +1,71 @@
 {
-  "explorer": {
-    "Title": "Mod Inventory"
-  },
-  "general": {
-    "Title": "Basics",
-    "accounts": {
-      "Title": "Accounts",
-      "Delete": "Delete account",
-      "DeletionConfirmation": "Are you sure you want to delete all data for that allycode that is stored in your browser? (mods, toons, character selections and targets)",
-      "DeletionExplanation1": "You will be able to restore the character and mod data by fetching with this allycode again.",
-      "DeletionExplanation2": "The rest will be lost unless you make a backup first.",
-      "Cancel": "Cancel",
-      "Proceed": "Yes, delete data",
-      "Import": "Import account",
-      "Profile": "Allycode - Ingame Name"
-    },
-    "backup": {
-      "Title": "Backups & Reset",
-      "Restore": "Import file backup",
-      "Save": "Save file backup",
-      "Reset": "Reset all data",
-      "ResetConfirmation": "Reset the mods-manager?",
-      "ResetExplanation": "This will delete all data stored in your browser. All stored mods-manager data will be lost unless you make a file-backup first.",
-      "ResetCancel": "Cancel",
-      "ResetProceed": "Yes, reset"
-    },
-    "display": {
-      "Title": "Display",
-      "Language": "Language",
-      "DarkMode": "Dark Mode"
-    },
-    "hotutils": {
-      "SessionIdPrompt": "Enter your HotUtils sessionid here"
-    }
-  },
-  "optimizer": {
-    "TemplateDelete": "Delete template",
-    "Title": "Mod Optimizer",
-    "global": {
-      "Title": "Global Optimizer Settings",
-      "Threshold": "Threshold to change mods",
-      "LockUnselected": "Lock all unselected characters",
-      "NoModSetsBreak": "Don't break mod sets",
-      "Simulate6E": "Simulate 6E mods",
-      "SimulateLevel15": "Simulate level 15 mods"
-    },
-    "templates": {
-      "Title": "Character Templates",
-      "AddingMode": "Adding mode",
-      "Append": "Append",
-      "Apply": "Apply targets only",
-      "Delete": "Delete",
-      "Replace": "Replace",
-      "Own": "Own templates"
-    },
-    "stackrank": {
-      "Title": "Stack Rank",
-      "UseCase": "Use case",
-      "IgnoreArena": "Ignore arena",
-      "Alignment": "Alignment",
-      "AlignmentAll": "All Characters",
-      "AlignmentDark": "Dark Side",
-      "AlignmentLight": "Light Side",
-      "AlignmentNeutral": "Neutral",
-      "MinimumGear": "Minimum gearlevel",
-      "Top": "Maximum list size",
-      "OmicronBoosts": "Omicron Boosts"
-    }
-  }
+	"explorer": {
+		"Title": "Mod Inventory"
+	},
+	"general": {
+		"Title": "Basics",
+		"accounts": {
+			"Title": "Accounts",
+			"Delete": "Delete account",
+			"DeletionConfirmation": "Are you sure you want to delete all data for that allycode that is stored in your browser? (mods, toons, character selections and targets)",
+			"DeletionExplanation1": "You will be able to restore the character and mod data by fetching with this allycode again.",
+			"DeletionExplanation2": "The rest will be lost unless you make a backup first.",
+			"Cancel": "Cancel",
+			"Proceed": "Yes, delete data",
+			"Import": "Import C-3PO inventory",
+			"Profile": "Allycode - Ingame Name"
+		},
+		"backup": {
+			"Title": "Backups & Reset",
+			"Restore": "Import file backup",
+			"Save": "Save file backup",
+			"Reset": "Reset all data",
+			"ResetConfirmation": "Reset the mods-manager?",
+			"ResetExplanation": "This will delete all data stored in your browser. All stored mods-manager data will be lost unless you make a file-backup first.",
+			"ResetCancel": "Cancel",
+			"ResetProceed": "Yes, reset"
+		},
+		"display": {
+			"Title": "Display",
+			"Language": "Language",
+			"DarkMode": "Dark Mode"
+		},
+		"hotutils": {
+			"SessionIdPrompt": "Enter your HotUtils sessionid here"
+		}
+	},
+	"optimizer": {
+		"TemplateDelete": "Delete template",
+		"Title": "Mod Optimizer",
+		"global": {
+			"Title": "Global Optimizer Settings",
+			"Threshold": "Threshold to change mods",
+			"LockUnselected": "Lock all unselected characters",
+			"NoModSetsBreak": "Don't break mod sets",
+			"Simulate6E": "Simulate 6E mods",
+			"SimulateLevel15": "Simulate level 15 mods"
+		},
+		"templates": {
+			"Title": "Character Templates",
+			"AddingMode": "Adding mode",
+			"Append": "Append",
+			"Apply": "Apply targets only",
+			"Delete": "Delete",
+			"Replace": "Replace",
+			"Own": "Own templates"
+		},
+		"stackrank": {
+			"Title": "Stack Rank",
+			"UseCase": "Use case",
+			"IgnoreArena": "Ignore arena",
+			"Alignment": "Alignment",
+			"AlignmentAll": "All Characters",
+			"AlignmentDark": "Dark Side",
+			"AlignmentLight": "Light Side",
+			"AlignmentNeutral": "Neutral",
+			"MinimumGear": "Minimum gearlevel",
+			"Top": "Maximum list size",
+			"OmicronBoosts": "Omicron Boosts"
+		}
+	}
 }

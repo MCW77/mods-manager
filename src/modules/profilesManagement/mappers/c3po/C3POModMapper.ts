@@ -12,66 +12,60 @@ import type { Pips } from "#/domain/Pips";
 const C3PO2GIMOSetMap: {
 	[key in DTOs.C3PO.Set]: GIMOSetStatNames;
 } = {
-	"Critical Chance": "Critical Chance %",
-	"Critical Damage": "Critical Damage %",
-	"Defense %": "Defense %",
-	"Health %": "Health %",
-	"Offense %": "Offense %",
-	Potency: "Potency %",
-	"Speed %": "Speed %",
-	Tenacity: "Tenacity %",
+	"1": "Health %",
+	"2": "Offense %",
+	"3": "Defense %",
+	"4": "Speed %",
+	"5": "Critical Chance %",
+	"6": "Critical Damage %",
+	"7": "Potency %",
+	"8": "Tenacity %",
 };
 
 const C3PO2GIMOTiersMap: {
 	[key in DTOs.C3PO.Tier]: ModTiersEnum;
 } = {
-	A: ModTiersEnum.Gold,
-	B: ModTiersEnum.Purple,
-	C: ModTiersEnum.Blue,
-	D: ModTiersEnum.Green,
-	E: ModTiersEnum.Grey,
+	5: ModTiersEnum.Gold,
+	4: ModTiersEnum.Purple,
+	3: ModTiersEnum.Blue,
+	2: ModTiersEnum.Green,
+	1: ModTiersEnum.Grey,
 };
 
-const modIds: Generator<string, string, unknown> =
-	(function* uniqueModIdGenerator() {
-		let count = 1;
-		while (true) {
-			yield `unequippedMod${count++}`;
-		}
-		return "done";
-	})();
+const C3PO2GIMOSlotMap: Record<DTOs.C3PO.Slots, ModTypes.GIMOSlots> = {
+	"1": "square",
+	"2": "arrow",
+	"3": "diamond",
+	"4": "triangle",
+	"5": "circle",
+	"6": "cross",
+};
+
+const deconstructDefinitionId = (definitionId: string) => {
+	const set = C3PO2GIMOSetMap[definitionId[0] as DTOs.C3PO.Set];
+	const pips = Number(definitionId[1]);
+	const slot = C3PO2GIMOSlotMap[definitionId[2] as DTOs.C3PO.Slots];
+	return { set, pips, slot };
+};
 
 export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
-	type secondaryPos = "1" | "2" | "3" | "4";
 	const secondaryStats: GIMOStats.SecondaryStats.SecondaryStat[] = [];
-
-	const secondaryPosArray: secondaryPos[] = ["1", "2", "3", "4"];
-
-	for (const pos of secondaryPosArray) {
-		if (mod[`secondaryStat-${pos}-Name`] !== undefined) {
-			secondaryStats.push(
-				fromC3POSecondary(pos, {
-					name: mod[`secondaryStat-${pos}-Name`],
-					value: mod[`secondaryStat-${pos}-Value`],
-					rolls: mod[`secondaryStat-${pos}-Roll`],
-				}),
-			);
-		}
+	for (const [index, secondaryStat] of mod.secondaryStat.entries()) {
+		secondaryStats.push(fromC3POSecondary(String(index), secondaryStat));
 	}
 
+	const definition = deconstructDefinitionId(mod.definitionId);
+
 	return new GIMOMods.Mod(
-		modIds.next().value,
-		mod.slot.toLowerCase() as ModTypes.GIMOSlots,
-		C3PO2GIMOSetMap[mod.setName],
+		mod.id,
+		definition.slot,
+		definition.set,
 		Number(mod.level) as ModTypes.Levels,
-		Number(mod.pips) as Pips,
-		fromC3POPrimary({
-			primaryStatName: mod.primaryStatName,
-			primaryStatValue: mod.primaryStatValue,
-		}),
+		definition.pips as Pips,
+		fromC3POPrimary(mod.primaryStat),
 		secondaryStats,
 		"null",
-		0,
+		mod.reRolledCount,
 		C3PO2GIMOTiersMap[mod.tier],
 	);
 }

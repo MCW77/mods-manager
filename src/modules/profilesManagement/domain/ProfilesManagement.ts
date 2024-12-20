@@ -23,7 +23,10 @@ interface ProfilesManagement {
 	deleteProfile: (allycode: string) => void;
 	updateProfile: (profile: PlayerProfile) => void;
 	reset: () => void;
-	importModsFromC3PO: (modsJSON: string) => number;
+	importModsFromC3PO: (modsJSON: string) => {
+		error: string;
+		totalMods: number;
+	};
 	toPersistable: () => PersistedProfiles;
 	toJSON: () => string;
 	fromJSON: (profilesManagementJSON: string) => PersistedProfiles;
