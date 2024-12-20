@@ -114,11 +114,14 @@ const modMove$ = observable({
 	moveMods: async (loadout: Loadout) => {
 		isBusy$.set(true);
 		try {
-			const response = await post(hotutilsv2mockbaseurl, {
-				action: "movemods",
-				sessionId: hotutils$.activeSessionId.get(),
-				payload: loadout,
-			});
+			const response = await post(
+				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
+				{
+					action: "movemods",
+					sessionId: hotutils$.activeSessionId.get(),
+					payload: loadout,
+				},
+			);
 
 			if (response.errorMessage) {
 				dialog$.hide();
@@ -148,7 +151,7 @@ const modMove$ = observable({
 					dialog$.hide();
 					isBusy$.set(false);
 					dialog$.show(<LazyModMoveProgress />, true);
-					const pollStatus = await modMove$.pollForModMoveStatus();
+					modMove$.pollForModMoveStatus();
 					return true;
 				}
 			}
@@ -165,13 +168,16 @@ const modMove$ = observable({
 	},
 	pollForModMoveStatus: async () => {
 		try {
-			const response = await post(hotutilsv2mockbaseurl, {
-				action: "checkmovestatus",
-				sessionId: hotutils$.activeSessionId.get(),
-				payload: {
-					taskId: modMove$.status.taskId.get(),
+			const response = await post(
+				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
+				{
+					action: "checkmovestatus",
+					sessionId: hotutils$.activeSessionId.get(),
+					payload: {
+						taskId: modMove$.status.taskId.get(),
+					},
 				},
-			});
+			);
 
 			if (response.errorMessage) {
 				dialog$.hide();

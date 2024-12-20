@@ -118,9 +118,8 @@ const MoveModsModal = () => {
 		const lockedMods = (
 			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
 		)
-			.filter(
-				([characterId]) =>
-					lockedStatus$.ofActivePlayerByCharacterId[characterId],
+			.filter(([characterId]) =>
+				lockedStatus$.ofActivePlayerByCharacterId[characterId].peek(),
 			)
 			.map(([characterId, mods]) => ({
 				id: characterId,
