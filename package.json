@@ -30,7 +30,7 @@
     "@radix-ui/react-toggle": "^1.1.1",
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.7",
-    "@unocss/preset-mini": "^0.65.2",
+    "@unocss/preset-mini": "^65.4.3",
     "@unocss/reset": "^65.4.3",
     "@vitejs/plugin-react": "^4.3.4",
     "big.js": "^6.2.2",
