@@ -193,8 +193,8 @@ importers:
         specifier: ^65.4.3
         version: 65.4.3(postcss@8.5.1)(rollup@2.79.2)(vite@5.4.11(@types/node@22.10.9)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))
       unocss-preset-animations:
-        specifier: ^1.1.0
-        version: 1.1.0(@unocss/preset-wind@65.4.3)(unocss@65.4.3(postcss@8.5.1)(rollup@2.79.2)(vite@5.4.11(@types/node@22.10.9)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2)))
+        specifier: ^1.1.1
+        version: 1.1.1(@unocss/preset-wind@65.4.3)(unocss@65.4.3(postcss@8.5.1)(rollup@2.79.2)(vite@5.4.11(@types/node@22.10.9)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2)))
       vite:
         specifier: ^5.4.11
         version: 5.4.11(@types/node@22.10.9)(terser@5.37.0)
@@ -3747,11 +3747,11 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
-  unocss-preset-animations@1.1.0:
-    resolution: {integrity: sha512-wCcVnu1IvQmzKK9dZpeZbPPuXO5sKmYGe5VaASjH8st6G3wgw4tw7HsVRP0bXHRhO0PXGtC5Kw9IRKh6dPGPtA==}
+  unocss-preset-animations@1.1.1:
+    resolution: {integrity: sha512-YBttRSHWH0r8OABPzXNcxDhRV67LNIsA0ZrWoYTMHUc/SzVYZBU79IXLtOneLk1NCpzlfkyxm+8DWLJnmG1R6g==}
     peerDependencies:
-      '@unocss/preset-wind': '>= 0.56.0 < 1'
-      unocss: '>= 0.56.0 < 1'
+      '@unocss/preset-wind': '>=0.56.0 < 101'
+      unocss: '>=0.56.0 < 101'
 
   unocss@65.4.3:
     resolution: {integrity: sha512-mwSVi0ovPxaDv58yFB7Vm5v1x/q/pUc7aTh7SJbeYoRrpbUGdKiVf20YSQfMqmBNXV9CFDr4o6tabP/58as6RQ==}
@@ -7760,7 +7760,7 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.1.0(@unocss/preset-wind@65.4.3)(unocss@65.4.3(postcss@8.5.1)(rollup@2.79.2)(vite@5.4.11(@types/node@22.10.9)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))):
+  unocss-preset-animations@1.1.1(@unocss/preset-wind@65.4.3)(unocss@65.4.3(postcss@8.5.1)(rollup@2.79.2)(vite@5.4.11(@types/node@22.10.9)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))):
     dependencies:
       '@unocss/preset-wind': 65.4.3
       unocss: 65.4.3(postcss@8.5.1)(rollup@2.79.2)(vite@5.4.11(@types/node@22.10.9)(terser@5.37.0))(vue@3.5.13(typescript@5.7.2))
