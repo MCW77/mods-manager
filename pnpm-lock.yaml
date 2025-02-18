@@ -72,8 +72,8 @@ importers:
         specifier: ^1.1.8
         version: 1.1.8(@types/react-dom@18.3.1)(@types/react@18.3.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@unocss/preset-mini':
-        specifier: ^65.5.0
-        version: 65.5.0
+        specifier: ^66.0.0
+        version: 66.0.0
       '@unocss/reset':
         specifier: ^66.0.0
         version: 66.0.0
