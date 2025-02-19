@@ -41,6 +41,7 @@ const target$: PlanEditing = observable({
 	},
 	isUnsaveable: () => {
 		return (
+			target$.target.id.get() === "" ||
 			(target$.isBuiltinTarget.get() && !target$.hasAChangedName.get()) ||
 			!target$.isTargetChanged.get() ||
 			(target$.isUsedTargetName.get() && target$.hasAChangedName.get())
