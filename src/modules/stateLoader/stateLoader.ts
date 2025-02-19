@@ -1,5 +1,5 @@
 import { observable, type ObservableObject } from "@legendapp/state";
-import type { ProfilesManagement } from "#/modules/profilesManagement/domain/ProfilesManagement";
+import type { ProfilesManagementObservable } from "#/modules/profilesManagement/domain/ProfilesManagement";
 import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
 import type { CharactersObservable } from "#/modules/characters/domain/CharactersObservable";
 import type { CharactersManagementObservable } from "#/modules/charactersManagement/domain/CharactersManagementObservable";
@@ -13,7 +13,7 @@ import type { TemplatesObservable } from "#/modules/templates/domain/TemplatesOb
 
 export interface StateLoaderObservable {
 	isDone: boolean;
-	profilesManagement$: ObservableObject<ProfilesManagement> | null;
+	profilesManagement$: ObservableObject<ProfilesManagementObservable> | null;
 	compilations$: ObservableObject<CompilationsObservable> | null;
 	characters$: ObservableObject<CharactersObservable> | null;
 	charactersManagement$: ObservableObject<CharactersManagementObservable> | null;

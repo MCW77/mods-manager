@@ -24,7 +24,7 @@ import {
 	getProfileToPersist,
 } from "../domain/PlayerProfile";
 import type { Profiles, PersistedProfiles } from "../domain/Profiles";
-import type { ProfilesManagement } from "../domain/ProfilesManagement";
+import type { ProfilesManagementObservable } from "../domain/ProfilesManagement";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
@@ -50,8 +50,8 @@ const getInitialProfiles = () => {
 	return structuredClone(initialProfiles);
 };
 
-const profilesManagement$: ObservableObject<ProfilesManagement> =
-	observable<ProfilesManagement>({
+const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
+	observable<ProfilesManagementObservable>({
 		defaultProfile: {
 			allycode: "",
 			characterById: {} as Character.CharacterById,

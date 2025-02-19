@@ -7,7 +7,7 @@ import type { Profiles, PersistedProfiles } from "./Profiles";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
 
-interface ProfilesManagement {
+interface ProfilesManagementObservable {
 	defaultProfile: PlayerProfile;
 	lastProfileAdded: string;
 	lastProfileDeleted: string;
@@ -38,4 +38,4 @@ interface ProfilesManagement {
 	deleteMods: (mods: Mod[]) => void;
 }
 
-export type { ProfilesManagement };
+export type { ProfilesManagementObservable };
