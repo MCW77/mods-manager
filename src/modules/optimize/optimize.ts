@@ -33,7 +33,7 @@ export function cancelOptimizer(): void {
 /**
  * Take the results of the mod optimization and apply them to the current profile
  * @param result {Object} The result from the optimizer
- * @param settings {OptimizerRun} The previous settings that were used to get this result
+ * @param settings {OptimizationConditions} The previous settings that were used to get this result
  * @returns {*}
  */
 const finishModOptimization = (
