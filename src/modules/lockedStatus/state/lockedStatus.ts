@@ -12,11 +12,6 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-/*
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
-
-const profilesManagement$ = stateLoader$.profilesManagement$;
-*/
 const { profilesManagement$ } = await import(
 	"#/modules/profilesManagement/state/profilesManagement"
 );
