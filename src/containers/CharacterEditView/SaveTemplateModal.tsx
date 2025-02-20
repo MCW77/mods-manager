@@ -52,9 +52,11 @@ const SaveTemplateModal: React.FC = observer(() => {
 								</SelectTrigger>
 								<SelectContent>
 									{templates$.categories.get().map((category) => (
-										<SelectItem key={category} value={category}>
-											{category}
-										</SelectItem>
+										<Show key={category} if={category !== ""}>
+											<SelectItem key={category} value={category}>
+												{category}
+											</SelectItem>
+										</Show>
 									))}
 								</SelectContent>
 							</ReactiveSelect>
