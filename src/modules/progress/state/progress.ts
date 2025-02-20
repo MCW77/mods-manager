@@ -42,7 +42,7 @@ const getStartOptimizationStatus = () =>
 	structuredClone(startOptimizationStatus);
 const progress$: ObservableObject<Progress> = observable<Progress>({
 	error: null,
-	finished: false,
+	finished: true,
 	hasMissingCharacters: false,
 	optimizationStatus: getStartOptimizationStatus(),
 	postOptimizationMessages: [],
