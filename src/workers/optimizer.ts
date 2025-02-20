@@ -8,7 +8,7 @@ import type { ObservableObject } from "@legendapp/state";
 import type { StateLoaderObservable } from "../modules/stateLoader/stateLoader";
 
 import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
-import type { ProfilesManagement } from "#/modules/profilesManagement/domain/ProfilesManagement";
+import type { ProfilesManagementObservable } from "#/modules/profilesManagement/domain/ProfilesManagement";
 import type { IncrementalOptimizationObservable } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
 import type { LockedStatusObservable } from "#/modules/lockedStatus/domain/LockedStatusObservable";
 import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
@@ -135,7 +135,7 @@ type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 // state
 
 let stateLoader$: ObservableObject<StateLoaderObservable>;
-let profilesManagement$: ObservableObject<ProfilesManagement>;
+let profilesManagement$: ObservableObject<ProfilesManagementObservable>;
 let compilations$: ObservableObject<CompilationsObservable>;
 let incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable>;
 let lockedStatus$: ObservableObject<LockedStatusObservable>;
