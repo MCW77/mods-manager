@@ -69,7 +69,9 @@ const CharacterActions: React.FC = observer(() => {
 		e.preventDefault();
 		beginBatch();
 		if (
-			!compilations$.compilationByIdForActiveAllycode.has(state.name.peek())
+			!compilations$.compilationByIdForActiveAllycode
+				.peek()
+				.has(state.name.peek())
 		) {
 			compilations$.addCompilation(
 				state.name.peek(),
