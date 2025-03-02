@@ -1,8 +1,14 @@
+import type { Observable } from "@legendapp/state";
+
 type IndicesByProfile = Record<string, number | null>;
 
 interface IncrementalOptimizationObservable {
+	persistedData: {
+		id: "indicesByProfile";
+		indicesByProfile: IndicesByProfile;
+	};
+	indicesByProfile: () => Observable<IndicesByProfile>;
 	activeIndex: () => number | null;
-	indicesByProfile: IndicesByProfile;
 	addProfile: (allycode: string) => void;
 	reset: () => void;
 	deleteProfile: (allycode: string) => void;

@@ -1,12 +1,25 @@
+// state
+import type { Observable } from "@legendapp/state";
+
+// domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import type { Observable } from "@legendapp/state";
 import type { Compilation } from "./Compilation";
 
 interface CompilationsObservable {
+	persistedData1: {
+		id: "compilationByIdByAllycode";
+		compilationByIdByAllycode: Map<string, Map<string, Compilation>>;
+	};
+	persistedData2: {
+		id: "defaultCompilation";
+		defaultCompilation: Compilation;
+	};
 	activeCompilationId: string;
-	defaultCompilation: Compilation;
-	compilationByIdByAllycode: Map<string, Map<string, Compilation>>;
+	defaultCompilation: () => Observable<Compilation>;
+	compilationByIdByAllycode: () => Observable<
+		Map<string, Map<string, Compilation>>
+	>;
 	compilationByIdForActiveAllycode: () => Observable<Map<string, Compilation>>;
 	activeCompilation: () => Observable<Compilation>;
 	addProfile: (allycode: string) => void;
@@ -30,6 +43,7 @@ interface CompilationsObservable {
 	applyRanking: (ranking: CharacterNames[]) => void;
 	ensureSelectedCharactersExist: (compilationId: string) => void;
 	resetOptimizationConditions: (allycode: string) => void;
+	reset: () => void;
 }
 
 export type { CompilationsObservable };

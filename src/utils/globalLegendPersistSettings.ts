@@ -5,7 +5,7 @@ const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
 			databaseName: "GIMO",
-			version: 16,
+			version: 18,
 			tableNames: [
 				"OptimizationSettings",
 				"IncrementalOptimization",

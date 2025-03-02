@@ -12,7 +12,11 @@ import { fetchVersion } from "../api/fetchVersion";
 import type { AboutObservable } from "../domain/AboutObservable";
 
 const about$: ObservableObject<AboutObservable> = observable<AboutObservable>({
-	version: String(import.meta.env.VITE_VERSION) || "local",
+	version: () => about$.persistedData.version,
+	persistedData: {
+		id: "version",
+		version: String(import.meta.env.VITE_VERSION) || "local",
+	},
 	checkVersion: async () => {
 		try {
 			const currentVersion = about$.version.get();
@@ -41,7 +45,7 @@ const about$: ObservableObject<AboutObservable> = observable<AboutObservable>({
 });
 
 const syncStatus$ = syncObservable(
-	about$.version,
+	about$.persistedData,
 	persistOptions({
 		persist: {
 			name: "About",

@@ -195,13 +195,13 @@ function updatePlayerData(
 			profile.playerValues,
 		)) {
 			if (
-				lockedStatus$.lockedStatusByCharacterIdByAllycode[newAllycode][
+				lockedStatus$.byCharacterIdByAllycode[newAllycode][
 					characterId
 				].peek() === undefined
 			)
-				lockedStatus$.lockedStatusByCharacterIdByAllycode[newAllycode][
-					characterId
-				].set(false);
+				lockedStatus$.byCharacterIdByAllycode[newAllycode][characterId].set(
+					false,
+				);
 
 			const characterById$ =
 				profilesManagement$.profiles.profileByAllycode[newAllycode]
@@ -217,7 +217,7 @@ function updatePlayerData(
 
 		profilesManagement$.profiles.lastUpdatedByAllycode[newAllycode].set({
 			id: newAllycode,
-			lastUpdated: Date.now(),
+			lastUpdated: profilesManagement$.now.peek(),
 		});
 
 		// If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile

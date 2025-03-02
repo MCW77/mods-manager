@@ -23,16 +23,16 @@ import {
 	getProfileFromPersisted,
 	getProfileToPersist,
 } from "../domain/PlayerProfile";
-import type { Profiles, PersistedProfiles } from "../domain/Profiles";
+import type {
+	Profiles,
+	PersistedProfiles,
+	PersistedDataWithProfiles,
+} from "../domain/Profiles";
 import type { ProfilesManagementObservable } from "../domain/ProfilesManagement";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
-
-const isMod = (mod: Mod | undefined): mod is Mod => {
-	return mod !== undefined;
-};
 
 const isObservableMod = (
 	mod: Observable<Mod | undefined> | Observable<Mod>,
@@ -41,17 +41,21 @@ const isObservableMod = (
 };
 
 const getInitialProfiles = () => {
-	const initialProfiles: Profiles = {
-		activeAllycode: "",
-		playernameByAllycode: {},
-		profileByAllycode: {},
-		lastUpdatedByAllycode: {},
+	const initialProfiles: PersistedDataWithProfiles = {
+		id: "profiles",
+		profiles: {
+			activeAllycode: "",
+			playernameByAllycode: {},
+			profileByAllycode: {},
+			lastUpdatedByAllycode: {},
+		},
 	};
 	return structuredClone(initialProfiles);
 };
 
 const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 	observable<ProfilesManagementObservable>({
+		persistedData: getInitialProfiles(),
 		defaultProfile: {
 			allycode: "",
 			characterById: {} as Character.CharacterById,
@@ -59,7 +63,7 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			playerName: "",
 		},
 		now: Date.now(),
-		profiles: getInitialProfiles(),
+		profiles: () => profilesManagement$.persistedData.profiles,
 		lastProfileAdded: "",
 		lastProfileDeleted: "",
 		activeLastUpdated: () => {
@@ -176,8 +180,17 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			}
 		},
 		toPersistable: () => {
-			const modById = 0;
-			const result = {} as PersistedProfiles;
+			let result = {} as PersistedProfiles;
+			const profiles = profilesManagement$.profiles.peek();
+			const allycodeProfiles = Object.values(profiles.profileByAllycode);
+			const newProfileByAllycode: Record<string, PersistedPlayerProfile> = {};
+			for (const profile of allycodeProfiles) {
+				newProfileByAllycode[profile.allycode] = getProfileToPersist(profile);
+			}
+			result = {
+				...profiles,
+				profileByAllycode: newProfileByAllycode,
+			};
 			return result;
 		},
 		toJSON: () => {
@@ -252,8 +265,15 @@ when(
 );
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const hasModById = (obj: any): obj is { modById: Map<string, GIMOFlatMod> } => {
-	return Object.hasOwn(obj, "modById");
+const hasModByIdMap = (obj: any): obj is { modById: Map<string, Mod> } => {
+	return Object.hasOwn(obj, "modById") && obj.modById instanceof Map;
+};
+
+const hasModByIdRecord = (
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	obj: any,
+): obj is { modById: Record<string, GIMOFlatMod> } => {
+	return Object.hasOwn(obj, "modById") && obj.modById instanceof Object;
 };
 
 const hasProfileByAllycode = (
@@ -287,7 +307,7 @@ const isFullPersistedPlayerProfile = (
 };
 
 const syncStatus$ = syncObservable(
-	profilesManagement$.profiles,
+	profilesManagement$.persistedData,
 	persistOptions({
 		persist: {
 			name: "Profiles",
@@ -296,22 +316,27 @@ const syncStatus$ = syncObservable(
 			},
 
 			transform: {
-				load: (value) => {
-					if (hasPersistedProfileByAllycode(value)) {
-						const profiles = Object.values(value.profileByAllycode);
-						const allycodes = Object.keys(value.profileByAllycode);
+				load: (
+					value: { id: "profiles"; profiles: PersistedProfiles } & GIMOFlatMod,
+				) => {
+					if (hasPersistedProfileByAllycode(value.profiles)) {
+						const profiles = Object.values(value.profiles.profileByAllycode);
+						const allycodes = Object.keys(value.profiles.profileByAllycode);
 						if (profiles.length > 0) {
 							if (isFullPersistedPlayerProfile(profiles[0])) {
 								const newProfileByAllycode: Record<string, PlayerProfile> = {};
 								for (const profile of profiles) {
-									if (hasModById(profile)) {
+									if (hasModByIdRecord(profile)) {
 										newProfileByAllycode[profile.allycode] =
 											getProfileFromPersisted(profile);
 									}
 								}
 								const result = {
-									...value,
-									profileByAllycode: newProfileByAllycode,
+									id: "profiles",
+									profiles: {
+										...value.profiles,
+										profileByAllycode: newProfileByAllycode,
+									},
 								};
 								return result;
 							}
@@ -323,9 +348,9 @@ const syncStatus$ = syncObservable(
 					}
 					return value;
 				},
-				save: (value: Partial<Profiles>) => {
-					if (hasProfileByAllycode(value)) {
-						const profiles = Object.values(value.profileByAllycode);
+				save: (value: { profiles: Partial<Profiles> }) => {
+					if (hasProfileByAllycode(value.profiles)) {
+						const profiles = Object.values(value.profiles.profileByAllycode);
 						if (profiles.length > 0) {
 							if (isFullPlayerProfile(profiles[0])) {
 								const newProfileByAllycode: Record<
@@ -337,23 +362,28 @@ const syncStatus$ = syncObservable(
 										getProfileToPersist(profile);
 								}
 								const result = {
-									...value,
-									profileByAllycode: newProfileByAllycode,
+									profiles: {
+										profileByAllycode: newProfileByAllycode,
+									},
 								};
 								return result;
 							}
-							if (hasModById(profiles[0])) {
-								const allycode = Object.keys(value.profileByAllycode)[0];
-								const modId = Object.keys(
-									value.profileByAllycode[allycode].modById,
+							if (hasModByIdMap(profiles[0])) {
+								const allycode = Object.keys(
+									value.profiles.profileByAllycode,
 								)[0];
-								const modById = value.profileByAllycode[allycode]
+								const modId = Object.keys(
+									value.profiles.profileByAllycode[allycode].modById,
+								)[0];
+								const modById = value.profiles.profileByAllycode[allycode]
 									.modById as Map<string, Mod> & Record<string, Mod>;
 								return {
-									profileByAllycode: {
-										[allycode]: {
-											modById: {
-												[modId]: modById[modId]?.serialize(),
+									profiles: {
+										profileByAllycode: {
+											[allycode]: {
+												modById: {
+													[modId]: modById[modId]?.serialize(),
+												},
 											},
 										},
 									},
@@ -361,7 +391,7 @@ const syncStatus$ = syncObservable(
 							}
 						}
 					}
-					return value;
+					return structuredClone(value);
 				},
 			},
 		},

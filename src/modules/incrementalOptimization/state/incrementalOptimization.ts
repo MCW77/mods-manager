@@ -10,6 +10,11 @@ const { profilesManagement$ } = await import(
 // domain
 import type { IncrementalOptimizationObservable } from "../domain/IncrementalOptimizationObservable";
 
+const initialIndicesByProfile = {
+	id: "indicesByProfile",
+	indicesByProfile: {},
+} as const;
+
 const incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable> =
 	observable<IncrementalOptimizationObservable>({
 		activeIndex: () => {
@@ -17,7 +22,10 @@ const incrementalOptimization$: ObservableObject<IncrementalOptimizationObservab
 				profilesManagement$.profiles.activeAllycode.get()
 			].get();
 		},
-		indicesByProfile: {},
+		persistedData: initialIndicesByProfile,
+		indicesByProfile: () => {
+			return incrementalOptimization$.persistedData.indicesByProfile;
+		},
 		addProfile: (allycode: string) => {
 			incrementalOptimization$.indicesByProfile.set({
 				...incrementalOptimization$.indicesByProfile.peek(),
@@ -45,7 +53,7 @@ profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
 });
 
 const syncStatus$ = syncObservable(
-	incrementalOptimization$.indicesByProfile,
+	incrementalOptimization$.persistedData,
 	persistOptions({
 		persist: {
 			name: "IncrementalOptimization",
@@ -53,7 +61,7 @@ const syncStatus$ = syncObservable(
 				itemID: "indicesByProfile",
 			},
 		},
-		initial: {},
+		initial: structuredClone(initialIndicesByProfile),
 	}),
 );
 await when(syncStatus$.isPersistLoaded);

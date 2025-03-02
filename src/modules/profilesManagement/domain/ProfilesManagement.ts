@@ -3,15 +3,20 @@ import type { Observable } from "@legendapp/state";
 
 // domain
 import type { PlayerProfile } from "./PlayerProfile";
-import type { Profiles, PersistedProfiles } from "./Profiles";
+import type {
+	Profiles,
+	PersistedProfiles,
+	PersistedDataWithProfiles,
+} from "./Profiles";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
 
 interface ProfilesManagementObservable {
+	persistedData: PersistedDataWithProfiles;
 	defaultProfile: PlayerProfile;
 	lastProfileAdded: string;
 	lastProfileDeleted: string;
-	profiles: Profiles;
+	profiles: () => Observable<Profiles>;
 	now: number;
 	activeLastUpdated: () => string;
 	activePlayer: () => string;

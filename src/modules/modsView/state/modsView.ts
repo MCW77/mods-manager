@@ -1,3 +1,6 @@
+// utils
+import { objectKeys } from "#/utils/objectKeys";
+
 // state
 import {
 	beginBatch,
@@ -11,6 +14,10 @@ import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 // domain
 import type { Categories } from "../domain/Categories";
+import type {
+	ModsViewObservable,
+	ModsViewPersistedData,
+} from "../domain/ModsViewObservable";
 import {
 	defaultViewSetupByCategory,
 	quickFilter,
@@ -18,8 +25,10 @@ import {
 	type Filter,
 	type FilterKeys,
 	type TriState,
+	type ModsViewSetupByIdByCategory,
+	type PersistableModsViewSetupByIdByCategory,
+	type PersistableViewSetup,
 } from "../domain/ModsViewOptions";
-import type { ModsViewObservable } from "../domain/ModsViewObservable";
 
 const cloneQuickFilter = () => structuredClone(quickFilter);
 const clonedQuickFilter = cloneQuickFilter();
@@ -42,30 +51,38 @@ const defaultCalibrateViewSetup = structuredClone(
 const defaultAllModsViewSetup = structuredClone(
 	defaultViewSetupByCategory.AllMods,
 );
-const defaultViewSetup = {
-	Reveal: {
-		[defaultRevealViewSetup.id]: defaultRevealViewSetup,
-	} as ViewSetupById,
-	Level: { [defaultLevelViewSetup.id]: defaultLevelViewSetup } as ViewSetupById,
-	Slice5Dot: {
-		[defaultSlice5DotViewSetup.id]: defaultSlice5DotViewSetup,
-	} as ViewSetupById,
-	Slice6E: {
-		[defaultSlice6EViewSetup.id]: defaultSlice6EViewSetup,
-	} as ViewSetupById,
-	Slice6Dot: {
-		[defaultSlice6DotViewSetup.id]: defaultSlice6DotViewSetup,
-	} as ViewSetupById,
-	Calibrate: {
-		[defaultCalibrateViewSetup.id]: defaultCalibrateViewSetup,
-	} as ViewSetupById,
-	AllMods: {
-		[defaultAllModsViewSetup.id]: defaultAllModsViewSetup,
-	} as ViewSetupById,
+const defaultViewSetup: ModsViewPersistedData = {
+	viewSetup: {
+		id: "viewSetup",
+		byIdByCategory: {
+			Reveal: {
+				[defaultRevealViewSetup.id]: defaultRevealViewSetup,
+			} as ViewSetupById,
+			Level: {
+				[defaultLevelViewSetup.id]: defaultLevelViewSetup,
+			} as ViewSetupById,
+			Slice5Dot: {
+				[defaultSlice5DotViewSetup.id]: defaultSlice5DotViewSetup,
+			} as ViewSetupById,
+			Slice6E: {
+				[defaultSlice6EViewSetup.id]: defaultSlice6EViewSetup,
+			} as ViewSetupById,
+			Slice6Dot: {
+				[defaultSlice6DotViewSetup.id]: defaultSlice6DotViewSetup,
+			} as ViewSetupById,
+			Calibrate: {
+				[defaultCalibrateViewSetup.id]: defaultCalibrateViewSetup,
+			} as ViewSetupById,
+			AllMods: {
+				[defaultAllModsViewSetup.id]: defaultAllModsViewSetup,
+			} as ViewSetupById,
+		},
+	},
 };
 
 const modsView$: ObservableObject<ModsViewObservable> =
 	observable<ModsViewObservable>({
+		persistedData: structuredClone(defaultViewSetup),
 		activeCategory: "Reveal" as Categories,
 		idOfActiveViewSetupByCategory: {
 			Reveal: "DefaultReveal",
@@ -85,7 +102,8 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			Calibrate: "QuickFilter",
 			AllMods: "QuickFilter",
 		},
-		viewSetupByIdByCategory: structuredClone(defaultViewSetup),
+		viewSetupByIdByCategory: () =>
+			modsView$.persistedData.viewSetup.byIdByCategory,
 		quickFilter: clonedQuickFilter,
 		viewSetupByIdInActiveCategory: () =>
 			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
@@ -161,6 +179,59 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			syncStatus$.reset();
 			modsView$.quickFilter.assign(cloneQuickFilter());
 			endBatch();
+		},
+		restoreFromPersistable: (
+			persistedData: PersistableModsViewSetupByIdByCategory,
+		) => {
+			const viewSetupByIdByCategory: ModsViewSetupByIdByCategory = {
+				Reveal: {} as ViewSetupById,
+				Level: {} as ViewSetupById,
+				Slice5Dot: {} as ViewSetupById,
+				Slice6E: {} as ViewSetupById,
+				Slice6Dot: {} as ViewSetupById,
+				Calibrate: {} as ViewSetupById,
+				AllMods: {} as ViewSetupById,
+			};
+			for (const category of objectKeys(persistedData)) {
+				for (const [viewSetupId, viewSetup] of Object.entries(
+					persistedData[category],
+				)) {
+					const viewSetupClone = {
+						...viewSetup,
+						sort: new Map(Object.entries(viewSetup.sort)),
+					};
+					viewSetupByIdByCategory[category][viewSetupId] = viewSetupClone;
+				}
+			}
+			modsView$.viewSetupByIdByCategory.set(viewSetupByIdByCategory);
+		},
+		toPersistable: (): PersistableModsViewSetupByIdByCategory => {
+			const clone: ModsViewSetupByIdByCategory = structuredClone(
+				modsView$.viewSetupByIdByCategory.peek(),
+			);
+			const persistableViewSetupByIdByCategory: PersistableModsViewSetupByIdByCategory =
+				{
+					Reveal: {},
+					Level: {},
+					Slice5Dot: {},
+					Slice6E: {},
+					Slice6Dot: {},
+					Calibrate: {},
+					AllMods: {},
+				};
+			for (const category of objectKeys(clone)) {
+				for (const [viewSetupId, viewSetup] of Object.entries(
+					clone[category],
+				)) {
+					const persistableViewSetup: PersistableViewSetup = {
+						...viewSetup,
+						sort: Object.fromEntries(viewSetup.sort),
+					};
+					persistableViewSetupByIdByCategory[category][viewSetupId] =
+						persistableViewSetup;
+				}
+			}
+			return persistableViewSetupByIdByCategory;
 		},
 		addViewSetup: () => {
 			const oldId = modsView$.idOfActiveViewSetupInActiveCategory.peek();
@@ -268,7 +339,7 @@ const filters$ = observable({
 });
 
 const syncStatus$ = syncObservable(
-	modsView$.viewSetupByIdByCategory,
+	modsView$.persistedData,
 	persistOptions({
 		persist: {
 			name: "ViewSetup",

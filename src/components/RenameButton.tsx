@@ -40,7 +40,7 @@ const RenameButton = observer(
 						size="icon"
 						className="h-6 w-6 p-0 hover:bg-slate-100 focus-visible:ring-1 focus-visible:ring-slate-400"
 						onClick={handleRename}
-            onMouseDown={(e) => e.stopPropagation()}
+						onMouseDown={(e) => e.stopPropagation()}
 					>
 						<PencilIcon className="h-3 w-3 text-slate-500" />
 						<span className="sr-only">Rename {itemName}</span>

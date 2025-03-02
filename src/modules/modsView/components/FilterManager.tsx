@@ -60,7 +60,9 @@ const FilterManager = observer(
 												<RenameButton
 													itemId={id}
 													itemName={id}
-													onRename={modsView$.renameFilter}
+													onRename={(itemId, newName) =>
+														modsView$.renameFilter(itemId, newName)
+													}
 												/>
 												<Button
 													size={"icon"}

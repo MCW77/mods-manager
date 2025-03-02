@@ -5,3 +5,4 @@ export interface SortConfig {
 }
 
 export type SortConfigById = Map<string, SortConfig>;
+export type PersistableSortConfigById = Record<string, SortConfig>;

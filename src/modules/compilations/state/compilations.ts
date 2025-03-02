@@ -17,7 +17,7 @@ const { profilesManagement$ } = await import(
 // domain
 import { getDefaultCompilation, type Compilation } from "../domain/Compilation";
 import type { CharacterNames } from "#/constants/CharacterNames";
-import {characterSettings } from "#/constants/characterSettings";
+import { characterSettings } from "#/constants/characterSettings";
 import {
 	fromShortOptimizationPlan,
 	type OptimizationPlan,
@@ -25,8 +25,11 @@ import {
 import type { CompilationsObservable } from "../domain/CompilationsObservable";
 
 const getinitialCompilations = () => {
-	const result = new Map<string, Map<string, Compilation>>();
-	return result;
+	const compilations = new Map<string, Map<string, Compilation>>();
+	return {
+		id: "compilationByIdByAllycode",
+		compilationByIdByAllycode: compilations,
+	} as const;
 };
 
 const isCompilation = (
@@ -38,8 +41,11 @@ const isCompilation = (
 const compilations$: ObservableObject<CompilationsObservable> =
 	observable<CompilationsObservable>({
 		activeCompilationId: "DefaultCompilation",
-		defaultCompilation: getDefaultCompilation(),
-		compilationByIdByAllycode: getinitialCompilations(),
+		persistedData1: getinitialCompilations(),
+		persistedData2: getDefaultCompilation(),
+		defaultCompilation: () => compilations$.persistedData2.defaultCompilation,
+		compilationByIdByAllycode: () =>
+			compilations$.persistedData1.compilationByIdByAllycode,
 		compilationByIdForActiveAllycode: () => {
 			const allycode = profilesManagement$.activeProfile.allycode.get();
 			return (
@@ -225,9 +231,14 @@ const compilations$: ObservableObject<CompilationsObservable> =
 		ensureSelectedCharactersExist: (compilationId: string) => {
 			const profile$ = profilesManagement$.activeProfile;
 			const compilation$ =
+				compilationId === "DefaultCompilation"
+					? compilations$.defaultCompilation
+					: compilations$.compilationByIdForActiveAllycode[compilationId];
+			/*
 				compilations$.compilationByIdByAllycode[profile$.allycode.peek()][
 					compilationId
 				];
+*/
 			const compilation = compilation$.peek();
 			if (compilation === undefined) return;
 			for (const [
@@ -248,6 +259,10 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				compilationById$[compilation.id].optimizationConditions.set(null);
 			}
 		},
+		reset: () => {
+			syncStatus$.reset();
+			syncStatus2$.reset();
+		},
 	});
 
 profilesManagement$.lastProfileAdded.onChange(({ value }) => {
@@ -262,8 +277,14 @@ profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
 	compilations$.deleteProfile(value);
 });
 
+profilesManagement$.profiles.activeAllycode.onChange(({ value }) => {
+	compilations$.ensureSelectedCharactersExist(
+		compilations$.activeCompilationId.get(),
+	);
+});
+
 const syncStatus$ = syncObservable(
-	compilations$.compilationByIdByAllycode,
+	compilations$.persistedData1,
 	persistOptions({
 		persist: {
 			name: "Compilations",
@@ -277,12 +298,12 @@ const syncStatus$ = syncObservable(
 await when(syncStatus$.isPersistLoaded);
 
 const syncStatus2$ = syncObservable(
-	compilations$.defaultCompilation,
+	compilations$.persistedData2,
 	persistOptions({
 		persist: {
 			name: "DefaultCompilation",
 			indexedDB: {
-				itemID: "DefaultCompilation",
+				itemID: "defaultCompilation",
 			},
 		},
 		initial: getDefaultCompilation(),

@@ -1,18 +1,33 @@
 import type { Observable, ObservablePrimitive } from "@legendapp/state";
 import type { Categories } from "./Categories";
-import {
+import type {
 	Filter,
 	FilterKeys,
+	ModsViewSetupByIdByCategory,
+	PersistableModsViewSetupByIdByCategory,
 	TriState,
 	ViewSetup,
 	ViewSetupById,
 } from "./ModsViewOptions";
 
+interface ModsViewPersistedData {
+	viewSetup: {
+		id: "viewSetup";
+		byIdByCategory: ModsViewSetupByIdByCategory;
+	};
+}
+
 interface ModsViewObservable {
+	persistedData: {
+		viewSetup: {
+			id: "viewSetup";
+			byIdByCategory: ModsViewSetupByIdByCategory;
+		};
+	};
 	activeCategory: Categories;
 	idOfActiveViewSetupByCategory: Record<Categories, string>;
 	idOfSelectedFilterByCategory: Record<Categories, string>;
-	viewSetupByIdByCategory: Record<Categories, ViewSetupById>;
+	viewSetupByIdByCategory: () => Observable<ModsViewSetupByIdByCategory>;
 	quickFilter: Filter;
 	viewSetupByIdInActiveCategory: () => Observable<ViewSetupById>;
 	idOfActiveViewSetupInActiveCategory: () => ObservablePrimitive<string>;
@@ -25,6 +40,10 @@ interface ModsViewObservable {
 	massSetFilter: (filterName: FilterKeys, value: TriState) => void;
 	cycleState: (filterName: FilterKeys, valueKey: string) => void;
 	reset: () => void;
+	restoreFromPersistable: (
+		persistable: PersistableModsViewSetupByIdByCategory,
+	) => void;
+	toPersistable: () => PersistableModsViewSetupByIdByCategory;
 	addViewSetup: () => void;
 	removeViewSetup: (id: string) => void;
 	renameViewSetup: (id: string, newName: string) => void;
@@ -34,4 +53,4 @@ interface ModsViewObservable {
 	renameFilter: (id: string, newName: string) => void;
 }
 
-export type { ModsViewObservable };
+export type { ModsViewObservable, ModsViewPersistedData };

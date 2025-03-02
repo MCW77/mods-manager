@@ -5,14 +5,26 @@ import type { Observable } from "@legendapp/state";
 import type {
 	LockedStatusByCharacterId,
 	LockedStatusByCharacterIdByAllycode,
+	LockedStatusPersistedData,
 } from "./LockedStatusByCharacterId";
 
 interface LockedStatusObservable {
-	lockedStatusByCharacterIdByAllycode: LockedStatusByCharacterIdByAllycode;
+	persistedData: LockedStatusPersistedData;
+	byCharacterIdByAllycode: () => Observable<LockedStatusByCharacterIdByAllycode>;
 	ofActivePlayerByCharacterId: () => Observable<LockedStatusByCharacterId>;
 	lockAll: () => void;
 	unlockAll: () => void;
 	reset: () => void;
 }
 
-export type { LockedStatusObservable };
+const getInitialLockedStatus = (): LockedStatusPersistedData => {
+	const lockedStatus: LockedStatusPersistedData = {
+		lockedStatus: {
+			id: "lockedStatus",
+			lockedStatusByCharacterIdByAllycode: {},
+		},
+	};
+	return lockedStatus;
+};
+
+export { type LockedStatusObservable, getInitialLockedStatus };

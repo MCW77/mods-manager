@@ -33,12 +33,18 @@ type CSStat = CSStats.CharacterSummaryStat;
 
 const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 	observable<OptimizationSettingsObservable>({
+		persistedData: {
+			id: "settingsByProfile",
+			settingsByProfile: {},
+		},
 		activeSettings: () => {
 			return optimizationSettings$.settingsByProfile[
 				profilesManagement$.profiles.activeAllycode.get()
 			].get() as ProfileOptimizationSettings;
 		},
-		settingsByProfile: {},
+		settingsByProfile: () => {
+			return optimizationSettings$.persistedData.settingsByProfile;
+		},
 		addProfile: (allycode: string) => {
 			return optimizationSettings$.settingsByProfile.set({
 				...optimizationSettings$.settingsByProfile.peek(),
@@ -311,7 +317,7 @@ profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
 });
 
 const syncStatus$ = syncObservable(
-	optimizationSettings$.settingsByProfile,
+	optimizationSettings$.persistedData,
 	persistOptions({
 		persist: {
 			name: "OptimizationSettings",

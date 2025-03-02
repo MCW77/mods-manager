@@ -1,3 +1,6 @@
+// state
+import type { Observable } from "@legendapp/state";
+
 // domain
 import type { Character } from "#/domain/Character";
 import type { CharacterSummaryStat } from "#/domain/CharacterSummaryStat";
@@ -7,7 +10,11 @@ import type { CharacterFilterPredicate } from "./CharacterFilterById";
 import type { CharacterFilterSetup } from "./CharacterFilterSetup";
 
 interface CharactersManagementObservable {
-	filterSetup: CharacterFilterSetup;
+	persistedData: {
+		filterSetup: CharacterFilterSetup;
+		id: "filterSetup";
+	};
+	filterSetup: () => Observable<CharacterFilterSetup>;
 	activeCustomFilter: () => CharacterFilterPredicate;
 	addTextFilter: () => void;
 	getFlatValuesForCharacter: (

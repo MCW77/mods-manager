@@ -1,14 +1,5 @@
-// react
-import { lazy } from "react";
-
 // state
-import {
-	beginBatch,
-	endBatch,
-	observable,
-	type ObservableObject,
-	when,
-} from "@legendapp/state";
+import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
@@ -34,6 +25,11 @@ import type {
 
 const hotutilsv2baseurl =
 	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
+
+const initialPersistedData = {
+	id: "sessionIdByProfile",
+	sessionIdByProfile: {} as SessionIdByProfile,
+} as const;
 
 const post = async (url = "", data = {}, extras = {}) => {
 	const response = await fetch(
@@ -62,6 +58,7 @@ const post = async (url = "", data = {}, extras = {}) => {
 
 const hotutils$: ObservableObject<HotutilsObservable> =
 	observable<HotutilsObservable>({
+		persistedData: structuredClone(initialPersistedData),
 		activeSessionId: () => {
 			const allycode = profilesManagement$.profiles.activeAllycode.get();
 			return hotutils$.sessionIdByProfile[allycode].get() || "";
@@ -73,7 +70,9 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			return hotutils$.sessionIdByProfile[allycode].peek() || "";
 		},
 		isSubscribed: () => hotutils$.checkSubscriptionStatus(),
-		sessionIdByProfile: {} as SessionIdByProfile,
+		sessionIdByProfile: () => {
+			return hotutils$.persistedData.sessionIdByProfile;
+		},
 		addProfile: (allycode: string) => {
 			hotutils$.sessionIdByProfile[allycode].set("");
 		},
@@ -252,7 +251,7 @@ profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
 });
 
 const syncStatus$ = syncObservable(
-	hotutils$.sessionIdByProfile,
+	hotutils$.persistedData,
 	persistOptions({
 		persist: {
 			name: "HotUtils",
@@ -260,7 +259,7 @@ const syncStatus$ = syncObservable(
 				itemID: "sessionIdByProfile",
 			},
 		},
-		initial: {} as SessionIdByProfile,
+		initial: initialPersistedData,
 	}),
 );
 await when(syncStatus$.isPersistLoaded);

@@ -57,7 +57,9 @@ const ViewSetupManager = observer(
 											<RenameButton
 												itemId={id}
 												itemName={id}
-												onRename={modsView$.renameViewSetup}
+												onRename={(itemId, newName) =>
+													modsView$.renameViewSetup(itemId, newName)
+												}
 											/>
 											<Button
 												size={"icon"}

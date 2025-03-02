@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Computed, For, observer, Show } from "@legendapp/state/react";
+import { Computed, For, observer, Show, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -24,7 +24,7 @@ import { Label } from "#ui/label";
 const SortManager = observer(
 	React.memo(() => {
 		const [t] = useTranslation("domain");
-		const viewSetup = modsView$.activeViewSetupInActiveCategory.get();
+		const viewSetup = use$(modsView$.activeViewSetupInActiveCategory);
 
 		const sortOptions = [
 			{
@@ -81,14 +81,15 @@ const SortManager = observer(
 							return (
 								<For each={modsView$.activeViewSetupInActiveCategory.sort}>
 									{(sortConfig$) => {
-										const sortBy = sortConfig$.sortBy.get();
+										const sortConfig = use$(sortConfig$);
+
 										return (
 											<Badge
 												variant={"outline"}
 												className={"flex items-center"}
 											>
 												<ReactiveMultiColumnSelect
-													key={`sort-option-${sortConfig$.id.get()}`}
+													key={`sort-option-${sortConfig.id}`}
 													groups={sortOptions}
 													selectedValue$={sortConfig$.sortBy}
 												/>
@@ -96,7 +97,7 @@ const SortManager = observer(
 													size={"xxs"}
 													variant={"outline"}
 													onClick={() => {
-														if (sortConfig$.sortOrder.get() === "asc") {
+														if (sortConfig$.sortOrder.peek() === "asc") {
 															sortConfig$.sortOrder.set("desc");
 														} else {
 															sortConfig$.sortOrder.set("asc");
@@ -104,7 +105,7 @@ const SortManager = observer(
 													}}
 												>
 													<Show
-														if={() => sortConfig$.sortOrder.get() === "asc"}
+														if={() => sortConfig.sortOrder === "asc"}
 														else={() => (
 															<FontAwesomeIcon
 																icon={faSortDown}

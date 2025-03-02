@@ -13,15 +13,18 @@ export interface Compilation {
 	selectedCharacters: SelectedCharacters;
 }
 
-export const getDefaultCompilation = (): Compilation => {
-	return {
-		category: "",
-		description: "Default compilation used until saved under own name",
-		flatCharacterModdings: [] as FlatCharacterModdings,
-		hasSelectionChanged: false,
-		id: "DefaultCompilation",
-		lastOptimized: null as Date | null,
-		optimizationConditions: null as OptimizationConditions,
-		selectedCharacters: [] as SelectedCharacters,
-	};
+export const getDefaultCompilation = () => {
+	return structuredClone({
+		id: "defaultCompilation",
+		defaultCompilation: {
+			category: "",
+			description: "Default compilation used until saved under own name",
+			flatCharacterModdings: [] as FlatCharacterModdings,
+			hasSelectionChanged: false,
+			id: "DefaultCompilation",
+			lastOptimized: null as Date | null,
+			optimizationConditions: null as OptimizationConditions,
+			selectedCharacters: [] as SelectedCharacters,
+		},
+	} as const);
 };

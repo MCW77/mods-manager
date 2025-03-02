@@ -29,6 +29,10 @@ const customCharacterFilterGroups = [
 				label: "Missing Mods",
 				value: "Missing Mods",
 			},
+			{
+				label: "Needs Leveling",
+				value: "Needs Leveling",
+			},
 		],
 	},
 	{

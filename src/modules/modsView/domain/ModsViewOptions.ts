@@ -3,7 +3,7 @@ import type * as UtilityTypes from "#/utils/typeHelper";
 
 // domain
 import type { Categories } from "./Categories";
-import type { SortConfigById } from "./SortConfig";
+import type { PersistableSortConfigById, SortConfigById } from "./SortConfig";
 
 export type TriState = -1 | 0 | 1;
 
@@ -153,9 +153,24 @@ export interface ViewSetup {
 	modScore: string;
 }
 
-export type ViewSetupById = Record<string, ViewSetup>;
+export interface PersistableViewSetup {
+	id: string;
+	category: Categories;
+	description: string;
+	filterById: Record<string, Filter>;
+	sort: PersistableSortConfigById;
+	isGroupingEnabled: boolean;
+	modScore: string;
+}
 
-export type ViewSetupByIdByCategory = Record<Categories, ViewSetupById>;
+export type ViewSetupById = Record<string, ViewSetup>;
+type PersistableViewSetupById = Record<string, PersistableViewSetup>;
+
+export type ModsViewSetupByIdByCategory = Record<Categories, ViewSetupById>;
+export type PersistableModsViewSetupByIdByCategory = Record<
+	Categories,
+	PersistableViewSetupById
+>;
 
 export const quickFilter: Filter = {
 	id: "QuickFilter",

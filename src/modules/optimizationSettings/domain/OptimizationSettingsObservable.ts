@@ -1,17 +1,26 @@
+// state
+import type { Observable } from "@legendapp/state";
+
 // domain
 import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
+
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+
 import type { Mod } from "#/domain/Mod";
 import type * as Character from "#/domain/Character";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+import type { ModLoadout } from "#/domain/ModLoadout";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { CharacterSummaryStats as CSStats } from "#/domain/Stats";
-import { ModLoadout } from "#/domain/ModLoadout";
 
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 
 interface OptimizationSettingsObservable {
+	persistedData: {
+		id: "settingsByProfile";
+		settingsByProfile: SettingsByProfile;
+	};
 	activeSettings: () => ProfileOptimizationSettings;
-	settingsByProfile: SettingsByProfile;
+	settingsByProfile: () => Observable<SettingsByProfile>;
 	addProfile: (allycode: string) => void;
 	reset: () => void;
 	deleteProfile: (allycode: string) => void;
@@ -40,4 +49,4 @@ interface OptimizationSettingsObservable {
 	shouldUpgradeMods: (target: OptimizationPlan) => boolean;
 }
 
-export type { OptimizationSettingsObservable };
+export type { OptimizationSettingsObservable, SettingsByProfile };

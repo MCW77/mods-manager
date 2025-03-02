@@ -7,6 +7,7 @@ import {
 	endBatch,
 	type Observable,
 	observable,
+	ObservableObject,
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -17,53 +18,55 @@ const { profilesManagement$ } = await import(
 );
 
 // domain
-import type {
-	LockedStatusByCharacterIdByAllycode,
-	LockedStatusByCharacterId,
-} from "../domain/LockedStatusByCharacterId";
-import type { LockedStatusObservable } from "../domain/LockedStatusObservable";
+import type { LockedStatusByCharacterId } from "../domain/LockedStatusByCharacterId";
+import {
+	getInitialLockedStatus,
+	type LockedStatusObservable,
+} from "../domain/LockedStatusObservable";
 
-const lockedStatus$ = observable<LockedStatusObservable>({
-	lockedStatusByCharacterIdByAllycode:
-		{} as LockedStatusByCharacterIdByAllycode,
-	ofActivePlayerByCharacterId: (): Observable<LockedStatusByCharacterId> => {
-		return lockedStatus$.lockedStatusByCharacterIdByAllycode[
-			profilesManagement$.profiles.activeAllycode.get()
-		];
-	},
-	lockAll: () => {
-		beginBatch();
-		for (const characterId of objectKeys(
-			lockedStatus$.ofActivePlayerByCharacterId.peek(),
-		)) {
-			lockedStatus$.ofActivePlayerByCharacterId[characterId].set(true);
-		}
-		endBatch();
-	},
-	unlockAll: () => {
-		beginBatch();
-		for (const characterId of objectKeys(
-			lockedStatus$.ofActivePlayerByCharacterId.peek(),
-		)) {
-			lockedStatus$.ofActivePlayerByCharacterId[characterId].set(false);
-		}
-		endBatch();
-	},
-	reset: () => {
-		syncStatus$.reset();
-	},
-});
+const lockedStatus$: ObservableObject<LockedStatusObservable> =
+	observable<LockedStatusObservable>({
+		persistedData: getInitialLockedStatus(),
+		byCharacterIdByAllycode: () => {
+			return lockedStatus$.persistedData.lockedStatus
+				.lockedStatusByCharacterIdByAllycode;
+		},
+		ofActivePlayerByCharacterId: (): Observable<LockedStatusByCharacterId> => {
+			return lockedStatus$.persistedData.lockedStatus
+				.lockedStatusByCharacterIdByAllycode[
+				profilesManagement$.profiles.activeAllycode.get()
+			];
+		},
+		lockAll: () => {
+			beginBatch();
+			for (const characterId of objectKeys(
+				lockedStatus$.ofActivePlayerByCharacterId.peek(),
+			)) {
+				lockedStatus$.ofActivePlayerByCharacterId[characterId].set(true);
+			}
+			endBatch();
+		},
+		unlockAll: () => {
+			beginBatch();
+			for (const characterId of objectKeys(
+				lockedStatus$.ofActivePlayerByCharacterId.peek(),
+			)) {
+				lockedStatus$.ofActivePlayerByCharacterId[characterId].set(false);
+			}
+			endBatch();
+		},
+		reset: () => {
+			syncStatus$.reset();
+		},
+	});
 
 const syncStatus$ = syncObservable(
-	lockedStatus$.lockedStatusByCharacterIdByAllycode,
+	lockedStatus$.persistedData,
 	persistOptions({
 		persist: {
 			name: "LockedStatus",
-			indexedDB: {
-				itemID: "lockedStatus",
-			},
 		},
-		initial: {} as LockedStatusByCharacterIdByAllycode,
+		initial: getInitialLockedStatus(),
 	}),
 );
 await when(syncStatus$.isPersistLoaded);
