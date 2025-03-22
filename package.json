@@ -87,6 +87,10 @@
 	"pnpm": {
 		"overrides": {
 			"braces@<3.0.3": ">=3.0.3"
-		}
+		},
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"esbuild"
+		]
 	}
 }
