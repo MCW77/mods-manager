@@ -23,12 +23,13 @@ import {
 	quickFilter,
 	type ViewSetupById,
 	type Filter,
-	type FilterKeys,
+	type TriStateFilterKeys,
 	type TriState,
 	type ModsViewSetupByIdByCategory,
 	type PersistableModsViewSetupByIdByCategory,
 	type PersistableViewSetup,
 } from "../domain/ModsViewOptions";
+import { createSortConfig } from "../domain/SortConfig";
 
 const cloneQuickFilter = () => structuredClone(quickFilter);
 const clonedQuickFilter = cloneQuickFilter();
@@ -159,7 +160,7 @@ const modsView$: ObservableObject<ModsViewObservable> =
 		setFilterId: (filterId: string) => {
 			modsView$.idOfSelectedFilterInActiveCategory.set(filterId);
 		},
-		massSetFilter: (filterName: FilterKeys, value: TriState) => {
+		massSetFilter: (filterName: TriStateFilterKeys, value: TriState) => {
 			const filter = modsView$.activeFilter[filterName];
 			beginBatch();
 			for (const key of Object.keys(filter)) {
@@ -167,9 +168,9 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			}
 			endBatch();
 		},
-		cycleState: (filterName: FilterKeys, valueKey: string) => {
+		cycleState: (filterName: TriStateFilterKeys, valueKey: string) => {
 			const filter = modsView$.activeFilter[filterName][valueKey];
-			const value = filter.get();
+			const value = filter.peek();
 			if (value === -1) filter.set(0);
 			if (value === 0) filter.set(1);
 			if (value === 1) filter.set(-1);
@@ -286,12 +287,11 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			endBatch();
 		},
 		addSortConfig: () => {
-			const id = crypto.randomUUID();
-			modsView$.activeViewSetupInActiveCategory.sort.set(id, {
-				id,
-				sortBy: "characterID",
-				sortOrder: "asc",
-			});
+			const sortConfig = createSortConfig("characterID", "asc");
+			modsView$.activeViewSetupInActiveCategory.sort.set(
+				sortConfig.id,
+				sortConfig,
+			);
 		},
 		addFilter: () => {
 			beginBatch();

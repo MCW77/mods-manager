@@ -7,7 +7,7 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import type { FilterKeys } from "../domain/ModsViewOptions";
+import type { TriStateFilterKeys } from "../domain/ModsViewOptions";
 
 // components
 import { Button } from "#ui/button";
@@ -20,10 +20,10 @@ import {
 } from "#ui/tooltip";
 
 type SetAllButtonGroupProps = {
-	filterKey: FilterKeys;
+	filterKey: TriStateFilterKeys;
 };
 
-const SetAllButtonGroup: React.FC<SetAllButtonGroupProps> = ({ filterKey }) => {
+const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
 	const [t] = useTranslation("explore-ui");
 
 	return (

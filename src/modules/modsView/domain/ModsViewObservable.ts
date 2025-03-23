@@ -2,7 +2,7 @@ import type { Observable, ObservablePrimitive } from "@legendapp/state";
 import type { Categories } from "./Categories";
 import type {
 	Filter,
-	FilterKeys,
+	TriStateFilterKeys,
 	ModsViewSetupByIdByCategory,
 	PersistableModsViewSetupByIdByCategory,
 	TriState,
@@ -37,8 +37,8 @@ interface ModsViewObservable {
 	resetActiveViewSetup: () => void;
 	resetActiveFilter: () => void;
 	setFilterId: (filterId: string) => void;
-	massSetFilter: (filterName: FilterKeys, value: TriState) => void;
-	cycleState: (filterName: FilterKeys, valueKey: string) => void;
+	massSetFilter: (filterName: TriStateFilterKeys, value: TriState) => void;
+	cycleState: (filterName: TriStateFilterKeys, valueKey: string) => void;
 	reset: () => void;
 	restoreFromPersistable: (
 		persistable: PersistableModsViewSetupByIdByCategory,

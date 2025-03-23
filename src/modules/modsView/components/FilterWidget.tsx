@@ -17,11 +17,14 @@ const LevelFilter = lazy(() => import("./Filters/LevelFilter"));
 const SlotFilter = lazy(() => import("./Filters/SlotFilter"));
 const SetFilter = lazy(() => import("./Filters/SetFilter"));
 const TierFilter = lazy(() => import("./Filters/TierFilter"));
+const ScoreFilter = lazy(() => import("./Filters/ScoreFilter"));
 const RarityFilter = lazy(() => import("./Filters/RarityFilter"));
 const EquippedFilter = lazy(() => import("./Filters/EquippedFilter"));
 const PrimaryFilter = lazy(() => import("./Filters/PrimaryFilter"));
 const SecondaryFilter = lazy(() => import("./Filters/SecondaryFilter"));
 const AssignedFilter = lazy(() => import("./Filters/AssignedFilter"));
+const CalibrationFilter = lazy(() => import("./Filters/CalibrationFilter"));
+const SpeedFilter = lazy(() => import("./Filters/SpeedFilter"));
 
 import { Button } from "#/components/ui/button";
 import {
@@ -83,6 +86,11 @@ const FilterWidget = () => {
 							<EquippedFilter />
 						</div>
 						<RarityFilter />
+						<CalibrationFilter />
+						<div className="flex flex-col gap-4 col-span-2">
+							<SpeedFilter />
+							<ScoreFilter />
+						</div>
 					</div>
 					<PrimaryFilter />
 					<SecondaryFilter />

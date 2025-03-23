@@ -1,23 +1,27 @@
 // react
-import React, { lazy } from "react";
+import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer } from "@legendapp/state/react";
+import { Memo, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import type { SlotSettings, TriState } from "../../domain/ModsViewOptions";
+import {
+	type SlotSettingsSlots,
+	slotSettingsSlots,
+	type TriState,
+} from "../../domain/ModsViewOptions";
 
 // components
 const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
-const imageOffsets: Record<keyof SlotSettings, Record<TriState, string>> = {
+const imageOffsets: Record<SlotSettingsSlots, Record<TriState, string>> = {
 	square: {
 		"-1": "bg-[position:0em_-2.5em]",
 		"0": "bg-[position:0em_0em]",
@@ -50,44 +54,50 @@ const imageOffsets: Record<keyof SlotSettings, Record<TriState, string>> = {
 	},
 };
 
-const SlotFilter = observer(
-	React.memo(() => {
-		const [t] = useTranslation("global-ui");
-		const slotConfig: SlotSettings = modsView$.activeFilter.slot.get();
+const SlotFilter = () => {
+	const [t] = useTranslation("global-ui");
 
-		return (
-			<div className={"w-24 flex flex-col gap-2 items-center"}>
-				<Label className="p-r-2" htmlFor={"slot-filter1"}>
-					Slot
-				</Label>
-				<div
-					id={"slot-filter1"}
-					className="flex flex-row flex-wrap justify-center"
-				>
-					{Object.keys(slotConfig).map((slot: keyof SlotSettings) => {
-						const inputName = `slot-filter-${slot}`;
-						const value = slotConfig[slot] || 0;
-						const slotCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/empty-mod-shapes.webp')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
-						const stateCSS = value === 0 ? "opacity-50" : "opacity-100";
-						const className = `${slotCSS} ${stateCSS}`;
+	return (
+		<div className={"w-24 flex flex-col gap-2 items-center"}>
+			<Label className="p-r-2" htmlFor={"slot-filter1"}>
+				Slot
+			</Label>
+			<div
+				id={"slot-filter1"}
+				className="flex flex-row flex-wrap justify-center"
+			>
+				{slotSettingsSlots.map((slot: SlotSettingsSlots) => {
+					const inputName = `slot-filter-${slot}`;
 
-						return (
-							<Button
-								className={className}
-								key={inputName}
-								variant={"ghost"}
-								onClick={() => modsView$.cycleState("slot", slot.toString())}
-							>
-								{" "}
-							</Button>
-						);
-					})}
-				</div>
-				<SetAllButtonGroup filterKey="slot" />
+					return (
+						<Memo key={inputName}>
+							{() => {
+								const slotState = use$(modsView$.activeFilter.slot[slot]);
+								const value = slotState || 0;
+								const slotCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/empty-mod-shapes.webp')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
+								const stateCSS = value === 0 ? "opacity-50" : "opacity-100";
+								const className = `${slotCSS} ${stateCSS}`;
+
+								return (
+									<Button
+										className={className}
+										variant={"ghost"}
+										onClick={() =>
+											modsView$.cycleState("slot", slot.toString())
+										}
+									>
+										{" "}
+									</Button>
+								);
+							}}
+						</Memo>
+					);
+				})}
 			</div>
-		);
-	}),
-);
+			<SetAllButtonGroup filterKey="slot" />
+		</div>
+	);
+};
 
 SlotFilter.displayName = "SlotFilter";
 

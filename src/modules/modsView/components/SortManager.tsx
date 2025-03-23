@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Computed, For, observer, Show, use$ } from "@legendapp/state/react";
+import { For, observer, Show, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -36,8 +36,7 @@ const SortManager = observer(
 					{ value: "rolls", label: "# of Stat Upgrades" },
 					{ value: "character", label: "Character" },
 					{ value: "reRolledCount", label: "Calibrations" },
-					{ value: "totalCalibrations", label: "Total Calibrations" },
-					{ value: "calibrationPrice", label: "Calibration Price" },
+					{ value: "TotalCalibrations", label: "Total Calibrations" },
 				],
 			},
 			{
@@ -76,69 +75,60 @@ const SortManager = observer(
 					</Button>
 				</div>
 				<div className="flex justify-around flex-wrap gap-2">
-					<Computed>
-						{() => {
-							return (
-								<For each={modsView$.activeViewSetupInActiveCategory.sort}>
-									{(sortConfig$) => {
-										const sortConfig = use$(sortConfig$);
+					<For each={modsView$.activeViewSetupInActiveCategory.sort}>
+						{(sortConfig$) => {
+							const sortConfig = use$(sortConfig$);
 
-										return (
-											<Badge
-												variant={"outline"}
-												className={"flex items-center"}
-											>
-												<ReactiveMultiColumnSelect
-													key={`sort-option-${sortConfig.id}`}
-													groups={sortOptions}
-													selectedValue$={sortConfig$.sortBy}
+							return (
+								<Badge variant={"outline"} className={"flex items-center"}>
+									<ReactiveMultiColumnSelect
+										key={`sort-option-${sortConfig.id}`}
+										groups={sortOptions}
+										selectedValue$={sortConfig$.sortBy}
+									/>
+									<Button
+										size={"xxs"}
+										variant={"outline"}
+										onClick={() => {
+											if (sortConfig$.sortOrder.peek() === "asc") {
+												sortConfig$.sortOrder.set("desc");
+											} else {
+												sortConfig$.sortOrder.set("asc");
+											}
+										}}
+									>
+										<Show
+											if={() => sortConfig.sortOrder === "asc"}
+											else={() => (
+												<FontAwesomeIcon
+													icon={faSortDown}
+													title="Sort descending"
 												/>
-												<Button
-													size={"xxs"}
-													variant={"outline"}
-													onClick={() => {
-														if (sortConfig$.sortOrder.peek() === "asc") {
-															sortConfig$.sortOrder.set("desc");
-														} else {
-															sortConfig$.sortOrder.set("asc");
-														}
-													}}
-												>
-													<Show
-														if={() => sortConfig.sortOrder === "asc"}
-														else={() => (
-															<FontAwesomeIcon
-																icon={faSortDown}
-																title="Sort descending"
-															/>
-														)}
-													>
-														{() => (
-															<FontAwesomeIcon
-																icon={faSortUp}
-																title="Sort ascending"
-															/>
-														)}
-													</Show>
-												</Button>
-												<Button
-													size={"xxs"}
-													variant={"outline"}
-													onClick={() =>
-														modsView$.activeViewSetupInActiveCategory.sort.delete(
-															sortConfig$.id.peek(),
-														)
-													}
-												>
-													x
-												</Button>
-											</Badge>
-										);
-									}}
-								</For>
+											)}
+										>
+											{() => (
+												<FontAwesomeIcon
+													icon={faSortUp}
+													title="Sort ascending"
+												/>
+											)}
+										</Show>
+									</Button>
+									<Button
+										size={"xxs"}
+										variant={"outline"}
+										onClick={() =>
+											modsView$.activeViewSetupInActiveCategory.sort.delete(
+												sortConfig$.id.peek(),
+											)
+										}
+									>
+										x
+									</Button>
+								</Badge>
 							);
 						}}
-					</Computed>
+					</For>
 				</div>
 			</div>
 		);

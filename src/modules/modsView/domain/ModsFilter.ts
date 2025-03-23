@@ -6,20 +6,10 @@ import mapValues from "lodash-es/mapValues";
 
 // domain
 import type {
-	EquippedSettings,
-	FilterKeys,
 	Filter,
-	LevelSettings,
 	ViewSetup,
 	PartialFilter,
-	PrimarySettings,
-	RaritySettings,
-	SecondariesScoreTierSettings,
-	SecondarySettings,
-	SetSettings,
-	SlotSettings,
-	TierSettings,
-	AssignedSettings,
+	TriStateFilterKeys,
 } from "./ModsViewOptions";
 import type { SortConfigById } from "./SortConfig";
 import { Mod } from "#/domain/Mod";
@@ -42,13 +32,12 @@ class ModsFilter {
 		primary: [],
 		secondary: [],
 		assigned: [],
-		secondariesscoretier: [],
+		calibration: [],
 	};
 
 	unselectedOptions: PartialFilter = structuredClone(this.selectedOptions);
 	filters: ModFilterPredicate[] = [];
 	quickFilter: ModFilterPredicate;
-
 	sortOptions: SortConfigById;
 	isGroupingEnabled: boolean;
 
@@ -59,7 +48,10 @@ class ModsFilter {
 		this.quickFilter = combineFilters([
 			this.selectedOptionsFilter(this.selectedOptions),
 			this.unselectedOptionsFilter(this.unselectedOptions),
+			this.extractScoreFilter(quickFilter, modsViewOptions.modScore),
+			this.extractSpeedFilter(quickFilter),
 		]);
+
 		for (const filter of Object.values(modsViewOptions.filterById)) {
 			[this.selectedOptions, this.unselectedOptions] =
 				this.extractSelectedAndUnselectedOptions(filter);
@@ -67,6 +59,8 @@ class ModsFilter {
 				combineFilters([
 					this.selectedOptionsFilter(this.selectedOptions),
 					this.unselectedOptionsFilter(this.unselectedOptions),
+					this.extractScoreFilter(filter, modsViewOptions.modScore),
+					this.extractSpeedFilter(filter),
 				]),
 			);
 		}
@@ -85,6 +79,23 @@ class ModsFilter {
 		}
 	}
 
+	extractSpeedFilter(filter: Filter) {
+		return (mod: Mod) => {
+			const [min, max] = filter.speedRange;
+			const modSpeed =
+				mod.secondaryStats.find((secondary) => secondary.type === "Speed")
+					?.value ?? 0;
+			return min <= modSpeed && modSpeed <= max;
+		};
+	}
+
+	extractScoreFilter(filter: Filter, scoreName: string) {
+		return (mod: Mod) => {
+			const [min, max] = filter.score;
+			return min <= mod.scores[scoreName] && mod.scores[scoreName] <= max;
+		};
+	}
+
 	extractSelectedAndUnselectedOptions(filters: Filter) {
 		const selectedOptions: PartialFilter = {
 			slot: [],
@@ -96,7 +107,7 @@ class ModsFilter {
 			primary: [],
 			secondary: [],
 			assigned: [],
-			secondariesscoretier: [],
+			calibration: [],
 		};
 		const unselectedOptions: PartialFilter = {
 			slot: [],
@@ -108,29 +119,14 @@ class ModsFilter {
 			primary: [],
 			secondary: [],
 			assigned: [],
-			secondariesscoretier: [],
+			calibration: [],
 		};
 
-		// #region CombinedSettings
-		type CombinedSettings =
-			| SlotSettings
-			| SetSettings
-			| RaritySettings
-			| TierSettings
-			| LevelSettings
-			| PrimarySettings
-			| SecondarySettings
-			| EquippedSettings
-			| AssignedSettings
-			| SecondariesScoreTierSettings;
-		// #endregion
-
-		type FilterKV = [FilterKeys, Filter[FilterKeys]];
+		type FilterKV = [TriStateFilterKeys, Filter[TriStateFilterKeys]];
 
 		const entries2 = Object.entries(filters) as FilterKV[];
 
 		for (const [type, values] of entries2) {
-			const t = Object.entries(values);
 			selectedOptions[type] = Object.entries(values)
 				.filter(([option, value]) => 1 === value)
 				.map(([option]) => (Number.isNaN(Number(option)) ? option : +option));
@@ -187,6 +183,13 @@ class ModsFilter {
 		)
 			return false;
 		if (selectedOptions.assigned.length > 0 && !mod.isAssigned()) return false;
+		if (
+			selectedOptions.calibration.length > 0 &&
+			!selectedOptions.calibration.every(
+				(calibrationCost) => mod.reRollPrice() === calibrationCost,
+			)
+		)
+			return false;
 		return true;
 	};
 
@@ -232,6 +235,13 @@ class ModsFilter {
 					mod.secondaryStats.every(
 						(modSecondary) => modSecondary.type !== secondary,
 					),
+				)
+			)
+				return false;
+			if (
+				unselectedOptions.calibration.length > 0 &&
+				!unselectedOptions.calibration.every(
+					(calibrationCost) => mod.reRollPrice() !== calibrationCost,
 				)
 			)
 				return false;
