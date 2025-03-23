@@ -1224,7 +1224,7 @@ function filterMods(
 	baseMods: Mod[],
 	slot: ModTypes.GIMOSlots,
 	minDots: number,
-	primaryStat: GIMOPrimaryStatNames,
+	primaryStat: GIMOPrimaryStatNames | undefined,
 ) {
 	if (primaryStat) {
 		// Only filter if some primary stat restriction is set
@@ -1232,7 +1232,9 @@ function filterMods(
 			(mod) =>
 				mod.slot === slot &&
 				mod.pips >= minDots &&
-				mod.primaryStat.type === primaryStat,
+				(primaryStat === undefined
+					? true
+					: mod.primaryStat.type === primaryStat),
 		);
 		if (fullyFilteredMods.length > 0) {
 			return { mods: fullyFilteredMods, messages: [] };

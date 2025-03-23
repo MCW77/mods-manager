@@ -115,7 +115,7 @@ export const createOptimizationPlan = (
 		id: id,
 		description: description,
 		minimumModDots: minimumModDots,
-		primaryStatRestrictions: primaryStatRestrictions as PrimaryStatRestrictions,
+		primaryStatRestrictions: primaryStatRestrictions,
 		setRestrictions: setRestrictions,
 		targetStats: targetStats,
 		useOnlyFullSets: useOnlyFullSets,
@@ -162,7 +162,7 @@ export const fromShortOptimizationPlan = ({
 		id: id,
 		description: desc,
 		minimumModDots: minDots,
-		primaryStatRestrictions: primaryRes as PrimaryStatRestrictions,
+		primaryStatRestrictions: primaryRes,
 		setRestrictions: setRes,
 		targetStats: targetStats,
 		useOnlyFullSets: fullSets,
@@ -317,9 +317,8 @@ export const equals = (
 	);
 };
 
-export type PrimaryStatRestrictions = Record<
-	ModTypes.VariablePrimarySlots,
-	GIMOPrimaryStatNames
+export type PrimaryStatRestrictions = Partial<
+	Record<ModTypes.VariablePrimarySlots, GIMOPrimaryStatNames>
 >;
 
 export interface OptimizationPlan extends Record<OptimizableStats, number> {

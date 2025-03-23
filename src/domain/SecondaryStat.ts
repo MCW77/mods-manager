@@ -19,7 +19,9 @@ export type HUDefensiveStats =
 export type HUStatNames = HUNeutralStats | HUOffensiveStats | HUDefensiveStats;
 
 export type Rolls = 1 | 2 | 3 | 4 | 5;
-export type StrRolls = "1" | "2" | "3" | "4" | "5";
+
+export const strRolls = ["1", "2", "3", "4", "5"] as const;
+export type StrRolls = (typeof strRolls)[number];
 
 export class SecondaryStat extends Stat {
 	static statNames: Readonly<GIMOSecondaryStatNames[]> = [

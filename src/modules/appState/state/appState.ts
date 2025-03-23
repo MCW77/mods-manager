@@ -1,6 +1,6 @@
 // utils
 import saveAs from "file-saver";
-
+import * as v from "valibot";
 // state
 import {
 	beginBatch,
@@ -25,21 +25,17 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
+import type { Backup, PersistableBackup } from "../domain/Backup";
+import {
+	ModsManagerSchema,
+	ModsManagerBackupSchema,
+} from "../domain/schemas/mods-manager";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
-import type { IndicesByProfile } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
-import type { LockedStatusByCharacterIdByAllycode } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
-import type {
-	ModsViewSetupByIdByCategory,
-	PersistableModsViewSetupByIdByCategory,
-} from "#/modules/modsView/domain/ModsViewOptions";
-import type { SettingsByProfile } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
 import {
 	type PlayerProfile,
 	type PersistedPlayerProfile,
 	getProfileFromPersisted,
 } from "#/modules/profilesManagement/domain/PlayerProfile";
-import type { PersistedProfiles } from "#/modules/profilesManagement/domain/Profiles";
-import type { CharacterTemplatesByName } from "#/modules/templates/domain/CharacterTemplates";
 
 type AppState = {
 	reset: () => void;
@@ -47,32 +43,77 @@ type AppState = {
 	saveBackup: () => void;
 };
 
-interface Backup {
-	characterTemplates: CharacterTemplatesByName;
-	compilations: Map<string, Map<string, Compilation>>;
-	defaultCompilation: Compilation;
-	incrementalOptimizationIndices: IndicesByProfile;
-	lockedStatus: LockedStatusByCharacterIdByAllycode;
-	modsViewSetups: PersistableModsViewSetupByIdByCategory;
-	profilesManagement: PersistedProfiles;
-	sessionIds: Record<string, string>;
-	settings: SettingsByProfile;
-	version: string;
-}
+const loadModsManagerBackup = (backup: PersistableBackup) => {
+	beginBatch();
 
-interface PersistableBackup {
-	characterTemplates: CharacterTemplatesByName;
-	compilations: Record<string, Record<string, Compilation>>;
-	defaultCompilation: Compilation;
-	incrementalOptimizationIndices: IndicesByProfile;
-	lockedStatus: LockedStatusByCharacterIdByAllycode;
-	modsViewSetups: PersistableModsViewSetupByIdByCategory;
-	profilesManagement: PersistedProfiles;
-	sessionIds: Record<string, string>;
-	settings: SettingsByProfile;
-	version: string;
-	client: "mods-manager";
-}
+	if (backup.characterTemplates) {
+		templates$.userTemplatesByName.set(backup.characterTemplates);
+	}
+
+	if (backup.defaultCompilation) {
+		compilations$.defaultCompilation.set(backup.defaultCompilation);
+	}
+
+	if (backup.compilations) {
+		const compilations: Map<string, Map<string, Compilation>> = new Map();
+		for (const [allycode, compilationsMap] of Object.entries(
+			backup.compilations,
+		)) {
+			compilations.set(allycode, new Map(Object.entries(compilationsMap)));
+		}
+		compilations$.compilationByIdByAllycode.set(compilations);
+	}
+
+	if (backup.incrementalOptimizationIndices) {
+		incrementalOptimization$.indicesByProfile.set(
+			backup.incrementalOptimizationIndices,
+		);
+	}
+
+	if (backup.lockedStatus) {
+		lockedStatus$.byCharacterIdByAllycode.set(backup.lockedStatus);
+	}
+
+	if (backup.modsViewSetups) {
+		modsView$.restoreFromPersistable(backup.modsViewSetups);
+	}
+
+	if (backup.profilesManagement) {
+		const profilesManagement = backup.profilesManagement;
+		const profiles: PlayerProfile[] = Object.values(
+			profilesManagement.profileByAllycode,
+		).map((profile: PersistedPlayerProfile) =>
+			getProfileFromPersisted(profile),
+		);
+		profilesManagement$.profiles.activeAllycode.set(
+			profilesManagement.activeAllycode,
+		);
+		profilesManagement$.profiles.lastUpdatedByAllycode.set(
+			profilesManagement.lastUpdatedByAllycode,
+		);
+		profilesManagement$.profiles.playernameByAllycode.set(
+			profilesManagement.playernameByAllycode,
+		);
+		profilesManagement$.profiles.profileByAllycode.set(
+			Object.fromEntries(
+				profiles.map((profile: PlayerProfile) => [profile.allycode, profile]),
+			),
+		);
+	}
+
+	if (backup.sessionIds) {
+		hotutils$.sessionIdByProfile.set(backup.sessionIds);
+	}
+
+	if (backup.settings) {
+		optimizationSettings$.settingsByProfile.set(backup.settings);
+	}
+	endBatch();
+};
+
+const isModsManagerBackup = (parsedJSON: unknown) => {
+	return v.is(ModsManagerSchema, parsedJSON);
+};
 
 const appState$: ObservableObject<AppState> = observable({
 	reset: () => {
@@ -94,7 +135,7 @@ const appState$: ObservableObject<AppState> = observable({
 			/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
 		);
 		try {
-			const stateObj: PersistableBackup = JSON.parse(
+			const parsedJON: unknown = JSON.parse(
 				serializedAppState,
 				(key, value) => {
 					if (typeof value === "string" && value.match(isoDatePattern)) {
@@ -103,7 +144,7 @@ const appState$: ObservableObject<AppState> = observable({
 					return value;
 				},
 			);
-			if (stateObj.client !== "mods-manager") {
+			if (!isModsManagerBackup(parsedJON)) {
 				dialog$.showError(
 					"Import of backup aborted",
 					"The selected file is not a valid mods-manager backup",
@@ -111,75 +152,11 @@ const appState$: ObservableObject<AppState> = observable({
 				);
 				return;
 			}
-			beginBatch();
-
-			if (stateObj.characterTemplates) {
-				templates$.userTemplatesByName.set(stateObj.characterTemplates);
-			}
-
-			if (stateObj.defaultCompilation) {
-				compilations$.defaultCompilation.set(stateObj.defaultCompilation);
-			}
-
-			if (stateObj.compilations) {
-				const compilations: Map<string, Map<string, Compilation>> = new Map();
-				for (const [allycode, compilationsMap] of Object.entries(
-					stateObj.compilations,
-				)) {
-					compilations.set(allycode, new Map(Object.entries(compilationsMap)));
-				}
-				compilations$.compilationByIdByAllycode.set(compilations);
-			}
-
-			if (stateObj.incrementalOptimizationIndices) {
-				incrementalOptimization$.indicesByProfile.set(
-					stateObj.incrementalOptimizationIndices,
-				);
-			}
-
-			if (stateObj.lockedStatus) {
-				lockedStatus$.byCharacterIdByAllycode.set(stateObj.lockedStatus);
-			}
-
-			if (stateObj.modsViewSetups) {
-				modsView$.restoreFromPersistable(stateObj.modsViewSetups);
-			}
-
-			if (stateObj.profilesManagement) {
-				const profilesManagement = stateObj.profilesManagement;
-				const profiles: PlayerProfile[] = Object.values(
-					profilesManagement.profileByAllycode,
-				).map((profile: PersistedPlayerProfile) =>
-					getProfileFromPersisted(profile),
-				);
-				profilesManagement$.profiles.activeAllycode.set(
-					profilesManagement.activeAllycode,
-				);
-				profilesManagement$.profiles.lastUpdatedByAllycode.set(
-					profilesManagement.lastUpdatedByAllycode,
-				);
-				profilesManagement$.profiles.playernameByAllycode.set(
-					profilesManagement.playernameByAllycode,
-				);
-				profilesManagement$.profiles.profileByAllycode.set(
-					Object.fromEntries(
-						profiles.map((profile: PlayerProfile) => [
-							profile.allycode,
-							profile,
-						]),
-					),
-				);
-			}
-
-			if (stateObj.sessionIds) {
-				hotutils$.sessionIdByProfile.set(stateObj.sessionIds);
-			}
-
-			if (stateObj.settings) {
-				optimizationSettings$.settingsByProfile.set(stateObj.settings);
-			}
-
-			endBatch();
+			const persistableBackup: PersistableBackup = v.parse(
+				ModsManagerBackupSchema,
+				parsedJON,
+			);
+			loadModsManagerBackup(persistableBackup);
 		} catch (e) {
 			dialog$.showError(
 				"Error loading backup",

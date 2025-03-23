@@ -13,30 +13,20 @@ import type {
 } from "../SecondaryStat";
 import type { HUStatNames as HUSetStatNames } from "../SetStat";
 
-export type Levels =
-	| 1
-	| 2
-	| 3
-	| 4
-	| 5
-	| 6
-	| 7
-	| 8
-	| 9
-	| 10
-	| 11
-	| 12
-	| 13
-	| 14
-	| 15;
+export const levels = [
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+] as const;
+export type Levels = (typeof levels)[number];
 
-export type GIMOSlots =
-	| "square"
-	| "arrow"
-	| "diamond"
-	| "triangle"
-	| "circle"
-	| "cross";
+export const gimoSlots = [
+	"square",
+	"arrow",
+	"diamond",
+	"triangle",
+	"circle",
+	"cross",
+] as const;
+export type GIMOSlots = (typeof gimoSlots)[number];
 export type HUSlots =
 	| "Transmitter"
 	| "Receiver"
@@ -44,7 +34,13 @@ export type HUSlots =
 	| "Holo-Array"
 	| "Data-Bus"
 	| "Multiplexer";
-export type VariablePrimarySlots = "arrow" | "triangle" | "circle" | "cross";
+export const variablePrimarySlots = [
+	"arrow",
+	"triangle",
+	"circle",
+	"cross",
+] as const;
+export type VariablePrimarySlots = (typeof variablePrimarySlots)[number];
 
 type t2 = 1 | 2 | 3 | 4;
 type t4 = `secondaryType_${t2}`;

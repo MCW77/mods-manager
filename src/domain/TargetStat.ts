@@ -1,24 +1,7 @@
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 
-export type TargetStatsNames =
-	| "Accuracy"
-	| "Armor"
-	| "Critical Avoidance"
-	| "Critical Damage"
-	| "Health"
-	| "Health+Protection"
-	| "Physical Critical Chance"
-	| "Physical Damage"
-	| "Potency"
-	| "Protection"
-	| "Resistance"
-	| "Special Critical Chance"
-	| "Special Damage"
-	| "Speed"
-	| "Tenacity";
-
-export const targetStatsNames: Readonly<TargetStatsNames[]> = [
+export const targetStatsNames = [
 	"Accuracy",
 	"Armor",
 	"Critical Avoidance",
@@ -35,6 +18,7 @@ export const targetStatsNames: Readonly<TargetStatsNames[]> = [
 	"Speed",
 	"Tenacity",
 ] as const;
+export type TargetStatsNames = (typeof targetStatsNames)[number];
 
 export type TargetStat = {
 	id: string;
