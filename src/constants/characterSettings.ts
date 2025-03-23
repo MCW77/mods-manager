@@ -329,6 +329,25 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 15,
 		}),
 	]),
+	BATCHERS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 30,
+			cc: 10,
+			cd: 50,
+			phys: 20,
+			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Offense %": 1,
+			},
+		}),
+	]),
 	B1BATTLEDROIDV2: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -1160,6 +1179,21 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.mixed,
 	),
+	CROSSHAIRS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 40,
+			phys: 100,
+			primaryRes: {
+				cross: "Offense %",
+				triangle: "Critical Damage %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Critical Chance %": 1,
+			},
+		}),
+	]),
 	CT5555: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -2478,6 +2512,24 @@ const characterSettings: CharacterSettingsIndexer = {
 			"Default",
 		),
 	]),
+	HUNTERS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 20,
+			spd: 100,
+			pot: 25,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	HUYANG: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -2841,6 +2893,21 @@ const characterSettings: CharacterSettingsIndexer = {
 			}),
 		],
 		["JMK"],
+	),
+	JOCASTANU: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 50,
+				prot: 10,
+				spd: 100,
+				cd: 10,
+				ten: 10,
+				phys: 25,
+			}),
+		],
+		[],
+		DamageType.special,
 	),
 	JOLEEBINDO: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -3644,6 +3711,27 @@ const characterSettings: CharacterSettingsIndexer = {
 			}),
 		],
 		["OB"],
+	),
+	OMEGAS3: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				ten: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Health %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
 	),
 	PADAWANOBIWAN: createCharacterSettings(
 		[
@@ -4979,6 +5067,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Murderbears"],
 	),
+	WRECKERS3: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 100,
+			spd: 50,
+			primaryRes: {
+				arrow: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+				triangle: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	YOUNGCHEWBACCA: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
