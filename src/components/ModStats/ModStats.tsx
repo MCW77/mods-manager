@@ -1,23 +1,24 @@
 // react
-import React, { lazy } from "react";
+import { lazy, memo } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
 import "./ModStats.css";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
-const modsView$ = stateLoader$.modsView$;
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type * as Character from "#/domain/Character";
-import { type Mod, modScores } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { SecondaryStats, Stats } from "#/domain/Stats";
 
@@ -27,7 +28,6 @@ const CharacterAvatar = lazy(
 );
 const ModScores = lazy(() => import("../ModScores/ModScores"));
 const SellModButton = lazy(() => import("../SellModButton/SellModButton"));
-import { Separator } from "#ui/separator";
 
 type ComponentProps = {
 	mod: Mod;
@@ -35,12 +35,11 @@ type ComponentProps = {
 	assignedTarget?: OptimizationPlan;
 };
 
-const ModStats = React.memo(
+const ModStats = memo(
 	({ mod, showAvatar = false, assignedTarget }: ComponentProps) => {
 		const [t, i18n] = useTranslation("domain");
-		const characterById = profilesManagement$.activeProfile.characterById.get();
-		const baseCharacterById = characters$.baseCharacterById.get();
-		const scoreName = modsView$.activeViewSetupInActiveCategory.modScore.get();
+		const characterById = use$(profilesManagement$.activeProfile.characterById);
+		const baseCharacterById = use$(characters$.baseCharacterById);
 
 		const translateStat = (displayText: Stats.DisplayedStat) => {
 			const seperatorPos = displayText.indexOf(" ");
@@ -66,31 +65,6 @@ const ModStats = React.memo(
 			);
 		};
 
-		const showStatScoreElement = (
-			stat: SecondaryStats.SecondaryStat,
-			index: number,
-		) => {
-			if (!("score" in stat) || stat.score === undefined)
-				return <li key={index}>{"--"}</li>;
-
-			return (
-				<li key={index} className={`class-${stat.score.getClass()}`}>
-					{stat.score.show()}
-				</li>
-			);
-		};
-
-		const showAllStatsScoreElement = (mod: Mod, scoreName: string) => {
-			return (
-				<li key={5} className={`class-${mod.getClass()}`}>
-					{modScores.find((modScore) => modScore.name === scoreName)
-						?.isFlatOrPercentage === "IsFlat"
-						? `${mod.scores[scoreName]}`
-						: `${Math.floor(mod.scores[scoreName] * 100) / 100}%`}
-				</li>
-			);
-		};
-
 		const character: Character.Character | null =
 			mod.characterID !== null
 				? characterById[mod.characterID as CharacterNames]
@@ -98,18 +72,6 @@ const ModStats = React.memo(
 		const statsDisplay =
 			mod.secondaryStats.length > 0
 				? mod.secondaryStats.map((stat, index) => showStatElement(stat, index))
-				: [<li key={0}>None</li>];
-
-		const statsScoresDisplay =
-			mod.secondaryStats.length > 0
-				? mod.secondaryStats.map((stat, index) =>
-						showStatScoreElement(stat, index),
-					)
-				: [<li key={0}>None</li>];
-
-		const allStatsScoreDisplay =
-			mod.secondaryStats.length > 0
-				? showAllStatsScoreElement(mod, scoreName)
 				: [<li key={0}>None</li>];
 
 		return (

@@ -1,7 +1,7 @@
 // react
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { observer } from "@legendapp/state/react";
+import { observer, Show, use$ } from "@legendapp/state/react";
 
 // styles
 import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -22,8 +22,12 @@ import { Button } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
 
 const HelpView: React.FC = observer(() => {
-	const helpSection = help$.section.get();
-	const helpTopic = help$.topic.get();
+	const helpSection = use$(help$.section);
+	const helpTopic = use$(help$.topic);
+	const previousSectionIsNotHelp = use$(
+		() => ui$.previousSection.get() !== "help",
+	);
+
 	const [t] = useTranslation("help-ui");
 	const [currentSection, changeCurrentSection] = useState(helpSection);
 	const [currentTopic, changeCurrentTopic] = useState(helpTopic);
@@ -259,18 +263,19 @@ const HelpView: React.FC = observer(() => {
 	return (
 		<div className={"w-full flex flex-col"}>
 			<nav className="flex flex-wrap justify-evenly p-4">
-				{ui$.previousSection.get() !== "help" && (
-					<div className="m-1 p-2 rounded-xl">
-						<FontAwesomeIcon
-							icon={faCircleLeft}
-							title={"Go back"}
-							onClick={() => {
-								ui$.goToPreviousSection();
-							}}
-						/>
-					</div>
-				)}
-
+				<Show if={previousSectionIsNotHelp}>
+					{() => (
+						<div className="m-1 p-2 rounded-xl">
+							<FontAwesomeIcon
+								icon={faCircleLeft}
+								title={"Go back"}
+								onClick={() => {
+									ui$.goToPreviousSection();
+								}}
+							/>
+						</div>
+					)}
+				</Show>
 				{renderSection("general")}
 				{renderSection("profiles")}
 				{renderSection("explorer")}

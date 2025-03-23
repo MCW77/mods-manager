@@ -1,5 +1,5 @@
 // state
-import { reactive, reactiveObserver, Show } from "@legendapp/state/react";
+import { reactive, reactiveObserver, Show, use$ } from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
 import { target$ } from "#/modules/planEditing/state/planEditing";
@@ -22,11 +22,11 @@ interface SetItem {
 }
 
 const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
-	const setRestrictions$ = target$.target.setRestrictions;
+	const setRestrictions = use$(target$.target.setRestrictions);
 
 	const selectedSets$ = computed(() => {
 		const selectedSets: SetItem[] = [];
-		for (const [setName, count] of Object.entries(setRestrictions$.get())) {
+		for (const [setName, count] of Object.entries(setRestrictions)) {
 			for (let i = 0; i < count; i++) {
 				selectedSets.push({
 					setName: setName as GIMOSetStatNames,
@@ -51,6 +51,8 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 					0,
 				),
 	);
+	const emptySlots = use$(emptySlots$);
+	const selectedSets = use$(selectedSets$);
 
 	const setBonusToFormDisplay = (setBonus: SetBonus, index: number) => {
 		const className =
@@ -109,7 +111,7 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 				<div className={"selected-sets"}>
 					<p>Selected Sets:</p>
 					<div className="flex gap-2 min-h-[5rem]">
-						{selectedSets$.get().map(({ setName, key }, index) => (
+						{selectedSets.map(({ setName, key }, index) => (
 							<img
 								src={`/img/icon_buff_${setName
 									.replace(/\s|%/g, "")
@@ -122,13 +124,13 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 								}
 							/>
 						))}
-						<Show if={() => emptySlots$.get() > 0}>
+						<Show if={() => emptySlots > 0}>
 							<span className={"empty-set"} />
 						</Show>
-						<Show if={() => emptySlots$.get() > 1}>
+						<Show if={() => emptySlots > 1}>
 							<span className={"empty-set"} />
 						</Show>
-						<Show if={() => emptySlots$.get() === 3}>
+						<Show if={() => emptySlots === 3}>
 							<span className={"empty-set"} />
 						</Show>
 					</div>

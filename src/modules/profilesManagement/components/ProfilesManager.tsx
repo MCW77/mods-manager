@@ -1,8 +1,7 @@
 // react
-import type React from "react";
 import { lazy, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Memo, Show, observer, useMount } from "@legendapp/state/react";
+import { Memo, Show, useMount } from "@legendapp/state/react";
 
 // styles
 import {
@@ -32,7 +31,7 @@ const ProfileSelector = lazy(() => import("./ProfileSelector"));
 
 import { Button } from "#ui/button";
 
-const ProfilesManager: React.FC = observer(() => {
+const ProfilesManager = () => {
 	useRenderCount("ProfilesManager");
 	const [t] = useTranslation("global-ui");
 	const [isAddingAProfile, setIsAddingAProfile] = useState(
@@ -117,7 +116,7 @@ const ProfilesManager: React.FC = observer(() => {
 			</Show>
 		</div>
 	);
-});
+};
 
 ProfilesManager.displayName = "ProfilesManager";
 

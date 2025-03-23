@@ -1,10 +1,12 @@
 // react
-import { memo, lazy } from "react";
+import { lazy, memo } from "react";
 
 // styles
 import "./ModImage.css";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -43,7 +45,7 @@ const getModColor = (mod: Mod) => {
 
 const ModImage = memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
-		const characterById = profilesManagement$.activeProfile.characterById.get();
+		const characterById = use$(profilesManagement$.activeProfile.characterById);
 		const modColor = getModColor(mod);
 		const character = mod.characterID
 			? characterById[mod.characterID as CharacterNames]

@@ -8,7 +8,7 @@ import "./CharacterEditView.css";
 
 // state
 import { observable } from "@legendapp/state";
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -43,10 +43,12 @@ const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
 	const [t] = useTranslation("optimize-ui");
-	const characterById = profilesManagement$.activeProfile.characterById.get();
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const selectedCharacters =
-		compilations$.defaultCompilation.selectedCharacters.get();
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const selectedCharacters = use$(
+		compilations$.defaultCompilation.selectedCharacters,
+	);
+	const isSelectionExpanded = use$(isSelectionExpanded$);
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	let availableCharacters = [] as Character.Character[];
@@ -117,10 +119,11 @@ const CharacterEditView = observer(() => {
 		);
 	}
 
-	const starsReactivity = charactersManagement$.filterSetup.starsRange.get();
-	const levelReactivity = charactersManagement$.filterSetup.levelRange.get();
-	const gearLevelReactivity =
-		charactersManagement$.filterSetup.gearLevelRange.get();
+	const starsReactivity = use$(charactersManagement$.filterSetup.starsRange);
+	const levelReactivity = use$(charactersManagement$.filterSetup.levelRange);
+	const gearLevelReactivity = use$(
+		charactersManagement$.filterSetup.gearLevelRange,
+	);
 	highlightedCharacters = highlightedCharacters.filter(
 		charactersManagement$.filterSetup.permanentFilterById.peek().get("stars")
 			?.filterPredicate ?? ((character: Character.Character) => true),
@@ -173,7 +176,7 @@ const CharacterEditView = observer(() => {
 	return (
 		<div
 			className={`character-edit flex flex-col flex-grow-1 gap-2 ${
-				isSelectionExpanded$.get() ? "sort-view" : ""
+				isSelectionExpanded ? "sort-view" : ""
 			}`}
 		>
 			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">

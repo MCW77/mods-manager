@@ -14,7 +14,7 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -38,6 +38,7 @@ const TemplatesManager = observer(
 			[] as CharacterTemplates,
 		);
 		const [t] = useTranslation("settings-ui");
+		const userTemplates = use$(templates$.userTemplates);
 
 		return (
 			<div className={"templates-manager"}>
@@ -109,7 +110,7 @@ const TemplatesManager = observer(
 					</Button>
 				</div>
 				<div className={"templates"}>
-					{templates$.userTemplates.get().map((template) => (
+					{userTemplates.map((template) => (
 						<div
 							className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
 							data-template={template.id}
@@ -126,9 +127,9 @@ const TemplatesManager = observer(
 										(template) => template.id === templateName,
 									);
 									const wasSelected = selectedTemplate !== undefined;
-									const template = templates$.userTemplates
-										.get()
-										.find((template) => template.id === templateName);
+									const template = userTemplates.find(
+										(template) => template.id === templateName,
+									);
 									target.classList.toggle("selected");
 									target.dataset.selected =
 										selectedTemplate === undefined ? "true" : "false";
@@ -157,9 +158,9 @@ const TemplatesManager = observer(
 											(template) => template.id === templateName,
 										);
 										const wasSelected = selectedTemplate !== undefined;
-										const template = templates$.userTemplates
-											.get()
-											.find((template) => template.id === templateName);
+										const template = userTemplates.find(
+											(template) => template.id === templateName,
+										);
 										target.classList.toggle("selected");
 										target.dataset.selected =
 											selectedTemplate === undefined ? "true" : "false";

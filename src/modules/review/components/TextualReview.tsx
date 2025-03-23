@@ -2,6 +2,8 @@
 import copyToClipboard from "#/utils/clipboard";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -82,8 +84,8 @@ type TextualReviewProps = {
  * @returns Array[JSX Element]
  */
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
 	return (
 		<div>

@@ -5,6 +5,8 @@ import { memo, lazy } from "react";
 import "./ModDetail.css";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -26,15 +28,14 @@ const SellModButton = lazy(
 	() => import("#/components/SellModButton/SellModButton"),
 );
 import { Label } from "#ui/label";
-
 type ComponentProps = {
 	assignedTarget?: OptimizationPlan.OptimizationPlan;
 	mod: Mod;
 };
 
 const ModDetail = memo(({ assignedTarget, mod }: ComponentProps) => {
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
 	const character: Character.Character | null =
 		mod.characterID !== "null" ? characterById[mod.characterID] : null;

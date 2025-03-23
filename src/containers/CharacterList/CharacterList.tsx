@@ -1,6 +1,6 @@
 // react
 import React, { lazy } from "react";
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 // styles
 import "./CharacterList.css";
@@ -22,9 +22,10 @@ const CharacterBlock = lazy(() => import("./CharacterBlock"));
 
 const CharacterList = observer(
 	React.memo(() => {
-		const characterById = profilesManagement$.activeProfile.characterById.get();
-		const selectedCharacters =
-			compilations$.defaultCompilation.selectedCharacters.get();
+		const characterById = use$(profilesManagement$.activeProfile.characterById);
+		const selectedCharacters = use$(
+			compilations$.defaultCompilation.selectedCharacters,
+		);
 
 		const characterBlockDragEnter = () => {
 			return (event: React.DragEvent<HTMLDivElement>) => {

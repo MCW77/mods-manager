@@ -1,6 +1,11 @@
 // react
 import { lazy } from "react";
-import { observer, useObservable } from "@legendapp/state/react";
+import {
+	Computed,
+	observer,
+	use$,
+	useObservable,
+} from "@legendapp/state/react";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
@@ -52,18 +57,25 @@ import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 import { progress$ } from "#/modules/progress/state/progress";
 
 const CharacterActions: React.FC = observer(() => {
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const selectedCharacters =
-		compilations$.defaultCompilation.selectedCharacters.get();
-	const modAssignments =
-		compilations$.defaultCompilation.flatCharacterModdings.get();
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const selectedCharacters = use$(
+		compilations$.defaultCompilation.selectedCharacters,
+	);
+	const modAssignments = use$(
+		compilations$.defaultCompilation.flatCharacterModdings,
+	);
 
-	const state = useObservable({
-		isOpen: false,
+	const state$ = useObservable({
+		isFormOpen: false,
 		name: compilations$.activeCompilation.id.get(),
 		description: compilations$.activeCompilation.description.get(),
 		category: compilations$.activeCompilation.category.get(),
 	});
+
+	const isFormOpen = use$(state$.isFormOpen);
+	const compilationName = use$(state$.name);
+	const compilationDescription = use$(state$.description);
+	const compilationCategory = use$(state$.category);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -71,28 +83,28 @@ const CharacterActions: React.FC = observer(() => {
 		if (
 			!compilations$.compilationByIdForActiveAllycode
 				.peek()
-				.has(state.name.peek())
+				.has(state$.name.peek())
 		) {
 			compilations$.addCompilation(
-				state.name.peek(),
-				state.description.peek(),
-				state.category.peek(),
+				state$.name.peek(),
+				state$.description.peek(),
+				state$.category.peek(),
 			);
 		}
-		compilations$.compilationByIdForActiveAllycode[state.name.peek()].set(
+		compilations$.compilationByIdForActiveAllycode[state$.name.peek()].set(
 			structuredClone(compilations$.defaultCompilation.peek()),
 		);
-		compilations$.compilationByIdForActiveAllycode[state.name.peek()].id.set(
-			state.name.peek(),
+		compilations$.compilationByIdForActiveAllycode[state$.name.peek()].id.set(
+			state$.name.peek(),
 		);
 		compilations$.compilationByIdForActiveAllycode[
-			state.name.peek()
-		].description.set(state.description.peek());
+			state$.name.peek()
+		].description.set(state$.description.peek());
 		compilations$.compilationByIdForActiveAllycode[
-			state.name.peek()
-		].category.set(state.category.peek());
-		compilations$.activeCompilationId.set(state.name.peek());
-		state.isOpen.set(false);
+			state$.name.peek()
+		].category.set(state$.category.peek());
+		compilations$.activeCompilationId.set(state$.name.peek());
+		state$.isFormOpen.set(false);
 		endBatch();
 	};
 
@@ -313,7 +325,7 @@ const CharacterActions: React.FC = observer(() => {
 					<FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6" />
 				</span>
 			</Button>
-			<Popover open={state.isOpen.get()} onOpenChange={state.isOpen.set}>
+			<Popover open={isFormOpen} onOpenChange={state$.isFormOpen.set}>
 				<PopoverTrigger className={"m-auto p-2"} asChild>
 					<Button size="sm">
 						<FontAwesomeIcon icon={faSave} title={"Save"} />
@@ -328,34 +340,46 @@ const CharacterActions: React.FC = observer(() => {
 							Save compilation
 						</h4>
 						<Label htmlFor={"compilation_save_form_name"}>Name</Label>
-						<Input
-							id="compilation_save_form_name"
-							value={state.name.get()}
-							onChange={(e) => state.name.set(e.target.value)}
-							className="h-8 text-sm"
-						/>
+						<Computed>
+							{() => (
+								<Input
+									id="compilation_save_form_name"
+									value={compilationName}
+									onChange={(e) => state$.name.set(e.target.value)}
+									className="h-8 text-sm"
+								/>
+							)}
+						</Computed>
 						<Label htmlFor={"compilation_save_form_description"}>
 							Description
 						</Label>
-						<Input
-							id="compilation_save_form_description"
-							value={state.description.get()}
-							onChange={(e) => state.description.set(e.target.value)}
-							className="h-8 text-sm"
-						/>
+						<Computed>
+							{() => (
+								<Input
+									id="compilation_save_form_description"
+									value={compilationDescription}
+									onChange={(e) => state$.description.set(e.target.value)}
+									className="h-8 text-sm"
+								/>
+							)}
+						</Computed>
 						<Label htmlFor={"compilation_save_form_category"}>Category</Label>
-						<Input
-							id="compilation_save_form_category"
-							value={state.category.get()}
-							onChange={(e) => state.category.set(e.target.value)}
-							className="h-8 text-sm"
-						/>
+						<Computed>
+							{() => (
+								<Input
+									id="compilation_save_form_category"
+									value={compilationCategory}
+									onChange={(e) => state$.category.set(e.target.value)}
+									className="h-8 text-sm"
+								/>
+							)}
+						</Computed>
 						<div className="flex justify-end space-x-2">
 							<Button
 								type="button"
 								variant="outline"
 								size="sm"
-								onClick={() => state.isOpen.set(false)}
+								onClick={() => state$.isFormOpen.set(false)}
 								className="h-8 px-3 text-xs"
 							>
 								Cancel

@@ -1,5 +1,5 @@
 // react
-import { For, observer, useObservable } from "@legendapp/state/react";
+import { For, observer, use$, useObservable } from "@legendapp/state/react";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
@@ -24,23 +24,27 @@ import {
 } from "#/components/ui/card";
 
 const CompilationsView: React.FC = observer(() => {
-	const state = useObservable({
+	const state$ = useObservable({
 		isOpen: false,
 		name: "",
 		description: "",
 		category: "",
 	});
+	const isFormOpen = use$(state$.isOpen);
+	const name = use$(state$.name);
+	const description = use$(state$.description);
+	const category = use$(state$.category);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		compilations$.addCompilation(
-			state.name.peek(),
-			state.description.peek(),
-			state.category.peek(),
+			state$.name.peek(),
+			state$.description.peek(),
+			state$.category.peek(),
 		);
-		state.name.set("");
-		state.description.set("");
-		state.isOpen.set(false);
+		state$.name.set("");
+		state$.description.set("");
+		state$.isOpen.set(false);
 	};
 
 	return (
@@ -50,7 +54,7 @@ const CompilationsView: React.FC = observer(() => {
 					<CardTitle>{"Add Compilation"}</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Popover open={state.isOpen.get()} onOpenChange={state.isOpen.set}>
+					<Popover open={isFormOpen} onOpenChange={state$.isOpen.set}>
 						<PopoverTrigger className={"m-auto p-2"} asChild>
 							<Button variant={"outline"} className={"w-[80%] h-[80%]"}>
 								+
@@ -67,8 +71,8 @@ const CompilationsView: React.FC = observer(() => {
 								<Label htmlFor={"compilation_add_form_name"}>Name</Label>
 								<Input
 									id="compilation_add_form_name"
-									value={state.name.get()}
-									onChange={(e) => state.name.set(e.target.value)}
+									value={name}
+									onChange={(e) => state$.name.set(e.target.value)}
 									className="h-8 text-sm"
 								/>
 								<Label htmlFor={"compilation_add_form_description"}>
@@ -76,8 +80,8 @@ const CompilationsView: React.FC = observer(() => {
 								</Label>
 								<Input
 									id="compilation_add_form_description"
-									value={state.description.get()}
-									onChange={(e) => state.description.set(e.target.value)}
+									value={description}
+									onChange={(e) => state$.description.set(e.target.value)}
 									className="h-8 text-sm"
 								/>
 								<Label htmlFor={"compilation_add_form_category"}>
@@ -85,8 +89,8 @@ const CompilationsView: React.FC = observer(() => {
 								</Label>
 								<Input
 									id="compilation_add_form_category"
-									value={state.category.get()}
-									onChange={(e) => state.category.set(e.target.value)}
+									value={category}
+									onChange={(e) => state$.category.set(e.target.value)}
 									className="h-8 text-sm"
 								/>
 								<div className="flex justify-end space-x-2">
@@ -94,7 +98,7 @@ const CompilationsView: React.FC = observer(() => {
 										type="button"
 										variant="outline"
 										size="sm"
-										onClick={() => state.isOpen.set(false)}
+										onClick={() => state$.isOpen.set(false)}
 										className="h-8 px-3 text-xs"
 									>
 										Cancel
@@ -113,22 +117,18 @@ const CompilationsView: React.FC = observer(() => {
 				</CardContent>
 			</Card>
 			<For each={compilations$.compilationByIdForActiveAllycode}>
-				{(compilation) => {
+				{(compilation$) => {
+					const compilation = use$(compilation$);
 					const displayedDate =
-						compilation.lastOptimized.get()?.toLocaleDateString() ?? "never";
-					let displayedCategory = compilation.category.get();
+						compilation.lastOptimized?.toLocaleDateString() ?? "never";
+					let displayedCategory = compilation.category;
 					if (displayedCategory === "") displayedCategory = "None";
 
 					return (
-						<Card
-							key={compilation.id.get()}
-							className={"w-[300px] max-h-[30%]"}
-						>
+						<Card key={compilation.id} className={"w-[300px] max-h-[30%]"}>
 							<CardHeader>
-								<CardTitle>{compilation.id.get()}</CardTitle>
-								<CardDescription>
-									{compilation.description.get()}
-								</CardDescription>
+								<CardTitle>{compilation.id}</CardTitle>
+								<CardDescription>{compilation.description}</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<div className={"flex gap-2 items-center"}>
@@ -141,13 +141,13 @@ const CompilationsView: React.FC = observer(() => {
 								</div>
 								<div className={"flex gap-2 items-center"}>
 									<Label>Unit Count:</Label>
-									<p>{compilation.selectedCharacters.length}</p>
+									<p>{compilation$.selectedCharacters.length}</p>
 								</div>
 								<div className={"flex gap-2 items-center"}>
 									<Button
 										variant={"outline"}
 										onClick={() =>
-											compilations$.deleteCompilation(compilation.id.peek())
+											compilations$.deleteCompilation(compilation$.id.peek())
 										}
 									>
 										Delete
@@ -157,13 +157,13 @@ const CompilationsView: React.FC = observer(() => {
 										onClick={() => {
 											beginBatch();
 											compilations$.activeCompilationId.set(
-												compilation.id.peek(),
+												compilation$.id.peek(),
 											);
 											compilations$.ensureSelectedCharactersExist(
-												compilation.id.peek(),
+												compilation$.id.peek(),
 											);
 											compilations$.defaultCompilation.set(
-												structuredClone(compilation.peek()),
+												structuredClone(compilation$.peek()),
 											);
 											compilations$.defaultCompilation.id.set(
 												"DefaultCompilation",

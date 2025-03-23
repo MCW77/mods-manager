@@ -5,6 +5,8 @@ import { lazy } from "react";
 import flatten from "lodash-es/flatten";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -40,10 +42,10 @@ interface ListViewProps {
  * @returns {Array<*>}
  */
 const ListView = ({ displayedMods }: ListViewProps) => {
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const characterById = profilesManagement$.activeProfile.characterById.get();
-	const filter = review$.modListFilter.get();
-	const modById = profilesManagement$.activeProfile.modById.get();
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const filter = use$(review$.modListFilter);
+	const modById = use$(profilesManagement$.activeProfile.modById);
 
 	let individualMods: {
 		id: CharacterNames;

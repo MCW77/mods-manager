@@ -4,6 +4,7 @@ import collectByKey from "#/utils/collectByKey";
 import { formatNumber } from "#/utils/formatNumber";
 
 //state
+import { use$ } from "@legendapp/state/react";
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -45,10 +46,11 @@ const modRemovalCosts = {
 };
 
 const MoveModsModal = () => {
-	const modById = profilesManagement$.activeProfile.modById.get();
-	const flatCharacterModdings =
-		compilations$.defaultCompilation.flatCharacterModdings.get();
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
+	const flatCharacterModdings = use$(
+		compilations$.defaultCompilation.flatCharacterModdings,
+	);
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
 		modById.values().filter((mod) => mod.characterID !== "null"),

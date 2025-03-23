@@ -1,5 +1,5 @@
 // react
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -25,8 +25,13 @@ import { Label } from "#ui/label";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const AddTemplateModal: React.FC = observer(() => {
-	const selectedCharacters =
-		compilations$.defaultCompilation.selectedCharacters.get();
+	const selectedCharacters = use$(
+		compilations$.defaultCompilation.selectedCharacters,
+	);
+	const templatesFilter = use$(templates$.filter);
+	const selectedCategory = use$(templates$.selectedCategory);
+	const selectedTemplate = use$(templates$.selectedTemplate);
+	const filteredTemplates = use$(templates$.filteredTemplates);
 
 	return (
 		<div className={"flex flex-col gap-4"}>
@@ -37,7 +42,7 @@ const AddTemplateModal: React.FC = observer(() => {
 					<ToggleGroup
 						id={"uservsbuiltin"}
 						type={"single"}
-						value={templates$.filter.get()}
+						value={templatesFilter}
 						onValueChange={(value: TemplateTypes) => {
 							templates$.filter.set(value);
 						}}
@@ -54,7 +59,7 @@ const AddTemplateModal: React.FC = observer(() => {
 					<ToggleGroup
 						id={"categories"}
 						type={"single"}
-						value={templates$.selectedCategory.get()}
+						value={selectedCategory}
 						onValueChange={(value) => {
 							templates$.selectedCategory.set(value);
 						}}
@@ -76,12 +81,12 @@ const AddTemplateModal: React.FC = observer(() => {
 					className={"flex flex-row gap-1 justify-center flex-wrap"}
 					id={"templates"}
 					type={"single"}
-					value={templates$.selectedTemplate.get()}
+					value={selectedTemplate}
 					onValueChange={(value) => {
 						templates$.selectedTemplate.set(value);
 					}}
 				>
-					{templates$.filteredTemplates.get().map((template) => {
+					{filteredTemplates.map((template) => {
 						const id = template.id;
 						return (
 							<ToggleGroupItem key={id} value={id}>
@@ -97,7 +102,7 @@ const AddTemplateModal: React.FC = observer(() => {
 				</Button>
 				<Button
 					type={"button"}
-					disabled={templates$.selectedTemplate.get() === ""}
+					disabled={selectedTemplate === ""}
 					onClick={() => {
 						dialog$.hide();
 						const templateName = templates$.selectedTemplate.get();

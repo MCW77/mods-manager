@@ -1,7 +1,7 @@
 // react
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { observer, reactive } from "@legendapp/state/react";
+import { observer, reactive, use$ } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -27,8 +27,8 @@ type ComponentProps = {
 const ProfileSelector = observer(
 	React.memo(({ setAddMode }: ComponentProps) => {
 		const [t] = useTranslation("global-ui");
-		const profiles = profilesManagement$.profiles.playernameByAllycode.get();
-		const allycode = profilesManagement$.profiles.activeAllycode.get();
+		const profiles = use$(profilesManagement$.profiles.playernameByAllycode);
+		const allycode = use$(profilesManagement$.profiles.activeAllycode);
 
 		return (
 			<ReactiveSelect

@@ -2,7 +2,12 @@
 import collectByKey from "#/utils/collectByKey";
 
 // state
-import { observer, reactive, useObservable } from "@legendapp/state/react";
+import {
+	observer,
+	reactive,
+	use$,
+	useObservable,
+} from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -27,10 +32,11 @@ import { Label } from "#/components/ui/label";
 const ReactiveInput = reactive(Input);
 
 const CreateProfileModal: React.FC = observer(() => {
-	const modById = profilesManagement$.activeProfile.modById.get();
-	const modAssignments =
-		compilations$.defaultCompilation.flatCharacterModdings.get();
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
+	const modAssignments = use$(
+		compilations$.defaultCompilation.flatCharacterModdings,
+	);
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
 		modById.values().filter((mod) => mod.characterID !== "null"),
@@ -41,6 +47,7 @@ const CreateProfileModal: React.FC = observer(() => {
 		category: "Grandivory",
 		name: "",
 	});
+	const input = use$(input$);
 
 	const generateHotUtilsProfile = () => {
 		const assignedMods = modAssignments
@@ -115,7 +122,7 @@ const CreateProfileModal: React.FC = observer(() => {
 				</Button>
 				<Button
 					type={"button"}
-					disabled={input$.category.get() === "" || input$.name.get() === ""}
+					disabled={input.category === "" || input.name === ""}
 					onClick={() => {
 						dialog$.hide();
 						createLoudout();

@@ -6,6 +6,7 @@ import flatten from "lodash-es/flatten";
 import collectByKey from "#/utils/collectByKey";
 
 // state
+import { use$ } from "@legendapp/state/react";
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -44,9 +45,11 @@ const modRemovalCosts = {
 };
 
 const ActionsWidget = () => {
-	const modById = profilesManagement$.activeProfile.modById.get();
-	const modAssignments =
-		compilations$.defaultCompilation.flatCharacterModdings.get();
+	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
+	const modAssignments = use$(
+		compilations$.defaultCompilation.flatCharacterModdings,
+	);
+	const hasActiveSession = use$(hotutils$.hasActiveSession);
 
 	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)
@@ -129,14 +132,14 @@ const ActionsWidget = () => {
 				<Label htmlFor="Hotutils-Actions">HotUtils</Label>
 				<Button
 					type={"button"}
-					disabled={!hotutils$.hasActiveSession.get()}
+					disabled={!hasActiveSession}
 					onClick={() => dialog$.show(<CreateProfileModal />)}
 				>
 					Create Loadout
 				</Button>
 				<Button
 					type={"button"}
-					disabled={!hotutils$.hasActiveSession.get()}
+					disabled={!hasActiveSession}
 					onClick={() => dialog$.show(<MoveModsModal />)}
 				>
 					Move mods in-game

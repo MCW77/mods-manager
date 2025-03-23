@@ -2,7 +2,7 @@
 import type React from "react";
 import { lazy } from "react";
 
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -35,13 +35,15 @@ type CharacterBlockProps = {
  */
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
-		const selectedCharacters =
-			compilations$.defaultCompilation.selectedCharacters.get();
-		const baseCharacterById = characters$.baseCharacterById.get();
+		const selectedCharacters = use$(
+			compilations$.defaultCompilation.selectedCharacters,
+		);
+		const baseCharacterById = use$(characters$.baseCharacterById);
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
-		const isLocked =
-			lockedStatus$.ofActivePlayerByCharacterId[character.id].get();
+		const isLocked = use$(
+			lockedStatus$.ofActivePlayerByCharacterId[character.id],
+		);
 		const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
 
 		const isCharacterSelected = (characterID: CharacterNames) =>

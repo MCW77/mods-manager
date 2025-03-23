@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { For, observer, reactive, Show } from "@legendapp/state/react";
+import { For, observer, reactive, Show, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -29,13 +29,17 @@ const ReactiveSelect = reactive(Select);
 const FilterManager = observer(
 	React.memo(() => {
 		const [t] = useTranslation("global-ui");
-		const activeViewSetupInActiveCategory =
-			modsView$.activeViewSetupInActiveCategory.get();
+		const activeViewSetupInActiveCategory = use$(
+			modsView$.activeViewSetupInActiveCategory,
+		);
+		const idOfSelectedFilterInActiveCategory = use$(
+			modsView$.idOfSelectedFilterInActiveCategory,
+		);
 
 		return (
 			<div className={"flex items-center"}>
 				<ReactiveSelect
-					$value={() => modsView$.idOfSelectedFilterInActiveCategory.get()}
+					$value={() => idOfSelectedFilterInActiveCategory}
 					onValueChange={(value) => {
 						modsView$.idOfSelectedFilterInActiveCategory.set(value);
 					}}

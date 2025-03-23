@@ -1,5 +1,5 @@
 // state
-import { Computed, For, observer } from "@legendapp/state/react";
+import { Computed, For, observer, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -253,6 +253,16 @@ const customCharacterFilterGroups = [
 ];
 
 const CharacterFilters: React.FC = observer(() => {
+	const hideSelectedCharacters = use$(
+		charactersManagement$.filterSetup.hideSelectedCharacters,
+	);
+	const starsRange = use$(charactersManagement$.filterSetup.starsRange);
+	const levelRange = use$(charactersManagement$.filterSetup.levelRange);
+	const gearLevelRange = use$(charactersManagement$.filterSetup.gearLevelRange);
+	const quickFilter = use$(
+		charactersManagement$.filterSetup.quickFilter.filter,
+	);
+
 	return (
 		<div className="p2 flex flex-col gap-2">
 			<div>
@@ -261,7 +271,7 @@ const CharacterFilters: React.FC = observer(() => {
 				</Label>
 				<Switch
 					id={"hide-selected"}
-					checked={charactersManagement$.filterSetup.hideSelectedCharacters.get()}
+					checked={hideSelectedCharacters}
 					onCheckedChange={() =>
 						charactersManagement$.filterSetup.hideSelectedCharacters.set(
 							!charactersManagement$.filterSetup.hideSelectedCharacters.get(),
@@ -278,7 +288,7 @@ const CharacterFilters: React.FC = observer(() => {
 					max={7}
 					min={0}
 					step={1}
-					value={charactersManagement$.filterSetup.starsRange.get()}
+					value={starsRange}
 					onValueChange={(newValues: [number, number]) => {
 						const [newMin, newMax] = newValues;
 						if (newMin <= newMax) {
@@ -301,7 +311,7 @@ const CharacterFilters: React.FC = observer(() => {
 					max={85}
 					min={0}
 					step={1}
-					value={charactersManagement$.filterSetup.levelRange.get()}
+					value={levelRange}
 					onValueChange={(newValues: [number, number]) => {
 						const [newMin, newMax] = newValues;
 						if (newMin <= newMax) {
@@ -324,7 +334,7 @@ const CharacterFilters: React.FC = observer(() => {
 					max={22}
 					min={1}
 					step={1}
-					value={charactersManagement$.filterSetup.gearLevelRange.get()}
+					value={gearLevelRange}
 					onValueChange={(newValues: [number, number]) => {
 						const [newMin, newMax] = newValues;
 						if (newMin <= newMax) {
@@ -354,7 +364,7 @@ const CharacterFilters: React.FC = observer(() => {
 					id="character-filter"
 					type="text"
 					placeholder="name, tag, or acronym"
-					value={charactersManagement$.filterSetup.quickFilter.filter.get()}
+					value={quickFilter}
 					onChange={(e) =>
 						charactersManagement$.filterSetup.quickFilter.filter.set(
 							e.target.value.toLowerCase(),
@@ -378,13 +388,16 @@ const CharacterFilters: React.FC = observer(() => {
 						return (
 							<For each={charactersManagement$.filterSetup.filtersById}>
 								{(filter$) => {
+									const filter = use$(filter$.filter);
+									const filterId = use$(filter$.id);
+
 									return (
 										<div
-											key={`sort-option-${filter$.id.get()}`}
+											key={`sort-option-${filterId}`}
 											className={"flex items-center"}
 										>
 											<Badge variant={"outline"}>
-												{filter$.filter.get()}
+												{filter}
 												<Button
 													size={"xxs"}
 													variant={"outline"}

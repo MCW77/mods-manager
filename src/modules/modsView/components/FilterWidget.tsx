@@ -1,10 +1,9 @@
 // react
-import type React from "react";
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer } from "@legendapp/state/react";
+import { use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -33,9 +32,9 @@ import {
 	CollapsibleCardTrigger,
 } from "#ui/CollapsibleCard";
 
-const FilterWidget: React.FC = observer(() => {
+const FilterWidget = () => {
 	const [t] = useTranslation("explore-ui");
-	const profile = profilesManagement$.activeProfile.get();
+	const profile = use$(profilesManagement$.activeProfile);
 
 	return (
 		<CollapsibleCard
@@ -70,7 +69,7 @@ const FilterWidget: React.FC = observer(() => {
 				<div className={"flex flex-col justify-between items-center gap-2"}>
 					<div
 						className={
-							"w-full grid grid-cols-[repeat(auto-fit,_minmax(min(6rem,_100%),_1fr))] gap-x-2 gap-y-4"
+							"w-full grid grid-cols-[repeat(auto-fit,_minmax(min(6rem,_100%),_1fr))] gap-x-2 gap-y-4 justify-items-center"
 						}
 					>
 						<SlotFilter />
@@ -91,7 +90,7 @@ const FilterWidget: React.FC = observer(() => {
 			</CollapsibleCardContent>
 		</CollapsibleCard>
 	);
-});
+};
 
 FilterWidget.displayName = "FilterWidget";
 

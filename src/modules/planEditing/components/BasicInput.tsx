@@ -1,5 +1,5 @@
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { reactive, use$ } from "@legendapp/state/react";
 
 // domain
 import type { StatWeightsInputProps } from "#/modules/planEditing/components/StatWeightsInputProps";
@@ -12,7 +12,9 @@ import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
 
-const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }: StatWeightsInputProps) => {
+const BasicInput = ({ target$, stat }: StatWeightsInputProps) => {
+	const statValue = use$(target$.target[stat]);
+
 	return (
 		<>
 			<Label htmlFor={`${stat}-stat-basic`}>{`${stat}: `}:</Label>
@@ -20,7 +22,7 @@ const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }:
 				max={100}
 				min={-100}
 				step={0.5}
-				singleValue={target$.target[stat].get()}
+				singleValue={statValue}
 				onSingleChange={(weight: number) => {
 					target$.target[stat].set(weight);
 				}}
@@ -38,7 +40,7 @@ const BasicInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }:
 			/>
 		</>
 	);
-});
+};
 
 BasicInput.displayName = "BasicInput";
 

@@ -1,5 +1,4 @@
 // react
-import type React from "react";
 import { lazy, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -14,13 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import {
-	Memo,
-	Show,
-	observer,
-	reactive,
-	useMount,
-} from "@legendapp/state/react";
+import { Memo, Show, reactive, use$, useMount } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -69,10 +62,12 @@ const hotutils$ = stateLoader$.hotutils$;
 
 const ReactiveTabs = reactive(Tabs);
 
-const App: React.FC = observer(() => {
+const App = () => {
 	useRenderCount("App");
 	const [t] = useTranslation("global-ui");
-	const firstSection = profilesManagement$.hasProfiles.get() ? "mods" : "help";
+	const firstSection = use$(() =>
+		profilesManagement$.hasProfiles.get() ? "mods" : "help",
+	);
 
 	useMount(() => {
 		console.log("App mounted");
@@ -287,7 +282,7 @@ const App: React.FC = observer(() => {
 			</div>
 		</Suspense>
 	);
-});
+};
 
 App.displayName = "App";
 

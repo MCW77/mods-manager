@@ -1,9 +1,7 @@
 // state
-import { reactive, reactiveObserver } from "@legendapp/state/react";
-import { target$ } from "#/modules/planEditing/state/planEditing";
+import { reactive, reactiveObserver, use$ } from "@legendapp/state/react";
 
-// domain
-import type { PrimaryStats } from "#/domain/Stats";
+import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // components
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
@@ -12,6 +10,19 @@ import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
 const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
+	const arrowsPrimaryStatRestrictions = use$(
+		() => target$.target.primaryStatRestrictions.arrow.get() ?? "",
+	);
+	const trianglesPrimaryStatRestrictions = use$(
+		() => target$.target.primaryStatRestrictions.triangle.get() ?? "",
+	);
+	const crossesPrimaryStatRestrictions = use$(
+		() => target$.target.primaryStatRestrictions.cross.get() ?? "",
+	);
+	const circlesPrimaryStatRestrictions = use$(
+		() => target$.target.primaryStatRestrictions.circle.get() ?? "",
+	);
+
 	return (
 		<div className="grid gap-4">
 			<div className={""}>
@@ -32,9 +43,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						type={"single"}
-						$value={() =>
-							target$.target.primaryStatRestrictions.arrow.get() ?? ""
-						}
+						$value={arrowsPrimaryStatRestrictions}
 						onValueChange={(value) => {
 							if (value === "")
 								target$.target.primaryStatRestrictions.arrow.delete();
@@ -82,9 +91,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						orientation={"horizontal"}
 						size={"sm"}
 						type={"single"}
-						$value={() =>
-							target$.target.primaryStatRestrictions.triangle.get() ?? ""
-						}
+						$value={trianglesPrimaryStatRestrictions}
 						onValueChange={(value) => {
 							if (value === "")
 								target$.target.primaryStatRestrictions.triangle.delete();
@@ -131,9 +138,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						orientation={"horizontal"}
 						size={"sm"}
 						type={"single"}
-						$value={() =>
-							target$.target.primaryStatRestrictions.cross.get() ?? ""
-						}
+						$value={crossesPrimaryStatRestrictions}
 						onValueChange={(value) => {
 							if (value === "")
 								target$.target.primaryStatRestrictions.cross.delete();
@@ -180,9 +185,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						orientation={"horizontal"}
 						size={"sm"}
 						type={"single"}
-						$value={() =>
-							target$.target.primaryStatRestrictions.circle.get() ?? ""
-						}
+						$value={circlesPrimaryStatRestrictions}
 						onValueChange={(value) => {
 							if (value === "")
 								target$.target.primaryStatRestrictions.circle.delete();

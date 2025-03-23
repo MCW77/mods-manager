@@ -1,6 +1,6 @@
 // react
 import { lazy } from "react";
-import { observer, Show } from "@legendapp/state/react";
+import { observer, Show, use$ } from "@legendapp/state/react";
 
 // styles
 import "./Review.css";
@@ -166,12 +166,13 @@ const modUpgradeCosts: {
 };
 
 const Review: React.FC = observer(() => {
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const characterById = profilesManagement$.activeProfile.characterById.get();
-	const filter = review$.modListFilter.get();
-	const modById = profilesManagement$.activeProfile.modById.get();
-	const modAssignments =
-		compilations$.defaultCompilation.flatCharacterModdings.get();
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const filter = use$(review$.modListFilter);
+	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
+	const modAssignments = use$(
+		compilations$.defaultCompilation.flatCharacterModdings,
+	);
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: CharacterModdings,

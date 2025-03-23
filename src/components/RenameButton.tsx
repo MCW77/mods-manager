@@ -1,5 +1,5 @@
 // state
-import { observer, useObservable } from "@legendapp/state/react";
+import { observer, use$, useObservable } from "@legendapp/state/react";
 
 // components
 import { PencilIcon } from "lucide-react";
@@ -13,27 +13,29 @@ interface RenameButtonProps {
 	onRename: (id: string, newName: string) => void;
 }
 
-const RenameButton = observer(
+const RenameButton: React.FC<RenameButtonProps> = observer(
 	({ itemId, itemName, onRename }: RenameButtonProps) => {
-		const state = useObservable({
+		const state$ = useObservable({
 			isOpen: false,
 			newName: itemName,
 		});
+		const isPopoverOpen = use$(state$.isOpen);
+		const newName = use$(state$.newName);
 
 		const handleRename = (e: React.MouseEvent) => {
 			e.preventDefault();
 			e.stopPropagation();
-			state.isOpen.set(true);
+			state$.isOpen.set(true);
 		};
 
 		const handleSubmit = (e: React.FormEvent) => {
 			e.preventDefault();
-			onRename(itemId, state.newName.get());
-			state.isOpen.set(false);
+			onRename(itemId, newName);
+			state$.isOpen.set(false);
 		};
 
 		return (
-			<Popover open={state.isOpen.get()} onOpenChange={state.isOpen.set}>
+			<Popover open={isPopoverOpen} onOpenChange={state$.isOpen.set}>
 				<PopoverTrigger asChild>
 					<Button
 						variant="ghost"
@@ -53,8 +55,8 @@ const RenameButton = observer(
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
 						<h4 className="font-medium text-sm text-slate-900">Rename Item</h4>
 						<Input
-							value={state.newName.get()}
-							onChange={(e) => state.newName.set(e.target.value)}
+							value={newName}
+							onChange={(e) => state$.newName.set(e.target.value)}
 							placeholder="Enter new name"
 							className="h-8 text-sm"
 						/>
@@ -63,7 +65,7 @@ const RenameButton = observer(
 								type="button"
 								variant="outline"
 								size="sm"
-								onClick={() => state.isOpen.set(false)}
+								onClick={() => state$.isOpen.set(false)}
 								className="h-8 px-3 text-xs"
 							>
 								Cancel
@@ -82,5 +84,7 @@ const RenameButton = observer(
 		);
 	},
 );
+
+RenameButton.displayName = "RenameButton";
 
 export { RenameButton };

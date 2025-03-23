@@ -10,6 +10,8 @@ import formatAllycode from "#/utils/formatAllycode";
 import { readFile } from "#/utils/readFile";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -24,8 +26,9 @@ import { Label } from "#ui/label";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
 const AccountsManager = React.memo(() => {
-	const playerProfiles =
-		profilesManagement$.profiles.playernameByAllycode.get();
+	const playerProfiles = use$(
+		profilesManagement$.profiles.playernameByAllycode,
+	);
 	const [selectedProfile, setSelectedProfile] = useState(
 		Object.keys(playerProfiles)[0] ?? "",
 	);

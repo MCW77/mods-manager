@@ -1,5 +1,5 @@
 // state
-import { Memo, observer } from "@legendapp/state/react";
+import { Memo, observer, use$ } from "@legendapp/state/react";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { modMove$ } from "#/modules/modMove/state/modMove";
@@ -9,22 +9,20 @@ import { Button } from "#ui/button";
 import { Progress } from "#ui/progress";
 
 const ModMoveProgress: React.FC = observer(() => {
+	const count = use$(modMove$.status.progress.count);
+	const index = use$(modMove$.status.progress.index);
+	const message = use$(modMove$.status.message);
+
 	return (
 		<div className={"flex flex-col gap-2"}>
 			<h3>Moving Your Mods...</h3>
 			<div>
 				<Memo>
 					{() => {
-						console.log(`index: ${modMove$.status.progress.index.get()}`);
-						return (
-							<Progress
-								value={modMove$.status.progress.index.get()}
-								max={modMove$.status.progress.count.get()}
-							/>
-						);
+						return <Progress value={index} max={count} />;
 					}}
 				</Memo>
-				<Memo>{() => <>{modMove$.status.message.get()}</>}</Memo>
+				<Memo>{() => <>{message}</>}</Memo>
 			</div>
 			<div>
 				<Button

@@ -5,6 +5,8 @@ import * as React from "react";
 import "./CharacterAvatar.css";
 
 // state
+import { use$ } from "@legendapp/state/react";
+
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const characters$ = stateLoader$.characters$;
@@ -32,7 +34,7 @@ const CharacterAvatar = React.memo(
 		displayStars = true,
 		id,
 	}: ComponentProps) => {
-		const baseCharacterById = characters$.baseCharacterById.get();
+		const baseCharacterById = use$(characters$.baseCharacterById);
 
 		if (character === undefined || character === null) return null;
 

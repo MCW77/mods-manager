@@ -6,6 +6,7 @@ import {
 	observer,
 	reactive,
 	Show,
+	use$,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -34,11 +35,13 @@ import { Progress } from "#ui/progress";
 const ReactiveProgress = reactive(Progress);
 
 const OptimizerProgress: React.FC = observer(() => {
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
 		return charId === "" ? undefined : characterById[charId];
 	});
+	const character = use$(character$);
+	const optimizationStatus = use$(progress$.optimizationStatus);
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
@@ -53,11 +56,9 @@ const OptimizerProgress: React.FC = observer(() => {
 			<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
 			<div className={"flex flex-col gap-2"}>
 				<Show ifReady={character$}>
-					{(condition) => <CharacterAvatar character={character$.get()} />}
+					{(condition) => <CharacterAvatar character={character} />}
 				</Show>
-				<div className={"step"}>
-					{progress$.optimizationStatus.message.get()}
-				</div>
+				<div className={"step"}>{optimizationStatus.message}</div>
 				<div>
 					<Label>Character progress</Label>
 					<ReactiveProgress
@@ -71,9 +72,7 @@ const OptimizerProgress: React.FC = observer(() => {
 					/>
 				</div>
 				<div>
-					<Label>
-						Sets progress: {progress$.optimizationStatus.sets.get().join(" - ")}
-					</Label>
+					<Label>Sets progress: {optimizationStatus.sets.join(" - ")}</Label>
 					<ReactiveProgress
 						$value={() =>
 							Math.trunc(
@@ -85,10 +84,7 @@ const OptimizerProgress: React.FC = observer(() => {
 					/>
 				</div>
 				<div>
-					<Label>
-						TargetStats progress:{" "}
-						{progress$.optimizationStatus.targetStat.get()}
-					</Label>
+					<Label>TargetStats progress: {optimizationStatus.targetStat}</Label>
 					<ReactiveProgress
 						$value={() =>
 							Math.trunc(

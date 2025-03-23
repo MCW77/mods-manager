@@ -8,7 +8,7 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // components
-import { Switch } from "@legendapp/state/react";
+import { Switch, use$ } from "@legendapp/state/react";
 
 // containers
 const CharacterEditForm = lazy(
@@ -20,7 +20,9 @@ const CharacterEditView = lazy(
 );
 
 const OptimizerView = React.memo(() => {
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const currentCharacterId = use$(optimizerView$.currentCharacter.id);
+	const currentCharacterTarget = use$(optimizerView$.currentCharacter.target);
 
 	return (
 		<div className={"flex items-stretch overflow-hidden flex-grow-1"}>
@@ -29,10 +31,8 @@ const OptimizerView = React.memo(() => {
 					basic: () => <CharacterEditView />,
 					edit: () => (
 						<CharacterEditForm
-							character={
-								characterById[optimizerView$.currentCharacter.id.get()]
-							}
-							target={optimizerView$.currentCharacter.target.get()}
+							character={characterById[currentCharacterId]}
+							target={currentCharacterTarget}
 						/>
 					),
 					review: () => <Review />,

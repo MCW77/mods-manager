@@ -4,6 +4,7 @@ import {
 	Switch,
 	observer,
 	reactive,
+	use$,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -54,12 +55,18 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 		);
 		if (targetStat$ === undefined) return;
 
+		const stat = use$(targetStat$.stat);
+		const minimum = use$(targetStat$.minimum);
+		const maximum = use$(targetStat$.maximum);
+		const type = use$(targetStat$.type);
+
 		const baseCharacterById$ = characters$.baseCharacterById;
 		const relativeCharacterName$ = useObservable(() => {
 			const relativeCharacterId = targetStat$.relativeCharacterId.get();
 			if (relativeCharacterId === "null") return "";
 			return baseCharacterById$[relativeCharacterId].name.get();
 		});
+		const relativeCharacterName = use$(relativeCharacterName$);
 
 		return (
 			<Card className={"flex flex-col flex-gap-2 w-fit"}>
@@ -70,7 +77,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						</Label>
 						<ReactiveSwitch
 							$checked={targetStat$.optimizeForTarget}
-							$disabled={targetStat$.stat.get() === "Health+Protection"}
+							$disabled={stat === "Health+Protection"}
 							onCheckedChange={(checked) => {
 								targetStat$.optimizeForTarget.set(checked);
 							}}
@@ -96,7 +103,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 					{{
 						null: () => (
 							<Label>
-								{`The ${targetStat$.stat.get()} must be between ${targetStat$.minimum.get()} and ${targetStat$.maximum.get()}`}
+								{`The ${stat} must be between ${minimum} and ${maximum}`}
 							</Label>
 						),
 						default: () => (
@@ -104,29 +111,23 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 								{{
 									"+": () => (
 										<div className={"flex flex-col flex-gap-1"}>
-											<Label>
-												{`The ${targetStat$.stat.get()} must be between`}
-											</Label>
+											<Label>{`The ${stat} must be between`}</Label>
 											<Label>
 												{`${Intl.NumberFormat("en-US", {
 													signDisplay: "exceptZero",
-												}).format(
-													targetStat$.minimum.get(),
-												)} and ${Intl.NumberFormat("en-US", {
+												}).format(minimum)} and ${Intl.NumberFormat("en-US", {
 													signDisplay: "exceptZero",
 												}).format(
-													targetStat$.maximum.get(),
-												)} compared to the ${targetStat$.stat.get()} of ${relativeCharacterName$.get()}`}
+													maximum,
+												)} compared to the ${stat} of ${relativeCharacterName}`}
 											</Label>
 										</div>
 									),
 									"*": () => (
 										<div className={"flex flex-col flex-gap-1"}>
+											<Label>{`The ${stat} must be between`}</Label>
 											<Label>
-												{`The ${targetStat$.stat.get()} must be between`}
-											</Label>
-											<Label>
-												{`${targetStat$.minimum.get()}% and ${targetStat$.maximum.get()}% of the  ${targetStat$.stat.get()} of ${relativeCharacterName$.get()}`}
+												{`${minimum}% and ${maximum}% of the  ${stat} of ${relativeCharacterName}`}
 											</Label>
 										</div>
 									),
@@ -170,7 +171,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						<ReactiveInput
 							className={"w-24"}
 							id={`target-stat-min${id}`}
-							min={targetStat$.type.get() === "*" ? 0 : undefined}
+							min={type === "*" ? 0 : undefined}
 							type={"number"}
 							$value={targetStat$.minimum}
 							onChange={(e: React.FormEvent<HTMLInputElement>) => {
@@ -185,7 +186,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						<ReactiveInput
 							className={"w-24"}
 							id={`target-stat-max${id}`}
-							min={targetStat$.type.get() === "*" ? 0 : undefined}
+							min={type === "*" ? 0 : undefined}
 							step={"any"}
 							type={"number"}
 							$value={targetStat$.maximum}

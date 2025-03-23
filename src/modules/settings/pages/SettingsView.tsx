@@ -1,7 +1,7 @@
 // react
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 // styles
 import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -27,14 +27,15 @@ import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSe
 
 const SettingsView: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");
+	const previousSection = use$(ui$.previousSection);
 
 	const renderSection = (sectionName: SettingsSections) => {
+		const section = use$(settings$.section);
+
 		return (
 			<div
 				className={`${sectionName} m-[0.2em] p-[0.4em] border-1 border-solid ${
-					sectionName === settings$.section.get()
-						? "border-yellow-400"
-						: "border-white"
+					sectionName === section ? "border-yellow-400" : "border-white"
 				} rounded-xl bg-transparent`}
 				onClick={() => settings$.section.set(sectionName)}
 				onKeyUp={(e) => {
@@ -49,18 +50,20 @@ const SettingsView: React.FC = observer(() => {
 	};
 
 	const renderTopic = () => {
-		return match(settings$.section.get())
+		const section = use$(settings$.section);
+
+		return match(section)
 			.with("general", () => <GeneralSettingsView />)
 			.with("optimizer", () => <OptimizerSettingsView />)
 			.otherwise(() => {
-				return <div id={`settings-${settings$.section.get()}`} />;
+				return <div id={`settings-${section}`} />;
 			});
 	};
 
 	return (
 		<div className={"Settings-page flex flex-col grow-1"} key={"settings"}>
 			<nav className="sections flex flex-wrap justify-evenly">
-				{ui$.previousSection.get() !== "settings" && (
+				{previousSection !== "settings" && (
 					<div className="returnTo m-[0.2em] p-[0.4em]">
 						<FontAwesomeIcon
 							icon={faCircleLeft}

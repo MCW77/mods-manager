@@ -4,7 +4,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -23,10 +23,14 @@ const GroupedMods = lazy(() => import("./GroupedMods"));
 const CategoryView: React.FC = observer(() => {
 	useRenderCount(`CategoryView (${modsView$.activeCategory.peek()})`);
 	const [t] = useTranslation("global-ui");
-	const modById = profilesManagement$.activeProfile.modById.get();
+	const modById = use$(profilesManagement$.activeProfile.modById);
+	const activeViewSetupInActiveCategory = use$(
+		modsView$.activeViewSetupInActiveCategory,
+	);
+	const quickFilter = use$(modsView$.quickFilter);
 	const modsFilter = new ModsFilter(
-		modsView$.activeViewSetupInActiveCategory.get(),
-		modsView$.quickFilter.get(),
+		activeViewSetupInActiveCategory,
+		quickFilter,
 	);
 	const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(
 		Array.from(modById.values()),

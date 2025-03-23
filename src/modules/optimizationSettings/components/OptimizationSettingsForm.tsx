@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { observer, reactive, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -16,7 +16,10 @@ import { Label } from "#ui/label";
 
 const OptimizationSettingsForm: React.FC = observer(() => {
 	const [t, i18n] = useTranslation("settings-ui");
-	const allycode = profilesManagement$.profiles.activeAllycode.get();
+	const allycode = use$(profilesManagement$.profiles.activeAllycode);
+	const modChangeThreshold = use$(
+		optimizationSettings$.settingsByProfile[allycode].modChangeThreshold,
+	);
 
 	const ReactiveInput = reactive(Input);
 
@@ -37,9 +40,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					min={0}
 					max={100}
 					step={1}
-					singleValue={optimizationSettings$.settingsByProfile[
-						allycode
-					].modChangeThreshold.get()}
+					singleValue={modChangeThreshold}
 					onSingleChange={(threshold: number) => {
 						optimizationSettings$.settingsByProfile[
 							allycode

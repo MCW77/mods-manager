@@ -1,6 +1,6 @@
 // react
 import { lazy, useMemo } from "react";
-import { Computed, reactiveObserver } from "@legendapp/state/react";
+import { Computed, reactiveObserver, Show, use$ } from "@legendapp/state/react";
 
 // utils
 import { objectEntries } from "#/utils/objectEntries";
@@ -21,7 +21,8 @@ import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 
 const TargetStatsWidget: React.FC = reactiveObserver(() => {
-	const baseCharacterById = characters$.baseCharacterById.get();
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const hasTargetStats = use$(() => target$.target.targetStats.length > 0);
 
 	const groups = useMemo(() => {
 		const baseCharactersLabelValue = Object.values(baseCharacterById)
@@ -65,27 +66,25 @@ const TargetStatsWidget: React.FC = reactiveObserver(() => {
 								variant={"outline"}
 								onClick={() => {
 									target$.addTargetStat();
-									/*
-                target$.target.targetStats.set(
-                  [...target$.target.targetStats.peek(), createTargetStat('Speed')]
-                )
-*/
 								}}
 							>
 								+
 							</Button>
 						</Card>
-						{target$.target.targetStats.get() &&
-							target$.target.targetStats.map((targetStat$) => {
-								return (
-									<TargetStatWidget
-										target$={target$}
-										id={targetStat$.peek().id}
-										key={targetStat$.id.peek()}
-										baseCharacters={groups}
-									/>
-								);
-							})}
+						<Show if={hasTargetStats}>
+							{() =>
+								target$.target.targetStats.map((targetStat$) => {
+									return (
+										<TargetStatWidget
+											target$={target$}
+											id={targetStat$.peek().id}
+											key={targetStat$.id.peek()}
+											baseCharacters={groups}
+										/>
+									);
+								})
+							}
+						</Show>
 					</div>
 				)}
 			</Computed>
@@ -96,16 +95,3 @@ const TargetStatsWidget: React.FC = reactiveObserver(() => {
 TargetStatsWidget.displayName = "TargetStatsWidget";
 
 export default TargetStatsWidget;
-
-/*<Memo key={id}>
-                {() =>*/
-//}
-//                </Memo>
-/*
-    <For each={targetStats$}>
-      {(item as Observable<TargetStat2>) => {
-        const id = item.peek()!.id;
-        return item.peek() !== undefined ? <TargetStatWidget targetStat$={item} targetStats={targetStats$} id={id} baseCharacters={baseCharacters2}></TargetStatWidget> : <></>
-      }}
-    </For>
-*/

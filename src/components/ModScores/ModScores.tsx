@@ -1,9 +1,15 @@
 // react
-import React from "react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { For, observer, Show, useObservable } from "@legendapp/state/react";
+import {
+	For,
+	observer,
+	Show,
+	use$,
+	useObservable,
+} from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -20,9 +26,9 @@ type ComponentProps = {
 };
 
 const ModScores = observer(
-	React.memo(({ mod }: ComponentProps) => {
+	memo(({ mod }: ComponentProps) => {
 		const [t, i18n] = useTranslation("domain");
-		const scoreName = modsView$.activeViewSetupInActiveCategory.modScore.get();
+		const scoreName = use$(modsView$.activeViewSetupInActiveCategory.modScore);
 		const secondariesCount$ = useObservable(
 			() => mod.secondaryStats.length > 0,
 		);
@@ -34,14 +40,16 @@ const ModScores = observer(
 				<ul className="p-l-0 text-[#c5f5f5]">
 					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
 						<For each={secondaryStats$}>
-							{(stat) => (
-								<li
-									key={stat.id.get()}
-									className={`class-${stat.score.getClass()}`}
-								>
-									{stat.score.get().show()}
-								</li>
-							)}
+							{(stat$) => {
+								const id = use$(stat$.id);
+								const scoreText = use$(() => stat$.score.get().show());
+
+								return (
+									<li key={id} className={`class-${stat$.score.getClass()}`}>
+										{scoreText}
+									</li>
+								);
+							}}
 						</For>
 					</Show>
 					<Separator

@@ -1,9 +1,8 @@
 // react
-import type React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { reactive, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -24,14 +23,15 @@ import {
 
 const ReactiveSelect = reactive(Select);
 
-const ScoreSelector: React.FC = observer(() => {
+const ScoreSelector = () => {
 	const [t] = useTranslation("explore-ui");
+	const modScore = use$(modsView$.activeViewSetupInActiveCategory.modScore);
 
 	return (
 		<div>
 			<Label htmlFor={"score-select"}>{t("filter.ScoreHeadline")}</Label>
 			<ReactiveSelect
-				$value={() => modsView$.activeViewSetupInActiveCategory.modScore.get()}
+				$value={() => modScore}
 				onValueChange={(value) => {
 					modsView$.activeViewSetupInActiveCategory.modScore.set(value);
 				}}
@@ -61,7 +61,7 @@ const ScoreSelector: React.FC = observer(() => {
 			</ReactiveSelect>
 		</div>
 	);
-});
+};
 
 ScoreSelector.displayName = "ScoreSelector";
 

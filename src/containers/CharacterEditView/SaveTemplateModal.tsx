@@ -1,5 +1,11 @@
 // react
-import { Computed, Show, observer, reactive } from "@legendapp/state/react";
+import {
+	Computed,
+	Show,
+	observer,
+	reactive,
+	use$,
+} from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -24,6 +30,11 @@ const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 
 const SaveTemplateModal: React.FC = observer(() => {
+	const cannotSaveTemplate = use$(
+		() => !templates$.isUnique.get() || templates$.id.get() === "",
+	);
+	const templatesCategories = use$(templates$.categories);
+
 	return (
 		<div className={"flex flex-col gap-2"}>
 			<h3>Please enter a name for this character template</h3>
@@ -51,7 +62,7 @@ const SaveTemplateModal: React.FC = observer(() => {
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									{templates$.categories.get().map((category) => (
+									{templatesCategories.map((category) => (
 										<Show key={category} if={category !== ""}>
 											<SelectItem key={category} value={category}>
 												{category}
@@ -89,7 +100,7 @@ const SaveTemplateModal: React.FC = observer(() => {
 				</Button>
 				<Button
 					type={"button"}
-					disabled={!templates$.isUnique.get() || templates$.id.get() === ""}
+					disabled={cannotSaveTemplate}
 					onClick={() => {
 						dialog$.hide();
 						templates$.saveTemplate();

@@ -3,7 +3,7 @@ import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { reactive } from "@legendapp/state/react";
+import { reactive, use$ } from "@legendapp/state/react";
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -37,9 +37,26 @@ interface GroupedModsProps {
 	groupedMods: Mod[][];
 }
 
-type AssignedMods = Record<string, CharacterNames>;
-
 const ReactiveCollapsible = reactive(Collapsible.Root);
+
+const modElements = (
+	mods: Mod[],
+	modGroupsElement: React.RefObject<HTMLDivElement>,
+) => {
+	return mods.map((mod) => {
+		return (
+			<RenderIfVisible
+				className={"w-[21em]"}
+				defaultHeight={278}
+				key={`RIV-${mod.id}`}
+				visibleOffset={4000}
+				root={modGroupsElement}
+			>
+				<ModDetail mod={mod} />
+			</RenderIfVisible>
+		);
+	});
+};
 
 const GroupedMods = ({
 	groupedMods,
@@ -48,7 +65,7 @@ const GroupedMods = ({
 }: GroupedModsProps) => {
 	const [t] = useTranslation("explore-ui");
 	const [tDomain] = useTranslation("domain");
-	const characterById = profilesManagement$.activeProfile.characterById.get();
+	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
 	const modGroupsElement = React.createRef<HTMLDivElement>();
 
@@ -90,22 +107,6 @@ const GroupedMods = ({
 			endBatch();
 		},
 	});
-
-	const modElements = (mods: Mod[]) => {
-		return mods.map((mod) => {
-			return (
-				<RenderIfVisible
-					className={"w-[21em]"}
-					defaultHeight={278}
-					key={`RIV-${mod.id}`}
-					visibleOffset={4000}
-					root={modGroupsElement}
-				>
-					<ModDetail mod={mod} />
-				</RenderIfVisible>
-			);
-		});
-	};
 
 	return (
 		<div className="flex flex-col grow-1">
@@ -156,13 +157,13 @@ const GroupedMods = ({
 				className="flex flex-col overflow-y-auto overscroll-y-contain grow-1"
 				ref={modGroupsElement}
 			>
-				{modGroups$.modGroups.map((modGroup) => {
+				{modGroups$.modGroups.map((modGroup$) => {
 					return (
 						<ReactiveCollapsible
-							key={`modgroup-${modGroup.key.get()}`}
-							$open={modGroup.isOpen}
+							key={`modgroup-${modGroup$.key.peek()}`}
+							$open={modGroup$.isOpen}
 							onOpenChange={(isOpen) => {
-								modGroup.isOpen.set(isOpen);
+								modGroup$.isOpen.set(isOpen);
 							}}
 						>
 							<Collapsible.Trigger
@@ -171,27 +172,27 @@ const GroupedMods = ({
 							>
 								<div>
 									<span className="basis-20%">
-										{tDomain(`slots.name.${modGroup.mods[0].slot.get()}`)}
+										{tDomain(`slots.name.${modGroup$.mods[0].slot.peek()}`)}
 									</span>
 									<span className="basis-30%">
-										{tDomain(`stats.${modGroup.mods[0].get().modset}`)}
+										{tDomain(`stats.${modGroup$.mods[0].modset.peek()}`)}
 									</span>
 									<span className="basis-30%">
 										{tDomain(
-											`stats.${modGroup.mods[0].primaryStat.get().getDisplayType()}`,
+											`stats.${modGroup$.mods[0].primaryStat.peek().getDisplayType()}`,
 										)}
 									</span>
 									<span className="basis-20%">
 										(
 										{tDomain("ModWithCount", {
-											count: modGroup.get().mods.length,
+											count: modGroup$.peek().mods.length,
 										})}
 										)
 									</span>
 								</div>
 							</Collapsible.Trigger>
 							<Collapsible.Content className="flex flex-row flex-wrap justify-evenly gap-y-4 p-y-2 text-center">
-								{modElements(modGroup.mods.get())}
+								{modElements(modGroup$.mods.peek(), modGroupsElement)}
 							</Collapsible.Content>
 						</ReactiveCollapsible>
 					);

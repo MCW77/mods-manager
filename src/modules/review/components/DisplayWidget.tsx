@@ -1,5 +1,5 @@
 // react
-import { reactive } from "@legendapp/state/react";
+import { reactive, use$ } from "@legendapp/state/react";
 
 // utils
 import flatten from "lodash-es/flatten";
@@ -47,11 +47,12 @@ const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
-	const modById = profilesManagement$.activeProfile.modById.get();
-	const baseCharacterById = characters$.baseCharacterById.get();
-	const filter = review$.modListFilter.get();
-	const flatCharacterModdings =
-		compilations$.defaultCompilation.flatCharacterModdings.get();
+	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
+	const baseCharacterById = use$(characters$.baseCharacterById);
+	const filter = use$(review$.modListFilter);
+	const flatCharacterModdings = use$(
+		compilations$.defaultCompilation.flatCharacterModdings,
+	);
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: CharacterModdings,
@@ -68,7 +69,8 @@ const DisplayWidget = () => {
           assignedMods.filter(mod => mod.shouldLevel(target) || mod.shouldSlice(profile.characters[id], target)),
         missedGoals: missedGoals,
       }));
-*/
+			*/
+
 			for (const assignment of tempAssignments) {
 				assignment.assignedMods = assignment.assignedMods.filter(
 					(mod) =>

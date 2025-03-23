@@ -1,6 +1,6 @@
 // state
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
-import { Show } from "@legendapp/state/react";
+import { Show, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -37,8 +37,9 @@ const SelectionActions = ({
 	lastSelectedCharacterIndex,
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
-	const selectedCharacters =
-		compilations$.defaultCompilation.selectedCharacters.get();
+	const selectedCharacters = use$(
+		compilations$.defaultCompilation.selectedCharacters,
+	);
 
 	return (
 		<div className="flex gap-2">
@@ -84,7 +85,7 @@ const SelectionActions = ({
 			<Button
 				className="flex flex-gap-2"
 				type="button"
-				onClick={() => isSelectionExpanded$.set(!isSelectionExpanded$.get())}
+				onClick={() => isSelectionExpanded$.toggle()}
 			>
 				<Show
 					if={isSelectionExpanded$}

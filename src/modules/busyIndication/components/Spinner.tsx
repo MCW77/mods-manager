@@ -1,13 +1,16 @@
 // state
-import { Show, observer } from "@legendapp/state/react";
+import { Show, use$ } from "@legendapp/state/react";
+
 import { isBusy$ } from "../state/isBusy";
 
 // styles
 import "./Spinner.css";
 
-const Spinner: React.FC = observer(() => {
+const Spinner = () => {
+	const isBusy = use$(isBusy$);
+
 	return (
-		<Show if={isBusy$.get()}>
+		<Show if={isBusy}>
 			<div
 				className={`absolute inset-0 bg-black/50 m-0 p-2 z-300 text-center
           before:content-[''] before:inline-block before:h-full before:align-middle
@@ -21,7 +24,7 @@ const Spinner: React.FC = observer(() => {
 			</div>
 		</Show>
 	);
-});
+};
 
 Spinner.displayName = "Spinner";
 

@@ -1,10 +1,9 @@
 // react
-import type React from "react";
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { observer, reactive, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -23,6 +22,9 @@ const ReactiveSwitch = reactive(Switch);
 
 const ViewSetupWidget: React.FC = observer(() => {
 	const [t] = useTranslation("explore-ui");
+	const isGroupingEnabled = use$(
+		modsView$.activeViewSetupInActiveCategory.isGroupingEnabled,
+	);
 
 	return (
 		<div
@@ -35,9 +37,7 @@ const ViewSetupWidget: React.FC = observer(() => {
 					<Label htmlFor={"group-mods"}>Group mods: </Label>
 					<ReactiveSwitch
 						id={"group-mods"}
-						$checked={() =>
-							modsView$.activeViewSetupInActiveCategory.isGroupingEnabled.get()
-						}
+						$checked={() => isGroupingEnabled}
 						onCheckedChange={() =>
 							modsView$.activeViewSetupInActiveCategory.isGroupingEnabled.toggle()
 						}
