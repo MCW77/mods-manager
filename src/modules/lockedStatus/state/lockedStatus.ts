@@ -7,7 +7,7 @@ import {
 	endBatch,
 	type Observable,
 	observable,
-	ObservableObject,
+	type ObservableObject,
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
