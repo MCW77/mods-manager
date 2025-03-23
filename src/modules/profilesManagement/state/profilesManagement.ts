@@ -253,7 +253,7 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 		},
 	});
 
-const nowTimer = setInterval(() => {
+let nowTimer = setInterval(() => {
 	profilesManagement$.now.set(Date.now());
 }, 500);
 
@@ -261,6 +261,15 @@ when(
 	() => !profilesManagement$.hasProfiles.get(),
 	() => {
 		clearInterval(nowTimer);
+	},
+);
+
+when(
+	() => profilesManagement$.hasProfiles.get(),
+	() => {
+		nowTimer = setInterval(() => {
+			profilesManagement$.now.set(Date.now());
+		}, 500);
 	},
 );
 
