@@ -1,7 +1,7 @@
 // react
 import type React from "react";
 import { lazy } from "react";
-import { observer, reactive } from "@legendapp/state/react";
+import { Memo, observer, reactive, use$ } from "@legendapp/state/react";
 
 // styles
 import "./CharacterList.css";
@@ -32,10 +32,19 @@ import { Button } from "#ui/button";
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
+	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "#/components/ui/tooltip";
+import { Label } from "#/components/ui/label";
 
 const ReactiveSelect = reactive(Select);
 
@@ -81,11 +90,14 @@ const characterBlockDragLeave = () => {
 
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 	({ characterId, target, index }: CharacterBlockProps) => {
-		const characterById = profilesManagement$.activeProfile.characterById.get();
-		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		const baseCharacterById = characters$.baseCharacterById.get();
+		const characterById = use$(profilesManagement$.activeProfile.characterById);
+		const allycode = use$(profilesManagement$.profiles.activeAllycode);
+		const baseCharacterById = use$(characters$.baseCharacterById);
 		const character = characterById[characterId];
-		const selectedPlan = target.id;
+		const activePlan = target.id;
+		const charactersLockedStatus = use$(
+			lockedStatus$.ofActivePlayerByCharacterId[characterId],
+		);
 
 		/**
 		 * @param dropCharacterIndex The index of the character on which the drop is occurring or null (No characters in the list)
@@ -127,7 +139,14 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 				(event.target as HTMLDivElement).classList.remove("drop-character");
 			};
 		};
-
+		/*
+		let handleValueChange = (value: string) => {
+			const newTarget = structuredClone(target);
+			newTarget.minimumModDots = Number(value);
+			compilations$.saveTarget(character.id, newTarget);
+			(document?.activeElement as HTMLSelectElement)?.blur();
+		};
+*/
 		/**
 		 * Renders the set of 10 icons that show the state of a selected character
 		 * @param character {Character}
@@ -148,39 +167,10 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			const blankTargetActive = OptimizationPlan.isBlank(target)
 				? "active"
 				: "";
-			const lockedActive = lockedStatus$.ofActivePlayerByCharacterId[
-				character.id
-			].get()
-				? "active"
-				: "";
-
-			let handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-				const newTarget = structuredClone(target);
-				newTarget.minimumModDots = Number(event.target.value);
-				compilations$.saveTarget(character.id, newTarget);
-				(document?.activeElement as HTMLSelectElement)?.blur();
-			};
-			handleChange = handleChange.bind(this);
+			const lockedActive = charactersLockedStatus ? "active" : "";
 
 			return (
 				<div className={"character-icons"}>
-					<span
-						className={"icon minimum-dots"}
-						title={`This character will only use mods with at least ${minimumDots} ${
-							1 === minimumDots ? "dot" : "dots"
-						}`}
-					>
-						<select value={minimumDots} onChange={handleChange}>
-							{[1, 2, 3, 4, 5, 6].map((dots) => (
-								<option key={dots} value={dots}>
-									{dots}
-								</option>
-							))}
-						</select>
-						<span className={` ${1 < minimumDots ? "green active" : "gray"}`}>
-							{minimumDots}
-						</span>
-					</span>
 					<span
 						className={`icon restrictions ${restrictionsActive}`}
 						title={
@@ -274,11 +264,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 				onDoubleClick={() => compilations$.unselectCharacter(index)}
 			>
 				<div
-					className={
-						lockedStatus$.ofActivePlayerByCharacterId[character.id].get()
-							? `${baseClass} locked`
-							: baseClass
-					}
+					className={charactersLockedStatus ? `${baseClass} locked` : baseClass}
 					draggable={true}
 					onDragStart={characterBlockDragStart(index)}
 				>
@@ -290,29 +276,10 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 							: character.id}
 					</div>
 					<div className={"target p-y-1 flex items-center flex-wrap gap-2"}>
-						<ReactiveSelect
-							$value={() => selectedPlan}
-							onValueChange={(value) => {
-								const target = Character.targets(
-									characterSettings,
-									character,
-								).find((target) => target.id === value);
-								if (target !== undefined) {
-									compilations$.changeTarget(index, target);
-								}
-							}}
-						>
-							<SelectTrigger className={"min-w-24 w-fit h-6 px-2 inline-flex"}>
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent
-								className={"w-32 min-w-12"}
-								position={"popper"}
-								sideOffset={5}
-							>
-								{options}
-							</SelectContent>
-						</ReactiveSelect>
+						<Label>Target:</Label>
+						<Label className="dark:text-white light:text-black">
+							{activePlan}
+						</Label>
 						<Button
 							size={"xs"}
 							type={"button"}

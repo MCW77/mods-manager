@@ -1,12 +1,15 @@
 // react
 import { lazy } from "react";
 import {
+	For,
 	Memo,
 	observer,
 	reactive,
 	Reactive,
 	Show,
+	use$,
 	useMount,
+	useObservable,
 } from "@legendapp/state/react";
 
 // state
@@ -62,6 +65,15 @@ import {
 	SelectValue,
 } from "#ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs-vertical";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuLabel,
+	DropdownMenuRadioGroup,
+	DropdownMenuRadioItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "#/components/ui/dropdown-menu";
 
 const ReactiveButton = reactive(Button);
 const ReactiveInput = reactive(Input);
@@ -75,17 +87,25 @@ type ComponentProps = {
 
 const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
-		const allycode = profilesManagement$.profiles.activeAllycode.get();
-		const baseCharacterById = characters$.baseCharacterById.get();
-		const progress = progress$.optimizationStatus.get();
-		const modAssignments =
-			compilations$.defaultCompilation.flatCharacterModdings.get();
-
+		const allycode = use$(profilesManagement$.profiles.activeAllycode);
+		const baseCharacterById = use$(characters$.baseCharacterById);
+		const progress = use$(progress$.optimizationStatus);
+		const modAssignments = use$(
+			compilations$.defaultCompilation.flatCharacterModdings,
+		);
+		const targetIsInAdvancedEditMode = use$(target$.isInAdvancedEditMode);
+		const targetMinimumModDots = use$(
+			() => target$.target.minimumModDots.get()?.toString() ?? "5",
+		);
+		const currentCharacter = use$(optimizerView$.currentCharacter);
+		const targetName = use$(target$.target.id);
 		const targetsNames = profilesManagement$.activeProfile.characterById[
 			character.id
 		].targets
 			.peek()
 			.map((target) => target.id);
+		const targets = Character.targets(characterSettings, character);
+		//		const targetsNames$ = useObservable(targets.map((target) => target.id));
 
 		const cloneOptimizationPlan = () => structuredClone(target);
 
@@ -346,7 +366,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				className={
 					"character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8"
 				}
-				noValidate={target$.isInAdvancedEditMode.get()}
+				noValidate={targetIsInAdvancedEditMode}
 				onSubmit={(e) => {
 					e.preventDefault();
 					saveTarget();
@@ -365,7 +385,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					</div>
 					<div className={"flex gap-2 justify-center items-center"}>
 						<div className={"actions p-2 flex gap-2 justify-center"}>
-							<Show if={target$.isTargetChanged.get()}>
+							<Show if={target$.isTargetChanged}>
 								{() => (
 									<Button
 										type={"button"}
@@ -377,7 +397,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									</Button>
 								)}
 							</Show>
-							<Show if={target$.canDeleteTarget.get()}>
+							<Show if={target$.canDeleteTarget}>
 								{() => (
 									<Button
 										type={"button"}
@@ -403,7 +423,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							<Memo>
 								{() => (
 									<ReactiveButton
-										$disabled={target$.isUnsaveable.get()}
+										$disabled={target$.isUnsaveable}
 										type={"submit"}
 									>
 										Save
@@ -421,6 +441,46 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 								target$.target.id.set(e.currentTarget.value);
 							}}
 						/>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant="outline">Open</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent className="w-56">
+								<DropdownMenuLabel>Targets</DropdownMenuLabel>
+								<DropdownMenuSeparator />
+								<DropdownMenuRadioGroup
+									value={targetName}
+									onValueChange={(value) => {
+										const foundTarget = targets.find(
+											(targetItem) => targetItem.id === value,
+										);
+
+										if (foundTarget !== undefined) {
+											beginBatch();
+											compilations$.changeTarget(
+												currentCharacter.index,
+												foundTarget,
+											);
+											target$.target.set(foundTarget);
+											target$.uneditedTarget.set(structuredClone(foundTarget));
+											endBatch();
+										}
+									}}
+								>
+									<For each={target$.namesOfAllTargets}>
+										{(targetName$) => {
+											const targetName = use$(targetName$);
+
+											return (
+												<DropdownMenuRadioItem value={targetName}>
+													{targetName}
+												</DropdownMenuRadioItem>
+											);
+										}}
+									</For>
+								</DropdownMenuRadioGroup>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 				</div>
 				<Tabs
@@ -443,9 +503,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									<span>
 										<ReactiveSelect
 											name={"mod-dots"}
-											$value={() =>
-												target$.target.minimumModDots.get()?.toString() ?? "5"
-											}
+											$value={() => targetMinimumModDots}
 											onValueChange={(value) => {
 												if (value === "") return;
 												target$.target.minimumModDots.set(

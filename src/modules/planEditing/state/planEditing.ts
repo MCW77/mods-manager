@@ -21,6 +21,9 @@ const target$: PlanEditing = observable({
 		const character = characterSettings[
 			target$.characterId.get()
 		] as CharacterSettings;
+		if (!character) {
+			return [];
+		}
 		return character.targets.map((target) => target.id);
 	},
 	namesOfAllTargets: () => {
