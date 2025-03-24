@@ -1,10 +1,15 @@
-import { defineConfig, presetUno, presetIcons, presetTypography } from "unocss";
+import {
+	defineConfig,
+	presetWind3,
+	presetIcons,
+	presetTypography,
+} from "unocss";
 import presetAnimations from "unocss-preset-animations";
 import presetShadcn from "./src/lib/shadcn/preset.shadcn";
 
 export default defineConfig({
   presets: [
-    presetUno(),
+		presetWind3(),
     presetAnimations(),
     presetIcons(),
     presetShadcn(),
@@ -29,13 +34,13 @@ export default defineConfig({
           to: { height: 0 },
         },
         "spin-slow": {
-          from: { transform: 'rotate(0deg)' },
-          to: { transform: 'rotate(360deg)' },
+					from: { transform: "rotate(0deg)" },
+					to: { transform: "rotate(360deg)" },
         },
         "spin-slow-reverse": {
-          from: { transform: 'rotate(360deg)' },
-          to: { transform: 'rotate(0deg)' },
-        }
+					from: { transform: "rotate(360deg)" },
+					to: { transform: "rotate(0deg)" },
+				},
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
