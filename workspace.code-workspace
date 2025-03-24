@@ -15,10 +15,8 @@
 		"typescript.suggest.completeFunctionCalls": true,
 		"typescript.suggest.jsdoc.generateReturns": false,
 		"typescript.suggest.completeJSDocs": false,
-		"gitlens.codeLens.scopes": [
-			"document",
-			"containers",
-			"blocks"
-		]
+		"gitlens.codeLens.scopes": ["document", "containers", "blocks"],
+		"LineCount.statistics": false,
+		"LineCount.includes": ["src/**/*"]
 	}
 }
