@@ -201,6 +201,9 @@ importers:
       unocss-preset-animations:
         specifier: ^1.1.1
         version: 1.1.1(@unocss/preset-wind@66.1.0-beta.6)(unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2)))
+      unocss-preset-shadcn:
+        specifier: ^0.5.0
+        version: 0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.1.0-beta.6)(unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2))))(unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2)))
       vite:
         specifier: ^5.4.11
         version: 5.4.11(@types/node@22.13.11)(terser@5.39.0)
@@ -3483,6 +3486,12 @@ packages:
     peerDependencies:
       '@unocss/preset-wind': '>=0.56.0 < 101'
       unocss: '>=0.56.0 < 101'
+
+  unocss-preset-shadcn@0.5.0:
+    resolution: {integrity: sha512-e/bF/+b5adcolHio3kst3WVF+f09+BiDkyTshUVqcWXB0RabQ0T8lzqfM3KAegTTi1iJo1jjCZoE88cUzaVDmQ==}
+    peerDependencies:
+      unocss: '>=0.56.0 < 101'
+      unocss-preset-animations: ^1.1.1
 
   unocss@66.0.0:
     resolution: {integrity: sha512-SHstiv1s7zGPSjzOsADzlwRhQM+6817+OqQE3Fv+N/nn2QLNx1bi3WXybFfz5tWkzBtyTZlwdPmeecsIs1yOCA==}
@@ -7358,6 +7367,11 @@ snapshots:
     dependencies:
       '@unocss/preset-wind': 66.1.0-beta.6
       unocss: 66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2))
+
+  unocss-preset-shadcn@0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.1.0-beta.6)(unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2))))(unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2))):
+    dependencies:
+      unocss: 66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2))
+      unocss-preset-animations: 1.1.1(@unocss/preset-wind@66.1.0-beta.6)(unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2)))
 
   unocss@66.0.0(postcss@8.5.3)(vite@5.4.11(@types/node@22.13.11)(terser@5.39.0))(vue@3.5.13(typescript@5.8.2)):
     dependencies:
