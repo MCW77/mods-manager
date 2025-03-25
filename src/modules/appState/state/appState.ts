@@ -112,7 +112,7 @@ const loadModsManagerBackup = (backup: PersistableBackup) => {
 };
 
 const isModsManagerBackup = (parsedJSON: unknown) => {
-	return v.is(ModsManagerSchema, parsedJSON);
+	return v.is(ModsManagerBackupSchema, parsedJSON);
 };
 
 const appState$: ObservableObject<AppState> = observable({

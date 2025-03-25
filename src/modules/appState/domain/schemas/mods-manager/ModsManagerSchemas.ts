@@ -22,7 +22,7 @@ const ModsManagerBackupSchema = v.object({
 	sessionIds: v.record(v.string(), v.string()),
 	settings: SettingsByProfileSchema,
 	version: v.string(),
-	client: v.literal("mods-manager"),
+	client: v.exactOptional(v.literal("mods-manager"), "mods-manager"),
 });
 
 const ModsManagerSchema = v.object({
