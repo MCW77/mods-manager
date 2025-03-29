@@ -23,9 +23,10 @@ const EquippedFilter = () => {
 			<div id={"equipped-filter1"} className="flex flex-row gap-2 flex-wrap">
 				<Memo>
 					{() => {
-						const equippedState = use$(
-							modsView$.activeFilter.equipped.equipped,
-						);
+						const equippedState = use$(() => {
+							const activeFilter = modsView$.activeFilter.get();
+							return activeFilter.equipped.equipped;
+						});
 						const value = equippedState || 0;
 						const className =
 							value === 1

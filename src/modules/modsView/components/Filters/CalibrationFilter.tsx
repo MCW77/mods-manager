@@ -35,9 +35,10 @@ const CalibrationFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const calibrationState = use$(
-									modsView$.activeFilter.calibration[String(calibrationCost)],
-								);
+								const calibrationState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.calibration[String(calibrationCost)];
+								});
 								const value = calibrationState || 0;
 								const className =
 									value === 1

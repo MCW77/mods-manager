@@ -47,7 +47,10 @@ const TierFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const tierState = use$(modsView$.activeFilter.tier[tier]);
+								const tierState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.tier[tier];
+								});
 								const value = tierState || 0;
 								const stateCSS =
 									value === 1

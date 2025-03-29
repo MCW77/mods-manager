@@ -72,7 +72,10 @@ const SlotFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const slotState = use$(modsView$.activeFilter.slot[slot]);
+								const slotState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.slot[slot];
+								});
 								const value = slotState || 0;
 								const slotCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/empty-mod-shapes.webp')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
 								const stateCSS = value === 0 ? "opacity-50" : "opacity-100";

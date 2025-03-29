@@ -82,7 +82,10 @@ const SetFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const modsetState = use$(modsView$.activeFilter.modset[set]);
+								const modsetState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.modset[set];
+								});
 								const value = modsetState || 0;
 								const setCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
 								const stateCSS = value === 0 ? "opacity-50" : "opacity-100";

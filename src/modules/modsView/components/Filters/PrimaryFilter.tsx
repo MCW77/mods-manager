@@ -35,9 +35,10 @@ const PrimaryFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const primaryState = use$(
-									modsView$.activeFilter.primary[primary],
-								);
+								const primaryState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.primary[primary];
+								});
 								const value = primaryState || 0;
 								const className =
 									value === 1

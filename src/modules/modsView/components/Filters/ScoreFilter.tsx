@@ -22,7 +22,10 @@ const ScoreFilter = () => {
 				modsView$.activeViewSetupInActiveCategory.modScore.get(),
 		),
 	);
-	const scoreMinMax = use$(modsView$.activeFilter.score);
+	const scoreMinMax = use$(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.score;
+	});
 	const max = score?.isFlatOrPercentage === "IsPercentage" ? 100 : 800;
 	const value = scoreMinMax || [0, 100];
 

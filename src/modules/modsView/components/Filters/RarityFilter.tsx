@@ -36,7 +36,10 @@ const RarityFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const rarityState = use$(modsView$.activeFilter.rarity[rarity]);
+								const rarityState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.rarity[rarity];
+								});
 								const value = rarityState || 0;
 								const className =
 									value === 1

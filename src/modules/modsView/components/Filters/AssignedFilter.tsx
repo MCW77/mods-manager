@@ -23,9 +23,10 @@ const AssignedFilter = () => {
 			<div id={"assigned-filter1"} className="flex flex-row gap-2 flex-wrap">
 				<Memo>
 					{() => {
-						const assignedState = use$(
-							modsView$.activeFilter.assigned.assigned,
-						);
+						const assignedState = use$(() => {
+							const activeFilter = modsView$.activeFilter.get();
+							return activeFilter.assigned.assigned;
+						});
 						const value = assignedState || 0;
 						const className =
 							value === 1

@@ -14,7 +14,10 @@ import { Slider } from "#ui/slider";
 
 const SpeedFilter = () => {
 	const [t] = useTranslation("global-ui");
-	const scoreMinMax = use$(modsView$.activeFilter.speedRange);
+	const scoreMinMax = use$(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.speedRange;
+	});
 	const value = scoreMinMax || [3, 31];
 
 	return (

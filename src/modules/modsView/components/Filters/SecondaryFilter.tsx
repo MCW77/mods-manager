@@ -38,9 +38,10 @@ const SecondaryFilter = () => {
 						return (
 							<Memo key={inputName}>
 								{() => {
-									const secondaryState = use$(
-										modsView$.activeFilter.secondary[secondary],
-									);
+									const secondaryState = use$(() => {
+										const activeFilter = modsView$.activeFilter.get();
+										return activeFilter.secondary[secondary];
+									});
 									const value = secondaryState || 0;
 									const className =
 										value === 1

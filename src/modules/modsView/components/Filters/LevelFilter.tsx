@@ -38,7 +38,10 @@ const LevelFilter = () => {
 					return (
 						<Memo key={inputName}>
 							{() => {
-								const levelState = use$(modsView$.activeFilter.level[level]);
+								const levelState = use$(() => {
+									const activeFilter = modsView$.activeFilter.get();
+									return activeFilter.level[level];
+								});
 								const value = levelState || 0;
 								const className =
 									value === 1
