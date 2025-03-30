@@ -11,6 +11,21 @@ type RecordWithNestedEntities = {
 	[key: string]: Entity | string | unknown;
 };
 
+const storeNames = [
+	"OptimizationSettings",
+	"IncrementalOptimization",
+	"Profiles",
+	"CharactersManagement",
+	"HotUtils",
+	"About",
+	"Templates",
+	"TemplatesAddingMode",
+	"ViewSetup",
+	"Characters",
+	"LockedStatus",
+	"Compilations",
+	"DefaultCompilation",
+];
 // For empty string id, upgradeFunction handles an array of records
 function itemUpgrade(
 	db: IDBDatabase,
@@ -97,6 +112,18 @@ function upgradeFilterTo18(
 		Reflect.deleteProperty(filter, "secondariesscoretier");
 	filter.speedRange = [0, 31];
 }
+
+function createStores(db: IDBDatabase) {
+	for (const storeName of storeNames) {
+		if (!db.objectStoreNames.contains(storeName)) {
+			const store = db.createObjectStore(storeName, {
+				keyPath: "id",
+				autoIncrement: false,
+			});
+		}
+	}
+}
+
 function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
 		itemUpgrade(
@@ -251,26 +278,19 @@ const persistOptions = configureSynced({
 		plugin: observablePersistIndexedDB({
 			databaseName: "GIMO",
 			version: 18,
-			tableNames: [
-				"OptimizationSettings",
-				"IncrementalOptimization",
-				"Profiles",
-				"CharactersManagement",
-				"HotUtils",
-				"About",
-				"Templates",
-				"TemplatesAddingMode",
-				"ViewSetup",
-				"Characters",
-				"LockedStatus",
-				"Compilations",
-				"DefaultCompilation",
-			],
+			tableNames: storeNames,
 			onUpgradeNeeded: (event) => {
 				const request = event.target as IDBOpenDBRequest;
 				const db = request.result as IDBDatabase;
 				const transaction = request.transaction;
-				if (event.newVersion === 18 && transaction !== null)
+				if (event.oldVersion === 0) {
+					createStores(db);
+				}
+				if (
+					event.oldVersion === 16 &&
+					event.newVersion === 18 &&
+					transaction !== null
+				)
 					upgradeTo18(db, transaction);
 			},
 		}),
