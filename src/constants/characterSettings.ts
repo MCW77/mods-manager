@@ -1307,6 +1307,40 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["NS", "hSTR NS"],
 	),
+	DARKREY: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 25,
+			spd: 100,
+			phys: 20,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Health",
+			health: 25,
+			spd: 100,
+			phys: 20,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	DARKTROOPER: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",

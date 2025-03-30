@@ -71,6 +71,7 @@ export const characterNames = [
 	"CT7567",
 	"CT210408",
 	"DAKA",
+	"DARKREY",
 	"DARKTROOPER",
 	"DARTHBANE",
 	"DARTHMALAK",
