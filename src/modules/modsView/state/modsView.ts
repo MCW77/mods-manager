@@ -177,6 +177,26 @@ const modsView$: ObservableObject<ModsViewObservable> =
 		},
 		reset: () => {
 			beginBatch();
+			modsView$.idOfActiveViewSetupByCategory.set({
+				Reveal: "DefaultReveal",
+				Level: "DefaultLevel",
+				Slice5Dot: "DefaultSlice5Dot",
+				Slice6E: "DefaultSlice6E",
+				Slice6Dot: "DefaultSlice6Dot",
+				Calibrate: "DefaultCalibrate",
+				AllMods: "DefaultAllMods",
+			});
+			modsView$.idOfSelectedFilterByCategory.set({
+				Reveal: "QuickFilter",
+				Level: "QuickFilter",
+				Slice5Dot: "QuickFilter",
+				Slice6E: "QuickFilter",
+				Slice6Dot: "QuickFilter",
+				Calibrate: "QuickFilter",
+				AllMods: "QuickFilter",
+			});
+			endBatch();
+			beginBatch();
 			syncStatus$.reset();
 			modsView$.quickFilter.assign(cloneQuickFilter());
 			endBatch();
