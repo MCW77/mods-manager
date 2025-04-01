@@ -67,7 +67,7 @@ function itemUpgrade(
 
 			request.onsuccess = (event: Event) => {
 				const oldData = (event.target as IDBRequest).result;
-				if (oldData) {
+				if (oldData && (!Array.isArray(oldData) || oldData.length > 0)) {
 					const newData = upgradeFunction(oldData);
 
 					// Delete and recreate the store in the current versionchange transaction
