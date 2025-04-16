@@ -1,0 +1,11 @@
+.bg-selected {
+	background-color: hsl(var(--selected)) !important;
+}
+
+.text-selected-foreground {
+	color: hsl(var(--selected-foreground)) !important;
+}
+
+.border-selected-border {
+	border-color: hsl(var(--selected-border)) !important;
+}

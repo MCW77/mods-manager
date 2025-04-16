@@ -25,26 +25,22 @@ const SpeedFilter = () => {
 			<Label className="p-r-2 text-[modgold]" htmlFor={"speed-filter1"}>
 				Speed Range
 			</Label>
-			<div
+			<Slider
+				className="w-24"
 				id={"speed-filter1"}
-				className="flex flex-row gap-1 justify-center flex-wrap"
-			>
-				<Slider
-					className="w-24"
-					max={31}
-					min={0}
-					step={1}
-					value={value}
-					onValueChange={(newValues: [number, number]) => {
-						const [newMin, newMax] = newValues;
-						if (newMin <= newMax) {
-							modsView$.activeFilter.speedRange.set(newValues);
-						} else {
-							modsView$.activeFilter.speedRange.set([newMax, newMax]);
-						}
-					}}
-				/>
-			</div>
+				max={31}
+				min={0}
+				step={1}
+				value={value}
+				onValueChange={(newValues: [number, number]) => {
+					const [newMin, newMax] = newValues;
+					if (newMin <= newMax) {
+						modsView$.activeFilter.speedRange.set(newValues);
+					} else {
+						modsView$.activeFilter.speedRange.set([newMax, newMax]);
+					}
+				}}
+			/>
 		</div>
 	);
 };

@@ -10,6 +10,7 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const modsView$ = stateLoader$.modsView$;
 
 // domain
+import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
 import {
 	type TierSettingsTiers,
 	tierSettingsTiers,
@@ -52,12 +53,7 @@ const TierFilter = () => {
 									return activeFilter.tier[tier];
 								});
 								const value = tierState || 0;
-								const stateCSS =
-									value === 1
-										? "border-inset bg-[#000040]/100"
-										: value === -1
-											? "border-inset bg-[#400000]/100 border-[#800000]/100 text-red-500 dark:bg-[#400000]/100 dark:border-[#800000]/100 dark:text-red-500"
-											: "text-slate-400 opacity-30";
+								const stateCSS = getFilterSelectionStyles(value);
 								const tierColor = ModConsts.tiersMap.get(Number(tier));
 								const className = `${stateCSS} ${tierColor}`;
 

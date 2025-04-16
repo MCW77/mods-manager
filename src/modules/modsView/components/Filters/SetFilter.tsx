@@ -87,7 +87,7 @@ const SetFilter = () => {
 									return activeFilter.modset[set];
 								});
 								const value = modsetState || 0;
-								const setCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
+								const setCSS = `w-[2.9em] h-[2.9em] pt-0 pr-[.2em] pb-[.2em] pl-.5 bg-origin-content bg-clip-content bg-[url('/img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
 								const stateCSS = value === 0 ? "opacity-50" : "opacity-100";
 								const className = `${setCSS} ${stateCSS}`;
 
