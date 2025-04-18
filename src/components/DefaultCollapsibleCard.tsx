@@ -2,7 +2,7 @@ import * as React from "react";
 
 import * as CC from "./ui/CollapsibleCard";
 import { ChevronDown } from "lucide-react";
-import { cn } from "#/lib/shadcn";
+import { cn } from "#lib/utils";
 
 interface DefaultCollapsibleCardProps {
 	title: string;
@@ -23,14 +23,16 @@ const DefaultCollapsibleCard = React.forwardRef<
 			{...props}
 		>
 			<CC.CollapsibleCardHeader className="flex flex-row justify-between p-2">
-				<CC.CollapsibleCardTitle className="align-middle">
-					{title}
-				</CC.CollapsibleCardTitle>
-				<CC.CollapsibleCardTrigger className="flex flex-row justify-around items-center">
-					<ChevronDown
-						className={`m-r0 h-4 w-4 ${isOpen ? "transform rotate-180" : ""}`}
-					/>
-				</CC.CollapsibleCardTrigger>
+				<div className="flex flex-row items-center justify-between w-full">
+					<CC.CollapsibleCardTitle className="align-middle">
+						{title}
+					</CC.CollapsibleCardTitle>
+					<CC.CollapsibleCardTrigger className="flex flex-row justify-around items-center">
+						<ChevronDown
+							className={`m-r0 h-4 w-4 ${isOpen ? "transform rotate-180" : ""}`}
+						/>
+					</CC.CollapsibleCardTrigger>
+				</div>
 			</CC.CollapsibleCardHeader>
 			<CC.CollapsibleCardContent className="p-2">
 				{children}

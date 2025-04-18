@@ -28,8 +28,10 @@ const ScoreSelector = () => {
 	const modScore = use$(modsView$.activeViewSetupInActiveCategory.modScore);
 
 	return (
-		<div>
-			<Label htmlFor={"score-select"}>{t("filter.ScoreHeadline")}</Label>
+		<div className={"flex items-center gap-2"}>
+			<Label className={"min-w-fit"} htmlFor={"score-select"}>
+				{t("filter.ScoreHeadline")}:
+			</Label>
 			<ReactiveSelect
 				$value={() => modScore}
 				onValueChange={(value) => {

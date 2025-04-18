@@ -90,7 +90,12 @@ const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 	return (
 		<div>
 			<h2>Move Summary</h2>
-			<pre id="summary_pre" className={"summary"}>
+			<pre
+				id="summary_pre"
+				className={
+					"bg-background p-1 overflow-y-auto text-shadow-none max-h-[calc(100vh-27em)]"
+				}
+			>
 				{summaryListContent(baseCharacterById, characterById, modAssignments)}
 			</pre>
 			<div className={"flex justify-center gap-2"}>

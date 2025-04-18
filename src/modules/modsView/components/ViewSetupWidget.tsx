@@ -29,7 +29,7 @@ const ViewSetupWidget: React.FC = observer(() => {
 	return (
 		<div
 			className={`w-28vw m-l-2 p-2 flex flex-col justify-between items-center gap-4
-                  bg-slate-950/30 border-2 border-solid border-slate-200 dark:border-slate-800`}
+                  bg-background/30 border-2 border-solid border-border`}
 		>
 			<div className={"flex flex-col justify-between items-center gap-2"}>
 				<ViewSetupManager />

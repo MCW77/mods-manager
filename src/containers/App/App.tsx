@@ -68,6 +68,8 @@ const App = () => {
 	const firstSection = use$(() =>
 		profilesManagement$.hasProfiles.get() ? "mods" : "help",
 	);
+	const tabStyle =
+		"flex data-[state=active]:grow-1 data-[state=inactive]:m-t-0 min-h-0";
 
 	useMount(() => {
 		console.log("App mounted");
@@ -111,9 +113,9 @@ const App = () => {
 				}
 			>
 				<div
-					className={`flex grow-1 justify-stretch overflow-hidden text-white
+					className={`flex grow-1 justify-stretch overflow-hidden text-foreground
 													before:content-["_"] before:fixed before:w-full before:h-full before:top-0 before:left-0 before:z-[-1] before:will-change-transform
-												  before:bg-cover before:bg-[url('/img/cantina-background.webp')] before:bg-no-repeat before:bg-center`}
+												  before:bg-cover before:dark:bg-[url('/img/cantina-background.webp')] before:bg-no-repeat before:bg-center`}
 				>
 					<Dialog />
 					<Spinner />
@@ -211,10 +213,7 @@ const App = () => {
 							{() => (
 								<Memo>
 									{() => (
-										<TabsContent
-											className={"flex data-[state=active]:grow-1 min-h-0"}
-											value="mods"
-										>
+										<TabsContent className={tabStyle} value="mods">
 											<ModsView />
 										</TabsContent>
 									)}
@@ -225,10 +224,7 @@ const App = () => {
 							{() => (
 								<Memo>
 									{() => (
-										<TabsContent
-											className={"flex data-[state=active]:grow-1 min-h-0"}
-											value="mod compilations"
-										>
+										<TabsContent className={tabStyle} value="mod compilations">
 											<CompilationsView />
 										</TabsContent>
 									)}
@@ -239,10 +235,7 @@ const App = () => {
 							{() => (
 								<Memo>
 									{() => (
-										<TabsContent
-											className={"flex data-[state=active]:grow-1 min-h-0"}
-											value="optimize"
-										>
+										<TabsContent className={tabStyle} value="optimize">
 											<Suspense fallback={<SimpleSpinner isVisible={true} />}>
 												<OptimizerView />
 											</Suspense>
@@ -255,26 +248,17 @@ const App = () => {
 							{() => (
 								<Memo>
 									{() => (
-										<TabsContent
-											className={"flex data-[state=active]:grow-1 min-h-0"}
-											value="settings"
-										>
+										<TabsContent className={tabStyle} value="settings">
 											<SettingsView />
 										</TabsContent>
 									)}
 								</Memo>
 							)}
 						</Show>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="help"
-						>
+						<TabsContent className={tabStyle} value="help">
 							<HelpView />
 						</TabsContent>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="about"
-						>
+						<TabsContent className={tabStyle} value="about">
 							<AboutView />
 						</TabsContent>
 					</ReactiveTabs>

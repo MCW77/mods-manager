@@ -52,16 +52,18 @@ const ProfilesManager = () => {
 				<ProfileSelector setAddMode={setIsAddingAProfile} />
 			)}
 			<Show if={profilesManagement$.profiles.activeAllycode}>
-				<div className="flex gap-1">
-					<Memo>
-						{() => (
+				<div className="flex items-center gap-2">
+					<Show
+						if={hotutils$.hasActiveSession}
+						else={() => (
 							<Button
+								className="aspect-ratio-square"
 								size={"icon"}
 								type={"button"}
 								variant={"outline"}
 								onClick={() => {
 									refreshPlayerData(
-										profilesManagement$.profiles.activeAllycode.get(),
+										profilesManagement$.profiles.activeAllycode.peek(),
 										true,
 										null,
 									);
@@ -73,43 +75,46 @@ const ProfilesManager = () => {
 								/>
 							</Button>
 						)}
-					</Memo>
-					<Show if={hotutils$.hasActiveSession}>
-						<Memo>
-							{() => (
-								<Button
-									size={"icon"}
-									type={"button"}
-									variant={"outline"}
-									onClick={() =>
-										refreshPlayerData(
-											profilesManagement$.profiles.activeAllycode.get(),
-											true,
-											hotutils$.activeSessionId.get() ?? null,
-										)
-									}
-								>
-									<span className="fa-layers">
-										<FontAwesomeIcon
-											icon={faArrowsRotate}
-											title={`${t("header.FetchHot")}`}
-										/>
-										<FontAwesomeIcon
-											icon={faFire}
-											size="sm"
-											transform="shrink-1 right-14 down-15"
-											color="Red"
-										/>
-									</span>
-								</Button>
-							)}
-						</Memo>
+					>
+						{() => (
+							<Button
+								className="aspect-ratio-square m-r-1 m-b-1"
+								size={"icon"}
+								type={"button"}
+								variant={"outline"}
+								onClick={() =>
+									refreshPlayerData(
+										profilesManagement$.profiles.activeAllycode.peek(),
+										true,
+										hotutils$.activeSessionId.peek() ?? null,
+									)
+								}
+							>
+								<span className="fa-layers">
+									<FontAwesomeIcon
+										icon={faArrowsRotate}
+										title={`${t("header.FetchHot")}`}
+									/>
+									<FontAwesomeIcon
+										icon={faFire}
+										size="sm"
+										transform="shrink-1 right-14 down-15"
+										color="Red"
+									/>
+								</span>
+							</Button>
+						)}
 					</Show>
 					<Memo>
 						{() => (
-							<span>
-								Last updated: {profilesManagement$.activeLastUpdated.get()}
-							</span>
+							<div className="flex flex-col items-center justify-center gap-1">
+								<span className="w-full min-w-max text-sm text-foreground text-balance">
+									Last updated:
+								</span>
+								<span className="w-full min-w-max text-sm text-foreground text-balance">
+									{profilesManagement$.activeLastUpdated.get()}
+								</span>
+							</div>
 						)}
 					</Memo>
 				</div>

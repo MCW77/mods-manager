@@ -24,9 +24,11 @@ const FlexSidebar = ({
 	const [isCollapsed2, setCollapsed] = useState(isCollapsed);
 
 	return (
-		(<div className={`flexsidebar-container flex relative duration-1000 ease ${isCollapsed2 ? "collapsed" : ""}`}>
+		<div
+			className={`flexsidebar-container flex relative duration-1000 ease ${isCollapsed2 ? "collapsed" : ""}`}
+		>
 			<span
-				className={`block absolute h-1.4em w-1em top-4em m-0 p-y-0 p-x-0.25em bg-#333 border-1px border-solid border-gray will-change[transform_left] transition-[transform,left] duration-1000 ease  z-1 ${isCollapsed2 ? "show left-0 rotate-180" : "hide left-28vw"}`}
+				className={`block absolute h-1.4em w-1em top-4em m-0 p-y-0 p-x-0.25em bg-background border-1px border-solid border-border will-change[transform_left] transition-[transform,left] duration-1000 ease  z-1 ${isCollapsed2 ? "show left-0 rotate-180" : "hide left-28vw"}`}
 				onClick={() => {
 					setCollapsed(!isCollapsed2);
 				}}
@@ -45,9 +47,17 @@ const FlexSidebar = ({
 					}`}
 				/>
 			</span>
-			<div className={`relative ${isCollapsed2 ? "flex-[0.0000001_1_0]" : "flex-[0.0000001_0_30vw]"} h-full overflow-x-hidden overflow-y-auto transition-[flex] duration-1000 ease will-change-[flex]`}>{sidebarContent}</div>
-			<div className={`flexsidebar-maincontent flex p-l-1.5em will-change-flex ${isCollapsed2 ? "flex-[0.000001_0_100vw)]" : "flex-[0.000001_1_calc(70vw_-_2em)]"}`}>{mainContent}</div>
-		</div>)
+			<div
+				className={`relative ${isCollapsed2 ? "flex-[0.0000001_1_0]" : "flex-[0.0000001_0_30vw]"} h-full overflow-x-hidden overflow-y-auto transition-[flex] duration-1000 ease will-change-[flex]`}
+			>
+				{sidebarContent}
+			</div>
+			<div
+				className={`flexsidebar-maincontent flex p-l-1.5em will-change-flex ${isCollapsed2 ? "flex-[0.000001_0_100vw)]" : "flex-[0.000001_1_calc(70vw_-_2em)]"}`}
+			>
+				{mainContent}
+			</div>
+		</div>
 	);
 };
 
@@ -57,13 +67,14 @@ interface FlexSidebarSidebarContentProps {
 	sidebarContent: JSX.Element | JSX.Element[];
 }
 
-const FlexSidebarSidebarContent = ({ sidebarContent }: FlexSidebarSidebarContentProps) => {
-  return (
-    <div className="absolute inset-0 m-l-1 overflow-hidden rounded-lg border-1 border-solid border-[#888]">
-      {sidebarContent}
-    </div>
-
-  );
+const FlexSidebarSidebarContent = ({
+	sidebarContent,
+}: FlexSidebarSidebarContentProps) => {
+	return (
+		<div className="absolute inset-0 m-l-1 overflow-hidden rounded-lg border-1 border-solid border-[#888]">
+			{sidebarContent}
+		</div>
+	);
 };
 
 FlexSidebarSidebarContent.displayName = "FlexSidebarSidebarContent";

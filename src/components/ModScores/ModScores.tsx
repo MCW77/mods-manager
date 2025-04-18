@@ -52,10 +52,7 @@ const ModScores = observer(
 							}}
 						</For>
 					</Show>
-					<Separator
-						className={"m-y-1 bg-slate-200 dark:bg-slate-200"}
-						decorative
-					/>
+					<Separator className={"m-y-1 border-foreground"} decorative />
 					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
 						{() => (
 							<li key={"5"} className={`class-${mod.getClass()}`}>

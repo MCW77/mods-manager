@@ -1,7 +1,7 @@
 // react
 import React, { useRef } from "react";
 
-import { cn } from "#lib/shadcn";
+import { cn } from "#lib/utils";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,9 +34,7 @@ const FileInput = React.memo(
 			<div className={cn("relative", className)}>
 				<Label htmlFor={id} className={"cursor-pointer w-full block group"}>
 					<Button
-						className={
-							"pointer-events-none w-full group-hover:bg-slate-900/90 dark:group-hover:bg-slate-50/90"
-						}
+						className={"pointer-events-none w-full group-hover:bg-primary/90"}
 					>
 						<FontAwesomeIcon className={"p-r-2"} icon={icon} />
 						{label}
