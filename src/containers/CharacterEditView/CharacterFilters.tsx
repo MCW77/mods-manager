@@ -264,159 +264,166 @@ const CharacterFilters: React.FC = observer(() => {
 	);
 
 	return (
-		<div className="p2 flex flex-col gap-2">
-			<div>
-				<Label className="p-r-2" htmlFor={"hide-selected"}>
-					Hide selected
-				</Label>
-				<Switch
-					id={"hide-selected"}
-					checked={hideSelectedCharacters}
-					onCheckedChange={() =>
-						charactersManagement$.filterSetup.hideSelectedCharacters.set(
-							!charactersManagement$.filterSetup.hideSelectedCharacters.get(),
-						)
-					}
-				/>
-			</div>
-			<div>
-				<Label className="p-r-2" htmlFor={"stars-range"}>
-					Stars
-				</Label>
-				<Slider
-					id={"stars-range"}
-					max={7}
-					min={0}
-					step={1}
-					value={starsRange}
-					onValueChange={(newValues: [number, number]) => {
-						const [newMin, newMax] = newValues;
-						if (newMin <= newMax) {
-							charactersManagement$.filterSetup.starsRange.set(newValues);
-						} else {
-							charactersManagement$.filterSetup.starsRange.set([
-								newMax,
-								newMax,
-							]);
+		<div className="p2 grid grid-cols-2 gap-2">
+			<div className="flex flex-col gap-2">
+				<div>
+					<Label className="p-r-2" htmlFor={"hide-selected"}>
+						Hide selected
+					</Label>
+					<Switch
+						id={"hide-selected"}
+						checked={hideSelectedCharacters}
+						onCheckedChange={() =>
+							charactersManagement$.filterSetup.hideSelectedCharacters.set(
+								!charactersManagement$.filterSetup.hideSelectedCharacters.get(),
+							)
 						}
-					}}
-				/>
-			</div>
-			<div>
-				<Label className="p-r-2" htmlFor={"level-range"}>
-					Level
-				</Label>
-				<Slider
-					id={"level-range"}
-					max={85}
-					min={0}
-					step={1}
-					value={levelRange}
-					onValueChange={(newValues: [number, number]) => {
-						const [newMin, newMax] = newValues;
-						if (newMin <= newMax) {
-							charactersManagement$.filterSetup.levelRange.set(newValues);
-						} else {
-							charactersManagement$.filterSetup.levelRange.set([
-								newMax,
-								newMax,
-							]);
-						}
-					}}
-				/>
-			</div>
-			<div>
-				<Label className="p-r-2" htmlFor={"gearLevel-range"}>
-					Gear
-				</Label>
-				<Slider
-					id={"gearLevel-range"}
-					max={22}
-					min={1}
-					step={1}
-					value={gearLevelRange}
-					onValueChange={(newValues: [number, number]) => {
-						const [newMin, newMax] = newValues;
-						if (newMin <= newMax) {
-							charactersManagement$.filterSetup.gearLevelRange.set(newValues);
-						} else {
-							charactersManagement$.filterSetup.gearLevelRange.set([
-								newMax,
-								newMax,
-							]);
-						}
-					}}
-				/>
-			</div>
-			<div className={"flex flex-col gap-1"}>
-				<Label className="p-r-2" htmlFor={"custom-character-filter"}>
-					Custom filter
-				</Label>
-				<ReactiveMultiColumnSelect
-					id={"custom-character-filter"}
-					groups={customCharacterFilterGroups}
-					selectedValue$={charactersManagement$.filterSetup.customFilterId}
-				/>
-			</div>
-			<div className={"flex gap-2 m-t-2"}>
-				<input
-					className="mb-2 bg-black color-white rounded-2 placeholder-blue-500 placeholder-opacity-50"
-					id="character-filter"
-					type="text"
-					placeholder="name, tag, or acronym"
-					value={quickFilter}
-					onChange={(e) =>
-						charactersManagement$.filterSetup.quickFilter.filter.set(
-							e.target.value.toLowerCase(),
-						)
-					}
-				/>
-				<Button
-					size={"xs"}
-					variant={"outline"}
-					onClick={() => {
-						charactersManagement$.addTextFilter();
-						charactersManagement$.filterSetup.quickFilter.filter.set("");
-					}}
-				>
-					+
-				</Button>
-			</div>
-			<div className="flex justify-around flex-wrap gap-2">
-				<Computed>
-					{() => {
-						return (
-							<For each={charactersManagement$.filterSetup.filtersById}>
-								{(filter$) => {
-									const filter = use$(filter$.filter);
-									const filterId = use$(filter$.id);
+					/>
+				</div>
+				<div className={"flex gap-1"}>
+					<Label className="p-r-2" htmlFor={"custom-character-filter"}>
+						Custom filter
+					</Label>
+					<ReactiveMultiColumnSelect
+						id={"custom-character-filter"}
+						groups={customCharacterFilterGroups}
+						selectedValue$={charactersManagement$.filterSetup.customFilterId}
+					/>
+				</div>
+				<div className={"flex flex-col gap-1"}>
+					<div className={"flex gap-2 m-t-2"}>
+						<input
+							className="mb-2 bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
+							id="character-filter"
+							type="text"
+							placeholder="name, tag, or acronym"
+							value={quickFilter}
+							onChange={(e) =>
+								charactersManagement$.filterSetup.quickFilter.filter.set(
+									e.target.value.toLowerCase(),
+								)
+							}
+						/>
+						<Button
+							size={"xs"}
+							variant={"outline"}
+							onClick={() => {
+								charactersManagement$.addTextFilter();
+								charactersManagement$.filterSetup.quickFilter.filter.set("");
+							}}
+						>
+							+
+						</Button>
+					</div>
+					<div className="flex justify-around flex-wrap gap-2">
+						<Computed>
+							{() => {
+								return (
+									<For each={charactersManagement$.filterSetup.filtersById}>
+										{(filter$) => {
+											const filter = use$(filter$.filter);
+											const filterId = use$(filter$.id);
 
-									return (
-										<div
-											key={`sort-option-${filterId}`}
-											className={"flex items-center"}
-										>
-											<Badge variant={"outline"}>
-												{filter}
-												<Button
-													size={"xxs"}
-													variant={"outline"}
-													onClick={() =>
-														charactersManagement$.filterSetup.filtersById.delete(
-															filter$.id.peek(),
-														)
-													}
+											return (
+												<div
+													key={`sort-option-${filterId}`}
+													className={"flex items-center"}
 												>
-													x
-												</Button>
-											</Badge>
-										</div>
-									);
-								}}
-							</For>
-						);
-					}}
-				</Computed>
+													<Badge variant={"outline"}>
+														{filter}
+														<Button
+															size={"xxs"}
+															variant={"outline"}
+															onClick={() =>
+																charactersManagement$.filterSetup.filtersById.delete(
+																	filter$.id.peek(),
+																)
+															}
+														>
+															x
+														</Button>
+													</Badge>
+												</div>
+											);
+										}}
+									</For>
+								);
+							}}
+						</Computed>
+					</div>
+				</div>
+			</div>
+			<div className="flex flex-col gap-2">
+				<div>
+					<Label className="p-r-2" htmlFor={"stars-range"}>
+						Stars
+					</Label>
+					<Slider
+						className="min-w-[19%]"
+						id={"stars-range"}
+						max={7}
+						min={0}
+						step={1}
+						value={starsRange}
+						onValueChange={(newValues: [number, number]) => {
+							const [newMin, newMax] = newValues;
+							if (newMin <= newMax) {
+								charactersManagement$.filterSetup.starsRange.set(newValues);
+							} else {
+								charactersManagement$.filterSetup.starsRange.set([
+									newMax,
+									newMax,
+								]);
+							}
+						}}
+					/>
+				</div>
+				<div>
+					<Label className="p-r-2" htmlFor={"level-range"}>
+						Level
+					</Label>
+					<Slider
+						id={"level-range"}
+						max={85}
+						min={0}
+						step={1}
+						value={levelRange}
+						onValueChange={(newValues: [number, number]) => {
+							const [newMin, newMax] = newValues;
+							if (newMin <= newMax) {
+								charactersManagement$.filterSetup.levelRange.set(newValues);
+							} else {
+								charactersManagement$.filterSetup.levelRange.set([
+									newMax,
+									newMax,
+								]);
+							}
+						}}
+					/>
+				</div>
+				<div>
+					<Label className="p-r-2" htmlFor={"gearLevel-range"}>
+						Gear
+					</Label>
+					<Slider
+						id={"gearLevel-range"}
+						max={22}
+						min={1}
+						step={1}
+						value={gearLevelRange}
+						onValueChange={(newValues: [number, number]) => {
+							const [newMin, newMax] = newValues;
+							if (newMin <= newMax) {
+								charactersManagement$.filterSetup.gearLevelRange.set(newValues);
+							} else {
+								charactersManagement$.filterSetup.gearLevelRange.set([
+									newMax,
+									newMax,
+								]);
+							}
+						}}
+					/>
+				</div>
 			</div>
 		</div>
 	);

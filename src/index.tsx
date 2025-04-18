@@ -11,6 +11,7 @@ import { observer, Show } from "@legendapp/state/react";
 import "./index.css";
 import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
+import "./selected-styles.css";
 import "./i18n";
 
 // state
@@ -23,13 +24,7 @@ import { Spinner } from "./components/Spinner/Spinner";
 const App = lazy(() => import("./containers/App/App"));
 
 const rootNode = document.getElementById("root");
-document.body.classList.add(
-	ui$.theme.get(),
-	"bg-white",
-	"dark:bg-slate-950",
-	"text-slate-500",
-	"dark:text-slate-400",
-);
+document.body.classList.add(ui$.theme.get());
 
 const RootComponent = observer(() => {
 	return (

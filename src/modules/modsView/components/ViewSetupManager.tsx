@@ -68,7 +68,7 @@ const ViewSetupManager = React.memo(() => {
 												modsView$.removeViewSetup(id);
 											}}
 										>
-											<TrashIcon className="h-3 w-3 text-slate-500" />
+											<TrashIcon className="h-3 w-3 text-muted-foreground" />
 										</Button>
 									</Show>
 								</div>

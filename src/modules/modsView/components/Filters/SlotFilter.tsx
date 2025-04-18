@@ -77,7 +77,7 @@ const SlotFilter = () => {
 									return activeFilter.slot[slot];
 								});
 								const value = slotState || 0;
-								const slotCSS = `w-[2.9em] h-[2.9em] p-[.2em] bg-origin-content bg-clip-content bg-[url('/img/empty-mod-shapes.webp')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
+								const slotCSS = `size-[2.9em] pt-0 pr-[.2em] pb-[.2em] pl-.5 bg-origin-content bg-clip-content bg-[url('/img/empty-mod-shapes.webp')] bg-[length:15em_5em] ${imageOffsets[slot][value]} bg-no-repeat`;
 								const stateCSS = value === 0 ? "opacity-50" : "opacity-100";
 								const className = `${slotCSS} ${stateCSS}`;
 

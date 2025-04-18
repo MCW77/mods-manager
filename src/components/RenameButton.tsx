@@ -40,11 +40,11 @@ const RenameButton: React.FC<RenameButtonProps> = observer(
 					<Button
 						variant="ghost"
 						size="icon"
-						className="h-6 w-6 p-0 hover:bg-slate-100 focus-visible:ring-1 focus-visible:ring-slate-400"
+						className="h-6 w-6 p-0 hover:bg-foreground focus-visible:ring-1 focus-visible:ring-nuted-foreground focus-visible:ring-offset-2 focus-visible:ring-muted-foreground"
 						onClick={handleRename}
 						onMouseDown={(e) => e.stopPropagation()}
 					>
-						<PencilIcon className="h-3 w-3 text-slate-500" />
+						<PencilIcon className="h-3 w-3 text-muted-foreground" />
 						<span className="sr-only">Rename {itemName}</span>
 					</Button>
 				</PopoverTrigger>
@@ -53,7 +53,7 @@ const RenameButton: React.FC<RenameButtonProps> = observer(
 					onPointerDownOutside={(e) => e.preventDefault()}
 				>
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
-						<h4 className="font-medium text-sm text-slate-900">Rename Item</h4>
+						<h4 className="font-medium text-sm text-popover">Rename Item</h4>
 						<Input
 							value={newName}
 							onChange={(e) => state$.newName.set(e.target.value)}
@@ -73,7 +73,7 @@ const RenameButton: React.FC<RenameButtonProps> = observer(
 							<Button
 								type="submit"
 								size="sm"
-								className="h-8 px-3 text-xs bg-slate-900 text-white hover:bg-slate-700"
+								className="h-8 px-3 text-xs bg-primary-foreground text-primary hover:bg-accent"
 							>
 								Save
 							</Button>

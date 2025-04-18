@@ -34,26 +34,22 @@ const ScoreFilter = () => {
 			<Label className="p-r-2 text-[modgold]" htmlFor={"score-filter1"}>
 				Score
 			</Label>
-			<div
+			<Slider
+				className="w-50"
 				id={"score-filter1"}
-				className="flex flex-row gap-1 justify-center flex-wrap"
-			>
-				<Slider
-					className="w-50"
-					max={max}
-					min={0}
-					step={1}
-					value={value}
-					onValueChange={(newValues: [number, number]) => {
-						const [newMin, newMax] = newValues;
-						if (newMin <= newMax) {
-							modsView$.activeFilter.score.set(newValues);
-						} else {
-							modsView$.activeFilter.score.set([newMax, newMax]);
-						}
-					}}
-				/>
-			</div>
+				max={max}
+				min={0}
+				step={1}
+				value={value}
+				onValueChange={(newValues: [number, number]) => {
+					const [newMin, newMax] = newValues;
+					if (newMin <= newMax) {
+						modsView$.activeFilter.score.set(newValues);
+					} else {
+						modsView$.activeFilter.score.set([newMax, newMax]);
+					}
+				}}
+			/>
 		</div>
 	);
 };

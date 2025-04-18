@@ -432,55 +432,59 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							</Memo>
 						</div>
 						<Label htmlFor={"plan-name"}>Target Name: </Label>
-						<ReactiveInput
-							className={"w-fit"}
-							id={"plan-name"}
-							type={"text"}
-							$value={target$.target.id}
-							onChange={(e: React.FormEvent<HTMLInputElement>) => {
-								target$.target.id.set(e.currentTarget.value);
-							}}
-						/>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="outline">Open</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent className="w-56">
-								<DropdownMenuLabel>Targets</DropdownMenuLabel>
-								<DropdownMenuSeparator />
-								<DropdownMenuRadioGroup
-									value={targetName}
-									onValueChange={(value) => {
-										const foundTarget = targets.find(
-											(targetItem) => targetItem.id === value,
-										);
-
-										if (foundTarget !== undefined) {
-											beginBatch();
-											compilations$.changeTarget(
-												currentCharacter.index,
-												foundTarget,
+						<div className={"flex flex-nowrap items-center"}>
+							<ReactiveInput
+								className={"w-fit"}
+								id={"plan-name"}
+								type={"text"}
+								$value={target$.target.id}
+								onChange={(e: React.FormEvent<HTMLInputElement>) => {
+									target$.target.id.set(e.currentTarget.value);
+								}}
+							/>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant="outline">Select</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent className="w-56">
+									<DropdownMenuLabel>Targets</DropdownMenuLabel>
+									<DropdownMenuSeparator />
+									<DropdownMenuRadioGroup
+										value={targetName}
+										onValueChange={(value) => {
+											const foundTarget = targets.find(
+												(targetItem) => targetItem.id === value,
 											);
-											target$.target.set(foundTarget);
-											target$.uneditedTarget.set(structuredClone(foundTarget));
-											endBatch();
-										}
-									}}
-								>
-									<For each={target$.namesOfAllTargets}>
-										{(targetName$) => {
-											const targetName = use$(targetName$);
 
-											return (
-												<DropdownMenuRadioItem value={targetName}>
-													{targetName}
-												</DropdownMenuRadioItem>
-											);
+											if (foundTarget !== undefined) {
+												beginBatch();
+												compilations$.changeTarget(
+													currentCharacter.index,
+													foundTarget,
+												);
+												target$.target.set(foundTarget);
+												target$.uneditedTarget.set(
+													structuredClone(foundTarget),
+												);
+												endBatch();
+											}
 										}}
-									</For>
-								</DropdownMenuRadioGroup>
-							</DropdownMenuContent>
-						</DropdownMenu>
+									>
+										<For each={target$.namesOfAllTargets}>
+											{(targetName$) => {
+												const targetName = use$(targetName$);
+
+												return (
+													<DropdownMenuRadioItem value={targetName}>
+														{targetName}
+													</DropdownMenuRadioItem>
+												);
+											}}
+										</For>
+									</DropdownMenuRadioGroup>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
 					</div>
 				</div>
 				<Tabs

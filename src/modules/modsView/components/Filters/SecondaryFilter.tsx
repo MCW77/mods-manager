@@ -21,6 +21,7 @@ const SetAllButtonGroup = lazy(
 );
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
+import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
 
 const SecondaryFilter = () => {
 	const [t] = useTranslation("global-ui");
@@ -43,12 +44,7 @@ const SecondaryFilter = () => {
 										return activeFilter.secondary[secondary];
 									});
 									const value = secondaryState || 0;
-									const className =
-										value === 1
-											? "border-inset bg-[#000040]/100"
-											: value === -1
-												? "border-inset bg-[#400000]/100 border-[#800000]/100 text-red-500"
-												: "text-slate-400";
+									const className = getFilterSelectionStyles(value);
 
 									return (
 										<Button

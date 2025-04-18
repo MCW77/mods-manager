@@ -336,7 +336,7 @@ const CharacterActions: React.FC = observer(() => {
 					onPointerDownOutside={(e) => e.preventDefault()}
 				>
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
-						<h4 className="font-medium text-sm text-slate-900">
+						<h4 className="font-medium text-sm text-primary-foreground">
 							Save compilation
 						</h4>
 						<Label htmlFor={"compilation_save_form_name"}>Name</Label>
@@ -380,15 +380,10 @@ const CharacterActions: React.FC = observer(() => {
 								variant="outline"
 								size="sm"
 								onClick={() => state$.isFormOpen.set(false)}
-								className="h-8 px-3 text-xs"
 							>
 								Cancel
 							</Button>
-							<Button
-								type="submit"
-								size="sm"
-								className="h-8 px-3 text-xs bg-slate-900 text-white hover:bg-slate-700"
-							>
+							<Button type="submit" size="sm">
 								Save
 							</Button>
 						</div>
