@@ -172,8 +172,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1
       '@unocss/preset-typography':
-        specifier: ^66.0.0
-        version: 66.0.0
+        specifier: 66.1.0-beta.12
+        version: 66.1.0-beta.12
       cz-conventional-changelog:
         specifier: ^3.0.1
         version: 3.0.1(@types/node@22.14.0)(typescript@5.8.3)
@@ -1795,9 +1795,6 @@ packages:
 
   '@unocss/preset-tagify@66.1.0-beta.12':
     resolution: {integrity: sha512-dhhiT8rpf8a5hrRYoIfV8X4KOs0Nugz15LIxJrv87zUZcWhMXA0Flla1IfgZ937ULIcqBBqZdQEYfVG0vc3FIw==}
-
-  '@unocss/preset-typography@66.0.0':
-    resolution: {integrity: sha512-apjckP5nPU5mtaHTCzz5u/dK9KJWwJ2kOFCVk0+a/KhUWmnqnzmjRYZlEuWxxr5QxTdCW+9cIoRDSA0lYZS5tg==}
 
   '@unocss/preset-typography@66.1.0-beta.12':
     resolution: {integrity: sha512-6qpDfPGxH/ComRMhVc+oZMUcbV+2tFFFVtNkIRFTDBlfDUMMtUc6xDcj6w/DeuIZpl67zSetvQSSWUBH2k1kuA==}
@@ -5292,12 +5289,6 @@ snapshots:
   '@unocss/preset-tagify@66.1.0-beta.12':
     dependencies:
       '@unocss/core': 66.1.0-beta.12
-
-  '@unocss/preset-typography@66.0.0':
-    dependencies:
-      '@unocss/core': 66.0.0
-      '@unocss/preset-mini': 66.0.0
-      '@unocss/rule-utils': 66.0.0
 
   '@unocss/preset-typography@66.1.0-beta.12':
     dependencies:
