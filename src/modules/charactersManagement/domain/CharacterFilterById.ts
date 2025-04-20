@@ -31,7 +31,7 @@ export const createTextCharacterFilter = (filter: string): CharacterFilter => {
 export const createCustomCharacterFilter = (
 	filter: string,
 	filterPredicate: CharacterFilterPredicate,
-): CharacterFilter => {
+): CustomFilter => {
 	return {
 		id: crypto.randomUUID(),
 		type: "custom",

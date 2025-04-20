@@ -40,143 +40,147 @@ const customCharacterFilterGroups = [
 		items: [
 			{
 				label: "501ST",
-				value: "501ST",
+				value: "Faction--501st",
 			},
 			{
 				label: "Bad Batch",
-				value: "Bad Batch",
-			},
-			{
-				label: "Droid",
-				value: "Droid",
+				value: "Faction--Bad Batch",
 			},
 			{
 				label: "Bounty Hunter",
-				value: "Bounty Hunter",
+				value: "Faction--Bounty Hunter",
 			},
 			{
 				label: "Clone Trooper",
-				value: "Clone Trooper",
+				value: "Faction--Clone Trooper",
+			},
+			{
+				label: "Droid",
+				value: "Faction--Droid",
 			},
 			{
 				label: "Empire",
-				value: "Empire",
+				value: "Faction--Empire",
 			},
 			{
 				label: "Ewok",
-				value: "Ewok",
+				value: "Faction--Ewok",
 			},
 			{
 				label: "First Order",
-				value: "First Order",
+				value: "Faction--First Order",
 			},
 			{
 				label: "Galactic Republic",
-				value: "Galactic Republic",
+				value: "Faction--Galactic Republic",
 			},
 			{
 				label: "Geonosian",
-				value: "Geonosian",
+				value: "Faction--Geonosian",
 			},
 			{
 				label: "Gungan",
-				value: "Gungan",
+				value: "Faction--Gungan",
 			},
 			{
 				label: "Hutt Cartel",
-				value: "Hutt Cartel",
+				value: "Faction--Hutt Cartel",
 			},
 			{
 				label: "Imperial Remnant",
-				value: "Imperial Remnant",
+				value: "Faction--Imperial Remnant",
 			},
 			{
 				label: "Imperial Trooper",
-				value: "Imperial Trooper",
+				value: "Faction--Imperial Trooper",
 			},
 			{
 				label: "Inquisitorius",
-				value: "Inquisitorius",
+				value: "Faction--Inquisitorius",
 			},
 			{
 				label: "Jawa",
-				value: "Jawa",
+				value: "Faction--Jawa",
 			},
 			{
 				label: "Jedi",
-				value: "Jedi",
+				value: "Faction--Jedi",
+			},
+			{
+				label: "Jedi Vanguard",
+				value: "Faction--Jedi Vanguard",
 			},
 			{
 				label: "Mandalorian",
-				value: "Mandalorian",
+				value: "Faction--Mandalorian",
 			},
 			{
 				label: "Mercenary",
-				value: "Mercenary",
+				value: "Faction--Mercenary",
 			},
 			{
 				label: "Nightsister",
-				value: "Nightsister",
+				value: "Faction--Nightsister",
 			},
 			{
 				label: "Old Republic",
-				value: "Old Republic",
+				value: "Faction--Old Republic",
 			},
 			{
 				label: "Phoenix",
-				value: "Phoenix",
+				value: "Faction--Phoenix",
 			},
 			{
 				label: "Rebel",
-				value: "Rebel",
+				value: "Faction--Rebel",
 			},
 			{
 				label: "Rebel Fighter",
-				value: "Rebel Fighter",
+				value: "Faction--Rebel Fighter",
 			},
 			{
 				label: "Resistance",
-				value: "Resistance",
+				value: "Faction--Resistance",
 			},
 			{
 				label: "Rogue One",
-				value: "Rogue One",
+				value: "Faction--Rogue One",
 			},
 			{
 				label: "Scoundrel",
-				value: "Scoundrel",
+				value: "Faction--Scoundrel",
 			},
 			{
 				label: "Separatist",
-				value: "Separatist",
+				value: "Faction--Separatist",
 			},
 			{
 				label: "Sith",
-				value: "Sith",
+				value: "Faction--Sith",
 			},
 			{
 				label: "Sith Empire",
-				value: "Sith Empire",
+				value: "Faction--Sith Empire",
 			},
 			{
 				label: "Smuggler",
-				value: "Smuggler",
+				value: "Faction--Smuggler",
 			},
 			{
 				label: "Spectre",
-				value: "Spectre",
+				value: "Faction--Spectre",
 			},
 			{
 				label: "Tusken",
-				value: "Tusken",
+				value: "Faction--Tusken",
 			},
 			{
 				label: "Unaligned Force User",
-				value: "Unaligned Force User",
+				value: "Faction--Unaligned Force User",
 			},
 			{
 				label: "Wookiee",
-				value: "Wookiee",
+				value: "Faction--Wookiee",
 			},
 		],
 	},
@@ -185,35 +189,35 @@ const customCharacterFilterGroups = [
 		items: [
 			{
 				label: "Attacker",
-				value: "Attacker",
+				value: "Role--Attacker",
 			},
 			{
 				label: "Fleet Commander",
-				value: "Fleet Commander",
+				value: "Role--Fleet Commander",
 			},
 			{
 				label: "Galactic Legend",
-				value: "Galactic Legend",
+				value: "Role--Galactic Legend",
 			},
 			{
 				label: "Healer",
-				value: "Healer",
+				value: "Role--Healer",
 			},
 			{
 				label: "Leader",
-				value: "Leader",
+				value: "Role--Leader",
 			},
 			{
 				label: "Pilot",
-				value: "Pilot",
+				value: "Role--Pilot",
 			},
 			{
 				label: "Support",
-				value: "Support",
+				value: "Role--Support",
 			},
 			{
 				label: "Tank",
-				value: "Tank",
+				value: "Role--Tank",
 			},
 		],
 	},

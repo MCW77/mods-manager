@@ -18,6 +18,8 @@ export interface APIBaseCharacter {
 	combatType: number;
 	categories: string[];
 	description: string;
+	fleetCommander: boolean;
+	galacticLegend: boolean;
 	alignment: APIBaseCharacterAlignments;
 	role: APIBaseCharacterCategory[];
 	shipSlot: number;
@@ -57,7 +59,9 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 					.concat(bc.species)
 					.concat(bc.other ? bc.other : [])
 					.map((category) => category.display)
-					.concat(bc.shipSlot !== 0 ? ["Crew Member"] : []);
+					.concat(bc.shipSlot !== 0 ? ["Crew Member"] : [])
+					.concat(bc.galacticLegend ? ["Galactic Legend"] : [])
+					.concat(bc.fleetCommander ? ["Fleet Commander"] : []);
 				let alignments: string[] = [];
 				if (bc.alignment === 2) {
 					alignments = ["light", "lightside", "ls"];

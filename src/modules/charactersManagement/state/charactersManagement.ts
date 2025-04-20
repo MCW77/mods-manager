@@ -3,12 +3,17 @@ import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
+const { profilesManagement$ } = await import(
+	"#/modules/profilesManagement/state/profilesManagement"
+);
 const { compilations$ } = await import(
 	"#/modules/compilations/state/compilations"
 );
+const { characters$ } = await import("#/modules/characters/state/characters");
 
 // domain
 import {
+	createCustomCharacterFilter,
 	createTextCharacterFilter,
 	type TextFilter,
 	type CharacterFilter,
@@ -23,8 +28,24 @@ import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { Stat } from "#/domain/Stat";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
 
+const addCategoryFilter = (
+	customFilterById: Map<string, CustomFilter>,
+	category: string,
+) => {
+	const filterString = category.replace("Role--", "").replace("Faction--", "");
+	const categoryFilter = createCustomCharacterFilter(
+		category,
+		(character: Character) => {
+			return characters$.baseCharacterById[character.id].categories.includes(
+				filterString,
+			);
+		},
+	);
+	customFilterById.set(category, categoryFilter);
+};
+
 const getDefaultFilterSetup = () => {
-	return {
+	const result = {
 		id: "filterSetup",
 		filterSetup: {
 			customFilterById: new Map<string, CustomFilter>([
@@ -38,11 +59,11 @@ const getDefaultFilterSetup = () => {
 					},
 				],
 				[
-					"Has stat targets",
+					"Has Stat Targets",
 					{
-						id: "Has stat targets",
+						id: "Has Stat Targets",
 						type: "custom",
-						filter: "Has stat targets",
+						filter: "Has Stat Targets",
 						filterPredicate: (character: Character) => {
 							const selectedCharacters =
 								compilations$.defaultCompilation.selectedCharacters.peek();
@@ -66,8 +87,12 @@ const getDefaultFilterSetup = () => {
 							const modsAssignedToCharacter = modAssignments.find(
 								(ma) => ma.characterId === character.id,
 							);
-							if (modsAssignedToCharacter === undefined) return false;
-							return modsAssignedToCharacter.assignedMods.length < 6;
+							if (modsAssignedToCharacter !== undefined)
+								return modsAssignedToCharacter.assignedMods.length < 6;
+							const modsEquippedOnCharacter = [
+								...profilesManagement$.activeProfile.modById.peek().values(),
+							].filter((mod) => mod.characterID === character.id);
+							return modsEquippedOnCharacter.length < 6;
 						},
 					},
 				],
@@ -83,10 +108,25 @@ const getDefaultFilterSetup = () => {
 							const modsAssignedToCharacter = modAssignments.find(
 								(ma) => ma.characterId === character.id,
 							);
-							if (modsAssignedToCharacter === undefined) return false;
-							//						const mods = profilesManagement$.activeProfile.mods.peek();
-							//						return modsAssignedToCharacter.assignedMods.some((mod) => mod.level < 15);
-							return true;
+							if (modsAssignedToCharacter !== undefined) {
+								const modsAssignedToCharacter2 = {
+									...modsAssignedToCharacter,
+									assignedMods: modsAssignedToCharacter.assignedMods
+										.map((modId) => {
+											return profilesManagement$.activeProfile.modById
+												.peek()
+												.get(modId);
+										})
+										.filter((mod) => mod !== undefined),
+								};
+								return modsAssignedToCharacter2.assignedMods.some(
+									(mod) => mod.level < 15,
+								);
+							}
+							const modsEquippedOnCharacter = [
+								...profilesManagement$.activeProfile.modById.peek().values(),
+							].filter((mod) => mod.characterID === character.id);
+							return modsEquippedOnCharacter.some((mod) => mod.level < 15);
 						},
 					},
 				],
@@ -304,6 +344,62 @@ const getDefaultFilterSetup = () => {
 			starsRange: [0, 7] as [number, number],
 		},
 	} as const;
+	for (const role of [
+		"Attacker",
+		"Crew Member",
+		"Fleet Commander",
+		"Galactic Legend",
+		"Healer",
+		"Leader",
+		"Support",
+		"Tank",
+	]) {
+		addCategoryFilter(result.filterSetup.customFilterById, `Role--${role}`);
+	}
+	for (const faction of [
+		"501st",
+		"Bad Batch",
+		"Bounty Hunter",
+		"Clone Trooper",
+		"Droid",
+		"Empire",
+		"Ewok",
+		"First Order",
+		"Galactic Republic",
+		"Geonosian",
+		"Gungan",
+		"Hutt Cartel",
+		"Imperial Remnant",
+		"Imperial Trooper",
+		"Inquisitorius",
+		"Jawa",
+		"Jedi",
+		"Jedi Vanguard",
+		"Mandalorian",
+		"Mercenary",
+		"Nightsister",
+		"Old Republic",
+		"Phoenix",
+		"Rebel",
+		"Rebel Fighter",
+		"Resistance",
+		"Rogue One",
+		"Scoundrel",
+		"Separatist",
+		"Sith",
+		"Sith Empire",
+		"Smuggler",
+		"Spectre",
+		"Tusken",
+		"Unaligned Force User",
+		"Wookie",
+	]) {
+		addCategoryFilter(
+			result.filterSetup.customFilterById,
+			`Faction--${faction}`,
+		);
+	}
+	return result;
 };
 
 const charactersManagement$: ObservableObject<CharactersManagementObservable> =
