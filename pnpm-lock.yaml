@@ -187,11 +187,11 @@ importers:
         specifier: 66.1.0-beta.12
         version: 66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))
       unocss-preset-animations:
-        specifier: ^1.1.1
-        version: 1.1.1(@unocss/preset-wind@66.1.0-beta.12)(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)))
+        specifier: ^1.2.1
+        version: 1.2.1(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)))
       unocss-preset-shadcn:
         specifier: ^0.5.0
-        version: 0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.1.0-beta.12)(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))))(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)))
+        version: 0.5.0(unocss-preset-animations@1.2.1(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))))(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)))
       vite:
         specifier: ^5.4.11
         version: 5.4.11(@types/node@22.14.1)(terser@5.39.0)
@@ -3209,11 +3209,14 @@ packages:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
 
-  unocss-preset-animations@1.1.1:
-    resolution: {integrity: sha512-YBttRSHWH0r8OABPzXNcxDhRV67LNIsA0ZrWoYTMHUc/SzVYZBU79IXLtOneLk1NCpzlfkyxm+8DWLJnmG1R6g==}
+  unocss-preset-animations@1.2.1:
+    resolution: {integrity: sha512-HFdYPSLZ8SaAgTLfTNoiV5+1xAdcttOtFSPsZyHbA0qSis7Sansf90pz7a2yhs9Yq6Nos9P4onDttfdO8dwKPA==}
     peerDependencies:
-      '@unocss/preset-wind': '>=0.56.0 < 101'
+      '@unocss/preset-wind3': '>=0.56.0 < 101'
       unocss: '>=0.56.0 < 101'
+    peerDependenciesMeta:
+      '@unocss/preset-wind3':
+        optional: true
 
   unocss-preset-shadcn@0.5.0:
     resolution: {integrity: sha512-e/bF/+b5adcolHio3kst3WVF+f09+BiDkyTshUVqcWXB0RabQ0T8lzqfM3KAegTTi1iJo1jjCZoE88cUzaVDmQ==}
@@ -6763,15 +6766,14 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.1.1(@unocss/preset-wind@66.1.0-beta.12)(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))):
+  unocss-preset-animations@1.2.1(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))):
     dependencies:
-      '@unocss/preset-wind': 66.1.0-beta.12
       unocss: 66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))
 
-  unocss-preset-shadcn@0.5.0(unocss-preset-animations@1.1.1(@unocss/preset-wind@66.1.0-beta.12)(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))))(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))):
+  unocss-preset-shadcn@0.5.0(unocss-preset-animations@1.2.1(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))))(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))):
     dependencies:
       unocss: 66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3))
-      unocss-preset-animations: 1.1.1(@unocss/preset-wind@66.1.0-beta.12)(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)))
+      unocss-preset-animations: 1.2.1(unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)))
 
   unocss@66.1.0-beta.12(postcss@8.5.3)(vite@5.4.11(@types/node@22.14.1)(terser@5.39.0))(vue@3.5.13(typescript@5.8.3)):
     dependencies:
