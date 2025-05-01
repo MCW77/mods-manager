@@ -34,7 +34,7 @@
 		"@unocss/preset-mini": "66.1.0-beta.13",
 		"@unocss/reset": "66.1.0-beta.13",
 		"@vitejs/plugin-react": "^4.4.1",
-		"big.js": "^6.2.2",
+		"big.js": "^7.0.1",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"file-saver": "^2.0.5",
