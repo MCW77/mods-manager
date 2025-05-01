@@ -26,16 +26,13 @@ import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
 import type { Backup, PersistableBackup } from "../domain/Backup";
-import {
-	ModsManagerSchema,
-	ModsManagerBackupSchema,
-} from "../domain/schemas/mods-manager";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
 import {
 	type PlayerProfile,
 	type PersistedPlayerProfile,
 	getProfileFromPersisted,
 } from "#/modules/profilesManagement/domain/PlayerProfile";
+import { ModsManagerBackupSchema } from "#/domain/schemas/mods-manager";
 
 type AppState = {
 	reset: () => void;
@@ -144,18 +141,18 @@ const appState$: ObservableObject<AppState> = observable({
 					return value;
 				},
 			);
-			if (!isModsManagerBackup(parsedJON)) {
+			const validationResult = v.safeParse(ModsManagerBackupSchema, parsedJON);
+			if (!validationResult.success) {
 				dialog$.showError(
 					"Import of backup aborted",
-					"The selected file is not a valid mods-manager backup",
+					`Invalid backup file: ${validationResult.issues.map(
+						(issue) => issue.message,
+					)}`,
 					"Please check you selected a valid file. If so let me know about the error on discord",
 				);
 				return;
 			}
-			const persistableBackup: PersistableBackup = v.parse(
-				ModsManagerBackupSchema,
-				parsedJON,
-			);
+			const persistableBackup: PersistableBackup = validationResult.output;
 			loadModsManagerBackup(persistableBackup);
 		} catch (e) {
 			dialog$.showError(

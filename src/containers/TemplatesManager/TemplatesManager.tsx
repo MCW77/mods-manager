@@ -14,7 +14,7 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
-import { observer, use$ } from "@legendapp/state/react";
+import { For, observer, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -52,19 +52,16 @@ const TemplatesManager = observer(
 							readFile(
 								file,
 								(templatesString) => {
-									try {
-										const templates: CharacterTemplates =
-											JSON.parse(templatesString);
-										templates$.userTemplatesByName.set(
-											templates$.groupTemplatesById(templates),
-										);
-									} catch (e) {
-										throw new Error(
-											"Unable to read templates from file. Make sure that you've selected a character templates file",
+									templates$.importTemplates(templatesString);
+									if (templates$.import.errorMessage.peek() !== "") {
+										dialog$.showError(
+											templates$.import.errorMessage.peek(),
+											templates$.import.errorReason.peek(),
+											templates$.import.errorSolution.peek(),
 										);
 									}
 								},
-								(error) => dialog$.showError(error.message),
+								(error) => {},
 							)
 						}
 					/>
@@ -110,81 +107,92 @@ const TemplatesManager = observer(
 					</Button>
 				</div>
 				<div className={"templates"}>
-					{userTemplates.map((template) => (
-						<div
-							className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
-							data-template={template.id}
-							key={`template-${template.id}`}
-							onClick={(event) => {
-								event.stopPropagation();
-								const target = event.currentTarget as HTMLDivElement;
-								if (
-									target.dataset.template !== undefined &&
-									target.dataset.template !== null
-								) {
-									const templateName = target.dataset.template;
-									const selectedTemplate = selectedTemplates.find(
-										(template) => template.id === templateName,
-									);
-									const wasSelected = selectedTemplate !== undefined;
-									const template = userTemplates.find(
-										(template) => template.id === templateName,
-									);
-									target.classList.toggle("selected");
-									target.dataset.selected =
-										selectedTemplate === undefined ? "true" : "false";
-									if (wasSelected) {
-										setSelectedTemplates(
-											selectedTemplates.toSpliced(
-												selectedTemplates.indexOf(selectedTemplate),
-												1,
-											),
-										);
-									} else {
-										if (template !== undefined)
-											setSelectedTemplates([...selectedTemplates, template]);
-									}
-								}
-							}}
-							onKeyUp={(event) => {
-								if (event.code === "Enter") {
-									const target = event.currentTarget as HTMLDivElement;
-									if (
-										target.dataset.template !== undefined &&
-										target.dataset.template !== null
-									) {
-										const templateName = target.dataset.template;
-										const selectedTemplate = selectedTemplates.find(
-											(template) => template.id === templateName,
-										);
-										const wasSelected = selectedTemplate !== undefined;
-										const template = userTemplates.find(
-											(template) => template.id === templateName,
-										);
-										target.classList.toggle("selected");
-										target.dataset.selected =
-											selectedTemplate === undefined ? "true" : "false";
-										if (wasSelected) {
-											setSelectedTemplates(
-												selectedTemplates.toSpliced(
-													selectedTemplates.indexOf(selectedTemplate),
-													1,
-												),
+					<For each={templates$.userTemplates}>
+						{(template$) => {
+							const template = use$(template$);
+							return (
+								<div
+									className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
+									data-template={template.id}
+									key={`template-${template.id}`}
+									onClick={(event) => {
+										event.stopPropagation();
+										const target = event.currentTarget as HTMLDivElement;
+										if (
+											target.dataset.template !== undefined &&
+											target.dataset.template !== null
+										) {
+											const templateName = target.dataset.template;
+											const selectedTemplate = selectedTemplates.find(
+												(template) => template.id === templateName,
 											);
-										} else {
-											if (template !== undefined)
-												setSelectedTemplates([...selectedTemplates, template]);
+											const wasSelected = selectedTemplate !== undefined;
+											const template = userTemplates.find(
+												(template) => template.id === templateName,
+											);
+											target.classList.toggle("selected");
+											target.dataset.selected =
+												selectedTemplate === undefined ? "true" : "false";
+											if (wasSelected) {
+												setSelectedTemplates(
+													selectedTemplates.toSpliced(
+														selectedTemplates.indexOf(selectedTemplate),
+														1,
+													),
+												);
+											} else {
+												if (template !== undefined)
+													setSelectedTemplates([
+														...selectedTemplates,
+														template,
+													]);
+											}
 										}
-									}
-								}
-							}}
-						>
-							<span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">
-								&nbsp;
-							</span>
-							{template.id}
-						</div>
-					))}
+									}}
+									onKeyUp={(event) => {
+										if (event.code === "Enter") {
+											const target = event.currentTarget as HTMLDivElement;
+											if (
+												target.dataset.template !== undefined &&
+												target.dataset.template !== null
+											) {
+												const templateName = target.dataset.template;
+												const selectedTemplate = selectedTemplates.find(
+													(template) => template.id === templateName,
+												);
+												const wasSelected = selectedTemplate !== undefined;
+												const template = userTemplates.find(
+													(template) => template.id === templateName,
+												);
+												target.classList.toggle("selected");
+												target.dataset.selected =
+													selectedTemplate === undefined ? "true" : "false";
+												if (wasSelected) {
+													setSelectedTemplates(
+														selectedTemplates.toSpliced(
+															selectedTemplates.indexOf(selectedTemplate),
+															1,
+														),
+													);
+												} else {
+													if (template !== undefined)
+														setSelectedTemplates([
+															...selectedTemplates,
+															template,
+														]);
+												}
+											}
+										}
+									}}
+								>
+									<span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">
+										&nbsp;
+									</span>
+									{template.id}
+								</div>
+							);
+						}}
+					</For>
 				</div>
 			</div>
 		);

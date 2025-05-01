@@ -1,5 +1,5 @@
 export * from "./CharacterNamesSchemas";
-export * from "./TargetStatSchemas";
+export * from "./TargetStatsSchemas";
 export * from "./OptimizationPlanSchemas";
 export * from "./CharacterSchemas";
 export * from "./SelectedCharactersSchemas";

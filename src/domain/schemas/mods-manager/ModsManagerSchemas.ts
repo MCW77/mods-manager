@@ -3,7 +3,7 @@ import * as v from "valibot";
 
 // domain
 import {
-	CharacterTemplatesSchema,
+	CharacterTemplateByNameSchema,
 	CompilationSchema,
 	LockedStatusByCharacterIdSchema,
 	ModsViewSetupsSchema,
@@ -12,7 +12,7 @@ import {
 } from "./";
 
 const ModsManagerBackupSchema = v.object({
-	characterTemplates: CharacterTemplatesSchema,
+	characterTemplates: CharacterTemplateByNameSchema,
 	compilations: v.record(v.string(), v.record(v.string(), CompilationSchema)),
 	defaultCompilation: CompilationSchema,
 	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),

@@ -85,7 +85,7 @@ const PersistableSortConfigByIdSchema = v.record(
 	v.object({
 		id: v.string(),
 		sortBy: v.string(),
-		sortOrder: v.literal("asc", "desc"),
+		sortOrder: v.picklist(["asc", "desc"]),
 	}),
 );
 

@@ -273,11 +273,13 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
+export const latestDBVersion = 18;
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
 			databaseName: "GIMO",
-			version: 18,
+			version: latestDBVersion,
 			tableNames: storeNames,
 			onUpgradeNeeded: (event) => {
 				const request = event.target as IDBOpenDBRequest;

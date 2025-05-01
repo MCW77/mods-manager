@@ -6,9 +6,16 @@ import type {
 import type { TemplatesAddingMode } from "./TemplatesAddingMode";
 import type { TemplateTypes } from "./TemplateTypes";
 
+interface Import {
+	errorMessage: string;
+	errorReason: string;
+	errorSolution: string;
+}
+
 interface TemplatesObservable {
 	id: string;
 	category: string;
+	import: Import;
 	templatesAddingMode: TemplatesAddingMode;
 	userTemplatesByName: CharacterTemplatesByName;
 	selectedTemplate: string;
@@ -27,6 +34,7 @@ interface TemplatesObservable {
 	allTemplates: () => CharacterTemplates;
 	filteredTemplates: () => CharacterTemplates;
 	saveTemplate: () => void;
+	importTemplates: (templatesString: string) => void;
 	reset: () => void;
 }
 
