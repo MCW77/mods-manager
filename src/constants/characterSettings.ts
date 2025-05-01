@@ -220,6 +220,18 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["JKA"],
 	),
+	APPO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 50,
+			phys: 30,
+			primaryRes: {
+				triangle: "Critical Damage %",
+				circle: "Health %",
+			},
+		}),
+	]),
 	ARCTROOPER501ST: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -2932,12 +2944,15 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 50,
-				prot: 10,
+				prot: 50,
 				spd: 100,
 				cd: 10,
-				ten: 10,
-				phys: 25,
+				phys: 30,
+				primaryRes: {
+					triangle: "Protection %",
+					cross: "Protection %",
+					circle: "Protection %",
+				},
 			}),
 		],
 		[],
@@ -3767,6 +3782,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	OPERATIVE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			spd: 100,
+			phys: 20,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	PADAWANOBIWAN: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
