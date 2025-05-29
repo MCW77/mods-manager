@@ -16,6 +16,7 @@ export interface PersistedPlayerProfile {
 	modById: Record<string, GIMOFlatMod>;
 	playerName: string;
 }
+
 export const createPlayerProfile = (
 	allycode: string,
 	playerName: string,
@@ -31,15 +32,14 @@ export const createPlayerProfile = (
 export const getProfileFromPersisted = (
 	profile: PersistedPlayerProfile,
 ): PlayerProfile => {
-/*
+	/*
 	const modById = new Map<string, Mod>(
 		profile.modById.map((mod) => [mod.mod_uid, Mod.deserialize(mod)]),
 	);
 */
 	const modById = new Map<string, Mod>();
 	for (const [modUid, mod] of Object.entries(profile.modById)) {
-		if (mod !== undefined)
-			modById.set(modUid, Mod.deserialize(mod));
+		if (mod !== undefined) modById.set(modUid, Mod.deserialize(mod));
 	}
 
 	return {
@@ -48,10 +48,12 @@ export const getProfileFromPersisted = (
 		modById,
 		playerName: profile.playerName,
 	};
-}
+};
 
-export const getProfileToPersist = (profile: PlayerProfile): PersistedPlayerProfile => {
-/*
+export const getProfileToPersist = (
+	profile: PlayerProfile,
+): PersistedPlayerProfile => {
+	/*
 	const modById =
 		profile.modById.size > 0
 			? Array.from(profile.modById.values()).map((value) => value.serialize())
