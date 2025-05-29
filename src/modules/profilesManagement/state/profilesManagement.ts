@@ -130,6 +130,7 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			beginBatch();
 			profilesManagement$.profiles.profileByAllycode[allycode].delete();
 			profilesManagement$.profiles.playernameByAllycode[allycode].delete();
+			profilesManagement$.profiles.lastUpdatedByAllycode[allycode].delete();
 			const activeAllycode = profilesManagement$.profiles.activeAllycode.peek();
 			if (activeAllycode === allycode) {
 				const profilesByAllycode =
