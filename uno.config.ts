@@ -8,6 +8,12 @@ import presetAnimations from "unocss-preset-animations";
 import presetShadcn from "unocss-preset-shadcn";
 
 export default defineConfig({
+	content: {
+		filesystem: [
+			"src/**/*.{js,ts,jsx,tsx}",
+			"index.html",
+		],
+	},
 	presets: [
 		presetWind3(),
 		presetAnimations(),

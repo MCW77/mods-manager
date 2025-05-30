@@ -1,3 +1,25 @@
+// Prevent React Refresh in worker context
+// @ts-ignore
+if (typeof globalThis !== 'undefined') {
+	// @ts-ignore
+	globalThis.__vite_plugin_react_preamble_installed__ = true;
+	// @ts-ignore
+	globalThis.window = {
+		__registerBeforePerformReactRefresh: () => {},
+		__reactRefreshUtils: null,
+		addEventListener: () => {},
+		removeEventListener: () => {},
+		location: { reload: () => {} },
+		console: globalThis.console || { log: () => {}, warn: () => {}, error: () => {} },
+	};
+	// @ts-ignore
+	globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;
+	// @ts-ignore
+	globalThis.$RefreshReg$ = () => {};
+	// @ts-ignore
+	globalThis.$RefreshSig$ = () => (type) => type;
+}
+
 // utils
 import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
