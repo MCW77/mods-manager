@@ -248,7 +248,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 					(acc: Record<string, unknown>, item) => {
 						acc[item.id] = Object.entries(item).reduce(
 							(acc2, [key, value]) => {
-								if (key !== "id") {
+								if (key !== "id" && value !== undefined) {
 									for (const filter of Object.values(
 										(value as { filterById: Record<string, Partial<Filter>> })
 											.filterById,

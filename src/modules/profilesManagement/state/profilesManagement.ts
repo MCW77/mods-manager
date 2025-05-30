@@ -130,6 +130,7 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			beginBatch();
 			profilesManagement$.profiles.profileByAllycode[allycode].delete();
 			profilesManagement$.profiles.playernameByAllycode[allycode].delete();
+			profilesManagement$.profiles.lastUpdatedByAllycode[allycode].delete();
 			const activeAllycode = profilesManagement$.profiles.activeAllycode.peek();
 			if (activeAllycode === allycode) {
 				const profilesByAllycode =
@@ -275,14 +276,24 @@ when(
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const hasModByIdMap = (obj: any): obj is { modById: Map<string, Mod> } => {
-	return Object.hasOwn(obj, "modById") && obj.modById instanceof Map;
+	return (
+		typeof obj === "object" &&
+		obj !== null &&
+		Object.hasOwn(obj, "modById") &&
+		obj.modById instanceof Map
+	);
 };
 
 const hasModByIdRecord = (
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	obj: any,
 ): obj is { modById: Record<string, GIMOFlatMod> } => {
-	return Object.hasOwn(obj, "modById") && obj.modById instanceof Object;
+	return (
+		typeof obj === "object" &&
+		obj !== null &&
+		Object.hasOwn(obj, "modById") &&
+		obj.modById instanceof Object
+	);
 };
 
 const hasProfileByAllycode = (
@@ -297,8 +308,11 @@ const hasPersistedProfileByAllycode = (
 	return Object.hasOwn(obj, "profileByAllycode");
 };
 
-const isFullPlayerProfile = (obj: object): obj is PlayerProfile => {
+const isFullPlayerProfile = (obj: unknown): obj is PlayerProfile => {
 	return (
+		obj !== undefined &&
+		obj !== null &&
+		typeof obj === "object" &&
 		Object.hasOwn(obj, "allycode") &&
 		Object.hasOwn(obj, "modById") &&
 		Object.hasOwn(obj, "characterById")

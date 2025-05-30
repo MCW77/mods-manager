@@ -295,4 +295,7 @@ export const characterNames = [
 	"ZORIIBLISS_V2",
 ] as const;
 
-export type CharacterNames = UtilityTypes.ElementType<typeof characterNames>;
+export type CharacterNames = string;
+export type StrictCharacterNames = UtilityTypes.ElementType<
+	typeof characterNames
+>;
