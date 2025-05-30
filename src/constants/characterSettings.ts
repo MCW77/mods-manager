@@ -1605,6 +1605,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		["Imperial Grancor Maneuver"],
 		DamageType.special,
 	),
+	DISGUISEDCLONETROOPER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 20,
+			spd: 100,
+			phys: 40,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				cross: "Protection %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	DOCTORAPHRA: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -4328,6 +4346,25 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Rogue 1", "SRP"],
 	),
+	SCORCH: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			arm: 20,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				cross: "Protection %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+	]),
 	SCOUTTROOPER_V3: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
