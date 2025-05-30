@@ -27,7 +27,22 @@ export default defineConfig({	worker: {
 							__reactRefreshUtils: null,
 							addEventListener: () => {},
 							removeEventListener: () => {},
-							location: { reload: () => {} },
+							location: {
+								reload: () => {},
+								replace: () => {},
+								assign: () => {},
+								toString: () => 'about:blank',
+								href: 'about:blank',
+								origin: 'null',
+								protocol: 'about:',
+								host: '',
+								hostname: '',
+								port: '',
+								pathname: 'blank',
+								search: '',
+								hash: '',
+								ancestorOrigins: { length: 0, contains: () => false, item: () => null },
+							},
 							console: globalThis.console || { log: () => {}, warn: () => {}, error: () => {} },
 						};
 						globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;

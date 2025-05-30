@@ -9,9 +9,29 @@ if (typeof globalThis !== 'undefined') {
 		__reactRefreshUtils: null,
 		addEventListener: () => {},
 		removeEventListener: () => {},
-		location: { reload: () => {} },
+		location: {
+			reload: () => {},
+			replace: () => {},
+			assign: () => {},
+			toString: () => 'about:blank',
+			href: 'about:blank',
+			origin: 'null',
+			protocol: 'about:',
+			host: '',
+			hostname: '',
+			port: '',
+			pathname: 'blank',
+			search: '',
+			hash: '',
+			ancestorOrigins: {
+				length: 0,
+				contains: () => false,
+				item: () => null,
+				[Symbol.iterator]: function* () {},
+			} as unknown as DOMStringList,
+		} as Location,
 		console: globalThis.console || { log: () => {}, warn: () => {}, error: () => {} },
-	};
+	} as any;
 	// @ts-ignore
 	globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;
 	// @ts-ignore
