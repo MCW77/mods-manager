@@ -9,7 +9,8 @@ import { visualizer } from "rollup-plugin-visualizer";
 
 
 // https://vitejs.dev/config/
-export default defineConfig({	worker: {
+export default defineConfig({
+	worker: {
 		format: "es",
 		plugins: () => [
 			UnoCSS({
@@ -59,12 +60,12 @@ export default defineConfig({	worker: {
 		__REACT_DEVTOOLS_GLOBAL_HOOK__: 'undefined',
 		// Completely disable React Refresh in worker context
 		__vite_is_modern_browser: 'false',
-		// React Refresh globals for worker context
-		'$RefreshReg$': '(() => {})',
-		'$RefreshSig$': '(() => (type) => type)',
-		// Fix for use-sync-external-store compatibility with Vite 6
+		// React Refresh globals for worker context - use simple function references
+		'$RefreshReg$': 'undefined',
+		'$RefreshSig$': 'undefined',		// Fix for use-sync-external-store compatibility with Vite 6
 		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-	},optimizeDeps: {
+	},
+	optimizeDeps: {
 		include: ["unocss"],
 		exclude: ["@legendapp/state", "@legendapp/state/react"],
 	},
