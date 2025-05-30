@@ -20,18 +20,21 @@ interface Backup {
 	version: string;
 }
 
-interface PersistableBackup {
+interface PersistableBackupData {
 	characterTemplates: CharacterTemplatesByName;
 	compilations: Record<string, Record<string, Compilation>>;
-	defaultCompilation: Compilation;
+	defaultCompilation: Compilation | undefined;
 	incrementalOptimizationIndices: IndicesByProfile;
 	lockedStatus: LockedStatusByCharacterIdByAllycode;
-	modsViewSetups: PersistableModsViewSetupByIdByCategory;
-	profilesManagement: PersistedProfiles;
+	modsViewSetups: PersistableModsViewSetupByIdByCategory | undefined;
+	profilesManagement: PersistedProfiles | undefined;
 	sessionIds: Record<string, string>;
-	settings: SettingsByProfile;
-	version: string;
-	client: "mods-manager";
+	settings: SettingsByProfile | undefined;
 }
 
-export type { Backup, PersistableBackup };
+interface PersistableBackup extends PersistableBackupData {
+	client: "mods-manager";
+	version: string;
+}
+
+export type { Backup, PersistableBackupData, PersistableBackup };

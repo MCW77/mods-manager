@@ -60,4 +60,8 @@ const PersistedProfilesSchema = v.object({
 	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchema),
 });
 
-export { PersistedProfilesSchema };
+type PersistedProfilesSchemaOutput = v.InferOutput<
+	typeof PersistedProfilesSchema
+>;
+
+export { PersistedProfilesSchema, type PersistedProfilesSchemaOutput };
