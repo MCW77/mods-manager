@@ -229,7 +229,10 @@ function updatePlayerData(
 			for (const modId of modById$.keys()) {
 				modById$[modId].characterID.set("null");
 			}
-		}
+		} else
+			profilesManagement$.profiles.profileByAllycode[
+				newAllycode
+			].modById.clear();
 		//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
 		for (const mod of profile.mods)
 			profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
