@@ -79,7 +79,7 @@
 		"cz-conventional-changelog": "^3.0.1",
 		"fake-indexeddb": "^6.1.0",
 		"rollup-plugin-visualizer": "^5.14.0",
-		"typescript": "5.8.3",
+		"typescript": "5.9.2",
 		"unocss": "66.1.2",
 		"unocss-preset-animations": "^1.2.1",
 		"unocss-preset-shadcn": "^0.5.0",
