@@ -1,6 +1,15 @@
+// utils
+import { objectEntries } from "./objectEntries";
+
+// state
 import { configureSynced } from "@legendapp/state/sync";
 import { observablePersistIndexedDB } from "@legendapp/state/persist-plugins/indexeddb";
-import type { Filter } from "#/modules/modsView/domain/ModsViewOptions";
+
+// domain
+import type {
+	Filter,
+	SecondarySettings,
+} from "#/modules/modsView/domain/ModsViewOptions";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };
@@ -33,7 +42,7 @@ function itemUpgrade(
 	storeName: string,
 	id: "",
 	upgradeFunction: (oldData: Array<RecordWithNestedEntities>) => void,
-): void;
+): Promise<void>;
 
 // For non-empty string id, upgradeFunction handles a single record
 function itemUpgrade(
@@ -42,7 +51,7 @@ function itemUpgrade(
 	storeName: string,
 	id: string,
 	upgradeFunction: (oldData: Record<string, unknown>) => void,
-): void;
+): Promise<void>;
 
 // Implementation that works with both overloads - keeping original type
 function itemUpgrade(
@@ -53,51 +62,75 @@ function itemUpgrade(
 	upgradeFunction:
 		| ((oldData: Array<RecordWithNestedEntities>) => void)
 		| ((oldData: Record<string, unknown>) => void),
-) {
-	try {
-		if (db.objectStoreNames.contains(storeName)) {
-			const oldStore = transaction.objectStore(storeName);
+): Promise<void> {
+	return new Promise((resolve, reject) => {
+		try {
+			if (db.objectStoreNames.contains(storeName)) {
+				const oldStore = transaction.objectStore(storeName);
 
-			let request: IDBRequest;
-			if (id === "") {
-				request = oldStore.getAll();
-			} else {
-				request = oldStore.get(id);
-			}
-
-			request.onsuccess = (event: Event) => {
-				const oldData = (event.target as IDBRequest).result;
-				if (oldData && (!Array.isArray(oldData) || oldData.length > 0)) {
-					const newData = upgradeFunction(oldData);
-
-					// Delete and recreate the store in the current versionchange transaction
-					db.deleteObjectStore(storeName);
-					const newStore = db.createObjectStore(storeName, {
-						keyPath: "id",
-						autoIncrement: false,
-					});
-
-					// Add the data back
-					newStore.put(newData);
+				let request: IDBRequest;
+				if (id === "") {
+					request = oldStore.getAll();
+				} else {
+					request = oldStore.get(id);
 				}
-			};
-			request.onerror = (event: Event) => {
-				console.error(
-					`Error reading data from old store: ${storeName}`,
-					(event.target as IDBRequest).error,
-				);
-				transaction.abort();
-			};
+
+				request.onsuccess = (event: Event) => {
+					try {
+						const oldData = (event.target as IDBRequest).result;
+						if (oldData && (!Array.isArray(oldData) || oldData.length > 0)) {
+							const newData = upgradeFunction(oldData);
+
+							// Delete and recreate the store in the current versionchange transaction
+							db.deleteObjectStore(storeName);
+							const newStore = db.createObjectStore(storeName, {
+								keyPath: "id",
+								autoIncrement: false,
+							});
+
+							// Add the data back
+							const putRequest = newStore.put(newData);
+							putRequest.onsuccess = () => resolve();
+							putRequest.onerror = (putEvent: Event) => {
+								console.error(
+									`Error putting data to new store: ${storeName}`,
+									(putEvent.target as IDBRequest).error,
+								);
+								reject((putEvent.target as IDBRequest).error);
+							};
+						} else {
+							resolve();
+						}
+					} catch (error) {
+						console.error(
+							`Error processing data for ${storeName}:${id}`,
+							error,
+						);
+						reject(error);
+					}
+				};
+				request.onerror = (event: Event) => {
+					const error = (event.target as IDBRequest).error;
+					console.error(
+						`Error reading data from old store: ${storeName}`,
+						error,
+					);
+					reject(error);
+				};
+			} else {
+				resolve();
+			}
+		} catch (error) {
+			console.error(`Error upgrading:${id} in ${storeName}`, error);
+			reject(error);
 		}
-	} catch (error) {
-		console.error(`Error upgrading:${id} in ${storeName}`, error);
-		transaction.abort();
-	}
+	});
 }
 
 function upgradeFilterTo18(
 	filter: Partial<Filter> & { secondariesscoretier?: unknown },
 ) {
+	if (filter === undefined) return;
 	filter.assigned = { assigned: filter.assigned?.assigned ?? 0 };
 	filter.calibration = {
 		"15": 0,
@@ -113,8 +146,50 @@ function upgradeFilterTo18(
 	filter.speedRange = [0, 31];
 }
 
-function createStores(db: IDBDatabase) {
-	for (const storeName of storeNames) {
+function upgradeFilterTo19(
+	filter:
+		| Partial<Filter>
+		| (Omit<Partial<Filter>, "secondary"> & {
+				secondary: Record<keyof SecondarySettings, number>;
+		  }),
+) {
+	if (filter === undefined) return;
+	// Convert TriState secondary values to roll ranges
+	if (filter.secondary) {
+		const newSecondary: SecondarySettings = {
+			"Critical Chance %": [0, 5],
+			Defense: [0, 5],
+			"Defense %": [0, 5],
+			Health: [0, 5],
+			"Health %": [0, 5],
+			Offense: [0, 5],
+			"Offense %": [0, 5],
+			"Potency %": [0, 5],
+			Protection: [0, 5],
+			"Protection %": [0, 5],
+			Speed: [0, 5],
+			"Tenacity %": [0, 5],
+		};
+		for (const [statType, triStateValue] of objectEntries(filter.secondary)) {
+			// Map TriState to roll ranges: 0 → [0,5], -1 → [0,0], 1 → [1,5]
+			switch (triStateValue) {
+				case -1:
+					newSecondary[statType] = [0, 0]; // Cannot be present
+					break;
+				case 1:
+					newSecondary[statType] = [1, 5]; // Must be present
+					break;
+				default:
+					newSecondary[statType] = [0, 5]; // Any mod (default)
+					break;
+			}
+		}
+		filter.secondary = newSecondary;
+	}
+}
+
+function createStores(db: IDBDatabase, stores: string[] = storeNames) {
+	for (const storeName of stores) {
 		if (!db.objectStoreNames.contains(storeName)) {
 			const store = db.createObjectStore(storeName, {
 				keyPath: "id",
@@ -124,9 +199,15 @@ function createStores(db: IDBDatabase) {
 	}
 }
 
-function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
+const hasFilterById = (
+	obj: object,
+): obj is { filterById: Record<string, Partial<Filter> | undefined> } => {
+	return Object.hasOwn(obj, "filterById");
+};
+
+async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"CharactersManagement",
@@ -141,7 +222,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"Compilations",
@@ -154,7 +235,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"DefaultCompilation",
@@ -169,7 +250,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"HotUtils",
@@ -184,7 +265,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"IncrementalOptimization",
@@ -199,7 +280,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"LockedStatus",
@@ -214,7 +295,7 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(
+		await itemUpgrade(
 			db,
 			transaction,
 			"OptimizationSettings",
@@ -229,31 +310,39 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
-			return {
-				id: "profiles",
-				profiles: {
-					activeAllycode: oldProfiles.activeAllycode,
-					lastUpdatedByAllycode: oldProfiles.lastUpdatedByAllycode,
-					playernameByAllycode: oldProfiles.playernameByAllycode,
-					profileByAllycode: oldProfiles.profileByAllycode,
-				},
-			};
-		});
+		await itemUpgrade(
+			db,
+			transaction,
+			"Profiles",
+			"profiles",
+			(oldProfiles) => {
+				return {
+					id: "profiles",
+					profiles: {
+						activeAllycode: oldProfiles.activeAllycode,
+						lastUpdatedByAllycode: oldProfiles.lastUpdatedByAllycode,
+						playernameByAllycode: oldProfiles.playernameByAllycode,
+						profileByAllycode: oldProfiles.profileByAllycode,
+					},
+				};
+			},
+		);
 
-		itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
+		await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
 			return {
 				id: "viewSetup",
 				byIdByCategory: oldViewSetup.reduce(
 					(acc: Record<string, unknown>, item) => {
 						acc[item.id] = Object.entries(item).reduce(
 							(acc2, [key, value]) => {
-								if (key !== "id" && value !== undefined) {
-									for (const filter of Object.values(
-										(value as { filterById: Record<string, Partial<Filter>> })
-											.filterById,
-									)) {
-										upgradeFilterTo18(filter);
+								if (key !== "id" && value !== undefined && value !== null) {
+									if (hasFilterById(value)) {
+										for (const filter of Object.values(
+											(value as { filterById: Record<string, Partial<Filter>> })
+												.filterById,
+										)) {
+											upgradeFilterTo18(filter);
+										}
 									}
 									acc2[key] = value;
 								}
@@ -273,7 +362,214 @@ function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
-export const latestDBVersion = 18;
+async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(
+			db,
+			transaction,
+			"CharactersManagement",
+			"filterSetup",
+			(oldCharactersManagement) => {
+				const newCharactersManagement: Record<string, unknown> = {};
+				for (const [key, value] of objectEntries(
+					oldCharactersManagement.filterSetup as Record<string, unknown>,
+				)) {
+					if (key !== "id") newCharactersManagement[key] = value;
+				}
+				return {
+					id: "filterSetup",
+					filterSetup: {
+						...newCharactersManagement,
+					},
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"Compilations",
+			"compilationByIdByAllycode",
+			(oldCompilations) => {
+				const newCompilations: Map<string, unknown> = new Map();
+				for (const [
+					key,
+					value,
+				] of oldCompilations.compilationByIdByAllycode as Map<
+					string,
+					unknown
+				>) {
+					if (key !== "id") newCompilations.set(key, value);
+				}
+				return {
+					id: "compilationByIdByAllycode",
+					compilationByIdByAllycode: newCompilations,
+				};
+			},
+		);
+		/*
+		await itemUpgrade(
+			db,
+			transaction,
+			"DefaultCompilation",
+			"defaultCompilation",
+			(oldDefaultCompilation) => {
+				const newDefaultCompilation: Record<string, unknown> = {};
+				for (const [key, value] of objectEntries(
+					oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+				)) {
+					if (key !== "id") newDefaultCompilation[key] = value;
+				}
+				return {
+					id: "defaultCompilation",
+					defaultCompilation: {
+						...newDefaultCompilation,
+					},
+				};
+			},
+		);
+*/
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"HotUtils",
+			"sessionIdByProfile",
+			(oldHotUtils) => {
+				const newHotUtils: Record<string, unknown> = {};
+				for (const [allycode, sessionId] of objectEntries(
+					oldHotUtils.sessionIdByProfile as Record<string, unknown>,
+				)) {
+					if (allycode !== "id") newHotUtils[allycode] = sessionId;
+				}
+				return {
+					id: "sessionIdByProfile",
+					sessionIdByProfile: {
+						...newHotUtils,
+					},
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"IncrementalOptimization",
+			"indicesByProfile",
+			(oldIndices) => {
+				const newIndices: Record<string, number> = {};
+				for (const [allycode, index] of objectEntries(
+					oldIndices.indicesByProfile as Record<string, unknown>,
+				)) {
+					if (allycode !== "id") newIndices[allycode] = index as number;
+				}
+				return {
+					id: "indicesByProfile",
+					indicesByProfile: {
+						...newIndices,
+					},
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"LockedStatus",
+			"lockedStatus",
+			(oldLockedStatus) => {
+				const newLockedStatus: Record<string, unknown> = {};
+				for (const [allycode, status] of objectEntries(
+					oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+						string,
+						unknown
+					>,
+				)) {
+					if (allycode !== "id") newLockedStatus[allycode] = status;
+				}
+				return {
+					id: "lockedStatus",
+					lockedStatusByCharacterIdByAllycode: {
+						...newLockedStatus,
+					},
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"OptimizationSettings",
+			"settingsByProfile",
+			(oldOptimizationSettings) => {
+				const newSettings: Record<string, unknown> = {};
+				for (const [allycode, settings] of objectEntries(
+					oldOptimizationSettings.settingsByProfile as Record<string, unknown>,
+				)) {
+					if (allycode !== "id") newSettings[allycode] = settings;
+				}
+				return {
+					id: "settingsByProfile",
+					settingsByProfile: {
+						...newSettings,
+					},
+				};
+			},
+		);
+
+		await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
+			if (
+				oldViewSetup.length > 0 &&
+				Object.hasOwn(oldViewSetup[0], "byIdByCategory") &&
+				typeof oldViewSetup[0].byIdByCategory === "object" &&
+				oldViewSetup[0].byIdByCategory !== null
+			) {
+				return {
+					id: "viewSetup",
+					byIdByCategory: objectEntries(oldViewSetup[0].byIdByCategory).reduce(
+						(acc: Record<string, unknown>, item) => {
+							acc[item[0]] = Object.entries(item[1]).reduce(
+								(acc2, [key, value]) => {
+									if (key !== "id" && value !== undefined && value !== null) {
+										if (hasFilterById(value)) {
+											for (const [filterId, filter] of objectEntries(
+												value.filterById,
+											)) {
+												if (filter === undefined)
+													Reflect.deleteProperty(value.filterById, filterId);
+												else {
+													upgradeFilterTo18(filter);
+													upgradeFilterTo19(filter);
+												}
+											}
+										}
+										acc2[key] = value;
+									}
+									return acc2;
+								},
+								{} as Record<string, unknown>,
+							);
+							return acc;
+						},
+						{},
+					),
+				};
+			}
+
+			return {
+				id: "viewSetup",
+				byIdByCategory: {},
+			};
+		});
+	} catch (error) {
+		console.error("Error in upgradeTo19:", error);
+		transaction.abort();
+	}
+}
+
+const dbVersions = [16, 18, 19] as const;
+type DBVersions = (typeof dbVersions)[number];
+const latestDBVersion = dbVersions[dbVersions.length - 1];
 
 const persistOptions = configureSynced({
 	persist: {
@@ -281,22 +577,37 @@ const persistOptions = configureSynced({
 			databaseName: "GIMO",
 			version: latestDBVersion,
 			tableNames: storeNames,
-			onUpgradeNeeded: (event) => {
+			onUpgradeNeeded: async (event) => {
 				const request = event.target as IDBOpenDBRequest;
 				const db = request.result as IDBDatabase;
 				const transaction = request.transaction;
 				if (event.oldVersion === 0) {
 					createStores(db);
 				}
-				if (
-					event.oldVersion === 16 &&
-					event.newVersion === 18 &&
-					transaction !== null
-				)
-					upgradeTo18(db, transaction);
+				if (transaction !== null) {
+					if (event.oldVersion < 18) await upgradeTo18(db, transaction);
+					if (event.oldVersion < 19) await upgradeTo19(db, transaction);
+				}
 			},
 		}),
 	},
 });
 
-export { persistOptions };
+const testing =
+	typeof process !== "undefined" && process.env.NODE_ENV === "test";
+
+const testOnlyCreateStores = testing ? createStores : undefined;
+const testOnlyStoreNames = testing ? storeNames : undefined;
+const testOnlyUpgradeTo18 = testing ? upgradeTo18 : undefined;
+const testOnlyUpgradeTo19 = testing ? upgradeTo19 : undefined;
+
+export {
+	type DBVersions,
+	latestDBVersion,
+	persistOptions,
+	upgradeFilterTo19,
+	testOnlyCreateStores,
+	testOnlyStoreNames,
+	testOnlyUpgradeTo18,
+	testOnlyUpgradeTo19,
+};

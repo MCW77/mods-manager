@@ -1,13 +1,7 @@
-// utils
-import * as v from "valibot";
-
 // state
 import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import {
-	latestDBVersion,
-	persistOptions,
-} from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 const { compilations$ } = await import(
 	"#/modules/compilations/state/compilations"
@@ -16,62 +10,15 @@ const { compilations$ } = await import(
 // domain
 import defaultTemplates from "#/constants/characterTemplates.json";
 
+import { convertTemplates } from "../domain/Backup";
 import type {
 	CharacterTemplate,
 	CharacterTemplates,
 	CharacterTemplatesByName,
 } from "../domain/CharacterTemplates";
 import type { TemplatesAddingMode } from "../domain/TemplatesAddingMode";
-import type { TemplateTypes } from "../domain/TemplateTypes";
 import type { TemplatesObservable } from "../domain/TemplatesObservable";
-import { fromGIMOCharacterTemplates } from "../mappers/GIMOCharacterTemplatesMapper";
-import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
-import {
-	CharacterTemplatesSchemaV18,
-	CharacterTemplatesSchemaV19,
-	LatestCharacterTemplatesSchema,
-} from "#/domain/schemas/mods-manager";
-
-interface Backup {
-	characterTemplates: unknown;
-	client: "mods-manager";
-	backupType: "characterTemplates";
-	version: number;
-}
-
-const normalizeTemplatesJSON = (data: unknown) => {
-	const normalizedData: Backup = {
-		characterTemplates: data,
-		client: "mods-manager",
-		backupType: "characterTemplates",
-		version: 18,
-	};
-	return normalizedData;
-};
-
-const migrations = new Map<number, (data: unknown) => Backup>([]);
-
-function runMigrations(data: Backup) {
-	let currentData = data;
-	while (data.version < latestDBVersion) {
-		const migrate = migrations.get(data.version);
-		if (!migrate) {
-			templates$.import.errorMessage.set(
-				"Import of character templates failed",
-			);
-			templates$.import.errorReason.set(
-				`Couldn't find a migration for version ${data.version}`,
-			);
-			templates$.import.errorSolution.set(
-				"Ensure your backup matches a known schema.",
-			);
-			return null;
-		}
-		currentData = migrate(currentData);
-	}
-
-	return currentData;
-}
+import type { TemplateTypes } from "../domain/TemplateTypes";
 
 const templates$: ObservableObject<TemplatesObservable> =
 	observable<TemplatesObservable>({
@@ -157,7 +104,6 @@ const templates$: ObservableObject<TemplatesObservable> =
 		},
 		importTemplates: (templatesString: string) => {
 			let parsedJSON: unknown;
-			let templates = null as Backup | null;
 			try {
 				parsedJSON = JSON.parse(templatesString);
 			} catch (error) {
@@ -170,68 +116,24 @@ const templates$: ObservableObject<TemplatesObservable> =
 				}
 				return;
 			}
-
-			const gimoParseResult = v.safeParse(
-				GIMOCharacterTemplatesSchema,
-				parsedJSON,
-			);
-			if (gimoParseResult.success) {
-				templates = normalizeTemplatesJSON(
-					fromGIMOCharacterTemplates(gimoParseResult.output),
-				);
-			} else {
-				const modsManagerParseResult = v.safeParse(
-					CharacterTemplatesSchemaV18,
-					parsedJSON,
-				);
-				if (modsManagerParseResult.success) {
-					templates = normalizeTemplatesJSON(modsManagerParseResult.output);
-				}
-			}
-			if (templates === null) {
-				const modsManagerParseResult = v.safeParse(
-					CharacterTemplatesSchemaV19,
-					parsedJSON,
-				);
-				if (modsManagerParseResult.success) {
-					templates = modsManagerParseResult.output;
-				}
-			}
-			if (templates === null) {
+			const conversionResult = convertTemplates(parsedJSON);
+			if (conversionResult.importError.errorMessage !== "") {
 				templates$.import.errorMessage.set(
-					"Import of character templates failed.",
+					conversionResult.importError.errorMessage,
 				);
 				templates$.import.errorReason.set(
-					"Couldn't validate a character templates backup",
+					conversionResult.importError.errorReason,
 				);
 				templates$.import.errorSolution.set(
-					"Please check you selected a valid file. If so let me know about the error on discord",
+					conversionResult.importError.errorSolution,
 				);
 				return;
 			}
-			templates = runMigrations(templates);
-			if (templates === null) {
-				return;
-			}
-
-			const finalSchemaResult = v.safeParse(
-				LatestCharacterTemplatesSchema,
-				templates,
-			);
-			if (!finalSchemaResult.success) {
-				templates$.import.errorMessage.set(
-					"Import of character templates failed",
-				);
-				templates$.import.errorReason.set(
-					`Validation of the final migrated data failed:
-			 ${finalSchemaResult.issues.map((issue) => issue.message)}`,
-				);
-				templates$.import.errorSolution.set("Please report on discord!");
-				return;
-			}
-			templates$.import.errorMessage.set("");
-			for (const template of finalSchemaResult.output.characterTemplates) {
-				templates$.userTemplatesByName[template.id].set(template);
+			if (conversionResult.backup !== null) {
+				templates$.import.errorMessage.set("");
+				for (const template of conversionResult.backup.characterTemplates) {
+					templates$.userTemplatesByName[template.id].set(template);
+				}
 			}
 		},
 	});

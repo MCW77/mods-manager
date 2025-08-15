@@ -43,6 +43,16 @@ const SecondarySettingsSchema = v.object(
 	v.entriesFromList(secondarySettingsSecondaries, TriStateSchema),
 );
 
+const SecondarySettingsSchemaV19 = v.object(
+	v.entriesFromList(
+		secondarySettingsSecondaries,
+		v.tuple([
+			v.pipe(v.number(), v.minValue(0), v.maxValue(5)),
+			v.pipe(v.number(), v.minValue(0), v.maxValue(5)),
+		]),
+	),
+);
+
 const SlotSettingsSchema = v.object(
 	v.entriesFromList(slotSettingsSlots, TriStateSchema),
 );
@@ -76,6 +86,33 @@ const FilterSchema = v.object({
 			v.pipe(v.number(), v.minValue(0), v.maxValue(31)),
 		]),
 		[0, 31],
+	),	tier: TierSettingsSchema,
+});
+
+const FilterSchemaV19 = v.object({
+	assigned: AssignedSettingsSchema,
+	calibration: CalibrationSettingsSchema,
+	id: v.string(),
+	equipped: EquippedSettingsSchema,
+	level: LevelSettingsSchema,
+	modset: SetSettingsSchema,
+	primary: PrimarySettingsSchema,
+	rarity: RaritySettingsSchema,
+	score: v.optional(
+		v.tuple([
+			v.pipe(v.number(), v.minValue(0), v.maxValue(800)),
+			v.pipe(v.number(), v.minValue(0), v.maxValue(800)),
+		]),
+		[0, 100],
+	),
+	secondary: SecondarySettingsSchemaV19,
+	slot: SlotSettingsSchema,
+	speedRange: v.optional(
+		v.tuple([
+			v.pipe(v.number(), v.minValue(0), v.maxValue(31)),
+			v.pipe(v.number(), v.minValue(0), v.maxValue(31)),
+		]),
+		[0, 31],
 	),
 	tier: TierSettingsSchema,
 });
@@ -95,9 +132,25 @@ const PersistableViewSetupSchema = v.object({
 	filterById: v.record(v.string(), FilterSchema),
 	id: v.string(),
 	isGroupingEnabled: v.boolean(),
+	modScore: v.string(),	sort: PersistableSortConfigByIdSchema,
+});
+
+const PersistableViewSetupSchemaV19 = v.object({
+	category: v.picklist(categories),
+	description: v.string(),
+	filterById: v.record(v.string(), FilterSchemaV19),
+	id: v.string(),
+	isGroupingEnabled: v.boolean(),
 	modScore: v.string(),
 	sort: PersistableSortConfigByIdSchema,
 });
+
+const ModsViewSetupsSchemaV19 = v.object(
+	v.entriesFromList(
+		categories,
+		v.record(v.string(), PersistableViewSetupSchemaV19),
+	),
+);
 
 const ModsViewSetupsSchema = v.object(
 	v.entriesFromList(
@@ -106,4 +159,4 @@ const ModsViewSetupsSchema = v.object(
 	),
 );
 
-export { ModsViewSetupsSchema };
+export { ModsViewSetupsSchema, ModsViewSetupsSchemaV19 };

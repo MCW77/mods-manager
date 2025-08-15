@@ -1,7 +1,7 @@
 // utils
 import saveAs from "file-saver";
-import * as v from "valibot";
 import { objectEntries } from "#/utils/objectEntries";
+import superjson from "superjson";
 
 // state
 import {
@@ -29,84 +29,23 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
-import type { Backup, PersistableBackup } from "../domain/Backup";
+import { convertBackup, type Backup, type BackupData } from "../domain/Backup";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
 import { getProfileFromPersisted } from "#/modules/profilesManagement/domain/PlayerProfile";
-import {
-	LatestModsManagerBackupSchema,
-	type LatestModsManagerBackupDataSchemaOutput,
-	ModsManagerBackupSchemaV16,
-	ModsManagerBackupSchemaV18,
-} from "#/domain/schemas/mods-manager";
-import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
-import { fromGIMOBackup } from "../mappers/GIMOBackupMapper";
+import type { LatestModsManagerBackupDataSchemaOutput } from "#/domain/schemas/mods-manager";
 
-interface NormalizedBackup {
-	data: unknown;
-	client: "mods-manager" | "gimo";
-	backupType: "fullBackup";
-	version: number;
+interface ImportError {
+	errorMessage: string;
+	errorReason: string;
+	errorSolution: string;
 }
 
 type AppState = {
-	import: {
-		errorMessage: string;
-		errorReason: string;
-		errorSolution: string;
-	};
+	import: ImportError;
 	reset: () => void;
 	loadBackup: (serializedAppState: string) => void;
 	saveBackup: () => void;
 };
-
-const migrations = new Map<
-	number,
-	(normalizedBackup: NormalizedBackup) => NormalizedBackup
->([
-	[
-		0,
-		(normalizedBackup) => {
-			return {
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: normalizedBackup.data,
-				version: 16,
-			};
-		},
-	],
-	[
-		16,
-		(normalizedBackup) => {
-			return {
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: normalizedBackup.data,
-				version: 18,
-			};
-		},
-	],
-]);
-
-function runMigrations(data: NormalizedBackup) {
-	let currentData = data;
-	while (currentData.version < latestDBVersion) {
-		const migrate = migrations.get(currentData.version);
-		if (!migrate) {
-			templates$.import.errorMessage.set(
-				"Import of character templates failed",
-			);
-			templates$.import.errorReason.set(
-				`Couldn't find a migration for version ${data.version}`,
-			);
-			templates$.import.errorSolution.set(
-				"Ensure your backup matches a known schema.",
-			);
-			return null;
-		}
-		currentData = migrate(currentData);
-	}
-	return currentData;
-}
 
 const mergeProfilesManagement = (
 	profilesManagement: LatestModsManagerBackupDataSchemaOutput["profilesManagement"],
@@ -430,20 +369,6 @@ const loadModsManagerBackup = (
 	endBatch();
 };
 
-const normalizeBackupJSON = (params: {
-	client: "mods-manager" | "gimo";
-	data: unknown;
-	version: number;
-}) => {
-	const normalizedData: NormalizedBackup = {
-		data: params.data,
-		client: params.client,
-		backupType: "fullBackup",
-		version: params.version,
-	};
-	return normalizedData;
-};
-
 const appState$: ObservableObject<AppState> = observable({
 	import: {
 		errorMessage: "",
@@ -465,18 +390,11 @@ const appState$: ObservableObject<AppState> = observable({
 		endBatch();
 	},
 	loadBackup: (serializedAppState: string) => {
-		const isoDatePattern = new RegExp(
-			/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/,
-		);
 		let parsedJSON: unknown;
-		let backup = null as NormalizedBackup | null;
+
+		// Parse with superjson (handles both new superjson format and old JSON format)
 		try {
-			parsedJSON = JSON.parse(serializedAppState, (key, value) => {
-				if (typeof value === "string" && value.match(isoDatePattern)) {
-					return new Date(value);
-				}
-				return value;
-			});
+			parsedJSON = superjson.parse(serializedAppState);
 		} catch (error) {
 			if (error instanceof SyntaxError) {
 				appState$.import.errorMessage.set("Import of backup failed.");
@@ -485,82 +403,27 @@ const appState$: ObservableObject<AppState> = observable({
 			}
 			return;
 		}
-		const gimoParseResult = v.safeParse(GIMOBackupSchema, parsedJSON);
-		if (gimoParseResult.success) {
-			backup = normalizeBackupJSON({
-				client: "gimo",
-				data: fromGIMOBackup(gimoParseResult.output),
-				version: 0,
-			});
-		}
-		if (backup === null) {
-			const modsManagerParseResult = v.safeParse(
-				ModsManagerBackupSchemaV16,
-				parsedJSON,
-			);
-			if (modsManagerParseResult.success) {
-				backup = normalizeBackupJSON({
-					client: "mods-manager",
-					data: modsManagerParseResult.output,
-					version: 16,
-				});
-			}
-		}
-		if (backup === null) {
-			const modsManagerParseResult = v.safeParse(
-				ModsManagerBackupSchemaV18,
-				parsedJSON,
-			);
-			if (modsManagerParseResult.success) {
-				backup = normalizeBackupJSON({
-					client: "mods-manager",
-					data: modsManagerParseResult.output,
-					version: 18,
-				});
-			}
-		}
 
-		if (backup === null) {
+		const conversionResult = convertBackup(parsedJSON);
+		if (conversionResult.importError.errorMessage !== "") {
 			appState$.import.errorMessage.set(
-				"Import of mods-manager backup failed.",
+				conversionResult.importError.errorMessage,
 			);
 			appState$.import.errorReason.set(
-				"Couldn't validate a mods-manager backup",
+				conversionResult.importError.errorReason,
 			);
 			appState$.import.errorSolution.set(
-				"Please check you selected a valid file. If so let me know about the error on discord",
+				conversionResult.importError.errorSolution,
 			);
 			return;
 		}
-
-		backup = runMigrations(backup);
-		if (backup === null) {
-			return;
+		if (conversionResult.backup !== null) {
+			appState$.import.errorMessage.set("");
+			loadModsManagerBackup(conversionResult.backup.data);
 		}
-
-		const finalSchemaResult = v.safeParse(
-			LatestModsManagerBackupSchema,
-			backup,
-		);
-		if (!finalSchemaResult.success) {
-			appState$.import.errorMessage.set("Import of character templates failed");
-			appState$.import.errorReason.set(
-				`Validation of the final migrated data failed:
-			${finalSchemaResult.issues.map((issue) => issue.message)}`,
-			);
-			appState$.import.errorSolution.set("Please report on discord!");
-			return;
-		}
-		appState$.import.errorMessage.set("");
-		const test = finalSchemaResult.output.data.defaultCompilation;
-		type Test = typeof test;
-		const persistableBackupData: LatestModsManagerBackupDataSchemaOutput =
-			finalSchemaResult.output.data;
-		//		const persistableBackupData: PersistableBackupData = finalSchemaResult.output.data;
-		loadModsManagerBackup(persistableBackupData);
 	},
 	saveBackup: () => {
-		const backup: Backup = {
+		const backupData: BackupData = {
 			characterTemplates: templates$.userTemplatesByName.peek(),
 			defaultCompilation: compilations$.defaultCompilation.peek(),
 			compilations: compilations$.compilationByIdByAllycode.peek(),
@@ -572,30 +435,23 @@ const appState$: ObservableObject<AppState> = observable({
 			profilesManagement: profilesManagement$.toPersistable(),
 			sessionIds: hotutils$.sessionIdByProfile.peek(),
 			settings: optimizationSettings$.settingsByProfile.peek(),
-			version: about$.version.peek(),
 		};
 		const compilations: Record<string, Record<string, Compilation>> = {};
-		for (const [allycode, compilationsMap] of backup.compilations) {
+		for (const [allycode, compilationsMap] of backupData.compilations) {
 			if (allycode !== "id") {
 				compilations[allycode] = Object.fromEntries(
 					Array.from(compilationsMap),
 				);
 			}
 		}
-		const persistableBackup: PersistableBackup = {
-			characterTemplates: backup.characterTemplates,
-			defaultCompilation: backup.defaultCompilation,
-			compilations,
-			incrementalOptimizationIndices: backup.incrementalOptimizationIndices,
-			lockedStatus: backup.lockedStatus,
-			modsViewSetups: backup.modsViewSetups,
-			profilesManagement: backup.profilesManagement,
-			sessionIds: backup.sessionIds,
-			settings: backup.settings,
-			version: backup.version,
+		const backup: Backup = {
+			data: backupData,
+			appVersion: about$.version.peek(),
+			backupType: "fullBackup",
 			client: "mods-manager",
+			version: latestDBVersion,
 		};
-		const serializedBackup = JSON.stringify(persistableBackup);
+		const serializedBackup = superjson.stringify(backup);
 		const backupBlob = new Blob([serializedBackup], {
 			type: "application/json;charset=utf-8",
 		});
@@ -607,4 +463,5 @@ const appState$: ObservableObject<AppState> = observable({
 });
 
 appState$.import.errorMessage.set("");
+
 export { appState$ };
