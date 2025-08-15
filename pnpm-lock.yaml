@@ -178,8 +178,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1
       '@unocss/preset-typography':
-        specifier: 66.1.2
-        version: 66.1.2
+        specifier: 66.4.2
+        version: 66.4.2
       '@vitest/coverage-v8':
         specifier: ^3.2.4
         version: 3.2.4(vitest@3.2.4)
@@ -1898,9 +1898,6 @@ packages:
 
   '@unocss/preset-tagify@66.4.2':
     resolution: {integrity: sha512-dECS09LqWJY4sYpgPUH2OAUftWU/tiZPR2XDRoTngeGU37GxSN+1sWtSmB7vwDm3C7opsdVUN20he8F1LUNubw==}
-
-  '@unocss/preset-typography@66.1.2':
-    resolution: {integrity: sha512-+k9zp27Ak8rB6LPFDwq9fcwd3+ivFeSvXFQ2d4fBCwGGOAKHIA7qHLg3etxRaMhGd3YUPv/6d7FWpBbQgUVYZw==}
 
   '@unocss/preset-typography@66.4.2':
     resolution: {integrity: sha512-ZOKRuR5+V0r30QTVq04/6ZoIw75me3V25v2dU2YWJXIzwpMKmQ9TUN/M1yeiEUFfXjOaruWX6Ad6CvAw2MlCew==}
@@ -5839,12 +5836,6 @@ snapshots:
   '@unocss/preset-tagify@66.4.2':
     dependencies:
       '@unocss/core': 66.4.2
-
-  '@unocss/preset-typography@66.1.2':
-    dependencies:
-      '@unocss/core': 66.1.2
-      '@unocss/preset-mini': 66.1.2
-      '@unocss/rule-utils': 66.1.2
 
   '@unocss/preset-typography@66.4.2':
     dependencies:
