@@ -21,8 +21,7 @@ const combineFilters: (filters: ModFilterPredicate[]) => ModFilterPredicate =
 		return filters.map((filter) => filter(item)).every((x) => x === true);
 	};
 
-class ModsFilter {
-	selectedOptions: PartialFilter = {
+class ModsFilter {	selectedOptions: PartialFilter = {
 		slot: [],
 		modset: [],
 		rarity: [],
@@ -30,7 +29,6 @@ class ModsFilter {
 		level: [],
 		equipped: [],
 		primary: [],
-		secondary: [],
 		assigned: [],
 		calibration: [],
 	};
@@ -44,23 +42,23 @@ class ModsFilter {
 	constructor(modsViewOptions: ViewSetup, quickFilter: Filter) {
 		Mod.setupAccessors();
 		[this.selectedOptions, this.unselectedOptions] =
-			this.extractSelectedAndUnselectedOptions(quickFilter);
-		this.quickFilter = combineFilters([
+			this.extractSelectedAndUnselectedOptions(quickFilter);		this.quickFilter = combineFilters([
 			this.selectedOptionsFilter(this.selectedOptions),
 			this.unselectedOptionsFilter(this.unselectedOptions),
 			this.extractScoreFilter(quickFilter, modsViewOptions.modScore),
 			this.extractSpeedFilter(quickFilter),
+			this.extractSecondaryFilter(quickFilter),
 		]);
 
 		for (const filter of Object.values(modsViewOptions.filterById)) {
 			[this.selectedOptions, this.unselectedOptions] =
-				this.extractSelectedAndUnselectedOptions(filter);
-			this.filters.push(
+				this.extractSelectedAndUnselectedOptions(filter);			this.filters.push(
 				combineFilters([
 					this.selectedOptionsFilter(this.selectedOptions),
 					this.unselectedOptionsFilter(this.unselectedOptions),
 					this.extractScoreFilter(filter, modsViewOptions.modScore),
 					this.extractSpeedFilter(filter),
+					this.extractSecondaryFilter(filter),
 				]),
 			);
 		}
@@ -95,7 +93,6 @@ class ModsFilter {
 			return min <= mod.scores[scoreName] && mod.scores[scoreName] <= max;
 		};
 	}
-
 	extractSelectedAndUnselectedOptions(filters: Filter) {
 		const selectedOptions: PartialFilter = {
 			slot: [],
@@ -105,7 +102,6 @@ class ModsFilter {
 			level: [],
 			equipped: [],
 			primary: [],
-			secondary: [],
 			assigned: [],
 			calibration: [],
 		};
@@ -117,7 +113,6 @@ class ModsFilter {
 			level: [],
 			equipped: [],
 			primary: [],
-			secondary: [],
 			assigned: [],
 			calibration: [],
 		};
@@ -165,20 +160,10 @@ class ModsFilter {
 		)
 			return false;
 		if (selectedOptions.equipped.length > 0 && mod.characterID === "null")
-			return false;
-		if (
+			return false;		if (
 			selectedOptions.primary.length > 0 &&
 			!selectedOptions.primary.every(
 				(primary) => mod.primaryStat.type === primary,
-			)
-		)
-			return false;
-		if (
-			selectedOptions.secondary.length > 0 &&
-			!selectedOptions.secondary.every((secondary) =>
-				mod.secondaryStats.some(
-					(modSecondary) => modSecondary.type === secondary,
-				),
 			)
 		)
 			return false;
@@ -221,20 +206,10 @@ class ModsFilter {
 			)
 				return false;
 			if (unselectedOptions.equipped.length > 0 && mod.characterID !== "null")
-				return false;
-			if (
+				return false;			if (
 				unselectedOptions.primary.length > 0 &&
 				!unselectedOptions.primary.every(
 					(primary) => mod.primaryStat.type !== primary,
-				)
-			)
-				return false;
-			if (
-				unselectedOptions.secondary.length > 0 &&
-				!unselectedOptions.secondary.every((secondary) =>
-					mod.secondaryStats.every(
-						(modSecondary) => modSecondary.type !== secondary,
-					),
 				)
 			)
 				return false;
@@ -248,7 +223,23 @@ class ModsFilter {
 			if (unselectedOptions.assigned.length > 0 && mod.isAssigned())
 				return false;
 			return true;
+			};
+
+	extractSecondaryFilter(filter: Filter) {
+		return (mod: Mod) => {
+			for (const [statType, [minRolls, maxRolls]] of Object.entries(filter.secondary)) {
+				const secondaryStat = mod.secondaryStats.find(
+					(secondary) => secondary.type === statType,
+				);
+				const rollCount = secondaryStat ? secondaryStat.rolls : 0;
+
+				if (rollCount < minRolls || rollCount > maxRolls) {
+					return false;
+				}
+			}
+			return true;
 		};
+	}
 
 	filterMods(mods: Mod[]) {
 		let result: Mod[] = this.filters.length === 0 ? mods : [];

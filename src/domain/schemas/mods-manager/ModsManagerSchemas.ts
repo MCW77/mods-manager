@@ -7,6 +7,7 @@ import {
 	CompilationSchema,
 	LockedStatusByCharacterIdSchema,
 	ModsViewSetupsSchema,
+	ModsViewSetupsSchemaV19,
 	PersistedProfilesSchema,
 	SettingsByProfileSchema,
 } from "./";
@@ -46,6 +47,29 @@ const ModsManagerBackupSchemaV18 = v.object({
 	version: v.string(),
 	client: v.exactOptional(v.literal("mods-manager"), "mods-manager"),
 });
+type ModsManagerBackupSchemaV18Output = v.InferOutput<
+	typeof ModsManagerBackupSchemaV18
+>;
+
+const ModsManagerBackupDataSchemaV19 = v.object({
+	characterTemplates: CharacterTemplateByNameSchema,
+	compilations: v.record(v.string(), v.record(v.string(), CompilationSchema)),
+	defaultCompilation: CompilationSchema,
+	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchema),
+	modsViewSetups: ModsViewSetupsSchemaV19,
+	profilesManagement: PersistedProfilesSchema,
+	sessionIds: v.record(v.string(), v.string()),
+	settings: SettingsByProfileSchema,
+});
+
+const ModsManagerBackupSchemaV19 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: ModsManagerBackupDataSchemaV19,
+	version: v.number(),
+});
 
 const LatestModsManagerBackupDataSchema = v.object({
 	characterTemplates: CharacterTemplateByNameSchema,
@@ -62,7 +86,7 @@ const LatestModsManagerBackupDataSchema = v.object({
 		v.record(v.string(), LockedStatusByCharacterIdSchema),
 		{},
 	),
-	modsViewSetups: v.exactOptional(v.optional(ModsViewSetupsSchema)),
+	modsViewSetups: v.exactOptional(v.optional(ModsViewSetupsSchemaV19)),
 	profilesManagement: v.exactOptional(v.optional(PersistedProfilesSchema)),
 	sessionIds: v.exactOptional(v.record(v.string(), v.string()), {}),
 	settings: v.exactOptional(v.optional(SettingsByProfileSchema)),
@@ -72,6 +96,7 @@ type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 >;
 
 const LatestModsManagerBackupSchema = v.object({
+	appVersion: v.string(),
 	data: LatestModsManagerBackupDataSchema,
 	backupType: v.literal("fullBackup"),
 	version: v.number(),
@@ -91,5 +116,7 @@ export {
 	type LatestModsManagerBackupDataSchemaOutput,
 	ModsManagerBackupSchemaV16,
 	ModsManagerBackupSchemaV18,
+	type ModsManagerBackupSchemaV18Output,
+	ModsManagerBackupSchemaV19,
 	ModsManagerSchema,
 };

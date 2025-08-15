@@ -144,19 +144,19 @@ export const secondarySettingsSecondaries = [
 ] as const;
 export type SecondarySettingsSecondaries =
 	(typeof secondarySettingsSecondaries)[number];
-export interface SecondarySettings extends BaseSettings {
-	"Critical Chance %": TriState;
-	"Defense %": TriState;
-	Defense: TriState;
-	"Offense %": TriState;
-	Offense: TriState;
-	"Health %": TriState;
-	Health: TriState;
-	"Potency %": TriState;
-	"Tenacity %": TriState;
-	"Protection %": TriState;
-	Protection: TriState;
-	Speed: TriState;
+export interface SecondarySettings {
+	"Critical Chance %": [number, number];
+	Defense: [number, number];
+	"Defense %": [number, number];
+	Health: [number, number];
+	"Health %": [number, number];
+	Offense: [number, number];
+	"Offense %": [number, number];
+	"Potency %": [number, number];
+	Protection: [number, number];
+	"Protection %": [number, number];
+	Speed: [number, number];
+	"Tenacity %": [number, number];
 }
 
 export interface AssignedSettings extends BaseSettings {
@@ -190,7 +190,6 @@ const availableTriStateFilters = [
 	"level",
 	"equipped",
 	"primary",
-	"secondary",
 	"assigned",
 	"calibration",
 ] as const;
@@ -224,7 +223,6 @@ export interface PartialFilter {
 	level: (keyof LevelSettings)[];
 	equipped: (keyof EquippedSettings)[];
 	primary: (keyof PrimarySettings)[];
-	secondary: (keyof SecondarySettings)[];
 	assigned: (keyof AssignedSettings)[];
 	calibration: (keyof CalibrationSettings)[];
 }
@@ -314,18 +312,18 @@ export const quickFilter: Filter = {
 		Speed: 0,
 	},
 	secondary: {
-		"Critical Chance %": 0,
-		"Defense %": 0,
-		Defense: 0,
-		"Offense %": 0,
-		Offense: 0,
-		"Health %": 0,
-		Health: 0,
-		"Potency %": 0,
-		"Tenacity %": 0,
-		"Protection %": 0,
-		Protection: 0,
-		Speed: 0,
+		"Critical Chance %": [0, 5],
+		Defense: [0, 5],
+		"Defense %": [0, 5],
+		Health: [0, 5],
+		"Health %": [0, 5],
+		Offense: [0, 5],
+		"Offense %": [0, 5],
+		"Potency %": [0, 5],
+		Protection: [0, 5],
+		"Protection %": [0, 5],
+		Speed: [0, 5],
+		"Tenacity %": [0, 5],
 	},
 	assigned: {
 		assigned: 0,
