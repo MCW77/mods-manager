@@ -702,6 +702,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	BRUTUS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			phys: 50,
+			cc: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Critical Chance %": 1,
+			},
+		}),
+	]),
 	BT1: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -1593,6 +1611,23 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 100,
 			cc: 25,
+		}),
+	]),
+	DEPABILLABA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			spd: 50,
+			phys: 40,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
 		}),
 	]),
 	DIRECTORKRENNIC: createCharacterSettings(
@@ -2741,6 +2776,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["ISC"],
 	),
+	ITHANO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			spd: 100,
+			phys: 40,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				cross: "Offense %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	JABBATHEHUTT: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -2958,6 +3011,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["JMK"],
 	),
+	JEDIMASTERMACEWINDU: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			phys: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
+		}),
+	]),
 	JOCASTANU: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -3152,6 +3223,28 @@ const characterSettings: CharacterSettingsIndexer = {
 			),
 		],
 		["Fisty", "Fister"],
+	),
+	KIX: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					cross: "Health %",
+					circle: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
 	),
 	KRRSANTAN: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -4077,6 +4170,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Quadme", "Queeni"],
 	),
+	QUIGGOLD: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 70,
+			prot: 100,
+			spd: 40,
+			arm: 25,
+			res: 25,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				cross: "Protection %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
+	]),
 	QUIGONJINN: createCharacterSettings(
 		[
 			toRenamed(
@@ -4527,6 +4640,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["SiT", "Nightmare"],
 	),
+	SM33: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 60,
+			spd: 20,
+			cc: 30,
+			phys: 100,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Offense %",
+				triangle: "Critical Damage %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
+		}),
+	]),
 	SMUGGLERCHEWBACCA: createCharacterSettings(
 		[
 			toRenamed(
@@ -5019,6 +5152,27 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Auto Lightzader", "Wampanader", "Nightmare"],
 	),
+	VANGUARDTEMPLEGUARD: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 20,
+			spd: 30,
+			arm: 10,
+			res: 10,
+			primaryRes: {
+				arrow: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+				triangle: "Protection %",
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+	]),
+
 	VEERS: createCharacterSettings(
 		[
 			toRenamed(
