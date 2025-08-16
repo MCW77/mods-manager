@@ -131,6 +131,10 @@ const customCharacterFilterGroups = [
 				value: "Faction--Phoenix",
 			},
 			{
+				label: "Pirate",
+				value: "Faction--Pirate",
+			},
+			{
 				label: "Rebel",
 				value: "Faction--Rebel",
 			},
@@ -206,6 +210,10 @@ const customCharacterFilterGroups = [
 			{
 				label: "Leader",
 				value: "Role--Leader",
+			},
+			{
+				label: "Order 66 Raid",
+				value: "Role--[c][ffff33]Order 66 Raid[-][/c]",
 			},
 			{
 				label: "Pilot",
@@ -296,6 +304,7 @@ const CharacterFilters: React.FC = observer(() => {
 				</div>
 				<div className={"flex flex-col gap-1"}>
 					<div className={"flex gap-2 m-t-2"}>
+						{/** biome-ignore lint/correctness/useUniqueElementIds: <explanation> */}
 						<input
 							className="mb-2 bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
 							id="character-filter"

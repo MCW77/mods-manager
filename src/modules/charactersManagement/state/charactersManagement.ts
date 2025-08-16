@@ -351,6 +351,7 @@ const getDefaultFilterSetup = () => {
 		"Galactic Legend",
 		"Healer",
 		"Leader",
+		"[c][ffff33]Order 66 Raid[-][/c]",
 		"Support",
 		"Tank",
 	]) {
@@ -380,6 +381,7 @@ const getDefaultFilterSetup = () => {
 		"Nightsister",
 		"Old Republic",
 		"Phoenix",
+		"Pirate",
 		"Rebel",
 		"Rebel Fighter",
 		"Resistance",
