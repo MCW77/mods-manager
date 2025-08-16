@@ -1,6 +1,6 @@
 // Prevent React Refresh in worker context
 // @ts-ignore
-if (typeof globalThis !== 'undefined') {
+if (typeof globalThis !== "undefined") {
 	// @ts-ignore
 	globalThis.__vite_plugin_react_preamble_installed__ = true;
 	// @ts-ignore
@@ -13,16 +13,16 @@ if (typeof globalThis !== 'undefined') {
 			reload: () => {},
 			replace: () => {},
 			assign: () => {},
-			toString: () => 'about:blank',
-			href: 'about:blank',
-			origin: 'null',
-			protocol: 'about:',
-			host: '',
-			hostname: '',
-			port: '',
-			pathname: 'blank',
-			search: '',
-			hash: '',
+			toString: () => "about:blank",
+			href: "about:blank",
+			origin: "null",
+			protocol: "about:",
+			host: "",
+			hostname: "",
+			port: "",
+			pathname: "blank",
+			search: "",
+			hash: "",
 			ancestorOrigins: {
 				length: 0,
 				contains: () => false,
@@ -30,7 +30,11 @@ if (typeof globalThis !== 'undefined') {
 				[Symbol.iterator]: function* () {},
 			} as unknown as DOMStringList,
 		} as Location,
-		console: globalThis.console || { log: () => {}, warn: () => {}, error: () => {} },
+		console: globalThis.console || {
+			log: () => {},
+			warn: () => {},
+			error: () => {},
+		},
 	} as any;
 	// @ts-ignore
 	globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;
@@ -249,6 +253,8 @@ self.onmessage = (message) => {
 			lastRun,
 			compilations$.defaultCompilation.flatCharacterModdings.peek(),
 		);
+
+		perf.logMeasures("optimizeMods");
 
 		optimizationSuccessMessage(optimizerResults);
 		self.close();
@@ -788,7 +794,6 @@ const cache: Cache = {
 
 function clearCache() {
 	cache.modScores.clear();
-	cache.modUpgrades.clear();
 	cache.modStats.clear();
 	cache.statValues.clear();
 }
@@ -863,18 +868,14 @@ function getFlatStatsFromLoadout(
  * @param character {Character}
  * @param target {OptimizationPlan}
  */
-function getFlatStatsFromMod(
-	mod: Mod,
-	character: Character.Character,
-	target: OptimizationPlan,
-) {
+function getFlatStatsFromMod(mod: Mod, character: Character.Character) {
 	const cacheHit = cache.modStats.get(mod.id);
 	if (cacheHit) {
 		return cacheHit;
 	}
 
 	const flattenedStats: StatValue[] = [];
-	const workingMod = getUpgradedMod(mod, character, target);
+	const workingMod = getUpgradedMod(mod);
 
 	flattenedStats.push(...flattenStatValues(workingMod.primaryStat, character));
 	for (const stat of workingMod.secondaryStats) {
@@ -947,7 +948,6 @@ function getSetBonusStatsFromLoadout(loadout: Mod[]) {
 function flattenStatValues(stat: Stat, character: Character.Character) {
 	const cacheKey: StatValuesCacheKey = `${stat.displayType}${stat.isPercentVersion}${stat.value}`;
 	const cacheHit = cache.statValues.get(cacheKey);
-	const a: Stats.DisplayStatNames = stat.displayType;
 
 	if (cacheHit) {
 		return cacheHit;
@@ -1224,7 +1224,7 @@ function getStatValueForCharacterWithMods(
 function restrictMods(allMods: Mod[], setRestriction: SetRestrictions) {
 	const potentialSets = areSetsComplete(setRestriction)
 		? Object.entries(setRestriction)
-				.filter(([set, count]) => count > 0)
+				.filter(([, count]) => count > 0)
 				.map(([set]) => set)
 		: Object.values(setBonuses).map((setBonus) => setBonus.name);
 
@@ -1241,7 +1241,7 @@ function areSetsComplete(setDefinition: SetRestrictions) {
 	return (
 		6 ===
 		(Object.entries(setDefinition) as SetRestrictionsEntries)
-			.filter(([setName, setCount]) => -1 !== setCount)
+			.filter(([, setCount]) => -1 !== setCount)
 			.reduce(
 				(filledSlots, [setName, setCount]) =>
 					filledSlots + setBonuses[setName].numberOfModsRequired * setCount,
@@ -1395,11 +1395,7 @@ function scoreMod(mod: Mod, target: OptimizationPlan) {
  * @param target {OptimizationPlan}
  * @returns {Mod}
  */
-function getUpgradedMod(
-	mod: Mod,
-	character: Character.Character,
-	target: OptimizationPlan,
-) {
+function getUpgradedMod(mod: Mod) {
 	const cacheHit = cache.modUpgrades.get(mod.id);
 	if (cacheHit) {
 		return cacheHit;
@@ -1567,7 +1563,7 @@ Object.freeze(chooseTwoOptions);
  * @return {Object} An array with an entry for each item in `order`. Each entry will be of the form
  *                  {id, target, assignedMods, messages}
  */
-function optimizeMods(
+let optimizeMods = (
 	availableMods: Mod[],
 	characterById: Character.CharacterById,
 	order: SelectedCharacters,
@@ -1575,7 +1571,7 @@ function optimizeMods(
 	globalSettings: ProfileOptimizationSettings,
 	previousRun: OptimizationConditions,
 	previousModAssignments: FlatCharacterModdings,
-) {
+) => {
 	// We only want to recalculate mods if settings have changed between runs. If global settings or locked
 	// characters have changed, recalculate all characters
 	let recalculateMods =
@@ -1832,8 +1828,8 @@ function optimizeMods(
 	clearCache();
 
 	return optimizerResults;
-}
-
+};
+optimizeMods = perf.measureTime(optimizeMods, "optimizeMods");
 /**
  * Given a target for a character, update any relative target stats to asbolute
  * target stats by adding the base values from the relative character
@@ -1893,7 +1889,7 @@ function changeRelativeTargetStatsToAbsolute(
 			// Because we so heavily rely on the cache, we need to make sure the mod values are cached here.
 			clearCache();
 			for (const mod of characterMods) {
-				getFlatStatsFromMod(mod, relativeCharacter, target);
+				getFlatStatsFromMod(mod, relativeCharacter);
 			}
 
 			const characterStatValue = getStatValueForCharacterWithMods(
@@ -2019,7 +2015,7 @@ function findBestLoadoutForCharacter(
 	// Get the flattened stats and score every mod for this character. From that point on, only look at the cache
 	// for the rest of the time processing mods for this character.
 	for (const mod of modsToCache) {
-		getFlatStatsFromMod(mod, character, target);
+		getFlatStatsFromMod(mod, character);
 		scoreMod(mod, target);
 	}
 
@@ -2222,7 +2218,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	const totalModSlotsOpen =
 		6 -
 		Object.entries<number>(setRestrictions)
-			.filter(([setName, setCount]) => -1 !== setCount)
+			.filter(([, setCount]) => -1 !== setCount)
 			.reduce(
 				(filledSlots, [setName, setCount]) =>
 					filledSlots +
@@ -2404,7 +2400,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		modGroup: ModsAndSatisfiedSetRestrictions,
 		targetStats: TargetStats,
 		targetStatsCount: number,
-		topLevel: boolean,
 	): Generator<ModsAndSatisfiedSetRestrictions> {
 		if (0 === targetStats.length) {
 			if (6 > modGroup[0].length) {
@@ -2440,7 +2435,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				const modSlotsOpen =
 					6 -
 					(Object.entries(setRestrictions) as SetRestrictionsEntries)
-						.filter(([setName, setCount]) => -1 !== setCount)
+						.filter(([, setCount]) => -1 !== setCount)
 						.reduce(
 							(filledSlots, [setName, setCount]) =>
 								filledSlots +
@@ -2529,7 +2524,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 							[modsThatFitGivenValues, updatedSetRestriction],
 							updatedTargetStats,
 							targetStatsCount,
-							false,
 						);
 					}
 				}
@@ -2595,7 +2589,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 						[modsThatFitGivenValues, setRestrictions],
 						updatedTargetStats,
 						targetStatsCount,
-						false,
 					);
 				}
 			}
@@ -2607,7 +2600,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		[usableMods, setRestrictions],
 		target.targetStats,
 		target.targetStats.length,
-		true,
 	);
 };
 // getPotentialModsToSatisfyTargetStats = perf.measureTime(getPotentialModsToSatisfyTargetStats, "getPotentialModsToSatisfyTargetStats");
@@ -3215,13 +3207,13 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	};
 
 	const usedSets = (Object.entries(setsToUse) as SetRestrictionsEntries)
-		.filter(([setName, count]) => count > 0)
+		.filter(([, count]) => count > 0)
 		.map(([setName]) => setName);
 
 	const modSlotsOpen =
 		6 -
 		(Object.entries(setsToUse) as SetRestrictionsEntries)
-			.filter(([setName, setCount]) => -1 !== setCount)
+			.filter(([, setCount]) => -1 !== setCount)
 			.reduce(
 				(filledSlots, [setName, setCount]) =>
 					filledSlots + setBonuses[setName].numberOfModsRequired * setCount,
