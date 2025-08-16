@@ -96,7 +96,8 @@ import type {
 interface Cache {
 	modScores: Map<string, number>;
 	modUpgrades: Map<string, Mod>;
-	modStats: Map<string, StatValue[]>;
+	// Generation-tagged cache: entries valid only for current modStatsGen
+	modStats: Map<string, { gen: number; value: StatValue[] }>;
 	statValues: Map<string, StatValue[]>;
 }
 
@@ -788,13 +789,18 @@ function deserializeTarget(target: OptimizationPlan) {
 const cache: Cache = {
 	modScores: new Map<string, number>(),
 	modUpgrades: new Map<string, Mod>(),
-	modStats: new Map<string, Stat[]>(),
+	modStats: new Map<string, { gen: number; value: StatValue[] }>(),
 	statValues: new Map<string, StatValue[]>(),
 };
 
+// Generation counter for character-dependent modStats cache
+let modStatsGen = 0;
+function bumpModStatsGen() {
+	modStatsGen += 1;
+}
+
 function clearCache() {
 	cache.modScores.clear();
-	cache.modStats.clear();
 	cache.statValues.clear();
 }
 // #endregion Caching variables
@@ -811,6 +817,7 @@ function clearCache() {
 function getFlatStatsFromLoadout(
 	loadout: Mod[],
 	character: Character.Character,
+	relativeGen: number,
 ) {
 	const statsFromSetBonus = getSetBonusStatsFromLoadout(loadout);
 	const statsDirectlyFromMods: StatValue[] = [];
@@ -818,7 +825,18 @@ function getFlatStatsFromLoadout(
 	const combinedStats: Partial<Record<Stats.DisplayStatNames, Stat>> = {};
 
 	for (const mod of loadout) {
-		statsDirectlyFromMods.push(...(cache.modStats.get(mod.id) ?? []));
+		const entry = cache.modStats.get(mod.id);
+		if (entry && entry.gen === relativeGen) {
+			statsDirectlyFromMods.push(...entry.value);
+		} else {
+			statsDirectlyFromMods.push(...[]);
+		}
+		// Ensure we read character-correct stats via generation-aware accessor
+		/*
+      statsDirectlyFromMods.push(
+        ...getFlatStatsFromMod(mod, character, relativeGen),
+      );
+      */
 	}
 
 	for (const stat of statsFromSetBonus) {
@@ -868,10 +886,14 @@ function getFlatStatsFromLoadout(
  * @param character {Character}
  * @param target {OptimizationPlan}
  */
-function getFlatStatsFromMod(mod: Mod, character: Character.Character) {
-	const cacheHit = cache.modStats.get(mod.id);
-	if (cacheHit) {
-		return cacheHit;
+function getFlatStatsFromMod(
+	mod: Mod,
+	character: Character.Character,
+	relativeGen: number,
+) {
+	const entry = cache.modStats.get(mod.id);
+	if (entry && entry.gen === relativeGen) {
+		return entry.value;
 	}
 
 	const flattenedStats: StatValue[] = [];
@@ -882,7 +904,7 @@ function getFlatStatsFromMod(mod: Mod, character: Character.Character) {
 		flattenedStats.push(...flattenStatValues(stat, character));
 	}
 
-	cache.modStats.set(mod.id, flattenedStats);
+	cache.modStats.set(mod.id, { gen: relativeGen, value: flattenedStats });
 	return flattenedStats;
 }
 
@@ -1047,6 +1069,7 @@ function getMissedGoals(
 			loadout,
 			character,
 			goalStat.stat,
+			modStatsGen,
 		);
 
 		if (
@@ -1146,6 +1169,7 @@ function loadoutFulfillsTargetStatRestriction(
 			loadout,
 			character,
 			targetStat.stat,
+			modStatsGen,
 		);
 		return totalValue <= targetStat.maximum && totalValue >= targetStat.minimum;
 	});
@@ -1163,6 +1187,7 @@ function getStatValueForCharacterWithMods(
 	loadout: Mod[],
 	character: Character.Character,
 	stat: TargetStatsNames,
+	relativeGen: number,
 ) {
 	if (
 		stat !== "Health+Protection" &&
@@ -1180,7 +1205,7 @@ function getStatValueForCharacterWithMods(
 			character.playerValues.equippedStats[healthProperty] +
 			character.playerValues.equippedStats[protProperty];
 
-		const setStats = getFlatStatsFromLoadout(loadout, character);
+		const setStats = getFlatStatsFromLoadout(loadout, character, relativeGen);
 
 		const setValue = setStats.reduce((setValueSum, setStat) => {
 			// Check to see if the stat is health or protection. If it is, add its value to the total.
@@ -1194,7 +1219,7 @@ function getStatValueForCharacterWithMods(
 	const statProperty = Stats.Stat.display2CSGIMOStatNamesMap[stat][0];
 	const baseValue = character.playerValues.equippedStats[statProperty];
 
-	const setStats = getFlatStatsFromLoadout(loadout, character);
+	const setStats = getFlatStatsFromLoadout(loadout, character, relativeGen);
 
 	const setValue = setStats.reduce((setValueSum, setStat) => {
 		// Check to see if the stat is the target stat. If it is, add its value to the total.
@@ -1376,7 +1401,11 @@ function scoreMod(mod: Mod, target: OptimizationPlan) {
 		return cacheHit;
 	}
 
-	const flattenedStatValues = cache.modStats.get(mod.id) ?? [];
+	const modStatsEntry = cache.modStats.get(mod.id);
+	const flattenedStatValues =
+		modStatsEntry && modStatsEntry.gen === modStatsGen
+			? modStatsEntry.value
+			: [];
 
 	const modScore = flattenedStatValues.reduce(
 		(score, stat) => score + scoreStat(stat, target),
@@ -1468,7 +1497,7 @@ function scoreLoadout(
 	character: Character.Character,
 	target: OptimizationPlan,
 ) {
-	return getFlatStatsFromLoadout(loadout, character).reduce(
+	return getFlatStatsFromLoadout(loadout, character, modStatsGen).reduce(
 		(score, stat) => score + scoreStat(stat, target),
 		0,
 	);
@@ -1819,6 +1848,7 @@ let optimizeMods = (
 				missedGoals: getMissedGoals(assignedLoadout, character, goalStats),
 			});
 
+			bumpModStatsGen();
 			return modSuggestions;
 		},
 		[],
@@ -1886,16 +1916,15 @@ function changeRelativeTargetStatsToAbsolute(
 					.filter((mod: Mod | undefined): mod is Mod => !!mod);
 			}
 
-			// Because we so heavily rely on the cache, we need to make sure the mod values are cached here.
 			clearCache();
-			for (const mod of characterMods) {
-				getFlatStatsFromMod(mod, relativeCharacter);
-			}
-
+			const relativeCharacterIndex = currentModSuggestions.findLastIndex(
+				(item) => item?.characterId === targetStat.relativeCharacterId,
+			);
 			const characterStatValue = getStatValueForCharacterWithMods(
 				characterMods,
 				relativeCharacter,
 				targetStat.stat,
+				relativeCharacterIndex,
 			);
 
 			let minimum: number;
@@ -1995,7 +2024,7 @@ function findBestLoadoutForCharacter(
 
 	const setRestrictions = target.setRestrictions;
 	const targetStats = target.targetStats;
-	// Clear the cache at the start of each character
+	// Cclear other caches
 	clearCache();
 	const loadoutScoreCache = () => {
 		const cache = new Map<string, number>();
@@ -2015,7 +2044,7 @@ function findBestLoadoutForCharacter(
 	// Get the flattened stats and score every mod for this character. From that point on, only look at the cache
 	// for the rest of the time processing mods for this character.
 	for (const mod of modsToCache) {
-		getFlatStatsFromMod(mod, character);
+		getFlatStatsFromMod(mod, character, modStatsGen);
 		scoreMod(mod, target);
 	}
 
@@ -2492,15 +2521,15 @@ const getPotentialModsToSatisfyTargetStats = function* (
 						}
 
 						/*
-						for (const mod of mods) {
-							if (
-								modValues[currentTarget.stat][mod.id] ===
-								potentialModValuesObject[mod.slot]
-							) {
-								modsThatFitGivenValues.push(mod);
-							}
-						}
-						*/
+            for (const mod of mods) {
+              if (
+                modValues[currentTarget.stat][mod.id] ===
+                potentialModValuesObject[mod.slot]
+              ) {
+                modsThatFitGivenValues.push(mod);
+              }
+            }
+            */
 
 						// Send progress messages as we iterate over the possible values
 						if (++currentIteration % onePercent === 0) {
@@ -2558,14 +2587,14 @@ const getPotentialModsToSatisfyTargetStats = function* (
 						modsThatFitGivenValues.push(currentMod);
 					}
 					/*
-					for (const mod of mods) {
-						if (
-							modValues[currentTarget.stat][mod.id] ===
-							potentialModValuesObject[mod.slot]
-						) {
-							modsThatFitGivenValues.push(mod);
-						}
-					}
+          for (const mod of mods) {
+            if (
+              modValues[currentTarget.stat][mod.id] ===
+              potentialModValuesObject[mod.slot]
+            ) {
+              modsThatFitGivenValues.push(mod);
+            }
+          }
 */
 					// Send progress messages as we iterate over the possible values
 					if (currentIteration++ % onePercent === 0) {
@@ -2756,7 +2785,9 @@ function collectModValuesBySlot(
 
 	// Iterate through all the mods, filling out the objects as we go
 	for (const mod of mods) {
-		const modSummary = cache.modStats.get(mod.id) ?? [];
+		const entry = cache.modStats.get(mod.id);
+		const modSummary = entry && entry.gen === modStatsGen ? entry.value : [];
+
 		const combinedModSummary = {} as Record<Stats.DisplayStatNames, StatValue>;
 
 		for (const stat of modSummary) {
@@ -2917,8 +2948,6 @@ const findBestLoadoutFromPotentialMods = (
 	target: OptimizationPlan,
 	cachedLoadoutScores: (loadout: Mod[], id: string) => number,
 ) => {
-	let time = 0;
-	let totalTime = 0;
 	let bestLoadoutAndMessages: LoadoutAndMessages = {
 		loadout: [],
 		id: "",
@@ -2942,7 +2971,6 @@ const findBestLoadoutFromPotentialMods = (
 	//  updateBestSet = perf.measureTime(updateBestSet, "updateBestSet");
 
 	for (const [loadout, candidateSetRestrictions] of potentialLoadouts) {
-		time = performance.now();
 		const loadoutAndMessages: LoadoutOrNullAndMessages =
 			findBestLoadoutWithoutChangingRestrictions(
 				loadout,
@@ -2951,7 +2979,6 @@ const findBestLoadoutFromPotentialMods = (
 				candidateSetRestrictions,
 				cachedLoadoutScores,
 			);
-		totalTime += performance.now() - time;
 
 		if (setAndMessagesHasSet(loadoutAndMessages)) {
 			const setScore = cachedLoadoutScores(
