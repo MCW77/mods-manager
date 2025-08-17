@@ -2478,8 +2478,18 @@ const getPotentialModsToSatisfyTargetStats = function* (
 						totalConfigurations + configuration.length,
 					0,
 				);
-				const onePercent = Math.floor(numConfigurations / 100);
+				const onePercent = Math.max(1, Math.floor(numConfigurations / 100));
 				let currentIteration = 0;
+
+				// Pre-index once for this branch
+				const bestByKeyByValueBySlot = buildBestModsIndex(
+					mods,
+					currentTarget.stat,
+					modValues,
+				);
+				const bestArraysBySlot = buildBestModsArrayLookup(
+					bestByKeyByValueBySlot,
+				);
 
 				for (let numSetsUsed = minSets; numSetsUsed <= maxSets; numSetsUsed++) {
 					const updatedSetRestriction = Object.assign({}, setRestrictions, {
@@ -2490,40 +2500,17 @@ const getPotentialModsToSatisfyTargetStats = function* (
 					const potentialModValues =
 						modConfigurationsByStat[currentTarget.stat][numSetsUsed];
 
-					// Filter out mods into only those that have those values
+					// Build modsThatFitGivenValues via lookups in the pre-indexed map
 					for (const potentialModValuesObject of potentialModValues) {
 						const modsThatFitGivenValues: Mod[] = [];
-						const modsByPrimarySetSlot = Map.groupBy(
-							mods.filter(
-								(mod) =>
-									modValues[currentTarget.stat][mod.id] ===
-									potentialModValuesObject[mod.slot],
-							),
-							(mod) => mod.primaryStat.type + mod.modset.name + mod.slot,
-						);
-						for (const modsByPrimarySetSlotValue of modsByPrimarySetSlot.values()) {
-							let currentMod = modsByPrimarySetSlotValue[0];
-							let maxScore = cache.modScores.get(currentMod.id) ?? 0;
-							for (const mod of modsByPrimarySetSlotValue) {
-								const score = cache.modScores.get(mod.id) ?? 0;
-								if (score > maxScore) {
-									currentMod = mod;
-									maxScore = score;
-								}
-							}
-							modsThatFitGivenValues.push(currentMod);
+						for (const slot of gimoSlots) {
+							const desiredValue = potentialModValuesObject[
+								slot as keyof typeof potentialModValuesObject
+							] as number | undefined;
+							if (desiredValue === undefined) continue;
+							const arr = bestArraysBySlot.get(slot)?.get(desiredValue);
+							if (arr?.length) modsThatFitGivenValues.push(...arr);
 						}
-
-						/*
-            for (const mod of mods) {
-              if (
-                modValues[currentTarget.stat][mod.id] ===
-                potentialModValuesObject[mod.slot]
-              ) {
-                modsThatFitGivenValues.push(mod);
-              }
-            }
-            */
 
 						// Send progress messages as we iterate over the possible values
 						if (++currentIteration % onePercent === 0) {
@@ -2554,42 +2541,30 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				const potentialModValues =
 					modConfigurationsByStat[currentTarget.stat][0];
 				const numConfigurations = potentialModValues.length;
-				const onePercent = Math.floor(numConfigurations / 100);
+				const onePercent = Math.max(1, Math.floor(numConfigurations / 100));
 				let currentIteration = 0;
 
-				// Filter out mods into only those that have those values
+				// Pre-index once for this branch
+				const bestByKeyByValueBySlot = buildBestModsIndex(
+					mods,
+					currentTarget.stat,
+					modValues,
+				);
+				const bestArraysBySlot = buildBestModsArrayLookup(
+					bestByKeyByValueBySlot,
+				);
+
+				// Build modsThatFitGivenValues via lookups in the pre-indexed map
 				for (const potentialModValuesObject of potentialModValues) {
 					const modsThatFitGivenValues: Mod[] = [];
-					const modsByPrimarySetSlot = Map.groupBy(
-						mods.filter(
-							(mod) =>
-								modValues[currentTarget.stat][mod.id] ===
-								potentialModValuesObject[mod.slot],
-						),
-						(mod) => mod.primaryStat.type + mod.modset.name + mod.slot,
-					);
-					for (const modsByPrimarySetSlotValue of modsByPrimarySetSlot.values()) {
-						let currentMod = modsByPrimarySetSlotValue[0];
-						let maxScore = cache.modScores.get(currentMod.id) ?? 0;
-						for (const mod of modsByPrimarySetSlotValue) {
-							const score = cache.modScores.get(mod.id) ?? 0;
-							if (score > maxScore) {
-								currentMod = mod;
-								maxScore = score;
-							}
-						}
-						modsThatFitGivenValues.push(currentMod);
+					for (const slot of gimoSlots) {
+						const desiredValue = potentialModValuesObject[
+							slot as keyof typeof potentialModValuesObject
+						] as number | undefined;
+						if (desiredValue === undefined) continue;
+						const arr = bestArraysBySlot.get(slot)?.get(desiredValue);
+						if (arr?.length) modsThatFitGivenValues.push(...arr);
 					}
-					/*
-          for (const mod of mods) {
-            if (
-              modValues[currentTarget.stat][mod.id] ===
-              potentialModValuesObject[mod.slot]
-            ) {
-              modsThatFitGivenValues.push(mod);
-            }
-          }
-*/
 					// Send progress messages as we iterate over the possible values
 					if (currentIteration++ % onePercent === 0) {
 						const progressPercent =
@@ -2818,6 +2793,58 @@ function collectModValuesBySlot(
 	}
 
 	return [modValues, valuesBySlotByStat];
+}
+
+// Build a nested index for a given target stat: slot -> value -> key(primary|set|slot) -> best-scoring Mod
+type BestModsIndex = Map<ModTypes.GIMOSlots, Map<number, Map<string, Mod>>>;
+
+function buildBestModsIndex(
+	mods: Mod[],
+	stat: TargetStatsNames,
+	modValues: Record<TargetStatsNames, Record<string, number>>,
+): BestModsIndex {
+	const bestByKeyByValueBySlot: BestModsIndex = new Map();
+	// Local alias for faster lookups in hot loop
+	const scores = cache.modScores;
+	for (const mod of mods) {
+		const valueForStat = modValues[stat][mod.id] ?? 0;
+		const slot = mod.slot;
+		let byValue = bestByKeyByValueBySlot.get(slot);
+		if (!byValue) {
+			byValue = new Map<number, Map<string, Mod>>();
+			bestByKeyByValueBySlot.set(slot, byValue);
+		}
+		let byKey = byValue.get(valueForStat);
+		if (!byKey) {
+			byKey = new Map<string, Mod>();
+			byValue.set(valueForStat, byKey);
+		}
+		// Slot is already the outer map key, so it doesn't need to be part of the inner grouping key
+		const key = `${mod.primaryStat.type}|${mod.modset.name}`;
+		const existing = byKey.get(key);
+		if (!existing) {
+			byKey.set(key, mod);
+		} else {
+			const existingScore = scores.get(existing.id) ?? 0;
+			const score = scores.get(mod.id) ?? 0;
+			if (score > existingScore) byKey.set(key, mod);
+		}
+	}
+	return bestByKeyByValueBySlot;
+}
+
+// Create fast array lookups per (slot,value) from the index
+type BestModsArrayLookup = Map<ModTypes.GIMOSlots, Map<number, Mod[]>>;
+function buildBestModsArrayLookup(index: BestModsIndex): BestModsArrayLookup {
+	const bySlotArrays: BestModsArrayLookup = new Map();
+	for (const [slot, byValue] of index.entries()) {
+		const valueMap = new Map<number, Mod[]>();
+		for (const [value, byKey] of byValue.entries()) {
+			valueMap.set(value, Array.from(byKey.values()));
+		}
+		bySlotArrays.set(slot, valueMap);
+	}
+	return bySlotArrays;
 }
 
 /**
