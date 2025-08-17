@@ -2841,15 +2841,15 @@ function findStatValuesThatMeetTarget(
 	characterCount: number,
 	characterIndex: number,
 ) {
-	const onePercent = Math.floor(
-		(valuesBySlot.square.size *
+	const denom = Math.max(1, Math.floor(progressMax - progressMin));
+	const total =
+		valuesBySlot.square.size *
 			valuesBySlot.arrow.size *
 			valuesBySlot.diamond.size *
 			valuesBySlot.triangle.size *
 			valuesBySlot.circle.size *
-			valuesBySlot.cross.size) /
-			(progressMax - progressMin),
-	);
+		valuesBySlot.cross.size;
+	const onePercent = Math.max(1, Math.floor(total / denom));
 	let iterations = 0;
 	let abort = [false, false, false, false, false, false];
 	const firstOfSlot = [true, true, true, true, true, true];
