@@ -2459,6 +2459,14 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				0,
 			);
 
+			// Pre-index
+			const bestByKeyByValueBySlot = buildBestModsIndex(
+				mods,
+				currentTarget.stat,
+				modValues,
+			);
+			const bestArraysBySlot = buildBestModsArrayLookup(bestByKeyByValueBySlot);
+
 			// Find any collection of values that will sum up to the target stat
 			// If there is a setValue, repeat finding mods to fill the target for as many sets as can be used
 			if (setValue) {
@@ -2488,16 +2496,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				);
 				const onePercent = Math.max(1, Math.floor(numConfigurations / 100));
 				let currentIteration = 0;
-
-				// Pre-index once for this branch
-				const bestByKeyByValueBySlot = buildBestModsIndex(
-					mods,
-					currentTarget.stat,
-					modValues,
-				);
-				const bestArraysBySlot = buildBestModsArrayLookup(
-					bestByKeyByValueBySlot,
-				);
 
 				for (let numSetsUsed = minSets; numSetsUsed <= maxSets; numSetsUsed++) {
 					const updatedSetRestriction = Object.assign({}, setRestrictions, {
@@ -2551,16 +2549,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				const numConfigurations = potentialModValues.length;
 				const onePercent = Math.max(1, Math.floor(numConfigurations / 100));
 				let currentIteration = 0;
-
-				// Pre-index once for this branch
-				const bestByKeyByValueBySlot = buildBestModsIndex(
-					mods,
-					currentTarget.stat,
-					modValues,
-				);
-				const bestArraysBySlot = buildBestModsArrayLookup(
-					bestByKeyByValueBySlot,
-				);
 
 				// Build modsThatFitGivenValues via lookups in the pre-indexed map
 				for (const potentialModValuesObject of potentialModValues) {
