@@ -2844,15 +2844,27 @@ function findStatValuesThatMeetTarget(
 	const denom = Math.max(1, Math.floor(progressMax - progressMin));
 	const total =
 		valuesBySlot.square.size *
-			valuesBySlot.arrow.size *
-			valuesBySlot.diamond.size *
-			valuesBySlot.triangle.size *
-			valuesBySlot.circle.size *
+		valuesBySlot.arrow.size *
+		valuesBySlot.diamond.size *
+		valuesBySlot.triangle.size *
+		valuesBySlot.circle.size *
 		valuesBySlot.cross.size;
 	const onePercent = Math.max(1, Math.floor(total / denom));
 	let iterations = 0;
 	let abort = [false, false, false, false, false, false];
 	const firstOfSlot = [true, true, true, true, true, true];
+
+	// Precompute per-slot max and suffixMax for early lower-bound pruning.
+	// Sets are already in descending order; the first value is the max.
+	const maxPerSlot: number[] = gimoSlots.map((slot) => {
+		const it = valuesBySlot[slot].values();
+		const first = it.next();
+		return first.done ? 0 : (first.value as number);
+	});
+	const suffixMax: number[] = new Array(gimoSlots.length + 1).fill(0);
+	for (let i = gimoSlots.length - 1; i >= 0; i--) {
+		suffixMax[i] = suffixMax[i + 1] + maxPerSlot[i];
+	}
 
 	progressMessage(
 		character.id,
@@ -2872,15 +2884,21 @@ function findStatValuesThatMeetTarget(
 	function* slotRecursor(
 		slotIndex: number,
 		valuesObject: Partial<Record<ModTypes.GIMOSlots, number>>,
+		prefixSum: number,
 	): Generator<Partial<Record<ModTypes.GIMOSlots, number>>> {
 		if (slotIndex < 6) {
 			const currentSlot = gimoSlots[slotIndex];
 			firstOfSlot[slotIndex] = true;
 			for (const slotValue of valuesBySlot[currentSlot]) {
-				yield* slotRecursor(
-					slotIndex + 1,
-					Object.assign({}, valuesObject, { [currentSlot]: slotValue }),
-				);
+				// Early lower-bound pruning: even with maximum remaining, can't reach target
+				const optimistic = prefixSum + slotValue + suffixMax[slotIndex + 1];
+				if (optimistic < targetMin) {
+					break; // further values are smaller; break this slot's loop
+				}
+
+				// In-place mutation avoids Object.assign churn
+				valuesObject[currentSlot] = slotValue;
+				yield* slotRecursor(slotIndex + 1, valuesObject, prefixSum + slotValue);
 				firstOfSlot[slotIndex] = false;
 				if (abort[slotIndex]) {
 					return;
@@ -2902,14 +2920,10 @@ function findStatValuesThatMeetTarget(
 				);
 			}
 
-			const statValue = Object.values(valuesObject).reduce(
-				(acc, value) => acc + value,
-				0,
-			);
 			abort = [false, false, false, false, false, false];
-			if (statValue >= targetMin && statValue <= targetMax) {
+			if (prefixSum >= targetMin && prefixSum <= targetMax) {
 				yield valuesObject;
-			} else if (statValue < targetMin) {
+			} else if (prefixSum < targetMin) {
 				abort = [
 					firstOfSlot[1] &&
 						firstOfSlot[2] &&
@@ -2927,7 +2941,7 @@ function findStatValuesThatMeetTarget(
 		}
 	}
 
-	return Array.from(slotRecursor(0, {}));
+	return Array.from(slotRecursor(0, {}, 0));
 }
 
 function setAndMessagesHasSet(
