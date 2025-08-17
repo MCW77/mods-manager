@@ -1090,14 +1090,11 @@ function getMissedGoals(
  */
 function loadoutFulfillsFullSetRestriction(loadout: Mod[]) {
 	// Count how many mods exist in each set
-	const setCounts: SetRestrictions = loadout.reduce<SetRestrictions>(
-		(acc, mod) => {
-			return Object.assign({}, acc, {
-				[mod.modset.name]: (acc[mod.modset.name] || 0) + 1,
-			});
-		},
-		{},
-	);
+	const setCounts: SetRestrictions = {} as SetRestrictions;
+	for (const mod of loadout) {
+		const name = mod.modset.name;
+		setCounts[name] = (setCounts[name] ?? 0) + 1;
+	}
 
 	//console.log(`setCounts: ${JSON.stringify(setCounts)}`);
 	return (Object.entries(setCounts) as [GIMOSetStatNames, number][]).every(
@@ -1120,14 +1117,11 @@ function loadoutFulfillsSetRestriction(
 	setDefinition: SetRestrictions,
 ) {
 	// Count how many mods exist in each set
-	const setCounts: SetRestrictions = loadout.reduce<SetRestrictions>(
-		(acc, mod) => {
-			return Object.assign({}, acc, {
-				[mod.modset.name]: (acc[mod.modset.name] || 0) + 1,
-			});
-		},
-		{},
-	);
+	const setCounts: SetRestrictions = {} as SetRestrictions;
+	for (const mod of loadout) {
+		const name = mod.modset.name;
+		setCounts[name] = (setCounts[name] ?? 0) + 1;
+	}
 
 	// Check that each set in the setDefinition has a corresponding value at least that high in setCounts, unless
 	// the given count is -1, meaning the set should be actively avoided
@@ -1713,12 +1707,16 @@ let optimizeMods = (
 				const messages = previousModAssignments[index].messages;
 				const missedGoals = previousModAssignments[index].missedGoals || [];
 
-				// Remove any assigned mods from the available pool
-				for (let i = usableMods.length - 1; i >= 0; i--) {
-					if (assignedMods.includes(usableMods[i].id)) {
-						usableMods.splice(i, 1);
+				// Remove any assigned mods from the available pool (O(n) with Set membership)
+				const assignedIds = new Set(assignedMods);
+				let writeIndex = 0;
+				for (let readIndex = 0; readIndex < usableMods.length; readIndex++) {
+					const mod = usableMods[readIndex];
+					if (!assignedIds.has(mod.id)) {
+						usableMods[writeIndex++] = mod;
 					}
 				}
+				if (writeIndex < usableMods.length) usableMods.length = writeIndex;
 
 				modSuggestions.push({
 					characterId: characterID,
@@ -1833,12 +1831,16 @@ let optimizeMods = (
 			// // Check the goal stats and add any messages related to missing goals
 			// assignmentMessages.push(...getMissingGoalStatMessages(newLoadoutForCharacter, character, goalStats, target));
 
-			// Remove any assigned mods from the available pool
-			for (let i = usableMods.length - 1; i >= 0; i--) {
-				if (assignedLoadout.includes(usableMods[i])) {
-					usableMods.splice(i, 1);
+			// Remove any assigned mods from the available pool (O(n) with Set membership)
+			const assignedSet = new Set(assignedLoadout);
+			let writeIndex = 0;
+			for (let readIndex = 0; readIndex < usableMods.length; readIndex++) {
+				const mod = usableMods[readIndex];
+				if (!assignedSet.has(mod)) {
+					usableMods[writeIndex++] = mod;
 				}
 			}
+			if (writeIndex < usableMods.length) usableMods.length = writeIndex;
 
 			modSuggestions.push({
 				characterId: characterID,
@@ -2049,7 +2051,6 @@ function findBestLoadoutForCharacter(
 	}
 
 	let loadout: Mod[];
-	let id: string;
 	let messages: string[];
 	let extraMessages: string[] = [];
 	const mutableTarget = Object.assign({}, target);
@@ -2109,17 +2110,14 @@ function findBestLoadoutForCharacter(
 			}
 		}
 		if (loadout.length === 0) {
-			({
-				loadout: loadout,
-				id,
-				messages,
-			} = findBestLoadoutByLooseningSetRestrictions(
-				usableMods,
-				character,
-				reducedTarget,
-				setRestrictions,
-				cachedLoadoutScores,
-			));
+			({ loadout: loadout, messages } =
+				findBestLoadoutByLooseningSetRestrictions(
+					usableMods,
+					character,
+					reducedTarget,
+					setRestrictions,
+					cachedLoadoutScores,
+				));
 			extraMessages.push(
 				"Could not fill the target stats as given, so the target stat restriction was dropped",
 			);
@@ -2152,11 +2150,7 @@ function findBestLoadoutForCharacter(
 		"Finding the best loadout",
 		0,
 	);
-	({
-		loadout: loadout,
-		id,
-		messages,
-	} = findBestLoadoutByLooseningSetRestrictions(
+	({ loadout: loadout, messages } = findBestLoadoutByLooseningSetRestrictions(
 		usableMods,
 		character,
 		mutableTarget,
