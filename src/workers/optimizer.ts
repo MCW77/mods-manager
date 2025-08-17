@@ -3456,88 +3456,169 @@ function* getCandidateLoadoutsGenerator(
 		}
 	}
 	Object.freeze(forcedSets);
-	const setObject: PartialModBySlot = {};
 
-	/**
-	 * Convert nextSetObject from Object(slot: mod) format to Array<Mod> format, storing the result in nextSet
-	 */
-	function setObjectToArray() {
-		const modArray: Mod[] = [];
+	// (previous setObjectToArray removed in favor of an allocation-light emitter below)
+
+	// Allocation-light emitters: inline the combination building to avoid inner generator overhead
+	const slotIndex: Record<ModTypes.GIMOSlots, number> = {
+		square: 0,
+		arrow: 1,
+		diamond: 2,
+		triangle: 3,
+		circle: 4,
+		cross: 5,
+	};
+	const scratch: (Mod | null)[] = [null, null, null, null, null, null];
+
+	function nonNullCount(
+		map: NullablePartialModBySlot | null | undefined,
+	): number {
+		if (!map) return 0;
+		let c = 0;
 		for (const slot of gimoSlots) {
-			if (setObject[slot]) {
-				modArray.push(setObject[slot]);
-			}
+			const m = map[slot];
+			if (m !== null && m !== undefined) c++;
 		}
-
-		return modArray;
+		return c;
 	}
 
-	/**
-	 * Combine up to 3 sets of mods in every way possible that maintains set bonuses, running each combination through a
-	 * check function. In order to do this simply, the first set given is assumed to require 4 mods if only 2 sets are
-	 * given, and 2 mods if 3 are given. All other sets are assumed to require 2 mods.
-	 * @param firstSet {Object<String, Mod>}
-	 * @param secondSet {Object<String, Mod>}
-	 * @param thirdSet {Object<String, Mod>}
-	 * @param allowFirstSetNulls {boolean} Whether to allow null values in the first set
-	 * @param allowSecondSetNulls {boolean} Whether to allow null values in the second set
-	 */
-	function* combineSetsGenerator(
+	function emitFromScratch() {
+		const out: Mod[] = [];
+		// Convert scratch to compact Mod[] in gimoSlots order
+		for (let i = 0; i < 6; i++) {
+			const m = scratch[i];
+			if (m) out.push(m);
+		}
+		return out;
+	}
+
+	function* yieldTwoSets(
 		firstSet: NullablePartialModBySlot,
 		secondSet: NullablePartialModBySlot,
-		thirdSet?: NullablePartialModBySlot,
-		allowFirstSetNulls = false,
-		allowSecondSetNulls = false,
-	) {
-		if (!firstSet || !secondSet) {
-			return;
-		}
-		if (!thirdSet) {
-			generateSets: for (const [
-				firstSetSlots,
-				secondSetSlots,
-			] of chooseFourOptions) {
-				for (const slot of firstSetSlots) {
-					if (!allowFirstSetNulls && null === firstSet[slot]) {
-						continue generateSets;
-					}
-					setObject[slot] = firstSet[slot];
+		allowFirstSetNulls: boolean,
+		allowSecondSetNulls: boolean,
+	): Generator<Mod[]> {
+		if (!firstSet || !secondSet) return;
+		for (const [firstSetSlots, secondSetSlots] of chooseFourOptions) {
+			// reset scratch
+			scratch[0] =
+				scratch[1] =
+				scratch[2] =
+				scratch[3] =
+				scratch[4] =
+				scratch[5] =
+					null;
+			let invalid = false;
+			for (const slot of firstSetSlots) {
+				const mod = firstSet[slot] ?? null;
+				if (!allowFirstSetNulls && mod === null) {
+					invalid = true;
+					break;
 				}
-				for (const slot of secondSetSlots) {
-					if (!allowSecondSetNulls && null === secondSet[slot]) {
-						continue generateSets;
-					}
-					setObject[slot] = secondSet[slot];
-				}
-				yield setObjectToArray();
+				scratch[slotIndex[slot]] = mod;
 			}
-		} else {
-			generateSets: for (const [
-				firstSetSlots,
-				secondSetSlots,
-				thirdSetSlots,
-			] of chooseTwoOptions) {
-				for (const slot of firstSetSlots) {
-					if (!allowFirstSetNulls && null === firstSet[slot]) {
-						continue generateSets;
-					}
-					setObject[slot] = firstSet[slot];
+			if (invalid) continue;
+			for (const slot of secondSetSlots) {
+				const mod = secondSet[slot] ?? null;
+				if (!allowSecondSetNulls && mod === null) {
+					invalid = true;
+					break;
 				}
-				for (const slot of secondSetSlots) {
-					if (!allowSecondSetNulls && null === secondSet[slot]) {
-						continue generateSets;
-					}
-					setObject[slot] = secondSet[slot];
-				}
-				for (const slot of thirdSetSlots) {
-					if (null === thirdSet[slot]) {
-						continue generateSets;
-					}
-					setObject[slot] = thirdSet[slot];
-				}
-				yield setObjectToArray();
+				scratch[slotIndex[slot]] = mod;
 			}
+			if (invalid) continue;
+			yield emitFromScratch();
 		}
+	}
+
+	function* safeYieldTwoSets(
+		firstSet: NullablePartialModBySlot,
+		secondSet: NullablePartialModBySlot,
+		allowFirstSetNulls: boolean,
+		allowSecondSetNulls: boolean,
+	): Generator<Mod[]> {
+		// Two-sets mode uses chooseFourOptions => first needs 4, second needs 2 unless nulls allowed
+		if (!allowFirstSetNulls && nonNullCount(firstSet) < 4) return;
+		if (!allowSecondSetNulls && nonNullCount(secondSet) < 2) return;
+		yield* yieldTwoSets(
+			firstSet,
+			secondSet,
+			allowFirstSetNulls,
+			allowSecondSetNulls,
+		);
+	}
+
+	function* yieldThreeSets(
+		firstSet: NullablePartialModBySlot,
+		secondSet: NullablePartialModBySlot,
+		thirdSet: NullablePartialModBySlot,
+		allowFirstSetNulls: boolean,
+		allowSecondSetNulls: boolean,
+	): Generator<Mod[]> {
+		if (!firstSet || !secondSet || !thirdSet) return;
+		for (const [
+			firstSetSlots,
+			secondSetSlots,
+			thirdSetSlots,
+		] of chooseTwoOptions) {
+			// reset scratch
+			scratch[0] =
+				scratch[1] =
+				scratch[2] =
+				scratch[3] =
+				scratch[4] =
+				scratch[5] =
+					null;
+			let invalid = false;
+			for (const slot of firstSetSlots) {
+				const mod = firstSet[slot] ?? null;
+				if (!allowFirstSetNulls && mod === null) {
+					invalid = true;
+					break;
+				}
+				scratch[slotIndex[slot]] = mod;
+			}
+			if (invalid) continue;
+			for (const slot of secondSetSlots) {
+				const mod = secondSet[slot] ?? null;
+				if (!allowSecondSetNulls && mod === null) {
+					invalid = true;
+					break;
+				}
+				scratch[slotIndex[slot]] = mod;
+			}
+			if (invalid) continue;
+			for (const slot of thirdSetSlots) {
+				const mod = thirdSet[slot] ?? null;
+				if (mod === null) {
+					invalid = true;
+					break;
+				}
+				scratch[slotIndex[slot]] = mod;
+			}
+			if (invalid) continue;
+			yield emitFromScratch();
+		}
+	}
+
+	function* safeYieldThreeSets(
+		firstSet: NullablePartialModBySlot,
+		secondSet: NullablePartialModBySlot,
+		thirdSet: NullablePartialModBySlot,
+		allowFirstSetNulls: boolean,
+		allowSecondSetNulls: boolean,
+	): Generator<Mod[]> {
+		// Three-sets mode uses chooseTwoOptions => 2 each; 'third' never allows nulls in current calls
+		if (!allowFirstSetNulls && nonNullCount(firstSet) < 2) return;
+		if (!allowSecondSetNulls && nonNullCount(secondSet) < 2) return;
+		if (nonNullCount(thirdSet) < 2) return;
+		yield* yieldThreeSets(
+			firstSet,
+			secondSet,
+			thirdSet,
+			allowFirstSetNulls,
+			allowSecondSetNulls,
+		);
 	}
 
 	let firstSet: ModBySlot;
@@ -3559,16 +3640,16 @@ function* getCandidateLoadoutsGenerator(
 		if (forcedSets[2].length > 0) {
 			// Every set is completely deterministic. Combine the first and second sets in every way possible
 			secondSet = baseSets[forcedSets[2][0]] ?? emptySet;
-			yield* combineSetsGenerator(firstSet, secondSet);
+			yield* safeYieldTwoSets(firstSet, secondSet, false, false);
 		} else {
 			// The sets aren't completely deterministic. We need to check...
 			// The four-mod set plus setless mods
-			yield* combineSetsGenerator(firstSet, setlessMods, null, false, true);
+			yield* safeYieldTwoSets(firstSet, setlessMods, false, true);
 
 			// The four-mod set plus any two-mod sets with value
 			for (const secondSetType of twoModSets) {
 				secondSet = baseSets[secondSetType] ?? emptySet;
-				yield* combineSetsGenerator(firstSet, secondSet);
+				yield* safeYieldTwoSets(firstSet, secondSet, false, false);
 			}
 		}
 	} else if (1 === forcedSets[2].length) {
@@ -3576,20 +3657,20 @@ function* getCandidateLoadoutsGenerator(
 		firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
 
 		// The two-mod set plus setless mods
-		yield* combineSetsGenerator(setlessMods, firstSet, null, true);
+		yield* safeYieldTwoSets(setlessMods, firstSet, true, false);
 
 		// The two-mod set plus any two two-mod sets with value
 		for (let i = 0; i < twoModSets.length; i++) {
 			secondSet = baseSets[twoModSets[i]] ?? emptySet;
 
 			// The forced set plus the second set plus setless mods
-			yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
+			yield* safeYieldThreeSets(setlessMods, firstSet, secondSet, true, false);
 
 			for (let j = i; j < twoModSets.length; j++) {
 				thirdSet = baseSets[twoModSets[j]] ?? emptySet;
 
 				// The forced set plus the two other sets
-				yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
+				yield* safeYieldThreeSets(firstSet, secondSet, thirdSet, false, false);
 			}
 		}
 	} else if (2 === forcedSets[2].length) {
@@ -3598,42 +3679,51 @@ function* getCandidateLoadoutsGenerator(
 		secondSet = baseSets[forcedSets[2][1]] ?? emptySet;
 
 		// The two sets plus setless mods
-		yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
+		yield* safeYieldThreeSets(setlessMods, firstSet, secondSet, true, false);
 
 		// The two sets plus any two-mod sets with value
 		for (const thirdSetType of twoModSets) {
 			thirdSet = baseSets[thirdSetType] ?? emptySet;
-			yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
+			yield* safeYieldThreeSets(firstSet, secondSet, thirdSet, false, false);
 		}
 	} else if (3 === forcedSets[2].length) {
 		// Every set is deterministic
 		firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
 		secondSet = baseSets[forcedSets[2][1]] ?? emptySet;
 		thirdSet = baseSets[forcedSets[2][2]] ?? emptySet;
-		yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
+		yield* safeYieldThreeSets(firstSet, secondSet, thirdSet, false, false);
 	} else {
 		// If no sets are forced, we can check every possible combination
 		// The base set
-		if (setlessMods) {
+		if (setlessMods && nonNullCount(setlessMods) > 0) {
+			// Emit the base set from setlessMods
+			scratch[0] =
+				scratch[1] =
+				scratch[2] =
+				scratch[3] =
+				scratch[4] =
+				scratch[5] =
+					null;
 			for (const slot of gimoSlots) {
-				// TODO check if the null check an not null bang are ok
-				if (setlessMods[slot] !== null) {
-					setObject[slot] = setlessMods[slot];
+				const m = setlessMods[slot];
+				if (m !== null) {
+					// m can be Mod or undefined; only assign when it's a Mod
+					if (m !== undefined) scratch[slotIndex[slot]] = m;
 				}
 			}
-			yield setObjectToArray();
+			yield emitFromScratch();
 		}
 
 		for (const firstSetType of fourModSets) {
 			const firstSet = baseSets[firstSetType] ?? null; // TODO check if the not undefined bang is ok
 
 			// the whole set plus setless mods
-			yield* combineSetsGenerator(firstSet, setlessMods, null, false, true);
+			yield* safeYieldTwoSets(firstSet, setlessMods, false, true);
 
 			// the whole set plus any 2-mod set
 			for (const secondSetType of twoModSets) {
 				const secondSet = baseSets[secondSetType] ?? null; // TODO check if the not undefined bang is ok
-				yield* combineSetsGenerator(firstSet, secondSet);
+				yield* safeYieldTwoSets(firstSet, secondSet, false, false);
 			}
 		}
 
@@ -3641,20 +3731,31 @@ function* getCandidateLoadoutsGenerator(
 			const firstSet = baseSets[twoModSets[i]] ?? null; // TODO check if the not undefined bang is ok
 
 			// the whole set plus setless mods
-			yield* combineSetsGenerator(setlessMods, firstSet, null, true);
+			yield* safeYieldTwoSets(setlessMods, firstSet, true, false);
 
 			// the whole set plus a set of 4 from any 2-mod sets and the base set
 			for (let j = i; j < twoModSets.length; j++) {
 				const secondSet = baseSets[twoModSets[j]] ?? null; // TODO check if the not undefined bang is ok
 
 				// the first set plus the second set plus setless mods
-				yield* combineSetsGenerator(setlessMods, firstSet, secondSet, true);
+				yield* safeYieldThreeSets(
+					setlessMods,
+					firstSet,
+					secondSet,
+					true,
+					false,
+				);
 
 				// the first set plus the second set plus another set
 				for (let k = j; k < twoModSets.length; k++) {
 					const thirdSet = baseSets[twoModSets[k]] ?? null; // TODO check if the not undefined bang is ok
-
-					yield* combineSetsGenerator(firstSet, secondSet, thirdSet);
+					yield* safeYieldThreeSets(
+						firstSet,
+						secondSet,
+						thirdSet,
+						false,
+						false,
+					);
 				}
 			}
 		}
