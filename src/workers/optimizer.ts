@@ -1,10 +1,21 @@
-// Prevent React Refresh in worker context
-// @ts-ignore
+// Prevent React Refresh in worker context (safe narrowed globals in worker)
+declare global {
+	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+	interface Global {
+		__vite_plugin_react_preamble_installed__?: boolean;
+		__REACT_DEVTOOLS_GLOBAL_HOOK__?: unknown;
+		$RefreshReg$?: () => void;
+		$RefreshSig$?: <T>(type: T) => T;
+		window?: Partial<Window> & {
+			__registerBeforePerformReactRefresh?: () => void;
+			__reactRefreshUtils?: unknown;
+		};
+	}
+}
+
 if (typeof globalThis !== "undefined") {
-	// @ts-ignore
-	globalThis.__vite_plugin_react_preamble_installed__ = true;
-	// @ts-ignore
-	globalThis.window = {
+	(globalThis as Global).__vite_plugin_react_preamble_installed__ = true;
+	(globalThis as Global).window = {
 		__registerBeforePerformReactRefresh: () => {},
 		__reactRefreshUtils: null,
 		addEventListener: () => {},
@@ -30,18 +41,15 @@ if (typeof globalThis !== "undefined") {
 				[Symbol.iterator]: function* () {},
 			} as unknown as DOMStringList,
 		} as Location,
-		console: globalThis.console || {
+		console: (globalThis as unknown as { console?: Console }).console || {
 			log: () => {},
 			warn: () => {},
 			error: () => {},
 		},
-	} as any;
-	// @ts-ignore
-	globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;
-	// @ts-ignore
-	globalThis.$RefreshReg$ = () => {};
-	// @ts-ignore
-	globalThis.$RefreshSig$ = () => (type) => type;
+	} as Partial<Window>;
+	(globalThis as Global).__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;
+	(globalThis as Global).$RefreshReg$ = () => {};
+	(globalThis as Global).$RefreshSig$ = <T>(type: T) => type;
 }
 
 // utils
