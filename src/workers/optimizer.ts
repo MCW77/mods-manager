@@ -277,6 +277,7 @@ function optimizationSuccessMessage(result: FlatCharacterModdings) {
 	});
 }
 
+let lastProgressUpdated: number | undefined;
 function progressMessage(
 	characterId: CharacterNames,
 	characterCount: number,
@@ -289,6 +290,10 @@ function progressMessage(
 	step: string,
 	progress = 100,
 ) {
+	if (
+		lastProgressUpdated === undefined ||
+		performance.now() - lastProgressUpdated > 100
+	) {
 	postMessage({
 		character: characterId,
 		characterCount: characterCount,
@@ -302,6 +307,8 @@ function progressMessage(
 		targetStatIndex: targetStatIndex,
 		type: "Progress",
 	});
+		lastProgressUpdated = performance.now();
+	}
 }
 // #endregion Messaging
 
