@@ -2929,6 +2929,8 @@ function findStatValuesThatMeetTarget(
 				// In-place mutation avoids Object.assign churn
 				valuesObject[currentSlot] = slotValue;
 				yield* slotRecursor(slotIndex + 1, valuesObject, prefixSum + slotValue);
+				// Clean up for next iteration to avoid leaking values across branches
+				delete valuesObject[currentSlot];
 				firstOfSlot[slotIndex] = false;
 				if (abort[slotIndex]) {
 					return;
@@ -2952,7 +2954,8 @@ function findStatValuesThatMeetTarget(
 
 			abort = [false, false, false, false, false, false];
 			if (prefixSum >= targetMin && prefixSum <= targetMax) {
-				yield valuesObject;
+				// Yield a snapshot to avoid later in-place mutations corrupting prior results
+				yield { ...valuesObject };
 			} else if (prefixSum < targetMin) {
 				abort = [
 					firstOfSlot[1] &&
