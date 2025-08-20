@@ -2951,10 +2951,10 @@ function findStatValuesThatMeetTarget(
 	return Array.from(slotRecursor(0, {}, 0));
 }
 
-function setAndMessagesHasSet(
-	setAndMessages: LoadoutOrNullAndMessages,
-): setAndMessages is LoadoutAndMessages {
-	return setAndMessages.loadout !== null;
+function loadoutAndMessagesHasLoadout(
+	loadoutAndMessages: LoadoutOrNullAndMessages,
+): loadoutAndMessages is LoadoutAndMessages {
+	return loadoutAndMessages.loadout !== null;
 }
 
 const findBestLoadoutFromPotentialMods = (
@@ -2968,18 +2968,18 @@ const findBestLoadoutFromPotentialMods = (
 		id: "",
 		messages: [],
 	};
-	let bestSetScore = Number.NEGATIVE_INFINITY;
+	let bestLoadoutScore = Number.NEGATIVE_INFINITY;
 	let bestUnmovedMods = 0;
 	let bestModsSatisfyCharacterRestrictions = false;
 
-	const updateBestSet = (
+	const updateBestLoadout = (
 		loadoutAndMessages: LoadoutAndMessages,
 		score: number,
 		unmovedMods: number,
 		modsSatisfyCharacterRestrictions: boolean,
 	) => {
 		bestLoadoutAndMessages = loadoutAndMessages;
-		bestSetScore = score;
+		bestLoadoutScore = score;
 		bestUnmovedMods = unmovedMods;
 		bestModsSatisfyCharacterRestrictions = modsSatisfyCharacterRestrictions;
 	};
@@ -2995,8 +2995,8 @@ const findBestLoadoutFromPotentialMods = (
 				cachedLoadoutScores,
 			);
 
-		if (setAndMessagesHasSet(loadoutAndMessages)) {
-			const setScore = cachedLoadoutScores(
+		if (loadoutAndMessagesHasLoadout(loadoutAndMessages)) {
+			const loadoutScore = cachedLoadoutScores(
 				loadoutAndMessages.loadout,
 				loadoutAndMessages.id,
 			);
@@ -3021,13 +3021,13 @@ const findBestLoadoutFromPotentialMods = (
 			// We'll accept a new set if it is better than the existing set OR if the existing set doesn't fulfill all of the
 			// restrictions and the new set does
 			if (
-				setScore > bestSetScore ||
-				(setScore > 0 &&
+				loadoutScore > bestLoadoutScore ||
+				(loadoutScore > 0 &&
 					!bestModsSatisfyCharacterRestrictions &&
 					newModsSatisfyCharacterRestrictions)
 			) {
-				updateBestSet(loadoutAndMessages, setScore, 0, true); // TODO check if this works. Las param was null
-			} else if (setScore === bestSetScore) {
+				updateBestLoadout(loadoutAndMessages, loadoutScore, 0, true); // TODO check if this works. Las param was null
+			} else if (loadoutScore === bestLoadoutScore) {
 				// If both sets have the same value, choose the set that moves the fewest mods
 				const unmovedMods = loadoutAndMessages.loadout.filter(
 					(mod) => mod.characterID === character.id,
@@ -3039,9 +3039,9 @@ const findBestLoadoutFromPotentialMods = (
 				}
 
 				if (unmovedMods > bestUnmovedMods) {
-					updateBestSet(
+					updateBestLoadout(
 						loadoutAndMessages,
-						setScore,
+						loadoutScore,
 						unmovedMods,
 						newModsSatisfyCharacterRestrictions,
 					);
@@ -3051,9 +3051,9 @@ const findBestLoadoutFromPotentialMods = (
 						bestLoadoutAndMessages.loadout.length
 				) {
 					// If both sets move the same number of unmoved mods, choose the set that uses the most mods overall
-					updateBestSet(
+					updateBestLoadout(
 						loadoutAndMessages,
-						setScore,
+						loadoutScore,
 						unmovedMods,
 						newModsSatisfyCharacterRestrictions,
 					);
