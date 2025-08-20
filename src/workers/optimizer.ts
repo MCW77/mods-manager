@@ -2440,7 +2440,13 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		targetStatsCount: number,
 	): Generator<ModsAndSatisfiedSetRestrictions> {
 		if (0 === targetStats.length) {
-			if (6 > modGroup[0].length) {
+			if (
+				6 > modGroup[0].length ||
+				gimoSlots.reduce((hasSlot, slot) => {
+					const slotMod = modGroup[0].find((mod) => mod.slot === slot);
+					return hasSlot && !!slotMod;
+				}, true) === false
+			) {
 				// If we don't have enough mods to fill out a set, don't even both checking
 				return;
 			}
