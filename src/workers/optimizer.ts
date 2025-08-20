@@ -3357,7 +3357,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 
 	// Make each possible set of 6 from the sub-sets found above, including filling in with the "base" set formed
 	// without taking sets into account
-	const candidateSets = getCandidateLoadoutsGenerator(
+	const candidateLoadouts = getCandidateLoadoutsGenerator(
 		potentialUsedSets,
 		baseSets,
 		setlessMods,
@@ -3368,7 +3368,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let bestLoadoutScore = Number.NEGATIVE_INFINITY;
 	let bestUnmovedMods = -1;
 
-	for (const loadout of candidateSets) {
+	for (const loadout of candidateLoadouts) {
 		const loadoutScore = cachedLoadoutScores(
 			loadout,
 			generateLoadoutId(loadout),
