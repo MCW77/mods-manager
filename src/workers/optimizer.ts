@@ -166,9 +166,6 @@ interface SetLoadout {
 	bigOrSmall: BigOrSmall;
 }
 
-type SetLoadoutKey = `${GIMOSetStatNames | "Setless"}-${BigOrSmall}`;
-type SetLoadouts = Map<SetLoadoutKey, SetLoadout>;
-
 interface SetStat {
 	type: GIMOSetStatNames;
 	displayType: Stats.DisplayStatNames;
@@ -281,7 +278,7 @@ self.onmessage = (message) => {
 					target: deserializeTarget(target),
 				}));
 
-		const optimizerResults = optimizeMods(
+		const optimizerResults = perf.measureTime(optimizeMods, "optimizeMods")(
 			allMods,
 			profile.characterById,
 			selectedCharacters,
@@ -832,20 +829,25 @@ function deserializeTarget(target: OptimizationPlan) {
 // #region Caching variables
 
 const createLoadoutScoresCache = () => {
-	const cache = new Map<string, number>();
+	const scoresCache = new Map<string, number>();
 	return (
 		loadout: Mod[],
 		id: string,
 		character: Character.Character,
 		target: OptimizationPlan,
 	) => {
-		if (cache.has(id)) {
-			return cache.get(id) ?? 0;
+		if (scoresCache.has(id)) {
+			return scoresCache.get(id) ?? 0;
 		}
 
-		const scoreEntries = scoreLoadout(loadout, id, character, target);
+		const scoreEntries = perf.measureTime(scoreLoadout, "scoreLoadout")(
+			loadout,
+			id,
+			character,
+			target,
+		);
 		for (const scoreEntry of scoreEntries) {
-			cache.set(scoreEntry[0], scoreEntry[1]);
+			scoresCache.set(scoreEntry[0], scoreEntry[1]);
 		}
 		return scoreEntries[scoreEntries.length - 1][1];
 	};
@@ -1599,12 +1601,12 @@ function splitLoadoutBySets(loadout: Mod[]) {
  * @param character {Character}
  * @param target {OptimizationPlan}
  */
-let scoreLoadout = (
+function scoreLoadout(
 	loadout: Mod[],
 	id: string,
 	character: Character.Character,
 	target: OptimizationPlan,
-) => {
+) {
 	const scoreEntries: ScoreEntry[] = [];
 	const loadoutsSplitBySet = splitLoadoutBySets(loadout);
 	if (loadoutsSplitBySet.size === 1) {
@@ -1631,8 +1633,7 @@ let scoreLoadout = (
 	}
 	scoreEntries.push([id, totalScore] as const);
 	return scoreEntries;
-};
-scoreLoadout = perf.measureTime(scoreLoadout, "scoreLoadout");
+}
 
 function scoreSetLoadout(
 	setLoadout: SetLoadout,
@@ -1745,7 +1746,7 @@ Object.freeze(chooseTwoOptions);
  * @return {Object} An array with an entry for each item in `order`. Each entry will be of the form
  *                  {id, target, assignedMods, messages}
  */
-let optimizeMods = (
+function optimizeMods(
 	availableMods: Mod[],
 	characterById: Character.CharacterById,
 	order: SelectedCharacters,
@@ -1753,7 +1754,7 @@ let optimizeMods = (
 	globalSettings: ProfileOptimizationSettings,
 	previousRun: OptimizationConditions,
 	previousModAssignments: FlatCharacterModdings,
-) => {
+) {
 	// We only want to recalculate mods if settings have changed between runs. If global settings or locked
 	// characters have changed, recalculate all characters
 	let recalculateMods =
@@ -2030,8 +2031,8 @@ let optimizeMods = (
 	);
 
 	return optimizerResults;
-};
-optimizeMods = perf.measureTime(optimizeMods, "optimizeMods");
+}
+
 /**
  * Given a target for a character, update any relative target stats to asbolute
  * target stats by adding the base values from the relative character
