@@ -115,8 +115,12 @@ interface Cache {
 	) => StatValue[];
 	modScores: Map<string, number>;
 	modUpgrades: Map<string, Mod>;
-	// Generation-tagged cache: entries valid only for current modStatsGen
-	modStats: Map<string, { gen: number; value: StatValue[] }>;
+	// Closure-based modStats cache API (bound to current character)
+	modStats: {
+		get: (mod: Mod) => StatValue[];
+		has: (mod: Mod) => boolean;
+		setCharacter: (character: Character.Character) => void;
+	};
 	statValues: Map<string, StatValue[]>;
 	relatedStatValues: Map<string, Map<string, number>>;
 }
@@ -847,6 +851,40 @@ const createLoadoutScoresCache = () => {
 	};
 };
 
+const createModStatsCache = () => {
+	const cache = new Map<string, StatValue[]>();
+	let currentCharacter: Character.Character | null = null;
+	return {
+		get: (mod: Mod) => {
+			if (!currentCharacter) {
+				throw new Error("modStats cache used before character was set");
+			}
+			if (cache.has(mod.id)) {
+				return cache.get(mod.id) ?? [];
+			}
+
+			const flattenedStats: StatValue[] = [];
+			const workingMod = getUpgradedMod(mod);
+
+			flattenedStats.push(
+				...flattenStatValues(workingMod.primaryStat, currentCharacter),
+			);
+			for (const stat of workingMod.secondaryStats) {
+				flattenedStats.push(...flattenStatValues(stat, currentCharacter));
+			}
+
+			cache.set(mod.id, flattenedStats);
+			return flattenedStats;
+		},
+		has: (mod: Mod) => {
+			return cache.has(mod.id);
+		},
+		setCharacter: (character: Character.Character) => {
+			currentCharacter = character;
+		},
+	};
+};
+
 const createSetStatsCache = () => {
 	const cache = new Map<string, StatValue[]>();
 	return (
@@ -868,24 +906,19 @@ const createSetStatsCache = () => {
 const cache: Cache = {
 	loadoutScores: createLoadoutScoresCache(),
 	modScores: new Map<string, number>(),
+	modStats: createModStatsCache(),
 	modUpgrades: new Map<string, Mod>(),
-	modStats: new Map<string, { gen: number; value: StatValue[] }>(),
-	statValues: new Map<string, StatValue[]>(),
 	relatedStatValues: new Map<string, Map<string, number>>(),
 	setStats: createSetStatsCache(),
+	statValues: new Map<string, StatValue[]>(),
 };
 
-// Generation counter for character-dependent modStats cache
-let modStatsGen = 0;
-function bumpModStatsGen() {
-	modStatsGen += 1;
-}
-
-function clearCache() {
+function resetCaches() {
 	cache.loadoutScores = createLoadoutScoresCache();
+	cache.modScores = new Map<string, number>();
+	cache.modStats = createModStatsCache();
 	cache.setStats = createSetStatsCache();
-	cache.modScores.clear();
-	cache.statValues.clear();
+	cache.statValues = new Map<string, StatValue[]>();
 }
 // #endregion Caching variables
 
@@ -945,8 +978,7 @@ function getFlatStatsFromSetLoadout(
 	const combinedStats: Partial<Record<Stats.DisplayStatNames, Stat>> = {};
 
 	for (const mod of setLoadout.loadout) {
-		// Ensure we read character-correct stats via generation-aware accessor
-		statsDirectlyFromMods.push(...getFlatStatsFromMod(mod, character));
+		statsDirectlyFromMods.push(...cache.modStats.get(mod));
 	}
 
 	for (const stat of flatStatsFromSet) {
@@ -988,30 +1020,6 @@ function getFlatStatsFromSetLoadout(
 		}
 		return stat;
 	});
-}
-
-/**
- * Convert a mod into an array of Stats that all have absolute values based on a given character
- * @param mod {Mod}
- * @param character {Character}
- * @param target {OptimizationPlan}
- */
-function getFlatStatsFromMod(mod: Mod, character: Character.Character) {
-	const entry = cache.modStats.get(mod.id);
-	if (entry && entry.gen === modStatsGen) {
-		return entry.value;
-	}
-
-	const flattenedStats: StatValue[] = [];
-	const workingMod = getUpgradedMod(mod);
-
-	flattenedStats.push(...flattenStatValues(workingMod.primaryStat, character));
-	for (const stat of workingMod.secondaryStats) {
-		flattenedStats.push(...flattenStatValues(stat, character));
-	}
-
-	cache.modStats.set(mod.id, { gen: modStatsGen, value: flattenedStats });
-	return flattenedStats;
 }
 
 /**
@@ -1453,10 +1461,8 @@ function scoreMod(mod: Mod, target: OptimizationPlan) {
 		return cacheHit;
 	}
 
-	const modStatsEntry = cache.modStats.get(mod.id);
-	const flattenedStatValues =
-		modStatsEntry && modStatsEntry.gen === modStatsGen
-			? modStatsEntry.value
+	const flattenedStatValues = cache.modStats.has(mod)
+		? cache.modStats.get(mod)
 			: [];
 
 	const modScore = flattenedStatValues.reduce(
@@ -1884,6 +1890,7 @@ let optimizeMods = (
 				return modSuggestions;
 			}
 			recalculateMods = true;
+			cache.modStats.setCharacter(character);
 
 			if (globalSettings.optimizeWithPrimaryAndSetRestrictions === false) {
 				target.setRestrictions = {};
@@ -2001,7 +2008,6 @@ let optimizeMods = (
 				missedGoals: getMissedGoals(assignedLoadout, character, goalStats),
 			});
 
-			bumpModStatsGen();
 			if (charactersRelatedTo.has(character.id)) {
 				const relatedStatValues: Map<string, number> = new Map();
 				charactersRelatedTo.get(character.id)?.forEach((relatedStat) => {
@@ -2016,14 +2022,13 @@ let optimizeMods = (
 				});
 				cache.relatedStatValues.set(character.id, relatedStatValues);
 			}
-			clearCache();
+
+			resetCaches();
 			return modSuggestions;
 		},
 		[],
 	);
 
-	// Delete any cache that we had saved
-	clearCache();
 	return optimizerResults;
 };
 optimizeMods = perf.measureTime(optimizeMods, "optimizeMods");
@@ -2158,7 +2163,7 @@ function findBestLoadoutForCharacter(
 	// Get the flattened stats and score every mod for this character. From that point on, only look at the cache
 	// for the rest of the time processing mods for this character.
 	for (const mod of modsToCache) {
-		getFlatStatsFromMod(mod, character);
+		cache.modStats.get(mod);
 		scoreMod(mod, target);
 	}
 
@@ -2855,8 +2860,7 @@ function collectModValuesBySlot(
 
 	// Iterate through all the mods, filling out the objects as we go
 	for (const mod of mods) {
-		const entry = cache.modStats.get(mod.id);
-		const modSummary = entry && entry.gen === modStatsGen ? entry.value : [];
+		const modSummary = cache.modStats.has(mod) ? cache.modStats.get(mod) : [];
 
 		const combinedModSummary = {} as Record<Stats.DisplayStatNames, StatValue>;
 
