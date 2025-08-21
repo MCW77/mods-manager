@@ -702,40 +702,6 @@ function chooseFromArray<T>(input: readonly T[], choices: number) {
 	return combinations;
 }
 
-function areObjectsEquivalent(left: object, right: object): boolean {
-	// If either object is null, then Object.getOwnPropertyNames will fail. Do these checks first
-	if (left === null) {
-		return right === null;
-	}
-	if (right === null) {
-		return false;
-	}
-
-	// Create arrays of property names
-	const leftProps = Object.getOwnPropertyNames(left);
-	const rightProps = Object.getOwnPropertyNames(right);
-
-	// If number of properties is different,
-	// objects are not equivalent
-	if (leftProps.length !== rightProps.length) {
-		return false;
-	}
-
-	// Check that every property is equivalent
-	return leftProps.every((propName: string) => {
-		if ((left as Record<string, unknown>)[propName] instanceof Object) {
-			return areObjectsEquivalent(
-				(left as Record<string, object>)[propName],
-				(right as Record<string, object>)[propName],
-			);
-		}
-		return (
-			(left as Record<string, unknown>)[propName] ===
-			(right as Record<string, unknown>)[propName]
-		);
-	});
-}
-
 function deserializePrimaryStat(type: GIMOPrimaryStatNames, value: string) {
 	const displayType = PrimaryStats.PrimaryStat.GIMO2DisplayStatNamesMap[type];
 	const rawValue = value.replace(/[+%]/g, "");
@@ -1853,14 +1819,10 @@ function optimizeMods(
 				characterID === previousRun.selectedCharacters[index].id &&
 				previousCharacter &&
 				previousCharacter.playerValues &&
-				areObjectsEquivalent(
-					character.playerValues,
-					previousCharacter.playerValues,
-				) &&
-				areObjectsEquivalent(
-					target,
-					previousRun.selectedCharacters[index].target,
-				) &&
+				JSON.stringify(character.playerValues) ===
+					JSON.stringify(previousCharacter.playerValues) &&
+				JSON.stringify(target) ===
+					JSON.stringify(previousRun.selectedCharacters[index].target) &&
 				previousCharacter.targets &&
 				lockedStatus$.ofActivePlayerByCharacterId[character.id].peek() ===
 					previousRun.lockedStatus[character.id] &&
