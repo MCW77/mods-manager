@@ -210,6 +210,7 @@ type ModBySlot = Record<ModTypes.GIMOSlots, Mod | null>;
 type PartialModBySlot = Partial<ModBySlot>;
 type NullablePartialModBySlot = PartialModBySlot | null;
 type SetRestrictionsEntries = [GIMOSetStatNames, number][];
+type BestModsIndex = Map<ModTypes.GIMOSlots, Map<number, Map<string, Mod>>>;
 // #endregion types
 
 // state
@@ -892,6 +893,18 @@ function resetCaches() {
 
 const charactersRelatedTo = new Map<string, Set<TargetStatsNames>>();
 // #region Utility functions
+function getOpenModSlots(setRestrictions: SetRestrictions): number {
+	return (
+		6 -
+		(Object.entries(setRestrictions) as SetRestrictionsEntries)
+			.filter(([, setCount]) => -1 !== setCount)
+			.reduce(
+				(filledSlots, [setName, setCount]) =>
+					filledSlots + setBonuses[setName].numberOfModsRequired * setCount,
+				0,
+			)
+	);
+}
 
 function getFlatStatsFromSet(
 	setName: GIMOSetStatNames,
@@ -2544,17 +2557,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			// If there is a setValue, repeat finding mods to fill the target for as many sets as can be used
 			if (setValue) {
 				// Also check to see if any mod set a) provides a value for the stats and b) can be added to the set restrictions
-				const modSlotsOpen =
-					6 -
-					(Object.entries(setRestrictions) as SetRestrictionsEntries)
-						.filter(([, setCount]) => -1 !== setCount)
-						.reduce(
-							(filledSlots, [setName, setCount]) =>
-								filledSlots +
-								setBonuses[setName].numberOfModsRequired * setCount,
-							0,
-						);
-
+				const modSlotsOpen = getOpenModSlots(setRestrictions);
 				const minSets = setRestrictions[setValue.set.name] || 0;
 				const maxSets =
 					minSets +
@@ -2864,8 +2867,6 @@ function collectModValuesBySlot(
 }
 
 // Build a nested index for a given target stat: slot -> value -> key(primary|set|slot) -> best-scoring Mod
-type BestModsIndex = Map<ModTypes.GIMOSlots, Map<number, Map<string, Mod>>>;
-
 function buildBestModsIndex(
 	mods: Mod[],
 	stat: TargetStatsNames,
@@ -3340,15 +3341,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		.filter(([, count]) => count > 0)
 		.map(([setName]) => setName);
 
-	const modSlotsOpen =
-		6 -
-		(Object.entries(setsToUse) as SetRestrictionsEntries)
-			.filter(([, setCount]) => -1 !== setCount)
-			.reduce(
-				(filledSlots, [setName, setCount]) =>
-					filledSlots + setBonuses[setName].numberOfModsRequired * setCount,
-				0,
-			);
+	const modSlotsOpen = getOpenModSlots(setsToUse);
 
 	if (0 === modSlotsOpen) {
 		// If sets are 100% deterministic, make potentialUsedSets only them
