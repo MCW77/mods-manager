@@ -211,6 +211,7 @@ type PartialModBySlot = Partial<ModBySlot>;
 type NullablePartialModBySlot = PartialModBySlot | null;
 type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 type BestModsIndex = Map<ModTypes.GIMOSlots, Map<number, Map<string, Mod>>>;
+type BestModsArrayLookup = Map<ModTypes.GIMOSlots, Map<number, Mod[]>>;
 // #endregion types
 
 // state
@@ -1088,12 +1089,6 @@ const loadoutSatisfiesCharacterRestrictions = (
 			loadoutFulfillsTargetStatRestriction(loadout, character, target))
 	);
 };
-/*
-loadoutSatisfiesCharacterRestrictions = perf.measureTime(
-  loadoutSatisfiesCharacterRestrictions,
-  "loadoutSatisfiesCharacterRestrictions",
-);
-*/
 
 /**
  * Find any goal stats that weren't hit and return the target and the value.
@@ -1444,7 +1439,7 @@ function scoreMod(mod: Mod, target: OptimizationPlan) {
 
 	const flattenedStatValues = cache.modStats.has(mod)
 		? cache.modStats.get(mod)
-			: [];
+		: [];
 
 	const modScore = flattenedStatValues.reduce(
 		(score, stat) => score + scoreStat(stat, target),
@@ -2164,13 +2159,6 @@ function findBestLoadoutForCharacter(
 			character,
 			mutableTarget,
 		));
-		/*
-    perf.logMeasures("cachedLoadoutScores");
-    perf.logMeasures("findBestLoadoutWithoutChangingRestrictions");
-    perf.logMeasures("getPotentialModsToSatisfyTargetStats");
-    perf.logMeasures("targetStatRecursor");
-    perf.logMeasures("findBestLoadoutFromPotentialMods");
-*/
 
 		// If we couldn't find a mod set that would fulfill the target stat, but we're limiting to only full sets, then
 		// try again without that limitation
@@ -2269,6 +2257,11 @@ function findBestLoadoutForCharacter(
 	};
 }
 
+// TODO: Refactor this function
+// * Create a new function that will loop over each target stat
+// * At each iteration, run the equivalent of this function on every mod set from the previous iteration
+// * Then, filter out any that are empty
+
 /**
  * Given a set of mods and a target stat, get all of the mod and set restriction combinations that will fit that target
  * @param allMods {Array<Mod>}
@@ -2277,10 +2270,6 @@ function findBestLoadoutForCharacter(
  * @returns {Array<Array<Mod>,Object<String, Number>>} An array of potential mods that could be used to create a set
  *   that fulfills the target stat as [mods, setRestriction]
  */
-// TODO: Refactor this function
-// * Create a new function that will loop over each target stat
-// * At each iteration, run the equivalent of this function on every mod set from the previous iteration
-// * Then, filter out any that are empty
 const getPotentialModsToSatisfyTargetStats = function* (
 	allMods: Mod[],
 	character: Character.Character,
@@ -2664,7 +2653,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			}
 		}
 	};
-	//  targetStatRecursor = perf.measureTime(targetStatRecursor, "targetStatRecursor");
 
 	yield* targetStatRecursor(
 		[usableMods, setRestrictions],
@@ -2672,7 +2660,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		target.targetStats.length,
 	);
 };
-// getPotentialModsToSatisfyTargetStats = perf.measureTime(getPotentialModsToSatisfyTargetStats, "getPotentialModsToSatisfyTargetStats");
 
 /**
  * Given a character and a list of stats, return an object with the character's value for that stat from level, stars,
@@ -2903,7 +2890,6 @@ function buildBestModsIndex(
 }
 
 // Create fast array lookups per (slot,value) from the index
-type BestModsArrayLookup = Map<ModTypes.GIMOSlots, Map<number, Mod[]>>;
 function buildBestModsArrayLookup(index: BestModsIndex): BestModsArrayLookup {
 	const bySlotArrays: BestModsArrayLookup = new Map();
 	for (const [slot, byValue] of index.entries()) {
@@ -3074,7 +3060,6 @@ const findBestLoadoutFromPotentialMods = (
 		bestUnmovedMods = unmovedMods;
 		bestModsSatisfyCharacterRestrictions = modsSatisfyCharacterRestrictions;
 	};
-	//  updateBestSet = perf.measureTime(updateBestSet, "updateBestSet");
 
 	for (const [loadout, candidateSetRestrictions] of potentialLoadouts) {
 		const loadoutAndMessages: LoadoutOrNullAndMessages =
@@ -3160,7 +3145,6 @@ const findBestLoadoutFromPotentialMods = (
 
 	return bestLoadoutAndMessages;
 };
-// findBestLoadoutFromPotentialMods = perf.measureTime(findBestLoadoutFromPotentialMods, "findBestLoadoutFromPotentialMods");
 
 /**
  * Figure out what the best set of mods for a character are such that the values in the plan are optimized. Try to
@@ -3467,7 +3451,6 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		messages: messages,
 	};
 };
-// findBestLoadoutWithoutChangingRestrictions = perf.measureTime(findBestLoadoutWithoutChangingRestrictions, "findBestLoadoutWithoutChangingRestrictions");
 
 /**
  * Find all the potential combinations of mods to consider by taking into account mod sets and keeping set bonuses
