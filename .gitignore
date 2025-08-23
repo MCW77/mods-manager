@@ -7,3 +7,4 @@ dist-ssr
 /affix.json
 /hualldata.json
 /statMod.json
+,*.*
