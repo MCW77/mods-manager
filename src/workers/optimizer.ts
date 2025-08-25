@@ -2297,6 +2297,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	target: OptimizationPlan,
 ) {
 	const setRestrictions = target.setRestrictions;
+	const openModSlots = getOpenModSlots(setRestrictions);
 	const statNames = target.targetStats.map((targetStat) => targetStat.stat);
 	// A map from the set name to the value the set provides for a target stat
 	// {statName: {set, value}}
@@ -2334,17 +2335,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		Tenacity: {},
 	};
 
-	const totalModSlotsOpen =
-		6 -
-		Object.entries<number>(setRestrictions)
-			.filter(([, setCount]) => -1 !== setCount)
-			.reduce(
-				(filledSlots, [setName, setCount]) =>
-					filledSlots +
-					setBonuses[setName as GIMOSetStatNames].numberOfModsRequired *
-						setCount,
-				0,
-			);
 
 	// Filter out any mods that don't meet primary or set restrictions. This can vastly speed up this process
 	let usableMods = filterOutUnusableMods(allMods, target, totalModSlotsOpen);
@@ -2394,7 +2384,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			const minSets = setRestrictions[setValue.set.name] || 0;
 			const maxSets =
 				(setRestrictions[setValue.set.name] || 0) +
-				Math.floor(totalModSlotsOpen / setValue.set.numberOfModsRequired);
+				Math.floor(openModSlots / setValue.set.numberOfModsRequired);
 
 			for (let numSetsUsed = maxSets; numSetsUsed >= 0; numSetsUsed--) {
 				const nonModValue =
