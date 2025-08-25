@@ -215,7 +215,6 @@ type BestModsArrayLookup = Map<ModTypes.GIMOSlots, Map<number, Mod[]>>;
 // #endregion types
 
 // state
-
 let stateLoader$: ObservableObject<StateLoaderObservable>;
 let profilesManagement$: ObservableObject<ProfilesManagementObservable>;
 let compilations$: ObservableObject<CompilationsObservable>;
@@ -251,7 +250,6 @@ self.onmessage = (message) => {
 			profile.modById.values().map((mod) => mod.serialize()),
 			deserializeMod,
 		);
-		//			const allMods = profile.mods.map(deserializeMod);
 
 		const lastRunCharacterById: Partial<Character.CharacterById> = {};
 
@@ -1383,9 +1381,11 @@ function filterMods(
  *
  * @param character Character
  */
-function modSort(character: Character.Character) {
+function modSort(character: Character.Character, target: OptimizationPlan) {
 	return (left: Mod, right: Mod) => {
-		if (cache.modScores.get(right.id) === cache.modScores.get(left.id)) {
+		const leftScore = scoreMod(left, target);
+		const rightScore = scoreMod(right, target);
+		if (leftScore === rightScore) {
 			// If mods have equal value, then favor the one that's already equipped
 			if (left.characterID !== "null" && character.id === left.characterID) {
 				return -1;
@@ -1395,9 +1395,7 @@ function modSort(character: Character.Character) {
 			}
 			return 0;
 		}
-		return (
-			(cache.modScores.get(right.id) ?? 0) - (cache.modScores.get(left.id) ?? 0)
-		);
+		return rightScore - leftScore;
 	};
 }
 
@@ -2369,7 +2367,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			}
 		}
 	}
-	//  console.log(`usableMods#: ${usableMods.length}`);
 
 	for (const targetStat of target.targetStats) {
 		const setValue = setValues[targetStat.stat];
@@ -3138,10 +3135,6 @@ const findBestLoadoutFromPotentialMods = (
 			}
 		}
 	}
-	/*
-  perf.logMeasures("loadoutSatisfiesCharacterRestrictions");
-  console.log(`Total time spent finding best mod set: ${totalTime}ms`);
-*/
 
 	return bestLoadoutAndMessages;
 };
@@ -3236,7 +3229,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 
 	// Sort all the mods by score, then break them into sets.
 	// For each slot, try to use the most restrictions possible from what has been set for that character
-	usableMods.sort(modSort(character));
+	usableMods.sort(modSort(character, target));
 
 	({ mods: squares, messages: subMessages } = filterMods(
 		usableMods,
