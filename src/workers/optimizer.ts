@@ -892,6 +892,27 @@ function resetCaches() {
 
 const charactersRelatedTo = new Map<string, Set<TargetStatsNames>>();
 // #region Utility functions
+function modHasScoreForTargetStat(mod: Mod, targetStat: TargetStat) {
+	if (targetStat.stat === "Speed" && targetStat.minimum === 0) return true;
+	if (affectedTargetStatsBySet[mod.modset.name].includes(targetStat.stat))
+		return true;
+	if (
+		affectedTargetStatsByPtimaryStat[mod.primaryStat.type].includes(
+			targetStat.stat,
+		)
+	)
+		return true;
+	if (
+		mod.secondaryStats.some((secondaryStat) =>
+			affectedTargetStatsBySecondaryStat[secondaryStat.type].includes(
+				targetStat.stat,
+			),
+		)
+	)
+		return true;
+	return false;
+}
+
 function getOpenModSlots(setRestrictions: SetRestrictions): number {
 	return (
 		6 -
@@ -2420,18 +2441,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		}
 	}
 
-	function modHasScoreForTargetStat(mod: Mod, stat: TargetStatsNames) {
-		if (affectedTargetStatsBySet[mod.modset.name].includes(stat)) return true;
-		if (affectedTargetStatsByPtimaryStat[mod.primaryStat.type].includes(stat))
-			return true;
-		if (
-			mod.secondaryStats.some((secondaryStat) =>
-				affectedTargetStatsBySecondaryStat[secondaryStat.type].includes(stat),
-			)
-		)
-			return true;
-		return false;
-	}
 
 	/**
 	 * Given a set of mods, return only those mods that might be used with the current target. Filter out any mods
