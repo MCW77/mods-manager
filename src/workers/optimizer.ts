@@ -2348,8 +2348,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 
 	// Filter out any mods that don't meet primary or set restrictions. This can vastly speed up this process
 	let usableMods = filterOutUnusableMods(allMods, target, totalModSlotsOpen);
-	//  console.log(`allMods#: ${allMods.length}`);
-	//  console.log(`usableMods#: ${usableMods.length}`);
 
 	const [modValues, valuesBySlotByStat] = collectModValuesBySlot(
 		usableMods,
@@ -3551,7 +3549,6 @@ function* getCandidateLoadoutsGenerator(
 	): Generator<Mod[]> {
 		if (!firstSet || !secondSet) return;
 		for (const [firstSetSlots, secondSetSlots] of chooseFourOptions) {
-			// reset scratch
 			scratch[0] =
 				scratch[1] =
 				scratch[2] =
@@ -3612,7 +3609,6 @@ function* getCandidateLoadoutsGenerator(
 			secondSetSlots,
 			thirdSetSlots,
 		] of chooseTwoOptions) {
-			// reset scratch
 			scratch[0] =
 				scratch[1] =
 				scratch[2] =
@@ -3684,70 +3680,44 @@ function* getCandidateLoadoutsGenerator(
 		cross: null,
 	};
 
-	// If there's a forced 4-mod set
 	if (forcedSets[4].length > 0) {
 		firstSet = baseSets[forcedSets[4][0]] ?? emptySet;
-
 		if (forcedSets[2].length > 0) {
-			// Every set is completely deterministic. Combine the first and second sets in every way possible
 			secondSet = baseSets[forcedSets[2][0]] ?? emptySet;
 			yield* safeYieldTwoSets(firstSet, secondSet, false, false);
 		} else {
-			// The sets aren't completely deterministic. We need to check...
-			// The four-mod set plus setless mods
 			yield* safeYieldTwoSets(firstSet, setlessMods, false, true);
-
-			// The four-mod set plus any two-mod sets with value
 			for (const secondSetType of twoModSets) {
 				secondSet = baseSets[secondSetType] ?? emptySet;
 				yield* safeYieldTwoSets(firstSet, secondSet, false, false);
 			}
 		}
 	} else if (1 === forcedSets[2].length) {
-		// If there's exactly one forced 2-mod set, there should be 4 slots open
 		firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
-
-		// The two-mod set plus setless mods
 		yield* safeYieldTwoSets(setlessMods, firstSet, true, false);
-
-		// The two-mod set plus any two two-mod sets with value
 		for (let i = 0; i < twoModSets.length; i++) {
 			secondSet = baseSets[twoModSets[i]] ?? emptySet;
-
-			// The forced set plus the second set plus setless mods
 			yield* safeYieldThreeSets(setlessMods, firstSet, secondSet, true, false);
-
 			for (let j = i; j < twoModSets.length; j++) {
 				thirdSet = baseSets[twoModSets[j]] ?? emptySet;
-
-				// The forced set plus the two other sets
 				yield* safeYieldThreeSets(firstSet, secondSet, thirdSet, false, false);
 			}
 		}
 	} else if (2 === forcedSets[2].length) {
-		// With 2 forced 2-mod sets, there should be 2 slots open
 		firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
 		secondSet = baseSets[forcedSets[2][1]] ?? emptySet;
-
-		// The two sets plus setless mods
 		yield* safeYieldThreeSets(setlessMods, firstSet, secondSet, true, false);
-
-		// The two sets plus any two-mod sets with value
 		for (const thirdSetType of twoModSets) {
 			thirdSet = baseSets[thirdSetType] ?? emptySet;
 			yield* safeYieldThreeSets(firstSet, secondSet, thirdSet, false, false);
 		}
 	} else if (3 === forcedSets[2].length) {
-		// Every set is deterministic
 		firstSet = baseSets[forcedSets[2][0]] ?? emptySet;
 		secondSet = baseSets[forcedSets[2][1]] ?? emptySet;
 		thirdSet = baseSets[forcedSets[2][2]] ?? emptySet;
 		yield* safeYieldThreeSets(firstSet, secondSet, thirdSet, false, false);
 	} else {
-		// If no sets are forced, we can check every possible combination
-		// The base set
 		if (setlessMods && nonNullCount(setlessMods) > 0) {
-			// Emit the base set from setlessMods
 			scratch[0] =
 				scratch[1] =
 				scratch[2] =
@@ -3758,37 +3728,24 @@ function* getCandidateLoadoutsGenerator(
 			for (const slot of gimoSlots) {
 				const m = setlessMods[slot];
 				if (m !== null) {
-					// m can be Mod or undefined; only assign when it's a Mod
 					if (m !== undefined) scratch[slotIndex[slot]] = m;
 				}
 			}
 			yield emitFromScratch();
 		}
-
 		for (const firstSetType of fourModSets) {
-			const firstSet = baseSets[firstSetType] ?? null; // TODO check if the not undefined bang is ok
-
-			// the whole set plus setless mods
+			const firstSet = baseSets[firstSetType] ?? null;
 			yield* safeYieldTwoSets(firstSet, setlessMods, false, true);
-
-			// the whole set plus any 2-mod set
 			for (const secondSetType of twoModSets) {
-				const secondSet = baseSets[secondSetType] ?? null; // TODO check if the not undefined bang is ok
+				const secondSet = baseSets[secondSetType] ?? null;
 				yield* safeYieldTwoSets(firstSet, secondSet, false, false);
 			}
 		}
-
 		for (let i = 0; i < twoModSets.length; i++) {
-			const firstSet = baseSets[twoModSets[i]] ?? null; // TODO check if the not undefined bang is ok
-
-			// the whole set plus setless mods
+			const firstSet = baseSets[twoModSets[i]] ?? null;
 			yield* safeYieldTwoSets(setlessMods, firstSet, true, false);
-
-			// the whole set plus a set of 4 from any 2-mod sets and the base set
 			for (let j = i; j < twoModSets.length; j++) {
-				const secondSet = baseSets[twoModSets[j]] ?? null; // TODO check if the not undefined bang is ok
-
-				// the first set plus the second set plus setless mods
+				const secondSet = baseSets[twoModSets[j]] ?? null;
 				yield* safeYieldThreeSets(
 					setlessMods,
 					firstSet,
@@ -3796,10 +3753,8 @@ function* getCandidateLoadoutsGenerator(
 					true,
 					false,
 				);
-
-				// the first set plus the second set plus another set
 				for (let k = j; k < twoModSets.length; k++) {
-					const thirdSet = baseSets[twoModSets[k]] ?? null; // TODO check if the not undefined bang is ok
+					const thirdSet = baseSets[twoModSets[k]] ?? null;
 					yield* safeYieldThreeSets(
 						firstSet,
 						secondSet,
