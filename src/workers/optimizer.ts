@@ -933,12 +933,8 @@ function getFlatStatsFromSet(
 ) {
 	const setBonus = setBonuses[setName];
 	const flatStats: StatValue[] = [];
-	if (bigOrSmall === "big") {
-		flatStats.push(...flattenStatValues(setBonus.maxBonus, character));
-	} else {
-		flatStats.push(...flattenStatValues(setBonus.smallBonus, character));
-	}
-
+	const bonus = bigOrSmall === "big" ? setBonus.maxBonus : setBonus.smallBonus;
+	flatStats.push(...flattenStatValues(bonus, character));
 	return flatStats;
 }
 
