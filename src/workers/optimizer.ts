@@ -2540,11 +2540,11 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			// If there is a setValue, repeat finding mods to fill the target for as many sets as can be used
 			if (setValue) {
 				// Also check to see if any mod set a) provides a value for the stats and b) can be added to the set restrictions
-				const modSlotsOpen = getOpenModSlots(setRestrictions);
+				const openModSlots = getOpenModSlots(setRestrictions);
 				const minSets = setRestrictions[setValue.set.name] || 0;
 				const maxSets =
 					minSets +
-					Math.floor(modSlotsOpen / setValue.set.numberOfModsRequired);
+					Math.floor(openModSlots / setValue.set.numberOfModsRequired);
 
 				const numConfigurations = Object.values(
 					modConfigurationsByStat[currentTarget.stat],
