@@ -917,7 +917,7 @@ function getOpenModSlots(setRestrictions: SetRestrictions): number {
 	return (
 		6 -
 		(Object.entries(setRestrictions) as SetRestrictionsEntries)
-			.filter(([, setCount]) => -1 !== setCount)
+			.filter(([, setCount]) => setCount > 0)
 			.reduce(
 				(filledSlots, [setName, setCount]) =>
 					filledSlots + setBonuses[setName].numberOfModsRequired * setCount,
