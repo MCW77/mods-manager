@@ -3197,6 +3197,106 @@ function generateLoadoutId(loadout: Mod[]) {
 	return loadout.map((mod) => mod.id).join("-");
 }
 
+// Hybrid filter: bucket by slot once, then per-slot early-exit filters
+function filterMods(mods: Mod[], target: OptimizationPlan) {
+	const bySlot: Record<ModTypes.GIMOSlots, Mod[]> = {
+		square: [],
+		arrow: [],
+		diamond: [],
+		triangle: [],
+		circle: [],
+		cross: [],
+	};
+	for (const mod of mods) bySlot[mod.slot].push(mod);
+
+	const minimumDots = target.minimumModDots;
+	const primaryRestrictions = target.primaryStatRestrictions;
+
+	const pickForSlot = (
+		modsForSlot: Mod[],
+		slot: ModTypes.GIMOSlots,
+		primaryStat: GIMOPrimaryStatNames | undefined,
+	): { mods: Mod[]; messages: string[] } => {
+		const messages: string[] = [];
+		if (primaryStat) {
+			const fullyFilteredMods = modsForSlot.filter(
+				(mod) =>
+					mod.pips >= minimumDots && mod.primaryStat.type === primaryStat,
+			);
+			if (fullyFilteredMods.length > 0)
+				return { mods: fullyFilteredMods, messages };
+		}
+		const modsFilterdByDots = modsForSlot.filter(
+			(mod) => mod.pips >= minimumDots,
+		);
+		if (modsFilterdByDots.length > 0) {
+			if (primaryStat) {
+				messages.push(
+					`No ${primaryStat} ${slot} mods were available, so the primary stat restriction was dropped.`,
+				);
+			}
+			return { mods: modsFilterdByDots, messages };
+		}
+		if (modsForSlot.length > 0) {
+			if (primaryStat) {
+				messages.push(
+					`No ${primaryStat} or ${minimumDots}-dot ${slot} mods were available, so both restrictions were dropped.`,
+				);
+			} else {
+				messages.push(
+					`No ${minimumDots}-dot ${slot} mods were available, so the dots restriction was dropped.`,
+				);
+			}
+			return { mods: modsForSlot, messages };
+		}
+		messages.push(`No ${slot} mods were available to use.`);
+		return { mods: [], messages };
+	};
+
+	const squareSel = pickForSlot(bySlot.square, "square", undefined);
+	const arrowSel = pickForSlot(
+		bySlot.arrow,
+		"arrow",
+		primaryRestrictions.arrow,
+	);
+	const diamondSel = pickForSlot(bySlot.diamond, "diamond", undefined);
+	const triangleSel = pickForSlot(
+		bySlot.triangle,
+		"triangle",
+		primaryRestrictions.triangle,
+	);
+	const circleSel = pickForSlot(
+		bySlot.circle,
+		"circle",
+		primaryRestrictions.circle,
+	);
+	const crossSel = pickForSlot(
+		bySlot.cross,
+		"cross",
+		primaryRestrictions.cross,
+	);
+
+	const messages: string[] = [];
+	messages.push(
+		...squareSel.messages,
+		...arrowSel.messages,
+		...diamondSel.messages,
+		...triangleSel.messages,
+		...circleSel.messages,
+		...crossSel.messages,
+	);
+
+	return {
+		square: squareSel.mods,
+		arrow: arrowSel.mods,
+		diamond: diamondSel.mods,
+		triangle: triangleSel.mods,
+		circle: circleSel.mods,
+		cross: crossSel.mods,
+		messages,
+	};
+}
+
 /**
  * Find the best configuration of mods from a set of usable mods
  * @param usableMods {Array<Mod>}
@@ -3214,7 +3314,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 ): LoadoutOrNullAndMessages => {
 	const potentialUsedSets = new Set<SetBonus>();
 	const baseSets: Partial<Record<GIMOSetStatNames, ModBySlot>> = {};
-	const messages: string[] = [];
+	let messages: string[];
 	let squares: Mod[] = [];
 	let arrows: Mod[] = [];
 	let diamonds: Mod[] = [];
@@ -3222,54 +3322,20 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let circles: Mod[] = [];
 	let crosses: Mod[] = [];
 	let setlessMods: NullablePartialModBySlot;
-	let subMessages: string[];
 
 	// Sort all the mods by score, then break them into sets.
 	// For each slot, try to use the most restrictions possible from what has been set for that character
 	usableMods.sort(modSort(character, target));
 
-	({ mods: squares, messages: subMessages } = filterMods(
-		usableMods,
-		"square",
-		target.minimumModDots,
-		"Offense %",
-	));
-	messages.push(...subMessages);
-	({ mods: arrows, messages: subMessages } = filterMods(
-		usableMods,
-		"arrow",
-		target.minimumModDots,
-		target.primaryStatRestrictions.arrow,
-	));
-	messages.push(...subMessages);
-	({ mods: diamonds, messages: subMessages } = filterMods(
-		usableMods,
-		"diamond",
-		target.minimumModDots,
-		"Defense %",
-	));
-	messages.push(...subMessages);
-	({ mods: triangles, messages: subMessages } = filterMods(
-		usableMods,
-		"triangle",
-		target.minimumModDots,
-		target.primaryStatRestrictions.triangle,
-	));
-	messages.push(...subMessages);
-	({ mods: circles, messages: subMessages } = filterMods(
-		usableMods,
-		"circle",
-		target.minimumModDots,
-		target.primaryStatRestrictions.circle,
-	));
-	messages.push(...subMessages);
-	({ mods: crosses, messages: subMessages } = filterMods(
-		usableMods,
-		"cross",
-		target.minimumModDots,
-		target.primaryStatRestrictions.cross,
-	));
-	messages.push(...subMessages);
+	({
+		square: squares,
+		arrow: arrows,
+		diamond: diamonds,
+		triangle: triangles,
+		circle: circles,
+		cross: crosses,
+		messages,
+	} = filterMods(usableMods, target));
 
 	if (
 		squares.length === 1 &&
