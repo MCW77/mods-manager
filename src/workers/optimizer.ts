@@ -3298,6 +3298,20 @@ function filterMods(mods: Mod[], target: OptimizationPlan) {
 }
 
 /**
+ * Given a sorted array of mods, return either the first mod (if it has a non-negative score) or null. This allows
+ * for empty slots on characters where the mods might be better used elsewhere.
+ * @param candidates Array[Mod]
+ * @returns Mod
+ */
+const topMod = (candidates: Mod[]) => {
+	const mod: Mod | null = firstOrNull(candidates);
+	if (mod && (cache.modScores.get(mod.id) ?? 0) >= 0) {
+		return mod;
+	}
+	return null;
+};
+
+/**
  * Find the best configuration of mods from a set of usable mods
  * @param usableMods {Array<Mod>}
  * @param character {Character}
@@ -3362,20 +3376,6 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		}
 		return { loadout: null, id: "", messages: [] as string[] };
 	}
-
-	/**
-	 * Given a sorted array of mods, return either the first mod (if it has a non-negative score) or null. This allows
-	 * for empty slots on characters where the mods might be better used elsewhere.
-	 * @param candidates Array[Mod]
-	 * @returns Mod
-	 */
-	const topMod = (candidates: Mod[]) => {
-		const mod: Mod | null = firstOrNull(candidates);
-		if (mod && (cache.modScores.get(mod.id) ?? 0) >= 0) {
-			return mod;
-		}
-		return null;
-	};
 
 	const usedSets = (Object.entries(setsToUse) as SetRestrictionsEntries)
 		.filter(([, count]) => count > 0)
