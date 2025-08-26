@@ -963,6 +963,18 @@ function getSetRestrictionsNames(setRestrictions: SetRestrictions) {
 	return names;
 }
 
+function addPossibleSetRestrictionNames(
+	setRestrictionNames: Set<GIMOSetStatNames>,
+	openModSlots: number,
+) {
+	if (openModSlots === 0) return;
+	for (const setBonus of Object.values(setBonuses)) {
+		if (setBonus.numberOfModsRequired <= openModSlots) {
+			setRestrictionNames.add(setBonus.name);
+		}
+	}
+}
+
 function getOpenModSlots(setRestrictions: SetRestrictions): number {
 	return (
 		6 -
@@ -1346,32 +1358,10 @@ function getStatValueForCharacterWithMods(
  * @returns {Array<Mod>}
  */
 function restrictMods(allMods: Mod[], setRestriction: SetRestrictions) {
-	const potentialSets = areSetsComplete(setRestriction)
-		? Object.entries(setRestriction)
-				.filter(([, count]) => count > 0)
-				.map(([set]) => set)
-		: Object.values(setBonuses).map((setBonus) => setBonus.name);
-
-	return allMods.filter((mod) => potentialSets.includes(mod.modset.name));
-}
-
-/**
- * Utility function to determine if a given sets definition covers all 6 mod slots
- *
- * @param setDefinition {Object<SetBonus, Number>}
- * @returns {Boolean}
- */
-function areSetsComplete(setDefinition: SetRestrictions) {
-	return (
-		6 ===
-		(Object.entries(setDefinition) as SetRestrictionsEntries)
-			.filter(([, setCount]) => -1 !== setCount)
-			.reduce(
-				(filledSlots, [setName, setCount]) =>
-					filledSlots + setBonuses[setName].numberOfModsRequired * setCount,
-				0,
-			)
-	);
+	const openModSlots = getOpenModSlots(setRestriction);
+	const potentialSets = getSetRestrictionsNames(setRestriction);
+	addPossibleSetRestrictionNames(potentialSets, openModSlots);
+	return allMods.filter((mod) => potentialSets.has(mod.modset.name));
 }
 
 /**
