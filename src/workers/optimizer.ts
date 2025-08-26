@@ -74,10 +74,11 @@ import type * as ModTypes from "../domain/types/ModTypes";
 
 import type * as Character from "../domain/Character";
 import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats";
-import type {
-	OptimizableStats,
-	OptimizationPlan,
-	PrimaryStatRestrictions,
+import {
+	fromShortOptimizationPlan,
+	type OptimizableStats,
+	type OptimizationPlan,
+	type PrimaryStatRestrictions,
 } from "../domain/OptimizationPlan";
 import type { SelectedCharacters } from "../domain/SelectedCharacters";
 import type { SetRestrictions } from "../domain/SetRestrictions";
@@ -212,6 +213,8 @@ type NullablePartialModBySlot = PartialModBySlot | null;
 type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 type BestModsIndex = Map<ModTypes.GIMOSlots, Map<number, Map<string, Mod>>>;
 type BestModsArrayLookup = Map<ModTypes.GIMOSlots, Map<number, Mod[]>>;
+type ModFilterPredicate = (mod: Mod) => boolean;
+
 // #endregion types
 
 // state
@@ -913,6 +916,53 @@ function modHasScoreForTargetStat(mod: Mod, targetStat: TargetStat) {
 	return false;
 }
 
+const modFilters = {
+	setNames: new Set<GIMOSetStatNames>(),
+	target: fromShortOptimizationPlan({}),
+	openModSlots: 0,
+	hasSet: (mod: Mod) => modFilters.setNames.has(mod.modset.name),
+	no4SlotSets: (mod: Mod) => mod.modset.numberOfModsRequired !== 4,
+	no6Dot: (mod: Mod) => mod.pips < 6,
+	only6Dot: (mod: Mod) => mod.pips === 6,
+	hasMinimumDots: (mod: Mod) => mod.pips >= modFilters.target.minimumModDots,
+	hasRestrictedPrimaryStat: (mod: Mod) => {
+		if (["square", "diamond"].includes(mod.slot)) return true;
+		if (
+			modFilters.target.primaryStatRestrictions[
+				mod.slot as ModTypes.VariablePrimarySlots
+			] === undefined
+		)
+			return true;
+
+		return (
+			mod.primaryStat.type ===
+			modFilters.target.primaryStatRestrictions[
+				mod.slot as ModTypes.VariablePrimarySlots
+			]
+		);
+	},
+	hasScoredStats: (mod: Mod) =>
+		modFilters.target.targetStats.some((targetStat: TargetStat) =>
+			modHasScoreForTargetStat(mod, targetStat),
+		),
+};
+
+const combineModFilters: (filters: ModFilterPredicate[]) => ModFilterPredicate =
+	(filters) => (item: Mod) =>
+		filters.map((filter) => filter(item)).every((x) => x === true);
+
+function getSetRestrictionsNames(setRestrictions: SetRestrictions) {
+	const names = new Set<GIMOSetStatNames>();
+	for (const [setName, setCount] of Object.entries(
+		setRestrictions,
+	) as SetRestrictionsEntries) {
+		if (setCount > 0) {
+			names.add(setName);
+		}
+	}
+	return names;
+}
+
 function getOpenModSlots(setRestrictions: SetRestrictions): number {
 	return (
 		6 -
@@ -1149,10 +1199,8 @@ function loadoutFulfillsFullSetRestriction(loadout: Mod[]) {
 		setCounts[name] = (setCounts[name] ?? 0) + 1;
 	}
 
-	//console.log(`setCounts: ${JSON.stringify(setCounts)}`);
 	return (Object.entries(setCounts) as [GIMOSetStatNames, number][]).every(
 		([setName, count]) => {
-			//console.log(`741: setName: ${setName}`);
 			return 0 === count % setBonuses[setName].numberOfModsRequired;
 		},
 	);
@@ -2069,34 +2117,20 @@ function findBestLoadoutForCharacter(
 	characterIndex: number,
 	target: OptimizationPlan,
 ) {
-	const filteredMods =
-		character.playerValues.gearLevel < 12
-			? mods.filter((mod) => 6 > mod.pips || mod.characterID === character.id)
-			: mods;
-	const modsToCache = filteredMods;
-	const usableMods = filteredMods;
-
 	const setRestrictions = target.setRestrictions;
 	const targetStats = target.targetStats;
-
-	// Get the flattened stats and score every mod for this character. From that point on, only look at the cache
-	// for the rest of the time processing mods for this character.
-	for (const mod of modsToCache) {
-		cache.modStats.get(mod);
-		scoreMod(mod, target);
-	}
 
 	let loadout: Mod[];
 	let messages: string[];
 	let extraMessages: string[] = [];
-	const mutableTarget = Object.assign({}, target);
-	let reducedTarget: OptimizationPlan = mutableTarget;
+	const mutableTarget = structuredClone(target);
+	let reducedTarget = structuredClone(target);
 
 	// First, check to see if there is any target stat
 	if (0 < targetStats.length) {
 		// If so, create an array of potential mod sets that could fill it
 		let potentialMods = getPotentialModsToSatisfyTargetStats(
-			usableMods,
+			mods,
 			character,
 			characterCount,
 			characterIndex,
@@ -2108,14 +2142,10 @@ function findBestLoadoutForCharacter(
 			mutableTarget,
 		));
 
+		if (loadout.length === 0) {
 		// If we couldn't find a mod set that would fulfill the target stat, but we're limiting to only full sets, then
 		// try again without that limitation
-		if (loadout.length === 0) {
-			reducedTarget = mutableTarget.useOnlyFullSets
-				? Object.assign({}, mutableTarget, {
-						useOnlyFullSets: false,
-					})
-				: mutableTarget;
+			reducedTarget.useOnlyFullSets = false;
 
 			if (mutableTarget.useOnlyFullSets) {
 				extraMessages.push(
@@ -2123,7 +2153,7 @@ function findBestLoadoutForCharacter(
 				);
 
 				potentialMods = getPotentialModsToSatisfyTargetStats(
-					usableMods,
+					mods,
 					character,
 					characterCount,
 					characterIndex,
@@ -2137,9 +2167,13 @@ function findBestLoadoutForCharacter(
 			}
 		}
 		if (loadout.length === 0) {
+			for (const mod of mods) {
+				cache.modStats.get(mod);
+				scoreMod(mod, target);
+			}
 			({ loadout: loadout, messages } =
 				findBestLoadoutByLooseningSetRestrictions(
-					usableMods,
+					mods,
 					character,
 					reducedTarget,
 					setRestrictions,
@@ -2162,7 +2196,8 @@ function findBestLoadoutForCharacter(
 		];
 	}
 
-	//    mutableTarget.targetStat = null;
+	reducedTarget = structuredClone(mutableTarget);
+	reducedTarget.targetStats = [];
 	// If not, simply iterate over all levels of restrictions until a suitable set is found.
 	progressMessage(
 		character.id,
@@ -2177,22 +2212,20 @@ function findBestLoadoutForCharacter(
 		0,
 	);
 	({ loadout: loadout, messages } = findBestLoadoutByLooseningSetRestrictions(
-		usableMods,
+		mods,
 		character,
-		mutableTarget,
+		reducedTarget,
 		setRestrictions,
 	));
 
-	if (loadout.length === 0 && mutableTarget.useOnlyFullSets) {
-		reducedTarget = Object.assign({}, mutableTarget, {
-			useOnlyFullSets: false,
-		});
+	if (loadout.length === 0 && reducedTarget.useOnlyFullSets) {
+		reducedTarget.useOnlyFullSets = false;
 		extraMessages.push(
 			"Could not find a mod set using only full sets, so the full sets restriction was dropped",
 		);
 
 		({ loadout: loadout, messages } = findBestLoadoutByLooseningSetRestrictions(
-			usableMods,
+			mods,
 			character,
 			reducedTarget,
 			setRestrictions,
@@ -2226,6 +2259,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	target: OptimizationPlan,
 ) {
 	const setRestrictions = target.setRestrictions;
+	const setRestrictionsNames = getSetRestrictionsNames(setRestrictions);
 	const openModSlots = getOpenModSlots(setRestrictions);
 	const statNames = target.targetStats.map((targetStat) => targetStat.stat);
 	// A map from the set name to the value the set provides for a target stat
@@ -2264,9 +2298,26 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		Tenacity: {},
 	};
 
-
 	// Filter out any mods that don't meet primary or set restrictions. This can vastly speed up this process
-	let usableMods = filterOutUnusableMods(allMods, target, totalModSlotsOpen);
+	modFilters.target = target;
+	modFilters.openModSlots = openModSlots;
+	modFilters.setNames = setRestrictionsNames;
+	let usableMods = allMods.filter(
+		combineModFilters([
+			modFilters.hasMinimumDots,
+			modFilters.hasScoredStats,
+			modFilters.hasRestrictedPrimaryStat,
+			openModSlots > 0 ? (_mod: Mod) => true : modFilters.hasSet,
+			character.playerValues.gearLevel < 12
+				? modFilters.no6Dot
+				: (_mod: Mod) => true,
+		]),
+	);
+
+	for (const mod of usableMods) {
+		cache.modStats.get(mod);
+		scoreMod(mod, target);
+	}
 
 	const [modValues, valuesBySlotByStat] = collectModValuesBySlot(
 		usableMods,
@@ -2356,57 +2407,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				),
 			};
 		}
-	}
-
-
-	/**
-	 * Given a set of mods, return only those mods that might be used with the current target. Filter out any mods
-	 * that don't have the correct primary stat, don't have enough dots, or aren't in the right sets, if all slots are
-	 * taken by the pre-selected sets
-	 *
-	 * @param mods {Array<Mod>}
-	 * @param target {OptimizationPlan}
-	 * @param modSlotsOpen {Integer}
-	 * @returns {Array<Mod>}
-	 */
-	function filterOutUnusableMods(
-		mods: Mod[],
-		target: OptimizationPlan,
-		modSlotsOpen: number,
-	) {
-		const modsInSets =
-			modSlotsOpen > 0
-				? mods
-				: mods.filter((mod) =>
-						Object.keys(target.setRestrictions).includes(mod.modset.name),
-					);
-
-		const modsWithPrimaries = modsInSets.filter((mod) => {
-			if (["square", "diamond"].includes(mod.slot)) return true;
-			if (
-				target.primaryStatRestrictions[
-					mod.slot as ModTypes.VariablePrimarySlots
-				] === undefined
-			)
-				return true;
-
-			return (
-				mod.primaryStat.type ===
-				target.primaryStatRestrictions[
-					mod.slot as ModTypes.VariablePrimarySlots
-				]
-			);
-		});
-
-		const modsWithScoredStats = modsWithPrimaries.filter((mod) =>
-			target.targetStats.some((targetStat) =>
-				modHasScoreForTargetStat(mod, targetStat.stat),
-			),
-		);
-
-		return modsWithScoredStats.filter(
-			(mod) => mod.pips >= target.minimumModDots,
-		);
 	}
 
 	/**
