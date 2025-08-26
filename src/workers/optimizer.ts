@@ -3065,12 +3065,6 @@ const findBestLoadoutFromPotentialMods = (
 			);
 
 		if (loadoutAndMessagesHasLoadout(loadoutAndMessages)) {
-			const loadoutScore = cache.loadoutScores(
-				loadoutAndMessages.loadout,
-				loadoutAndMessages.id,
-				character,
-				target,
-			);
 			const newModsSatisfyCharacterRestrictions =
 				loadoutSatisfiesCharacterRestrictions(
 					loadoutAndMessages.loadout,
@@ -3088,6 +3082,12 @@ const findBestLoadoutFromPotentialMods = (
 			) {
 				continue;
 			}
+			const loadoutScore = cache.loadoutScores(
+				loadoutAndMessages.loadout,
+				loadoutAndMessages.id,
+				character,
+				target,
+			);
 
 			// We'll accept a new set if it is better than the existing set OR if the existing set doesn't fulfill all of the
 			// restrictions and the new set does
