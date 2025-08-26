@@ -3381,9 +3381,9 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		.filter(([, count]) => count > 0)
 		.map(([setName]) => setName);
 
-	const modSlotsOpen = getOpenModSlots(setsToUse);
+	const openModSlots = getOpenModSlots(setsToUse);
 
-	if (0 === modSlotsOpen) {
+	if (0 === openModSlots) {
 		// If sets are 100% deterministic, make potentialUsedSets only them
 		for (const setName of usedSets) {
 			const setBonus = setBonuses[setName];
@@ -3395,14 +3395,20 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		let setName: GIMOSetStatNames;
 		for (setName in setBonuses) {
 			const setBonus = setBonuses[setName];
+			if (
+				setBonus.numberOfModsRequired <= openModSlots &&
+				(setsToUse[setName] ?? 0) !== -1
+			) {
 			potentialUsedSets.add(setBonus);
+			}
 		}
 		setlessMods = null;
 	} else {
 		// Otherwise, use any set bonus with positive value that fits into the set restriction
 		for (const setBonus of Object.values(setBonuses)) {
 			if (
-				setBonus.numberOfModsRequired <= modSlotsOpen &&
+				setBonus.numberOfModsRequired <= openModSlots &&
+				(setsToUse[setBonus.name] ?? 0) !== -1 &&
 				scoreStat(setBonus.maxBonus, target) > 0
 			) {
 				potentialUsedSets.add(setBonus);
