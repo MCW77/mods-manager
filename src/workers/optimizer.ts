@@ -3221,6 +3221,375 @@ const topMod = (candidates: Mod[]) => {
 	return null;
 };
 
+function getSetsBySlot(
+	squares: Mod[],
+	arrows: Mod[],
+	diamonds: Mod[],
+	triangles: Mod[],
+	circles: Mod[],
+	crosses: Mod[],
+): Record<ModTypes.GIMOSlots, Set<GIMOSetStatNames>> {
+	const squareSets = new Set<GIMOSetStatNames>();
+	const arrowSets = new Set<GIMOSetStatNames>();
+	const diamondSets = new Set<GIMOSetStatNames>();
+	const triangleSets = new Set<GIMOSetStatNames>();
+	const circleSets = new Set<GIMOSetStatNames>();
+	const crossSets = new Set<GIMOSetStatNames>();
+
+	for (const mod of squares) {
+		squareSets.add(mod.modset.name);
+	}
+	for (const mod of arrows) {
+		arrowSets.add(mod.modset.name);
+	}
+	for (const mod of diamonds) {
+		diamondSets.add(mod.modset.name);
+	}
+	for (const mod of triangles) {
+		triangleSets.add(mod.modset.name);
+	}
+	for (const mod of circles) {
+		circleSets.add(mod.modset.name);
+	}
+	for (const mod of crosses) {
+		crossSets.add(mod.modset.name);
+	}
+	return {
+		square: squareSets,
+		arrow: arrowSets,
+		diamond: diamondSets,
+		triangle: triangleSets,
+		circle: circleSets,
+		cross: crossSets,
+	};
+}
+
+function narrowToAvailableSets(
+	setsToUse: SetRestrictions,
+	useOnlyFullSets: boolean,
+	squares: Mod[],
+	arrows: Mod[],
+	diamonds: Mod[],
+	triangles: Mod[],
+	circles: Mod[],
+	crosses: Mod[],
+): {
+	canFulfillSetRestrictions: boolean;
+	availableSetsToUse: SetRestrictions;
+	squares: Mod[];
+	arrows: Mod[];
+	diamonds: Mod[];
+	triangles: Mod[];
+	circles: Mod[];
+	crosses: Mod[];
+} {
+	const setsBySlot = getSetsBySlot(
+		squares,
+		arrows,
+		diamonds,
+		triangles,
+		circles,
+		crosses,
+	);
+
+	// Track current assignment per slot (if a slot is forced to a single set)
+	const assignedSetBySlot: Partial<
+		Record<ModTypes.GIMOSlots, GIMOSetStatNames>
+	> = {};
+
+	// Compute required slots per set from setsToUse (ignore -1 which means avoid)
+	const requiredSlotsBySet = new Map<GIMOSetStatNames, number>();
+	for (const [setName, count] of Object.entries(
+		setsToUse,
+	) as SetRestrictionsEntries) {
+		if ((count ?? 0) > 0) {
+			const need = (setBonuses[setName].numberOfModsRequired * count) as number;
+			requiredSlotsBySet.set(setName, need);
+		}
+	}
+
+	// Helper to count how many slots currently allow a given set, and how many are already assigned to it
+
+	const countAvailability = (setName: GIMOSetStatNames) => {
+		let possible = 0;
+		let assigned = 0;
+		for (const slot of gimoSlots) {
+			if (setsBySlot[slot].has(setName)) {
+				possible++;
+				if (assignedSetBySlot[slot] === setName) assigned++;
+			}
+		}
+		return { possible, assigned };
+	};
+
+	// Initialize assignments for slots that already have only one possible set
+	for (const slot of gimoSlots) {
+		const allowed = setsBySlot[slot];
+		if (allowed.size === 1) {
+			const only = allowed.values().next().value as GIMOSetStatNames;
+			assignedSetBySlot[slot] = only;
+		}
+	}
+
+	// Constraint propagation loop
+	let changed = true;
+	while (changed) {
+		changed = false;
+		// For each required set, ensure feasibility and propagate forced assignments
+		for (const [setName, requiredSlots] of requiredSlotsBySet.entries()) {
+			// Quick feasibility check
+			const { possible, assigned } = countAvailability(setName);
+			if (possible < requiredSlots) {
+				return {
+					canFulfillSetRestrictions: false,
+					availableSetsToUse: {},
+					squares,
+					arrows,
+					diamonds,
+					triangles,
+					circles,
+					crosses,
+				};
+			}
+			const remaining = requiredSlots - assigned;
+			if (remaining <= 0) continue;
+
+			// Determine variable slots that can still take this set
+			const variableSlots: ModTypes.GIMOSlots[] = [];
+			for (const slot of gimoSlots) {
+				if (assignedSetBySlot[slot]) continue;
+				if (setsBySlot[slot].has(setName)) variableSlots.push(slot);
+			}
+
+			if (variableSlots.length < remaining) {
+				return {
+					canFulfillSetRestrictions: false,
+					availableSetsToUse: {},
+					squares,
+					arrows,
+					diamonds,
+					triangles,
+					circles,
+					crosses,
+				};
+			}
+
+			// If exactly the remaining number of variable slots can host this set, they must be this set
+			if (variableSlots.length === remaining) {
+				for (const slot of variableSlots) {
+					if (!assignedSetBySlot[slot]) {
+						assignedSetBySlot[slot] = setName;
+						setsBySlot[slot].clear();
+						setsBySlot[slot].add(setName);
+						changed = true;
+					}
+				}
+			}
+		}
+
+		// Any slots that now have a single allowed set become assigned
+		for (const slot of gimoSlots) {
+			if (!assignedSetBySlot[slot] && setsBySlot[slot].size === 1) {
+				const only = setsBySlot[slot].values().next().value as GIMOSetStatNames;
+				assignedSetBySlot[slot] = only;
+				// already single; keep as-is
+				changed = true;
+			}
+		}
+	}
+
+	/*
+	if (useOnlyFullSets) {
+		// Enforce that any partial assignments can be completed and prune/early-exit accordingly
+		const getVariableSlotsForSet = (
+			setName: GIMOSetStatNames,
+		): ModTypes.GIMOSlots[] => {
+			const vars: ModTypes.GIMOSlots[] = [];
+			for (const slot of gimoSlots) {
+				if (!assignedSetBySlot[slot] && setsBySlot[slot].has(setName))
+					vars.push(slot);
+			}
+			return vars;
+		};
+
+		// 1) Force-complete any partial set that has exactly as many variable slots as needed.
+		let ufChanged = true;
+		while (ufChanged) {
+			ufChanged = false;
+			for (const setName of Object.keys(setBonuses) as GIMOSetStatNames[]) {
+				const size = setBonuses[setName].numberOfModsRequired as number;
+				let assignedCount = 0;
+				for (const slot of gimoSlots)
+					if (assignedSetBySlot[slot] === setName) assignedCount++;
+				const remainder = assignedCount % size;
+				const need = remainder === 0 ? 0 : size - remainder; // mods needed to complete next full set
+				if (need === 0) continue;
+				const varSlots = getVariableSlotsForSet(setName);
+				if (varSlots.length < need) {
+					return {
+						canFulfillSetRestrictions: false,
+						availableSetsToUse: {},
+						squares,
+						arrows,
+						diamonds,
+						triangles,
+						circles,
+						crosses,
+					};
+				}
+				if (varSlots.length === need) {
+					// These slots must be this set to satisfy full-set-only constraint
+					for (const slot of varSlots) {
+						assignedSetBySlot[slot] = setName;
+						setsBySlot[slot].clear();
+						setsBySlot[slot].add(setName);
+					}
+					ufChanged = true;
+				}
+			}
+		}
+
+		// 2) Global feasibility: remaining unassigned slots must be fillable by whole sets (2/4 mods)
+		let unassignedSlots = 0;
+		for (const slot of gimoSlots)
+			if (!assignedSetBySlot[slot]) unassignedSlots++;
+
+		let sumNeed = 0; // minimal slots that must be reserved to complete existing partials
+		let cap2 = 0; // upper bound of additional 2-piece sets we could form
+		let cap4 = 0; // upper bound of additional 4-piece sets we could form
+		for (const setName of Object.keys(setBonuses) as GIMOSetStatNames[]) {
+			const size = setBonuses[setName].numberOfModsRequired as number;
+			let assignedCount = 0;
+			for (const slot of gimoSlots)
+				if (assignedSetBySlot[slot] === setName) assignedCount++;
+			const varSlots = getVariableSlotsForSet(setName);
+			const remainder = assignedCount % size;
+			const need = remainder === 0 ? 0 : size - remainder;
+			if (need > varSlots.length) {
+				return {
+					canFulfillSetRestrictions: false,
+					availableSetsToUse: {},
+					squares,
+					arrows,
+					diamonds,
+					triangles,
+					circles,
+					crosses,
+				};
+			}
+			sumNeed += need;
+			const leftover = varSlots.length - need;
+			if (size === 2) cap2 += Math.floor(leftover / 2);
+			else if (size === 4) cap4 += Math.floor(leftover / 4);
+		}
+
+		const L = unassignedSlots - sumNeed;
+		if (L < 0) {
+			return {
+				canFulfillSetRestrictions: false,
+				availableSetsToUse: {},
+				squares,
+				arrows,
+				diamonds,
+				triangles,
+				circles,
+				crosses,
+			};
+		}
+
+		let canFillRemainder = false;
+		for (let a = 0; a <= Math.min(cap4, Math.floor(L / 4)); a++) {
+			const rem = L - 4 * a;
+			if (rem % 2 === 0 && rem / 2 <= cap2) {
+				canFillRemainder = true;
+				break;
+			}
+		}
+		if (!canFillRemainder) {
+			return {
+				canFulfillSetRestrictions: false,
+				availableSetsToUse: {},
+				squares,
+				arrows,
+				diamonds,
+				triangles,
+				circles,
+				crosses,
+			};
+		}
+
+		// 3) Light pruning: if a set cannot possibly form a new full set from scratch, drop it where there are other options
+		for (const setName of Object.keys(setBonuses) as GIMOSetStatNames[]) {
+			const size = setBonuses[setName].numberOfModsRequired as number;
+			let assignedCount = 0;
+			for (const slot of gimoSlots)
+				if (assignedSetBySlot[slot] === setName) assignedCount++;
+			const remainder = assignedCount % size;
+			if (remainder !== 0) continue; // don't prune if it might help complete an existing partial
+			const varSlots = getVariableSlotsForSet(setName);
+			if (varSlots.length < size) {
+				for (const slot of varSlots) {
+					if (setsBySlot[slot].size > 1) {
+						setsBySlot[slot].delete(setName);
+					}
+				}
+			}
+		}
+	}
+*/
+	// Build updated availableSetsToUse: start from original and bump counts if assignments complete extra full sets
+	const availableSetsToUse: SetRestrictions = {
+		...(setsToUse as Record<string, number>),
+	} as SetRestrictions;
+	for (const setName of Object.keys(setBonuses) as GIMOSetStatNames[]) {
+		// Count assigned slots for this set
+		let assigned = 0;
+		for (const slot of gimoSlots) {
+			if (assignedSetBySlot[slot] === setName) assigned++;
+		}
+		if (assigned > 0) {
+			const fullSets = Math.floor(
+				assigned / setBonuses[setName].numberOfModsRequired,
+			);
+			if (fullSets > 0) {
+				const current = availableSetsToUse[setName] ?? 0;
+				if (fullSets > current) availableSetsToUse[setName] = fullSets;
+			}
+		}
+	}
+
+	// Finally, filter each slot's mods list to include only those from currently allowed sets
+	const filterByAllowed = (mods: Mod[], slot: ModTypes.GIMOSlots) => {
+		const allowed = setsBySlot[slot];
+		if (allowed.size === 0) return [];
+		if (allowed.size === 8) return mods;
+		let w = 0;
+		for (let r = 0; r < mods.length; r++) {
+			if (allowed.has(mods[r].modset.name)) mods[w++] = mods[r];
+		}
+		if (w < mods.length) mods.length = w;
+		return mods;
+	};
+
+	const filteredSquares = filterByAllowed(squares, "square");
+	const filteredArrows = filterByAllowed(arrows, "arrow");
+	const filteredDiamonds = filterByAllowed(diamonds, "diamond");
+	const filteredTriangles = filterByAllowed(triangles, "triangle");
+	const filteredCircles = filterByAllowed(circles, "circle");
+	const filteredCrosses = filterByAllowed(crosses, "cross");
+
+	return {
+		canFulfillSetRestrictions: true,
+		availableSetsToUse,
+		squares: filteredSquares,
+		arrows: filteredArrows,
+		diamonds: filteredDiamonds,
+		triangles: filteredTriangles,
+		circles: filteredCircles,
+		crosses: filteredCrosses,
+	};
+}
+
 /**
  * Find the best configuration of mods from a set of usable mods
  * @param usableMods {Array<Mod>}
@@ -3246,6 +3615,8 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let circles: Mod[] = [];
 	let crosses: Mod[] = [];
 	let setlessMods: NullablePartialModBySlot;
+	let availableSetsToUse: SetRestrictions = {};
+	let canFulfillSetRestrictions = true;
 
 	// Sort all the mods by score, then break them into sets.
 	// For each slot, try to use the most restrictions possible from what has been set for that character
@@ -3287,11 +3658,32 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		return { loadout: null, id: "", messages: [] as string[] };
 	}
 
-	const usedSets = (Object.entries(setsToUse) as SetRestrictionsEntries)
-		.filter(([, count]) => count > 0)
-		.map(([setName]) => setName);
-
-	const openModSlots = getOpenModSlots(setsToUse);
+	({
+		canFulfillSetRestrictions,
+		availableSetsToUse,
+		squares,
+		arrows,
+		diamonds,
+		triangles,
+		circles,
+		crosses,
+	} = narrowToAvailableSets(
+		setsToUse,
+		target.useOnlyFullSets,
+		squares,
+		arrows,
+		diamonds,
+		triangles,
+		circles,
+		crosses,
+	));
+	if (!canFulfillSetRestrictions) {
+		return { loadout: null, id: "", messages: [] as string[] };
+	}
+	// Use refined set restrictions going forward
+	const effectiveSetsToUse = availableSetsToUse;
+	const usedSets = getSetRestrictionsNames(effectiveSetsToUse);
+	const openModSlots = getOpenModSlots(effectiveSetsToUse);
 
 	if (0 === openModSlots) {
 		// If sets are 100% deterministic, make potentialUsedSets only them
@@ -3307,7 +3699,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 			const setBonus = setBonuses[setName];
 			if (
 				setBonus.numberOfModsRequired <= openModSlots &&
-				(setsToUse[setName] ?? 0) !== -1
+				(availableSetsToUse[setName] ?? 0) !== -1
 			) {
 			potentialUsedSets.add(setBonus);
 			}
@@ -3318,7 +3710,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		for (const setBonus of Object.values(setBonuses)) {
 			if (
 				setBonus.numberOfModsRequired <= openModSlots &&
-				(setsToUse[setBonus.name] ?? 0) !== -1 &&
+				(availableSetsToUse[setBonus.name] ?? 0) !== -1 &&
 				scoreStat(setBonus.maxBonus, target) > 0
 			) {
 				potentialUsedSets.add(setBonus);
@@ -3372,7 +3764,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		potentialUsedSets,
 		baseSets,
 		setlessMods,
-		setsToUse,
+		effectiveSetsToUse,
 	);
 
 	let bestLoadout: Mod[] = [];
