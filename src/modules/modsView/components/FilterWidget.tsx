@@ -41,6 +41,7 @@ const FilterWidget = () => {
 
 	return (
 		<CollapsibleCard
+			defaultOpen={true}
 			className={
 				"flex flex-col justify-between items-center gap-2 w-[-webkit-fill-available]"
 			}

@@ -41,14 +41,24 @@ const ModsView = React.memo(() => {
 					}
 				>
 					<TabsList className={"flex justify-around"}>
+						<TabsTrigger value="AllMods">All Mods</TabsTrigger>
 						<TabsTrigger value="Reveal">Reveal</TabsTrigger>
 						<TabsTrigger value="Level">Level</TabsTrigger>
 						<TabsTrigger value="Slice5Dot">Slice5Dot</TabsTrigger>
 						<TabsTrigger value="Slice6E">Slice6E</TabsTrigger>
 						<TabsTrigger value="Slice6Dot">Slice6Dot</TabsTrigger>
 						<TabsTrigger value="Calibrate">Calibrate</TabsTrigger>
-						<TabsTrigger value="AllMods">All Mods</TabsTrigger>
 					</TabsList>
+					<Memo>
+						{() => (
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="AllMods"
+							>
+								<CategoryView />
+							</TabsContent>
+						)}
+					</Memo>
 					<Memo>
 						{() => (
 							<TabsContent
@@ -104,16 +114,6 @@ const ModsView = React.memo(() => {
 							<TabsContent
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Calibrate"
-							>
-								<CategoryView />
-							</TabsContent>
-						)}
-					</Memo>
-					<Memo>
-						{() => (
-							<TabsContent
-								className={"flex data-[state=active]:grow-1 min-h-0"}
-								value="AllMods"
 							>
 								<CategoryView />
 							</TabsContent>

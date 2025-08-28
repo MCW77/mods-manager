@@ -84,7 +84,7 @@ const defaultViewSetup: ModsViewPersistedData = {
 const modsView$: ObservableObject<ModsViewObservable> =
 	observable<ModsViewObservable>({
 		persistedData: structuredClone(defaultViewSetup),
-		activeCategory: "Reveal" as Categories,
+		activeCategory: "AllMods" as Categories,
 		idOfActiveViewSetupByCategory: {
 			Reveal: "DefaultReveal",
 			Level: "DefaultLevel",

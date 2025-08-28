@@ -386,7 +386,7 @@ const defaultRevealSetup: ViewSetup = {
 	description: "Reveal",
 	filterById: { [defaultRevealFilter.id]: defaultRevealFilter },
 	sort: new Map(),
-	isGroupingEnabled: true,
+	isGroupingEnabled: false,
 	modScore: "PureSecondaries",
 };
 
@@ -396,7 +396,7 @@ const defaultLevelSetup: ViewSetup = {
 	description: "Level",
 	filterById: { [defaultLevelFilter.id]: defaultLevelFilter },
 	sort: new Map(),
-	isGroupingEnabled: true,
+	isGroupingEnabled: false,
 	modScore: "PureSecondaries",
 };
 
@@ -406,7 +406,7 @@ const defaultSlice5DotSetup: ViewSetup = {
 	description: "Slice5Dot",
 	filterById: { [defaultSlice5DotFilter.id]: defaultSlice5DotFilter },
 	sort: new Map(),
-	isGroupingEnabled: true,
+	isGroupingEnabled: false,
 	modScore: "PureSecondaries",
 };
 
@@ -416,7 +416,7 @@ const defaultSlice6ESetup: ViewSetup = {
 	description: "Slice6E",
 	filterById: { [defaultSlice6EFilter.id]: defaultSlice6EFilter },
 	sort: new Map(),
-	isGroupingEnabled: true,
+	isGroupingEnabled: false,
 	modScore: "PureSecondaries",
 };
 
@@ -426,7 +426,7 @@ const defaultSlice6DotSetup: ViewSetup = {
 	description: "Slice6Dot",
 	filterById: { [defaultSlice6DotFilter.id]: defaultSlice6DotFilter },
 	sort: new Map(),
-	isGroupingEnabled: true,
+	isGroupingEnabled: false,
 	modScore: "PureSecondaries",
 };
 
@@ -447,7 +447,7 @@ const defaultAllModsSetup: ViewSetup = {
 	description: "All Mods",
 	filterById: {},
 	sort: new Map(),
-	isGroupingEnabled: true,
+	isGroupingEnabled: false,
 	modScore: "PureSecondaries",
 };
 

@@ -8,6 +8,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button } from "../ui/button";
 
 interface FlexSidebarProps {
 	isCollapsed?: boolean;
@@ -27,8 +28,10 @@ const FlexSidebar = ({
 		<div
 			className={`flexsidebar-container flex relative duration-1000 ease ${isCollapsed2 ? "collapsed" : ""}`}
 		>
-			<span
-				className={`block absolute h-1.4em w-1em top-4em m-0 p-y-0 p-x-0.25em bg-background border-1px border-solid border-border will-change[transform_left] transition-[transform,left] duration-1000 ease  z-1 ${isCollapsed2 ? "show left-0 rotate-180" : "hide left-28vw"}`}
+			<Button
+				variant="ghost"
+				size="default"
+				className={`block absolute top-4em m-0 bg-background border-1px border-solid border-border will-change[transform_left] transition-[transform,left] duration-1000 ease  z-1 ${isCollapsed2 ? "show left-0 rotate-180" : "hide left-28vw"}`}
 				onClick={() => {
 					setCollapsed(!isCollapsed2);
 				}}
@@ -46,7 +49,7 @@ const FlexSidebar = ({
 							: t("sidebar.Toggle-collapse", "hide sidebar")
 					}`}
 				/>
-			</span>
+			</Button>
 			<div
 				className={`relative ${isCollapsed2 ? "flex-[0.0000001_1_0]" : "flex-[0.0000001_0_30vw]"} h-full overflow-x-hidden overflow-y-auto transition-[flex] duration-1000 ease will-change-[flex]`}
 			>
