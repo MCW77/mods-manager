@@ -1096,28 +1096,19 @@ function flattenStatValues(stat: Stat, character: Character.Character) {
 	if (cacheHit) {
 		return cacheHit;
 	}
-	//console.log(`Stat Displaytype: ${stat.displayType}`);
 	const statPropertyNames =
 		Stats.Stat.display2CSGIMOStatNamesMap[stat.displayType];
 
 	const flattenedStats: StatValue[] = statPropertyNames.map((statName) => {
 		const displayName = statDisplayNames[statName];
+		const value = !stat.isPercentVersion
+			? stat.value
+			: (stat.value * (character.playerValues.baseStats[statName] ?? 0)) / 100;
 
-		if (stat.isPercentVersion && character.playerValues.baseStats) {
 			return {
 				displayType: displayName,
-				value: (stat.value * character.playerValues.baseStats[statName]) / 100,
+			value,
 			};
-		}
-		if (!stat.isPercentVersion) {
-			return {
-				displayType: displayName,
-				value: stat.value,
-			};
-		}
-		throw new Error(
-			`Stat is given as a percentage, but ${character.id} has no base stats`,
-		);
 	});
 
 	cache.statValues.set(cacheKey, flattenedStats);
