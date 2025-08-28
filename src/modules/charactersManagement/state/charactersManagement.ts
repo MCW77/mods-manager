@@ -10,6 +10,9 @@ const { compilations$ } = await import(
 	"#/modules/compilations/state/compilations"
 );
 const { characters$ } = await import("#/modules/characters/state/characters");
+const { lockedStatus$ } = await import(
+	"#/modules/lockedStatus/state/lockedStatus"
+);
 
 // domain
 import {
@@ -127,6 +130,34 @@ const getDefaultFilterSetup = () => {
 								...profilesManagement$.activeProfile.modById.peek().values(),
 							].filter((mod) => mod.characterID === character.id);
 							return modsEquippedOnCharacter.some((mod) => mod.level < 15);
+						},
+					},
+				],
+				[
+					"Locked",
+					{
+						id: "Locked",
+						type: "custom",
+						filter: "Locked",
+						filterPredicate: (character: Character) => {
+							return lockedStatus$.ofActivePlayerByCharacterId[
+								character.id
+							].peek();
+						},
+					},
+				],
+				[
+					"Unlocked",
+					{
+						id: "Unlocked",
+						type: "custom",
+						filter: "Unlocked",
+						filterPredicate: (character: Character) => {
+							return (
+								lockedStatus$.ofActivePlayerByCharacterId[
+									character.id
+								].peek() === false
+							);
 						},
 					},
 				],

@@ -33,6 +33,14 @@ const customCharacterFilterGroups = [
 				label: "Needs Leveling",
 				value: "Needs Leveling",
 			},
+			{
+				label: "Locked",
+				value: "Locked",
+			},
+			{
+				label: "Unlocked",
+				value: "Unlocked",
+			},
 		],
 	},
 	{
