@@ -5152,6 +5152,25 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Auto Lightzader", "Wampanader", "Nightmare"],
 	),
+	VANE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 100,
+			prot: 60,
+			spd: 20,
+			arm: 50,
+			primaryRes: {
+				arrow: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+				triangle: "Health %",
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+	]),
 	VANGUARDTEMPLEGUARD: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",

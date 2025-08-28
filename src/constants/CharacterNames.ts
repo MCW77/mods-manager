@@ -288,6 +288,7 @@ export const characterNames = [
 	"UNDERCOVERLANDO",
 	"URORRURRR",
 	"VADER",
+	"VANE",
 	"VANGUARDTEMPLEGUARD",
 	"VEERS",
 	"VISASMARR",
