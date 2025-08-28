@@ -2179,6 +2179,10 @@ function findBestLoadoutForCharacter(
 
 	reducedTarget = structuredClone(mutableTarget);
 	reducedTarget.targetStats = [];
+	for (const mod of mods) {
+		cache.modStats.get(mod);
+		scoreMod(mod, target);
+	}
 	// If not, simply iterate over all levels of restrictions until a suitable set is found.
 	progressMessage(
 		character.id,
