@@ -39,7 +39,7 @@
 		"@radix-ui/react-tooltip": "^1.2.8",
 		"@unocss/preset-mini": "66.4.2",
 		"@unocss/reset": "66.4.2",
-		"@vitejs/plugin-react": "^5.0.0",
+		"@vitejs/plugin-react": "^5.0.2",
 		"big.js": "^7.0.1",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
