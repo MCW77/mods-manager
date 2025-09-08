@@ -1,30 +1,32 @@
+import { extend } from "lodash-es";
 import {
 	defineConfig,
-	presetWind3,
+	presetWind4,
 	presetIcons,
 	presetTypography,
 } from "unocss";
-import presetAnimations from "unocss-preset-animations";
+//import presetAnimations from "unocss-preset-animations";
 import presetShadcn from "unocss-preset-shadcn";
 
 export default defineConfig({
 	content: {
-		filesystem: [
-			"src/**/*.{js,ts,jsx,tsx}",
-			"index.html",
-		],
+		filesystem: ["src/**/*.{js,ts,jsx,tsx}", "index.html"],
 	},
 	presets: [
-		presetWind3(),
-		presetAnimations(),
+		presetWind4({
+			preflights: {
+				reset: true,
+			},
+		}),
 		presetIcons(),
 		presetShadcn({
 			color: "slate",
+			darkSelector: ".dark",
 		}),
 		presetTypography(),
 	],
 	theme: {
-		container: {
+		containers: {
 			center: true,
 			padding: "2rem",
 			screens: {
@@ -56,7 +58,7 @@ export default defineConfig({
 				"spin-slow": "spin-slow 2s linear infinite",
 				"spin-slow-reverse": "spin-slow-reverse 2s linear infinite",
 			},
-			borderRadius: {
+			radius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",

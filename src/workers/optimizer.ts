@@ -302,7 +302,7 @@ function progressMessage(
 ) {
 	if (
 		lastProgressUpdated === undefined ||
-		performance.now() - lastProgressUpdated > 100
+		performance.now() - lastProgressUpdated > 10
 	) {
 		postMessage({
 			character: characterId,
