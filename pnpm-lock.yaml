@@ -21,8 +21,8 @@ importers:
         specifier: ^7.0.1
         version: 7.0.1
       '@fortawesome/react-fontawesome':
-        specifier: ^0.2.3
-        version: 0.2.3(@fortawesome/fontawesome-svg-core@7.0.1)(react@18.3.1)
+        specifier: ^3.0.2
+        version: 3.0.2(@fortawesome/fontawesome-svg-core@7.0.1)(react@18.3.1)
       '@legendapp/state':
         specifier: 3.0.0-beta.30
         version: 3.0.0-beta.30(react@18.3.1)
@@ -1063,11 +1063,12 @@ packages:
     resolution: {integrity: sha512-esKuSrl1WMOTMDLNt38i16VfLe/gRZt2ZAJ3Yw7slfs7sj583MKqNFqO57zmhknk1Sya6f9Wys89aCzIJkcqlg==}
     engines: {node: '>=6'}
 
-  '@fortawesome/react-fontawesome@0.2.3':
-    resolution: {integrity: sha512-HlJco8RDY8NrzFVjy23b/7mNS4g9NegcrBG3n7jinwpc2x/AmSVk53IhWniLYM4szYLxRAFTAGwGn0EIlclDeQ==}
+  '@fortawesome/react-fontawesome@3.0.2':
+    resolution: {integrity: sha512-cmp/nT0pPC7HUALF8uc3+D5ECwEBWxYQbOIHwtGUWEu72sWtZc26k5onr920HWOViF0nYaC+Qzz6Ln56SQcaVg==}
+    engines: {node: '>=20'}
     peerDependencies:
-      '@fortawesome/fontawesome-svg-core': ~1 || ~6 || ~7
-      react: ^16.3 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      '@fortawesome/fontawesome-svg-core': ~6 || ~7
+      react: ^18.0.0 || ^19.0.0
 
   '@iconify-json/logos@1.2.9':
     resolution: {integrity: sha512-G6VCdFnwZcrT6Eveq3m43oJfLw/CX8plwFcE+2jgv3fiGB64pTmnU7Yd1MNZ/eA+/Re2iEDhuCfSNOWTHwwK8w==}
@@ -4928,10 +4929,9 @@ snapshots:
     dependencies:
       '@fortawesome/fontawesome-common-types': 7.0.1
 
-  '@fortawesome/react-fontawesome@0.2.3(@fortawesome/fontawesome-svg-core@7.0.1)(react@18.3.1)':
+  '@fortawesome/react-fontawesome@3.0.2(@fortawesome/fontawesome-svg-core@7.0.1)(react@18.3.1)':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.1
-      prop-types: 15.8.1
       react: 18.3.1
 
   '@iconify-json/logos@1.2.9':
