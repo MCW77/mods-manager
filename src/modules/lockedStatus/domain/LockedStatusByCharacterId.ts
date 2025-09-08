@@ -3,18 +3,15 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 interface LockedStatusPersistedData {
 	lockedStatus: {
 		id: "lockedStatus";
-		lockedStatusByCharacterIdByAllycode: LockedStatusByCharacterIdByAllycode;
+		lockedCharactersByAllycode: LockedCharactersByAllycode;
 	};
 }
-type LockedStatusByCharacterId = Record<CharacterNames, boolean>;
+type LockedCharacters = Set<CharacterNames>;
 
-type LockedStatusByCharacterIdByAllycode = Record<
-	string,
-	LockedStatusByCharacterId
->;
+type LockedCharactersByAllycode = Record<string, LockedCharacters>;
 
 export type {
-	LockedStatusByCharacterId,
-	LockedStatusByCharacterIdByAllycode,
+	LockedCharacters,
+	LockedCharactersByAllycode,
 	LockedStatusPersistedData,
 };

@@ -59,17 +59,18 @@ const fromGIMOLastRuns = (
 
 		// Create the compilation for this run
 		compilationsByAllycode[allycode][compilationId] = {
-			id: compilationId,
 			category: "GIMO Backups",
 			description: `Backup from ally code ${allycode}`,
-			hasSelectionChanged: false,
+			flatCharacterModdings: [],
+			id: compilationId,
+			isReoptimizationNeeded: true,
 			lastOptimized: null,
 			optimizationConditions: null,
+			reoptimizationIndex: -1,
 			selectedCharacters: run.selectedCharacters.map((selectedCharacter) => ({
 				id: selectedCharacter.id,
 				target: fromGIMOOptimizationPlan(selectedCharacter.target),
 			})),
-			flatCharacterModdings: [],
 		};
 	}
 

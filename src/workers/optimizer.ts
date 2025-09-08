@@ -92,7 +92,6 @@ import type {
 	FlatCharacterModdings,
 } from "../modules/compilations/domain/CharacterModdings";
 import type { MissedGoals } from "../modules/compilations/domain/MissedGoals";
-import type { OptimizationConditions } from "#/modules/compilations/domain/OptimizationConditions";
 import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings";
 import type { WithoutCC } from "../modules/profilesManagement/domain/CharacterStatNames";
 import type {
@@ -100,6 +99,7 @@ import type {
 	GIMOSecondaryStatNames,
 	GIMOSetStatNames,
 } from "#/domain/GIMOStatNames";
+import { objectEntries } from "#/utils/objectEntries";
 
 // #region types
 interface Cache {
@@ -109,9 +109,17 @@ interface Cache {
 		character: Character.Character,
 		target: OptimizationPlan,
 	) => number;
-	setStats: (
+	modsetScore: {
+		get: (
+			setName: GIMOSetStatNames,
+			stats: StatValue[],
+			target: OptimizationPlan,
+		) => number;
+		has: (setName: GIMOSetStatNames) => boolean;
+	};
+	modsetStats: (
 		setName: GIMOSetStatNames,
-		bigOrSmall: BigOrSmall,
+		fullOrHalf: FullOrHalf,
 		character: Character.Character,
 	) => StatValue[];
 	modScores: Map<string, number>;
@@ -160,11 +168,11 @@ interface SetBonus {
 	maxBonus: SetStat;
 }
 
-type BigOrSmall = "big" | "small";
+type FullOrHalf = "full" | "half";
 interface SetLoadout {
 	loadout: Mod[];
 	setName: GIMOSetStatNames | "Setless";
-	bigOrSmall: BigOrSmall;
+	fullOrHalf: FullOrHalf;
 }
 
 interface SetStat {
@@ -186,16 +194,11 @@ interface Mod {
 	tier: number;
 }
 
-interface LoadoutOrNullAndMessages {
-	loadout: Mod[] | null;
-	id: string;
-	messages: string[];
-}
-
 interface LoadoutAndMessages {
-	loadout: Mod[];
 	id: string;
+	loadout: Mod[];
 	messages: string[];
+	score: number;
 }
 
 type StatValuesCacheKey = `${string}${boolean | undefined}${number}`;
@@ -246,32 +249,11 @@ self.onmessage = (message) => {
 	}
 
 	if (message.data.type === "Optimize") {
-		const lastRun: OptimizationConditions =
-			compilations$.defaultCompilation.optimizationConditions.get();
 		const profile = profilesManagement$.activeProfile.get();
 		const allMods = Array.from(
 			profile.modById.values().map((mod) => mod.serialize()),
 			deserializeMod,
 		);
-
-		const lastRunCharacterById: Partial<Character.CharacterById> = {};
-
-		if (lastRun !== null) {
-			if (lastRun.characterById) {
-				for (const character of Object.values(lastRun.characterById)) {
-					lastRunCharacterById[character.id] = character;
-				}
-
-				lastRun.characterById = lastRunCharacterById as Character.CharacterById;
-			}
-
-			lastRun.selectedCharacters = Array.isArray(lastRun.selectedCharacters)
-				? lastRun.selectedCharacters.map(({ id, target }) => ({
-						id: id,
-						target: deserializeTarget(target),
-					}))
-				: lastRun.selectedCharacters;
-		}
 
 		const selectedCharacters: SelectedCharacters =
 			compilations$.defaultCompilation.selectedCharacters
@@ -287,7 +269,6 @@ self.onmessage = (message) => {
 			selectedCharacters,
 			incrementalOptimization$.indicesByProfile[profile.allycode].peek(),
 			optimizationSettings$.settingsByProfile.peek()[profile.allycode],
-			lastRun,
 			compilations$.defaultCompilation.flatCharacterModdings.peek(),
 		);
 
@@ -856,19 +837,45 @@ const createModStatsCache = () => {
 	};
 };
 
-const createSetStatsCache = () => {
+const createModsetScoreCache = () => {
+	const cache = new Map<GIMOSetStatNames, number>();
+	return {
+		get: (
+			setName: GIMOSetStatNames,
+			stats: StatValue[],
+			target: OptimizationPlan,
+		) => {
+			if (cache.has(setName)) {
+				return cache.get(setName) ?? 0;
+			}
+
+			const score = stats.reduce(
+				(acc, stat) => acc + scoreStat(stat, target),
+				0,
+			);
+
+			cache.set(setName, score);
+			return score;
+		},
+		has: (setName: GIMOSetStatNames) => {
+			return cache.has(setName);
+		},
+	};
+};
+
+const createModsetStatsCache = () => {
 	const cache = new Map<string, StatValue[]>();
 	return (
 		setName: GIMOSetStatNames,
-		bigOrSmall: BigOrSmall,
+		fullOrHalf: FullOrHalf,
 		character: Character.Character,
 	) => {
-		const cacheKey = `${setName}-${bigOrSmall}-${character.id}`;
+		const cacheKey = `${setName}-${fullOrHalf}-${character.id}`;
 		if (cache.has(cacheKey)) {
 			return cache.get(cacheKey) ?? [];
 		}
 
-		const setStats = getFlatStatsFromSet(setName, bigOrSmall, character);
+		const setStats = getFlatStatsFromSet(setName, fullOrHalf, character);
 		cache.set(cacheKey, setStats);
 		return setStats;
 	};
@@ -880,7 +887,8 @@ const cache: Cache = {
 	modStats: createModStatsCache(),
 	modUpgrades: new Map<string, Mod>(),
 	relatedStatValues: new Map<string, Map<string, number>>(),
-	setStats: createSetStatsCache(),
+	modsetScore: createModsetScoreCache(),
+	modsetStats: createModsetStatsCache(),
 	statValues: new Map<string, StatValue[]>(),
 };
 
@@ -888,13 +896,29 @@ function resetCaches() {
 	cache.loadoutScores = createLoadoutScoresCache();
 	cache.modScores = new Map<string, number>();
 	cache.modStats = createModStatsCache();
-	cache.setStats = createSetStatsCache();
+	cache.modsetStats = createModsetStatsCache();
 	cache.statValues = new Map<string, StatValue[]>();
 }
 // #endregion Caching variables
 
 const charactersRelatedTo = new Map<string, Set<TargetStatsNames>>();
 // #region Utility functions
+
+// Small helper encapsulating the reuse/skip checks for a character's previous optimization result
+function canReusePreviousAssignment(params: {
+	recalculateMods: boolean;
+	previousModAssignments: FlatCharacterModdings;
+	index: number;
+}): boolean {
+	const { recalculateMods, previousModAssignments, index } = params;
+
+	return (
+		!recalculateMods &&
+		index <= compilations$.defaultCompilation.reoptimizationIndex.peek() &&
+		!!previousModAssignments[index]
+	);
+}
+
 function modHasScoreForTargetStat(mod: Mod, targetStat: TargetStat) {
 	if (targetStat.stat === "Speed" && targetStat.minimum === 0) return true;
 	if (affectedTargetStatsBySet[mod.modset.name].includes(targetStat.stat))
@@ -945,6 +969,7 @@ const modFilters = {
 		modFilters.target.targetStats.some((targetStat: TargetStat) =>
 			modHasScoreForTargetStat(mod, targetStat),
 		),
+	noFilter: () => true,
 };
 
 const combineModFilters: (filters: ModFilterPredicate[]) => ModFilterPredicate =
@@ -963,7 +988,7 @@ function getSetRestrictionsNames(setRestrictions: SetRestrictions) {
 	return names;
 }
 
-function addPossibleSetRestrictionNames(
+function addPossibleSetRestrictionsNames(
 	setRestrictionNames: Set<GIMOSetStatNames>,
 	openModSlots: number,
 ) {
@@ -990,12 +1015,12 @@ function getOpenModSlots(setRestrictions: SetRestrictions): number {
 
 function getFlatStatsFromSet(
 	setName: GIMOSetStatNames,
-	bigOrSmall: BigOrSmall,
+	fullOrHalf: FullOrHalf,
 	character: Character.Character,
 ) {
 	const setBonus = setBonuses[setName];
 	const flatStats: StatValue[] = [];
-	const bonus = bigOrSmall === "big" ? setBonus.maxBonus : setBonus.smallBonus;
+	const bonus = fullOrHalf === "full" ? setBonus.maxBonus : setBonus.smallBonus;
 	flatStats.push(...flattenStatValues(bonus, character));
 	return flatStats;
 }
@@ -1029,7 +1054,7 @@ function getFlatStatsFromSetLoadout(
 ) {
 	const flatStatsFromSet =
 		setLoadout.setName !== "Setless"
-			? cache.setStats(setLoadout.setName, setLoadout.bigOrSmall, character)
+			? cache.modsetStats(setLoadout.setName, setLoadout.fullOrHalf, character)
 			: [];
 
 	const statsDirectlyFromMods: StatValue[] = [];
@@ -1040,9 +1065,7 @@ function getFlatStatsFromSetLoadout(
 		statsDirectlyFromMods.push(...cache.modStats.get(mod));
 	}
 
-	for (const stat of flatStatsFromSet) {
-		flattenedStats.push(...flattenStatValues(stat, character));
-	}
+	flattenedStats.push(...flatStatsFromSet);
 
 	for (const stat of statsDirectlyFromMods) {
 		flattenedStats.push(...flattenStatValues(stat, character));
@@ -1105,10 +1128,10 @@ function flattenStatValues(stat: Stat, character: Character.Character) {
 			? stat.value
 			: (stat.value * (character.playerValues.baseStats[statName] ?? 0)) / 100;
 
-			return {
-				displayType: displayName,
+		return {
+			displayType: displayName,
 			value,
-			};
+		};
 	});
 
 	cache.statValues.set(cacheKey, flattenedStats);
@@ -1342,20 +1365,6 @@ function getStatValueForCharacterWithMods(
 }
 
 /**
- * Given a set of mods and a definition of setRestriction, return only those mods that fit the setRestriction
- *
- * @param allMods {Array<Mod>}
- * @param setRestriction {Object}
- * @returns {Array<Mod>}
- */
-function restrictMods(allMods: Mod[], setRestriction: SetRestrictions) {
-	const openModSlots = getOpenModSlots(setRestriction);
-	const potentialSets = getSetRestrictionsNames(setRestriction);
-	addPossibleSetRestrictionNames(potentialSets, openModSlots);
-	return allMods.filter((mod) => potentialSets.has(mod.modset.name));
-}
-
-/**
  * Return a function to sort mods by their scores for a character
  *
  * @param character Character
@@ -1504,8 +1513,8 @@ function splitLoadoutBySets(loadout: Mod[]) {
 
 	for (const mod of loadout) {
 		const setName = mod.modset.name;
-		const bigOrSmallSet: BigOrSmall = mod.level === 15 ? "big" : "small";
-		const key = `${setName}-${bigOrSmallSet}` as const;
+		const fullOrHalfModset: FullOrHalf = mod.level === 15 ? "full" : "half";
+		const key = `${setName}-${fullOrHalfModset}` as const;
 		let arr = buckets.get(key);
 		if (!arr) {
 			arr = [];
@@ -1520,7 +1529,7 @@ function splitLoadoutBySets(loadout: Mod[]) {
 			setLoadoutsById.set(generateLoadoutId(modsArray), {
 				loadout: modsArray,
 				setName,
-				bigOrSmall: bigOrSmallSet,
+				fullOrHalf: fullOrHalfModset,
 			});
 			buckets.set(key, []);
 		}
@@ -1538,11 +1547,66 @@ function splitLoadoutBySets(loadout: Mod[]) {
 		setLoadoutsById.set(generateLoadoutId(leftovers), {
 			loadout: leftovers,
 			setName: "Setless",
-			bigOrSmall: "big",
+			fullOrHalf: "full",
 		});
 	}
 
 	return setLoadoutsById;
+}
+
+function getModsetsInLoadout(loadout: Mod[]) {
+	const modsetsCount: Record<GIMOSetStatNames, [number, number]> = {
+		"Critical Chance %": [0, 0],
+		"Critical Damage %": [0, 0],
+		"Defense %": [0, 0],
+		"Health %": [0, 0],
+		"Offense %": [0, 0],
+		"Potency %": [0, 0],
+		"Speed %": [0, 0],
+		"Tenacity %": [0, 0],
+	};
+	const modsets = new Map<GIMOSetStatNames, number>();
+
+	for (const mod of loadout) {
+		const setName = mod.modset.name;
+		const fullOrHalf = mod.level === 15 ? 0 : 1;
+		modsetsCount[setName][fullOrHalf]++;
+	}
+	for (let [setName, [fullCount, halfCount]] of objectEntries(modsetsCount)) {
+		const fullModsetCount = Math.floor(
+			fullCount / setBonuses[setName].numberOfModsRequired,
+		);
+		halfCount =
+			halfCount +
+			(fullCount - fullModsetCount * setBonuses[setName].numberOfModsRequired);
+		const halfModsetCount = Math.floor(
+			halfCount / setBonuses[setName].numberOfModsRequired,
+		);
+		if (fullModsetCount + halfModsetCount > 0)
+			modsets.set(setName, fullModsetCount * 2 + halfModsetCount);
+	}
+	return modsets;
+}
+
+function getLoadoutScore(
+	loadout: Mod[],
+	character: Character.Character,
+	target: OptimizationPlan,
+) {
+	const setsInLoadout = getModsetsInLoadout(loadout);
+	let modsetsScore = 0;
+	let modStatsScore = 0;
+	let flatStatsFromModset: StatValue[];
+	for (const [setName, count] of setsInLoadout.entries()) {
+		flatStatsFromModset = cache.modsetStats(setName, "half", character);
+		modsetsScore +=
+			cache.modsetScore.get(setName, flatStatsFromModset, target) * count;
+	}
+
+	for (const mod of loadout) {
+		modStatsScore += scoreMod(mod, target);
+	}
+	return modsetsScore + modStatsScore;
 }
 
 /**
@@ -1608,40 +1672,6 @@ function scoreSetLoadout(
 	return [id, score] as const;
 }
 
-/**
- * Given a set of set restrictions, systematically reduce their severity, returning an array sorted by most to least
- * restrictive
- *
- * @param setRestrictions {Object}
- * @returns {{restriction: Object, messages: Array<String>}[]}
- */
-function loosenRestrictions(setRestrictions: SetRestrictions) {
-	const restrictionsArray: {
-		restriction: SetRestrictions;
-		messages: string[];
-	}[] = [
-		{
-			restriction: setRestrictions,
-			messages: [],
-		},
-	];
-	// TODO add type for restriction
-
-	// Try without sets
-	for (const { restriction, messages } of restrictionsArray) {
-		if (Object.entries(restriction).length) {
-			restrictionsArray.push({
-				restriction: {},
-				messages: messages.concat(
-					"No mod sets could be found using the given sets, so the sets restriction was removed",
-				),
-			});
-		}
-	}
-
-	return restrictionsArray;
-}
-
 // #endregion
 
 // #region Startup code
@@ -1692,8 +1722,6 @@ Object.freeze(chooseTwoOptions);
  * @param order {Array<Object>} The characters to optimize, in order, as {id, target}
  * @param incrementalOptimizeIndex {number} index of character to stop optimization at for incremental runs
  * @param globalSettings {Object} The settings to apply to every character being optimized
- * @param previousRun {Object} The settings from the last time the optimizer was run, used to limit expensive
- *                             recalculations for optimizing mods
  * @return {Object} An array with an entry for each item in `order`. Each entry will be of the form
  *                  {id, target, assignedMods, messages}
  */
@@ -1703,63 +1731,26 @@ function optimizeMods(
 	order: SelectedCharacters,
 	incrementalOptimizeIndex: number | null,
 	globalSettings: ProfileOptimizationSettings,
-	previousRun: OptimizationConditions,
 	previousModAssignments: FlatCharacterModdings,
 ) {
 	// We only want to recalculate mods if settings have changed between runs. If global settings or locked
 	// characters have changed, recalculate all characters
 	let recalculateMods =
-		previousRun === undefined ||
-		previousRun === null ||
-		compilations$.defaultCompilation.hasSelectionChanged.peek() === true ||
-		globalSettings.forceCompleteSets !==
-			previousRun.globalSettings.forceCompleteSets ||
-		globalSettings.lockUnselectedCharacters !==
-			previousRun.globalSettings.lockUnselectedCharacters ||
-		globalSettings.modChangeThreshold !==
-			previousRun.globalSettings.modChangeThreshold ||
-		globalSettings.simulate6EModSlice !==
-			previousRun.globalSettings.simulate6EModSlice ||
-		globalSettings.simulateLevel15Mods !==
-			previousRun.globalSettings.simulateLevel15Mods ||
-		globalSettings.optimizeWithPrimaryAndSetRestrictions !==
-			previousRun.globalSettings.optimizeWithPrimaryAndSetRestrictions ||
-		availableMods.length !== previousRun.modCount;
-
-	if (!recalculateMods) {
-		let charID: CharacterNames;
-		for (charID in characterById) {
-			if (!Object.hasOwn(characterById, charID)) {
-				continue;
-			}
-			if (
-				!previousRun?.characterById[charID] ||
-				previousRun.lockedStatus[charID] !==
-					lockedStatus$.ofActivePlayerByCharacterId[charID].peek()
-			) {
-				recalculateMods = true;
-				break;
-			}
-		}
-	}
+		compilations$.defaultCompilation.isReoptimizationNeeded.peek() === true;
 
 	// Filter out any mods that are on locked characters, including if all unselected characters are locked
-	let usableMods = availableMods.filter(
+	const selectedCharacterIds = globalSettings.lockUnselectedCharacters
+		? new Set(order.map(({ id }) => id))
+		: new Set();
+	const lockedCharactersForActivePlayer =
+		lockedStatus$.lockedCharactersForActivePlayer.peek();
+	const usableMods = availableMods.filter(
 		(mod) =>
 			mod.characterID === "null" ||
-			!lockedStatus$.ofActivePlayerByCharacterId[mod.characterID].peek(),
+			(!lockedCharactersForActivePlayer.has(mod.characterID) &&
+				(!globalSettings.lockUnselectedCharacters ||
+					selectedCharacterIds.has(mod.characterID))),
 	);
-
-	if (globalSettings.lockUnselectedCharacters) {
-		const selectedCharacterIds = order.map(({ id }) => id);
-		usableMods = usableMods.filter(
-			(mod) =>
-				mod.characterID === "null" ||
-				selectedCharacterIds.includes(mod.characterID),
-		);
-	}
-
-	// note: previously computed unselectedCharacters/lockedCharacters here were unused
 
 	if (
 		incrementalOptimizeIndex !== null &&
@@ -1789,29 +1780,19 @@ function optimizeMods(
 			index,
 		) => {
 			const character = characterById[characterID];
-			const previousCharacter = previousRun?.characterById[characterID] ?? null;
 
 			// If the character is locked, skip it
-			if (lockedStatus$.ofActivePlayerByCharacterId[character.id].peek()) {
+			if (lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) {
 				return modSuggestions;
 			}
 
 			// For each character, check if the settings for the previous run were the same, and skip the character if so
 			if (
-				!recalculateMods &&
-				previousRun?.selectedCharacters &&
-				previousRun.selectedCharacters[index] &&
-				characterID === previousRun.selectedCharacters[index].id &&
-				previousCharacter &&
-				previousCharacter.playerValues &&
-				JSON.stringify(character.playerValues) ===
-					JSON.stringify(previousCharacter.playerValues) &&
-				JSON.stringify(target) ===
-					JSON.stringify(previousRun.selectedCharacters[index].target) &&
-				previousCharacter.targets &&
-				lockedStatus$.ofActivePlayerByCharacterId[character.id].peek() ===
-					previousRun.lockedStatus[character.id] &&
-				previousModAssignments[index]
+				canReusePreviousAssignment({
+					recalculateMods,
+					previousModAssignments,
+					index,
+				})
 			) {
 				const assignedMods = previousModAssignments[index].assignedMods;
 				const messages = previousModAssignments[index].messages;
@@ -1861,28 +1842,19 @@ function optimizeMods(
 
 			const realTarget = combineTargetStats(absoluteTarget, character);
 
-			const { loadout: newLoadoutForCharacter, messages: characterMessages } =
-				findBestLoadoutForCharacter(
-					usableMods,
-					character,
-					order.length,
-					index,
-					realTarget,
-				);
+			const foundLoadout = findBestLoadoutForCharacter(
+				usableMods,
+				character,
+				order.length,
+				index,
+				realTarget,
+			);
 
 			const oldLoadoutForCharacter = usableMods.filter(
 				(mod) => mod.characterID === character.id,
 			);
-
-			const newLoadoutValue = cache.loadoutScores(
-				newLoadoutForCharacter,
-				generateLoadoutId(newLoadoutForCharacter),
-				character,
-				realTarget,
-			);
-			const oldLoadoutValue = cache.loadoutScores(
+			const oldLoadoutScore = getLoadoutScore(
 				oldLoadoutForCharacter,
-				generateLoadoutId(oldLoadoutForCharacter),
 				character,
 				realTarget,
 			);
@@ -1893,11 +1865,11 @@ function optimizeMods(
 			if (
 				// Treat a threshold of 0 as "always change", so long as the new mod set is better than the old at all
 				(globalSettings.modChangeThreshold === 0 &&
-					newLoadoutValue >= oldLoadoutValue) ||
+					foundLoadout.score >= oldLoadoutScore) ||
 				// If the new set is the same mods as the old set
-				(newLoadoutForCharacter.length === oldLoadoutForCharacter.length &&
+				(foundLoadout.loadout.length === oldLoadoutForCharacter.length &&
 					oldLoadoutForCharacter.every((oldMod) =>
-						newLoadoutForCharacter.find((newMod) => newMod.id === oldMod.id),
+						foundLoadout.loadout.find((newMod) => newMod.id === oldMod.id),
 					)) ||
 				// If the old set doesn't satisfy the character/target restrictions, but the new set does
 				(!loadoutSatisfiesCharacterRestrictions(
@@ -1906,24 +1878,24 @@ function optimizeMods(
 					realTarget,
 				) &&
 					loadoutSatisfiesCharacterRestrictions(
-						newLoadoutForCharacter,
+						foundLoadout.loadout,
 						character,
 						realTarget,
 					)) ||
 				// If the new set is better than the old set
-				(newLoadoutValue / oldLoadoutValue) * 100 - 100 >
+				(foundLoadout.score / oldLoadoutScore) * 100 - 100 >
 					globalSettings.modChangeThreshold ||
 				// If the old set now has less than 6 mods and the new set has more mods
 				(oldLoadoutForCharacter.length < 6 &&
-					newLoadoutForCharacter.length > oldLoadoutForCharacter.length)
+					foundLoadout.loadout.length > oldLoadoutForCharacter.length)
 			) {
-				assignedLoadout = newLoadoutForCharacter;
-				assignmentMessages = characterMessages;
+				assignedLoadout = foundLoadout.loadout;
+				assignmentMessages = foundLoadout.messages;
 			} else {
 				assignedLoadout = oldLoadoutForCharacter;
 				if (
 					!loadoutSatisfiesCharacterRestrictions(
-						newLoadoutForCharacter,
+						foundLoadout.loadout,
 						character,
 						realTarget,
 					)
@@ -2101,89 +2073,57 @@ function findBestLoadoutForCharacter(
 	const setRestrictions = target.setRestrictions;
 	const targetStats = target.targetStats;
 
-	let loadout: Mod[];
-	let messages: string[];
-	let extraMessages: string[] = [];
-	const mutableTarget = structuredClone(target);
-	let reducedTarget = structuredClone(target);
+	let foundLoadout: LoadoutAndMessages = {
+		id: "",
+		loadout: [],
+		messages: [],
+		score: 0,
+	};
 
 	// First, check to see if there is any target stat
 	if (0 < targetStats.length) {
 		// If so, create an array of potential mod sets that could fill it
-		let potentialMods = getPotentialModsToSatisfyTargetStats(
+		const potentialMods = getPotentialModsToSatisfyTargetStats(
 			mods,
 			character,
 			characterCount,
 			characterIndex,
-			mutableTarget,
+			target,
 		);
-		({ loadout: loadout, messages } = findBestLoadoutFromPotentialMods(
+		foundLoadout = findBestLoadoutFromPotentialMods(
 			potentialMods,
 			character,
-			mutableTarget,
-		));
+			target,
+		);
 
-		if (loadout.length === 0) {
-		// If we couldn't find a mod set that would fulfill the target stat, but we're limiting to only full sets, then
-		// try again without that limitation
-			reducedTarget.useOnlyFullSets = false;
-
-			if (mutableTarget.useOnlyFullSets) {
-				extraMessages.push(
-					"Could not fill the target stat with full sets, so the full sets restriction was dropped",
-				);
-
-				potentialMods = getPotentialModsToSatisfyTargetStats(
-					mods,
-					character,
-					characterCount,
-					characterIndex,
-					mutableTarget,
-				);
-				({ loadout: loadout, messages } = findBestLoadoutFromPotentialMods(
-					potentialMods,
-					character,
-					reducedTarget,
-				));
-			}
-		}
-		if (loadout.length === 0) {
-			for (const mod of mods) {
-				cache.modStats.get(mod);
-				scoreMod(mod, target);
-			}
-			({ loadout: loadout, messages } =
-				findBestLoadoutByLooseningSetRestrictions(
-					mods,
-					character,
-					reducedTarget,
-					setRestrictions,
-				));
-			extraMessages.push(
-				"Could not fill the target stats as given, so the target stat restriction was dropped",
-			);
+		if (foundLoadout.loadout.length === 0) {
+			foundLoadout.messages.push("Could not fulfill targetstats restriction");
 		}
 
-		if (loadout.length) {
-			// Return the best set and set of messages
-			return {
-				loadout: loadout,
-				messages: messages.concat(extraMessages),
-			};
-		}
-
-		extraMessages = [
-			"Could not fulfill the target stat as given, so the target stat restriction was dropped",
-		];
+		return foundLoadout;
 	}
+	// Filter out any mods that don't meet primary or set restrictions. This can vastly speed up this process
+	const setRestrictionsNames = getSetRestrictionsNames(setRestrictions);
+	const openModSlots = getOpenModSlots(setRestrictions);
+	addPossibleSetRestrictionsNames(setRestrictionsNames, openModSlots);
+	modFilters.target = target;
+	modFilters.openModSlots = openModSlots;
+	modFilters.setNames = setRestrictionsNames;
+	const usableMods = mods.filter(
+		combineModFilters([
+			modFilters.hasMinimumDots,
+			modFilters.hasRestrictedPrimaryStat,
+			modFilters.hasSet,
+			character.playerValues.gearLevel < 12
+				? modFilters.no6Dot
+				: modFilters.noFilter,
+		]),
+	);
 
-	reducedTarget = structuredClone(mutableTarget);
-	reducedTarget.targetStats = [];
-	for (const mod of mods) {
+	for (const mod of usableMods) {
 		cache.modStats.get(mod);
 		scoreMod(mod, target);
 	}
-	// If not, simply iterate over all levels of restrictions until a suitable set is found.
 	progressMessage(
 		character.id,
 		characterCount,
@@ -2196,31 +2136,17 @@ function findBestLoadoutForCharacter(
 		"Finding the best loadout",
 		0,
 	);
-	({ loadout: loadout, messages } = findBestLoadoutByLooseningSetRestrictions(
-		mods,
+	foundLoadout = findBestLoadoutWithoutChangingRestrictions(
+		usableMods,
 		character,
-		reducedTarget,
+		target,
 		setRestrictions,
-	));
-
-	if (loadout.length === 0 && reducedTarget.useOnlyFullSets) {
-		reducedTarget.useOnlyFullSets = false;
-		extraMessages.push(
-			"Could not find a mod set using only full sets, so the full sets restriction was dropped",
-		);
-
-		({ loadout: loadout, messages } = findBestLoadoutByLooseningSetRestrictions(
-			mods,
-			character,
-			reducedTarget,
-			setRestrictions,
-		));
+	);
+	if (foundLoadout.loadout.length === 0) {
+		foundLoadout.messages.push("Could not fulfill restrictions");
 	}
 
-	return {
-		loadout: loadout,
-		messages: messages.concat(extraMessages),
-	};
+	return foundLoadout;
 }
 
 // TODO: Refactor this function
@@ -2244,8 +2170,9 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	target: OptimizationPlan,
 ) {
 	const setRestrictions = target.setRestrictions;
-	const setRestrictionsNames = getSetRestrictionsNames(setRestrictions);
 	const openModSlots = getOpenModSlots(setRestrictions);
+	const setRestrictionsNames = getSetRestrictionsNames(setRestrictions);
+	addPossibleSetRestrictionsNames(setRestrictionsNames, openModSlots);
 	const statNames = target.targetStats.map((targetStat) => targetStat.stat);
 	// A map from the set name to the value the set provides for a target stat
 	// {statName: {set, value}}
@@ -2292,10 +2219,10 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			modFilters.hasMinimumDots,
 			modFilters.hasScoredStats,
 			modFilters.hasRestrictedPrimaryStat,
-			openModSlots > 0 ? (_mod: Mod) => true : modFilters.hasSet,
+			openModSlots === 6 ? modFilters.noFilter : modFilters.hasSet,
 			character.playerValues.gearLevel < 12
 				? modFilters.no6Dot
-				: (_mod: Mod) => true,
+				: modFilters.noFilter,
 		]),
 	);
 
@@ -2320,7 +2247,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				const speedStat = mod.secondaryStats.find(
 					(stat) => stat.type === "Speed",
 				);
-				speedValue = speedStat ? speedStat.value : 0;
+				speedValue = speedStat?.value ?? 0;
 			}
 
 			return `${mod.slot}-${mod.modset.name}-${mod.primaryStat.type}-${speedValue}`;
@@ -2937,21 +2864,16 @@ function findStatValuesThatMeetTarget(
 	return Array.from(slotRecursor(0, {}, 0));
 }
 
-function loadoutAndMessagesHasLoadout(
-	loadoutAndMessages: LoadoutOrNullAndMessages,
-): loadoutAndMessages is LoadoutAndMessages {
-	return loadoutAndMessages.loadout !== null;
-}
-
 const findBestLoadoutFromPotentialMods = (
 	potentialLoadouts: Generator<ModsAndSatisfiedSetRestrictions>,
 	character: Character.Character,
 	target: OptimizationPlan,
 ) => {
 	let bestLoadoutAndMessages: LoadoutAndMessages = {
-		loadout: [],
 		id: "",
+		loadout: [],
 		messages: [],
+		score: 0,
 	};
 	let bestLoadoutScore = Number.NEGATIVE_INFINITY;
 	let bestUnmovedMods = 0;
@@ -2970,79 +2892,78 @@ const findBestLoadoutFromPotentialMods = (
 	};
 
 	for (const [loadout, candidateSetRestrictions] of potentialLoadouts) {
-		const loadoutAndMessages: LoadoutOrNullAndMessages =
-			findBestLoadoutWithoutChangingRestrictions(
-				loadout,
+		const loadoutAndMessages = findBestLoadoutWithoutChangingRestrictions(
+			loadout,
+			character,
+			target,
+			candidateSetRestrictions,
+		);
+
+		const newModsSatisfyCharacterRestrictions =
+			loadoutSatisfiesCharacterRestrictions(
+				loadoutAndMessages.loadout,
 				character,
 				target,
-				candidateSetRestrictions,
+				true,
 			);
 
-		if (loadoutAndMessagesHasLoadout(loadoutAndMessages)) {
-			const newModsSatisfyCharacterRestrictions =
-				loadoutSatisfiesCharacterRestrictions(
-					loadoutAndMessages.loadout,
-					character,
-					target,
-					true,
-				);
-
-			// If this set of mods couldn't fulfill all of the character restrictions, then it can only be used if
-			// we don't already have a set of mods that does
-			if (
-				!newModsSatisfyCharacterRestrictions &&
-				bestLoadoutAndMessages &&
-				bestModsSatisfyCharacterRestrictions
-			) {
-				continue;
-			}
+		// If this set of mods couldn't fulfill all of the character restrictions, then it can only be used if
+		// we don't already have a set of mods that does
+		if (
+			!newModsSatisfyCharacterRestrictions &&
+			bestLoadoutAndMessages &&
+			bestModsSatisfyCharacterRestrictions
+		) {
+			continue;
+		}
+		/*
 			const loadoutScore = cache.loadoutScores(
 				loadoutAndMessages.loadout,
 				loadoutAndMessages.id,
 				character,
 				target,
 			);
-
-			// We'll accept a new set if it is better than the existing set OR if the existing set doesn't fulfill all of the
-			// restrictions and the new set does
-			if (
-				loadoutScore > bestLoadoutScore ||
-				(loadoutScore > 0 &&
-					!bestModsSatisfyCharacterRestrictions &&
-					newModsSatisfyCharacterRestrictions)
-			) {
-				updateBestLoadout(loadoutAndMessages, loadoutScore, 0, true); // TODO check if this works. Las param was null
-			} else if (loadoutScore === bestLoadoutScore) {
-				// If both sets have the same value, choose the set that moves the fewest mods
-				const unmovedMods = loadoutAndMessages.loadout.filter(
+			*/
+		const loadoutScore = loadoutAndMessages.score;
+		// We'll accept a new set if it is better than the existing set OR if the existing set doesn't fulfill all of the
+		// restrictions and the new set does
+		if (
+			loadoutScore > bestLoadoutScore ||
+			(loadoutScore > 0 &&
+				!bestModsSatisfyCharacterRestrictions &&
+				newModsSatisfyCharacterRestrictions)
+		) {
+			updateBestLoadout(loadoutAndMessages, loadoutScore, 0, true); // TODO check if this works. Las param was null
+		} else if (loadoutScore === bestLoadoutScore) {
+			// If both sets have the same value, choose the set that moves the fewest mods
+			const unmovedMods = loadoutAndMessages.loadout.filter(
+				(mod) => mod.characterID === character.id,
+			).length;
+			if (null === bestUnmovedMods) {
+				bestUnmovedMods = bestLoadoutAndMessages.loadout.filter(
 					(mod) => mod.characterID === character.id,
 				).length;
-				if (null === bestUnmovedMods) {
-					bestUnmovedMods = bestLoadoutAndMessages.loadout.filter(
-						(mod) => mod.characterID === character.id,
-					).length;
-				}
+			}
 
-				if (unmovedMods > bestUnmovedMods) {
-					updateBestLoadout(
-						loadoutAndMessages,
-						loadoutScore,
-						unmovedMods,
-						newModsSatisfyCharacterRestrictions,
-					);
-				} else if (
-					unmovedMods === bestUnmovedMods &&
-					loadoutAndMessages.loadout.length >
-						bestLoadoutAndMessages.loadout.length
-				) {
-					// If both sets move the same number of unmoved mods, choose the set that uses the most mods overall
-					updateBestLoadout(
-						loadoutAndMessages,
-						loadoutScore,
-						unmovedMods,
-						newModsSatisfyCharacterRestrictions,
-					);
-				}
+			if (unmovedMods > bestUnmovedMods) {
+				updateBestLoadout(
+					loadoutAndMessages,
+					loadoutScore,
+					unmovedMods,
+					newModsSatisfyCharacterRestrictions,
+				);
+			} else if (
+				unmovedMods === bestUnmovedMods &&
+				loadoutAndMessages.loadout.length >
+					bestLoadoutAndMessages.loadout.length
+			) {
+				// If both sets move the same number of unmoved mods, choose the set that uses the most mods overall
+				updateBestLoadout(
+					loadoutAndMessages,
+					loadoutScore,
+					unmovedMods,
+					newModsSatisfyCharacterRestrictions,
+				);
 			}
 		}
 	}
@@ -3050,69 +2971,12 @@ const findBestLoadoutFromPotentialMods = (
 	return bestLoadoutAndMessages;
 };
 
-/**
- * Figure out what the best set of mods for a character are such that the values in the plan are optimized. Try to
- * satisfy the set restrictions given, but loosen them if no mod set can be found that uses them as-is.
- *
- * @param usableMods {Array<Mod>} The set of mods that is available to be used for this character
- * @param character {Character} A Character object that represents all of the base stats required for percentage
- *                              calculations as well as the optimization plan to use
- * @param target {OptimizationPlan} The optimization plan to use as the basis for the best mod set
- * @param setRestrictions {Object<String, Number>} An object with the number of each set to use
- * @returns {{messages: Array<String>, loadout: Array<Mod>}}
- */
-function findBestLoadoutByLooseningSetRestrictions(
-	usableMods: Mod[],
-	character: Character.Character,
-	target: OptimizationPlan,
-	setRestrictions: SetRestrictions,
-): LoadoutAndMessages {
-	// Get a list of the restrictions to iterate over for this character, in order of most restrictive (exactly what was
-	// selected) to least restrictive (the last entry will always be no restrictions).
-	const possibleRestrictions = loosenRestrictions(setRestrictions);
-
-	// Try to find a mod set using each set of restrictions until one is found
-	for (let i = 0; i < possibleRestrictions.length; i++) {
-		const { restriction, messages: restrictionMessages } =
-			possibleRestrictions[i];
-
-		// Filter the usable mods based on the given restrictions
-		const restrictedMods = restrictMods(usableMods, restriction);
-
-		// Try to optimize using this set of mods
-		const {
-			loadout: bestLoadout,
-			id: bestLoadoutId,
-			messages: setMessages,
-		} = findBestLoadoutWithoutChangingRestrictions(
-			restrictedMods,
-			character,
-			target,
-			restriction,
-		);
-
-		if (bestLoadout !== null) {
-			return {
-				loadout: bestLoadout,
-				id: bestLoadoutId,
-				messages: restrictionMessages.concat(setMessages),
-			};
-		}
-	}
-
-	return {
-		loadout: [],
-		id: "",
-		messages: [`No mod sets could be found for ${character.id}`],
-	};
-}
-
 function generateLoadoutId(loadout: Mod[]) {
 	return loadout.map((mod) => mod.id).join("-");
 }
 
 // Hybrid filter: bucket by slot once, then per-slot early-exit filters
-function filterMods(mods: Mod[], target: OptimizationPlan) {
+function filterMods(mods: Mod[]) {
 	const bySlot: Record<ModTypes.GIMOSlots, Mod[]> = {
 		square: [],
 		arrow: [],
@@ -3122,93 +2986,7 @@ function filterMods(mods: Mod[], target: OptimizationPlan) {
 		cross: [],
 	};
 	for (const mod of mods) bySlot[mod.slot].push(mod);
-
-	const minimumDots = target.minimumModDots;
-	const primaryRestrictions = target.primaryStatRestrictions;
-
-	const pickForSlot = (
-		modsForSlot: Mod[],
-		slot: ModTypes.GIMOSlots,
-		primaryStat: GIMOPrimaryStatNames | undefined,
-	): { mods: Mod[]; messages: string[] } => {
-		const messages: string[] = [];
-		if (primaryStat) {
-			const fullyFilteredMods = modsForSlot.filter(
-				(mod) =>
-					mod.pips >= minimumDots && mod.primaryStat.type === primaryStat,
-			);
-			if (fullyFilteredMods.length > 0)
-				return { mods: fullyFilteredMods, messages };
-		}
-		const modsFilterdByDots = modsForSlot.filter(
-			(mod) => mod.pips >= minimumDots,
-		);
-		if (modsFilterdByDots.length > 0) {
-			if (primaryStat) {
-				messages.push(
-					`No ${primaryStat} ${slot} mods were available, so the primary stat restriction was dropped.`,
-				);
-			}
-			return { mods: modsFilterdByDots, messages };
-		}
-		if (modsForSlot.length > 0) {
-			if (primaryStat) {
-				messages.push(
-					`No ${primaryStat} or ${minimumDots}-dot ${slot} mods were available, so both restrictions were dropped.`,
-				);
-			} else {
-				messages.push(
-					`No ${minimumDots}-dot ${slot} mods were available, so the dots restriction was dropped.`,
-				);
-			}
-			return { mods: modsForSlot, messages };
-		}
-		messages.push(`No ${slot} mods were available to use.`);
-		return { mods: [], messages };
-	};
-
-	const squareSel = pickForSlot(bySlot.square, "square", undefined);
-	const arrowSel = pickForSlot(
-		bySlot.arrow,
-		"arrow",
-		primaryRestrictions.arrow,
-	);
-	const diamondSel = pickForSlot(bySlot.diamond, "diamond", undefined);
-	const triangleSel = pickForSlot(
-		bySlot.triangle,
-		"triangle",
-		primaryRestrictions.triangle,
-	);
-	const circleSel = pickForSlot(
-		bySlot.circle,
-		"circle",
-		primaryRestrictions.circle,
-	);
-	const crossSel = pickForSlot(
-		bySlot.cross,
-		"cross",
-		primaryRestrictions.cross,
-	);
-
-	const messages: string[] = [];
-	messages.push(
-		...squareSel.messages,
-		...arrowSel.messages,
-		...diamondSel.messages,
-		...triangleSel.messages,
-		...circleSel.messages,
-		...crossSel.messages,
-	);
-
-	return {
-		square: squareSel.mods,
-		arrow: arrowSel.mods,
-		diamond: diamondSel.mods,
-		triangle: triangleSel.mods,
-		circle: circleSel.mods,
-		cross: crossSel.mods,
-		messages,
-	};
+	return bySlot;
 }
 
 /**
@@ -3608,10 +3386,10 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	character: Character.Character,
 	target: OptimizationPlan,
 	setsToUse: SetRestrictions,
-): LoadoutOrNullAndMessages => {
+) => {
 	const potentialUsedSets = new Set<SetBonus>();
 	const baseSets: Partial<Record<GIMOSetStatNames, ModBySlot>> = {};
-	let messages: string[];
+	const messages: string[] = [];
 	let squares: Mod[] = [];
 	let arrows: Mod[] = [];
 	let diamonds: Mod[] = [];
@@ -3633,8 +3411,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		triangle: triangles,
 		circle: circles,
 		cross: crosses,
-		messages,
-	} = filterMods(usableMods, target));
+	} = filterMods(usableMods));
 
 	if (
 		squares.length === 1 &&
@@ -3653,13 +3430,15 @@ const findBestLoadoutWithoutChangingRestrictions = (
 			crosses[0],
 		];
 		if (loadoutFulfillsSetRestriction(loadout, setsToUse)) {
+			const loadoutId = generateLoadoutId(loadout);
 			return {
+				id: loadoutId,
 				loadout: loadout,
-				id: generateLoadoutId(loadout),
 				messages: messages,
+				score: getLoadoutScore(loadout, character, target),
 			};
 		}
-		return { loadout: null, id: "", messages: [] as string[] };
+		return { id: "", loadout: [], messages: [] as string[], score: 0 };
 	}
 
 	({
@@ -3682,7 +3461,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		crosses,
 	));
 	if (!canFulfillSetRestrictions) {
-		return { loadout: null, id: "", messages: [] as string[] };
+		return { loadout: [], id: "", messages: [] as string[], score: 0 };
 	}
 	// Use refined set restrictions going forward
 	const effectiveSetsToUse = availableSetsToUse;
@@ -3705,7 +3484,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 				setBonus.numberOfModsRequired <= openModSlots &&
 				(availableSetsToUse[setName] ?? 0) !== -1
 			) {
-			potentialUsedSets.add(setBonus);
+				potentialUsedSets.add(setBonus);
 			}
 		}
 		setlessMods = null;
@@ -3776,12 +3555,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let bestUnmovedMods = -1;
 
 	for (const loadout of candidateLoadouts) {
-		const loadoutScore = cache.loadoutScores(
-			loadout,
-			generateLoadoutId(loadout),
-			character,
-			target,
-		);
+		const loadoutScore = getLoadoutScore(loadout, character, target);
 		if (loadoutScore > bestLoadoutScore) {
 			bestLoadout = loadout;
 			bestLoadoutScore = loadoutScore;
@@ -3814,9 +3588,10 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	}
 
 	return {
-		loadout: bestLoadout,
 		id: generateLoadoutId(bestLoadout),
+		loadout: bestLoadout,
 		messages: messages,
+		score: bestLoadoutScore,
 	};
 };
 

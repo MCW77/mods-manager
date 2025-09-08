@@ -65,7 +65,7 @@ const CreateProfileModal: React.FC = observer(() => {
 		const lockedMods = (
 			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
 		)
-			.filter(([id]) => lockedStatus$.ofActivePlayerByCharacterId[id].peek())
+			.filter(([id]) => lockedStatus$.lockedCharactersForActivePlayer.has(id))
 			.map(([id, mods]) => ({
 				id: id,
 				modIds: mods.map(({ id }) => id),

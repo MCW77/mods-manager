@@ -26,6 +26,7 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const templates$ = stateLoader$.templates$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
@@ -120,10 +121,8 @@ function mergeCompilations(
 		return;
 	}
 
-	for (const [allycode, compilationsMap] of Object.entries(compilationsData)) {
-		for (const [compilationId, compilation] of Object.entries(
-			compilationsMap,
-		)) {
+	for (const [allycode, compilationsMap] of compilationsData) {
+		for (const [compilationId, compilation] of compilationsMap) {
 			// Check if compilation ID already exists for this allycode
 			const existingCompilation =
 				compilations$.compilationByIdByAllycode[allycode][compilationId].peek();
@@ -223,9 +222,15 @@ function mergeLockedStatus(
 		backupLockedStatus,
 	)) {
 		const currentProfileLockedStatus =
-			lockedStatus$.byCharacterIdByAllycode[allycode].peek();
-		if (currentProfileLockedStatus === undefined) {
-			lockedStatus$.byCharacterIdByAllycode[allycode].set(backupCharacterLocks);
+			lockedStatus$.lockedCharactersByAllycode[allycode].peek();
+		if (
+			currentProfileLockedStatus === undefined ||
+			currentProfileLockedStatus === null ||
+			currentProfileLockedStatus.size === 0
+		) {
+			lockedStatus$.lockedCharactersByAllycode[allycode].set(
+				backupCharacterLocks,
+			);
 		}
 	}
 }
@@ -430,7 +435,7 @@ const appState$: ObservableObject<AppState> = observable({
 			incrementalOptimizationIndices:
 				incrementalOptimization$.indicesByProfile.peek(),
 			lockedStatus:
-				lockedStatus$.persistedData.lockedStatus.lockedStatusByCharacterIdByAllycode.peek(),
+				lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.peek(),
 			modsViewSetups: modsView$.toPersistable(),
 			profilesManagement: profilesManagement$.toPersistable(),
 			sessionIds: hotutils$.sessionIdByProfile.peek(),

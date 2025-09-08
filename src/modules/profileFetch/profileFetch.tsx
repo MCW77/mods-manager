@@ -13,9 +13,6 @@ const { compilations$ } = await import(
 );
 const { characters$ } = await import("#/modules/characters/state/characters");
 const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -194,15 +191,6 @@ function updatePlayerData(
 		for (const [characterId, playerValues] of objectEntries(
 			profile.playerValues,
 		)) {
-			if (
-				lockedStatus$.byCharacterIdByAllycode[newAllycode][
-					characterId
-				].peek() === undefined
-			)
-				lockedStatus$.byCharacterIdByAllycode[newAllycode][characterId].set(
-					false,
-				);
-
 			const characterById$ =
 				profilesManagement$.profiles.profileByAllycode[newAllycode]
 					.characterById;

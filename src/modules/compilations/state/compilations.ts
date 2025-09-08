@@ -79,10 +79,11 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				category,
 				description,
 				flatCharacterModdings: [],
-				hasSelectionChanged: false,
 				id,
+				isReoptimizationNeeded: true,
 				lastOptimized: null,
 				optimizationConditions: null,
+				reoptimizationIndex: -1,
 				selectedCharacters: [],
 			});
 		},
@@ -97,17 +98,23 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			target: OptimizationPlan,
 			prevIndex: number | null = null,
 		) => {
-			compilations$.defaultCompilation.hasSelectionChanged.set(true);
 			const selectedCharacter = { id: characterID, target: target };
 			if (null === prevIndex) {
 				compilations$.defaultCompilation.selectedCharacters.unshift(
 					selectedCharacter,
 				);
+				compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 			} else {
 				compilations$.defaultCompilation.selectedCharacters.splice(
 					prevIndex + 1,
 					0,
 					selectedCharacter,
+				);
+				compilations$.defaultCompilation.reoptimizationIndex.set(
+					Math.min(
+						prevIndex,
+						compilations$.defaultCompilation.reoptimizationIndex.peek(),
+					),
 				);
 			}
 		},
@@ -117,7 +124,12 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				compilations$.defaultCompilation.selectedCharacters.length
 			)
 				return;
-			compilations$.defaultCompilation.hasSelectionChanged.set(true);
+			compilations$.defaultCompilation.reoptimizationIndex.set(
+				Math.min(
+					characterIndex - 1,
+					compilations$.defaultCompilation.reoptimizationIndex.peek(),
+				),
+			);
 			compilations$.defaultCompilation.selectedCharacters.splice(
 				characterIndex,
 				1,
@@ -125,11 +137,17 @@ const compilations$: ObservableObject<CompilationsObservable> =
 		},
 		unselectAllCharacters: () => {
 			compilations$.defaultCompilation.selectedCharacters.set([]);
-			compilations$.defaultCompilation.hasSelectionChanged.set(true);
+			compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 		},
 		moveSelectedCharacter: (fromIndex: number, toIndex: number | null) => {
 			if (fromIndex === toIndex) return;
-			compilations$.defaultCompilation.hasSelectionChanged.set(true);
+			compilations$.defaultCompilation.reoptimizationIndex.set(
+				Math.min(
+					fromIndex - 1,
+					(toIndex ?? fromIndex) - 1,
+					compilations$.defaultCompilation.reoptimizationIndex.peek(),
+				),
+			);
 			const selectedCharacters =
 				compilations$.defaultCompilation.selectedCharacters.peek();
 			const [selectedCharacter] =
@@ -165,7 +183,12 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				.findIndex((target) => target.id === targetName);
 			if (targetIndex >= 0) {
 				beginBatch();
-				compilations$.defaultCompilation.hasSelectionChanged.set(true);
+				compilations$.defaultCompilation.reoptimizationIndex.set(
+					Math.min(
+						targetIndex - 1,
+						compilations$.defaultCompilation.reoptimizationIndex.peek(),
+					),
+				);
 				profilesManagement$.activeProfile.characterById[
 					characterId
 				].targets.splice(targetIndex, 1);
@@ -202,7 +225,12 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			compilations$.defaultCompilation.selectedCharacters[index].target.set(
 				target,
 			);
-			compilations$.defaultCompilation.hasSelectionChanged.set(true);
+			compilations$.defaultCompilation.reoptimizationIndex.set(
+				Math.min(
+					index - 1,
+					compilations$.defaultCompilation.reoptimizationIndex.peek(),
+				),
+			);
 		},
 		applyRanking: (ranking: CharacterNames[]) => {
 			const selectedCharacters =
@@ -226,7 +254,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			compilations$.defaultCompilation.selectedCharacters.set(
 				newSelectedCharacters,
 			);
-			compilations$.defaultCompilation.hasSelectionChanged.set(true);
+			compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 		},
 		ensureSelectedCharactersExist: (compilationId: string) => {
 			const profile$ = profilesManagement$.activeProfile;

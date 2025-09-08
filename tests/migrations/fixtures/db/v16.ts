@@ -62,8 +62,13 @@ export const defaultFixture = {
 
 	DefaultCompilation: [
 		{
+			category: "",
+			description: "",
+			flatCharacterModdings: [],
 			hasSelectionChanged: true,
 			id: "DefaultCompilation",
+			lastOptimized: null,
+			optimizationConditions: null,
 			selectedCharacters: [
 				{
 					id: "SUPREMELEADERKYLOREN",

@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeAll, vi } from "vitest";
 import { loadFixture } from "./fixtures-loader";
 import { convertBackup } from "../../src/modules/appState/domain/Backup";
+import { latestDBVersion } from "../../src/utils/globalLegendPersistSettings";
+import superjson from "superjson";
 
 // We'll need to mock the modules since they have side effects
 vi.mock("#/modules/profilesManagement/state/profilesManagement", () => ({
@@ -62,23 +64,45 @@ vi.mock("#/modules/templates/state/templates", () => ({
 }));
 
 describe("App State Backup Migrations", () => {
-	let backupV16: Record<string, unknown>;
-
-	beforeAll(async () => {
-		backupV16 = await loadFixture(16, "backup");
-	});
-
-	describe("Migration Chain", () => {
-		it("should migrate v16 backup through full chain", async () => {
-			const result = convertBackup(backupV16);
-
-			expect(result).toBeDefined();
-			expect(result.backup.version).toBe(19); // Latest version
-			expect(result.backup.appVersion).toBeDefined();
-			expect(result.backup.backupType).toBe("fullBackup");
-			expect(result.backup.client).toBe("mods-manager");
-			expect(result.backup.data).toBeDefined();
+	describe("Migration Chain", async () => {
+		const backupV16 = await loadFixture(16, "backup");
+		const expectedFixture = await loadFixture(
+			latestDBVersion,
+			"backup",
+			"fromV16",
+		);
+		let conversionResult: {
+			backup:
+				| (Record<string, unknown> & { data: Record<string, unknown> })
+				| null;
+			importError: {
+				errorMessage: string;
+				errorReason: string;
+				errorSolution: string;
+			};
+		};
+		beforeAll(async () => {
+			conversionResult = convertBackup(backupV16);
 		});
+
+		it("should migrate from version 16 to latest without errors", async () => {
+			expect(conversionResult.importError.errorMessage).toBe("");
+			expect(conversionResult.backup).not.toBeNull();
+			expect(conversionResult.backup?.version).toBe(latestDBVersion);
+		});
+
+		it.concurrent.each(Object.keys(expectedFixture))(
+			"should migrate %s correctly",
+			async (moduleName) => {
+				const migratedData = conversionResult.backup?.data[moduleName];
+				const expectedData = (expectedFixture.data as Record<string, unknown>)[
+					moduleName
+				];
+				expect(superjson.stringify(migratedData)).toBe(
+					superjson.stringify(expectedData),
+				);
+			},
+		);
 
 		it("should handle missing migration gracefully", async () => {
 			const invalidBackup = {
@@ -95,7 +119,8 @@ describe("App State Backup Migrations", () => {
 		});
 	});
 
-	describe("Data Integrity", () => {
+	describe("Data Integrity", async () => {
+		const backupV16 = await loadFixture(16, "backup");
 		it("should preserve essential data through migrations", async () => {
 			const backupWithData = {
 				...backupV16,
@@ -139,11 +164,12 @@ describe("App State Backup Migrations", () => {
 		});
 	});
 
-	describe("Schema Validation", () => {
+	describe("Schema Validation", async () => {
+		const backupV18 = await loadFixture(18, "backup");
 		it("should validate final migrated data against latest schema", async () => {
 			const { validateAgainstLatestSchema } = await import("./migration-utils");
 
-			const result = convertBackup(backupV16);
+			const result = convertBackup(backupV18);
 
 			// convertBackup should produce valid output that passes schema validation
 			expect(result.backup).toBeDefined();

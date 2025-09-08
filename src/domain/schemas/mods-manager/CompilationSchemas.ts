@@ -5,7 +5,7 @@ import * as v from "valibot";
 import {
 	CharacterByIdSchema,
 	KnownCharacterNamesSchema,
-	LockedStatusByCharacterIdSchema,
+	LockedStatusByCharacterIdSchemaV18,
 	OptimizationPlanSchema,
 	ProfileOptimizationSettingsSchema,
 	SelectedCharactersSchema,
@@ -15,23 +15,27 @@ import {
 const MissedGoalSchema = v.tuple([TargetStatSchema, v.number()]);
 const MissedGoalsSchema = v.array(MissedGoalSchema);
 
-const OptimizationConditionsSchema = v.nullable(
+const OptimizationConditionsSchemaV18 = v.nullable(
 	v.object({
 		characterById: CharacterByIdSchema,
 		globalSettings: ProfileOptimizationSettingsSchema,
-		lockedStatus: LockedStatusByCharacterIdSchema,
+		lockedStatus: LockedStatusByCharacterIdSchemaV18,
 		modCount: v.number(),
 		selectedCharacters: SelectedCharactersSchema,
 	}),
 );
 
-const CompilationSchema = v.object({
+const OptimizationConditionsSchemaV20 = v.nullable(
+	ProfileOptimizationSettingsSchema,
+);
+
+const CompilationSchemaV18 = v.object({
 	id: v.string(),
 	category: v.string(),
 	description: v.string(),
 	hasSelectionChanged: v.boolean(),
 	lastOptimized: v.nullable(v.date()),
-	optimizationConditions: OptimizationConditionsSchema,
+	optimizationConditions: OptimizationConditionsSchemaV18,
 	selectedCharacters: SelectedCharactersSchema,
 	flatCharacterModdings: v.array(
 		v.object({
@@ -44,4 +48,29 @@ const CompilationSchema = v.object({
 	),
 });
 
-export { CompilationSchema };
+const CompilationSchemaV20 = v.object({
+	id: v.string(),
+	category: v.string(),
+	description: v.string(),
+	isReoptimizationNeeded: v.boolean(),
+	lastOptimized: v.nullable(v.date()),
+	optimizationConditions: OptimizationConditionsSchemaV20,
+	reoptimizationIndex: v.number(),
+	selectedCharacters: SelectedCharactersSchema,
+	flatCharacterModdings: v.array(
+		v.object({
+			assignedMods: v.array(v.string()),
+			characterId: KnownCharacterNamesSchema,
+			messages: v.optional(v.array(v.string())),
+			missedGoals: MissedGoalsSchema,
+			target: OptimizationPlanSchema,
+		}),
+	),
+});
+type CompilationSchemaV20Output = v.InferOutput<typeof CompilationSchemaV20>;
+
+export {
+	CompilationSchemaV20,
+	CompilationSchemaV18,
+	type CompilationSchemaV20Output,
+};

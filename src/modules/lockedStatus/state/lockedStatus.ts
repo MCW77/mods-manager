@@ -1,6 +1,3 @@
-// utils
-import { objectKeys } from "#/utils/objectKeys";
-
 // state
 import {
 	beginBatch,
@@ -18,7 +15,11 @@ const { profilesManagement$ } = await import(
 );
 
 // domain
-import type { LockedStatusByCharacterId } from "../domain/LockedStatusByCharacterId";
+import {
+	type CharacterNames,
+	characterNames,
+} from "#/constants/CharacterNames";
+import type { LockedCharacters } from "../domain/LockedStatusByCharacterId";
 import {
 	getInitialLockedStatus,
 	type LockedStatusObservable,
@@ -27,38 +28,63 @@ import {
 const lockedStatus$: ObservableObject<LockedStatusObservable> =
 	observable<LockedStatusObservable>({
 		persistedData: getInitialLockedStatus(),
-		byCharacterIdByAllycode: () => {
+		lockedCharactersByAllycode: () => {
 			return lockedStatus$.persistedData.lockedStatus
-				.lockedStatusByCharacterIdByAllycode;
+				.lockedCharactersByAllycode;
 		},
-		ofActivePlayerByCharacterId: (): Observable<LockedStatusByCharacterId> => {
+		lockedCharactersForActivePlayer: (): Observable<LockedCharacters> => {
 			return lockedStatus$.persistedData.lockedStatus
-				.lockedStatusByCharacterIdByAllycode[
+				.lockedCharactersByAllycode[
 				profilesManagement$.profiles.activeAllycode.get()
 			];
 		},
+		isCharacterLockedForActivePlayer: (
+			characterId: CharacterNames,
+		): boolean => {
+			return lockedStatus$.lockedCharactersForActivePlayer
+				.get()
+				.has(characterId);
+		},
+		addProfile: (allycode: string) => {
+			lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode[
+				allycode
+			].set(new Set<CharacterNames>());
+		},
+		deleteProfile: (allycode: string) => {
+			delete lockedStatus$.persistedData.lockedStatus
+				.lockedCharactersByAllycode[allycode];
+		},
 		lockAll: () => {
 			beginBatch();
-			for (const characterId of objectKeys(
-				lockedStatus$.ofActivePlayerByCharacterId.peek(),
-			)) {
-				lockedStatus$.ofActivePlayerByCharacterId[characterId].set(true);
+			for (const characterId of characterNames) {
+				lockedStatus$.lockedCharactersForActivePlayer.add(characterId);
 			}
 			endBatch();
 		},
 		unlockAll: () => {
-			beginBatch();
-			for (const characterId of objectKeys(
-				lockedStatus$.ofActivePlayerByCharacterId.peek(),
-			)) {
-				lockedStatus$.ofActivePlayerByCharacterId[characterId].set(false);
-			}
-			endBatch();
+			lockedStatus$.lockedCharactersForActivePlayer.clear();
+		},
+		toggleCharacterForActivePlayer: (characterId: CharacterNames) => {
+			if (lockedStatus$.lockedCharactersForActivePlayer.has(characterId))
+				lockedStatus$.lockedCharactersForActivePlayer.delete(characterId);
+			else lockedStatus$.lockedCharactersForActivePlayer.add(characterId);
 		},
 		reset: () => {
 			syncStatus$.reset();
 		},
 	});
+
+profilesManagement$.lastProfileAdded.onChange(({ value }) => {
+	lockedStatus$.addProfile(value);
+});
+
+profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
+	if (value === "all") {
+		lockedStatus$.reset();
+		return;
+	}
+	lockedStatus$.deleteProfile(value);
+});
 
 const syncStatus$ = syncObservable(
 	lockedStatus$.persistedData,

@@ -56,8 +56,8 @@ const SelectionActions = ({
 				onClick={() => {
 					beginBatch();
 					for (const selectedCharacter of selectedCharacters) {
-						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(
-							true,
+						lockedStatus$.lockedCharactersForActivePlayer.add(
+							selectedCharacter.id,
 						);
 					}
 					endBatch();
@@ -72,8 +72,8 @@ const SelectionActions = ({
 				onClick={() => {
 					beginBatch();
 					for (const selectedCharacter of selectedCharacters) {
-						lockedStatus$.ofActivePlayerByCharacterId[selectedCharacter.id].set(
-							false,
+						lockedStatus$.lockedCharactersForActivePlayer.delete(
+							selectedCharacter.id,
 						);
 					}
 					endBatch();

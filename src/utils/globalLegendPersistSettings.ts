@@ -10,6 +10,8 @@ import type {
 	Filter,
 	SecondarySettings,
 } from "#/modules/modsView/domain/ModsViewOptions";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import { objectKeys } from "./objectKeys";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };
@@ -186,6 +188,50 @@ function upgradeFilterTo19(
 		}
 		filter.secondary = newSecondary;
 	}
+}
+
+function upgradeCompilationTo20(compilation: Record<string, unknown>) {
+	const newCompilation: Record<string, unknown> = {};
+	for (const [key, value] of objectEntries(compilation)) {
+		if (key === "hasSelectionChanged") {
+		} else if (key === "id") {
+			newCompilation[key] = value;
+			newCompilation.isReoptimizationNeeded = true;
+		} else if (key === "optimizationConditions") {
+			newCompilation[key] =
+				(value as Record<string, unknown> | null)?.globalSettings ?? null;
+			newCompilation.reoptimizationIndex = -1;
+		} else {
+			newCompilation[key] = value;
+		}
+	}
+	return newCompilation;
+}
+
+function getLockedStatusUpgradedTo20(
+	lockedStatus: Record<string, boolean> | Set<CharacterNames>,
+) {
+	const newLockedStatus: Set<CharacterNames> = new Set<CharacterNames>();
+	for (const characterId of objectKeys(lockedStatus)) {
+		if (lockedStatus[characterId] === true) {
+			newLockedStatus.add(characterId);
+		}
+	}
+	return newLockedStatus;
+}
+
+function upgradeLockedStatusTo20(
+	lockedStatus: Record<string, Record<string, boolean> | Set<CharacterNames>>,
+) {
+	const newLockedStatus: Record<string, Set<CharacterNames>> = {};
+	for (const [allycode, lockedStatusOfCharacterId] of objectEntries(
+		lockedStatus,
+	)) {
+		newLockedStatus[allycode] = getLockedStatusUpgradedTo20(
+			lockedStatusOfCharacterId,
+		);
+	}
+	return newLockedStatus;
 }
 
 function createStores(db: IDBDatabase, stores: string[] = storeNames) {
@@ -567,7 +613,142 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
-const dbVersions = [16, 18, 19] as const;
+async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
+	await itemUpgrade(
+		db,
+		transaction,
+		"Compilations",
+		"compilationByIdByAllycode",
+		(oldCompilations) => {
+			const newCompilationsByAllycode: Map<
+				string,
+				Map<string, Record<string, unknown>>
+			> = new Map();
+			for (const [
+				allycode,
+				compilations,
+			] of oldCompilations.compilationByIdByAllycode as Map<
+				string,
+				Map<string, Record<string, unknown>>
+			>) {
+				const newCompilations: Map<string, Record<string, unknown>> = new Map();
+				for (const [compilationId, compilation] of compilations) {
+					const newCompilation = upgradeCompilationTo20(compilation);
+					newCompilations.set(compilationId, newCompilation);
+				}
+				/*
+				for (const [compilationId, compilation] of compilations) {
+					for (const [key, value] of objectEntries(
+						compilation as Record<string, unknown>,
+					)) {
+						if (key === "hasSelectionChanged") {
+						} else if (key === "id") {
+							newCompilation[key] = value;
+							newCompilation.isReoptimizationNeeded = true;
+						} else if (key === "optimizationConditions") {
+							newCompilation[key] = value;
+							newCompilation.reoptimizationIndex = -1;
+						} else {
+							newCompilation[key] = value;
+						}
+					}
+					newCompilations.set(compilationId, newCompilation);
+				}
+				*/
+				newCompilationsByAllycode.set(allycode, newCompilations);
+			}
+			return {
+				id: "compilationByIdByAllycode",
+				compilationByIdByAllycode: newCompilationsByAllycode,
+			};
+		},
+	);
+
+	await itemUpgrade(
+		db,
+		transaction,
+		"DefaultCompilation",
+		"defaultCompilation",
+		(oldDefaultCompilation) => {
+			const newDefaultCompilation = upgradeCompilationTo20(
+				oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+			);
+			/*
+			for (const [key, value] of objectEntries(
+				oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+			)) {
+				if (key === "hasSelectionChanged") {
+				} else if (key === "id") {
+					newDefaultCompilation[key] = value;
+					newDefaultCompilation.isReoptimizationNeeded = true;
+				} else if (key === "optimizationConditions") {
+					newDefaultCompilation[key] = value;
+					newDefaultCompilation.reoptimizationIndex = -1;
+				} else {
+					newDefaultCompilation[key] = value;
+				}
+			}
+			*/
+			return {
+				id: "defaultCompilation",
+				defaultCompilation: {
+					...newDefaultCompilation,
+				},
+			};
+		},
+	);
+
+	await itemUpgrade(
+		db,
+		transaction,
+		"LockedStatus",
+		"lockedStatus",
+		(oldLockedStatus) => {
+			/*
+			const newLockedStatus: Record<
+				string,
+				Record<string, boolean> | Set<CharacterNames>
+			> = structuredClone(
+				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+					string,
+					Record<string, boolean>
+				>,
+			);
+			upgradeLockedStatusTo20(newLockedStatus);
+			*/
+			const newLockedStatus = upgradeLockedStatusTo20(
+				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+					string,
+					Record<string, boolean>
+				>,
+			);
+			/*
+			const newLockedStatus: Record<string, unknown> = {};
+			for (const [allycode, status] of objectEntries(
+				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+					string,
+					unknown
+				>,
+			)) {
+				const lockedCharacters = new Set<CharacterNames>(
+					objectEntries(status as Record<CharacterNames, boolean>)
+						.filter(([, isLocked]) => isLocked)
+						.map(([charId]) => charId as CharacterNames),
+				);
+				newLockedStatus[allycode] = lockedCharacters;
+			}
+				*/
+			return {
+				id: "lockedStatus",
+				lockedCharactersByAllycode: {
+					...newLockedStatus,
+				},
+			};
+		},
+	);
+}
+
+const dbVersions = [16, 18, 19, 20] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -587,6 +768,7 @@ const persistOptions = configureSynced({
 				if (transaction !== null) {
 					if (event.oldVersion < 18) await upgradeTo18(db, transaction);
 					if (event.oldVersion < 19) await upgradeTo19(db, transaction);
+					if (event.oldVersion < 20) await upgradeTo20(db, transaction);
 				}
 			},
 		}),
@@ -600,14 +782,18 @@ const testOnlyCreateStores = testing ? createStores : undefined;
 const testOnlyStoreNames = testing ? storeNames : undefined;
 const testOnlyUpgradeTo18 = testing ? upgradeTo18 : undefined;
 const testOnlyUpgradeTo19 = testing ? upgradeTo19 : undefined;
+const testOnlyUpgradeTo20 = testing ? upgradeTo20 : undefined;
 
 export {
 	type DBVersions,
 	latestDBVersion,
 	persistOptions,
 	upgradeFilterTo19,
+	upgradeCompilationTo20,
+	upgradeLockedStatusTo20,
 	testOnlyCreateStores,
 	testOnlyStoreNames,
 	testOnlyUpgradeTo18,
 	testOnlyUpgradeTo19,
+	testOnlyUpgradeTo20,
 };

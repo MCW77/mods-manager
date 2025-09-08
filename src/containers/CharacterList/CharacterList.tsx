@@ -70,15 +70,6 @@ const CharacterList = observer(
 							Character.defaultTarget(characterSettings, movingCharacter),
 							dropCharacterIndex,
 						);
-						/*
-						dispatch(
-							CharacterEdit.thunks.selectCharacter(
-								movingCharacterID,
-								Character.defaultTarget(movingCharacter),
-								dropCharacterIndex,
-							),
-						);
-*/
 						break;
 					}
 					case "move": {
@@ -88,14 +79,6 @@ const CharacterList = observer(
 							movingCharacterIndex,
 							dropCharacterIndex,
 						);
-						/*
-						dispatch(
-							CharacterEdit.thunks.moveSelectedCharacter(
-								movingCharacterIndex,
-								dropCharacterIndex,
-							),
-						);
-*/
 						break;
 					}
 					default:

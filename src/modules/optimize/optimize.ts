@@ -40,9 +40,14 @@ const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
 ) => {
-	compilations$.defaultCompilation.hasSelectionChanged.set(false);
+	compilations$.defaultCompilation.reoptimizationIndex.set(
+		compilations$.defaultCompilation.selectedCharacters.length,
+	);
+	compilations$.defaultCompilation.isReoptimizationNeeded.set(false);
 	compilations$.defaultCompilation.flatCharacterModdings.set(result);
-	compilations$.defaultCompilation.optimizationConditions.set(settings);
+	compilations$.defaultCompilation.optimizationConditions.set(
+		structuredClone(settings),
+	);
 	compilations$.defaultCompilation.lastOptimized.set(new Date());
 
 	// If this was an incremental optimization, leave the user on their current page
@@ -123,10 +128,6 @@ export function optimizeMods(): void {
 				finishModOptimization(
 					message.data.result,
 					createOptimizationConditions(
-						profilesManagement$.activeProfile.characterById.peek(),
-						lockedStatus$.ofActivePlayerByCharacterId.peek(),
-						profilesManagement$.activeProfile.modById.size,
-						compilations$.defaultCompilation.selectedCharacters.peek(),
 						optimizationSettings$.settingsByProfile[
 							profilesManagement$.profiles.activeAllycode.peek()
 						].peek(),

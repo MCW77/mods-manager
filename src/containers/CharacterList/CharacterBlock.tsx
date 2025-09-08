@@ -95,8 +95,8 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		const baseCharacterById = use$(characters$.baseCharacterById);
 		const character = characterById[characterId];
 		const activePlan = target.id;
-		const charactersLockedStatus = use$(
-			lockedStatus$.ofActivePlayerByCharacterId[characterId],
+		const charactersLockedStatus = use$(() =>
+			lockedStatus$.isCharacterLockedForActivePlayer(characterId),
 		);
 
 		/**
@@ -206,13 +206,11 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					<span
 						className={`icon locked ${lockedActive}`}
 						onClick={() => {
-							lockedStatus$.ofActivePlayerByCharacterId[character.id].toggle();
+							lockedStatus$.toggleCharacterForActivePlayer(character.id);
 						}}
 						onKeyUp={(event: React.KeyboardEvent<HTMLSpanElement>) => {
 							if (event.key === "Enter") {
-								lockedStatus$.ofActivePlayerByCharacterId[
-									character.id
-								].toggle();
+								lockedStatus$.toggleCharacterForActivePlayer(character.id);
 							}
 						}}
 						title={

@@ -6,8 +6,6 @@ import path from "node:path";
 import dynamicImport from "vite-plugin-dynamic-import";
 import { visualizer } from "rollup-plugin-visualizer";
 
-
-
 // https://vitejs.dev/config/
 export default defineConfig({
 	worker: {
@@ -18,58 +16,18 @@ export default defineConfig({
 				hmrTopLevelAwait: false,
 			}),
 		],
-		rollupOptions: {
-			external: ['@react-refresh'],
-			output: {
-				intro: `
-					if (typeof globalThis !== 'undefined') {
-						globalThis.window = {
-							__registerBeforePerformReactRefresh: () => {},
-							__reactRefreshUtils: null,
-							addEventListener: () => {},
-							removeEventListener: () => {},
-							location: {
-								reload: () => {},
-								replace: () => {},
-								assign: () => {},
-								toString: () => 'about:blank',
-								href: 'about:blank',
-								origin: 'null',
-								protocol: 'about:',
-								host: '',
-								hostname: '',
-								port: '',
-								pathname: 'blank',
-								search: '',
-								hash: '',
-								ancestorOrigins: { length: 0, contains: () => false, item: () => null },
-							},
-							console: globalThis.console || { log: () => {}, warn: () => {}, error: () => {} },
-						};
-						globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ = undefined;
-						globalThis.__vite_plugin_react_preamble_installed__ = true;
-						globalThis.$RefreshReg$ = () => {};
-						globalThis.$RefreshSig$ = () => (type) => type;
-					}
-				`,
-			},
-		},
 	},
 	define: {
-		// Prevent React Refresh in worker context
-		__REACT_DEVTOOLS_GLOBAL_HOOK__: 'undefined',
-		// Completely disable React Refresh in worker context
-		__vite_is_modern_browser: 'false',
-		// React Refresh globals for worker context - use simple function references
-		'$RefreshReg$': 'undefined',
-		'$RefreshSig$': 'undefined',		// Fix for use-sync-external-store compatibility with Vite 6
-		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+		"process.env.NODE_ENV": JSON.stringify(
+			process.env.NODE_ENV || "development",
+		),
 	},
 	optimizeDeps: {
 		include: ["unocss"],
 		exclude: ["@legendapp/state", "@legendapp/state/react"],
 	},
 	build: {
+		sourcemap: true,
 		target: "esnext",
 		rollupOptions: {
 			//			treeshake: true,
@@ -146,7 +104,7 @@ export default defineConfig({
 			"#": path.resolve(__dirname, "./src"),
 			"#lib": path.resolve(__dirname, "./src/lib"),
 			"#ui": path.resolve(__dirname, "./src/components/ui"),
-			'use-sync-external-store/shim/index.js': 'react',
+			"use-sync-external-store/shim/index.js": "react",
 		},
 		conditions: ["import", "module", "browser", "default"],
 		mainFields: ["module", "main"],

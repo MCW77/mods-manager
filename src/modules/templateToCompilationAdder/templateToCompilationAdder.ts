@@ -25,7 +25,7 @@ const appendTemplate = (templateName: string) => {
 	);
 
 	if (splitSelectedCharacters.existing === undefined) return [];
-	compilations$.defaultCompilation.hasSelectionChanged.set(true);
+	compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
 		const target = structuredClone(selectedCharacterInTemplate.target);
@@ -85,7 +85,7 @@ const replaceWithTemplate = (templateName: string) => {
 	compilations$.defaultCompilation.selectedCharacters.set(
 		splitSelectedCharacters.existing?.slice() ?? [],
 	);
-	compilations$.defaultCompilation.hasSelectionChanged.set(true);
+	compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 
 	if (splitSelectedCharacters.existing === undefined) return [];
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
@@ -143,7 +143,7 @@ const applyTemplateTargets = (templateName: string) => {
 			);
 		if (selectedCharacter === undefined) continue;
 		selectedCharacter.target.set(selectedCharacterInTemplate.target);
-		compilations$.defaultCompilation.hasSelectionChanged.set(true);
+		compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 	}
 
 	if (splitSelectedCharacters.missing?.length) {

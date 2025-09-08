@@ -6,10 +6,11 @@ export interface Compilation {
 	category: string;
 	description: string;
 	flatCharacterModdings: FlatCharacterModdings;
-	hasSelectionChanged: boolean;
 	id: string;
+	isReoptimizationNeeded: boolean;
 	lastOptimized: Date | null;
 	optimizationConditions: OptimizationConditions;
+	reoptimizationIndex: number;
 	selectedCharacters: SelectedCharacters;
 }
 
@@ -18,12 +19,13 @@ export const getDefaultCompilation = () => {
 		id: "defaultCompilation",
 		defaultCompilation: {
 			category: "",
-			description: "Default compilation used until saved under own name",
+			description: "",
 			flatCharacterModdings: [] as FlatCharacterModdings,
-			hasSelectionChanged: false,
 			id: "DefaultCompilation",
+			isReoptimizationNeeded: true,
 			lastOptimized: null as Date | null,
 			optimizationConditions: null as OptimizationConditions,
+			reoptimizationIndex: 0,
 			selectedCharacters: [] as SelectedCharacters,
 		},
 	} as const);

@@ -140,9 +140,9 @@ const getDefaultFilterSetup = () => {
 						type: "custom",
 						filter: "Locked",
 						filterPredicate: (character: Character) => {
-							return lockedStatus$.ofActivePlayerByCharacterId[
-								character.id
-							].peek();
+							return lockedStatus$.lockedCharactersForActivePlayer.has(
+								character.id,
+							);
 						},
 					},
 				],
@@ -153,10 +153,8 @@ const getDefaultFilterSetup = () => {
 						type: "custom",
 						filter: "Unlocked",
 						filterPredicate: (character: Character) => {
-							return (
-								lockedStatus$.ofActivePlayerByCharacterId[
-									character.id
-								].peek() === false
+							return !lockedStatus$.lockedCharactersForActivePlayer.has(
+								character.id,
 							);
 						},
 					},

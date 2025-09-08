@@ -4,7 +4,7 @@ import * as v from "valibot";
 // domain
 import { characterNames } from "#/constants/CharacterNames";
 
-const LockedStatusByCharacterIdSchema = v.pipe(
+const LockedStatusByCharacterIdSchemaV18 = v.pipe(
 	v.object(
 		Object.fromEntries(
 			characterNames.map((name) => [name, v.optional(v.boolean())]),
@@ -20,4 +20,9 @@ const LockedStatusByCharacterIdSchema = v.pipe(
 	}),
 );
 
-export { LockedStatusByCharacterIdSchema };
+const LockedStatusByCharacterIdSchemaV20 = v.set(v.picklist(characterNames));
+
+export {
+	LockedStatusByCharacterIdSchemaV18,
+	LockedStatusByCharacterIdSchemaV20,
+};

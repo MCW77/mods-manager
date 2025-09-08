@@ -18,6 +18,8 @@ const characters$ = stateLoader$.characters$;
 const charactersManagement$ = stateLoader$.charactersManagement$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
+import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
+
 // domain
 import { characterSettings } from "#/constants/characterSettings";
 
@@ -79,9 +81,9 @@ const CharacterEditView = observer(() => {
 				filter === "" ||
 				baseCharacter.name.toLowerCase().includes(filter) ||
 				(["lock", "locked"].includes(filter) &&
-					lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
+					lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) ||
 				(["unlock", "unlocked"].includes(filter) &&
-					!lockedStatus$.ofActivePlayerByCharacterId[character.id]) ||
+					!lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) ||
 				baseCharacter.categories
 					.concat(
 						characterSettings[character.id]

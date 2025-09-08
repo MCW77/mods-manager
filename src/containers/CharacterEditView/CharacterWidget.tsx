@@ -41,8 +41,9 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 		const baseCharacterById = use$(characters$.baseCharacterById);
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
-		const isLocked = use$(
-			lockedStatus$.ofActivePlayerByCharacterId[character.id],
+		// Track membership reactively on the observable Set itself (avoids stale subscriptions from `.get()`)
+		const isLocked = use$(() =>
+			lockedStatus$.isCharacterLockedForActivePlayer(character.id),
 		);
 		const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
 
@@ -52,10 +53,6 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 			);
 
 		const isDraggable = isCharacterSelected(character.id) ? undefined : true;
-
-		const toggleCharacterLock = (characterID: CharacterNames) => {
-			lockedStatus$.ofActivePlayerByCharacterId[characterID].toggle();
-		};
 
 		const dragStart = (character: Character.Character) => {
 			return (event: React.DragEvent<HTMLDivElement>) => {
@@ -74,9 +71,12 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 			<div className={classAttr} key={character.id}>
 				<span
 					className={`icon locked ${isLocked ? "active" : ""}`}
-					onClick={() => toggleCharacterLock(character.id)}
+					onClick={() =>
+						lockedStatus$.toggleCharacterForActivePlayer(character.id)
+					}
 					onKeyUp={(e) => {
-						if (e.code === "Enter") toggleCharacterLock(character.id);
+						if (e.code === "Enter")
+							lockedStatus$.toggleCharacterForActivePlayer(character.id);
 					}}
 				/>
 				<div
