@@ -16,9 +16,9 @@
 		"test:migrations:ui": "vitest --ui --config=vitest.migrations.config.ts"
 	},
 	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^7.0.0",
-		"@fortawesome/free-regular-svg-icons": "^7.0.0",
-		"@fortawesome/free-solid-svg-icons": "^7.0.0",
+		"@fortawesome/fontawesome-svg-core": "^7.0.1",
+		"@fortawesome/free-regular-svg-icons": "^7.0.1",
+		"@fortawesome/free-solid-svg-icons": "^7.0.1",
 		"@fortawesome/react-fontawesome": "^0.2.3",
 		"@legendapp/state": "3.0.0-beta.30",
 		"@radix-ui/react-collapsible": "^1.1.12",
