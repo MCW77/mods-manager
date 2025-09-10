@@ -49,7 +49,7 @@ const HelpView: React.FC = observer(() => {
 	};
 
 	const topicCSS =
-		"prose m-x-auto max-w-[80ch] flex flex-col items-center text-balance";
+		"prose dark:prose-invert m-x-auto max-w-[80ch] flex flex-col items-center text-balance";
 
 	const renderSection = (sectionName: HelpSections) => {
 		return (

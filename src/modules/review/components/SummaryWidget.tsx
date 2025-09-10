@@ -22,7 +22,7 @@ const SummaryWidget = ({
 	const valueChange = (100 * (newSetValue - currentSetValue)) / currentSetValue;
 
 	return (
-		<div className="prose prose-sm text-sm">
+		<div className="prose prose-sm dark:prose-invert text-sm">
 			<h4>Costs</h4>
 			<p>
 				<span>Reassigning {numMovingMods} mods</span>
