@@ -338,38 +338,34 @@ const CharacterFilters: React.FC = observer(() => {
 					</div>
 					<div className="flex justify-around flex-wrap gap-2">
 						<Computed>
-							{() => {
-								return (
-									<For each={charactersManagement$.filterSetup.filtersById}>
-										{(filter$) => {
-											const filter = use$(filter$.filter);
-											const filterId = use$(filter$.id);
+							<For each={charactersManagement$.filterSetup.filtersById}>
+								{(filter$) => {
+									const filter = use$(filter$.filter);
+									const filterId = use$(filter$.id);
 
-											return (
-												<div
-													key={`sort-option-${filterId}`}
-													className={"flex items-center"}
+									return (
+										<div
+											key={`sort-option-${filterId}`}
+											className={"flex items-center"}
+										>
+											<Badge variant={"outline"}>
+												{filter}
+												<Button
+													size={"xxs"}
+													variant={"outline"}
+													onClick={() =>
+														charactersManagement$.filterSetup.filtersById.delete(
+															filter$.id.peek(),
+														)
+													}
 												>
-													<Badge variant={"outline"}>
-														{filter}
-														<Button
-															size={"xxs"}
-															variant={"outline"}
-															onClick={() =>
-																charactersManagement$.filterSetup.filtersById.delete(
-																	filter$.id.peek(),
-																)
-															}
-														>
-															x
-														</Button>
-													</Badge>
-												</div>
-											);
-										}}
-									</For>
-								);
-							}}
+													x
+												</Button>
+											</Badge>
+										</div>
+									);
+								}}
+							</For>
 						</Computed>
 					</div>
 				</div>

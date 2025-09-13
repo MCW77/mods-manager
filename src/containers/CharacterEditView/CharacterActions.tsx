@@ -341,38 +341,32 @@ const CharacterActions: React.FC = observer(() => {
 						</h4>
 						<Label htmlFor={"compilation_save_form_name"}>Name</Label>
 						<Computed>
-							{() => (
-								<Input
-									id="compilation_save_form_name"
-									value={compilationName}
-									onChange={(e) => state$.name.set(e.target.value)}
-									className="h-8 text-sm"
-								/>
-							)}
+							<Input
+								id="compilation_save_form_name"
+								value={compilationName}
+								onChange={(e) => state$.name.set(e.target.value)}
+								className="h-8 text-sm"
+							/>
 						</Computed>
 						<Label htmlFor={"compilation_save_form_description"}>
 							Description
 						</Label>
 						<Computed>
-							{() => (
-								<Input
-									id="compilation_save_form_description"
-									value={compilationDescription}
-									onChange={(e) => state$.description.set(e.target.value)}
-									className="h-8 text-sm"
-								/>
-							)}
+							<Input
+								id="compilation_save_form_description"
+								value={compilationDescription}
+								onChange={(e) => state$.description.set(e.target.value)}
+								className="h-8 text-sm"
+							/>
 						</Computed>
 						<Label htmlFor={"compilation_save_form_category"}>Category</Label>
 						<Computed>
-							{() => (
-								<Input
-									id="compilation_save_form_category"
-									value={compilationCategory}
-									onChange={(e) => state$.category.set(e.target.value)}
-									className="h-8 text-sm"
-								/>
-							)}
+							<Input
+								id="compilation_save_form_category"
+								value={compilationCategory}
+								onChange={(e) => state$.category.set(e.target.value)}
+								className="h-8 text-sm"
+							/>
 						</Computed>
 						<div className="flex justify-end space-x-2">
 							<Button

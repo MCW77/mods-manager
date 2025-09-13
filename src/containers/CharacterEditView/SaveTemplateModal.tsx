@@ -39,50 +39,48 @@ const SaveTemplateModal: React.FC = observer(() => {
 		<div className={"flex flex-col gap-2"}>
 			<h3>Please enter a name for this character template</h3>
 			<Computed>
-				{() => (
+				<div>
+					<ReactiveInput
+						type={"text"}
+						id={"template-name"}
+						placeholder={"Template Name"}
+						$value={templates$.id}
+						onChange={(event) => {
+							templates$.id.set(event.target.value);
+						}}
+					/>
 					<div>
+						<Label htmlFor={"template-category"}>Category</Label>
+						<ReactiveSelect
+							$value={templates$.category}
+							onValueChange={(value: string) => {
+								templates$.category.set(value);
+							}}
+						>
+							<SelectTrigger>
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{templatesCategories.map((category) => (
+									<Show key={category} if={category !== ""}>
+										<SelectItem key={category} value={category}>
+											{category}
+										</SelectItem>
+									</Show>
+								))}
+							</SelectContent>
+						</ReactiveSelect>
 						<ReactiveInput
 							type={"text"}
-							id={"template-name"}
-							placeholder={"Template Name"}
-							$value={templates$.id}
+							id={"template-category"}
+							placeholder={"Template Category"}
+							$value={templates$.category}
 							onChange={(event) => {
-								templates$.id.set(event.target.value);
+								templates$.category.set(event.target.value);
 							}}
 						/>
-						<div>
-							<Label htmlFor={"template-category"}>Category</Label>
-							<ReactiveSelect
-								$value={templates$.category}
-								onValueChange={(value: string) => {
-									templates$.category.set(value);
-								}}
-							>
-								<SelectTrigger>
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{templatesCategories.map((category) => (
-										<Show key={category} if={category !== ""}>
-											<SelectItem key={category} value={category}>
-												{category}
-											</SelectItem>
-										</Show>
-									))}
-								</SelectContent>
-							</ReactiveSelect>
-							<ReactiveInput
-								type={"text"}
-								id={"template-category"}
-								placeholder={"Template Category"}
-								$value={templates$.category}
-								onChange={(event) => {
-									templates$.category.set(event.target.value);
-								}}
-							/>
-						</div>
 					</div>
-				)}
+				</div>
 			</Computed>
 			<Show
 				if={templates$.isUnique}

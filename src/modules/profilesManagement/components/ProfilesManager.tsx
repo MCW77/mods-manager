@@ -76,46 +76,42 @@ const ProfilesManager = () => {
 							</Button>
 						)}
 					>
-						{() => (
-							<Button
-								className="aspect-ratio-square m-r-1 m-b-1"
-								size={"icon"}
-								type={"button"}
-								variant={"outline"}
-								onClick={() =>
-									refreshPlayerData(
-										profilesManagement$.profiles.activeAllycode.peek(),
-										true,
-										hotutils$.activeSessionId.peek() ?? null,
-									)
-								}
-							>
-								<span className="fa-layers">
-									<FontAwesomeIcon
-										icon={faArrowsRotate}
-										title={`${t("header.FetchHot")}`}
-									/>
-									<FontAwesomeIcon
-										icon={faFire}
-										size="sm"
-										transform="shrink-1 right-14 down-15"
-										color="Red"
-									/>
-								</span>
-							</Button>
-						)}
+						<Button
+							className="aspect-ratio-square m-r-1 m-b-1"
+							size={"icon"}
+							type={"button"}
+							variant={"outline"}
+							onClick={() =>
+								refreshPlayerData(
+									profilesManagement$.profiles.activeAllycode.peek(),
+									true,
+									hotutils$.activeSessionId.peek() ?? null,
+								)
+							}
+						>
+							<span className="fa-layers">
+								<FontAwesomeIcon
+									icon={faArrowsRotate}
+									title={`${t("header.FetchHot")}`}
+								/>
+								<FontAwesomeIcon
+									icon={faFire}
+									size="sm"
+									transform="shrink-1 right-14 down-15"
+									color="Red"
+								/>
+							</span>
+						</Button>
 					</Show>
 					<Memo>
-						{() => (
-							<div className="flex flex-col items-center justify-center gap-1">
-								<span className="w-full min-w-max text-sm text-foreground text-balance">
-									Last updated:
-								</span>
-								<span className="w-full min-w-max text-sm text-foreground text-balance">
-									{profilesManagement$.activeLastUpdated.get()}
-								</span>
-							</div>
-						)}
+						<div className="flex flex-col items-center justify-center gap-1">
+							<span className="w-full min-w-max text-sm text-foreground text-balance">
+								Last updated:
+							</span>
+							<span className="w-full min-w-max text-sm text-foreground text-balance">
+								{profilesManagement$.activeLastUpdated.get()}
+							</span>
+						</div>
 					</Memo>
 				</div>
 			</Show>

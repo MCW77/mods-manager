@@ -56,7 +56,7 @@ const OptimizerProgress: React.FC = observer(() => {
 			<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
 			<div className={"flex flex-col gap-2"}>
 				<Show ifReady={character$}>
-					{(condition) => <CharacterAvatar character={character} />}
+					<CharacterAvatar character={character} />
 				</Show>
 				<div className={"step"}>{optimizationStatus.message}</div>
 				<div>

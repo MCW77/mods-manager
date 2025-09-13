@@ -386,31 +386,27 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					<div className={"flex gap-2 justify-center items-center"}>
 						<div className={"actions p-2 flex gap-2 justify-center"}>
 							<Show if={target$.isTargetChanged}>
-								{() => (
-									<Button
-										type={"button"}
-										onClick={() => {
-											target$.target.set({ ...target$.uneditedTarget.peek() });
-										}}
-									>
-										Reset target
-									</Button>
-								)}
+								<Button
+									type={"button"}
+									onClick={() => {
+										target$.target.set({ ...target$.uneditedTarget.peek() });
+									}}
+								>
+									Reset target
+								</Button>
 							</Show>
 							<Show if={target$.canDeleteTarget}>
-								{() => (
-									<Button
-										type={"button"}
-										id={"delete-button"}
-										variant={"destructive"}
-										onClick={() => {
-											compilations$.deleteTarget(character.id, target.id);
-											optimizerView$.view.set("basic");
-										}}
-									>
-										Delete target
-									</Button>
-								)}
+								<Button
+									type={"button"}
+									id={"delete-button"}
+									variant={"destructive"}
+									onClick={() => {
+										compilations$.deleteTarget(character.id, target.id);
+										optimizerView$.view.set("basic");
+									}}
+								>
+									Delete target
+								</Button>
 							</Show>
 							<Button
 								type={"button"}
@@ -421,14 +417,12 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 								Cancel
 							</Button>
 							<Memo>
-								{() => (
-									<ReactiveButton
-										$disabled={target$.isUnsaveable}
-										type={"submit"}
-									>
-										Save
-									</ReactiveButton>
-								)}
+								<ReactiveButton
+									$disabled={target$.isUnsaveable}
+									type={"submit"}
+								>
+									Save
+								</ReactiveButton>
 							</Memo>
 						</div>
 						<Label htmlFor={"plan-name"}>Target Name: </Label>

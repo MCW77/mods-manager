@@ -106,12 +106,10 @@ const SortManager = observer(
 												/>
 											)}
 										>
-											{() => (
-												<FontAwesomeIcon
-													icon={faSortUp}
-													title="Sort ascending"
-												/>
-											)}
+											<FontAwesomeIcon
+												icon={faSortUp}
+												title="Sort ascending"
+											/>
 										</Show>
 									</Button>
 									<Button

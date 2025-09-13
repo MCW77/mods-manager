@@ -1,6 +1,6 @@
 // react
 import { lazy, useMemo } from "react";
-import { Computed, reactiveObserver, Show, use$ } from "@legendapp/state/react";
+import { Computed, For, reactiveObserver, Show, use$ } from "@legendapp/state/react";
 
 // utils
 import { objectEntries } from "#/utils/objectEntries";
@@ -57,36 +57,32 @@ const TargetStatsWidget: React.FC = reactiveObserver(() => {
 	return (
 		<div>
 			<Computed>
-				{() => (
-					<div className="flex flex-wrap gap-2">
-						<Card className={"flex items-center justify-center aspect-square"}>
-							<Button
-								type={"button"}
-								size={"lg"}
-								variant={"outline"}
-								onClick={() => {
-									target$.addTargetStat();
-								}}
-							>
-								+
-							</Button>
-						</Card>
-						<Show if={hasTargetStats}>
-							{() =>
-								target$.target.targetStats.map((targetStat$) => {
-									return (
-										<TargetStatWidget
-											target$={target$}
-											id={targetStat$.peek().id}
-											key={targetStat$.id.peek()}
-											baseCharacters={groups}
-										/>
-									);
-								})
-							}
-						</Show>
-					</div>
-				)}
+				<div className="flex flex-wrap gap-2">
+					<Card className={"flex items-center justify-center aspect-square"}>
+						<Button
+							type={"button"}
+							size={"lg"}
+							variant={"outline"}
+							onClick={() => {
+								target$.addTargetStat();
+							}}
+						>
+							+
+						</Button>
+					</Card>
+					<Show if={hasTargetStats}>
+						<For each={target$.target.targetStats}>
+							{(targetStat$) => (
+								<TargetStatWidget
+									target$={target$}
+									id={targetStat$.peek().id}
+									key={targetStat$.id.peek()}
+									baseCharacters={groups}
+								/>
+							)}
+						</For>
+					</Show>
+				</div>
 			</Computed>
 		</div>
 	);

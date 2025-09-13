@@ -264,17 +264,15 @@ const HelpView: React.FC = observer(() => {
 		<div className={"w-full flex flex-col"}>
 			<nav className="flex flex-wrap justify-evenly p-4">
 				<Show if={previousSectionIsNotHelp}>
-					{() => (
-						<div className="m-1 p-2 rounded-xl">
-							<FontAwesomeIcon
-								icon={faCircleLeft}
-								title={"Go back"}
-								onClick={() => {
-									ui$.goToPreviousSection();
-								}}
-							/>
-						</div>
-					)}
+					<div className="m-1 p-2 rounded-xl">
+						<FontAwesomeIcon
+							icon={faCircleLeft}
+							title={"Go back"}
+							onClick={() => {
+								ui$.goToPreviousSection();
+							}}
+						/>
+					</div>
 				</Show>
 				{renderSection("general")}
 				{renderSection("profiles")}

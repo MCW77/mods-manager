@@ -136,56 +136,48 @@ const App = () => {
 								/>
 								<TabsList>
 									<Show if={profilesManagement$.hasProfiles}>
-										{() => (
-											<TabsTrigger value="mods">
-												<div className={"flex flex-gap-1 items-center"}>
-													<FontAwesomeIcon
-														icon={faMagnifyingGlass}
-														title={t("header.NavMods")}
-													/>
-													{t("header.NavMods")}
-												</div>
-											</TabsTrigger>
-										)}
+										<TabsTrigger value="mods">
+											<div className={"flex flex-gap-1 items-center"}>
+												<FontAwesomeIcon
+													icon={faMagnifyingGlass}
+													title={t("header.NavMods")}
+												/>
+												{t("header.NavMods")}
+											</div>
+										</TabsTrigger>
 									</Show>
 									<Show if={profilesManagement$.hasProfiles}>
-										{() => (
-											<TabsTrigger value="mod compilations">
-												<div className={"flex flex-gap-1 items-center"}>
-													<FontAwesomeIcon
-														icon={faMagnifyingGlass}
-														title={t("header.NavModCompilations")}
-													/>
-													{t("header.NavModCompilations")}
-												</div>
-											</TabsTrigger>
-										)}
+										<TabsTrigger value="mod compilations">
+											<div className={"flex flex-gap-1 items-center"}>
+												<FontAwesomeIcon
+													icon={faMagnifyingGlass}
+													title={t("header.NavModCompilations")}
+												/>
+												{t("header.NavModCompilations")}
+											</div>
+										</TabsTrigger>
 									</Show>
 									<Show if={profilesManagement$.hasProfiles}>
-										{() => (
-											<TabsTrigger value="optimize">
-												<div className={"flex flex-gap-1 items-center"}>
-													<FontAwesomeIcon
-														icon={faWrench}
-														title={t("header.NavOptimizeMods")}
-													/>
-													{t("header.NavOptimizeMods")}
-												</div>
-											</TabsTrigger>
-										)}
+										<TabsTrigger value="optimize">
+											<div className={"flex flex-gap-1 items-center"}>
+												<FontAwesomeIcon
+													icon={faWrench}
+													title={t("header.NavOptimizeMods")}
+												/>
+												{t("header.NavOptimizeMods")}
+											</div>
+										</TabsTrigger>
 									</Show>
 									<Show if={profilesManagement$.hasProfiles}>
-										{() => (
-											<TabsTrigger value="settings">
-												<div className={"flex flex-gap-1 items-center"}>
-													<FontAwesomeIcon
-														icon={faGear}
-														title={t("header.NavSettings")}
-													/>
-													{t("header.NavSettings")}
-												</div>
-											</TabsTrigger>
-										)}
+										<TabsTrigger value="settings">
+											<div className={"flex flex-gap-1 items-center"}>
+												<FontAwesomeIcon
+													icon={faGear}
+													title={t("header.NavSettings")}
+												/>
+												{t("header.NavSettings")}
+											</div>
+										</TabsTrigger>
 									</Show>
 									<TabsTrigger value="help">
 										<div className={"flex flex-gap-1 items-center"}>
@@ -207,53 +199,37 @@ const App = () => {
 									</TabsTrigger>
 								</TabsList>
 							</div>
-							<Memo>{() => <ProfilesManager />}</Memo>
+							<Memo><ProfilesManager /></Memo>
 						</div>
 						<Show if={profilesManagement$.hasProfiles}>
-							{() => (
-								<Memo>
-									{() => (
-										<TabsContent className={tabStyle} value="mods">
-											<ModsView />
-										</TabsContent>
-									)}
-								</Memo>
-							)}
+							<Memo>
+								<TabsContent className={tabStyle} value="mods">
+									<ModsView />
+								</TabsContent>
+							</Memo>
 						</Show>
 						<Show if={profilesManagement$.hasProfiles}>
-							{() => (
-								<Memo>
-									{() => (
-										<TabsContent className={tabStyle} value="mod compilations">
-											<CompilationsView />
-										</TabsContent>
-									)}
-								</Memo>
-							)}
+							<Memo>
+								<TabsContent className={tabStyle} value="mod compilations">
+									<CompilationsView />
+								</TabsContent>
+							</Memo>
 						</Show>
 						<Show if={profilesManagement$.hasProfiles}>
-							{() => (
-								<Memo>
-									{() => (
-										<TabsContent className={tabStyle} value="optimize">
-											<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-												<OptimizerView />
-											</Suspense>
-										</TabsContent>
-									)}
-								</Memo>
-							)}
+							<Memo>
+								<TabsContent className={tabStyle} value="optimize">
+									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+										<OptimizerView />
+									</Suspense>
+								</TabsContent>
+							</Memo>
 						</Show>
 						<Show if={profilesManagement$.hasProfiles}>
-							{() => (
-								<Memo>
-									{() => (
-										<TabsContent className={tabStyle} value="settings">
-											<SettingsView />
-										</TabsContent>
-									)}
-								</Memo>
-							)}
+							<Memo>
+								<TabsContent className={tabStyle} value="settings">
+									<SettingsView />
+								</TabsContent>
+							</Memo>
 						</Show>
 						<TabsContent className={tabStyle} value="help">
 							<HelpView />

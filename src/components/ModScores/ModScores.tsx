@@ -54,14 +54,12 @@ const ModScores = observer(
 					</Show>
 					<Separator className={"m-y-1 border-foreground"} decorative />
 					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
-						{() => (
-							<li key={"5"} className={`class-${mod.getClass()}`}>
-								{modScores.find((modScore) => modScore.name === scoreName)
-									?.isFlatOrPercentage === "IsFlat"
-									? `${mod.scores[scoreName]}`
-									: `${Math.floor(mod.scores[scoreName] * 100) / 100}%`}
-							</li>
-						)}
+						<li key={"5"} className={`class-${mod.getClass()}`}>
+							{modScores.find((modScore) => modScore.name === scoreName)
+								?.isFlatOrPercentage === "IsFlat"
+								? `${mod.scores[scoreName]}`
+								: `${Math.floor(mod.scores[scoreName] * 100) / 100}%`}
+						</li>
 					</Show>
 				</ul>
 			</div>

@@ -40,6 +40,9 @@ export default defineConfig({
 	plugins: [
 		dynamicImport(),
 		react({
+      babel: {
+        configFile: true // This tells it to use your babel.config.js
+      },
 			exclude: [
 				/.*\.worker\.ts$/,
 				/.*workers\/.*\.ts$/,
