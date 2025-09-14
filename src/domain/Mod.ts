@@ -43,6 +43,7 @@ export class Mod {
 	} = {};
 	assignedID: CharacterNames | "null";
 	reRolledCount: number;
+	speedRemainder = 0;
 
 	static firstTimeSetupOfAccessors = true;
 

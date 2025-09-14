@@ -1,3 +1,6 @@
+// utils
+import * as v from "valibot";
+
 // state
 import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -12,6 +15,7 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
+import { FetchedFullGIMOProfileResponseSchema, type FetchedFullGIMOProfile } from "../domain/FetchedFullGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
 import type { ProfileCreationData } from "../domain/ProfileCreationData";
 import type * as DTOs from "#/modules/profilesManagement/dtos";
@@ -235,6 +239,52 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 				playerValues: profileValues,
 				updated: playerProfile.updated ?? false,
 			} as FetchedGIMOProfile;
+		},
+		fetchFullProfile: async (allycode: string) => {
+			// Use Cloudflare Pages Function as proxy to set custom headers
+			const response = await post(
+				"https://mods-manager.pages.dev/huAll", // Your Cloudflare function endpoint
+				{
+					url: "https://api.hotutils.com/Production/account/data/all",
+					data: {
+						sessionId: hotutils$.getSessionIdOfProfile(allycode),
+					},
+					headers: {
+						"authority": "api.hotutils.com",
+						"accept": "*/*",
+						"accept-language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
+						"apiuserid": "898a36a3-948a-4a8a-9798-7a1552b042a8",
+						"cache-control": "no-cache",
+						"content-type": "application/json",
+						"dnt": "1",
+						"origin": "https://hotutils.com",
+						"pragma": "no-cache",
+						"referer": "https://hotutils.com/",
+						"sec-ch-ua": "^\^Not.A/Brand^^;v=^\^8^^, ^\^Chromium^^;v=^\^114^^, ^\^Google",
+						"sec-ch-ua-mobile": "?1",
+						"sec-ch-ua-platform": "^\^Android^^",
+						"sec-fetch-dest": "empty",
+						"sec-fetch-mode": "cors",
+						"sec-fetch-site": "same-site",
+						"user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36",
+					},
+				},
+			);
+
+			if (response.errorMessage) {
+				throw new Error(response.errorMessage);
+			}
+
+			const parseResult = v.safeParse(
+				FetchedFullGIMOProfileResponseSchema,
+				response,
+			);
+			if (!parseResult.success) {
+				throw new Error("Failed to parse full profile from HotUtils");
+			}
+
+
+			return parseResult.output.data as FetchedFullGIMOProfile;
 		},
 	});
 

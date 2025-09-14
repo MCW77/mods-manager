@@ -22,6 +22,7 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 
 import * as Character from "#/domain/Character";
+import { FetchedFullGIMOProfile } from "../hotUtils/domain/FetchedFullGIMOProfile";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -42,6 +43,7 @@ export async function refreshPlayerData(
 ): Promise<void> {
 	const cleanedAllycode = cleanAllycode(allycode);
 	let profile: FetchedGIMOProfile;
+	let fullProfile: FetchedFullGIMOProfile;
 	const messages: string[] = [];
 	isBusy$.set(true);
 
@@ -61,7 +63,11 @@ export async function refreshPlayerData(
 
 	// Then, fetch the player's data from HotUtils
 	try {
-		profile = await hotutils$.fetchProfile(cleanedAllycode);
+
+		[profile, fullProfile] = await Promise.all([
+			hotutils$.fetchProfile(cleanedAllycode),
+			hotutils$.fetchFullProfile(cleanedAllycode),
+		]);
 
 		// Process all of the data that's been collected
 
@@ -70,6 +76,7 @@ export async function refreshPlayerData(
 		updatePlayerData(
 			cleanedAllycode,
 			profile,
+			fullProfile,
 			keepOldMods && !(useSession && sessionId),
 		);
 		// Show the success and/or error messages
@@ -180,6 +187,7 @@ function showFetchResult(
 function updatePlayerData(
 	newAllycode: string,
 	profile: FetchedGIMOProfile,
+	fullProfile: FetchedFullGIMOProfile,
 	keepOldMods: boolean,
 ): void {
 	try {
@@ -218,6 +226,9 @@ function updatePlayerData(
 				modById$[modId].characterID.set("null");
 			}
 		} else
+			for (const mod of fullProfile.mods.mods) {
+				profilesManagement$.profiles.profileByAllycode[newAllycode].modById[mod.id].speedRemainder.set(mod.speedRemainder);
+			}
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();
