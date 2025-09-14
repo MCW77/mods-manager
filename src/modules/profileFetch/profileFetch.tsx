@@ -64,10 +64,9 @@ export async function refreshPlayerData(
 	// Then, fetch the player's data from HotUtils
 	try {
 
-		[profile, fullProfile] = await Promise.all([
-			hotutils$.fetchProfile(cleanedAllycode),
-			hotutils$.fetchFullProfile(cleanedAllycode),
-		]);
+
+			profile = await hotutils$.fetchProfile(cleanedAllycode);
+			fullProfile = await hotutils$.fetchFullProfile(cleanedAllycode);
 
 		// Process all of the data that's been collected
 
