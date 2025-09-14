@@ -12,6 +12,9 @@ export async function onRequest(context) {
 
     // Extract the target URL and custom headers from the request
     const { data } = requestBody;
+    console.log("Data received in huAll function:", data);
+    const jsonData = JSON.stringify(data);
+    console.log("JSON data to be sent:", jsonData);
 
     const url = "https://api.hotutils.com/Production/account/data/all";
 
