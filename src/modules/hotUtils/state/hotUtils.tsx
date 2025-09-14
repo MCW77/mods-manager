@@ -241,6 +241,9 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			} as FetchedGIMOProfile;
 		},
 		fetchFullProfile: async (allycode: string) => {
+			if (hotutils$.getSessionIdOfProfile(allycode) === "") {
+				return {} as FetchedFullGIMOProfile;
+			}
 			// Use Cloudflare Pages Function as proxy to set custom headers
 			const response = await post(
 				"https://api-test.mods-manager.pages.dev/huAll", // Your Cloudflare function endpoint

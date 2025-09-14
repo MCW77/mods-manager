@@ -225,13 +225,16 @@ function updatePlayerData(
 			for (const modId of modById$.keys()) {
 				modById$[modId].characterID.set("null");
 			}
-		} else
-			for (const mod of fullProfile.mods.mods) {
-				profilesManagement$.profiles.profileByAllycode[newAllycode].modById[mod.id].speedRemainder.set(mod.speedRemainder);
+		} else {
+			if (fullProfile.mods) {
+				for (const mod of fullProfile.mods.mods) {
+					profilesManagement$.profiles.profileByAllycode[newAllycode].modById[mod.id].speedRemainder.set(mod.speedRemainder);
+				}
 			}
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();
+		}
 		//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
 		for (const mod of profile.mods)
 			profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
