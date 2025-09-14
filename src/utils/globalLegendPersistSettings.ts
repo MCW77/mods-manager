@@ -636,25 +636,6 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 					const newCompilation = upgradeCompilationTo20(compilation);
 					newCompilations.set(compilationId, newCompilation);
 				}
-				/*
-				for (const [compilationId, compilation] of compilations) {
-					for (const [key, value] of objectEntries(
-						compilation as Record<string, unknown>,
-					)) {
-						if (key === "hasSelectionChanged") {
-						} else if (key === "id") {
-							newCompilation[key] = value;
-							newCompilation.isReoptimizationNeeded = true;
-						} else if (key === "optimizationConditions") {
-							newCompilation[key] = value;
-							newCompilation.reoptimizationIndex = -1;
-						} else {
-							newCompilation[key] = value;
-						}
-					}
-					newCompilations.set(compilationId, newCompilation);
-				}
-				*/
 				newCompilationsByAllycode.set(allycode, newCompilations);
 			}
 			return {
@@ -673,22 +654,6 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 			const newDefaultCompilation = upgradeCompilationTo20(
 				oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
 			);
-			/*
-			for (const [key, value] of objectEntries(
-				oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
-			)) {
-				if (key === "hasSelectionChanged") {
-				} else if (key === "id") {
-					newDefaultCompilation[key] = value;
-					newDefaultCompilation.isReoptimizationNeeded = true;
-				} else if (key === "optimizationConditions") {
-					newDefaultCompilation[key] = value;
-					newDefaultCompilation.reoptimizationIndex = -1;
-				} else {
-					newDefaultCompilation[key] = value;
-				}
-			}
-			*/
 			return {
 				id: "defaultCompilation",
 				defaultCompilation: {
@@ -704,40 +669,12 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 		"LockedStatus",
 		"lockedStatus",
 		(oldLockedStatus) => {
-			/*
-			const newLockedStatus: Record<
-				string,
-				Record<string, boolean> | Set<CharacterNames>
-			> = structuredClone(
-				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
-					string,
-					Record<string, boolean>
-				>,
-			);
-			upgradeLockedStatusTo20(newLockedStatus);
-			*/
 			const newLockedStatus = upgradeLockedStatusTo20(
 				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
 					string,
 					Record<string, boolean>
 				>,
 			);
-			/*
-			const newLockedStatus: Record<string, unknown> = {};
-			for (const [allycode, status] of objectEntries(
-				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
-					string,
-					unknown
-				>,
-			)) {
-				const lockedCharacters = new Set<CharacterNames>(
-					objectEntries(status as Record<CharacterNames, boolean>)
-						.filter(([, isLocked]) => isLocked)
-						.map(([charId]) => charId as CharacterNames),
-				);
-				newLockedStatus[allycode] = lockedCharacters;
-			}
-				*/
 			return {
 				id: "lockedStatus",
 				lockedCharactersByAllycode: {
