@@ -243,7 +243,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 		fetchFullProfile: async (allycode: string) => {
 			// Use Cloudflare Pages Function as proxy to set custom headers
 			const response = await post(
-				"https://mods-manager.pages.dev/huAll", // Your Cloudflare function endpoint
+				"https://api-test.mods-manager.pages.dev/huAll", // Your Cloudflare function endpoint
 				{
 					data: {
 						sessionId: hotutils$.getSessionIdOfProfile(allycode),
