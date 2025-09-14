@@ -7,38 +7,55 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 export type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
 export type BaseCharacterAlignments = "noforce" | "neutral" | "light" | "dark";
 
+export interface BaseSkill {
+	display: string;
+	key: string;
+	leader: boolean;
+	mode: APIBaseOmicronMode;
+}
+
 export interface APIBaseCharacterCategory {
 	display: string;
 	key: string;
 }
+export interface APIBaseSkill {
+	display: string;
+	key: string;
+	leader: boolean;
+	mode: APIBaseOmicronMode;
+}
 export interface APIBaseCharacter {
+	affiliation: APIBaseCharacterCategory[];
+	alignment: APIBaseCharacterAlignments;
 	baseId: CharacterNames;
-	name: string;
 	baseImage: string;
-	combatType: number;
 	categories: string[];
+	combatType: number;
 	description: string;
 	fleetCommander: boolean;
 	galacticLegend: boolean;
-	alignment: APIBaseCharacterAlignments;
+	name: string;
+	omicron: APIBaseSkill[];
+	other: APIBaseCharacterCategory[];
+	profession: APIBaseCharacterCategory[];
 	role: APIBaseCharacterCategory[];
 	shipSlot: number;
-	affiliation: APIBaseCharacterCategory[];
 	species: APIBaseCharacterCategory[];
-	profession: APIBaseCharacterCategory[];
-	other: APIBaseCharacterCategory[];
+	zeta: APIBaseSkill[];
 }
 
 /**
  * interface to hold static settings for each character that the optimizer knows about.
  */
 export interface BaseCharacter {
-	id: CharacterNames;
-	name: string;
+	alignment: BaseCharacterAlignments;
 	avatarUrl: string;
 	categories: string[];
 	description: string;
-	alignment: BaseCharacterAlignments;
+	id: CharacterNames;
+	name: string;
+	omicrons: BaseSkill[];
+	zetas: BaseSkill[];
 }
 
 const API2BaseCharacterAlignment = {
@@ -46,7 +63,20 @@ const API2BaseCharacterAlignment = {
 	1: "neutral",
 	2: "light",
 	3: "dark",
-};
+} as const;
+
+const APIBaseOmicronMode = {
+	4: "raid",
+	7: "tb",
+	8: "tw",
+	9: "gac",
+	11: "conquest",
+	12: "gc",
+	14: "3v3gac",
+	15: "5v5gac",
+} as const;
+
+type APIBaseOmicronMode = typeof APIBaseOmicronMode[keyof typeof APIBaseOmicronMode];
 
 export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 	return groupByKey(
@@ -76,13 +106,25 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 				categories = categories.concat(alignments);
 
 				return {
-					id: bc.baseId,
-					name: bc.name,
+					alignment: API2BaseCharacterAlignment[bc.alignment],
 					avatarUrl: `https://api.hotutils.com/images${bc.baseImage}`,
 					categories: categories,
 					description: bc.description,
-					alignment: API2BaseCharacterAlignment[bc.alignment],
-				} as BaseCharacter;
+					id: bc.baseId,
+					name: bc.name,
+					omicrons: bc.omicron.map((skill) => ({
+						display: skill.display,
+						key: skill.key,
+						leader: skill.leader,
+						mode: skill.mode,
+					})),
+					zetas: bc.zeta.map((skill) => ({
+						display: skill.display,
+						key: skill.key,
+						leader: skill.leader,
+						mode: skill.mode,
+					})),
+				};
 			}),
 		(bc: BaseCharacter) => bc.id,
 	) as BaseCharacterById;
@@ -93,10 +135,12 @@ export type BaseCharacterById = Record<CharacterNames, BaseCharacter>;
 export type BaseCharacters = BaseCharacter[];
 
 export const defaultBaseCharacter = {
-	id: "FINN",
-	name: "",
+	alignment: "light",
 	avatarUrl: "https://swgoh.gg/static/img/assets/blank-character.png",
 	categories: [],
 	description: "",
-	alignment: "light",
+	id: "FINN",
+	name: "",
+	omicrons: [],
+	zetas: [],
 } as BaseCharacter;
