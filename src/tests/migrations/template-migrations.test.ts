@@ -31,14 +31,7 @@ describe("Template Migrations", () => {
 				expect(result.backup.characterTemplates).toBeDefined();
 				expect(Array.isArray(result.backup.characterTemplates)).toBe(true);
 
-				const templates = result.backup.characterTemplates as Array<{
-					id: string;
-					name: string;
-					selectedCharacters: Array<{
-						id: string;
-						target: Record<string, unknown>;
-					}>;
-				}>;
+				const templates = result.backup.characterTemplates;
 
 				expect(templates[0].id).toBe("Darth Revan Test"); // GIMO name becomes id
 			}
@@ -61,14 +54,7 @@ describe("Template Migrations", () => {
 			expect(result.backup).toBeDefined();
 
 			if (result.backup) {
-				const templates = result.backup.characterTemplates as Array<{
-					id: string;
-					name: string;
-					selectedCharacters: Array<{
-						id: string;
-						target: Record<string, unknown>;
-					}>;
-				}>;
+				const templates = result.backup.characterTemplates;
 
 				expect(templates[0].selectedCharacters).toBeDefined();
 				expect(templates[0].selectedCharacters[0].id).toBe("DARTHREVAN");
@@ -164,20 +150,7 @@ describe("Template Migrations", () => {
 			expect(result.importError.errorMessage).toBe("");
 
 			if (result.backup) {
-				const templates = result.backup.characterTemplates as Array<{
-					id: string;
-					name: string;
-					selectedCharacters: Array<{
-						id: string;
-						target: {
-							targetStats: Array<{
-								stat: string;
-								minimum: number;
-								maximum: number;
-							}>;
-						};
-					}>;
-				}>;
+				const templates = result.backup.characterTemplates;
 				const template = templates[0];
 				expect(template.id).toBe("Test Character Template"); // GIMO name becomes id
 				expect(template.selectedCharacters).toBeDefined();

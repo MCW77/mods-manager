@@ -1,11 +1,3 @@
-declare global {
-	interface ImportMeta {
-		glob: (
-			pattern: string,
-		) => Record<string, () => Promise<{ dbFixture: Record<string, unknown> }>>;
-	}
-}
-
 // Map dynamic per-version fixtures under ./fixtures/db/v*.ts
 const loaders = import.meta.glob("./fixtures/**/v*.ts");
 
