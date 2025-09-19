@@ -1294,9 +1294,9 @@ export const defaultFixture = {
 				},
 			},
 		},
-		sessionIds: {
-			634243494: "",
-		},
+		sessionIds: new Map<string, { gimoSessionId: string; huSessionId: string }>(
+			[["634243494", { gimoSessionId: "sessionId-1", huSessionId: "" }]],
+		),
 		settings: {
 			"634243494": {
 				forceCompleteSets: false,
@@ -1308,7 +1308,7 @@ export const defaultFixture = {
 			},
 		},
 	},
-	version: 20,
+	version: 21,
 };
 
 export const fromV16 = {
@@ -1326,5 +1326,5 @@ export const fromV16 = {
 		sessionIds: {},
 		settings: null,
 	},
-	version: 20,
+	version: 21,
 };

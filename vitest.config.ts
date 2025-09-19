@@ -21,9 +21,9 @@ export default defineConfig({
 			},
 		},
 		globals: true,
-		setupFiles: ["./tests/migrations/setup.ts"],
+		setupFiles: ["./src/tests/migrations/setup.ts"],
 		include: [
-			"tests/migrations/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
+			"src/tests/migrations/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
 		],
 		testTimeout: 30000, // Longer timeout for database operations
 		coverage: {
@@ -31,7 +31,7 @@ export default defineConfig({
 			reporter: ["text", "json", "html"],
 			exclude: [
 				"node_modules/",
-				"tests/",
+				"src/tests/",
 				"dist/",
 				"**/*.d.ts",
 				"vite.config.ts",

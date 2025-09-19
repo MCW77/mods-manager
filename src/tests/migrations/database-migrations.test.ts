@@ -6,7 +6,7 @@ import {
 	openDatabaseWithMigration,
 	getFromStore,
 } from "./migration-utils";
-import { latestDBVersion } from "../../src/utils/globalLegendPersistSettings";
+import { latestDBVersion } from "../../utils/globalLegendPersistSettings";
 
 const migrateData = async (
 	dbName: string,

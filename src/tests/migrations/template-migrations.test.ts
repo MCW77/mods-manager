@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { loadFixture } from "./fixtures-loader";
-import { convertTemplates } from "../../src/modules/templates/domain/Backup";
+import { convertTemplates } from "../../modules/templates/domain/Backup";
 
 describe("Template Migrations", () => {
 	let templatesV0: unknown;

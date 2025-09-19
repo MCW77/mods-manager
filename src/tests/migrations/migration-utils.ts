@@ -8,10 +8,11 @@ import {
 	testOnlyUpgradeTo18,
 	testOnlyUpgradeTo19,
 	testOnlyUpgradeTo20,
-} from "../../src/utils/globalLegendPersistSettings";
+	testOnlyUpgradeTo21,
+} from "../../utils/globalLegendPersistSettings";
 
 // domain
-import { LatestModsManagerBackupSchema } from "../../src/domain/schemas/mods-manager/ModsManagerSchemas";
+import { LatestModsManagerBackupSchema } from "../../domain/schemas/mods-manager/ModsManagerSchemas";
 
 // Define store data interface for IndexedDB operations
 interface StoreData {
@@ -24,6 +25,7 @@ const storeNamesByVersion: Map<number, string[]> = new Map([
 	[18, testOnlyStoreNames || []],
 	[19, testOnlyStoreNames || []],
 	[20, testOnlyStoreNames || []],
+	[21, testOnlyStoreNames || []],
 ]);
 
 /**
@@ -119,6 +121,12 @@ export async function openDatabaseWithMigration(
 			if (oldVersion <= 19 && newVersion >= 20) {
 				if (testOnlyUpgradeTo20) {
 					await testOnlyUpgradeTo20(db, transaction);
+				}
+			}
+
+			if (oldVersion <= 20 && newVersion >= 21) {
+				if (testOnlyUpgradeTo21) {
+					await testOnlyUpgradeTo21(db, transaction);
 				}
 			}
 		};

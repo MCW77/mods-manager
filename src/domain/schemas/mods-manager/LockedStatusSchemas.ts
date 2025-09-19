@@ -5,11 +5,7 @@ import * as v from "valibot";
 import { characterNames } from "#/constants/CharacterNames";
 
 const LockedStatusByCharacterIdSchemaV18 = v.pipe(
-	v.object(
-		Object.fromEntries(
-			characterNames.map((name) => [name, v.optional(v.boolean())]),
-		),
-	),
+	v.record(v.string(), v.boolean()),
 	v.transform((obj) => {
 		const result: Record<(typeof characterNames)[number], boolean> =
 			{} as Record<(typeof characterNames)[number], boolean>;

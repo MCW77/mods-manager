@@ -10,4 +10,5 @@ export * from "./CompilationSchemas";
 export * from "./PersistedProfilesSchemas";
 export * from "./SettingsByProfileSchemas";
 export * from "./ModsViewSetupsSchemas";
+export * from "./HotutilsSchemas";
 export * from "./ModsManagerSchemas";

@@ -1,3 +1,6 @@
+// utils
+import * as v from "valibot";
+
 // state
 import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -12,23 +15,27 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
+import {
+	FetchedFullGIMOProfileResponseSchema,
+	type FetchedFullGIMOProfile,
+} from "../domain/FetchedFullGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
 import type { ProfileCreationData } from "../domain/ProfileCreationData";
 import type * as DTOs from "#/modules/profilesManagement/dtos";
 import * as Mappers from "#/modules/profilesManagement/mappers";
 import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 import { Mod } from "#/domain/Mod";
-import type {
-	HotutilsObservable,
-	SessionIdByProfile,
-} from "../domain/HotutilsObservable";
+import type { HotutilsObservable } from "../domain/HotutilsObservable";
 
 const hotutilsv2baseurl =
 	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
 
 const initialPersistedData = {
-	id: "sessionIdByProfile",
-	sessionIdByProfile: {} as SessionIdByProfile,
+	id: "sessionIDsByProfile",
+	sessionIDsByProfile: new Map<
+		string,
+		{ gimoSessionId: string; huSessionId: string }
+	>(),
 } as const;
 
 const post = async (url = "", data = {}, extras = {}) => {
@@ -61,23 +68,29 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 		persistedData: structuredClone(initialPersistedData),
 		activeSessionId: () => {
 			const allycode = profilesManagement$.profiles.activeAllycode.get();
-			return hotutils$.sessionIdByProfile[allycode].get() || "";
+			return hotutils$.sessionIDsByProfile[allycode].gimoSessionId.get() || "";
 		},
 		hasActiveSession: () => {
 			return hotutils$.activeSessionId.get() !== "" && hotutils$.isSubscribed();
 		},
-		getSessionIdOfProfile: (allycode: string) => {
-			return hotutils$.sessionIdByProfile[allycode].peek() || "";
+		getGIMOSessionIdOfProfile: (allycode: string) => {
+			return hotutils$.sessionIDsByProfile[allycode].gimoSessionId.peek() || "";
+		},
+		getHUSessionIdOfProfile: (allycode: string) => {
+			return hotutils$.sessionIDsByProfile[allycode].huSessionId.peek() || "";
 		},
 		isSubscribed: () => hotutils$.checkSubscriptionStatus(),
-		sessionIdByProfile: () => {
-			return hotutils$.persistedData.sessionIdByProfile;
+		sessionIDsByProfile: () => {
+			return hotutils$.persistedData.sessionIDsByProfile;
 		},
 		addProfile: (allycode: string) => {
-			hotutils$.sessionIdByProfile[allycode].set("");
+			hotutils$.sessionIDsByProfile.set(allycode, {
+				gimoSessionId: "",
+				huSessionId: "",
+			});
 		},
 		deleteProfile: (allycode: string) => {
-			hotutils$.sessionIdByProfile[allycode].delete();
+			hotutils$.sessionIDsByProfile.delete(allycode);
 		},
 		reset: () => {
 			syncStatus$.reset();
@@ -199,7 +212,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/",
 				{
 					action: "getprofile",
-					sessionId: hotutils$.getSessionIdOfProfile(allycode),
+					sessionId: hotutils$.getGIMOSessionIdOfProfile(allycode),
 					payload: {
 						allyCode: allycode,
 					},
@@ -235,6 +248,34 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 				playerValues: profileValues,
 				updated: playerProfile.updated ?? false,
 			} as FetchedGIMOProfile;
+		},
+		fetchFullProfile: async (allycode: string) => {
+			if (hotutils$.getHUSessionIdOfProfile(allycode) === "") {
+				return {} as FetchedFullGIMOProfile;
+			}
+			// Use Cloudflare Pages Function as proxy to set custom headers
+			const response = await post(
+				"https://api-test.mods-manager.pages.dev/huAll", // Your Cloudflare function endpoint
+				{
+					data: {
+						sessionId: hotutils$.getHUSessionIdOfProfile(allycode),
+					},
+				},
+			);
+
+			if (response.errorMessage) {
+				throw new Error(response.errorMessage);
+			}
+
+			const parseResult = v.safeParse(
+				FetchedFullGIMOProfileResponseSchema,
+				response,
+			);
+			if (!parseResult.success) {
+				throw new Error("Failed to parse full profile from HotUtils");
+			}
+
+			return parseResult.output.data as FetchedFullGIMOProfile;
 		},
 	});
 

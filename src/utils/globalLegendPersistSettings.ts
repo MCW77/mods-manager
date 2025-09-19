@@ -234,6 +234,29 @@ function upgradeLockedStatusTo20(
 	return newLockedStatus;
 }
 
+function upgradeProfilesTo22(profiles: Record<string, unknown>) {
+	if (
+		Object.hasOwn(profiles, "profileByAllycode") &&
+		typeof profiles.profileByAllycode === "object" &&
+		profiles.profileByAllycode !== null
+	) {
+		for (const profile of Object.values(profiles.profileByAllycode)) {
+			if (
+				typeof profile === "object" &&
+				profile !== null &&
+				Object.hasOwn(profile, "modById")
+			) {
+				for (const mod of Object.values(
+					profile.modById as Record<string, Record<string, unknown>>,
+				)) {
+					mod.speedRemainder = 0;
+				}
+			}
+		}
+	}
+	return profiles;
+}
+
 function createStores(db: IDBDatabase, stores: string[] = storeNames) {
 	for (const storeName of stores) {
 		if (!db.objectStoreNames.contains(storeName)) {
@@ -685,7 +708,49 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 	);
 }
 
-const dbVersions = [16, 18, 19, 20] as const;
+async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
+	await itemUpgrade(
+		db,
+		transaction,
+		"HotUtils",
+		"sessionIdByProfile",
+		(oldHotUtils) => {
+			const newHotUtils: Map<
+				string,
+				{ gimoSessionId: string; huSessionId: string }
+			> = new Map();
+			for (const [allycode, sessionId] of objectEntries(
+				(oldHotUtils.sessionIdByProfile as Record<string, unknown>)
+					.sessionIdByProfile as Record<string, string>,
+			)) {
+				newHotUtils.set(allycode, {
+					gimoSessionId: sessionId,
+					huSessionId: "",
+				});
+			}
+			return {
+				id: "sessionIDsByProfile",
+				sessionIDsByProfile: newHotUtils,
+			};
+		},
+	);
+}
+
+async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
+	await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
+		const newProfiles = upgradeProfilesTo22(
+			oldProfiles.profiles as Record<string, unknown>,
+		);
+		return {
+			id: "profiles",
+			profiles: {
+				...newProfiles,
+			},
+		};
+	});
+}
+
+const dbVersions = [16, 18, 19, 20, 21] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -706,6 +771,7 @@ const persistOptions = configureSynced({
 					if (event.oldVersion < 18) await upgradeTo18(db, transaction);
 					if (event.oldVersion < 19) await upgradeTo19(db, transaction);
 					if (event.oldVersion < 20) await upgradeTo20(db, transaction);
+					if (event.oldVersion < 21) await upgradeTo21(db, transaction);
 				}
 			},
 		}),
@@ -720,6 +786,7 @@ const testOnlyStoreNames = testing ? storeNames : undefined;
 const testOnlyUpgradeTo18 = testing ? upgradeTo18 : undefined;
 const testOnlyUpgradeTo19 = testing ? upgradeTo19 : undefined;
 const testOnlyUpgradeTo20 = testing ? upgradeTo20 : undefined;
+const testOnlyUpgradeTo21 = testing ? upgradeTo21 : undefined;
 
 export {
 	type DBVersions,
@@ -733,4 +800,5 @@ export {
 	testOnlyUpgradeTo18,
 	testOnlyUpgradeTo19,
 	testOnlyUpgradeTo20,
+	testOnlyUpgradeTo21,
 };

@@ -99,6 +99,16 @@ export const defaultFixture = {
 		},
 	],
 
+	HotUtils: [
+		{
+			id: "sessionIdByProfile",
+			sessionIdByProfile: {
+				"634243494": "session-1",
+				"123456789": "session-2",
+			},
+		},
+	],
+
 	IncrementalOptimization: [
 		{
 			id: "indicesByProfile",

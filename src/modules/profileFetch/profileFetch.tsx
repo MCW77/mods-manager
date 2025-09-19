@@ -22,6 +22,7 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 
 import * as Character from "#/domain/Character";
+import type { FetchedFullGIMOProfile } from "../hotUtils/domain/FetchedFullGIMOProfile";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -42,6 +43,7 @@ export async function refreshPlayerData(
 ): Promise<void> {
 	const cleanedAllycode = cleanAllycode(allycode);
 	let profile: FetchedGIMOProfile;
+	let fullProfile: FetchedFullGIMOProfile;
 	const messages: string[] = [];
 	isBusy$.set(true);
 
@@ -54,7 +56,7 @@ export async function refreshPlayerData(
 		);
 		messages.push(`This is an error with an API that the optimizer uses (HotUtils) and NOT
       an error in the optimizer itself. Feel free to discuss it on the
-      optimizer\'s discord server, but know that there are no changes that
+      optimizer's discord server, but know that there are no changes that
       can be made to the optimizer to fix this issue.`);
 		return;
 	}
@@ -62,6 +64,7 @@ export async function refreshPlayerData(
 	// Then, fetch the player's data from HotUtils
 	try {
 		profile = await hotutils$.fetchProfile(cleanedAllycode);
+		fullProfile = await hotutils$.fetchFullProfile(cleanedAllycode);
 
 		// Process all of the data that's been collected
 
@@ -70,6 +73,7 @@ export async function refreshPlayerData(
 		updatePlayerData(
 			cleanedAllycode,
 			profile,
+			fullProfile,
 			keepOldMods && !(useSession && sessionId),
 		);
 		// Show the success and/or error messages
@@ -180,6 +184,7 @@ function showFetchResult(
 function updatePlayerData(
 	newAllycode: string,
 	profile: FetchedGIMOProfile,
+	fullProfile: FetchedFullGIMOProfile,
 	keepOldMods: boolean,
 ): void {
 	try {
@@ -217,16 +222,24 @@ function updatePlayerData(
 			for (const modId of modById$.keys()) {
 				modById$[modId].characterID.set("null");
 			}
-		} else
+		} else {
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();
+		}
 		//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
 		for (const mod of profile.mods)
 			profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
 				mod.id,
 				mod,
 			);
+		if (fullProfile.mods) {
+			for (const mod of fullProfile.mods.mods) {
+				profilesManagement$.profiles.profileByAllycode[newAllycode].modById[
+					mod.id
+				].speedRemainder.set(mod.speedRemainder);
+			}
+		}
 
 		compilations$.resetOptimizationConditions(newAllycode);
 		profilesManagement$.profiles.activeAllycode.set(newAllycode);

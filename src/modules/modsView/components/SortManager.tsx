@@ -31,6 +31,7 @@ const SortManager = observer(
 				label: "misc",
 				items: [
 					{ value: "characterID", label: "CharacterId (default)" },
+					{ value: "speedRemainder", label: "Speed Remainder" },
 					{ value: "slot", label: "Slot" },
 					{ value: "modset", label: "Set" },
 					{ value: "rolls", label: "# of Stat Upgrades" },
@@ -106,10 +107,7 @@ const SortManager = observer(
 												/>
 											)}
 										>
-											<FontAwesomeIcon
-												icon={faSortUp}
-												title="Sort ascending"
-											/>
+											<FontAwesomeIcon icon={faSortUp} title="Sort ascending" />
 										</Show>
 									</Button>
 									<Button

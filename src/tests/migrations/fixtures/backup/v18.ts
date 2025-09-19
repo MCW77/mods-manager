@@ -1333,7 +1333,7 @@ export const defaultFixture = {
 		},
 	},
 	sessionIds: {
-		634243494: "",
+		634243494: "sessionId-1",
 	},
 	settings: {
 		"634243494": {

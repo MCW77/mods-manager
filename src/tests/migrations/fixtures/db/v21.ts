@@ -1,4 +1,4 @@
-import type { CharacterNames } from "../../../../src/constants/CharacterNames";
+import type { CharacterNames } from "../../../../constants/CharacterNames";
 
 export const defaultFixture = {
 	CharactersManagement: [
@@ -110,6 +110,19 @@ export const defaultFixture = {
 					},
 				],
 			},
+		},
+	],
+
+	HotUtils: [
+		{
+			id: "sessionIDsByProfile",
+			sessionIDsByProfile: new Map<
+				string,
+				{ gimoSessionId: string; huSessionId: string }
+			>([
+				["123456789", { gimoSessionId: "session-2", huSessionId: "" }],
+				["634243494", { gimoSessionId: "session-1", huSessionId: "" }],
+			]),
 		},
 	],
 

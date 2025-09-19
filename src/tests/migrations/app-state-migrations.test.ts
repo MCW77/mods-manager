@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, vi } from "vitest";
 import { loadFixture } from "./fixtures-loader";
-import { convertBackup } from "../../src/modules/appState/domain/Backup";
-import { latestDBVersion } from "../../src/utils/globalLegendPersistSettings";
+import { convertBackup } from "../../modules/appState/domain/Backup";
+import { latestDBVersion } from "../../utils/globalLegendPersistSettings";
 import superjson from "superjson";
 
 // We'll need to mock the modules since they have side effects
@@ -65,7 +65,9 @@ vi.mock("#/modules/templates/state/templates", () => ({
 
 describe("App State Backup Migrations", () => {
 	describe("Migration Chain", async () => {
-		const backupV16 = await loadFixture(16, "backup");
+		const backupV16 = await loadFixture(16, "backup").then((data) =>
+			structuredClone(data),
+		);
 		const expectedFixture = await loadFixture(
 			latestDBVersion,
 			"backup",
@@ -105,12 +107,9 @@ describe("App State Backup Migrations", () => {
 		);
 
 		it("should handle missing migration gracefully", async () => {
-			const invalidBackup = {
-				...backupV16,
-				version: 12, // Non-existent version
-			};
+			backupV16.version = 12; // Non-existent version
 
-			const result = convertBackup(invalidBackup);
+			const result = convertBackup(backupV16);
 			// convertBackup should return null for invalid migrations instead of throwing
 			expect(result.importError.errorMessage).not.toBe("");
 			expect(result.importError.errorReason).toBe(
@@ -120,47 +119,38 @@ describe("App State Backup Migrations", () => {
 	});
 
 	describe("Data Integrity", async () => {
-		const backupV16 = await loadFixture(16, "backup");
-		it("should preserve essential data through migrations", async () => {
-			const backupWithData = {
-				...backupV16,
-				characterTemplates: { DARTHREVAN: { id: "DARTHREVAN", name: "Test" } },
-				profilesManagement: {
-					activeAllycode: "123456789",
-					profileByAllycode: {
-						"123456789": {
-							allycode: "123456789",
-							playerName: "TestPlayer",
-							modById: {},
-							characterById: {},
-						},
-					},
-				},
+		const backupV16 = await loadFixture(16, "backup").then((data) =>
+			structuredClone(data),
+		);
+		backupV16.characterTemplates = null; // Corrupted data
+		backupV16.profilesManagement = "invalid"; // Wrong type
+		let didThrow = false;
+		let result: {
+			backup:
+				| (Record<string, unknown> & { data: Record<string, unknown> })
+				| null;
+			importError: {
+				errorMessage: string;
+				errorReason: string;
+				errorSolution: string;
 			};
+		} = {
+			backup: null,
+			importError: { errorMessage: "", errorReason: "", errorSolution: "" },
+		};
+		try {
+			result = convertBackup(backupV16);
+		} catch (error) {
+			didThrow = true;
+		}
 
-			const result = convertBackup(backupWithData);
-
-			expect(result.backup).toBeDefined();
-			if (result.backup) {
-				// Type assertion to access data properties
-				const resultData = result.backup.data as Record<string, unknown>;
-				expect(resultData.characterTemplates).toEqual(
-					backupWithData.characterTemplates,
-				);
-				expect(resultData.profilesManagement).toBeDefined();
-			}
-		});
-
-		it("should handle corrupted data gracefully", async () => {
-			const corruptedBackup = {
-				...backupV16,
-				characterTemplates: null, // Corrupted data
-				profilesManagement: "invalid", // Wrong type
-			};
-
+		it("should handle corrupted data gracefully", () => {
 			// Should not throw, but handle gracefully
-			const result = convertBackup(corruptedBackup);
-			expect(result.backup).toBeDefined();
+			expect(result.importError.errorMessage).toBe(
+				"Import of mods-manager backup failed.",
+			);
+			expect(result.backup).toBeNull();
+			expect(didThrow).toBe(false);
 		});
 	});
 

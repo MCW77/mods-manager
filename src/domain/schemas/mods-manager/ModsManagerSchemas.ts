@@ -12,6 +12,8 @@ import {
 	ModsViewSetupsSchemaV19,
 	PersistedProfilesSchema,
 	SettingsByProfileSchema,
+	HotutilsSchemaV18,
+	HotutilsSchemaV21,
 } from "./";
 
 const ModsManagerBackupSchemaV16 = v.pipe(
@@ -50,10 +52,10 @@ const ModsManagerBackupSchemaV18 = v.object({
 	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV18),
 	modsViewSetups: ModsViewSetupsSchema,
 	profilesManagement: PersistedProfilesSchema,
-	sessionIds: v.record(v.string(), v.string()),
+	sessionIds: HotutilsSchemaV18,
 	settings: SettingsByProfileSchema,
 	version: v.string(),
-	client: v.exactOptional(v.literal("mods-manager"), "mods-manager"),
+	client: v.literal("mods-manager"),
 });
 type ModsManagerBackupSchemaV18Output = v.InferOutput<
 	typeof ModsManagerBackupSchemaV18
@@ -67,7 +69,7 @@ const ModsManagerBackupDataSchemaV19 = v.object({
 	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV18),
 	modsViewSetups: ModsViewSetupsSchemaV19,
 	profilesManagement: PersistedProfilesSchema,
-	sessionIds: v.record(v.string(), v.string()),
+	sessionIds: HotutilsSchemaV18,
 	settings: SettingsByProfileSchema,
 });
 type ModsManagerBackupDataSchemaV19Output = v.InferOutput<
@@ -87,18 +89,18 @@ type ModsManagerBackupSchemaV19Output = v.InferOutput<
 
 const ModsManagerBackupDataSchemaV20 = v.object({
 	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.record(
-		v.string(),
-		v.record(v.string(), CompilationSchemaV20),
-	),
+	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV20)),
 	defaultCompilation: CompilationSchemaV20,
 	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
 	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
 	modsViewSetups: ModsViewSetupsSchemaV19,
 	profilesManagement: PersistedProfilesSchema,
-	sessionIds: v.record(v.string(), v.string()),
+	sessionIds: HotutilsSchemaV18,
 	settings: SettingsByProfileSchema,
 });
+type ModsManagerBackupDataSchemaV20Output = v.InferOutput<
+	typeof ModsManagerBackupDataSchemaV20
+>;
 
 const ModsManagerBackupSchemaV20 = v.object({
 	appVersion: v.string(),
@@ -107,35 +109,41 @@ const ModsManagerBackupSchemaV20 = v.object({
 	data: ModsManagerBackupDataSchemaV20,
 	version: v.number(),
 });
+type ModsManagerBackupSchemaV20Output = v.InferOutput<
+	typeof ModsManagerBackupSchemaV20
+>;
 
-const LatestModsManagerBackupDataSchema = v.object({
+const ModsManagerBackupDataSchemaV21 = v.object({
 	characterTemplates: CharacterTemplateByNameSchema,
 	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV20)),
-	defaultCompilation: v.exactOptional(v.optional(CompilationSchemaV20)),
-	incrementalOptimizationIndices: v.exactOptional(
-		v.record(v.string(), v.nullable(v.number())),
-		{},
-	),
-	lockedStatus: v.exactOptional(
-		v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-		{},
-	),
-	modsViewSetups: v.exactOptional(v.optional(ModsViewSetupsSchemaV19)),
-	profilesManagement: v.exactOptional(v.optional(PersistedProfilesSchema)),
-	sessionIds: v.exactOptional(v.record(v.string(), v.string()), {}),
-	settings: v.exactOptional(v.optional(SettingsByProfileSchema)),
+	defaultCompilation: CompilationSchemaV20,
+	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+	modsViewSetups: ModsViewSetupsSchemaV19,
+	profilesManagement: PersistedProfilesSchema,
+	sessionIds: HotutilsSchemaV21,
+	settings: SettingsByProfileSchema,
 });
+
+const ModsManagerBackupSchemaV21 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: ModsManagerBackupDataSchemaV21,
+	version: v.number(),
+});
+
+const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV21;
 type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupDataSchema
 >;
-type Comp = LatestModsManagerBackupDataSchemaOutput["compilations"];
 
 const LatestModsManagerBackupSchema = v.object({
 	appVersion: v.string(),
-	data: LatestModsManagerBackupDataSchema,
 	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: LatestModsManagerBackupDataSchema,
 	version: v.number(),
-	client: v.exactOptional(v.literal("mods-manager"), "mods-manager"),
 });
 type LatestModsManagerBackupSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupSchema
@@ -153,9 +161,12 @@ export {
 	ModsManagerBackupSchemaV18,
 	ModsManagerBackupSchemaV19,
 	ModsManagerBackupSchemaV20,
+	ModsManagerBackupSchemaV21,
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupSchemaV18Output,
 	type ModsManagerBackupDataSchemaV19Output,
 	type ModsManagerBackupSchemaV19Output,
+	type ModsManagerBackupDataSchemaV20Output,
+	type ModsManagerBackupSchemaV20Output,
 	ModsManagerSchema,
 };

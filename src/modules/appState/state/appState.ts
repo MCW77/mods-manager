@@ -309,9 +309,12 @@ function mergeSessionIds(
 	}
 
 	for (const [allycode, backupSessionId] of Object.entries(backupSessionIds)) {
-		const currentSessionId = hotutils$.sessionIdByProfile[allycode].peek();
-		if (!currentSessionId || currentSessionId === "") {
-			hotutils$.sessionIdByProfile[allycode].set(backupSessionId);
+		const currentGimoSessionId =
+			hotutils$.sessionIDsByProfile[allycode].gimoSessionId.peek();
+		if (!currentGimoSessionId || currentGimoSessionId === "") {
+			hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
+				backupSessionId,
+			);
 		}
 	}
 }
@@ -438,7 +441,7 @@ const appState$: ObservableObject<AppState> = observable({
 				lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.peek(),
 			modsViewSetups: modsView$.toPersistable(),
 			profilesManagement: profilesManagement$.toPersistable(),
-			sessionIds: hotutils$.sessionIdByProfile.peek(),
+			sessionIds: hotutils$.sessionIDsByProfile.peek(),
 			settings: optimizationSettings$.settingsByProfile.peek(),
 		};
 		const compilations: Record<string, Record<string, Compilation>> = {};
