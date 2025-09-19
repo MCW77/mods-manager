@@ -19,16 +19,17 @@ const ReactiveInput = reactive(Input);
 const HotutilsSettingsForm = () => {
 	const [t, i18n] = useTranslation("settings-ui");
 
-	const globalCSS =
-		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
+	const containerCSS =
+		"grid gap-3 md:grid-cols-[[labels]auto_[gimo]1fr[hu]1fr] grid-auto-flow-row items-center justify-items-start" as const;
 	const labelCSS = "grid-col-[labels] grid-row-auto" as const;
-	const inputCSS = "grid-col-[controls] grid-row-auto" as const;
+	const gimoCSS = "grid-col-[gimo] grid-row-auto" as const;
+	const huCSS = "grid-col-[hu] grid-row-auto" as const;
 	const namesByAllycode = use$(
 		profilesManagement$.profiles.playernameByAllycode,
 	);
 
 	return (
-		<div className={globalCSS}>
+		<div className={containerCSS}>
 			<Label className={"labelCSS"}>{t("general.accounts.Profile")}</Label>
 			{Object.entries(namesByAllycode).map(([allycode, name]) => (
 				<Fragment key={allycode}>
@@ -36,13 +37,27 @@ const HotutilsSettingsForm = () => {
 						{`${allycode} - ${name}`}
 					</Label>
 					<ReactiveInput
-						className={inputCSS}
+						className={gimoCSS}
 						placeholder={t("general.hotutils.SessionIdPrompt")}
 						size={20}
 						type="text"
-						$value={hotutils$.sessionIdByProfile[allycode]}
+						$value={hotutils$.sessionIDsByProfile[allycode].gimoSessionId}
 						onChange={(event) =>
-							hotutils$.sessionIdByProfile[allycode].set(event.target.value)
+							hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
+								event.target.value,
+							)
+						}
+					/>
+					<ReactiveInput
+						className={huCSS}
+						placeholder={t("general.hotutils.SessionIdPrompt")}
+						size={20}
+						type="text"
+						$value={hotutils$.sessionIDsByProfile[allycode].huSessionId}
+						onChange={(event) =>
+							hotutils$.sessionIDsByProfile[allycode].huSessionId.set(
+								event.target.value,
+							)
 						}
 					/>
 				</Fragment>

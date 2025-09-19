@@ -84,7 +84,10 @@ const App = () => {
 				if (queryParams.has("NoPull")) {
 					if (profilesManagement$.profiles.activeAllycode.peek() === "")
 						refreshPlayerData(allycode, false, sessionId, false);
-					else hotutils$.sessionIdByProfile[allycode].set(sessionId);
+					else
+						hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
+							sessionId,
+						);
 				} else {
 					refreshPlayerData(allycode, true, sessionId, false);
 				}
@@ -199,7 +202,9 @@ const App = () => {
 									</TabsTrigger>
 								</TabsList>
 							</div>
-							<Memo><ProfilesManager /></Memo>
+							<Memo>
+								<ProfilesManager />
+							</Memo>
 						</div>
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>

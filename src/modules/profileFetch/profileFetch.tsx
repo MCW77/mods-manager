@@ -22,7 +22,7 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 
 import * as Character from "#/domain/Character";
-import { FetchedFullGIMOProfile } from "../hotUtils/domain/FetchedFullGIMOProfile";
+import type { FetchedFullGIMOProfile } from "../hotUtils/domain/FetchedFullGIMOProfile";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -56,17 +56,15 @@ export async function refreshPlayerData(
 		);
 		messages.push(`This is an error with an API that the optimizer uses (HotUtils) and NOT
       an error in the optimizer itself. Feel free to discuss it on the
-      optimizer\'s discord server, but know that there are no changes that
+      optimizer's discord server, but know that there are no changes that
       can be made to the optimizer to fix this issue.`);
 		return;
 	}
 
 	// Then, fetch the player's data from HotUtils
 	try {
-
-
-			profile = await hotutils$.fetchProfile(cleanedAllycode);
-			fullProfile = await hotutils$.fetchFullProfile(cleanedAllycode);
+		profile = await hotutils$.fetchProfile(cleanedAllycode);
+		fullProfile = await hotutils$.fetchFullProfile(cleanedAllycode);
 
 		// Process all of the data that's been collected
 
@@ -225,11 +223,6 @@ function updatePlayerData(
 				modById$[modId].characterID.set("null");
 			}
 		} else {
-			if (fullProfile.mods) {
-				for (const mod of fullProfile.mods.mods) {
-					profilesManagement$.profiles.profileByAllycode[newAllycode].modById[mod.id].speedRemainder.set(mod.speedRemainder);
-				}
-			}
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();
@@ -240,6 +233,13 @@ function updatePlayerData(
 				mod.id,
 				mod,
 			);
+		if (fullProfile.mods) {
+			for (const mod of fullProfile.mods.mods) {
+				profilesManagement$.profiles.profileByAllycode[newAllycode].modById[
+					mod.id
+				].speedRemainder.set(mod.speedRemainder);
+			}
+		}
 
 		compilations$.resetOptimizationConditions(newAllycode);
 		profilesManagement$.profiles.activeAllycode.set(newAllycode);

@@ -26,6 +26,8 @@ import {
 	ModsManagerBackupSchemaV19,
 	ModsManagerBackupSchemaV20,
 	type ModsManagerBackupSchemaV16Output,
+	type ModsManagerBackupDataSchemaV20Output,
+	ModsManagerBackupSchemaV21,
 } from "#/domain/schemas/mods-manager";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
 import { fromGIMOBackup } from "../mappers/GIMOBackupMapper";
@@ -38,7 +40,7 @@ interface BackupData {
 	lockedStatus: LockedCharactersByAllycode;
 	modsViewSetups: PersistableModsViewSetupByIdByCategory;
 	profilesManagement: PersistedProfiles;
-	sessionIds: Record<string, string>;
+	sessionIds: Map<string, { gimoSessionId: string; huSessionId: string }>;
 	settings: SettingsByProfile;
 }
 
@@ -138,10 +140,23 @@ const migrations = new Map<
 					},
 					incrementalOptimizationIndices: data.incrementalOptimizationIndices,
 					lockedStatus: data.lockedStatus,
-					modsViewSetups: data.modsViewSetups,
-					profilesManagement: data.profilesManagement,
+					modsViewSetups: {
+						AllMods: {},
+						Calibrate: {},
+						Level: {},
+						Reveal: {},
+						Slice5Dot: {},
+						Slice6Dot: {},
+						Slice6E: {},
+					},
+					profilesManagement: {
+						activeAllycode: "",
+						lastUpdatedByAllycode: {},
+						playernameByAllycode: {},
+						profileByAllycode: {},
+					},
 					sessionIds: data.sessionIds,
-					settings: data.settings,
+					settings: {},
 				},
 				version: 18,
 			};
@@ -251,6 +266,45 @@ const migrations = new Map<
 			};
 		},
 	],
+	[
+		20,
+		(normalizedBackup) => {
+			// Migrate v20 to v21: Update session IDs structure
+			const data =
+				normalizedBackup.data as ModsManagerBackupDataSchemaV20Output;
+
+			const newSessionIDs = new Map<
+				string,
+				{ gimoSessionId: string; huSessionId: string }
+			>();
+			for (const [allycode, sessionId] of objectEntries(data.sessionIds)) {
+				newSessionIDs.set(allycode, {
+					gimoSessionId: sessionId,
+					huSessionId: "",
+				});
+			}
+
+			const newData = {
+				characterTemplates: data.characterTemplates,
+				compilations: data.compilations,
+				defaultCompilation: data.defaultCompilation,
+				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+				lockedStatus: data.lockedStatus,
+				modsViewSetups: data.modsViewSetups,
+				profilesManagement: data.profilesManagement,
+				sessionIds: newSessionIDs,
+				settings: data.settings,
+			};
+
+			return {
+				appVersion: normalizedBackup.appVersion,
+				backupType: "fullBackup",
+				client: "mods-manager",
+				data: newData,
+				version: 21,
+			};
+		},
+	],
 ]);
 
 function runMigrations(data: NormalizedBackup) {
@@ -328,6 +382,14 @@ const convertBackup = (parsedJSON: unknown) => {
 	if (backup === null) {
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV20,
+			parsedJSON,
+		);
+		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
+	}
+
+	if (backup === null) {
+		const modsManagerParseResult = v.safeParse(
+			ModsManagerBackupSchemaV21,
 			parsedJSON,
 		);
 		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
