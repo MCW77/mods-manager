@@ -709,31 +709,36 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 }
 
 async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
-	await itemUpgrade(
-		db,
-		transaction,
-		"HotUtils",
-		"sessionIdByProfile",
-		(oldHotUtils) => {
-			const newHotUtils: Map<
-				string,
-				{ gimoSessionId: string; huSessionId: string }
-			> = new Map();
-			for (const [allycode, sessionId] of objectEntries(
-				(oldHotUtils.sessionIdByProfile as Record<string, unknown>)
-					.sessionIdByProfile as Record<string, string>,
-			)) {
-				newHotUtils.set(allycode, {
-					gimoSessionId: sessionId,
-					huSessionId: "",
-				});
-			}
-			return {
-				id: "sessionIDsByProfile",
-				sessionIDsByProfile: newHotUtils,
-			};
-		},
-	);
+	try {
+		await itemUpgrade(
+			db,
+			transaction,
+			"HotUtils",
+			"sessionIdByProfile",
+			(oldHotUtils) => {
+				const newHotUtils: Map<
+					string,
+					{ gimoSessionId: string; huSessionId: string }
+				> = new Map();
+				for (const [allycode, sessionId] of objectEntries(
+					(oldHotUtils.sessionIdByProfile as Record<string, unknown>)
+						.sessionIdByProfile as Record<string, string>,
+				)) {
+					newHotUtils.set(allycode, {
+						gimoSessionId: sessionId,
+						huSessionId: "",
+					});
+				}
+				return {
+					id: "sessionIDsByProfile",
+					sessionIDsByProfile: newHotUtils,
+				};
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo21:", error);
+		transaction.abort();
+	}
 }
 
 async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
