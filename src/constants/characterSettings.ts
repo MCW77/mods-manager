@@ -871,6 +871,28 @@ const characterSettings: CharacterSettingsIndexer = {
 			},
 		}),
 	]),
+
+	CAPTAINSILVO: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 20,
+				spd: 100,
+				pot: 5,
+				primaryRes: {
+					arrow: "Speed",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Potency %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
 	CAPTAINTARPALS: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -2246,6 +2268,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Speed %": 1,
 				"Health %": 1,
 			},
+		}),
+	]),
+	GLHONDO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 10,
+			spd: 100,
+			pot: 5,
 		}),
 	]),
 	GLLEIA: createCharacterSettings(
