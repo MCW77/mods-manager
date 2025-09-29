@@ -1,11 +1,14 @@
 // react
-import React, { useEffect, useRef, useState } from "react";
+import type React from "react";
 import { useTranslation } from "react-i18next";
+import { useRenderCount } from "#/hooks/useRenderCount";
 
 // utils
 import formatAllycode from "#/utils/formatAllycode";
 
 // state
+import type { ObservableBoolean } from "@legendapp/state";
+import { useObservable } from "@legendapp/state/react";
 const { refreshPlayerData } = await import(
 	"#/modules/profileFetch/profileFetch"
 );
@@ -14,21 +17,23 @@ const { refreshPlayerData } = await import(
 import { Input } from "#ui/input";
 
 type ComponentProps = {
-	setAddMode: React.Dispatch<React.SetStateAction<boolean>>;
+	isAddingProfile$: ObservableBoolean;
 };
 
-const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
+const ProfileAdder = ({ isAddingProfile$ }: ComponentProps) => {
+	useRenderCount("ProfileAdder");
 	const [t] = useTranslation("global-ui");
-	const inputRef = useRef<HTMLInputElement>(null);
-	const [isFetchFinished, setIsFetchFinished] = useState(false);
-
-	useEffect(() => {
-		if (isFetchFinished === true) setAddMode(false);
-	}, [isFetchFinished, setAddMode]);
+	const isFetchFinished$ = useObservable(false);
+	isAddingProfile$.onChange(({ value }) => {
+		if (value === true) isFetchFinished$.set(false);
+	});
+	isFetchFinished$.onChange(({ value }) => {
+		if (value === true) isAddingProfile$.set(false);
+	});
 
 	const fetch = async (allycode: string): Promise<void> => {
 		const result = await refreshPlayerData(allycode, true, null);
-		setIsFetchFinished(true);
+		isFetchFinished$.set(true);
 		return result;
 	};
 
@@ -39,10 +44,9 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 			inputMode={"numeric"}
 			placeholder={t("header.ProfileSelectionPlaceholder")}
 			size={26}
-			ref={inputRef}
 			onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
 				if (e.key === "Escape") {
-					setAddMode(false);
+					isAddingProfile$.set(false);
 				}
 				if (e.key === "Enter") {
 					fetch((e.target as HTMLInputElement).value);
@@ -66,7 +70,7 @@ const ProfileAdder = React.memo(({ setAddMode }: ComponentProps) => {
 			}}
 		/>
 	);
-});
+};
 
 ProfileAdder.displayName = "ProfileAdder";
 
