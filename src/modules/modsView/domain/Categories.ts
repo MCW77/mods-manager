@@ -1,11 +1,11 @@
 const categories = [
-	"Reveal",
-	"Level",
-	"Slice5Dot",
-	"Slice6E",
-	"Slice6Dot",
-	"Calibrate",
 	"AllMods",
+	"Calibrate",
+	"Level",
+	"Reveal",
+	"Slice5Dot",
+	"Slice6Dot",
+	"Slice6E",
 ] as const;
 type Categories = (typeof categories)[number];
 

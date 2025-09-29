@@ -49,14 +49,8 @@ const CompilationSchemaV18 = v.object({
 });
 
 const CompilationSchemaV20 = v.object({
-	id: v.string(),
 	category: v.string(),
 	description: v.string(),
-	isReoptimizationNeeded: v.boolean(),
-	lastOptimized: v.nullable(v.date()),
-	optimizationConditions: OptimizationConditionsSchemaV20,
-	reoptimizationIndex: v.number(),
-	selectedCharacters: SelectedCharactersSchema,
 	flatCharacterModdings: v.array(
 		v.object({
 			assignedMods: v.array(v.string()),
@@ -66,6 +60,12 @@ const CompilationSchemaV20 = v.object({
 			target: OptimizationPlanSchema,
 		}),
 	),
+	id: v.string(),
+	isReoptimizationNeeded: v.boolean(),
+	lastOptimized: v.nullable(v.date()),
+	optimizationConditions: OptimizationConditionsSchemaV20,
+	reoptimizationIndex: v.number(),
+	selectedCharacters: SelectedCharactersSchema,
 });
 type CompilationSchemaV20Output = v.InferOutput<typeof CompilationSchemaV20>;
 
