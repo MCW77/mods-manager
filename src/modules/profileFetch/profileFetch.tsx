@@ -19,10 +19,11 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
+import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFullGIMOProfile";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 
 import * as Character from "#/domain/Character";
-import type { FetchedFullGIMOProfile } from "../hotUtils/domain/FetchedFullGIMOProfile";
+import { Mod } from "#/domain/Mod";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -223,9 +224,14 @@ function updatePlayerData(
 				modById$[modId].characterID.set("null");
 			}
 		} else {
+/*
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();
+*/
+			profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
+				new Map<string, Mod>(),
+			);
 		}
 		//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
 		for (const mod of profile.mods)
