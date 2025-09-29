@@ -1,5 +1,5 @@
 // react
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
@@ -68,6 +68,10 @@ const App = () => {
 	const firstSection = use$(() =>
 		profilesManagement$.hasProfiles.get() ? "mods" : "help",
 	);
+	// Memoize the section change callback to prevent recreating it on every render
+	const handleSectionChange = useCallback((section: string) => {
+		ui$.currentSection.set(section as SectionNames);
+	}, []);
 	const tabStyle =
 		"flex data-[state=active]:grow-1 data-[state=inactive]:m-t-0 min-h-0";
 
@@ -126,9 +130,7 @@ const App = () => {
 					<ReactiveTabs
 						className="flex flex-col grow-1 min-w-1"
 						$value={ui$.currentSection}
-						onValueChange={(section) =>
-							ui$.currentSection.set(section as SectionNames)
-						}
+						onValueChange={handleSectionChange}
 					>
 						<div className={"flex justify-around p-1"}>
 							<div className={"flex flex-gap-2 items-center"}>
