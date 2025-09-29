@@ -3,6 +3,7 @@ import { loadFixture } from "./fixtures-loader";
 import { convertBackup } from "../../modules/appState/domain/Backup";
 import { latestDBVersion } from "../../utils/globalLegendPersistSettings";
 import superjson from "superjson";
+import { objectKeys } from "#/utils/objectKeys";
 
 // We'll need to mock the modules since they have side effects
 vi.mock("#/modules/profilesManagement/state/profilesManagement", () => ({
@@ -93,18 +94,17 @@ describe("App State Backup Migrations", () => {
 			expect(conversionResult.backup?.version).toBe(latestDBVersion);
 		});
 
-		it.concurrent.each(Object.keys(expectedFixture))(
-			"should migrate %s correctly",
-			async (moduleName) => {
-				const migratedData = conversionResult.backup?.data[moduleName];
-				const expectedData = (expectedFixture.data as Record<string, unknown>)[
-					moduleName
-				];
-				expect(superjson.stringify(migratedData)).toBe(
-					superjson.stringify(expectedData),
-				);
-			},
-		);
+		it.concurrent.each(
+			objectKeys(expectedFixture.data as Record<string, unknown>),
+		)("should migrate %s correctly", async (moduleName) => {
+			const migratedData = conversionResult.backup?.data[moduleName];
+			const expectedData = (expectedFixture.data as Record<string, unknown>)[
+				moduleName
+			];
+			expect(superjson.stringify(migratedData)).toBe(
+				superjson.stringify(expectedData),
+			);
+		});
 
 		it("should handle missing migration gracefully", async () => {
 			backupV16.version = 12; // Non-existent version

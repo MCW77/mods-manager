@@ -35,7 +35,7 @@ export function validateAgainstLatestSchema(data: unknown): boolean {
 	try {
 		const validation = v.safeParse(LatestModsManagerBackupSchema, data);
 		return validation.success;
-	} catch (error) {
+	} catch (_error) {
 		return false;
 	}
 }
@@ -96,7 +96,7 @@ export async function openDatabaseWithMigration(
 
 		request.onerror = () => reject(request.error);
 
-		request.onupgradeneeded = async (event) => {
+		request.onupgradeneeded = async (_event) => {
 			const db = request.result;
 			const transaction = request.transaction;
 
