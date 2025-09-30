@@ -16,6 +16,7 @@ import {
 	upgradeCompilationTo20,
 	upgradeFilterTo19,
 	upgradeLockedStatusTo20,
+	upgradeProfilesTo21,
 } from "#/utils/globalLegendPersistSettings";
 import {
 	LatestModsManagerBackupSchema,
@@ -283,6 +284,7 @@ const migrations = new Map<
 				});
 			}
 
+			const newProfiles = upgradeProfilesTo21(data.profilesManagement);
 			const newData = {
 				characterTemplates: data.characterTemplates,
 				compilations: data.compilations,
@@ -290,7 +292,7 @@ const migrations = new Map<
 				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
 				lockedStatus: data.lockedStatus,
 				modsViewSetups: data.modsViewSetups,
-				profilesManagement: data.profilesManagement,
+				profilesManagement: newProfiles,
 				sessionIds: newSessionIDs,
 				settings: data.settings,
 			};
@@ -353,19 +355,16 @@ const convertBackup = (parsedJSON: unknown) => {
 		}
 	}
 	if (backup === null) {
+		// Pre-v19 backup - convert ISO dates
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV18,
-			parsedJSON,
+			convertISODates(parsedJSON),
 		);
 		if (modsManagerParseResult.success) {
-			// Pre-v19 backup - convert ISO dates
-			const dataWithDates = convertISODates(
-				modsManagerParseResult.output,
-			) as v.InferOutput<typeof ModsManagerBackupSchemaV18>;
 			backup = normalizeBackupJSON({
-				appVersion: dataWithDates.version,
+				appVersion: modsManagerParseResult.output.version,
 				client: "mods-manager",
-				data: dataWithDates,
+				data: modsManagerParseResult.output,
 				version: 18,
 			});
 		}

@@ -13,7 +13,7 @@ export interface PlayerProfile {
 export interface PersistedPlayerProfile {
 	allycode: string;
 	characterById: Character.CharacterById;
-	modById: Record<string, GIMOFlatMod>;
+	modById: Map<string, GIMOFlatMod>;
 	playerName: string;
 }
 
@@ -32,15 +32,9 @@ export const createPlayerProfile = (
 export const getProfileFromPersisted = (
 	profile: PersistedPlayerProfile,
 ): PlayerProfile => {
-	/*
 	const modById = new Map<string, Mod>(
-		profile.modById.map((mod) => [mod.mod_uid, Mod.deserialize(mod)]),
+		profile.modById.entries().map(([key, mod]) => [key, Mod.deserialize(mod)]),
 	);
-*/
-	const modById = new Map<string, Mod>();
-	for (const [modUid, mod] of Object.entries(profile.modById)) {
-		if (mod !== undefined) modById.set(modUid, Mod.deserialize(mod));
-	}
 
 	return {
 		allycode: profile.allycode,
@@ -53,15 +47,9 @@ export const getProfileFromPersisted = (
 export const getProfileToPersist = (
 	profile: PlayerProfile,
 ): PersistedPlayerProfile => {
-	/*
-	const modById =
-		profile.modById.size > 0
-			? Array.from(profile.modById.values()).map((value) => value.serialize())
-			: Object.values(profile.modById).map((value) => value.serialize());
-*/
-	const modById: Record<string, GIMOFlatMod> = {};
+	const modById: Map<string, GIMOFlatMod> = new Map();
 	for (const [modUid, mod] of profile.modById) {
-		modById[modUid] = mod.serialize();
+		modById.set(modUid, mod.serialize());
 	}
 
 	return {

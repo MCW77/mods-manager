@@ -7,6 +7,7 @@ import type { Compilation } from "#/modules/compilations/domain/Compilation";
 import { fromGIMOCharacterTemplates } from "#/modules/templates/mappers/GIMOCharacterTemplatesMapper";
 import { fromGIMOOptimizationPlan } from "#/modules/templates/mappers/GIMOOptimizationPlanMapper";
 import type { PersistedProfilesSchemaOutput } from "#/domain/schemas/mods-manager/PersistedProfilesSchemas";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 // mappers
 
@@ -30,7 +31,7 @@ const fromGIMOProfiles = (profiles: GIMOBackup["profiles"]) => {
 		profilesManagement.profileByAllycode[allycode] = {
 			allycode: profile.allyCode,
 			characterById: {},
-			modById: {},
+			modById: new Map<string, GIMOFlatMod>(),
 			playerName: profile.playerName,
 		};
 	}

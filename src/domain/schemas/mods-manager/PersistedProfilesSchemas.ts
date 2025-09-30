@@ -40,14 +40,21 @@ const GIMOFlatModSchema = v.object({
 	reRolledCount: v.number(),
 });
 
-const PersistedPlayerProfileSchema = v.object({
+const PersistedPlayerProfileSchemaV18 = v.object({
 	allycode: v.string(),
 	characterById: CharacterByIdSchema,
 	modById: v.record(v.string(), GIMOFlatModSchema),
 	playerName: v.string(),
 });
 
-const PersistedProfilesSchema = v.object({
+const PersistedPlayerProfileSchemaV21 = v.object({
+	allycode: v.string(),
+	characterById: CharacterByIdSchema,
+	modById: v.map(v.string(), GIMOFlatModSchema),
+	playerName: v.string(),
+});
+
+const PersistedProfilesSchemaV18 = v.object({
 	activeAllycode: v.string(),
 	lastUpdatedByAllycode: v.record(
 		v.string(),
@@ -57,11 +64,28 @@ const PersistedProfilesSchema = v.object({
 		}),
 	),
 	playernameByAllycode: v.record(v.string(), v.string()),
-	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchema),
+	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV18),
+});
+
+const PersistedProfilesSchemaV21 = v.object({
+	activeAllycode: v.string(),
+	lastUpdatedByAllycode: v.record(
+		v.string(),
+		v.object({
+			id: v.string(),
+			lastUpdated: v.number(),
+		}),
+	),
+	playernameByAllycode: v.record(v.string(), v.string()),
+	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV21),
 });
 
 type PersistedProfilesSchemaOutput = v.InferOutput<
-	typeof PersistedProfilesSchema
+	typeof PersistedProfilesSchemaV21
 >;
 
-export { PersistedProfilesSchema, type PersistedProfilesSchemaOutput };
+export {
+	PersistedProfilesSchemaV18,
+	PersistedProfilesSchemaV21,
+	type PersistedProfilesSchemaOutput,
+};

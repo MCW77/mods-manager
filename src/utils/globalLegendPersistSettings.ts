@@ -1,5 +1,6 @@
 // utils
 import { objectEntries } from "./objectEntries";
+import { objectKeys } from "./objectKeys";
 
 // state
 import { configureSynced } from "@legendapp/state/sync";
@@ -11,7 +12,7 @@ import type {
 	SecondarySettings,
 } from "#/modules/modsView/domain/ModsViewOptions";
 import type { CharacterNames } from "#/constants/CharacterNames";
-import { objectKeys } from "./objectKeys";
+import { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };
@@ -234,7 +235,7 @@ function upgradeLockedStatusTo20(
 	return newLockedStatus;
 }
 
-function upgradeProfilesTo22(profiles: Record<string, unknown>) {
+function upgradeProfilesTo21(profiles: Record<string, unknown>) {
 	if (
 		Object.hasOwn(profiles, "profileByAllycode") &&
 		typeof profiles.profileByAllycode === "object" &&
@@ -246,11 +247,14 @@ function upgradeProfilesTo22(profiles: Record<string, unknown>) {
 				profile !== null &&
 				Object.hasOwn(profile, "modById")
 			) {
+				const newModById: Map<string, GIMOFlatMod> = new Map();
 				for (const mod of Object.values(
-					profile.modById as Record<string, Record<string, unknown>>,
+					profile.modById as Record<string, GIMOFlatMod>,
 				)) {
 					mod.speedRemainder = 0;
+					newModById.set(mod.mod_uid, mod);
 				}
+				profile.modById = newModById;
 			}
 		}
 	}
@@ -476,6 +480,7 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 				};
 			},
 		);
+
 		/*
 		await itemUpgrade(
 			db,
@@ -497,7 +502,7 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 				};
 			},
 		);
-*/
+		*/
 
 		await itemUpgrade(
 			db,
@@ -637,75 +642,80 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 }
 
 async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
-	await itemUpgrade(
-		db,
-		transaction,
-		"Compilations",
-		"compilationByIdByAllycode",
-		(oldCompilations) => {
-			const newCompilationsByAllycode: Map<
-				string,
-				Map<string, Record<string, unknown>>
-			> = new Map();
-			for (const [
-				allycode,
-				compilations,
-			] of oldCompilations.compilationByIdByAllycode as Map<
-				string,
-				Map<string, Record<string, unknown>>
-			>) {
-				const newCompilations: Map<string, Record<string, unknown>> = new Map();
-				for (const [compilationId, compilation] of compilations) {
-					const newCompilation = upgradeCompilationTo20(compilation);
-					newCompilations.set(compilationId, newCompilation);
-				}
-				newCompilationsByAllycode.set(allycode, newCompilations);
-			}
-			return {
-				id: "compilationByIdByAllycode",
-				compilationByIdByAllycode: newCompilationsByAllycode,
-			};
-		},
-	);
-
-	await itemUpgrade(
-		db,
-		transaction,
-		"DefaultCompilation",
-		"defaultCompilation",
-		(oldDefaultCompilation) => {
-			const newDefaultCompilation = upgradeCompilationTo20(
-				oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
-			);
-			return {
-				id: "defaultCompilation",
-				defaultCompilation: {
-					...newDefaultCompilation,
-				},
-			};
-		},
-	);
-
-	await itemUpgrade(
-		db,
-		transaction,
-		"LockedStatus",
-		"lockedStatus",
-		(oldLockedStatus) => {
-			const newLockedStatus = upgradeLockedStatusTo20(
-				oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+	try {
+		await itemUpgrade(
+			db,
+			transaction,
+			"Compilations",
+			"compilationByIdByAllycode",
+			(oldCompilations) => {
+				const newCompilationsByAllycode: Map<
 					string,
-					Record<string, boolean>
-				>,
-			);
-			return {
-				id: "lockedStatus",
-				lockedCharactersByAllycode: {
-					...newLockedStatus,
-				},
-			};
-		},
-	);
+					Map<string, Record<string, unknown>>
+				> = new Map();
+				for (const [
+					allycode,
+					compilations,
+				] of oldCompilations.compilationByIdByAllycode as Map<
+					string,
+					Map<string, Record<string, unknown>>
+				>) {
+					const newCompilations: Map<string, Record<string, unknown>> = new Map();
+					for (const [compilationId, compilation] of compilations) {
+						const newCompilation = upgradeCompilationTo20(compilation);
+						newCompilations.set(compilationId, newCompilation);
+					}
+					newCompilationsByAllycode.set(allycode, newCompilations);
+				}
+				return {
+					id: "compilationByIdByAllycode",
+					compilationByIdByAllycode: newCompilationsByAllycode,
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"DefaultCompilation",
+			"defaultCompilation",
+			(oldDefaultCompilation) => {
+				const newDefaultCompilation = upgradeCompilationTo20(
+					oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+				);
+				return {
+					id: "defaultCompilation",
+					defaultCompilation: {
+						...newDefaultCompilation,
+					},
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"LockedStatus",
+			"lockedStatus",
+			(oldLockedStatus) => {
+				const newLockedStatus = upgradeLockedStatusTo20(
+					oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+						string,
+						Record<string, boolean>
+					>,
+				);
+				return {
+					id: "lockedStatus",
+					lockedCharactersByAllycode: {
+						...newLockedStatus,
+					},
+				};
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo20:", error);
+		transaction.abort();
+	}
 }
 
 async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
@@ -735,24 +745,20 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 				};
 			},
 		);
+
+		await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
+			const newProfiles = upgradeProfilesTo21(
+				oldProfiles.profiles as Record<string, unknown>,
+			);
+			return {
+				id: "profiles",
+				profiles: newProfiles,
+			};
+		});
 	} catch (error) {
 		console.error("Error in upgradeTo21:", error);
 		transaction.abort();
 	}
-}
-
-async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
-	await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
-		const newProfiles = upgradeProfilesTo22(
-			oldProfiles.profiles as Record<string, unknown>,
-		);
-		return {
-			id: "profiles",
-			profiles: {
-				...newProfiles,
-			},
-		};
-	});
 }
 
 const dbVersions = [16, 18, 19, 20, 21] as const;
@@ -800,6 +806,7 @@ export {
 	upgradeFilterTo19,
 	upgradeCompilationTo20,
 	upgradeLockedStatusTo20,
+	upgradeProfilesTo21,
 	testOnlyCreateStores,
 	testOnlyStoreNames,
 	testOnlyUpgradeTo18,

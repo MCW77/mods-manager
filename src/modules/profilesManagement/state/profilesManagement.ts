@@ -395,18 +395,21 @@ const syncStatus$ = syncObservable(
 								const allycode = Object.keys(
 									value.profiles.profileByAllycode,
 								)[0];
-								const modId = Object.keys(
-									value.profiles.profileByAllycode[allycode].modById,
-								)[0];
-								const modById = value.profiles.profileByAllycode[allycode]
-									.modById as Map<string, Mod> & Record<string, Mod>;
+								const oldModById =
+									value.profiles.profileByAllycode[allycode].modById;
+								const newModById: Map<string, GIMOFlatMod> = new Map<
+									string,
+									GIMOFlatMod
+								>(
+									oldModById
+										.entries()
+										.map(([key, mod]) => [key, mod.serialize()]),
+								);
 								return {
 									profiles: {
 										profileByAllycode: {
 											[allycode]: {
-												modById: {
-													[modId]: modById[modId]?.serialize(),
-												},
+												modById: newModById,
 											},
 										},
 									},
