@@ -113,10 +113,8 @@ export const defaultFixture = {
 		{
 			id: "sessionIdByProfile",
 			sessionIdByProfile: {
-				sessionIdByProfile: {
-					"123456789": "session-2",
-					"634243494": "session-1",
-				},
+				"123456789": "session-2",
+				"634243494": "session-1",
 			},
 		},
 	],
