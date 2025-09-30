@@ -117,7 +117,7 @@ const mergeProfilesManagement = (
 function mergeCompilations(
 	compilationsData: LatestModsManagerBackupDataSchemaOutput["compilations"],
 ): void {
-	if (!compilationsData || Object.keys(compilationsData).length === 0) {
+	if (!compilationsData || compilationsData.size === 0) {
 		return;
 	}
 
@@ -302,18 +302,26 @@ function mergeModsViewSetups(
  * Only sets session IDs from backup where current session ID is empty string or doesn't exist.
  */
 function mergeSessionIds(
-	backupSessionIds: LatestModsManagerBackupDataSchemaOutput["sessionIds"],
+	backupSessionIdsByAllycode: LatestModsManagerBackupDataSchemaOutput["sessionIds"],
 ): void {
-	if (!backupSessionIds) {
+	if (!backupSessionIdsByAllycode) {
 		return;
 	}
 
-	for (const [allycode, backupSessionId] of Object.entries(backupSessionIds)) {
+	for (const [allycode, backupSessionIds] of backupSessionIdsByAllycode.entries()) {
 		const currentGimoSessionId =
 			hotutils$.sessionIDsByProfile[allycode].gimoSessionId.peek();
+		const currentHuSessionId =
+			hotutils$.sessionIDsByProfile[allycode].huSessionId.peek();
+
 		if (!currentGimoSessionId || currentGimoSessionId === "") {
 			hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
-				backupSessionId,
+				backupSessionIds.gimoSessionId,
+			);
+		}
+		if (!currentHuSessionId || currentHuSessionId === "") {
+			hotutils$.sessionIDsByProfile[allycode].huSessionId.set(
+				backupSessionIds.huSessionId,
 			);
 		}
 	}
@@ -346,8 +354,8 @@ function mergeSettings(
 const loadModsManagerBackup = (
 	backup: LatestModsManagerBackupDataSchemaOutput,
 ) => {
-	beginBatch();
 	mergeProfilesManagement(backup.profilesManagement);
+	beginBatch();
 	mergeCharacterTemplates(backup.characterTemplates);
 
 	if (
@@ -403,6 +411,9 @@ const appState$: ObservableObject<AppState> = observable({
 		// Parse with superjson (handles both new superjson format and old JSON format)
 		try {
 			parsedJSON = superjson.parse(serializedAppState);
+			if (parsedJSON === undefined) {
+				parsedJSON = JSON.parse(serializedAppState);
+			}
 		} catch (error) {
 			if (error instanceof SyntaxError) {
 				appState$.import.errorMessage.set("Import of backup failed.");
