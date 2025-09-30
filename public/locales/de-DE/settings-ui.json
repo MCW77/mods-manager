@@ -31,7 +31,8 @@
 			"Language": "Sprache"
 		},
 		"hotutils": {
-			"SessionIdPrompt": "HotUtils SessionId hier eingeben"
+			"GIMOSessionIdPrompt": "Gib deine HU-Session-ID für GIMO ein",
+			"HUSessionIdPrompt": "Gib deine HU-Session-ID für HU ein"
 		}
 	},
 	"optimizer": {

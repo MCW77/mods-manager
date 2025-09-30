@@ -20,46 +20,51 @@ const HotutilsSettingsForm = () => {
 	const [t, i18n] = useTranslation("settings-ui");
 
 	const containerCSS =
-		"grid gap-3 md:grid-cols-[[labels]auto_[gimo]1fr[hu]1fr] grid-auto-flow-row items-center justify-items-start" as const;
-	const labelCSS = "grid-col-[labels] grid-row-auto" as const;
-	const gimoCSS = "grid-col-[gimo] grid-row-auto" as const;
-	const huCSS = "grid-col-[hu] grid-row-auto" as const;
+		"grid gap-3 grid-cols-[auto_1fr] auto-rows-auto items-start justify-items-start w-full" as const;
+	const labelCSS = "col-start-1 justify-self-start" as const;
+	const inputsContainerCSS = "col-start-2 w-full space-y-2" as const;
+	const inputCSS = "w-full min-w-72" as const;
 	const namesByAllycode = use$(
 		profilesManagement$.profiles.playernameByAllycode,
 	);
 
 	return (
 		<div className={containerCSS}>
-			<Label className={"labelCSS"}>{t("general.accounts.Profile")}</Label>
+			<Label className={labelCSS}>{t("general.accounts.Profile")}</Label>
+			<div className={inputsContainerCSS}>
+				<div className="text-sm font-medium text-muted-foreground">
+					Session IDs
+				</div>
+			</div>
 			{Object.entries(namesByAllycode).map(([allycode, name]) => (
 				<Fragment key={allycode}>
 					<Label className={labelCSS} htmlFor="player">
 						{`${allycode} - ${name}`}
 					</Label>
-					<ReactiveInput
-						className={gimoCSS}
-						placeholder={t("general.hotutils.SessionIdPrompt")}
-						size={20}
-						type="text"
-						$value={hotutils$.sessionIDsByProfile[allycode].gimoSessionId}
-						onChange={(event) =>
-							hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
-								event.target.value,
-							)
-						}
-					/>
-					<ReactiveInput
-						className={huCSS}
-						placeholder={t("general.hotutils.SessionIdPrompt")}
-						size={20}
-						type="text"
-						$value={hotutils$.sessionIDsByProfile[allycode].huSessionId}
-						onChange={(event) =>
-							hotutils$.sessionIDsByProfile[allycode].huSessionId.set(
-								event.target.value,
-							)
-						}
-					/>
+					<div className={inputsContainerCSS}>
+						<ReactiveInput
+							className={inputCSS}
+							placeholder={t("general.hotutils.GIMOSessionIdPrompt")}
+							type="text"
+							$value={hotutils$.sessionIDsByProfile[allycode].gimoSessionId}
+							onChange={(event) =>
+								hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
+									event.target.value,
+								)
+							}
+						/>
+						<ReactiveInput
+							className={inputCSS}
+							placeholder={t("general.hotutils.HUSessionIdPrompt")}
+							type="text"
+							$value={hotutils$.sessionIDsByProfile[allycode].huSessionId}
+							onChange={(event) =>
+								hotutils$.sessionIDsByProfile[allycode].huSessionId.set(
+									event.target.value,
+								)
+							}
+						/>
+					</div>
 				</Fragment>
 			))}
 		</div>

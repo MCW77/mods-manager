@@ -31,7 +31,8 @@
 			"DarkMode": "Dark Mode"
 		},
 		"hotutils": {
-			"SessionIdPrompt": "Enter your HotUtils sessionid here"
+			"GIMOSessionIdPrompt": "Enter your HU sessionid for GIMO",
+			"HUSessionIdPrompt": "Enter your HU sessionid for HU"
 		}
 	},
 	"optimizer": {
