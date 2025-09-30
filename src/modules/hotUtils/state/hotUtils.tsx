@@ -297,7 +297,7 @@ const syncStatus$ = syncObservable(
 		persist: {
 			name: "HotUtils",
 			indexedDB: {
-				itemID: "sessionIdByProfile",
+				itemID: "sessionIDsByProfile",
 			},
 		},
 		initial: initialPersistedData,
