@@ -193,7 +193,9 @@ function upgradeFilterTo19(
 
 function upgradeCompilationTo20(compilation: Record<string, unknown>) {
 	const newCompilation: Record<string, unknown> = {};
-	for (const [key, value] of objectEntries(compilation)) {
+	for (const [key, value] of objectEntries(compilation).sort(([keyA], [keyB]) =>
+		keyA.localeCompare(keyB),
+	)) {
 		if (key === "hasSelectionChanged") {
 		} else if (key === "id") {
 			newCompilation[key] = value;
@@ -731,8 +733,7 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 					{ gimoSessionId: string; huSessionId: string }
 				> = new Map();
 				for (const [allycode, sessionId] of objectEntries(
-					(oldHotUtils.sessionIdByProfile as Record<string, unknown>)
-						.sessionIdByProfile as Record<string, string>,
+					oldHotUtils.sessionIdByProfile as Record<string, string>,
 				)) {
 					newHotUtils.set(allycode, {
 						gimoSessionId: sessionId,
