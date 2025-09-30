@@ -1,7 +1,16 @@
+// utils
+import { objectEntries } from "#/utils/objectEntries";
+
 // react
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import { observer, reactive, use$ } from "@legendapp/state/react";
+import {
+	For,
+	observer,
+	reactive,
+	use$,
+	useObservable,
+} from "@legendapp/state/react";
 import { useRenderCount } from "#/hooks/useRenderCount";
 
 // state
@@ -32,12 +41,14 @@ const ProfileSelector: React.FC<ComponentProps> = observer(
 	({ isAddingProfile$ }: ComponentProps) => {
 		useRenderCount("ProfileSelector");
 		const [t] = useTranslation("global-ui");
-		const profiles = use$(profilesManagement$.profiles.playernameByAllycode);
 		const allycode = use$(profilesManagement$.profiles.activeAllycode);
+		const nameByAllycode$ = useObservable(
+			objectEntries(profilesManagement$.profiles.playernameByAllycode.get()),
+		);
 
 		return (
 			<ReactiveSelect
-				value={allycode ?? ""}
+				$value={profilesManagement$.profiles.activeAllycode}
 				onValueChange={(value) => {
 					if (value === "new") {
 						isAddingProfile$.set(true);
@@ -52,11 +63,13 @@ const ProfileSelector: React.FC<ComponentProps> = observer(
 				</SelectTrigger>
 				<SelectContent className="accent-blue">
 					<SelectGroup className="accent-blue">
-						{Object.entries(profiles).map(([allycode, playerName]) => (
-							<SelectItem key={allycode} value={allycode}>
-								{playerName}
-							</SelectItem>
-						))}
+						<For each={nameByAllycode$}>
+							{([allycode$, playerName$]) => (
+								<SelectItem key={allycode$.get()} value={allycode$.get()}>
+									{playerName$.get()}
+								</SelectItem>
+							)}
+						</For>
 					</SelectGroup>
 					<SelectSeparator />
 					<SelectGroup className="accent-blue">
