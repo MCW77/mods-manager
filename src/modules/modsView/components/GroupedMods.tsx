@@ -49,7 +49,7 @@ const modElements = (
 				className={"w-[21em]"}
 				defaultHeight={278}
 				key={`RIV-${mod.id}`}
-				visibleOffset={4000}
+				visibleOffset={2780}
 				root={modGroupsElement}
 			>
 				<ModDetail mod={mod} />
