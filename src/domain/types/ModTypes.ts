@@ -114,6 +114,7 @@ export type GIMOFlatMod = {
 	tier: ModTiersEnum;
 	characterID: CharacterNames | "null";
 	reRolledCount: number;
+	speedRemainder?: number;
 } & FlatGIMOModTypeIndexer &
 	FlatModValueIndexer &
 	FlatModRollIndexer;

@@ -66,6 +66,7 @@ export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
 		secondaryStats,
 		"null",
 		mod.reRolledCount,
+		0,
 		C3PO2GIMOTiersMap[mod.tier],
 	);
 }

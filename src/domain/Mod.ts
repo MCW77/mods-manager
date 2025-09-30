@@ -111,6 +111,7 @@ export class Mod {
 		secondaryStats: SecondaryStat[],
 		characterID: CharacterNames | "null",
 		reRolledCount: number,
+		speedRemainder: number,
 		tier: ModTiersEnum = 1,
 	) {
 		this.id = id;
@@ -122,6 +123,7 @@ export class Mod {
 		this.secondaryStats = secondaryStats;
 		this.characterID = characterID;
 		this.reRolledCount = reRolledCount;
+		this.speedRemainder = speedRemainder;
 		this.tier = tier;
 		for (const stat of this.secondaryStats) {
 			if (this.pips === 6) {
@@ -166,6 +168,7 @@ export class Mod {
 			this.secondaryStats,
 			characterID,
 			this.reRolledCount,
+			this.speedRemainder,
 			this.tier,
 		);
 	}
@@ -181,6 +184,7 @@ export class Mod {
 			this.secondaryStats,
 			"null",
 			this.reRolledCount,
+			this.speedRemainder,
 			this.tier,
 		);
 	}
@@ -201,6 +205,7 @@ export class Mod {
 			this.secondaryStats,
 			this.characterID,
 			this.reRolledCount,
+			this.speedRemainder,
 			this.tier,
 		);
 	}
@@ -220,6 +225,7 @@ export class Mod {
 			this.secondaryStats.map((stat) => stat.upgrade()),
 			this.characterID,
 			this.reRolledCount,
+			this.speedRemainder,
 			1,
 		);
 	}
@@ -246,6 +252,7 @@ export class Mod {
 			characterID: this.characterID,
 			tier: this.tier,
 			reRolledCount: this.reRolledCount,
+			speedRemainder: this.speedRemainder ?? 0,
 			primaryBonusType: pBT,
 			primaryBonusValue: pBV,
 			secondaryType_1: "Health",
@@ -348,6 +355,7 @@ export class Mod {
 			secondaryStats,
 			flatMod.characterID ?? "null",
 			flatMod.reRolledCount,
+			0,
 			flatMod.tier,
 		);
 	}
@@ -410,6 +418,7 @@ export class Mod {
 			secondaryStats,
 			mod.characterID,
 			mod.reRolledCount,
+			mod.speedRemainder ?? 0,
 			mod.tier,
 		);
 	}
