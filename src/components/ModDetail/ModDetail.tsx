@@ -18,7 +18,6 @@ import type { Mod } from "#/domain/Mod";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { Arrow } from "#/components/Arrow/Arrow";
 const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
 );
@@ -28,6 +27,7 @@ const SellModButton = lazy(
 	() => import("#/components/SellModButton/SellModButton"),
 );
 import { Label } from "#ui/label";
+
 type ComponentProps = {
 	assignedTarget?: OptimizationPlan.OptimizationPlan;
 	mod: Mod;
