@@ -62,7 +62,7 @@
 		"vite-plugin-dynamic-import": "^1.6.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.3",
+		"@biomejs/biome": "2.2.4",
 		"@iconify-json/logos": "^1.2.9",
 		"@iconify-json/skill-icons": "^1.2.3",
 		"@types/big.js": "^6.2.2",
