@@ -25,7 +25,7 @@ export async function onRequest(context) {
 				authority: "api.hotutils.com",
 				accept: "*/*",
 				"accept-language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
-				apiuserid: "898a36a3-948a-4a8a-9798-7a1552b042a8",
+				apiuserid: process.env.apiuserid,
 				"cache-control": "no-cache",
 				"content-type": "application/json",
 				dnt: "1",
