@@ -79,7 +79,7 @@
 		"fake-indexeddb": "^6.2.2",
 		"rollup-plugin-visualizer": "^6.0.3",
 		"typescript": "5.9.2",
-		"unocss": "66.5.1",
+		"unocss": "66.5.2",
 		"unocss-preset-shadcn": "^1.0.1",
 		"vite": "^7.1.7",
 		"vite-plugin-pwa": "^1.0.3",
