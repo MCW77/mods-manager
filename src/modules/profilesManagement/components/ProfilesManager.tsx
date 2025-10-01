@@ -1,7 +1,13 @@
 // react
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
-import { Memo, Show, Switch, useMount, useObservable } from "@legendapp/state/react";
+import {
+	Memo,
+	Show,
+	Switch,
+	useMount,
+	useObservable,
+} from "@legendapp/state/react";
 
 // styles
 import {
@@ -34,11 +40,12 @@ import { Button } from "#ui/button";
 const ProfilesManager = () => {
 	useRenderCount("ProfilesManager");
 	const [t] = useTranslation("global-ui");
-	const isAddingProfile$ = useObservable<boolean>(!profilesManagement$.hasProfiles.peek());
+	const isAddingProfile$ = useObservable<boolean>(
+		!profilesManagement$.hasProfiles.peek(),
+	);
 	profilesManagement$.hasProfiles.onChange(({ value }) => {
 		console.log("hasProfiles changed:", value);
-		if (!value)
-			isAddingProfile$.set(true);
+		if (!value) isAddingProfile$.set(true);
 	});
 
 	useMount(() => {
@@ -50,11 +57,11 @@ const ProfilesManager = () => {
 		<div className="flex items-center gap-2">
 			<FontAwesomeIcon icon={faUser} />
 			<Switch value={isAddingProfile$}>
-        {{
-          true: () => <ProfileAdder isAddingProfile$={isAddingProfile$} />,
-          false: () => <ProfileSelector isAddingProfile$={isAddingProfile$} />,
-        }}
-      </Switch>
+				{{
+					true: () => <ProfileAdder isAddingProfile$={isAddingProfile$} />,
+					false: () => <ProfileSelector isAddingProfile$={isAddingProfile$} />,
+				}}
+			</Switch>
 			<Show if={profilesManagement$.profiles.activeAllycode}>
 				<div className="flex items-center gap-2">
 					<Show
