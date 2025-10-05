@@ -27,7 +27,7 @@ type ComponentProps = {
 
 const ModScores = observer(
 	memo(({ mod }: ComponentProps) => {
-		const [t, i18n] = useTranslation("domain");
+		const [t] = useTranslation("domain");
 		const scoreName = use$(modsView$.activeViewSetupInActiveCategory.modScore);
 		const secondariesCount$ = useObservable(
 			() => mod.secondaryStats.length > 0,

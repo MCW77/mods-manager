@@ -37,7 +37,7 @@ type ComponentProps = {
 
 const ModStats = memo(
 	({ mod, showAvatar = false, assignedTarget }: ComponentProps) => {
-		const [t, i18n] = useTranslation("domain");
+		const [t] = useTranslation("domain");
 		const characterById = use$(profilesManagement$.activeProfile.characterById);
 		const baseCharacterById = use$(characters$.baseCharacterById);
 

@@ -33,7 +33,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Separator } from "#ui/separator";
 
 const GeneralSettingsView: React.FC = observer(() => {
-	const [t, i18n] = useTranslation("settings-ui");
+	const [t] = useTranslation("settings-ui");
 
 	/**
 	 * Renders the "Are you sure?" modal for resetting the app

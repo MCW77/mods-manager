@@ -19,7 +19,7 @@ import {
 const ReactiveSelect = reactive(Select);
 
 const UISettingsForm: React.FC = observer(() => {
-	const [t, i18n] = useTranslation("settings-ui");
+	const [t] = useTranslation("settings-ui");
 
 	const globalCSS =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;

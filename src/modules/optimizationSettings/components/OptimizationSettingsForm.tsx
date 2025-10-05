@@ -15,7 +15,7 @@ import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 
 const OptimizationSettingsForm: React.FC = observer(() => {
-	const [t, i18n] = useTranslation("settings-ui");
+	const [t] = useTranslation("settings-ui");
 	const allycode = use$(profilesManagement$.profiles.activeAllycode);
 	const modChangeThreshold = use$(
 		optimizationSettings$.settingsByProfile[allycode].modChangeThreshold,

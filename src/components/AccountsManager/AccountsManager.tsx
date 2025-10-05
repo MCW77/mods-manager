@@ -32,7 +32,7 @@ const AccountsManager = React.memo(() => {
 	const [selectedProfile, setSelectedProfile] = useState(
 		Object.keys(playerProfiles)[0] ?? "",
 	);
-	const [t, i18n] = useTranslation("settings-ui");
+	const [t] = useTranslation("settings-ui");
 
 	/**
 	 * Renders the "Are you sure?" modal for deleting an ally code

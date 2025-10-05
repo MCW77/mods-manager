@@ -17,7 +17,7 @@ import { Label } from "#/components/ui/label";
 const ReactiveInput = reactive(Input);
 
 const HotutilsSettingsForm = () => {
-	const [t, i18n] = useTranslation("settings-ui");
+	const [t] = useTranslation("settings-ui");
 
 	const containerCSS =
 		"grid gap-3 grid-cols-[auto_1fr] auto-rows-auto items-start justify-items-start w-full" as const;

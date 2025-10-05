@@ -26,7 +26,7 @@ const GeneralSettingsView = lazy(
 import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSettingsView";
 
 const SettingsView: React.FC = observer(() => {
-	const [t, i18n] = useTranslation("settings-ui");
+	const [t] = useTranslation("settings-ui");
 	const previousSection = use$(ui$.previousSection);
 
 	const renderSection = (sectionName: SettingsSections) => {

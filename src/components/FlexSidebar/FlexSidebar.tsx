@@ -21,7 +21,7 @@ const FlexSidebar = ({
 	mainContent,
 	sidebarContent,
 }: FlexSidebarProps) => {
-	const [t, i18n] = useTranslation("global-ui");
+	const [t] = useTranslation("global-ui");
 	const [isCollapsed2, setCollapsed] = useState(isCollapsed);
 
 	return (
