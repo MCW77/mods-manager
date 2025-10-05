@@ -1,5 +1,5 @@
 // react
-import React, { lazy } from "react";
+import { lazy } from "react";
 import ReactDOM from "react-dom";
 
 // containers

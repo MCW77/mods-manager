@@ -1,5 +1,3 @@
-import type { ElementType } from "../utils/typeHelper";
-
 enum ModSetsEnum {
 	Health = 1,
 	Offense = 2,

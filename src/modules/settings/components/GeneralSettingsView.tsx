@@ -1,5 +1,5 @@
 // react
-import { lazy, type ComponentProps } from "react";
+import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { observer } from "@legendapp/state/react";
 
@@ -62,8 +62,6 @@ const GeneralSettingsView: React.FC = observer(() => {
 
 	const global =
 		"grid gap-3 md:grid-cols-[1fr[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
-	const labelCSS = "grid-col-[labels] grid-row-auto" as const;
-	const inputCSS = "grid-col-[controls] grid-row-auto" as const;
 
 	return (
 		<div className="grid grid-gap-2 justify-center grid-cols-[repeat(auto-fit,_minmax(min(500px,_100%),_1fr))]">
@@ -117,7 +115,6 @@ const GeneralSettingsView: React.FC = observer(() => {
 					</div>
 					<Separator className={"h-26"} orientation={"vertical"} />
 					<Button
-						className={inputCSS}
 						type={"button"}
 						variant={"destructive"}
 						onClick={() => dialog$.show(resetModal())}
@@ -134,12 +131,6 @@ const GeneralSettingsView: React.FC = observer(() => {
 		</div>
 	);
 });
-
-const FormInput = (props: ComponentProps<"div">) => {
-	return (
-		<div className="grid-col-[controls] grid-row-auto">{props.children}</div>
-	);
-};
 
 GeneralSettingsView.displayName = "GeneralSettingsView";
 

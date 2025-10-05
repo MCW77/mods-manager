@@ -10,7 +10,6 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const about$ = stateLoader$.about$;
 
 // components
-import { Github } from "lucide-react";
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 
