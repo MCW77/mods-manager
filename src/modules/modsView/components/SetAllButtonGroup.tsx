@@ -1,5 +1,5 @@
 // react
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -24,7 +24,7 @@ type SetAllButtonGroupProps = {
 };
 
 const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
-	const [t] = useTranslation("explore-ui");
+	//	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"actions flex gap-1 justify-center items-center"}>

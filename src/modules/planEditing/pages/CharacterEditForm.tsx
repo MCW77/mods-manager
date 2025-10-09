@@ -9,7 +9,6 @@ import {
 	Show,
 	use$,
 	useMount,
-	useObservable,
 } from "@legendapp/state/react";
 
 // state

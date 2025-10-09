@@ -43,29 +43,6 @@ export const statWeights = {
 	"Critical Avoidance %": 10,
 };
 
-interface OptimizationPlanParam {
-	id: string;
-	description: string;
-	health?: number;
-	protection?: number;
-	speed?: number;
-	critDmg?: number;
-	potency?: number;
-	tenacity?: number;
-	physDmg?: number;
-	specDmg?: number;
-	critChance?: number;
-	armor?: number;
-	resistance?: number;
-	accuracy?: number;
-	critAvoid?: number;
-	minimumModDots?: number;
-	primaryStatRestrictions?: PrimaryStatRestrictions;
-	setRestrictions?: SetRestrictions;
-	targetStats?: TargetStats;
-	useOnlyFullSets?: boolean;
-}
-
 interface ShortOptimizationPlanParam {
 	id?: string;
 	desc?: string;

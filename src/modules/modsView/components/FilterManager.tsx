@@ -1,6 +1,5 @@
 // react
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 // state
 import { For, observer, reactive, Show, use$ } from "@legendapp/state/react";
@@ -28,7 +27,6 @@ const ReactiveSelect = reactive(Select);
 
 const FilterManager = observer(
 	React.memo(() => {
-		const [t] = useTranslation("global-ui");
 		const activeViewSetupInActiveCategory = use$(
 			modsView$.activeViewSetupInActiveCategory,
 		);

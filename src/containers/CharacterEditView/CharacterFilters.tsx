@@ -312,10 +312,8 @@ const CharacterFilters: React.FC = observer(() => {
 				</div>
 				<div className={"flex flex-col gap-1"}>
 					<div className={"flex gap-2 m-t-2"}>
-						{/** biome-ignore lint/correctness/useUniqueElementIds: <explanation> */}
 						<input
 							className="mb-2 bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
-							id="character-filter"
 							type="text"
 							placeholder="name, tag, or acronym"
 							value={quickFilter}

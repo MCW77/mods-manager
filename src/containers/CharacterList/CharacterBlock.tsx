@@ -1,7 +1,7 @@
 // react
 import type React from "react";
 import { lazy } from "react";
-import { Memo, observer, reactive, use$ } from "@legendapp/state/react";
+import { observer, use$ } from "@legendapp/state/react";
 
 // styles
 import "./CharacterList.css";
@@ -29,24 +29,7 @@ const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
 );
 import { Button } from "#ui/button";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from "#ui/select";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "#/components/ui/tooltip";
-import { Label } from "#/components/ui/label";
-
-const ReactiveSelect = reactive(Select);
+import { Label } from "#ui/label";
 
 type CharacterBlockProps = {
 	characterId: CharacterNames;
@@ -163,7 +146,6 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target)
 				? "active"
 				: "";
-			const minimumDots = target.minimumModDots;
 			const blankTargetActive = OptimizationPlan.isBlank(target)
 				? "active"
 				: "";
@@ -238,16 +220,6 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 				view: "edit",
 			});
 		};
-
-		const options = Character.targets(characterSettings, character)
-			.map((characterTarget) => characterTarget.id)
-			.map((targetName) => {
-				return (
-					<SelectItem className={"w-32"} value={targetName} key={targetName}>
-						{targetName}
-					</SelectItem>
-				);
-			});
 
 		const baseClass = "character-block cursor-grab";
 

@@ -1,7 +1,6 @@
 // react
 import type React from "react";
 import { lazy, Suspense } from "react";
-import { useTranslation } from "react-i18next";
 
 // styles
 import "./CharacterEditView.css";
@@ -44,7 +43,6 @@ const CharacterList = lazy(
 const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
-	const [t] = useTranslation("optimize-ui");
 	const characterById = use$(profilesManagement$.activeProfile.characterById);
 	const baseCharacterById = use$(characters$.baseCharacterById);
 	const selectedCharacters = use$(

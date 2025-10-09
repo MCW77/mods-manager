@@ -1,7 +1,6 @@
 // react
 import type React from "react";
 import { lazy } from "react";
-import { useTranslation } from "react-i18next";
 
 // state
 import { observer, use$ } from "@legendapp/state/react";
@@ -22,7 +21,6 @@ const GroupedMods = lazy(() => import("./GroupedMods"));
 
 const CategoryView: React.FC = observer(() => {
 	useRenderCount(`CategoryView (${modsView$.activeCategory.peek()})`);
-	const [t] = useTranslation("global-ui");
 	const modById = use$(profilesManagement$.activeProfile.modById);
 	const activeViewSetupInActiveCategory = use$(
 		modsView$.activeViewSetupInActiveCategory,
