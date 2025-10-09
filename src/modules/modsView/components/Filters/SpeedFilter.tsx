@@ -13,7 +13,7 @@ import { Label } from "#ui/label";
 import { Slider } from "#ui/slider";
 
 const SpeedFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 	const scoreMinMax = use$(() => {
 		const activeFilter = modsView$.activeFilter.get();
 		return activeFilter.speedRange;
@@ -22,8 +22,8 @@ const SpeedFilter = () => {
 
 	return (
 		<div className={"w-50 flex flex-col gap-2 items-center"}>
-			<Label className="p-r-2 text-[modgold]" htmlFor={"speed-filter1"}>
-				Speed Range
+			<Label className="p-r-2" htmlFor={"speed-filter1"}>
+				{t("filter.SpeedRangeHeadline")}
 			</Label>
 			<Slider
 				className="w-24"

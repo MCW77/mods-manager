@@ -55,12 +55,12 @@ const imageOffsets: Record<SlotSettingsSlots, Record<TriState, string>> = {
 };
 
 const SlotFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"slot-filter1"}>
-				Slot
+				{t("filter.SlotHeadline")}
 			</Label>
 			<div
 				id={"slot-filter1"}

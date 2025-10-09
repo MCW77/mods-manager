@@ -20,12 +20,12 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const RarityFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"rarity-filter1"}>
-				Rarity
+				{t("filter.RarityHeadline")}
 			</Label>
 			<div
 				id={"rarity-filter1"}

@@ -14,7 +14,7 @@ import { Slider } from "#ui/slider";
 import { modScores } from "#/domain/Mod";
 
 const ScoreFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 	const score = use$(() =>
 		modScores.find(
 			(modScore) =>
@@ -31,8 +31,8 @@ const ScoreFilter = () => {
 
 	return (
 		<div className={"w-50 flex flex-col gap-2 items-center"}>
-			<Label className="p-r-2 text-[modgold]" htmlFor={"score-filter1"}>
-				Score
+			<Label className="p-r-2" htmlFor={"score-filter1"}>
+				{t("filter.ScoreHeadline")}
 			</Label>
 			<Slider
 				className="w-50"

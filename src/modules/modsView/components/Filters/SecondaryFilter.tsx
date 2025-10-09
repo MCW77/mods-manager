@@ -19,12 +19,12 @@ import { Label } from "#ui/label";
 import { Slider } from "#ui/slider";
 
 const SecondaryFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"p-x-1 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"secondary-filter1"}>
-				Secondary Stat Rolls
+				{t("filter.SecondaryStatRolls")}
 			</Label>
 			<div id={"secondary-filter1"} className="flex flex-row gap-4 flex-wrap">
 				{secondarySettingsSecondaries.map(

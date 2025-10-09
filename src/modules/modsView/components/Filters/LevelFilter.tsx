@@ -22,12 +22,12 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const LevelFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"level-filter1"}>
-				Level
+				{t("filter.LevelHeadline")}
 			</Label>
 			<div
 				id={"level-filter1"}

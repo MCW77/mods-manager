@@ -22,12 +22,12 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const PrimaryFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"p-x-1 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"primary-filter1"}>
-				Primary Stat
+				{t("filter.PrimaryHeadline")}
 			</Label>
 			<div id={"primary-filter1"} className="flex flex-row gap-2 flex-wrap">
 				{primarySettingsPrimaries.map((primary: PrimarySettingsPrimaries) => {

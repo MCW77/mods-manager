@@ -19,12 +19,12 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const CalibrationFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-32 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"calibration-filter1"}>
-				Calibration
+				{t("filter.CalibrationHeadline")}
 			</Label>
 			<div
 				id={"calibration-filter1"}

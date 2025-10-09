@@ -1,17 +1,29 @@
 {
-  "filter": {
-    "SecondaryScoreHeadline": "2° Score",
-    "EquippedHeadline": "Equipped",
-    "OptimizerHeadline": "Used By Optimizer",
-    "ScoreHeadline": "Mod Score",
-    "SortHeadline": "Sort By",
-    "Reset": "Reset",
-    "Group": "Group Mods"
-  },
-  "ModsShown": "Showing {{actual}} out of {{max}} mods.",
-  "Expand": "Expand all groups",
-  "Collapse": "Collapse all groups",
-  "DeleteButton": "Delete all displayed mods",
-  "DeleteAlt1": "This will remove all mods displayed under the current filter from the mods optimizer.",
-  "DeleteAlt2": "Are you sure you want to delete all of these mods?"
+	"filter": {
+		"AssignedValue": "assigned",
+		"EquippedValue": "equipped",
+		"AssignedHeadline": "Assigned",
+		"CalibrationHeadline": "Calibration",
+		"EquippedHeadline": "Equipped",
+		"LevelHeadline": "Level",
+		"OptimizerHeadline": "Used By Optimizer",
+		"PrimaryHeadline": "Primary Stat",
+		"RarityHeadline": "Rarity",
+		"ScoreHeadline": "Mod Score",
+		"SecondaryScoreHeadline": "2° Score",
+		"SecondaryStatRolls": "Secondary Stat Rolls",
+		"SetHeadline": "Set",
+		"SlotHeadline": "Slot",
+		"SortHeadline": "Sort By",
+		"SpeedRangeHeadline": "Speed Range",
+		"TierHeadline": "Tier",
+		"Reset": "Reset",
+		"Group": "Group Mods"
+	},
+	"ModsShown": "Showing {{actual}} out of {{max}} mods.",
+	"Expand": "Expand all groups",
+	"Collapse": "Collapse all groups",
+	"DeleteButton": "Delete all displayed mods",
+	"DeleteAlt1": "This will remove all mods displayed under the current filter from the mods optimizer.",
+	"DeleteAlt2": "Are you sure you want to delete all of these mods?"
 }

@@ -65,12 +65,12 @@ const imageOffsets: Record<SetSettingsSets, Record<TriState, string>> = {
 };
 
 const SetFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"set-filter1"}>
-				Set
+				{t("filter.SetHeadline")}
 			</Label>
 			<div
 				id={"set-filter1"}

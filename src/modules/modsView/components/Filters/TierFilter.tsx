@@ -31,12 +31,12 @@ const tierColorByTier: Record<TierSettingsTiers, string> = {
 };
 
 const TierFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2 text-[modgold]" htmlFor={"tier-filter1"}>
-				Tier
+				{t("filter.TierHeadline")}
 			</Label>
 			<div
 				id={"tier-filter1"}

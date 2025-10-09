@@ -16,12 +16,12 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const EquippedFilter = () => {
-	const [t] = useTranslation("global-ui");
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
 			<Label className="p-r-2" htmlFor={"equipped-filter1"}>
-				Equipped
+				{t("filter.EquippedHeadline")}
 			</Label>
 			<div id={"equipped-filter1"} className="flex flex-row gap-2 flex-wrap">
 				<Memo>
@@ -40,7 +40,7 @@ const EquippedFilter = () => {
 								variant={"outline"}
 								onClick={() => modsView$.cycleState("equipped", "equipped")}
 							>
-								{"equipped"}
+								{t("filter.EquippedValue")}
 							</Button>
 						);
 					}}
