@@ -1,4 +1,5 @@
 // react
+import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -16,6 +17,13 @@ import { Label } from "#ui/label";
 
 const OptimizationSettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
+	const threshold1Id = useId();
+	const threshold2Id = useId();
+	const lockUnselectedId = useId();
+	const forceCompleteSetsId = useId();
+	const simulate6EId = useId();
+	const simulateLevel15Id = useId();
+	const optimizeWithRestrictionsId = useId();
 	const allycode = use$(profilesManagement$.profiles.activeAllycode);
 	const modChangeThreshold = use$(
 		optimizationSettings$.settingsByProfile[allycode].modChangeThreshold,
@@ -30,13 +38,13 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 
 	return (
 		<div className={globalCSS}>
-			<Label className={labelCSS} htmlFor="threshold2">
+			<Label className={labelCSS} htmlFor={`threshold2-${threshold2Id}`}>
 				{t("optimizer.global.Threshold")}:
 			</Label>
 			<div className={`${inputCSS} flex gap-2`}>
 				<SingleValueSlider
 					className={"min-w-[120px]"}
-					id="threshold1"
+					id={`threshold1-${threshold1Id}`}
 					min={0}
 					max={100}
 					step={1}
@@ -49,7 +57,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				/>
 				<ReactiveInput
 					className={"w-20"}
-					id="threshold2"
+					id={`threshold2-${threshold2Id}`}
 					min={0}
 					max={100}
 					type="number"
@@ -63,12 +71,15 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					}
 				/>
 			</div>
-			<Label className={labelCSS} htmlFor="lock-unselected">
+			<Label
+				className={labelCSS}
+				htmlFor={`lock-unselected-${lockUnselectedId}`}
+			>
 				{t("optimizer.global.LockUnselected")}:
 			</Label>
 			<ReactiveInput
 				className={inputCSS}
-				id="lock-unselected"
+				id={`lock-unselected-${lockUnselectedId}`}
 				type="checkbox"
 				$checked={
 					optimizationSettings$.settingsByProfile[allycode]
@@ -80,12 +91,15 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					].lockUnselectedCharacters.set(event.target.checked)
 				}
 			/>
-			<Label className={labelCSS} htmlFor="force-complete-sets">
+			<Label
+				className={labelCSS}
+				htmlFor={`force-complete-sets-${forceCompleteSetsId}`}
+			>
 				{t("optimizer.global.NoModSetsBreak")}:
 			</Label>
 			<ReactiveInput
 				className={inputCSS}
-				id="force-complete-sets"
+				id={`force-complete-sets-${forceCompleteSetsId}`}
 				type="checkbox"
 				$checked={
 					optimizationSettings$.settingsByProfile[allycode].forceCompleteSets
@@ -96,12 +110,12 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					].forceCompleteSets.set(event.target.checked)
 				}
 			/>
-			<Label className={labelCSS} htmlFor="simulate-6e">
+			<Label className={labelCSS} htmlFor={`simulate-6e-${simulate6EId}`}>
 				{t("optimizer.global.Simulate6E")}
 			</Label>
 			<ReactiveInput
 				className={inputCSS}
-				id="simulate-6e"
+				id={`simulate-6e-${simulate6EId}`}
 				type="checkbox"
 				$checked={
 					optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice
@@ -112,12 +126,15 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					].simulate6EModSlice.set(event.target.checked)
 				}
 			/>
-			<Label className={labelCSS} htmlFor="simulate-level-15">
+			<Label
+				className={labelCSS}
+				htmlFor={`simulate-level-15-${simulateLevel15Id}`}
+			>
 				{t("optimizer.global.SimulateLevel15")}
 			</Label>
 			<ReactiveInput
 				className={inputCSS}
-				id="simulate-level-15"
+				id={`simulate-level-15-${simulateLevel15Id}`}
 				type="checkbox"
 				$checked={
 					optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods
@@ -128,12 +145,15 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					].simulateLevel15Mods.set(event.target.checked)
 				}
 			/>
-			<Label className="p-r-2" htmlFor={"optimize-with-restrictions-toggle"}>
+			<Label
+				className="p-r-2"
+				htmlFor={`optimize-with-restrictions-toggle-${optimizeWithRestrictionsId}`}
+			>
 				Optimize with primary and set restrictions
 			</Label>
 			<ReactiveInput
 				className={inputCSS}
-				id="optimize-with-restrictions-toggle"
+				id={`optimize-with-restrictions-toggle-${optimizeWithRestrictionsId}`}
 				type="checkbox"
 				$checked={
 					optimizationSettings$.settingsByProfile[allycode]

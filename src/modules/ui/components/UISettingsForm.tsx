@@ -15,11 +15,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { useId } from "react";
 
 const ReactiveSelect = reactive(Select);
 
 const UISettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
+	const languageId = useId();
 
 	const globalCSS =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
@@ -28,7 +30,7 @@ const UISettingsForm: React.FC = observer(() => {
 
 	return (
 		<div className={globalCSS}>
-			<Label className={labelCSS} htmlFor="language">
+			<Label className={labelCSS} htmlFor={`languageId_${languageId}`}>
 				{t("general.display.Language")}
 			</Label>
 			<ReactiveSelect
@@ -37,17 +39,17 @@ const UISettingsForm: React.FC = observer(() => {
 			>
 				<SelectTrigger
 					className={`${inputCSS} w-[180px] accent-blue`}
-					id="language"
+					id={`languageId_${languageId}`}
 				>
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent className="accent-blue">
-          <SelectItem key={"English"} value={"en-US"}>
-            English
-          </SelectItem>
-          <SelectItem key={"Deutsch"} value={"de-DE"}>
-            Deutsch
-          </SelectItem>
+					<SelectItem key={"English"} value={"en-US"}>
+						English
+					</SelectItem>
+					<SelectItem key={"Deutsch"} value={"de-DE"}>
+						Deutsch
+					</SelectItem>
 				</SelectContent>
 			</ReactiveSelect>
 		</div>

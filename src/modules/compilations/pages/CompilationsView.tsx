@@ -1,4 +1,5 @@
 // react
+import { useId } from "react";
 import { For, observer, use$, useObservable } from "@legendapp/state/react";
 
 // state
@@ -30,6 +31,9 @@ const CompilationsView: React.FC = observer(() => {
 		description: "",
 		category: "",
 	});
+	const nameId = useId();
+	const descriptionId = useId();
+	const categoryId = useId();
 	const isFormOpen = use$(state$.isOpen);
 	const name = use$(state$.name);
 	const description = use$(state$.description);
@@ -68,27 +72,31 @@ const CompilationsView: React.FC = observer(() => {
 								<h4 className="font-medium text-sm text-primary-foreground">
 									Add compilation
 								</h4>
-								<Label htmlFor={"compilation_add_form_name"}>Name</Label>
+								<Label htmlFor={`compilation_add_form_name${nameId}`}>
+									Name
+								</Label>
 								<Input
-									id="compilation_add_form_name"
+									id={`compilation_add_form_name${nameId}`}
 									value={name}
 									onChange={(e) => state$.name.set(e.target.value)}
 									className="h-8 text-sm"
 								/>
-								<Label htmlFor={"compilation_add_form_description"}>
+								<Label
+									htmlFor={`compilation_add_form_description${descriptionId}`}
+								>
 									Description
 								</Label>
 								<Input
-									id="compilation_add_form_description"
+									id={`compilation_add_form_description${descriptionId}`}
 									value={description}
 									onChange={(e) => state$.description.set(e.target.value)}
 									className="h-8 text-sm"
 								/>
-								<Label htmlFor={"compilation_add_form_category"}>
+								<Label htmlFor={`compilation_add_form_category${categoryId}`}>
 									Category
 								</Label>
 								<Input
-									id="compilation_add_form_category"
+									id={`compilation_add_form_category${categoryId}`}
 									value={category}
 									onChange={(e) => state$.category.set(e.target.value)}
 									className="h-8 text-sm"

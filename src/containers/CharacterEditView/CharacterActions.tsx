@@ -1,5 +1,5 @@
 // react
-import { lazy } from "react";
+import { lazy, useId } from "react";
 import {
 	Computed,
 	observer,
@@ -57,6 +57,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 import { progress$ } from "#/modules/progress/state/progress";
 
 const CharacterActions: React.FC = observer(() => {
+	const nameId = useId();
+	const descriptionId = useId();
+	const categoryId = useId();
+
 	const baseCharacterById = use$(characters$.baseCharacterById);
 	const selectedCharacters = use$(
 		compilations$.defaultCompilation.selectedCharacters,
@@ -339,30 +343,34 @@ const CharacterActions: React.FC = observer(() => {
 						<h4 className="font-medium text-sm text-primary-foreground">
 							Save compilation
 						</h4>
-						<Label htmlFor={"compilation_save_form_name"}>Name</Label>
+						<Label htmlFor={`compilation_save_form_name-${nameId}`}>Name</Label>
 						<Computed>
 							<Input
-								id="compilation_save_form_name"
+								id={`compilation_save_form_name-${nameId}`}
 								value={compilationName}
 								onChange={(e) => state$.name.set(e.target.value)}
 								className="h-8 text-sm"
 							/>
 						</Computed>
-						<Label htmlFor={"compilation_save_form_description"}>
+						<Label
+							htmlFor={`compilation_save_form_description-${descriptionId}`}
+						>
 							Description
 						</Label>
 						<Computed>
 							<Input
-								id="compilation_save_form_description"
+								id={`compilation_save_form_description-${descriptionId}`}
 								value={compilationDescription}
 								onChange={(e) => state$.description.set(e.target.value)}
 								className="h-8 text-sm"
 							/>
 						</Computed>
-						<Label htmlFor={"compilation_save_form_category"}>Category</Label>
+						<Label htmlFor={`compilation_save_form_category-${categoryId}`}>
+							Category
+						</Label>
 						<Computed>
 							<Input
-								id="compilation_save_form_category"
+								id={`compilation_save_form_category-${categoryId}`}
 								value={compilationCategory}
 								onChange={(e) => state$.category.set(e.target.value)}
 								className="h-8 text-sm"
