@@ -2,6 +2,7 @@
 import "#/utils/globalLegendPersistSettings";
 
 // react
+import { scan } from "react-scan";
 import React, { lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -16,6 +17,10 @@ import { ui$ } from "./modules/ui/state/ui";
 
 // containers
 const App = lazy(() => import("./containers/App/App"));
+
+scan({
+	enabled: true,
+});
 
 const rootNode = document.getElementById("root");
 document.documentElement.classList.add(ui$.theme.get());
