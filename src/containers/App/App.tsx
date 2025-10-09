@@ -23,9 +23,6 @@ const { refreshPlayerData } = await import(
 
 import { ui$ } from "#/modules/ui/state/ui";
 
-// hooks
-import { useRenderCount } from "#/hooks/useRenderCount";
-
 // domain
 import type { SectionNames } from "#/modules/ui/domain/SectionNames";
 
@@ -63,7 +60,6 @@ const hotutils$ = stateLoader$.hotutils$;
 const ReactiveTabs = reactive(Tabs);
 
 const App = () => {
-	useRenderCount("App");
 	const [t] = useTranslation("global-ui");
 	const firstSection = use$(() =>
 		profilesManagement$.hasProfiles.get() ? "mods" : "help",

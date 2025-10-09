@@ -1,7 +1,6 @@
 // react
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import { useRenderCount } from "#/hooks/useRenderCount";
 
 // utils
 import formatAllycode from "#/utils/formatAllycode";
@@ -21,7 +20,6 @@ type ComponentProps = {
 };
 
 const ProfileAdder = ({ isAddingProfile$ }: ComponentProps) => {
-	useRenderCount("ProfileAdder");
 	const [t] = useTranslation("global-ui");
 	const isFetchFinished$ = useObservable(false);
 	isAddingProfile$.onChange(({ value }) => {

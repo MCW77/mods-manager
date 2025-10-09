@@ -11,7 +11,6 @@ import {
 	use$,
 	useObservable,
 } from "@legendapp/state/react";
-import { useRenderCount } from "#/hooks/useRenderCount";
 
 // state
 import type { ObservableBoolean } from "@legendapp/state";
@@ -39,7 +38,6 @@ type ComponentProps = {
 
 const ProfileSelector: React.FC<ComponentProps> = observer(
 	({ isAddingProfile$ }: ComponentProps) => {
-		useRenderCount("ProfileSelector");
 		const [t] = useTranslation("global-ui");
 		const allycode = use$(profilesManagement$.profiles.activeAllycode);
 		const nameByAllycode$ = useObservable(

@@ -26,9 +26,6 @@ const { refreshPlayerData } = await import(
 	"#/modules/profileFetch/profileFetch"
 );
 
-// hooks
-import { useRenderCount } from "#/hooks/useRenderCount";
-
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -38,19 +35,16 @@ const ProfileSelector = lazy(() => import("./ProfileSelector"));
 import { Button } from "#ui/button";
 
 const ProfilesManager = () => {
-	useRenderCount("ProfilesManager");
 	const [t] = useTranslation("global-ui");
 	const isAddingProfile$ = useObservable<boolean>(
 		!profilesManagement$.hasProfiles.peek(),
 	);
 	profilesManagement$.hasProfiles.onChange(({ value }) => {
-		console.log("hasProfiles changed:", value);
 		if (!value) isAddingProfile$.set(true);
 	});
 
 	useMount(() => {
 		hotutils$.isSubscribed();
-		console.log("ProfilesManager mounted");
 	});
 
 	return (

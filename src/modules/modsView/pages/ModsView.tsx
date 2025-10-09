@@ -10,9 +10,6 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
-// hooks
-import { useRenderCount } from "#/hooks/useRenderCount";
-
 // domain
 import type { Categories } from "../domain/Categories";
 
@@ -26,7 +23,6 @@ const ReactiveTabs = reactive(Tabs);
 
 const ModsView = React.memo(() => {
 	const [t] = useTranslation("global-ui");
-	useRenderCount("ModsView");
 	const profile = use$(profilesManagement$.activeProfile);
 
 	return (

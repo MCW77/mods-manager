@@ -10,9 +10,6 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
-// hooks
-import { useRenderCount } from "#/hooks/useRenderCount";
-
 // domain
 import { ModsFilter } from "../domain/ModsFilter";
 
@@ -20,7 +17,6 @@ import { ModsFilter } from "../domain/ModsFilter";
 const GroupedMods = lazy(() => import("./GroupedMods"));
 
 const CategoryView: React.FC = observer(() => {
-	useRenderCount(`CategoryView (${modsView$.activeCategory.peek()})`);
 	const modById = use$(profilesManagement$.activeProfile.modById);
 	const activeViewSetupInActiveCategory = use$(
 		modsView$.activeViewSetupInActiveCategory,
