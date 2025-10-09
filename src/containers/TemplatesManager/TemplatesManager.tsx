@@ -41,7 +41,7 @@ const TemplatesManager = observer(
 		const userTemplates = use$(templates$.userTemplates);
 
 		return (
-			<div className={"templates-manager"}>
+			<div>
 				<div className="flex gap-2 items-center">
 					<FileInput
 						label={"Import"}
@@ -61,7 +61,7 @@ const TemplatesManager = observer(
 										);
 									}
 								},
-								(error) => {},
+								() => {},
 							)
 						}
 					/>

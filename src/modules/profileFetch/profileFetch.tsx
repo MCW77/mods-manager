@@ -50,8 +50,8 @@ export async function refreshPlayerData(
 
 	// First, fetch character definitions from swgoh.gg
 	try {
-		const baseCharacterById = await characters$.baseCharacterById();
-	} catch (error) {
+		await characters$.baseCharacterById();
+	} catch (_error) {
 		messages.push(
 			"Error when fetching character definitions from HotUtils. Some characters may not optimize properly until you fetch again.",
 		);
@@ -141,7 +141,7 @@ function showFetchResult(
 				className={"text-[#ff4500] border-b-1 border-solid border-b-white"}
 				key={0}
 			>
-				{errorMessages.map((message, index) => (
+				{errorMessages.map((message) => (
 					<p key={message}>{message}</p>
 				))}
 			</div>,

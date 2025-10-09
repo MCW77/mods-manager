@@ -171,10 +171,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				}
 
 				const targetStatRows = missedGoals.map(
-					(
-						[targetStat, resultValue]: [t: TargetStat, r: number],
-						index: number,
-					) => (
+					([targetStat, resultValue]: [t: TargetStat, r: number]) => (
 						<div className={"form-row"} key={targetStat.id}>
 							<span>{targetStat.stat}</span>
 							<span>

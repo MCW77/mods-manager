@@ -126,17 +126,16 @@ const CharacterEditView = observer(() => {
 	);
 	highlightedCharacters = highlightedCharacters.filter(
 		charactersManagement$.filterSetup.permanentFilterById.peek().get("stars")
-			?.filterPredicate ?? ((character: Character.Character) => true),
+			?.filterPredicate ?? (() => true),
 	);
 	highlightedCharacters = highlightedCharacters.filter(
 		charactersManagement$.filterSetup.permanentFilterById.peek().get("level")
-			?.filterPredicate ?? ((character: Character.Character) => true),
+			?.filterPredicate ?? (() => true),
 	);
 	highlightedCharacters = highlightedCharacters.filter(
 		charactersManagement$.filterSetup.permanentFilterById
 			.peek()
-			.get("gearLevel")?.filterPredicate ??
-			((character: Character.Character) => true),
+			.get("gearLevel")?.filterPredicate ?? (() => true),
 	);
 	const filteredCharacters = availableCharacters.filter(
 		(character) => !highlightedCharacters.includes(character),

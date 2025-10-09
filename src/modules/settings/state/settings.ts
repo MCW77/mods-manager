@@ -13,6 +13,6 @@ export const settings$ = observable<Settings>({
 	section: "general",
 });
 
-settings$.section.onChange(({ value }) => {
+settings$.section.onChange(() => {
 	ui$.currentSection.set("settings");
 });

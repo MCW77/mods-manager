@@ -58,7 +58,7 @@ const getDefaultFilterSetup = () => {
 						id: "None",
 						type: "custom",
 						filter: "None",
-						filterPredicate: (character: Character) => true,
+						filterPredicate: () => true,
 					},
 				],
 				[
@@ -441,12 +441,8 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 			const id = charactersManagement$.filterSetup.customFilterId.get();
 			const customFilterById =
 				charactersManagement$.filterSetup.customFilterById.get();
-			if (customFilterById.has(id) === false)
-				return (character: Character) => true;
-			return (
-				customFilterById.get(id)?.filterPredicate ??
-				((character: Character) => true)
-			);
+			if (customFilterById.has(id) === false) return () => true;
+			return customFilterById.get(id)?.filterPredicate ?? (() => true);
 		},
 		addTextFilter: () => {
 			const newFilter = createTextCharacterFilter(

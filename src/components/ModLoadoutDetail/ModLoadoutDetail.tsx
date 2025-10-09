@@ -71,10 +71,7 @@ const ModLoadoutDetail = React.memo(
 		assignedTarget,
 		missedGoals = [],
 	}: ComponentProps) => {
-		const addCalculatedStatsToPlayerValues = (
-			playerStats: PlayerStat[],
-			missedGoals: MissedGoals,
-		) => {
+		const addCalculatedStatsToPlayerValues = (playerStats: PlayerStat[]) => {
 			const currentStats = {
 				health: 0,
 				protection: 0,
@@ -303,9 +300,9 @@ const ModLoadoutDetail = React.memo(
 		);
 
 		// Add effective health and average damage to the stats display
-		addCalculatedStatsToPlayerValues(playerStats, missedGoals);
+		addCalculatedStatsToPlayerValues(playerStats);
 
-		const statsDisplay = playerStats.map((stat, index) => {
+		const statsDisplay = playerStats.map((stat) => {
 			if (stat.recommendedValue == null) {
 				return (
 					<tr key={stat.name}>

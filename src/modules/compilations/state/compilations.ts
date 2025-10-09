@@ -148,8 +148,10 @@ const compilations$: ObservableObject<CompilationsObservable> =
 					compilations$.defaultCompilation.reoptimizationIndex.peek(),
 				),
 			);
+/*
 			const selectedCharacters =
 				compilations$.defaultCompilation.selectedCharacters.peek();
+*/
 			const [selectedCharacter] =
 				compilations$.defaultCompilation.selectedCharacters.splice(
 					fromIndex,
@@ -305,7 +307,7 @@ profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
 	compilations$.deleteProfile(value);
 });
 
-profilesManagement$.profiles.activeAllycode.onChange(({ value }) => {
+profilesManagement$.profiles.activeAllycode.onChange(() => {
 	compilations$.ensureSelectedCharactersExist(
 		compilations$.activeCompilationId.get(),
 	);

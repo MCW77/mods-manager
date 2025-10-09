@@ -96,7 +96,7 @@ export async function openDatabaseWithMigration(
 
 		request.onerror = () => reject(request.error);
 
-		request.onupgradeneeded = async (_event) => {
+		request.onupgradeneeded = async () => {
 			const db = request.result;
 			const transaction = request.transaction;
 

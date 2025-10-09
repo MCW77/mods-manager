@@ -32,7 +32,7 @@ const about$: ObservableObject<AboutObservable> = observable<AboutObservable>({
 					"warning",
 				);
 			}
-		} catch (error) {
+		} catch (_error) {
 			dialog$.showFlash(
 				"Checking if new version is available failed",
 				"Maybe our server is down or there are connection issues. You can reload the page or just continue using the current version.",

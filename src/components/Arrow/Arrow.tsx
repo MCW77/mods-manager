@@ -2,7 +2,7 @@
 import * as React from "react";
 
 const Arrow = React.memo(
-	({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+	({ className }: React.HTMLAttributes<HTMLDivElement>) => (
 		<svg
 			className={`inline fill-black stroke-[#eeca44] stroke-width-5 ${className}`}
 			viewBox="0 0 500 500"
