@@ -15,7 +15,7 @@ const characters$ = observable<CharactersObservable>({
 		try {
 			return await fetchCharacters();
 		} catch (error) {
-			throw error;
+			throw new Error("Failed to fetch base characters", { cause: error });
 		}
 	},
 });
