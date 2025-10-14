@@ -1,27 +1,68 @@
 // react
-import React from "react";
+import { memo } from "react";
+
+// components
+import { Badge } from "../ui/badge";
 
 type ComponentProps = {
 	pips: number;
 };
 
-const Pips = React.memo(({ pips }: ComponentProps) => {
-	const pipElements = Array.from(Array(pips).keys()).map((_, index) => (
-		// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-		<span key={index} className="inline-block size-[5px] m-x-[1.6px] m-y-[2px] bg-[#fae8da] rounded-[3px]" />
-	));
+const Pip = memo(() => (
+	<div className="size-[5px] m-[2px] bg-foreground rounded-full" />
+));
 
+// Pre-rendered static components for the most common cases (5 and 6 pips)
+// These will only be rendered once and reused, significantly reducing re-renders
+const Pips5 = memo(() => (
+	<Badge variant="outline" className="w-16 p-1 items-start border-3">
+		<Pip />
+		<Pip />
+		<Pip />
+		<Pip />
+		<Pip />
+		<div className="size-[5px] m-[2px]" />
+	</Badge>
+));
+Pips5.displayName = "Pips5";
+
+const Pips6 = memo(() => (
+	<Badge variant="outline" className="w-16 p-1 items-start border-3">
+		<Pip />
+		<Pip />
+		<Pip />
+		<Pip />
+		<Pip />
+		<Pip />
+	</Badge>
+));
+Pips6.displayName = "Pips6";
+
+// Dynamic component for rare cases (1-4 pips)
+const PipsDynamic = memo(({ pips }: ComponentProps) => {
 	return (
-		<div className={
-			`p-[1px] m-y-[5px] text-left font-size-0
-			 relative z-[-10]
-			 before:absolute before:inset-[-2px] before:z-[-2] before:rounded-sm before:bg-[linear-gradient(30deg,_#afa992_10%,_black_70%)] before:content-[""]
-			 after:absolute after:inset-0 after:z-[-1] after:rounded-sm after:bg-black after:content-[""]
-			`}>
-			{pipElements}
-		</div>
+		<Badge variant="outline" className="w-16 p-1 items-start border-3">
+			<Pip key={"pip-1"} />
+			{pips > 1 && <Pip key={"pip-2"} />}
+			{pips > 2 && <Pip key={"pip-3"} />}
+			{pips > 3 && <Pip key={"pip-4"} />}
+			{pips < 4 && <div className="size-[5px] m-[2px]" />}
+			{pips < 3 && <div className="size-[5px] m-[2px]" />}
+			{pips < 2 && <div className="size-[5px] m-[2px]" />}
+			<div className="size-[5px] m-[2px]" />
+			<div className="size-[5px] m-[2px]" />
+		</Badge>
 	);
 });
+PipsDynamic.displayName = "PipsDynamic";
+
+// Main component that chooses the optimal rendering strategy
+const Pips = ({ pips }: ComponentProps) => {
+	if (pips === 5) return <Pips5 />;
+	if (pips === 6) return <Pips6 />;
+
+	return <PipsDynamic pips={pips} />;
+};
 
 Pips.displayName = "Pips";
 
