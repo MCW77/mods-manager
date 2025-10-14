@@ -326,7 +326,7 @@ const ModLoadoutDetail = React.memo(
 			return (
 				<tr key={stat.name}>
 					<td
-						className={`stat-type ${missedMessage ? "red-text" : ""}`}
+						className={`stat-type ${missedMessage ? "text-red-600" : ""}`}
 						title={missedMessage}
 					>
 						{stat.name}
@@ -348,7 +348,7 @@ const ModLoadoutDetail = React.memo(
 					)}
 					<td className={"stat-value"}>
 						<span
-							className={`total-value ${missedMessage ? "red-text" : ""}`}
+							className={`total-value ${missedMessage ? "text-red-600" : ""}`}
 							title={missedMessage}
 						>
 							{stat.recommendedValue % 1

@@ -86,13 +86,13 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 								<div className={"character-id"}>
 									<CharacterAvatar character={character} />
 									<Arrow />
-									<h3 className={missedGoals?.length ? "red-text" : ""}>
+									<h3 className={missedGoals?.length ? "text-red-600" : ""}>
 										{baseCharacterById[characterID]
 											? baseCharacterById[characterID].name
 											: characterID}
 									</h3>
 									{target && (
-										<h4 className={missedGoals?.length ? "red-text" : ""}>
+										<h4 className={missedGoals?.length ? "text-red-600" : ""}>
 											{target.id}
 										</h4>
 									)}
