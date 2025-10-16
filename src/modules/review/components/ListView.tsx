@@ -32,6 +32,7 @@ const CharacterAvatar = lazy(
 const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 interface ListViewProps {
 	displayedMods: CharacterModdings;
@@ -101,7 +102,7 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 	}
 
 	return (
-		<div>
+		<div className={"grid grid-cols-1 gap-2 justify-items-center"}>
 			{individualMods.map(({ id: characterID, target, mod }) => {
 				const character = characterById[characterID];
 
@@ -111,19 +112,23 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 						key={`RIV-${mod.id}`}
 						visibleOffset={4000}
 					>
-						<div className={"mod-row individual"}>
+						<div className={"grid grid-cols-[2fr_2fr_1fr] gap-4 items-center"}>
 							<ModDetail mod={mod} assignedTarget={target} />
-							<div className={"character-id"}>
-								<Arrow />
-								<CharacterAvatar character={character} />
-								<h3>
-									{baseCharacterById[character.id]
-										? baseCharacterById[character.id].name
-										: character.id}
-								</h3>
-								<h4>{target.id}</h4>
+							<div className={"flex gap-2 items-center"}>
+								<Arrow className={"size-16"} />
+								<div className={"flex flex-col gap-2 items-center"}>
+									<CharacterAvatar character={character} />
+									<div className={"inline-flex flex-col gap-1 vertical-middle"}>
+										<Label>
+											{baseCharacterById[character.id]
+												? baseCharacterById[character.id].name
+												: character.id}
+										</Label>
+										<Label>{target.id}</Label>
+									</div>
+								</div>
 							</div>
-							<div className={"actions"}>
+							<div className={"grid grid-cols-1 gap-2 justify-items-stretch"}>
 								<Button
 									type={"button"}
 									onClick={() => profilesManagement$.unequipMod(mod.id)}

@@ -34,6 +34,7 @@ const ModLoadoutView = lazy(
 );
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 type SetsViewProps = {
 	modAssignments: CharacterModdings;
@@ -64,9 +65,9 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 
 	// Iterate over each character to render a full mod set
 	return (
-		<div>
+		<div className={"grid grid-cols-1 gap-2 justify-items-center"}>
 			<For each={modAssignments$}>
-				{(value, id) => {
+				{(value, _id) => {
 					const {
 						characterId: characterID,
 						missedGoals,
@@ -82,42 +83,56 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 							key={`RIV-${value.characterId.peek()}`}
 							visibleOffset={4000}
 						>
-							<div className={"mod-row set"}>
-								<div className={"character-id"}>
-									<CharacterAvatar character={character} />
-									<Arrow />
-									<h3 className={missedGoals?.length ? "text-red-600" : ""}>
-										{baseCharacterById[characterID]
-											? baseCharacterById[characterID].name
-											: characterID}
-									</h3>
-									{target && (
-										<h4 className={missedGoals?.length ? "text-red-600" : ""}>
-											{target.id}
-										</h4>
-									)}
-									<div className={"actions"}>
-										{ModListFilter.sortOptions.currentCharacter ===
-											filter.sort && (
-											<Button
-												type={"button"}
-												onClick={() => profilesManagement$.unequipMods(mods)}
+							<div
+								className={`grid ${ModListFilter.sortOptions.assignedCharacter === filter.sort ? "grid-cols-[2fr_5fr]" : "grid-cols-[5fr_4fr]"} gap-4 items-center`}
+							>
+								<div className={"flex gap-4 items-center justify-evenly"}>
+									<div className={"flex flex-col gap-2 items-center"}>
+										<CharacterAvatar character={character} />
+										<div
+											className={"inline-flex flex-col gap-1 vertical-middle"}
+										>
+											<Label
+												className={missedGoals?.length ? "text-red-600" : ""}
 											>
-												I removed these mods
-											</Button>
-										)}
-										{ModListFilter.sortOptions.assignedCharacter ===
-											filter.sort && (
-											<Button
-												type={"button"}
-												onClick={() =>
-													profilesManagement$.reassignMods(mods, characterID)
-												}
-											>
-												I reassigned these mods
-											</Button>
-										)}
+												{baseCharacterById[characterID]
+													? baseCharacterById[characterID].name
+													: characterID}
+											</Label>
+											{target && (
+												<Label
+													className={missedGoals?.length ? "text-red-600" : ""}
+												>
+													{target.id}
+												</Label>
+											)}
+										</div>
+										<div
+											className={"grid grid-cols-1 gap-2 justify-items-stretch"}
+										>
+											{ModListFilter.sortOptions.currentCharacter ===
+												filter.sort && (
+												<Button
+													type={"button"}
+													onClick={() => profilesManagement$.unequipMods(mods)}
+												>
+													I removed these mods
+												</Button>
+											)}
+											{ModListFilter.sortOptions.assignedCharacter ===
+												filter.sort && (
+												<Button
+													type={"button"}
+													onClick={() =>
+														profilesManagement$.reassignMods(mods, characterID)
+													}
+												>
+													I reassigned these mods
+												</Button>
+											)}
+										</div>{" "}
 									</div>
+									<Arrow className={"size-24"} />
 								</div>
 								{ModListFilter.sortOptions.assignedCharacter ===
 									filter.sort && (

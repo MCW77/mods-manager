@@ -2,9 +2,6 @@
 import { lazy } from "react";
 import { observer, Show, use$ } from "@legendapp/state/react";
 
-// styles
-import "./Review.css";
-
 // utils
 import flatten from "lodash-es/flatten";
 import mapValues from "lodash-es/mapValues";
@@ -44,6 +41,7 @@ const ListView = lazy(() => import("../components/ListView"));
 const SetsView = lazy(() => import("../components/SetsView"));
 import { SummaryWidget } from "../components/SummaryWidget";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
+import { Label } from "#ui/label";
 
 // A map from number of pips that a mod has to the cost to remove it
 const modRemovalCosts = {
@@ -385,7 +383,7 @@ const Review: React.FC = observer(() => {
 	);
 
 	return (
-		<div className={"review flex flex-col flex-grow-1 overflow-y-auto"}>
+		<div className={"flex flex-col flex-grow-1 overflow-y-auto"}>
 			<div
 				className={"flex flex-col justify-around items-stretch p-y-2 min-h-min"}
 			>
@@ -406,7 +404,7 @@ const Review: React.FC = observer(() => {
 						/>
 					</DefaultCollapsibleCard>
 				</div>
-				<div className="overflow-y-auto">
+				<div className="flex justify-center overflow-y-auto">
 					<Show
 						if={() => 0 === displayedMods.length}
 						else={
@@ -423,15 +421,15 @@ const Review: React.FC = observer(() => {
 						<Show
 							if={() => 0 === numMovingMods}
 							else={
-								<h3>
+								<Label>
 									No more mods to move under that filter. Try a different filter
 									now!
-								</h3>
+								</Label>
 							}
 						>
 							<div>
-								<h2>You don't have any mods left to move! Great job!</h2>
-								<h3>Don't forget to assign mods to all your pilots!</h3>
+								<Label>You don't have any mods left to move! Great job!</Label>
+								<Label>Don't forget to assign mods to all your pilots!</Label>
 							</div>
 						</Show>
 					</Show>
