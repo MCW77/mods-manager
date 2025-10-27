@@ -22,20 +22,12 @@ const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
-const tierColorByTier: Record<TierSettingsTiers, string> = {
-	"1": "text-[modgray]",
-	"2": "text-[modgreen]",
-	"3": "text-[modblue]",
-	"4": "text-[modpurple]",
-	"5": "text-[modgold]",
-};
-
 const TierFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
 	return (
 		<div className={"w-24 flex flex-col gap-2 items-center"}>
-			<Label className="p-r-2 text-[modgold]" htmlFor={"tier-filter1"}>
+			<Label className="p-r-2" htmlFor={"tier-filter1"}>
 				{t("filter.TierHeadline")}
 			</Label>
 			<div
@@ -53,13 +45,12 @@ const TierFilter = () => {
 									return activeFilter.tier[tier];
 								});
 								const value = tierState || 0;
-								const stateCSS = getFilterSelectionStyles(value);
 								const tierColor = ModConsts.tiersMap.get(Number(tier));
-								const className = `${stateCSS} ${tierColor}`;
+								const stateCSS = getFilterSelectionStyles(value, tierColor);
 
 								return (
 									<Button
-										className={className}
+										className={stateCSS}
 										size="xs"
 										variant={"outline"}
 										onClick={() =>

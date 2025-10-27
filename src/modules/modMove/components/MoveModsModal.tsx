@@ -150,7 +150,7 @@ const MoveModsModal = () => {
 			<p>
 				This will move all of your mods as recommended by Grandivory's Mods
 				Optimizer. Please note that{" "}
-				<strong className={"gold"}>
+				<strong className={"text-mod-gold"}>
 					this action will log you out of Galaxy of Heroes if you are currently
 					logged in
 				</strong>

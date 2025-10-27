@@ -1,211 +1,37 @@
-.gold {
-  color: #eeca44 !important;
-}
-
-.purple {
-  color: #a35ef9 !important;
-}
-
-.blue {
-  color: #2997f1 !important;
-}
-
-.green {
-  color: #8fff3a !important;
-}
-
-.gray {
-  color: #ccfffe !important;
-}
-
-.increase {
-  color: #60bd1b;
-}
-
-.increase::before {
-  content: '+';
-}
-
-.decrease {
-  color: #e64343;
-}
-
-.center {
-  text-align: center !important;
-}
-
-.left {
-  text-align: left !important;
-}
-
-html, body {
-  height: 100dvh;
-  box-sizing: border-box;
+html,
+body {
+	height: 100dvh;
+	box-sizing: border-box;
 }
 
 #root {
-  display: flex;
-  height: 100%;
+	display: flex;
+	height: 100%;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
 }
 
 ::-webkit-scrollbar {
-  width: .4em;
-  height: .4em;
-  margin-left: 1em;
+	width: 0.4em;
+	height: 0.4em;
+	margin-left: 1em;
 }
 
 ::-webkit-scrollbar-track {
-  border: 1px inset dodgerblue;
-  background: #1e2f46;
+	border: 1px inset dodgerblue;
+	background: #1e2f46;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: dodgerblue;
-  min-height: 3em;
-}
-
-button2, .button {
-  display: inline-block;
-  margin: .1em;
-  background-color: #46801a;
-  border: 1px outset limegreen;
-  border-radius: 5px;
-  font-size: 1em;
-  font-weight: 300;
-  color: white;
-  padding: 1px 1px;
-  opacity: .9;
-  cursor: pointer;
-  line-height: 1.3;
-  vertical-align: middle;
-  text-decoration: none;
-  text-shadow: none;
-}
-
-button[disabled],
-button[disabled]:hover {
-  opacity: .5;
-  cursor: auto;
-}
-
-button2.small, .button.small {
-  font-size: .6em;
-}
-
-button2:active, .button:active {
-  border: 1px inset limegreen;
-}
-
-button2.red, .button.red {
-  background-color: darkred;
-  border: 1px outset red;
-}
-
-button2.red:active, .button.red:active {
-  border: 1px inset red;
-}
-
-button2.blue, .button.blue {
-  background-color: #0b4884;
-  border: 1px outset dodgerblue;
-  color: white !important;
-}
-
-button2.blue:active, .button.blue:active {
-  border: 1px inset dodgerblue;
-}
-
-button2:hover, button2:focus,
-.button:hover, .button:focus {
-  outline: 0;
-  opacity: 1;
-}
-
-button2.link {
-  text-decoration: underline;
-  background-color: transparent;
-  border: none;
-  color: #d3d3d3;
-  font-size: 1em;
-  margin: .1em;
-  padding: 0;
-  font-weight: 400;
-}
-
-.icon {
-  display: inline-block;
-  height: 1em;
-  width: 1em;
-  margin: 0 .25em;
-  vertical-align: middle;
-}
-
-.modal.error-modal {
-  border: 1px solid darkred;
-  background-color: #ead118;
-  width: 30em;
-  min-height: 12em;
-  color: black;
-  text-shadow: none;
-}
-
-.modal.error-modal .warning-label {
-  float: right;
-  height: 10em;
-}
-
-.modal.error-modal p {
-  word-break: break-word;
-}
-
-.modal.changelog-modal {
-  max-width: 45em;
-}
-
-.modal .help {
-  max-width: 30em;
-}
-
-.modal .fetch-results {
-  max-width: 40em;
-}
-
-.modal .progress {
-  height: 1em;
-  width: 17em;
-  margin: .5em auto;
-  border-radius: .5em;
-  border: 1px solid limegreen;
-  padding: 0;
-  overflow: hidden;
-}
-
-.modal .progress .progress-bar {
-  display: block;
-  height: 100%;
-  background-image: repeating-linear-gradient(-45deg, #8fff3a, #46801a 1em, #8fff3a 2em);
-  background-size: 2.828em 1em;
-  background-repeat: repeat-x;
-  animation: Progress 1s linear infinite;
-  transition: width .5s;
+	background: dodgerblue;
+	min-height: 3em;
 }
 
 strong {
-  font-weight: bold;
-  color: #a35ef9;
-}
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  font-size: 1em;
-  color: white;
-  background-color: rgb(0, 0, 64);
-  border: 1px solid dodgerblue;
-  border-radius: 0;
-  padding: .25em;
+	font-weight: bold;
+	color: #a35ef9;
 }

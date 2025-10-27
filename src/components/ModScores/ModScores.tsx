@@ -17,6 +17,7 @@ const modsView$ = stateLoader$.modsView$;
 
 // domain
 import { type Mod, modScores } from "#/domain/Mod";
+import { modTierColors } from "#/domain/ModTierColors";
 
 // components
 import { Separator } from "#ui/separator";
@@ -36,8 +37,8 @@ const ModScores = observer(
 
 		return (
 			<div>
-				<h4>{t("Score_other")}</h4>
-				<ul className="p-l-0 text-[#c5f5f5]">
+				<h4 className="uppercase">{t("Score_other")}</h4>
+				<ul className="text-[#c5f5f5]">
 					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
 						<For each={secondaryStats$}>
 							{(stat$) => {
@@ -45,7 +46,10 @@ const ModScores = observer(
 								const scoreText = use$(() => stat$.score.get().show());
 
 								return (
-									<li key={id} className={`class-${stat$.score.getClass()}`}>
+									<li
+										key={id}
+										className={`leading-[1.2em] ${modTierColors[stat$.score.getClass()]}`}
+									>
 										{scoreText}
 									</li>
 								);
@@ -54,7 +58,7 @@ const ModScores = observer(
 					</Show>
 					<Separator className={"m-y-1 border-foreground"} decorative />
 					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
-						<li key={"5"} className={`class-${mod.getClass()}`}>
+						<li key={"5"} className={`${modTierColors[mod.getClass()]}`}>
 							{modScores.find((modScore) => modScore.name === scoreName)
 								?.isFlatOrPercentage === "IsFlat"
 								? `${mod.scores[scoreName]}`

@@ -90,7 +90,7 @@ const CreateProfileModal: React.FC = observer(() => {
 	return (
 		<div className={"flex flex-col gap-2"}>
 			<h2>Create a new HotUtils loudout</h2>
-			<p className={"center"}>
+			<p className={"text-center"}>
 				Please note that using the same name as an existing loudout will cause
 				it to be overwritten.
 			</p>

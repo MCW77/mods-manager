@@ -65,7 +65,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 
 	// Iterate over each character to render a full mod set
 	return (
-		<div className={"grid grid-cols-1 gap-2 justify-items-center"}>
+		<div className={"grid grid-cols-1 gap-6 justify-items-center"}>
 			<For each={modAssignments$}>
 				{(value, _id) => {
 					const {
@@ -88,7 +88,10 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 							>
 								<div className={"flex gap-4 items-center justify-evenly"}>
 									<div className={"flex flex-col gap-2 items-center"}>
-										<CharacterAvatar character={character} />
+										<CharacterAvatar
+											className={"text-[1.5em]"}
+											character={character}
+										/>
 										<div
 											className={"inline-flex flex-col gap-1 vertical-middle"}
 										>
@@ -141,24 +144,16 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 										oldLoadout={createModLoadout(
 											currentModsByCharacter[characterID] || [],
 										)}
-										showAvatars={true}
 										character={character}
 										target={target}
 										useUpgrades={true}
-										assignedCharacter={character}
 										assignedTarget={target}
 										missedGoals={missedGoals}
 									/>
 								)}
 								{ModListFilter.sortOptions.currentCharacter === filter.sort && (
 									<div className={"mod-set-block"}>
-										<ModLoadoutView
-											modLoadout={createModLoadout(mods)}
-											showAvatars={
-												ModListFilter.sortOptions.currentCharacter !==
-												filter.sort
-											}
-										/>
+										<ModLoadoutView modLoadout={createModLoadout(mods)} />
 									</div>
 								)}
 							</div>

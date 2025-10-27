@@ -106,18 +106,18 @@ const TemplatesManager = observer(
 						{t("optimizer.templates.Delete")} {` ${selectedTemplates.length}`}
 					</Button>
 				</div>
-				<div className={"templates"}>
+				<ul>
 					<For each={templates$.userTemplates}>
 						{(template$) => {
 							const template = use$(template$);
 							return (
-								<div
+								<li
 									className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
 									data-template={template.id}
 									key={`template-${template.id}`}
 									onClick={(event) => {
 										event.stopPropagation();
-										const target = event.currentTarget as HTMLDivElement;
+										const target = event.currentTarget as HTMLLIElement;
 										if (
 											target.dataset.template !== undefined &&
 											target.dataset.template !== null
@@ -151,7 +151,7 @@ const TemplatesManager = observer(
 									}}
 									onKeyUp={(event) => {
 										if (event.code === "Enter") {
-											const target = event.currentTarget as HTMLDivElement;
+											const target = event.currentTarget as HTMLLIElement;
 											if (
 												target.dataset.template !== undefined &&
 												target.dataset.template !== null
@@ -189,11 +189,11 @@ const TemplatesManager = observer(
 										&nbsp;
 									</span>
 									{template.id}
-								</div>
+								</li>
 							);
 						}}
 					</For>
-				</div>
+				</ul>
 			</div>
 		);
 	}),

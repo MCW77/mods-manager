@@ -1,71 +1,34 @@
 // react
-import React, { lazy } from "react";
-
-// styles
-import "./ModLoadoutView.css";
-
-// state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
-
-const optimizationSettings$ = stateLoader$.optimizationSettings$;
+import React from "react";
 
 // domain
-import type * as Character from "#/domain/Character";
 import * as ModLoadout from "#/domain/ModLoadout";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 // components
-const ModImage = lazy(() => import("#/components/ModImage/ModImage"));
-const ModStats = lazy(() => import("#/components/ModStats/ModStats"));
+import ModDetail from "#/components/ModDetail/ModDetail";
 
 type ComponentProps = {
 	modLoadout: ModLoadout.ModLoadout;
-	showAvatars: boolean;
-	assignedCharacter?: Character.Character;
 	assignedTarget?: OptimizationPlan;
 };
 
 const ModLoadoutView = React.memo(
-	({
-		modLoadout,
-		showAvatars = false,
-		assignedCharacter,
-		assignedTarget,
-	}: ComponentProps) => {
+	({ modLoadout, assignedTarget }: ComponentProps) => {
 		const usedSlots = ModLoadout.getUsedSlots(modLoadout);
 		let modDetails = null;
 		if (ModLoadout.hasSlots(modLoadout, usedSlots)) {
 			modDetails = usedSlots.map((slot) => (
-				<div className={`mod ${slot}`} key={modLoadout[slot]?.id}>
-					{assignedTarget &&
-						optimizationSettings$.shouldLevelMod(
-							modLoadout[slot],
-							assignedTarget,
-						) && <span className={"icon level active"} />}
-					{assignedTarget &&
-						optimizationSettings$.shouldSliceMod(
-							modLoadout[slot],
-							assignedTarget,
-						) && <span className={"icon slice active"} />}
-					<ModImage
-						mod={modLoadout[slot]}
-						showAvatar={showAvatars}
-						className={
-							assignedCharacter &&
-							modLoadout[slot].characterID === assignedCharacter.id
-								? "no-move"
-								: ""
-						}
-					/>
-					<ModStats
-						mod={modLoadout[slot]}
-						showAvatar
-						assignedTarget={assignedTarget}
-					/>
+				<div key={modLoadout[slot]?.id}>
+					<ModDetail mod={modLoadout[slot]} assignedTarget={assignedTarget} />
 				</div>
 			));
 		}
-		return <div className={"mod-set-view"}>{modDetails}</div>;
+		return (
+			<div className={"relative inline-grid grid-cols-2 grid-rows-3 gap-2"}>
+				{modDetails}
+			</div>
+		);
 	},
 );
 

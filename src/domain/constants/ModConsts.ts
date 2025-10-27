@@ -1,7 +1,4 @@
-import type {
-	ModTiersEnum,
-	ModSecondariesScoreTiersEnum,
-} from "#/constants/enums";
+import type { ModTiersEnum } from "#/constants/enums";
 import type * as ModTypes from "../types/ModTypes";
 
 export const gimoSlots: ModTypes.GIMOSlots[] = [
@@ -14,19 +11,9 @@ export const gimoSlots: ModTypes.GIMOSlots[] = [
 ];
 
 export const tiersMap: Map<ModTiersEnum, string> = new Map([
-	[5, "gold"],
-	[4, "purple"],
-	[3, "blue"],
-	[2, "green"],
-	[1, "grey"],
-]);
-
-export const secondaryScoresTiersMap: Map<
-	ModSecondariesScoreTiersEnum,
-	string
-> = new Map([
-	[4, "gold"],
-	[3, "purple"],
-	[2, "blue"],
-	[1, "green"],
+	[5, "mod-gold"],
+	[4, "mod-purple"],
+	[3, "mod-blue"],
+	[2, "mod-green"],
+	[1, "mod-grey"],
 ]);

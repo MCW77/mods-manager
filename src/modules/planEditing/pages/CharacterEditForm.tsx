@@ -394,7 +394,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							<Show if={target$.canDeleteTarget}>
 								<Button
 									type={"button"}
-									id={"delete-button"}
 									variant={"destructive"}
 									onClick={() => {
 										compilations$.deleteTarget(character.id, target.id);

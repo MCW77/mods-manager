@@ -112,7 +112,7 @@ const App = () => {
 		<Suspense fallback={<div className={"bg-black h-full w-full"} />}>
 			<div
 				className={
-					"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif] text-left"
+					"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif]"
 				}
 			>
 				<div

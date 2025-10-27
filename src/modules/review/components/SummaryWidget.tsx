@@ -51,7 +51,11 @@ const SummaryWidget = ({
 					Overall change:{" "}
 					<span
 						className={
-							valueChange > 0 ? "increase" : valueChange < 0 ? "decrease" : ""
+							valueChange > 0
+								? "text-green-500 after:content-['+']"
+								: valueChange < 0
+									? "text-red-500"
+									: ""
 						}
 					>
 						{formatNumber(Number(valueChange.toFixed(2)))}%

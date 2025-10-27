@@ -93,9 +93,11 @@ const AccountsManager = React.memo(() => {
 									dialog$.showFlash(
 										<p>
 											Successfully imported{" "}
-											<span className={"gold"}>{importedModsCount}</span> mods
-											for player{" "}
-											<span className={"gold"}>
+											<span className={"text-mod-gold"}>
+												{importedModsCount}
+											</span>{" "}
+											mods for player{" "}
+											<span className={"text-mod-gold"}>
 												{profilesManagement$.activeProfile.playerName.peek()}
 											</span>
 										</p>,

@@ -2,12 +2,9 @@
 import type React from "react";
 import { lazy, Suspense } from "react";
 
-// styles
-import "./CharacterEditView.css";
-
 // state
 import { observable } from "@legendapp/state";
-import { observer, use$ } from "@legendapp/state/react";
+import { Memo, observer, use$ } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -174,7 +171,7 @@ const CharacterEditView = observer(() => {
 
 	return (
 		<div
-			className={`character-edit flex flex-col flex-grow-1 gap-2 ${
+			className={`character-edit flex flex-col flex-grow-1 gap-2 overflow-hidden group ${
 				isSelectionExpanded ? "sort-view" : ""
 			}`}
 		>
@@ -210,7 +207,9 @@ const CharacterEditView = observer(() => {
 			</div>
 			<div className="flex h-[83%]">
 				<div
-					className="available-characters"
+					className="available-characters w-auto overflow-y-auto flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
+					role="application"
+					aria-label="Available characters drop zone"
 					onDragEnter={availableCharactersDragEnter}
 					onDragOver={dragOver}
 					onDragLeave={dragLeave}
@@ -218,7 +217,7 @@ const CharacterEditView = observer(() => {
 				>
 					<div
 						className={
-							"grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] p-x-1"
+							"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1"
 						}
 					>
 						{highlightedCharacters.map((character) => (
@@ -236,15 +235,17 @@ const CharacterEditView = observer(() => {
 								<CharacterWidget
 									key={character.id}
 									character={character}
-									className={"inactive"}
+									className={"opacity-25"}
 								/>
 							</Suspense>
 						))}
 					</div>
 				</div>
-				<div className="selected-characters">
+				<div className="selected-characters flex-grow-0 group-[&.sort-view]:flex-grow-1 max-w-[calc(33%_-_7em)] group-[&.sort-view]:max-w-initial m-l-1em">
 					<Suspense fallback={<Spinner isVisible={true} />}>
-						<CharacterList />
+						<Memo>
+							<CharacterList />
+						</Memo>
 					</Suspense>
 				</div>
 			</div>

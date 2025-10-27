@@ -2,7 +2,7 @@
 import type React from "react";
 import { lazy } from "react";
 
-import { observer, use$ } from "@legendapp/state/react";
+import { observer, use$, useObservable } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -18,6 +18,8 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import * as Character from "#/domain/Character";
 
 // components
+import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
+
 const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
 );
@@ -42,10 +44,12 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
 		// Track membership reactively on the observable Set itself (avoids stale subscriptions from `.get()`)
-		const isLocked = use$(() =>
-			lockedStatus$.isCharacterLockedForActivePlayer(character.id),
-		);
-		const classAttr = `${isLocked ? "locked" : ""} ${className} character`;
+		const isLocked$ = useObservable(() => {
+			const reactiveIsLocked =
+				lockedStatus$.lockedCharactersForActivePlayer.get();
+			return lockedStatus$.isCharacterLockedForActivePlayer(character.id);
+		});
+		const classAttr = `${className} relative w-32 m-0.5em text-center`;
 
 		const isCharacterSelected = (characterID: CharacterNames) =>
 			selectedCharacters.some(
@@ -69,15 +73,11 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 
 		return (
 			<div className={classAttr} key={character.id}>
-				<span
-					className={`icon locked ${isLocked ? "active" : ""}`}
-					onClick={() =>
+				<LockedToggle
+					$pressed={isLocked$}
+					onPressedChange={() =>
 						lockedStatus$.toggleCharacterForActivePlayer(character.id)
 					}
-					onKeyUp={(e) => {
-						if (e.code === "Enter")
-							lockedStatus$.toggleCharacterForActivePlayer(character.id);
-					}}
 				/>
 				<div
 					className={`${isDraggable ? "cursor-grab" : ""}`}
@@ -92,10 +92,12 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 							lastSelectedCharacter,
 						)
 					}
+					role={"option"}
+					tabIndex={0}
 				>
 					<CharacterAvatar character={character} />
 				</div>
-				<div className={"character-name"}>
+				<div className={"text-center"}>
 					{baseCharacterById[character.id]
 						? baseCharacterById[character.id].name
 						: character.id}

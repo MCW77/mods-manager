@@ -1,9 +1,6 @@
 // react
 import React, { lazy } from "react";
 
-// styles
-import "./ModLoadoutDetail.css";
-
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
@@ -12,10 +9,6 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
 import type * as Character from "#/domain/Character";
-import type {
-	CalculatedCharacterSummaryStatNames,
-	GIMOCharacterSummaryStatNames,
-} from "#/domain/GIMOStatNames";
 import type { ModLoadout } from "#/domain/ModLoadout";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
@@ -41,20 +34,12 @@ interface PlayerStat {
 	missedGoal: [TargetStat, number] | undefined;
 }
 
-type PlayerStats = {
-	[key in
-		| GIMOCharacterSummaryStatNames
-		| CalculatedCharacterSummaryStatNames]: PlayerStat;
-};
-
 type ComponentProps = {
 	oldLoadout: ModLoadout;
 	newLoadout: ModLoadout;
-	showAvatars: boolean;
 	character: Character.Character;
 	target: OptimizationPlan.OptimizationPlan;
 	useUpgrades: boolean;
-	assignedCharacter: Character.Character;
 	assignedTarget: OptimizationPlan.OptimizationPlan;
 	missedGoals: MissedGoals;
 };
@@ -63,11 +48,9 @@ const ModLoadoutDetail = React.memo(
 	({
 		oldLoadout,
 		newLoadout,
-		showAvatars = false,
 		character,
 		target,
 		useUpgrades,
-		assignedCharacter,
 		assignedTarget,
 		missedGoals = [],
 	}: ComponentProps) => {
@@ -266,10 +249,10 @@ const ModLoadoutDetail = React.memo(
 						(character.playerValues.level * 7.5 + statValue);
 
 					const statIncrease = statValue - baseStatValue;
-					stat = new CSStats.CharacterSummaryStat(
-						statName,
-						`${statIncrease % 1 ? Math.round(statIncrease * 100) / 100 : statIncrease}`,
-					);
+					stat.value =
+						statIncrease % 1
+							? Math.round(statIncrease * 100) / 100
+							: statIncrease;
 
 					if (originalStat) {
 						originalStatValue =
@@ -306,11 +289,15 @@ const ModLoadoutDetail = React.memo(
 			if (stat.recommendedValue == null) {
 				return (
 					<tr key={stat.name}>
-						<td className={"stat-type"}>{stat.name}</td>
-						<td className={"stat-value"}>???(???)</td>
+						<td className={"p-x-[0.5em] p-y-[0.2em] text-[0.95em] text-left"}>
+							{stat.name}
+						</td>
+						<td className={"p-x-[0.5em] p-y-[0.2em] text-[0.95em] text-white"}>
+							???(???)
+						</td>
 						{stat.diffStat && (
 							<td
-								className={`stat-diff${stat.diffStat.value > 0 ? " increase" : stat.diffStat.value < 0 ? " decrease" : ""}`}
+								className={`${stat.diffStat.value > 0 ? "text-green-500 after:content-['+']" : stat.diffStat.value < 0 ? "text-red-500" : ""}`}
 							>
 								{stat.diffStat.showValue()}
 							</td>
@@ -324,15 +311,19 @@ const ModLoadoutDetail = React.memo(
 				: undefined;
 
 			return (
-				<tr key={stat.name}>
+				<tr className={"odd:bg-cyan-950 even:bg-sky-900"} key={stat.name}>
 					<td
-						className={`stat-type ${missedMessage ? "text-red-600" : ""}`}
+						className={`p-x-[0.5em] p-y-[0.2em] text-[0.95em] text-left ${missedMessage ? "text-red-600" : ""}`}
 						title={missedMessage}
 					>
 						{stat.name}
 					</td>
 					{stat.diffStat && (
-						<td className={"stat-value"}>
+						<td
+							className={
+								"w-[9em] p-x-[0.5em] p-y-[0.2em] text-[0.95em] text-white text-right"
+							}
+						>
 							<span className={"total-value"}>
 								{stat.currentValue % 1
 									? stat.currentValue.toFixed(2)
@@ -340,13 +331,17 @@ const ModLoadoutDetail = React.memo(
 								{stat.displayModifier}{" "}
 							</span>
 							{stat.currentStat && (
-								<span className={"mods-value"}>
+								<span className={"text-teal-400"}>
 									({stat.currentStat.showValue()})
 								</span>
 							)}
 						</td>
 					)}
-					<td className={"stat-value"}>
+					<td
+						className={
+							"w-[9em] p-x-[0.5em] p-y-[0.2em] text-[0.95em] text-white text-right"
+						}
+					>
 						<span
 							className={`total-value ${missedMessage ? "text-red-600" : ""}`}
 							title={missedMessage}
@@ -357,19 +352,19 @@ const ModLoadoutDetail = React.memo(
 							{stat.displayModifier}{" "}
 						</span>
 						{stat.recommendedStat && (
-							<span className={"mods-value"}>
+							<span className={"text-teal-400"}>
 								({stat.recommendedStat.showValue()})
 							</span>
 						)}
 					</td>
 					<td
-						className={`optimizer-value ${stat.optimizationValue > 0 ? "increase" : stat.optimizationValue < 0 ? "decrease" : ""}`}
+						className={`w-[3.2em] p-x-[0.5em] p-y-[0.2em] text-[0.95em] ${stat.optimizationValue > 0 ? "text-green-500 after:content-['+']" : stat.optimizationValue < 0 ? "text-red-500" : ""}`}
 					>
 						{(stat.optimizationValue || 0).toFixed(2)}
 					</td>
 					{stat.diffStat && (
 						<td
-							className={`stat-diff${stat.diffStat.value > 0 ? " increase" : stat.diffStat.value < 0 ? " decrease" : ""}`}
+							className={`w-[4em] p-x-[0.5em] p-y-[0.2em] text-[0.95em] ${stat.diffStat.value > 0 ? "text-green-500 after:content-['+']" : stat.diffStat.value < 0 ? "text-red-500" : ""}`}
 						>
 							{stat.diffStat.showValue()}
 						</td>
@@ -396,49 +391,56 @@ const ModLoadoutDetail = React.memo(
 				: (100 * newValue) / oldValue - 100;
 
 		return (
-			<div className={"mod-set-detail"}>
+			<div
+				className={
+					"mod-set-detail relative flex gap-2 border-1 border-solid border-blue-500 p-2 bg-blue-200 dark:bg-blue-900 dark:bg-opacity-40 text-foreground text-shadow-md"
+				}
+			>
 				<ModLoadoutView
 					modLoadout={newLoadout}
-					showAvatars={showAvatars}
-					assignedCharacter={assignedCharacter}
 					assignedTarget={assignedTarget}
 				/>
-				<div className={"summary"}>
+				<div className={"summary flex flex-col gap-4"}>
 					<table>
 						<thead>
 							<tr>
-								<th colSpan={oldLoadout ? 5 : 4}>Stats Summary</th>
+								<th
+									className={"text-center bg-sky-500"}
+									colSpan={oldLoadout ? 5 : 4}
+								>
+									Stats Summary
+								</th>
 							</tr>
 							<tr>
-								<th />
-								<th>Current</th>
-								<th>Recommended</th>
-								<th>Value</th>
-								<th>Change</th>
+								<th className={"text-center bg-sky-500"} />
+								<th className={"text-center bg-sky-500"}>Current</th>
+								<th className={"text-center bg-sky-500"}>Recommended</th>
+								<th className={"text-center bg-sky-500"}>Value</th>
+								<th className={"text-center bg-sky-500"}>Change</th>
 							</tr>
 						</thead>
 						<tbody>{statsDisplay}</tbody>
 					</table>
-				</div>
-				<div className={"set-value"}>
-					{oldLoadout && <div>Previous Set Value: {oldValue.toFixed(2)}</div>}
-					<div>Total Value of Set: {newValue.toFixed(2)}</div>
-					{oldLoadout && (
-						<div>
-							Value Change:&nbsp;
-							<span
-								className={
-									valueChange > 0
-										? "increase"
-										: valueChange < 0
-											? "decrease"
-											: ""
-								}
-							>
-								{valueChange.toFixed(2)}%
-							</span>
-						</div>
-					)}
+					<div>
+						{oldLoadout && <div>Previous Set Value: {oldValue.toFixed(2)}</div>}
+						<div>Total Value of Set: {newValue.toFixed(2)}</div>
+						{oldLoadout && (
+							<div>
+								Value Change:&nbsp;
+								<span
+									className={
+										valueChange > 0
+											? "text-green-500 after:content-['+']"
+											: valueChange < 0
+												? "text-red-500"
+												: ""
+									}
+								>
+									{valueChange.toFixed(2)}%
+								</span>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 		);

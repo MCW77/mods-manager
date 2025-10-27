@@ -23,7 +23,7 @@ import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFu
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 
 import * as Character from "#/domain/Character";
-import { Mod } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -151,8 +151,11 @@ function showFetchResult(
 	fetchResults.push(
 		<p key={100}>
 			Successfully pulled data for{" "}
-			<span className={"gold"}>{Object.keys(profile.playerValues).length}</span>{" "}
-			characters and <span className={"gold"}>{profile.mods.length}</span> mods.
+			<span className={"text-mod-gold"}>
+				{Object.keys(profile.playerValues).length}
+			</span>{" "}
+			characters and{" "}
+			<span className={"text-mod-gold"}>{profile.mods.length}</span> mods.
 		</p>,
 	);
 
@@ -226,7 +229,7 @@ function updatePlayerData(
 				modById$[modId].characterID.set("null");
 			}
 		} else {
-/*
+			/*
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();

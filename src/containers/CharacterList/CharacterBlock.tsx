@@ -1,10 +1,10 @@
+// utils
+import { cn } from "#/lib/utils";
+
 // react
 import type React from "react";
 import { lazy } from "react";
-import { observer, use$ } from "@legendapp/state/react";
-
-// styles
-import "./CharacterList.css";
+import { Computed, observer, use$ } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -19,9 +19,7 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
-import { characterSettings } from "#/constants/characterSettings";
-
-import * as Character from "#/domain/Character";
+import type * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
@@ -30,6 +28,7 @@ const CharacterAvatar = lazy(
 );
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
+import { Toggle } from "#/components/reactive/Toggle";
 
 type CharacterBlockProps = {
 	characterId: CharacterNames;
@@ -50,27 +49,6 @@ const characterBlockDragStart = (index: number) => {
 	};
 };
 
-const characterBlockDragEnter = () => {
-	return (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-
-		(event.target as HTMLDivElement).classList.add("drop-character");
-	};
-};
-
-const characterBlockDragOver = () => {
-	return (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-	};
-};
-
-const characterBlockDragLeave = () => {
-	return (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		(event.target as HTMLDivElement).classList.remove("drop-character");
-	};
-};
-
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 	({ characterId, target, index }: CharacterBlockProps) => {
 		const characterById = use$(profilesManagement$.activeProfile.characterById);
@@ -82,46 +60,6 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			lockedStatus$.isCharacterLockedForActivePlayer(characterId),
 		);
 
-		/**
-		 * @param dropCharacterIndex The index of the character on which the drop is occurring or null (No characters in the list)
-		 * @returns {Function}
-		 */
-		const characterBlockDrop = (dropCharacterIndex: number | null) => {
-			return (event: React.DragEvent<HTMLDivElement>) => {
-				event.preventDefault();
-				event.stopPropagation();
-				const options = JSON.parse(
-					event.dataTransfer.getData("application/json"),
-				);
-
-				switch (options.effect) {
-					case "add": {
-						const movingCharacterID: CharacterNames =
-							event.dataTransfer.getData("text/plain") as CharacterNames;
-						const movingCharacter = characterById[movingCharacterID];
-						compilations$.selectCharacter(
-							movingCharacterID,
-							Character.defaultTarget(characterSettings, movingCharacter),
-							dropCharacterIndex,
-						);
-						break;
-					}
-					case "move": {
-						const movingCharacterIndex =
-							+event.dataTransfer.getData("text/plain");
-						compilations$.moveSelectedCharacter(
-							movingCharacterIndex,
-							dropCharacterIndex,
-						);
-						break;
-					}
-					default:
-					// Do nothing
-				}
-
-				(event.target as HTMLDivElement).classList.remove("drop-character");
-			};
-		};
 		/*
 		let handleValueChange = (value: string) => {
 			const newTarget = structuredClone(target);
@@ -139,22 +77,18 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			character: Character.Character,
 			target: OptimizationPlan.OptimizationPlan,
 		) => {
-			const restrictionsActive = OptimizationPlan.hasRestrictions(target)
-				? "active"
-				: "";
-			const targetStatActive = target.targetStats?.length ? "active" : "";
-			const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target)
-				? "active"
-				: "";
-			const blankTargetActive = OptimizationPlan.isBlank(target)
-				? "active"
-				: "";
-			const lockedActive = charactersLockedStatus ? "active" : "";
+			const restrictionsActive = OptimizationPlan.hasRestrictions(target);
+			const targetStatActive = target.targetStats?.length > 0;
+			const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target);
+			const blankTargetActive = OptimizationPlan.isBlank(target);
 
 			return (
-				<div className={"character-icons"}>
+				<div className={"grid-col-2 grid-row-2"}>
 					<span
-						className={`icon restrictions ${restrictionsActive}`}
+						className={cn(
+							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-36px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
+							restrictionsActive ? "bg-[position:-36px_0px]" : "",
+						)}
 						title={
 							restrictionsActive
 								? "This character has restrictions active"
@@ -162,7 +96,10 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						}
 					/>
 					<span
-						className={`icon target ${targetStatActive}`}
+						className={cn(
+							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-54px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
+							targetStatActive ? "bg-[position:-54px_0px]" : "",
+						)}
 						title={
 							targetStatActive
 								? "This character has a target stat selected"
@@ -170,7 +107,10 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						}
 					/>
 					<span
-						className={`icon negative ${negativeWeightsActive}`}
+						className={cn(
+							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-90px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
+							negativeWeightsActive ? "bg-[position:-90px_0px]" : "",
+						)}
 						title={
 							negativeWeightsActive
 								? "This character's target has negative stat weights"
@@ -178,25 +118,29 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						}
 					/>
 					<span
-						className={`icon blank-target ${blankTargetActive}`}
+						className={cn(
+							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-126px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
+							blankTargetActive ? "bg-[position:-126px_0px]" : "",
+						)}
 						title={
 							blankTargetActive
 								? "This character's target has no assigned stat weights"
 								: "This character's target has at least one stat given a value"
 						}
 					/>
-					<span
-						className={`icon locked ${lockedActive}`}
-						onClick={() => {
+					<Toggle
+						className={cn(
+							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-144px_-18px] w-[18px] min-w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0 rounded-none`,
+							charactersLockedStatus ? "bg-[position:-144px_0px]" : "",
+						)}
+						$pressed={() =>
+							lockedStatus$.isCharacterLockedForActivePlayer(characterId)
+						}
+						onPressedChange={() => {
 							lockedStatus$.toggleCharacterForActivePlayer(character.id);
 						}}
-						onKeyUp={(event: React.KeyboardEvent<HTMLSpanElement>) => {
-							if (event.key === "Enter") {
-								lockedStatus$.toggleCharacterForActivePlayer(character.id);
-							}
-						}}
 						title={
-							lockedActive
+							charactersLockedStatus
 								? "This character is locked. Its mods will not be assigned to other characters"
 								: "This character is not locked"
 						}
@@ -221,33 +165,38 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			});
 		};
 
-		const baseClass = "character-block cursor-grab";
-
 		return (
-			<div
-				className={"character-block-wrapper"}
-				key={character.id}
-				onDragEnter={characterBlockDragEnter()}
-				onDragOver={characterBlockDragOver()}
-				onDragLeave={characterBlockDragLeave()}
-				onDrop={characterBlockDrop(index)}
-				onDoubleClick={() => compilations$.unselectCharacter(index)}
-			>
-				<div
-					className={charactersLockedStatus ? `${baseClass} locked` : baseClass}
+			<div className={"w-80 p-x-0 p-y-1 m-0"} key={character.id}>
+				<article
+					className={`max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab ${charactersLockedStatus ? "locked" : ""}`}
+					aria-label={`Character ${baseCharacterById[character.id]?.name || character.id} - draggable`}
 					draggable={true}
 					onDragStart={characterBlockDragStart(index)}
+					onDoubleClick={() => compilations$.unselectCharacter(index)}
 				>
-					{renderCharacterIcons(character, target)}
-					<CharacterAvatar character={character} />
-					<div className={"character-name"}>
+					<Computed>{renderCharacterIcons(character, target)}</Computed>
+					<CharacterAvatar
+						character={character}
+						className={
+							"row-start-1 row-end-3 col-start-1 col-end-1 text-size-3.2"
+						}
+					/>
+					<div
+						className={
+							"inline-block grid-row-1 grid-col-2 align-middle pointer-events-none"
+						}
+					>
 						{baseCharacterById[character.id]
 							? baseCharacterById[character.id].name
 							: character.id}
 					</div>
-					<div className={"target p-y-1 flex items-center flex-wrap gap-2"}>
-						<Label>Target:</Label>
-						<Label className="dark:text-white light:text-black">
+					<div
+						className={
+							"grid-row-3 grid-col-2 p-y-1 flex items-center flex-wrap gap-2"
+						}
+					>
+						<Label className="align-middle">Target:</Label>
+						<Label className="align-middle dark:text-white light:text-black">
 							{activePlan}
 						</Label>
 						<Button
@@ -258,7 +207,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 							Edit
 						</Button>
 					</div>
-				</div>
+				</article>
 			</div>
 		);
 	},

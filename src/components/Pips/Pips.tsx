@@ -9,13 +9,13 @@ type ComponentProps = {
 };
 
 const Pip = memo(() => (
-	<div className="size-[5px] m-[2px] bg-foreground rounded-full" />
+	<div className="size-[6px] m-0.5 bg-foreground rounded-full" />
 ));
 
 // Pre-rendered static components for the most common cases (5 and 6 pips)
 // These will only be rendered once and reused, significantly reducing re-renders
 const Pips5 = memo(() => (
-	<Badge variant="outline" className="w-16 p-1 items-start border-3">
+	<Badge variant="outline" className="w-17.5 p-1 items-start border-3">
 		<Pip />
 		<Pip />
 		<Pip />
@@ -27,7 +27,7 @@ const Pips5 = memo(() => (
 Pips5.displayName = "Pips5";
 
 const Pips6 = memo(() => (
-	<Badge variant="outline" className="w-16 p-1 items-start border-3">
+	<Badge variant="outline" className="w-17.5 p-1 items-start border-3">
 		<Pip />
 		<Pip />
 		<Pip />
@@ -41,7 +41,7 @@ Pips6.displayName = "Pips6";
 // Dynamic component for rare cases (1-4 pips)
 const PipsDynamic = memo(({ pips }: ComponentProps) => {
 	return (
-		<Badge variant="outline" className="w-16 p-1 items-start border-3">
+		<Badge variant="outline" className="w-17.5 p-1 items-start border-3">
 			<Pip key={"pip-1"} />
 			{pips > 1 && <Pip key={"pip-2"} />}
 			{pips > 2 && <Pip key={"pip-3"} />}

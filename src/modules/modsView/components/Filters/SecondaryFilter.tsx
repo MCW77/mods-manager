@@ -42,10 +42,7 @@ const SecondaryFilter = () => {
 
 									return (
 										<div className="flex flex-col gap-1 items-center">
-											<Label
-												className="text-xs text-[modgold]"
-												htmlFor={inputName}
-											>
+											<Label className="text-xs" htmlFor={inputName}>
 												{secondary}
 											</Label>
 											<Slider

@@ -9,7 +9,6 @@ import { createRoot } from "react-dom/client";
 // styles
 import "./index.css";
 import "virtual:uno.css";
-import "./selected-styles.css";
 import "./i18n";
 
 // state

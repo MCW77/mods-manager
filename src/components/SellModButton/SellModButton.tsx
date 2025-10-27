@@ -9,13 +9,13 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 import type { Mod } from "#/domain/Mod";
 
 // components
-import { Button } from "#ui/button";
+import { Button, type ButtonProps } from "#ui/button";
 
 type ComponentProps = {
 	mod: Mod;
-};
+} & ButtonProps;
 
-const SellModButton = React.memo(({ mod }: ComponentProps) => {
+const SellModButton = React.memo(({ mod, ...buttonProps }: ComponentProps) => {
 	return (
 		<Button
 			type={"button"}
@@ -25,6 +25,7 @@ const SellModButton = React.memo(({ mod }: ComponentProps) => {
 			onClick={() => {
 				profilesManagement$.deleteMod(mod.id);
 			}}
+			{...buttonProps}
 		>
 			X
 		</Button>

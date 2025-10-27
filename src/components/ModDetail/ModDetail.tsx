@@ -1,9 +1,6 @@
 // react
 import { memo, lazy } from "react";
 
-// styles
-import "./ModDetail.css";
-
 // state
 import { use$ } from "@legendapp/state/react";
 
@@ -41,10 +38,13 @@ const ModDetail = memo(({ assignedTarget, mod }: ComponentProps) => {
 		mod.characterID !== "null" ? characterById[mod.characterID] : null;
 
 	return (
-		<div className={"mod-detail"} key={mod.id}>
-			<div className={"flex flex-col gap-6"}>
-				<ModImage mod={mod} />
-			</div>
+		<div
+			className={
+				"mod-detail relative inline-grid p-1 w-84 grid-cols-[5em_1fr] grid-rows-[1fr_auto_auto] gap-x-2 gap-y-0 items-start text-foreground dark:bg-blue-900 bg-blue-200 dark:bg-opacity-40 border-1 border-solid border-blue-500 text-shadow-md"
+			}
+			key={mod.id}
+		>
+			<ModImage mod={mod} />
 			{character && <CharacterAvatar character={character} />}
 			{character && (
 				<h4
@@ -57,7 +57,7 @@ const ModDetail = memo(({ assignedTarget, mod }: ComponentProps) => {
 						: character.id}
 				</h4>
 			)}
-			<div className="stats">
+			<div className="stats text-[0.9em] row-start-1 row-span-2 col-start-2 col-span-2">
 				<ModStats mod={mod} assignedTarget={assignedTarget} />
 			</div>
 			{mod.pips === 6 && (

@@ -1,4 +1,3 @@
-import { extend } from "lodash-es";
 import {
 	defineConfig,
 	presetWind4,
@@ -12,6 +11,51 @@ export default defineConfig({
 	content: {
 		filesystem: ["src/**/*.{js,ts,jsx,tsx}", "index.html"],
 	},
+	safelist: [
+		// Ensure mod color utilities are always included for dynamic usage
+		"text-mod-grey",
+		"text-mod-green",
+		"text-mod-blue",
+		"text-mod-purple",
+		"text-mod-gold",
+		"bg-mod-grey",
+		"bg-mod-green",
+		"bg-mod-blue",
+		"bg-mod-purple",
+		"bg-mod-gold",
+		"border-mod-grey",
+		"border-mod-green",
+		"border-mod-blue",
+		"border-mod-purple",
+		"border-mod-gold",
+		"text-selected-foreground",
+		"bg-selected",
+		"border-selected-border",
+	],
+	rules: [
+		// Custom rules to ensure mod color utilities are generated
+		[
+			/^text-selected-foreground$/,
+			() => ({ color: "hsl(var(--selected-foreground))" }),
+		],
+		[/^bg-selected$/, () => ({ "background-color": "hsl(var(--selected))" })],
+		[
+			/^border-selected-border$/,
+			() => ({ "border-color": "hsl(var(--selected-border))" }),
+		],
+		[
+			/^text-mod-(grey|green|blue|purple|gold)$/,
+			([, color]) => ({ color: `hsl(var(--mod-${color}))` }),
+		],
+		[
+			/^bg-mod-(grey|green|blue|purple|gold)$/,
+			([, color]) => ({ "background-color": `hsl(var(--mod-${color}))` }),
+		],
+		[
+			/^border-mod-(grey|green|blue|purple|gold)$/,
+			([, color]) => ({ "border-color": `hsl(var(--mod-${color}))` }),
+		],
+	],
 	presets: [
 		presetWind4({
 			preflights: {
@@ -103,6 +147,13 @@ export default defineConfig({
 					3: "hsl(var(--chart-3))",
 					4: "hsl(var(--chart-4))",
 					5: "hsl(var(--chart-5))",
+				},
+				mod: {
+					grey: "hsl(var(--mod-grey))",
+					green: "hsl(var(--mod-green))",
+					blue: "hsl(var(--mod-blue))",
+					purple: "hsl(var(--mod-purple))",
+					gold: "hsl(var(--mod-gold))",
 				},
 			},
 		},
