@@ -13,12 +13,14 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import { characterSettings } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
+import { useTranslation } from "react-i18next";
 
 // components
 const CharacterBlock = lazy(() => import("./CharacterBlock"));
 
 const CharacterList = observer(
 	React.memo(() => {
+		const [t] = useTranslation("optimize-ui");
 		const characterById = use$(profilesManagement$.activeProfile.characterById);
 		const selectedCharacters = use$(
 			compilations$.defaultCompilation.selectedCharacters,
@@ -34,9 +36,6 @@ const CharacterList = observer(
 
 			const container = containerRef.current;
 			const mouseY = event.clientY;
-			const characterElements = Array.from(container.children).filter(
-				(child) => child.getAttribute("data-character-index") !== null,
-			) as HTMLElement[];
 
 			// Clear any existing drop-character classes
 			for (const el of container.children) {
@@ -155,7 +154,7 @@ const CharacterList = observer(
 			<div
 				ref={containerRef}
 				className={
-					"p-y-1 p-r-1 m-r-2 h-full min-w-80 overscroll-contain overflow-x-hidden overflow-y-auto group-[&.sort-view]:flex group-[&.sort-view]:flex-wrap group-[&.sort-view]:gap-2 group-[&.sort-view]:items-start"
+					"p-y-1 p-r-1 m-r-2 h-full overscroll-contain overflow-x-hidden overflow-y-auto group-[&.sort-view]:flex group-[&.sort-view]:flex-wrap group-[&.sort-view]:gap-2 group-[&.sort-view]:items-start"
 				}
 				role="application"
 				aria-label="Available characters drop zone"
@@ -170,7 +169,7 @@ const CharacterList = observer(
 							<div
 								key={id}
 								data-character-index={index}
-								className="w-80 [&.drop-character]:shadow-[0_2px_3px_0_darkred] [&.drop-character-before]:shadow-[0_-3px_5px_0_darkred]"
+								className="[&.drop-character]:shadow-[0_2px_3px_0_darkred] [&.drop-character-before]:shadow-[0_-3px_5px_0_darkred]"
 							>
 								<CharacterBlock
 									characterId={id}
@@ -182,7 +181,7 @@ const CharacterList = observer(
 					}
 				>
 					<div className="max-w-full p-1 bg-slate-950/50 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] min-h-[4rem] flex items-center justify-center text-gray-400">
-						Drop characters here
+						{t("selected.DropHere")}
 					</div>
 				</Show>
 			</div>

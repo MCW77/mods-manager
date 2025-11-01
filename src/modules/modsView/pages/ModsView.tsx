@@ -3,11 +3,10 @@ import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, reactive, use$ } from "@legendapp/state/react";
+import { Memo, reactive } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
 // domain
@@ -22,8 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 const ReactiveTabs = reactive(Tabs);
 
 const ModsView = React.memo(() => {
-	const [t] = useTranslation("global-ui");
-	const profile = use$(profilesManagement$.activeProfile);
+	const [t] = useTranslation("explore-ui");
 
 	return (
 		<FlexSidebar
@@ -37,13 +35,19 @@ const ModsView = React.memo(() => {
 					}
 				>
 					<TabsList className={"flex justify-around"}>
-						<TabsTrigger value="AllMods">All Mods</TabsTrigger>
-						<TabsTrigger value="Reveal">Reveal</TabsTrigger>
-						<TabsTrigger value="Level">Level</TabsTrigger>
-						<TabsTrigger value="Slice5Dot">Slice5Dot</TabsTrigger>
-						<TabsTrigger value="Slice6E">Slice6E</TabsTrigger>
-						<TabsTrigger value="Slice6Dot">Slice6Dot</TabsTrigger>
-						<TabsTrigger value="Calibrate">Calibrate</TabsTrigger>
+						<TabsTrigger value="AllMods">{t("categories.All")}</TabsTrigger>
+						<TabsTrigger value="Reveal">{t("categories.Reveal")}</TabsTrigger>
+						<TabsTrigger value="Level">{t("categories.Level")}</TabsTrigger>
+						<TabsTrigger value="Slice5Dot">
+							{t("categories.Slice5Dot")}
+						</TabsTrigger>
+						<TabsTrigger value="Slice6E">{t("categories.Slice6E")}</TabsTrigger>
+						<TabsTrigger value="Slice6Dot">
+							{t("categories.Slice6Dot")}
+						</TabsTrigger>
+						<TabsTrigger value="Calibrate">
+							{t("categories.Calibrate")}
+						</TabsTrigger>
 					</TabsList>
 					<Memo>
 						<TabsContent

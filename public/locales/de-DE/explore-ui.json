@@ -1,4 +1,13 @@
 {
+	"categories": {
+		"All": "Alle mods",
+		"Reveal": "Mods zum Aufdecken",
+		"Level": "Mods zum Leveln",
+		"Slice5Dot": "Mods zum 5-Dot-Slicen",
+		"Slice6E": "Mods zum Slicen auf 6E",
+		"Slice6Dot": "Mods zum 6-Dot-Slicen",
+		"Calibrate": "Mods zum Kalibrieren"
+	},
 	"filter": {
 		"AssignedValue": "zugewiesen",
 		"EquippedValue": "ausgerüstet",

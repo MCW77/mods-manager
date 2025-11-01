@@ -1,4 +1,13 @@
 {
+	"categories": {
+		"All": "All mods",
+		"Reveal": "Mods to reveal",
+		"Level": "Mods to level",
+		"Slice5Dot": "Mods to slice at 5-Dot",
+		"Slice6E": "Mods to slice to 6E",
+		"Slice6Dot": "Mods to slice at 6-Dot",
+		"Calibrate": "Mods to calibrate"
+	},
 	"filter": {
 		"AssignedValue": "assigned",
 		"EquippedValue": "equipped",

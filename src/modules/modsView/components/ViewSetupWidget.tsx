@@ -34,7 +34,7 @@ const ViewSetupWidget: React.FC = observer(() => {
 			<div className={"flex flex-col justify-between items-center gap-2"}>
 				<ViewSetupManager />
 				<div className={"flex justify-between items-center"}>
-					<Label htmlFor={"group-mods"}>Group mods: </Label>
+					<Label htmlFor={"group-mods"}>{t("filter.Group")}: </Label>
 					<ReactiveSwitch
 						id={"group-mods"}
 						$checked={() => isGroupingEnabled}
