@@ -1,5 +1,5 @@
 // react
-import { lazy } from "react";
+import { lazy, useId } from "react";
 
 // utils
 import flatten from "lodash-es/flatten";
@@ -45,6 +45,7 @@ const modRemovalCosts = {
 };
 
 const ActionsWidget = () => {
+	const actionsId = useId();
 	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
 	const modAssignments = use$(
 		compilations$.defaultCompilation.flatCharacterModdings,
@@ -128,8 +129,8 @@ const ActionsWidget = () => {
 					Change my selection
 				</Button>
 			</div>
-			<div id="Hotutils-Actions" className="flex flex-col gap-2">
-				<Label htmlFor="Hotutils-Actions">HotUtils</Label>
+			<div id={`Hotutils-Actions-${actionsId}`} className="flex flex-col gap-2">
+				<Label htmlFor={`Hotutils-Actions-${actionsId}`}>HotUtils</Label>
 				<Button
 					type={"button"}
 					disabled={!hasActiveSession}

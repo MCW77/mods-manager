@@ -1,5 +1,6 @@
 // react
 import { reactive, use$ } from "@legendapp/state/react";
+import { useId } from "react";
 
 // utils
 import flatten from "lodash-es/flatten";
@@ -47,6 +48,8 @@ const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
+	const sortOptionsId = useId();
+	const viewOptionsId = useId();
 	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
 	const baseCharacterById = use$(characters$.baseCharacterById);
 	const filter = use$(review$.modListFilter);
@@ -231,10 +234,13 @@ const DisplayWidget = () => {
 
 	return (
 		<div className={global}>
-			<Label className={labelCSS} htmlFor="sort-options">
+			<Label className={labelCSS} htmlFor={`sort-options-${sortOptionsId}`}>
 				Group by character:
 			</Label>
-			<div className={`${inputCSS} flex gap-2 items-center`} id="sort-options">
+			<div
+				className={`${inputCSS} flex gap-2 items-center`}
+				id={`sort-options-${sortOptionsId}`}
+			>
 				<Label htmlFor="sort-options-value">current</Label>
 				<ReactiveSwitch
 					className="mr-2 ml-2"
@@ -255,10 +261,13 @@ const DisplayWidget = () => {
 					assigned
 				</Label>
 			</div>
-			<Label className={labelCSS} htmlFor="view-options">
+			<Label className={labelCSS} htmlFor={`view-options-${viewOptionsId}`}>
 				Show mods as:
 			</Label>
-			<div className={`${inputCSS} flex gap-2 items-center`} id="view-options">
+			<div
+				className={`${inputCSS} flex gap-2 items-center`}
+				id={`view-options-${viewOptionsId}`}
+			>
 				<Label htmlFor="view-options-value">
 					{ModListFilter.viewOptions.sets}
 				</Label>

@@ -1,9 +1,11 @@
 // utils
 import copyToClipboard from "#/utils/clipboard";
 
-// state
+// react
+import { useId } from "react";
 import { use$ } from "@legendapp/state/react";
 
+// state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -84,6 +86,7 @@ type TextualReviewProps = {
  * @returns Array[JSX Element]
  */
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
+	const summaryId = useId();
 	const baseCharacterById = use$(characters$.baseCharacterById);
 	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
@@ -91,7 +94,7 @@ const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 		<div>
 			<h2>Move Summary</h2>
 			<pre
-				id="summary_pre"
+				id={`summary_pre_${summaryId}`}
 				className={
 					"bg-background p-1 overflow-y-auto text-shadow-none max-h-[calc(100vh-27em)]"
 				}
