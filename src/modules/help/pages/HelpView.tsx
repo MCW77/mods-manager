@@ -121,7 +121,7 @@ const HelpView: React.FC = observer(() => {
 				return (
 					<div className={topicCSS}>
 						{title !== "" && <h2>{title}</h2>}
-						{paragraphs.map((p, index: number) => (
+						{paragraphs.map((p) => (
 							<p key={p}>{p}</p>
 						))}
 					</div>

@@ -110,7 +110,7 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 				<div className={"selected-sets"}>
 					<p>Selected Sets:</p>
 					<div className="flex gap-2 min-h-[5rem]">
-						{selectedSets.map(({ setName, key }, index) => (
+						{selectedSets.map(({ setName, key }) => (
 							<img
 								src={`/img/icon_buff_${setName
 									.replace(/\s|%/g, "")

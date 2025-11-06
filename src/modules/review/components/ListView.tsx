@@ -93,7 +93,7 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 			});
 		}
 	} else if (filter.tag !== "All") {
-		individualMods = individualMods.filter(({ id, mod }) => {
+		individualMods = individualMods.filter(({ id }) => {
 			const tags = baseCharacterById[id]
 				? baseCharacterById[id].categories
 				: [];

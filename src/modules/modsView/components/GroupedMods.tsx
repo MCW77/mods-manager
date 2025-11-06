@@ -129,7 +129,7 @@ const GroupedMods = ({
 				<div className="flex gap-2 justify-center items-center p-t-2 p-r-6">
 					<Button
 						size={"sm"}
-						onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+						onClick={() => {
 							modGroups$.openAll();
 						}}
 					>
@@ -137,7 +137,7 @@ const GroupedMods = ({
 					</Button>
 					<Button
 						size={"sm"}
-						onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+						onClick={() => {
 							modGroups$.closeAll();
 						}}
 					>

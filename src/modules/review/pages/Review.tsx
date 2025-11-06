@@ -277,13 +277,12 @@ const Review: React.FC = observer(() => {
 				);
 			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
-				displayedMods = modAssignments2.filter(
-					({ characterId: id, target, assignedMods }) =>
-						assignedMods.some(
-							(mod) =>
-								optimizationSettings$.shouldLevelMod(mod, target) ||
-								optimizationSettings$.shouldSliceMod(mod, target),
-						),
+				displayedMods = modAssignments2.filter(({ target, assignedMods }) =>
+					assignedMods.some(
+						(mod) =>
+							optimizationSettings$.shouldLevelMod(mod, target) ||
+							optimizationSettings$.shouldSliceMod(mod, target),
+					),
 				);
 			} else {
 				displayedMods = modAssignments2;
@@ -372,9 +371,7 @@ const Review: React.FC = observer(() => {
 
 	const modsBeingUpgraded = modAssignments2
 		.filter(({ target }) => optimizationSettings$.shouldUpgradeMods(target))
-		.map(({ characterId: id, assignedMods }) =>
-			assignedMods.filter((mod) => 15 !== mod.level),
-		)
+		.map(({ assignedMods }) => assignedMods.filter((mod) => 15 !== mod.level))
 		.reduce((allMods, characterMods) => allMods.concat(characterMods), []);
 
 	const modUpgradeCost = modsBeingUpgraded.reduce(

@@ -192,13 +192,12 @@ const DisplayWidget = () => {
 				);
 			} else if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
-				displayedMods = modAssignments.filter(
-					({ characterId: id, target, assignedMods }) =>
-						assignedMods.some(
-							(mod) =>
-								optimizationSettings$.shouldLevelMod(mod, target) ||
-								optimizationSettings$.shouldSliceMod(mod, target),
-						),
+				displayedMods = modAssignments.filter(({ target, assignedMods }) =>
+					assignedMods.some(
+						(mod) =>
+							optimizationSettings$.shouldLevelMod(mod, target) ||
+							optimizationSettings$.shouldSliceMod(mod, target),
+					),
 				);
 			} else {
 				displayedMods = modAssignments;

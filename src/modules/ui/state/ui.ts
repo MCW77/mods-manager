@@ -26,7 +26,7 @@ export const ui$ = observable<UI>({
 	},
 });
 
-ui$.currentSection.onChange(({ value, getPrevious }) => {
+ui$.currentSection.onChange(({ getPrevious }) => {
 	ui$.previousSection.set(getPrevious());
 });
 
