@@ -11,7 +11,7 @@ export type ExcludeMatchingProperties<T, V> = Pick<
 >;
 
 export type ExpandRecursively<T> = T extends object
-	? T extends Function
+	? T extends (...args: never[]) => unknown
 		? T
 		: T extends infer O
 			? { [K in keyof O]: ExpandRecursively<O[K]> }
@@ -19,14 +19,14 @@ export type ExpandRecursively<T> = T extends object
 	: T;
 
 export type ExpandRecursivelyNoFuncs<T> = ExpandRecursively<
-	ExcludeMatchingProperties<T, Function>
+	ExcludeMatchingProperties<T, (...args: never[]) => unknown>
 >;
 
 export type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & {};
 export type PrettifyRecursively<T> = T extends object
-	? T extends Function
+	? T extends (...args: never[]) => unknown
 		? T
 		: T extends infer O
 			? { [K in keyof O]: PrettifyRecursively<O[K]> }

@@ -75,7 +75,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 						target,
 					} = value.get();
 					const character = characterById[value.characterId.peek()];
-					if (character === undefined) return <></>;
+					if (character === undefined) return <div />;
 
 					return (
 						<RenderIfVisible

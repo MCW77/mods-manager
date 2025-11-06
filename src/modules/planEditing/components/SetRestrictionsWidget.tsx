@@ -82,8 +82,7 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 		setBonuses.map(setBonusToFormDisplay),
 	);
 	const setBonusDisplay = setBonusGroupsDisplay.map((groupDisplay, index) => (
-		// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-		<div className="flex flex-row gap-4" key={index}>
+		<div className="flex flex-row gap-4" key={`group-${index + 1}`}>
 			{groupDisplay}
 		</div>
 	));

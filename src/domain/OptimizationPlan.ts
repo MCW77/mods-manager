@@ -220,11 +220,20 @@ export const toRenamed = (
 	};
 };
 
-export const hasRestrictions = (target: OptimizationPlan) => {
-	return (
-		Object.values(target.primaryStatRestrictions).filter((primary) => !!primary)
-			.length || !areObjectsEquivalent({}, target.setRestrictions)
+function hasPrimaryStatRestrictions(target: OptimizationPlan) {
+	return Object.values(target.primaryStatRestrictions).some(
+		(restriction) => restriction !== undefined,
 	);
+}
+
+function hasSetRestrictions(target: OptimizationPlan) {
+	return Object.values(target.setRestrictions).some(
+		(restriction) => restriction !== undefined,
+	);
+}
+
+export const hasRestrictions = (target: OptimizationPlan) => {
+	return hasPrimaryStatRestrictions(target) || hasSetRestrictions(target);
 };
 
 export const isBlank = (target: OptimizationPlan) => {

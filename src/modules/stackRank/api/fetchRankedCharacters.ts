@@ -36,6 +36,6 @@ export const fetchRankedCharacters = async (
 		);
 		return response as CharacterNames[];
 	} catch (error) {
-		throw error;
+		throw new Error("Failed post to fetch ranked characters", { cause: error });
 	}
 };

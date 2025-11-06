@@ -52,8 +52,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 	({ target$, id, baseCharacters }: ComponentProps) => {
 		const targetStat$ = target$.target.targetStats.find(
 			(ts) => ts.peek().id === id,
-		);
-		if (targetStat$ === undefined) return;
+		) as NonNullable<ReturnType<typeof target$.target.targetStats.find>>;
 
 		const stat = use$(targetStat$.stat);
 		const minimum = use$(targetStat$.minimum);

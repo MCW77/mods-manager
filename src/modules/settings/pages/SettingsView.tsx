@@ -43,6 +43,9 @@ const SettingsView: React.FC = observer(() => {
 						settings$.section.set(sectionName);
 					}
 				}}
+				role={"tab"}
+				tabIndex={0}
+				key={`settings-section-${sectionName}`}
 			>
 				{t(`${sectionName}.Title`)}
 			</div>

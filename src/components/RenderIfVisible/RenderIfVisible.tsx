@@ -1,6 +1,6 @@
 // react
 import type React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 type ComponentProps = {
 	className?: string;
@@ -25,7 +25,7 @@ const RenderIfVisible = ({
 	const placeholderHeight = useRef<number>(defaultHeight);
 	const intersectionRef = useRef<HTMLDivElement>(null);
 
-	const setVisibleOnIdle = (visible: boolean) => {
+	const setVisibleOnIdle = useCallback((visible: boolean) => {
 		if (isRequestIdleCallbackAvailable) {
 			window.requestIdleCallback(() => setIsVisible(visible), {
 				timeout: 600,
@@ -33,7 +33,7 @@ const RenderIfVisible = ({
 		} else {
 			setIsVisible(visible);
 		}
-	};
+	}, []);
 
 	// Set visibility with intersection observer
 	useEffect(() => {
@@ -54,19 +54,19 @@ const RenderIfVisible = ({
 				observer.unobserve(intersectionRef.current);
 			}
 		};
-	}, [intersectionRef]);
+	}, [root, visibleOffset, setVisibleOnIdle]);
 
 	// Set true height for placeholder element after render.
 	useEffect(() => {
 		if (intersectionRef.current && isVisible) {
 			placeholderHeight.current = intersectionRef.current.offsetHeight;
 		}
-	}, [isVisible, intersectionRef]);
+	}, [isVisible]);
 
 	return (
 		<div className={className} ref={intersectionRef}>
 			{isVisible ? (
-				<>{children}</>
+				children
 			) : (
 				<div style={{ height: placeholderHeight.current }} />
 			)}

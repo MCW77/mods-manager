@@ -12,7 +12,7 @@ import type {
 	SecondarySettings,
 } from "#/modules/modsView/domain/ModsViewOptions";
 import type { CharacterNames } from "#/constants/CharacterNames";
-import { GIMOFlatMod } from "#/domain/types/ModTypes";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };
@@ -266,7 +266,7 @@ function upgradeProfilesTo21(profiles: Record<string, unknown>) {
 function createStores(db: IDBDatabase, stores: string[] = storeNames) {
 	for (const storeName of stores) {
 		if (!db.objectStoreNames.contains(storeName)) {
-			const store = db.createObjectStore(storeName, {
+			db.createObjectStore(storeName, {
 				keyPath: "id",
 				autoIncrement: false,
 			});
@@ -662,7 +662,10 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 					string,
 					Map<string, Record<string, unknown>>
 				>) {
-					const newCompilations: Map<string, Record<string, unknown>> = new Map();
+					const newCompilations: Map<
+						string,
+						Record<string, unknown>
+					> = new Map();
 					for (const [compilationId, compilation] of compilations) {
 						const newCompilation = upgradeCompilationTo20(compilation);
 						newCompilations.set(compilationId, newCompilation);
@@ -747,15 +750,21 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 			},
 		);
 
-		await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
-			const newProfiles = upgradeProfilesTo21(
-				oldProfiles.profiles as Record<string, unknown>,
-			);
-			return {
-				id: "profiles",
-				profiles: newProfiles,
-			};
-		});
+		await itemUpgrade(
+			db,
+			transaction,
+			"Profiles",
+			"profiles",
+			(oldProfiles) => {
+				const newProfiles = upgradeProfilesTo21(
+					oldProfiles.profiles as Record<string, unknown>,
+				);
+				return {
+					id: "profiles",
+					profiles: newProfiles,
+				};
+			},
+		);
 	} catch (error) {
 		console.error("Error in upgradeTo21:", error);
 		transaction.abort();

@@ -92,7 +92,6 @@ const GroupedMods = ({
 		modGroups: modGroups,
 		closeAll: () => {
 			beginBatch();
-			// biome-ignore lint/complexity/noForEach: <explanation>
 			modGroups$.modGroups.forEach((group) => {
 				group.isOpen.set(false);
 			});
@@ -100,7 +99,6 @@ const GroupedMods = ({
 		},
 		openAll: () => {
 			beginBatch();
-			// biome-ignore lint/complexity/noForEach: <explanation>
 			modGroups$.modGroups.forEach((group) => {
 				group.isOpen.set(true);
 			});

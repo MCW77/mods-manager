@@ -274,24 +274,26 @@ when(
 	},
 );
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const hasModByIdMap = (obj: any): obj is { modById: Map<string, Mod> } => {
+const hasModByIdKey = (obj: object): obj is { modById: unknown } => {
+	return Object.hasOwn(obj, "modById");
+};
+
+const hasModByIdMap = (obj: unknown): obj is { modById: Map<string, Mod> } => {
 	return (
 		typeof obj === "object" &&
 		obj !== null &&
-		Object.hasOwn(obj, "modById") &&
+		hasModByIdKey(obj) &&
 		obj.modById instanceof Map
 	);
 };
 
 const hasModByIdRecord = (
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	obj: any,
+	obj: unknown,
 ): obj is { modById: Record<string, GIMOFlatMod> } => {
 	return (
 		typeof obj === "object" &&
 		obj !== null &&
-		Object.hasOwn(obj, "modById") &&
+		hasModByIdKey(obj) &&
 		obj.modById instanceof Object
 	);
 };

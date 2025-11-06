@@ -500,7 +500,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 											onValueChange={(value) => {
 												if (value === "") return;
 												target$.target.minimumModDots.set(
-													Number.parseInt(value),
+													Number.parseInt(value, 10),
 												);
 											}}
 										>

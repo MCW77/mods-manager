@@ -3180,8 +3180,8 @@ function narrowToAvailableSets(
 		}
 	}
 
-	/*
 	if (useOnlyFullSets) {
+		/*
 		// Enforce that any partial assignments can be completed and prune/early-exit accordingly
 		const getVariableSlotsForSet = (
 			setName: GIMOSetStatNames,
@@ -3317,8 +3317,9 @@ function narrowToAvailableSets(
 				}
 			}
 		}
-	}
 */
+	}
+
 	// Build updated availableSetsToUse: start from original and bump counts if assignments complete extra full sets
 	const availableSetsToUse: SetRestrictions = {
 		...(setsToUse as Record<string, number>),

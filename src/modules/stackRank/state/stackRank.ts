@@ -22,7 +22,6 @@ const stackRank$ = observable<{
 	useCase: "0",
 	fetch: async (allycode: string): Promise<CharacterNames[]> => {
 		const aT = stackRank$.peek();
-		// biome-ignore lint/performance/noDelete: <explanation>
 		if (aT.parameters.top === 0) delete aT.parameters.top;
 		try {
 			const characters = await fetchRankedCharacters(
@@ -32,7 +31,7 @@ const stackRank$ = observable<{
 			);
 			return characters;
 		} catch (error) {
-			throw error;
+			throw new Error("Failed to fetch ranked characters", { cause: error });
 		}
 	},
 });

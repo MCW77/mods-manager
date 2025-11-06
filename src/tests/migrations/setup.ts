@@ -50,7 +50,7 @@ setupNavigatorStorageMock();
 
 // Global test utilities for database migration testing
 function resetIndexedDB() {
-	// biome-ignore lint/suspicious/noGlobalAssign: <explanation>
+	// biome-ignore lint/suspicious/noGlobalAssign: <This is the recommended way to reset fake-indexeddb>
 	indexedDB = new IDBFactory();
 }
 
