@@ -45,7 +45,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 
 		// Track membership reactively on the observable Set itself (avoids stale subscriptions from `.get()`)
 		const isLocked$ = useObservable(() => {
-			const reactiveIsLocked =
+			const _reactiveIsLocked =
 				lockedStatus$.lockedCharactersForActivePlayer.get();
 			return lockedStatus$.isCharacterLockedForActivePlayer(character.id);
 		});

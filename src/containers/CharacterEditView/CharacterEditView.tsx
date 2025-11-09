@@ -116,9 +116,9 @@ const CharacterEditView = observer(() => {
 		);
 	}
 
-	const starsReactivity = use$(charactersManagement$.filterSetup.starsRange);
-	const levelReactivity = use$(charactersManagement$.filterSetup.levelRange);
-	const gearLevelReactivity = use$(
+	const _starsReactivity = use$(charactersManagement$.filterSetup.starsRange);
+	const _levelReactivity = use$(charactersManagement$.filterSetup.levelRange);
+	const _gearLevelReactivity = use$(
 		charactersManagement$.filterSetup.gearLevelRange,
 	);
 	highlightedCharacters = highlightedCharacters.filter(

@@ -116,11 +116,11 @@ export class CharacterSummaryStat extends Stat {
 			);
 		}
 		const valueDiff = this.bigValue.minus(that.bigValue);
-		let strValueDiff: string;
+		let _strValueDiff: string;
 		if (valueDiff.mod(1)) {
-			strValueDiff = `${valueDiff.toFixed(2)}`;
+			_strValueDiff = `${valueDiff.toFixed(2)}`;
 		} else {
-			strValueDiff = `${valueDiff}`;
+			_strValueDiff = `${valueDiff}`;
 		}
 		const result = this.clone();
 		result.value = valueDiff.toNumber();

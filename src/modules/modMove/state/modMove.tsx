@@ -23,7 +23,7 @@ const LazyModMoveProgress = lazy(() => import("../components/ModMoveProgress"));
 // components
 import { ModMoveCancelModal } from "../../modMove/components/ModMoveCancelModal";
 
-const hotutilsv2mockbaseurl = "http://localhost:3001/humock";
+const _hotutilsv2mockbaseurl = "http://localhost:3001/humock";
 
 const post = async (url = "", data = {}, extras = {}) => {
 	const response = await fetch(

@@ -21,7 +21,8 @@ const combineFilters: (filters: ModFilterPredicate[]) => ModFilterPredicate =
 		return filters.map((filter) => filter(item)).every((x) => x === true);
 	};
 
-class ModsFilter {	selectedOptions: PartialFilter = {
+class ModsFilter {
+	selectedOptions: PartialFilter = {
 		slot: [],
 		modset: [],
 		rarity: [],
@@ -42,7 +43,8 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 	constructor(modsViewOptions: ViewSetup, quickFilter: Filter) {
 		Mod.setupAccessors();
 		[this.selectedOptions, this.unselectedOptions] =
-			this.extractSelectedAndUnselectedOptions(quickFilter);		this.quickFilter = combineFilters([
+			this.extractSelectedAndUnselectedOptions(quickFilter);
+		this.quickFilter = combineFilters([
 			this.selectedOptionsFilter(this.selectedOptions),
 			this.unselectedOptionsFilter(this.unselectedOptions),
 			this.extractScoreFilter(quickFilter, modsViewOptions.modScore),
@@ -52,7 +54,8 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 
 		for (const filter of Object.values(modsViewOptions.filterById)) {
 			[this.selectedOptions, this.unselectedOptions] =
-				this.extractSelectedAndUnselectedOptions(filter);			this.filters.push(
+				this.extractSelectedAndUnselectedOptions(filter);
+			this.filters.push(
 				combineFilters([
 					this.selectedOptionsFilter(this.selectedOptions),
 					this.unselectedOptionsFilter(this.unselectedOptions),
@@ -123,10 +126,10 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 
 		for (const [type, values] of entries2) {
 			selectedOptions[type] = Object.entries(values)
-				.filter(([option, value]) => 1 === value)
+				.filter(([_option, value]) => 1 === value)
 				.map(([option]) => (Number.isNaN(Number(option)) ? option : +option));
 			unselectedOptions[type] = Object.entries(values)
-				.filter(([option, value]) => -1 === value)
+				.filter(([_option, value]) => -1 === value)
 				.map(([option]) => (Number.isNaN(Number(option)) ? option : +option));
 		}
 
@@ -160,7 +163,8 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 		)
 			return false;
 		if (selectedOptions.equipped.length > 0 && mod.characterID === "null")
-			return false;		if (
+			return false;
+		if (
 			selectedOptions.primary.length > 0 &&
 			!selectedOptions.primary.every(
 				(primary) => mod.primaryStat.type === primary,
@@ -206,7 +210,8 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 			)
 				return false;
 			if (unselectedOptions.equipped.length > 0 && mod.characterID !== "null")
-				return false;			if (
+				return false;
+			if (
 				unselectedOptions.primary.length > 0 &&
 				!unselectedOptions.primary.every(
 					(primary) => mod.primaryStat.type !== primary,
@@ -223,11 +228,13 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 			if (unselectedOptions.assigned.length > 0 && mod.isAssigned())
 				return false;
 			return true;
-			};
+		};
 
 	extractSecondaryFilter(filter: Filter) {
 		return (mod: Mod) => {
-			for (const [statType, [minRolls, maxRolls]] of Object.entries(filter.secondary)) {
+			for (const [statType, [minRolls, maxRolls]] of Object.entries(
+				filter.secondary,
+			)) {
 				const secondaryStat = mod.secondaryStats.find(
 					(secondary) => secondary.type === statType,
 				);
@@ -297,7 +304,7 @@ class ModsFilter {	selectedOptions: PartialFilter = {
 	}
 
 	getGroupedModsCount(groupedMods: Record<string, Mod[]>) {
-		return Object.entries(groupedMods).reduce((acc, [group, mods]) => {
+		return Object.entries(groupedMods).reduce((acc, [_group, mods]) => {
 			return acc + mods.length;
 		}, 0);
 	}

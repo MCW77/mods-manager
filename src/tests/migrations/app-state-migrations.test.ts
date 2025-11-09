@@ -140,7 +140,7 @@ describe("App State Backup Migrations", () => {
 		};
 		try {
 			result = convertBackup(backupV16);
-		} catch (error) {
+		} catch (_error) {
 			didThrow = true;
 		}
 

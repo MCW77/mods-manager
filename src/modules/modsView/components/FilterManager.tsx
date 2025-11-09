@@ -27,7 +27,7 @@ const ReactiveSelect = reactive(Select);
 
 const FilterManager = observer(
 	React.memo(() => {
-		const activeViewSetupInActiveCategory = use$(
+		const _activeViewSetupInActiveCategory = use$(
 			modsView$.activeViewSetupInActiveCategory,
 		);
 		const idOfSelectedFilterInActiveCategory = use$(

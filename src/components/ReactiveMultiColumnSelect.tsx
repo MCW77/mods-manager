@@ -40,7 +40,7 @@ const ReactiveMultiColumnSelect: React.FC<MultiColumnSelectProps> = ({
 	...props
 }) => {
 	const items = groups.flatMap((group) => group.items);
-	const selectedValue = use$(selectedValue$);
+	const _selectedValue = use$(selectedValue$);
 	const selectedLabel$ = computed(
 		() =>
 			items.find((item) => item.value === selectedValue$.get())?.label ?? "",

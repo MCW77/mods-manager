@@ -24,7 +24,7 @@ import { Label } from "#ui/label";
 const SortManager = observer(
 	React.memo(() => {
 		const [t] = useTranslation("domain");
-		const viewSetup = use$(modsView$.activeViewSetupInActiveCategory);
+		const _viewSetup = use$(modsView$.activeViewSetupInActiveCategory);
 
 		const sortOptions = [
 			{

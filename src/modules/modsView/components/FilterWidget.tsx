@@ -37,7 +37,7 @@ import {
 
 const FilterWidget = () => {
 	const [t] = useTranslation("explore-ui");
-	const profile = use$(profilesManagement$.activeProfile);
+	const _profile = use$(profilesManagement$.activeProfile);
 
 	return (
 		<CollapsibleCard

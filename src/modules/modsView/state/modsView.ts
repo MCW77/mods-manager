@@ -109,7 +109,7 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			modsView$.viewSetupByIdByCategory[modsView$.activeCategory.get()],
 		idOfActiveViewSetupInActiveCategory: () => {
 			const category = modsView$.activeCategory.get();
-			const reactivity =
+			const _reactivity =
 				modsView$.idOfActiveViewSetupByCategory[category].get();
 			const result = modsView$.idOfActiveViewSetupByCategory[category];
 			return result;
