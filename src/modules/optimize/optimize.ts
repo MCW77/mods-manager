@@ -5,8 +5,6 @@ const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
-const characters$ = stateLoader$.characters$;
-const lockedStatus$ = stateLoader$.lockedStatus$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
@@ -74,7 +72,6 @@ const finishModOptimization = (
 		);
 
 	if (resultsWithMessages.length) {
-		const baseCharacterById = characters$.baseCharacterById.peek();
 		const doubledResultsWithMessages = [];
 		for (const item of resultsWithMessages) {
 			doubledResultsWithMessages.push(item);
@@ -90,8 +87,6 @@ const finishModOptimization = (
  */
 export function optimizeMods(): void {
 	progress$.init();
-	const allycode = profilesManagement$.profiles.activeAllycode.peek();
-
 	// If any of the characters being optimized don't have stats, then show an error message
 	if (
 		Object.values(profilesManagement$.activeProfile.characterById.peek()).some(

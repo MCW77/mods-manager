@@ -33,7 +33,6 @@ import { target$ } from "#/modules/planEditing/state/planEditing";
 import { characterSettings } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
-import type { CharacterSettings } from "#/domain/CharacterSettings";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { TargetStat } from "#/domain/TargetStat";
 
@@ -104,7 +103,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			.peek()
 			.map((target) => target.id);
 		const targets = Character.targets(characterSettings, character);
-		//		const targetsNames$ = useObservable(targets.map((target) => target.id));
 
 		const cloneOptimizationPlan = () => structuredClone(target);
 
@@ -119,11 +117,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			target$.uneditedTarget.assign(cloneOptimizationPlan());
 			target$.namesOfUserTargets.set(targetsNames);
 			endBatch();
-			const defaultTarget = characterSettings[character.id]
-				? (characterSettings[character.id] as CharacterSettings).targets.find(
-						(defaultTarget) => defaultTarget.id === target.id,
-					)
-				: null;
 		});
 
 		const missedGoalsSection = (
@@ -149,7 +142,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				if (modAssignments === null) {
 					return (
 						<div id={"missed-form"}>
-							<div className={"form-row"}>
+							<div>
 								<span>No optimization data yet!</span>
 							</div>
 							{rerunButton}
@@ -162,7 +155,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				if (missedGoals.length === 0) {
 					return (
 						<div id={"missed-form"}>
-							<div className={"form-row"}>
+							<div>
 								<span>No missed targets from last run</span>
 							</div>
 							{rerunButton}
@@ -172,7 +165,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 
 				const targetStatRows = missedGoals.map(
 					([targetStat, resultValue]: [t: TargetStat, r: number]) => (
-						<div className={"form-row"} key={targetStat.id}>
+						<div key={targetStat.id}>
 							<span>{targetStat.stat}</span>
 							<span>
 								({targetStat.minimum})-({targetStat.maximum})

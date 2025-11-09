@@ -22,7 +22,6 @@ import {
 	defaultViewSetupByCategory,
 	quickFilter,
 	type ViewSetupById,
-	type Filter,
 	type TriStateFilterKeys,
 	type TriState,
 	type ModsViewSetupByIdByCategory,
@@ -352,11 +351,6 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			endBatch();
 		},
 	});
-
-const filters$ = observable({
-	allFilters: [] as Filter[],
-	filtersByCategory: {} as Record<Categories, Filter>,
-});
 
 const syncStatus$ = syncObservable(
 	modsView$.persistedData,

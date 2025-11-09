@@ -46,7 +46,6 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 	const baseCharacterById = use$(characters$.baseCharacterById);
 	const characterById = use$(profilesManagement$.activeProfile.characterById);
 	const filter = use$(review$.modListFilter);
-	const modById = use$(profilesManagement$.activeProfile.modById);
 
 	let individualMods: {
 		id: CharacterNames;

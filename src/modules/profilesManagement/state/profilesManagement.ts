@@ -194,12 +194,6 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			};
 			return result;
 		},
-		toJSON: () => {
-			return "";
-		},
-		fromJSON: (profilesManagementJSON: string) => {
-			return {} as PersistedProfiles;
-		},
 		reassignMod: (modId: string, newCharacterId: CharacterNames) => {
 			const modToReassign = profilesManagement$.activeProfile.modById[modId];
 			if (modToReassign === undefined) return;
@@ -346,7 +340,6 @@ const syncStatus$ = syncObservable(
 				) => {
 					if (hasPersistedProfileByAllycode(value.profiles)) {
 						const profiles = Object.values(value.profiles.profileByAllycode);
-						const allycodes = Object.keys(value.profiles.profileByAllycode);
 						if (profiles.length > 0) {
 							if (isFullPersistedPlayerProfile(profiles[0])) {
 								const newProfileByAllycode: Record<string, PlayerProfile> = {};

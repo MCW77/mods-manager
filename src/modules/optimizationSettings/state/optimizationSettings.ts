@@ -29,7 +29,6 @@ import type { ModLoadout } from "#/domain/ModLoadout";
 import type SetBonus from "#/domain/SetBonus";
 
 const CSStat = CSStats.CharacterSummaryStat;
-type CSStat = CSStats.CharacterSummaryStat;
 
 const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 	observable<OptimizationSettingsObservable>({

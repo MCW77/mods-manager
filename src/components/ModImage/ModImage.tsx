@@ -13,7 +13,6 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
-import { SetStats } from "#/domain/Stats";
 
 // components
 const CharacterAvatar = lazy(

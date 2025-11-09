@@ -3,17 +3,12 @@ import React, { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { reactive, use$ } from "@legendapp/state/react";
+import { reactive } from "@legendapp/state/react";
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
-
-const profilesManagement$ = stateLoader$.profilesManagement$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-
 import type { Mod } from "#/domain/Mod";
 
 // components
@@ -65,7 +60,6 @@ const GroupedMods = ({
 }: GroupedModsProps) => {
 	const [t] = useTranslation("explore-ui");
 	const [tDomain] = useTranslation("domain");
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
 
 	const modGroupsElement = React.createRef<HTMLDivElement>();
 

@@ -135,7 +135,6 @@ const applyTemplateTargets = (templateName: string) => {
 
 	if (splitSelectedCharacters.existing === undefined) return [];
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
-		const target = structuredClone(selectedCharacterInTemplate.target);
 		const selectedCharacter =
 			compilations$.defaultCompilation.selectedCharacters.find(
 				(selectedCharacter) =>

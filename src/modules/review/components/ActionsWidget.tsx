@@ -1,10 +1,6 @@
 // react
 import { lazy, useId } from "react";
 
-// utils
-import flatten from "lodash-es/flatten";
-import collectByKey from "#/utils/collectByKey";
-
 // state
 import { use$ } from "@legendapp/state/react";
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -17,10 +13,6 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-
-import type { Mod } from "#/domain/Mod";
-
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
@@ -33,16 +25,6 @@ const MoveModsModal = lazy(
 const TextualReview = lazy(() => import("./TextualReview"));
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-
-// A map from number of pips that a mod has to the cost to remove it
-const modRemovalCosts = {
-	1: 550,
-	2: 1050,
-	3: 1900,
-	4: 3000,
-	5: 4750,
-	6: 8000,
-};
 
 const ActionsWidget = () => {
 	const actionsId = useId();
@@ -63,11 +45,6 @@ const ActionsWidget = () => {
 			missedGoals: missedGoals || [],
 		})) as CharacterModdings;
 
-	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		modById.values().filter((mod) => mod.characterID !== "null"),
-		(mod: Mod) => mod.characterID,
-	);
-
 	const movingModsByAssignedCharacter: CharacterModdings = modAssignments2
 		.map(({ characterId, target, assignedMods }) => ({
 			characterId,
@@ -78,32 +55,6 @@ const ActionsWidget = () => {
 			missedGoals: [],
 		}))
 		.filter(({ assignedMods }) => assignedMods.length);
-
-	const movingMods = flatten(
-		movingModsByAssignedCharacter.map(({ assignedMods }) => assignedMods),
-	).filter((mod) => mod.characterID);
-
-	// Mod cost is the cost of all mods that are being REMOVED. Every mod
-	// being assigned to a new character (so that isn't already unassigned) is
-	// being removed from that character. Then, any mods that used to be equipped
-	// are also being removed.
-	const removedMods = flatten(
-		movingModsByAssignedCharacter.map(({ characterId: id, assignedMods }) => {
-			const changingSlots = assignedMods.map((mod) => mod.slot);
-			return currentModsByCharacter[id]
-				? currentModsByCharacter[id].filter((mod) =>
-						changingSlots.includes(mod.slot),
-					)
-				: [];
-		}),
-	).filter((mod) => !movingMods.includes(mod));
-
-	const modCostBasis = movingMods.concat(removedMods);
-	// Get a count of how much it will cost to move the mods. It only costs money to remove mods
-	const modRemovalCost = modCostBasis.reduce(
-		(cost, mod) => cost + modRemovalCosts[mod.pips],
-		0,
-	);
 
 	return (
 		<div className="flex flex-col gap-4">

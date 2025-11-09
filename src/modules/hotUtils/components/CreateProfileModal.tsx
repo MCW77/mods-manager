@@ -94,7 +94,7 @@ const CreateProfileModal: React.FC = observer(() => {
 				Please note that using the same name as an existing loudout will cause
 				it to be overwritten.
 			</p>
-			<div className={"form-row"}>
+			<div>
 				<Label htmlFor={"categoryName"}>Category:</Label>
 				<ReactiveInput
 					id={"categoryName"}
@@ -103,7 +103,7 @@ const CreateProfileModal: React.FC = observer(() => {
 					onChange={(e) => input$.category.set(e.target.value)}
 				/>
 			</div>
-			<div className={"form-row"}>
+			<div>
 				<Label htmlFor={"loudoutName"}>Loudout Name:</Label>
 				<ReactiveInput
 					id={"loudoutName"}

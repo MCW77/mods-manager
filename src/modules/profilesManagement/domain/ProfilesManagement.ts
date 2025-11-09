@@ -33,8 +33,6 @@ interface ProfilesManagementObservable {
 		totalMods: number;
 	};
 	toPersistable: () => PersistedProfiles;
-	toJSON: () => string;
-	fromJSON: (profilesManagementJSON: string) => PersistedProfiles;
 	reassignMod: (modId: string, characterId: CharacterNames) => void;
 	reassignMods: (mods: Mod[], characterId: CharacterNames) => void;
 	unequipMod: (modId: string) => void;

@@ -45,7 +45,6 @@ const OptimizerSettingsView: React.FC = observer(() => {
 	const global =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
 	const labelCSS = "grid-col-[labels] grid-row-auto" as const;
-	const inputCSS = "grid-col-[controls] grid-row-auto" as const;
 
 	return (
 		<div className="grid grid-gap-2 justify-center grid-cols-[repeat(auto-fit,_minmax(min(500px,_100%),_1fr))]">

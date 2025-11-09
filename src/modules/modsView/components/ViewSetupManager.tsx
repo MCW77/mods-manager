@@ -1,6 +1,5 @@
 // react
 import React from "react";
-import { useTranslation } from "react-i18next";
 
 // state
 import { For, reactive, Show } from "@legendapp/state/react";
@@ -27,8 +26,6 @@ import { TrashIcon } from "lucide-react";
 const ReactiveSelect = reactive(Select);
 
 const ViewSetupManager = React.memo(() => {
-	const [t] = useTranslation("global-ui");
-
 	return (
 		<div className={"flex items-center"}>
 			<ReactiveSelect
