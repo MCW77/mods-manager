@@ -99,6 +99,12 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			prevIndex: number | null = null,
 		) => {
 			const selectedCharacter = { id: characterID, target: target };
+			if (
+				compilations$.defaultCompilation.selectedCharacters.some(
+					(sc) => sc.peek().id === characterID,
+				)
+			)
+				return;
 			if (null === prevIndex) {
 				compilations$.defaultCompilation.selectedCharacters.unshift(
 					selectedCharacter,
@@ -148,7 +154,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 					compilations$.defaultCompilation.reoptimizationIndex.peek(),
 				),
 			);
-/*
+			/*
 			const selectedCharacters =
 				compilations$.defaultCompilation.selectedCharacters.peek();
 */
