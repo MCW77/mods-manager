@@ -52,15 +52,15 @@ const CompilationsView: React.FC = observer(() => {
 	};
 
 	return (
-		<div className={"flex gap-2 flex-wrap"}>
-			<Card key={"***add"} className={"w-[300px] max-h-[30%]"}>
+		<div className={"grid gap-2 grid-flow-col"}>
+			<Card key={"***add"} className={"w-[250px] max-h-[25%]"}>
 				<CardHeader>
 					<CardTitle>{"Add Compilation"}</CardTitle>
 				</CardHeader>
-				<CardContent>
+				<CardContent className={"h-full flex items-center justify-center"}>
 					<Popover open={isFormOpen} onOpenChange={state$.isOpen.set}>
 						<PopoverTrigger className={"m-auto p-2"} asChild>
-							<Button variant={"outline"} className={"w-[80%] h-[80%]"}>
+							<Button variant={"outline"} className={"w-[86%] h-[60%] p-4"}>
 								+
 							</Button>
 						</PopoverTrigger>
@@ -128,59 +128,74 @@ const CompilationsView: React.FC = observer(() => {
 					if (displayedCategory === "") displayedCategory = "None";
 
 					return (
-						<Card key={compilation.id} className={"w-[300px] max-h-[30%]"}>
+						<Card
+							key={compilation.id}
+							className={
+								"w-[250px] max-h-[25%] flex flex-col gap-2 items-stretch"
+							}
+						>
 							<CardHeader>
-								<CardTitle>{compilation.id}</CardTitle>
-								<CardDescription>{compilation.description}</CardDescription>
+								<CardTitle className={"wrap-anywhere"}>
+									{compilation.id}
+								</CardTitle>
+								<CardDescription className={"wrap-anywhere"}>
+									{compilation.description}
+								</CardDescription>
 							</CardHeader>
-							<CardContent>
-								<div className={"flex gap-2 items-center"}>
-									<Label>Last Run:</Label>
-									<p>{displayedDate}</p>
-								</div>
-								<div className={"flex gap-2 items-center"}>
-									<Label>Category:</Label>
-									<p>{displayedCategory}</p>
-								</div>
-								<div className={"flex gap-2 items-center"}>
-									<Label>Unit Count:</Label>
-									<p>{compilation$.selectedCharacters.length}</p>
-								</div>
-								<div className={"flex gap-2 items-center"}>
-									<Button
-										variant={"outline"}
-										onClick={() =>
-											compilations$.deleteCompilation(compilation$.id.peek())
-										}
+							<CardContent className={"h-full"}>
+								<div className={"h-full flex flex-col gap-4"}>
+									<div className={"flex flex-col gap-2"}>
+										<div className={"flex gap-2 items-center"}>
+											<Label>Last Run:</Label>
+											<p>{displayedDate}</p>
+										</div>
+										<div className={"flex gap-2 items-center"}>
+											<Label>Category:</Label>
+											<p className={"wrap-anywhere"}>{displayedCategory}</p>
+										</div>
+										<div className={"flex gap-2 items-center"}>
+											<Label>Unit Count:</Label>
+											<p>{compilation$.selectedCharacters.length}</p>
+										</div>
+									</div>
+									<div
+										className={"h-full flex gap-2 items-end justify-between"}
 									>
-										Delete
-									</Button>
-									<Button
-										variant={"outline"}
-										onClick={() => {
-											beginBatch();
-											compilations$.activeCompilationId.set(
-												compilation$.id.peek(),
-											);
-											compilations$.ensureSelectedCharactersExist(
-												compilation$.id.peek(),
-											);
-											compilations$.defaultCompilation.set(
-												structuredClone(compilation$.peek()),
-											);
-											compilations$.defaultCompilation.id.set(
-												"DefaultCompilation",
-											);
-											compilations$.defaultCompilation.category.set("");
-											compilations$.defaultCompilation.description.set(
-												"Default compilation used until saved under own name",
-											);
-											endBatch();
-											ui$.currentSection.set("optimize");
-										}}
-									>
-										Edit
-									</Button>
+										<Button
+											variant={"outline"}
+											onClick={() => {
+												beginBatch();
+												compilations$.activeCompilationId.set(
+													compilation$.id.peek(),
+												);
+												compilations$.ensureSelectedCharactersExist(
+													compilation$.id.peek(),
+												);
+												compilations$.defaultCompilation.set(
+													structuredClone(compilation$.peek()),
+												);
+												compilations$.defaultCompilation.id.set(
+													"DefaultCompilation",
+												);
+												compilations$.defaultCompilation.category.set("");
+												compilations$.defaultCompilation.description.set(
+													"Default compilation used until saved under own name",
+												);
+												endBatch();
+												ui$.currentSection.set("optimize");
+											}}
+										>
+											Edit
+										</Button>
+										<Button
+											variant={"destructive"}
+											onClick={() =>
+												compilations$.deleteCompilation(compilation$.id.peek())
+											}
+										>
+											Delete
+										</Button>
+									</div>
 								</div>
 							</CardContent>
 						</Card>
