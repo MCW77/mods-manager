@@ -1,54 +1,87 @@
 // react
 import * as React from "react";
 
+const activeStarStyle =
+	"block absolute top-[41.66%] left-[41.66%] size-[16.66%] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform";
+const inactiveStarStyle =
+	"block absolute top-[41.66%] left-[41.66%] size-[16.66%] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform";
+
 const ActiveStar1 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(-70deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(-70deg)_translateY(-350%)]`}
+	/>
 ));
 
 const ActiveStar2 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(-47deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(-47deg)_translateY(-350%)]`}
+	/>
 ));
 
 const ActiveStar3 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(-23deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(-23deg)_translateY(-350%)]`}
+	/>
 ));
 
 const ActiveStar4 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(0deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(0deg)_translateY(-350%)]`}
+	/>
 ));
 
 const ActiveStar5 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(23deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(23deg)_translateY(-350%)]`}
+	/>
 ));
 
 const ActiveStar6 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(47deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(47deg)_translateY(-350%)]`}
+	/>
 ));
 
 const ActiveStar7 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-active.webp)] transform [transform:rotate(70deg)_translateY(-350%)]" />
+	<div
+		className={`${activeStarStyle} [transform:rotate(70deg)_translateY(-350%)]`}
+	/>
 ));
 
 const InactiveStar1 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(-70deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(-70deg)_translateY(-350%)]`}
+	/>
 ));
 const InactiveStar2 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(-47deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(-47deg)_translateY(-350%)]`}
+	/>
 ));
 const InactiveStar3 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(-23deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(-23deg)_translateY(-350%)]`}
+	/>
 ));
 const InactiveStar4 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(0deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(0deg)_translateY(-350%)]`}
+	/>
 ));
 const InactiveStar5 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(23deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(23deg)_translateY(-350%)]`}
+	/>
 ));
 const InactiveStar6 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(47deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(47deg)_translateY(-350%)]`}
+	/>
 ));
 const InactiveStar7 = React.memo(() => (
-	<div className="block absolute top-[41.66%] left-[41.66%] size-[16.66%] z-[30] bg-contain bg-no-repeat bg-[url(/img/star-passive.webp)] transform [transform:rotate(70deg)_translateY(-350%)]" />
+	<div
+		className={`${inactiveStarStyle} [transform:rotate(70deg)_translateY(-350%)]`}
+	/>
 ));
 
 const Stars0 = React.memo(() => (
