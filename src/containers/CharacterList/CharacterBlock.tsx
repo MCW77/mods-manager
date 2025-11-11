@@ -1,6 +1,3 @@
-// utils
-import { cn } from "#/lib/utils";
-
 // react
 import type React from "react";
 import { lazy, useCallback } from "react";
@@ -20,15 +17,15 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as Character from "#/domain/Character";
-import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
+import { CharacterTargetStatusIcons } from "./CharacterTargetStatusIcons";
 const CharacterAvatar = lazy(
 	() => import("#/components/CharacterAvatar/CharacterAvatar"),
 );
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { Toggle } from "#ui/toggle";
 
 const showEditCharacterModal = (
 	allycode: string,
@@ -81,95 +78,6 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			lockedStatus$.isCharacterLockedForActivePlayer(characterId),
 		);
 
-		/*
-		let handleValueChange = (value: string) => {
-			const newTarget = structuredClone(target);
-			newTarget.minimumModDots = Number(value);
-			compilations$.saveTarget(character.id, newTarget);
-			(document?.activeElement as HTMLSelectElement)?.blur();
-		};
-*/
-		/**
-		 * Renders the set of 10 icons that show the state of a selected character
-		 * @param character {Character}
-		 * @param target {OptimizationPlan}
-		 */
-		const renderCharacterIcons = (
-			character: Character.Character,
-			target: OptimizationPlan.OptimizationPlan,
-		) => {
-			const restrictionsActive = OptimizationPlan.hasRestrictions(target);
-			const targetStatActive = target.targetStats?.length > 0;
-			const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target);
-			const blankTargetActive = OptimizationPlan.isBlank(target);
-
-			return (
-				<div className={"grid-col-2 grid-row-2"}>
-					<span
-						className={cn(
-							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-36px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
-							restrictionsActive ? "bg-[position:-36px_0px]" : "",
-						)}
-						title={
-							restrictionsActive
-								? "This character has restrictions active"
-								: "This character has no restrictions active"
-						}
-					/>
-					<span
-						className={cn(
-							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-54px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
-							targetStatActive ? "bg-[position:-54px_0px]" : "",
-						)}
-						title={
-							targetStatActive
-								? "This character has a target stat selected"
-								: "This character has no target stat selected"
-						}
-					/>
-					<span
-						className={cn(
-							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-90px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
-							negativeWeightsActive ? "bg-[position:-90px_0px]" : "",
-						)}
-						title={
-							negativeWeightsActive
-								? "This character's target has negative stat weights"
-								: "This character's target has no negative stat weights"
-						}
-					/>
-					<span
-						className={cn(
-							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-126px_-18px] w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0`,
-							blankTargetActive ? "bg-[position:-126px_0px]" : "",
-						)}
-						title={
-							blankTargetActive
-								? "This character's target has no assigned stat weights"
-								: "This character's target has at least one stat given a value"
-						}
-					/>
-					<Toggle
-						className={cn(
-							`inline-block text-xs bg-[url('/img/character_icons.webp')] bg-[length:180px_36px] bg-[position:-144px_-18px] w-[18px] min-w-[18px] h-[18px] leading-6 text-center mx-0.5 p-0 rounded-none`,
-							charactersLockedStatus ? "bg-[position:-144px_0px]" : "",
-						)}
-						$pressed={() =>
-							lockedStatus$.isCharacterLockedForActivePlayer(characterId)
-						}
-						onPressedChange={() => {
-							lockedStatus$.toggleCharacterForActivePlayer(character.id);
-						}}
-						title={
-							charactersLockedStatus
-								? "This character is locked. Its mods will not be assigned to other characters"
-								: "This character is not locked"
-						}
-					/>
-				</div>
-			);
-		};
-
 		return (
 			<div className={"w-80 p-x-0 p-y-1 m-0"} key={character.id}>
 				<article
@@ -179,7 +87,6 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					onDragStart={characterBlockDragStart(index)}
 					onDoubleClick={() => compilations$.unselectCharacter(index)}
 				>
-					<Computed>{renderCharacterIcons(character, target)}</Computed>
 					<CharacterAvatar
 						character={character}
 						className={
@@ -200,6 +107,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 							"grid-row-3 grid-col-2 p-y-1 flex items-center flex-wrap gap-2"
 						}
 					>
+						<Computed>{CharacterTargetStatusIcons(character, target)}</Computed>
 						<Label className="align-middle">Target:</Label>
 						<Label className="align-middle dark:text-white light:text-black">
 							{activePlan}
