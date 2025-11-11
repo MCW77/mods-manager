@@ -3,6 +3,7 @@ import { lazy } from "react";
 
 // state
 import {
+	Memo,
 	observer,
 	reactive,
 	Show,
@@ -40,8 +41,6 @@ const OptimizerProgress: React.FC = observer(() => {
 		const charId = progress$.optimizationStatus.character.get();
 		return charId === "" ? undefined : characterById[charId];
 	});
-	const character = use$(character$);
-	const optimizationStatus = use$(progress$.optimizationStatus);
 	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
 
 	const cancel = (closeModal: boolean) => {
@@ -56,9 +55,21 @@ const OptimizerProgress: React.FC = observer(() => {
 			<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
 			<div className={"flex flex-col gap-2"}>
 				<Show ifReady={character$}>
-					<CharacterAvatar character={character} />
+					<Memo>
+						{() => {
+							const character = use$(character$);
+							return <CharacterAvatar character={character} />;
+						}}
+					</Memo>
 				</Show>
-				<div className={"step"}>{optimizationStatus.message}</div>
+				<div className={"step"}>
+					<Memo>
+						{() => {
+							const message = use$(progress$.optimizationStatus.message);
+							return message;
+						}}
+					</Memo>
+				</div>
 				<div>
 					<Label>Character progress</Label>
 					<ReactiveProgress
@@ -72,7 +83,17 @@ const OptimizerProgress: React.FC = observer(() => {
 					/>
 				</div>
 				<div>
-					<Label>Sets progress: {optimizationStatus.sets.join(" - ")}</Label>
+					<Label>
+						Sets progress:{" "}
+						<Memo>
+							{() => {
+								const joinedSets = use$(() =>
+									progress$.optimizationStatus.sets.get().join(" - "),
+								);
+								return joinedSets;
+							}}
+						</Memo>
+					</Label>
 					<ReactiveProgress
 						$value={() =>
 							Math.trunc(
@@ -84,7 +105,17 @@ const OptimizerProgress: React.FC = observer(() => {
 					/>
 				</div>
 				<div>
-					<Label>TargetStats progress: {optimizationStatus.targetStat}</Label>
+					<Label>
+						TargetStats progress:{" "}
+						<Memo>
+							{() => {
+								const targetStat = use$(
+									progress$.optimizationStatus.targetStat,
+								);
+								return targetStat;
+							}}
+						</Memo>
+					</Label>
 					<ReactiveProgress
 						$value={() =>
 							Math.trunc(
