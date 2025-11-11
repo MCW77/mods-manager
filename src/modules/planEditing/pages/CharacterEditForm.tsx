@@ -9,10 +9,11 @@ import {
 	Show,
 	use$,
 	useMount,
+	useObservable,
 } from "@legendapp/state/react";
 
 // state
-import { beginBatch, endBatch } from "@legendapp/state";
+import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
@@ -34,8 +35,8 @@ import { characterSettings } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
-import type { TargetStat } from "#/domain/TargetStat";
 
+import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter";
 import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
@@ -72,11 +73,300 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import type {
+	MissedGoal,
+	MissedGoals,
+} from "#/modules/compilations/domain/MissedGoals";
 
 const ReactiveButton = reactive(Button);
 const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 enableReactComponents();
+
+const runIncrementalCalc = (
+	saveTarget: () => void,
+	baseCharacterById: Record<string, BaseCharacter>,
+) => {
+	saveTarget();
+
+	const onFinishedDispose = progress$.finished.onChange(({ value }) => {
+		if (value) {
+			onFinishedDispose();
+
+			if (progress$.hasMissingCharacters.peek() === true) {
+				dialog$.showError(
+					"Optimization aborted!",
+					"Character data is missing",
+					"Please refetch to add the missing characters and try again!",
+				);
+				return;
+			}
+
+			const error = progress$.error.peek();
+			if (error !== null) {
+				dialog$.showError(
+					"Optimization aborted!",
+					error.message,
+					"Please try again!",
+				);
+				return;
+			}
+
+			const messages = progress$.postOptimizationMessages.peek();
+			if (messages.length > 0) {
+				dialog$.show(
+					<div className={"flex flex-col flex-gap-2"}>
+						<h3 className={"text-center"}>
+							Important messages regarding your selected targets
+						</h3>
+						<div className="flex items-center justify-center h-[75vh] px-4 md:px-6">
+							<div className="w-full max-w-4xl border rounded-lg">
+								<div className="grid w-full grid-cols-[1fr_1fr] border-b">
+									<div className="grid gap-1 p-4">
+										<div className="text-sm font-medium tracking-wide">
+											Character
+										</div>
+									</div>
+									<div className="grid gap-1 p-4">
+										<div className="text-sm font-medium tracking-wide">
+											Messages
+										</div>
+									</div>
+								</div>
+								<div className="h-[70vh] overflow-auto">
+									<div className="grid w-full grid-cols-[1fr_1fr]">
+										{messages.map(
+											(
+												{ characterId: id, target, messages, missedGoals },
+												index,
+											) => {
+												const tempStats = {
+													Health: 0,
+													Protection: 0,
+													Speed: 0,
+													"Critical Damage %": 0,
+													"Potency %": 0,
+													"Tenacity %": 0,
+													"Physical Damage": 0,
+													"Special Damage": 0,
+													Armor: 0,
+													Resistance: 0,
+													"Accuracy %": 0,
+													"Critical Avoidance %": 0,
+													"Physical Critical Chance %": 0,
+													"Special Critical Chance %": 0,
+												};
+												const character =
+													profilesManagement$.activeProfile.characterById[
+														id
+													].peek() ||
+													Character.createCharacter(
+														id,
+														{
+															level: 0,
+															stars: 0,
+															gearLevel: 0,
+															gearPieces: [],
+															galacticPower: 0,
+															baseStats: tempStats,
+															equippedStats: tempStats,
+															relicTier: 0,
+														},
+														[],
+													);
+
+												return index % 2 === 0 ? (
+													<div key={`${id}-Avatar`} className="grid gap-1 p-4">
+														<CharacterAvatar character={character} />
+														<br />
+														{baseCharacterById[id]
+															? baseCharacterById[id].name
+															: id}
+													</div>
+												) : (
+													<div
+														key={`${id}-Messages`}
+														className="grid gap-1 p-4"
+													>
+														<h4>{target.id}:</h4>
+														<ul>
+															{messages?.map((message) => (
+																<li key={message}>{message}</li>
+															))}
+														</ul>
+														<ul className={"text-red-600"}>
+															{missedGoals.map(([missedGoal, value]) => (
+																<li key={missedGoal.id}>
+																	{`Missed goal stat for ${
+																		missedGoal.stat
+																	}. Value of ${
+																		value % 1 ? value.toFixed(2) : value
+																	} was not between ${
+																		missedGoal.minimum
+																	} and ${missedGoal.maximum}.`}
+																</li>
+															))}
+														</ul>
+													</div>
+												);
+											},
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className={"flex justify-center"}>
+							<DialogClose asChild>
+								<Button>Close</Button>
+							</DialogClose>
+						</div>
+					</div>,
+				);
+			}
+		}
+	});
+
+	optimizeMods();
+};
+
+type IncrementalOptimizationSectionProps = {
+	modAssignments: FlatCharacterModding;
+	saveTarget: () => void;
+	baseCharacterById: Record<string, BaseCharacter>;
+};
+
+type RerunButtonProps = {
+	saveTarget: () => void;
+	baseCharacterById: Record<string, BaseCharacter>;
+};
+
+function RerunButton({ saveTarget, baseCharacterById }: RerunButtonProps) {
+	return (
+		<Button
+			type={"button"}
+			onClick={() => runIncrementalCalc(saveTarget, baseCharacterById)}
+		>
+			Run Incremental Optimization
+		</Button>
+	);
+}
+
+type MissedGoalsSectionProps = {
+	missedGoals$: Observable<MissedGoals>;
+	saveTarget: () => void;
+	baseCharacterById: Record<string, BaseCharacter>;
+};
+
+function MissedGoalsSection({
+	missedGoals$,
+	saveTarget,
+	baseCharacterById,
+}: MissedGoalsSectionProps) {
+	return (
+		<Show
+			if={missedGoals$.length > 0}
+			else={
+				<div>
+					<For each={missedGoals$}>
+						{([targetStat$, resultValue$]: Observable<MissedGoal>) => {
+							const targetStat = use$(targetStat$);
+							const resultValue = use$(resultValue$);
+							return (
+								<div key={targetStat.id}>
+									<span>{targetStat.stat}</span>
+									<span>
+										({targetStat.minimum})-({targetStat.maximum})
+									</span>
+									<span>
+										{(targetStat.minimum ?? 0 > resultValue) ? " ↓ " : " ↑ "}
+									</span>
+									<span>{resultValue}</span>
+								</div>
+							);
+						}}
+					</For>
+					<RerunButton
+						saveTarget={saveTarget}
+						baseCharacterById={baseCharacterById}
+					/>
+				</div>
+			}
+		>
+			<div>
+				<div>
+					<span>No missed targets from last run</span>
+				</div>
+				<RerunButton
+					saveTarget={saveTarget}
+					baseCharacterById={baseCharacterById}
+				/>
+			</div>
+		</Show>
+	);
+}
+
+function IncrementalOptimizationResults({
+	modAssignments,
+	saveTarget,
+	baseCharacterById,
+}: IncrementalOptimizationSectionProps) {
+	const modAssignments$ = useObservable(modAssignments);
+	const hasModAssignments$ = useObservable(
+		() => modAssignments$.get() !== null,
+	);
+	return (
+		<Show if={progress$.finished} else={<OptimizerProgress />}>
+			<Show
+				if={hasModAssignments$}
+				else={() => (
+					<div>
+						<div>
+							<span>No optimization data yet!</span>
+						</div>
+						<RerunButton
+							saveTarget={saveTarget}
+							baseCharacterById={baseCharacterById}
+						/>
+					</div>
+				)}
+			>
+				{() => {
+					return (
+						<MissedGoalsSection
+							missedGoals$={modAssignments$.missedGoals}
+							saveTarget={saveTarget}
+							baseCharacterById={baseCharacterById}
+						/>
+					);
+				}}
+			</Show>
+		</Show>
+	);
+}
+
+function IncrementalOptimizationSection({
+	modAssignments,
+	saveTarget,
+	baseCharacterById,
+}: IncrementalOptimizationSectionProps) {
+	if ((target$.target.targetStats.peek() || []).length === 0) {
+		return <div />;
+	}
+
+	return (
+		<div>
+			<div>Incremental Optimization</div>
+			<hr />
+			<div>
+				<IncrementalOptimizationResults
+					modAssignments={modAssignments}
+					saveTarget={saveTarget}
+					baseCharacterById={baseCharacterById}
+				/>
+			</div>
+		</div>
+	);
+}
 
 type ComponentProps = {
 	character: Character.Character;
@@ -87,7 +377,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
 		const allycode = use$(profilesManagement$.profiles.activeAllycode);
 		const baseCharacterById = use$(characters$.baseCharacterById);
-		const progress = use$(progress$.optimizationStatus);
 		const modAssignments = use$(
 			compilations$.defaultCompilation.flatCharacterModdings,
 		);
@@ -118,228 +407,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			target$.namesOfUserTargets.set(targetsNames);
 			endBatch();
 		});
-
-		const missedGoalsSection = (
-			modAssignments: FlatCharacterModding | null,
-		) => {
-			if ((target$.target.targetStats.peek() || []).length === 0) {
-				return;
-			}
-
-			const resultsInner = (() => {
-				if (progress$.finished.peek() === false) {
-					return <OptimizerProgress />;
-				}
-
-				const rerunButton = (
-					<div className={"actions"}>
-						<Button type={"button"} onClick={() => runIncrementalCalc()}>
-							Run Incremental Optimization
-						</Button>
-					</div>
-				);
-
-				if (modAssignments === null) {
-					return (
-						<div id={"missed-form"}>
-							<div>
-								<span>No optimization data yet!</span>
-							</div>
-							{rerunButton}
-						</div>
-					);
-				}
-
-				const missedGoals = modAssignments.missedGoals;
-
-				if (missedGoals.length === 0) {
-					return (
-						<div id={"missed-form"}>
-							<div>
-								<span>No missed targets from last run</span>
-							</div>
-							{rerunButton}
-						</div>
-					);
-				}
-
-				const targetStatRows = missedGoals.map(
-					([targetStat, resultValue]: [t: TargetStat, r: number]) => (
-						<div key={targetStat.id}>
-							<span>{targetStat.stat}</span>
-							<span>
-								({targetStat.minimum})-({targetStat.maximum})
-							</span>
-							<span>
-								{(targetStat.minimum ?? 0 > resultValue) ? " ↓ " : " ↑ "}
-							</span>
-							<span>{resultValue}</span>
-						</div>
-					),
-				);
-
-				return (
-					<div id={"missed-form"}>
-						{targetStatRows}
-						{rerunButton}
-					</div>
-				);
-			})();
-
-			return (
-				<div className={"incremental-optimization"}>
-					<div className={"title"}>Incremental Optimization</div>
-					<hr />
-					<div className={"content"}>{resultsInner}</div>
-				</div>
-			);
-		};
-
-		const runIncrementalCalc = () => {
-			saveTarget();
-
-			const onFinishedDispose = progress$.finished.onChange(({ value }) => {
-				if (value) {
-					onFinishedDispose();
-
-					if (progress$.hasMissingCharacters.peek() === true) {
-						dialog$.showError(
-							"Optimization aborted!",
-							"Character data is missing",
-							"Please refetch to add the missing characters and try again!",
-						);
-						return;
-					}
-
-					const error = progress$.error.peek();
-					if (error !== null) {
-						dialog$.showError(
-							"Optimization aborted!",
-							error.message,
-							"Please try again!",
-						);
-						return;
-					}
-
-					const messages = progress$.postOptimizationMessages.peek();
-					if (messages.length > 0) {
-						dialog$.show(
-							<div className={"flex flex-col flex-gap-2"}>
-								<h3 className={"text-center"}>
-									Important messages regarding your selected targets
-								</h3>
-								<div className="flex items-center justify-center h-[75vh] px-4 md:px-6">
-									<div className="w-full max-w-4xl border rounded-lg">
-										<div className="grid w-full grid-cols-[1fr_1fr] border-b">
-											<div className="grid gap-1 p-4">
-												<div className="text-sm font-medium tracking-wide">
-													Character
-												</div>
-											</div>
-											<div className="grid gap-1 p-4">
-												<div className="text-sm font-medium tracking-wide">
-													Messages
-												</div>
-											</div>
-										</div>
-										<div className="h-[70vh] overflow-auto">
-											<div className="grid w-full grid-cols-[1fr_1fr]">
-												{messages.map(
-													(
-														{ characterId: id, target, messages, missedGoals },
-														index,
-													) => {
-														const tempStats = {
-															Health: 0,
-															Protection: 0,
-															Speed: 0,
-															"Critical Damage %": 0,
-															"Potency %": 0,
-															"Tenacity %": 0,
-															"Physical Damage": 0,
-															"Special Damage": 0,
-															Armor: 0,
-															Resistance: 0,
-															"Accuracy %": 0,
-															"Critical Avoidance %": 0,
-															"Physical Critical Chance %": 0,
-															"Special Critical Chance %": 0,
-														};
-														const character =
-															profilesManagement$.activeProfile.characterById[
-																id
-															].peek() ||
-															Character.createCharacter(
-																id,
-																{
-																	level: 0,
-																	stars: 0,
-																	gearLevel: 0,
-																	gearPieces: [],
-																	galacticPower: 0,
-																	baseStats: tempStats,
-																	equippedStats: tempStats,
-																	relicTier: 0,
-																},
-																[],
-															);
-
-														return index % 2 === 0 ? (
-															<div
-																key={`${id}-Avatar`}
-																className="grid gap-1 p-4"
-															>
-																<CharacterAvatar character={character} />
-																<br />
-																{baseCharacterById[id]
-																	? baseCharacterById[id].name
-																	: id}
-															</div>
-														) : (
-															<div
-																key={`${id}-Messages`}
-																className="grid gap-1 p-4"
-															>
-																<h4>{target.id}:</h4>
-																<ul>
-																	{messages?.map((message) => (
-																		<li key={message}>{message}</li>
-																	))}
-																</ul>
-																<ul className={"text-red-600"}>
-																	{missedGoals.map(([missedGoal, value]) => (
-																		<li key={missedGoal.id}>
-																			{`Missed goal stat for ${
-																				missedGoal.stat
-																			}. Value of ${
-																				value % 1 ? value.toFixed(2) : value
-																			} was not between ${
-																				missedGoal.minimum
-																			} and ${missedGoal.maximum}.`}
-																		</li>
-																	))}
-																</ul>
-															</div>
-														);
-													},
-												)}
-											</div>
-										</div>
-									</div>
-								</div>
-								<div className={"flex justify-center"}>
-									<DialogClose asChild>
-										<Button>Close</Button>
-									</DialogClose>
-								</div>
-							</div>,
-						);
-					}
-				}
-			});
-
-			optimizeMods();
-		};
 
 		const saveTarget = () => {
 			let newTarget = structuredClone(target$.target.peek());
@@ -537,11 +604,21 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					<TabsContent value="Stat Targets">
 						<div className={"flex flex-wrap gap-2"}>
 							<TargetStatsWidget />
-							{missedGoalsSection(
-								modAssignments.find(
-									(modAssignment) => modAssignment.characterId === character.id,
-								) ?? null,
-							)}
+							<IncrementalOptimizationSection
+								modAssignments={
+									modAssignments.find(
+										(modAssignment) =>
+											modAssignment.characterId === character.id,
+									) ?? {
+										assignedMods: [],
+										characterId: character.id,
+										missedGoals: [],
+										target,
+									}
+								}
+								saveTarget={saveTarget}
+								baseCharacterById={baseCharacterById}
+							/>
 						</div>
 					</TabsContent>
 				</Tabs>
