@@ -3,7 +3,7 @@ import { cn } from "#/lib/utils";
 
 // react
 import type React from "react";
-import { lazy } from "react";
+import { lazy, useCallback } from "react";
 import { Computed, observer, use$ } from "@legendapp/state/react";
 
 // state
@@ -28,7 +28,24 @@ const CharacterAvatar = lazy(
 );
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { Toggle } from "#/components/reactive/Toggle";
+import { Toggle } from "#ui/toggle";
+
+const showEditCharacterModal = (
+	allycode: string,
+	character: Character.Character,
+	index: number,
+	target: OptimizationPlan.OptimizationPlan,
+) => {
+	incrementalOptimization$.indicesByProfile[allycode].set(index);
+	optimizerView$.assign({
+		currentCharacter: {
+			id: character.id,
+			index: index,
+			target: structuredClone(target),
+		},
+		view: "edit",
+	});
+};
 
 type CharacterBlockProps = {
 	characterId: CharacterNames;
@@ -55,6 +72,10 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		const allycode = use$(profilesManagement$.profiles.activeAllycode);
 		const baseCharacterById = use$(characters$.baseCharacterById);
 		const character = characterById[characterId];
+		const showEditCharacterModalCallback = useCallback(
+			() => showEditCharacterModal(allycode, character, index, target),
+			[allycode, character, index, target],
+		);
 		const activePlan = target.id;
 		const charactersLockedStatus = use$(() =>
 			lockedStatus$.isCharacterLockedForActivePlayer(characterId),
@@ -149,22 +170,6 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			);
 		};
 
-		const showEditCharacterModal = (
-			character: Character.Character,
-			index: number,
-			target: OptimizationPlan.OptimizationPlan,
-		) => {
-			incrementalOptimization$.indicesByProfile[allycode].set(index);
-			optimizerView$.assign({
-				currentCharacter: {
-					id: character.id,
-					index: index,
-					target: structuredClone(target),
-				},
-				view: "edit",
-			});
-		};
-
 		return (
 			<div className={"w-80 p-x-0 p-y-1 m-0"} key={character.id}>
 				<article
@@ -202,7 +207,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 						<Button
 							size={"xs"}
 							type={"button"}
-							onClick={() => showEditCharacterModal(character, index, target)}
+									onClick={() => showEditCharacterModalCallback()}
 						>
 							Edit
 						</Button>
