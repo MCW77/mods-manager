@@ -41,7 +41,7 @@ const modElements = (
 	return mods.map((mod) => {
 		return (
 			<RenderIfVisible
-				className={"w-[21em]"}
+				className={"w-[21em] snap-start"}
 				defaultHeight={278}
 				key={`RIV-${mod.id}`}
 				visibleOffset={2780}
@@ -146,12 +146,13 @@ const GroupedMods = ({
 				<span className="basis-20%">{"#"}</span>
 			</div>
 			<div
-				className="flex flex-col overflow-y-auto overscroll-y-contain grow-1"
+				className="flex flex-col overflow-y-auto overscroll-y-contain grow-1 snap-y snap-proximity"
 				ref={modGroupsElement}
 			>
 				{modGroups$.modGroups.map((modGroup$) => {
 					return (
 						<ReactiveCollapsible
+							className="snap-start"
 							key={`modgroup-${modGroup$.key.peek()}`}
 							$open={modGroup$.isOpen}
 							onOpenChange={(isOpen) => {
