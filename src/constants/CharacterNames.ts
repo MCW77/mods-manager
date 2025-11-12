@@ -1,6 +1,7 @@
 // utils
 import type * as UtilityTypes from "#/utils/typeHelper";
 export const characterNames = [
+	"4LOM",
 	"50RT",
 	"AAYLASECURA",
 	"ADMINISTRATORLANDO",
@@ -204,6 +205,7 @@ export const characterNames = [
 	"MASTERQUIGON",
 	"MAUL",
 	"MAULS7",
+	"MAZKANATA",
 	"MERRIN",
 	"MISSIONVAO",
 	"MOFFGIDEONS1",
@@ -306,6 +308,7 @@ export const characterNames = [
 	"ZAMWESELL",
 	"ZEBS3",
 	"ZORIIBLISS_V2",
+	"ZUCKUSS",
 ] as const;
 
 export type CharacterNames = string;

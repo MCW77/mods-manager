@@ -14,6 +14,33 @@ import {
 import { createTargetStat } from "#/domain/TargetStat";
 
 const characterSettings: CharacterSettingsIndexer = {
+	"4LOM": createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 10,
+				spd: 85,
+				cc: 5,
+				cd: 15,
+				pot: 10,
+				ten: 35,
+				spec: 10,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Tenacity %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
 	"50RT": createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -3623,6 +3650,29 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 		}),
 	]),
+	MAZKANATA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				spd: 100,
+				ten: 40,
+				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Tenacity %": 1,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
 	MERRIN: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -5496,6 +5546,27 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			pot: 10,
 			phys: 20,
+		}),
+	]),
+	ZUCKUSS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 30,
+			spd: 100,
+			ten: 20,
+			arm: 5,
+			res: 5,
+			minDots: 5,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Tenacity %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Tenacity %": 1,
+			},
 		}),
 	]),
 };
