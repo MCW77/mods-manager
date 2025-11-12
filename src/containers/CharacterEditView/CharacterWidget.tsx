@@ -74,6 +74,7 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 		return (
 			<div className={classAttr} key={character.id}>
 				<LockedToggle
+					className={"absolute top-[0.2em] right-[0.2em]"}
 					$pressed={isLocked$}
 					onPressedChange={() =>
 						lockedStatus$.toggleCharacterForActivePlayer(character.id)

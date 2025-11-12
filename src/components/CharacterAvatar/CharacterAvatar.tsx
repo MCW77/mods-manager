@@ -105,43 +105,47 @@ const CharacterAvatar = React.memo(
 			.run();
 
 		const avatarClassName = cn(
-			` relative inline-block size-16 m-x-2.4 m-t-3.6 m-b-1.2em rounded-full row-start-2 row-end-2 col-start-1 col-end-3 after:content-[''] after:block after:absolute after:w-full after:h-full after:box-border after:z-[29] after:left-0 after:top-0 after:bg-cover after:pointer-events-none ${displayGear ? gearClass : ""}`,
+			` relative inline-block size-16 m-x-2.4 m-t-3.6 m-b-1em rounded-full row-start-2 row-end-2 col-start-1 col-end-3 after:content-[''] after:block after:absolute after:w-full after:h-full after:box-border after:z-[29] after:left-0 after:top-[10px] after:bg-cover after:pointer-events-none ${displayGear ? gearClass : ""}`,
 			className,
 		);
 
 		return (
-			<div className={avatarClassName} id={id}>
-				<Show if={displayStars$}>
-					<Switch value={stars$}>
-						{{
-							0: () => <Stars0 />,
-							1: () => <Stars1 />,
-							2: () => <Stars2 />,
-							3: () => <Stars3 />,
-							4: () => <Stars4 />,
-							5: () => <Stars5 />,
-							6: () => <Stars6 />,
-							7: () => <Stars7 />,
-						}}
-					</Switch>
-				</Show>
-				<div className={"grid h-20"}>
-					<div
-						className={
-							"row-start-1 row-end-1 col-start-1 col-end-1 self-center"
-						}
-					>
-						<img
-							className={"rounded-full"}
-							src={baseCharacter.avatarUrl}
-							loading={"lazy"}
-							alt={baseCharacter.name}
-							title={baseCharacter.name}
-							draggable={false}
-						/>
+			<div className="flex flex-col items-center justify-center">
+				<div className={avatarClassName} id={id}>
+					<Show if={displayStars$}>
+						<Switch value={stars$}>
+							{{
+								0: () => <Stars0 />,
+								1: () => <Stars1 />,
+								2: () => <Stars2 />,
+								3: () => <Stars3 />,
+								4: () => <Stars4 />,
+								5: () => <Stars5 />,
+								6: () => <Stars6 />,
+								7: () => <Stars7 />,
+							}}
+						</Switch>
+					</Show>
+					<div className={"grid h-21"}>
+						<div
+							className={
+								"row-start-1 row-end-1 col-start-1 col-end-1 self-center"
+							}
+						>
+							<img
+								className={"rounded-full"}
+								src={baseCharacter.avatarUrl}
+								loading={"lazy"}
+								alt={baseCharacter.name}
+								title={baseCharacter.name}
+								draggable={false}
+							/>
+						</div>
 					</div>
+				</div>
+				<div className="grid p-0">
 					<Show if={displayLevel$}>
-						<Badge className="row-start-1 row-end-1 col-start-1 col-end-1 self-end justify-self-center px-0.5">
+						<Badge className="row-start-2 row-end-2 col-start-1 col-end-1 self-end justify-self-center p-0">
 							{character.playerValues.level}
 						</Badge>
 					</Show>

@@ -40,7 +40,7 @@ const ModDetail = memo(({ assignedTarget, mod }: ComponentProps) => {
 	return (
 		<div
 			className={
-				"relative inline-grid p-1 w-84 grid-cols-[5em_1fr] grid-rows-[1fr_auto_auto] gap-x-2 gap-y-0 items-start text-foreground dark:bg-blue-900 bg-blue-200 dark:bg-opacity-40 border-1 border-solid border-blue-500 text-shadow-md"
+				"relative inline-grid p-1 w-84 grid-cols-[5em_1fr] grid-rows-[1fr_auto_auto] gap-x-2 gap-y-1 items-start text-foreground dark:bg-blue-900 bg-blue-200 dark:bg-opacity-40 border-1 border-solid border-blue-500 text-shadow-md"
 			}
 			key={mod.id}
 		>

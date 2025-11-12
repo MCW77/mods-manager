@@ -1,6 +1,6 @@
 // react
 import type React from "react";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 
 // state
 import { observable } from "@legendapp/state";
@@ -32,6 +32,7 @@ const CharacterWidget = lazy(() => import("./CharacterWidget"));
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Spinner } from "#/components/Spinner/Spinner";
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 
 const CharacterList = lazy(
 	() => import("#/containers/CharacterList/CharacterList"),
@@ -46,6 +47,7 @@ const CharacterEditView = observer(() => {
 		compilations$.defaultCompilation.selectedCharacters,
 	);
 	const isSelectionExpanded = use$(isSelectionExpanded$);
+	const containerRef = useRef<HTMLDivElement>(null);
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
 	let availableCharacters = [] as Character.Character[];
@@ -138,6 +140,34 @@ const CharacterEditView = observer(() => {
 		(character) => !highlightedCharacters.includes(character),
 	);
 
+	// Disable scroll snap while actively scrolling
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		let scrollTimeout: NodeJS.Timeout;
+
+		const handleScroll = () => {
+			// Disable snap type while scrolling
+			container.style.scrollSnapType = "none";
+
+			// Clear any existing timeout
+			clearTimeout(scrollTimeout);
+
+			// Re-enable snap type after 300ms of no scrolling
+			scrollTimeout = setTimeout(() => {
+				container.style.scrollSnapType = "y proximity";
+			}, 30);
+		};
+
+		container.addEventListener("scroll", handleScroll, { passive: true });
+
+		return () => {
+			container.removeEventListener("scroll", handleScroll);
+			clearTimeout(scrollTimeout);
+		};
+	}, []);
+
 	const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
 	};
@@ -207,41 +237,58 @@ const CharacterEditView = observer(() => {
 			</div>
 			<div className="flex h-[83%]">
 				<div
-					className="available-characters w-auto overflow-y-auto flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
+					className="w-auto overflow-y-auto snap-y snap-proximity flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
 					role="application"
 					aria-label="Available characters drop zone"
 					onDragEnter={availableCharactersDragEnter}
 					onDragOver={dragOver}
 					onDragLeave={dragLeave}
 					onDrop={availableCharactersDrop}
+					ref={containerRef}
 				>
 					<div
 						className={
-							"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1"
+							"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
 						}
 					>
 						{highlightedCharacters.map((character) => (
-							<CharacterWidget
+							<RenderIfVisible
+								className="snap-start"
 								key={character.id}
-								character={character}
-								className={"active"}
-							/>
-						))}
-						{filteredCharacters.map((character) => (
-							<Suspense
-								key={character.id}
-								fallback={<div>Loading CharacterWidget</div>}
+								defaultHeight={161}
+								root={containerRef}
+								visibleOffset={1610}
 							>
 								<CharacterWidget
 									key={character.id}
 									character={character}
-									className={"opacity-25"}
+									className={"active"}
 								/>
-							</Suspense>
+							</RenderIfVisible>
+						))}
+						{filteredCharacters.map((character) => (
+							<RenderIfVisible
+								className="snap-start"
+								key={character.id}
+								defaultHeight={161}
+								root={containerRef}
+								visibleOffset={1610}
+							>
+								<Suspense
+									key={character.id}
+									fallback={<div>Loading CharacterWidget</div>}
+								>
+									<CharacterWidget
+										key={character.id}
+										character={character}
+										className={"opacity-25"}
+									/>
+								</Suspense>
+							</RenderIfVisible>
 						))}
 					</div>
 				</div>
-				<div className="selected-characters flex-grow-0 group-[&.sort-view]:flex-grow-1 max-w-[calc(33%_-_7em)] group-[&.sort-view]:max-w-initial m-l-1em">
+				<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
 					<Suspense fallback={<Spinner isVisible={true} />}>
 						<Memo>
 							<CharacterList />

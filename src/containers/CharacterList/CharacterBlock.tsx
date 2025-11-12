@@ -79,9 +79,9 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		);
 
 		return (
-			<div className={"w-80 p-x-0 p-y-1 m-0"} key={character.id}>
+			<div className={"p-x-0 p-y-1 m-0 w-60"} key={character.id}>
 				<article
-					className={`max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab ${charactersLockedStatus ? "locked" : ""}`}
+					className={`max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] grid-rows-[auto_20px] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab ${charactersLockedStatus ? "locked" : ""}`}
 					aria-label={`Character ${baseCharacterById[character.id]?.name || character.id} - draggable`}
 					draggable={true}
 					onDragStart={characterBlockDragStart(index)}
@@ -90,12 +90,12 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					<CharacterAvatar
 						character={character}
 						className={
-							"row-start-1 row-end-3 col-start-1 col-end-1 text-size-3.2"
+							"row-start-1 row-end-1 col-start-1 col-end-1 text-size-3.2"
 						}
 					/>
 					<div
 						className={
-							"inline-block grid-row-1 grid-col-2 align-middle pointer-events-none"
+							"inline-block grid-row-2 col-start-1 col-end-3 align-middle pointer-events-none"
 						}
 					>
 						{baseCharacterById[character.id]
@@ -104,21 +104,28 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					</div>
 					<div
 						className={
-							"grid-row-3 grid-col-2 p-y-1 flex items-center flex-wrap gap-2"
+							"grid-row-1 grid-col-2 flex flex-col gap-2 justify-center"
 						}
 					>
 						<Computed>{CharacterTargetStatusIcons(character, target)}</Computed>
-						<Label className="align-middle">Target:</Label>
-						<Label className="align-middle dark:text-white light:text-black">
-							{activePlan}
-						</Label>
-						<Button
-							size={"xs"}
-							type={"button"}
-									onClick={() => showEditCharacterModalCallback()}
+						<div
+							className={"p-y-1 items-center grid grid-rows-[auto_20px] gap-2"}
 						>
-							Edit
-						</Button>
+							<div className="flex items-center justify-between">
+								<Label className="align-middle">Target:</Label>
+								<Button
+									className="px-5"
+									size={"xs"}
+									type={"button"}
+									onClick={() => showEditCharacterModalCallback()}
+								>
+									Edit
+								</Button>
+							</div>
+							<Label className="grid-row-2 align-middle dark:text-white light:text-black">
+								{activePlan}
+							</Label>
+						</div>
 					</div>
 				</article>
 			</div>

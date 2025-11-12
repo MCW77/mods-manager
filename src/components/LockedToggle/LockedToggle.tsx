@@ -27,11 +27,11 @@ function LockedToggle({
 	);
 	const title = use$(title$);
 	const commonCSS =
-		"absolute block size-[1.2em] m0 p0 top-[0.2em] right-[0.2em] leading-[1.2em] bg-[url(/img/character_icons.webp)] bg-[size:12em_2.4em]";
+		"size-[16px] m0 p0 leading-[1.2em] bg-[url(/img/character_icons.webp)] bg-[size:160px_32px]";
 
 	return (
 		<Toggle
-			className={"absolute block size-[1.2em] m0 p0 top-[0.2em] right-[0.2em]"}
+			className={cn("h-[16px] min-w-0 p-0 rounded-none", className)}
 			$pressed={$pressed}
 			onPressedChange={onPressedChange}
 			title={title}
@@ -40,15 +40,12 @@ function LockedToggle({
 				if={$pressed}
 				else={() => (
 					<div
-						className={cn(
-							`${commonCSS} bg-[position:-9.6em_-1.2em]`,
-							className,
-						)}
+						className={cn(`${commonCSS} bg-[position:-128px_-16px]`, className)}
 					/>
 				)}
 			>
 				<div
-					className={cn(`${commonCSS} bg-[position:-9.6em_-0em]`, className)}
+					className={cn(`${commonCSS} bg-[position:-128px_-0px]`, className)}
 				/>
 			</Show>
 		</Toggle>

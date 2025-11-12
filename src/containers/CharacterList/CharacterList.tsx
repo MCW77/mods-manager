@@ -1,5 +1,5 @@
 // react
-import React, { lazy, useRef, useState } from "react";
+import React, { lazy, useEffect, useRef, useState } from "react";
 import { observer, Show, use$ } from "@legendapp/state/react";
 
 // state
@@ -14,6 +14,7 @@ import { characterSettings } from "#/constants/characterSettings";
 
 import * as Character from "#/domain/Character";
 import { useTranslation } from "react-i18next";
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 
 // components
 const CharacterBlock = lazy(() => import("./CharacterBlock"));
@@ -28,7 +29,8 @@ const CharacterList = observer(
 
 		const containerRef = useRef<HTMLDivElement>(null);
 		const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-
+		const [disableLazyLoad, setDisableLazyLoad] = useState(false);
+		const disableTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 		const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
 			event.preventDefault();
 
@@ -111,6 +113,14 @@ const CharacterList = observer(
 				event.dataTransfer.getData("application/json"),
 			);
 
+			// Disable lazy loading temporarily to prevent flickering during reorder
+			setDisableLazyLoad(true);
+
+			// Clear any existing timeout
+			if (disableTimeoutRef.current) {
+				clearTimeout(disableTimeoutRef.current);
+			}
+
 			switch (options.effect) {
 				case "add": {
 					const movingCharacterID: CharacterNames = event.dataTransfer.getData(
@@ -148,13 +158,56 @@ const CharacterList = observer(
 					el.classList.remove("drop-character", "drop-character-before");
 				}
 			}
+
+			// Re-enable lazy loading after React has finished reordering
+			disableTimeoutRef.current = setTimeout(() => {
+				setDisableLazyLoad(false);
+				disableTimeoutRef.current = null;
+			}, 500); // 500ms should be enough for React to complete the reorder
 		};
+
+		// Cleanup timeout on unmount
+		useEffect(() => {
+			return () => {
+				if (disableTimeoutRef.current) {
+					clearTimeout(disableTimeoutRef.current);
+				}
+			};
+		}, []);
+
+		// Disable scroll snap while actively scrolling
+		useEffect(() => {
+			const container = containerRef.current;
+			if (!container) return;
+
+			let scrollTimeout: NodeJS.Timeout;
+
+			const handleScroll = () => {
+				// Disable snap type while scrolling
+				container.style.scrollSnapType = "none";
+
+				// Clear any existing timeout
+				clearTimeout(scrollTimeout);
+
+				// Re-enable snap type after 300ms of no scrolling
+				scrollTimeout = setTimeout(() => {
+					container.style.scrollSnapType = "y mandatory";
+				}, 300);
+			};
+
+			container.addEventListener("scroll", handleScroll, { passive: true });
+
+			return () => {
+				container.removeEventListener("scroll", handleScroll);
+				clearTimeout(scrollTimeout);
+			};
+		}, []);
 
 		return (
 			<div
 				ref={containerRef}
 				className={
-					"p-y-1 p-r-1 m-r-2 h-full overscroll-contain overflow-x-hidden overflow-y-auto group-[&.sort-view]:flex group-[&.sort-view]:flex-wrap group-[&.sort-view]:gap-2 group-[&.sort-view]:items-start"
+					"p-y-1 p-r-1 m-r-2 h-full snap-y snap-mandatory scroll-smooth overscroll-contain overflow-x-hidden overflow-y-auto group-[&.sort-view]:grid group-[&.sort-view]:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] group-[&.sort-view]:auto-rows-min group-[&.sort-view]:gap-2"
 				}
 				role="application"
 				aria-label="Available characters drop zone"
@@ -166,17 +219,21 @@ const CharacterList = observer(
 					if={compilations$.defaultCompilation.selectedCharacters.length === 0}
 					else={() =>
 						selectedCharacters.map(({ id, target }, index) => (
-							<div
+							<RenderIfVisible
 								key={id}
 								data-character-index={index}
-								className="[&.drop-character]:shadow-[0_2px_3px_0_darkred] [&.drop-character-before]:shadow-[0_-3px_5px_0_darkred]"
+								className="[&.drop-character]:shadow-[0_2px_3px_0_darkred] [&.drop-character-before]:shadow-[0_-3px_5px_0_darkred] snap-start"
+								defaultHeight={148}
+								root={containerRef}
+								visibleOffset={1480}
+								disabled={disableLazyLoad}
 							>
 								<CharacterBlock
 									characterId={id}
 									target={target}
 									index={index}
 								/>
-							</div>
+							</RenderIfVisible>
 						))
 					}
 				>
