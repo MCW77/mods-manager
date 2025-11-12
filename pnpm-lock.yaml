@@ -193,8 +193,8 @@ importers:
         specifier: ^6.2.5
         version: 6.2.5
       rollup-plugin-visualizer:
-        specifier: ^6.0.3
-        version: 6.0.3(rollup@2.79.2)
+        specifier: ^6.0.5
+        version: 6.0.5(rollup@2.79.2)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -3606,8 +3606,8 @@ packages:
     engines: {node: '>= 0.10'}
     deprecated: Use String.prototype.padEnd() instead
 
-  rollup-plugin-visualizer@6.0.3:
-    resolution: {integrity: sha512-ZU41GwrkDcCpVoffviuM9Clwjy5fcUxlz0oMoTXTYsK+tcIFzbdacnrr2n8TXcHxbGKKXtOdjxM2HUS4HjkwIw==}
+  rollup-plugin-visualizer@6.0.5:
+    resolution: {integrity: sha512-9+HlNgKCVbJDs8tVtjQ43US12eqaiHyyiLMdBwQ7vSZPiHMysGNo2E88TAp1si5wx8NAoYriI2A5kuKfIakmJg==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -7941,7 +7941,7 @@ snapshots:
 
   right-pad@1.0.1: {}
 
-  rollup-plugin-visualizer@6.0.3(rollup@2.79.2):
+  rollup-plugin-visualizer@6.0.5(rollup@2.79.2):
     dependencies:
       open: 8.4.2
       picomatch: 4.0.3
