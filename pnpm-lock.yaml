@@ -175,8 +175,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1
       '@unocss/preset-typography':
-        specifier: 66.5.2
-        version: 66.5.2
+        specifier: 66.5.6
+        version: 66.5.6
       '@unocss/preset-wind4':
         specifier: ^66.5.2
         version: 66.5.2
@@ -2121,9 +2121,6 @@ packages:
 
   '@unocss/preset-tagify@66.5.6':
     resolution: {integrity: sha512-zUJlt7xE7eJ9BV4lAECAeGuOJz6l3J5x0ZGWXyJ5vne2YNww4XU6seLtKhK/8viiZQa/D4c7zaHXJH4R8ov+LQ==}
-
-  '@unocss/preset-typography@66.5.2':
-    resolution: {integrity: sha512-Ez3VWrNlJVa9cywsI/IwUdZ4OUeeUvf04pZmf+bwSU3CHqfonRT8K3+ndHQfuTJYbIb1k3few+cc1P1W7NP7Xw==}
 
   '@unocss/preset-typography@66.5.6':
     resolution: {integrity: sha512-kZBw8REe4WM1HJQYNXdMJbbN+e1FGHLpzqFfvb3SW3e6WVmlQKsaokfv6UnnMjeIvRuFOGXmXmRNUUJckFgMDQ==}
@@ -6349,11 +6346,6 @@ snapshots:
   '@unocss/preset-tagify@66.5.6':
     dependencies:
       '@unocss/core': 66.5.6
-
-  '@unocss/preset-typography@66.5.2':
-    dependencies:
-      '@unocss/core': 66.5.2
-      '@unocss/rule-utils': 66.5.2
 
   '@unocss/preset-typography@66.5.6':
     dependencies:
