@@ -7,8 +7,9 @@ type ComponentProps = {
 	defaultHeight?: number;
 	visibleOffset?: number;
 	root?: React.RefObject<HTMLElement> | null;
+	disabled?: boolean;
 	children: React.ReactNode;
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const isWindowAvailable = typeof window !== "undefined";
 const isRequestIdleCallbackAvailable =
@@ -19,24 +20,49 @@ const RenderIfVisible = ({
 	defaultHeight = 300,
 	visibleOffset = 1000,
 	root = null,
+	disabled = false,
 	children,
+	...restProps
 }: ComponentProps) => {
 	const [isVisible, setIsVisible] = useState<boolean>(!isWindowAvailable);
 	const placeholderHeight = useRef<number>(defaultHeight);
 	const intersectionRef = useRef<HTMLDivElement>(null);
+	const hasBeenVisibleRef = useRef<boolean>(false);
 
 	const setVisibleOnIdle = useCallback((visible: boolean) => {
-		if (isRequestIdleCallbackAvailable) {
-			window.requestIdleCallback(() => setIsVisible(visible), {
-				timeout: 600,
-			});
+		if (visible) {
+			hasBeenVisibleRef.current = true;
+			// Show immediately
+			if (isRequestIdleCallbackAvailable) {
+				window.requestIdleCallback(() => setIsVisible(true), {
+					timeout: 600,
+				});
+			} else {
+				setIsVisible(true);
+			}
 		} else {
-			setIsVisible(visible);
+			// Once rendered, keep it rendered (don't hide)
+			// This prevents flickering during DOM reordering from drag-drop
+			if (!hasBeenVisibleRef.current) {
+				if (isRequestIdleCallbackAvailable) {
+					window.requestIdleCallback(() => setIsVisible(false), {
+						timeout: 600,
+					});
+				} else {
+					setIsVisible(false);
+				}
+			}
 		}
 	}, []);
 
 	// Set visibility with intersection observer
 	useEffect(() => {
+		// If disabled, always show content
+		if (disabled) {
+			setIsVisible(true);
+			return () => {};
+		}
+
 		if (intersectionRef.current === null) return () => {};
 
 		const observer = new IntersectionObserver(
@@ -54,7 +80,7 @@ const RenderIfVisible = ({
 				observer.unobserve(intersectionRef.current);
 			}
 		};
-	}, [root, visibleOffset, setVisibleOnIdle]);
+	}, [root, visibleOffset, setVisibleOnIdle, disabled]);
 
 	// Set true height for placeholder element after render.
 	useEffect(() => {
@@ -64,7 +90,7 @@ const RenderIfVisible = ({
 	}, [isVisible]);
 
 	return (
-		<div className={className} ref={intersectionRef}>
+		<div className={className} ref={intersectionRef} {...restProps}>
 			{isVisible ? (
 				children
 			) : (
