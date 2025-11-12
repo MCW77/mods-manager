@@ -2,7 +2,7 @@
 import { cn } from "#/lib/utils";
 
 // react
-import { Show } from "@legendapp/state/react";
+import { Show, use$, useObservable } from "@legendapp/state/react";
 
 // state
 import type { Observable } from "@legendapp/state";
@@ -20,6 +20,12 @@ function LockedToggle({
 	onPressedChange,
 	className,
 }: LockedToggleProps) {
+	const title$ = useObservable(() =>
+		$pressed.get()
+			? "This character is locked. Its mods will not be assigned to other characters"
+			: "This character is not locked",
+	);
+	const title = use$(title$);
 	const commonCSS =
 		"absolute block size-[1.2em] m0 p0 top-[0.2em] right-[0.2em] leading-[1.2em] bg-[url(/img/character_icons.webp)] bg-[size:12em_2.4em]";
 
@@ -28,6 +34,7 @@ function LockedToggle({
 			className={"absolute block size-[1.2em] m0 p0 top-[0.2em] right-[0.2em]"}
 			$pressed={$pressed}
 			onPressedChange={onPressedChange}
+			title={title}
 		>
 			<Show
 				if={$pressed}
