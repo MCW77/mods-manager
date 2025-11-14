@@ -1,4 +1,4 @@
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
 interface LockedStatusPersistedData {
 	lockedStatus: {

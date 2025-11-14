@@ -5,14 +5,14 @@ import { Fragment } from "react/jsx-runtime";
 // state
 import { reactive, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;
 
 // components
-import { Input } from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
+import { Input } from "#/components/ui/input.jsx";
+import { Label } from "#/components/ui/label.jsx";
 
 const ReactiveInput = reactive(Input);
 

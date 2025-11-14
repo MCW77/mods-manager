@@ -5,21 +5,21 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
+import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles.js";
 import {
 	type PrimarySettingsPrimaries,
 	primarySettingsPrimaries,
-} from "../../domain/ModsViewOptions";
+} from "../../domain/ModsViewOptions.js";
 
 // components
-const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 const PrimaryFilter = () => {
 	const [t] = useTranslation("explore-ui");

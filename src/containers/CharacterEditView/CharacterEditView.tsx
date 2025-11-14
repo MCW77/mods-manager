@@ -6,7 +6,7 @@ import { lazy, Suspense, useEffect, useRef } from "react";
 import { observable } from "@legendapp/state";
 import { Memo, observer, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -17,25 +17,25 @@ const lockedStatus$ = stateLoader$.lockedStatus$;
 import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
 
 // domain
-import { characterSettings } from "#/constants/characterSettings";
+import { characterSettings } from "#/constants/characterSettings.js";
 
-import { defaultBaseCharacter } from "#/modules/characters/domain/BaseCharacter";
-import type { CharacterFilter } from "#/modules/charactersManagement/domain/CharacterFilterById";
-import * as Character from "#/domain/Character";
+import { defaultBaseCharacter } from "#/modules/characters/domain/BaseCharacter.js";
+import type { CharacterFilter } from "#/modules/charactersManagement/domain/CharacterFilterById.js";
+import * as Character from "#/domain/Character.js";
 
 // components
-const SelectionActions = lazy(() => import("./SelectionActions"));
-const TemplatesActions = lazy(() => import("./TemplatesActions"));
-const CharacterActions = lazy(() => import("./CharacterActions"));
-const CharacterFilters = lazy(() => import("./CharacterFilters"));
-const CharacterWidget = lazy(() => import("./CharacterWidget"));
+const SelectionActions = lazy(() => import("./SelectionActions.jsx"));
+const TemplatesActions = lazy(() => import("./TemplatesActions.jsx"));
+const CharacterActions = lazy(() => import("./CharacterActions.jsx"));
+const CharacterFilters = lazy(() => import("./CharacterFilters.jsx"));
+const CharacterWidget = lazy(() => import("./CharacterWidget.jsx"));
 
-import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { Spinner } from "#/components/Spinner/Spinner";
-import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard.jsx";
+import { Spinner } from "#/components/Spinner/Spinner.jsx";
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible.jsx";
 
 const CharacterList = lazy(
-	() => import("#/containers/CharacterList/CharacterList"),
+	() => import("#/containers/CharacterList/CharacterList.jsx"),
 );
 
 const isSelectionExpanded$ = observable(false);

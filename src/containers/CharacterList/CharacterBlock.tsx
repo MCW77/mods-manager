@@ -4,7 +4,7 @@ import { lazy, useCallback } from "react";
 import { Computed, observer, use$ } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -12,20 +12,20 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type * as Character from "#/domain/Character";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type * as Character from "#/domain/Character.js";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
 // components
-import { CharacterTargetStatusIcons } from "./CharacterTargetStatusIcons";
+import { CharacterTargetStatusIcons } from "./CharacterTargetStatusIcons.jsx";
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 const showEditCharacterModal = (
 	allycode: string,
@@ -107,7 +107,12 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 							"grid-row-1 grid-col-2 flex flex-col gap-2 justify-center"
 						}
 					>
-						<Computed>{CharacterTargetStatusIcons(character, target)}</Computed>
+						<Computed>
+							<CharacterTargetStatusIcons
+								character={character}
+								target={target}
+							/>
+						</Computed>
 						<div
 							className={"p-y-1 items-center grid grid-rows-[auto_20px] gap-2"}
 						>

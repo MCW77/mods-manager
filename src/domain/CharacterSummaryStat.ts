@@ -1,6 +1,6 @@
 // domain
-import type { GIMOCharacterSummaryStatNames } from "./GIMOStatNames";
-import { Stat } from "./Stat";
+import type { GIMOCharacterSummaryStatNames } from "./GIMOStatNames.js";
+import { Stat } from "./Stat.js";
 
 // #region DisplayStatNames
 export type DisplayStatNames =

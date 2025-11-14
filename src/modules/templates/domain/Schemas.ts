@@ -2,8 +2,8 @@
 import type * as v from "valibot";
 
 // domain
-import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
-import { CharacterTemplatesSchemaV18 } from "#/domain/schemas/mods-manager";
+import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas.js";
+import { CharacterTemplatesSchemaV18 } from "#/domain/schemas/mods-manager/index.js";
 
 const schemaByVersion = new Map<
 	number,

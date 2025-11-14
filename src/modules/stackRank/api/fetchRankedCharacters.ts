@@ -1,8 +1,8 @@
 // state
-import type { StackRankParameters } from "../domain/StackRankParameters";
+import type { StackRankParameters } from "../domain/StackRankParameters.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
 const post = async (url = "", data = {}) => {
 	const requestInit: RequestInit = {

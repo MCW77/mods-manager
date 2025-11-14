@@ -2,7 +2,7 @@
 import { memo } from "react";
 
 // components
-import { Badge } from "../ui/badge";
+import { Badge } from "../ui/badge.jsx";
 
 type ComponentProps = {
 	pips: number;

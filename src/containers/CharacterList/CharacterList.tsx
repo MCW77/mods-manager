@@ -1,23 +1,23 @@
 // react
 import React, { lazy, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { observer, Show, use$ } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-import { characterSettings } from "#/constants/characterSettings";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import { characterSettings } from "#/constants/characterSettings.js";
 
-import * as Character from "#/domain/Character";
-import { useTranslation } from "react-i18next";
-import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+import * as Character from "#/domain/Character.js";
 
 // components
-const CharacterBlock = lazy(() => import("./CharacterBlock"));
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible.jsx";
+const CharacterBlock = lazy(() => import("./CharacterBlock.jsx"));
 
 const CharacterList = observer(
 	React.memo(() => {

@@ -4,12 +4,12 @@
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"allowJs": true,
 		"skipLibCheck": true,
-		"esModuleInterop": false,
+		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "ESNext",
-		"moduleResolution": "Node",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
@@ -20,6 +20,7 @@
 			"#lib/*": ["./src/lib/*"],
 			"#ui/*": ["./src/components/ui/*"]
 		},
+		"types": ["@legendapp/state/types/babel", "node"],
 		"downlevelIteration": true,
 		"noFallthroughCasesInSwitch": true,
 		"noErrorTruncation": true

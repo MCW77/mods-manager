@@ -1,24 +1,30 @@
 // react
 import { lazy, useMemo } from "react";
-import { Computed, For, reactiveObserver, Show, use$ } from "@legendapp/state/react";
+import {
+	Computed,
+	For,
+	reactiveObserver,
+	Show,
+	use$,
+} from "@legendapp/state/react";
 
 // utils
-import { objectEntries } from "#/utils/objectEntries";
+import { objectEntries } from "#/utils/objectEntries.js";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const characters$ = stateLoader$.characters$;
 
-import { target$ } from "../state/planEditing";
+import { target$ } from "../state/planEditing.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
 // components
-const TargetStatWidget = lazy(() => import("./TargetStatWidget"));
-import { Button } from "#ui/button";
-import { Card } from "#ui/card";
+const TargetStatWidget = lazy(() => import("./TargetStatWidget.jsx"));
+import { Button } from "#ui/button.jsx";
+import { Card } from "#ui/card.jsx";
 
 const TargetStatsWidget: React.FC = reactiveObserver(() => {
 	const baseCharacterById = use$(characters$.baseCharacterById);

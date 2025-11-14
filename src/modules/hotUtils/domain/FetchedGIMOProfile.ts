@@ -1,5 +1,5 @@
-import type { Mod } from "#/domain/Mod";
-import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
+import type { Mod } from "#/domain/Mod.js";
+import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues.js";
 
 export interface FetchedGIMOProfile {
 	name: string;

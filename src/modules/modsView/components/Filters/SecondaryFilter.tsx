@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
@@ -12,11 +12,11 @@ const modsView$ = stateLoader$.modsView$;
 import {
 	type SecondarySettingsSecondaries,
 	secondarySettingsSecondaries,
-} from "../../domain/ModsViewOptions";
+} from "../../domain/ModsViewOptions.js";
 
 // components
-import { Label } from "#ui/label";
-import { Slider } from "#ui/slider";
+import { Label } from "#ui/label.jsx";
+import { Slider } from "#ui/slider.jsx";
 
 const SecondaryFilter = () => {
 	const [t] = useTranslation("explore-ui");

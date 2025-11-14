@@ -2,10 +2,10 @@
 import type { ObservableObject } from "@legendapp/state";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
-import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames.js";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
 type PlanEditing = ObservableObject<{
 	canDeleteTarget: () => boolean;

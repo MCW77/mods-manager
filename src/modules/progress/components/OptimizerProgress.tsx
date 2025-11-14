@@ -11,27 +11,27 @@ import {
 	useObservable,
 } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
-const { cancelOptimizer } = await import("#/modules/optimize/optimize");
+const { cancelOptimizer } = await import("#/modules/optimize/optimize.js");
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { progress$ } from "../state/progress";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { progress$ } from "../state/progress.js";
 
 // domain
-import type * as Character from "#/domain/Character";
+import type * as Character from "#/domain/Character.js";
 
 // components
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
 
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
-import { Progress } from "#ui/progress";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
+import { Progress } from "#ui/progress.jsx";
 
 const ReactiveProgress = reactive(Progress);
 

@@ -1,5 +1,5 @@
 // utils
-import collectByKey from "#/utils/collectByKey";
+import collectByKey from "#/utils/collectByKey.js";
 
 // state
 import {
@@ -9,25 +9,25 @@ import {
 	useObservable,
 } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const hotutils$ = stateLoader$.hotutils$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
-import type { Mod } from "#/domain/Mod";
-import type { ProfileCreationData } from "#/modules/hotUtils/domain/ProfileCreationData";
+import type { Mod } from "#/domain/Mod.js";
+import type { ProfileCreationData } from "#/modules/hotUtils/domain/ProfileCreationData.js";
 
 // components
-import { Button } from "#/components/ui/button";
-import { Input } from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
+import { Button } from "#/components/ui/button.jsx";
+import { Input } from "#/components/ui/input.jsx";
+import { Label } from "#/components/ui/label.jsx";
 
 const ReactiveInput = reactive(Input);
 

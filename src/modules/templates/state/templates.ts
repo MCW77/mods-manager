@@ -1,24 +1,26 @@
 // state
 import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
 
 const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
+	"#/modules/compilations/state/compilations.js"
 );
 
 // domain
-import defaultTemplates from "#/constants/characterTemplates.json";
+import defaultTemplates from "#/constants/characterTemplates.json" with {
+	type: "json",
+};
 
-import { convertTemplates } from "../domain/Backup";
+import { convertTemplates } from "../domain/Backup.js";
 import type {
 	CharacterTemplate,
 	CharacterTemplates,
 	CharacterTemplatesByName,
-} from "../domain/CharacterTemplates";
-import type { TemplatesAddingMode } from "../domain/TemplatesAddingMode";
-import type { TemplatesObservable } from "../domain/TemplatesObservable";
-import type { TemplateTypes } from "../domain/TemplateTypes";
+} from "../domain/CharacterTemplates.js";
+import type { TemplatesAddingMode } from "../domain/TemplatesAddingMode.js";
+import type { TemplatesObservable } from "../domain/TemplatesObservable.js";
+import type { TemplateTypes } from "../domain/TemplateTypes.js";
 
 const templates$: ObservableObject<TemplatesObservable> =
 	observable<TemplatesObservable>({

@@ -2,8 +2,8 @@
 import Big from "big.js";
 
 // domain
-import type { GIMOSecondaryStatNames } from "./GIMOStatNames";
-import { Stat } from "./Stat";
+import type { GIMOSecondaryStatNames } from "./GIMOStatNames.js";
+import { Stat } from "./Stat.js";
 
 export type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
 export type HUOffensiveStats = "Offense" | "Offense %" | "Crit Chance %";

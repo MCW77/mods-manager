@@ -3,19 +3,19 @@ import { Switch, reactive, reactiveObserver } from "@legendapp/state/react";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
-import { target$ } from "#/modules/planEditing/state/planEditing";
+import { target$ } from "#/modules/planEditing/state/planEditing.js";
 
 // domain
-import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
 // components
-import { AdvancedInput } from "./AdvancedInput";
-import { BasicInput } from "./BasicInput";
-import { StatWeightsForm } from "./StatWeightsForm";
+import { AdvancedInput } from "./AdvancedInput.jsx";
+import { BasicInput } from "./BasicInput.jsx";
+import { StatWeightsForm } from "./StatWeightsForm.jsx";
 
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
-import { Switch as ShadSwitch } from "#ui/switch";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
+import { Switch as ShadSwitch } from "#ui/switch.jsx";
 
 const ReactiveSwitch = reactive(ShadSwitch);
 

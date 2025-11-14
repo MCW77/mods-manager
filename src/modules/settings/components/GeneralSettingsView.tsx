@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 import { observer } from "@legendapp/state/react";
 
 // utils
-import { readFile } from "#/utils/readFile";
+import { readFile } from "#/utils/readFile.js";
 
 // state
-const { appState$ } = await import("#/modules/appState/state/appState");
+const { appState$ } = await import("#/modules/appState/state/appState.js");
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
 
 // components
 import {
@@ -20,17 +20,17 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AccountsManager = lazy(
-	() => import("#/components/AccountsManager/AccountsManager"),
+	() => import("#/components/AccountsManager/AccountsManager.jsx"),
 );
-import { FileInput } from "#/components/FileInput/FileInput";
+import { FileInput } from "#/components/FileInput/FileInput.jsx";
 const HotutilsSettingsForm = lazy(
-	() => import("#/modules/hotUtils/components/HotutilsSettingsForm"),
+	() => import("#/modules/hotUtils/components/HotutilsSettingsForm.jsx"),
 );
-import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
+import { UISettingsForm } from "#/modules/ui/components/UISettingsForm.jsx";
 
-import { Button } from "#ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
-import { Separator } from "#ui/separator";
+import { Button } from "#ui/button.jsx";
+import { Card, CardContent, CardHeader, CardTitle } from "#ui/card.jsx";
+import { Separator } from "#ui/separator.jsx";
 
 const GeneralSettingsView: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");

@@ -2,9 +2,9 @@
 import * as v from "valibot";
 
 // domain
-import { variablePrimarySlots } from "#/domain/types/ModTypes";
-import { gimoPrimaryStatNames } from "#/domain/GIMOStatNames";
-import { TargetStatsSchema } from "./TargetStatsSchemas";
+import { variablePrimarySlots } from "#/domain/types/ModTypes.js";
+import { gimoPrimaryStatNames } from "#/domain/GIMOStatNames.js";
+import { TargetStatsSchema } from "./TargetStatsSchemas.js";
 
 const gimoSetStatNames = [
 	"critchance",

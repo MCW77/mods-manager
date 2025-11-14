@@ -5,7 +5,7 @@ import * as v from "valibot";
 import {
 	characterNames,
 	type CharacterNames,
-} from "#/constants/CharacterNames";
+} from "#/constants/CharacterNames.js";
 
 const KnownCharacterNamesSchema = v.picklist(characterNames);
 const ArbitraryCharacterNamesSchema = v.pipe(

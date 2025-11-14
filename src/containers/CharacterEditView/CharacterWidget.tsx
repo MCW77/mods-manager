@@ -5,23 +5,23 @@ import { lazy } from "react";
 import { observer, use$, useObservable } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
-import { characterSettings } from "#/constants/characterSettings";
-import type { CharacterNames } from "#/constants/CharacterNames";
+import { characterSettings } from "#/constants/characterSettings.js";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
-import * as Character from "#/domain/Character";
+import * as Character from "#/domain/Character.js";
 
 // components
-import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
+import { LockedToggle } from "#/components/LockedToggle/LockedToggle.jsx";
 
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
 
 type CharacterBlockProps = {

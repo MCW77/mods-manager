@@ -2,27 +2,27 @@
 import { observer, use$ } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const compilations$ = stateLoader$.compilations$;
 const templates$ = stateLoader$.templates$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
 
 import {
 	appendTemplate,
 	applyTemplateTargets,
 	replaceWithTemplate,
-} from "#/modules/templateToCompilationAdder/templateToCompilationAdder";
+} from "#/modules/templateToCompilationAdder/templateToCompilationAdder.js";
 
 // domain
-import type { CharacterTemplate } from "#/modules/templates/domain/CharacterTemplates";
-import type { TemplateTypes } from "#/modules/templates/domain/TemplateTypes";
+import type { CharacterTemplate } from "#/modules/templates/domain/CharacterTemplates.js";
+import type { TemplateTypes } from "#/modules/templates/domain/TemplateTypes.js";
 
 // components
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
-import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
+import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group.jsx";
 
 const AddTemplateModal: React.FC = observer(() => {
 	const selectedCharacters = use$(

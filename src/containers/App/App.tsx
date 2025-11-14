@@ -15,42 +15,42 @@ import {
 // state
 import { Memo, Show, reactive, use$, useMount } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const { refreshPlayerData } = await import(
-	"#/modules/profileFetch/profileFetch"
+	"#/modules/profileFetch/profileFetch.jsx"
 );
 
-import { ui$ } from "#/modules/ui/state/ui";
+import { ui$ } from "#/modules/ui/state/ui.js";
 
 // domain
-import type { SectionNames } from "#/modules/ui/domain/SectionNames";
+import type { SectionNames } from "#/modules/ui/domain/SectionNames.js";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Spinner } from "#/modules/busyIndication/components/Spinner";
-import { Spinner as SimpleSpinner } from "#/components/Spinner/Spinner";
-import { Dialog } from "#/modules/dialog/components/Dialog";
+import { Spinner } from "#/modules/busyIndication/components/Spinner.jsx";
+import { Spinner as SimpleSpinner } from "#/components/Spinner/Spinner.jsx";
+import { Dialog } from "#/modules/dialog/components/Dialog.jsx";
 const ProfilesManager = lazy(
-	() => import("#/modules/profilesManagement/components/ProfilesManager"),
+	() => import("#/modules/profilesManagement/components/ProfilesManager.jsx"),
 );
 
-import { Toaster } from "#ui/sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
+import { Toaster } from "#ui/sonner.jsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs.jsx";
 
 // containers
-const AboutView = lazy(() => import("#/containers/AboutView/AboutView"));
+const AboutView = lazy(() => import("#/containers/AboutView/AboutView.jsx"));
 const CompilationsView = lazy(
-	() => import("#/modules/compilations/pages/CompilationsView"),
+	() => import("#/modules/compilations/pages/CompilationsView.jsx"),
 );
-import { HelpView } from "#/modules/help/pages/HelpView";
-const ModsView = lazy(() => import("#/modules/modsView/pages/ModsView"));
+import { HelpView } from "#/modules/help/pages/HelpView.jsx";
+const ModsView = lazy(() => import("#/modules/modsView/pages/ModsView.jsx"));
 const OptimizerView = lazy(
-	() => import("#/containers/OptimizerView/OptimizerView"),
+	() => import("#/containers/OptimizerView/OptimizerView.jsx"),
 );
 const SettingsView = lazy(
-	() => import("#/modules/settings/pages/SettingsView"),
+	() => import("#/modules/settings/pages/SettingsView.jsx"),
 );
 
 const profilesManagement$ = stateLoader$.profilesManagement$;

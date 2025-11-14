@@ -54,52 +54,52 @@ if (typeof globalThis !== "undefined") {
 
 // utils
 import "../utils/globalLegendPersistSettings";
-import * as perf from "../utils/performance";
+import * as perf from "../utils/performance.js";
+import { objectEntries } from "#/utils/objectEntries.js";
 
 // state
 import type { ObservableObject } from "@legendapp/state";
 
-import type { StateLoaderObservable } from "../modules/stateLoader/stateLoader";
+import type { StateLoaderObservable } from "../modules/stateLoader/stateLoader.js";
 
-import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
-import type { ProfilesManagementObservable } from "#/modules/profilesManagement/domain/ProfilesManagement";
-import type { IncrementalOptimizationObservable } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
-import type { LockedStatusObservable } from "#/modules/lockedStatus/domain/LockedStatusObservable";
-import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
+import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable.js";
+import type { ProfilesManagementObservable } from "#/modules/profilesManagement/domain/ProfilesManagement.js";
+import type { IncrementalOptimizationObservable } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable.js";
+import type { LockedStatusObservable } from "#/modules/lockedStatus/domain/LockedStatusObservable.js";
+import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable.js";
 
 // domain
-import type { CharacterNames } from "../constants/CharacterNames";
-import { gimoSlots } from "../domain/constants/ModConsts";
-import type * as ModTypes from "../domain/types/ModTypes";
+import type { CharacterNames } from "../constants/CharacterNames.js";
+import { gimoSlots } from "../domain/constants/ModConsts.js";
+import type * as ModTypes from "../domain/types/ModTypes.js";
 
-import type * as Character from "../domain/Character";
-import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats";
+import type * as Character from "../domain/Character.js";
+import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats.js";
 import {
 	fromShortOptimizationPlan,
 	type OptimizableStats,
 	type OptimizationPlan,
 	type PrimaryStatRestrictions,
-} from "../domain/OptimizationPlan";
-import type { SelectedCharacters } from "../domain/SelectedCharacters";
-import type { SetRestrictions } from "../domain/SetRestrictions";
+} from "../domain/OptimizationPlan.js";
+import type { SelectedCharacters } from "../domain/SelectedCharacters.js";
+import type { SetRestrictions } from "../domain/SetRestrictions.js";
 import type {
 	TargetStat,
 	TargetStats,
 	TargetStatsNames,
-} from "../domain/TargetStat";
+} from "../domain/TargetStat.js";
 import type {
 	FlatCharacterModding,
 	FlatCharacterModdings,
-} from "../modules/compilations/domain/CharacterModdings";
-import type { MissedGoals } from "../modules/compilations/domain/MissedGoals";
-import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings";
-import type { WithoutCC } from "../modules/profilesManagement/domain/CharacterStatNames";
+} from "../modules/compilations/domain/CharacterModdings.js";
+import type { MissedGoals } from "../modules/compilations/domain/MissedGoals.js";
+import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings.js";
+import type { WithoutCC } from "../modules/profilesManagement/domain/CharacterStatNames.js";
 import type {
 	GIMOPrimaryStatNames,
 	GIMOSecondaryStatNames,
 	GIMOSetStatNames,
-} from "#/domain/GIMOStatNames";
-import { objectEntries } from "#/utils/objectEntries";
+} from "#/domain/GIMOStatNames.js";
 
 // #region types
 interface Cache {
@@ -231,7 +231,7 @@ let optimizationSettings$: ObservableObject<OptimizationSettingsObservable>;
 // #region Messaging
 self.onmessage = (message) => {
 	if (message.data.type === "Init") {
-		import("../modules/stateLoader/stateLoader")
+		import("../modules/stateLoader/stateLoader.js")
 			.then((module) => {
 				stateLoader$ = module.stateLoader$;
 				profilesManagement$ = stateLoader$.profilesManagement$;

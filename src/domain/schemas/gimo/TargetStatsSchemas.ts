@@ -2,8 +2,8 @@
 import * as v from "valibot";
 
 // domain
-import { targetStatsNames } from "#/domain/TargetStat";
-import { KnownCharacterNamesSchema } from "./CharacterNamesSchemas";
+import { targetStatsNames } from "#/domain/TargetStat.js";
+import { KnownCharacterNamesSchema } from "./CharacterNamesSchemas.js";
 
 const TargetStatSchema = v.object({
 	optimizeForTarget: v.boolean(),

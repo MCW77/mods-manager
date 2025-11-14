@@ -1,17 +1,19 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
+	"#/modules/profilesManagement/state/profilesManagement.js"
 );
 const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
+	"#/modules/compilations/state/compilations.js"
 );
-const { characters$ } = await import("#/modules/characters/state/characters");
+const { characters$ } = await import(
+	"#/modules/characters/state/characters.js"
+);
 const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
+	"#/modules/lockedStatus/state/lockedStatus.js"
 );
 
 // domain
@@ -21,15 +23,15 @@ import {
 	type TextFilter,
 	type CharacterFilter,
 	type CustomFilter,
-} from "../domain/CharacterFilterById";
-import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
+} from "../domain/CharacterFilterById.js";
+import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable.js";
 
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames.js";
 
-import type { Character } from "#/domain/Character";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import { Stat } from "#/domain/Stat";
-import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import type { Character } from "#/domain/Character.js";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
+import { Stat } from "#/domain/Stat.js";
+import { CharacterSummaryStats as CSStats } from "#/domain/Stats.js";
 
 const addCategoryFilter = (
 	customFilterById: Map<string, CustomFilter>,

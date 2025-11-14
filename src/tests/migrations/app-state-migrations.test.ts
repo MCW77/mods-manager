@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeAll, vi } from "vitest";
-import { loadFixture } from "./fixtures-loader";
-import { convertBackup } from "../../modules/appState/domain/Backup";
-import { latestDBVersion } from "../../utils/globalLegendPersistSettings";
+import { loadFixture } from "./fixtures-loader.js";
+import { convertBackup } from "../../modules/appState/domain/Backup.js";
+import { latestDBVersion } from "../../utils/globalLegendPersistSettings.js";
 import superjson from "superjson";
-import { objectKeys } from "#/utils/objectKeys";
+import { objectKeys } from "#/utils/objectKeys.js";
 
 // We'll need to mock the modules since they have side effects
 vi.mock("#/modules/profilesManagement/state/profilesManagement", () => ({
@@ -157,7 +157,9 @@ describe("App State Backup Migrations", () => {
 	describe("Schema Validation", async () => {
 		const backupV18 = await loadFixture(18, "backup");
 		it("should validate final migrated data against latest schema", async () => {
-			const { validateAgainstLatestSchema } = await import("./migration-utils");
+			const { validateAgainstLatestSchema } = await import(
+				"./migration-utils.js"
+			);
 
 			const result = convertBackup(backupV18);
 
@@ -170,7 +172,9 @@ describe("App State Backup Migrations", () => {
 		});
 
 		it("should reject invalid final data", async () => {
-			const { validateAgainstLatestSchema } = await import("./migration-utils");
+			const { validateAgainstLatestSchema } = await import(
+				"./migration-utils.js"
+			);
 
 			const invalidData = {
 				appVersion: 123, // Should be string

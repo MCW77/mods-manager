@@ -12,14 +12,14 @@ import {
 	CollapsibleTrigger,
 	CollapsibleContent,
 } from "@radix-ui/react-collapsible";
-import { Button } from "#ui/button";
+import { Button } from "#ui/button.jsx";
 import {
 	Select,
 	SelectTrigger,
 	SelectContent,
 	SelectItem,
 	SelectValue,
-} from "#ui/select";
+} from "#ui/select.jsx";
 
 const ReactiveSelect = reactive(Select);
 

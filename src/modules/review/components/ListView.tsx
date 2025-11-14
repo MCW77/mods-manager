@@ -2,37 +2,37 @@
 import { lazy } from "react";
 
 // utils
-import flatten from "lodash-es/flatten";
+import flatten from "lodash-es/flatten.js";
 
 // state
 import { use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
 
-import { review$ } from "../state/review";
+import { review$ } from "../state/review.js";
 
 // domain
-import * as ModListFilter from "../domain/ModListFilter";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
-import * as ModLoadout from "#/domain/ModLoadout";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+import * as ModListFilter from "../domain/ModListFilter.js";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import * as Character from "#/domain/Character.js";
+import type { Mod } from "#/domain/Mod.js";
+import * as ModLoadout from "#/domain/ModLoadout.js";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
-import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings.js";
 
 // components
-import { Arrow } from "#/components/Arrow/Arrow";
+import { Arrow } from "#/components/Arrow/Arrow.jsx";
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
-const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
-import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail.jsx"));
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible.jsx";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 interface ListViewProps {
 	displayedMods: CharacterModdings;

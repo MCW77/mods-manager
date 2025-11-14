@@ -1,10 +1,11 @@
+// utils
+import i18n from "#/i18n.js";
+
 // state
 import { observable } from "@legendapp/state";
 
 // domain
-import type { SectionNames } from "../domain/SectionNames";
-
-import i18n from "#/i18n";
+import type { SectionNames } from "../domain/SectionNames.js";
 
 interface UI {
 	currentSection: SectionNames;

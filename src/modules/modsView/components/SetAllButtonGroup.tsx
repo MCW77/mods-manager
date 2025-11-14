@@ -2,22 +2,22 @@
 // import { useTranslation } from "react-i18next";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import type { TriStateFilterKeys } from "../domain/ModsViewOptions";
+import type { TriStateFilterKeys } from "../domain/ModsViewOptions.js";
 
 // components
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "#ui/tooltip";
+} from "#ui/tooltip.jsx";
 
 type SetAllButtonGroupProps = {
 	filterKey: TriStateFilterKeys;

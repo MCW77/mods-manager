@@ -1,17 +1,17 @@
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type { ModTiersEnum } from "../../constants/enums";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { ModTiersEnum } from "../../constants/enums.js";
 import type {
 	GIMOPrimaryStatNames,
 	GIMOSecondaryStatNames,
 	GIMOSetStatNames,
-} from "../GIMOStatNames";
-import type { Pips } from "../Pips";
-import type { HUStatNames as HUPrimaryStatNames } from "../PrimaryStat";
+} from "../GIMOStatNames.js";
+import type { Pips } from "../Pips.js";
+import type { HUStatNames as HUPrimaryStatNames } from "../PrimaryStat.js";
 import type {
 	HUStatNames as HUSecondaryStatNames,
 	StrRolls,
-} from "../SecondaryStat";
-import type { HUStatNames as HUSetStatNames } from "../SetStat";
+} from "../SecondaryStat.js";
+import type { HUStatNames as HUSetStatNames } from "../SetStat.js";
 
 export const levels = [
 	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,

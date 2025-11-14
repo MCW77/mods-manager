@@ -2,9 +2,12 @@
 import * as v from "valibot";
 
 // domain
-import { variablePrimarySlots } from "#/domain/types/ModTypes";
-import { gimoPrimaryStatNames, gimoSetStatNames } from "#/domain/GIMOStatNames";
-import { TargetStatsSchema } from "./";
+import { variablePrimarySlots } from "#/domain/types/ModTypes.js";
+import {
+	gimoPrimaryStatNames,
+	gimoSetStatNames,
+} from "#/domain/GIMOStatNames.js";
+import { TargetStatsSchema } from "./index.js";
 
 const VariablePrimarySlotSchema = v.picklist(variablePrimarySlots);
 const GIMOPrimaryStatNamesSchema = v.picklist(gimoPrimaryStatNames);

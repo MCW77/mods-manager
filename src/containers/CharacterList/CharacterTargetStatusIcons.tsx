@@ -1,25 +1,28 @@
 // utils
-import { cn } from "#/lib/utils";
+import { cn } from "#/lib/utils.js";
 
 // react
 import { useObservable } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
-import type * as Character from "#/domain/Character";
-import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type * as Character from "#/domain/Character.js";
+import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
 // components
-import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
+import { LockedToggle } from "#/components/LockedToggle/LockedToggle.jsx";
 
-function CharacterTargetStatusIcons(
-	character: Character.Character,
-	target: OptimizationPlan.OptimizationPlan,
-) {
+function CharacterTargetStatusIcons({
+	character,
+	target,
+}: {
+	character: Character.Character;
+	target: OptimizationPlan.OptimizationPlan;
+}) {
 	const isLocked$ = useObservable(() => {
 		const _reactiveIsLocked =
 			lockedStatus$.lockedCharactersForActivePlayer.get();

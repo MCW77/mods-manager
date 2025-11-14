@@ -4,28 +4,28 @@ import * as v from "valibot";
 // state
 import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
+	"#/modules/profilesManagement/state/profilesManagement.js"
 );
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy.js";
 
 // domain
-import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
+import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile.js";
 import {
 	FetchedFullGIMOProfileResponseSchema,
 	type FetchedFullGIMOProfile,
-} from "../domain/FetchedFullGIMOProfile";
-import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
-import type { ProfileCreationData } from "../domain/ProfileCreationData";
-import type * as DTOs from "#/modules/profilesManagement/dtos";
-import * as Mappers from "#/modules/profilesManagement/mappers";
-import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
-import { Mod } from "#/domain/Mod";
-import type { HotutilsObservable } from "../domain/HotutilsObservable";
+} from "../domain/FetchedFullGIMOProfile.js";
+import type { FetchedHUProfile } from "../domain/FetchedHUProfile.js";
+import type { ProfileCreationData } from "../domain/ProfileCreationData.js";
+import type * as DTOs from "#/modules/profilesManagement/dtos/index.js";
+import * as Mappers from "#/modules/profilesManagement/mappers/index.js";
+import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues.js";
+import { Mod } from "#/domain/Mod.js";
+import type { HotutilsObservable } from "../domain/HotutilsObservable.js";
 
 const hotutilsv2baseurl =
 	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";

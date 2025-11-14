@@ -2,8 +2,8 @@
 import type * as v from "valibot";
 
 // domain
-import { createTargetStat, type TargetStats } from "#/domain/TargetStat";
-import type { TargetStatsSchema as GIMOTargetStatsSchema } from "#/domain/schemas/gimo/TargetStatsSchemas";
+import { createTargetStat, type TargetStats } from "#/domain/TargetStat.js";
+import type { TargetStatsSchema as GIMOTargetStatsSchema } from "#/domain/schemas/gimo/TargetStatsSchemas.js";
 
 type GIMOTargetStats = v.InferOutput<typeof GIMOTargetStatsSchema>;
 

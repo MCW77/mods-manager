@@ -4,33 +4,33 @@ import { lazy } from "react";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { stackRank$ } from "#/modules/stackRank/state/stackRank";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy.js";
+import { stackRank$ } from "#/modules/stackRank/state/stackRank.js";
 
 // domain
-import { characterSettings } from "#/constants/characterSettings";
-import * as Character from "#/domain/Character";
+import { characterSettings } from "#/constants/characterSettings.js";
+import * as Character from "#/domain/Character.js";
 
 // component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 
 const AddTemplateModal = lazy(
-	() => import("#/containers/CharacterEditView/AddTemplateModal"),
+	() => import("#/containers/CharacterEditView/AddTemplateModal.jsx"),
 );
 const SaveTemplateModal = lazy(
-	() => import("#/containers/CharacterEditView/SaveTemplateModal"),
+	() => import("#/containers/CharacterEditView/SaveTemplateModal.jsx"),
 );
 
-import { HelpLink } from "#/modules/help/components/HelpLink";
+import { HelpLink } from "#/modules/help/components/HelpLink.jsx";
 
-import { Button } from "#ui/button";
+import { Button } from "#ui/button.jsx";
 
 interface TemplatesActionsProps {
 	hasNoSelectedCharacters: boolean;

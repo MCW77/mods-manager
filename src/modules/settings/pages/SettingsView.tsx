@@ -10,20 +10,20 @@ import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { match } from "ts-pattern";
 
 // state
-import { settings$ } from "../state/settings";
-import { ui$ } from "#/modules/ui/state/ui";
+import { settings$ } from "../state/settings.js";
+import { ui$ } from "#/modules/ui/state/ui.js";
 
 // domain
-import type { SettingsSections } from "#/modules/settings/domain/SettingsSections";
+import type { SettingsSections } from "#/modules/settings/domain/SettingsSections.js";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // containers
 const GeneralSettingsView = lazy(
-	() => import("#/modules/settings/components/GeneralSettingsView"),
+	() => import("#/modules/settings/components/GeneralSettingsView.jsx"),
 );
-import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSettingsView";
+import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSettingsView.jsx";
 
 const SettingsView: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");

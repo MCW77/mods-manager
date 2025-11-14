@@ -4,16 +4,16 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
+import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles.js";
 
 // components
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 const EquippedFilter = () => {
 	const [t] = useTranslation("explore-ui");

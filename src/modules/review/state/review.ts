@@ -2,7 +2,7 @@
 import { observable } from "@legendapp/state";
 
 // domain
-import type { ModListFilter } from "#/modules/review/domain/ModListFilter";
+import type { ModListFilter } from "#/modules/review/domain/ModListFilter.js";
 
 interface OptimizerView {
 	modListFilter: ModListFilter;

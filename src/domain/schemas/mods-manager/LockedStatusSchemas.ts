@@ -2,7 +2,7 @@
 import * as v from "valibot";
 
 // domain
-import { characterNames } from "#/constants/CharacterNames";
+import { characterNames } from "#/constants/CharacterNames.js";
 
 const LockedStatusByCharacterIdSchemaV18 = v.pipe(
 	v.record(v.string(), v.boolean()),

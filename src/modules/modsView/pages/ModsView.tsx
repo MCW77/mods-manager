@@ -5,18 +5,18 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, reactive } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import type { Categories } from "../domain/Categories";
+import type { Categories } from "../domain/Categories.js";
 
 // components
-const CategoryView = lazy(() => import("../components/CategoryView"));
-const ViewSetupWidget = lazy(() => import("../components/ViewSetupWidget"));
-import { FlexSidebar } from "#/components/FlexSidebar/FlexSidebar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
+const CategoryView = lazy(() => import("../components/CategoryView.jsx"));
+const ViewSetupWidget = lazy(() => import("../components/ViewSetupWidget.jsx"));
+import { FlexSidebar } from "#/components/FlexSidebar/FlexSidebar.jsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs.jsx";
 
 const ReactiveTabs = reactive(Tabs);
 

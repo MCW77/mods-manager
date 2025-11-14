@@ -1,17 +1,17 @@
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-import optimizationStrategy from "#/constants/optimizationStrategy";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import optimizationStrategy from "#/constants/optimizationStrategy.js";
 
 import {
 	createCharacterSettings,
 	DamageType,
 	type CharacterSettingsIndexer,
-} from "#/domain/CharacterSettings";
+} from "#/domain/CharacterSettings.js";
 import {
 	fromShortOptimizationPlan,
 	toRenamed,
-} from "#/domain/OptimizationPlan";
-import { createTargetStat } from "#/domain/TargetStat";
+} from "#/domain/OptimizationPlan.js";
+import { createTargetStat } from "#/domain/TargetStat.js";
 
 const characterSettings: CharacterSettingsIndexer = {
 	"4LOM": createCharacterSettings(

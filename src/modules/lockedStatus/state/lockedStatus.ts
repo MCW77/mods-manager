@@ -8,22 +8,22 @@ import {
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
+	"#/modules/profilesManagement/state/profilesManagement.js"
 );
 
 // domain
 import {
 	type CharacterNames,
 	characterNames,
-} from "#/constants/CharacterNames";
-import type { LockedCharacters } from "../domain/LockedStatusByCharacterId";
+} from "#/constants/CharacterNames.js";
+import type { LockedCharacters } from "../domain/LockedStatusByCharacterId.js";
 import {
 	getInitialLockedStatus,
 	type LockedStatusObservable,
-} from "../domain/LockedStatusObservable";
+} from "../domain/LockedStatusObservable.js";
 
 const lockedStatus$: ObservableObject<LockedStatusObservable> =
 	observable<LockedStatusObservable>({

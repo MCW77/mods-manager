@@ -1,8 +1,8 @@
 // utils
-import groupByKey from "#/utils/groupByKey";
+import groupByKey from "#/utils/groupByKey.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
 export type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
 export type BaseCharacterAlignments = "noforce" | "neutral" | "light" | "dark";
@@ -76,7 +76,8 @@ const APIBaseOmicronMode = {
 	15: "5v5gac",
 } as const;
 
-type APIBaseOmicronMode = typeof APIBaseOmicronMode[keyof typeof APIBaseOmicronMode];
+type APIBaseOmicronMode =
+	(typeof APIBaseOmicronMode)[keyof typeof APIBaseOmicronMode];
 
 export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 	return groupByKey(

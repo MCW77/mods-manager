@@ -3,38 +3,38 @@ import { lazy } from "react";
 import { For, use$, useMount, useObservable } from "@legendapp/state/react";
 
 // utils
-import collectByKey from "#/utils/collectByKey";
+import collectByKey from "#/utils/collectByKey.js";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
 
-import { review$ } from "../state/review";
+import { review$ } from "../state/review.js";
 
 // domain
-import * as ModListFilter from "../domain/ModListFilter";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type { Mod } from "#/domain/Mod";
-import { createModLoadout } from "#/domain/ModLoadout";
+import * as ModListFilter from "../domain/ModListFilter.js";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { Mod } from "#/domain/Mod.js";
+import { createModLoadout } from "#/domain/ModLoadout.js";
 
-import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings.js";
 
 // components
-import { Arrow } from "#/components/Arrow/Arrow";
+import { Arrow } from "#/components/Arrow/Arrow.jsx";
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
 const ModLoadoutDetail = lazy(
-	() => import("#/components/ModLoadoutDetail/ModLoadoutDetail"),
+	() => import("#/components/ModLoadoutDetail/ModLoadoutDetail.jsx"),
 );
 const ModLoadoutView = lazy(
-	() => import("#/components/ModLoadoutView/ModLoadoutView"),
+	() => import("#/components/ModLoadoutView/ModLoadoutView.jsx"),
 );
-import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible.jsx";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 type SetsViewProps = {
 	modAssignments: CharacterModdings;

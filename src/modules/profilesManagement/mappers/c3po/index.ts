@@ -1,3 +1,3 @@
-export * as ModMapper from "./C3POModMapper";
-export * as PrimaryStatMapper from "./C3POPrimaryStatMapper";
-export * as SecondaryStatMapper from "./C3POSecondaryStatMapper";
+export * as ModMapper from "./C3POModMapper.js";
+export * as PrimaryStatMapper from "./C3POPrimaryStatMapper.js";
+export * as SecondaryStatMapper from "./C3POSecondaryStatMapper.js";

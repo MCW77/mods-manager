@@ -2,33 +2,35 @@
 import { observer, reactive } from "@legendapp/state/react";
 
 // domain
-import type { StatWeightsInputProps } from "./StatWeightsInputProps";
-import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { StatWeightsInputProps } from "./StatWeightsInputProps.js";
+import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
 // components
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
 
 const ReactiveInput = reactive(Input);
 
-const AdvancedInput: React.FC<StatWeightsInputProps> = observer(({ target$, stat }: StatWeightsInputProps) => {
-	return (
-		<>
-			<Label htmlFor={`${stat}-stat-advanced`}>{`${stat}: `}:</Label>
-			<ReactiveInput
-				id={`${stat}-stat-advanced`}
-				max={100 / OptimizationPlan.statWeights[stat]}
-				min={-100 / OptimizationPlan.statWeights[stat]}
-				step={0.01}
-				type={"number"}
-				$value={target$.target[stat]}
-				onChange={(e) => {
-					target$.target[stat].set(e.target.valueAsNumber);
-				}}
-			/>
-		</>
-	);
-});
+const AdvancedInput: React.FC<StatWeightsInputProps> = observer(
+	({ target$, stat }: StatWeightsInputProps) => {
+		return (
+			<>
+				<Label htmlFor={`${stat}-stat-advanced`}>{`${stat}: `}:</Label>
+				<ReactiveInput
+					id={`${stat}-stat-advanced`}
+					max={100 / OptimizationPlan.statWeights[stat]}
+					min={-100 / OptimizationPlan.statWeights[stat]}
+					step={0.01}
+					type={"number"}
+					$value={target$.target[stat]}
+					onChange={(e) => {
+						target$.target[stat].set(e.target.valueAsNumber);
+					}}
+				/>
+			</>
+		);
+	},
+);
 
 AdvancedInput.displayName = "AdvancedInput";
 

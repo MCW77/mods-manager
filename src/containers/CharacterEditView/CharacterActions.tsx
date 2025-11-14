@@ -10,7 +10,7 @@ import {
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -18,16 +18,17 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-const { optimizeMods } = await import("#/modules/optimize/optimize");
+const { optimizeMods } = await import("#/modules/optimize/optimize.js");
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { review$ } from "#/modules/review/state/review";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
+import { progress$ } from "#/modules/progress/state/progress.js";
+import { review$ } from "#/modules/review/state/review.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
-import { createCharacter } from "#/domain/Character";
+import { createCharacter } from "#/domain/Character.js";
 
 // component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,21 +41,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
 const OptimizerProgress = lazy(
-	() => import("#/modules/progress/components/OptimizerProgress"),
+	() => import("#/modules/progress/components/OptimizerProgress.jsx"),
 );
 
-import { HelpLink } from "#/modules/help/components/HelpLink";
-import { SettingsLink } from "#/modules/settings/components/SettingsLink";
+import { HelpLink } from "#/modules/help/components/HelpLink.jsx";
+import { SettingsLink } from "#/modules/settings/components/SettingsLink.jsx";
 
-import { Button } from "#ui/button";
-import { DialogClose } from "#ui/dialog";
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
-import { progress$ } from "#/modules/progress/state/progress";
+import { Button } from "#ui/button.jsx";
+import { DialogClose } from "#ui/dialog.jsx";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
+import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover.jsx";
 
 const CharacterActions: React.FC = observer(() => {
 	const nameId = useId();

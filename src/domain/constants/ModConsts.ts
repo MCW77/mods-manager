@@ -1,5 +1,5 @@
-import type { ModTiersEnum } from "#/constants/enums";
-import type * as ModTypes from "../types/ModTypes";
+import type { ModTiersEnum } from "#/constants/enums.js";
+import type * as ModTypes from "../types/ModTypes.js";
 
 export const gimoSlots: ModTypes.GIMOSlots[] = [
 	"square",

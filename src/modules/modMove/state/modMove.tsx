@@ -5,23 +5,25 @@ import { lazy } from "react";
 import { observable, beginBatch, endBatch } from "@legendapp/state";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
+	"#/modules/profilesManagement/state/profilesManagement.js"
 );
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils.js");
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy.js";
 
 // domain
-import type { Loadout } from "../domain/Loudout";
-import type { MoveStatus } from "../domain/MoveStatus";
+import type { Loadout } from "../domain/Loudout.js";
+import type { MoveStatus } from "../domain/MoveStatus.js";
 
-import { Mod } from "#/domain/Mod";
+import { Mod } from "#/domain/Mod.js";
 
 // components
-const LazyModMoveProgress = lazy(() => import("../components/ModMoveProgress"));
+const LazyModMoveProgress = lazy(
+	() => import("../components/ModMoveProgress.jsx"),
+);
 // components
-import { ModMoveCancelModal } from "../../modMove/components/ModMoveCancelModal";
+import { ModMoveCancelModal } from "../../modMove/components/ModMoveCancelModal.jsx";
 
 const _hotutilsv2mockbaseurl = "http://localhost:3001/humock";
 

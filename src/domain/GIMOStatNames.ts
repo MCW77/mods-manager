@@ -1,4 +1,4 @@
-import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames.js";
 
 export const gimoPrimaryNeutralStats = [
 	"Speed",

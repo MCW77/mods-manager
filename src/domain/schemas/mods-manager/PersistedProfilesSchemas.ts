@@ -2,16 +2,16 @@
 import * as v from "valibot";
 
 // domain
-import { CharacterByIdSchema, ArbitraryCharacterNamesSchema } from "./";
-import { setSettingsSets } from "#/modules/modsView/domain/ModsViewOptions";
-import { gimoSlots, levels } from "#/domain/types/ModTypes";
-import { ModTiersEnum } from "#/constants/enums";
+import { CharacterByIdSchema, ArbitraryCharacterNamesSchema } from "./index.js";
+import { setSettingsSets } from "#/modules/modsView/domain/ModsViewOptions.js";
+import { gimoSlots, levels } from "#/domain/types/ModTypes.js";
+import { ModTiersEnum } from "#/constants/enums.js";
 import {
 	gimoPrimaryStatNames,
 	gimoSecondaryStatNames,
-} from "#/domain/GIMOStatNames";
-import { strRolls } from "#/domain/SecondaryStat";
-import { pips } from "#/domain/Pips";
+} from "#/domain/GIMOStatNames.js";
+import { strRolls } from "#/domain/SecondaryStat.js";
+import { pips } from "#/domain/Pips.js";
 
 const GIMOFlatModSchema = v.object({
 	mod_uid: v.string(),

@@ -1,12 +1,12 @@
 // utils
-import { objectKeys } from "#/utils/objectKeys";
+import { objectKeys } from "#/utils/objectKeys.js";
 
 // domain
-import * as ModConsts from "./constants/ModConsts";
+import * as ModConsts from "./constants/ModConsts.js";
 
-import type * as ModTypes from "./types/ModTypes";
+import type * as ModTypes from "./types/ModTypes.js";
 
-import type { Mod } from "./Mod";
+import type { Mod } from "./Mod.js";
 
 export type ModLoadout = Record<ModTypes.GIMOSlots, Mod | null>;
 

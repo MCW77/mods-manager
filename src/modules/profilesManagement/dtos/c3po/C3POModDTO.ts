@@ -1,5 +1,5 @@
-import type { C3POPrimaryStatDTO } from "./C3POPrimaryStatDTO";
-import type { C3POSecondaryStatDTO } from "./C3POSecondaryStatDTO";
+import type { C3POPrimaryStatDTO } from "./C3POPrimaryStatDTO.js";
+import type { C3POSecondaryStatDTO } from "./C3POSecondaryStatDTO.js";
 
 export type Set = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
 

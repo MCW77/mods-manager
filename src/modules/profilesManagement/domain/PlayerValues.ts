@@ -1,5 +1,5 @@
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type * as DTOs from "../dtos";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type * as DTOs from "../dtos/index.js";
 
 export type PlayerValuesByCharacter = Record<
 	CharacterNames,

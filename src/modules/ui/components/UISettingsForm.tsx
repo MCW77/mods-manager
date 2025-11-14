@@ -1,21 +1,21 @@
 // react
+import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-import { ui$ } from "../state/ui";
+import { ui$ } from "../state/ui.js";
 
 // components
-import { Label } from "#ui/label";
+import { Label } from "#ui/label.jsx";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select";
-import { useId } from "react";
+} from "#ui/select.jsx";
 
 const ReactiveSelect = reactive(Select);
 

@@ -17,22 +17,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;
 
 const { refreshPlayerData } = await import(
-	"#/modules/profileFetch/profileFetch"
+	"#/modules/profileFetch/profileFetch.jsx"
 );
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ProfileAdder = lazy(() => import("./ProfileAdder"));
-const ProfileSelector = lazy(() => import("./ProfileSelector"));
+const ProfileAdder = lazy(() => import("./ProfileAdder.jsx"));
+const ProfileSelector = lazy(() => import("./ProfileSelector.jsx"));
 
-import { Button } from "#ui/button";
+import { Button } from "#ui/button.jsx";
 
 const ProfilesManager = () => {
 	const [t] = useTranslation("global-ui");

@@ -1,6 +1,6 @@
-import type { GIMOSecondaryStatNames } from "#/domain/GIMOStatNames";
-import { type Rolls, SecondaryStat } from "#/domain/SecondaryStat";
-import type * as C3PO from "../../dtos/c3po";
+import type { GIMOSecondaryStatNames } from "#/domain/GIMOStatNames.js";
+import { type Rolls, SecondaryStat } from "#/domain/SecondaryStat.js";
+import type * as C3PO from "../../dtos/c3po/index.js";
 
 const c3PO2GIMOSecondaryStatNameMap: {
 	[key in C3PO.SecondaryStatNames]: GIMOSecondaryStatNames;

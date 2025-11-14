@@ -1,5 +1,5 @@
 // components
-import { Button } from "#ui/button";
+import { Button } from "#ui/button.jsx";
 
 const ModMoveCancelModal = () => {
 	return (

@@ -5,16 +5,16 @@ import { lazy } from "react";
 // state
 import { observer, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { ModsFilter } from "../domain/ModsFilter";
+import { ModsFilter } from "../domain/ModsFilter.js";
 
 // components
-const GroupedMods = lazy(() => import("./GroupedMods"));
+const GroupedMods = lazy(() => import("./GroupedMods.jsx"));
 
 const CategoryView: React.FC = observer(() => {
 	const modById = use$(profilesManagement$.activeProfile.modById);

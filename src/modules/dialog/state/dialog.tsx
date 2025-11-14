@@ -4,11 +4,11 @@ import type * as React from "react";
 // state
 import { type ObservableObject, observable } from "@legendapp/state";
 
-import { errorMessage$ } from "#/modules/errorMessage/state/errorMessage";
+import { errorMessage$ } from "#/modules/errorMessage/state/errorMessage.js";
 
 // components
 import { toast } from "sonner";
-import { ErrorMessage } from "#/modules/errorMessage/components/ErrorMessage";
+import { ErrorMessage } from "#/modules/errorMessage/components/ErrorMessage.jsx";
 
 type Dialog = {
 	content: React.ReactNode;

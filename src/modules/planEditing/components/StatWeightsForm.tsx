@@ -5,37 +5,39 @@ import type { ComponentType } from "react";
 import { observer } from "@legendapp/state/react";
 
 // domain
-import type { PlanEditing } from "../domain/PlanEditing";
-import type { StatWeightsInputProps } from "./StatWeightsInputProps";
+import type { PlanEditing } from "../domain/PlanEditing.js";
+import type { StatWeightsInputProps } from "./StatWeightsInputProps.js";
 
 type ComponentProps = {
 	target$: PlanEditing;
 	StatInput: ComponentType<StatWeightsInputProps>;
 };
 
-const StatWeightsForm: React.FC<ComponentProps> = observer(({ target$, StatInput }: ComponentProps) => {
-	return (
-		<div className="flex flex-wrap gap-4">
-			<div>
-				<StatInput target$={target$} stat={"Health"} />
-				<StatInput target$={target$} stat={"Protection"} />
-				<StatInput target$={target$} stat={"Tenacity %"} />
-				<StatInput target$={target$} stat={"Armor"} />
-				<StatInput target$={target$} stat={"Resistance"} />
-				<StatInput target$={target$} stat={"Critical Avoidance %"} />
+const StatWeightsForm: React.FC<ComponentProps> = observer(
+	({ target$, StatInput }: ComponentProps) => {
+		return (
+			<div className="flex flex-wrap gap-4">
+				<div>
+					<StatInput target$={target$} stat={"Health"} />
+					<StatInput target$={target$} stat={"Protection"} />
+					<StatInput target$={target$} stat={"Tenacity %"} />
+					<StatInput target$={target$} stat={"Armor"} />
+					<StatInput target$={target$} stat={"Resistance"} />
+					<StatInput target$={target$} stat={"Critical Avoidance %"} />
+				</div>
+				<div>
+					<StatInput target$={target$} stat={"Speed"} />
+					<StatInput target$={target$} stat={"Critical Chance"} />
+					<StatInput target$={target$} stat={"Critical Damage %"} />
+					<StatInput target$={target$} stat={"Potency %"} />
+					<StatInput target$={target$} stat={"Physical Damage"} />
+					<StatInput target$={target$} stat={"Special Damage"} />
+					<StatInput target$={target$} stat={"Accuracy %"} />
+				</div>
 			</div>
-			<div>
-				<StatInput target$={target$} stat={"Speed"} />
-				<StatInput target$={target$} stat={"Critical Chance"} />
-				<StatInput target$={target$} stat={"Critical Damage %"} />
-				<StatInput target$={target$} stat={"Potency %"} />
-				<StatInput target$={target$} stat={"Physical Damage"} />
-				<StatInput target$={target$} stat={"Special Damage"} />
-				<StatInput target$={target$} stat={"Accuracy %"} />
-			</div>
-		</div>
-	);
-});
+		);
+	},
+);
 
 StatWeightsForm.displayName = "StatWeightsForm";
 

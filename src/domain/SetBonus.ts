@@ -1,6 +1,6 @@
 // domain
-import type { GIMOSetStatNames } from "./GIMOStatNames";
-import type { SetStats } from "./Stats";
+import type { GIMOSetStatNames } from "./GIMOStatNames.js";
+import type { SetStats } from "./Stats.js";
 
 class SetBonus {
 	constructor(

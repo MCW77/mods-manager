@@ -2,13 +2,13 @@
 import { reactive, use$ } from "@legendapp/state/react";
 
 // domain
-import type { StatWeightsInputProps } from "#/modules/planEditing/components/StatWeightsInputProps";
+import type { StatWeightsInputProps } from "#/modules/planEditing/components/StatWeightsInputProps.js";
 
 // components
-import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
+import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider.jsx";
 
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
 
 const ReactiveInput = reactive(Input);
 

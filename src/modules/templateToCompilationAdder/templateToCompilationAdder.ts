@@ -1,12 +1,12 @@
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const templates$ = stateLoader$.templates$;
 
 // domain
-import { characterSettings } from "#/constants/characterSettings";
+import { characterSettings } from "#/constants/characterSettings.js";
 
 const appendTemplate = (templateName: string) => {
 	const template = templates$.allTemplates

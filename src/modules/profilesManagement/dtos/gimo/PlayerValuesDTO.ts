@@ -1,4 +1,4 @@
-import type { CharacterStatsDTO } from "./CharacterStatsDTO";
+import type { CharacterStatsDTO } from "./CharacterStatsDTO.js";
 
 interface PlayerValuesDTO {
 	level: number;

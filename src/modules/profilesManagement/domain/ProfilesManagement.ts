@@ -2,14 +2,14 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { PlayerProfile } from "./PlayerProfile";
+import type { PlayerProfile } from "./PlayerProfile.js";
 import type {
 	Profiles,
 	PersistedProfiles,
 	PersistedDataWithProfiles,
-} from "./Profiles";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type { Mod } from "#/domain/Mod";
+} from "./Profiles.js";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { Mod } from "#/domain/Mod.js";
 
 interface ProfilesManagementObservable {
 	persistedData: PersistedDataWithProfiles;

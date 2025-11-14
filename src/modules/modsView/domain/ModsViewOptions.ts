@@ -1,13 +1,13 @@
 // utils
-import type * as UtilityTypes from "#/utils/typeHelper";
+import type * as UtilityTypes from "#/utils/typeHelper.js";
 
 // domain
-import type { Categories } from "./Categories";
+import type { Categories } from "./Categories.js";
 import {
 	createSortConfig,
 	type PersistableSortConfigById,
 	type SortConfigById,
-} from "./SortConfig";
+} from "./SortConfig.js";
 
 export type TriState = -1 | 0 | 1;
 

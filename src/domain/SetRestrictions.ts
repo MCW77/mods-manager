@@ -1,5 +1,5 @@
 // domain
-import type { GIMOSetStatNames } from "./GIMOStatNames";
+import type { GIMOSetStatNames } from "./GIMOStatNames.js";
 
 type SetRestrictions = Partial<Record<GIMOSetStatNames, number>>;
 

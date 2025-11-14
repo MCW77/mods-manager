@@ -1,5 +1,5 @@
 // utils
-import type * as UtilityTypes from "#/utils/typeHelper";
+import type * as UtilityTypes from "#/utils/typeHelper.js";
 export const characterNames = [
 	"4LOM",
 	"50RT",

@@ -5,35 +5,35 @@ import { useTranslation } from "react-i18next";
 // state
 import { use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
 // components
 import { ChevronsUpDown } from "lucide-react";
-const FilterManager = lazy(() => import("./FilterManager"));
-const LevelFilter = lazy(() => import("./Filters/LevelFilter"));
-const SlotFilter = lazy(() => import("./Filters/SlotFilter"));
-const SetFilter = lazy(() => import("./Filters/SetFilter"));
-const TierFilter = lazy(() => import("./Filters/TierFilter"));
-const ScoreFilter = lazy(() => import("./Filters/ScoreFilter"));
-const RarityFilter = lazy(() => import("./Filters/RarityFilter"));
-const EquippedFilter = lazy(() => import("./Filters/EquippedFilter"));
-const PrimaryFilter = lazy(() => import("./Filters/PrimaryFilter"));
-const SecondaryFilter = lazy(() => import("./Filters/SecondaryFilter"));
-const AssignedFilter = lazy(() => import("./Filters/AssignedFilter"));
-const CalibrationFilter = lazy(() => import("./Filters/CalibrationFilter"));
-const SpeedFilter = lazy(() => import("./Filters/SpeedFilter"));
+const FilterManager = lazy(() => import("./FilterManager.jsx"));
+const LevelFilter = lazy(() => import("./Filters/LevelFilter.jsx"));
+const SlotFilter = lazy(() => import("./Filters/SlotFilter.jsx"));
+const SetFilter = lazy(() => import("./Filters/SetFilter.jsx"));
+const TierFilter = lazy(() => import("./Filters/TierFilter.jsx"));
+const ScoreFilter = lazy(() => import("./Filters/ScoreFilter.jsx"));
+const RarityFilter = lazy(() => import("./Filters/RarityFilter.jsx"));
+const EquippedFilter = lazy(() => import("./Filters/EquippedFilter.jsx"));
+const PrimaryFilter = lazy(() => import("./Filters/PrimaryFilter.jsx"));
+const SecondaryFilter = lazy(() => import("./Filters/SecondaryFilter.jsx"));
+const AssignedFilter = lazy(() => import("./Filters/AssignedFilter.jsx"));
+const CalibrationFilter = lazy(() => import("./Filters/CalibrationFilter.jsx"));
+const SpeedFilter = lazy(() => import("./Filters/SpeedFilter.jsx"));
 
-import { Button } from "#/components/ui/button";
+import { Button } from "#/components/ui/button.jsx";
 import {
 	CollapsibleCard,
 	CollapsibleCardContent,
 	CollapsibleCardHeader,
 	CollapsibleCardTitle,
 	CollapsibleCardTrigger,
-} from "#ui/CollapsibleCard";
+} from "#ui/CollapsibleCard.jsx";
 
 const FilterWidget = () => {
 	const [t] = useTranslation("explore-ui");

@@ -2,17 +2,17 @@
 import { reactive, reactiveObserver, Show, use$ } from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
-import { target$ } from "#/modules/planEditing/state/planEditing";
+import { target$ } from "#/modules/planEditing/state/planEditing.js";
 
 // domain
-import setBonuses from "#/constants/setbonuses";
+import setBonuses from "#/constants/setbonuses.js";
 
-import type SetBonus from "#/domain/SetBonus";
-import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
+import type SetBonus from "#/domain/SetBonus.js";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames.js";
 
 // components
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
 
 const ReactiveInput = reactive(Input);
 

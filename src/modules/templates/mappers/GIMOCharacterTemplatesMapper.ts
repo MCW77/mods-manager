@@ -2,11 +2,11 @@
 import type * as v from "valibot";
 
 // domain
-import type { CharacterTemplates } from "../domain/CharacterTemplates";
-import type { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
+import type { CharacterTemplates } from "../domain/CharacterTemplates.js";
+import type { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas.js";
 
 // mappers
-import { fromGIMOOptimizationPlan } from "./GIMOOptimizationPlanMapper";
+import { fromGIMOOptimizationPlan } from "./GIMOOptimizationPlanMapper.js";
 
 type GIMOCharacterTemplates = v.InferOutput<
 	typeof GIMOCharacterTemplatesSchema

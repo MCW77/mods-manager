@@ -1,16 +1,16 @@
 // utils
-import groupByKey from "../utils/groupByKey";
+import groupByKey from "../utils/groupByKey.js";
 
 // domain
-import type { CharacterNames } from "../constants/CharacterNames";
+import type { CharacterNames } from "../constants/CharacterNames.js";
 
-import type * as DTOs from "../modules/profilesManagement/dtos";
+import type * as DTOs from "../modules/profilesManagement/dtos/index.js";
 
-import type { CharacterSettingsIndexer } from "./CharacterSettings";
+import type { CharacterSettingsIndexer } from "./CharacterSettings.js";
 import {
 	createOptimizationPlan,
 	type OptimizationPlan,
-} from "./OptimizationPlan";
+} from "./OptimizationPlan.js";
 
 export interface Character {
 	id: CharacterNames;

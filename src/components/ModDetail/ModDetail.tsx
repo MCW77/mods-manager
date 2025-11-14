@@ -4,26 +4,26 @@ import { memo, lazy } from "react";
 // state
 import { use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
 
 // domain
-import type * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type * as Character from "#/domain/Character.js";
+import type { Mod } from "#/domain/Mod.js";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
 // components
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
-const ModImage = lazy(() => import("#/components/ModImage/ModImage"));
-const ModStats = lazy(() => import("#/components/ModStats/ModStats"));
+const ModImage = lazy(() => import("#/components/ModImage/ModImage.jsx"));
+const ModStats = lazy(() => import("#/components/ModStats/ModStats.jsx"));
 const SellModButton = lazy(
-	() => import("#/components/SellModButton/SellModButton"),
+	() => import("#/components/SellModButton/SellModButton.jsx"),
 );
-import { Label } from "#ui/label";
+import { Label } from "#ui/label.jsx";
 
 type ComponentProps = {
 	assignedTarget?: OptimizationPlan.OptimizationPlan;

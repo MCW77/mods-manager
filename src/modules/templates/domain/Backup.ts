@@ -2,16 +2,16 @@
 import * as v from "valibot";
 
 // state
-import { latestDBVersion } from "#/utils/globalLegendPersistSettings";
+import { latestDBVersion } from "#/utils/globalLegendPersistSettings.js";
 
 // domain
-import { fromGIMOCharacterTemplates } from "../mappers/GIMOCharacterTemplatesMapper";
-import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
+import { fromGIMOCharacterTemplates } from "../mappers/GIMOCharacterTemplatesMapper.js";
+import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas.js";
 import {
 	CharacterTemplatesSchemaV18,
 	CharacterTemplatesSchemaV19,
 	LatestCharacterTemplatesSchema,
-} from "#/domain/schemas/mods-manager";
+} from "#/domain/schemas/mods-manager/index.js";
 
 interface NormalizedBackup {
 	appVersion: string;

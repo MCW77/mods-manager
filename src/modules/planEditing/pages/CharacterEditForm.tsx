@@ -16,54 +16,63 @@ import {
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
-const { optimizeMods } = await import("#/modules/optimize/optimize");
+const { optimizeMods } = await import("#/modules/optimize/optimize.js");
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
-import { progress$ } from "#/modules/progress/state/progress";
-import { target$ } from "#/modules/planEditing/state/planEditing";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
+import { progress$ } from "#/modules/progress/state/progress.js";
+import { target$ } from "#/modules/planEditing/state/planEditing.js";
 
 // domain
-import { characterSettings } from "#/constants/characterSettings";
+import { characterSettings } from "#/constants/characterSettings.js";
 
-import * as Character from "#/domain/Character";
-import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import * as Character from "#/domain/Character.js";
+import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 
-import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter";
-import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings";
+import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter.js";
+import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings.js";
+import type {
+	MissedGoal,
+	MissedGoals,
+} from "#/modules/compilations/domain/MissedGoals.js";
 
 // components
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
 );
 const OptimizerProgress = lazy(
-	() => import("#/modules/progress/components/OptimizerProgress"),
+	() => import("#/modules/progress/components/OptimizerProgress.jsx"),
 );
-import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
-import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
+import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget.jsx";
+import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget.jsx";
 const TargetStatsWidget = lazy(
-	() => import("#/modules/planEditing/components/TargetStatsWidget"),
+	() => import("#/modules/planEditing/components/TargetStatsWidget.jsx"),
 );
-import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
-import { Button } from "#ui/button";
-import { DialogClose } from "#ui/dialog";
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
+import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget.jsx";
+import { Button } from "#ui/button.jsx";
+import { DialogClose } from "#ui/dialog.jsx";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs-vertical";
+} from "#ui/select.jsx";
+import {
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+} from "#ui/tabs-vertical.jsx";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -72,11 +81,7 @@ import {
 	DropdownMenuRadioItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "#/components/ui/dropdown-menu";
-import type {
-	MissedGoal,
-	MissedGoals,
-} from "#/modules/compilations/domain/MissedGoals";
+} from "#/components/ui/dropdown-menu.jsx";
 
 const ReactiveButton = reactive(Button);
 const ReactiveInput = reactive(Input);

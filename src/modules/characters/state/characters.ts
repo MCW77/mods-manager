@@ -1,14 +1,14 @@
 // state
 import { observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
 
 // api
-import { fetchCharacters } from "../api/fetchBaseCharacters";
+import { fetchCharacters } from "../api/fetchBaseCharacters.js";
 
 // domain
-import type { BaseCharacterById } from "../domain/BaseCharacter";
-import type { CharactersObservable } from "../domain/CharactersObservable";
+import type { BaseCharacterById } from "../domain/BaseCharacter.js";
+import type { CharactersObservable } from "../domain/CharactersObservable.js";
 
 const characters$ = observable<CharactersObservable>({
 	baseCharacterById: async () => {

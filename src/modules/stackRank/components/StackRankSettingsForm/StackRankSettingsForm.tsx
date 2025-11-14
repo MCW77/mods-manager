@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-import { stackRank$ } from "../../state/stackRank";
+import { stackRank$ } from "../../state/stackRank.js";
 
 // components
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
 import {
 	Select,
 	SelectContent,
@@ -16,8 +16,8 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select";
-import { Switch } from "#ui/switch";
+} from "#ui/select.jsx";
+import { Switch } from "#ui/switch.jsx";
 
 const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);

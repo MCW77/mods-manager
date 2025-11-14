@@ -8,7 +8,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "../ui/button";
+import { Button } from "../ui/button.jsx";
 
 interface FlexSidebarProps {
 	isCollapsed?: boolean;

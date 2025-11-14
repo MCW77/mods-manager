@@ -1,13 +1,13 @@
 // utils
-import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
+import areObjectsEquivalent from "#/utils/areObjectsEquivalent.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type * as ModTypes from "#/domain/types/ModTypes";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type * as ModTypes from "#/domain/types/ModTypes.js";
 
-import type { SetRestrictions } from "#/domain/SetRestrictions";
-import type { TargetStats } from "#/domain/TargetStat";
-import type { GIMOPrimaryStatNames } from "./GIMOStatNames";
+import type { SetRestrictions } from "#/domain/SetRestrictions.js";
+import type { TargetStats } from "#/domain/TargetStat.js";
+import type { GIMOPrimaryStatNames } from "./GIMOStatNames.js";
 
 // #region OptimizableStats
 export type OptimizableStats =

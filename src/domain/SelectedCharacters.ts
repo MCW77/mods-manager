@@ -1,7 +1,7 @@
 // domain
-import type { CharacterNames } from "../constants/CharacterNames";
+import type { CharacterNames } from "../constants/CharacterNames.js";
 
-import type { OptimizationPlan } from "./OptimizationPlan";
+import type { OptimizationPlan } from "./OptimizationPlan.js";
 
 export type SelectedCharacters = SelectedCharacter[];
 

@@ -1,6 +1,6 @@
-import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
-import { PrimaryStats } from "../../../../domain/Stats";
-import type * as C3PODTOs from "../../dtos/c3po";
+import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames.js";
+import { PrimaryStats } from "../../../../domain/Stats.js";
+import type * as C3PODTOs from "../../dtos/c3po/index.js";
 
 const c3PO2GIMOPrimaryStatNameMap: {
 	[key in C3PODTOs.PrimaryStatNames]: GIMOPrimaryStatNames;

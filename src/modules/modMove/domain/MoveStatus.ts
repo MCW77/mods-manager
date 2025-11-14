@@ -1,4 +1,4 @@
-import type { MoveProgress } from "./MoveProgress";
+import type { MoveProgress } from "./MoveProgress.js";
 
 interface MoveStatus {
 	taskId: number;

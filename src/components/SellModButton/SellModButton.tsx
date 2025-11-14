@@ -2,14 +2,14 @@
 import React from "react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 // domain
-import type { Mod } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod.js";
 
 // components
-import { Button, type ButtonProps } from "#ui/button";
+import { Button, type ButtonProps } from "#ui/button.jsx";
 
 type ComponentProps = {
 	mod: Mod;

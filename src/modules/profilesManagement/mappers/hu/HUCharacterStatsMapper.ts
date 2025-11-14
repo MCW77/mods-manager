@@ -1,4 +1,4 @@
-import type * as DTOs from "../../dtos";
+import type * as DTOs from "../../dtos/index.js";
 
 const fromHU = (
 	statsDTO: DTOs.HU.HUCharacterStatsDTO | undefined,

@@ -2,15 +2,15 @@
 import React from "react";
 
 // state
-import { settings$ } from "../state/settings";
+import { settings$ } from "../state/settings.js";
 
 // domain
-import type { SettingsSections } from "../domain/SettingsSections";
+import type { SettingsSections } from "../domain/SettingsSections.js";
 
 // components
 import { Settings as SettingsIcon } from "lucide-react";
 
-import { Button } from "#ui/button";
+import { Button } from "#ui/button.jsx";
 
 type ComponentProps = {
 	title: string;

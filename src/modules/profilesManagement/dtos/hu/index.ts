@@ -1,4 +1,4 @@
-export * from "./HUCharacterStatsDTO";
+export * from "./HUCharacterStatsDTO.js";
 //export * from "./HUModDTO";
-export * from "./HUPlayerValuesDTO";
+export * from "./HUPlayerValuesDTO.js";
 //export * from "./HUProfileDTO";

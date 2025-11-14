@@ -10,7 +10,7 @@ import {
 	ProfileOptimizationSettingsSchema,
 	SelectedCharactersSchema,
 	TargetStatSchema,
-} from "./";
+} from "./index.js";
 
 const MissedGoalSchema = v.tuple([TargetStatSchema, v.number()]);
 const MissedGoalsSchema = v.array(MissedGoalSchema);

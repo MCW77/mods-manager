@@ -1,27 +1,28 @@
 // utils
 import { match, P } from "ts-pattern";
+import { cn } from "#/lib/utils.js";
+
 // react
 import { lazy, memo } from "react";
 
 // state
 import { use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
+import { ModTiersEnum } from "#/constants/enums.js";
+import type { CharacterNames } from "#/constants/CharacterNames.js";
 
-import type { Mod } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod.js";
 
 // components
 const CharacterAvatar = lazy(
-	() => import("../CharacterAvatar/CharacterAvatar"),
+	() => import("../CharacterAvatar/CharacterAvatar.jsx"),
 );
-import { Pips } from "../Pips/Pips";
-import { Badge } from "../ui/badge";
-import { ModTiersEnum } from "#/constants/enums";
-import { cn } from "#/lib/utils";
+import { Pips } from "../Pips/Pips.jsx";
+import { Badge } from "../ui/badge.jsx";
 
 const SET_BG_POSITIONS = {
 	// Grey tier (X 0px offset)

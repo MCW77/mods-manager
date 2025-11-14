@@ -5,9 +5,9 @@ import * as v from "valibot";
 import {
 	type CharacterNames,
 	characterNames,
-} from "#/constants/CharacterNames";
-import { KnownCharacterNamesSchema, OptimizationPlanSchema } from "./";
-import type { Character } from "#/domain/Character";
+} from "#/constants/CharacterNames.js";
+import { KnownCharacterNamesSchema, OptimizationPlanSchema } from "./index.js";
+import type { Character } from "#/domain/Character.js";
 
 const CharacterStatsDTOSchema = v.object({
 	"Accuracy %": v.number(),

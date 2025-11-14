@@ -1,29 +1,31 @@
 // utils
-import cleanAllycode from "#/utils/cleanAllycode";
-import { objectEntries } from "#/utils/objectEntries";
+import cleanAllycode from "#/utils/cleanAllycode.js";
+import { objectEntries } from "#/utils/objectEntries.js";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
+	"#/modules/profilesManagement/state/profilesManagement.js"
 );
 const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
+	"#/modules/compilations/state/compilations.js"
 );
-const { characters$ } = await import("#/modules/characters/state/characters");
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+const { characters$ } = await import(
+	"#/modules/characters/state/characters.js"
+);
+const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils.js");
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
 
 // domain
-import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFullGIMOProfile";
-import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
+import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFullGIMOProfile.js";
+import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile.js";
 
-import * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
+import * as Character from "#/domain/Character.js";
+import type { Mod } from "#/domain/Mod.js";
 
 /**
  * Collect all the information needed for the optimizer for a player

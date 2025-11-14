@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 // state
 import { use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const about$ = stateLoader$.about$;
 
 // components
-import { Button } from "#ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
+import { Button } from "#ui/button.jsx";
+import { Card, CardContent, CardHeader, CardTitle } from "#ui/card.jsx";
 
 const AboutView = React.memo(() => {
 	const [t] = useTranslation("global-ui");

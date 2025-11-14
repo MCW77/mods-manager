@@ -1,7 +1,7 @@
 // state
 import { Show, use$ } from "@legendapp/state/react";
 
-import { isBusy$ } from "../state/isBusy";
+import { isBusy$ } from "../state/isBusy.js";
 
 // styles
 import "./Spinner.css";

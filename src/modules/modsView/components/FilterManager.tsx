@@ -4,24 +4,24 @@ import React from "react";
 // state
 import { For, observer, reactive, Show, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { builtinFilters } from "../domain/ModsViewOptions";
+import { builtinFilters } from "../domain/ModsViewOptions.js";
 
 // components
 import { TrashIcon } from "lucide-react";
-import { Button } from "#ui/button";
+import { Button } from "#ui/button.jsx";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select";
-import { RenameButton } from "#/components/RenameButton";
+} from "#ui/select.jsx";
+import { RenameButton } from "#/components/RenameButton.jsx";
 
 const ReactiveSelect = reactive(Select);
 

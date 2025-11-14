@@ -1,4 +1,4 @@
-import type { Character } from "#/domain/Character";
+import type { Character } from "#/domain/Character.js";
 
 export type CharacterFilterPredicate = (character: Character) => boolean;
 

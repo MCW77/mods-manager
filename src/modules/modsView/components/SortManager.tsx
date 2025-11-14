@@ -5,21 +5,21 @@ import { useTranslation } from "react-i18next";
 // state
 import { For, observer, Show, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { modScores } from "#/domain/Mod";
-import { SecondaryStats } from "#/domain/Stats";
+import { modScores } from "#/domain/Mod.js";
+import { SecondaryStats } from "#/domain/Stats.js";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
-import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
-import { Badge } from "#ui/badge";
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect.jsx";
+import { Badge } from "#ui/badge.jsx";
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 const SortManager = observer(
 	React.memo(() => {

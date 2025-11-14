@@ -4,14 +4,16 @@ import { useTranslation } from "react-i18next";
 // state
 import { use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const modsView$ = stateLoader$.modsView$;
 
+// domain
+import { modScores } from "#/domain/Mod.js";
+
 // components
-import { Label } from "#ui/label";
-import { Slider } from "#ui/slider";
-import { modScores } from "#/domain/Mod";
+import { Label } from "#ui/label.jsx";
+import { Slider } from "#ui/slider.jsx";
 
 const ScoreFilter = () => {
 	const [t] = useTranslation("explore-ui");

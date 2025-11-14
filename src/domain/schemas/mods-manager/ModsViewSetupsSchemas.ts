@@ -11,8 +11,8 @@ import {
 	setSettingsSets,
 	slotSettingsSlots,
 	tierSettingsTiers,
-} from "#/modules/modsView/domain/ModsViewOptions";
-import { categories } from "#/modules/modsView/domain/Categories";
+} from "#/modules/modsView/domain/ModsViewOptions.js";
+import { categories } from "#/modules/modsView/domain/Categories.js";
 
 const TriStateSchema = v.picklist([-1, 0, 1]);
 const CalibrationSettingsSchema = v.optional(
@@ -86,7 +86,8 @@ const FilterSchema = v.object({
 			v.pipe(v.number(), v.minValue(0), v.maxValue(31)),
 		]),
 		[0, 31],
-	),	tier: TierSettingsSchema,
+	),
+	tier: TierSettingsSchema,
 });
 
 const FilterSchemaV19 = v.object({
@@ -132,7 +133,8 @@ const PersistableViewSetupSchema = v.object({
 	filterById: v.record(v.string(), FilterSchema),
 	id: v.string(),
 	isGroupingEnabled: v.boolean(),
-	modScore: v.string(),	sort: PersistableSortConfigByIdSchema,
+	modScore: v.string(),
+	sort: PersistableSortConfigByIdSchema,
 });
 
 const PersistableViewSetupSchemaV19 = v.object({

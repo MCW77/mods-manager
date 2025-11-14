@@ -5,15 +5,15 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive, use$ } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // components
-import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
+import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider.jsx";
+import { Input } from "#ui/input.jsx";
+import { Label } from "#ui/label.jsx";
 
 const OptimizationSettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");

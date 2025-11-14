@@ -3,28 +3,28 @@ import { lazy, useId } from "react";
 
 // state
 import { use$ } from "@legendapp/state/react";
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const hotutils$ = stateLoader$.hotutils$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
 
 // domain
-import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings.js";
 
 // components
 const CreateProfileModal = lazy(
-	() => import("#/modules/hotUtils/components/CreateProfileModal"),
+	() => import("#/modules/hotUtils/components/CreateProfileModal.jsx"),
 );
 const MoveModsModal = lazy(
-	() => import("#/modules/modMove/components/MoveModsModal"),
+	() => import("#/modules/modMove/components/MoveModsModal.jsx"),
 );
-const TextualReview = lazy(() => import("./TextualReview"));
-import { Button } from "#ui/button";
-import { Label } from "#ui/label";
+const TextualReview = lazy(() => import("./TextualReview.jsx"));
+import { Button } from "#ui/button.jsx";
+import { Label } from "#ui/label.jsx";
 
 const ActionsWidget = () => {
 	const actionsId = useId();

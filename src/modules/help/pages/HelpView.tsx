@@ -10,16 +10,16 @@ import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { match } from "ts-pattern";
 
 // state
-import { help$ } from "../state/help";
-import { ui$ } from "#/modules/ui/state/ui";
+import { help$ } from "../state/help.js";
+import { ui$ } from "#/modules/ui/state/ui.js";
 
 // domain
-import type { HelpSections } from "../domain/HelpSections";
+import type { HelpSections } from "../domain/HelpSections.js";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "#/components/ui/button";
-import { Label } from "#/components/ui/label";
+import { Button } from "#/components/ui/button.jsx";
+import { Label } from "#/components/ui/label.jsx";
 
 const HelpView: React.FC = observer(() => {
 	const helpSection = use$(help$.section);
