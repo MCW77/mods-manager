@@ -80,6 +80,30 @@ export const fromGIMOBackup = (backup: GIMOBackup) => {
 	return {
 		characterTemplates: fromGIMOCharacterTemplates(backup.characterTemplates),
 		compilations: fromGIMOLastRuns(backup.lastRuns),
+		defaultCompilation: {
+			category: "",
+			description: "",
+			flatCharacterModdings: [],
+			id: "DefaultCompilation",
+			isReoptimizationNeeded: true,
+			lastOptimized: null as Date | null,
+			optimizationConditions: null,
+			reoptimizationIndex: -1,
+			selectedCharacters: [],
+		},
+		incrementalOptimizationIndices: {},
+		lockedStatus: {},
+		modsViewSetups: {
+			AllMods: {},
+			Calibrate: {},
+			Level: {},
+			Reveal: {},
+			Slice5Dot: {},
+			Slice6Dot: {},
+			Slice6E: {},
+		},
 		profilesManagement: fromGIMOProfiles(backup.profiles),
+		sessionIds: {},
+		settings: {},
 	};
 };

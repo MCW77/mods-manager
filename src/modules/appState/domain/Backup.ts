@@ -106,12 +106,13 @@ const migrations = new Map<
 	[
 		0,
 		(normalizedBackup) => {
+			// Migrate GIMO backup to mods-manager v18 structure
 			return {
 				appVersion: normalizedBackup.appVersion,
 				backupType: "fullBackup",
 				client: "mods-manager",
 				data: normalizedBackup.data,
-				version: 16,
+				version: 18,
 			};
 		},
 	],

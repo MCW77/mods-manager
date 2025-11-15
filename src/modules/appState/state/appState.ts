@@ -62,12 +62,11 @@ const mergeProfilesManagement = (
 		return;
 	}
 
-	beginBatch();
-
 	// Process each profile from the imported data
 	for (const [allycode, persistedProfile] of Object.entries(
 		profilesManagement.profileByAllycode,
 	)) {
+		beginBatch();
 		const profile = getProfileFromPersisted(persistedProfile);
 
 		if (profilesManagement$.hasProfileWithAllycode(allycode)) {
@@ -79,8 +78,10 @@ const mergeProfilesManagement = (
 			// After adding, update with the full profile data
 			profilesManagement$.updateProfile(profile);
 		}
+		endBatch();
 	}
 
+	beginBatch();
 	// Update lastUpdatedByAllycode with imported data (merge with existing)
 	if (profilesManagement.lastUpdatedByAllycode) {
 		const currentLastUpdated =
@@ -130,7 +131,10 @@ function mergeCompilations(
 			// Check if compilation ID already exists for this allycode
 			const existingCompilation =
 				compilations$.compilationByIdByAllycode[allycode][compilationId].peek();
-
+			if (compilations$.compilationByIdByAllycode.has(allycode) === false) {
+				// Initialize Map for this allycode if it doesn't exist
+				compilations$.compilationByIdByAllycode.set(allycode, new Map());
+			}
 			if (!existingCompilation) {
 				// Compilation doesn't exist, add it directly
 				compilations$.compilationByIdByAllycode[allycode][compilationId].set(
