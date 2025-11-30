@@ -56,7 +56,7 @@
 		"react-responsive": "^9.0.2",
 		"react-scan": "^0.4.3",
 		"sonner": "^2.0.7",
-		"superjson": "^2.2.5",
+		"superjson": "^2.2.6",
 		"tailwind-merge": "^3.4.0",
 		"ts-pattern": "^5.9.0",
 		"valibot": "1.2.0",
