@@ -83,7 +83,7 @@
 		"unocss": "66.5.9",
 		"unocss-preset-shadcn": "^1.0.1",
 		"vite": "^7.2.4",
-		"vite-plugin-pwa": "^1.1.0",
+		"vite-plugin-pwa": "^1.2.0",
 		"vitest": "^4.0.14"
 	},
 	"config": {
