@@ -196,8 +196,8 @@ function updatePlayerData(
 	keepOldMods: boolean,
 ): void {
 	try {
-		beginBatch();
 		profilesManagement$.addProfile(newAllycode, profile.name);
+		beginBatch();
 
 		// Collect the new character objects by combining the default characters with the player values
 		// and the optimizer settings from the current profile.
