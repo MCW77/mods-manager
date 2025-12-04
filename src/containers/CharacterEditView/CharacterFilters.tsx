@@ -422,7 +422,7 @@ const CharacterFilters: React.FC = observer(() => {
 					</Label>
 					<Slider
 						id={"gearLevel-range"}
-						max={22}
+						max={23}
 						min={1}
 						step={1}
 						value={gearLevelRange}

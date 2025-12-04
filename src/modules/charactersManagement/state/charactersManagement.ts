@@ -370,7 +370,7 @@ const getDefaultFilterSetup = () => {
 				type: "text",
 				filter: "",
 			} as TextFilter,
-			gearLevelRange: [1, 22] as [number, number],
+			gearLevelRange: [1, 23] as [number, number],
 			levelRange: [0, 85] as [number, number],
 			starsRange: [0, 7] as [number, number],
 		},
