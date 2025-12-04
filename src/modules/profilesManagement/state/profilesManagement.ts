@@ -396,9 +396,14 @@ const syncStatus$ = syncObservable(
 									string,
 									GIMOFlatMod
 								>(
-									oldModById
-										.entries()
-										.map(([key, mod]) => [key, mod.serialize()]),
+									oldModById.size === 0
+										? Object.entries(oldModById).map(([key, mod]) => [
+												key,
+												mod.serialize(),
+											])
+										: oldModById
+												.entries()
+												.map(([key, mod]) => [key, mod.serialize()]),
 								);
 								return {
 									profiles: {
