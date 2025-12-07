@@ -896,6 +896,7 @@ function resetCaches() {
 	cache.loadoutScores = createLoadoutScoresCache();
 	cache.modScores = new Map<string, number>();
 	cache.modStats = createModStatsCache();
+	cache.modsetScore = createModsetScoreCache();
 	cache.modsetStats = createModsetStatsCache();
 	cache.statValues = new Map<string, StatValue[]>();
 }
@@ -1604,7 +1605,7 @@ function getLoadoutScore(
 	}
 
 	for (const mod of loadout) {
-		modStatsScore += scoreMod(mod, target);
+		modStatsScore += Math.trunc(scoreMod(mod, target));
 	}
 	return modsetsScore + modStatsScore;
 }
