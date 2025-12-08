@@ -38,12 +38,6 @@ interface OptimizationSettingsObservable {
 	) => {
 		[key in CharacterStatNames.All]: CSStats.CharacterSummaryStat;
 	};
-	getOptimizationValue: (
-		modLoadout: ModLoadout,
-		character: Character.Character,
-		target: OptimizationPlan,
-		withUpgrades: boolean,
-	) => number;
 	shouldLevelMod: (mod: Mod, target: OptimizationPlan) => boolean;
 	shouldSliceMod: (mod: Mod, target: OptimizationPlan) => boolean;
 	shouldUpgradeMods: (target: OptimizationPlan) => boolean;

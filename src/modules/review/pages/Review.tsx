@@ -215,6 +215,8 @@ const Review: React.FC = observer(() => {
 					assignedMods: mods,
 					target: OptimizationPlan.createOptimizationPlan("xyz"),
 					missedGoals: [],
+					currentScore: 0,
+					previousScore: 0,
 				}),
 			),
 		);
@@ -224,14 +226,25 @@ const Review: React.FC = observer(() => {
 
 	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)
-		.map(({ characterId, target, assignedMods, missedGoals }) => ({
-			characterId,
-			target,
-			assignedMods: assignedMods
-				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
-				: [],
-			missedGoals: missedGoals || [],
-		})) as CharacterModdings;
+		.map(
+			({
+				characterId,
+				target,
+				assignedMods,
+				missedGoals,
+				currentScore,
+				previousScore,
+			}) => ({
+				characterId,
+				target,
+				assignedMods: assignedMods
+					? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
+					: [],
+				missedGoals: missedGoals || [],
+				currentScore,
+				previousScore,
+			}),
+		) as CharacterModdings;
 
 	let displayedMods: CharacterModdings;
 	switch (filter.view) {
@@ -239,26 +252,44 @@ const Review: React.FC = observer(() => {
 			if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
 				displayedMods = modAssignments2
-					.map(({ characterId, target, assignedMods }) => ({
-						characterId,
-						target,
-						assignedMods: assignedMods.filter(
-							(mod) =>
-								optimizationSettings$.shouldLevelMod(mod, target) ||
-								optimizationSettings$.shouldSliceMod(mod, target),
-						),
-						missedGoals: [],
-					}))
+					.map(
+						({
+							characterId,
+							target,
+							assignedMods,
+							currentScore,
+							previousScore,
+						}) => ({
+							characterId,
+							target,
+							assignedMods: assignedMods.filter(
+								(mod) =>
+									optimizationSettings$.shouldLevelMod(mod, target) ||
+									optimizationSettings$.shouldSliceMod(mod, target),
+							),
+							missedGoals: [],
+							currentScore,
+							previousScore,
+						}),
+					)
 					.filter(({ assignedMods }) => assignedMods.length > 0);
 			} else {
 				// If we're not showing upgrades, then only show mods that aren't already assigned to that character
 				displayedMods = modAssignments2.map(
-					({ characterId, target, assignedMods }) => ({
+					({
+						characterId,
+						target,
+						assignedMods,
+						currentScore,
+						previousScore,
+					}) => ({
 						characterId,
 						target: target,
 						assignedMods: assignedMods
 							.filter((mod) => mod.characterID !== characterId)
 							.sort(ModLoadout.slotSort),
+						currentScore,
+						previousScore,
 						missedGoals: [],
 					}),
 				);
@@ -299,9 +330,9 @@ const Review: React.FC = observer(() => {
 			}
 	}
 
-	const numMovingMods = modAssignments2.reduce(
+	const numMovingMods = modAssignments.reduce(
 		(count, { characterId: id, assignedMods }) =>
-			assignedMods.filter((mod) => mod.characterID !== id).length + count,
+			assignedMods.filter((characterId) => characterId !== id).length + count,
 		0,
 	);
 
@@ -311,28 +342,14 @@ const Review: React.FC = observer(() => {
 		modById.values().filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
 	);
-	const currentLoadoutValue = modAssignments2
-		.map(({ characterId: id, target }) =>
-			Object.keys(currentModsByCharacter).includes(id)
-				? optimizationSettings$.getOptimizationValue(
-						ModLoadout.createModLoadout(currentModsByCharacter[id]),
-						characterById[id],
-						target,
-						false,
-					)
-				: 0,
-		)
-		.reduce((a, b) => a + b, 0);
-	const newLoadoutValue = modAssignments2
-		.map(({ characterId: id, target, assignedMods }) =>
-			optimizationSettings$.getOptimizationValue(
-				ModLoadout.createModLoadout(assignedMods),
-				characterById[id],
-				target,
-				true,
-			),
-		)
-		.reduce((a, b) => a + b, 0);
+	const currentLoadoutValue = modAssignments.reduce(
+		(scoreSum, { previousScore }) => scoreSum + previousScore,
+		0,
+	);
+	const newLoadoutValue = modAssignments.reduce(
+		(scoreSum, { currentScore }) => scoreSum + currentScore,
+		0,
+	);
 
 	const movingModsByAssignedCharacter = modAssignments2
 		.map(({ characterId: id, target, assignedMods }) => ({

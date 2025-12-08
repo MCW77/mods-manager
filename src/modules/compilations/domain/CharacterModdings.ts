@@ -11,6 +11,8 @@ interface FlatCharacterModding {
 	assignedMods: string[];
 	missedGoals: MissedGoals;
 	messages?: string[];
+	currentScore: number;
+	previousScore: number;
 }
 
 interface CharacterModding {
@@ -19,6 +21,8 @@ interface CharacterModding {
 	assignedMods: Mod[];
 	missedGoals: MissedGoals;
 	messages?: string[];
+	currentScore: number;
+	previousScore: number;
 }
 
 const createCharacterModding = (
@@ -27,12 +31,16 @@ const createCharacterModding = (
 	assignedMods: Mod[],
 	missedGoals: MissedGoals = [],
 	messages: string[] = [],
+	currentScore = 0,
+	previousScore = 0,
 ): CharacterModding => ({
 	characterId,
 	target,
 	assignedMods,
 	missedGoals,
 	messages,
+	currentScore,
+	previousScore,
 });
 
 type FlatCharacterModdings = FlatCharacterModding[];

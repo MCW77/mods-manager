@@ -1,6 +1,12 @@
 // react
 import { lazy } from "react";
-import { For, use$, useMount, useObservable } from "@legendapp/state/react";
+import {
+	For,
+	use$,
+	useMount,
+	useObservable,
+	useValue,
+} from "@legendapp/state/react";
 
 // utils
 import collectByKey from "#/utils/collectByKey.js";
@@ -74,6 +80,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 						assignedMods: mods,
 						target,
 					} = value.get();
+					const modAssignment = value.get();
 					const character = characterById[value.characterId.peek()];
 					if (character === undefined) return <div />;
 
@@ -145,10 +152,8 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 											currentModsByCharacter[characterID] || [],
 										)}
 										character={character}
-										target={target}
 										useUpgrades={true}
-										assignedTarget={target}
-										missedGoals={missedGoals}
+										modAssignment={modAssignment}
 									/>
 								)}
 								{ModListFilter.sortOptions.currentCharacter === filter.sort && (

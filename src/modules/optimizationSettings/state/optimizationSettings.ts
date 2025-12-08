@@ -286,21 +286,6 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 
 			return loadoutSummary;
 		},
-		getOptimizationValue(
-			modLoadout: ModLoadout,
-			character: Character.Character,
-			target: OptimizationPlan,
-			withUpgrades = false,
-		) {
-			return Object.values(
-				optimizationSettings$.getSummary(modLoadout, character, withUpgrades),
-			).reduce(
-				(setValue, stat) =>
-					setValue +
-					charactersManagement$.getOptimizationValue(character, target, stat),
-				0,
-			);
-		},
 	});
 
 profilesManagement$.lastProfileAdded.onChange(({ value }) => {

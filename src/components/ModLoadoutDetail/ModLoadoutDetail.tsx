@@ -10,11 +10,10 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 // domain
 import type * as Character from "#/domain/Character.js";
 import type { ModLoadout } from "#/domain/ModLoadout.js";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan.js";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats.js";
 import type { TargetStat } from "#/domain/TargetStat.js";
 
-import type { MissedGoals } from "#/modules/compilations/domain/MissedGoals.js";
+import type { CharacterModding } from "#/modules/compilations/domain/CharacterModdings.js";
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames.js";
 
 // components
@@ -35,24 +34,20 @@ interface PlayerStat {
 }
 
 type ComponentProps = {
+	character: Character.Character;
 	oldLoadout: ModLoadout;
 	newLoadout: ModLoadout;
-	character: Character.Character;
-	target: OptimizationPlan.OptimizationPlan;
 	useUpgrades: boolean;
-	assignedTarget: OptimizationPlan.OptimizationPlan;
-	missedGoals: MissedGoals;
+	modAssignment: CharacterModding;
 };
 
 const ModLoadoutDetail = React.memo(
 	({
+		character,
 		oldLoadout,
 		newLoadout,
-		character,
-		target,
 		useUpgrades,
-		assignedTarget,
-		missedGoals = [],
+		modAssignment: { target, missedGoals, previousScore, currentScore },
 	}: ComponentProps) => {
 		const addCalculatedStatsToPlayerValues = (playerStats: PlayerStat[]) => {
 			const currentStats = {
@@ -373,22 +368,10 @@ const ModLoadoutDetail = React.memo(
 			);
 		});
 
-		const oldValue = optimizationSettings$.getOptimizationValue(
-			oldLoadout,
-			character,
-			target,
-			false,
-		);
-		const newValue = optimizationSettings$.getOptimizationValue(
-			newLoadout,
-			character,
-			target,
-			useUpgrades,
-		);
 		const valueChange =
-			oldValue === 0
+			previousScore === 0
 				? Number.POSITIVE_INFINITY
-				: (100 * newValue) / oldValue - 100;
+				: (100 * currentScore) / previousScore - 100;
 
 		return (
 			<div
@@ -396,10 +379,7 @@ const ModLoadoutDetail = React.memo(
 					"mod-set-detail relative flex gap-2 border-1 border-solid border-blue-500 p-2 bg-blue-200 dark:bg-blue-900 dark:bg-opacity-40 text-foreground text-shadow-md"
 				}
 			>
-				<ModLoadoutView
-					modLoadout={newLoadout}
-					assignedTarget={assignedTarget}
-				/>
+				<ModLoadoutView modLoadout={newLoadout} assignedTarget={target} />
 				<div className={"summary flex flex-col gap-4"}>
 					<table>
 						<thead>
@@ -422,8 +402,10 @@ const ModLoadoutDetail = React.memo(
 						<tbody>{statsDisplay}</tbody>
 					</table>
 					<div>
-						{oldLoadout && <div>Previous Set Value: {oldValue.toFixed(2)}</div>}
-						<div>Total Value of Set: {newValue.toFixed(2)}</div>
+						{oldLoadout && (
+							<div>Previous Set Value: {previousScore.toFixed(2)}</div>
+						)}
+						<div>Total Value of Set: {currentScore.toFixed(2)}</div>
 						{oldLoadout && (
 							<div>
 								Value Change:&nbsp;

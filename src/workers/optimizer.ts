@@ -1816,6 +1816,8 @@ function optimizeMods(
 					assignedMods: assignedMods,
 					messages: messages,
 					missedGoals: missedGoals,
+					currentScore: previousModAssignments[index].currentScore || 0,
+					previousScore: previousModAssignments[index].previousScore || 0,
 				} as FlatCharacterModding);
 				return modSuggestions;
 			}
@@ -1927,6 +1929,8 @@ function optimizeMods(
 				assignedMods: assignedLoadout.map((mod) => mod.id),
 				messages: assignmentMessages,
 				missedGoals: getMissedGoals(assignedLoadout, character, goalStats),
+				currentScore: foundLoadout.score,
+				previousScore: oldLoadoutScore,
 			});
 
 			if (charactersRelatedTo.has(character.id)) {
