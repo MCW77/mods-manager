@@ -7,7 +7,7 @@ import {
 	For,
 	observer,
 	Show,
-	use$,
+	useValue,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -29,7 +29,9 @@ type ComponentProps = {
 const ModScores = observer(
 	memo(({ mod }: ComponentProps) => {
 		const [t] = useTranslation("domain");
-		const scoreName = use$(modsView$.activeViewSetupInActiveCategory.modScore);
+		const scoreName = useValue(
+			modsView$.activeViewSetupInActiveCategory.modScore,
+		);
 		const secondariesCount$ = useObservable(
 			() => mod.secondaryStats.length > 0,
 		);
@@ -42,8 +44,8 @@ const ModScores = observer(
 					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
 						<For each={secondaryStats$}>
 							{(stat$) => {
-								const id = use$(stat$.id);
-								const scoreText = use$(() => stat$.score.get().show());
+								const id = useValue(stat$.id);
+								const scoreText = useValue(() => stat$.score.get().show());
 
 								return (
 									<li

@@ -2,7 +2,7 @@
 import { lazy, useId } from "react";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -28,11 +28,13 @@ import { Label } from "#ui/label.jsx";
 
 const ActionsWidget = () => {
 	const actionsId = useId();
-	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
-	const modAssignments = use$(
+	const modById = useValue(() =>
+		profilesManagement$.activeProfile.modById.get(),
+	);
+	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);
-	const hasActiveSession = use$(hotutils$.hasActiveSession);
+	const hasActiveSession = useValue(hotutils$.hasActiveSession);
 
 	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)

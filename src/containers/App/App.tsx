@@ -13,7 +13,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import { Memo, Show, reactive, use$, useMount } from "@legendapp/state/react";
+import {
+	Memo,
+	Show,
+	reactive,
+	useValue,
+	useMount,
+} from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -61,7 +67,7 @@ const ReactiveTabs = reactive(Tabs);
 
 const App = () => {
 	const [t] = useTranslation("global-ui");
-	const firstSection = use$(() =>
+	const firstSection = useValue(() =>
 		profilesManagement$.hasProfiles.get() ? "mods" : "help",
 	);
 	// Memoize the section change callback to prevent recreating it on every render

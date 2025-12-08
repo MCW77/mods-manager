@@ -1,5 +1,10 @@
 // state
-import { reactive, reactiveObserver, Show, use$ } from "@legendapp/state/react";
+import {
+	reactive,
+	reactiveObserver,
+	Show,
+	useValue,
+} from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
 import { target$ } from "#/modules/planEditing/state/planEditing.js";
@@ -22,7 +27,7 @@ interface SetItem {
 }
 
 const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
-	const setRestrictions = use$(target$.target.setRestrictions);
+	const setRestrictions = useValue(target$.target.setRestrictions);
 
 	const selectedSets$ = computed(() => {
 		const selectedSets: SetItem[] = [];
@@ -51,8 +56,8 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 					0,
 				),
 	);
-	const emptySlots = use$(emptySlots$);
-	const selectedSets = use$(selectedSets$);
+	const emptySlots = useValue(emptySlots$);
+	const selectedSets = useValue(selectedSets$);
 
 	const setBonusToFormDisplay = (setBonus: SetBonus, index: number) => {
 		const className =

@@ -7,7 +7,7 @@ import {
 	observer,
 	reactive,
 	Show,
-	use$,
+	useValue,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -36,7 +36,9 @@ import { Progress } from "#ui/progress.jsx";
 const ReactiveProgress = reactive(Progress);
 
 const OptimizerProgress: React.FC = observer(() => {
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
 		return charId === "" ? undefined : characterById[charId];
@@ -57,7 +59,7 @@ const OptimizerProgress: React.FC = observer(() => {
 				<Show ifReady={character$}>
 					<Memo>
 						{() => {
-							const character = use$(character$);
+							const character = useValue(character$);
 							return <CharacterAvatar character={character} />;
 						}}
 					</Memo>
@@ -65,7 +67,7 @@ const OptimizerProgress: React.FC = observer(() => {
 				<div className={"step"}>
 					<Memo>
 						{() => {
-							const message = use$(progress$.optimizationStatus.message);
+							const message = useValue(progress$.optimizationStatus.message);
 							return message;
 						}}
 					</Memo>
@@ -87,7 +89,7 @@ const OptimizerProgress: React.FC = observer(() => {
 						Sets progress:{" "}
 						<Memo>
 							{() => {
-								const joinedSets = use$(() =>
+								const joinedSets = useValue(() =>
 									progress$.optimizationStatus.sets.get().join(" - "),
 								);
 								return joinedSets;
@@ -109,7 +111,7 @@ const OptimizerProgress: React.FC = observer(() => {
 						TargetStats progress:{" "}
 						<Memo>
 							{() => {
-								const targetStat = use$(
+								const targetStat = useValue(
 									progress$.optimizationStatus.targetStat,
 								);
 								return targetStat;

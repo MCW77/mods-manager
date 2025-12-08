@@ -6,7 +6,7 @@ import { cn } from "#/lib/utils.js";
 import { lazy, memo } from "react";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -158,7 +158,9 @@ type ComponentProps = {
 
 const ModImage = memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
-		const characterById = use$(profilesManagement$.activeProfile.characterById);
+		const characterById = useValue(
+			profilesManagement$.activeProfile.characterById,
+		);
 		const character = mod.characterID
 			? characterById[mod.characterID as CharacterNames]
 			: null;

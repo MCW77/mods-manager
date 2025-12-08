@@ -2,7 +2,7 @@
 import { memo, lazy } from "react";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -31,8 +31,10 @@ type ComponentProps = {
 };
 
 const ModDetail = memo(({ assignedTarget, mod }: ComponentProps) => {
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
 
 	const character: Character.Character | null =
 		mod.characterID !== "null" ? characterById[mod.characterID] : null;

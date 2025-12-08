@@ -1,7 +1,7 @@
 // react
 import React, { lazy, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { observer, Show, use$ } from "@legendapp/state/react";
+import { observer, Show, useValue } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
@@ -22,8 +22,10 @@ const CharacterBlock = lazy(() => import("./CharacterBlock.jsx"));
 const CharacterList = observer(
 	React.memo(() => {
 		const [t] = useTranslation("optimize-ui");
-		const characterById = use$(profilesManagement$.activeProfile.characterById);
-		const selectedCharacters = use$(
+		const characterById = useValue(
+			profilesManagement$.activeProfile.characterById,
+		);
+		const selectedCharacters = useValue(
 			compilations$.defaultCompilation.selectedCharacters,
 		);
 

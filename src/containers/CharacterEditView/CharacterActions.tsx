@@ -3,7 +3,7 @@ import { lazy, useId } from "react";
 import {
 	Computed,
 	observer,
-	use$,
+	useValue,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -61,11 +61,11 @@ const CharacterActions: React.FC = observer(() => {
 	const descriptionId = useId();
 	const categoryId = useId();
 
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const selectedCharacters = use$(
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
-	const modAssignments = use$(
+	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);
 
@@ -76,10 +76,10 @@ const CharacterActions: React.FC = observer(() => {
 		category: compilations$.activeCompilation.category.get(),
 	});
 
-	const isFormOpen = use$(state$.isFormOpen);
-	const compilationName = use$(state$.name);
-	const compilationDescription = use$(state$.description);
-	const compilationCategory = use$(state$.category);
+	const isFormOpen = useValue(state$.isFormOpen);
+	const compilationName = useValue(state$.name);
+	const compilationDescription = useValue(state$.description);
+	const compilationCategory = useValue(state$.category);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();

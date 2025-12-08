@@ -1,7 +1,7 @@
 // react
 import type React from "react";
 import { lazy, useCallback } from "react";
-import { Computed, observer, use$ } from "@legendapp/state/react";
+import { Computed, observer, useValue } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
@@ -65,16 +65,18 @@ const characterBlockDragStart = (index: number) => {
 
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 	({ characterId, target, index }: CharacterBlockProps) => {
-		const characterById = use$(profilesManagement$.activeProfile.characterById);
-		const allycode = use$(profilesManagement$.profiles.activeAllycode);
-		const baseCharacterById = use$(characters$.baseCharacterById);
+		const characterById = useValue(
+			profilesManagement$.activeProfile.characterById,
+		);
+		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
+		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const character = characterById[characterId];
 		const showEditCharacterModalCallback = useCallback(
 			() => showEditCharacterModal(allycode, character, index, target),
 			[allycode, character, index, target],
 		);
 		const activePlan = target.id;
-		const charactersLockedStatus = use$(() =>
+		const charactersLockedStatus = useValue(() =>
 			lockedStatus$.isCharacterLockedForActivePlayer(characterId),
 		);
 

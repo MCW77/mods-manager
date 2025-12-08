@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -21,6 +21,26 @@ const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
 
+function LevelButton({ level }: { level: LevelSettingsStringLevels }) {
+	const levelState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.level[level];
+	});
+	const value = levelState || 0;
+	const className = getFilterSelectionStyles(value);
+
+	return (
+		<Button
+			className={className}
+			size="xs"
+			variant={"outline"}
+			onClick={() => modsView$.cycleState("level", level.toString())}
+		>
+			{level}
+		</Button>
+	);
+}
+
 const LevelFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
@@ -37,29 +57,7 @@ const LevelFilter = () => {
 					const inputName = `level-filter-${level}`;
 
 					return (
-						<Memo key={inputName}>
-							{() => {
-								const levelState = use$(() => {
-									const activeFilter = modsView$.activeFilter.get();
-									return activeFilter.level[level];
-								});
-								const value = levelState || 0;
-								const className = getFilterSelectionStyles(value);
-
-								return (
-									<Button
-										className={className}
-										size="xs"
-										variant={"outline"}
-										onClick={() =>
-											modsView$.cycleState("level", level.toString())
-										}
-									>
-										{level}
-									</Button>
-								);
-							}}
-						</Memo>
+						<Memo key={inputName}>{() => <LevelButton level={level} />}</Memo>
 					);
 				})}
 			</div>

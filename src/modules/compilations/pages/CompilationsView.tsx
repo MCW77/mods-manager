@@ -1,6 +1,6 @@
 // react
 import { useId } from "react";
-import { For, observer, use$, useObservable } from "@legendapp/state/react";
+import { For, observer, useValue, useObservable } from "@legendapp/state/react";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
@@ -34,10 +34,10 @@ const CompilationsView: React.FC = observer(() => {
 	const nameId = useId();
 	const descriptionId = useId();
 	const categoryId = useId();
-	const isFormOpen = use$(state$.isOpen);
-	const name = use$(state$.name);
-	const description = use$(state$.description);
-	const category = use$(state$.category);
+	const isFormOpen = useValue(state$.isOpen);
+	const name = useValue(state$.name);
+	const description = useValue(state$.description);
+	const category = useValue(state$.category);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -121,7 +121,7 @@ const CompilationsView: React.FC = observer(() => {
 			</Card>
 			<For each={compilations$.compilationByIdForActiveAllycode}>
 				{(compilation$) => {
-					const compilation = use$(compilation$);
+					const compilation = useValue(compilation$);
 					const displayedDate =
 						compilation.lastOptimized?.toLocaleDateString() ?? "never";
 					let displayedCategory = compilation.category;

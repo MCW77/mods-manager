@@ -1,5 +1,5 @@
 // state
-import { Computed, observer, use$ } from "@legendapp/state/react";
+import { Computed, observer, useValue } from "@legendapp/state/react";
 
 import { dialog$ } from "#/modules/dialog/state/dialog.js";
 import { modMove$ } from "#/modules/modMove/state/modMove.js";
@@ -15,8 +15,8 @@ const ModMoveProgress: React.FC = observer(() => {
 			<div>
 				<Computed>
 					{() => {
-						const count = use$(modMove$.status.progress.count);
-						const index = use$(modMove$.status.progress.index);
+						const count = useValue(modMove$.status.progress.count);
+						const index = useValue(modMove$.status.progress.index);
 
 						if (count === 0) {
 							return <Progress value={0} />;
@@ -26,7 +26,7 @@ const ModMoveProgress: React.FC = observer(() => {
 				</Computed>
 				<Computed>
 					{() => {
-						const message = use$(modMove$.status.message);
+						const message = useValue(modMove$.status.message);
 
 						return <>{message}</>;
 					}}

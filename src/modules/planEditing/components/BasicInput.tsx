@@ -1,5 +1,5 @@
 // state
-import { reactive, use$ } from "@legendapp/state/react";
+import { reactive, useValue } from "@legendapp/state/react";
 
 // domain
 import type { StatWeightsInputProps } from "#/modules/planEditing/components/StatWeightsInputProps.js";
@@ -13,7 +13,7 @@ import { Label } from "#ui/label.jsx";
 const ReactiveInput = reactive(Input);
 
 const BasicInput = ({ target$, stat }: StatWeightsInputProps) => {
-	const statValue = use$(target$.target[stat]);
+	const statValue = useValue(target$.target[stat]);
 
 	return (
 		<>

@@ -7,7 +7,7 @@ import {
 	reactive,
 	Reactive,
 	Show,
-	use$,
+	useValue,
 	useMount,
 	useObservable,
 } from "@legendapp/state/react";
@@ -262,6 +262,25 @@ type MissedGoalsSectionProps = {
 	baseCharacterById: Record<string, BaseCharacter>;
 };
 
+function MissedGoalItem({
+	missedGoal$,
+}: {
+	missedGoal$: Observable<MissedGoal>;
+}) {
+	const targetStat = useValue(missedGoal$[0]);
+	const resultValue = useValue(missedGoal$[1]);
+	return (
+		<div>
+			<span>{targetStat.stat}</span>
+			<span>
+				({targetStat.minimum})-({targetStat.maximum})
+			</span>
+			<span>{(targetStat.minimum ?? 0 > resultValue) ? " ↓ " : " ↑ "}</span>
+			<span>{resultValue}</span>
+		</div>
+	);
+}
+
 function MissedGoalsSection({
 	missedGoals$,
 	saveTarget,
@@ -273,22 +292,9 @@ function MissedGoalsSection({
 			else={
 				<div>
 					<For each={missedGoals$}>
-						{([targetStat$, resultValue$]: Observable<MissedGoal>) => {
-							const targetStat = use$(targetStat$);
-							const resultValue = use$(resultValue$);
-							return (
-								<div key={targetStat.id}>
-									<span>{targetStat.stat}</span>
-									<span>
-										({targetStat.minimum})-({targetStat.maximum})
-									</span>
-									<span>
-										{(targetStat.minimum ?? 0 > resultValue) ? " ↓ " : " ↑ "}
-									</span>
-									<span>{resultValue}</span>
-								</div>
-							);
-						}}
+						{(missedGoal: Observable<MissedGoal>) => (
+							<MissedGoalItem missedGoal$={missedGoal} />
+						)}
 					</For>
 					<RerunButton
 						saveTarget={saveTarget}
@@ -380,17 +386,17 @@ type ComponentProps = {
 
 const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
-		const allycode = use$(profilesManagement$.profiles.activeAllycode);
-		const baseCharacterById = use$(characters$.baseCharacterById);
-		const modAssignments = use$(
+		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
+		const baseCharacterById = useValue(characters$.baseCharacterById);
+		const modAssignments = useValue(
 			compilations$.defaultCompilation.flatCharacterModdings,
 		);
-		const targetIsInAdvancedEditMode = use$(target$.isInAdvancedEditMode);
-		const targetMinimumModDots = use$(
+		const targetIsInAdvancedEditMode = useValue(target$.isInAdvancedEditMode);
+		const targetMinimumModDots = useValue(
 			() => target$.target.minimumModDots.get()?.toString() ?? "5",
 		);
-		const currentCharacter = use$(optimizerView$.currentCharacter);
-		const targetName = use$(target$.target.id);
+		const currentCharacter = useValue(optimizerView$.currentCharacter);
+		const targetName = useValue(target$.target.id);
 		const targetsNames = profilesManagement$.activeProfile.characterById[
 			character.id
 		].targets
@@ -526,7 +532,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									>
 										<For each={target$.namesOfAllTargets}>
 											{(targetName$) => {
-												const targetName = use$(targetName$);
+												const targetName = useValue(targetName$);
 
 												return (
 													<DropdownMenuRadioItem value={targetName}>
@@ -619,6 +625,8 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 										characterId: character.id,
 										missedGoals: [],
 										target,
+										previousScore: 0,
+										currentScore: 0,
 									}
 								}
 								saveTarget={saveTarget}

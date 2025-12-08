@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -64,6 +64,27 @@ const imageOffsets: Record<SetSettingsSets, Record<TriState, string>> = {
 	},
 };
 
+function SetButton({ set }: { set: SetSettingsSets }) {
+	const setState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.modset[set];
+	});
+	const value = setState || 0;
+	const setCSS = `w-[2.9em] h-[2.9em] pt-0 pr-[.2em] pb-[.2em] pl-.5 bg-origin-content bg-clip-content bg-[url('/img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
+	const stateCSS = value === 0 ? "opacity-50" : "opacity-100";
+	const className = `${setCSS} ${stateCSS}`;
+
+	return (
+		<Button
+			className={className}
+			variant={"ghost"}
+			onClick={() => modsView$.cycleState("modset", set.toString())}
+		>
+			{" "}
+		</Button>
+	);
+}
+
 const SetFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
@@ -79,32 +100,7 @@ const SetFilter = () => {
 				{setSettingsSets.map((set: SetSettingsSets) => {
 					const inputName = `set-filter-${set}`;
 
-					return (
-						<Memo key={inputName}>
-							{() => {
-								const modsetState = use$(() => {
-									const activeFilter = modsView$.activeFilter.get();
-									return activeFilter.modset[set];
-								});
-								const value = modsetState || 0;
-								const setCSS = `w-[2.9em] h-[2.9em] pt-0 pr-[.2em] pb-[.2em] pl-.5 bg-origin-content bg-clip-content bg-[url('/img/icon-buffs.webp')] bg-[length:20em_5em] ${imageOffsets[set][value]} bg-no-repeat`;
-								const stateCSS = value === 0 ? "opacity-50" : "opacity-100";
-								const className = `${setCSS} ${stateCSS}`;
-
-								return (
-									<Button
-										className={className}
-										variant={"ghost"}
-										onClick={() =>
-											modsView$.cycleState("modset", set.toString())
-										}
-									>
-										{" "}
-									</Button>
-								);
-							}}
-						</Memo>
-					);
+					return <Memo key={inputName}>{() => <SetButton set={set} />}</Memo>;
 				})}
 			</div>
 			<SetAllButtonGroup filterKey="modset" />

@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { reactive, use$ } from "@legendapp/state/react";
+import { reactive, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -25,7 +25,7 @@ const ReactiveSelect = reactive(Select);
 
 const ScoreSelector = () => {
 	const [t] = useTranslation("explore-ui");
-	const modScore = use$(modsView$.activeViewSetupInActiveCategory.modScore);
+	const modScore = useValue(modsView$.activeViewSetupInActiveCategory.modScore);
 
 	return (
 		<div className={"flex items-center gap-2"}>

@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -14,7 +14,7 @@ import { Slider } from "#ui/slider.jsx";
 
 const SpeedFilter = () => {
 	const [t] = useTranslation("explore-ui");
-	const scoreMinMax = use$(() => {
+	const scoreMinMax = useValue(() => {
 		const activeFilter = modsView$.activeFilter.get();
 		return activeFilter.speedRange;
 	});

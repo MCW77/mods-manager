@@ -1,5 +1,5 @@
 // react
-import { reactive, use$ } from "@legendapp/state/react";
+import { reactive, useValue } from "@legendapp/state/react";
 import { useId } from "react";
 
 // utils
@@ -50,10 +50,12 @@ const ReactiveSwitch = reactive(Switch);
 const DisplayWidget = () => {
 	const sortOptionsId = useId();
 	const viewOptionsId = useId();
-	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const filter = use$(review$.modListFilter);
-	const flatCharacterModdings = use$(
+	const modById = useValue(() =>
+		profilesManagement$.activeProfile.modById.get(),
+	);
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const filter = useValue(review$.modListFilter);
+	const flatCharacterModdings = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);
 

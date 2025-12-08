@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef } from "react";
 
 // state
 import { computed, type Observable } from "@legendapp/state";
-import { Memo, reactive, use$ } from "@legendapp/state/react";
+import { Memo, reactive, useValue } from "@legendapp/state/react";
 
 // components
 import { ChevronsUpDown } from "lucide-react";
@@ -34,13 +34,22 @@ interface MultiColumnSelectProps
 	selectedValue$: Observable<string>;
 }
 
+function SelectedValue({
+	selectedLabel$,
+}: {
+	selectedLabel$: Observable<string>;
+}) {
+	const selectedLabel = useValue(selectedLabel$);
+	return <SelectValue>{selectedLabel}</SelectValue>;
+}
+
 const ReactiveMultiColumnSelect: React.FC<MultiColumnSelectProps> = ({
 	groups,
 	selectedValue$,
 	...props
 }) => {
 	const items = groups.flatMap((group) => group.items);
-	const _selectedValue = use$(selectedValue$);
+	const _selectedValue = useValue(selectedValue$);
 	const selectedLabel$ = computed(
 		() =>
 			items.find((item) => item.value === selectedValue$.get())?.label ?? "",
@@ -53,13 +62,7 @@ const ReactiveMultiColumnSelect: React.FC<MultiColumnSelectProps> = ({
 	return (
 		<ReactiveSelect $value={selectedValue$} onValueChange={handleChange}>
 			<SelectTrigger className={"w-auto h-4 px-2 mx-2 inline-flex"} {...props}>
-				<Memo>
-					{() => {
-						const selectedLabel = use$(selectedLabel$);
-
-						return <SelectValue>{selectedLabel}</SelectValue>;
-					}}
-				</Memo>
+				<Memo>{() => <SelectedValue selectedLabel$={selectedLabel$} />}</Memo>
 			</SelectTrigger>
 			<SelectContent
 				position={"popper"}

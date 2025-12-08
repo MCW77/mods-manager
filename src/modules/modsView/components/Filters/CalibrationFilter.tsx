@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -17,6 +17,28 @@ import { Mod } from "#/domain/Mod.js";
 const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
+
+function CalibrationButton({ calibrationCost }: { calibrationCost: number }) {
+	const calibrationState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.calibration[String(calibrationCost)];
+	});
+	const value = calibrationState || 0;
+	const className = getFilterSelectionStyles(value);
+
+	return (
+		<Button
+			className={className}
+			size="xs"
+			variant={"outline"}
+			onClick={() =>
+				modsView$.cycleState("calibration", calibrationCost.toString())
+			}
+		>
+			{calibrationCost}
+		</Button>
+	);
+}
 
 const CalibrationFilter = () => {
 	const [t] = useTranslation("explore-ui");
@@ -35,30 +57,7 @@ const CalibrationFilter = () => {
 
 					return (
 						<Memo key={inputName}>
-							{() => {
-								const calibrationState = use$(() => {
-									const activeFilter = modsView$.activeFilter.get();
-									return activeFilter.calibration[String(calibrationCost)];
-								});
-								const value = calibrationState || 0;
-								const className = getFilterSelectionStyles(value);
-
-								return (
-									<Button
-										className={className}
-										size="xs"
-										variant={"outline"}
-										onClick={() =>
-											modsView$.cycleState(
-												"calibration",
-												calibrationCost.toString(),
-											)
-										}
-									>
-										{calibrationCost}
-									</Button>
-								);
-							}}
+							{() => <CalibrationButton calibrationCost={calibrationCost} />}
 						</Memo>
 					);
 				})}

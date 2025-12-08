@@ -1,6 +1,6 @@
 // react
 import React from "react";
-import { Show, use$ } from "@legendapp/state/react";
+import { Show, useValue } from "@legendapp/state/react";
 
 // state
 import { errorMessage$ } from "../state/errorMessage.js";
@@ -10,7 +10,7 @@ import { WarningLabel } from "#/components/WarningLabel/WarningLabel.jsx";
 import { DialogClose } from "#ui/dialog.jsx";
 
 const ErrorMessage = React.memo(() => {
-	const errorMessage = use$(errorMessage$);
+	const errorMessage = useValue(errorMessage$);
 
 	return (
 		<div className={"flex flex-col gap-4"}>

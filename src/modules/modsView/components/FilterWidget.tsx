@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -37,7 +37,7 @@ import {
 
 const FilterWidget = () => {
 	const [t] = useTranslation("explore-ui");
-	const _profile = use$(profilesManagement$.activeProfile);
+	const _profile = useValue(profilesManagement$.activeProfile);
 
 	return (
 		<CollapsibleCard

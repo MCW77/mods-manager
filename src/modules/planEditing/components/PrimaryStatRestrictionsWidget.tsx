@@ -1,5 +1,5 @@
 // state
-import { reactive, reactiveObserver, use$ } from "@legendapp/state/react";
+import { reactive, reactiveObserver, useValue } from "@legendapp/state/react";
 
 import { target$ } from "#/modules/planEditing/state/planEditing.js";
 
@@ -12,16 +12,16 @@ import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group.jsx";
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
 const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
-	const arrowsPrimaryStatRestrictions = use$(
+	const arrowsPrimaryStatRestrictions = useValue(
 		() => target$.target.primaryStatRestrictions.arrow.get() ?? "",
 	);
-	const trianglesPrimaryStatRestrictions = use$(
+	const trianglesPrimaryStatRestrictions = useValue(
 		() => target$.target.primaryStatRestrictions.triangle.get() ?? "",
 	);
-	const crossesPrimaryStatRestrictions = use$(
+	const crossesPrimaryStatRestrictions = useValue(
 		() => target$.target.primaryStatRestrictions.cross.get() ?? "",
 	);
-	const circlesPrimaryStatRestrictions = use$(
+	const circlesPrimaryStatRestrictions = useValue(
 		() => target$.target.primaryStatRestrictions.circle.get() ?? "",
 	);
 

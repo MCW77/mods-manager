@@ -3,7 +3,7 @@ import copyToClipboard from "#/utils/clipboard.js";
 
 // react
 import { useId } from "react";
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
@@ -87,8 +87,10 @@ type TextualReviewProps = {
  */
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 	const summaryId = useId();
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
 
 	return (
 		<div>

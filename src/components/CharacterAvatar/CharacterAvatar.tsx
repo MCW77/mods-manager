@@ -6,7 +6,7 @@ import { match, P } from "ts-pattern";
 import * as React from "react";
 
 // state
-import { Show, Switch, use$, useObservable } from "@legendapp/state/react";
+import { Show, Switch, useValue, useObservable } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -50,7 +50,7 @@ const CharacterAvatar = React.memo(
 		id,
 		className = "",
 	}: ComponentProps) => {
-		const baseCharacterById = use$(characters$.baseCharacterById);
+		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const displayStars$ = useObservable(displayStars);
 		const displayLevel$ = useObservable(displayLevel);
 		const stars$ = useObservable(() => {

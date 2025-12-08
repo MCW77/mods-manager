@@ -2,7 +2,7 @@
 import type React from "react";
 import { lazy } from "react";
 
-import { observer, use$, useObservable } from "@legendapp/state/react";
+import { observer, useValue, useObservable } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
@@ -37,10 +37,10 @@ type CharacterBlockProps = {
  */
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
-		const selectedCharacters = use$(
+		const selectedCharacters = useValue(
 			compilations$.defaultCompilation.selectedCharacters,
 		);
-		const baseCharacterById = use$(characters$.baseCharacterById);
+		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const lastSelectedCharacter = selectedCharacters.length - 1;
 
 		// Track membership reactively on the observable Set itself (avoids stale subscriptions from `.get()`)

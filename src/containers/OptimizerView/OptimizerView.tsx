@@ -1,6 +1,6 @@
 // react
 import React, { lazy } from "react";
-import { Switch, use$ } from "@legendapp/state/react";
+import { Switch, useValue } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
@@ -18,9 +18,13 @@ const CharacterEditView = lazy(
 );
 
 const OptimizerView = React.memo(() => {
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
-	const currentCharacterId = use$(optimizerView$.currentCharacter.id);
-	const currentCharacterTarget = use$(optimizerView$.currentCharacter.target);
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
+	const currentCharacterId = useValue(optimizerView$.currentCharacter.id);
+	const currentCharacterTarget = useValue(
+		optimizerView$.currentCharacter.target,
+	);
 
 	return (
 		<div className={"flex items-stretch overflow-hidden flex-grow-1"}>

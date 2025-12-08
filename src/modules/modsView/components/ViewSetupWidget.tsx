@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive, use$ } from "@legendapp/state/react";
+import { observer, reactive, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -22,7 +22,7 @@ const ReactiveSwitch = reactive(Switch);
 
 const ViewSetupWidget: React.FC = observer(() => {
 	const [t] = useTranslation("explore-ui");
-	const isGroupingEnabled = use$(
+	const isGroupingEnabled = useValue(
 		modsView$.activeViewSetupInActiveCategory.isGroupingEnabled,
 	);
 

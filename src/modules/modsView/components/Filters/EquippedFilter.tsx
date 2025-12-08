@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -15,6 +15,27 @@ import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles.js"
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
 
+function EquippedButton() {
+	const [t] = useTranslation("explore-ui");
+	const equippedState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.equipped.equipped;
+	});
+	const value = equippedState || 0;
+	const className = getFilterSelectionStyles(value);
+
+	return (
+		<Button
+			className={className}
+			size="xs"
+			variant={"outline"}
+			onClick={() => modsView$.cycleState("equipped", "equipped")}
+		>
+			{t("filter.EquippedValue")}
+		</Button>
+	);
+}
+
 const EquippedFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
@@ -24,27 +45,7 @@ const EquippedFilter = () => {
 				{t("filter.EquippedHeadline")}
 			</Label>
 			<div id={"equipped-filter1"} className="flex flex-row gap-2 flex-wrap">
-				<Memo>
-					{() => {
-						const equippedState = use$(() => {
-							const activeFilter = modsView$.activeFilter.get();
-							return activeFilter.equipped.equipped;
-						});
-						const value = equippedState || 0;
-						const className = getFilterSelectionStyles(value);
-
-						return (
-							<Button
-								className={className}
-								size="xs"
-								variant={"outline"}
-								onClick={() => modsView$.cycleState("equipped", "equipped")}
-							>
-								{t("filter.EquippedValue")}
-							</Button>
-						);
-					}}
-				</Memo>
+				<Memo>{() => <EquippedButton />}</Memo>
 			</div>
 		</div>
 	);

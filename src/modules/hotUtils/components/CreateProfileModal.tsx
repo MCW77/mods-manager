@@ -5,7 +5,7 @@ import collectByKey from "#/utils/collectByKey.js";
 import {
 	observer,
 	reactive,
-	use$,
+	useValue,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -32,11 +32,15 @@ import { Label } from "#/components/ui/label.jsx";
 const ReactiveInput = reactive(Input);
 
 const CreateProfileModal: React.FC = observer(() => {
-	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
-	const modAssignments = use$(
+	const modById = useValue(() =>
+		profilesManagement$.activeProfile.modById.get(),
+	);
+	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
 		modById.values().filter((mod) => mod.characterID !== "null"),
@@ -47,7 +51,7 @@ const CreateProfileModal: React.FC = observer(() => {
 		category: "Grandivory",
 		name: "",
 	});
-	const input = use$(input$);
+	const input = useValue(input$);
 
 	const generateHotUtilsProfile = () => {
 		const assignedMods = modAssignments

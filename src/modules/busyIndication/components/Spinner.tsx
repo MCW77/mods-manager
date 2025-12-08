@@ -1,5 +1,5 @@
 // state
-import { Show, use$ } from "@legendapp/state/react";
+import { Show, useValue } from "@legendapp/state/react";
 
 import { isBusy$ } from "../state/isBusy.js";
 
@@ -7,7 +7,7 @@ import { isBusy$ } from "../state/isBusy.js";
 import "./Spinner.css";
 
 const Spinner = () => {
-	const isBusy = use$(isBusy$);
+	const isBusy = useValue(isBusy$);
 
 	return (
 		<Show if={isBusy}>

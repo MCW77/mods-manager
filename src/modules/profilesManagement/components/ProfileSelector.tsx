@@ -8,7 +8,7 @@ import {
 	For,
 	observer,
 	reactive,
-	use$,
+	useValue,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -39,7 +39,7 @@ type ComponentProps = {
 const ProfileSelector: React.FC<ComponentProps> = observer(
 	({ isAddingProfile$ }: ComponentProps) => {
 		const [t] = useTranslation("global-ui");
-		const allycode = use$(profilesManagement$.profiles.activeAllycode);
+		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
 		const nameByAllycode$ = useObservable(
 			objectEntries(profilesManagement$.profiles.playernameByAllycode.get()),
 		);

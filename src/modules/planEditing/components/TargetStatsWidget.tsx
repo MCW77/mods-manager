@@ -5,7 +5,7 @@ import {
 	For,
 	reactiveObserver,
 	Show,
-	use$,
+	useValue,
 } from "@legendapp/state/react";
 
 // utils
@@ -27,8 +27,8 @@ import { Button } from "#ui/button.jsx";
 import { Card } from "#ui/card.jsx";
 
 const TargetStatsWidget: React.FC = reactiveObserver(() => {
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const hasTargetStats = use$(() => target$.target.targetStats.length > 0);
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const hasTargetStats = useValue(() => target$.target.targetStats.length > 0);
 
 	const groups = useMemo(() => {
 		const baseCharactersLabelValue = Object.values(baseCharacterById)

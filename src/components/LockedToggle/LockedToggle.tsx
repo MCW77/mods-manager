@@ -2,7 +2,7 @@
 import { cn } from "#/lib/utils.js";
 
 // react
-import { Show, use$, useObservable } from "@legendapp/state/react";
+import { Show, useValue, useObservable } from "@legendapp/state/react";
 
 // state
 import type { Observable } from "@legendapp/state";
@@ -25,7 +25,7 @@ function LockedToggle({
 			? "This character is locked. Its mods will not be assigned to other characters"
 			: "This character is not locked",
 	);
-	const title = use$(title$);
+	const title = useValue(title$);
 	const commonCSS =
 		"size-[16px] m0 p0 leading-[1.2em] bg-[url(/img/character_icons.webp)] bg-[size:160px_32px]";
 

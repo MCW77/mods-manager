@@ -1,6 +1,6 @@
 // state
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
-import { Show, use$ } from "@legendapp/state/react";
+import { Show, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -37,7 +37,7 @@ const SelectionActions = ({
 	lastSelectedCharacterIndex,
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
-	const selectedCharacters = use$(
+	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
 

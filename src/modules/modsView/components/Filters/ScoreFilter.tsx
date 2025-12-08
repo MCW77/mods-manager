@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -17,14 +17,14 @@ import { Slider } from "#ui/slider.jsx";
 
 const ScoreFilter = () => {
 	const [t] = useTranslation("explore-ui");
-	const score = use$(() =>
+	const score = useValue(() =>
 		modScores.find(
 			(modScore) =>
 				modScore.name ===
 				modsView$.activeViewSetupInActiveCategory.modScore.get(),
 		),
 	);
-	const scoreMinMax = use$(() => {
+	const scoreMinMax = useValue(() => {
 		const activeFilter = modsView$.activeFilter.get();
 		return activeFilter.score;
 	});

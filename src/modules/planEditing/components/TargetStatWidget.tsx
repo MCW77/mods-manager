@@ -4,7 +4,7 @@ import {
 	Switch,
 	observer,
 	reactive,
-	use$,
+	useValue,
 	useObservable,
 } from "@legendapp/state/react";
 
@@ -57,10 +57,10 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 			(ts) => ts.peek().id === id,
 		) as NonNullable<ReturnType<typeof target$.target.targetStats.find>>;
 
-		const stat = use$(targetStat$.stat);
-		const minimum = use$(targetStat$.minimum);
-		const maximum = use$(targetStat$.maximum);
-		const type = use$(targetStat$.type);
+		const stat = useValue(targetStat$.stat);
+		const minimum = useValue(targetStat$.minimum);
+		const maximum = useValue(targetStat$.maximum);
+		const type = useValue(targetStat$.type);
 
 		const baseCharacterById$ = characters$.baseCharacterById;
 		const relativeCharacterName$ = useObservable(() => {
@@ -68,7 +68,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 			if (relativeCharacterId === "null") return "";
 			return baseCharacterById$[relativeCharacterId].name.get();
 		});
-		const relativeCharacterName = use$(relativeCharacterName$);
+		const relativeCharacterName = useValue(relativeCharacterName$);
 
 		return (
 			<Card className={"flex flex-col flex-gap-2 w-fit"}>

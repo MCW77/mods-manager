@@ -1,12 +1,6 @@
 // react
 import { lazy } from "react";
-import {
-	For,
-	use$,
-	useMount,
-	useObservable,
-	useValue,
-} from "@legendapp/state/react";
+import { For, useMount, useObservable, useValue } from "@legendapp/state/react";
 
 // utils
 import collectByKey from "#/utils/collectByKey.js";
@@ -53,10 +47,12 @@ type SetsViewProps = {
  */
 const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const modAssignments$ = useObservable(modAssignments);
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
-	const filter = use$(review$.modListFilter);
-	const modById = use$(profilesManagement$.activeProfile.modById);
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
+	const filter = useValue(review$.modListFilter);
+	const modById = useValue(profilesManagement$.activeProfile.modById);
 
 	const currentModsByCharacter: {
 		[key in CharacterNames]: Mod[];

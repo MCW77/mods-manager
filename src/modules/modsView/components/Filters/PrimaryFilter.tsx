@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -21,6 +21,26 @@ const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
 
+function PrimaryButton({ primary }: { primary: PrimarySettingsPrimaries }) {
+	const primaryState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.primary[primary];
+	});
+	const value = primaryState || 0;
+	const className = getFilterSelectionStyles(value);
+
+	return (
+		<Button
+			className={className}
+			size="xs"
+			variant={"outline"}
+			onClick={() => modsView$.cycleState("primary", primary.toString())}
+		>
+			{primary}
+		</Button>
+	);
+}
+
 const PrimaryFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
@@ -35,27 +55,7 @@ const PrimaryFilter = () => {
 
 					return (
 						<Memo key={inputName}>
-							{() => {
-								const primaryState = use$(() => {
-									const activeFilter = modsView$.activeFilter.get();
-									return activeFilter.primary[primary];
-								});
-								const value = primaryState || 0;
-								const className = getFilterSelectionStyles(value);
-
-								return (
-									<Button
-										className={className}
-										size="xs"
-										variant={"outline"}
-										onClick={() =>
-											modsView$.cycleState("primary", primary.toString())
-										}
-									>
-										{primary}
-									</Button>
-								);
-							}}
+							{() => <PrimaryButton primary={primary} />}
 						</Memo>
 					);
 				})}

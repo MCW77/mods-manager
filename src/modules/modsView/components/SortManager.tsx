@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { For, observer, Show, use$ } from "@legendapp/state/react";
+import { For, observer, Show, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -24,7 +24,7 @@ import { Label } from "#ui/label.jsx";
 const SortManager = observer(
 	React.memo(() => {
 		const [t] = useTranslation("domain");
-		const _viewSetup = use$(modsView$.activeViewSetupInActiveCategory);
+		const _viewSetup = useValue(modsView$.activeViewSetupInActiveCategory);
 
 		const sortOptions = [
 			{
@@ -78,7 +78,7 @@ const SortManager = observer(
 				<div className="flex justify-around flex-wrap gap-2">
 					<For each={modsView$.activeViewSetupInActiveCategory.sort}>
 						{(sortConfig$) => {
-							const sortConfig = use$(sortConfig$);
+							const sortConfig = useValue(sortConfig$);
 
 							return (
 								<Badge variant={"outline"} className={"flex items-center"}>

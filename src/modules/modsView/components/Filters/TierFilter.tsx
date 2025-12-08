@@ -3,7 +3,7 @@ import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -22,6 +22,27 @@ const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
 
+function TierButton({ tier }: { tier: TierSettingsTiers }) {
+	const tierState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.tier[tier];
+	});
+	const value = tierState || 0;
+	const tierColor = ModConsts.tiersMap.get(Number(tier));
+	const stateCSS = getFilterSelectionStyles(value, tierColor);
+
+	return (
+		<Button
+			className={stateCSS}
+			size="xs"
+			variant={"outline"}
+			onClick={() => modsView$.cycleState("tier", tier.toString())}
+		>
+			{String.fromCharCode(70 - Number(tier))}
+		</Button>
+	);
+}
+
 const TierFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
@@ -38,30 +59,7 @@ const TierFilter = () => {
 					const inputName = `tier-filter-${tier}`;
 
 					return (
-						<Memo key={inputName}>
-							{() => {
-								const tierState = use$(() => {
-									const activeFilter = modsView$.activeFilter.get();
-									return activeFilter.tier[tier];
-								});
-								const value = tierState || 0;
-								const tierColor = ModConsts.tiersMap.get(Number(tier));
-								const stateCSS = getFilterSelectionStyles(value, tierColor);
-
-								return (
-									<Button
-										className={stateCSS}
-										size="xs"
-										variant={"outline"}
-										onClick={() =>
-											modsView$.cycleState("tier", tier.toString())
-										}
-									>
-										{String.fromCharCode(70 - Number(tier))}
-									</Button>
-								);
-							}}
-						</Memo>
+						<Memo key={inputName}>{() => <TierButton tier={tier} />}</Memo>
 					);
 				})}
 			</div>

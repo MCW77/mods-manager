@@ -2,7 +2,13 @@
 import React from "react";
 
 // state
-import { For, observer, reactive, Show, use$ } from "@legendapp/state/react";
+import {
+	For,
+	observer,
+	reactive,
+	Show,
+	useValue,
+} from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -27,10 +33,10 @@ const ReactiveSelect = reactive(Select);
 
 const FilterManager = observer(
 	React.memo(() => {
-		const _activeViewSetupInActiveCategory = use$(
+		const _activeViewSetupInActiveCategory = useValue(
 			modsView$.activeViewSetupInActiveCategory,
 		);
-		const idOfSelectedFilterInActiveCategory = use$(
+		const idOfSelectedFilterInActiveCategory = useValue(
 			modsView$.idOfSelectedFilterInActiveCategory,
 		);
 

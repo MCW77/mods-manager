@@ -3,7 +3,7 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive, use$ } from "@legendapp/state/react";
+import { observer, reactive, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -24,8 +24,8 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 	const simulate6EId = useId();
 	const simulateLevel15Id = useId();
 	const optimizeWithRestrictionsId = useId();
-	const allycode = use$(profilesManagement$.profiles.activeAllycode);
-	const modChangeThreshold = use$(
+	const allycode = useValue(profilesManagement$.profiles.activeAllycode);
+	const modChangeThreshold = useValue(
 		optimizationSettings$.settingsByProfile[allycode].modChangeThreshold,
 	);
 

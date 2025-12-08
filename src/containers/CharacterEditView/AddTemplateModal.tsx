@@ -1,5 +1,5 @@
 // react
-import { observer, use$ } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 
 // state
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
@@ -25,13 +25,13 @@ import { Label } from "#ui/label.jsx";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group.jsx";
 
 const AddTemplateModal: React.FC = observer(() => {
-	const selectedCharacters = use$(
+	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
-	const templatesFilter = use$(templates$.filter);
-	const selectedCategory = use$(templates$.selectedCategory);
-	const selectedTemplate = use$(templates$.selectedTemplate);
-	const filteredTemplates = use$(templates$.filteredTemplates);
+	const templatesFilter = useValue(templates$.filter);
+	const selectedCategory = useValue(templates$.selectedCategory);
+	const selectedTemplate = useValue(templates$.selectedTemplate);
+	const filteredTemplates = useValue(templates$.filteredTemplates);
 
 	return (
 		<div className={"flex flex-col gap-4"}>

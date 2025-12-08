@@ -1,5 +1,5 @@
 // react
-import { reactive, use$ } from "@legendapp/state/react";
+import { reactive, useValue } from "@legendapp/state/react";
 
 // state
 import { dialog$ } from "../state/dialog.js";
@@ -10,7 +10,7 @@ import * as DialogPrimitive from "#/components/Dialogs/Dialog/Dialog.jsx";
 const ReactiveDialog = reactive(DialogPrimitive.Dialog);
 
 export const Dialog = () => {
-	const content = use$(dialog$.content);
+	const content = useValue(dialog$.content);
 
 	return (
 		<ReactiveDialog

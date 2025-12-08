@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -15,6 +15,27 @@ import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles.js"
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
 
+function AssignedButton() {
+	const [t] = useTranslation("explore-ui");
+	const assignedState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.assigned.assigned;
+	});
+	const value = assignedState || 0;
+	const className = getFilterSelectionStyles(value);
+
+	return (
+		<Button
+			className={className}
+			size="xs"
+			variant={"outline"}
+			onClick={() => modsView$.cycleState("assigned", "assigned")}
+		>
+			{t("filter.AssignedValue")}
+		</Button>
+	);
+}
+
 const AssignedFilter = () => {
 	const [t] = useTranslation("explore-ui");
 
@@ -24,27 +45,7 @@ const AssignedFilter = () => {
 				{t("filter.AssignedHeadline")}
 			</Label>
 			<div id={"assigned-filter1"} className="flex flex-row gap-2 flex-wrap">
-				<Memo>
-					{() => {
-						const assignedState = use$(() => {
-							const activeFilter = modsView$.activeFilter.get();
-							return activeFilter.assigned.assigned;
-						});
-						const value = assignedState || 0;
-						const className = getFilterSelectionStyles(value);
-
-						return (
-							<Button
-								className={className}
-								size="xs"
-								variant={"outline"}
-								onClick={() => modsView$.cycleState("assigned", "assigned")}
-							>
-								{t("filter.AssignedValue")}
-							</Button>
-						);
-					}}
-				</Memo>
+				<Memo>{() => <AssignedButton />}</Memo>
 			</div>
 		</div>
 	);

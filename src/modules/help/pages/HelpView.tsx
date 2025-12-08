@@ -1,7 +1,7 @@
 // react
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { observer, Show, use$ } from "@legendapp/state/react";
+import { observer, Show, useValue } from "@legendapp/state/react";
 
 // styles
 import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -22,9 +22,9 @@ import { Button } from "#/components/ui/button.jsx";
 import { Label } from "#/components/ui/label.jsx";
 
 const HelpView: React.FC = observer(() => {
-	const helpSection = use$(help$.section);
-	const helpTopic = use$(help$.topic);
-	const previousSectionIsNotHelp = use$(
+	const helpSection = useValue(help$.section);
+	const helpTopic = useValue(help$.topic);
+	const previousSectionIsNotHelp = useValue(
 		() => ui$.previousSection.get() !== "help",
 	);
 

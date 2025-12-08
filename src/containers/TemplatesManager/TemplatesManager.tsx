@@ -14,7 +14,7 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile.js";
 
 // state
-import { For, observer, use$ } from "@legendapp/state/react";
+import { For, observer, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -38,7 +38,7 @@ const TemplatesManager = observer(
 			[] as CharacterTemplates,
 		);
 		const [t] = useTranslation("settings-ui");
-		const userTemplates = use$(templates$.userTemplates);
+		const userTemplates = useValue(templates$.userTemplates);
 
 		return (
 			<div>
@@ -109,7 +109,7 @@ const TemplatesManager = observer(
 				<ul>
 					<For each={templates$.userTemplates}>
 						{(template$) => {
-							const template = use$(template$);
+							const template = useValue(template$);
 							return (
 								<li
 									className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"

@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "#ui/card.jsx";
 
 const AboutView = React.memo(() => {
 	const [t] = useTranslation("global-ui");
-	const version = use$(about$.version);
+	const version = useValue(about$.version);
 
 	return (
 		<div className={"p-y-4 flex flex-col gap-20 items-center grow-1"}>

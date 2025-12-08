@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, use$ } from "@legendapp/state/react";
+import { Memo, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -18,6 +18,26 @@ import {
 // components
 import { Button } from "#ui/button.jsx";
 import { Label } from "#ui/label.jsx";
+
+function RarityButton({ rarity }: { rarity: RaritySettingsRarities }) {
+	const rarityState = useValue(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		return activeFilter.rarity[rarity];
+	});
+	const value = rarityState || 0;
+	const className = getFilterSelectionStyles(value);
+
+	return (
+		<Button
+			className={className}
+			size="xs"
+			variant={"outline"}
+			onClick={() => modsView$.cycleState("rarity", rarity.toString())}
+		>
+			{"•".repeat(Number(rarity))}
+		</Button>
+	);
+}
 
 const RarityFilter = () => {
 	const [t] = useTranslation("explore-ui");
@@ -36,27 +56,7 @@ const RarityFilter = () => {
 
 					return (
 						<Memo key={inputName}>
-							{() => {
-								const rarityState = use$(() => {
-									const activeFilter = modsView$.activeFilter.get();
-									return activeFilter.rarity[rarity];
-								});
-								const value = rarityState || 0;
-								const className = getFilterSelectionStyles(value);
-
-								return (
-									<Button
-										className={className}
-										size="xs"
-										variant={"outline"}
-										onClick={() =>
-											modsView$.cycleState("rarity", rarity.toString())
-										}
-									>
-										{"•".repeat(Number(rarity))}
-									</Button>
-								);
-							}}
+							{() => <RarityButton rarity={rarity} />}
 						</Memo>
 					);
 				})}

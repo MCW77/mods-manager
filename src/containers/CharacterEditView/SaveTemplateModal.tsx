@@ -4,7 +4,7 @@ import {
 	Show,
 	observer,
 	reactive,
-	use$,
+	useValue,
 } from "@legendapp/state/react";
 
 // state
@@ -30,10 +30,10 @@ const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 
 const SaveTemplateModal: React.FC = observer(() => {
-	const cannotSaveTemplate = use$(
+	const cannotSaveTemplate = useValue(
 		() => !templates$.isUnique.get() || templates$.id.get() === "",
 	);
-	const templatesCategories = use$(templates$.categories);
+	const templatesCategories = useValue(templates$.categories);
 
 	return (
 		<div className={"flex flex-col gap-2"}>

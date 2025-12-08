@@ -1,6 +1,6 @@
 // react
 import { lazy } from "react";
-import { observer, Show, use$ } from "@legendapp/state/react";
+import { observer, Show, useValue } from "@legendapp/state/react";
 
 // utils
 import flatten from "lodash-es/flatten.js";
@@ -164,11 +164,12 @@ const modUpgradeCosts: {
 };
 
 const Review: React.FC = observer(() => {
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
-	const filter = use$(review$.modListFilter);
-	const modById = use$(() => profilesManagement$.activeProfile.modById.get());
-	const modAssignments = use$(
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const filter = useValue(review$.modListFilter);
+	const modById = useValue(() =>
+		profilesManagement$.activeProfile.modById.get(),
+	);
+	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);
 

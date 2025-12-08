@@ -1,5 +1,5 @@
 // state
-import { Computed, For, observer, use$ } from "@legendapp/state/react";
+import { Computed, For, observer, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -273,13 +273,15 @@ const customCharacterFilterGroups = [
 ];
 
 const CharacterFilters: React.FC = observer(() => {
-	const hideSelectedCharacters = use$(
+	const hideSelectedCharacters = useValue(
 		charactersManagement$.filterSetup.hideSelectedCharacters,
 	);
-	const starsRange = use$(charactersManagement$.filterSetup.starsRange);
-	const levelRange = use$(charactersManagement$.filterSetup.levelRange);
-	const gearLevelRange = use$(charactersManagement$.filterSetup.gearLevelRange);
-	const quickFilter = use$(
+	const starsRange = useValue(charactersManagement$.filterSetup.starsRange);
+	const levelRange = useValue(charactersManagement$.filterSetup.levelRange);
+	const gearLevelRange = useValue(
+		charactersManagement$.filterSetup.gearLevelRange,
+	);
+	const quickFilter = useValue(
 		charactersManagement$.filterSetup.quickFilter.filter,
 	);
 
@@ -338,8 +340,8 @@ const CharacterFilters: React.FC = observer(() => {
 						<Computed>
 							<For each={charactersManagement$.filterSetup.filtersById}>
 								{(filter$) => {
-									const filter = use$(filter$.filter);
-									const filterId = use$(filter$.id);
+									const filter = useValue(filter$.filter);
+									const filterId = useValue(filter$.id);
 
 									return (
 										<div

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
 // state
-import { reactive, use$ } from "@legendapp/state/react";
+import { reactive, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -24,7 +24,7 @@ const HotutilsSettingsForm = () => {
 	const labelCSS = "col-start-1 justify-self-start" as const;
 	const inputsContainerCSS = "col-start-2 w-full space-y-2" as const;
 	const inputCSS = "w-full min-w-72" as const;
-	const namesByAllycode = use$(
+	const namesByAllycode = useValue(
 		profilesManagement$.profiles.playernameByAllycode,
 	);
 

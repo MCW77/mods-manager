@@ -4,7 +4,7 @@ import { lazy, Suspense, useEffect, useRef } from "react";
 
 // state
 import { observable } from "@legendapp/state";
-import { Memo, observer, use$ } from "@legendapp/state/react";
+import { Memo, observer, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -41,12 +41,14 @@ const CharacterList = lazy(
 const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
-	const characterById = use$(profilesManagement$.activeProfile.characterById);
-	const baseCharacterById = use$(characters$.baseCharacterById);
-	const selectedCharacters = use$(
+	const characterById = useValue(
+		profilesManagement$.activeProfile.characterById,
+	);
+	const baseCharacterById = useValue(characters$.baseCharacterById);
+	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
-	const isSelectionExpanded = use$(isSelectionExpanded$);
+	const isSelectionExpanded = useValue(isSelectionExpanded$);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const lastSelectedCharacter = selectedCharacters.length - 1;
 
@@ -118,9 +120,13 @@ const CharacterEditView = observer(() => {
 		);
 	}
 
-	const _starsReactivity = use$(charactersManagement$.filterSetup.starsRange);
-	const _levelReactivity = use$(charactersManagement$.filterSetup.levelRange);
-	const _gearLevelReactivity = use$(
+	const _starsReactivity = useValue(
+		charactersManagement$.filterSetup.starsRange,
+	);
+	const _levelReactivity = useValue(
+		charactersManagement$.filterSetup.levelRange,
+	);
+	const _gearLevelReactivity = useValue(
 		charactersManagement$.filterSetup.gearLevelRange,
 	);
 	highlightedCharacters = highlightedCharacters.filter(

@@ -3,7 +3,7 @@ import type React from "react";
 import { lazy } from "react";
 
 // state
-import { observer, use$ } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -17,11 +17,11 @@ import { ModsFilter } from "../domain/ModsFilter.js";
 const GroupedMods = lazy(() => import("./GroupedMods.jsx"));
 
 const CategoryView: React.FC = observer(() => {
-	const modById = use$(profilesManagement$.activeProfile.modById);
-	const activeViewSetupInActiveCategory = use$(
+	const modById = useValue(profilesManagement$.activeProfile.modById);
+	const activeViewSetupInActiveCategory = useValue(
 		modsView$.activeViewSetupInActiveCategory,
 	);
-	const quickFilter = use$(modsView$.quickFilter);
+	const quickFilter = useValue(modsView$.quickFilter);
 	const modsFilter = new ModsFilter(
 		activeViewSetupInActiveCategory,
 		quickFilter,

@@ -1,7 +1,7 @@
 // react
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
-import { observer, use$ } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 
 // styles
 import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -27,10 +27,10 @@ import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSe
 
 const SettingsView: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
-	const previousSection = use$(ui$.previousSection);
+	const previousSection = useValue(ui$.previousSection);
 
 	const renderSection = (sectionName: SettingsSections) => {
-		const section = use$(settings$.section);
+		const section = useValue(settings$.section);
 
 		return (
 			<div
@@ -53,7 +53,7 @@ const SettingsView: React.FC = observer(() => {
 	};
 
 	const renderTopic = () => {
-		const section = use$(settings$.section);
+		const section = useValue(settings$.section);
 
 		return match(section)
 			.with("general", () => <GeneralSettingsView />)

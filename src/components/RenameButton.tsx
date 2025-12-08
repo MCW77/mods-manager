@@ -1,5 +1,5 @@
 // state
-import { observer, use$, useObservable } from "@legendapp/state/react";
+import { observer, useValue, useObservable } from "@legendapp/state/react";
 
 // components
 import { PencilIcon } from "lucide-react";
@@ -19,8 +19,8 @@ const RenameButton: React.FC<RenameButtonProps> = observer(
 			isOpen: false,
 			newName: itemName,
 		});
-		const isPopoverOpen = use$(state$.isOpen);
-		const newName = use$(state$.newName);
+		const isPopoverOpen = useValue(state$.isOpen);
+		const newName = useValue(state$.newName);
 
 		const handleRename = (e: React.MouseEvent) => {
 			e.preventDefault();

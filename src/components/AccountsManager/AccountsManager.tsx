@@ -10,7 +10,7 @@ import formatAllycode from "#/utils/formatAllycode.js";
 import { readFile } from "#/utils/readFile.js";
 
 // state
-import { use$ } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -26,7 +26,7 @@ import { Label } from "#ui/label.jsx";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group.jsx";
 
 const AccountsManager = React.memo(() => {
-	const playerProfiles = use$(
+	const playerProfiles = useValue(
 		profilesManagement$.profiles.playernameByAllycode,
 	);
 	const [selectedProfile, setSelectedProfile] = useState(
