@@ -38,24 +38,39 @@ const ActionsWidget = () => {
 
 	const modAssignments2: CharacterModdings = modAssignments
 		.filter((x) => null !== x)
-		.map(({ characterId, target, assignedMods, missedGoals }) => ({
-			characterId,
-			target,
-			assignedMods: assignedMods
-				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
-				: [],
-			missedGoals: missedGoals || [],
-		})) as CharacterModdings;
+		.map(
+			({
+				characterId,
+				target,
+				assignedMods,
+				missedGoals,
+				currentScore,
+				previousScore,
+			}) => ({
+				characterId,
+				target,
+				assignedMods: assignedMods
+					? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
+					: [],
+				missedGoals: missedGoals || [],
+				currentScore,
+				previousScore,
+			}),
+		) as CharacterModdings;
 
 	const movingModsByAssignedCharacter: CharacterModdings = modAssignments2
-		.map(({ characterId, target, assignedMods }) => ({
-			characterId,
-			target,
-			assignedMods: assignedMods.filter(
-				(mod) => mod.characterID !== characterId,
-			),
-			missedGoals: [],
-		}))
+		.map(
+			({ characterId, target, assignedMods, currentScore, previousScore }) => ({
+				characterId,
+				target,
+				assignedMods: assignedMods.filter(
+					(mod) => mod.characterID !== characterId,
+				),
+				missedGoals: [],
+				currentScore,
+				previousScore,
+			}),
+		)
 		.filter(({ assignedMods }) => assignedMods.length);
 
 	return (

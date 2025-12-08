@@ -35,6 +35,8 @@ export const defaultFixture = {
 					assignedMods: [],
 					missedGoals: [],
 					messages: [],
+					currentScore: 0,
+					previousScore: 0,
 				},
 			],
 			id: "DefaultCompilation",
@@ -1337,7 +1339,7 @@ export const defaultFixture = {
 			},
 		},
 	},
-	version: 21,
+	version: 22,
 };
 
 export const fromV16 = {
@@ -1381,5 +1383,5 @@ export const fromV16 = {
 		>(),
 		settings: {},
 	},
-	version: 21,
+	version: 22,
 };

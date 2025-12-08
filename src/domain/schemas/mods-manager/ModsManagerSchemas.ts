@@ -6,6 +6,7 @@ import {
 	CharacterTemplateByNameSchema,
 	CompilationSchemaV18,
 	CompilationSchemaV20,
+	CompilationSchemaV22,
 	LockedStatusByCharacterIdSchemaV20,
 	LockedStatusByCharacterIdSchemaV18,
 	ModsViewSetupsSchema,
@@ -148,6 +149,9 @@ const ModsManagerBackupDataSchemaV21 = v.object({
 	sessionIds: HotutilsSchemaV21,
 	settings: SettingsByProfileSchema,
 });
+type ModsManagerBackupDataSchemaV21Output = v.InferOutput<
+	typeof ModsManagerBackupDataSchemaV21
+>;
 
 const ModsManagerBackupSchemaV21 = v.object({
 	appVersion: v.string(),
@@ -157,7 +161,27 @@ const ModsManagerBackupSchemaV21 = v.object({
 	version: v.number(),
 });
 
-const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV21;
+const ModsManagerBackupDataSchemaV22 = v.object({
+	characterTemplates: CharacterTemplateByNameSchema,
+	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+	defaultCompilation: CompilationSchemaV22,
+	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+	modsViewSetups: ModsViewSetupsSchemaV19,
+	profilesManagement: PersistedProfilesSchemaV21,
+	sessionIds: HotutilsSchemaV21,
+	settings: SettingsByProfileSchema,
+});
+
+const ModsManagerBackupSchemaV22 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: ModsManagerBackupDataSchemaV22,
+	version: v.number(),
+});
+
+const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV22;
 type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupDataSchema
 >;
@@ -186,11 +210,13 @@ export {
 	ModsManagerBackupSchemaV19,
 	ModsManagerBackupSchemaV20,
 	ModsManagerBackupSchemaV21,
+	ModsManagerBackupSchemaV22,
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupSchemaV18Output,
 	type ModsManagerBackupDataSchemaV19Output,
 	type ModsManagerBackupSchemaV19Output,
 	type ModsManagerBackupDataSchemaV20Output,
 	type ModsManagerBackupSchemaV20Output,
+	type ModsManagerBackupDataSchemaV21Output,
 	ModsManagerSchema,
 };

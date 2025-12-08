@@ -263,6 +263,17 @@ function upgradeProfilesTo21(profiles: Record<string, unknown>) {
 	return profiles;
 }
 
+function upgradeCompilationTo22(compilation: Record<string, unknown>) {
+	const newCompilation: Record<string, unknown> = structuredClone(compilation);
+	(newCompilation.flatCharacterModdings as Record<string, unknown>[]).forEach(
+		(charModding) => {
+			charModding.currentScore = 0;
+			charModding.previousScore = 0;
+		},
+	);
+	return newCompilation;
+}
+
 function createStores(db: IDBDatabase, stores: string[] = storeNames) {
 	for (const storeName of stores) {
 		if (!db.objectStoreNames.contains(storeName)) {
@@ -771,7 +782,66 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
-const dbVersions = [16, 18, 19, 20, 21] as const;
+async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(
+			db,
+			transaction,
+			"Compilations",
+			"compilationByIdByAllycode",
+			(oldCompilations) => {
+				const newCompilationsByAllycode: Map<
+					string,
+					Map<string, Record<string, unknown>>
+				> = new Map();
+				for (const [
+					allycode,
+					compilations,
+				] of oldCompilations.compilationByIdByAllycode as Map<
+					string,
+					Map<string, Record<string, unknown>>
+				>) {
+					const newCompilations: Map<
+						string,
+						Record<string, unknown>
+					> = new Map();
+					for (const [compilationId, compilation] of compilations) {
+						const newCompilation = upgradeCompilationTo22(compilation);
+						newCompilations.set(compilationId, newCompilation);
+					}
+					newCompilationsByAllycode.set(allycode, newCompilations);
+				}
+				return {
+					id: "compilationByIdByAllycode",
+					compilationByIdByAllycode: newCompilationsByAllycode,
+				};
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"DefaultCompilation",
+			"defaultCompilation",
+			(oldDefaultCompilation) => {
+				const newDefaultCompilation = upgradeCompilationTo22(
+					oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+				);
+				return {
+					id: "defaultCompilation",
+					defaultCompilation: {
+						...newDefaultCompilation,
+					},
+				};
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo22:", error);
+		transaction.abort();
+	}
+}
+
+const dbVersions = [16, 18, 19, 20, 21, 22] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -793,6 +863,7 @@ const persistOptions = configureSynced({
 					if (event.oldVersion < 19) await upgradeTo19(db, transaction);
 					if (event.oldVersion < 20) await upgradeTo20(db, transaction);
 					if (event.oldVersion < 21) await upgradeTo21(db, transaction);
+					if (event.oldVersion < 22) await upgradeTo22(db, transaction);
 				}
 			},
 		}),
@@ -808,6 +879,7 @@ const testOnlyUpgradeTo18 = testing ? upgradeTo18 : undefined;
 const testOnlyUpgradeTo19 = testing ? upgradeTo19 : undefined;
 const testOnlyUpgradeTo20 = testing ? upgradeTo20 : undefined;
 const testOnlyUpgradeTo21 = testing ? upgradeTo21 : undefined;
+const testOnlyUpgradeTo22 = testing ? upgradeTo22 : undefined;
 
 export {
 	type DBVersions,
@@ -817,10 +889,12 @@ export {
 	upgradeCompilationTo20,
 	upgradeLockedStatusTo20,
 	upgradeProfilesTo21,
+	upgradeCompilationTo22,
 	testOnlyCreateStores,
 	testOnlyStoreNames,
 	testOnlyUpgradeTo18,
 	testOnlyUpgradeTo19,
 	testOnlyUpgradeTo20,
 	testOnlyUpgradeTo21,
+	testOnlyUpgradeTo22,
 };

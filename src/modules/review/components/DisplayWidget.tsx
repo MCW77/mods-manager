@@ -103,6 +103,8 @@ const DisplayWidget = () => {
 					assignedMods: mods,
 					target: OptimizationPlan.createOptimizationPlan("xyz"),
 					missedGoals: [],
+					currentScore: 0,
+					previousScore: 0,
 				}),
 			),
 		);
@@ -128,27 +130,45 @@ const DisplayWidget = () => {
 			if (ModListFilter.showOptions.upgrades === filter.show) {
 				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
 				displayedMods = modAssignments
-					.map(({ characterId, target, assignedMods }) => ({
-						characterId,
-						target,
-						assignedMods: assignedMods.filter(
-							(mod) =>
-								optimizationSettings$.shouldLevelMod(mod, target) ||
-								optimizationSettings$.shouldSliceMod(mod, target),
-						),
-						missedGoals: [],
-					}))
+					.map(
+						({
+							characterId,
+							target,
+							assignedMods,
+							currentScore,
+							previousScore,
+						}) => ({
+							characterId,
+							target,
+							assignedMods: assignedMods.filter(
+								(mod) =>
+									optimizationSettings$.shouldLevelMod(mod, target) ||
+									optimizationSettings$.shouldSliceMod(mod, target),
+							),
+							missedGoals: [],
+							currentScore,
+							previousScore,
+						}),
+					)
 					.filter(({ assignedMods }) => assignedMods.length > 0);
 			} else {
 				// If we're not showing upgrades, then only show mods that aren't already assigned to that character
 				displayedMods = modAssignments.map(
-					({ characterId, target, assignedMods }) => ({
+					({
+						characterId,
+						target,
+						assignedMods,
+						currentScore,
+						previousScore,
+					}) => ({
 						characterId,
 						target,
 						assignedMods: assignedMods
 							.filter((mod) => mod.characterID !== characterId)
 							.sort(ModLoadout.slotSort),
 						missedGoals: [],
+						currentScore,
+						previousScore,
 					}),
 				);
 			}

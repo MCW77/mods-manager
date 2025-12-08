@@ -69,8 +69,33 @@ const CompilationSchemaV20 = v.object({
 });
 type CompilationSchemaV20Output = v.InferOutput<typeof CompilationSchemaV20>;
 
+const CompilationSchemaV22 = v.object({
+	category: v.string(),
+	description: v.string(),
+	flatCharacterModdings: v.array(
+		v.object({
+			assignedMods: v.array(v.string()),
+			characterId: KnownCharacterNamesSchema,
+			messages: v.optional(v.array(v.string())),
+			missedGoals: MissedGoalsSchema,
+			target: OptimizationPlanSchema,
+			currentScore: v.number(),
+			previousScore: v.number(),
+		}),
+	),
+	id: v.string(),
+	isReoptimizationNeeded: v.boolean(),
+	lastOptimized: v.nullable(v.date()),
+	optimizationConditions: OptimizationConditionsSchemaV20,
+	reoptimizationIndex: v.number(),
+	selectedCharacters: SelectedCharactersSchema,
+});
+type CompilationSchemaV22Output = v.InferOutput<typeof CompilationSchemaV22>;
+
 export {
+	CompilationSchemaV22,
 	CompilationSchemaV20,
 	CompilationSchemaV18,
 	type CompilationSchemaV20Output,
+	type CompilationSchemaV22Output,
 };

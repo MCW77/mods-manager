@@ -17,6 +17,7 @@ import {
 	upgradeFilterTo19,
 	upgradeLockedStatusTo20,
 	upgradeProfilesTo21,
+	upgradeCompilationTo22,
 } from "#/utils/globalLegendPersistSettings.js";
 import {
 	LatestModsManagerBackupSchema,
@@ -29,6 +30,8 @@ import {
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupDataSchemaV20Output,
 	ModsManagerBackupSchemaV21,
+	type ModsManagerBackupDataSchemaV21Output,
+	ModsManagerBackupSchemaV22,
 } from "#/domain/schemas/mods-manager/index.js";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas.js";
 import { fromGIMOBackup } from "../mappers/GIMOBackupMapper.js";
@@ -307,6 +310,49 @@ const migrations = new Map<
 			};
 		},
 	],
+	[
+		21,
+		(normalizedBackup) => {
+			// Migrate v21 to v22: Update characterModdings in compilations
+			const data =
+				normalizedBackup.data as ModsManagerBackupDataSchemaV21Output;
+
+			const newCompilations = new Map<
+				string,
+				Map<string, Record<string, unknown>>
+			>();
+			for (const [allycode, compilationById] of data.compilations) {
+				const newCompilationById = new Map<string, Record<string, unknown>>();
+				for (const [compilationId, compilation] of compilationById) {
+					newCompilationById.set(
+						compilationId,
+						upgradeCompilationTo22(compilation),
+					);
+				}
+				newCompilations.set(allycode, newCompilationById);
+			}
+
+			const newData = {
+				characterTemplates: data.characterTemplates,
+				compilations: newCompilations,
+				defaultCompilation: upgradeCompilationTo22(data.defaultCompilation),
+				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+				lockedStatus: data.lockedStatus,
+				modsViewSetups: data.modsViewSetups,
+				profilesManagement: data.profilesManagement,
+				sessionIds: data.sessionIds,
+				settings: data.settings,
+			};
+
+			return {
+				appVersion: normalizedBackup.appVersion,
+				backupType: "fullBackup",
+				client: "mods-manager",
+				data: newData,
+				version: 22,
+			};
+		},
+	],
 ]);
 
 function runMigrations(data: NormalizedBackup) {
@@ -389,6 +435,14 @@ const convertBackup = (parsedJSON: unknown) => {
 	if (backup === null) {
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV21,
+			parsedJSON,
+		);
+		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
+	}
+
+	if (backup === null) {
+		const modsManagerParseResult = v.safeParse(
+			ModsManagerBackupSchemaV22,
 			parsedJSON,
 		);
 		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
