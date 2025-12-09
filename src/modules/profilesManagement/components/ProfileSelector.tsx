@@ -40,7 +40,7 @@ const ProfileSelector: React.FC<ComponentProps> = observer(
 	({ isAddingProfile$ }: ComponentProps) => {
 		const [t] = useTranslation("global-ui");
 		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
-		const nameByAllycode$ = useObservable(
+		const nameByAllycode$ = useObservable(() =>
 			objectEntries(profilesManagement$.profiles.playernameByAllycode.get()),
 		);
 
