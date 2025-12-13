@@ -78,6 +78,7 @@ const App = () => {
 		"flex data-[state=active]:grow-1 data-[state=inactive]:m-t-0 min-h-0";
 
 	useMount(() => {
+		about$.checkVersion();
 		console.log("App mounted");
 	});
 	useEffect(() => {
@@ -110,7 +111,6 @@ const App = () => {
 		);
 
 		// Check the current version of the app against the API
-		about$.checkVersion();
 		ui$.currentSection.set(firstSection);
 	}, [firstSection]);
 
