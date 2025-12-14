@@ -49,6 +49,7 @@ export async function refreshPlayerData(
 	let fullProfile: FetchedFullGIMOProfile;
 	const messages: string[] = [];
 	isBusy$.set(true);
+	hotutils$.checkSubscriptionStatus();
 
 	// First, fetch character definitions from swgoh.gg
 	try {
@@ -257,7 +258,6 @@ function updatePlayerData(
 		compilations$.resetOptimizationConditions(newAllycode);
 		profilesManagement$.profiles.activeAllycode.set(newAllycode);
 		endBatch();
-		hotutils$.checkSubscriptionStatus();
 	} catch (error) {
 		const errorMessage = error instanceof DOMException ? error.message : "";
 		dialog$.showError(
