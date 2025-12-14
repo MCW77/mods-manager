@@ -1,6 +1,13 @@
 // react
-import { lazy, Suspense, useCallback, useEffect } from "react";
+import { lazy, Suspense, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import {
+	Memo,
+	Show,
+	reactive,
+	useMount,
+	useObserve,
+} from "@legendapp/state/react";
 
 // styles
 import "./App.css";
@@ -13,13 +20,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-import {
-	Memo,
-	Show,
-	reactive,
-	useValue,
-	useMount,
-} from "@legendapp/state/react";
+import { observable } from "@legendapp/state";
 
 const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
 
@@ -65,11 +66,19 @@ const hotutils$ = stateLoader$.hotutils$;
 
 const ReactiveTabs = reactive(Tabs);
 
+const firstRender$ = observable(true);
+
 const App = () => {
 	const [t] = useTranslation("global-ui");
-	const firstSection = useValue(() =>
-		profilesManagement$.hasProfiles.get() ? "mods" : "help",
-	);
+
+	useObserve(() => {
+		const hasProfiles = profilesManagement$.hasProfiles.get();
+		if (!hasProfiles) {
+			ui$.currentSection.set("help");
+		}
+		ui$.currentSection.set("mods");
+	});
+
 	// Memoize the section change callback to prevent recreating it on every render
 	const handleSectionChange = useCallback((section: string) => {
 		ui$.currentSection.set(section as SectionNames);
@@ -78,41 +87,40 @@ const App = () => {
 		"flex data-[state=active]:grow-1 data-[state=inactive]:m-t-0 min-h-0";
 
 	useMount(() => {
-		about$.checkVersion();
+		if (firstRender$.peek() === true) {
+			firstRender$.set(false);
+			const queryParams = new URLSearchParams(document.location.search);
+			const allycode = queryParams.get("Allycode");
+			const sessionId = queryParams.get("SessionID");
+
+			if (allycode) {
+				if (sessionId) {
+					if (queryParams.has("NoPull")) {
+						if (profilesManagement$.profiles.activeAllycode.peek() === "")
+							refreshPlayerData(allycode, false, sessionId, false);
+						else
+							hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
+								sessionId,
+							);
+					} else {
+						refreshPlayerData(allycode, true, sessionId, false);
+					}
+				} else if (!queryParams.has("NoPull")) {
+					refreshPlayerData(allycode, true, null, false);
+				}
+			}
+
+			// Remove the query string after reading anything we needed from it.
+			window.history.replaceState(
+				{},
+				document.title,
+				document.location.href.split("?")[0],
+			);
+
+			about$.checkVersion();
+		}
 		console.log("App mounted");
 	});
-	useEffect(() => {
-		const queryParams = new URLSearchParams(document.location.search);
-		const allycode = queryParams.get("Allycode");
-		const sessionId = queryParams.get("SessionID");
-
-		if (allycode) {
-			if (sessionId) {
-				if (queryParams.has("NoPull")) {
-					if (profilesManagement$.profiles.activeAllycode.peek() === "")
-						refreshPlayerData(allycode, false, sessionId, false);
-					else
-						hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
-							sessionId,
-						);
-				} else {
-					refreshPlayerData(allycode, true, sessionId, false);
-				}
-			} else if (!queryParams.has("NoPull")) {
-				refreshPlayerData(allycode, true, null, false);
-			}
-		}
-
-		// Remove the query string after reading anything we needed from it.
-		window.history.replaceState(
-			{},
-			document.title,
-			document.location.href.split("?")[0],
-		);
-
-		// Check the current version of the app against the API
-		ui$.currentSection.set(firstSection);
-	}, [firstSection]);
 
 	return (
 		<Suspense fallback={<div className={"bg-black h-full w-full"} />}>
