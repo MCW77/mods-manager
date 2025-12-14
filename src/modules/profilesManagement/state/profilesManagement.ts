@@ -1,5 +1,5 @@
 // utils
-import { formatTimespan } from "../utils/formatTimespan.js";
+import { formatTimespan } from "../utils/formatTimespan";
 
 // state
 import {
@@ -11,28 +11,28 @@ import {
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 // domain
-import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po/index.js";
-import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po/index.js";
+import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po/index";
+import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po/index";
 import {
 	type PersistedPlayerProfile,
 	type PlayerProfile,
 	createPlayerProfile,
 	getProfileFromPersisted,
 	getProfileToPersist,
-} from "../domain/PlayerProfile.js";
+} from "../domain/PlayerProfile";
 import type {
 	Profiles,
 	PersistedProfiles,
 	PersistedDataWithProfiles,
-} from "../domain/Profiles.js";
-import type { ProfilesManagementObservable } from "../domain/ProfilesManagement.js";
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import type * as Character from "#/domain/Character.js";
-import { Mod } from "#/domain/Mod.js";
-import type { GIMOFlatMod } from "#/domain/types/ModTypes.js";
+} from "../domain/Profiles";
+import type { ProfilesManagementObservable } from "../domain/ProfilesManagement";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type * as Character from "#/domain/Character";
+import { Mod } from "#/domain/Mod";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 const isObservableMod = (
 	mod: Observable<Mod | undefined> | Observable<Mod>,

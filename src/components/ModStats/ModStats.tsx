@@ -6,18 +6,18 @@ import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
-import type { Mod } from "#/domain/Mod.js";
-import { modTierColors } from "#/domain/ModTierColors.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import type { SecondaryStats, Stats } from "#/domain/Stats.js";
+import type { Mod } from "#/domain/Mod";
+import { modTierColors } from "#/domain/ModTierColors";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { SecondaryStats, Stats } from "#/domain/Stats";
 
 // components
-const ModScores = lazy(() => import("../ModScores/ModScores.jsx"));
+const ModScores = lazy(() => import("../ModScores/ModScores"));
 
 const translateStat = (
 	displayText: Stats.DisplayedStat,

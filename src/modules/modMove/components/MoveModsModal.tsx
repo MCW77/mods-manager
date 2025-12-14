@@ -1,29 +1,29 @@
 // utils
-import flatten from "lodash-es/flatten.js";
-import collectByKey from "#/utils/collectByKey.js";
-import { formatNumber } from "#/utils/formatNumber.js";
+import flatten from "lodash-es/flatten";
+import collectByKey from "#/utils/collectByKey";
+import { formatNumber } from "#/utils/formatNumber";
 
 //state
 import { useValue } from "@legendapp/state/react";
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
-import { modMove$ } from "#/modules/modMove/state/modMove.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
+import { modMove$ } from "#/modules/modMove/state/modMove";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { Mod } from "#/domain/Mod.js";
+import type { Mod } from "#/domain/Mod";
 
-import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings.js";
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { Credits } from "#/components/Credits/Credits.jsx";
-import { Button } from "#ui/button.jsx";
+import { Credits } from "#/components/Credits/Credits";
+import { Button } from "#ui/button";
 
 interface HUModsProfile {
 	id: CharacterNames;

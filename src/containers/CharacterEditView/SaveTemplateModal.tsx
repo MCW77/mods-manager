@@ -8,23 +8,23 @@ import {
 } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const templates$ = stateLoader$.templates$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // components
-import { Button } from "#ui/button.jsx";
-import { Input } from "#ui/input.jsx";
-import { Label } from "#ui/label.jsx";
+import { Button } from "#ui/button";
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
+} from "#ui/select";
 
 const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);

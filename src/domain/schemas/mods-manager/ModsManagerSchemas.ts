@@ -16,7 +16,7 @@ import {
 	SettingsByProfileSchema,
 	HotutilsSchemaV18,
 	HotutilsSchemaV21,
-} from "./index.js";
+} from "./index";
 
 const ModsManagerBackupSchemaV16 = v.pipe(
 	v.object({

@@ -2,14 +2,14 @@
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 // domain
-import { characterSettings } from "#/constants/characterSettings.js";
-import setBonuses from "#/constants/setbonuses.js";
-import type { PlanEditing } from "../domain/PlanEditing.js";
-import type { CharacterSettings } from "#/domain/CharacterSettings.js";
-import type { GIMOSetStatNames } from "#/domain/GIMOStatNames.js";
-import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
-import type { SetRestrictions } from "#/domain/SetRestrictions.js";
-import { createTargetStat, type TargetStat } from "#/domain/TargetStat.js";
+import { characterSettings } from "#/constants/characterSettings";
+import setBonuses from "#/constants/setbonuses";
+import type { PlanEditing } from "../domain/PlanEditing";
+import type { CharacterSettings } from "#/domain/CharacterSettings";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { SetRestrictions } from "#/domain/SetRestrictions";
+import { createTargetStat, type TargetStat } from "#/domain/TargetStat";
 
 const target = OptimizationPlan.createOptimizationPlan("");
 

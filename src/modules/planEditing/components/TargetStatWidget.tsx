@@ -9,26 +9,26 @@ import {
 } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const characters$ = stateLoader$.characters$;
 
 // domain
-import type { PlanEditing } from "../domain/PlanEditing.js";
+import type { PlanEditing } from "../domain/PlanEditing";
 import {
 	type TargetStatsNames,
 	targetStatsNames,
-} from "#/domain/TargetStat.js";
+} from "#/domain/TargetStat";
 
 // components
 import {
 	type Group,
 	ReactiveMultiColumnSelect,
-} from "#/components/ReactiveMultiColumnSelect.jsx";
-import { Button } from "#ui/button.jsx";
-import { Card } from "#ui/card.jsx";
-import { Input } from "#ui/input.jsx";
-import { Label } from "#ui/label.jsx";
+} from "#/components/ReactiveMultiColumnSelect";
+import { Button } from "#ui/button";
+import { Card } from "#ui/card";
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
 import {
 	Select,
 	SelectContent,
@@ -36,9 +36,9 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
-import { Switch as ShadSwitch } from "#ui/switch.jsx";
-import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group.jsx";
+} from "#ui/select";
+import { Switch as ShadSwitch } from "#ui/switch";
+import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);

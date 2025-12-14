@@ -1,7 +1,7 @@
 import {
 	type BaseCharacterById,
 	mapAPI2BaseCharacterById,
-} from "../domain/BaseCharacter.js";
+} from "../domain/BaseCharacter";
 
 export async function fetchCharacters(): Promise<BaseCharacterById> {
 	return fetch("https://api.mods-optimizer.swgoh.grandivory.com/characters/")

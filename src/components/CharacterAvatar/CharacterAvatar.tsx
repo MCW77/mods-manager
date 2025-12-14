@@ -1,5 +1,5 @@
 // utils
-import { cn } from "#/lib/utils.js";
+import { cn } from "#/lib/utils";
 import { match, P } from "ts-pattern";
 
 // react
@@ -8,7 +8,7 @@ import * as React from "react";
 // state
 import { Show, Switch, useValue, useObservable } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const characters$ = stateLoader$.characters$;
 
@@ -16,8 +16,8 @@ const characters$ = stateLoader$.characters$;
 import {
 	type BaseCharacter,
 	defaultBaseCharacter,
-} from "#/modules/characters/domain/BaseCharacter.js";
-import type * as Character from "#/domain/Character.js";
+} from "#/modules/characters/domain/BaseCharacter";
+import type * as Character from "#/domain/Character";
 
 // components
 import {
@@ -29,8 +29,8 @@ import {
 	Stars5,
 	Stars6,
 	Stars7,
-} from "./Stars.jsx";
-import { Badge } from "#ui/badge.jsx";
+} from "./Stars";
+import { Badge } from "#ui/badge";
 
 type ComponentProps = {
 	character?: Character.Character;

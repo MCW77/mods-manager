@@ -1,5 +1,5 @@
 import "i18next";
-import type { defaultNS } from "../i18n.js";
+import type { defaultNS } from "../i18n";
 import type domain from "../../public/locales/en-US/domain.json";
 import type exploreui from "../../public/locales/en-US/explore-ui.json";
 import type globalui from "../../public/locales/en-US/global-ui.json";

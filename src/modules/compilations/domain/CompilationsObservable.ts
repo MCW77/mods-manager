@@ -2,9 +2,9 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import type { Compilation } from "./Compilation.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { Compilation } from "./Compilation";
 
 interface CompilationsObservable {
 	persistedData1: {

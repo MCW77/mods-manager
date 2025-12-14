@@ -1,4 +1,4 @@
-import type * as SetTypes from "../types/SetTypes.js";
+import type * as SetTypes from "../types/SetTypes";
 
 export const setNames: Readonly<SetTypes.SetNames[]> = [
 	"Crit Chance",

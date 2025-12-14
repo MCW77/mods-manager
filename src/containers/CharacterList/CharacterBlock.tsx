@@ -4,7 +4,7 @@ import { lazy, useCallback } from "react";
 import { Computed, observer, useValue } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -12,20 +12,20 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import type * as Character from "#/domain/Character.js";
-import type * as OptimizationPlan from "#/domain/OptimizationPlan.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type * as Character from "#/domain/Character";
+import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { CharacterTargetStatusIcons } from "./CharacterTargetStatusIcons.jsx";
+import { CharacterTargetStatusIcons } from "./CharacterTargetStatusIcons";
 const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar.jsx"),
+	() => import("#/components/CharacterAvatar/CharacterAvatar"),
 );
-import { Button } from "#ui/button.jsx";
-import { Label } from "#ui/label.jsx";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 const showEditCharacterModal = (
 	allycode: string,

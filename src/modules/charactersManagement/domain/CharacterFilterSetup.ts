@@ -2,7 +2,7 @@ import type {
 	TextFilter,
 	CharacterFilterById,
 	CustomFilterById,
-} from "./CharacterFilterById.js";
+} from "./CharacterFilterById";
 
 export interface CharacterFilterSetup {
 	customFilterById: CustomFilterById;

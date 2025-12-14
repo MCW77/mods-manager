@@ -2,15 +2,15 @@
 import React from "react";
 
 // state
-import { help$ } from "#/modules/help/state/help.js";
+import { help$ } from "#/modules/help/state/help";
 
 //domain
-import type { HelpSections } from "#/modules/help/domain/HelpSections.js";
+import type { HelpSections } from "#/modules/help/domain/HelpSections";
 
 // components
 import { HelpCircle } from "lucide-react";
 
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 type ComponentProps = {
 	title: string;

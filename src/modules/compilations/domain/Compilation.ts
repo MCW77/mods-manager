@@ -1,6 +1,6 @@
-import type { FlatCharacterModdings } from "./CharacterModdings.js";
-import type { OptimizationConditions } from "./OptimizationConditions.js";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters.js";
+import type { FlatCharacterModdings } from "./CharacterModdings";
+import type { OptimizationConditions } from "./OptimizationConditions";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
 
 export interface Compilation {
 	category: string;

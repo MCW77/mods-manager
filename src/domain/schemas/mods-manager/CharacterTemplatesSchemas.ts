@@ -2,7 +2,7 @@
 import * as v from "valibot";
 
 // domain
-import { SelectedCharactersSchema } from "./index.js";
+import { SelectedCharactersSchema } from "./index";
 
 const CharacterTemplateSchema = v.object({
 	id: v.string(),

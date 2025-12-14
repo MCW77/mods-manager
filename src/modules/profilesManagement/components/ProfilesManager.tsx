@@ -1,13 +1,7 @@
 // react
 import { lazy } from "react";
 import { useTranslation } from "react-i18next";
-import {
-	Memo,
-	Show,
-	Switch,
-	useMount,
-	useObservable,
-} from "@legendapp/state/react";
+import { Memo, Show, Switch, useObservable } from "@legendapp/state/react";
 
 // styles
 import {
@@ -17,22 +11,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;
 
 const { refreshPlayerData } = await import(
-	"#/modules/profileFetch/profileFetch.jsx"
+	"#/modules/profileFetch/profileFetch"
 );
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ProfileAdder = lazy(() => import("./ProfileAdder.jsx"));
-const ProfileSelector = lazy(() => import("./ProfileSelector.jsx"));
+const ProfileAdder = lazy(() => import("./ProfileAdder"));
+const ProfileSelector = lazy(() => import("./ProfileSelector"));
 
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 const ProfilesManager = () => {
 	const [t] = useTranslation("global-ui");

@@ -2,8 +2,8 @@
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
 // domain
-import type { HelpSections } from "../domain/HelpSections.js";
-import { ui$ } from "#/modules/ui/state/ui.js";
+import type { HelpSections } from "../domain/HelpSections";
+import { ui$ } from "#/modules/ui/state/ui";
 
 interface Help {
 	section: HelpSections;

@@ -1,32 +1,32 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement.js"
+	"#/modules/profilesManagement/state/profilesManagement"
 );
 const { charactersManagement$ } = await import(
-	"#/modules/charactersManagement/state/charactersManagement.js"
+	"#/modules/charactersManagement/state/charactersManagement"
 );
 
 // domain
-import * as ModConsts from "#/domain/constants/ModConsts.js";
-import setBonuses from "#/constants/setbonuses.js";
+import * as ModConsts from "#/domain/constants/ModConsts";
+import setBonuses from "#/constants/setbonuses";
 
-import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings.js";
-import type { Mod } from "#/domain/Mod.js";
-import type * as Character from "#/domain/Character.js";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
+import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
+import type { Mod } from "#/domain/Mod";
+import type * as Character from "#/domain/Character";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import {
 	Stats,
 	CharacterSummaryStats as CSStats,
 	SetStats,
-} from "#/domain/Stats.js";
-import type { OptimizationSettingsObservable } from "../domain/OptimizationSettingsObservable.js";
-import type { ModLoadout } from "#/domain/ModLoadout.js";
-import type SetBonus from "#/domain/SetBonus.js";
+} from "#/domain/Stats";
+import type { OptimizationSettingsObservable } from "../domain/OptimizationSettingsObservable";
+import type { ModLoadout } from "#/domain/ModLoadout";
+import type SetBonus from "#/domain/SetBonus";
 
 const CSStat = CSStats.CharacterSummaryStat;
 

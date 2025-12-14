@@ -2,18 +2,18 @@
 import Big from "big.js";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import type { ModTiersEnum } from "#/constants/enums.js";
-import type * as ModTypes from "./types/ModTypes.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type { ModTiersEnum } from "#/constants/enums";
+import type * as ModTypes from "./types/ModTypes";
 import type {
 	GIMOPrimaryStatNames,
 	GIMOSecondaryStatNames,
 	GIMOSetStatNames,
-} from "./GIMOStatNames.js";
-import type { Pips } from "./Pips.js";
-import { PrimaryStat } from "./PrimaryStat.js";
-import { type Rolls, SecondaryStat } from "./SecondaryStat.js";
-import { SetStat } from "./SetStat.js";
+} from "./GIMOStatNames";
+import type { Pips } from "./Pips";
+import { PrimaryStat } from "./PrimaryStat";
+import { type Rolls, SecondaryStat } from "./SecondaryStat";
+import { SetStat } from "./SetStat";
 
 const HU2GIMOSlotsMap: {
 	[key in ModTypes.HUSlots]: ModTypes.GIMOSlots;

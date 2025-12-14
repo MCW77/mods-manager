@@ -1,12 +1,12 @@
 // state
 import { observable } from "@legendapp/state";
-import type { StackRankParameters } from "../domain/StackRankParameters.js";
+import type { StackRankParameters } from "../domain/StackRankParameters";
 
 // api
-import { fetchRankedCharacters } from "../api/fetchRankedCharacters.js";
+import { fetchRankedCharacters } from "../api/fetchRankedCharacters";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 const stackRank$ = observable<{
 	parameters: StackRankParameters;

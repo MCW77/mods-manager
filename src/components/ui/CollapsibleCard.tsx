@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Collapsible from "@radix-ui/react-collapsible";
 
-import { cn } from "#lib/utils.js";
+import { cn } from "#lib/utils";
 
 const CollapsibleCard = React.forwardRef<
 	React.ElementRef<typeof Collapsible.Root>,

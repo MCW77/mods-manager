@@ -5,17 +5,17 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive } from "@legendapp/state/react";
 
-import { ui$ } from "../state/ui.js";
+import { ui$ } from "../state/ui";
 
 // components
-import { Label } from "#ui/label.jsx";
+import { Label } from "#ui/label";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
+} from "#ui/select";
 
 const ReactiveSelect = reactive(Select);
 

@@ -1,4 +1,4 @@
-import type { CharacterNames } from "../../../../constants/CharacterNames.js";
+import type { CharacterNames } from "../../../../constants/CharacterNames";
 
 export const defaultFixture = {
 	CharactersManagement: [

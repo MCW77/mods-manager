@@ -1,4 +1,4 @@
-import areInputsEqual from "./are-inputs-equal.js";
+import areInputsEqual from "./are-inputs-equal";
 
 type ThisParamType<T> = T extends (this: infer U, ...args: never) => unknown
 	? U

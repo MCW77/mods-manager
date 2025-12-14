@@ -1,15 +1,15 @@
 // react
 import React, { useRef } from "react";
 
-import { cn } from "#lib/utils.js";
+import { cn } from "#lib/utils";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
-import { Button } from "../ui/button.jsx";
-import { Input } from "../ui/input.jsx";
-import { Label } from "../ui/label.jsx";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 type ComponentProps = {
 	accept?: string;

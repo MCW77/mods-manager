@@ -10,10 +10,10 @@ import {
 	testOnlyUpgradeTo20,
 	testOnlyUpgradeTo21,
 	testOnlyUpgradeTo22,
-} from "../../utils/globalLegendPersistSettings.js";
+} from "../../utils/globalLegendPersistSettings";
 
 // domain
-import { LatestModsManagerBackupSchema } from "../../domain/schemas/mods-manager/ModsManagerSchemas.js";
+import { LatestModsManagerBackupSchema } from "../../domain/schemas/mods-manager/ModsManagerSchemas";
 
 // Define store data interface for IndexedDB operations
 interface StoreData {

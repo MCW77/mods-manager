@@ -4,22 +4,22 @@ import { useTranslation } from "react-i18next";
 // state
 import { reactive, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { modScores } from "#/domain/Mod.js";
+import { modScores } from "#/domain/Mod";
 
 // components
-import { Label } from "#ui/label.jsx";
+import { Label } from "#ui/label";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
+} from "#ui/select";
 
 const ReactiveSelect = reactive(Select);
 

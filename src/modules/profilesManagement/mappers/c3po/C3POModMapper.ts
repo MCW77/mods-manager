@@ -1,13 +1,13 @@
-import type * as ModTypes from "../../../../domain/types/ModTypes.js";
-import { ModTiersEnum } from "../../../../constants/enums.js";
+import type * as ModTypes from "../../../../domain/types/ModTypes";
+import { ModTiersEnum } from "../../../../constants/enums";
 
-import type * as DTOs from "../../dtos/index.js";
-import { fromC3PO as fromC3POPrimary } from "./C3POPrimaryStatMapper.js";
-import { fromC3PO as fromC3POSecondary } from "./C3POSecondaryStatMapper.js";
-import * as GIMOMods from "../../../../domain/Mod.js";
-import type * as GIMOStats from "../../../../domain/Stats.js";
-import type { GIMOSetStatNames } from "#/domain/GIMOStatNames.js";
-import type { Pips } from "#/domain/Pips.js";
+import type * as DTOs from "../../dtos/index";
+import { fromC3PO as fromC3POPrimary } from "./C3POPrimaryStatMapper";
+import { fromC3PO as fromC3POSecondary } from "./C3POSecondaryStatMapper";
+import * as GIMOMods from "../../../../domain/Mod";
+import type * as GIMOStats from "../../../../domain/Stats";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
+import type { Pips } from "#/domain/Pips";
 
 const C3PO2GIMOSetMap: {
 	[key in DTOs.C3PO.Set]: GIMOSetStatNames;

@@ -1,13 +1,13 @@
 // state
 import { reactive, reactiveObserver, useValue } from "@legendapp/state/react";
 
-import { target$ } from "#/modules/planEditing/state/planEditing.js";
+import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // domain
-import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames.js";
+import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
 
 // components
-import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group.jsx";
+import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const ReactiveToggleGroup = reactive(ToggleGroup);
 

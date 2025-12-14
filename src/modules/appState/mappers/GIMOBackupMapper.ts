@@ -2,12 +2,12 @@
 import type * as v from "valibot";
 
 // domain
-import type { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas.js";
-import type { Compilation } from "#/modules/compilations/domain/Compilation.js";
-import { fromGIMOCharacterTemplates } from "#/modules/templates/mappers/GIMOCharacterTemplatesMapper.js";
-import { fromGIMOOptimizationPlan } from "#/modules/templates/mappers/GIMOOptimizationPlanMapper.js";
-import type { PersistedProfilesSchemaOutput } from "#/domain/schemas/mods-manager/PersistedProfilesSchemas.js";
-import type { GIMOFlatMod } from "#/domain/types/ModTypes.js";
+import type { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
+import type { Compilation } from "#/modules/compilations/domain/Compilation";
+import { fromGIMOCharacterTemplates } from "#/modules/templates/mappers/GIMOCharacterTemplatesMapper";
+import { fromGIMOOptimizationPlan } from "#/modules/templates/mappers/GIMOOptimizationPlanMapper";
+import type { PersistedProfilesSchemaOutput } from "#/domain/schemas/mods-manager/PersistedProfilesSchemas";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 type GIMOBackup = v.InferOutput<typeof GIMOBackupSchema>;
 

@@ -1,12 +1,12 @@
 // state
 import { Computed, observer, useValue } from "@legendapp/state/react";
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
-import { modMove$ } from "#/modules/modMove/state/modMove.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
+import { modMove$ } from "#/modules/modMove/state/modMove";
 
 // components
-import { Button } from "#ui/button.jsx";
-import { Progress } from "#ui/progress.jsx";
+import { Button } from "#ui/button";
+import { Progress } from "#ui/progress";
 
 const ModMoveProgress: React.FC = observer(() => {
 	return (

@@ -3,11 +3,11 @@ import React from "react";
 import { Show, useValue } from "@legendapp/state/react";
 
 // state
-import { errorMessage$ } from "../state/errorMessage.js";
+import { errorMessage$ } from "../state/errorMessage";
 
 // components
-import { WarningLabel } from "#/components/WarningLabel/WarningLabel.jsx";
-import { DialogClose } from "#ui/dialog.jsx";
+import { WarningLabel } from "#/components/WarningLabel/WarningLabel";
+import { DialogClose } from "#ui/dialog";
 
 const ErrorMessage = React.memo(() => {
 	const errorMessage = useValue(errorMessage$);

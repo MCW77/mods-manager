@@ -7,17 +7,17 @@ import {
 } from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
-import { target$ } from "#/modules/planEditing/state/planEditing.js";
+import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // domain
-import setBonuses from "#/constants/setbonuses.js";
+import setBonuses from "#/constants/setbonuses";
 
-import type SetBonus from "#/domain/SetBonus.js";
-import type { GIMOSetStatNames } from "#/domain/GIMOStatNames.js";
+import type SetBonus from "#/domain/SetBonus";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 
 // components
-import { Input } from "#ui/input.jsx";
-import { Label } from "#ui/label.jsx";
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
 
 const ReactiveInput = reactive(Input);
 

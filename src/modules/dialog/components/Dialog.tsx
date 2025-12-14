@@ -2,10 +2,10 @@
 import { reactive, useValue } from "@legendapp/state/react";
 
 // state
-import { dialog$ } from "../state/dialog.js";
+import { dialog$ } from "../state/dialog";
 
 // components
-import * as DialogPrimitive from "#/components/Dialogs/Dialog/Dialog.jsx";
+import * as DialogPrimitive from "#/components/Dialogs/Dialog/Dialog";
 
 const ReactiveDialog = reactive(DialogPrimitive.Dialog);
 

@@ -2,16 +2,16 @@
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { isBusy$ } from "#/modules/busyIndication/state/isBusy.js";
+import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 
 // domain
-import { characterSettings } from "#/constants/characterSettings.js";
-import * as Character from "#/domain/Character.js";
+import { characterSettings } from "#/constants/characterSettings";
+import * as Character from "#/domain/Character";
 
 // component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +24,7 @@ import {
 	faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 interface SelectionActionsProps {
 	visibleCharacters: Character.Character[];

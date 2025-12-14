@@ -6,10 +6,10 @@ import { useTranslation } from "react-i18next";
 import { reactive } from "@legendapp/state/react";
 import { beginBatch, endBatch, observable } from "@legendapp/state";
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type { Mod } from "#/domain/Mod.js";
+import type { Mod } from "#/domain/Mod";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,11 +20,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import * as Collapsible from "@radix-ui/react-collapsible";
 
-const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail.jsx"));
-import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible.jsx";
-const DeleteModsModal = lazy(() => import("./DeleteModsModal.jsx"));
+const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+const DeleteModsModal = lazy(() => import("./DeleteModsModal"));
 
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 interface GroupedModsProps {
 	allModsCount: number;

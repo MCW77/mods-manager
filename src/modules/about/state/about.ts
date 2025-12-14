@@ -1,15 +1,15 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // api
-import { fetchVersion } from "../api/fetchVersion.js";
+import { fetchVersion } from "../api/fetchVersion";
 
 // domain
-import type { AboutObservable } from "../domain/AboutObservable.js";
+import type { AboutObservable } from "../domain/AboutObservable";
 
 const about$: ObservableObject<AboutObservable> = observable<AboutObservable>({
 	version: () => about$.persistedData.version,

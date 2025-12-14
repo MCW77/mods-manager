@@ -2,8 +2,8 @@
 import * as v from "valibot";
 
 // domain
-import { CharacterTemplatesSchema } from "./CharacterTemplatesSchemas.js";
-import { SelectedCharactersSchema } from "./SelectedCharactersSchemas.js";
+import { CharacterTemplatesSchema } from "./CharacterTemplatesSchemas";
+import { SelectedCharactersSchema } from "./SelectedCharactersSchemas";
 
 const ProfileSchema = v.object({
 	allyCode: v.string(),

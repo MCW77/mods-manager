@@ -1,20 +1,20 @@
 // utils
-import { cn } from "#/lib/utils.js";
+import { cn } from "#/lib/utils";
 
 // react
 import { useObservable } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 // domain
-import type * as Character from "#/domain/Character.js";
-import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
+import type * as Character from "#/domain/Character";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-import { LockedToggle } from "#/components/LockedToggle/LockedToggle.jsx";
+import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
 
 function CharacterTargetStatusIcons({
 	character,

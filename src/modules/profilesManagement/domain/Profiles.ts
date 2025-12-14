@@ -2,7 +2,7 @@
 import type {
 	PersistedPlayerProfile,
 	PlayerProfile,
-} from "../domain/PlayerProfile.js";
+} from "../domain/PlayerProfile";
 
 interface PersistedDataWithPersistedProfiles {
 	id: "profiles";

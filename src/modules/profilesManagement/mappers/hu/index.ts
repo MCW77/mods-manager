@@ -1,2 +1,2 @@
-export * as HUCharacterStatsMapper from "./HUCharacterStatsMapper.js";
-export * as HUPlayerValuesMapper from "./HUPlayerValuesMapper.js";
+export * as HUCharacterStatsMapper from "./HUCharacterStatsMapper";
+export * as HUPlayerValuesMapper from "./HUPlayerValuesMapper";

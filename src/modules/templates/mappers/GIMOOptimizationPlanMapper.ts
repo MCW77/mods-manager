@@ -2,12 +2,12 @@
 import type * as v from "valibot";
 
 // domain
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import type { OptimizationPlanSchema as GIMOOptimizationPlanSchema } from "#/domain/schemas/gimo/OptimizationPlanSchemas.js";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { OptimizationPlanSchema as GIMOOptimizationPlanSchema } from "#/domain/schemas/gimo/OptimizationPlanSchemas";
 
 // mappers
-import { fromGIMOSetRestrictions } from "./GIMOSetRestrictionsMapper.js";
-import { fromGIMOTargetStats } from "./GIMOTargetStatsMapper.js";
+import { fromGIMOSetRestrictions } from "./GIMOSetRestrictionsMapper";
+import { fromGIMOTargetStats } from "./GIMOTargetStatsMapper";
 
 type GIMOOptimizationPlan = v.InferOutput<typeof GIMOOptimizationPlanSchema>;
 

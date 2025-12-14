@@ -8,24 +8,24 @@ import {
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement.js"
+	"#/modules/profilesManagement/state/profilesManagement"
 );
 
 // domain
 import {
 	getDefaultCompilation,
 	type Compilation,
-} from "../domain/Compilation.js";
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import { characterSettings } from "#/constants/characterSettings.js";
+} from "../domain/Compilation";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import { characterSettings } from "#/constants/characterSettings";
 import {
 	fromShortOptimizationPlan,
 	type OptimizationPlan,
-} from "#/domain/OptimizationPlan.js";
-import type { CompilationsObservable } from "../domain/CompilationsObservable.js";
+} from "#/domain/OptimizationPlan";
+import type { CompilationsObservable } from "../domain/CompilationsObservable";
 
 const getinitialCompilations = () => {
 	const compilations = new Map<string, Map<string, Compilation>>();

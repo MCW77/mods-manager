@@ -2,9 +2,9 @@
 import type {
 	CharacterTemplates,
 	CharacterTemplatesByName,
-} from "./CharacterTemplates.js";
-import type { TemplatesAddingMode } from "./TemplatesAddingMode.js";
-import type { TemplateTypes } from "./TemplateTypes.js";
+} from "./CharacterTemplates";
+import type { TemplatesAddingMode } from "./TemplatesAddingMode";
+import type { TemplateTypes } from "./TemplateTypes";
 
 interface Import {
 	errorMessage: string;

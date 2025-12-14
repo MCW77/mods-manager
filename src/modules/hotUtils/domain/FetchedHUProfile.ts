@@ -1,6 +1,6 @@
 // domain
-import type { HUFlatMod } from "#/domain/types/ModTypes.js";
-import type { HUPlayerValuesDTO } from "#/modules/profilesManagement/dtos/hu/index.js";
+import type { HUFlatMod } from "#/domain/types/ModTypes";
+import type { HUPlayerValuesDTO } from "#/modules/profilesManagement/dtos/hu/index";
 
 export interface FetchedHUProfile {
 	allycode: number;

@@ -2,15 +2,15 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings.js";
+import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
 
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames.js";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
-import type { Mod } from "#/domain/Mod.js";
-import type * as Character from "#/domain/Character.js";
-import type { ModLoadout } from "#/domain/ModLoadout.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import type { CharacterSummaryStats as CSStats } from "#/domain/Stats.js";
+import type { Mod } from "#/domain/Mod";
+import type * as Character from "#/domain/Character";
+import type { ModLoadout } from "#/domain/ModLoadout";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { CharacterSummaryStats as CSStats } from "#/domain/Stats";
 
 type SettingsByProfile = Record<string, ProfileOptimizationSettings>;
 

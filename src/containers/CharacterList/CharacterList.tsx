@@ -4,20 +4,20 @@ import { useTranslation } from "react-i18next";
 import { observer, Show, useValue } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import { characterSettings } from "#/constants/characterSettings.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import { characterSettings } from "#/constants/characterSettings";
 
-import * as Character from "#/domain/Character.js";
+import * as Character from "#/domain/Character";
 
 // components
-import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible.jsx";
-const CharacterBlock = lazy(() => import("./CharacterBlock.jsx"));
+import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+const CharacterBlock = lazy(() => import("./CharacterBlock"));
 
 const CharacterList = observer(
 	React.memo(() => {

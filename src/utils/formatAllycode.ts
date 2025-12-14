@@ -1,5 +1,5 @@
 // utils
-import cleanAllycode from "./cleanAllycode.js";
+import cleanAllycode from "./cleanAllycode";
 
 /**
  * Format an ally code to follow the ###-###-### format shown in-game

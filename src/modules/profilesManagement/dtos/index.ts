@@ -1,3 +1,3 @@
-export * as C3PO from "./c3po/index.js";
-export * as HU from "./hu/index.js";
-export * as GIMO from "./gimo/index.js";
+export * as C3PO from "./c3po/index";
+export * as HU from "./hu/index";
+export * as GIMO from "./gimo/index";

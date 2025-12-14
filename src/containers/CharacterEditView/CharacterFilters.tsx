@@ -1,17 +1,17 @@
 // state
 import { Computed, For, observer, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const charactersManagement$ = stateLoader$.charactersManagement$;
 
 // components
-import { Badge } from "#ui/badge.jsx";
-import { Button } from "#ui/button.jsx";
-import { Label } from "#ui/label.jsx";
-import { Slider } from "#ui/slider.jsx";
-import { Switch } from "#ui/switch.jsx";
-import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect.jsx";
+import { Badge } from "#ui/badge";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
+import { Slider } from "#ui/slider";
+import { Switch } from "#ui/switch";
+import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
 
 const customCharacterFilterGroups = [
 	{

@@ -2,7 +2,7 @@
 import React from "react";
 
 // components
-import * as DialogPrimitive from "#ui/dialog.jsx";
+import * as DialogPrimitive from "#ui/dialog";
 
 export const DialogContent = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.DialogContent>,

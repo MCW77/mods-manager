@@ -11,26 +11,26 @@ import {
 
 // utils
 import { saveAs } from "file-saver";
-import { readFile } from "#/utils/readFile.js";
+import { readFile } from "#/utils/readFile";
 
 // state
 import { For, observer, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const templates$ = stateLoader$.templates$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates.js";
+import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { FileInput } from "#/components/FileInput/FileInput.jsx";
+import { FileInput } from "#/components/FileInput/FileInput";
 
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 const TemplatesManager = observer(
 	React.memo(() => {

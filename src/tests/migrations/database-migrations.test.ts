@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeAll } from "vitest";
-import { loadFixture } from "./fixtures-loader.js";
+import { loadFixture } from "./fixtures-loader";
 import superjson from "superjson";
 import {
 	createOldDatabase,
 	openDatabaseWithMigration,
 	getFromStore,
-} from "./migration-utils.js";
-import { latestDBVersion } from "../../utils/globalLegendPersistSettings.js";
+} from "./migration-utils";
+import { latestDBVersion } from "../../utils/globalLegendPersistSettings";
 
 const migrateData = async (
 	dbName: string,

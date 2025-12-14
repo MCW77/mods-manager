@@ -1,6 +1,6 @@
-import { SetStats } from "../domain/Stats.js";
-import SetBonus from "../domain/SetBonus.js";
-import type { GIMOSetStatNames } from "#/domain/GIMOStatNames.js";
+import { SetStats } from "../domain/Stats";
+import SetBonus from "../domain/SetBonus";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 
 type SetBonuses = Record<GIMOSetStatNames, SetBonus>;
 

@@ -9,22 +9,22 @@ import {
 } from "@legendapp/state/react";
 
 // utils
-import { objectEntries } from "#/utils/objectEntries.js";
+import { objectEntries } from "#/utils/objectEntries";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const characters$ = stateLoader$.characters$;
 
-import { target$ } from "../state/planEditing.js";
+import { target$ } from "../state/planEditing";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 // components
-const TargetStatWidget = lazy(() => import("./TargetStatWidget.jsx"));
-import { Button } from "#ui/button.jsx";
-import { Card } from "#ui/card.jsx";
+const TargetStatWidget = lazy(() => import("./TargetStatWidget"));
+import { Button } from "#ui/button";
+import { Card } from "#ui/card";
 
 const TargetStatsWidget: React.FC = reactiveObserver(() => {
 	const baseCharacterById = useValue(characters$.baseCharacterById);

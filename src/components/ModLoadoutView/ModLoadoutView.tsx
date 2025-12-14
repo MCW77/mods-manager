@@ -2,11 +2,11 @@
 import React from "react";
 
 // domain
-import * as ModLoadout from "#/domain/ModLoadout.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
+import * as ModLoadout from "#/domain/ModLoadout";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 // components
-import ModDetail from "#/components/ModDetail/ModDetail.jsx";
+import ModDetail from "#/components/ModDetail/ModDetail";
 
 type ComponentProps = {
 	modLoadout: ModLoadout.ModLoadout;

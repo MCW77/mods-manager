@@ -1,23 +1,23 @@
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
-import { progress$ } from "#/modules/progress/state/progress.js";
-import { review$ } from "#/modules/review/state/review.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
+import { progress$ } from "#/modules/progress/state/progress";
+import { review$ } from "#/modules/review/state/review";
 
 // domain
-import type { FlatCharacterModdings } from "#/modules/compilations/domain/CharacterModdings.js";
+import type { FlatCharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 import {
 	type OptimizationConditions,
 	createOptimizationConditions,
-} from "#/modules/compilations/domain/OptimizationConditions.js";
+} from "#/modules/compilations/domain/OptimizationConditions";
 
 // const OptimizerWorker = await import("#/workers/optimizer?worker");
 

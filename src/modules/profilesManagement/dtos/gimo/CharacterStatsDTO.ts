@@ -1,4 +1,4 @@
-import type * as CharacterStatNames from "../../domain/CharacterStatNames.js";
+import type * as CharacterStatNames from "../../domain/CharacterStatNames";
 type CharacterStatNamesIndexer = Record<CharacterStatNames.All, number>;
 
 /**

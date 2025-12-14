@@ -1,4 +1,4 @@
-import type { StackRankParameters } from "./StackRankParameters.js";
+import type { StackRankParameters } from "./StackRankParameters";
 
 interface StackRankSettings {
 	overwrite: "false" | "true";

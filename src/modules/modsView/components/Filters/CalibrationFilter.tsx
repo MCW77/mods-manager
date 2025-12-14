@@ -5,18 +5,18 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles.js";
-import { Mod } from "#/domain/Mod.js";
+import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
+import { Mod } from "#/domain/Mod";
 
 // components
-const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
-import { Button } from "#ui/button.jsx";
-import { Label } from "#ui/label.jsx";
+const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 function CalibrationButton({ calibrationCost }: { calibrationCost: number }) {
 	const calibrationState = useValue(() => {

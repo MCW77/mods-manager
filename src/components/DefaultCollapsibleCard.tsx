@@ -2,11 +2,11 @@
 import * as React from "react";
 
 // utils
-import { cn } from "#lib/utils.js";
+import { cn } from "#lib/utils";
 
 // components
 import { ChevronDown } from "lucide-react";
-import * as CC from "./ui/CollapsibleCard.jsx";
+import * as CC from "./ui/CollapsibleCard";
 
 interface DefaultCollapsibleCardProps {
 	title: string;

@@ -1,15 +1,15 @@
 // utils
 import * as v from "valibot";
-import { objectEntries } from "#/utils/objectEntries.js";
+import { objectEntries } from "#/utils/objectEntries";
 
 // domain
-import type { Compilation } from "#/modules/compilations/domain/Compilation.js";
-import type { IndicesByProfile } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable.js";
-import type { LockedCharactersByAllycode } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId.js";
-import type { PersistableModsViewSetupByIdByCategory } from "#/modules/modsView/domain/ModsViewOptions.js";
-import type { SettingsByProfile } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable.js";
-import type { PersistedProfiles } from "#/modules/profilesManagement/domain/Profiles.js";
-import type { CharacterTemplatesByName } from "#/modules/templates/domain/CharacterTemplates.js";
+import type { Compilation } from "#/modules/compilations/domain/Compilation";
+import type { IndicesByProfile } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
+import type { LockedCharactersByAllycode } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
+import type { PersistableModsViewSetupByIdByCategory } from "#/modules/modsView/domain/ModsViewOptions";
+import type { SettingsByProfile } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
+import type { PersistedProfiles } from "#/modules/profilesManagement/domain/Profiles";
+import type { CharacterTemplatesByName } from "#/modules/templates/domain/CharacterTemplates";
 
 import {
 	latestDBVersion,
@@ -18,7 +18,7 @@ import {
 	upgradeLockedStatusTo20,
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
-} from "#/utils/globalLegendPersistSettings.js";
+} from "#/utils/globalLegendPersistSettings";
 import {
 	LatestModsManagerBackupSchema,
 	type ModsManagerBackupSchemaV18Output,
@@ -32,9 +32,9 @@ import {
 	ModsManagerBackupSchemaV21,
 	type ModsManagerBackupDataSchemaV21Output,
 	ModsManagerBackupSchemaV22,
-} from "#/domain/schemas/mods-manager/index.js";
-import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas.js";
-import { fromGIMOBackup } from "../mappers/GIMOBackupMapper.js";
+} from "#/domain/schemas/mods-manager/index";
+import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
+import { fromGIMOBackup } from "../mappers/GIMOBackupMapper";
 
 interface BackupData {
 	characterTemplates: CharacterTemplatesByName;

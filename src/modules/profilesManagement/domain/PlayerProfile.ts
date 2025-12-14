@@ -1,7 +1,7 @@
 // domain
-import type { GIMOFlatMod } from "#/domain/types/ModTypes.js";
-import type * as Character from "#/domain/Character.js";
-import { Mod } from "#/domain/Mod.js";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
+import type * as Character from "#/domain/Character";
+import { Mod } from "#/domain/Mod";
 
 export interface PlayerProfile {
 	allycode: string;

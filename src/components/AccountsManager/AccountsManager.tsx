@@ -6,24 +6,24 @@ import { useTranslation } from "react-i18next";
 import { faFileImport, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import formatAllycode from "#/utils/formatAllycode.js";
-import { readFile } from "#/utils/readFile.js";
+import formatAllycode from "#/utils/formatAllycode";
+import { readFile } from "#/utils/readFile";
 
 // state
 import { useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { FileInput } from "#/components/FileInput/FileInput.jsx";
-import { Button } from "#ui/button.jsx";
-import { Label } from "#ui/label.jsx";
-import { RadioGroup, RadioGroupItem } from "#ui/radio-group.jsx";
+import { FileInput } from "#/components/FileInput/FileInput";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
+import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
 const AccountsManager = React.memo(() => {
 	const playerProfiles = useValue(

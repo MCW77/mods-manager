@@ -1,5 +1,5 @@
 // domain
-import type { ProfileOptimizationSettings } from "#/modules/optimizationSettings/domain/ProfileOptimizationSettings.js";
+import type { ProfileOptimizationSettings } from "#/modules/optimizationSettings/domain/ProfileOptimizationSettings";
 
 type OptimizationConditions = ProfileOptimizationSettings | null;
 

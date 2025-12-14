@@ -1,6 +1,6 @@
 // domain
-import type { GIMOSetStatNames } from "./GIMOStatNames.js";
-import { Stat } from "./Stat.js";
+import type { GIMOSetStatNames } from "./GIMOStatNames";
+import { Stat } from "./Stat";
 
 // #region HUStatNames
 export type HUStatNames =

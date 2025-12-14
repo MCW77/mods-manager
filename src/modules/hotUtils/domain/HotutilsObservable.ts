@@ -2,10 +2,10 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { FetchedGIMOProfile } from "./FetchedGIMOProfile.js";
-import type { FetchedFullGIMOProfile } from "./FetchedFullGIMOProfile.js";
-import type { ProfileCreationData } from "./ProfileCreationData.js";
-import type { SessionIDsByProfile } from "./SessionIDsByProfile.js";
+import type { FetchedGIMOProfile } from "./FetchedGIMOProfile";
+import type { FetchedFullGIMOProfile } from "./FetchedFullGIMOProfile";
+import type { ProfileCreationData } from "./ProfileCreationData";
+import type { SessionIDsByProfile } from "./SessionIDsByProfile";
 
 interface HotutilsObservable {
 	persistedData: {

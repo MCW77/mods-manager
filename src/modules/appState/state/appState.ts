@@ -1,6 +1,6 @@
 // utils
 import saveAs from "file-saver";
-import { objectEntries } from "#/utils/objectEntries.js";
+import { objectEntries } from "#/utils/objectEntries";
 import superjson from "superjson";
 
 // state
@@ -11,9 +11,9 @@ import {
 	type ObservableObject,
 } from "@legendapp/state";
 
-import { latestDBVersion } from "#/utils/globalLegendPersistSettings.js";
+import { latestDBVersion } from "#/utils/globalLegendPersistSettings";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -25,19 +25,19 @@ const modsView$ = stateLoader$.modsView$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const templates$ = stateLoader$.templates$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
-import { ui$ } from "#/modules/ui/state/ui.js";
+import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
 import {
 	convertBackup,
 	type Backup,
 	type BackupData,
-} from "../domain/Backup.js";
-import type { Compilation } from "#/modules/compilations/domain/Compilation.js";
-import { getProfileFromPersisted } from "#/modules/profilesManagement/domain/PlayerProfile.js";
-import type { LatestModsManagerBackupDataSchemaOutput } from "#/domain/schemas/mods-manager/index.js";
+} from "../domain/Backup";
+import type { Compilation } from "#/modules/compilations/domain/Compilation";
+import { getProfileFromPersisted } from "#/modules/profilesManagement/domain/PlayerProfile";
+import type { LatestModsManagerBackupDataSchemaOutput } from "#/domain/schemas/mods-manager/index";
 
 interface ImportError {
 	errorMessage: string;

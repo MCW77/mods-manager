@@ -1,9 +1,9 @@
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { Mod } from "#/domain/Mod.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import type { MissedGoals } from "./MissedGoals.js";
+import type { Mod } from "#/domain/Mod";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { MissedGoals } from "./MissedGoals";
 
 interface FlatCharacterModding {
 	characterId: CharacterNames;

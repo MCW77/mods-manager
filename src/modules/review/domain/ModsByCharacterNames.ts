@@ -1,7 +1,7 @@
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { Mod } from "#/domain/Mod.js";
+import type { Mod } from "#/domain/Mod";
 
 type ModsByCharacterNames = Record<CharacterNames, Mod[]>;
 

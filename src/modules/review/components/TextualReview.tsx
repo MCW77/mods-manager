@@ -1,25 +1,25 @@
 // utils
-import copyToClipboard from "#/utils/clipboard.js";
+import copyToClipboard from "#/utils/clipboard";
 
 // react
 import { useId } from "react";
 import { useValue } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type * as Character from "#/domain/Character.js";
+import type * as Character from "#/domain/Character";
 
-import type { BaseCharacterById } from "#/modules/characters/domain/BaseCharacter.js";
-import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings.js";
+import type { BaseCharacterById } from "#/modules/characters/domain/BaseCharacter";
+import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 const capitalize = (text: string) => {
 	return text.charAt(0).toUpperCase() + text.slice(1);

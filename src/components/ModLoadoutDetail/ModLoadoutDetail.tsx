@@ -2,23 +2,23 @@
 import React, { lazy } from "react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const charactersManagement$ = stateLoader$.charactersManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
-import type * as Character from "#/domain/Character.js";
-import type { ModLoadout } from "#/domain/ModLoadout.js";
-import { CharacterSummaryStats as CSStats } from "#/domain/Stats.js";
-import type { TargetStat } from "#/domain/TargetStat.js";
+import type * as Character from "#/domain/Character";
+import type { ModLoadout } from "#/domain/ModLoadout";
+import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import type { TargetStat } from "#/domain/TargetStat";
 
-import type { CharacterModding } from "#/modules/compilations/domain/CharacterModdings.js";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames.js";
+import type { CharacterModding } from "#/modules/compilations/domain/CharacterModdings";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
 const ModLoadoutView = lazy(
-	() => import("#/components/ModLoadoutView/ModLoadoutView.jsx"),
+	() => import("#/components/ModLoadoutView/ModLoadoutView"),
 );
 
 interface PlayerStat {

@@ -1,5 +1,5 @@
 import type { Observable, ObservablePrimitive } from "@legendapp/state";
-import type { Categories } from "./Categories.js";
+import type { Categories } from "./Categories";
 import type {
 	Filter,
 	TriStateFilterKeys,
@@ -8,7 +8,7 @@ import type {
 	TriState,
 	ViewSetup,
 	ViewSetupById,
-} from "./ModsViewOptions.js";
+} from "./ModsViewOptions";
 
 interface ModsViewPersistedData {
 	viewSetup: {

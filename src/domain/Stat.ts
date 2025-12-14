@@ -2,8 +2,8 @@
 import Big from "big.js";
 
 // domain
-import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames.js";
-import type { AllGIMOStatNames } from "./GIMOStatNames.js";
+import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import type { AllGIMOStatNames } from "./GIMOStatNames";
 
 // #region DisplayStatNames
 export type DisplayStatNames =

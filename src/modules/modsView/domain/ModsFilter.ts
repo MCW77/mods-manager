@@ -1,8 +1,8 @@
 // utils
-import { groupBy } from "#/utils/groupBy.js";
-import orderBy from "lodash-es/orderBy.js";
-import mapValues from "lodash-es/mapValues.js";
-import { memoizeOne } from "#/utils/memoizeOne.js";
+import { groupBy } from "#/utils/groupBy";
+import orderBy from "lodash-es/orderBy";
+import mapValues from "lodash-es/mapValues";
+import { memoizeOne } from "#/utils/memoizeOne";
 
 // domain
 import type {
@@ -10,9 +10,9 @@ import type {
 	ViewSetup,
 	PartialFilter,
 	TriStateFilterKeys,
-} from "./ModsViewOptions.js";
-import type { SortConfigById } from "./SortConfig.js";
-import { Mod } from "#/domain/Mod.js";
+} from "./ModsViewOptions";
+import type { SortConfigById } from "./SortConfig";
+import { Mod } from "#/domain/Mod";
 
 type ModFilterPredicate = (mod: Mod) => boolean;
 

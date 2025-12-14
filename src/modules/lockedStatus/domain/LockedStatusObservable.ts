@@ -6,8 +6,8 @@ import type {
 	LockedCharacters,
 	LockedCharactersByAllycode,
 	LockedStatusPersistedData,
-} from "./LockedStatusByCharacterId.js";
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+} from "./LockedStatusByCharacterId";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
 interface LockedStatusObservable {
 	persistedData: LockedStatusPersistedData;

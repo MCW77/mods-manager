@@ -1,14 +1,14 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement.js"
+	"#/modules/profilesManagement/state/profilesManagement"
 );
 
 // domain
-import type { IncrementalOptimizationObservable } from "../domain/IncrementalOptimizationObservable.js";
+import type { IncrementalOptimizationObservable } from "../domain/IncrementalOptimizationObservable";
 
 const initialIndicesByProfile = {
 	id: "indicesByProfile",

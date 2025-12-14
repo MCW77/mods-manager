@@ -1,6 +1,6 @@
-import type * as DTOs from "../../dtos/index.js";
-import * as HUCharacterStatsMapper from "./HUCharacterStatsMapper.js";
-import { addCharacterStats } from "../../domain/CharacterStats.js";
+import type * as DTOs from "../../dtos/index";
+import * as HUCharacterStatsMapper from "./HUCharacterStatsMapper";
+import { addCharacterStats } from "../../domain/CharacterStats";
 
 const fromHU = (
 	valuesDTO: DTOs.HU.HUPlayerValuesDTO,

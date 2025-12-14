@@ -1,5 +1,5 @@
 // utils
-import { objectKeys } from "#/utils/objectKeys.js";
+import { objectKeys } from "#/utils/objectKeys";
 
 // state
 import {
@@ -10,14 +10,14 @@ import {
 	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 // domain
-import type { Categories } from "../domain/Categories.js";
+import type { Categories } from "../domain/Categories";
 import type {
 	ModsViewObservable,
 	ModsViewPersistedData,
-} from "../domain/ModsViewObservable.js";
+} from "../domain/ModsViewObservable";
 import {
 	defaultViewSetupByCategory,
 	quickFilter,
@@ -27,8 +27,8 @@ import {
 	type ModsViewSetupByIdByCategory,
 	type PersistableModsViewSetupByIdByCategory,
 	type PersistableViewSetup,
-} from "../domain/ModsViewOptions.js";
-import { createSortConfig } from "../domain/SortConfig.js";
+} from "../domain/ModsViewOptions";
+import { createSortConfig } from "../domain/SortConfig";
 
 const cloneQuickFilter = () => structuredClone(quickFilter);
 const clonedQuickFilter = cloneQuickFilter();

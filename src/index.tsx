@@ -12,10 +12,10 @@ import "virtual:uno.css";
 import "./i18n";
 
 // state
-import { ui$ } from "./modules/ui/state/ui.js";
+import { ui$ } from "./modules/ui/state/ui";
 
 // containers
-const App = lazy(() => import("./containers/App/App.jsx"));
+const App = lazy(() => import("./containers/App/App"));
 
 scan({
 	enabled: true,

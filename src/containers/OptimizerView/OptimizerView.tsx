@@ -3,18 +3,18 @@ import React, { lazy } from "react";
 import { Switch, useValue } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
-import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView.js";
+import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // containers
 const CharacterEditForm = lazy(
-	() => import("#/modules/planEditing/pages/CharacterEditForm.jsx"),
+	() => import("#/modules/planEditing/pages/CharacterEditForm"),
 );
-const Review = lazy(() => import("#/modules/review/pages/Review.jsx"));
+const Review = lazy(() => import("#/modules/review/pages/Review"));
 const CharacterEditView = lazy(
-	() => import("#/containers/CharacterEditView/CharacterEditView.jsx"),
+	() => import("#/containers/CharacterEditView/CharacterEditView"),
 );
 
 const OptimizerView = React.memo(() => {

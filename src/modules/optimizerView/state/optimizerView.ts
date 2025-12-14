@@ -2,9 +2,9 @@
 import { observable } from "@legendapp/state";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 type Views = "basic" | "review" | "edit";
 interface CurrentCharacter {

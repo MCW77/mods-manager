@@ -1,4 +1,4 @@
-import { createOptimizationPlan } from "../domain/OptimizationPlan.js";
+import { createOptimizationPlan } from "../domain/OptimizationPlan";
 
 const optimizationStrategy = {
 	"Speed with survivability": createOptimizationPlan(

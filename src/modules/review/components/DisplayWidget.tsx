@@ -3,37 +3,37 @@ import { reactive, useValue } from "@legendapp/state/react";
 import { useId } from "react";
 
 // utils
-import flatten from "lodash-es/flatten.js";
-import mapValues from "lodash-es/mapValues.js";
-import uniq from "lodash-es/uniq.js";
-import { groupBy } from "#/utils/groupBy.js";
+import flatten from "lodash-es/flatten";
+import mapValues from "lodash-es/mapValues";
+import uniq from "lodash-es/uniq";
+import { groupBy } from "#/utils/groupBy";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
 
-import { review$ } from "#/modules/review/state/review.js";
+import { review$ } from "#/modules/review/state/review";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { Mod } from "#/domain/Mod.js";
-import * as ModLoadout from "#/domain/ModLoadout.js";
-import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
+import type { Mod } from "#/domain/Mod";
+import * as ModLoadout from "#/domain/ModLoadout";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 import type {
 	CharacterModding,
 	CharacterModdings,
-} from "#/modules/compilations/domain/CharacterModdings.js";
-import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames.js";
-import * as ModListFilter from "#/modules/review/domain/ModListFilter.js";
+} from "#/modules/compilations/domain/CharacterModdings";
+import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames";
+import * as ModListFilter from "#/modules/review/domain/ModListFilter";
 
 // components
-import { Label } from "#ui/label.jsx";
+import { Label } from "#ui/label";
 import {
 	Select,
 	SelectContent,
@@ -41,8 +41,8 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
-import { Switch } from "#ui/switch.jsx";
+} from "#ui/select";
+import { Switch } from "#ui/switch";
 
 const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);

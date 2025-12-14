@@ -11,8 +11,8 @@ import {
 	setSettingsSets,
 	slotSettingsSlots,
 	tierSettingsTiers,
-} from "#/modules/modsView/domain/ModsViewOptions.js";
-import { categories } from "#/modules/modsView/domain/Categories.js";
+} from "#/modules/modsView/domain/ModsViewOptions";
+import { categories } from "#/modules/modsView/domain/Categories";
 
 const TriStateSchema = v.picklist([-1, 0, 1]);
 const CalibrationSettingsSchema = v.optional(

@@ -1,19 +1,19 @@
 // state
 import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings.js";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement.js"
+	"#/modules/profilesManagement/state/profilesManagement"
 );
 const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations.js"
+	"#/modules/compilations/state/compilations"
 );
 const { characters$ } = await import(
-	"#/modules/characters/state/characters.js"
+	"#/modules/characters/state/characters"
 );
 const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus.js"
+	"#/modules/lockedStatus/state/lockedStatus"
 );
 
 // domain
@@ -23,15 +23,15 @@ import {
 	type TextFilter,
 	type CharacterFilter,
 	type CustomFilter,
-} from "../domain/CharacterFilterById.js";
-import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable.js";
+} from "../domain/CharacterFilterById";
+import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
 
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames.js";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
-import type { Character } from "#/domain/Character.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import { Stat } from "#/domain/Stat.js";
-import { CharacterSummaryStats as CSStats } from "#/domain/Stats.js";
+import type { Character } from "#/domain/Character";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { Stat } from "#/domain/Stat";
+import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
 
 const addCategoryFilter = (
 	customFilterById: Map<string, CustomFilter>,

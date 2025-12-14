@@ -1,4 +1,4 @@
-import type { TriState } from "./ModsViewOptions.js";
+import type { TriState } from "./ModsViewOptions";
 
 export function getFilterSelectionStyles(value: TriState, tierColorCSS = "") {
 	if (value === 1)

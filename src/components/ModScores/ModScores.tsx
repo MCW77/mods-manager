@@ -11,16 +11,16 @@ import {
 	useObservable,
 } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { type Mod, modScores } from "#/domain/Mod.js";
-import { modTierColors } from "#/domain/ModTierColors.js";
+import { type Mod, modScores } from "#/domain/Mod";
+import { modTierColors } from "#/domain/ModTierColors";
 
 // components
-import { Separator } from "#ui/separator.jsx";
+import { Separator } from "#ui/separator";
 
 type ComponentProps = {
 	mod: Mod;

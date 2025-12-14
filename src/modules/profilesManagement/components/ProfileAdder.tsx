@@ -3,17 +3,17 @@ import type React from "react";
 import { useTranslation } from "react-i18next";
 
 // utils
-import formatAllycode from "#/utils/formatAllycode.js";
+import formatAllycode from "#/utils/formatAllycode";
 
 // state
 import type { ObservableBoolean } from "@legendapp/state";
 import { useObservable } from "@legendapp/state/react";
 const { refreshPlayerData } = await import(
-	"#/modules/profileFetch/profileFetch.jsx"
+	"#/modules/profileFetch/profileFetch"
 );
 
 // components
-import { Input } from "#ui/input.jsx";
+import { Input } from "#ui/input";
 
 type ComponentProps = {
 	isAddingProfile$: ObservableBoolean;

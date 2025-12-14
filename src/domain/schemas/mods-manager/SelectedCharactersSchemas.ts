@@ -5,7 +5,7 @@ import * as v from "valibot";
 import {
 	ArbitraryCharacterNamesSchema,
 	OptimizationPlanSchema,
-} from "./index.js";
+} from "./index";
 
 const SelectedCharactersSchema = v.array(
 	v.object({

@@ -5,16 +5,16 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive, useSelector } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const templates$ = stateLoader$.templates$;
 
 // domain
-import type { TemplatesAddingMode } from "#/modules/templates/domain/TemplatesAddingMode.js";
+import type { TemplatesAddingMode } from "#/modules/templates/domain/TemplatesAddingMode";
 
 // components
-import { Card, CardContent, CardHeader, CardTitle } from "#ui/card.jsx";
-import { Label } from "#ui/label.jsx";
+import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
+import { Label } from "#ui/label";
 import {
 	Select,
 	SelectContent,
@@ -22,17 +22,17 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
+} from "#ui/select";
 
 // containers
 const TemplatesManager = lazy(
-	() => import("#/containers/TemplatesManager/TemplatesManager.jsx"),
+	() => import("#/containers/TemplatesManager/TemplatesManager"),
 );
-import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm.jsx";
+import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
 const OptimizationSettingsForm = lazy(
 	() =>
 		import(
-			"#/modules/optimizationSettings/components/OptimizationSettingsForm.jsx"
+			"#/modules/optimizationSettings/components/OptimizationSettingsForm"
 		),
 );
 

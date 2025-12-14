@@ -1,5 +1,5 @@
 // utils
-import { objectEntries } from "#/utils/objectEntries.js";
+import { objectEntries } from "#/utils/objectEntries";
 
 // react
 import type React from "react";
@@ -14,7 +14,7 @@ import {
 
 // state
 import type { ObservableBoolean } from "@legendapp/state";
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 
@@ -27,7 +27,7 @@ import {
 	SelectSeparator,
 	SelectTrigger,
 	SelectValue,
-} from "#ui/select.jsx";
+} from "#ui/select";
 
 // Create ReactiveSelect outside component to prevent recreation on every render
 const ReactiveSelect = reactive(Select);

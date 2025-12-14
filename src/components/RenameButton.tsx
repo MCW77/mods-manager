@@ -3,9 +3,9 @@ import { observer, useValue, useObservable } from "@legendapp/state/react";
 
 // components
 import { PencilIcon } from "lucide-react";
-import { Button } from "#ui/button.jsx";
-import { Input } from "#ui/input.jsx";
-import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover.jsx";
+import { Button } from "#ui/button";
+import { Input } from "#ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 
 interface RenameButtonProps {
 	itemId: string;

@@ -3,10 +3,10 @@
 import type React from "react";
 
 // hooks
-import { useLazyComponentLoader } from "#/hooks/useLazyComponentLoader.js";
+import { useLazyComponentLoader } from "#/hooks/useLazyComponentLoader";
 
 // components
-import { Spinner } from "#/components/Spinner/Spinner.jsx";
+import { Spinner } from "#/components/Spinner/Spinner";
 
 interface LazyComponentWrapperProps {
 	load: () => Promise<{ [key: string]: React.ComponentType<object> }>;

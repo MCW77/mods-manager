@@ -1,2 +1,2 @@
-export * from "./CharacterStatsDTO.js";
-export * from "./PlayerValuesDTO.js";
+export * from "./CharacterStatsDTO";
+export * from "./PlayerValuesDTO";

@@ -3,45 +3,45 @@ import { lazy } from "react";
 import { observer, Show, useValue } from "@legendapp/state/react";
 
 // utils
-import flatten from "lodash-es/flatten.js";
-import mapValues from "lodash-es/mapValues.js";
-import collectByKey from "#/utils/collectByKey.js";
-import { groupBy } from "#/utils/groupBy.js";
+import flatten from "lodash-es/flatten";
+import mapValues from "lodash-es/mapValues";
+import collectByKey from "#/utils/collectByKey";
+import { groupBy } from "#/utils/groupBy";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
 
-import { review$ } from "#/modules/review/state/review.js";
+import { review$ } from "#/modules/review/state/review";
 
 // domain
-import * as ModListFilter from "../domain/ModListFilter.js";
-import type { ModsByCharacterNames } from "../domain/ModsByCharacterNames.js";
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import type * as ModTypes from "#/domain/types/ModTypes.js";
+import * as ModListFilter from "../domain/ModListFilter";
+import type { ModsByCharacterNames } from "../domain/ModsByCharacterNames";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type * as ModTypes from "#/domain/types/ModTypes";
 
-import type { Mod } from "#/domain/Mod.js";
-import * as ModLoadout from "#/domain/ModLoadout.js";
-import * as OptimizationPlan from "#/domain/OptimizationPlan.js";
-import type { Pips } from "#/domain/Pips.js";
+import type { Mod } from "#/domain/Mod";
+import * as ModLoadout from "#/domain/ModLoadout";
+import * as OptimizationPlan from "#/domain/OptimizationPlan";
+import type { Pips } from "#/domain/Pips";
 
 import type {
 	CharacterModding,
 	CharacterModdings,
-} from "#/modules/compilations/domain/CharacterModdings.js";
+} from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-const ActionsWidget = lazy(() => import("../components/ActionsWidget.jsx"));
-const DisplayWidget = lazy(() => import("../components/DisplayWidget.jsx"));
-const ListView = lazy(() => import("../components/ListView.jsx"));
-const SetsView = lazy(() => import("../components/SetsView.jsx"));
-import { SummaryWidget } from "../components/SummaryWidget.jsx";
-import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard.jsx";
-import { Label } from "#ui/label.jsx";
+const ActionsWidget = lazy(() => import("../components/ActionsWidget"));
+const DisplayWidget = lazy(() => import("../components/DisplayWidget"));
+const ListView = lazy(() => import("../components/ListView"));
+const SetsView = lazy(() => import("../components/SetsView"));
+import { SummaryWidget } from "../components/SummaryWidget";
+import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
+import { Label } from "#ui/label";
 
 // A map from number of pips that a mod has to the cost to remove it
 const modRemovalCosts = {

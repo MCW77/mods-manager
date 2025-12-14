@@ -1,7 +1,7 @@
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 export const DamageType = {
 	physical: 1,

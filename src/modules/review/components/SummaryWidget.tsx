@@ -1,8 +1,8 @@
 // utils
-import { formatNumber } from "#/utils/formatNumber.js";
+import { formatNumber } from "#/utils/formatNumber";
 
 // components
-import { Credits } from "#/components/Credits/Credits.jsx";
+import { Credits } from "#/components/Credits/Credits";
 
 type ComponentProps = {
 	currentSetValue: number;

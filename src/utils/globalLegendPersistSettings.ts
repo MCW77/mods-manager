@@ -1,6 +1,6 @@
 // utils
-import { objectEntries } from "./objectEntries.js";
-import { objectKeys } from "./objectKeys.js";
+import { objectEntries } from "./objectEntries";
+import { objectKeys } from "./objectKeys";
 
 // state
 import { configureSynced } from "@legendapp/state/sync";
@@ -10,9 +10,9 @@ import { observablePersistIndexedDB } from "@legendapp/state/persist-plugins/ind
 import type {
 	Filter,
 	SecondarySettings,
-} from "#/modules/modsView/domain/ModsViewOptions.js";
-import type { CharacterNames } from "#/constants/CharacterNames.js";
-import type { GIMOFlatMod } from "#/domain/types/ModTypes.js";
+} from "#/modules/modsView/domain/ModsViewOptions";
+import type { CharacterNames } from "#/constants/CharacterNames";
+import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };

@@ -2,8 +2,8 @@
 import * as v from "valibot";
 
 // domain
-import { ArbitraryCharacterNamesSchema } from "./CharacterNamesSchemas.js";
-import { OptimizationPlanSchema } from "./OptimizationPlanSchemas.js";
+import { ArbitraryCharacterNamesSchema } from "./CharacterNamesSchemas";
+import { OptimizationPlanSchema } from "./OptimizationPlanSchemas";
 
 const SelectedCharactersSchema = v.array(
 	v.object({

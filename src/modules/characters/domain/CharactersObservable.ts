@@ -1,5 +1,5 @@
 // domain
-import type { BaseCharacterById } from "./BaseCharacter.js";
+import type { BaseCharacterById } from "./BaseCharacter";
 
 interface CharactersObservable {
 	baseCharacterById: () => Promise<BaseCharacterById>;

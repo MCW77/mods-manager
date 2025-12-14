@@ -4,16 +4,16 @@ import { useTranslation } from "react-i18next";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
-import { dialog$ } from "#/modules/dialog/state/dialog.js";
+import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type { Mod } from "#/domain/Mod.js";
+import type { Mod } from "#/domain/Mod";
 
 // components
-import { Button } from "#ui/button.jsx";
+import { Button } from "#ui/button";
 
 type ComponentProps = {
 	groupedMods: Mod[][];

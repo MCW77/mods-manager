@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
@@ -12,11 +12,11 @@ const modsView$ = stateLoader$.modsView$;
 import {
 	type SecondarySettingsSecondaries,
 	secondarySettingsSecondaries,
-} from "../../domain/ModsViewOptions.js";
+} from "../../domain/ModsViewOptions";
 
 // components
-import { Label } from "#ui/label.jsx";
-import { Slider } from "#ui/slider.jsx";
+import { Label } from "#ui/label";
+import { Slider } from "#ui/slider";
 
 function SecondarySlider({
 	secondary,

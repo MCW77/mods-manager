@@ -1,5 +1,5 @@
 // utils
-import { cn } from "#/lib/utils.js";
+import { cn } from "#/lib/utils";
 
 // react
 import { Show, useValue, useObservable } from "@legendapp/state/react";
@@ -9,7 +9,7 @@ import type { Observable } from "@legendapp/state";
 
 // components
 import type * as TogglePrimitive from "@radix-ui/react-toggle";
-import { Toggle } from "#/components/reactive/Toggle.jsx";
+import { Toggle } from "#/components/reactive/Toggle";
 
 type LockedToggleProps = {
 	$pressed: Observable<boolean>;

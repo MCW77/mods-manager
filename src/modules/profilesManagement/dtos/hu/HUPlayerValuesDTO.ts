@@ -1,6 +1,6 @@
-import type { CharacterNames } from "#/constants/CharacterNames.js";
+import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { HUCharacterStatsDTO } from "./HUCharacterStatsDTO.js";
+import type { HUCharacterStatsDTO } from "./HUCharacterStatsDTO";
 
 interface HUPlayerValuesDTO {
 	baseId: CharacterNames;

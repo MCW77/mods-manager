@@ -1,4 +1,4 @@
-import type * as DTOs from "../dtos/index.js";
+import type * as DTOs from "../dtos/index";
 
 function addCharacterStats(
 	firstStat: DTOs.GIMO.CharacterStatsDTO,

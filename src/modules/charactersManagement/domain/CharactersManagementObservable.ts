@@ -2,12 +2,12 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { Character } from "#/domain/Character.js";
-import type { CharacterSummaryStat } from "#/domain/CharacterSummaryStat.js";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan.js";
-import type { Stat } from "#/domain/Stat.js";
-import type { CharacterFilterPredicate } from "./CharacterFilterById.js";
-import type { CharacterFilterSetup } from "./CharacterFilterSetup.js";
+import type { Character } from "#/domain/Character";
+import type { CharacterSummaryStat } from "#/domain/CharacterSummaryStat";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { Stat } from "#/domain/Stat";
+import type { CharacterFilterPredicate } from "./CharacterFilterById";
+import type { CharacterFilterSetup } from "./CharacterFilterSetup";
 
 interface CharactersManagementObservable {
 	persistedData: {

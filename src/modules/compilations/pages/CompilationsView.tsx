@@ -5,24 +5,24 @@ import { For, observer, useValue, useObservable } from "@legendapp/state/react";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const compilations$ = stateLoader$.compilations$;
 
-import { ui$ } from "#/modules/ui/state/ui.js";
+import { ui$ } from "#/modules/ui/state/ui";
 
 // components
-import { Button } from "#ui/button.jsx";
-import { Input } from "#ui/input.jsx";
-import { Label } from "#ui/label.jsx";
-import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover.jsx";
+import { Button } from "#ui/button";
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "#/components/ui/card.jsx";
+} from "#/components/ui/card";
 
 const CompilationsView: React.FC = observer(() => {
 	const state$ = useObservable({

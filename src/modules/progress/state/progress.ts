@@ -7,8 +7,8 @@ import {
 } from "@legendapp/state";
 
 // domain
-import type { OptimizationStatus } from "../domain/OptimizationStatus.js";
-import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings.js";
+import type { OptimizationStatus } from "../domain/OptimizationStatus";
+import type { FlatCharacterModding } from "#/modules/compilations/domain/CharacterModdings";
 
 interface Progress {
 	error: Error | null;

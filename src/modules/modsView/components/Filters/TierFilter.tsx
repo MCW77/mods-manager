@@ -5,22 +5,22 @@ import { useTranslation } from "react-i18next";
 // state
 import { Memo, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader.js");
+const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
 
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles.js";
+import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
 import {
 	type TierSettingsTiers,
 	tierSettingsTiers,
-} from "../../domain/ModsViewOptions.js";
-import * as ModConsts from "#/domain/constants/ModConsts.js";
+} from "../../domain/ModsViewOptions";
+import * as ModConsts from "#/domain/constants/ModConsts";
 
 // components
-const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup.jsx"));
-import { Button } from "#ui/button.jsx";
-import { Label } from "#ui/label.jsx";
+const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 function TierButton({ tier }: { tier: TierSettingsTiers }) {
 	const tierState = useValue(() => {

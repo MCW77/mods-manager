@@ -1,8 +1,8 @@
 // domain
-import type * as StatTypes from "./types/StatTypes.js";
-import type { GIMOPrimaryStatNames } from "./GIMOStatNames.js";
-import type { Pips } from "./Pips.js";
-import { Stat } from "./Stat.js";
+import type * as StatTypes from "./types/StatTypes";
+import type { GIMOPrimaryStatNames } from "./GIMOStatNames";
+import type { Pips } from "./Pips";
+import { Stat } from "./Stat";
 
 export type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
 export type HUOffensiveStats =

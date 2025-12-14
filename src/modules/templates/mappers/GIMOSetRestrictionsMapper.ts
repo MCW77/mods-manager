@@ -2,8 +2,8 @@
 import type * as v from "valibot";
 
 // domain
-import type { SetRestrictions } from "#/domain/SetRestrictions.js";
-import type { SetRestrictionsSchema as GIMOSetRestrictionsSchema } from "#/domain/schemas/gimo/OptimizationPlanSchemas.js";
+import type { SetRestrictions } from "#/domain/SetRestrictions";
+import type { SetRestrictionsSchema as GIMOSetRestrictionsSchema } from "#/domain/schemas/gimo/OptimizationPlanSchemas";
 
 type GIMOSetRestrictions = v.InferOutput<typeof GIMOSetRestrictionsSchema>;
 
