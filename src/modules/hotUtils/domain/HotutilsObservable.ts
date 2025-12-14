@@ -13,10 +13,10 @@ interface HotutilsObservable {
 		sessionIDsByProfile: SessionIDsByProfile;
 	};
 	activeSessionId: string;
-	hasActiveSession: () => boolean;
+	hasActiveSession: () => Promise<boolean>;
 	getGIMOSessionIdOfProfile: (allycode: string) => string;
 	getHUSessionIdOfProfile: (allycode: string) => string;
-	isSubscribed: () => boolean;
+	isSubscribed: boolean;
 	sessionIDsByProfile: () => Observable<SessionIDsByProfile>;
 	addProfile: (allycode: string) => void;
 	deleteProfile: (allycode: string) => void;

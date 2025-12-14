@@ -66,12 +66,16 @@ const post = async (url = "", data = {}, extras = {}) => {
 const hotutils$: ObservableObject<HotutilsObservable> =
 	observable<HotutilsObservable>({
 		persistedData: structuredClone(initialPersistedData),
+		isSubscribed: false,
 		activeSessionId: () => {
 			const allycode = profilesManagement$.profiles.activeAllycode.get();
-			return hotutils$.sessionIDsByProfile[allycode].gimoSessionId.get() || "";
+			const sessionId =
+				hotutils$.sessionIDsByProfile[allycode].gimoSessionId.get() || "";
+			return sessionId;
 		},
-		hasActiveSession: () => {
-			return hotutils$.activeSessionId.get() !== "" && hotutils$.isSubscribed();
+		hasActiveSession: async () => {
+			if (hotutils$.activeSessionId.get() === "") return false;
+			return await when(hotutils$.checkSubscriptionStatus);
 		},
 		getGIMOSessionIdOfProfile: (allycode: string) => {
 			return hotutils$.sessionIDsByProfile[allycode].gimoSessionId.peek() || "";
@@ -79,7 +83,6 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 		getHUSessionIdOfProfile: (allycode: string) => {
 			return hotutils$.sessionIDsByProfile[allycode].huSessionId.peek() || "";
 		},
-		isSubscribed: () => hotutils$.checkSubscriptionStatus(),
 		sessionIDsByProfile: () => {
 			return hotutils$.persistedData.sessionIDsByProfile;
 		},
@@ -96,7 +99,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			syncStatus$.reset();
 		},
 		checkSubscriptionStatus: async (): Promise<boolean> => {
-			const activeAllycode = profilesManagement$.profiles.activeAllycode.get();
+			const activeAllycode = profilesManagement$.profiles.activeAllycode.peek();
 			if (activeAllycode === "") return false;
 			isBusy$.set(true);
 			try {
@@ -115,6 +118,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 						undefined,
 						"error",
 					);
+					hotutils$.isSubscribed.set(false);
 					return false;
 				}
 				switch (response.access) {
@@ -126,6 +130,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 							undefined,
 							"warning",
 						);
+						hotutils$.isSubscribed.set(false);
 						return false;
 					case 1:
 						dialog$.showFlash(
@@ -135,6 +140,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 							undefined,
 							"info",
 						);
+						hotutils$.isSubscribed.set(true);
 						return true;
 					case 2:
 						dialog$.showFlash(
@@ -144,6 +150,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 							undefined,
 							"info",
 						);
+						hotutils$.isSubscribed.set(true);
 						return true;
 					default:
 						dialog$.showFlash(
@@ -167,6 +174,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			} finally {
 				isBusy$.set(false);
 			}
+			hotutils$.isSubscribed.set(false);
 			return false;
 		},
 		createProfile: async (profile: ProfileCreationData) => {

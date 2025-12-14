@@ -43,10 +43,6 @@ const ProfilesManager = () => {
 		if (!value) isAddingProfile$.set(true);
 	});
 
-	useMount(() => {
-		hotutils$.isSubscribed();
-	});
-
 	return (
 		<div className="flex items-center gap-2">
 			<FontAwesomeIcon icon={faUser} />
