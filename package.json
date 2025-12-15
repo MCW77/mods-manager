@@ -82,7 +82,7 @@
 		"typescript": "5.9.3",
 		"unocss": "66.5.10",
 		"unocss-preset-shadcn": "^1.0.1",
-		"vite": "^7.2.7",
+		"vite": "^7.3.0",
 		"vite-plugin-pwa": "^1.2.0",
 		"vitest": "^4.0.15"
 	},
