@@ -36,7 +36,7 @@ const ReactiveCollapsible = reactive(Collapsible.Root);
 
 const modElements = (
 	mods: Mod[],
-	modGroupsElement: React.RefObject<HTMLDivElement>,
+	modGroupsElement: React.RefObject<HTMLDivElement | null>,
 ) => {
 	return mods.map((mod) => {
 		return (

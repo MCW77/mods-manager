@@ -40,7 +40,10 @@ const HelpView: React.FC = observer(() => {
 		editor: [1, 2, 3],
 	};
 
-	const sectionElements: Record<string, React.RefObject<HTMLButtonElement>> = {
+	const sectionElements: Record<
+		string,
+		React.RefObject<HTMLButtonElement | null>
+	> = {
 		general: React.createRef<HTMLButtonElement>(),
 		profiles: React.createRef<HTMLButtonElement>(),
 		explorer: React.createRef<HTMLButtonElement>(),

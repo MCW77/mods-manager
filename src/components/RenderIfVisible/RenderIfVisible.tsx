@@ -6,7 +6,7 @@ type ComponentProps = {
 	className?: string;
 	defaultHeight?: number;
 	visibleOffset?: number;
-	root?: React.RefObject<HTMLElement> | null;
+	root?: React.RefObject<HTMLElement | null> | null;
 	disabled?: boolean;
 	children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
