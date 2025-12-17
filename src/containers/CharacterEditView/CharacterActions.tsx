@@ -51,7 +51,7 @@ import { HelpLink } from "#/modules/help/components/HelpLink";
 import { SettingsLink } from "#/modules/settings/components/SettingsLink";
 
 import { Button } from "#ui/button";
-import { DialogClose } from "#ui/dialog";
+import { DialogClose } from "#/components/custom/dialog";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";

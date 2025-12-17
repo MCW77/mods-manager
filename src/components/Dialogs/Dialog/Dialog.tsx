@@ -2,9 +2,27 @@
 import React from "react";
 
 // components
-import * as DialogPrimitive from "#ui/dialog";
+import * as DialogPrimitive from "#/components/custom/dialog";
 
-export const DialogContent = React.forwardRef<
+const Dialog = DialogPrimitive.Dialog;
+
+const DialogTrigger = DialogPrimitive.DialogTrigger;
+
+const DialogPortal = DialogPrimitive.DialogPortal;
+
+const DialogOverlay = DialogPrimitive.DialogOverlay;
+
+const DialogClose = DialogPrimitive.DialogClose;
+
+const DialogHeader = DialogPrimitive.DialogHeader;
+
+const DialogFooter = DialogPrimitive.DialogFooter;
+
+const DialogTitle = DialogPrimitive.DialogTitle;
+
+const DialogDescription = DialogPrimitive.DialogDescription;
+
+const DialogContent = React.forwardRef<
 	React.ElementRef<typeof DialogPrimitive.DialogContent>,
 	React.ComponentPropsWithoutRef<typeof DialogPrimitive.DialogContent>
 >(({ children, ...props }, forwardedRef) => (
@@ -16,7 +34,15 @@ export const DialogContent = React.forwardRef<
 	</DialogPrimitive.DialogPortal>
 ));
 
-export const Dialog = DialogPrimitive.Dialog;
-export const DialogClose = DialogPrimitive.DialogClose;
-export const DialogTitle = DialogPrimitive.DialogTitle;
-export const DialogDescription = DialogPrimitive.DialogDescription;
+export {
+	Dialog,
+	DialogPortal,
+	DialogOverlay,
+	DialogTrigger,
+	DialogClose,
+	DialogContent,
+	DialogHeader,
+	DialogFooter,
+	DialogTitle,
+	DialogDescription,
+};

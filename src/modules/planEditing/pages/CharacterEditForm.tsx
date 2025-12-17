@@ -57,7 +57,7 @@ const TargetStatsWidget = lazy(
 );
 import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
 import { Button } from "#ui/button";
-import { DialogClose } from "#ui/dialog";
+import { DialogClose } from "#/components/custom/dialog";
 import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import {
