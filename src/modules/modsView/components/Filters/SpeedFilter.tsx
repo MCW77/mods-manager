@@ -10,7 +10,7 @@ const modsView$ = stateLoader$.modsView$;
 
 // components
 import { Label } from "#ui/label";
-import { Slider } from "#ui/slider";
+import { Slider } from "#/components/custom/slider";
 
 const SpeedFilter = () => {
 	const [t] = useTranslation("explore-ui");

@@ -13,7 +13,7 @@ import { modScores } from "#/domain/Mod";
 
 // components
 import { Label } from "#ui/label";
-import { Slider } from "#ui/slider";
+import { Slider } from "#/components/custom/slider";
 
 const ScoreFilter = () => {
 	const [t] = useTranslation("explore-ui");

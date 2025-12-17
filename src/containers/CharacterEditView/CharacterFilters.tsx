@@ -9,7 +9,7 @@ const charactersManagement$ = stateLoader$.charactersManagement$;
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { Slider } from "#ui/slider";
+import { Slider } from "#/components/custom/slider";
 import { Switch } from "#ui/switch";
 import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
 

@@ -16,7 +16,7 @@ import {
 
 // components
 import { Label } from "#ui/label";
-import { Slider } from "#ui/slider";
+import { Slider } from "#/components/custom/slider";
 
 function SecondarySlider({
 	secondary,

@@ -3,7 +3,7 @@ import { useEffect, useState, type ComponentPropsWithoutRef } from "react";
 import { reactiveObserver, type ShapeWith$ } from "@legendapp/state/react";
 
 // components
-import { Slider } from "#ui/slider";
+import { Slider } from "#/components/custom/slider";
 
 interface SingleValueSliderProps
 	extends ComponentPropsWithoutRef<typeof Slider> {
