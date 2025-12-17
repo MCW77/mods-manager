@@ -72,7 +72,7 @@ import {
 	TabsContent,
 	TabsList,
 	TabsTrigger,
-} from "#ui/tabs-vertical";
+} from "#/components/custom/tabs-vertical";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
