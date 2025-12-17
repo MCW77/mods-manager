@@ -33,7 +33,7 @@ import {
 	CollapsibleCardHeader,
 	CollapsibleCardTitle,
 	CollapsibleCardTrigger,
-} from "#ui/CollapsibleCard";
+} from "#/components/custom/CollapsibleCard";
 
 const FilterWidget = () => {
 	const [t] = useTranslation("explore-ui");
