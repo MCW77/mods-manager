@@ -19,7 +19,7 @@ const ModLoadoutView = React.memo(
 		let modDetails = null;
 		if (ModLoadout.hasSlots(modLoadout, usedSlots)) {
 			modDetails = usedSlots.map((slot) => (
-				<div key={modLoadout[slot]?.id}>
+				<div className={"flex"} key={modLoadout[slot]?.id}>
 					<ModDetail mod={modLoadout[slot]} assignedTarget={assignedTarget} />
 				</div>
 			));
