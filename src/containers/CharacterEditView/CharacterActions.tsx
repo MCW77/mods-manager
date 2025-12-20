@@ -108,7 +108,7 @@ const CharacterActions: React.FC = observer(() => {
 	};
 
 	return (
-		<div className={"flex gap-2"}>
+		<div className={"flex flex-wrap gap-2"}>
 			<Button
 				type="button"
 				onClick={() => {
@@ -323,11 +323,13 @@ const CharacterActions: React.FC = observer(() => {
 					/>
 					<FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6" />
 				</span>
+				Optimize Mods
 			</Button>
 			<Popover open={isFormOpen} onOpenChange={state$.isFormOpen.set}>
 				<PopoverTrigger className={"m-auto p-2"} asChild>
 					<Button size="sm">
 						<FontAwesomeIcon icon={faSave} title={"Save"} />
+						Save Compilation
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent

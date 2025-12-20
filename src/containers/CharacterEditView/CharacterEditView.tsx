@@ -214,12 +214,12 @@ const CharacterEditView = observer(() => {
 						<CharacterFilters />
 					</Suspense>
 				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Actions">
+				<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
 					<Suspense fallback={<div>Loading CharacterActions</div>}>
 						<CharacterActions />
 					</Suspense>
 				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Selection">
+				<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
 					<Suspense fallback={<div>Loading SelectionActions</div>}>
 						<SelectionActions
 							visibleCharacters={highlightedCharacters}
