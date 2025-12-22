@@ -12,7 +12,7 @@ import { readFile } from "#/utils/readFile";
 // state
 import { useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 import { dialog$ } from "#/modules/dialog/state/dialog";

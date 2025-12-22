@@ -5,7 +5,7 @@ import { cn } from "#/lib/utils";
 import { useObservable } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const lockedStatus$ = stateLoader$.lockedStatus$;
 

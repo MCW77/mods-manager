@@ -1,11 +1,11 @@
 // react
-import { lazy, type ComponentProps } from "react";
+import { type ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
 import { observer, reactive, useSelector } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const templates$ = stateLoader$.templates$;
 
@@ -25,16 +25,9 @@ import {
 } from "#ui/select";
 
 // containers
-const TemplatesManager = lazy(
-	() => import("#/containers/TemplatesManager/TemplatesManager"),
-);
+import TemplatesManager from "#/containers/TemplatesManager/TemplatesManager";
 import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
-const OptimizationSettingsForm = lazy(
-	() =>
-		import(
-			"#/modules/optimizationSettings/components/OptimizationSettingsForm"
-		),
-);
+import OptimizationSettingsForm from "#/modules/optimizationSettings/components/OptimizationSettingsForm";
 
 const ReactiveSelect = reactive(Select);
 

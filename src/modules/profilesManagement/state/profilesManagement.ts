@@ -424,6 +424,6 @@ const syncStatus$ = syncObservable(
 		initial: getInitialProfiles(),
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { profilesManagement$ };
+export { profilesManagement$, syncStatus$ };

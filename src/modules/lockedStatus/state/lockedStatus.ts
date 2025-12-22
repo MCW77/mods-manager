@@ -10,9 +10,7 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import {
@@ -95,6 +93,6 @@ const syncStatus$ = syncObservable(
 		initial: getInitialLockedStatus(),
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { lockedStatus$ };
+export { lockedStatus$, syncStatus$ };

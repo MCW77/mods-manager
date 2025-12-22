@@ -1,5 +1,4 @@
 // react
-import { lazy } from "react";
 import {
 	For,
 	Memo,
@@ -16,14 +15,14 @@ import {
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { enableReactComponents } from "@legendapp/state/config/enableReactComponents";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
-const { optimizeMods } = await import("#/modules/optimize/optimize");
+import { optimizeMods } from "#/modules/optimize/optimize";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -44,17 +43,11 @@ import type {
 } from "#/modules/compilations/domain/MissedGoals";
 
 // components
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
-const OptimizerProgress = lazy(
-	() => import("#/modules/progress/components/OptimizerProgress"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
+import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
 import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
 import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
-const TargetStatsWidget = lazy(
-	() => import("#/modules/planEditing/components/TargetStatsWidget"),
-);
+import TargetStatsWidget from "#/modules/planEditing/components/TargetStatsWidget";
 import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
 import { Button } from "#ui/button";
 import { DialogClose } from "#/components/custom/dialog";

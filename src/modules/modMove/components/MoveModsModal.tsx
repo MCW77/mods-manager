@@ -5,7 +5,7 @@ import { formatNumber } from "#/utils/formatNumber";
 
 //state
 import { useValue } from "@legendapp/state/react";
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

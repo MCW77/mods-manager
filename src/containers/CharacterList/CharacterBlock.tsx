@@ -1,10 +1,10 @@
 // react
 import type React from "react";
-import { lazy, useCallback } from "react";
+import { useCallback } from "react";
 import { Computed, observer, useValue } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -21,9 +21,7 @@ import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
 import { CharacterTargetStatusIcons } from "./CharacterTargetStatusIcons";
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 

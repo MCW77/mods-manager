@@ -1,8 +1,8 @@
 // react
-import React, { lazy } from "react";
+import React from "react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const charactersManagement$ = stateLoader$.charactersManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
@@ -17,9 +17,7 @@ import type { CharacterModding } from "#/modules/compilations/domain/CharacterMo
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
-const ModLoadoutView = lazy(
-	() => import("#/components/ModLoadoutView/ModLoadoutView"),
-);
+import ModLoadoutView from "#/components/ModLoadoutView/ModLoadoutView";
 
 interface PlayerStat {
 	name: CSStats.DisplayStatNames;

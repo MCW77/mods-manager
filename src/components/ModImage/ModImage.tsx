@@ -3,12 +3,11 @@ import { match, P } from "ts-pattern";
 import { cn } from "#/lib/utils";
 
 // react
-import { lazy, memo } from "react";
+import { memo } from "react";
 
 // state
 import { useValue } from "@legendapp/state/react";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 // domain
@@ -18,9 +17,7 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
 
 // components
-const CharacterAvatar = lazy(
-	() => import("../CharacterAvatar/CharacterAvatar"),
-);
+import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
 import { Pips } from "../Pips/Pips";
 import { Badge } from "../ui/badge";
 

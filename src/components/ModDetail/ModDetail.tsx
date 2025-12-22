@@ -1,10 +1,9 @@
 // react
-import { memo, lazy } from "react";
+import { memo } from "react";
 
 // state
 import { useValue } from "@legendapp/state/react";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
@@ -15,14 +14,10 @@ import type { Mod } from "#/domain/Mod";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
-const ModImage = lazy(() => import("#/components/ModImage/ModImage"));
-const ModStats = lazy(() => import("#/components/ModStats/ModStats"));
-const SellModButton = lazy(
-	() => import("#/components/SellModButton/SellModButton"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
+import ModImage from "#/components/ModImage/ModImage";
+import ModStats from "#/components/ModStats/ModStats";
+import SellModButton from "#/components/SellModButton/SellModButton";
 import { Label } from "#ui/label";
 
 type ComponentProps = {

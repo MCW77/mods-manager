@@ -1,5 +1,5 @@
 // react
-import React, { lazy } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -20,9 +20,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import * as Collapsible from "@radix-ui/react-collapsible";
 
-const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
+import ModDetail from "#/components/ModDetail/ModDetail";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
-const DeleteModsModal = lazy(() => import("./DeleteModsModal"));
+import DeleteModsModal from "./DeleteModsModal";
 
 import { Button } from "#ui/button";
 

@@ -1,9 +1,9 @@
 // react
-import { lazy, useId } from "react";
+import { useId } from "react";
 
 // state
 import { useValue } from "@legendapp/state/react";
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -16,13 +16,9 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-const CreateProfileModal = lazy(
-	() => import("#/modules/hotUtils/components/CreateProfileModal"),
-);
-const MoveModsModal = lazy(
-	() => import("#/modules/modMove/components/MoveModsModal"),
-);
-const TextualReview = lazy(() => import("./TextualReview"));
+import CreateProfileModal from "#/modules/hotUtils/components/CreateProfileModal";
+import MoveModsModal from "#/modules/modMove/components/MoveModsModal";
+import TextualReview from "./TextualReview";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 

@@ -9,7 +9,7 @@ import uniq from "lodash-es/uniq";
 import { groupBy } from "#/utils/groupBy";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;

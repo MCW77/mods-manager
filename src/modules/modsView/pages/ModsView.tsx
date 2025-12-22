@@ -1,11 +1,11 @@
 // react
-import React, { lazy } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 // state
 import { Memo, reactive } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
 
@@ -13,8 +13,8 @@ const modsView$ = stateLoader$.modsView$;
 import type { Categories } from "../domain/Categories";
 
 // components
-const CategoryView = lazy(() => import("../components/CategoryView"));
-const ViewSetupWidget = lazy(() => import("../components/ViewSetupWidget"));
+import CategoryView from "../components/CategoryView";
+import ViewSetupWidget from "../components/ViewSetupWidget";
 import { FlexSidebar } from "#/components/FlexSidebar/FlexSidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 

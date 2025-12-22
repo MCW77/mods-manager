@@ -1,5 +1,5 @@
 // react
-import { lazy, useMemo } from "react";
+import { useMemo } from "react";
 import {
 	Computed,
 	For,
@@ -12,7 +12,7 @@ import {
 import { objectEntries } from "#/utils/objectEntries";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const characters$ = stateLoader$.characters$;
 
@@ -22,7 +22,7 @@ import { target$ } from "../state/planEditing";
 import type { CharacterNames } from "#/constants/CharacterNames";
 
 // components
-const TargetStatWidget = lazy(() => import("./TargetStatWidget"));
+import TargetStatWidget from "./TargetStatWidget";
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 

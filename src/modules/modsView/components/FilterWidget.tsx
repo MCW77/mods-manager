@@ -1,30 +1,29 @@
 // react
-import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
 import { useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
 // components
 import { ChevronsUpDown } from "lucide-react";
-const FilterManager = lazy(() => import("./FilterManager"));
-const LevelFilter = lazy(() => import("./Filters/LevelFilter"));
-const SlotFilter = lazy(() => import("./Filters/SlotFilter"));
-const SetFilter = lazy(() => import("./Filters/SetFilter"));
-const TierFilter = lazy(() => import("./Filters/TierFilter"));
-const ScoreFilter = lazy(() => import("./Filters/ScoreFilter"));
-const RarityFilter = lazy(() => import("./Filters/RarityFilter"));
-const EquippedFilter = lazy(() => import("./Filters/EquippedFilter"));
-const PrimaryFilter = lazy(() => import("./Filters/PrimaryFilter"));
-const SecondaryFilter = lazy(() => import("./Filters/SecondaryFilter"));
-const AssignedFilter = lazy(() => import("./Filters/AssignedFilter"));
-const CalibrationFilter = lazy(() => import("./Filters/CalibrationFilter"));
-const SpeedFilter = lazy(() => import("./Filters/SpeedFilter"));
+import FilterManager from "./FilterManager";
+import LevelFilter from "./Filters/LevelFilter";
+import SlotFilter from "./Filters/SlotFilter";
+import SetFilter from "./Filters/SetFilter";
+import TierFilter from "./Filters/TierFilter";
+import ScoreFilter from "./Filters/ScoreFilter";
+import RarityFilter from "./Filters/RarityFilter";
+import EquippedFilter from "./Filters/EquippedFilter";
+import PrimaryFilter from "./Filters/PrimaryFilter";
+import SecondaryFilter from "./Filters/SecondaryFilter";
+import AssignedFilter from "./Filters/AssignedFilter";
+import CalibrationFilter from "./Filters/CalibrationFilter";
+import SpeedFilter from "./Filters/SpeedFilter";
 
 import { Button } from "#/components/ui/button";
 import {

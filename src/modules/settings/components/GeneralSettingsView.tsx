@@ -1,5 +1,4 @@
 // react
-import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 import { observer } from "@legendapp/state/react";
 
@@ -7,8 +6,7 @@ import { observer } from "@legendapp/state/react";
 import { readFile } from "#/utils/readFile";
 
 // state
-const { appState$ } = await import("#/modules/appState/state/appState");
-
+import { appState$ } from "#/modules/appState/state/appState";
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // components
@@ -19,13 +17,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const AccountsManager = lazy(
-	() => import("#/components/AccountsManager/AccountsManager"),
-);
+import AccountsManager from "#/components/AccountsManager/AccountsManager";
 import { FileInput } from "#/components/FileInput/FileInput";
-const HotutilsSettingsForm = lazy(
-	() => import("#/modules/hotUtils/components/HotutilsSettingsForm"),
-);
+import HotutilsSettingsForm from "#/modules/hotUtils/components/HotutilsSettingsForm";
 import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
 
 import { Button } from "#ui/button";

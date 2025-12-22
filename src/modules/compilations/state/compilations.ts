@@ -10,9 +10,7 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import {
@@ -334,7 +332,7 @@ const syncStatus$ = syncObservable(
 		initial: getinitialCompilations(),
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
 const syncStatus2$ = syncObservable(
 	compilations$.persistedData2,
@@ -348,6 +346,6 @@ const syncStatus2$ = syncObservable(
 		initial: getDefaultCompilation(),
 	}),
 );
-await when(syncStatus2$.isPersistLoaded);
+// await when(syncStatus2$.isPersistLoaded);
 
-export { compilations$ };
+export { compilations$, syncStatus$, syncStatus2$ };

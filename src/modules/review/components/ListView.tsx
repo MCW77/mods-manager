@@ -1,5 +1,4 @@
 // react
-import { lazy } from "react";
 
 // utils
 import flatten from "lodash-es/flatten";
@@ -7,7 +6,7 @@ import flatten from "lodash-es/flatten";
 // state
 import { useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
@@ -26,10 +25,8 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
-const ModDetail = lazy(() => import("#/components/ModDetail/ModDetail"));
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
+import ModDetail from "#/components/ModDetail/ModDetail";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";

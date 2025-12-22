@@ -1,19 +1,18 @@
 // react
-import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
 import { observer, reactive, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
 
 // components
-const FilterWidget = lazy(() => import("./FilterWidget"));
-const ViewSetupManager = lazy(() => import("./ViewSetupManager"));
-const ScoreSelector = lazy(() => import("./ScoreSelector"));
-const SortManager = lazy(() => import("./SortManager"));
+import FilterWidget from "./FilterWidget";
+import ViewSetupManager from "./ViewSetupManager";
+import ScoreSelector from "./ScoreSelector";
+import SortManager from "./SortManager";
 
 import { Label } from "#ui/label";
 import { Switch } from "#ui/switch";

@@ -22,11 +22,9 @@ import {
 // state
 import { observable } from "@legendapp/state";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const { refreshPlayerData } = await import(
-	"#/modules/profileFetch/profileFetch"
-);
+import { refreshPlayerData } from "#/modules/profileFetch/profileFetch";
 
 import { ui$ } from "#/modules/ui/state/ui";
 
@@ -39,9 +37,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
 import { Spinner as SimpleSpinner } from "#/components/Spinner/Spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
-const ProfilesManager = lazy(
-	() => import("#/modules/profilesManagement/components/ProfilesManager"),
-);
+import ProfilesManager from "#/modules/profilesManagement/components/ProfilesManager";
 
 import { Toaster } from "#ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
@@ -68,7 +64,7 @@ const ReactiveTabs = reactive(Tabs);
 
 const firstRender$ = observable(true);
 
-const App = () => {
+const AppContent = () => {
 	const [t] = useTranslation("global-ui");
 
 	useObserve(() => {
@@ -258,6 +254,23 @@ const App = () => {
 				</div>
 			</div>
 		</Suspense>
+	);
+};
+
+AppContent.displayName = "AppContent";
+
+const App = () => {
+	return (
+		<Show
+			if={stateLoader$.isDone}
+			else={
+				<div className="flex h-full w-full items-center justify-center bg-black">
+					<SimpleSpinner isVisible={true} />
+				</div>
+			}
+		>
+			<AppContent />
+		</Show>
 	);
 };
 

@@ -55,6 +55,6 @@ const syncStatus$ = syncObservable(
 		},
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { about$ };
+export { about$, syncStatus$ };

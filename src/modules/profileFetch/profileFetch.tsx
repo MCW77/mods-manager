@@ -5,16 +5,10 @@ import { objectEntries } from "#/utils/objectEntries";
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import(
-	"#/modules/characters/state/characters"
-);
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { compilations$ } from "#/modules/compilations/state/compilations";
+import { characters$ } from "#/modules/characters/state/characters";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";

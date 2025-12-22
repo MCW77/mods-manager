@@ -3,9 +3,7 @@ import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
 import type { IncrementalOptimizationObservable } from "../domain/IncrementalOptimizationObservable";
@@ -64,6 +62,6 @@ const syncStatus$ = syncObservable(
 		initial: structuredClone(initialIndicesByProfile),
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { incrementalOptimization$ };
+export { incrementalOptimization$, syncStatus$ };

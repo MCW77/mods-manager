@@ -8,9 +8,7 @@ import formatAllycode from "#/utils/formatAllycode";
 // state
 import type { ObservableBoolean } from "@legendapp/state";
 import { useObservable } from "@legendapp/state/react";
-const { refreshPlayerData } = await import(
-	"#/modules/profileFetch/profileFetch"
-);
+import { refreshPlayerData } from "#/modules/profileFetch/profileFetch";
 
 // components
 import { Input } from "#ui/input";

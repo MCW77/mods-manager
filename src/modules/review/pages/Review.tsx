@@ -1,5 +1,4 @@
 // react
-import { lazy } from "react";
 import { observer, Show, useValue } from "@legendapp/state/react";
 
 // utils
@@ -9,7 +8,7 @@ import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -35,10 +34,10 @@ import type {
 } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-const ActionsWidget = lazy(() => import("../components/ActionsWidget"));
-const DisplayWidget = lazy(() => import("../components/DisplayWidget"));
-const ListView = lazy(() => import("../components/ListView"));
-const SetsView = lazy(() => import("../components/SetsView"));
+import ActionsWidget from "../components/ActionsWidget";
+import DisplayWidget from "../components/DisplayWidget";
+import ListView from "../components/ListView";
+import SetsView from "../components/SetsView";
 import { SummaryWidget } from "../components/SummaryWidget";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Label } from "#ui/label";

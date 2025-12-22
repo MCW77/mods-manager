@@ -1,11 +1,10 @@
 // react
 import type React from "react";
-import { lazy } from "react";
 
 import { observer, useValue, useObservable } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
@@ -20,9 +19,8 @@ import * as Character from "#/domain/Character";
 // components
 import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
 
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
+
 
 type CharacterBlockProps = {
 	character: Character.Character;

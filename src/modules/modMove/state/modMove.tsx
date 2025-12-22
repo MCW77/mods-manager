@@ -1,13 +1,10 @@
 // react
-import { lazy } from "react";
 
 // state
 import { observable, beginBatch, endBatch } from "@legendapp/state";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { hotutils$ } = await import("#/modules/hotUtils/state/hotUtils");
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -19,9 +16,8 @@ import type { MoveStatus } from "../domain/MoveStatus";
 import { Mod } from "#/domain/Mod";
 
 // components
-const LazyModMoveProgress = lazy(
-	() => import("../components/ModMoveProgress"),
-);
+import LazyModMoveProgress from "../components/ModMoveProgress";
+
 // components
 import { ModMoveCancelModal } from "../../modMove/components/ModMoveCancelModal";
 

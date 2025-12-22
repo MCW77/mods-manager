@@ -3,9 +3,7 @@ import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
+import { compilations$ } from "#/modules/compilations/state/compilations";
 
 // domain
 import defaultTemplates from "#/constants/characterTemplates.json" with {
@@ -151,7 +149,7 @@ const syncStatus1$ = syncObservable(
 		},
 	}),
 );
-await when(syncStatus1$.isPersistLoaded);
+// await when(syncStatus1$.isPersistLoaded);
 
 const syncStatus2$ = syncObservable(
 	templates$.userTemplatesByName,
@@ -162,6 +160,6 @@ const syncStatus2$ = syncObservable(
 		initial: {},
 	}),
 );
-await when(syncStatus2$.isPersistLoaded);
+// await when(syncStatus2$.isPersistLoaded);
 
-export { templates$ };
+export { templates$, syncStatus1$, syncStatus2$ };

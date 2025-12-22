@@ -6,9 +6,7 @@ import { observable, type ObservableObject, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -311,6 +309,6 @@ const syncStatus$ = syncObservable(
 		initial: initialPersistedData,
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { hotutils$ };
+export { hotutils$, syncStatus$ };

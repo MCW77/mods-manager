@@ -1,5 +1,5 @@
 // react
-import { lazy, useId } from "react";
+import { useId } from "react";
 import {
 	Computed,
 	observer,
@@ -9,8 +9,7 @@ import {
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -18,7 +17,7 @@ const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-const { optimizeMods } = await import("#/modules/optimize/optimize");
+import { optimizeMods } from "#/modules/optimize/optimize";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -40,12 +39,8 @@ import {
 	faUnlock,
 } from "@fortawesome/free-solid-svg-icons";
 
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
-const OptimizerProgress = lazy(
-	() => import("#/modules/progress/components/OptimizerProgress"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
+import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
 import { SettingsLink } from "#/modules/settings/components/SettingsLink";

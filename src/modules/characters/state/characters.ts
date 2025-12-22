@@ -29,6 +29,6 @@ const syncStatus$ = syncObservable(
 		initial: {} as BaseCharacterById,
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { characters$ };
+export { characters$, syncStatus$ };

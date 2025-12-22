@@ -3,18 +3,10 @@ import { type ObservableObject, observable, when } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-const { profilesManagement$ } = await import(
-	"#/modules/profilesManagement/state/profilesManagement"
-);
-const { compilations$ } = await import(
-	"#/modules/compilations/state/compilations"
-);
-const { characters$ } = await import(
-	"#/modules/characters/state/characters"
-);
-const { lockedStatus$ } = await import(
-	"#/modules/lockedStatus/state/lockedStatus"
-);
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { compilations$ } from "#/modules/compilations/state/compilations";
+import { characters$ } from "#/modules/characters/state/characters";
+import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // domain
 import {
@@ -557,6 +549,6 @@ const syncStatus$ = syncObservable(
 		initial: getDefaultFilterSetup(),
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { charactersManagement$ };
+export { charactersManagement$, syncStatus$ };

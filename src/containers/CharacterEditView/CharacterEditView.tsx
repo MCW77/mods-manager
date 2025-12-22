@@ -1,12 +1,11 @@
 // react
 import type React from "react";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 
 // state
 import { observable } from "@legendapp/state";
 import { Memo, observer, useValue } from "@legendapp/state/react";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -24,19 +23,17 @@ import type { CharacterFilter } from "#/modules/charactersManagement/domain/Char
 import * as Character from "#/domain/Character";
 
 // components
-const SelectionActions = lazy(() => import("./SelectionActions"));
-const TemplatesActions = lazy(() => import("./TemplatesActions"));
-const CharacterActions = lazy(() => import("./CharacterActions"));
-const CharacterFilters = lazy(() => import("./CharacterFilters"));
-const CharacterWidget = lazy(() => import("./CharacterWidget"));
+import SelectionActions from "./SelectionActions";
+import TemplatesActions from "./TemplatesActions";
+import CharacterActions from "./CharacterActions";
+import CharacterFilters from "./CharacterFilters";
+import CharacterWidget from "./CharacterWidget";
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Spinner } from "#/components/Spinner/Spinner";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 
-const CharacterList = lazy(
-	() => import("#/containers/CharacterList/CharacterList"),
-);
+import CharacterList from "#/containers/CharacterList/CharacterList";
 
 const isSelectionExpanded$ = observable(false);
 

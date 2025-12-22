@@ -58,7 +58,7 @@ import * as perf from "../utils/performance";
 import { objectEntries } from "#/utils/objectEntries";
 
 // state
-import type { ObservableObject } from "@legendapp/state";
+import { type ObservableObject, when } from "@legendapp/state";
 
 import type { StateLoaderObservable } from "../modules/stateLoader/stateLoader";
 
@@ -234,13 +234,15 @@ self.onmessage = (message) => {
 		import("../modules/stateLoader/stateLoader")
 			.then((module) => {
 				stateLoader$ = module.stateLoader$;
-				profilesManagement$ = stateLoader$.profilesManagement$;
-				compilations$ = stateLoader$.compilations$;
-				incrementalOptimization$ = stateLoader$.incrementalOptimization$;
-				lockedStatus$ = stateLoader$.lockedStatus$;
-				optimizationSettings$ = stateLoader$.optimizationSettings$;
-				postMessage({
-					type: "Ready",
+				when(stateLoader$.isDone).then(() => {
+					profilesManagement$ = stateLoader$.profilesManagement$;
+					compilations$ = stateLoader$.compilations$;
+					incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+					lockedStatus$ = stateLoader$.lockedStatus$;
+					optimizationSettings$ = stateLoader$.optimizationSettings$;
+					postMessage({
+						type: "Ready",
+					});
 				});
 			})
 			.catch((error) => {

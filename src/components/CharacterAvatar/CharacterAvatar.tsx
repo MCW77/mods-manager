@@ -7,8 +7,7 @@ import * as React from "react";
 
 // state
 import { Show, Switch, useValue, useObservable } from "@legendapp/state/react";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const characters$ = stateLoader$.characters$;
 

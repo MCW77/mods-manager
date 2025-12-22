@@ -1,12 +1,12 @@
 // react
-import { lazy, memo } from "react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 // types
 import type { TFunction } from "i18next";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
@@ -17,7 +17,7 @@ import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { SecondaryStats, Stats } from "#/domain/Stats";
 
 // components
-const ModScores = lazy(() => import("../ModScores/ModScores"));
+import ModScores from "../ModScores/ModScores";
 
 const translateStat = (
 	displayText: Stats.DisplayedStat,

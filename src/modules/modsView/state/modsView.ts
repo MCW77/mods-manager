@@ -361,6 +361,6 @@ const syncStatus$ = syncObservable(
 		initial: structuredClone(defaultViewSetup),
 	}),
 );
-await when(syncStatus$.isPersistLoaded);
+// await when(syncStatus$.isPersistLoaded);
 
-export { modsView$ };
+export { modsView$, syncStatus$ };

@@ -8,7 +8,7 @@ import {
 } from "@legendapp/state/react";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const templates$ = stateLoader$.templates$;
 

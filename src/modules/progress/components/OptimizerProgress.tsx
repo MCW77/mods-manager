@@ -1,5 +1,4 @@
 // react
-import { lazy } from "react";
 
 // state
 import {
@@ -11,12 +10,12 @@ import {
 	useObservable,
 } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
-const { cancelOptimizer } = await import("#/modules/optimize/optimize");
+import { cancelOptimizer } from "#/modules/optimize/optimize";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { progress$ } from "../state/progress";
@@ -25,9 +24,7 @@ import { progress$ } from "../state/progress";
 import type * as Character from "#/domain/Character";
 
 // components
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";

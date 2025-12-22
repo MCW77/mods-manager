@@ -1,10 +1,8 @@
 // react
-import { lazy } from "react";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
@@ -21,12 +19,8 @@ import * as Character from "#/domain/Character";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 
-const AddTemplateModal = lazy(
-	() => import("#/containers/CharacterEditView/AddTemplateModal"),
-);
-const SaveTemplateModal = lazy(
-	() => import("#/containers/CharacterEditView/SaveTemplateModal"),
-);
+import AddTemplateModal from "#/containers/CharacterEditView/AddTemplateModal";
+import SaveTemplateModal from "#/containers/CharacterEditView/SaveTemplateModal";
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
 

@@ -1,8 +1,7 @@
 // state
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { Show, useValue } from "@legendapp/state/react";
-
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 // state
 import { observer, reactive, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;

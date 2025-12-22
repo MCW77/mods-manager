@@ -1,11 +1,10 @@
 // react
-import { lazy } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
 import { Memo, useValue } from "@legendapp/state/react";
 
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
 
@@ -18,7 +17,7 @@ import {
 import * as ModConsts from "#/domain/constants/ModConsts";
 
 // components
-const SetAllButtonGroup = lazy(() => import("../SetAllButtonGroup"));
+import SetAllButtonGroup from "../SetAllButtonGroup";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 

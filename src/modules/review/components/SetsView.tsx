@@ -1,12 +1,11 @@
 // react
-import { lazy } from "react";
 import { For, useMount, useObservable, useValue } from "@legendapp/state/react";
 
 // utils
 import collectByKey from "#/utils/collectByKey";
 
 // state
-const { stateLoader$ } = await import("#/modules/stateLoader/stateLoader");
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
@@ -23,15 +22,9 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
-const CharacterAvatar = lazy(
-	() => import("#/components/CharacterAvatar/CharacterAvatar"),
-);
-const ModLoadoutDetail = lazy(
-	() => import("#/components/ModLoadoutDetail/ModLoadoutDetail"),
-);
-const ModLoadoutView = lazy(
-	() => import("#/components/ModLoadoutView/ModLoadoutView"),
-);
+import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
+import ModLoadoutDetail from "#/components/ModLoadoutDetail/ModLoadoutDetail";
+import ModLoadoutView from "#/components/ModLoadoutView/ModLoadoutView";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
