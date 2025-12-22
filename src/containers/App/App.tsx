@@ -143,6 +143,8 @@ const AppContent = () => {
 								<img
 									alt={"Logo"}
 									className={"h-6"}
+									height={24}
+									width={24}
 									src={"/img/gold-crit-dmg-arrow-mod-cropped.webp"}
 								/>
 								<TabsList>
