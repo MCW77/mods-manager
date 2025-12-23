@@ -220,7 +220,7 @@ const AppContent = () => {
 							<Memo>
 								<TabsContent className={tabStyle} value="mods">
 									<Suspense fallback={null}>
-									<ModsView />
+										<ModsView />
 									</Suspense>
 								</TabsContent>
 							</Memo>
@@ -229,7 +229,7 @@ const AppContent = () => {
 							<Memo>
 								<TabsContent className={tabStyle} value="mod compilations">
 									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-									<CompilationsView />
+										<CompilationsView />
 									</Suspense>
 								</TabsContent>
 							</Memo>
@@ -247,19 +247,19 @@ const AppContent = () => {
 							<Memo>
 								<TabsContent className={tabStyle} value="settings">
 									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-									<SettingsView />
+										<SettingsView />
 									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
 						<TabsContent className={tabStyle} value="help">
 							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-							<HelpView />
+								<HelpView />
 							</Suspense>
 						</TabsContent>
 						<TabsContent className={tabStyle} value="about">
 							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-							<AboutView />
+								<AboutView />
 							</Suspense>
 						</TabsContent>
 					</ReactiveTabs>
