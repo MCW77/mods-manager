@@ -219,14 +219,18 @@ const AppContent = () => {
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="mods">
+									<Suspense fallback={null}>
 									<ModsView />
+									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="mod compilations">
+									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
 									<CompilationsView />
+									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
@@ -242,15 +246,21 @@ const AppContent = () => {
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="settings">
+									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
 									<SettingsView />
+									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
 						<TabsContent className={tabStyle} value="help">
+							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
 							<HelpView />
+							</Suspense>
 						</TabsContent>
 						<TabsContent className={tabStyle} value="about">
+							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
 							<AboutView />
+							</Suspense>
 						</TabsContent>
 					</ReactiveTabs>
 				</div>
