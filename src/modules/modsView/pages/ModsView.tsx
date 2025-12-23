@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import React, { Suspense } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -50,60 +50,74 @@ const ModsView = React.memo(() => {
 						</TabsTrigger>
 					</TabsList>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="AllMods"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="AllMods"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="Reveal"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="Reveal"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="Level"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="Level"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="Slice5Dot"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="Slice5Dot"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="Slice6E"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="Slice6E"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="Slice6Dot"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="Slice6Dot"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 					<Memo>
-						<TabsContent
-							className={"flex data-[state=active]:grow-1 min-h-0"}
-							value="Calibrate"
-						>
-							<CategoryView />
-						</TabsContent>
+						<Suspense fallback={null}>
+							<TabsContent
+								className={"flex data-[state=active]:grow-1 min-h-0"}
+								value="Calibrate"
+							>
+								<CategoryView />
+							</TabsContent>
+						</Suspense>
 					</Memo>
 				</ReactiveTabs>
 			}
