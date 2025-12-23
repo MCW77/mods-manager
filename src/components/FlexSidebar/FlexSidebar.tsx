@@ -12,8 +12,8 @@ import { Button } from "../ui/button";
 
 interface FlexSidebarProps {
 	isCollapsed?: boolean;
-	mainContent: JSX.Element | JSX.Element[];
-	sidebarContent: JSX.Element | JSX.Element[];
+	mainContent: React.JSX.Element | React.JSX.Element[];
+	sidebarContent: React.JSX.Element | React.JSX.Element[];
 }
 
 const FlexSidebar = ({
@@ -67,7 +67,7 @@ const FlexSidebar = ({
 FlexSidebar.displayName = "FlexSidebar";
 
 interface FlexSidebarSidebarContentProps {
-	sidebarContent: JSX.Element | JSX.Element[];
+	sidebarContent: React.JSX.Element | React.JSX.Element[];
 }
 
 const FlexSidebarSidebarContent = ({

@@ -4,7 +4,6 @@ import {
 	Memo,
 	observer,
 	reactive,
-	Reactive,
 	Show,
 	useValue,
 	useMount,
@@ -422,7 +421,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		};
 
 		return (
-			<Reactive.form
+			<form
 				className={
 					"character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8"
 				}
@@ -628,7 +627,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 						</div>
 					</TabsContent>
 				</Tabs>
-			</Reactive.form>
+			</form>
 		);
 	},
 );

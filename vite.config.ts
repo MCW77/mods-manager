@@ -40,9 +40,9 @@ export default defineConfig({
 	plugins: [
 		dynamicImport(),
 		react({
-      babel: {
-        configFile: true // This tells it to use your babel.config.js
-      },
+			babel: {
+				configFile: true, // This tells it to use your babel.config.js
+			},
 			exclude: [
 				/.*\.worker\.ts$/,
 				/.*workers\/.*\.ts$/,
@@ -104,6 +104,8 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
+			react: path.resolve(__dirname, "./node_modules/react"),
+			"react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
 			"#": path.resolve(__dirname, "./src"),
 			"#lib": path.resolve(__dirname, "./src/lib"),
 			"#ui": path.resolve(__dirname, "./src/components/ui"),

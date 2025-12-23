@@ -143,6 +143,8 @@ const AppContent = () => {
 								<img
 									alt={"Logo"}
 									className={"h-6"}
+									height={24}
+									width={24}
 									src={"/img/gold-crit-dmg-arrow-mod-cropped.webp"}
 								/>
 								<TabsList>
@@ -217,14 +219,18 @@ const AppContent = () => {
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="mods">
-									<ModsView />
+									<Suspense fallback={null}>
+										<ModsView />
+									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="mod compilations">
-									<CompilationsView />
+									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+										<CompilationsView />
+									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
@@ -240,15 +246,21 @@ const AppContent = () => {
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="settings">
-									<SettingsView />
+									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+										<SettingsView />
+									</Suspense>
 								</TabsContent>
 							</Memo>
 						</Show>
 						<TabsContent className={tabStyle} value="help">
-							<HelpView />
+							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+								<HelpView />
+							</Suspense>
 						</TabsContent>
 						<TabsContent className={tabStyle} value="about">
-							<AboutView />
+							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+								<AboutView />
+							</Suspense>
 						</TabsContent>
 					</ReactiveTabs>
 				</div>

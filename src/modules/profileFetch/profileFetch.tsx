@@ -130,7 +130,7 @@ function showFetchResult(
 	errorMessages: string[],
 	usedSession: boolean,
 ): void {
-	const fetchResults: JSX.Element[] = [];
+	const fetchResults: React.JSX.Element[] = [];
 
 	if (errorMessages.length) {
 		fetchResults.push(

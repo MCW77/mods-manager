@@ -1,4 +1,5 @@
 // react
+import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { Memo, Show, Switch, useObservable } from "@legendapp/state/react";
 
@@ -37,12 +38,16 @@ const ProfilesManager = () => {
 	return (
 		<div className="flex items-center gap-2">
 			<FontAwesomeIcon icon={faUser} />
-			<Switch value={isAddingProfile$}>
-				{{
-					true: () => <ProfileAdder isAddingProfile$={isAddingProfile$} />,
-					false: () => <ProfileSelector isAddingProfile$={isAddingProfile$} />,
-				}}
-			</Switch>
+			<Suspense fallback={<div className="w-60" />}>
+				<Switch value={isAddingProfile$}>
+					{{
+						true: () => <ProfileAdder isAddingProfile$={isAddingProfile$} />,
+						false: () => (
+							<ProfileSelector isAddingProfile$={isAddingProfile$} />
+						),
+					}}
+				</Switch>
+			</Suspense>
 			<Show if={profilesManagement$.profiles.activeAllycode}>
 				<div className="flex items-center gap-2">
 					<Show

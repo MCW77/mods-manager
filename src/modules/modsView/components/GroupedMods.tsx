@@ -1,10 +1,11 @@
 // react
 import React from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { reactive } from "@legendapp/state/react";
-import { beginBatch, endBatch, observable } from "@legendapp/state";
+import { For, reactive, useValue, useObservable } from "@legendapp/state/react";
+import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
@@ -26,32 +27,98 @@ import DeleteModsModal from "./DeleteModsModal";
 
 import { Button } from "#ui/button";
 
+const ReactiveCollapsible = reactive(Collapsible.Root);
+
+type ModGroup = {
+	isOpen: boolean;
+	id: string;
+	mods: Mod[];
+};
+
+type ObservableModGroups = {
+	modGroups: ModGroup[];
+	closeAll: () => void;
+	openAll: () => void;
+};
+
+type ModGroupItemProps = {
+	item$: Observable<ModGroup>;
+	modGroupsElement: React.RefObject<HTMLDivElement | null>;
+};
+
+function ModGroupItem({
+	item$: modGroup$,
+	modGroupsElement,
+}: ModGroupItemProps) {
+	const [tDomain] = useTranslation("domain");
+	return (
+		<ReactiveCollapsible
+			key={`modgroup-${modGroup$.id.peek()}`}
+			$open={modGroup$.isOpen}
+			onOpenChange={(isOpen) => {
+				modGroup$.isOpen.set(isOpen);
+			}}
+		>
+			<Collapsible.Trigger className="flex hover:cursor-pointer" asChild>
+				<div>
+					<span className="basis-20%">
+						{tDomain(`slots.name.${modGroup$.mods[0].slot.peek()}`)}
+					</span>
+					<span className="basis-30%">
+						{tDomain(`stats.${modGroup$.mods[0].modset.peek()}`)}
+					</span>
+					<span className="basis-30%">
+						{tDomain(
+							`stats.${modGroup$.mods[0].primaryStat.peek().getDisplayType()}`,
+						)}
+					</span>
+					<span className="basis-20%">
+						(
+						{tDomain("ModWithCount", {
+							count: modGroup$.mods.length,
+						})}
+						)
+					</span>
+				</div>
+			</Collapsible.Trigger>
+			<Collapsible.Content className="flex flex-row flex-wrap justify-evenly gap-4 p-y-2 text-center">
+				<For
+					each={modGroup$.mods}
+					item={({ item$ }) => (
+						<ModItem item$={item$} modGroupsElement={modGroupsElement} />
+					)}
+					optimized
+				/>
+			</Collapsible.Content>
+		</ReactiveCollapsible>
+	);
+}
+
+type ModItemProps = {
+	item$: Observable<Mod>;
+	modGroupsElement: React.RefObject<HTMLDivElement | null>;
+};
+
+function ModItem({ item$, modGroupsElement }: ModItemProps) {
+	const mod = useValue(item$);
+	return (
+		<RenderIfVisible
+			className={"w-[21em]"}
+			defaultHeight={243}
+			key={`RIV-${mod.id}`}
+			visibleOffset={486}
+			root={modGroupsElement}
+		>
+			<ModDetail mod={mod} />
+		</RenderIfVisible>
+	);
+}
+
 interface GroupedModsProps {
 	allModsCount: number;
 	displayedModsCount: number;
 	groupedMods: Mod[][];
 }
-
-const ReactiveCollapsible = reactive(Collapsible.Root);
-
-const modElements = (
-	mods: Mod[],
-	modGroupsElement: React.RefObject<HTMLDivElement>,
-) => {
-	return mods.map((mod) => {
-		return (
-			<RenderIfVisible
-				className={"w-[21em] snap-start"}
-				defaultHeight={278}
-				key={`RIV-${mod.id}`}
-				visibleOffset={2780}
-				root={modGroupsElement}
-			>
-				<ModDetail mod={mod} />
-			</RenderIfVisible>
-		);
-	});
-};
 
 const GroupedMods = ({
 	groupedMods,
@@ -61,28 +128,18 @@ const GroupedMods = ({
 	const [t] = useTranslation("explore-ui");
 	const [tDomain] = useTranslation("domain");
 
-	const modGroupsElement = React.createRef<HTMLDivElement>();
+	const modGroupsElement = useRef<HTMLDivElement>(null);
 
-	type ModGroup = {
-		isOpen: boolean;
-		key: string;
-		mods: Mod[];
-	};
 	const modGroups: ModGroup[] = [];
 	for (const modGroup of groupedMods) {
 		modGroups.push({
 			isOpen: true,
-			key: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
+			id: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
 			mods: modGroup,
 		});
 	}
-	type ObservableModGroups = {
-		modGroups: ModGroup[];
-		closeAll: () => void;
-		openAll: () => void;
-	};
 
-	const modGroups$ = observable<ObservableModGroups>({
+	const modGroups$ = useObservable<ObservableModGroups>({
 		modGroups: modGroups,
 		closeAll: () => {
 			beginBatch();
@@ -146,50 +203,19 @@ const GroupedMods = ({
 				<span className="basis-20%">{"#"}</span>
 			</div>
 			<div
-				className="flex flex-col overflow-y-auto overscroll-y-contain grow-1 snap-y snap-proximity"
+				className="flex flex-col overflow-y-auto overscroll-y-contain grow-1"
 				ref={modGroupsElement}
 			>
-				{modGroups$.modGroups.map((modGroup$) => {
-					return (
-						<ReactiveCollapsible
-							className="snap-start"
-							key={`modgroup-${modGroup$.key.peek()}`}
-							$open={modGroup$.isOpen}
-							onOpenChange={(isOpen) => {
-								modGroup$.isOpen.set(isOpen);
-							}}
-						>
-							<Collapsible.Trigger
-								className="flex hover:cursor-pointer"
-								asChild
-							>
-								<div>
-									<span className="basis-20%">
-										{tDomain(`slots.name.${modGroup$.mods[0].slot.peek()}`)}
-									</span>
-									<span className="basis-30%">
-										{tDomain(`stats.${modGroup$.mods[0].modset.peek()}`)}
-									</span>
-									<span className="basis-30%">
-										{tDomain(
-											`stats.${modGroup$.mods[0].primaryStat.peek().getDisplayType()}`,
-										)}
-									</span>
-									<span className="basis-20%">
-										(
-										{tDomain("ModWithCount", {
-											count: modGroup$.peek().mods.length,
-										})}
-										)
-									</span>
-								</div>
-							</Collapsible.Trigger>
-							<Collapsible.Content className="flex flex-row flex-wrap justify-evenly gap-y-4 p-y-2 text-center">
-								{modElements(modGroup$.mods.peek(), modGroupsElement)}
-							</Collapsible.Content>
-						</ReactiveCollapsible>
-					);
-				})}
+				<For
+					each={modGroups$.modGroups}
+					item={({ item$: modGroup$ }) => (
+						<ModGroupItem
+							item$={modGroup$}
+							modGroupsElement={modGroupsElement}
+						/>
+					)}
+					optimized
+				/>
 			</div>
 		</div>
 	);

@@ -214,12 +214,12 @@ const CharacterEditView = observer(() => {
 						<CharacterFilters />
 					</Suspense>
 				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Actions">
+				<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
 					<Suspense fallback={<div>Loading CharacterActions</div>}>
 						<CharacterActions />
 					</Suspense>
 				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Selection">
+				<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
 					<Suspense fallback={<div>Loading SelectionActions</div>}>
 						<SelectionActions
 							visibleCharacters={highlightedCharacters}
@@ -249,50 +249,53 @@ const CharacterEditView = observer(() => {
 					onDrop={availableCharactersDrop}
 					ref={containerRef}
 				>
-					<div
-						className={
-							"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
-						}
-					>
-						{highlightedCharacters.map((character) => (
-							<RenderIfVisible
-								className="snap-start"
-								key={character.id}
-								defaultHeight={161}
-								root={containerRef}
-								visibleOffset={1610}
-							>
-								<CharacterWidget
+					<Suspense fallback={null}>
+						<div
+							className={
+								"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
+							}
+						>
+							{highlightedCharacters.map((character) => (
+								<RenderIfVisible
+									className="snap-start"
 									key={character.id}
-									character={character}
-									className={"active"}
-								/>
-							</RenderIfVisible>
-						))}
-						{filteredCharacters.map((character) => (
-							<RenderIfVisible
-								className="snap-start"
-								key={character.id}
-								defaultHeight={161}
-								root={containerRef}
-								visibleOffset={1610}
-							>
-								<Suspense
+									defaultHeight={161}
+									root={containerRef}
+									searchableText={
+										baseCharacterById[character.id]?.name || character.id
+									}
+									visibleOffset={1610}
+								>
+									<CharacterWidget
+										key={character.id}
+										character={character}
+										className={"active"}
+									/>
+								</RenderIfVisible>
+							))}
+							{filteredCharacters.map((character) => (
+								<RenderIfVisible
+									className="snap-start"
 									key={character.id}
-									fallback={<div>Loading CharacterWidget</div>}
+									defaultHeight={161}
+									root={containerRef}
+									searchableText={
+										baseCharacterById[character.id]?.name || character.id
+									}
+									visibleOffset={1610}
 								>
 									<CharacterWidget
 										key={character.id}
 										character={character}
 										className={"opacity-25"}
 									/>
-								</Suspense>
-							</RenderIfVisible>
-						))}
-					</div>
+								</RenderIfVisible>
+							))}
+						</div>
+					</Suspense>
 				</div>
 				<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
-					<Suspense fallback={<Spinner isVisible={true} />}>
+					<Suspense fallback={null}>
 						<Memo>
 							<CharacterList />
 						</Memo>
