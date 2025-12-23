@@ -249,6 +249,7 @@ const CharacterEditView = observer(() => {
 					onDrop={availableCharactersDrop}
 					ref={containerRef}
 				>
+					<Suspense fallback={null}>
 					<div
 						className={
 							"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
@@ -277,22 +278,18 @@ const CharacterEditView = observer(() => {
 								root={containerRef}
 								visibleOffset={1610}
 							>
-								<Suspense
-									key={character.id}
-									fallback={<div>Loading CharacterWidget</div>}
-								>
 									<CharacterWidget
 										key={character.id}
 										character={character}
 										className={"opacity-25"}
 									/>
-								</Suspense>
 							</RenderIfVisible>
 						))}
 					</div>
+					</Suspense>
 				</div>
 				<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
-					<Suspense fallback={<Spinner isVisible={true} />}>
+					<Suspense fallback={null}>
 						<Memo>
 							<CharacterList />
 						</Memo>
