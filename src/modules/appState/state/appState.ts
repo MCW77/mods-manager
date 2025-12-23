@@ -30,11 +30,7 @@ import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
 import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
-import {
-	convertBackup,
-	type Backup,
-	type BackupData,
-} from "../domain/Backup";
+import { convertBackup, type Backup, type BackupData } from "../domain/Backup";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
 import { getProfileFromPersisted } from "#/modules/profilesManagement/domain/PlayerProfile";
 import type { LatestModsManagerBackupDataSchemaOutput } from "#/domain/schemas/mods-manager/index";

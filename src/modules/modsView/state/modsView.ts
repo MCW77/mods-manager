@@ -7,7 +7,6 @@ import {
 	endBatch,
 	observable,
 	type ObservableObject,
-	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
@@ -361,6 +360,5 @@ const syncStatus$ = syncObservable(
 		initial: structuredClone(defaultViewSetup),
 	}),
 );
-// await when(syncStatus$.isPersistLoaded);
 
 export { modsView$, syncStatus$ };

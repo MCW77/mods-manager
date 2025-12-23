@@ -5,7 +5,6 @@ import {
 	type Observable,
 	observable,
 	type ObservableObject,
-	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
@@ -93,6 +92,5 @@ const syncStatus$ = syncObservable(
 		initial: getInitialLockedStatus(),
 	}),
 );
-// await when(syncStatus$.isPersistLoaded);
 
 export { lockedStatus$, syncStatus$ };

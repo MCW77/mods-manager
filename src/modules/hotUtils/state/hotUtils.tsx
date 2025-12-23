@@ -309,6 +309,5 @@ const syncStatus$ = syncObservable(
 		initial: initialPersistedData,
 	}),
 );
-// await when(syncStatus$.isPersistLoaded);
 
 export { hotutils$, syncStatus$ };

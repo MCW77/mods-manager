@@ -100,8 +100,8 @@ async function loadStateModules() {
 			when(lockedStatusModule.syncStatus$.isPersistLoaded),
 			when(modsViewModule.syncStatus$.isPersistLoaded),
 			when(optimizationSettingsModule.syncStatus$.isPersistLoaded),
-			when(templatesModule.syncStatus1$.isPersistLoaded),
-			when(templatesModule.syncStatus2$.isPersistLoaded),
+			when(templatesModule.templatesSyncStatus$.isPersistLoaded),
+			when(templatesModule.templatesAddingModeSyncStatus$.isPersistLoaded),
 		]);
 
 		stateLoader$.isDone.set(true);

@@ -5,7 +5,6 @@ import {
 	type Observable,
 	observable,
 	type ObservableObject,
-	when,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
@@ -13,10 +12,7 @@ import { persistOptions } from "#/utils/globalLegendPersistSettings";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
-import {
-	getDefaultCompilation,
-	type Compilation,
-} from "../domain/Compilation";
+import { getDefaultCompilation, type Compilation } from "../domain/Compilation";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import { characterSettings } from "#/constants/characterSettings";
 import {
@@ -332,7 +328,6 @@ const syncStatus$ = syncObservable(
 		initial: getinitialCompilations(),
 	}),
 );
-// await when(syncStatus$.isPersistLoaded);
 
 const syncStatus2$ = syncObservable(
 	compilations$.persistedData2,
@@ -346,6 +341,5 @@ const syncStatus2$ = syncObservable(
 		initial: getDefaultCompilation(),
 	}),
 );
-// await when(syncStatus2$.isPersistLoaded);
 
 export { compilations$, syncStatus$, syncStatus2$ };

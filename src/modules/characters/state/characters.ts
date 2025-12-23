@@ -1,5 +1,5 @@
 // state
-import { observable, when } from "@legendapp/state";
+import { observable } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
@@ -29,6 +29,5 @@ const syncStatus$ = syncObservable(
 		initial: {} as BaseCharacterById,
 	}),
 );
-// await when(syncStatus$.isPersistLoaded);
 
 export { characters$, syncStatus$ };

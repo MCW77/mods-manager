@@ -30,7 +30,6 @@ import CharacterFilters from "./CharacterFilters";
 import CharacterWidget from "./CharacterWidget";
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
-import { Spinner } from "#/components/Spinner/Spinner";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 
 import CharacterList from "#/containers/CharacterList/CharacterList";

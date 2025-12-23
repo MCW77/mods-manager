@@ -1,5 +1,5 @@
 // react
-import { type ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
 // state

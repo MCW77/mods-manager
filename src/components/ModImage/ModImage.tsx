@@ -10,9 +10,9 @@ import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
+
 // domain
 import { ModTiersEnum } from "#/constants/enums";
-import type { CharacterNames } from "#/constants/CharacterNames";
 
 import type { Mod } from "#/domain/Mod";
 

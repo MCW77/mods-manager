@@ -1,5 +1,5 @@
 // state
-import { observable, type ObservableObject, when } from "@legendapp/state";
+import { observable, type ObservableObject } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
@@ -99,8 +99,8 @@ const templates$: ObservableObject<TemplatesObservable> =
 			});
 		},
 		reset: () => {
-			syncStatus1$.reset();
-			syncStatus2$.reset();
+			templatesSyncStatus$.reset();
+			templatesAddingModeSyncStatus$.reset();
 		},
 		importTemplates: (templatesString: string) => {
 			let parsedJSON: unknown;
@@ -138,7 +138,7 @@ const templates$: ObservableObject<TemplatesObservable> =
 		},
 	});
 
-const syncStatus1$ = syncObservable(
+const templatesSyncStatus$ = syncObservable(
 	templates$.templatesAddingMode,
 	persistOptions({
 		persist: {
@@ -149,9 +149,8 @@ const syncStatus1$ = syncObservable(
 		},
 	}),
 );
-// await when(syncStatus1$.isPersistLoaded);
 
-const syncStatus2$ = syncObservable(
+const templatesAddingModeSyncStatus$ = syncObservable(
 	templates$.userTemplatesByName,
 	persistOptions({
 		persist: {
@@ -160,6 +159,5 @@ const syncStatus2$ = syncObservable(
 		initial: {},
 	}),
 );
-// await when(syncStatus2$.isPersistLoaded);
 
-export { templates$, syncStatus1$, syncStatus2$ };
+export { templates$, templatesSyncStatus$, templatesAddingModeSyncStatus$ };
