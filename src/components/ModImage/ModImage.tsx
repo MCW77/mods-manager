@@ -155,12 +155,12 @@ type ComponentProps = {
 
 const ModImage = memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
-		const characterById = useValue(
-			profilesManagement$.activeProfile.characterById,
-		);
-		const character = mod.characterID
-			? characterById[mod.characterID as CharacterNames]
-			: null;
+		const character = useValue(() => {
+			if (mod.characterID === "null") return null;
+			return profilesManagement$.activeProfile.characterById[
+				mod.characterID
+			].get();
+		});
 
 		// #region Slot Match
 		const slotBackgroundPosition: BackgroundPositionClass = match([
