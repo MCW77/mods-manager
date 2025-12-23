@@ -250,42 +250,48 @@ const CharacterEditView = observer(() => {
 					ref={containerRef}
 				>
 					<Suspense fallback={null}>
-					<div
-						className={
-							"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
-						}
-					>
-						{highlightedCharacters.map((character) => (
-							<RenderIfVisible
-								className="snap-start"
-								key={character.id}
-								defaultHeight={161}
-								root={containerRef}
-								visibleOffset={1610}
-							>
-								<CharacterWidget
+						<div
+							className={
+								"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
+							}
+						>
+							{highlightedCharacters.map((character) => (
+								<RenderIfVisible
+									className="snap-start"
 									key={character.id}
-									character={character}
-									className={"active"}
-								/>
-							</RenderIfVisible>
-						))}
-						{filteredCharacters.map((character) => (
-							<RenderIfVisible
-								className="snap-start"
-								key={character.id}
-								defaultHeight={161}
-								root={containerRef}
-								visibleOffset={1610}
-							>
+									defaultHeight={161}
+									root={containerRef}
+									searchableText={
+										baseCharacterById[character.id]?.name || character.id
+									}
+									visibleOffset={1610}
+								>
+									<CharacterWidget
+										key={character.id}
+										character={character}
+										className={"active"}
+									/>
+								</RenderIfVisible>
+							))}
+							{filteredCharacters.map((character) => (
+								<RenderIfVisible
+									className="snap-start"
+									key={character.id}
+									defaultHeight={161}
+									root={containerRef}
+									searchableText={
+										baseCharacterById[character.id]?.name || character.id
+									}
+									visibleOffset={1610}
+								>
 									<CharacterWidget
 										key={character.id}
 										character={character}
 										className={"opacity-25"}
 									/>
-							</RenderIfVisible>
-						))}
-					</div>
+								</RenderIfVisible>
+							))}
+						</div>
 					</Suspense>
 				</div>
 				<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">

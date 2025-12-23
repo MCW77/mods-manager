@@ -5,6 +5,9 @@ import { observe } from "#/utils/intersectionObserver";
 import type React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
+// components
+import { SearchableActivity } from "#/components/SearchableActivity/SearchableActivity";
+
 type ComponentProps = {
 	className?: string;
 	defaultHeight?: number;
@@ -12,6 +15,7 @@ type ComponentProps = {
 	root?: React.RefObject<HTMLElement | null> | null;
 	disabled?: boolean;
 	children: React.ReactNode;
+	searchableText?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const isWindowAvailable = typeof window !== "undefined";
@@ -25,6 +29,7 @@ const RenderIfVisible = ({
 	root = null,
 	disabled = false,
 	children,
+	searchableText,
 	...restProps
 }: ComponentProps) => {
 	const [isVisible, setIsVisible] = useState<boolean>(!isWindowAvailable);
@@ -51,12 +56,12 @@ const RenderIfVisible = ({
 		} else {
 			if (!isVisibleRef.current) return;
 
-				if (isRequestIdleCallbackAvailable) {
-					window.requestIdleCallback(() => setIsVisible(false), {
-						timeout: 600,
-					});
-				} else {
-					setIsVisible(false);
+			if (isRequestIdleCallbackAvailable) {
+				window.requestIdleCallback(() => setIsVisible(false), {
+					timeout: 600,
+				});
+			} else {
+				setIsVisible(false);
 			}
 		}
 	}, []);
@@ -96,12 +101,18 @@ const RenderIfVisible = ({
 	}, [isVisible]);
 
 	return (
-		<div className={className} ref={intersectionRef} {...restProps}>
-			{isVisible ? (
-				children
-			) : (
-				<div style={{ height: placeholderHeight.current }} />
-			)}
+		<div
+			className={className}
+			ref={intersectionRef}
+			style={{ minHeight: !isVisible ? placeholderHeight.current : undefined }}
+			{...restProps}
+		>
+			<SearchableActivity
+				mode={isVisible ? "visible" : "hidden"}
+				searchableText={searchableText}
+			>
+				{children}
+			</SearchableActivity>
 		</div>
 	);
 };
