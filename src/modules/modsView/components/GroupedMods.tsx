@@ -4,8 +4,13 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { For, reactive, useValue, useObservable } from "@legendapp/state/react";
-import { beginBatch, endBatch, type Observable } from "@legendapp/state";
+import { For, reactive, useValue } from "@legendapp/state/react";
+import {
+	beginBatch,
+	endBatch,
+	observable,
+	type Observable,
+} from "@legendapp/state";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
@@ -139,7 +144,7 @@ const GroupedMods = ({
 		});
 	}
 
-	const modGroups$ = useObservable<ObservableModGroups>({
+	const modGroups$ = observable<ObservableModGroups>({
 		modGroups: modGroups,
 		closeAll: () => {
 			beginBatch();
