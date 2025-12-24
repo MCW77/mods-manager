@@ -29,12 +29,6 @@ export function observe(
 			Element,
 			(entry: IntersectionObserverEntry) => void
 		>();
-		console.log(
-			"Creating new IntersectionObserver for root:",
-			root,
-			"with margin:",
-			rootMargin,
-		);
 		const observer = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				const cb = elements.get(entry.target);
