@@ -1,4 +1,5 @@
 // react
+import { useMemo } from "react";
 import { For, useMount, useObservable, useValue } from "@legendapp/state/react";
 
 // utils
@@ -47,11 +48,13 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const filter = useValue(review$.modListFilter);
 	const modById = useValue(profilesManagement$.activeProfile.modById);
 
-	const currentModsByCharacter: {
-		[key in CharacterNames]: Mod[];
-	} = collectByKey(
+	const currentModsByCharacter: Record<CharacterNames, Mod[]> = useMemo(
+		() =>
+			collectByKey(
 		modById.values().filter((mod) => mod.characterID !== "null"),
 		(mod: Mod) => mod.characterID,
+			),
+		[modById],
 	);
 
 	useMount(() => {
