@@ -1,5 +1,4 @@
 // react
-import { useRef } from "react";
 import { For, useMount, useObservable, useValue } from "@legendapp/state/react";
 
 // utils
@@ -48,8 +47,6 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const filter = useValue(review$.modListFilter);
 	const modById = useValue(profilesManagement$.activeProfile.modById);
 
-	const containerRef = useRef<HTMLDivElement>(null);
-
 	const currentModsByCharacter: {
 		[key in CharacterNames]: Mod[];
 	} = collectByKey(
@@ -63,11 +60,8 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 
 	// Iterate over each character to render a full mod set
 	return (
-		<div
-			className={"grid grid-cols-1 gap-6 justify-items-center"}
-			ref={containerRef}
-		>
-			<For each={modAssignments$}>
+		<div className={"grid grid-cols-1 gap-6 justify-items-center"}>
+			<For each={modAssignments$} optimized>
 				{(value, _id) => {
 					const {
 						characterId: characterID,
@@ -83,7 +77,6 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 						<RenderIfVisible
 							defaultHeight={811}
 							key={`RIV-${value.characterId.peek()}`}
-							root={containerRef}
 							visibleOffset={811 * 8}
 							searchableText={
 								baseCharacterById[character.id]?.name || character.id
