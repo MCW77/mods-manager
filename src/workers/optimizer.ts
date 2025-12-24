@@ -58,15 +58,28 @@ import * as perf from "../utils/performance";
 import { objectEntries } from "#/utils/objectEntries";
 
 // state
-import { type ObservableObject, when } from "@legendapp/state";
+import { when } from "@legendapp/state";
 
-import type { StateLoaderObservable } from "../modules/stateLoader/stateLoader";
-
-import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
-import type { ProfilesManagementObservable } from "#/modules/profilesManagement/domain/ProfilesManagement";
-import type { IncrementalOptimizationObservable } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
-import type { LockedStatusObservable } from "#/modules/lockedStatus/domain/LockedStatusObservable";
-import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
+import {
+	profilesManagement$,
+	syncStatus$ as profilesManagementSyncStatus$,
+} from "#/modules/profilesManagement/state/profilesManagement";
+import {
+	compilations$,
+	syncStatus2$ as defaultCompilationStatus$,
+} from "#/modules/compilations/state/compilations";
+import {
+	incrementalOptimization$,
+	syncStatus$ as incrrementalOptimizationStatus$,
+} from "#/modules/incrementalOptimization/state/incrementalOptimization";
+import {
+	lockedStatus$,
+	syncStatus$ as lockedSyncStatus$,
+} from "#/modules/lockedStatus/state/lockedStatus";
+import {
+	optimizationSettings$,
+	syncStatus$ as optimizationSettingsSyncStatus$,
+} from "#/modules/optimizationSettings/state/optimizationSettings";
 
 // domain
 import type { CharacterNames } from "../constants/CharacterNames";
@@ -220,34 +233,22 @@ type ModFilterPredicate = (mod: Mod) => boolean;
 
 // #endregion types
 
-// state
-let stateLoader$: ObservableObject<StateLoaderObservable>;
-let profilesManagement$: ObservableObject<ProfilesManagementObservable>;
-let compilations$: ObservableObject<CompilationsObservable>;
-let incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable>;
-let lockedStatus$: ObservableObject<LockedStatusObservable>;
-let optimizationSettings$: ObservableObject<OptimizationSettingsObservable>;
-
 // #region Messaging
-self.onmessage = (message) => {
+self.onmessage = async (message) => {
 	if (message.data.type === "Init") {
-		import("../modules/stateLoader/stateLoader")
-			.then((module) => {
-				stateLoader$ = module.stateLoader$;
-				when(stateLoader$.isDone).then(() => {
-					profilesManagement$ = stateLoader$.profilesManagement$;
-					compilations$ = stateLoader$.compilations$;
-					incrementalOptimization$ = stateLoader$.incrementalOptimization$;
-					lockedStatus$ = stateLoader$.lockedStatus$;
-					optimizationSettings$ = stateLoader$.optimizationSettings$;
-					postMessage({
-						type: "Ready",
-					});
+		await when(
+			() =>
+				profilesManagementSyncStatus$.isPersistLoaded.get() &&
+				defaultCompilationStatus$.isPersistLoaded.get() &&
+				incrrementalOptimizationStatus$.isPersistLoaded.get() &&
+				lockedSyncStatus$.isPersistLoaded.get() &&
+				optimizationSettingsSyncStatus$.isPersistLoaded.get(),
+			() => {
+				postMessage({
+					type: "Ready",
 				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+			},
+		);
 	}
 
 	if (message.data.type === "Optimize") {
