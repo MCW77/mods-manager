@@ -51,8 +51,8 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = useMemo(
 		() =>
 			collectByKey(
-		modById.values().filter((mod) => mod.characterID !== "null"),
-		(mod: Mod) => mod.characterID,
+				modById.values().filter((mod) => mod.characterID !== "null"),
+				(mod: Mod) => mod.characterID,
 			),
 		[modById],
 	);
@@ -75,15 +75,25 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 					const modAssignment = value.get();
 					const character = characterById[value.characterId.peek()];
 					if (character === undefined) return <div />;
+					let searchText =
+						baseCharacterById[character.id]?.name || character.id;
+					const charactersTakenFrom: string[] = [];
+					for (const assignedMod of modAssignment.assignedMods) {
+						if (assignedMod?.characterID) {
+							const name =
+								baseCharacterById[assignedMod.characterID]?.name ||
+								assignedMod.characterID;
+							charactersTakenFrom.push(name);
+						}
+					}
+					searchText = `${searchText}_${charactersTakenFrom.join("_")}`;
 
 					return (
 						<RenderIfVisible
 							defaultHeight={811}
 							key={`RIV-${value.characterId.peek()}`}
 							visibleOffset={811 * 8}
-							searchableText={
-								baseCharacterById[character.id]?.name || character.id
-							}
+							searchableText={searchText}
 						>
 							<div
 								className={`grid ${ModListFilter.sortOptions.assignedCharacter === filter.sort ? "grid-cols-[2fr_5fr]" : "grid-cols-[5fr_4fr]"} gap-4 items-center`}
