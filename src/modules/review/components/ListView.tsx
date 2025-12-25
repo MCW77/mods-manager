@@ -103,11 +103,18 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 		<div className={"grid grid-cols-1 gap-2 justify-items-center"}>
 			{individualMods.map(({ id: characterID, target, mod }) => {
 				const character = characterById[characterID];
+				const modCharacter =
+					mod && mod.characterID !== "null"
+						? baseCharacterById[mod.characterID]?.name || mod.characterID
+						: "";
+				if (character === undefined || modCharacter === null) return <div />;
+				const searchText = `${baseCharacterById[characterID]?.name || characterID}_${modCharacter}`;
 
 				return (
 					<RenderIfVisible
 						defaultHeight={625}
 						key={`RIV-${mod.id}`}
+						searchableText={searchText}
 						visibleOffset={4000}
 					>
 						<div className={"grid grid-cols-[2fr_2fr_1fr] gap-4 items-center"}>
