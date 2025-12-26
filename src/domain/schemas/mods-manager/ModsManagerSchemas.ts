@@ -106,7 +106,7 @@ const ModsManagerBackupSchemaV19 = v.object({
 	backupType: v.literal("fullBackup"),
 	client: v.literal("mods-manager"),
 	data: ModsManagerBackupDataSchemaV19,
-	version: v.number(),
+	version: v.literal(19),
 });
 type ModsManagerBackupSchemaV19Output = v.InferOutput<
 	typeof ModsManagerBackupSchemaV19
@@ -132,7 +132,7 @@ const ModsManagerBackupSchemaV20 = v.object({
 	backupType: v.literal("fullBackup"),
 	client: v.literal("mods-manager"),
 	data: ModsManagerBackupDataSchemaV20,
-	version: v.number(),
+	version: v.literal(20),
 });
 type ModsManagerBackupSchemaV20Output = v.InferOutput<
 	typeof ModsManagerBackupSchemaV20
@@ -158,7 +158,7 @@ const ModsManagerBackupSchemaV21 = v.object({
 	backupType: v.literal("fullBackup"),
 	client: v.literal("mods-manager"),
 	data: ModsManagerBackupDataSchemaV21,
-	version: v.number(),
+	version: v.literal(21),
 });
 
 const ModsManagerBackupDataSchemaV22 = v.object({
@@ -178,7 +178,7 @@ const ModsManagerBackupSchemaV22 = v.object({
 	backupType: v.literal("fullBackup"),
 	client: v.literal("mods-manager"),
 	data: ModsManagerBackupDataSchemaV22,
-	version: v.number(),
+	version: v.literal(22),
 });
 
 const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV22;
