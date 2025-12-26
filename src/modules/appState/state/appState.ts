@@ -364,13 +364,6 @@ const loadModsManagerBackup = (
 	mergeProfilesManagement(backup.profilesManagement);
 	beginBatch();
 	mergeCharacterTemplates(backup.characterTemplates);
-
-	if (
-		backup.defaultCompilation &&
-		compilations$.defaultCompilation.selectedCharacters.length === 0
-	) {
-		compilations$.defaultCompilation.set(backup.defaultCompilation);
-	}
 	mergeCompilations(backup.compilations);
 
 	if (backup.incrementalOptimizationIndices) {
