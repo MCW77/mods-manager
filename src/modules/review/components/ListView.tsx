@@ -122,7 +122,11 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 							<div className={"flex gap-2 items-center"}>
 								<Arrow className={"size-16"} />
 								<div className={"flex flex-col gap-2 items-center"}>
-									<CharacterAvatar character={character} />
+									<CharacterAvatar
+										character={character}
+										displayBadges={false}
+										displayStars={false}
+									/>
 									<div className={"inline-flex flex-col gap-1 vertical-middle"}>
 										<Label>
 											{baseCharacterById[character.id]

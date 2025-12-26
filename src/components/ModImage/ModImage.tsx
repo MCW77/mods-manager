@@ -603,7 +603,7 @@ const ModImage = memo(
 						character={character}
 						displayStars={false}
 						displayGear={false}
-						displayLevel={false}
+						displayBadges={false}
 						className={"absolute bottom-[-0.5em] right-[-1em] size-8 m-b-0"}
 					/>
 				)}

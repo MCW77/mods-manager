@@ -52,6 +52,7 @@ export interface BaseCharacter {
 	avatarUrl: string;
 	categories: string[];
 	description: string;
+	galacticLegend: boolean;
 	id: CharacterNames;
 	name: string;
 	omicrons: BaseSkill[];
@@ -111,6 +112,7 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 					avatarUrl: `https://api.hotutils.com/images${bc.baseImage}`,
 					categories: categories,
 					description: bc.description,
+					galacticLegend: bc.galacticLegend,
 					id: bc.baseId,
 					name: bc.name,
 					omicrons: bc.omicron.map((skill) => ({
@@ -140,6 +142,7 @@ export const defaultBaseCharacter = {
 	avatarUrl: "https://swgoh.gg/static/img/assets/blank-character.png",
 	categories: [],
 	description: "",
+	galacticLegend: false,
 	id: "FINN",
 	name: "",
 	omicrons: [],

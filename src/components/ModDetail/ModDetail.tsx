@@ -70,7 +70,13 @@ const ModDetail = memo(({ assignedTarget, mod }: ModDetailProps) => {
 						}
 					>
 						<ModImage mod={mod} />
-						{character && <CharacterAvatar character={character} />}
+						{character && (
+							<CharacterAvatar
+								character={character}
+								displayBadges={false}
+								displayStars={false}
+							/>
+						)}
 						{character && <CharacterName character={character} />}
 						<div className="stats text-[0.9em] row-start-1 row-span-2 col-start-2 col-span-2">
 							<ModStats mod={mod} assignedTarget={assignedTarget} />

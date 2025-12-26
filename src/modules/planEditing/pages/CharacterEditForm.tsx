@@ -170,11 +170,18 @@ const runIncrementalCalc = (
 															relicTier: 0,
 														},
 														[],
+														0,
+														[],
+														[],
 													);
 
 												return index % 2 === 0 ? (
 													<div key={`${id}-Avatar`} className="grid gap-1 p-4">
-														<CharacterAvatar character={character} />
+														<CharacterAvatar
+															character={character}
+															displayBadges={false}
+															displayStars={false}
+														/>
 														<br />
 														{baseCharacterById[id]
 															? baseCharacterById[id].name
@@ -435,7 +442,11 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			>
 				<div className={"flex flex-gap-4 justify-between"}>
 					<div className={"flex flex-gap-2 items-center"}>
-						<CharacterAvatar character={character} />
+						<CharacterAvatar
+							character={character}
+							displayBadges={false}
+							displayStars={false}
+						/>
 						<Label>
 							{baseCharacterById[character.id]
 								? baseCharacterById[character.id].name

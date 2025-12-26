@@ -57,7 +57,13 @@ const OptimizerProgress: React.FC = observer(() => {
 					<Memo>
 						{() => {
 							const character = useValue(character$);
-							return <CharacterAvatar character={character} />;
+							return (
+								<CharacterAvatar
+									character={character}
+									displayBadges={false}
+									displayStars={false}
+								/>
+							);
 						}}
 					</Memo>
 				</Show>

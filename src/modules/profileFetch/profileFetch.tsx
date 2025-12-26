@@ -202,11 +202,24 @@ function updatePlayerData(
 			const characterById$ =
 				profilesManagement$.profiles.profileByAllycode[newAllycode]
 					.characterById;
+			let omis: string[] = [];
+			let zetas: string[] = [];
+			if (fullProfile?.units?.units) {
+				const fullUnit = fullProfile.units.units.find(
+					(unit) => unit.baseId === characterId,
+				);
+				if (fullUnit) {
+					omis = fullUnit.omis === null ? [] : fullUnit.omis;
+					zetas = fullUnit.zetas === null ? [] : fullUnit.zetas;
+				}
+			}
 			if (Object.hasOwn(characterById$.peek(), characterId)) {
 				characterById$[characterId].playerValues.set(playerValues);
+				characterById$[characterId].omis.set(omis);
+				characterById$[characterId].zetas.set(zetas);
 			} else {
 				characterById$[characterId].set(
-					Character.createCharacter(characterId, playerValues, []),
+					Character.createCharacter(characterId, playerValues, [], omis, zetas),
 				);
 			}
 		}

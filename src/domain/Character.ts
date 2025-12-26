@@ -14,8 +14,10 @@ import {
 
 export interface Character {
 	id: CharacterNames;
+	omis: string[];
 	playerValues: DTOs.GIMO.PlayerValuesDTO;
 	targets: OptimizationPlan[];
+	zetas: string[];
 }
 
 export type CharacterById = Record<CharacterNames, Character>;
@@ -24,11 +26,15 @@ export const createCharacter = (
 	id: CharacterNames,
 	playerValues: DTOs.GIMO.PlayerValuesDTO,
 	targets: OptimizationPlan[],
+	omis: string[],
+	zetas: string[],
 ): Character => {
 	return {
 		id,
+		omis,
 		playerValues,
 		targets,
+		zetas,
 	};
 };
 

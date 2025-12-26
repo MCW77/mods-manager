@@ -92,15 +92,15 @@ const SkillSchema = v.object({
 
 const UnitSchema = v.object({
 	baseId: v.string(),
-	zetaCount: v.number(),
-	omiCount: v.number(),
-	twOmiCount: v.number(),
-	gacOmiCount: v.number(),
-	tbOmiCount: v.number(),
 	cqOmiCount: v.number(),
-	zetas: v.nullable(v.array(v.string())),
+	gacOmiCount: v.number(),
+	omiCount: v.number(),
 	omis: v.nullable(v.array(v.string())),
 	skills: v.array(SkillSchema),
+	tbOmiCount: v.number(),
+	twOmiCount: v.number(),
+	zetaCount: v.number(),
+	zetas: v.nullable(v.array(v.string())),
 });
 
 const UnitsSchema = v.object({

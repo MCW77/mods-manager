@@ -29,12 +29,11 @@ import {
 	Stars6,
 	Stars7,
 } from "./Stars";
-import { Badge } from "#ui/badge";
 
 type ComponentProps = {
 	character?: Character.Character;
 	displayGear?: boolean;
-	displayLevel?: boolean;
+	displayBadges?: boolean;
 	displayStars?: boolean;
 	id?: string;
 	className?: string;
@@ -44,17 +43,21 @@ const CharacterAvatar = React.memo(
 	({
 		character,
 		displayGear = true,
-		displayLevel = true,
+		displayBadges = true,
 		displayStars = true,
 		id,
 		className = "",
 	}: ComponentProps) => {
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const displayStars$ = useObservable(displayStars);
-		const displayLevel$ = useObservable(displayLevel);
+		const displayBadges$ = useObservable(displayBadges);
 		const stars$ = useObservable(() => {
 			if (character === undefined || character === null) return 0;
 			return character.playerValues.stars;
+		});
+		const isReliced$ = useObservable(() => {
+			if (character === undefined || character === null) return false;
+			return character.playerValues.gearLevel === 13;
 		});
 
 		if (character === undefined || character === null) return null;
@@ -108,6 +111,18 @@ const CharacterAvatar = React.memo(
 			className,
 		);
 
+		let badgePosition = "bg-[position:left_0px_top_0px]";
+		if (baseCharacter.galacticLegend) {
+			badgePosition = "bg-[position:left_0px_top_-120px]";
+		} else {
+			if (baseCharacter.alignment === "neutral") {
+				badgePosition = "bg-[position:left_0px_top_-80px]";
+			}
+			if (baseCharacter.alignment === "dark") {
+				badgePosition = "bg-[position:left_0px_top_-40px]";
+			}
+		}
+
 		return (
 			<div className="flex flex-col items-center justify-center">
 				<div className={avatarClassName} id={id}>
@@ -142,13 +157,31 @@ const CharacterAvatar = React.memo(
 						</div>
 					</div>
 				</div>
-				<div className="grid p-0">
-					<Show if={displayLevel$}>
-						<Badge className="row-start-2 row-end-2 col-start-1 col-end-1 self-end justify-self-center p-0">
-							{character.playerValues.level}
-						</Badge>
-					</Show>
-				</div>
+				<Show if={displayBadges$}>
+					<div className="flex">
+						<div className="h-10 w-4 row-1 col-1 grid">
+							<div className="size-4 rounded-full justify-self-end self-center inline-flex items-center border border-transparent text-xs font-semibold bg-primary-foreground text-primary">
+								{character.playerValues.level}
+							</div>
+						</div>
+						<Show if={isReliced$}>
+							<div
+								className={`size-10 text-center vertical-middle text-3/10 bg-[url(/img/badge-atlas-ultimate.webp)] bg-size-[40px_160px] ${badgePosition}`}
+							>
+								{character.playerValues.relicTier - 2}
+							</div>
+						</Show>
+						<div className="size-10 text-center vertical-middle text-3/10 bg-[url(/img/zeta.webp)] bg-size-[40px_40px]">
+							{character.zetas.length}
+						</div>
+						<div className="size-10 grid place-content-center place-items-center grid-rows-1 grid-cols-1">
+							<div className="size-10 row-1 col-1 bg-[url(/img/omicron.webp)] bg-size-[40px_40px]" />
+							<div className="size-4 row-1 col-1 rounded-full inline-flex items-center justify-center border border-transparent text-xs bg-primary-foreground text-primary">
+								{character.omis.length}
+							</div>
+						</div>
+					</div>
+				</Show>
 			</div>
 		);
 	},

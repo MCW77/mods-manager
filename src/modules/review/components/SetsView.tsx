@@ -103,6 +103,8 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 										<CharacterAvatar
 											className={"text-[1.5em]"}
 											character={character}
+											displayBadges={false}
+											displayStars={false}
 										/>
 										<div
 											className={"inline-flex flex-col gap-1 vertical-middle"}

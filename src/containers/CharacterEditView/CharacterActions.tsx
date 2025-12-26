@@ -246,6 +246,9 @@ const CharacterActions: React.FC = observer(() => {
 																					relicTier: 0,
 																				},
 																				[],
+																				0,
+																				[],
+																				[],
 																			);
 
 																		return index % 2 === 0 ? (
@@ -255,6 +258,8 @@ const CharacterActions: React.FC = observer(() => {
 																			>
 																				<CharacterAvatar
 																					character={character}
+																					displayBadges={false}
+																					displayStars={false}
 																				/>
 																				<br />
 																				{baseCharacterById[id]
