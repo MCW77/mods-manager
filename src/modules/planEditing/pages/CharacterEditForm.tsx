@@ -170,7 +170,6 @@ const runIncrementalCalc = (
 															relicTier: 0,
 														},
 														[],
-														0,
 														[],
 														[],
 													);

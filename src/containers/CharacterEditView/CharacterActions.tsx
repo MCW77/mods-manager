@@ -246,7 +246,6 @@ const CharacterActions: React.FC = observer(() => {
 																					relicTier: 0,
 																				},
 																				[],
-																				0,
 																				[],
 																				[],
 																			);
