@@ -38,50 +38,27 @@ const storeNames = [
 	"Compilations",
 	"DefaultCompilation",
 ];
-// For empty string id, upgradeFunction handles an array of records
-function itemUpgrade(
-	db: IDBDatabase,
-	transaction: IDBTransaction,
-	storeName: string,
-	id: "",
-	upgradeFunction: (oldData: Array<RecordWithNestedEntities>) => void,
-): Promise<void>;
 
-// For non-empty string id, upgradeFunction handles a single record
 function itemUpgrade(
 	db: IDBDatabase,
 	transaction: IDBTransaction,
 	storeName: string,
 	id: string,
-	upgradeFunction: (oldData: Record<string, unknown>) => void,
-): Promise<void>;
-
-// Implementation that works with both overloads - keeping original type
-function itemUpgrade(
-	db: IDBDatabase,
-	transaction: IDBTransaction,
-	storeName: string,
-	id: string,
-	upgradeFunction:
-		| ((oldData: Array<RecordWithNestedEntities>) => void)
-		| ((oldData: Record<string, unknown>) => void),
+	upgradeFunction: (
+		oldData: Array<RecordWithNestedEntities>,
+	) => Array<RecordWithNestedEntities>,
 ): Promise<void> {
 	return new Promise((resolve, reject) => {
 		try {
 			if (db.objectStoreNames.contains(storeName)) {
 				const oldStore = transaction.objectStore(storeName);
-
-				let request: IDBRequest;
-				if (id === "") {
-					request = oldStore.getAll();
-				} else {
-					request = oldStore.get(id);
-				}
+				const request = oldStore.getAll();
 
 				request.onsuccess = (event: Event) => {
 					try {
-						const oldData = (event.target as IDBRequest).result;
-						if (oldData && (!Array.isArray(oldData) || oldData.length > 0)) {
+						const oldData = (event.target as IDBRequest)
+							.result as Array<RecordWithNestedEntities>;
+						if (oldData && Array.isArray(oldData) && oldData.length > 0) {
 							const newData = upgradeFunction(oldData);
 
 							// Delete and recreate the store in the current versionchange transaction
@@ -92,15 +69,17 @@ function itemUpgrade(
 							});
 
 							// Add the data back
-							const putRequest = newStore.put(newData);
-							putRequest.onsuccess = () => resolve();
-							putRequest.onerror = (putEvent: Event) => {
-								console.error(
-									`Error putting data to new store: ${storeName}`,
-									(putEvent.target as IDBRequest).error,
-								);
-								reject((putEvent.target as IDBRequest).error);
-							};
+							for (const item of newData as Array<RecordWithNestedEntities>) {
+								const putRequest = newStore.put(item);
+								putRequest.onsuccess = () => resolve();
+								putRequest.onerror = (putEvent: Event) => {
+									console.error(
+										`Error putting data to new store: ${storeName}`,
+										(putEvent.target as IDBRequest).error,
+									);
+									reject((putEvent.target as IDBRequest).error);
+								};
+							}
 						} else {
 							resolve();
 						}
@@ -299,12 +278,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"CharactersManagement",
 			"filterSetup",
 			(oldfilterSetup) => {
-				return {
-					id: "filterSetup",
-					filterSetup: {
-						...oldfilterSetup,
+				return [
+					{
+						id: "filterSetup",
+						filterSetup: {
+							...oldfilterSetup[0],
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -314,10 +295,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"Compilations",
 			"compilationByIdByAllycode",
 			(oldCompilations) => {
-				return {
-					id: "compilationByIdByAllycode",
-					compilationByIdByAllycode: new Map(Object.entries(oldCompilations)),
-				};
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: new Map(
+							Object.entries(oldCompilations[0]),
+						),
+					},
+				];
 			},
 		);
 
@@ -327,12 +312,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"DefaultCompilation",
 			"DefaultCompilation",
 			(oldDefaultCompilation) => {
-				return {
-					id: "defaultCompilation",
-					defaultCompilation: {
-						...oldDefaultCompilation,
+				return [
+					{
+						id: "defaultCompilation",
+						defaultCompilation: {
+							...oldDefaultCompilation[0],
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -342,12 +329,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"HotUtils",
 			"sessionIdByProfile",
 			(oldHotUtils) => {
-				return {
-					id: "sessionIdByProfile",
-					sessionIdByProfile: {
-						...oldHotUtils,
+				return [
+					{
+						id: "sessionIdByProfile",
+						sessionIdByProfile: {
+							...oldHotUtils[0],
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -357,12 +346,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"IncrementalOptimization",
 			"indicesByProfile",
 			(oldIndices) => {
-				return {
-					id: "indicesByProfile",
-					indicesByProfile: {
-						...oldIndices,
+				return [
+					{
+						id: "indicesByProfile",
+						indicesByProfile: {
+							...oldIndices[0],
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -372,12 +363,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"LockedStatus",
 			"lockedStatus",
 			(oldLockedStatus) => {
-				return {
-					id: "lockedStatus",
-					lockedStatusByCharacterIdByAllycode: {
-						...oldLockedStatus,
+				return [
+					{
+						id: "lockedStatus",
+						lockedStatusByCharacterIdByAllycode: {
+							...oldLockedStatus[0],
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -387,12 +380,14 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"OptimizationSettings",
 			"settingsByProfile",
 			(oldOptimizationSettings) => {
-				return {
-					id: "settingsByProfile",
-					settingsByProfile: {
-						...oldOptimizationSettings,
+				return [
+					{
+						id: "settingsByProfile",
+						settingsByProfile: {
+							...oldOptimizationSettings[0],
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -402,45 +397,52 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 			"Profiles",
 			"profiles",
 			(oldProfiles) => {
-				return {
-					id: "profiles",
-					profiles: {
-						activeAllycode: oldProfiles.activeAllycode,
-						lastUpdatedByAllycode: oldProfiles.lastUpdatedByAllycode,
-						playernameByAllycode: oldProfiles.playernameByAllycode,
-						profileByAllycode: oldProfiles.profileByAllycode,
+				return [
+					{
+						id: "profiles",
+						profiles: {
+							activeAllycode: oldProfiles[0].activeAllycode,
+							lastUpdatedByAllycode: oldProfiles[0].lastUpdatedByAllycode,
+							playernameByAllycode: oldProfiles[0].playernameByAllycode,
+							profileByAllycode: oldProfiles[0].profileByAllycode,
+						},
 					},
-				};
+				];
 			},
 		);
 
 		await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
-			return {
-				id: "viewSetup",
-				byIdByCategory: oldViewSetup.reduce(
-					(acc: Record<string, unknown>, item) => {
-						acc[item.id] = Object.entries(item).reduce(
-							(acc2, [key, value]) => {
-								if (key !== "id" && value !== undefined && value !== null) {
-									if (hasFilterById(value)) {
-										for (const filter of Object.values(
-											(value as { filterById: Record<string, Partial<Filter>> })
-												.filterById,
-										)) {
-											upgradeFilterTo18(filter);
+			return [
+				{
+					id: "viewSetup",
+					byIdByCategory: oldViewSetup.reduce(
+						(acc: Record<string, unknown>, item) => {
+							acc[item.id] = Object.entries(item).reduce(
+								(acc2, [key, value]) => {
+									if (key !== "id" && value !== undefined && value !== null) {
+										if (hasFilterById(value)) {
+											for (const filter of Object.values(
+												(
+													value as {
+														filterById: Record<string, Partial<Filter>>;
+													}
+												).filterById,
+											)) {
+												upgradeFilterTo18(filter);
+											}
 										}
+										acc2[key] = value;
 									}
-									acc2[key] = value;
-								}
-								return acc2;
-							},
-							{} as Record<string, unknown>,
-						);
-						return acc;
-					},
-					{},
-				),
-			};
+									return acc2;
+								},
+								{} as Record<string, unknown>,
+							);
+							return acc;
+						},
+						{},
+					),
+				},
+			];
 		});
 	} catch (error) {
 		console.error("Error in upgradeTo18:", error);
@@ -458,16 +460,18 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 			(oldCharactersManagement) => {
 				const newCharactersManagement: Record<string, unknown> = {};
 				for (const [key, value] of objectEntries(
-					oldCharactersManagement.filterSetup as Record<string, unknown>,
+					oldCharactersManagement[0].filterSetup as Record<string, unknown>,
 				)) {
 					if (key !== "id") newCharactersManagement[key] = value;
 				}
-				return {
-					id: "filterSetup",
-					filterSetup: {
-						...newCharactersManagement,
+				return [
+					{
+						id: "filterSetup",
+						filterSetup: {
+							...newCharactersManagement,
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -478,19 +482,16 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 			"compilationByIdByAllycode",
 			(oldCompilations) => {
 				const newCompilations: Map<string, unknown> = new Map();
-				for (const [
-					key,
-					value,
-				] of oldCompilations.compilationByIdByAllycode as Map<
-					string,
-					unknown
-				>) {
+				for (const [key, value] of oldCompilations[0]
+					.compilationByIdByAllycode as Map<string, unknown>) {
 					if (key !== "id") newCompilations.set(key, value);
 				}
-				return {
-					id: "compilationByIdByAllycode",
-					compilationByIdByAllycode: newCompilations,
-				};
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: newCompilations,
+					},
+				];
 			},
 		);
 
@@ -525,16 +526,18 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 			(oldHotUtils) => {
 				const newHotUtils: Record<string, unknown> = {};
 				for (const [allycode, sessionId] of objectEntries(
-					oldHotUtils.sessionIdByProfile as Record<string, unknown>,
+					oldHotUtils[0].sessionIdByProfile as Record<string, unknown>,
 				)) {
 					if (allycode !== "id") newHotUtils[allycode] = sessionId;
 				}
-				return {
-					id: "sessionIdByProfile",
-					sessionIdByProfile: {
-						...newHotUtils,
+				return [
+					{
+						id: "sessionIdByProfile",
+						sessionIdByProfile: {
+							...newHotUtils,
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -546,16 +549,18 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 			(oldIndices) => {
 				const newIndices: Record<string, number> = {};
 				for (const [allycode, index] of objectEntries(
-					oldIndices.indicesByProfile as Record<string, unknown>,
+					oldIndices[0].indicesByProfile as Record<string, unknown>,
 				)) {
 					if (allycode !== "id") newIndices[allycode] = index as number;
 				}
-				return {
-					id: "indicesByProfile",
-					indicesByProfile: {
-						...newIndices,
+				return [
+					{
+						id: "indicesByProfile",
+						indicesByProfile: {
+							...newIndices,
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -567,19 +572,21 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 			(oldLockedStatus) => {
 				const newLockedStatus: Record<string, unknown> = {};
 				for (const [allycode, status] of objectEntries(
-					oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+					oldLockedStatus[0].lockedStatusByCharacterIdByAllycode as Record<
 						string,
 						unknown
 					>,
 				)) {
 					if (allycode !== "id") newLockedStatus[allycode] = status;
 				}
-				return {
-					id: "lockedStatus",
-					lockedStatusByCharacterIdByAllycode: {
-						...newLockedStatus,
+				return [
+					{
+						id: "lockedStatus",
+						lockedStatusByCharacterIdByAllycode: {
+							...newLockedStatus,
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -591,16 +598,21 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 			(oldOptimizationSettings) => {
 				const newSettings: Record<string, unknown> = {};
 				for (const [allycode, settings] of objectEntries(
-					oldOptimizationSettings.settingsByProfile as Record<string, unknown>,
+					oldOptimizationSettings[0].settingsByProfile as Record<
+						string,
+						unknown
+					>,
 				)) {
 					if (allycode !== "id") newSettings[allycode] = settings;
 				}
-				return {
-					id: "settingsByProfile",
-					settingsByProfile: {
-						...newSettings,
+				return [
+					{
+						id: "settingsByProfile",
+						settingsByProfile: {
+							...newSettings,
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -611,10 +623,12 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 				typeof oldViewSetup[0].byIdByCategory === "object" &&
 				oldViewSetup[0].byIdByCategory !== null
 			) {
-				return {
-					id: "viewSetup",
-					byIdByCategory: objectEntries(oldViewSetup[0].byIdByCategory).reduce(
-						(acc: Record<string, unknown>, item) => {
+				return [
+					{
+						id: "viewSetup",
+						byIdByCategory: objectEntries(
+							oldViewSetup[0].byIdByCategory,
+						).reduce((acc: Record<string, unknown>, item) => {
 							acc[item[0]] = Object.entries(item[1]).reduce(
 								(acc2, [key, value]) => {
 									if (key !== "id" && value !== undefined && value !== null) {
@@ -637,16 +651,17 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 								{} as Record<string, unknown>,
 							);
 							return acc;
-						},
-						{},
-					),
-				};
+						}, {}),
+					},
+				];
 			}
 
-			return {
-				id: "viewSetup",
-				byIdByCategory: {},
-			};
+			return [
+				{
+					id: "viewSetup",
+					byIdByCategory: {},
+				},
+			];
 		});
 	} catch (error) {
 		console.error("Error in upgradeTo19:", error);
@@ -666,10 +681,8 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 					string,
 					Map<string, Record<string, unknown>>
 				> = new Map();
-				for (const [
-					allycode,
-					compilations,
-				] of oldCompilations.compilationByIdByAllycode as Map<
+				for (const [allycode, compilations] of oldCompilations[0]
+					.compilationByIdByAllycode as Map<
 					string,
 					Map<string, Record<string, unknown>>
 				>) {
@@ -683,10 +696,12 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 					}
 					newCompilationsByAllycode.set(allycode, newCompilations);
 				}
-				return {
-					id: "compilationByIdByAllycode",
-					compilationByIdByAllycode: newCompilationsByAllycode,
-				};
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: newCompilationsByAllycode,
+					},
+				];
 			},
 		);
 
@@ -697,14 +712,19 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 			"defaultCompilation",
 			(oldDefaultCompilation) => {
 				const newDefaultCompilation = upgradeCompilationTo20(
-					oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+					oldDefaultCompilation[0].defaultCompilation as Record<
+						string,
+						unknown
+					>,
 				);
-				return {
-					id: "defaultCompilation",
-					defaultCompilation: {
-						...newDefaultCompilation,
+				return [
+					{
+						id: "defaultCompilation",
+						defaultCompilation: {
+							...newDefaultCompilation,
+						},
 					},
-				};
+				];
 			},
 		);
 
@@ -715,17 +735,19 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 			"lockedStatus",
 			(oldLockedStatus) => {
 				const newLockedStatus = upgradeLockedStatusTo20(
-					oldLockedStatus.lockedStatusByCharacterIdByAllycode as Record<
+					oldLockedStatus[0].lockedStatusByCharacterIdByAllycode as Record<
 						string,
 						Record<string, boolean>
 					>,
 				);
-				return {
-					id: "lockedStatus",
-					lockedCharactersByAllycode: {
-						...newLockedStatus,
+				return [
+					{
+						id: "lockedStatus",
+						lockedCharactersByAllycode: {
+							...newLockedStatus,
+						},
 					},
-				};
+				];
 			},
 		);
 	} catch (error) {
@@ -747,17 +769,19 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 					{ gimoSessionId: string; huSessionId: string }
 				> = new Map();
 				for (const [allycode, sessionId] of objectEntries(
-					oldHotUtils.sessionIdByProfile as Record<string, string>,
+					oldHotUtils[0].sessionIdByProfile as Record<string, string>,
 				)) {
 					newHotUtils.set(allycode, {
 						gimoSessionId: sessionId,
 						huSessionId: "",
 					});
 				}
-				return {
-					id: "sessionIDsByProfile",
-					sessionIDsByProfile: newHotUtils,
-				};
+				return [
+					{
+						id: "sessionIDsByProfile",
+						sessionIDsByProfile: newHotUtils,
+					},
+				];
 			},
 		);
 
@@ -768,12 +792,14 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 			"profiles",
 			(oldProfiles) => {
 				const newProfiles = upgradeProfilesTo21(
-					oldProfiles.profiles as Record<string, unknown>,
+					oldProfiles[0].profiles as Record<string, unknown>,
 				);
-				return {
-					id: "profiles",
-					profiles: newProfiles,
-				};
+				return [
+					{
+						id: "profiles",
+						profiles: newProfiles,
+					},
+				];
 			},
 		);
 	} catch (error) {
@@ -794,10 +820,8 @@ async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
 					string,
 					Map<string, Record<string, unknown>>
 				> = new Map();
-				for (const [
-					allycode,
-					compilations,
-				] of oldCompilations.compilationByIdByAllycode as Map<
+				for (const [allycode, compilations] of oldCompilations[0]
+					.compilationByIdByAllycode as Map<
 					string,
 					Map<string, Record<string, unknown>>
 				>) {
@@ -811,10 +835,12 @@ async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
 					}
 					newCompilationsByAllycode.set(allycode, newCompilations);
 				}
-				return {
-					id: "compilationByIdByAllycode",
-					compilationByIdByAllycode: newCompilationsByAllycode,
-				};
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: newCompilationsByAllycode,
+					},
+				];
 			},
 		);
 
@@ -825,14 +851,19 @@ async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
 			"defaultCompilation",
 			(oldDefaultCompilation) => {
 				const newDefaultCompilation = upgradeCompilationTo22(
-					oldDefaultCompilation.defaultCompilation as Record<string, unknown>,
+					oldDefaultCompilation[0].defaultCompilation as Record<
+						string,
+						unknown
+					>,
 				);
-				return {
-					id: "defaultCompilation",
-					defaultCompilation: {
-						...newDefaultCompilation,
+				return [
+					{
+						id: "defaultCompilation",
+						defaultCompilation: {
+							...newDefaultCompilation,
+						},
 					},
-				};
+				];
 			},
 		);
 	} catch (error) {
