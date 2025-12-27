@@ -157,9 +157,7 @@ describe("App State Backup Migrations", () => {
 	describe("Schema Validation", async () => {
 		const backupV18 = await loadFixture(18, "backup");
 		it("should validate final migrated data against latest schema", async () => {
-			const { validateAgainstLatestSchema } = await import(
-				"./migration-utils"
-			);
+			const { validateAgainstLatestSchema } = await import("./migration-utils");
 
 			const result = convertBackup(backupV18);
 
@@ -172,9 +170,7 @@ describe("App State Backup Migrations", () => {
 		});
 
 		it("should reject invalid final data", async () => {
-			const { validateAgainstLatestSchema } = await import(
-				"./migration-utils"
-			);
+			const { validateAgainstLatestSchema } = await import("./migration-utils");
 
 			const invalidData = {
 				appVersion: 123, // Should be string

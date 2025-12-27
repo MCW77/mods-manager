@@ -18,6 +18,7 @@ import {
 	upgradeLockedStatusTo20,
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
+	upgradeProfilesTo23,
 } from "#/utils/globalLegendPersistSettings";
 import {
 	LatestModsManagerBackupSchema,
@@ -32,6 +33,8 @@ import {
 	ModsManagerBackupSchemaV21,
 	type ModsManagerBackupDataSchemaV21Output,
 	ModsManagerBackupSchemaV22,
+	type ModsManagerBackupDataSchemaV22Output,
+	ModsManagerBackupSchemaV23,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
 import { fromGIMOBackup } from "../mappers/GIMOBackupMapper";
@@ -353,6 +356,36 @@ const migrations = new Map<
 			};
 		},
 	],
+	[
+		22,
+		(normalizedBackup) => {
+			// Migrate v22 to v23: Update characters in persisted profiles
+			const data =
+				normalizedBackup.data as ModsManagerBackupDataSchemaV22Output;
+
+			const newProfiles = upgradeProfilesTo23(data.profilesManagement);
+
+			const newData = {
+				characterTemplates: data.characterTemplates,
+				compilations: data.compilations,
+				defaultCompilation: data.defaultCompilation,
+				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+				lockedStatus: data.lockedStatus,
+				modsViewSetups: data.modsViewSetups,
+				profilesManagement: newProfiles,
+				sessionIds: data.sessionIds,
+				settings: data.settings,
+			};
+
+			return {
+				appVersion: normalizedBackup.appVersion,
+				backupType: "fullBackup",
+				client: "mods-manager",
+				data: newData,
+				version: 23,
+			};
+		},
+	],
 ]);
 
 function runMigrations(data: NormalizedBackup) {
@@ -443,6 +476,14 @@ const convertBackup = (parsedJSON: unknown) => {
 	if (backup === null) {
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV22,
+			parsedJSON,
+		);
+		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
+	}
+
+	if (backup === null) {
+		const modsManagerParseResult = v.safeParse(
+			ModsManagerBackupSchemaV23,
 			parsedJSON,
 		);
 		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;

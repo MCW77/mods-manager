@@ -2,7 +2,11 @@
 import * as v from "valibot";
 
 // domain
-import { CharacterByIdSchema, ArbitraryCharacterNamesSchema } from "./index";
+import {
+	CharacterByIdSchema,
+	CharacterByIdSchemaV23,
+	ArbitraryCharacterNamesSchema,
+} from "./index";
 import { setSettingsSets } from "#/modules/modsView/domain/ModsViewOptions";
 import { gimoSlots, levels } from "#/domain/types/ModTypes";
 import { ModTiersEnum } from "#/constants/enums";
@@ -54,6 +58,13 @@ const PersistedPlayerProfileSchemaV21 = v.object({
 	playerName: v.string(),
 });
 
+const PersistedPlayerProfileSchemaV23 = v.object({
+	allycode: v.string(),
+	characterById: CharacterByIdSchemaV23,
+	modById: v.map(v.string(), GIMOFlatModSchema),
+	playerName: v.string(),
+});
+
 const PersistedProfilesSchemaV18 = v.object({
 	activeAllycode: v.string(),
 	lastUpdatedByAllycode: v.record(
@@ -80,6 +91,19 @@ const PersistedProfilesSchemaV21 = v.object({
 	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV21),
 });
 
+const PersistedProfilesSchemaV23 = v.object({
+	activeAllycode: v.string(),
+	lastUpdatedByAllycode: v.record(
+		v.string(),
+		v.object({
+			id: v.string(),
+			lastUpdated: v.number(),
+		}),
+	),
+	playernameByAllycode: v.record(v.string(), v.string()),
+	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV23),
+});
+
 type PersistedProfilesSchemaOutput = v.InferOutput<
 	typeof PersistedProfilesSchemaV21
 >;
@@ -87,5 +111,6 @@ type PersistedProfilesSchemaOutput = v.InferOutput<
 export {
 	PersistedProfilesSchemaV18,
 	PersistedProfilesSchemaV21,
+	PersistedProfilesSchemaV23,
 	type PersistedProfilesSchemaOutput,
 };

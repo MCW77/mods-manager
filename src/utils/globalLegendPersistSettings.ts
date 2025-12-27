@@ -13,6 +13,7 @@ import type {
 } from "#/modules/modsView/domain/ModsViewOptions";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
+import type { Character } from "#/domain/Character";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };
@@ -251,6 +252,46 @@ function upgradeCompilationTo22(compilation: Record<string, unknown>) {
 		},
 	);
 	return newCompilation;
+}
+
+function upgradeCharactersTo23(characters: Array<RecordWithNestedEntities>) {
+	const newCharacters: Array<RecordWithNestedEntities> =
+		structuredClone(characters);
+	for (const character of newCharacters) {
+		character.galacticLegend = false;
+	}
+	return newCharacters;
+}
+
+function upgradeProfilesTo23(profiles: Record<string, unknown>) {
+	if (
+		Object.hasOwn(profiles, "profileByAllycode") &&
+		typeof profiles.profileByAllycode === "object" &&
+		profiles.profileByAllycode !== null
+	) {
+		for (const profile of Object.values(profiles.profileByAllycode)) {
+			if (
+				typeof profile === "object" &&
+				profile !== null &&
+				Object.hasOwn(profile, "characterById")
+			) {
+				const newCharacterById: Record<string, Character> = {};
+				for (const character of Object.values(
+					profile.characterById as Record<string, Character>,
+				)) {
+					newCharacterById[character.id] = {
+						id: character.id,
+						omis: [],
+						playerValues: character.playerValues,
+						targets: character.targets,
+						zetas: [],
+					};
+				}
+				profile.characterById = newCharacterById;
+			}
+		}
+	}
+	return profiles;
 }
 
 function createStores(db: IDBDatabase, stores: string[] = storeNames) {
@@ -872,7 +913,37 @@ async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
-const dbVersions = [16, 18, 19, 20, 21, 22] as const;
+async function upgradeTo23(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(db, transaction, "Characters", "", (oldCharacters) => {
+			const newCharacters = upgradeCharactersTo23(oldCharacters);
+			return newCharacters;
+		});
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"Profiles",
+			"profiles",
+			(oldProfiles) => {
+				const newProfiles = upgradeProfilesTo23(
+					oldProfiles[0].profiles as Record<string, unknown>,
+				);
+				return [
+					{
+						id: "profiles",
+						profiles: newProfiles,
+					},
+				];
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo23:", error);
+		transaction.abort();
+	}
+}
+
+const dbVersions = [16, 18, 19, 20, 21, 22, 23] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -895,6 +966,7 @@ const persistOptions = configureSynced({
 					if (event.oldVersion < 20) await upgradeTo20(db, transaction);
 					if (event.oldVersion < 21) await upgradeTo21(db, transaction);
 					if (event.oldVersion < 22) await upgradeTo22(db, transaction);
+					if (event.oldVersion < 23) await upgradeTo23(db, transaction);
 				}
 			},
 		}),
@@ -911,6 +983,7 @@ const testOnlyUpgradeTo19 = testing ? upgradeTo19 : undefined;
 const testOnlyUpgradeTo20 = testing ? upgradeTo20 : undefined;
 const testOnlyUpgradeTo21 = testing ? upgradeTo21 : undefined;
 const testOnlyUpgradeTo22 = testing ? upgradeTo22 : undefined;
+const testOnlyUpgradeTo23 = testing ? upgradeTo23 : undefined;
 
 export {
 	type DBVersions,
@@ -921,6 +994,7 @@ export {
 	upgradeLockedStatusTo20,
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
+	upgradeProfilesTo23,
 	testOnlyCreateStores,
 	testOnlyStoreNames,
 	testOnlyUpgradeTo18,
@@ -928,4 +1002,5 @@ export {
 	testOnlyUpgradeTo20,
 	testOnlyUpgradeTo21,
 	testOnlyUpgradeTo22,
+	testOnlyUpgradeTo23,
 };

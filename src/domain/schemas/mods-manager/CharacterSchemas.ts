@@ -41,6 +41,23 @@ const CharacterSchema = v.object({
 	targets: v.array(OptimizationPlanSchema),
 });
 
+const CharacterSchemaV23 = v.object({
+	id: KnownCharacterNamesSchema,
+	omis: v.array(v.string()),
+	playerValues: v.object({
+		galacticPower: v.number(),
+		gearLevel: v.number(),
+		gearPieces: v.array(v.string()),
+		level: v.number(),
+		relicTier: v.number(),
+		stars: v.number(),
+		baseStats: CharacterStatsDTOSchema,
+		equippedStats: CharacterStatsDTOSchema,
+	}),
+	targets: v.array(OptimizationPlanSchema),
+	zetas: v.array(v.string()),
+});
+
 // Default character stats with all values set to 0
 const defaultCharacterStats = {
 	"Accuracy %": 0,
@@ -77,6 +94,25 @@ const createDefaultCharacter = (
 	targets: [] as v.InferInput<typeof OptimizationPlanSchema>[],
 });
 
+const createDefaultCharacterV23 = (
+	characterId: v.InferInput<typeof KnownCharacterNamesSchema>,
+) => ({
+	id: characterId,
+	omis: [] as string[],
+	playerValues: {
+		galacticPower: 0,
+		gearLevel: 0,
+		gearPieces: [] as string[],
+		level: 0,
+		relicTier: 0,
+		stars: 0,
+		baseStats: { ...defaultCharacterStats },
+		equippedStats: { ...defaultCharacterStats },
+	},
+	targets: [] as v.InferInput<typeof OptimizationPlanSchema>[],
+	zetas: [] as string[],
+});
+
 const CharacterByIdSchema = v.pipe(
 	v.record(v.string(), CharacterSchema),
 	v.transform((input) => {
@@ -91,4 +127,18 @@ const CharacterByIdSchema = v.pipe(
 	}),
 );
 
-export { CharacterByIdSchema };
+const CharacterByIdSchemaV23 = v.pipe(
+	v.record(v.string(), CharacterSchemaV23),
+	v.transform((input) => {
+		// Add missing character entries with default values
+		const result = { ...input };
+		for (const characterName of characterNames) {
+			if (!(characterName in result)) {
+				result[characterName] = createDefaultCharacterV23(characterName);
+			}
+		}
+		return result as Record<CharacterNames, Character>;
+	}),
+);
+
+export { CharacterByIdSchema, CharacterByIdSchemaV23 };

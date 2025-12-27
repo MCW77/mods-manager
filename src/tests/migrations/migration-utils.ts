@@ -10,6 +10,7 @@ import {
 	testOnlyUpgradeTo20,
 	testOnlyUpgradeTo21,
 	testOnlyUpgradeTo22,
+	testOnlyUpgradeTo23,
 } from "../../utils/globalLegendPersistSettings";
 
 // domain
@@ -28,6 +29,7 @@ const storeNamesByVersion: Map<number, string[]> = new Map([
 	[20, testOnlyStoreNames || []],
 	[21, testOnlyStoreNames || []],
 	[22, testOnlyStoreNames || []],
+	[23, testOnlyStoreNames || []],
 ]);
 
 /**
@@ -135,6 +137,12 @@ export async function openDatabaseWithMigration(
 			if (oldVersion <= 21 && newVersion >= 22) {
 				if (testOnlyUpgradeTo22) {
 					await testOnlyUpgradeTo22(db, transaction);
+				}
+			}
+
+			if (oldVersion <= 22 && newVersion >= 23) {
+				if (testOnlyUpgradeTo23) {
+					await testOnlyUpgradeTo23(db, transaction);
 				}
 			}
 		};
