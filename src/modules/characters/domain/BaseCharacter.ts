@@ -22,7 +22,7 @@ export interface APIBaseSkill {
 	display: string;
 	key: string;
 	leader: boolean;
-	mode: APIBaseOmicronMode;
+	mode: keyof typeof APIBaseOmicronMode;
 }
 export interface APIBaseCharacter {
 	affiliation: APIBaseCharacterCategory[];
@@ -67,6 +67,7 @@ const API2BaseCharacterAlignment = {
 } as const;
 
 const APIBaseOmicronMode = {
+	0: "",
 	4: "raid",
 	7: "tb",
 	8: "tw",
@@ -119,13 +120,13 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 						display: skill.display,
 						key: skill.key,
 						leader: skill.leader,
-						mode: skill.mode,
+						mode: APIBaseOmicronMode[skill.mode],
 					})),
 					zetas: bc.zeta.map((skill) => ({
 						display: skill.display,
 						key: skill.key,
 						leader: skill.leader,
-						mode: skill.mode,
+						mode: APIBaseOmicronMode[skill.mode],
 					})),
 				};
 			}),

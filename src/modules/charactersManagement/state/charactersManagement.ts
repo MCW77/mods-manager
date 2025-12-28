@@ -20,7 +20,9 @@ import type { CharactersManagementObservable } from "../domain/CharactersManagem
 
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
+import { characterSettings } from "#/constants/characterSettings";
 import type { Character } from "#/domain/Character";
+import { DamageType } from "#/domain/CharacterSettings";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { Stat } from "#/domain/Stat";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
@@ -150,6 +152,140 @@ const getDefaultFilterSetup = () => {
 							return !lockedStatus$.lockedCharactersForActivePlayer.has(
 								character.id,
 							);
+						},
+					},
+				],
+				[
+					"Missing Zetas",
+					{
+						id: "Missing Zetas",
+						type: "custom",
+						filter: "Missing Zetas",
+						filterPredicate: (character: Character) => {
+							const baseCharacter =
+								characters$.baseCharacterById.peek()[character.id];
+							const possibleZetasCount = baseCharacter.zetas.length;
+							const actualZetasCount = character.zetas.length;
+							return actualZetasCount < possibleZetasCount;
+						},
+					},
+				],
+				[
+					"Missing Omicrons",
+					{
+						id: "Missing Omicrons",
+						type: "custom",
+						filter: "Missing Omicrons",
+						filterPredicate: (character: Character) => {
+							const baseCharacter =
+								characters$.baseCharacterById.peek()[character.id];
+							const possibleOmicronsCount = baseCharacter.omicrons.length;
+							const actualOmicronsCount = character.omis.length;
+							return actualOmicronsCount < possibleOmicronsCount;
+						},
+					},
+				],
+				[
+					"Missing GAC Omicrons",
+					{
+						id: "Missing GAC Omicrons",
+						type: "custom",
+						filter: "Missing GAC Omicrons",
+						filterPredicate: (character: Character) => {
+							const baseCharacter =
+								characters$.baseCharacterById.peek()[character.id];
+							let possibleOmicronsCount = baseCharacter.omicrons.length;
+							let actualOmicronsCount = character.omis.length;
+							if (
+								possibleOmicronsCount > 0 &&
+								baseCharacter.omicrons[0].mode !== "gac"
+							) {
+								actualOmicronsCount = 0;
+								possibleOmicronsCount = 0;
+							}
+							return actualOmicronsCount < possibleOmicronsCount;
+						},
+					},
+				],
+				[
+					"Missing TW Omicrons",
+					{
+						id: "Missing TW Omicrons",
+						type: "custom",
+						filter: "Missing TW Omicrons",
+						filterPredicate: (character: Character) => {
+							const baseCharacter =
+								characters$.baseCharacterById.peek()[character.id];
+							let possibleOmicronsCount = baseCharacter.omicrons.length;
+							let actualOmicronsCount = character.omis.length;
+							if (
+								possibleOmicronsCount > 0 &&
+								baseCharacter.omicrons[0].mode !== "tw"
+							) {
+								actualOmicronsCount = 0;
+								possibleOmicronsCount = 0;
+							}
+
+							return actualOmicronsCount < possibleOmicronsCount;
+						},
+					},
+				],
+				[
+					"Missing TB Omicrons",
+					{
+						id: "Missing TB Omicrons",
+						type: "custom",
+						filter: "Missing TB Omicrons",
+						filterPredicate: (character: Character) => {
+							const baseCharacter =
+								characters$.baseCharacterById.peek()[character.id];
+							let possibleOmicronsCount = baseCharacter.omicrons.length;
+							let actualOmicronsCount = character.omis.length;
+							if (
+								possibleOmicronsCount > 0 &&
+								baseCharacter.omicrons[0].mode !== "tb"
+							) {
+								actualOmicronsCount = 0;
+								possibleOmicronsCount = 0;
+							}
+
+							return actualOmicronsCount < possibleOmicronsCount;
+						},
+					},
+				],
+				[
+					"Physical Damage",
+					{
+						id: "Physical Damage",
+						type: "custom",
+						filter: "Physical Damage",
+						filterPredicate: (character: Character) => {
+							const damageType = characterSettings[character.id]?.damageType;
+							return damageType === DamageType.physical;
+						},
+					},
+				],
+				[
+					"Special Damage",
+					{
+						id: "Special Damage",
+						type: "custom",
+						filter: "Special Damage",
+						filterPredicate: (character: Character) => {
+							const damageType = characterSettings[character.id]?.damageType;
+							return damageType === DamageType.special;
+						},
+					},
+				],
+				[
+					"Mixed Damage",
+					{
+						id: "Mixed Damage",
+						type: "custom",
+						filter: "Mixed Damage",
+						filterPredicate: (character: Character) => {
+							const damageType = characterSettings[character.id]?.damageType;
+							return damageType === DamageType.mixed;
 						},
 					},
 				],

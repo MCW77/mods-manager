@@ -40,6 +40,38 @@ const customCharacterFilterGroups = [
 				label: "Unlocked",
 				value: "Unlocked",
 			},
+			{
+				label: "Missing Zetas",
+				value: "Missing Zetas",
+			},
+			{
+				label: "Missing Omicrons",
+				value: "Missing Omicrons",
+			},
+			{
+				label: "Missing GAC Omicrons",
+				value: "Missing GAC Omicrons",
+			},
+			{
+				label: "Missing TW Omicrons",
+				value: "Missing TW Omicrons",
+			},
+			{
+				label: "Missing TB Omicrons",
+				value: "Missing TB Omicrons",
+			},
+			{
+				label: "Physical Damage",
+				value: "Physical Damage",
+			},
+			{
+				label: "Special Damage",
+				value: "Special Damage",
+			},
+			{
+				label: "Mixed Damage",
+				value: "Mixed Damage",
+			},
 		],
 	},
 	{
