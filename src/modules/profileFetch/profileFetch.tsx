@@ -20,6 +20,7 @@ import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOPr
 
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
+import { datacrons$ } from "../datacrons/state/datacrons";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -262,6 +263,11 @@ function updatePlayerData(
 			}
 		}
 
+		if (fullProfile.datacrons) {
+			for (const datacron of fullProfile.datacrons) {
+				datacrons$.datacronsById.set(datacron.id, { ...datacron, name: "" });
+			}
+		}
 		compilations$.resetOptimizationConditions(newAllycode);
 		profilesManagement$.profiles.activeAllycode.set(newAllycode);
 		endBatch();
