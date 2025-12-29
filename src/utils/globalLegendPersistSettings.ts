@@ -38,6 +38,7 @@ const storeNames = [
 	"LockedStatus",
 	"Compilations",
 	"DefaultCompilation",
+	"Datacrons",
 ];
 
 function itemUpgrade(
@@ -943,7 +944,19 @@ async function upgradeTo23(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23] as const;
+async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		db.createObjectStore("Datacrons", {
+			keyPath: "id",
+			autoIncrement: false,
+		});
+	} catch (error) {
+		console.error("Error in upgradeTo24:", error);
+		transaction.abort();
+	}
+}
+
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -967,6 +980,7 @@ const persistOptions = configureSynced({
 					if (event.oldVersion < 21) await upgradeTo21(db, transaction);
 					if (event.oldVersion < 22) await upgradeTo22(db, transaction);
 					if (event.oldVersion < 23) await upgradeTo23(db, transaction);
+					if (event.oldVersion < 24) await upgradeTo24(db, transaction);
 				}
 			},
 		}),
