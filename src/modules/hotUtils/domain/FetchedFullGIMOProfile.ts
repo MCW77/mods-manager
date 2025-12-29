@@ -1,28 +1,28 @@
 // utils
 import * as v from "valibot";
 
-const DatacronSchema = v.object({
-	id: v.string(),
-	setId: v.number(),
-	templateId: v.string(),
+const AffixSchema = v.object({
+	abilityId: v.string(),
+	requiredRelicTier: v.number(),
+	requiredUnitTier: v.number(),
+	scopeIcon: v.string(),
+	statType: v.number(),
+	statValue: v.number(),
 	tag: v.array(v.string()),
-	affix: v.array(
-		v.object({
-			targetRule: v.string(),
-			abilityId: v.string(),
-			statType: v.number(),
-			statValue: v.number(),
-			tag: v.array(v.string()),
-			requiredUnitTier: v.number(),
-			requiredRelicTier: v.number(),
-			scopeIcon: v.string(),
-		}),
-	),
+	targetRule: v.string(),
+});
 
+const DatacronSchema = v.object({
+	affix: v.array(AffixSchema),
+	focused: v.boolean(),
+	id: v.string(),
 	locked: v.boolean(),
 	rerollIndex: v.number(),
-	focused: v.boolean(),
 	rerollCount: v.number(),
+	rerollOption: v.array(AffixSchema),
+	setId: v.number(),
+	tag: v.array(v.string()),
+	templateId: v.string(),
 });
 
 const StatSchema = v.object({
