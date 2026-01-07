@@ -4898,6 +4898,23 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["STHan"],
 	),
+	STRANGER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 100,
+			spd: 80,
+			phys: 40,
+			primaryRes: {
+				triangle: "Critical Damage %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	SUNFAC: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",

@@ -271,6 +271,7 @@ export const characterNames = [
 	"STARKILLER",
 	"STORMTROOPER",
 	"STORMTROOPERHAN",
+	"STRANGER",
 	"SUNFAC",
 	"SUPREMELEADERKYLOREN",
 	"T3_M4",
