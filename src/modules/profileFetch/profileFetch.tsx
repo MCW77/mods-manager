@@ -8,6 +8,7 @@ import { beginBatch, endBatch } from "@legendapp/state";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { compilations$ } from "#/modules/compilations/state/compilations";
 import { characters$ } from "#/modules/characters/state/characters";
+import { currencies$ } from "../currencies/state/currencies";
 import { datacrons$ } from "#/modules/datacrons/state/datacrons";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { materials$ } from "#/modules/materials/state/materials";
@@ -22,7 +23,6 @@ import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOPr
 
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
-import { currencies$ } from "../currencies/state/currencies";
 
 /**
  * Collect all the information needed for the optimizer for a player
