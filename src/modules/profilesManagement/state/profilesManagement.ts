@@ -106,7 +106,10 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			);
 		},
 		addProfile: (allycode: string, name: string) => {
-			if (profilesManagement$.hasProfileWithAllycode(allycode)) return;
+			if (profilesManagement$.hasProfileWithAllycode(allycode)) {
+				profilesManagement$.lastProfileAdded.set(allycode);
+				return;
+			}
 			const profile: PlayerProfile = createPlayerProfile(allycode, name);
 			beginBatch();
 			profilesManagement$.profiles.profileByAllycode.set({

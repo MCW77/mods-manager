@@ -55,6 +55,9 @@ const OptimizerView = lazy(
 const SettingsView = lazy(
 	() => import("#/modules/settings/pages/SettingsView"),
 );
+const DatacronsView = lazy(
+	() => import("#/modules/datacrons/pages/DatacronsView"),
+);
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const about$ = stateLoader$.about$;
@@ -182,6 +185,14 @@ const AppContent = () => {
 										</TabsTrigger>
 									</Show>
 									<Show if={profilesManagement$.hasProfiles}>
+										<TabsTrigger value="datacrons">
+											<div className={"flex flex-gap-1 items-center"}>
+												<FontAwesomeIcon icon={faWrench} title={"Datacrons"} />
+												{"Datacrons"}
+											</div>
+										</TabsTrigger>
+									</Show>
+									<Show if={profilesManagement$.hasProfiles}>
 										<TabsTrigger value="settings">
 											<div className={"flex flex-gap-1 items-center"}>
 												<FontAwesomeIcon
@@ -243,6 +254,16 @@ const AppContent = () => {
 								</TabsContent>
 							</Memo>
 						</Show>
+						<Show if={profilesManagement$.hasProfiles}>
+							<Memo>
+								<TabsContent className={tabStyle} value="datacrons">
+									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
+										<DatacronsView />
+									</Suspense>
+								</TabsContent>
+							</Memo>
+						</Show>
+
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
 								<TabsContent className={tabStyle} value="settings">

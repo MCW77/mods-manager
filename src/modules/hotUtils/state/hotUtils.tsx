@@ -85,10 +85,12 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			return hotutils$.persistedData.sessionIDsByProfile;
 		},
 		addProfile: (allycode: string) => {
-			hotutils$.sessionIDsByProfile.set(allycode, {
-				gimoSessionId: "",
-				huSessionId: "",
-			});
+			if (!hotutils$.sessionIDsByProfile.has(allycode)) {
+				hotutils$.sessionIDsByProfile.set(allycode, {
+					gimoSessionId: "",
+					huSessionId: "",
+				});
+			}
 		},
 		deleteProfile: (allycode: string) => {
 			hotutils$.sessionIDsByProfile.delete(allycode);

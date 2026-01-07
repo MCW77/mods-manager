@@ -8,7 +8,9 @@ import { beginBatch, endBatch } from "@legendapp/state";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { compilations$ } from "#/modules/compilations/state/compilations";
 import { characters$ } from "#/modules/characters/state/characters";
+import { datacrons$ } from "#/modules/datacrons/state/datacrons";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
+import { materials$ } from "#/modules/materials/state/materials";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -20,6 +22,7 @@ import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOPr
 
 import * as Character from "#/domain/Character";
 import type { Mod } from "#/domain/Mod";
+import { currencies$ } from "../currencies/state/currencies";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -262,6 +265,26 @@ function updatePlayerData(
 			}
 		}
 
+		if (fullProfile.datacrons) {
+			for (const datacron of fullProfile.datacrons) {
+				datacrons$.datacronByIdForActiveAllycode.set(datacron.id, {
+					...datacron,
+					name: "",
+				});
+			}
+		}
+
+		if (fullProfile.material) {
+			for (const material of fullProfile.material.material) {
+				materials$.materialByIdForActiveAllycode.set(material.id, material);
+			}
+		}
+
+		if (fullProfile.summary?.currency) {
+			for (const currency of fullProfile.summary.currency) {
+				currencies$.currencyByIdForActiveAllycode.set(currency.id, currency);
+			}
+		}
 		compilations$.resetOptimizationConditions(newAllycode);
 		profilesManagement$.profiles.activeAllycode.set(newAllycode);
 		endBatch();

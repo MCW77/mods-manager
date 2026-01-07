@@ -1,28 +1,50 @@
 // utils
 import * as v from "valibot";
+import { statIds, type StatId } from "./StatIDs";
+
+const CurrencySchema = v.pipe(
+	v.object({
+		bonusQuantity: v.number(),
+		currency: v.number(),
+		quantity: v.number(),
+	}),
+	v.transform((data) => ({
+		id: `${data.currency}`,
+		quantity: data.quantity,
+	})),
+);
+const MaterialSchema = v.object({
+	bonusQuantity: v.number(),
+	id: v.string(),
+	quantity: v.number(),
+});
+
+const AffixSchema = v.object({
+	abilityId: v.string(),
+	requiredRelicTier: v.number(),
+	requiredUnitTier: v.number(),
+	scopeIcon: v.string(),
+	statType: v.pipe(
+		v.number(),
+		v.check((input) => (Object.values(statIds) as number[]).includes(input)),
+		v.transform((input) => input as StatId),
+	),
+	statValue: v.number(),
+	tag: v.array(v.string()),
+	targetRule: v.string(),
+});
 
 const DatacronSchema = v.object({
+	affix: v.array(AffixSchema),
+	focused: v.boolean(),
 	id: v.string(),
-	setId: v.number(),
-	templateId: v.string(),
-	tag: v.array(v.string()),
-	affix: v.array(
-		v.object({
-			targetRule: v.string(),
-			abilityId: v.string(),
-			statType: v.number(),
-			statValue: v.number(),
-			tag: v.array(v.string()),
-			requiredUnitTier: v.number(),
-			requiredRelicTier: v.number(),
-			scopeIcon: v.string(),
-		}),
-	),
-
 	locked: v.boolean(),
 	rerollIndex: v.number(),
-	focused: v.boolean(),
 	rerollCount: v.number(),
+	rerollOption: v.array(AffixSchema),
+	setId: v.number(),
+	tag: v.array(v.string()),
+	templateId: v.string(),
 });
 
 const StatSchema = v.object({
@@ -75,9 +97,11 @@ const ProfileSummarySchema = v.pipe(
 		allyCode: v.number(),
 		guildName: v.nullable(v.string()),
 		name: v.string(),
+		currency: v.array(CurrencySchema),
 	}),
 	v.transform((data) => ({
 		allycode: data.allyCode,
+		currency: data.currency,
 		guildName: data.guildName,
 		name: data.name,
 	})),
@@ -146,6 +170,7 @@ const UnitsSchema = v.object({
 
 const FetchedFullGIMOProfileSchema = v.object({
 	datacrons: v.array(DatacronSchema),
+	material: v.object({ material: v.array(MaterialSchema) }),
 	mods: ModsSchema,
 	summary: ProfileSummarySchema,
 	units: UnitsSchema,

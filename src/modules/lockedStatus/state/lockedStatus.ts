@@ -43,6 +43,13 @@ const lockedStatus$: ObservableObject<LockedStatusObservable> =
 				.has(characterId);
 		},
 		addProfile: (allycode: string) => {
+			if (
+				Object.hasOwn(
+					lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode,
+					allycode,
+				)
+			)
+				return;
 			lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode[
 				allycode
 			].set(new Set<CharacterNames>());
