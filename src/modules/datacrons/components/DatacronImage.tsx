@@ -92,7 +92,7 @@ function DatacronImage({ datacron$ }: DatacronImageProps) {
 		<div className={"flex flex-col items-center"}>
 			<div className={iconContainer}>
 				<img
-					src={"/img/" + iconName + "_empty.webp"}
+					src={`/img/${iconName}_empty.webp`}
 					alt={setData.displayName}
 					className={"size-[114px]"}
 				/>
