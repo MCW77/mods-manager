@@ -1,12 +1,34 @@
 // utils
 import * as v from "valibot";
+import { statIds, type StatId } from "./StatIDs";
+
+const CurrencySchema = v.pipe(
+	v.object({
+		bonusQuantity: v.number(),
+		currency: v.number(),
+		quantity: v.number(),
+	}),
+	v.transform((data) => ({
+		id: `${data.currency}`,
+		quantity: data.quantity,
+	})),
+);
+const MaterialSchema = v.object({
+	bonusQuantity: v.number(),
+	id: v.string(),
+	quantity: v.number(),
+});
 
 const AffixSchema = v.object({
 	abilityId: v.string(),
 	requiredRelicTier: v.number(),
 	requiredUnitTier: v.number(),
 	scopeIcon: v.string(),
-	statType: v.number(),
+	statType: v.pipe(
+		v.number(),
+		v.check((input) => (Object.values(statIds) as number[]).includes(input)),
+		v.transform((input) => input as StatId),
+	),
 	statValue: v.number(),
 	tag: v.array(v.string()),
 	targetRule: v.string(),
@@ -75,9 +97,11 @@ const ProfileSummarySchema = v.pipe(
 		allyCode: v.number(),
 		guildName: v.nullable(v.string()),
 		name: v.string(),
+		currency: v.array(CurrencySchema),
 	}),
 	v.transform((data) => ({
 		allycode: data.allyCode,
+		currency: data.currency,
 		guildName: data.guildName,
 		name: data.name,
 	})),
@@ -146,6 +170,7 @@ const UnitsSchema = v.object({
 
 const FetchedFullGIMOProfileSchema = v.object({
 	datacrons: v.array(DatacronSchema),
+	material: v.object({ material: v.array(MaterialSchema) }),
 	mods: ModsSchema,
 	summary: ProfileSummarySchema,
 	units: UnitsSchema,
