@@ -41,7 +41,12 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			return optimizationSettings$.persistedData.settingsByProfile;
 		},
 		addProfile: (allycode: string) => {
-			return optimizationSettings$.settingsByProfile.set({
+			if (
+				Object.hasOwn(optimizationSettings$.settingsByProfile.peek(), allycode)
+			) {
+				return;
+			}
+			optimizationSettings$.settingsByProfile.set({
 				...optimizationSettings$.settingsByProfile.peek(),
 				[allycode]: {
 					forceCompleteSets: false,
