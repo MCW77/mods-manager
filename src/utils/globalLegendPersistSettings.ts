@@ -39,6 +39,8 @@ const storeNames = [
 	"Compilations",
 	"DefaultCompilation",
 	"Datacrons",
+	"Materials",
+	"Currencies",
 ];
 
 function itemUpgrade(
@@ -946,10 +948,7 @@ async function upgradeTo23(db: IDBDatabase, transaction: IDBTransaction) {
 
 async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
-		db.createObjectStore("Datacrons", {
-			keyPath: "id",
-			autoIncrement: false,
-		});
+		createStores(db, ["Datacrons", "Materials", "Currencies"]);
 	} catch (error) {
 		console.error("Error in upgradeTo24:", error);
 		transaction.abort();

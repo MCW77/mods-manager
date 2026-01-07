@@ -10,6 +10,9 @@ import type { LockedStatusObservable } from "#/modules/lockedStatus/domain/Locke
 import type { ModsViewObservable } from "#/modules/modsView/domain/ModsViewObservable";
 import type { OptimizationSettingsObservable } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
 import type { TemplatesObservable } from "#/modules/templates/domain/TemplatesObservable";
+import type { DatacronsObservable } from "#/modules/datacrons/domain/DatacronsObservable";
+import type { MaterialsObservable } from "#/modules/materials/domain/MaterialsObservable";
+import type { CurrenciesObservable } from "#/modules/currencies/domain/CurrenciesObservable";
 
 export interface StateLoaderObservable {
 	isDone: boolean;
@@ -24,6 +27,9 @@ export interface StateLoaderObservable {
 	modsView$: ObservableObject<ModsViewObservable> | null;
 	optimizationSettings$: ObservableObject<OptimizationSettingsObservable> | null;
 	templates$: ObservableObject<TemplatesObservable> | null;
+	datacrons$: ObservableObject<DatacronsObservable> | null;
+	materials$: ObservableObject<MaterialsObservable> | null;
+	currencies$: ObservableObject<CurrenciesObservable> | null;
 }
 const stateLoader$ = observable<StateLoaderObservable>({
 	isDone: false,
@@ -38,6 +44,9 @@ const stateLoader$ = observable<StateLoaderObservable>({
 	modsView$: null,
 	optimizationSettings$: null,
 	templates$: null,
+	datacrons$: null,
+	materials$: null,
+	currencies$: null,
 });
 
 async function loadStateModules() {
@@ -54,6 +63,9 @@ async function loadStateModules() {
 			modsViewModule,
 			optimizationSettingsModule,
 			templatesModule,
+			datacronsModule,
+			materialsModule,
+			currenciesModule,
 		] = await Promise.all([
 			import("#/modules/profilesManagement/state/profilesManagement"),
 			import("#/modules/compilations/state/compilations"),
@@ -66,6 +78,9 @@ async function loadStateModules() {
 			import("#/modules/modsView/state/modsView"),
 			import("#/modules/optimizationSettings/state/optimizationSettings"),
 			import("#/modules/templates/state/templates"),
+			import("#/modules/datacrons/state/datacrons"),
+			import("#/modules/materials/state/materials"),
+			import("#/modules/currencies/state/currencies"),
 		]);
 
 		stateLoader$.profilesManagement$.set(
@@ -87,7 +102,9 @@ async function loadStateModules() {
 			optimizationSettingsModule.optimizationSettings$,
 		);
 		stateLoader$.templates$.set(templatesModule.templates$);
-
+		stateLoader$.datacrons$.set(datacronsModule.datacrons$);
+		stateLoader$.materials$.set(materialsModule.materials$);
+		stateLoader$.currencies$.set(currenciesModule.currencies$);
 		await Promise.all([
 			when(profilesManagementModule.syncStatus$.isPersistLoaded),
 			when(compilationsModule.syncStatus$.isPersistLoaded),
@@ -102,6 +119,9 @@ async function loadStateModules() {
 			when(optimizationSettingsModule.syncStatus$.isPersistLoaded),
 			when(templatesModule.templatesSyncStatus$.isPersistLoaded),
 			when(templatesModule.templatesAddingModeSyncStatus$.isPersistLoaded),
+			when(datacronsModule.syncStatus$.isPersistLoaded),
+			when(materialsModule.syncStatus$.isPersistLoaded),
+			when(currenciesModule.syncStatus$.isPersistLoaded),
 		]);
 
 		stateLoader$.isDone.set(true);

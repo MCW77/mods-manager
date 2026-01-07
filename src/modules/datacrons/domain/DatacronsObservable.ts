@@ -1,19 +1,38 @@
+// state
 import type { Observable } from "@legendapp/state";
-import type { DatacronsById, DatacronsPersistedData } from "./Datacrons";
+
+// domain
+import type { DatacronFilter, DatacronSet } from "./DatacronFilter";
+import type {
+	DatacronById,
+	DatacronsPersistedData,
+	DatacronByIdForProfile,
+	Affix,
+} from "./Datacrons";
 
 interface DatacronsObservable {
 	persistedData: DatacronsPersistedData;
-	datacronsById: () => Observable<DatacronsById>;
+	datacronByIdByAllycode: () => Observable<
+		Record<string, DatacronByIdForProfile>
+	>;
+	datacronByIdForActiveAllycode: () => Observable<DatacronById>;
+	filteredDatacronsIdsForActiveAllycode: () => string[];
+	availableDatacronSets: () => Map<number, DatacronSet>;
+	availableAlignmentAbilities: () => Affix[];
+	availableCharacterAbilities: () => Affix[];
+	availableCharacters: () => Affix[];
+	availableFactionAbilities: () => Affix[];
+	availableFactions: () => Affix[];
+	filter: DatacronFilter;
+	showShortDescription: boolean;
+	addProfile: (allycode: string) => void;
+	deleteProfile: (allycode: string) => void;
+	resetFilters: () => void;
 	reset: () => void;
 }
 
 const getInitialDatacrons = (): DatacronsPersistedData => {
-	const datacrons: DatacronsPersistedData = {
-		datacrons: {
-			id: "datacrons",
-			datacronsById: new Map(),
-		},
-	};
+	const datacrons: DatacronsPersistedData = {};
 	return datacrons;
 };
 

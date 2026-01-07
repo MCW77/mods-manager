@@ -7,8 +7,11 @@ import {
 	CompilationSchemaV18,
 	CompilationSchemaV20,
 	CompilationSchemaV22,
+	CurrenciesSchemaV24,
+	DatacronsSchemaV24,
 	LockedStatusByCharacterIdSchemaV20,
 	LockedStatusByCharacterIdSchemaV18,
+	MaterialsSchemaV24,
 	ModsViewSetupsSchema,
 	ModsViewSetupsSchemaV19,
 	PersistedProfilesSchemaV18,
@@ -196,6 +199,9 @@ const ModsManagerBackupDataSchemaV23 = v.object({
 	sessionIds: HotutilsSchemaV21,
 	settings: SettingsByProfileSchema,
 });
+type ModsManagerBackupDataSchemaV23Output = v.InferOutput<
+	typeof ModsManagerBackupDataSchemaV23
+>;
 
 const ModsManagerBackupSchemaV23 = v.object({
 	appVersion: v.string(),
@@ -205,12 +211,35 @@ const ModsManagerBackupSchemaV23 = v.object({
 	version: v.literal(23),
 });
 
-const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV23;
+const ModsManagerBackupDataSchemaV24 = v.object({
+	characterTemplates: CharacterTemplateByNameSchema,
+	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+	currencies: CurrenciesSchemaV24,
+	datacrons: DatacronsSchemaV24,
+	defaultCompilation: CompilationSchemaV22,
+	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+	materials: MaterialsSchemaV24,
+	modsViewSetups: ModsViewSetupsSchemaV19,
+	profilesManagement: PersistedProfilesSchemaV23,
+	sessionIds: HotutilsSchemaV21,
+	settings: SettingsByProfileSchema,
+});
+
+const ModsManagerBackupSchemaV24 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: ModsManagerBackupDataSchemaV24,
+	version: v.literal(24),
+});
+
+const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV24;
 type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupDataSchema
 >;
 
-const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV23;
+const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV24;
 type LatestModsManagerBackupSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupSchema
 >;
@@ -230,6 +259,7 @@ export {
 	ModsManagerBackupSchemaV21,
 	ModsManagerBackupSchemaV22,
 	ModsManagerBackupSchemaV23,
+	ModsManagerBackupSchemaV24,
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupSchemaV18Output,
 	type ModsManagerBackupDataSchemaV19Output,
@@ -238,5 +268,6 @@ export {
 	type ModsManagerBackupSchemaV20Output,
 	type ModsManagerBackupDataSchemaV21Output,
 	type ModsManagerBackupDataSchemaV22Output,
+	type ModsManagerBackupDataSchemaV23Output,
 	ModsManagerSchema,
 };

@@ -18,9 +18,12 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const about$ = stateLoader$.about$;
+const currencies$ = stateLoader$.currencies$;
+const datacrons$ = stateLoader$.datacrons$;
 const hotutils$ = stateLoader$.hotutils$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
+const materials$ = stateLoader$.materials$;
 const modsView$ = stateLoader$.modsView$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const templates$ = stateLoader$.templates$;
@@ -211,6 +214,46 @@ function mergeCharacterTemplates(
 	}
 }
 
+function mergeCurrencies(
+	backupCurrencies: LatestModsManagerBackupDataSchemaOutput["currencies"],
+): void {
+	if (!backupCurrencies) return;
+	for (const [allycode, backupCurrencyByIdForProfile] of objectEntries(
+		backupCurrencies,
+	)) {
+		const currentCurrencyByIdForProfile =
+			currencies$.currencyByIdByAllycode.peek()[allycode];
+		if (
+			currentCurrencyByIdForProfile === undefined ||
+			currentCurrencyByIdForProfile === null ||
+			currentCurrencyByIdForProfile.currencyById.size === 0
+		) {
+			currencies$.currencyByIdByAllycode[allycode].set(
+				backupCurrencyByIdForProfile,
+			);
+		}
+	}
+}
+
+function mergeDatacrons(
+	backupDatacrons: LatestModsManagerBackupDataSchemaOutput["datacrons"],
+): void {
+	if (!backupDatacrons) return;
+	for (const [allycode, backupDatacronsOfProfile] of objectEntries(
+		backupDatacrons,
+	)) {
+		const currentDatacronsOfProfile =
+			datacrons$.datacronByIdByAllycode.peek()[allycode];
+		if (
+			currentDatacronsOfProfile === undefined ||
+			currentDatacronsOfProfile === null ||
+			currentDatacronsOfProfile.datacronById.size === 0
+		) {
+			datacrons$.datacronByIdByAllycode[allycode].set(backupDatacronsOfProfile);
+		}
+	}
+}
+
 /**
  * Merges locked status data from backup with existing locked status.
  * Only sets locked status from backup where current locked status doesn't exist for the profile.
@@ -234,6 +277,27 @@ function mergeLockedStatus(
 		) {
 			lockedStatus$.lockedCharactersByAllycode[allycode].set(
 				backupCharacterLocks,
+			);
+		}
+	}
+}
+
+function mergeMaterials(
+	backupMaterials: LatestModsManagerBackupDataSchemaOutput["materials"],
+): void {
+	if (!backupMaterials) return;
+	for (const [allycode, backupMaterialByIdForProfile] of objectEntries(
+		backupMaterials,
+	)) {
+		const currentMaterialByIdForProfile =
+			materials$.materialByIdByAllycode.peek()[allycode];
+		if (
+			currentMaterialByIdForProfile === undefined ||
+			currentMaterialByIdForProfile === null ||
+			currentMaterialByIdForProfile.materialById.size === 0
+		) {
+			materials$.materialByIdByAllycode[allycode].set(
+				backupMaterialByIdForProfile,
 			);
 		}
 	}
@@ -365,6 +429,8 @@ const loadModsManagerBackup = (
 	beginBatch();
 	mergeCharacterTemplates(backup.characterTemplates);
 	mergeCompilations(backup.compilations);
+	mergeCurrencies(backup.currencies);
+	mergeDatacrons(backup.datacrons);
 
 	if (backup.incrementalOptimizationIndices) {
 		// Only set indices from backup where current index doesn't exist (is null/undefined)
@@ -379,6 +445,7 @@ const loadModsManagerBackup = (
 		}
 	}
 	mergeLockedStatus(backup.lockedStatus);
+	mergeMaterials(backup.materials);
 	mergeModsViewSetups(backup.modsViewSetups);
 	mergeSessionIds(backup.sessionIds);
 	mergeSettings(backup.settings);
@@ -444,12 +511,15 @@ const appState$: ObservableObject<AppState> = observable({
 	saveBackup: () => {
 		const backupData: BackupData = {
 			characterTemplates: templates$.userTemplatesByName.peek(),
-			defaultCompilation: compilations$.defaultCompilation.peek(),
 			compilations: compilations$.compilationByIdByAllycode.peek(),
+			currencies: currencies$.persistedData.peek(),
+			datacrons: datacrons$.persistedData.peek(),
+			defaultCompilation: compilations$.defaultCompilation.peek(),
 			incrementalOptimizationIndices:
 				incrementalOptimization$.indicesByProfile.peek(),
 			lockedStatus:
 				lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.peek(),
+			materials: materials$.persistedData.peek(),
 			modsViewSetups: modsView$.toPersistable(),
 			profilesManagement: profilesManagement$.toPersistable(),
 			sessionIds: hotutils$.sessionIDsByProfile.peek(),

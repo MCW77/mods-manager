@@ -1,9 +1,11 @@
+import type { StatId } from "../../hotUtils/domain/StatIDs";
+
 interface Affix {
 	abilityId: string;
 	requiredRelicTier: number;
 	requiredUnitTier: number;
 	scopeIcon: string;
-	statType: number;
+	statType: StatId;
 	statValue: number;
 	tag: string[];
 	targetRule: string;
@@ -13,22 +15,28 @@ interface Datacron {
 	focused: boolean;
 	id: string;
 	locked: boolean;
+	name: string;
 	rerollCount: number;
 	rerollIndex: number;
 	rerollOption: Affix[];
 	setId: number;
 	tag: string[];
 	templateId: string;
-	name: string;
 }
 
-type DatacronsById = Map<string, Datacron>;
+type DatacronById = Map<string, Datacron>;
 
-interface DatacronsPersistedData {
-	datacrons: {
-		id: "datacrons";
-		datacronsById: DatacronsById;
-	};
+interface DatacronByIdForProfile {
+	id: string;
+	datacronById: DatacronById;
 }
 
-export type { DatacronsById, DatacronsPersistedData, Datacron };
+type DatacronsPersistedData = Record<string, DatacronByIdForProfile>;
+
+export type {
+	Affix,
+	DatacronById,
+	DatacronsPersistedData,
+	Datacron,
+	DatacronByIdForProfile,
+};
