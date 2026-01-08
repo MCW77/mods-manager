@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Fragment } from "react/jsx-runtime";
 
 // state
-import { reactive, useValue } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;

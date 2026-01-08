@@ -2,12 +2,7 @@
 import collectByKey from "#/utils/collectByKey";
 
 // state
-import {
-	observer,
-	reactive,
-	useValue,
-	useObservable,
-} from "@legendapp/state/react";
+import { observer, useValue, useObservable } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;

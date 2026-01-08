@@ -3,7 +3,7 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive, useValue } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
