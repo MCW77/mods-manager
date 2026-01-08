@@ -6,11 +6,11 @@ import { useValue } from "@legendapp/state/react";
 import { observable, type Observable } from "@legendapp/state";
 
 // components
-import { Input as CustomInput } from "#/components/custom/input";
+import { Input as ShadCNInput } from "#ui/input";
 import { booleanAsString } from "#/utils/legend-kit/as/booleanAsString";
 import { numberAsString } from "#/utils/legend-kit/as/numberAsString";
 
-type CustomInputProps = ComponentProps<typeof CustomInput>;
+type CustomInputProps = ComponentProps<typeof ShadCNInput>;
 interface InputProps
 	extends Omit<CustomInputProps, "checked" | "value" | "onChange"> {
 	$value: Observable<string | number | boolean | undefined>;
@@ -38,7 +38,7 @@ function Input({ type, $value, onChange, ...props }: InputProps) {
 	};
 
 	return (
-		<CustomInput {...props} onChange={handleChange} type={type} value={value} />
+		<ShadCNInput {...props} onChange={handleChange} type={type} value={value} />
 	);
 }
 
