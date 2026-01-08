@@ -8,3 +8,4 @@ dist-ssr
 /hualldata.json
 /statMod.json
 ,*.*
+*.npmrc
