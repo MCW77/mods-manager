@@ -42,6 +42,7 @@ import type {
 } from "#/modules/compilations/domain/MissedGoals";
 
 // components
+import { Input } from "#/components/reactive/Input";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
 import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
@@ -50,7 +51,6 @@ import TargetStatsWidget from "#/modules/planEditing/components/TargetStatsWidge
 import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
 import { Button } from "#ui/button";
 import { DialogClose } from "#/components/custom/dialog";
-import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import {
 	Select,
@@ -76,7 +76,6 @@ import {
 } from "#/components/ui/dropdown-menu";
 
 const ReactiveButton = reactive(Button);
-const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 enableReactComponents();
 
@@ -495,14 +494,11 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 						</div>
 						<Label htmlFor={"plan-name"}>Target Name: </Label>
 						<div className={"flex flex-nowrap items-center"}>
-							<ReactiveInput
+							<Input
 								className={"w-fit"}
 								id={"plan-name"}
 								type={"text"}
 								$value={target$.target.id}
-								onChange={(e: React.FormEvent<HTMLInputElement>) => {
-									target$.target.id.set(e.currentTarget.value);
-								}}
 							/>
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>

@@ -7,7 +7,7 @@ import { observer, reactive } from "@legendapp/state/react";
 import { stackRank$ } from "../../state/stackRank";
 
 // components
-import { Input } from "#ui/input";
+import { Input } from "#/components/reactive/Input";
 import { Label } from "#ui/label";
 import {
 	Select,
@@ -21,7 +21,6 @@ import { Switch } from "#ui/switch";
 
 const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(Switch);
-const ReactiveInput = reactive(Input);
 
 const StackRankSettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
@@ -102,26 +101,20 @@ const StackRankSettingsForm: React.FC = observer(() => {
 			<Label className={labelCSS} htmlFor={"minimum-gear-level"}>
 				{t("optimizer.stackrank.MinimumGear")}:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"minimum-gear-level"}
 				type={"number"}
 				$value={stackRank$.parameters.minimumGearLevel}
-				onChange={(event) =>
-					stackRank$.parameters.minimumGearLevel.set(event.target.valueAsNumber)
-				}
 			/>
 			<Label className={labelCSS} htmlFor={"top"}>
 				{t("optimizer.stackrank.Top")}:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"top"}
 				type={"number"}
 				$value={stackRank$.parameters.top}
-				onChange={(event) =>
-					stackRank$.parameters.top.set(event.target.valueAsNumber)
-				}
 			/>
 			<Label className={labelCSS}>
 				{t("optimizer.stackrank.OmicronBoosts")}:
@@ -129,62 +122,47 @@ const StackRankSettingsForm: React.FC = observer(() => {
 			<Label className={labelCSS} htmlFor={"omicron-boost-gac"}>
 				GAC:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"omicron-boost-gac"}
 				type={"checkbox"}
-				$checked={stackRank$.parameters.omicronGac}
-				onChange={(e) =>
-					stackRank$.parameters.omicronGac.set(e.currentTarget.checked)
-				}
+				$value={stackRank$.parameters.omicronGac}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-tw"}>
 				TW:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"omicron-boost-tw"}
 				type={"checkbox"}
-				$checked={stackRank$.parameters.omicronTw}
-				onChange={(e) =>
-					stackRank$.parameters.omicronTw.set(e.currentTarget.checked)
-				}
+				$value={stackRank$.parameters.omicronTw}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-tb"}>
 				TB:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"omicron-boost-tb"}
 				type={"checkbox"}
-				$checked={stackRank$.parameters.omicronTb}
-				onChange={(e) =>
-					stackRank$.parameters.omicronTb.set(e.currentTarget.checked)
-				}
+				$value={stackRank$.parameters.omicronTb}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-raids"}>
 				Raids:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"omicron-boost-raids"}
 				type={"checkbox"}
-				$checked={stackRank$.parameters.omicronRaids}
-				onChange={(e) =>
-					stackRank$.parameters.omicronRaids.set(e.currentTarget.checked)
-				}
+				$value={stackRank$.parameters.omicronRaids}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-conquest"}>
 				Conquest:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={"omicron-boost-conquest"}
 				type={"checkbox"}
-				$checked={stackRank$.parameters.omicronConquest}
-				onChange={(e) =>
-					stackRank$.parameters.omicronConquest.set(e.currentTarget.checked)
-				}
+				$value={stackRank$.parameters.omicronConquest}
 			/>
 		</form>
 	);

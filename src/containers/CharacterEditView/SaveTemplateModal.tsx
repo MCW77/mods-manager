@@ -15,8 +15,8 @@ const templates$ = stateLoader$.templates$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // components
+import { Input } from "#/components/reactive/Input";
 import { Button } from "#ui/button";
-import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import {
 	Select,
@@ -26,7 +26,6 @@ import {
 	SelectValue,
 } from "#ui/select";
 
-const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 
 const SaveTemplateModal: React.FC = observer(() => {
@@ -40,14 +39,11 @@ const SaveTemplateModal: React.FC = observer(() => {
 			<h3>Please enter a name for this character template</h3>
 			<Computed>
 				<div>
-					<ReactiveInput
+					<Input
 						type={"text"}
 						id={"template-name"}
 						placeholder={"Template Name"}
 						$value={templates$.id}
-						onChange={(event) => {
-							templates$.id.set(event.target.value);
-						}}
 					/>
 					<div>
 						<Label htmlFor={"template-category"}>Category</Label>
@@ -70,14 +66,11 @@ const SaveTemplateModal: React.FC = observer(() => {
 								))}
 							</SelectContent>
 						</ReactiveSelect>
-						<ReactiveInput
+						<Input
 							type={"text"}
 							id={"template-category"}
 							placeholder={"Template Category"}
 							$value={templates$.category}
-							onChange={(event) => {
-								templates$.category.set(event.target.value);
-							}}
 						/>
 					</div>
 				</div>

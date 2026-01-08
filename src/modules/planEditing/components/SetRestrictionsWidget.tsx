@@ -1,10 +1,5 @@
 // state
-import {
-	reactive,
-	reactiveObserver,
-	Show,
-	useValue,
-} from "@legendapp/state/react";
+import { reactiveObserver, Show, useValue } from "@legendapp/state/react";
 import { computed } from "@legendapp/state";
 
 import { target$ } from "#/modules/planEditing/state/planEditing";
@@ -16,10 +11,8 @@ import type SetBonus from "#/domain/SetBonus";
 import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 
 // components
-import { Input } from "#ui/input";
+import { Input } from "#/components/reactive/Input";
 import { Label } from "#ui/label";
-
-const ReactiveInput = reactive(Input);
 
 interface SetItem {
 	setName: GIMOSetStatNames;
@@ -98,14 +91,11 @@ const SetRestrictionsWidget: React.FC = reactiveObserver(() => {
 			<div className={"flex flex-col gap-4"}>
 				<div className={"flex gap-2"}>
 					<Label htmlFor={"use-full-sets"}>Don't break mod sets</Label>
-					<ReactiveInput
+					<Input
 						className={"w-auto h-auto"}
 						id={"use-full-sets"}
 						type={"checkbox"}
-						$checked={target$.target.useOnlyFullSets}
-						onChange={(e) =>
-							target$.target.useOnlyFullSets.set(e.target.checked)
-						}
+						$value={target$.target.useOnlyFullSets}
 					/>
 				</div>
 				<p className={""}>

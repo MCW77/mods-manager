@@ -10,10 +10,8 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 const hotutils$ = stateLoader$.hotutils$;
 
 // components
-import { Input } from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
-
-const ReactiveInput = reactive(Input);
+import { Input } from "#/components/reactive/Input";
+import { Label } from "#ui/label";
 
 const HotutilsSettingsForm = () => {
 	const [t] = useTranslation("settings-ui");
@@ -41,27 +39,17 @@ const HotutilsSettingsForm = () => {
 						{`${allycode} - ${name}`}
 					</Label>
 					<div className={inputsContainerCSS}>
-						<ReactiveInput
+						<Input
 							className={inputCSS}
 							placeholder={t("general.hotutils.GIMOSessionIdPrompt")}
 							type="text"
 							$value={hotutils$.sessionIDsByProfile[allycode].gimoSessionId}
-							onChange={(event) =>
-								hotutils$.sessionIDsByProfile[allycode].gimoSessionId.set(
-									event.target.value,
-								)
-							}
 						/>
-						<ReactiveInput
+						<Input
 							className={inputCSS}
 							placeholder={t("general.hotutils.HUSessionIdPrompt")}
 							type="text"
 							$value={hotutils$.sessionIDsByProfile[allycode].huSessionId}
-							onChange={(event) =>
-								hotutils$.sessionIDsByProfile[allycode].huSessionId.set(
-									event.target.value,
-								)
-							}
 						/>
 					</div>
 				</Fragment>

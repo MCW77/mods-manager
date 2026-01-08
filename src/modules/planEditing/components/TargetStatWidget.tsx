@@ -1,6 +1,7 @@
 // react
 import type React from "react";
 import {
+	Memo,
 	Switch,
 	observer,
 	reactive,
@@ -15,19 +16,16 @@ const characters$ = stateLoader$.characters$;
 
 // domain
 import type { PlanEditing } from "../domain/PlanEditing";
-import {
-	type TargetStatsNames,
-	targetStatsNames,
-} from "#/domain/TargetStat";
+import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
 
 // components
 import {
 	type Group,
 	ReactiveMultiColumnSelect,
 } from "#/components/ReactiveMultiColumnSelect";
+import { Input } from "#/components/reactive/Input";
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
-import { Input } from "#ui/input";
 import { Label } from "#ui/label";
 import {
 	Select,
@@ -40,7 +38,6 @@ import {
 import { Switch as ShadSwitch } from "#ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
-const ReactiveInput = reactive(Input);
 const ReactiveSelect = reactive(Select);
 const ReactiveSwitch = reactive(ShadSwitch);
 const ReactiveToggleGroup = reactive(ToggleGroup);
@@ -57,9 +54,6 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 			(ts) => ts.peek().id === id,
 		) as NonNullable<ReturnType<typeof target$.target.targetStats.find>>;
 
-		const stat = useValue(targetStat$.stat);
-		const minimum = useValue(targetStat$.minimum);
-		const maximum = useValue(targetStat$.maximum);
 		const type = useValue(targetStat$.type);
 
 		const baseCharacterById$ = characters$.baseCharacterById;
@@ -68,7 +62,6 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 			if (relativeCharacterId === "null") return "";
 			return baseCharacterById$[relativeCharacterId].name.get();
 		});
-		const relativeCharacterName = useValue(relativeCharacterName$);
 
 		return (
 			<Card className={"flex flex-col flex-gap-2 w-fit"}>
@@ -79,7 +72,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						</Label>
 						<ReactiveSwitch
 							$checked={targetStat$.optimizeForTarget}
-							$disabled={stat === "Health+Protection"}
+							$disabled={() => targetStat$.stat.get() === "Health+Protection"}
 							onCheckedChange={(checked) => {
 								targetStat$.optimizeForTarget.set(checked);
 							}}
@@ -105,7 +98,9 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 					{{
 						null: () => (
 							<Label>
-								{`The ${stat} must be between ${minimum} and ${maximum}`}
+								The <Memo>{targetStat$.stat}</Memo> must be between{" "}
+								<Memo>{targetStat$.minimum}</Memo> and{" "}
+								<Memo>{targetStat$.maximum}</Memo>
 							</Label>
 						),
 						default: () => (
@@ -113,23 +108,47 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 								{{
 									"+": () => (
 										<div className={"flex flex-col flex-gap-1"}>
-											<Label>{`The ${stat} must be between`}</Label>
 											<Label>
-												{`${Intl.NumberFormat("en-US", {
-													signDisplay: "exceptZero",
-												}).format(minimum)} and ${Intl.NumberFormat("en-US", {
-													signDisplay: "exceptZero",
-												}).format(
-													maximum,
-												)} compared to the ${stat} of ${relativeCharacterName}`}
+												The <Memo>{targetStat$.stat}</Memo> must be between{" "}
+											</Label>
+											<Label>
+												<Memo>
+													{() =>
+														Intl.NumberFormat("en-US", {
+															signDisplay: "exceptZero",
+														}).format(targetStat$.minimum.get())
+													}
+												</Memo>
+												{" and "}
+												<Memo>
+													{() =>
+														Intl.NumberFormat("en-US", {
+															signDisplay: "exceptZero",
+														}).format(targetStat$.maximum.get())
+													}
+												</Memo>
+												{" compared to the "}
+												<Memo>{targetStat$.stat}</Memo>
+												{" of "}
+												<Memo>{relativeCharacterName$}</Memo>
 											</Label>
 										</div>
 									),
 									"*": () => (
 										<div className={"flex flex-col flex-gap-1"}>
-											<Label>{`The ${stat} must be between`}</Label>
 											<Label>
-												{`${minimum}% and ${maximum}% of the  ${stat} of ${relativeCharacterName}`}
+												{"The "}
+												<Memo>{targetStat$.stat}</Memo>
+												{" must be between"}
+											</Label>
+											<Label>
+												<Memo>{targetStat$.minimum}</Memo>
+												{"% and "}
+												<Memo>{targetStat$.maximum}</Memo>
+												{"% of the "}
+												<Memo>{targetStat$.stat}</Memo>
+												{" of "}
+												<Memo>{relativeCharacterName$}</Memo>
 											</Label>
 										</div>
 									),
@@ -170,31 +189,25 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						<Label className="p-r-2" htmlFor={`target-stat-min${id}`}>
 							Minimum:
 						</Label>
-						<ReactiveInput
+						<Input
 							className={"w-24"}
 							id={`target-stat-min${id}`}
 							min={type === "*" ? 0 : undefined}
 							type={"number"}
 							$value={targetStat$.minimum}
-							onChange={(e: React.FormEvent<HTMLInputElement>) => {
-								targetStat$.minimum.set(e.currentTarget.valueAsNumber);
-							}}
 						/>
 					</div>
 					<div className="flex flex-col gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-max${id}`}>
 							Maximum:
 						</Label>
-						<ReactiveInput
+						<Input
 							className={"w-24"}
 							id={`target-stat-max${id}`}
 							min={type === "*" ? 0 : undefined}
 							step={"any"}
 							type={"number"}
 							$value={targetStat$.maximum}
-							onChange={(e: React.FormEvent<HTMLInputElement>) => {
-								targetStat$.maximum.set(e.currentTarget.valueAsNumber);
-							}}
 						/>
 					</div>
 				</div>

@@ -1,35 +1,44 @@
 // react
-import type { ComponentProps } from "react";
+import { useMemo, type ComponentProps } from "react";
 import { useValue } from "@legendapp/state/react";
 
 // state
-import type { Observable } from "@legendapp/state";
+import { observable, type Observable } from "@legendapp/state";
 
 // components
 import { Input as CustomInput } from "#/components/custom/input";
+import { booleanAsString } from "#/utils/legend-kit/as/booleanAsString";
+import { numberAsString } from "#/utils/legend-kit/as/numberAsString";
 
-type BaseProps = ComponentProps<typeof CustomInput>;
-interface ReactiveInputProps extends Omit<BaseProps, "value" | "onChange"> {
-	$value?: Observable<string | undefined>;
-	value?: string | undefined;
+type CustomInputProps = ComponentProps<typeof CustomInput>;
+interface InputProps
+	extends Omit<CustomInputProps, "checked" | "value" | "onChange"> {
+	$value: Observable<string | number | boolean | undefined>;
 	onChange?: (value: string | undefined) => void;
 }
-function Input({ $value, value, onChange, ...props }: ReactiveInputProps) {
-	const obsValue = useValue($value);
+function Input({ type, $value, onChange, ...props }: InputProps) {
+	const value$ = useMemo(() => {
+		if (type === "checkbox" || type === "radio")
+			return observable(
+				booleanAsString($value as Observable<boolean | undefined>),
+			);
+		if (type === "number")
+			return observable(
+				numberAsString($value as Observable<number | undefined>),
+			);
+		if ($value === undefined) return observable<string>("");
+		return $value as Observable<string | undefined>;
+	}, [$value, type]);
+	const value = useValue(value$);
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const newValue = event.target.value;
-		if ($value) {
-			$value.set(newValue);
-		}
+		value$.set(newValue);
 		onChange?.(newValue);
 	};
 
 	return (
-		<CustomInput
-			{...props}
-			value={$value ? (obsValue ?? "") : value}
-			onChange={handleChange}
-		/>
+		<CustomInput {...props} onChange={handleChange} type={type} value={value} />
 	);
 }
 

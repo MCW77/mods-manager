@@ -12,7 +12,7 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // components
 import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
-import { Input } from "#ui/input";
+import { Input } from "#/components/reactive/Input";
 import { Label } from "#ui/label";
 
 const OptimizationSettingsForm: React.FC = observer(() => {
@@ -28,8 +28,6 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 	const modChangeThreshold = useValue(
 		optimizationSettings$.settingsByProfile[allycode].modChangeThreshold,
 	);
-
-	const ReactiveInput = reactive(Input);
 
 	const globalCSS =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
@@ -55,7 +53,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 						].modChangeThreshold.set(threshold);
 					}}
 				/>
-				<ReactiveInput
+				<Input
 					className={"w-20"}
 					id={`threshold2-${threshold2Id}`}
 					min={0}
@@ -63,11 +61,6 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					type="number"
 					$value={
 						optimizationSettings$.settingsByProfile[allycode].modChangeThreshold
-					}
-					onChange={(event) =>
-						optimizationSettings$.settingsByProfile[
-							allycode
-						].modChangeThreshold.set(event.target.valueAsNumber)
 					}
 				/>
 			</div>
@@ -77,18 +70,13 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 			>
 				{t("optimizer.global.LockUnselected")}:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={`lock-unselected-${lockUnselectedId}`}
 				type="checkbox"
-				$checked={
+				$value={
 					optimizationSettings$.settingsByProfile[allycode]
 						.lockUnselectedCharacters
-				}
-				onChange={(event) =>
-					optimizationSettings$.settingsByProfile[
-						allycode
-					].lockUnselectedCharacters.set(event.target.checked)
 				}
 			/>
 			<Label
@@ -97,33 +85,23 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 			>
 				{t("optimizer.global.NoModSetsBreak")}:
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={`force-complete-sets-${forceCompleteSetsId}`}
 				type="checkbox"
-				$checked={
+				$value={
 					optimizationSettings$.settingsByProfile[allycode].forceCompleteSets
-				}
-				onChange={(event) =>
-					optimizationSettings$.settingsByProfile[
-						allycode
-					].forceCompleteSets.set(event.target.checked)
 				}
 			/>
 			<Label className={labelCSS} htmlFor={`simulate-6e-${simulate6EId}`}>
 				{t("optimizer.global.Simulate6E")}
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={`simulate-6e-${simulate6EId}`}
 				type="checkbox"
-				$checked={
+				$value={
 					optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice
-				}
-				onChange={(event) =>
-					optimizationSettings$.settingsByProfile[
-						allycode
-					].simulate6EModSlice.set(event.target.checked)
 				}
 			/>
 			<Label
@@ -132,17 +110,12 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 			>
 				{t("optimizer.global.SimulateLevel15")}
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={`simulate-level-15-${simulateLevel15Id}`}
 				type="checkbox"
-				$checked={
+				$value={
 					optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods
-				}
-				onChange={(event) =>
-					optimizationSettings$.settingsByProfile[
-						allycode
-					].simulateLevel15Mods.set(event.target.checked)
 				}
 			/>
 			<Label
@@ -151,18 +124,13 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 			>
 				Optimize with primary and set restrictions
 			</Label>
-			<ReactiveInput
+			<Input
 				className={inputCSS}
 				id={`optimize-with-restrictions-toggle-${optimizeWithRestrictionsId}`}
 				type="checkbox"
-				$checked={
+				$value={
 					optimizationSettings$.settingsByProfile[allycode]
 						.optimizeWithPrimaryAndSetRestrictions
-				}
-				onChange={(event) =>
-					optimizationSettings$.settingsByProfile[
-						allycode
-					].optimizeWithPrimaryAndSetRestrictions.set(event.target.checked)
 				}
 			/>
 		</div>

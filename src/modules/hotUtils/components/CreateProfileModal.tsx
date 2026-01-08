@@ -24,11 +24,9 @@ import type { Mod } from "#/domain/Mod";
 import type { ProfileCreationData } from "#/modules/hotUtils/domain/ProfileCreationData";
 
 // components
-import { Button } from "#/components/ui/button";
-import { Input } from "#/components/ui/input";
-import { Label } from "#/components/ui/label";
-
-const ReactiveInput = reactive(Input);
+import { Input } from "#/components/reactive/Input";
+import { Button } from "#ui/button";
+import { Label } from "#ui/label";
 
 const CreateProfileModal: React.FC = observer(() => {
 	const modById = useValue(() =>
@@ -99,21 +97,11 @@ const CreateProfileModal: React.FC = observer(() => {
 			</p>
 			<div>
 				<Label htmlFor={"categoryName"}>Category:</Label>
-				<ReactiveInput
-					id={"categoryName"}
-					type={"text"}
-					$value={input$.category}
-					onChange={(e) => input$.category.set(e.target.value)}
-				/>
+				<Input id={"categoryName"} type={"text"} $value={input$.category} />
 			</div>
 			<div>
 				<Label htmlFor={"loudoutName"}>Loudout Name:</Label>
-				<ReactiveInput
-					id={"loudoutName"}
-					type={"text"}
-					$value={input$.name}
-					onChange={(e) => input$.name.set(e.target.value)}
-				/>
+				<Input id={"loudoutName"} type={"text"} $value={input$.name} />
 			</div>
 			<div className={"flex gap-2 justify-center"}>
 				<Button

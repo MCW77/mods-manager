@@ -1,5 +1,5 @@
 // state
-import { reactive, useValue } from "@legendapp/state/react";
+import { useValue } from "@legendapp/state/react";
 
 // domain
 import type { StatWeightsInputProps } from "#/modules/planEditing/components/StatWeightsInputProps";
@@ -7,10 +7,8 @@ import type { StatWeightsInputProps } from "#/modules/planEditing/components/Sta
 // components
 import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
 
-import { Input } from "#ui/input";
+import { Input } from "#/components/reactive/Input";
 import { Label } from "#ui/label";
-
-const ReactiveInput = reactive(Input);
 
 const BasicInput = ({ target$, stat }: StatWeightsInputProps) => {
 	const statValue = useValue(target$.target[stat]);
@@ -27,16 +25,13 @@ const BasicInput = ({ target$, stat }: StatWeightsInputProps) => {
 					target$.target[stat].set(weight);
 				}}
 			/>
-			<ReactiveInput
+			<Input
 				id={`${stat}-stat-basic`}
 				max={100}
 				min={-100}
 				step={0.5}
 				type={"number"}
 				$value={target$.target[stat]}
-				onChange={(e) => {
-					target$.target[stat].set(e.target.valueAsNumber);
-				}}
 			/>
 		</>
 	);
