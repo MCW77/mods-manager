@@ -12,7 +12,7 @@ import { Label } from "#ui/label";
 const AdvancedInput: React.FC<StatWeightsInputProps> = observer(
 	({ target$, stat }: StatWeightsInputProps) => {
 		return (
-			<>
+			<div>
 				<Label htmlFor={`${stat}-stat-advanced`}>{`${stat}: `}:</Label>
 				<Input
 					id={`${stat}-stat-advanced`}
@@ -22,7 +22,7 @@ const AdvancedInput: React.FC<StatWeightsInputProps> = observer(
 					type={"number"}
 					$value={target$.target[stat]}
 				/>
-			</>
+			</div>
 		);
 	},
 );

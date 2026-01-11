@@ -1,15 +1,22 @@
 // state
-import { Computed, For, observer, useValue } from "@legendapp/state/react";
+import {
+	Computed,
+	For,
+	Memo,
+	observer,
+	useValue,
+} from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const charactersManagement$ = stateLoader$.charactersManagement$;
 
 // components
+import { Slider } from "#/components/custom/slider";
+import { Input } from "#/components/reactive/Input";
+import { Switch } from "#/components/reactive/Switch";
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { Slider } from "#/components/custom/slider";
-import { Switch } from "#ui/switch";
 import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
 
 const customCharacterFilterGroups = [
@@ -304,16 +311,10 @@ const customCharacterFilterGroups = [
 ];
 
 const CharacterFilters: React.FC = observer(() => {
-	const hideSelectedCharacters = useValue(
-		charactersManagement$.filterSetup.hideSelectedCharacters,
-	);
 	const starsRange = useValue(charactersManagement$.filterSetup.starsRange);
 	const levelRange = useValue(charactersManagement$.filterSetup.levelRange);
 	const gearLevelRange = useValue(
 		charactersManagement$.filterSetup.gearLevelRange,
-	);
-	const quickFilter = useValue(
-		charactersManagement$.filterSetup.quickFilter.filter,
 	);
 
 	return (
@@ -323,15 +324,14 @@ const CharacterFilters: React.FC = observer(() => {
 					<Label className="p-r-2" htmlFor={"hide-selected"}>
 						Hide selected
 					</Label>
-					<Switch
-						id={"hide-selected"}
-						checked={hideSelectedCharacters}
-						onCheckedChange={() =>
-							charactersManagement$.filterSetup.hideSelectedCharacters.set(
-								!charactersManagement$.filterSetup.hideSelectedCharacters.get(),
-							)
-						}
-					/>
+					<Memo>
+						<Switch
+							id={"hide-selected"}
+							$checked={
+								charactersManagement$.filterSetup.hideSelectedCharacters
+							}
+						/>
+					</Memo>
 				</div>
 				<div className={"flex gap-1"}>
 					<Label className="p-r-2" htmlFor={"custom-character-filter"}>
@@ -345,17 +345,19 @@ const CharacterFilters: React.FC = observer(() => {
 				</div>
 				<div className={"flex flex-col gap-1"}>
 					<div className={"flex gap-2 m-t-2"}>
-						<input
-							className="mb-2 bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
-							type="text"
-							placeholder="name, tag, or acronym"
-							value={quickFilter}
-							onChange={(e) =>
-								charactersManagement$.filterSetup.quickFilter.filter.set(
-									e.target.value.toLowerCase(),
-								)
-							}
-						/>
+						<Memo>
+							<Input
+								className="mb-2 bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
+								type="text"
+								placeholder="name, tag, or acronym"
+								$value={charactersManagement$.filterSetup.quickFilter.filter}
+								onChange={(value) =>
+									charactersManagement$.filterSetup.quickFilter.filter.set(
+										value?.toLowerCase() ?? "",
+									)
+								}
+							/>
+						</Memo>
 						<Button
 							size={"xs"}
 							variant={"outline"}
@@ -406,71 +408,79 @@ const CharacterFilters: React.FC = observer(() => {
 					<Label className="p-r-2" htmlFor={"stars-range"}>
 						Stars
 					</Label>
-					<Slider
-						className="min-w-[19%]"
-						id={"stars-range"}
-						max={7}
-						min={0}
-						step={1}
-						value={starsRange}
-						onValueChange={(newValues: [number, number]) => {
-							const [newMin, newMax] = newValues;
-							if (newMin <= newMax) {
-								charactersManagement$.filterSetup.starsRange.set(newValues);
-							} else {
-								charactersManagement$.filterSetup.starsRange.set([
-									newMax,
-									newMax,
-								]);
-							}
-						}}
-					/>
+					<Computed>
+						<Slider
+							className="min-w-[19%]"
+							id={"stars-range"}
+							max={7}
+							min={0}
+							step={1}
+							value={starsRange}
+							onValueChange={(newValues: [number, number]) => {
+								const [newMin, newMax] = newValues;
+								if (newMin <= newMax) {
+									charactersManagement$.filterSetup.starsRange.set(newValues);
+								} else {
+									charactersManagement$.filterSetup.starsRange.set([
+										newMax,
+										newMax,
+									]);
+								}
+							}}
+						/>
+					</Computed>
 				</div>
 				<div>
 					<Label className="p-r-2" htmlFor={"level-range"}>
 						Level
 					</Label>
-					<Slider
-						id={"level-range"}
-						max={85}
-						min={0}
-						step={1}
-						value={levelRange}
-						onValueChange={(newValues: [number, number]) => {
-							const [newMin, newMax] = newValues;
-							if (newMin <= newMax) {
-								charactersManagement$.filterSetup.levelRange.set(newValues);
-							} else {
-								charactersManagement$.filterSetup.levelRange.set([
-									newMax,
-									newMax,
-								]);
-							}
-						}}
-					/>
+					<Computed>
+						<Slider
+							id={"level-range"}
+							max={85}
+							min={0}
+							step={1}
+							value={levelRange}
+							onValueChange={(newValues: [number, number]) => {
+								const [newMin, newMax] = newValues;
+								if (newMin <= newMax) {
+									charactersManagement$.filterSetup.levelRange.set(newValues);
+								} else {
+									charactersManagement$.filterSetup.levelRange.set([
+										newMax,
+										newMax,
+									]);
+								}
+							}}
+						/>
+					</Computed>
 				</div>
 				<div>
 					<Label className="p-r-2" htmlFor={"gearLevel-range"}>
 						Gear
 					</Label>
-					<Slider
-						id={"gearLevel-range"}
-						max={23}
-						min={1}
-						step={1}
-						value={gearLevelRange}
-						onValueChange={(newValues: [number, number]) => {
-							const [newMin, newMax] = newValues;
-							if (newMin <= newMax) {
-								charactersManagement$.filterSetup.gearLevelRange.set(newValues);
-							} else {
-								charactersManagement$.filterSetup.gearLevelRange.set([
-									newMax,
-									newMax,
-								]);
-							}
-						}}
-					/>
+					<Computed>
+						<Slider
+							id={"gearLevel-range"}
+							max={23}
+							min={1}
+							step={1}
+							value={gearLevelRange}
+							onValueChange={(newValues: [number, number]) => {
+								const [newMin, newMax] = newValues;
+								if (newMin <= newMax) {
+									charactersManagement$.filterSetup.gearLevelRange.set(
+										newValues,
+									);
+								} else {
+									charactersManagement$.filterSetup.gearLevelRange.set([
+										newMax,
+										newMax,
+									]);
+								}
+							}}
+						/>
+					</Computed>
 				</div>
 			</div>
 		</div>

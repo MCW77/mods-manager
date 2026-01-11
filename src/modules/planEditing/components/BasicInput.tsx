@@ -14,7 +14,7 @@ const BasicInput = ({ target$, stat }: StatWeightsInputProps) => {
 	const statValue = useValue(target$.target[stat]);
 
 	return (
-		<>
+		<div>
 			<Label htmlFor={`${stat}-stat-basic`}>{`${stat}: `}:</Label>
 			<SingleValueSlider
 				max={100}
@@ -33,7 +33,7 @@ const BasicInput = ({ target$, stat }: StatWeightsInputProps) => {
 				type={"number"}
 				$value={target$.target[stat]}
 			/>
-		</>
+		</div>
 	);
 };
 

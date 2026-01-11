@@ -24,6 +24,7 @@ import {
 	ReactiveMultiColumnSelect,
 } from "#/components/ReactiveMultiColumnSelect";
 import { Input } from "#/components/reactive/Input";
+import { Switch as ShadCNSwitch } from "#/components/reactive/Switch";
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 import { Label } from "#ui/label";
@@ -35,11 +36,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { Switch as ShadSwitch } from "#ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
 const ReactiveSelect = reactive(Select);
-const ReactiveSwitch = reactive(ShadSwitch);
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
 type ComponentProps = {
@@ -63,6 +62,10 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 			return baseCharacterById$[relativeCharacterId].name.get();
 		});
 
+		const isHealthProtection$ = useObservable(
+			() => targetStat$.stat.get() === "Health+Protection",
+		);
+
 		return (
 			<Card className={"flex flex-col flex-gap-2 w-fit"}>
 				<div className="flex justify-between py-4 px-6">
@@ -70,9 +73,9 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						<Label className="p-r-2" htmlFor={`optimize-for-target${id}`}>
 							Report Only
 						</Label>
-						<ReactiveSwitch
+						<ShadCNSwitch
 							$checked={targetStat$.optimizeForTarget}
-							$disabled={() => targetStat$.stat.get() === "Health+Protection"}
+							$disabled={isHealthProtection$}
 							onCheckedChange={(checked) => {
 								targetStat$.optimizeForTarget.set(checked);
 							}}

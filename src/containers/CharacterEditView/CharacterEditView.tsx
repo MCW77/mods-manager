@@ -33,6 +33,7 @@ import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 
 import CharacterList from "#/containers/CharacterList/CharacterList";
+import { Computed } from "@legendapp/state/react";
 
 const isSelectionExpanded$ = observable(false);
 
@@ -207,100 +208,104 @@ const CharacterEditView = observer(() => {
 				isSelectionExpanded ? "sort-view" : ""
 			}`}
 		>
-			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
-				<DefaultCollapsibleCard title="Filters">
-					<Suspense fallback={<div>Loading CharacterFilters</div>}>
-						<CharacterFilters />
-					</Suspense>
-				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
-					<Suspense fallback={<div>Loading CharacterActions</div>}>
-						<CharacterActions />
-					</Suspense>
-				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
-					<Suspense fallback={<div>Loading SelectionActions</div>}>
-						<SelectionActions
-							visibleCharacters={highlightedCharacters}
-							lastSelectedCharacterIndex={lastSelectedCharacter}
-							isSelectionExpanded$={isSelectionExpanded$}
-						/>
-					</Suspense>
-				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Templates">
-					<Suspense fallback={<div>Loading TemplatesActions</div>}>
-						<TemplatesActions
-							hasNoSelectedCharacters={selectedCharacters.length === 0}
-							visibleCharacters={highlightedCharacters}
-							lastSelectedCharacterIndex={lastSelectedCharacter}
-						/>
-					</Suspense>
-				</DefaultCollapsibleCard>
-			</div>
-			<div className="flex h-[83%]">
-				<div
-					className="w-auto overflow-y-auto snap-y snap-proximity flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
-					role="application"
-					aria-label="Available characters drop zone"
-					onDragEnter={availableCharactersDragEnter}
-					onDragOver={dragOver}
-					onDragLeave={dragLeave}
-					onDrop={availableCharactersDrop}
-					ref={containerRef}
-				>
-					<Suspense fallback={null}>
-						<div
-							className={
-								"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
-							}
-						>
-							{highlightedCharacters.map((character) => (
-								<RenderIfVisible
-									className="snap-start"
-									key={character.id}
-									defaultHeight={161}
-									root={containerRef}
-									searchableText={
-										baseCharacterById[character.id]?.name || character.id
-									}
-									visibleOffset={1610}
-								>
-									<CharacterWidget
-										key={character.id}
-										character={character}
-										className={"active"}
-									/>
-								</RenderIfVisible>
-							))}
-							{filteredCharacters.map((character) => (
-								<RenderIfVisible
-									className="snap-start"
-									key={character.id}
-									defaultHeight={161}
-									root={containerRef}
-									searchableText={
-										baseCharacterById[character.id]?.name || character.id
-									}
-									visibleOffset={1610}
-								>
-									<CharacterWidget
-										key={character.id}
-										character={character}
-										className={"opacity-25"}
-									/>
-								</RenderIfVisible>
-							))}
-						</div>
-					</Suspense>
+			<Memo>
+				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
+					<DefaultCollapsibleCard title="Filters">
+						<Suspense fallback={<div>Loading CharacterFilters</div>}>
+							<CharacterFilters />
+						</Suspense>
+					</DefaultCollapsibleCard>
+					<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
+						<Suspense fallback={<div>Loading CharacterActions</div>}>
+							<CharacterActions />
+						</Suspense>
+					</DefaultCollapsibleCard>
+					<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
+						<Suspense fallback={<div>Loading SelectionActions</div>}>
+							<SelectionActions
+								visibleCharacters={highlightedCharacters}
+								lastSelectedCharacterIndex={lastSelectedCharacter}
+								isSelectionExpanded$={isSelectionExpanded$}
+							/>
+						</Suspense>
+					</DefaultCollapsibleCard>
+					<DefaultCollapsibleCard title="Templates">
+						<Suspense fallback={<div>Loading TemplatesActions</div>}>
+							<TemplatesActions
+								hasNoSelectedCharacters={selectedCharacters.length === 0}
+								visibleCharacters={highlightedCharacters}
+								lastSelectedCharacterIndex={lastSelectedCharacter}
+							/>
+						</Suspense>
+					</DefaultCollapsibleCard>
 				</div>
-				<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
-					<Suspense fallback={null}>
-						<Memo>
-							<CharacterList />
-						</Memo>
-					</Suspense>
+			</Memo>
+			<Computed>
+				<div className="flex h-[83%]">
+					<div
+						className="w-auto overflow-y-auto snap-y snap-proximity flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
+						role="application"
+						aria-label="Available characters drop zone"
+						onDragEnter={availableCharactersDragEnter}
+						onDragOver={dragOver}
+						onDragLeave={dragLeave}
+						onDrop={availableCharactersDrop}
+						ref={containerRef}
+					>
+						<Suspense fallback={null}>
+							<div
+								className={
+									"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
+								}
+							>
+								{highlightedCharacters.map((character) => (
+									<RenderIfVisible
+										className="snap-start"
+										key={character.id}
+										defaultHeight={161}
+										root={containerRef}
+										searchableText={
+											baseCharacterById[character.id]?.name || character.id
+										}
+										visibleOffset={1610}
+									>
+										<CharacterWidget
+											key={character.id}
+											character={character}
+											className={"active"}
+										/>
+									</RenderIfVisible>
+								))}
+								{filteredCharacters.map((character) => (
+									<RenderIfVisible
+										className="snap-start"
+										key={character.id}
+										defaultHeight={161}
+										root={containerRef}
+										searchableText={
+											baseCharacterById[character.id]?.name || character.id
+										}
+										visibleOffset={1610}
+									>
+										<CharacterWidget
+											key={character.id}
+											character={character}
+											className={"opacity-25"}
+										/>
+									</RenderIfVisible>
+								))}
+							</div>
+						</Suspense>
+					</div>
+					<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
+						<Suspense fallback={null}>
+							<Memo>
+								<CharacterList />
+							</Memo>
+						</Suspense>
+					</div>
 				</div>
-			</div>
+			</Computed>
 		</div>
 	);
 });

@@ -1,5 +1,5 @@
 // react
-import { reactive, useValue } from "@legendapp/state/react";
+import { reactive, useObservable, useValue } from "@legendapp/state/react";
 import { useId } from "react";
 
 // utils
@@ -42,14 +42,21 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { Switch } from "#ui/switch";
+import { Switch } from "#/components/reactive/Switch";
 
 const ReactiveSelect = reactive(Select);
-const ReactiveSwitch = reactive(Switch);
 
 const DisplayWidget = () => {
 	const sortOptionsId = useId();
 	const viewOptionsId = useId();
+	const isSortOptionsAssigned$ = useObservable(
+		() =>
+			review$.modListFilter.sort.get() ===
+			ModListFilter.sortOptions.assignedCharacter,
+	);
+	const isListView$ = useObservable(
+		() => review$.modListFilter.view.get() === ModListFilter.viewOptions.list,
+	);
 	const modById = useValue(() =>
 		profilesManagement$.activeProfile.modById.get(),
 	);
@@ -263,13 +270,10 @@ const DisplayWidget = () => {
 				id={`sort-options-${sortOptionsId}`}
 			>
 				<Label htmlFor="sort-options-value">current</Label>
-				<ReactiveSwitch
+				<Switch
 					className="mr-2 ml-2"
 					id={"sort-options-value"}
-					$checked={() =>
-						review$.modListFilter.sort.get() ===
-						ModListFilter.sortOptions.assignedCharacter
-					}
+					$checked={isSortOptionsAssigned$}
 					onCheckedChange={(checked) =>
 						review$.modListFilter.sort.set(
 							checked
@@ -292,11 +296,9 @@ const DisplayWidget = () => {
 				<Label htmlFor="view-options-value">
 					{ModListFilter.viewOptions.sets}
 				</Label>
-				<ReactiveSwitch
+				<Switch
 					id={"view-options-value"}
-					$checked={() =>
-						review$.modListFilter.view.get() === ModListFilter.viewOptions.list
-					}
+					$checked={isListView$}
 					onCheckedChange={(checked) =>
 						review$.modListFilter.view.set(
 							checked

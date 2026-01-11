@@ -2,8 +2,6 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive, useValue } from "@legendapp/state/react";
-
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
@@ -15,15 +13,10 @@ import ScoreSelector from "./ScoreSelector";
 import SortManager from "./SortManager";
 
 import { Label } from "#ui/label";
-import { Switch } from "#ui/switch";
+import { Switch } from "#/components/reactive/Switch";
 
-const ReactiveSwitch = reactive(Switch);
-
-const ViewSetupWidget: React.FC = observer(() => {
+function ViewSetupWidget() {
 	const [t] = useTranslation("explore-ui");
-	const isGroupingEnabled = useValue(
-		modsView$.activeViewSetupInActiveCategory.isGroupingEnabled,
-	);
 
 	return (
 		<div
@@ -34,11 +27,10 @@ const ViewSetupWidget: React.FC = observer(() => {
 				<ViewSetupManager />
 				<div className={"flex justify-between items-center"}>
 					<Label htmlFor={"group-mods"}>{t("filter.Group")}: </Label>
-					<ReactiveSwitch
+					<Switch
 						id={"group-mods"}
-						$checked={() => isGroupingEnabled}
-						onCheckedChange={() =>
-							modsView$.activeViewSetupInActiveCategory.isGroupingEnabled.toggle()
+						$checked={
+							modsView$.activeViewSetupInActiveCategory.isGroupingEnabled
 						}
 					/>
 				</div>
@@ -48,8 +40,6 @@ const ViewSetupWidget: React.FC = observer(() => {
 			<FilterWidget />
 		</div>
 	);
-});
-
-ViewSetupWidget.displayName = "ViewSetupWidget";
+}
 
 export default ViewSetupWidget;

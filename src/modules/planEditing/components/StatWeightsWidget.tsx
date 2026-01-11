@@ -15,9 +15,7 @@ import { StatWeightsForm } from "./StatWeightsForm";
 
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { Switch as ShadSwitch } from "#ui/switch";
-
-const ReactiveSwitch = reactive(ShadSwitch);
+import { Switch as SHadCNSwich } from "#/components/reactive/Switch";
 
 export const StatWeightsWidget: React.FC = reactiveObserver(() => {
 	return (
@@ -26,7 +24,7 @@ export const StatWeightsWidget: React.FC = reactiveObserver(() => {
 				<Label className="p-r-2" htmlFor={"basic-advanced-switch"}>
 					Basic
 				</Label>
-				<ReactiveSwitch
+				<SHadCNSwich
 					$checked={target$.isInAdvancedEditMode}
 					onCheckedChange={(checked) => {
 						beginBatch();

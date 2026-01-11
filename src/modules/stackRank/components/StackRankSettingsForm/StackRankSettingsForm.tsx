@@ -8,6 +8,7 @@ import { stackRank$ } from "../../state/stackRank";
 
 // components
 import { Input } from "#/components/reactive/Input";
+import { Switch } from "#/components/reactive/Switch";
 import { Label } from "#ui/label";
 import {
 	Select,
@@ -17,10 +18,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { Switch } from "#ui/switch";
 
 const ReactiveSelect = reactive(Select);
-const ReactiveSwitch = reactive(Switch);
 
 const StackRankSettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
@@ -57,14 +56,11 @@ const StackRankSettingsForm: React.FC = observer(() => {
 			<Label className={labelCSS} htmlFor={"ignore-arena"}>
 				{t("optimizer.stackrank.IgnoreArena")}:
 			</Label>
-			<ReactiveSwitch
+			<Switch
 				className={inputCSS}
 				id={"ignore-arena"}
 				name={"ignore-arena"}
 				$checked={stackRank$.parameters.ignoreArena}
-				onCheckedChange={(value) =>
-					stackRank$.parameters.ignoreArena.set(value)
-				}
 			/>
 			<Label className={labelCSS} htmlFor={"alignment-filter"}>
 				{t("optimizer.stackrank.Alignment")}:
