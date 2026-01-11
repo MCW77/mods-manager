@@ -14,7 +14,8 @@ export const numberAsString = (num$: ObservableParam<number | undefined>) =>
 			if (num$.peek() === undefined) {
 				return undefined;
 			}
-			return `${num$.get()}`;
+			// biome-ignore lint/style/useTemplate: <This should be as fast as possible>
+			return num$.get() + "";
 		},
 		set: ({ value }) => {
 			if (value === undefined) {
