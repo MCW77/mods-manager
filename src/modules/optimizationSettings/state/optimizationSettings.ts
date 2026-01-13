@@ -37,6 +37,11 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				profilesManagement$.profiles.activeAllycode.get()
 			].get() as ProfileOptimizationSettings;
 		},
+		activeSettings2: () => {
+			return optimizationSettings$.persistedData.settingsByProfile[
+				profilesManagement$.profiles.activeAllycode.get()
+			];
+		},
 		settingsByProfile: () => {
 			return optimizationSettings$.persistedData.settingsByProfile;
 		},

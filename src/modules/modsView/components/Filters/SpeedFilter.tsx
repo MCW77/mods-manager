@@ -2,15 +2,15 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { useValue } from "@legendapp/state/react";
+import { useObservable, useValue } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
 
 // components
+import { Slider } from "#/components/reactive/Slider";
 import { Label } from "#ui/label";
-import { Slider } from "#/components/custom/slider";
 
 const SpeedFilter = () => {
 	const [t] = useTranslation("explore-ui");
@@ -18,7 +18,14 @@ const SpeedFilter = () => {
 		const activeFilter = modsView$.activeFilter.get();
 		return activeFilter.speedRange;
 	});
-	const value = scoreMinMax || [3, 31];
+	const scoreRange$ = useObservable(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		if (!activeFilter?.speedRange) {
+			return [0, 31];
+		}
+		return activeFilter.speedRange;
+	});
+	const value = scoreMinMax || [0, 31];
 
 	return (
 		<div className={"w-50 flex flex-col gap-2 items-center"}>
@@ -31,16 +38,19 @@ const SpeedFilter = () => {
 				max={31}
 				min={0}
 				step={1}
-				value={value}
-				onValueChange={(newValues: [number, number]) => {
+				$value={scoreRange$}
+				onValueChange={(newValues: number[]) => {
 					const [newMin, newMax] = newValues;
 					if (newMin <= newMax) {
-						modsView$.activeFilter.speedRange.set(newValues);
+						modsView$.activeFilter.speedRange.set([newMin, newMax]);
 					} else {
 						modsView$.activeFilter.speedRange.set([newMax, newMax]);
 					}
 				}}
 			/>
+			<div className="text-xs text-gray-400">
+				{value[0]}-{value[1]}
+			</div>
 		</div>
 	);
 };

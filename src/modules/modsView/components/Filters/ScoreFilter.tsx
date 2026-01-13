@@ -11,8 +11,8 @@ const modsView$ = stateLoader$.modsView$;
 import { modScores } from "#/domain/Mod";
 
 // components
+import { Slider } from "#/components/reactive/Slider";
 import { Label } from "#ui/label";
-import { Slider } from "#/components/custom/slider";
 
 const ScoreFilter = () => {
 	const [t] = useTranslation("explore-ui");
@@ -23,12 +23,14 @@ const ScoreFilter = () => {
 				modsView$.activeViewSetupInActiveCategory.modScore.get(),
 		),
 	);
-	const scoreMinMax = useValue(() => {
+	const max = score?.isFlatOrPercentage === "IsPercentage" ? 100 : 800;
+	const scoreRange = useValue(() => {
 		const activeFilter = modsView$.activeFilter.get();
+		if (!activeFilter?.score) {
+			return [0, max];
+		}
 		return activeFilter.score;
 	});
-	const max = score?.isFlatOrPercentage === "IsPercentage" ? 100 : 800;
-	const value = scoreMinMax || [0, 100];
 
 	return (
 		<div className={"w-50 flex flex-col gap-2 items-center"}>
@@ -41,16 +43,19 @@ const ScoreFilter = () => {
 				max={max}
 				min={0}
 				step={1}
-				value={value}
-				onValueChange={(newValues: [number, number]) => {
+				$value={modsView$.activeFilter.score}
+				onValueChange={(newValues: number[]) => {
 					const [newMin, newMax] = newValues;
 					if (newMin <= newMax) {
-						modsView$.activeFilter.score.set(newValues);
+						modsView$.activeFilter.score.set([newMin, newMax]);
 					} else {
 						modsView$.activeFilter.score.set([newMax, newMax]);
 					}
 				}}
 			/>
+			<div className="text-xs text-gray-400">
+				{scoreRange[0]}-{scoreRange[1]}
+			</div>
 		</div>
 	);
 };

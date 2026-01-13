@@ -3,19 +3,17 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, useValue } from "@legendapp/state/react";
-
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // components
-import { SingleValueSlider } from "#/components/SingleValueSlider/SingleValueSlider";
 import { Input } from "#/components/reactive/Input";
+import { Slider } from "#/components/reactive/Slider";
 import { Label } from "#ui/label";
+import { useObservable } from "@legendapp/state/react";
 
-const OptimizationSettingsForm: React.FC = observer(() => {
+function OptimizationSettingsForm() {
 	const [t] = useTranslation("settings-ui");
 	const threshold1Id = useId();
 	const threshold2Id = useId();
@@ -24,9 +22,8 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 	const simulate6EId = useId();
 	const simulateLevel15Id = useId();
 	const optimizeWithRestrictionsId = useId();
-	const allycode = useValue(profilesManagement$.profiles.activeAllycode);
-	const modChangeThreshold = useValue(
-		optimizationSettings$.settingsByProfile[allycode].modChangeThreshold,
+	const lockUnselected$ = useObservable(
+		() => optimizationSettings$.activeSettings2.lockUnselectedCharacters,
 	);
 
 	const globalCSS =
@@ -40,18 +37,13 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				{t("optimizer.global.Threshold")}:
 			</Label>
 			<div className={`${inputCSS} flex gap-2`}>
-				<SingleValueSlider
+				<Slider
 					className={"min-w-[120px]"}
 					id={`threshold1-${threshold1Id}`}
 					min={0}
 					max={100}
 					step={1}
-					singleValue={modChangeThreshold}
-					onSingleChange={(threshold: number) => {
-						optimizationSettings$.settingsByProfile[
-							allycode
-						].modChangeThreshold.set(threshold);
-					}}
+					$value={optimizationSettings$.activeSettings2.modChangeThreshold}
 				/>
 				<Input
 					className={"w-20"}
@@ -59,9 +51,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 					min={0}
 					max={100}
 					type="number"
-					$value={
-						optimizationSettings$.settingsByProfile[allycode].modChangeThreshold
-					}
+					$value={optimizationSettings$.activeSettings2.modChangeThreshold}
 				/>
 			</div>
 			<Label
@@ -74,10 +64,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={`lock-unselected-${lockUnselectedId}`}
 				type="checkbox"
-				$value={
-					optimizationSettings$.settingsByProfile[allycode]
-						.lockUnselectedCharacters
-				}
+				$value={lockUnselected$}
 			/>
 			<Label
 				className={labelCSS}
@@ -89,9 +76,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={`force-complete-sets-${forceCompleteSetsId}`}
 				type="checkbox"
-				$value={
-					optimizationSettings$.settingsByProfile[allycode].forceCompleteSets
-				}
+				$value={optimizationSettings$.activeSettings2.forceCompleteSets}
 			/>
 			<Label className={labelCSS} htmlFor={`simulate-6e-${simulate6EId}`}>
 				{t("optimizer.global.Simulate6E")}
@@ -100,9 +85,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={`simulate-6e-${simulate6EId}`}
 				type="checkbox"
-				$value={
-					optimizationSettings$.settingsByProfile[allycode].simulate6EModSlice
-				}
+				$value={optimizationSettings$.activeSettings2.simulate6EModSlice}
 			/>
 			<Label
 				className={labelCSS}
@@ -114,9 +97,7 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={`simulate-level-15-${simulateLevel15Id}`}
 				type="checkbox"
-				$value={
-					optimizationSettings$.settingsByProfile[allycode].simulateLevel15Mods
-				}
+				$value={optimizationSettings$.activeSettings2.simulateLevel15Mods}
 			/>
 			<Label
 				className="p-r-2"
@@ -129,14 +110,12 @@ const OptimizationSettingsForm: React.FC = observer(() => {
 				id={`optimize-with-restrictions-toggle-${optimizeWithRestrictionsId}`}
 				type="checkbox"
 				$value={
-					optimizationSettings$.settingsByProfile[allycode]
+					optimizationSettings$.activeSettings2
 						.optimizeWithPrimaryAndSetRestrictions
 				}
 			/>
 		</div>
 	);
-});
-
-OptimizationSettingsForm.displayName = "OptimizationSettingsForm";
+}
 
 export default OptimizationSettingsForm;

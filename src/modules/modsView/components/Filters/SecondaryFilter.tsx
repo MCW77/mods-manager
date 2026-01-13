@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { Memo, useValue } from "@legendapp/state/react";
+import { Memo, useObservable, useValue } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
@@ -15,8 +15,8 @@ import {
 } from "../../domain/ModsViewOptions";
 
 // components
+import { Slider } from "#/components/reactive/Slider";
 import { Label } from "#ui/label";
-import { Slider } from "#/components/custom/slider";
 
 function SecondarySlider({
 	secondary,
@@ -25,6 +25,13 @@ function SecondarySlider({
 	secondary: SecondarySettingsSecondaries;
 	inputName: string;
 }) {
+	const secondaryState$ = useObservable(() => {
+		const activeFilter = modsView$.activeFilter.get();
+		if (!activeFilter.secondary[secondary]) {
+			return [0, 0];
+		}
+		return activeFilter.secondary[secondary];
+	});
 	const secondaryState = useValue(() => {
 		const activeFilter = modsView$.activeFilter.get();
 		return activeFilter.secondary[secondary];
@@ -41,11 +48,11 @@ function SecondarySlider({
 				max={5}
 				min={0}
 				step={1}
-				value={value}
-				onValueChange={(newValues: [number, number]) => {
+				$value={secondaryState$}
+				onValueChange={(newValues: number[]) => {
 					const [newMin, newMax] = newValues;
 					if (newMin <= newMax) {
-						modsView$.activeFilter.secondary[secondary].set(newValues);
+						modsView$.activeFilter.secondary[secondary].set([newMin, newMax]);
 					} else {
 						modsView$.activeFilter.secondary[secondary].set([newMax, newMax]);
 					}

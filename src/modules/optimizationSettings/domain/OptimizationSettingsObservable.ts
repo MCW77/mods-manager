@@ -20,6 +20,7 @@ interface OptimizationSettingsObservable {
 		settingsByProfile: SettingsByProfile;
 	};
 	activeSettings: () => ProfileOptimizationSettings;
+	activeSettings2: () => Observable<ProfileOptimizationSettings>;
 	settingsByProfile: () => Observable<SettingsByProfile>;
 	addProfile: (allycode: string) => void;
 	reset: () => void;

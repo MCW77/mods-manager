@@ -11,8 +11,8 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const charactersManagement$ = stateLoader$.charactersManagement$;
 
 // components
-import { Slider } from "#/components/custom/slider";
 import { Input } from "#/components/reactive/Input";
+import { Slider } from "#/components/reactive/Slider";
 import { Switch } from "#/components/reactive/Switch";
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
@@ -311,12 +311,6 @@ const customCharacterFilterGroups = [
 ];
 
 const CharacterFilters: React.FC = observer(() => {
-	const starsRange = useValue(charactersManagement$.filterSetup.starsRange);
-	const levelRange = useValue(charactersManagement$.filterSetup.levelRange);
-	const gearLevelRange = useValue(
-		charactersManagement$.filterSetup.gearLevelRange,
-	);
-
 	return (
 		<div className="p2 grid grid-cols-2 gap-2">
 			<div className="flex flex-col gap-2">
@@ -415,11 +409,14 @@ const CharacterFilters: React.FC = observer(() => {
 							max={7}
 							min={0}
 							step={1}
-							value={starsRange}
-							onValueChange={(newValues: [number, number]) => {
+							$value={charactersManagement$.filterSetup.starsRange}
+							onValueChange={(newValues: number[]) => {
 								const [newMin, newMax] = newValues;
 								if (newMin <= newMax) {
-									charactersManagement$.filterSetup.starsRange.set(newValues);
+									charactersManagement$.filterSetup.starsRange.set([
+										newMin,
+										newMax,
+									]);
 								} else {
 									charactersManagement$.filterSetup.starsRange.set([
 										newMax,
@@ -440,11 +437,14 @@ const CharacterFilters: React.FC = observer(() => {
 							max={85}
 							min={0}
 							step={1}
-							value={levelRange}
-							onValueChange={(newValues: [number, number]) => {
+							$value={charactersManagement$.filterSetup.levelRange}
+							onValueChange={(newValues: number[]) => {
 								const [newMin, newMax] = newValues;
 								if (newMin <= newMax) {
-									charactersManagement$.filterSetup.levelRange.set(newValues);
+									charactersManagement$.filterSetup.levelRange.set([
+										newMin,
+										newMax,
+									]);
 								} else {
 									charactersManagement$.filterSetup.levelRange.set([
 										newMax,
@@ -465,13 +465,14 @@ const CharacterFilters: React.FC = observer(() => {
 							max={23}
 							min={1}
 							step={1}
-							value={gearLevelRange}
-							onValueChange={(newValues: [number, number]) => {
+							$value={charactersManagement$.filterSetup.gearLevelRange}
+							onValueChange={(newValues: number[]) => {
 								const [newMin, newMax] = newValues;
 								if (newMin <= newMax) {
-									charactersManagement$.filterSetup.gearLevelRange.set(
-										newValues,
-									);
+									charactersManagement$.filterSetup.gearLevelRange.set([
+										newMin,
+										newMax,
+									]);
 								} else {
 									charactersManagement$.filterSetup.gearLevelRange.set([
 										newMax,
