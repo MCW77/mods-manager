@@ -17,6 +17,14 @@
 		"typescript.suggest.completeJSDocs": false,
 		"gitlens.codeLens.scopes": ["document", "containers", "blocks"],
 		"LineCount.statistics": false,
-		"LineCount.includes": ["src/**/*"]
+		"LineCount.includes": ["src/**/*"],
+		"chat.tools.terminal.autoApprove": {
+			"q": true,
+			"tsgo": true,
+			"/^pnpm exec biome lint \\./src \\./public$/": {
+				"approve": true,
+				"matchCommandLine": true
+			}
+		}
 	}
 }
