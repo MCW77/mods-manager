@@ -13,6 +13,7 @@ import type { TemplatesObservable } from "#/modules/templates/domain/TemplatesOb
 import type { DatacronsObservable } from "#/modules/datacrons/domain/DatacronsObservable";
 import type { MaterialsObservable } from "#/modules/materials/domain/MaterialsObservable";
 import type { CurrenciesObservable } from "#/modules/currencies/domain/CurrenciesObservable";
+import type { StackRankObservable } from "#/modules/stackRank/domain/StackRankObservable";
 
 export interface StateLoaderObservable {
 	isDone: boolean;
@@ -30,6 +31,7 @@ export interface StateLoaderObservable {
 	datacrons$: ObservableObject<DatacronsObservable> | null;
 	materials$: ObservableObject<MaterialsObservable> | null;
 	currencies$: ObservableObject<CurrenciesObservable> | null;
+	stackRank$: ObservableObject<StackRankObservable> | null;
 }
 const stateLoader$ = observable<StateLoaderObservable>({
 	isDone: false,
@@ -47,6 +49,7 @@ const stateLoader$ = observable<StateLoaderObservable>({
 	datacrons$: null,
 	materials$: null,
 	currencies$: null,
+	stackRank$: null,
 });
 
 async function loadStateModules() {
@@ -66,6 +69,7 @@ async function loadStateModules() {
 			datacronsModule,
 			materialsModule,
 			currenciesModule,
+			stackRankModule,
 		] = await Promise.all([
 			import("#/modules/profilesManagement/state/profilesManagement"),
 			import("#/modules/compilations/state/compilations"),
@@ -81,6 +85,7 @@ async function loadStateModules() {
 			import("#/modules/datacrons/state/datacrons"),
 			import("#/modules/materials/state/materials"),
 			import("#/modules/currencies/state/currencies"),
+			import("#/modules/stackRank/state/stackRank"),
 		]);
 
 		stateLoader$.profilesManagement$.set(
@@ -105,6 +110,7 @@ async function loadStateModules() {
 		stateLoader$.datacrons$.set(datacronsModule.datacrons$);
 		stateLoader$.materials$.set(materialsModule.materials$);
 		stateLoader$.currencies$.set(currenciesModule.currencies$);
+		stateLoader$.stackRank$.set(stackRankModule.stackRank$);
 		await Promise.all([
 			when(profilesManagementModule.syncStatus$.isPersistLoaded),
 			when(compilationsModule.syncStatus$.isPersistLoaded),
@@ -122,6 +128,7 @@ async function loadStateModules() {
 			when(datacronsModule.syncStatus$.isPersistLoaded),
 			when(materialsModule.syncStatus$.isPersistLoaded),
 			when(currenciesModule.syncStatus$.isPersistLoaded),
+			when(stackRankModule.syncStatus$.isPersistLoaded),
 		]);
 
 		stateLoader$.isDone.set(true);

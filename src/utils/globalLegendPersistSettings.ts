@@ -41,6 +41,7 @@ const storeNames = [
 	"Datacrons",
 	"Materials",
 	"Currencies",
+	"StackRank",
 ];
 
 function itemUpgrade(
@@ -955,7 +956,16 @@ async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
 	}
 }
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24] as const;
+async function upgradeTo25(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		createStores(db, ["StackRank"]);
+	} catch (error) {
+		console.error("Error in upgradeTo25:", error);
+		transaction.abort();
+	}
+}
+
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -980,6 +990,7 @@ const persistOptions = configureSynced({
 					if (event.oldVersion < 22) await upgradeTo22(db, transaction);
 					if (event.oldVersion < 23) await upgradeTo23(db, transaction);
 					if (event.oldVersion < 24) await upgradeTo24(db, transaction);
+					if (event.oldVersion < 25) await upgradeTo25(db, transaction);
 				}
 			},
 		}),
@@ -997,6 +1008,7 @@ const testOnlyUpgradeTo20 = testing ? upgradeTo20 : undefined;
 const testOnlyUpgradeTo21 = testing ? upgradeTo21 : undefined;
 const testOnlyUpgradeTo22 = testing ? upgradeTo22 : undefined;
 const testOnlyUpgradeTo23 = testing ? upgradeTo23 : undefined;
+const testOnlyUpgradeTo24 = testing ? upgradeTo24 : undefined;
 
 export {
 	type DBVersions,
@@ -1016,4 +1028,5 @@ export {
 	testOnlyUpgradeTo21,
 	testOnlyUpgradeTo22,
 	testOnlyUpgradeTo23,
+	testOnlyUpgradeTo24,
 };

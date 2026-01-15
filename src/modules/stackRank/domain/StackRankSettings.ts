@@ -1,9 +1,19 @@
 import type { StackRankParameters } from "./StackRankParameters";
 
 interface StackRankSettings {
-	overwrite: "false" | "true";
-	useCase: "" | "1" | "2" | "3";
+	useCase: "0" | "1" | "2" | "3";
 	parameters: StackRankParameters;
 }
 
-export type { StackRankSettings };
+interface StackRankSettingsForProfile {
+	id: string;
+	stackRankSettings: StackRankSettings;
+}
+
+type StackRankPersistedData = Record<string, StackRankSettingsForProfile>;
+
+export type {
+	StackRankSettings,
+	StackRankSettingsForProfile,
+	StackRankPersistedData,
+};

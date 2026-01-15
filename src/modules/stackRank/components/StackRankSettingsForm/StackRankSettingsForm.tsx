@@ -2,7 +2,8 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import type { Observable } from "@legendapp/state";
+import { observer, reactive, useValue } from "@legendapp/state/react";
 
 import { stackRank$ } from "../../state/stackRank";
 
@@ -23,6 +24,8 @@ const ReactiveSelect = reactive(Select);
 
 const StackRankSettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
+	const settings = useValue(stackRank$.settingsForActiveAllycode);
+	if (settings === undefined) return null;
 
 	const global =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
@@ -36,9 +39,11 @@ const StackRankSettingsForm: React.FC = observer(() => {
 			</Label>
 			<ReactiveSelect
 				name={"use-case"}
-				$value={stackRank$.useCase}
+				$value={stackRank$.settingsForActiveAllycode.useCase}
 				onValueChange={(value) => {
-					stackRank$.useCase.set(value);
+					stackRank$.settingsForActiveAllycode.useCase.set(
+						value as "0" | "1" | "2" | "3",
+					);
 				}}
 			>
 				<SelectTrigger className={inputCSS} id={"use-case"}>
@@ -60,16 +65,19 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"ignore-arena"}
 				name={"ignore-arena"}
-				$checked={stackRank$.parameters.ignoreArena}
+				$checked={
+					stackRank$.settingsForActiveAllycode.parameters
+						.ignoreArena as Observable<boolean>
+				}
 			/>
 			<Label className={labelCSS} htmlFor={"alignment-filter"}>
 				{t("optimizer.stackrank.Alignment")}:
 			</Label>
 			<ReactiveSelect
 				name={"alignment-filter"}
-				$value={stackRank$.parameters.alignmentFilter}
+				$value={stackRank$.settingsForActiveAllycode.parameters.alignmentFilter}
 				onValueChange={(value) => {
-					stackRank$.parameters.alignmentFilter.set(
+					stackRank$.settingsForActiveAllycode.parameters.alignmentFilter.set(
 						value as "0" | "1" | "2" | "3",
 					);
 				}}
@@ -101,7 +109,9 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"minimum-gear-level"}
 				type={"number"}
-				$value={stackRank$.parameters.minimumGearLevel}
+				$value={
+					stackRank$.settingsForActiveAllycode.parameters.minimumGearLevel
+				}
 			/>
 			<Label className={labelCSS} htmlFor={"top"}>
 				{t("optimizer.stackrank.Top")}:
@@ -110,7 +120,7 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"top"}
 				type={"number"}
-				$value={stackRank$.parameters.top}
+				$value={stackRank$.settingsForActiveAllycode.parameters.top}
 			/>
 			<Label className={labelCSS}>
 				{t("optimizer.stackrank.OmicronBoosts")}:
@@ -122,7 +132,7 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"omicron-boost-gac"}
 				type={"checkbox"}
-				$value={stackRank$.parameters.omicronGac}
+				$value={stackRank$.settingsForActiveAllycode.parameters.omicronGac}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-tw"}>
 				TW:
@@ -131,7 +141,7 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"omicron-boost-tw"}
 				type={"checkbox"}
-				$value={stackRank$.parameters.omicronTw}
+				$value={stackRank$.settingsForActiveAllycode.parameters.omicronTw}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-tb"}>
 				TB:
@@ -140,7 +150,7 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"omicron-boost-tb"}
 				type={"checkbox"}
-				$value={stackRank$.parameters.omicronTb}
+				$value={stackRank$.settingsForActiveAllycode.parameters.omicronTb}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-raids"}>
 				Raids:
@@ -149,7 +159,7 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"omicron-boost-raids"}
 				type={"checkbox"}
-				$value={stackRank$.parameters.omicronRaids}
+				$value={stackRank$.settingsForActiveAllycode.parameters.omicronRaids}
 			/>
 			<Label className={labelCSS} htmlFor={"omicron-boost-conquest"}>
 				Conquest:
@@ -158,7 +168,7 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				className={inputCSS}
 				id={"omicron-boost-conquest"}
 				type={"checkbox"}
-				$value={stackRank$.parameters.omicronConquest}
+				$value={stackRank$.settingsForActiveAllycode.parameters.omicronConquest}
 			/>
 		</form>
 	);

@@ -2,6 +2,7 @@ export * from "./CharacterNamesSchemas";
 export * from "./CurrenciesSchemas";
 export * from "./DatacronsSchemas";
 export * from "./MaterialsSchemas";
+export * from "./StackRankSchemas";
 export * from "./TargetStatsSchemas";
 export * from "./OptimizationPlanSchemas";
 export * from "./CharacterSchemas";

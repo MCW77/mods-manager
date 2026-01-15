@@ -13,6 +13,7 @@ import type { CharacterTemplatesByName } from "#/modules/templates/domain/Charac
 import type { CurrenciesPersistedData } from "#/modules/currencies/domain/Currencies";
 import type { DatacronsPersistedData } from "#/modules/datacrons/domain/Datacrons";
 import type { MaterialsPersistedData } from "#/modules/materials/domain/Materials";
+import type { StackRankPersistedData } from "#/modules/stackRank/domain/StackRankSettings";
 
 import {
 	latestDBVersion,
@@ -40,6 +41,8 @@ import {
 	ModsManagerBackupSchemaV23,
 	type ModsManagerBackupDataSchemaV23Output,
 	ModsManagerBackupSchemaV24,
+	type ModsManagerBackupDataSchemaV24Output,
+	ModsManagerBackupSchemaV25,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
 import { fromGIMOBackup } from "../mappers/GIMOBackupMapper";
@@ -57,6 +60,7 @@ interface BackupData {
 	profilesManagement: PersistedProfiles;
 	sessionIds: Map<string, { gimoSessionId: string; huSessionId: string }>;
 	settings: SettingsByProfile;
+	stackRank: StackRankPersistedData;
 }
 
 interface NormalizedBackup {
@@ -425,6 +429,38 @@ const migrations = new Map<
 			};
 		},
 	],
+	[
+		24,
+		(normalizedBackup) => {
+			// Migrate v24 to v25: Add stackRank
+			const data =
+				normalizedBackup.data as ModsManagerBackupDataSchemaV24Output;
+
+			const newData = {
+				characterTemplates: data.characterTemplates,
+				compilations: data.compilations,
+				currencies: data.currencies,
+				datacrons: data.datacrons,
+				defaultCompilation: data.defaultCompilation,
+				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+				lockedStatus: data.lockedStatus,
+				materials: data.materials,
+				modsViewSetups: data.modsViewSetups,
+				profilesManagement: data.profilesManagement,
+				sessionIds: data.sessionIds,
+				settings: data.settings,
+				stackRank: {},
+			};
+
+			return {
+				appVersion: normalizedBackup.appVersion,
+				backupType: "fullBackup",
+				client: "mods-manager",
+				data: newData,
+				version: 25,
+			};
+		},
+	],
 ]);
 
 function runMigrations(data: NormalizedBackup) {
@@ -531,6 +567,14 @@ const convertBackup = (parsedJSON: unknown) => {
 	if (backup === null) {
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV24,
+			parsedJSON,
+		);
+		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
+	}
+
+	if (backup === null) {
+		const modsManagerParseResult = v.safeParse(
+			ModsManagerBackupSchemaV25,
 			parsedJSON,
 		);
 		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
