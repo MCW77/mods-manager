@@ -27,6 +27,7 @@ const materials$ = stateLoader$.materials$;
 const modsView$ = stateLoader$.modsView$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const templates$ = stateLoader$.templates$;
+const stackRank$ = stateLoader$.stackRank$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
@@ -303,6 +304,26 @@ function mergeMaterials(
 	}
 }
 
+function mergeStackRank(
+	backupStackRank: LatestModsManagerBackupDataSchemaOutput["stackRank"],
+): void {
+	if (!backupStackRank) return;
+	for (const [allycode, backupStackRankSettingsForProfile] of objectEntries(
+		backupStackRank,
+	)) {
+		const currentStackRankSettingsForProfile =
+			stackRank$.settingsByAllycode.peek()[allycode];
+		if (
+			currentStackRankSettingsForProfile === undefined ||
+			currentStackRankSettingsForProfile === null
+		) {
+			stackRank$.settingsByAllycode[allycode].set(
+				backupStackRankSettingsForProfile,
+			);
+		}
+	}
+}
+
 /**
  * Smart merging logic for modsViewSetups that handles ID conflicts with suffix versioning
  * - Check if ViewSetup ID already exists within each of the 7 categories
@@ -449,6 +470,7 @@ const loadModsManagerBackup = (
 	mergeModsViewSetups(backup.modsViewSetups);
 	mergeSessionIds(backup.sessionIds);
 	mergeSettings(backup.settings);
+	mergeStackRank(backup.stackRank);
 	endBatch();
 };
 
@@ -524,6 +546,7 @@ const appState$: ObservableObject<AppState> = observable({
 			profilesManagement: profilesManagement$.toPersistable(),
 			sessionIds: hotutils$.sessionIDsByProfile.peek(),
 			settings: optimizationSettings$.settingsByProfile.peek(),
+			stackRank: stackRank$.persistedData.peek(),
 		};
 		const compilations: Record<string, Record<string, Compilation>> = {};
 		for (const [allycode, compilationsMap] of backupData.compilations) {

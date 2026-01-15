@@ -1,5 +1,5 @@
 // react
-import { Switch, reactive, reactiveObserver } from "@legendapp/state/react";
+import { Switch, reactiveObserver } from "@legendapp/state/react";
 
 // state
 import { beginBatch, endBatch } from "@legendapp/state";

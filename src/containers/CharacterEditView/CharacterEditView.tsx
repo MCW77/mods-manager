@@ -208,8 +208,8 @@ const CharacterEditView = observer(() => {
 				isSelectionExpanded ? "sort-view" : ""
 			}`}
 		>
-			<Memo>
-				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
+			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
+				<Memo>
 					<DefaultCollapsibleCard title="Filters">
 						<Suspense fallback={<div>Loading CharacterFilters</div>}>
 							<CharacterFilters />
@@ -220,26 +220,26 @@ const CharacterEditView = observer(() => {
 							<CharacterActions />
 						</Suspense>
 					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
-						<Suspense fallback={<div>Loading SelectionActions</div>}>
-							<SelectionActions
-								visibleCharacters={highlightedCharacters}
-								lastSelectedCharacterIndex={lastSelectedCharacter}
-								isSelectionExpanded$={isSelectionExpanded$}
-							/>
-						</Suspense>
-					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard title="Templates">
-						<Suspense fallback={<div>Loading TemplatesActions</div>}>
-							<TemplatesActions
-								hasNoSelectedCharacters={selectedCharacters.length === 0}
-								visibleCharacters={highlightedCharacters}
-								lastSelectedCharacterIndex={lastSelectedCharacter}
-							/>
-						</Suspense>
-					</DefaultCollapsibleCard>
-				</div>
-			</Memo>
+				</Memo>
+				<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
+					<Suspense fallback={<div>Loading SelectionActions</div>}>
+						<SelectionActions
+							visibleCharacters={highlightedCharacters}
+							lastSelectedCharacterIndex={lastSelectedCharacter}
+							isSelectionExpanded$={isSelectionExpanded$}
+						/>
+					</Suspense>
+				</DefaultCollapsibleCard>
+				<DefaultCollapsibleCard title="Templates">
+					<Suspense fallback={<div>Loading TemplatesActions</div>}>
+						<TemplatesActions
+							hasNoSelectedCharacters={selectedCharacters.length === 0}
+							visibleCharacters={highlightedCharacters}
+							lastSelectedCharacterIndex={lastSelectedCharacter}
+						/>
+					</Suspense>
+				</DefaultCollapsibleCard>
+			</div>
 			<Computed>
 				<div className="flex h-[83%]">
 					<div

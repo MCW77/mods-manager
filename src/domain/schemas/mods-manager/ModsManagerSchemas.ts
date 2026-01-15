@@ -20,6 +20,7 @@ import {
 	SettingsByProfileSchema,
 	HotutilsSchemaV18,
 	HotutilsSchemaV21,
+	StackRankSchemaV25,
 } from "./index";
 
 const ModsManagerBackupSchemaV16 = v.pipe(
@@ -233,13 +234,40 @@ const ModsManagerBackupSchemaV24 = v.object({
 	data: ModsManagerBackupDataSchemaV24,
 	version: v.literal(24),
 });
+type ModsManagerBackupDataSchemaV24Output = v.InferOutput<
+	typeof ModsManagerBackupDataSchemaV24
+>;
 
-const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV24;
+const ModsManagerBackupDataSchemaV25 = v.object({
+	characterTemplates: CharacterTemplateByNameSchema,
+	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+	currencies: CurrenciesSchemaV24,
+	datacrons: DatacronsSchemaV24,
+	defaultCompilation: CompilationSchemaV22,
+	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+	materials: MaterialsSchemaV24,
+	modsViewSetups: ModsViewSetupsSchemaV19,
+	profilesManagement: PersistedProfilesSchemaV23,
+	sessionIds: HotutilsSchemaV21,
+	settings: SettingsByProfileSchema,
+	stackRank: StackRankSchemaV25,
+});
+
+const ModsManagerBackupSchemaV25 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: ModsManagerBackupDataSchemaV25,
+	version: v.literal(25),
+});
+
+const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV25;
 type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupDataSchema
 >;
 
-const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV24;
+const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV25;
 type LatestModsManagerBackupSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupSchema
 >;
@@ -260,6 +288,7 @@ export {
 	ModsManagerBackupSchemaV22,
 	ModsManagerBackupSchemaV23,
 	ModsManagerBackupSchemaV24,
+	ModsManagerBackupSchemaV25,
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupSchemaV18Output,
 	type ModsManagerBackupDataSchemaV19Output,
@@ -269,5 +298,6 @@ export {
 	type ModsManagerBackupDataSchemaV21Output,
 	type ModsManagerBackupDataSchemaV22Output,
 	type ModsManagerBackupDataSchemaV23Output,
+	type ModsManagerBackupDataSchemaV24Output,
 	ModsManagerSchema,
 };
