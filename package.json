@@ -76,7 +76,7 @@
 		"@unocss/preset-wind4": "^66.5.12",
 		"@vitejs/plugin-react": "^5.1.2",
 		"@vitest/coverage-v8": "^4.0.16",
-		"@vitest/ui": "^4.0.16",
+		"@vitest/ui": "^4.0.17",
 		"fake-indexeddb": "^6.2.5",
 		"rollup-plugin-visualizer": "^6.0.5",
 		"typescript": "5.9.3",
