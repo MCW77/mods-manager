@@ -90,7 +90,8 @@
 	"packageManager": "pnpm@10.28.0",
 	"pnpm": {
 		"overrides": {
-			"braces@<3.0.3": ">=3.0.3"
+			"braces@<3.0.3": ">=3.0.3",
+			"preact@>=10.28.0 <10.28.2": ">=10.28.2"
 		},
 		"onlyBuiltDependencies": [
 			"@biomejs/biome",
