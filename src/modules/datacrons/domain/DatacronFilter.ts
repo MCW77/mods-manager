@@ -15,6 +15,7 @@ interface DatacronFilter {
 	character: string | undefined;
 	characterAbility: string | undefined;
 	focused: boolean | undefined;
+	isNamed: boolean | undefined;
 	name: string | undefined;
 }
 
@@ -103,6 +104,12 @@ function filterDatacrons(
 	}
 	if (filter.focused !== undefined) {
 		filters.push((datacron: Datacron) => datacron.focused === filter.focused);
+	}
+	if (filter.isNamed !== undefined) {
+		filters.push((datacron: Datacron) => {
+			const length = datacron.name.trim().length;
+			return filter.isNamed ? length > 0 : length === 0;
+		});
 	}
 	if (filter.name !== undefined) {
 		filters.push((datacron: Datacron) =>

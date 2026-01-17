@@ -107,13 +107,26 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 		numberAsString(datacrons$.filter.datacronSet),
 	);
 	const focused$ = useObservable(booleanAsString(datacrons$.filter.focused));
+	const isNamed$ = useObservable(booleanAsString(datacrons$.filter.isNamed));
 
 	if (!showFilters) return null;
 
 	return (
 		<Card className="max-w-[50%]">
 			<CardHeader>
-				<CardTitle>Filters</CardTitle>
+				<div className="flex justify-between items-center gap-4">
+					<CardTitle>Filters</CardTitle>
+					<div>
+						<Button
+							className="mt-2"
+							onClick={() => {
+								datacrons$.resetFilters();
+							}}
+						>
+							Reset Filters
+						</Button>
+					</div>
+				</div>
 			</CardHeader>
 			<CardContent className="">
 				<div className="flex flex-wrap gap-4">
@@ -208,21 +221,23 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 							</ClearableSelect>
 						</div>
 					</div>
-					<div className="flex flex-col">
-						<div className="flex flex-col">
+					<div className="grid">
+						<div>
+							<Label>Named Status</Label>
+							<ClearableSelect
+								$value={isNamed$}
+								placeholder="Select Named Status"
+							>
+								<SelectItem value="true">Named Datacron</SelectItem>
+								<SelectItem value="false">Unnamed Datacron</SelectItem>
+							</ClearableSelect>
+						</div>
+						<div>
 							<Label>Name</Label>
 							<Input
 								$value={datacrons$.filter.name}
 								placeholder="Datacron Name"
 							/>
-							<Button
-								className="mt-2"
-								onClick={() => {
-									datacrons$.resetFilters();
-								}}
-							>
-								Reset Filters
-							</Button>
 						</div>
 					</div>
 				</div>

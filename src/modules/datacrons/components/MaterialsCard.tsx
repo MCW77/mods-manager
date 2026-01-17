@@ -1,21 +1,27 @@
+// utils
+import { formatTimespan } from "../utils/formatTimespan";
+
+// react
+import { For, useValue } from "@legendapp/state/react";
+
+// state
+import { currencies$ } from "#/modules/currencies/state/currencies";
+import { datacrons$ } from "../state/datacrons";
+import { materials$ } from "#/modules/materials/state/materials";
+import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+
+// domain
+import DatacronSets from "../DatacronSets.json";
+
+// components
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "#/components/ui/card";
-import { For, useValue } from "@legendapp/state/react";
-import { datacrons$ } from "../state/datacrons";
-import { currencies$ } from "#/modules/currencies/state/currencies";
-import DatacronSets from "../DatacronSets.json";
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { formatTimespan } from "../utils/formatTimespan";
-import { Label } from "#/components/ui/label";
-import { materials$ } from "#/modules/materials/state/materials";
-interface DatacronSetMaterialsProps {
-	id: number;
-}
+} from "#ui/card";
+import { Label } from "#ui/label";
 
 function RemainingTime({ id }: { id: number }) {
 	const remainingTime$ = () =>
@@ -26,6 +32,11 @@ function RemainingTime({ id }: { id: number }) {
 	const remainingTime = useValue(remainingTime$);
 	return <span>expires in {remainingTime}</span>;
 }
+
+interface DatacronSetMaterialsProps {
+	id: number;
+}
+
 function DatacronSetMaterials({ id }: DatacronSetMaterialsProps) {
 	const name = datacrons$.availableDatacronSets.get().get(id)?.name || "";
 	const reroll1Key = `datacron_set_${id}_reroll_1`;

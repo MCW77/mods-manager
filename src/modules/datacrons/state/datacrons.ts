@@ -201,6 +201,7 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			character: undefined,
 			characterAbility: undefined,
 			focused: undefined,
+			isNamed: undefined,
 			name: undefined,
 		},
 		abilitiesDisplayMode: "Show Full Abilities",
@@ -212,7 +213,8 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			datacrons$.filter.factionAbility.set(undefined);
 			datacrons$.filter.character.set(undefined);
 			datacrons$.filter.characterAbility.set(undefined);
-			datacrons$.filter.focused.set(undefined as unknown as boolean);
+			datacrons$.filter.focused.set(undefined);
+			datacrons$.filter.isNamed.set(undefined);
 			datacrons$.filter.name.set(undefined);
 		},
 		reset: () => {
