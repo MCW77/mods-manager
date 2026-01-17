@@ -1,5 +1,5 @@
 // react
-import { For, useValue } from "@legendapp/state/react";
+import { For, Show, useValue } from "@legendapp/state/react";
 import type { Observable } from "@legendapp/state";
 
 // domain
@@ -28,9 +28,15 @@ function DatacronItem({ item$ }: DatacronItemProps) {
 	const setName =
 		useValue(datacrons$.availableDatacronSets.get().get(datacron?.setId ?? -1))
 			?.name || "";
-	const className = useValue(() =>
-		datacrons$.showShortDescription.get() ? "min-w-[49%] flex-1" : "w-full",
-	);
+	const className = useValue(() => {
+		let className = "";
+		const abilitiesDisplayMode = datacrons$.abilitiesDisplayMode.get();
+		if (abilitiesDisplayMode === "Hide Abilities") className = "flex-1";
+		if (abilitiesDisplayMode === "Show Full Abilities") className = "w-full";
+		if (abilitiesDisplayMode === "Show Short Abilities")
+			className = "min-w-[49%] flex-1";
+		return className;
+	});
 
 	if (!datacron) return null;
 
@@ -55,9 +61,11 @@ function DatacronItem({ item$ }: DatacronItemProps) {
 						</div>
 					</div>
 					<DatacronStats affixes$={datacron$.affix as Observable<Affix[]>} />
-					<DatacronAbilities
-						affixes$={datacron$.affix as Observable<Affix[]>}
-					/>
+					<Show if={datacrons$.abilitiesDisplayMode.get() !== "Hide Abilities"}>
+						<DatacronAbilities
+							affixes$={datacron$.affix as Observable<Affix[]>}
+						/>
+					</Show>
 				</div>
 			</CardContent>
 		</Card>

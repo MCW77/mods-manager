@@ -10,6 +10,11 @@ import type {
 	Affix,
 } from "./Datacrons";
 
+type AbilitiesDisplayMode =
+	| "Show Full Abilities"
+	| "Show Short Abilities"
+	| "Hide Abilities";
+
 interface DatacronsObservable {
 	persistedData: DatacronsPersistedData;
 	datacronByIdByAllycode: () => Observable<
@@ -24,7 +29,7 @@ interface DatacronsObservable {
 	availableFactionAbilities: () => Affix[];
 	availableFactions: () => Affix[];
 	filter: DatacronFilter;
-	showShortDescription: boolean;
+	abilitiesDisplayMode: AbilitiesDisplayMode;
 	addProfile: (allycode: string) => void;
 	deleteProfile: (allycode: string) => void;
 	resetFilters: () => void;
@@ -36,4 +41,8 @@ const getInitialDatacrons = (): DatacronsPersistedData => {
 	return datacrons;
 };
 
-export { type DatacronsObservable, getInitialDatacrons };
+export {
+	type AbilitiesDisplayMode,
+	type DatacronsObservable,
+	getInitialDatacrons,
+};

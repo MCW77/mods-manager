@@ -5,9 +5,19 @@ import { useValue } from "@legendapp/state/react";
 // state
 import { datacrons$ } from "../state/datacrons";
 
+// domain
+import type { AbilitiesDisplayMode } from "../domain/DatacronsObservable";
+
 // components
 import { Filter, Info } from "lucide-react";
 import { Button } from "#ui/button";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#ui/select";
 import DatacronsList from "../components/DatacronsList";
 import FilterCard from "../components/FilterCard";
 import MaterialsCard from "../components/MaterialsCard";
@@ -15,11 +25,7 @@ import MaterialsCard from "../components/MaterialsCard";
 export default function DatacronsView() {
 	const [showFilters, setShowFilters] = useState(false);
 	const [showInfo, setShowInfo] = useState(false);
-	const showDescriptionText = useValue(() =>
-		datacrons$.showShortDescription.get()
-			? "Show Long Descriptions"
-			: "Show Short Descriptions",
-	);
+	const abilitiesDisplayMode = useValue(datacrons$.abilitiesDisplayMode);
 
 	return (
 		<div className="relative flex h-full w-full flex-col overflow-hidden">
@@ -31,12 +37,26 @@ export default function DatacronsView() {
 					<Filter className="mr-2 h-4 w-4" />
 					{showFilters ? "Hide" : "Show"} Filters
 				</Button>
-				<Button
-					variant={"outline"}
-					onClick={() => datacrons$.showShortDescription.toggle()}
+				<Select
+					value={abilitiesDisplayMode}
+					onValueChange={(value) =>
+						datacrons$.abilitiesDisplayMode.set(value as AbilitiesDisplayMode)
+					}
 				>
-					{showDescriptionText}
-				</Button>
+					<SelectTrigger className="w-[200px]">
+						<SelectValue placeholder="Abilities Display Mode" />
+					</SelectTrigger>
+					<SelectContent>
+						<SelectItem value="Show Full Abilities">
+							Show Full Abilities
+						</SelectItem>
+						<SelectItem value="Show Short Abilities">
+							Show Short Abilities
+						</SelectItem>
+						<SelectItem value="Hide Abilities">Hide Abilities</SelectItem>
+					</SelectContent>
+				</Select>
+
 				<Button variant={"outline"} onClick={() => setShowInfo(!showInfo)}>
 					<Info className="mr-2 h-4 w-4" />
 					{showInfo ? "Hide" : "Show"} Materials Info

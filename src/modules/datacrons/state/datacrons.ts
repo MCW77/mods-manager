@@ -203,7 +203,7 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			focused: undefined,
 			name: undefined,
 		},
-		showShortDescription: true,
+		abilitiesDisplayMode: "Show Full Abilities",
 		resetFilters: () => {
 			datacrons$.filter.datacronSet.set(undefined);
 			datacrons$.filter.alignment.set(undefined);

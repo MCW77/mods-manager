@@ -13,7 +13,8 @@ interface AbilityItemProps {
 }
 function AbilityItem({ id, item$ }: AbilityItemProps) {
 	const item = useValue(item$);
-	const showShortDescription = useValue(datacrons$.showShortDescription);
+	const abilitiesDisplayMode = useValue(datacrons$.abilitiesDisplayMode);
+	if (abilitiesDisplayMode === "Hide Abilities") return null;
 
 	const url = item.affix.scopeIcon.includes("charui")
 		? `https://swgoh-images.s3.us-east-2.amazonaws.com/toon-portraits/${item.affix.scopeIcon}.png`
@@ -23,7 +24,9 @@ function AbilityItem({ id, item$ }: AbilityItemProps) {
 	let text = "Unknown Affix";
 	if (affixData) {
 		text = (
-			showShortDescription ? affixData.shortText : affixData.fullText
+			abilitiesDisplayMode === "Show Short Abilities"
+				? affixData.shortText
+				: affixData.fullText
 		).replace(/\\n/g, "\n");
 	}
 
