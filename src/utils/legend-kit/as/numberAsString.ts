@@ -8,18 +8,27 @@
 
 import { linked, type ObservableParam } from "@legendapp/state";
 
-export const numberAsString = (num$: ObservableParam<number | undefined>) =>
+export const numberAsString = (
+	num$: ObservableParam<number | undefined | null>,
+) =>
 	linked({
 		get: () => {
 			if (num$.peek() === undefined) {
-				return undefined;
+				return "undefined";
+			}
+			if (num$.peek() === null) {
+				return "null";
 			}
 			// biome-ignore lint/style/useTemplate: <This should be as fast as possible>
 			return num$.get() + "";
 		},
 		set: ({ value }) => {
-			if (value === undefined) {
+			if (value === "undefined") {
 				num$?.set(undefined);
+				return;
+			}
+			if (value === "null") {
+				num$?.set(null);
 				return;
 			}
 			num$?.set(+value);

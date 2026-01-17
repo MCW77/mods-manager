@@ -16,7 +16,7 @@ interface DatacronFilter {
 	characterAbility: string | undefined;
 	focused: boolean | undefined;
 	isNamed: boolean | undefined;
-	name: string | undefined;
+	name: string | null;
 }
 
 type DatacronFilterPredicate = (datacron: Datacron) => boolean;

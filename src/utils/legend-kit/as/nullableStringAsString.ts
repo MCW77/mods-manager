@@ -1,27 +1,27 @@
 import { linked, type ObservableParam } from "@legendapp/state";
 
-export const booleanAsString = (
-	bool$: ObservableParam<boolean | undefined | null>,
+export const nullableStringAsString = (
+	text$: ObservableParam<string | undefined | null>,
 ) =>
 	linked({
 		get: () => {
-			if (bool$.peek() === undefined) {
+			if (text$.peek() === undefined) {
 				return "undefined";
 			}
-			if (bool$.peek() === null) {
+			if (text$.peek() === null) {
 				return "null";
 			}
-			return bool$.get() ? "true" : "false";
+			return text$.get();
 		},
 		set: ({ value }) => {
 			if (value === "undefined") {
-				bool$?.set(undefined);
+				text$?.set(undefined);
 				return;
 			}
 			if (value === "null") {
-				bool$?.set(null);
+				text$?.set(null);
 				return;
 			}
-			bool$?.set(value === "true");
+			text$?.set(value);
 		},
 	});

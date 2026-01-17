@@ -202,7 +202,7 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			characterAbility: undefined,
 			focused: undefined,
 			isNamed: undefined,
-			name: undefined,
+			name: null,
 		},
 		abilitiesDisplayMode: "Show Full Abilities",
 		resetFilters: () => {
@@ -215,7 +215,7 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			datacrons$.filter.characterAbility.set(undefined);
 			datacrons$.filter.focused.set(undefined);
 			datacrons$.filter.isNamed.set(undefined);
-			datacrons$.filter.name.set(undefined);
+			datacrons$.filter.name.set(null);
 		},
 		reset: () => {
 			syncStatus$.reset();
