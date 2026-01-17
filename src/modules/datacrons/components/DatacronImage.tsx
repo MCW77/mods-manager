@@ -1,3 +1,6 @@
+// utils
+import { findAffix } from "../utils/findAffix";
+
 // state
 import type { Observable } from "@legendapp/state";
 import { Switch, useValue } from "@legendapp/state/react";
@@ -6,7 +9,6 @@ import { Switch, useValue } from "@legendapp/state/react";
 import type { Datacron } from "../domain/Datacrons";
 
 import DatacronSets from "../DatacronSets.json";
-import { findAffix } from "../utils/findAffix";
 
 const overlayIconCSS = [
 	"absolute top-0 left-0 size-[114px] opacity-0",
@@ -42,6 +44,7 @@ function DatacronImage({ datacron$ }: DatacronImageProps) {
 	const setData = (
 		DatacronSets as Record<string, { displayName: string; icon: string }>
 	)[`${datacron.setId}`];
+	if (setData === undefined) return null;
 	const iconName = `${setData.icon}${datacron.focused ? "_focused" : ""}`;
 	let iconContainer =
 		"relative size-[114px] bg-[url('/img/datacron-bg.webp')] bg-no-repeat bg-auto bg-origin-padding bg-clip-border bg-[position:0px_-342px]";
