@@ -7733,5 +7733,2451 @@
         "icon": "tex.icon_datacrons_reroll_a_3.png"
       }
     }
-  }
+  },
+	"26": {
+		"id": 26,
+		"displayName": "Bounty Protocol",
+		"expirationTimeMs": 1776063600000,
+		"icon": "tex.datacron_b",
+		"tier": [
+			{
+				"id": 0,
+				"upgradeCostRecipeId": "",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t1",
+				"rerollCostRecipeId": [],
+				"scopeIdentifier": 0,
+				"rerollRecipes": [],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t1",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 25000,
+							"maxQuantity": 25000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 5,
+							"maxQuantity": 5,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 1,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t1",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t1",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_a_1",
+					"datacron_set_26_reroll_cost_a_2",
+					"datacron_set_26_reroll_cost_a_3",
+					"datacron_set_26_reroll_cost_a_4",
+					"datacron_set_26_reroll_cost_a_5"
+				],
+				"scopeIdentifier": 0,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t1",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 50000,
+							"maxQuantity": 50000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 10,
+							"maxQuantity": 10,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_a_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 100000,
+								"maxQuantity": 100000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 100000,
+								"maxQuantity": 100000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 80,
+								"maxQuantity": 80,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t1",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 25000,
+							"maxQuantity": 25000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 5,
+							"maxQuantity": 5,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 2,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t2",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t2",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_a_1",
+					"datacron_set_26_reroll_cost_a_2",
+					"datacron_set_26_reroll_cost_a_3",
+					"datacron_set_26_reroll_cost_a_4",
+					"datacron_set_26_reroll_cost_a_5"
+				],
+				"scopeIdentifier": 0,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t2",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 150000,
+							"maxQuantity": 150000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 30,
+							"maxQuantity": 30,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_a_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 100000,
+								"maxQuantity": 100000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 100000,
+								"maxQuantity": 100000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 80,
+								"maxQuantity": 80,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t2",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 50000,
+							"maxQuantity": 50000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 8,
+							"maxQuantity": 8,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 3,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t3",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t3",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_a_1",
+					"datacron_set_26_reroll_cost_a_2",
+					"datacron_set_26_reroll_cost_a_3",
+					"datacron_set_26_reroll_cost_a_4",
+					"datacron_set_26_reroll_cost_a_5"
+				],
+				"scopeIdentifier": 2,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t3",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 300000,
+							"maxQuantity": 300000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 50,
+							"maxQuantity": 50,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 5,
+							"maxQuantity": 5,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_a_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 100000,
+								"maxQuantity": 100000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 100000,
+								"maxQuantity": 100000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_a_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_1",
+								"type": 7,
+								"minQuantity": 80,
+								"maxQuantity": 80,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t3",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 125000,
+							"maxQuantity": 125000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 20,
+							"maxQuantity": 20,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 4,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t4",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t4",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_b_1",
+					"datacron_set_26_reroll_cost_b_2",
+					"datacron_set_26_reroll_cost_b_3",
+					"datacron_set_26_reroll_cost_b_4",
+					"datacron_set_26_reroll_cost_b_5"
+				],
+				"scopeIdentifier": 0,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t4",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 500000,
+							"maxQuantity": 500000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 30,
+							"maxQuantity": 30,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_b_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 10,
+								"maxQuantity": 10,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 10,
+								"maxQuantity": 10,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 75000,
+								"maxQuantity": 75000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 75000,
+								"maxQuantity": 75000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 125000,
+								"maxQuantity": 125000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t4",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 250000,
+							"maxQuantity": 250000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 35,
+							"maxQuantity": 35,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 10,
+							"maxQuantity": 10,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 5,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t5",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t5",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_b_1",
+					"datacron_set_26_reroll_cost_b_2",
+					"datacron_set_26_reroll_cost_b_3",
+					"datacron_set_26_reroll_cost_b_4",
+					"datacron_set_26_reroll_cost_b_5"
+				],
+				"scopeIdentifier": 0,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t5",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 750000,
+							"maxQuantity": 750000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 45,
+							"maxQuantity": 45,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_b_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 10,
+								"maxQuantity": 10,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 10,
+								"maxQuantity": 10,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 75000,
+								"maxQuantity": 75000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 75000,
+								"maxQuantity": 75000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 125000,
+								"maxQuantity": 125000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t5",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 500000,
+							"maxQuantity": 500000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 60,
+							"maxQuantity": 60,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 25,
+							"maxQuantity": 25,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 6,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t6",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t6",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_b_1",
+					"datacron_set_26_reroll_cost_b_2",
+					"datacron_set_26_reroll_cost_b_3",
+					"datacron_set_26_reroll_cost_b_4",
+					"datacron_set_26_reroll_cost_b_5"
+				],
+				"scopeIdentifier": 3,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t6",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 1000000,
+							"maxQuantity": 1000000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 50,
+							"maxQuantity": 50,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 10,
+							"maxQuantity": 10,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_b_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 10,
+								"maxQuantity": 10,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 50000,
+								"maxQuantity": 50000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 10,
+								"maxQuantity": 10,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 75000,
+								"maxQuantity": 75000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 75000,
+								"maxQuantity": 75000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_b_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 125000,
+								"maxQuantity": 125000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_2",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t6",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 1000000,
+							"maxQuantity": 1000000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 100,
+							"maxQuantity": 100,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 40,
+							"maxQuantity": 40,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 7,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t7",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t7",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_c_1",
+					"datacron_set_26_reroll_cost_c_2",
+					"datacron_set_26_reroll_cost_c_3",
+					"datacron_set_26_reroll_cost_c_4",
+					"datacron_set_26_reroll_cost_c_5"
+				],
+				"scopeIdentifier": 0,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t7",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 1250000,
+							"maxQuantity": 1250000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 50,
+							"maxQuantity": 50,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 30,
+							"maxQuantity": 30,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_c_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 400000,
+								"maxQuantity": 400000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 400000,
+								"maxQuantity": 400000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 800000,
+								"maxQuantity": 800000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 80,
+								"maxQuantity": 80,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t7",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 1500000,
+							"maxQuantity": 1500000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 120,
+							"maxQuantity": 120,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 60,
+							"maxQuantity": 60,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 5,
+							"maxQuantity": 5,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 8,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t8",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t8",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_c_1",
+					"datacron_set_26_reroll_cost_c_2",
+					"datacron_set_26_reroll_cost_c_3",
+					"datacron_set_26_reroll_cost_c_4",
+					"datacron_set_26_reroll_cost_c_5"
+				],
+				"scopeIdentifier": 0,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t8",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 1500000,
+							"maxQuantity": 1500000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 50,
+							"maxQuantity": 50,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 50,
+							"maxQuantity": 50,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_c_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 400000,
+								"maxQuantity": 400000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 400000,
+								"maxQuantity": 400000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 800000,
+								"maxQuantity": 800000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 80,
+								"maxQuantity": 80,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t8",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 2000000,
+							"maxQuantity": 2000000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 180,
+							"maxQuantity": 180,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 100,
+							"maxQuantity": 100,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 10,
+							"maxQuantity": 10,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			},
+			{
+				"id": 9,
+				"upgradeCostRecipeId": "datacron_set_26_upgrade_cost_t9",
+				"dustGrantRecipeId": "datacron_set_26_dust_grant_t9",
+				"rerollCostRecipeId": [
+					"datacron_set_26_reroll_cost_c_1",
+					"datacron_set_26_reroll_cost_c_2",
+					"datacron_set_26_reroll_cost_c_3",
+					"datacron_set_26_reroll_cost_c_4",
+					"datacron_set_26_reroll_cost_c_5"
+				],
+				"scopeIdentifier": 4,
+				"upgradeRecipe": {
+					"id": "datacron_set_26_upgrade_cost_t9",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 2000000,
+							"maxQuantity": 2000000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 75,
+							"maxQuantity": 75,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 100,
+							"maxQuantity": 100,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				},
+				"rerollRecipes": [
+					{
+						"id": "datacron_set_26_reroll_cost_c_1",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_2",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 200000,
+								"maxQuantity": 200000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 20,
+								"maxQuantity": 20,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_3",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 400000,
+								"maxQuantity": 400000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_4",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 400000,
+								"maxQuantity": 400000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 40,
+								"maxQuantity": 40,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					},
+					{
+						"id": "datacron_set_26_reroll_cost_c_5",
+						"nameKey": "",
+						"descKey": "",
+						"iconKey": "",
+						"ingredients": [
+							{
+								"id": "DATACRON_CURRENCY",
+								"type": 3,
+								"minQuantity": 800000,
+								"maxQuantity": 800000,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							},
+							{
+								"id": "datacron_set_26_reroll_3",
+								"type": 7,
+								"minQuantity": 80,
+								"maxQuantity": 80,
+								"rarity": 8,
+								"previewPriority": 0,
+								"unitLevel": 0,
+								"unitTier": 0,
+								"primaryReward": false
+							}
+						],
+						"type": 11,
+						"unlockLevel": 0,
+						"requiredEraLevel": 0
+					}
+				],
+				"dustGrantRecipe": {
+					"id": "datacron_set_26_dust_grant_t9",
+					"nameKey": "",
+					"descKey": "",
+					"iconKey": "",
+					"ingredients": [
+						{
+							"id": "DATACRON_CURRENCY",
+							"type": 3,
+							"minQuantity": 2500000,
+							"maxQuantity": 2500000,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_1",
+							"type": 7,
+							"minQuantity": 300,
+							"maxQuantity": 300,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_2",
+							"type": 7,
+							"minQuantity": 140,
+							"maxQuantity": 140,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						},
+						{
+							"id": "datacron_set_26_upgrade_3",
+							"type": 7,
+							"minQuantity": 20,
+							"maxQuantity": 20,
+							"rarity": 8,
+							"previewPriority": 0,
+							"unitLevel": 0,
+							"unitTier": 0,
+							"primaryReward": false
+						}
+					],
+					"type": 11,
+					"unlockLevel": 0,
+					"requiredEraLevel": 0
+				}
+			}
+		],
+		"detailPrefab": "prefab.datacron_b",
+		"setMaterial": [],
+		"focusedTier": [],
+		"setMaterials": {
+			"datacron_set_26_upgrade_1": {
+				"displayName": "Binding Mk1",
+				"icon": "tex.icon_datacrons_upgrade_b_1.png"
+			},
+			"datacron_set_26_reroll_1": {
+				"displayName": "Breakdown Mk1",
+				"icon": "tex.icon_datacrons_reroll_b_1.png"
+			},
+			"datacron_set_26_upgrade_2": {
+				"displayName": "Binding Mk2",
+				"icon": "tex.icon_datacrons_upgrade_b_2.png"
+			},
+			"datacron_set_26_reroll_2": {
+				"displayName": "Breakdown Mk2",
+				"icon": "tex.icon_datacrons_reroll_b_2.png"
+			},
+			"datacron_set_26_upgrade_3": {
+				"displayName": "Binding Mk3",
+				"icon": "tex.icon_datacrons_upgrade_b_3.png"
+			},
+			"datacron_set_26_reroll_3": {
+				"displayName": "Breakdown Mk3",
+				"icon": "tex.icon_datacrons_reroll_b_3.png"
+			}
+		}
+	}
 }
