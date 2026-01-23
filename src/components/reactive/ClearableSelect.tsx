@@ -1,5 +1,5 @@
 // react
-import { observer } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 import type { ComponentProps } from "react";
 import type { Observable } from "@legendapp/state";
 
@@ -10,26 +10,24 @@ type BaseProps = ComponentProps<typeof ShadCNClearableSelect>;
 
 interface ReactiveClearableSelectProps
 	extends Omit<BaseProps, "value" | "onChange"> {
-	$value?: Observable<string | undefined>;
-	value?: string | undefined;
+	$value: Observable<string | undefined>;
 	onChange?: (value: string | undefined) => void;
 }
 
 export const ClearableSelect = observer(
-	({ $value, value, onChange, ...props }: ReactiveClearableSelectProps) => {
-		const obsValue = $value?.get();
+	({ $value, onChange, ...props }: ReactiveClearableSelectProps) => {
+		let obsValue = useValue($value);
+		if (obsValue === undefined) obsValue = "";
 
 		const handleChange = (newValue: string | undefined) => {
-			if ($value) {
-				$value.set(newValue);
-			}
+			$value.set(newValue);
 			onChange?.(newValue);
 		};
 
 		return (
 			<ShadCNClearableSelect
 				{...props}
-				value={$value ? (obsValue ?? "") : value}
+				value={obsValue}
 				onChange={handleChange}
 			/>
 		);

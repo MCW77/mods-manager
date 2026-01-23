@@ -58,7 +58,7 @@ function Input({ type, $value, onChange, ...props }: InputProps) {
 			type={type}
 			{...(isCheckboxOrRadio
 				? { checked: value === "true" }
-				: { value: value })}
+				: { value: value ?? "" })}
 		/>
 	);
 }

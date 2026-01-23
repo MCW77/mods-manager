@@ -16,7 +16,7 @@ interface DatacronFilter {
 	characterAbility: string | undefined;
 	focused: boolean | undefined;
 	isNamed: boolean | undefined;
-	name: string | null;
+	name: string | undefined;
 }
 
 type DatacronFilterPredicate = (datacron: Datacron) => boolean;
@@ -43,15 +43,21 @@ function filterDatacrons(
 			if (!affixData) return false;
 			return (
 				datacron.affix[2].abilityId.startsWith("datacron_alignment") &&
-				affixData.tag.includes(filter.alignment)
+				affixData.targetRule === filter.alignment
 			);
 		});
 	}
 	if (filter.alignmentAbility !== undefined) {
-		filters.push(
-			(datacron: Datacron) =>
-				datacron.affix[2]?.abilityId === filter.alignmentAbility,
-		);
+		const alignmentAbility = filter.alignmentAbility;
+		filters.push((datacron: Datacron) => {
+			const [targetRule, alignmentAbilityId] = alignmentAbility.split("|");
+			if (datacron.affix.length < 3) return false;
+			const affixData = findAffix(datacron.affix[2]);
+			return (
+				datacron.affix[2]?.abilityId === alignmentAbilityId &&
+				affixData?.targetRule === targetRule
+			);
+		});
 	}
 	if (filter.faction !== undefined) {
 		filters.push((datacron: Datacron) => {
@@ -108,10 +114,14 @@ function filterDatacrons(
 	if (filter.isNamed !== undefined) {
 		filters.push((datacron: Datacron) => {
 			const length = datacron.name.trim().length;
-			return filter.isNamed ? length > 0 : length === 0;
+			return length > 0 === filter.isNamed;
 		});
 	}
-	if (filter.name !== undefined) {
+	if (
+		filter.name !== undefined &&
+		filter.name !== null &&
+		filter.name.trim() !== ""
+	) {
 		filters.push((datacron: Datacron) =>
 			datacron.name.toLowerCase().includes(filter.name?.toLowerCase() || ""),
 		);

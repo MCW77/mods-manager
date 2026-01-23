@@ -1,5 +1,13 @@
+// utils
+import { findAffix } from "../utils/findAffix";
+
 // state
-import { observable, type ObservableObject } from "@legendapp/state";
+import {
+	beginBatch,
+	endBatch,
+	observable,
+	type ObservableObject,
+} from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
@@ -13,7 +21,6 @@ import {
 import { filterDatacrons, type DatacronSet } from "../domain/DatacronFilter";
 import DatacronSets from "../DatacronSets.json";
 import type { Datacron, DatacronById } from "../domain/Datacrons";
-import { findAffix } from "../utils/findAffix";
 
 const datacrons$: ObservableObject<DatacronsObservable> =
 	observable<DatacronsObservable>({
@@ -30,10 +37,9 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 		},
 		filteredDatacronsIdsForActiveAllycode: () => {
 			const allycode = profilesManagement$.activeProfile.allycode.get();
-			let datacrons =
-				Array.from(
-					datacrons$.persistedData[allycode]?.datacronById.get().values(),
-				) || [];
+			const datacronById =
+				datacrons$.persistedData[allycode]?.datacronById.get();
+			let datacrons = datacronById ? Array.from(datacronById.values()) : [];
 			datacrons = filterDatacrons(datacrons$.filter.get(), datacrons);
 			return datacrons.map((d) => d.id);
 		},
@@ -50,8 +56,12 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 		},
 		availableDatacronSets: () => {
 			const uniqueSetIds = new Set<number>();
+			const datacronIds =
+				datacrons$.filteredDatacronsIdsForActiveAllycode.get();
 			const datacronById = datacrons$.datacronByIdForActiveAllycode.get();
-			for (const datacron of datacronById.values()) {
+			for (const id of datacronIds) {
+				const datacron = datacronById.get(id);
+				if (!datacron) continue;
 				uniqueSetIds.add(datacron.setId);
 			}
 			const SetsById = new Map<number, DatacronSet>();
@@ -65,6 +75,41 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			}
 			return SetsById;
 		},
+		availableFocusedStates: () => {
+			const focusedStates = new Set<boolean>();
+			const datacronIds =
+				datacrons$.filteredDatacronsIdsForActiveAllycode.get();
+			const datacronById = datacrons$.datacronByIdForActiveAllycode.get();
+			for (const id of datacronIds) {
+				const datacron = datacronById.get(id);
+				if (!datacron) continue;
+				focusedStates.add(!!datacron.focused);
+			}
+			return Array.from(focusedStates).map((value) => ({
+				id: value ? "focused" : "unfocused",
+				value,
+			}));
+		},
+		availableAlignments: () => {
+			const alignments = [];
+			const alignmentTargetRules = new Set<string>();
+			const datacronIds =
+				datacrons$.filteredDatacronsIdsForActiveAllycode.get();
+			const datacronById = datacrons$.datacronByIdForActiveAllycode.get();
+			for (const id of datacronIds) {
+				const datacron = datacronById.get(id);
+				if (
+					!datacron ||
+					datacron.affix.length < 3 ||
+					alignmentTargetRules.has(datacron.affix[2].targetRule) ||
+					!datacron.affix[2].abilityId.startsWith("datacron_alignment")
+				)
+					continue;
+				alignmentTargetRules.add(datacron.affix[2].targetRule);
+				alignments.push(datacron.affix[2]);
+			}
+			return alignments;
+		},
 		availableAlignmentAbilities: () => {
 			const abilities = [];
 			const abilityIds = new Set<string>();
@@ -75,16 +120,16 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 
 			for (const id of datacronIds) {
 				const datacron = datacronById.get(id);
-				if (!datacron) continue;
-
+				if (!datacron || datacron.affix.length < 3) continue;
+				const abilityId = datacron.affix[2].abilityId;
 				const alignment = datacrons$.filter.alignment.get();
 
 				if (
 					alignment === undefined &&
-					!abilityIds.has(datacron.affix[2]?.abilityId) &&
-					datacron.affix[2]?.abilityId?.startsWith("datacron_alignment")
+					!abilityIds.has(abilityId) &&
+					abilityId.startsWith("datacron_alignment")
 				) {
-					abilityIds.add(datacron.affix[2]?.abilityId);
+					abilityIds.add(abilityId);
 					abilities.push(datacron.affix[2]);
 				}
 			}
@@ -102,12 +147,9 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 				if (!datacron) continue;
 
 				for (const affix of datacron.affix) {
+					if (!affix.abilityId.startsWith("datacron_character")) continue;
 					const affixData = findAffix(affix);
-					if (
-						affixData &&
-						affix.abilityId.startsWith("datacron_character") &&
-						!abilityIds.has(affix.abilityId)
-					) {
+					if (affixData && !abilityIds.has(affix.abilityId)) {
 						abilityIds.add(affix.abilityId);
 						abilities.push(affix);
 					}
@@ -127,12 +169,9 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 				if (!datacron) continue;
 
 				for (const affix of datacron.affix) {
+					if (!affix.abilityId.startsWith("datacron_character")) continue;
 					const affixData = findAffix(affix);
-					if (
-						affixData &&
-						affix.abilityId.startsWith("datacron_character") &&
-						!characterIds.has(affixData.targetCharacter)
-					) {
+					if (affixData && !characterIds.has(affixData.targetCharacter)) {
 						characterIds.add(affixData.targetCharacter);
 						characters.push(affix);
 					}
@@ -152,13 +191,13 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 				if (!datacron) continue;
 
 				for (const affix of datacron.affix) {
-					const affixData = findAffix(affix);
 					if (
-						affixData &&
-						(affix.abilityId.startsWith("datacron_faction") ||
-							affix.abilityId.startsWith("datacron_role")) &&
-						!abilityIds.has(affix.abilityId)
-					) {
+						!affix.abilityId.startsWith("datacron_faction") &&
+						!affix.abilityId.startsWith("datacron_role")
+					)
+						continue;
+					const affixData = findAffix(affix);
+					if (affixData && !abilityIds.has(affix.abilityId)) {
 						abilityIds.add(affix.abilityId);
 						abilities.push(affix);
 					}
@@ -178,19 +217,54 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 				if (!datacron) continue;
 
 				for (const affix of datacron.affix) {
-					const affixData = findAffix(affix);
 					if (
-						affixData &&
-						(affix.abilityId.startsWith("datacron_faction") ||
-							affix.abilityId.startsWith("datacron_role")) &&
-						!categories.has(affixData.targetCategory)
-					) {
+						!affix.abilityId.startsWith("datacron_faction") &&
+						!affix.abilityId.startsWith("datacron_role")
+					)
+						continue;
+					const affixData = findAffix(affix);
+					if (affixData && !categories.has(affixData.targetCategory)) {
 						categories.add(affixData.targetCategory);
 						abilities.push(affix);
 					}
 				}
 			}
 			return abilities;
+		},
+		availableNames: () => {
+			const names = new Set<string>();
+			const datacronIds =
+				datacrons$.filteredDatacronsIdsForActiveAllycode.get();
+			const datacronById = datacrons$.datacronByIdForActiveAllycode.get();
+			for (const id of datacronIds) {
+				const datacron = datacronById.get(id);
+				if (!datacron || datacron.name === "") continue;
+				names.add(datacron.name);
+			}
+			return Array.from(names).map((name) => ({
+				id: name,
+				name,
+			}));
+		},
+		availableNameModes: () => {
+			const nameModes = new Set<boolean>();
+			const datacronIds =
+				datacrons$.filteredDatacronsIdsForActiveAllycode.get();
+			const datacronById = datacrons$.datacronByIdForActiveAllycode.get();
+			for (const id of datacronIds) {
+				const datacron = datacronById.get(id);
+				if (!datacron) continue;
+				const name = datacron.name.trim();
+				if (name.length === 0) {
+					nameModes.add(false);
+				} else {
+					nameModes.add(true);
+				}
+			}
+			return Array.from(nameModes).map((value) => ({
+				id: value ? "named" : "unnamed",
+				value,
+			}));
 		},
 		filter: {
 			datacronSet: undefined,
@@ -202,10 +276,11 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			characterAbility: undefined,
 			focused: undefined,
 			isNamed: undefined,
-			name: null,
+			name: undefined,
 		},
 		abilitiesDisplayMode: "Show Full Abilities",
 		resetFilters: () => {
+			beginBatch();
 			datacrons$.filter.datacronSet.set(undefined);
 			datacrons$.filter.alignment.set(undefined);
 			datacrons$.filter.alignmentAbility.set(undefined);
@@ -215,7 +290,8 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			datacrons$.filter.characterAbility.set(undefined);
 			datacrons$.filter.focused.set(undefined);
 			datacrons$.filter.isNamed.set(undefined);
-			datacrons$.filter.name.set(null);
+			datacrons$.filter.name.set(undefined);
+			endBatch();
 		},
 		reset: () => {
 			syncStatus$.reset();

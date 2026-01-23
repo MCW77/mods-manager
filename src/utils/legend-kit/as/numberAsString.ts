@@ -13,21 +13,29 @@ export const numberAsString = (
 ) =>
 	linked({
 		get: () => {
-			if (num$.peek() === undefined) {
-				return "undefined";
+			const num = num$.get();
+			if (num === undefined) {
+				return "";
 			}
-			if (num$.peek() === null) {
-				return "null";
+			if (num === null) {
+				return "";
+			}
+			if (Number.isNaN(num)) {
+				return "";
 			}
 			// biome-ignore lint/style/useTemplate: <This should be as fast as possible>
-			return num$.get() + "";
+			return num + "";
 		},
 		set: ({ value }) => {
-			if (value === "undefined") {
+			if (value === undefined) {
 				num$?.set(undefined);
 				return;
 			}
-			if (value === "null") {
+			if (value === null) {
+				num$?.set(null);
+				return;
+			}
+			if (value === "") {
 				num$?.set(null);
 				return;
 			}

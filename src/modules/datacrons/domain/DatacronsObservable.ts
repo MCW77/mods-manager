@@ -23,11 +23,15 @@ interface DatacronsObservable {
 	datacronByIdForActiveAllycode: () => Observable<DatacronById>;
 	filteredDatacronsIdsForActiveAllycode: () => string[];
 	availableDatacronSets: () => Map<number, DatacronSet>;
+	availableFocusedStates: () => { id: string; value: boolean }[];
+	availableAlignments: () => Affix[];
 	availableAlignmentAbilities: () => Affix[];
 	availableCharacterAbilities: () => Affix[];
 	availableCharacters: () => Affix[];
 	availableFactionAbilities: () => Affix[];
 	availableFactions: () => Affix[];
+	availableNames: () => { id: string; name: string }[];
+	availableNameModes: () => { id: string; value: boolean }[];
 	filter: DatacronFilter;
 	abilitiesDisplayMode: AbilitiesDisplayMode;
 	addProfile: (allycode: string) => void;

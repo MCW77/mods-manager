@@ -6,19 +6,19 @@ export const booleanAsString = (
 	linked({
 		get: () => {
 			if (bool$.peek() === undefined) {
-				return "undefined";
+				return "";
 			}
 			if (bool$.peek() === null) {
-				return "null";
+				return "";
 			}
 			return bool$.get() ? "true" : "false";
 		},
 		set: ({ value }) => {
-			if (value === "undefined") {
+			if (value === undefined) {
 				bool$?.set(undefined);
 				return;
 			}
-			if (value === "null") {
+			if (value === null) {
 				bool$?.set(null);
 				return;
 			}

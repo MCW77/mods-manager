@@ -5,20 +5,21 @@ export const nullableStringAsString = (
 ) =>
 	linked({
 		get: () => {
-			if (text$.peek() === undefined) {
-				return "undefined";
+			const text = text$.get();
+			if (text === undefined) {
+				return "";
 			}
-			if (text$.peek() === null) {
-				return "null";
+			if (text === null) {
+				return "";
 			}
-			return text$.get();
+			return text;
 		},
 		set: ({ value }) => {
-			if (value === "undefined") {
+			if (value === undefined) {
 				text$?.set(undefined);
 				return;
 			}
-			if (value === "null") {
+			if (value === null) {
 				text$?.set(null);
 				return;
 			}

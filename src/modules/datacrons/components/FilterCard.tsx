@@ -17,7 +17,6 @@ import type { Affix } from "../domain/Datacrons";
 
 // components
 import { ClearableSelect } from "#/components/reactive/ClearableSelect";
-import { Input } from "#/components/reactive/Input";
 import { Button } from "#ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Label } from "#ui/label";
@@ -34,14 +33,41 @@ function DatacronSetItem({ item$ }: DatacronSetItemProps) {
 		</SelectItem>
 	);
 }
+
+interface FocusedStateItemProps {
+	item$: Observable<{ id: string; value: boolean }>;
+}
+
+function FocusedStateItem({ item$ }: FocusedStateItemProps) {
+	const item = useValue(item$);
+	return (
+		<SelectItem key={item.id} value={item.value ? "true" : "false"}>
+			{item.value ? "Focused Datacron" : "Normal Datacron"}
+		</SelectItem>
+	);
+}
+
+interface AlignmentItemProps {
+	item$: Observable<Affix>;
+}
+function AlignmentItem({ item$ }: AlignmentItemProps) {
+	const targetRule = useValue(item$.targetRule);
+	return (
+		<SelectItem key={targetRule} value={targetRule}>
+			{targetRule === "target_datacron_lightside" ? "Light Side" : "Dark Side"}
+		</SelectItem>
+	);
+}
+
 interface AlignmentAbilityItemProps {
 	item$: Observable<Affix>;
 }
 function AlignmentAbilityItem({ item$ }: AlignmentAbilityItemProps) {
 	const item = useValue(item$);
 	const affixData = findAffix(item);
+	const id = `${affixData?.targetRule}|${affixData?.abilityId}`;
 	return (
-		<SelectItem key={item.abilityId} value={`${item.abilityId}`}>
+		<SelectItem key={id} value={id}>
 			{affixData?.shortText}
 		</SelectItem>
 	);
@@ -101,8 +127,36 @@ function CharacterAbilityItem({ item$ }: FactionItemProps) {
 	);
 }
 
+interface NameModesItemProps {
+	item$: Observable<{ id: string; value: boolean }>;
+}
+
+function NameModesItem({ item$ }: NameModesItemProps) {
+	const item = useValue(item$.value);
+	return (
+		<SelectItem
+			key={item ? "named" : "unnamed"}
+			value={item ? "true" : "false"}
+		>
+			{item ? "Named Datacron" : "Unnamed Datacron"}
+		</SelectItem>
+	);
+}
+
+interface NameItemProps {
+	item$: Observable<{ id: string; name: string }>;
+}
+
+function NameItem({ item$ }: NameItemProps) {
+	const item = useValue(item$);
+	return (
+		<SelectItem key={item.id} value={item.name}>
+			{item.name}
+		</SelectItem>
+	);
+}
+
 function FilterCard({ showFilters }: { showFilters: boolean }) {
-	//	const filters = useValue(datacrons$.filters);
 	const datacronSet$ = useObservable(
 		numberAsString(datacrons$.filter.datacronSet),
 	);
@@ -143,8 +197,10 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 						<div>
 							<Label>Focused</Label>
 							<ClearableSelect $value={focused$} placeholder="Select Focused">
-								<SelectItem value="true">Focused Datacron</SelectItem>
-								<SelectItem value="false">Normal Datacron</SelectItem>
+								<For
+									each={datacrons$.availableFocusedStates}
+									item={FocusedStateItem}
+								/>
 							</ClearableSelect>
 						</div>
 					</div>
@@ -155,8 +211,10 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 								$value={datacrons$.filter.alignment}
 								placeholder="Select Alignment"
 							>
-								<SelectItem value="lightside">Light Side</SelectItem>
-								<SelectItem value="darkside">Dark Side</SelectItem>
+								<For
+									each={datacrons$.availableAlignments}
+									item={AlignmentItem}
+								/>
 							</ClearableSelect>
 						</div>
 						<div>
@@ -228,16 +286,20 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 								$value={isNamed$}
 								placeholder="Select Named Status"
 							>
-								<SelectItem value="true">Named Datacron</SelectItem>
-								<SelectItem value="false">Unnamed Datacron</SelectItem>
+								<For
+									each={datacrons$.availableNameModes}
+									item={NameModesItem}
+								/>
 							</ClearableSelect>
 						</div>
 						<div>
 							<Label>Name</Label>
-							<Input
+							<ClearableSelect
 								$value={datacrons$.filter.name}
-								placeholder="Datacron Name"
-							/>
+								placeholder="Select Name"
+							>
+								<For each={datacrons$.availableNames} item={NameItem} />
+							</ClearableSelect>
 						</div>
 					</div>
 				</div>
