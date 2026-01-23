@@ -15,22 +15,6 @@ body {
 	box-sizing: inherit;
 }
 
-::-webkit-scrollbar {
-	width: 0.4em;
-	height: 0.4em;
-	margin-left: 1em;
-}
-
-::-webkit-scrollbar-track {
-	border: 1px inset dodgerblue;
-	background: #1e2f46;
-}
-
-::-webkit-scrollbar-thumb {
-	background: dodgerblue;
-	min-height: 3em;
-}
-
 strong {
 	font-weight: bold;
 	color: #a35ef9;

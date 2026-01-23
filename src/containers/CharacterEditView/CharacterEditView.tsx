@@ -31,6 +31,7 @@ import CharacterWidget from "./CharacterWidget";
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+import { ScrollArea } from "#ui/scroll-area";
 
 import CharacterList from "#/containers/CharacterList/CharacterList";
 import { Computed } from "@legendapp/state/react";
@@ -147,26 +148,31 @@ const CharacterEditView = observer(() => {
 	useEffect(() => {
 		const container = containerRef.current;
 		if (!container) return;
+		// Find the ScrollArea viewport element (it has the class 'rounded-[inherit]')
+		const viewport = container.querySelector(
+			'[class*="rounded-[inherit]"]',
+		) as HTMLElement;
+		if (!viewport) return;
 
 		let scrollTimeout: NodeJS.Timeout;
 
 		const handleScroll = () => {
 			// Disable snap type while scrolling
-			container.style.scrollSnapType = "none";
+			viewport.style.scrollSnapType = "none";
 
 			// Clear any existing timeout
 			clearTimeout(scrollTimeout);
 
 			// Re-enable snap type after 300ms of no scrolling
 			scrollTimeout = setTimeout(() => {
-				container.style.scrollSnapType = "y proximity";
+				viewport.style.scrollSnapType = "y proximity";
 			}, 30);
 		};
 
-		container.addEventListener("scroll", handleScroll, { passive: true });
+		viewport.addEventListener("scroll", handleScroll, { passive: true });
 
 		return () => {
-			container.removeEventListener("scroll", handleScroll);
+			viewport.removeEventListener("scroll", handleScroll);
 			clearTimeout(scrollTimeout);
 		};
 	}, []);
@@ -243,59 +249,61 @@ const CharacterEditView = observer(() => {
 			<Computed>
 				<div className="flex h-[83%]">
 					<div
-						className="w-auto overflow-y-auto snap-y snap-proximity flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
+						ref={containerRef}
+						className="flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
 						role="application"
 						aria-label="Available characters drop zone"
 						onDragEnter={availableCharactersDragEnter}
 						onDragOver={dragOver}
 						onDragLeave={dragLeave}
 						onDrop={availableCharactersDrop}
-						ref={containerRef}
 					>
-						<Suspense fallback={null}>
-							<div
-								className={
-									"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
-								}
-							>
-								{highlightedCharacters.map((character) => (
-									<RenderIfVisible
-										className="snap-start"
-										key={character.id}
-										defaultHeight={161}
-										root={containerRef}
-										searchableText={
-											baseCharacterById[character.id]?.name || character.id
-										}
-										visibleOffset={1610}
-									>
-										<CharacterWidget
+						<ScrollArea className="h-full snap-y snap-proximity">
+							<Suspense fallback={null}>
+								<div
+									className={
+										"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
+									}
+								>
+									{highlightedCharacters.map((character) => (
+										<RenderIfVisible
+											className="snap-start"
 											key={character.id}
-											character={character}
-											className={"active"}
-										/>
-									</RenderIfVisible>
-								))}
-								{filteredCharacters.map((character) => (
-									<RenderIfVisible
-										className="snap-start"
-										key={character.id}
-										defaultHeight={161}
-										root={containerRef}
-										searchableText={
-											baseCharacterById[character.id]?.name || character.id
-										}
-										visibleOffset={1610}
-									>
-										<CharacterWidget
+											defaultHeight={161}
+											root={containerRef}
+											searchableText={
+												baseCharacterById[character.id]?.name || character.id
+											}
+											visibleOffset={1610}
+										>
+											<CharacterWidget
+												key={character.id}
+												character={character}
+												className={"active"}
+											/>
+										</RenderIfVisible>
+									))}
+									{filteredCharacters.map((character) => (
+										<RenderIfVisible
+											className="snap-start"
 											key={character.id}
-											character={character}
-											className={"opacity-25"}
-										/>
-									</RenderIfVisible>
-								))}
-							</div>
-						</Suspense>
+											defaultHeight={161}
+											root={containerRef}
+											searchableText={
+												baseCharacterById[character.id]?.name || character.id
+											}
+											visibleOffset={1610}
+										>
+											<CharacterWidget
+												key={character.id}
+												character={character}
+												className={"opacity-25"}
+											/>
+										</RenderIfVisible>
+									))}
+								</div>
+							</Suspense>
+						</ScrollArea>
 					</div>
 					<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
 						<Suspense fallback={null}>

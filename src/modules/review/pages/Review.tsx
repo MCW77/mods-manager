@@ -41,6 +41,7 @@ import SetsView from "../components/SetsView";
 import { SummaryWidget } from "../components/SummaryWidget";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { Label } from "#ui/label";
+import { ScrollArea } from "#/components/custom/ScrollArea";
 
 // A map from number of pips that a mod has to the cost to remove it
 const modRemovalCosts = {
@@ -397,28 +398,26 @@ const Review: React.FC = observer(() => {
 	);
 
 	return (
-		<div className={"flex flex-col flex-grow-1 overflow-y-auto"}>
-			<div
-				className={"flex flex-col justify-around items-stretch p-y-2 min-h-min"}
-			>
-				<div className="flex flex-wrap justify-around items-stretch p-y-2">
-					<DefaultCollapsibleCard title="Display">
-						<DisplayWidget />
-					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard title="Actions">
-						<ActionsWidget />
-					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard className="" title="Summary">
-						<SummaryWidget
-							currentSetValue={currentLoadoutValue}
-							newSetValue={newLoadoutValue}
-							modRemovalCost={modRemovalCost}
-							modUpgradeCost={modUpgradeCost}
-							numMovingMods={numMovingMods}
-						/>
-					</DefaultCollapsibleCard>
-				</div>
-				<div className="flex justify-center overflow-y-auto">
+		<div className="flex flex-col h-full w-full overflow-hidden">
+			<div className="flex flex-wrap justify-center items-stretch p-y-2 gap-2">
+				<DefaultCollapsibleCard title="Display">
+					<DisplayWidget />
+				</DefaultCollapsibleCard>
+				<DefaultCollapsibleCard title="Actions">
+					<ActionsWidget />
+				</DefaultCollapsibleCard>
+				<DefaultCollapsibleCard className="" title="Summary">
+					<SummaryWidget
+						currentSetValue={currentLoadoutValue}
+						newSetValue={newLoadoutValue}
+						modRemovalCost={modRemovalCost}
+						modUpgradeCost={modUpgradeCost}
+						numMovingMods={numMovingMods}
+					/>
+				</DefaultCollapsibleCard>
+			</div>
+			<div className="flex flex-1 min-h-0 justify-center">
+				<ScrollArea className="h-full w-fit max-w-full">
 					<Show
 						if={() => 0 === displayedMods.length}
 						else={
@@ -447,7 +446,7 @@ const Review: React.FC = observer(() => {
 							</div>
 						</Show>
 					</Show>
-				</div>
+				</ScrollArea>
 			</div>
 		</div>
 	);

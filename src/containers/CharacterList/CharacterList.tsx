@@ -17,6 +17,7 @@ import * as Character from "#/domain/Character";
 
 // components
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+import { ScrollArea } from "#/components/custom/ScrollArea";
 import CharacterBlock from "./CharacterBlock";
 
 const CharacterList = observer(
@@ -181,26 +182,31 @@ const CharacterList = observer(
 		useEffect(() => {
 			const container = containerRef.current;
 			if (!container) return;
+			// Find the ScrollArea viewport element
+			const viewport = container.querySelector(
+				'[class*="rounded-[inherit]"]',
+			) as HTMLElement;
+			if (!viewport) return;
 
 			let scrollTimeout: NodeJS.Timeout;
 
 			const handleScroll = () => {
 				// Disable snap type while scrolling
-				container.style.scrollSnapType = "none";
+				viewport.style.scrollSnapType = "none";
 
 				// Clear any existing timeout
 				clearTimeout(scrollTimeout);
 
 				// Re-enable snap type after 300ms of no scrolling
 				scrollTimeout = setTimeout(() => {
-					container.style.scrollSnapType = "y mandatory";
+					viewport.style.scrollSnapType = "y mandatory";
 				}, 300);
 			};
 
-			container.addEventListener("scroll", handleScroll, { passive: true });
+			viewport.addEventListener("scroll", handleScroll, { passive: true });
 
 			return () => {
-				container.removeEventListener("scroll", handleScroll);
+				viewport.removeEventListener("scroll", handleScroll);
 				clearTimeout(scrollTimeout);
 			};
 		}, []);
@@ -208,41 +214,45 @@ const CharacterList = observer(
 		return (
 			<div
 				ref={containerRef}
-				className={
-					"p-y-1 p-r-1 m-r-2 h-full snap-y snap-mandatory scroll-smooth overscroll-contain overflow-x-hidden overflow-y-auto group-[&.sort-view]:grid group-[&.sort-view]:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] group-[&.sort-view]:auto-rows-min group-[&.sort-view]:gap-2"
-				}
+				className="h-full"
 				role="application"
 				aria-label="Available characters drop zone"
 				onDragOver={handleDragOver}
 				onDragLeave={handleDragLeave}
 				onDrop={handleDrop}
 			>
-				<Show
-					if={compilations$.defaultCompilation.selectedCharacters.length === 0}
-					else={() =>
-						selectedCharacters.map(({ id, target }, index) => (
-							<RenderIfVisible
-								key={id}
-								data-character-index={index}
-								className="[&.drop-character]:shadow-[0_2px_3px_0_darkred] [&.drop-character-before]:shadow-[0_-3px_5px_0_darkred] snap-start"
-								defaultHeight={148}
-								root={containerRef}
-								visibleOffset={1480}
-								disabled={disableLazyLoad}
-							>
-								<CharacterBlock
-									characterId={id}
-									target={target}
-									index={index}
-								/>
-							</RenderIfVisible>
-						))
-					}
-				>
-					<div className="max-w-full p-1 bg-slate-950/50 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] min-h-[4rem] flex items-center justify-center text-gray-400">
-						{t("selected.DropHere")}
-					</div>
-				</Show>
+				<ScrollArea className="h-full p-y-1 p-r-1 m-r-2 snap-y snap-mandatory scroll-smooth overscroll-contain">
+					<div className="group-[&.sort-view]:grid group-[&.sort-view]:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] group-[&.sort-view]:auto-rows-min group-[&.sort-view]:gap-2">
+						<Show
+							if={
+								compilations$.defaultCompilation.selectedCharacters.length === 0
+							}
+							else={() =>
+								selectedCharacters.map(({ id, target }, index) => (
+									<RenderIfVisible
+										key={id}
+										data-character-index={index}
+										className="[&.drop-character]:shadow-[0_2px_3px_0_darkred] [&.drop-character-before]:shadow-[0_-3px_5px_0_darkred] snap-start"
+										defaultHeight={148}
+										root={containerRef}
+										visibleOffset={1480}
+										disabled={disableLazyLoad}
+									>
+										<CharacterBlock
+											characterId={id}
+											target={target}
+											index={index}
+										/>
+									</RenderIfVisible>
+								))
+							}
+						>
+							<div className="max-w-full p-1 bg-slate-950/50 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] min-h-[4rem] flex items-center justify-center text-gray-400">
+								{t("selected.DropHere")}
+							</div>
+						</Show>{" "}
+					</div>{" "}
+				</ScrollArea>
 			</div>
 		);
 	}),

@@ -28,6 +28,7 @@ import * as Collapsible from "@radix-ui/react-collapsible";
 
 import ModDetail from "#/components/ModDetail/ModDetail";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
+import { ScrollArea } from "#/components/custom/ScrollArea";
 import DeleteModsModal from "./DeleteModsModal";
 
 import { Button } from "#ui/button";
@@ -207,20 +208,19 @@ const GroupedMods = ({
 				<span className="basis-30%">{tDomain("Primary")}: </span>
 				<span className="basis-20%">{"#"}</span>
 			</div>
-			<div
-				className="flex flex-col overflow-y-auto overscroll-y-contain grow-1"
-				ref={modGroupsElement}
-			>
-				<For
-					each={modGroups$.modGroups}
-					item={({ item$: modGroup$ }) => (
-						<ModGroupItem
-							item$={modGroup$}
-							modGroupsElement={modGroupsElement}
-						/>
-					)}
-					optimized
-				/>
+			<div className="flex-1 min-h-0" ref={modGroupsElement}>
+				<ScrollArea className="h-full">
+					<For
+						each={modGroups$.modGroups}
+						item={({ item$: modGroup$ }) => (
+							<ModGroupItem
+								item$={modGroup$}
+								modGroupsElement={modGroupsElement}
+							/>
+						)}
+						optimized
+					/>
+				</ScrollArea>
 			</div>
 		</div>
 	);
