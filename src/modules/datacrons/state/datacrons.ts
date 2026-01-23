@@ -125,7 +125,8 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 				const alignment = datacrons$.filter.alignment.get();
 
 				if (
-					alignment === undefined &&
+					(alignment === undefined ||
+						datacron.affix[2].targetRule === alignment) &&
 					!abilityIds.has(abilityId) &&
 					abilityId.startsWith("datacron_alignment")
 				) {
