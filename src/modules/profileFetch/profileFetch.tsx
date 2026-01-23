@@ -267,9 +267,12 @@ function updatePlayerData(
 
 		if (fullProfile.datacrons) {
 			for (const datacron of fullProfile.datacrons) {
+				const existingDatacron = datacrons$.datacronByIdForActiveAllycode
+					.peek()
+					.get(datacron.id);
 				datacrons$.datacronByIdForActiveAllycode.set(datacron.id, {
 					...datacron,
-					name: "",
+					name: existingDatacron?.name ?? "",
 				});
 			}
 		}
