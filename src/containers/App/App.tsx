@@ -37,7 +37,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
 import { Spinner as SimpleSpinner } from "#/components/Spinner/Spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
-import ProfilesManager from "#/modules/profilesManagement/components/ProfilesManager";
+import ProfileSwitcher from "#/modules/profilesManagement/components/ProfilesManager";
 
 import { Toaster } from "#ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
@@ -224,7 +224,7 @@ const AppContent = () => {
 								</TabsList>
 							</div>
 							<Memo>
-								<ProfilesManager />
+								<ProfileSwitcher />
 							</Memo>
 						</div>
 						<Show if={profilesManagement$.hasProfiles}>

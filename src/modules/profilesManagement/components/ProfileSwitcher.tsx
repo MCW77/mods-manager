@@ -26,7 +26,7 @@ import ProfileSelector from "#/modules/profilesManagement/components/ProfileSele
 
 import { Button } from "#ui/button";
 
-const ProfilesManager = () => {
+const ProfileSwitcher = () => {
 	const [t] = useTranslation("global-ui");
 	const isAddingProfile$ = useObservable<boolean>(
 		!profilesManagement$.hasProfiles.peek(),
@@ -116,6 +116,6 @@ const ProfilesManager = () => {
 	);
 };
 
-ProfilesManager.displayName = "ProfilesManager";
+ProfileSwitcher.displayName = "ProfileSwitcher";
 
-export default ProfilesManager;
+export default ProfileSwitcher;
