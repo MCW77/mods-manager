@@ -25,7 +25,7 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
-const AccountsManager = React.memo(() => {
+const ProfilesManager = React.memo(() => {
 	const playerProfiles = useValue(
 		profilesManagement$.profiles.playernameByAllycode,
 	);
@@ -147,6 +147,6 @@ const AccountsManager = React.memo(() => {
 	);
 });
 
-AccountsManager.displayName = "AccountsManager";
+ProfilesManager.displayName = "ProfilesManager";
 
-export default AccountsManager;
+export default ProfilesManager;
