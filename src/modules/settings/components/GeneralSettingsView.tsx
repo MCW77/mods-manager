@@ -17,9 +17,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ProfilesManager from "#/components/AccountsManager/ProfilesManager";
 import { FileInput } from "#/components/FileInput/FileInput";
 import HotutilsSettingsForm from "#/modules/hotUtils/components/HotutilsSettingsForm";
+import ProfilesManager from "#/modules/profilesManagement/components/ProfilesManager";
 import { UISettingsForm } from "#/modules/ui/components/UISettingsForm";
 
 import { Button } from "#ui/button";
