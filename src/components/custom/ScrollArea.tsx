@@ -1,7 +1,12 @@
-import * as React from "react";
-import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
-
+// utils
 import { cn } from "#/lib/utils";
+
+// react
+import * as React from "react";
+
+// components
+import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
+import { Button } from "#ui/button";
 
 interface ScrollAreaProps
 	extends React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> {
@@ -59,15 +64,13 @@ const ScrollArea = React.forwardRef<
 				<ScrollAreaPrimitive.Corner />
 
 				{showScrollToTop && showButton && (
-					<button
+					<Button
 						type="button"
+						variant="outline"
 						onClick={scrollToTop}
 						className={cn(
-							"fixed bottom-4 right-4 z-50",
-							"flex h-10 w-10 items-center justify-center",
-							"rounded-full bg-primary text-primary-foreground",
-							"shadow-lg transition-all hover:scale-110",
-							"focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+							"fixed bottom-4 right-4 z-50 h-10 w-10 p-1",
+							"rounded-full transition-all hover:scale-110 bg-background/10",
 						)}
 						aria-label="Scroll to top"
 					>
@@ -85,7 +88,7 @@ const ScrollArea = React.forwardRef<
 							<title>Scroll to top</title>
 							<path d="m18 15-6-6-6 6" />
 						</svg>
-					</button>
+					</Button>
 				)}
 			</ScrollAreaPrimitive.Root>
 		);
