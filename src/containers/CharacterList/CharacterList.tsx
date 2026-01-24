@@ -42,8 +42,13 @@ const CharacterList = observer(
 			const container = containerRef.current;
 			const mouseY = event.clientY;
 
+			// Get all character elements
+			const characterElements = container.querySelectorAll(
+				"[data-character-index]",
+			);
+
 			// Clear any existing drop-character classes
-			for (const el of container.children) {
+			for (const el of characterElements) {
 				el.classList.remove("drop-character", "drop-character-before");
 			}
 
@@ -57,8 +62,8 @@ const CharacterList = observer(
 			// Find the insertion point based on mouse position
 			let dropIndex: number | null | undefined;
 
-			for (let i = 0; i < container.children.length; i++) {
-				const rect = container.children[i].getBoundingClientRect();
+			for (let i = 0; i < characterElements.length; i++) {
+				const rect = characterElements[i].getBoundingClientRect();
 				const elementCenter = rect.top + rect.height / 2;
 
 				if (mouseY < elementCenter) {
@@ -80,13 +85,13 @@ const CharacterList = observer(
 			// Apply visual feedback
 			if (dropIndex === null) {
 				// Inserting at beginning - we need to show feedback above first element
-				if (container.children[0]) {
-					container.children[0].classList.add("drop-character-before");
+				if (characterElements[0]) {
+					characterElements[0].classList.add("drop-character-before");
 				}
 			} else {
 				// Inserting between elements - highlight the element after which we'll insert
-				if (container.children[dropIndex]) {
-					container.children[dropIndex].classList.add("drop-character");
+				if (characterElements[dropIndex]) {
+					characterElements[dropIndex].classList.add("drop-character");
 				}
 			}
 		};
