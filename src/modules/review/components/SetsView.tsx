@@ -24,8 +24,8 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 // components
 import { Arrow } from "#/components/Arrow/Arrow";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
-import ModLoadoutDetail from "#/components/ModLoadoutDetail/ModLoadoutDetail";
-import ModLoadoutView from "#/components/ModLoadoutView/ModLoadoutView";
+import ModLoadoutDetail from "./ModLoadoutDetail";
+import ModLoadoutView from "./ModLoadoutView";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";

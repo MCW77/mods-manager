@@ -17,7 +17,7 @@ import type { CharacterModding } from "#/modules/compilations/domain/CharacterMo
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
-import ModLoadoutView from "#/components/ModLoadoutView/ModLoadoutView";
+import ModLoadoutView from "./ModLoadoutView";
 
 interface PlayerStat {
 	name: CSStats.DisplayStatNames;
