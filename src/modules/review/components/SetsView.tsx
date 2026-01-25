@@ -22,7 +22,7 @@ import { createModLoadout } from "#/domain/ModLoadout";
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { Arrow } from "#/components/Arrow/Arrow";
+import { Arrow } from "./Arrow";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 import ModLoadoutDetail from "./ModLoadoutDetail";
 import ModLoadoutView from "./ModLoadoutView";

@@ -24,7 +24,7 @@ import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
-import { Arrow } from "#/components/Arrow/Arrow";
+import { Arrow } from "./Arrow";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 import ModDetail from "#/components/ModDetail/ModDetail";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
