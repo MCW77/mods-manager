@@ -68,20 +68,20 @@ function ModGroupItem({
 			<Collapsible.Trigger className="flex hover:cursor-pointer" asChild>
 				<div>
 					<span className="basis-20%">
-						{tDomain(`slots.name.${modGroup$.mods[0].slot.peek()}`)}
+						{tDomain(`slots.name.${modGroup$.mods.peek()[0].slot}`)}
 					</span>
 					<span className="basis-30%">
-						{tDomain(`stats.${modGroup$.mods[0].modset.peek()}`)}
+						{tDomain(`stats.${modGroup$.mods.peek()[0].modset}`)}
 					</span>
 					<span className="basis-30%">
 						{tDomain(
-							`stats.${modGroup$.mods[0].primaryStat.peek().getDisplayType()}`,
+							`stats.${modGroup$.mods.peek()[0].primaryStat.getDisplayType()}`,
 						)}
 					</span>
 					<span className="basis-20%">
 						(
 						{tDomain("ModWithCount", {
-							count: modGroup$.mods.length,
+							count: modGroup$.mods.peek().length,
 						})}
 						)
 					</span>

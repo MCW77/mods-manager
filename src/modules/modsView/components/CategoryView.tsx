@@ -8,35 +8,36 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
-// domain
-import { ModsFilter } from "../domain/ModsFilter";
-
 // components
 import GroupedMods from "./GroupedMods";
 
 const CategoryView: React.FC = observer(() => {
-	const modById = useValue(profilesManagement$.activeProfile.modById);
-	const activeViewSetupInActiveCategory = useValue(
-		modsView$.activeViewSetupInActiveCategory,
-	);
-	const quickFilter = useValue(modsView$.quickFilter);
-	const modsFilter = new ModsFilter(
-		activeViewSetupInActiveCategory,
-		quickFilter,
-	);
-	const [filteredMods, modsCount] = modsFilter.applyModsViewOptions(
-		Array.from(modById.values()),
-	);
+	// Start performance measurement
+	performance.mark("mods-filter-start");
 
-	const mods = [];
-	for (const modsInGroup of Object.values(filteredMods)) {
-		if (modsInGroup.length > 0) mods.push(modsInGroup);
-	}
-	const groupedMods = mods.sort((mods1, mods2) => mods1.length - mods2.length);
+	const modById = useValue(profilesManagement$.activeProfile.modById);
+
+	// Use the new computed observables
+	const transformedMods = useValue(modsView$.transformedMods);
+	const modsCount = useValue(modsView$.modsCount);
+
+	// End performance measurement
+	performance.mark("mods-filter-end");
+	performance.measure(
+		"mods-filter-total",
+		"mods-filter-start",
+		"mods-filter-end",
+	);
+	const measure = performance.getEntriesByName("mods-filter-total")[0];
+	console.log(
+		`[perf-mods] Filter/Group/Sort: ${measure.duration.toFixed(2)}ms`,
+	);
+	performance.clearMarks();
+	performance.clearMeasures();
 
 	return (
 		<GroupedMods
-			groupedMods={groupedMods}
+			groupedMods={transformedMods}
 			allModsCount={modById.size}
 			displayedModsCount={modsCount}
 		/>

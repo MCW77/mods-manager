@@ -1,6 +1,9 @@
 // utils
 import Big from "big.js";
 
+// state
+import { ObservableHint } from "@legendapp/state";
+
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { ModTiersEnum } from "#/constants/enums";
@@ -125,6 +128,17 @@ export class Mod {
 		this.reRolledCount = reRolledCount;
 		this.speedRemainder = speedRemainder;
 		this.tier = tier;
+
+		/**
+		 * 1. Performance: Marking Mod instances as opaque prevents Legend State from recursively
+		 *    traversing and wrapping all nested properties (secondaryStats, primaryStat, etc.)
+		 * 2. Arrays: We mark arrays of Mods as opaque using ObservableHint.opaque(array), but the
+		 *    individual Mod objects within need this symbol set to prevent deep observation of their
+		 *    internal structure
+		 * 3. With this we can't observe individual properties of Mod instances.
+		 *    Just get/peek the whole Mod and access properties on the raw Mod.
+		 */
+		ObservableHint.opaque(this);
 		for (const stat of this.secondaryStats) {
 			if (this.pips === 6) {
 				const tempStat = stat.downgrade();

@@ -1,5 +1,10 @@
+// state
 import type { Observable, ObservablePrimitive } from "@legendapp/state";
+
+//domain
+import type { Mod } from "#/domain/Mod";
 import type { Categories } from "./Categories";
+import type { ModFilterPredicate } from "./ModFilterPredicate";
 import type {
 	Filter,
 	TriStateFilterKeys,
@@ -51,6 +56,17 @@ interface ModsViewObservable {
 	addFilter: () => void;
 	removeFilter: (id: string) => void;
 	renameFilter: (id: string, newName: string) => void;
+	// Computed observables for filtering, grouping, and sorting
+
+	// Computed: Filter mods based on named filters and quick filter
+	filteredMods: () => Mod[];
+	// Computed: Group filtered mods
+	groupedMods: () => Record<string, Mod[]>;
+	// Computed: Finish mods transform by sorting each group and return as array of arrays
+	transformedMods: () => Mod[][];
+	modsCount: () => number;
+	quickFilterPredicate: () => { predicates: ModFilterPredicate[]; id: number };
+	namedFiltersPredicates: () => ModFilterPredicate[];
 }
 
 export type { ModsViewObservable, ModsViewPersistedData };

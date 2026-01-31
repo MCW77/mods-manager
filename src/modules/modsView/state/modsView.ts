@@ -1,18 +1,29 @@
 // utils
+import { groupBy } from "#/utils/groupBy";
 import { objectKeys } from "#/utils/objectKeys";
+import mapValues from "lodash-es/mapValues";
+import orderBy from "lodash-es/orderBy";
 
 // state
 import {
+	ObservableHint,
+	type ObservableObject,
 	beginBatch,
 	endBatch,
 	observable,
-	type ObservableObject,
 } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const profilesManagement$ = stateLoader$.profilesManagement$;
 
 // domain
+import type { Mod } from "#/domain/Mod";
 import type { Categories } from "../domain/Categories";
+import {
+	createCombinedPredicate,
+	type ModFilterPredicate,
+} from "../domain/ModFilterPredicate";
 import type {
 	ModsViewObservable,
 	ModsViewPersistedData,
@@ -79,6 +90,9 @@ const defaultViewSetup: ModsViewPersistedData = {
 	},
 };
 
+let quickFilterPredicateCallCount = 0;
+let filteredModsCallCount = 0;
+
 const modsView$: ObservableObject<ModsViewObservable> =
 	observable<ModsViewObservable>({
 		persistedData: structuredClone(defaultViewSetup),
@@ -116,21 +130,16 @@ const modsView$: ObservableObject<ModsViewObservable> =
 		idOfSelectedFilterInActiveCategory: () =>
 			modsView$.idOfSelectedFilterByCategory[modsView$.activeCategory.get()],
 		activeViewSetupInActiveCategory: () => {
-			console.log(
-				"compute activeViewSetupInActiveCategory: ",
-				modsView$.activeViewSetupInActiveCategory.peek(),
-			);
-			const viewSetup =
-				modsView$.viewSetupByIdInActiveCategory[
-					modsView$.idOfActiveViewSetupInActiveCategory.get()
-				];
+			const viewSetupById = modsView$.viewSetupByIdInActiveCategory;
+			const id = modsView$.idOfActiveViewSetupInActiveCategory.get();
+
+			const viewSetup = viewSetupById[id];
 			if (viewSetup !== undefined) {
-				return viewSetup;
+				return ObservableHint.opaque(viewSetup);
 			}
 			throw new Error("Active view setup not found");
 		},
 		activeFilter: () => {
-			console.log("compute activeFilter");
 			const idOfSelectedFilterInActiveCategory =
 				modsView$.idOfSelectedFilterInActiveCategory.get();
 
@@ -140,6 +149,177 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			return modsView$.activeViewSetupInActiveCategory.filterById[
 				idOfSelectedFilterInActiveCategory
 			];
+		},
+		filteredMods: () => {
+			filteredModsCallCount++;
+			console.log(`filteredMods computed START (#${filteredModsCallCount})`);
+			const startTotal = performance.now();
+			let childTime = 0;
+
+			let start = performance.now();
+			const modById = profilesManagement$.activeProfile.modById.get();
+			const mods = Array.from(modById.values());
+			const namedFiltersPredicates = modsView$.namedFiltersPredicates.get();
+			childTime += performance.now() - start;
+
+			start = performance.now();
+			const quickFilterPredicateResult = modsView$.quickFilterPredicate.get();
+			console.log(
+				`filteredMods got quickFilterPredicate: id=${quickFilterPredicateResult.id}, array=${quickFilterPredicateResult.predicates}, func=${quickFilterPredicateResult.predicates[0]}`,
+			);
+			childTime += performance.now() - start;
+
+			let result: Mod[] = namedFiltersPredicates.length === 0 ? mods : [];
+			let filteredMods: Mod[] = [];
+			for (const filter of namedFiltersPredicates) {
+				filteredMods = mods.filter(filter);
+				for (const mod of filteredMods) {
+					if (!result.includes(mod)) result.push(mod);
+				}
+			}
+			result = result.filter(quickFilterPredicateResult.predicates[0]);
+
+			const totalTime = performance.now() - startTotal;
+			const ownTime = totalTime - childTime;
+			console.log(
+				`filteredMods: total=${totalTime.toFixed(2)}ms, own=${ownTime.toFixed(2)}ms`,
+			);
+			// Mark the array as opaque to prevent Legend State from recursively traversing it
+			// Note: We cannot mark individual Mod objects as opaque because components need to observe them
+			return ObservableHint.opaque(result);
+		},
+		groupedMods: () => {
+			const startTotal = performance.now();
+			let childTime = 0;
+
+			let start = performance.now();
+
+			const mods = modsView$.filteredMods.get({ shallow: true });
+			const getTime = performance.now() - start;
+			childTime += getTime;
+			console.log(
+				`groupedMods filteredMods.get() time: ${getTime.toFixed(2)}ms`,
+			);
+
+			start = performance.now();
+			const viewSetup = modsView$.activeViewSetupInActiveCategory.get();
+			const viewSetupTime = performance.now() - start;
+			childTime += viewSetupTime;
+			console.log(
+				`groupedMods activeViewSetupInActiveCategory.get() time: ${viewSetupTime.toFixed(2)}ms`,
+			);
+
+			if (!viewSetup.isGroupingEnabled) {
+				const totalTime = performance.now() - startTotal;
+				const ownTime = totalTime - childTime;
+				console.log(
+					`groupedMods: total=${totalTime.toFixed(2)}ms, own=${ownTime.toFixed(2)}ms`,
+				);
+				return ObservableHint.opaque({ all: mods });
+			}
+
+			start = performance.now();
+			const result = groupBy(
+				mods,
+				(mod: Mod) => `${mod.slot}-${mod.modset}-${mod.primaryStat.type}`,
+			);
+			const groupByTime = performance.now() - start;
+
+			const totalTime = performance.now() - startTotal;
+			const ownTime = totalTime - childTime;
+			console.log(
+				`groupedMods: total=${totalTime.toFixed(2)}ms, own=${ownTime.toFixed(2)}ms, groupBy=${groupByTime.toFixed(2)}ms`,
+			);
+			return ObservableHint.opaque(result);
+		},
+		transformedMods: () => {
+			const startTotal = performance.now();
+			let childTime = 0;
+
+			let start = performance.now();
+
+			const grouped = modsView$.groupedMods.get({ shallow: true });
+			const getTime = performance.now() - start;
+			childTime += getTime;
+			console.log(
+				`sortedGroupedMods groupedMods.get() time: ${getTime.toFixed(2)}ms`,
+			);
+
+			start = performance.now();
+			const viewSetup = modsView$.activeViewSetupInActiveCategory.get();
+			const sortOptions = structuredClone(viewSetup.sort);
+			const cloneTime = performance.now() - start;
+			childTime += cloneTime;
+			console.log(
+				`sortedGroupedMods sortOptions clone time: ${cloneTime.toFixed(2)}ms`,
+			);
+
+			if (sortOptions.size === 0) {
+				const id = crypto.randomUUID();
+				sortOptions.set(id, {
+					id,
+					sortBy: "characterID",
+					sortOrder: "asc",
+				});
+			}
+
+			const sortBys: string[] = [];
+			const sortDirections: ("asc" | "desc")[] = [];
+			for (const sortConfig of sortOptions.values()) {
+				sortBys.push(sortConfig.sortBy);
+				sortDirections.push(sortConfig.sortOrder);
+			}
+
+			start = performance.now();
+			const sortedMods = mapValues(grouped, (mods: Mod[]) => {
+				const sortedMods = orderBy(mods, sortBys, sortDirections);
+				return sortedMods;
+			});
+			const mapValuesTime = performance.now() - start;
+
+			start = performance.now();
+			const mods = Object.values(sortedMods);
+			const result = mods.sort((mods1, mods2) => mods1.length - mods2.length);
+			const finalSortTime = performance.now() - start;
+
+			const totalTime = performance.now() - startTotal;
+			const ownTime = totalTime - childTime;
+			console.log(
+				`sortedGroupedMods: total=${totalTime.toFixed(2)}ms, own=${ownTime.toFixed(2)}ms, clone=${cloneTime.toFixed(2)}ms, mapValues=${mapValuesTime.toFixed(2)}ms, finalSort=${finalSortTime.toFixed(2)}ms`,
+			);
+			return ObservableHint.opaque(result);
+		},
+		modsCount: () => {
+			return modsView$.filteredMods.get().length;
+		},
+		quickFilterPredicate: () => {
+			quickFilterPredicateCallCount++;
+			const filter = modsView$.quickFilter.get();
+			const modScore = modsView$.activeViewSetupInActiveCategory.modScore.get();
+			const predicate = createCombinedPredicate(filter, modScore);
+			const predicates: ModFilterPredicate[] = [];
+			predicates.push(predicate);
+			console.log(
+				`quickFilterPredicate computed (#${quickFilterPredicateCallCount}), returning new array:`,
+				predicates,
+			);
+			// TEST: Add a unique ID to each array to force it to be seen as different
+			return { predicates, id: quickFilterPredicateCallCount };
+		},
+		namedFiltersPredicates: () => {
+			const filterById =
+				modsView$.activeViewSetupInActiveCategory.filterById.get();
+
+			const filters = Object.values(filterById);
+			const predicates: ModFilterPredicate[] = [];
+			for (const filter of filters) {
+				const modScore =
+					modsView$.activeViewSetupInActiveCategory.modScore.get();
+
+				predicates.push(createCombinedPredicate(filter, modScore));
+			}
+
+			return predicates;
 		},
 		resetActiveViewSetup: () => {
 			modsView$.activeViewSetupInActiveCategory.set(
