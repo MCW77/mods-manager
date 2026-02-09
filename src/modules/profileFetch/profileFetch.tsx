@@ -259,9 +259,11 @@ function updatePlayerData(
 			);
 		if (fullProfile.mods) {
 			for (const mod of fullProfile.mods.mods) {
-				profilesManagement$.profiles.profileByAllycode[newAllycode].modById[
-					mod.id
-				].speedRemainder.set(mod.speedRemainder);
+				const profileMod =
+					profilesManagement$.profiles.profileByAllycode[newAllycode].modById[
+						mod.id
+					].peek();
+				if (profileMod) profileMod.speedRemainder = mod.speedRemainder;
 			}
 		}
 
