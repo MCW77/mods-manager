@@ -83,6 +83,11 @@ Inside that fixtures folder, the fixtures can be grouped by subfolder if needed.
 - TypeScript: 5.9.3+
 - React: 19.0.0+
 
+## Version Control Rules
+- Never use any git commands directly unless instructed
+- Always ask before using git commands
+- Commit messages have to follow the conventional commits format
+
 ## Additional Notes
 - Use `pnpm` for all package management tasks
 - Ensure all code adheres to TypeScript strict mode

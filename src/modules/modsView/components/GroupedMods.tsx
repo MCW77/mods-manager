@@ -11,6 +11,10 @@ import {
 	observable,
 	type Observable,
 } from "@legendapp/state";
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const modsView$ = stateLoader$.modsView$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
@@ -68,20 +72,20 @@ function ModGroupItem({
 			<Collapsible.Trigger className="flex hover:cursor-pointer" asChild>
 				<div>
 					<span className="basis-20%">
-						{tDomain(`slots.name.${modGroup$.mods[0].slot.peek()}`)}
+						{tDomain(`slots.name.${modGroup$.mods.peek()[0].slot}`)}
 					</span>
 					<span className="basis-30%">
-						{tDomain(`stats.${modGroup$.mods[0].modset.peek()}`)}
+						{tDomain(`stats.${modGroup$.mods.peek()[0].modset}`)}
 					</span>
 					<span className="basis-30%">
 						{tDomain(
-							`stats.${modGroup$.mods[0].primaryStat.peek().getDisplayType()}`,
+							`stats.${modGroup$.mods.peek()[0].primaryStat.getDisplayType()}`,
 						)}
 					</span>
 					<span className="basis-20%">
 						(
 						{tDomain("ModWithCount", {
-							count: modGroup$.mods.length,
+							count: modGroup$.mods.peek().length,
 						})}
 						)
 					</span>
@@ -120,24 +124,18 @@ function ModItem({ item$, modGroupsElement }: ModItemProps) {
 	);
 }
 
-interface GroupedModsProps {
-	allModsCount: number;
-	displayedModsCount: number;
-	groupedMods: Mod[][];
-}
-
-const GroupedMods = ({
-	groupedMods,
-	allModsCount,
-	displayedModsCount,
-}: GroupedModsProps) => {
+function GroupedMods() {
 	const [t] = useTranslation("explore-ui");
 	const [tDomain] = useTranslation("domain");
+
+	const allModsCount = useValue(profilesManagement$.activeProfile.modById.size);
+	const transformedMods = useValue(modsView$.transformedMods);
+	const transformedModsCount = useValue(modsView$.transformedModsCount);
 
 	const modGroupsElement = useRef<HTMLDivElement>(null);
 
 	const modGroups: ModGroup[] = [];
-	for (const modGroup of groupedMods) {
+	for (const modGroup of transformedMods) {
 		modGroups.push({
 			isOpen: true,
 			id: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
@@ -168,7 +166,7 @@ const GroupedMods = ({
 			<div className="flex justify-between">
 				<div className="flex gap-2 p-l-2 items-center text-sm align-middle">
 					{t("ModsShown", {
-						actual: displayedModsCount,
+						actual: transformedModsCount,
 						max: allModsCount,
 					})}
 					&nbsp;
@@ -177,7 +175,7 @@ const GroupedMods = ({
 						size={"sm"}
 						variant={"destructive"}
 						onClick={() => {
-							dialog$.show(<DeleteModsModal groupedMods={groupedMods} />);
+							dialog$.show(<DeleteModsModal groupedMods={transformedMods} />);
 						}}
 					>
 						<FontAwesomeIcon icon={faTrashCan} title={t("DeleteButton")} />
@@ -224,8 +222,6 @@ const GroupedMods = ({
 			</div>
 		</div>
 	);
-};
-
-GroupedMods.displayName = "GroupedMods";
+}
 
 export default GroupedMods;

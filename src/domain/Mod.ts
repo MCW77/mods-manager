@@ -1,6 +1,9 @@
 // utils
 import Big from "big.js";
 
+// state
+import { ObservableHint } from "@legendapp/state";
+
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { ModTiersEnum } from "#/constants/enums";
@@ -45,61 +48,7 @@ export class Mod {
 	reRolledCount: number;
 	speedRemainder = 0;
 
-	static firstTimeSetupOfAccessors = true;
-
 	static reRollPrices = [15, 25, 40, 75, 100, 150];
-
-	static setupCalibrationAccessors() {
-		Object.defineProperty(Mod.prototype, "TotalCalibrations", {
-			get: function (): number {
-				if ((this as Mod).pips < 6) return 0;
-				return (this as Mod).tier + 1;
-			},
-			configurable: true,
-		});
-	}
-
-	static setupStatAccessors() {
-		for (const stat of SecondaryStat.statNames) {
-			Object.defineProperty(Mod.prototype, `StatScore${stat}`, {
-				get: function (): number {
-					const foundStat: SecondaryStat | undefined = (
-						this as Mod
-					).secondaryStats.find(
-						(traversedStat: SecondaryStat) => traversedStat.type === stat,
-					);
-					return foundStat ? Number(foundStat.score.value) : 0;
-				},
-				configurable: true,
-			});
-			Object.defineProperty(Mod.prototype, `Stat${stat}`, {
-				get: function (): number {
-					const foundStat: SecondaryStat | undefined = (
-						this as Mod
-					).secondaryStats.find(
-						(traversedStat: SecondaryStat) => traversedStat.type === stat,
-					);
-					return foundStat ? foundStat.value : 0;
-				},
-				configurable: true,
-			});
-		}
-	}
-
-	static setupModScoreAccessors() {
-		for (const modScore of modScores) {
-			Object.defineProperty(Mod.prototype, `ModScore${modScore.name}`, {
-				get: function (): number {
-					return (this as Mod).scores[modScore.name] ?? 0;
-				},
-				configurable: true,
-			});
-		}
-	}
-
-	static setupAccessors(): void {
-		Mod.setupModScoreAccessors();
-	}
 
 	constructor(
 		id: string,
@@ -125,6 +74,17 @@ export class Mod {
 		this.reRolledCount = reRolledCount;
 		this.speedRemainder = speedRemainder;
 		this.tier = tier;
+
+		/**
+		 * 1. Performance: Marking Mod instances as opaque prevents Legend State from recursively
+		 *    traversing and wrapping all nested properties (secondaryStats, primaryStat, etc.)
+		 * 2. Arrays: We mark arrays of Mods as opaque using ObservableHint.opaque(array), but the
+		 *    individual Mod objects within need this symbol set to prevent deep observation of their
+		 *    internal structure
+		 * 3. With this we can't observe individual properties of Mod instances.
+		 *    Just get/peek the whole Mod and access properties on the raw Mod.
+		 */
+		ObservableHint.opaque(this);
 		for (const stat of this.secondaryStats) {
 			if (this.pips === 6) {
 				const tempStat = stat.downgrade();
@@ -423,9 +383,6 @@ export class Mod {
 		);
 	}
 }
-
-Mod.setupStatAccessors();
-Mod.setupCalibrationAccessors();
 
 // #region ModScores
 interface ModScore {
