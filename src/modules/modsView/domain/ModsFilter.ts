@@ -12,7 +12,7 @@ import type {
 	TriStateFilterKeys,
 } from "./ModsViewOptions";
 import type { SortConfigById } from "./SortConfig";
-import { Mod } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod";
 
 type ModFilterPredicate = (mod: Mod) => boolean;
 
@@ -41,7 +41,6 @@ class ModsFilter {
 	isGroupingEnabled: boolean;
 
 	constructor(modsViewOptions: ViewSetup, quickFilter: Filter) {
-		Mod.setupAccessors();
 		[this.selectedOptions, this.unselectedOptions] =
 			this.extractSelectedAndUnselectedOptions(quickFilter);
 		this.quickFilter = combineFilters([

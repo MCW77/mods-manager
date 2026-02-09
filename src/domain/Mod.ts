@@ -48,61 +48,7 @@ export class Mod {
 	reRolledCount: number;
 	speedRemainder = 0;
 
-	static firstTimeSetupOfAccessors = true;
-
 	static reRollPrices = [15, 25, 40, 75, 100, 150];
-
-	static setupCalibrationAccessors() {
-		Object.defineProperty(Mod.prototype, "TotalCalibrations", {
-			get: function (): number {
-				if ((this as Mod).pips < 6) return 0;
-				return (this as Mod).tier + 1;
-			},
-			configurable: true,
-		});
-	}
-
-	static setupStatAccessors() {
-		for (const stat of SecondaryStat.statNames) {
-			Object.defineProperty(Mod.prototype, `StatScore${stat}`, {
-				get: function (): number {
-					const foundStat: SecondaryStat | undefined = (
-						this as Mod
-					).secondaryStats.find(
-						(traversedStat: SecondaryStat) => traversedStat.type === stat,
-					);
-					return foundStat ? Number(foundStat.score.value) : 0;
-				},
-				configurable: true,
-			});
-			Object.defineProperty(Mod.prototype, `Stat${stat}`, {
-				get: function (): number {
-					const foundStat: SecondaryStat | undefined = (
-						this as Mod
-					).secondaryStats.find(
-						(traversedStat: SecondaryStat) => traversedStat.type === stat,
-					);
-					return foundStat ? foundStat.value : 0;
-				},
-				configurable: true,
-			});
-		}
-	}
-
-	static setupModScoreAccessors() {
-		for (const modScore of modScores) {
-			Object.defineProperty(Mod.prototype, `ModScore${modScore.name}`, {
-				get: function (): number {
-					return (this as Mod).scores[modScore.name] ?? 0;
-				},
-				configurable: true,
-			});
-		}
-	}
-
-	static setupAccessors(): void {
-		Mod.setupModScoreAccessors();
-	}
 
 	constructor(
 		id: string,
@@ -437,9 +383,6 @@ export class Mod {
 		);
 	}
 }
-
-Mod.setupStatAccessors();
-Mod.setupCalibrationAccessors();
 
 // #region ModScores
 interface ModScore {
