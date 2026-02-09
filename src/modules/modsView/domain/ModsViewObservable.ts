@@ -60,11 +60,11 @@ interface ModsViewObservable {
 
 	// Computed: Filter mods based on named filters and quick filter
 	filteredMods: () => Mod[];
-	// Computed: Group filtered mods
+	// Computed: Group filtered mods by slot, modset and primary stat
 	groupedMods: () => Record<string, Mod[]>;
-	// Computed: Finish mods transform by sorting each group and return as array of arrays
+	// Computed: Finish mods transform by sorting each group and return as array of Mod[]
 	transformedMods: () => Mod[][];
-	modsCount: () => number;
+	transformedModsCount: () => number;
 	quickFilterPredicate: () => { predicates: ModFilterPredicate[]; id: number };
 	namedFiltersPredicates: () => ModFilterPredicate[];
 }

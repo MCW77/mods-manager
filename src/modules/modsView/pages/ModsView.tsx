@@ -13,7 +13,7 @@ const modsView$ = stateLoader$.modsView$;
 import type { Categories } from "../domain/Categories";
 
 // components
-import CategoryView from "../components/CategoryView";
+import GroupedMods from "../components/GroupedMods";
 import ViewSetupWidget from "../components/ViewSetupWidget";
 import { FlexSidebar } from "#/components/FlexSidebar/FlexSidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
@@ -55,7 +55,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="AllMods"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
@@ -65,7 +65,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Reveal"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
@@ -75,7 +75,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Level"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
@@ -85,7 +85,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Slice5Dot"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
@@ -95,7 +95,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Slice6E"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
@@ -105,7 +105,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Slice6Dot"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
@@ -115,7 +115,7 @@ const ModsView = React.memo(() => {
 								className={"flex data-[state=active]:grow-1 min-h-0"}
 								value="Calibrate"
 							>
-								<CategoryView />
+								<GroupedMods />
 							</TabsContent>
 						</Suspense>
 					</Memo>
