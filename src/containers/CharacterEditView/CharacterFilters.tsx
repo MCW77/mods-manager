@@ -145,6 +145,10 @@ const customCharacterFilterGroups = [
 				value: "Faction--Inquisitorius",
 			},
 			{
+				label: "ISB",
+				value: "Faction--ISB",
+			},
+			{
 				label: "Jawa",
 				value: "Faction--Jawa",
 			},

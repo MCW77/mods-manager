@@ -532,6 +532,7 @@ const getDefaultFilterSetup = () => {
 		"Imperial Remnant",
 		"Imperial Trooper",
 		"Inquisitorius",
+		"ISB",
 		"Jawa",
 		"Jedi",
 		"Jedi Vanguard",
