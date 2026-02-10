@@ -25,7 +25,12 @@ const incrementalOptimization$: ObservableObject<IncrementalOptimizationObservab
 			return incrementalOptimization$.persistedData.indicesByProfile;
 		},
 		addProfile: (allycode: string) => {
-			if (Object.hasOwn(incrementalOptimization$.indicesByProfile, allycode)) {
+			if (
+				Object.hasOwn(
+					incrementalOptimization$.indicesByProfile.peek(),
+					allycode,
+				)
+			) {
 				return;
 			}
 			incrementalOptimization$.indicesByProfile.set({

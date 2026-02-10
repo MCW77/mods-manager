@@ -45,7 +45,7 @@ const lockedStatus$: ObservableObject<LockedStatusObservable> =
 		addProfile: (allycode: string) => {
 			if (
 				Object.hasOwn(
-					lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode,
+					lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.peek(),
 					allycode,
 				)
 			)

@@ -26,7 +26,8 @@ const materials$: ObservableObject<MaterialsObservable> =
 			return materials$.persistedData;
 		},
 		addProfile: (allycode: string) => {
-			if (Object.hasOwn(materials$.materialByIdByAllycode, allycode)) return;
+			if (Object.hasOwn(materials$.materialByIdByAllycode.peek(), allycode))
+				return;
 			materials$.materialByIdByAllycode[allycode].set({
 				id: allycode,
 				materialById: new Map<string, Material>(),

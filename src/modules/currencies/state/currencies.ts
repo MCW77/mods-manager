@@ -26,7 +26,8 @@ const currencies$: ObservableObject<CurrenciesObservable> =
 			);
 		},
 		addProfile: (allycode: string) => {
-			if (Object.hasOwn(currencies$.currencyByIdByAllycode, allycode)) return;
+			if (Object.hasOwn(currencies$.currencyByIdByAllycode.peek(), allycode))
+				return;
 			currencies$.currencyByIdByAllycode[allycode].set({
 				id: allycode,
 				currencyById: new Map<string, Currency>(),

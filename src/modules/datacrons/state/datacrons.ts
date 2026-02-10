@@ -44,7 +44,8 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			return datacrons.map((d) => d.id);
 		},
 		addProfile: (allycode: string) => {
-			if (Object.hasOwn(datacrons$.datacronByIdByAllycode, allycode)) return;
+			if (Object.hasOwn(datacrons$.datacronByIdByAllycode.peek(), allycode))
+				return;
 			datacrons$.datacronByIdByAllycode[allycode].set({
 				id: allycode,
 				datacronById: new Map<string, Datacron>(),
