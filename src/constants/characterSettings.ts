@@ -289,6 +289,25 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 5,
 		}),
 	]),
+	ASAJJDARKDISCIPLE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			phys: 60,
+			prot: 20,
+			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Potency %": 1,
+			},
+		}),
+	]),
 	ASAJVENTRESS: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -2776,6 +2795,26 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 75,
 		}),
 	]),
+	IG90: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			spd: 100,
+			ten: 40,
+			prot: 20,
+			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				circle: "Protection %",
+				cross: "Tenacity %",
+				triangle: "Protection %",
+			},
+			setRes: {
+				"Tenacity %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	IMAGUNDI: createCharacterSettings(
 		[
 			toRenamed(
@@ -2833,6 +2872,26 @@ const characterSettings: CharacterSettingsIndexer = {
 			}),
 		],
 		["ISC"],
+	),
+	INQUISITORBARRISS: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 100,
+				spd: 40,
+				primaryRes: {
+					arrow: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+					triangle: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
 	),
 	ITHANO: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -3634,6 +3693,24 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	MAUL: createCharacterSettings([
 		toRenamed(optimizationStrategy["Special Damage with Potency"], "Default"),
+	]),
+	MAULHATEFUELED: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 80,
+			phys: 50,
+			spd: 100,
+			cc: 20,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
+		}),
 	]),
 	MAULS7: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -4898,6 +4975,25 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["STHan"],
 	),
+	STORMTROOPERLUKE: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			ten: 30,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				cross: "Health %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Tenacity %": 1,
+			},
+		}),
+	]),
 	STRANGER: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -5250,6 +5346,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Auto Lightzader", "Wampanader", "Nightmare"],
 	),
+	VADERDUELSENDS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			phys: 50,
+			cc: 20,
+			primaryRes: {
+				arrow: "Speed",
+				circle: "Health %",
+				cross: "Offense %",
+				triangle: "Critical Damage %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Critical Chance %": 1,
+			},
+		}),
+	]),
 	VANE: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -5460,6 +5574,47 @@ const characterSettings: CharacterSettingsIndexer = {
 			},
 		}),
 	]),
+	YODACHEWBACCA: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 15,
+				spd: 100,
+				arm: 40,
+				res: 40,
+				primaryRes: {
+					arrow: "Speed",
+					circle: "Protection %",
+					cross: "Protection %",
+					triangle: "Defense %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Defense %": 1,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Defense",
+				health: 20,
+				prot: 15,
+				spd: 100,
+				arm: 40,
+				res: 40,
+				primaryRes: {
+					arrow: "Speed",
+					circle: "Protection %",
+					cross: "Defense %",
+					triangle: "Defense %",
+				},
+				setRes: {
+					"Defense %": 3,
+				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
 	YOUNGCHEWBACCA: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
