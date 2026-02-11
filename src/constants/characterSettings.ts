@@ -5346,7 +5346,7 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Auto Lightzader", "Wampanader", "Nightmare"],
 	),
-	VADERDUELSENDS: createCharacterSettings([
+	VADERDUELSEND: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
 			spd: 100,
