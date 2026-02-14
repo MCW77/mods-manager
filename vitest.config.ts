@@ -22,9 +22,7 @@ export default defineConfig({
 		},
 		globals: true,
 		setupFiles: ["./src/tests/migrations/setup.ts"],
-		include: [
-			"src/tests/migrations/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
-		],
+		include: ["src/tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
 		testTimeout: 30000, // Longer timeout for database operations
 		coverage: {
 			provider: "v8",
