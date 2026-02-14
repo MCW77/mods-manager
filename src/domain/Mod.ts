@@ -1,5 +1,10 @@
 // utils
-import Big from "big.js";
+import {
+	toScaled,
+	fromScaled,
+	mulScaled,
+	divScaled,
+} from "../utils/scaledNumber";
 
 // state
 import { ObservableHint } from "@legendapp/state";
@@ -260,9 +265,7 @@ export class Mod {
 	}
 
 	getClass() {
-		switch (
-			Math.floor(Big(this.scores.PureSecondaries).div(Big(20)).toNumber())
-		) {
+		switch (Math.floor(this.scores.PureSecondaries / 20)) {
 			case 4:
 				return "S";
 			case 3:
@@ -427,10 +430,11 @@ modScores.push(
 		"IsPercentage",
 		(mod: Mod) => {
 			if (mod.secondaryStats.length === 0) return 0;
-			return mod.secondaryStats
-				.reduce((acc, stat) => acc.plus(stat.score.value), Big(0))
-				.div(mod.secondaryStats.length)
-				.toNumber();
+			const sum = mod.secondaryStats.reduce(
+				(acc, stat) => acc + stat.score.value,
+				0,
+			);
+			return fromScaled(divScaled(sum, toScaled(mod.secondaryStats.length)));
 		},
 	),
 );
@@ -451,13 +455,11 @@ modScores.push(
 		"IsPercentage",
 		(mod: Mod) => {
 			if (mod.totalRolls === 0) return 0;
-			return mod.secondaryStats
-				.reduce(
-					(acc, stat) => acc.plus(stat.score.value.mul(stat.rolls)),
-					Big(0),
-				)
-				.div(mod.totalRolls)
-				.toNumber();
+			const sum = mod.secondaryStats.reduce(
+				(acc, stat) => acc + mulScaled(stat.score.value, toScaled(stat.rolls)),
+				0,
+			);
+			return fromScaled(divScaled(sum, toScaled(mod.totalRolls)));
 		},
 	),
 );
@@ -525,18 +527,20 @@ modScores.push(
 			};
 
 			return Number.parseFloat(
-				(mod.secondaryStats as (PrimaryStat | SecondaryStat)[])
-					.concat([mod.primaryStat])
-					.reduce(
-						(acc, stat) => acc.plus(stat.bigValue.mul(statScore[stat.type])),
-						Big(setScore[mod.modset]),
-					)
-					.toFixed(2),
+				fromScaled(
+					(mod.secondaryStats as (PrimaryStat | SecondaryStat)[])
+						.concat([mod.primaryStat])
+						.reduce(
+							(acc, stat) =>
+								acc +
+								mulScaled(stat.scaledValue, toScaled(statScore[stat.type])),
+							toScaled(setScore[mod.modset]),
+						),
+				).toFixed(2),
 			);
 		},
 	),
 );
-
 modScores.push(
 	createModScore(
 		"Pure6EOffense",
@@ -581,18 +585,17 @@ modScores.push(
 				if (isOffenseSecondary(stat.type)) return acc + stat.rolls;
 				return acc;
 			}, 0);
-			return mod.secondaryStats
-				.reduce(
-					(acc, stat) =>
-						acc.plus(
-							stat.score.value
-								.mul(stat.rolls)
-								.mul(isOffenseSecondary(stat.type) ? 1 : 0),
-						),
-					Big(0),
-				)
-				.div(offenseRolls + extraBadRolls)
-				.toNumber();
+			const sum = mod.secondaryStats.reduce((acc, stat) => {
+				const multiplier = isOffenseSecondary(stat.type) ? 1 : 0;
+				return (
+					acc +
+					mulScaled(
+						mulScaled(stat.score.value, toScaled(stat.rolls)),
+						toScaled(multiplier),
+					)
+				);
+			}, 0);
+			return fromScaled(divScaled(sum, toScaled(offenseRolls + extraBadRolls)));
 		},
 	),
 );
@@ -636,19 +639,17 @@ modScores.push(
 				if (isDefenseSecondary(stat.type)) return acc + stat.rolls;
 				return acc;
 			}, 0);
-			return mod.secondaryStats
-				.reduce(
-					(acc, stat) =>
-						acc.plus(
-							stat.score.value
-								.mul(stat.rolls)
-								.mul(isDefenseSecondary(stat.type) ? 1 : 0),
-						),
-					Big(0),
-				)
-				.div(defenseRolls + extraBadRolls)
-				.toNumber();
+			const sum = mod.secondaryStats.reduce((acc, stat) => {
+				const multiplier = isDefenseSecondary(stat.type) ? 1 : 0;
+				return (
+					acc +
+					mulScaled(
+						mulScaled(stat.score.value, toScaled(stat.rolls)),
+						toScaled(multiplier),
+					)
+				);
+			}, 0);
+			return fromScaled(divScaled(sum, toScaled(defenseRolls + extraBadRolls)));
 		},
 	),
 );
-// #endregion ModScores

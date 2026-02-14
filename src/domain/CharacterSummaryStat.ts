@@ -1,4 +1,5 @@
 // domain
+import { fromScaled } from "../utils/scaledNumber";
 import type { GIMOCharacterSummaryStatNames } from "./GIMOStatNames";
 import { Stat } from "./Stat";
 
@@ -94,7 +95,7 @@ export class CharacterSummaryStat extends Stat {
 		}
 
 		const result = this.clone();
-		result.value = this.bigValue.plus(that.bigValue).toNumber();
+		result.value = fromScaled(this.scaledValue + that.scaledValue);
 		return result;
 	}
 
@@ -115,15 +116,16 @@ export class CharacterSummaryStat extends Stat {
 				"Can't take the difference between Stats of different types",
 			);
 		}
-		const valueDiff = this.bigValue.minus(that.bigValue);
+		const valueDiff = this.scaledValue - that.scaledValue;
+		const valueDiffAsNumber = fromScaled(valueDiff);
 		let _strValueDiff: string;
-		if (valueDiff.mod(1)) {
-			_strValueDiff = `${valueDiff.toFixed(2)}`;
+		if (valueDiffAsNumber % 1) {
+			_strValueDiff = `${valueDiffAsNumber.toFixed(2)}`;
 		} else {
-			_strValueDiff = `${valueDiff}`;
+			_strValueDiff = `${valueDiffAsNumber}`;
 		}
 		const result = this.clone();
-		result.value = valueDiff.toNumber();
+		result.value = valueDiffAsNumber;
 		//    result.rawValue = strValueDiff;
 		return result;
 		//    return new Stat(this.type, `${strValueDiff}${this.displayModifier}`);

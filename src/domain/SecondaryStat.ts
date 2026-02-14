@@ -1,5 +1,10 @@
 // utils
-import Big from "big.js";
+import {
+	toScaled,
+	fromScaled,
+	mulScaled,
+	divScaled,
+} from "../utils/scaledNumber";
 
 // domain
 import type { GIMOSecondaryStatNames } from "./GIMOStatNames";
@@ -55,19 +60,19 @@ export class SecondaryStat extends Stat {
 			Speed: "Speed",
 		};
 
-	static upgradeFactors: { [key in GIMOSecondaryStatNames]: number } = {
-		"Critical Chance %": 1.045,
-		Defense: 1.63,
-		"Defense %": 2.34,
-		Health: 1.26,
-		"Health %": 1.86,
-		Offense: 1.1,
-		"Offense %": 3.02,
-		"Potency %": 1.33,
-		Protection: 1.11,
-		"Protection %": 1.33,
-		Speed: 1,
-		"Tenacity %": 1.33,
+	static scaledUpgradeFactors: { [key in GIMOSecondaryStatNames]: number } = {
+		"Critical Chance %": toScaled(1.045),
+		Defense: toScaled(1.63),
+		"Defense %": toScaled(2.34),
+		Health: toScaled(1.26),
+		"Health %": toScaled(1.86),
+		Offense: toScaled(1.1),
+		"Offense %": toScaled(3.02),
+		"Potency %": toScaled(1.33),
+		Protection: toScaled(1.11),
+		"Protection %": toScaled(1.33),
+		Speed: toScaled(1),
+		"Tenacity %": toScaled(1.33),
 	};
 
 	id: string;
@@ -123,29 +128,37 @@ export class SecondaryStat extends Stat {
 	 * @returns {SecondaryStat}
 	 */
 	upgrade(): SecondaryStat {
+		const upgradedValue = mulScaled(
+			this.scaledValue,
+			SecondaryStat.scaledUpgradeFactors[this.type],
+		);
 		const result = new SecondaryStat(
 			this.id,
 			this.type,
-			`${this.bigValue.mul(SecondaryStat.upgradeFactors[this.type])}`,
+			`${fromScaled(upgradedValue)}`,
 			this.rolls,
 		);
 
 		if (this.type === "Speed")
-			result.value = result.bigValue.plus(1).toNumber();
+			result.value = fromScaled(result.scaledValue + toScaled(1));
 
 		return result;
 	}
 
 	downgrade(): SecondaryStat {
+		const downgradedValue = divScaled(
+			this.scaledValue,
+			SecondaryStat.scaledUpgradeFactors[this.type],
+		);
 		const result = new SecondaryStat(
 			this.id,
 			this.type,
-			`${this.bigValue.div(SecondaryStat.upgradeFactors[this.type])}`,
+			`${fromScaled(downgradedValue)}`,
 			this.rolls,
 		);
 
 		if (this.type === "Speed")
-			result.value = result.bigValue.minus(1).toNumber();
+			result.value = fromScaled(result.scaledValue - toScaled(1));
 
 		return result;
 	}
@@ -174,7 +187,7 @@ export class SecondaryStat extends Stat {
 }
 
 class StatScore {
-	value: Big;
+	value: number; // Scaled integer
 	valueAsString: string;
 
 	static statInfo: {
@@ -248,30 +261,34 @@ class StatScore {
 
 	constructor(stat: SecondaryStat) {
 		const currentStatInfo = StatScore.statInfo[stat.type];
-		let statIntValue: Big;
+		let statIntValue: number;
 
 		if (stat.displayModifier === "%")
-			statIntValue = stat.bigValue.mul(
-				Big(10 ** (currentStatInfo.decimalPoints - 2)),
+			statIntValue = mulScaled(
+				stat.scaledValue,
+				toScaled(10 ** (currentStatInfo.decimalPoints - 2)),
 			);
-		else statIntValue = stat.bigValue;
+		else statIntValue = stat.scaledValue;
 
-		const intDistance = statIntValue
-			.minus(Big(currentStatInfo.intMin * stat.rolls))
-			.plus(1);
-		const onePercentEquivalent = Big(currentStatInfo.intCount * stat.rolls)
-			.minus(stat.rolls)
-			.plus(1)
-			.div(100);
-		this.value = intDistance.div(onePercentEquivalent);
-		this.valueAsString = this.value.toFixed(2);
+		const intDistance =
+			statIntValue -
+			toScaled(currentStatInfo.intMin * stat.rolls) +
+			toScaled(1);
+		const onePercentEquivalent = divScaled(
+			toScaled(currentStatInfo.intCount * stat.rolls) -
+				toScaled(stat.rolls) +
+				toScaled(1),
+			toScaled(100),
+		);
+		this.value = divScaled(intDistance, onePercentEquivalent);
+		this.valueAsString = fromScaled(this.value).toFixed(2);
 	}
 
 	/**
 	 * Return a CSS class to represent this score
 	 */
 	getClass() {
-		switch (Math.floor(this.value.div(20).toNumber())) {
+		switch (Math.floor(fromScaled(divScaled(this.value, toScaled(20))))) {
 			case 4:
 				return "S";
 			case 3:

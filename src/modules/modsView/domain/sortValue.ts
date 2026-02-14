@@ -1,4 +1,5 @@
 // domain
+import { fromScaled } from "#/utils/scaledNumber";
 import { modScores, type Mod } from "#/domain/Mod";
 import { SecondaryStat } from "#/domain/SecondaryStat";
 
@@ -16,7 +17,7 @@ for (const statName of SecondaryStat.statNames) {
 	});
 	sortValueHandlers.set(`StatScore${statName}`, (mod: Mod) => {
 		for (const stat of mod.secondaryStats) {
-			if (stat.type === statName) return stat.score.value.toNumber();
+			if (stat.type === statName) return fromScaled(stat.score.value);
 		}
 		return 0;
 	});

@@ -2,6 +2,12 @@
 import { type ObservableObject, observable } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import {
+	fromScaled,
+	mulScaled,
+	divScaled,
+	toScaled,
+} from "#/utils/scaledNumber";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 import { compilations$ } from "#/modules/compilations/state/compilations";
@@ -604,10 +610,15 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 				if (stat.isPercentVersion && character.playerValues?.baseStats) {
 					return new CSStats.CharacterSummaryStat(
 						statType,
-						`${stat.bigValue
-							.mul(character?.playerValues?.baseStats[statName] ?? 0)
-							.div(100)
-							.toNumber()}`,
+						`${fromScaled(
+							divScaled(
+								mulScaled(
+									stat.scaledValue,
+									toScaled(character?.playerValues?.baseStats[statName] ?? 0),
+								),
+								toScaled(100),
+							),
+						)}`,
 					);
 				}
 				if (!stat.isPercentVersion) {
@@ -668,7 +679,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 			}
 			return statTypes
 				.map((statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
-					stat.bigValue.mul(target[statType]).toNumber(),
+					fromScaled(mulScaled(stat.scaledValue, toScaled(target[statType]))),
 				)
 				.reduce((a, b) => a + b, 0);
 		},
