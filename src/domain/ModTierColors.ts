@@ -1,9 +1,9 @@
-const modTierColors = {
-	S: "text-mod-gold",
-	A: "text-mod-purple",
-	B: "text-mod-blue",
-	C: "text-mod-green",
-	D: "text-mod-grey",
-} as const;
+const modTierColors = [
+	"text-mod-grey",
+	"text-mod-green",
+	"text-mod-blue",
+	"text-mod-purple",
+	"text-mod-gold",
+] as const;
 
 export { modTierColors };

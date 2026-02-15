@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Mod Scoring Calculations > calculateGIMOOffenseScore() > should calculate GIMO offense score 1`] = `256.04`;
+
+exports[`Mod Scoring Calculations > calculatePureSecondaries() > should calculate score for mod with multiple secondaries 1`] = `61.19043`;

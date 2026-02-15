@@ -1,5 +1,5 @@
 // utils
-import Big from "big.js";
+import { toScaled, fromScaled } from "../utils/scaledNumber";
 
 // domain
 import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
@@ -114,20 +114,20 @@ export abstract class Stat {
 	#displayValue = "0";
 	abstract type: AllGIMOStatNames;
 	protected stringValue = "0";
-	private _value: Big = Big(0);
+	private _scaledValue = 0; // Stores scaled integer (value * 1,000,000)
 	displayModifier: "" | "%" = "";
-	public get bigValue(): Big {
-		return this._value;
+	public get scaledValue(): number {
+		return this._scaledValue;
 	}
 	public get valueString(): string {
 		return this.stringValue;
 	}
 	get value(): number {
-		return this._value.toNumber();
+		return fromScaled(this._scaledValue);
 	}
 	set value(input: number) {
-		this._value = Big(input);
-		this.stringValue = this._value.toString();
+		this._scaledValue = toScaled(input);
+		this.stringValue = fromScaled(this._scaledValue).toString();
 		this.updateDisplayValue();
 	}
 	isPercentVersion = false;
@@ -147,10 +147,9 @@ export abstract class Stat {
 	 * value was updated
 	 */
 	updateDisplayValue() {
+		const numValue = fromScaled(this._scaledValue);
 		this.#displayValue = `${
-			this._value.mod(1)
-				? Math.round(this._value.toNumber() * 100) / 100
-				: this._value
+			numValue % 1 ? Math.round(numValue * 100) / 100 : numValue
 		}`;
 	}
 
