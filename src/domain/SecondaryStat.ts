@@ -78,7 +78,7 @@ export class SecondaryStat extends Stat {
 	id: string;
 	type: GIMOSecondaryStatNames;
 	rolls: Rolls;
-	score!: StatScore;
+	score: SecondaryStatScore;
 
 	constructor(
 		id: string,
@@ -94,6 +94,7 @@ export class SecondaryStat extends Stat {
 		this.isPercentVersion =
 			this.displayModifier === "%" &&
 			Stat.mixedTypes.includes(this.getDisplayType());
+		this.score = { scaledValue: 0, valueAsString: "0%" };
 	}
 
 	clone(): this {
@@ -120,7 +121,7 @@ export class SecondaryStat extends Stat {
 	}
 
 	calcScore() {
-		this.score = new StatScore(this);
+		this.score = createStatScore(this);
 	}
 
 	/**
@@ -170,142 +171,109 @@ export class SecondaryStat extends Stat {
 	/**
 	 * Return a CSS class to represent this stat
 	 */
-	getClass() {
-		switch (this.rolls) {
-			case 5:
-				return "S";
-			case 4:
-				return "A";
-			case 3:
-				return "B";
-			case 2:
-				return "C";
-			default:
-				return "D";
-		}
+	getRollsTier() {
+		return this.rolls - 1;
 	}
 }
 
-class StatScore {
-	value: number; // Scaled integer
+interface SecondaryStatScore {
+	scaledValue: number;
 	valueAsString: string;
+}
 
-	static statInfo: {
-		[key in GIMOSecondaryStatNames]: {
-			intMin: number;
-			intCount: number;
-			decimalPoints: number;
-		};
-	} = {
-		"Critical Chance %": {
-			intMin: 1125,
-			intCount: 1126,
-			decimalPoints: 5,
-		},
-		Defense: {
-			intMin: 4,
-			intCount: 7,
-			decimalPoints: 0,
-		},
-		"Defense %": {
-			intMin: 85,
-			intCount: 86,
-			decimalPoints: 4,
-		},
-		Health: {
-			intMin: 214,
-			intCount: 215,
-			decimalPoints: 0,
-		},
-		"Health %": {
-			intMin: 563,
-			intCount: 563,
-			decimalPoints: 5,
-		},
-		Offense: {
-			intMin: 23,
-			intCount: 24,
-			decimalPoints: 0,
-		},
-		"Offense %": {
-			intMin: 281,
-			intCount: 283,
-			decimalPoints: 5,
-		},
-		"Potency %": {
-			intMin: 1125,
-			intCount: 1126,
-			decimalPoints: 5,
-		},
-		Protection: {
-			intMin: 415,
-			intCount: 416,
-			decimalPoints: 0,
-		},
-		"Protection %": {
-			intMin: 1125,
-			intCount: 1126,
-			decimalPoints: 5,
-		},
-		Speed: {
-			intMin: 3,
-			intCount: 4,
-			decimalPoints: 0,
-		},
-		"Tenacity %": {
-			intMin: 1125,
-			intCount: 1126,
-			decimalPoints: 5,
-		},
-	} as const;
+const statInfo: {
+	[key in GIMOSecondaryStatNames]: {
+		intMin: number;
+		intCount: number;
+		decimalPoints: number;
+	};
+} = {
+	"Critical Chance %": {
+		intMin: 1125,
+		intCount: 1126,
+		decimalPoints: 5,
+	},
+	Defense: {
+		intMin: 4,
+		intCount: 7,
+		decimalPoints: 0,
+	},
+	"Defense %": {
+		intMin: 85,
+		intCount: 86,
+		decimalPoints: 4,
+	},
+	Health: {
+		intMin: 214,
+		intCount: 215,
+		decimalPoints: 0,
+	},
+	"Health %": {
+		intMin: 563,
+		intCount: 563,
+		decimalPoints: 5,
+	},
+	Offense: {
+		intMin: 23,
+		intCount: 24,
+		decimalPoints: 0,
+	},
+	"Offense %": {
+		intMin: 281,
+		intCount: 283,
+		decimalPoints: 5,
+	},
+	"Potency %": {
+		intMin: 1125,
+		intCount: 1126,
+		decimalPoints: 5,
+	},
+	Protection: {
+		intMin: 415,
+		intCount: 416,
+		decimalPoints: 0,
+	},
+	"Protection %": {
+		intMin: 1125,
+		intCount: 1126,
+		decimalPoints: 5,
+	},
+	Speed: {
+		intMin: 3,
+		intCount: 4,
+		decimalPoints: 0,
+	},
+	"Tenacity %": {
+		intMin: 1125,
+		intCount: 1126,
+		decimalPoints: 5,
+	},
+} as const;
 
-	constructor(stat: SecondaryStat) {
-		const currentStatInfo = StatScore.statInfo[stat.type];
-		let statIntValue: number;
-
-		if (stat.displayModifier === "%")
-			statIntValue = mulScaled(
-				stat.scaledValue,
-				toScaled(10 ** (currentStatInfo.decimalPoints - 2)),
-			);
-		else statIntValue = stat.scaledValue;
-
-		const intDistance =
-			statIntValue -
-			toScaled(currentStatInfo.intMin * stat.rolls) +
-			toScaled(1);
-		const onePercentEquivalent = divScaled(
-			toScaled(currentStatInfo.intCount * stat.rolls) -
-				toScaled(stat.rolls) +
-				toScaled(1),
-			toScaled(100),
+function createStatScore(stat: SecondaryStat): SecondaryStatScore {
+	const currentStatInfo = statInfo[stat.type];
+	let statIntValue: number;
+	if (stat.displayModifier === "%")
+		statIntValue = mulScaled(
+			stat.scaledValue,
+			toScaled(10 ** (currentStatInfo.decimalPoints - 2)),
 		);
-		this.value = divScaled(intDistance, onePercentEquivalent);
-		this.valueAsString = fromScaled(this.value).toFixed(2);
-	}
+	else statIntValue = stat.scaledValue;
 
-	/**
-	 * Return a CSS class to represent this score
-	 */
-	getClass() {
-		switch (Math.floor(fromScaled(divScaled(this.value, toScaled(20))))) {
-			case 4:
-				return "S";
-			case 3:
-				return "A";
-			case 2:
-				return "B";
-			case 1:
-				return "C";
-			default:
-				return "D";
-		}
-	}
+	const intDistance =
+		statIntValue - toScaled(currentStatInfo.intMin * stat.rolls) + toScaled(1);
+	const onePercentEquivalent = divScaled(
+		toScaled(currentStatInfo.intCount * stat.rolls) -
+			toScaled(stat.rolls) +
+			toScaled(1),
+		toScaled(100),
+	);
+	return {
+		scaledValue: divScaled(intDistance, onePercentEquivalent),
+		valueAsString: `${fromScaled(divScaled(intDistance, onePercentEquivalent)).toFixed(2)}%`,
+	};
+}
 
-	/**
-	 * Return a string that represents this score
-	 */
-	show() {
-		return `${this.valueAsString}%`;
-	}
+export function getStatScoreTier(statScore: SecondaryStatScore) {
+	return Math.floor(fromScaled(divScaled(statScore.scaledValue, toScaled(20))));
 }

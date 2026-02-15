@@ -51,7 +51,7 @@ const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
 		return (
 			<li
 				key={index}
-				className={`leading-[1.2em] ${modTierColors[stat.getClass()]}`}
+				className={`leading-[1.2em] ${modTierColors[stat.getRollsTier()]}`}
 			>
 				<span>({stat.rolls})</span> {displayStat}
 			</li>

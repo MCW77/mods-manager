@@ -264,19 +264,8 @@ export class Mod {
 		return modObject;
 	}
 
-	getClass() {
-		switch (Math.floor(this.scores.PureSecondaries / 20)) {
-			case 4:
-				return "S";
-			case 3:
-				return "A";
-			case 2:
-				return "B";
-			case 1:
-				return "C";
-			default:
-				return "D";
-		}
+	getModScoreTier(scoreName: string) {
+		return Math.floor(this.scores[scoreName] / 20);
 	}
 
 	static fromHotUtils(flatMod: ModTypes.HUFlatMod) {
@@ -431,7 +420,7 @@ modScores.push(
 		(mod: Mod) => {
 			if (mod.secondaryStats.length === 0) return 0;
 			const sum = mod.secondaryStats.reduce(
-				(acc, stat) => acc + stat.score.value,
+				(acc, stat) => acc + stat.score.scaledValue,
 				0,
 			);
 			return fromScaled(divScaled(sum, toScaled(mod.secondaryStats.length)));
@@ -456,7 +445,8 @@ modScores.push(
 		(mod: Mod) => {
 			if (mod.totalRolls === 0) return 0;
 			const sum = mod.secondaryStats.reduce(
-				(acc, stat) => acc + mulScaled(stat.score.value, toScaled(stat.rolls)),
+				(acc, stat) =>
+					acc + mulScaled(stat.score.scaledValue, toScaled(stat.rolls)),
 				0,
 			);
 			return fromScaled(divScaled(sum, toScaled(mod.totalRolls)));
@@ -590,7 +580,7 @@ modScores.push(
 				return (
 					acc +
 					mulScaled(
-						mulScaled(stat.score.value, toScaled(stat.rolls)),
+						mulScaled(stat.score.scaledValue, toScaled(stat.rolls)),
 						toScaled(multiplier),
 					)
 				);
@@ -644,7 +634,7 @@ modScores.push(
 				return (
 					acc +
 					mulScaled(
-						mulScaled(stat.score.value, toScaled(stat.rolls)),
+						mulScaled(stat.score.scaledValue, toScaled(stat.rolls)),
 						toScaled(multiplier),
 					)
 				);
