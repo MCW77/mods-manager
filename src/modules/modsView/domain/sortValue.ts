@@ -17,7 +17,7 @@ for (const statName of SecondaryStat.statNames) {
 	});
 	sortValueHandlers.set(`StatScore${statName}`, (mod: Mod) => {
 		for (const stat of mod.secondaryStats) {
-			if (stat.type === statName) return fromScaled(stat.score.value);
+			if (stat.type === statName) return fromScaled(stat.score.scaledValue);
 		}
 		return 0;
 	});
