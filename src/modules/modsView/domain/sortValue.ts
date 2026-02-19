@@ -1,7 +1,13 @@
-// domain
+// utils
 import { fromScaled } from "#/utils/scaledNumber";
-import { modScores, type Mod } from "#/domain/Mod";
+
+// state
+import { modScores$ } from "#/modules/modScores/state/modScores";
+
+// domain
+import type { Mod } from "#/domain/Mod";
 import { SecondaryStat } from "#/domain/SecondaryStat";
+import { modScorers } from "#/modules/modScores/domain/ModScorer";
 
 type SortValueHandler = (mod: Mod) => string | number;
 
@@ -24,10 +30,10 @@ for (const statName of SecondaryStat.statNames) {
 }
 
 // Register ModScore handlers
-for (const modScore of modScores) {
+for (const modScorer of modScorers.values()) {
 	sortValueHandlers.set(
-		`ModScore${modScore.name}`,
-		(mod: Mod) => mod.scores[modScore.name] ?? 0,
+		`ModScore${modScorer.name}`,
+		(mod: Mod) => modScores$.getModScore(mod, modScorer.name).value,
 	);
 }
 

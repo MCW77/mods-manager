@@ -15,12 +15,13 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { type Mod, modScores } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod";
 import { modTierColors } from "#/domain/ModTierColors";
 import { getStatScoreTier } from "#/domain/SecondaryStat";
 
 // components
 import { Separator } from "#ui/separator";
+import { modScores$ } from "#/modules/modScores/state/modScores";
 
 type ComponentProps = {
 	mod: Mod;
@@ -32,6 +33,7 @@ const ModScores = observer(
 		const scoreName = useValue(
 			modsView$.activeViewSetupInActiveCategory.modScore,
 		);
+		const modScore = useValue(() => modScores$.getModScore(mod, scoreName));
 		const secondariesCount$ = useObservable(
 			() => mod.secondaryStats.length > 0,
 		);
@@ -64,12 +66,9 @@ const ModScores = observer(
 					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
 						<li
 							key={"5"}
-							className={`${modTierColors[mod.getModScoreTier(scoreName)]}`}
+							className={`${modTierColors[modScores$.getModScoreTier(modScore)]} leading-[1.2em]`}
 						>
-							{modScores.find((modScore) => modScore.name === scoreName)
-								?.isFlatOrPercentage === "IsFlat"
-								? `${mod.scores[scoreName]}`
-								: `${Math.floor(mod.scores[scoreName] * 100) / 100}%`}
+							{modScore.displayValue}
 						</li>
 					</Show>
 				</ul>

@@ -1,3 +1,6 @@
+// state
+import { modScores$ } from "#/modules/modScores/state/modScores";
+
 // domain
 import type { Mod } from "#/domain/Mod";
 import type {
@@ -52,7 +55,8 @@ function extractScoreFilter(
 ): ModFilterPredicate {
 	return (mod: Mod) => {
 		const [min, max] = filter.score;
-		return min <= mod.scores[scoreName] && mod.scores[scoreName] <= max;
+		const modScoreValue = modScores$.getModScore(mod, scoreName).value;
+		return min <= modScoreValue && modScoreValue <= max;
 	};
 }
 
