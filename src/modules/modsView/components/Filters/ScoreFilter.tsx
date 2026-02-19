@@ -8,7 +8,7 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { modScores } from "#/domain/Mod";
+import { modScorers } from "#/modules/modScores/domain/ModScorer";
 
 // components
 import { Slider } from "#/components/reactive/Slider";
@@ -16,14 +16,10 @@ import { Label } from "#ui/label";
 
 const ScoreFilter = () => {
 	const [t] = useTranslation("explore-ui");
-	const score = useValue(() =>
-		modScores.find(
-			(modScore) =>
-				modScore.name ===
-				modsView$.activeViewSetupInActiveCategory.modScore.get(),
-		),
+	const modScorer = useValue(() =>
+		modScorers.get(modsView$.activeViewSetupInActiveCategory.modScore.get()),
 	);
-	const max = score?.isFlatOrPercentage === "IsPercentage" ? 100 : 800;
+	const max = modScorer?.isFlatOrPercentage === "IsPercentage" ? 100 : 800;
 	const scoreRange = useValue(() => {
 		const activeFilter = modsView$.activeFilter.get();
 		if (!activeFilter?.score) {

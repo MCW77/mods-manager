@@ -4,6 +4,9 @@ import orderBy from "lodash-es/orderBy";
 import mapValues from "lodash-es/mapValues";
 import { memoizeOne } from "#/utils/memoizeOne";
 
+// state
+import { modScores$ } from "#/modules/modScores/state/modScores";
+
 // domain
 import type {
 	Filter,
@@ -92,7 +95,8 @@ class ModsFilter {
 	extractScoreFilter(filter: Filter, scoreName: string) {
 		return (mod: Mod) => {
 			const [min, max] = filter.score;
-			return min <= mod.scores[scoreName] && mod.scores[scoreName] <= max;
+			const modScoreValue = modScores$.getModScore(mod, scoreName).value;
+			return min <= modScoreValue && modScoreValue <= max;
 		};
 	}
 	extractSelectedAndUnselectedOptions(filters: Filter) {

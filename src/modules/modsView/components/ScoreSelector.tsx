@@ -9,7 +9,7 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { modScores } from "#/domain/Mod";
+import { modScorers } from "#/modules/modScores/domain/ModScorer";
 
 // components
 import { Label } from "#ui/label";
@@ -49,14 +49,14 @@ const ScoreSelector = () => {
 					position={"popper"}
 					sideOffset={5}
 				>
-					{modScores.map((modScore) => (
+					{Array.from(modScorers.values()).map((modScorer) => (
 						<SelectItem
 							className={"w-40"}
-							key={modScore.name}
-							title={modScore.description}
-							value={modScore.name}
+							key={modScorer.name}
+							title={modScorer.description}
+							value={modScorer.name}
 						>
-							{modScore.displayName}
+							{modScorer.displayName}
 						</SelectItem>
 					))}
 				</SelectContent>

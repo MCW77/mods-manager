@@ -10,8 +10,8 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { modScores } from "#/domain/Mod";
 import { SecondaryStats } from "#/domain/Stats";
+import { modScorers } from "#/modules/modScores/domain/ModScorer";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,9 +56,9 @@ const SortManager = observer(
 			},
 			{
 				label: "Mod Scores",
-				items: modScores.map((modScore) => ({
-					value: `ModScore${modScore.name}`,
-					label: modScore.displayName,
+				items: Array.from(modScorers.values()).map((modScorer) => ({
+					value: `ModScore${modScorer.name}`,
+					label: modScorer.displayName,
 				})),
 			},
 		];

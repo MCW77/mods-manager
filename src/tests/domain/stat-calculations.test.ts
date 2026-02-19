@@ -8,6 +8,7 @@
 import { describe, expect, it } from "vitest";
 import { Mod } from "../../domain/Mod";
 import { SecondaryStat } from "../../domain/SecondaryStat";
+import { modScores$ } from "#/modules/modScores/state/modScores";
 
 describe("SecondaryStat Calculations", () => {
 	describe("upgrade()", () => {
@@ -141,7 +142,7 @@ describe("Mod Scoring Calculations", () => {
 				reRolledCount: 0,
 			});
 
-			const score = mod.scores.PureSecondaries;
+			const score = modScores$.getModScore(mod, "PureSecondaries").value;
 
 			// Verify calculation produces expected result
 			expect(score).toMatchSnapshot();
@@ -175,7 +176,7 @@ describe("Mod Scoring Calculations", () => {
 				reRolledCount: 0,
 			});
 
-			const score = mod.scores.GIMOOffense;
+			const score = modScores$.getModScore(mod, "GIMOOffense").value;
 
 			// Verify calculation produces expected result
 			expect(score).toMatchSnapshot();
