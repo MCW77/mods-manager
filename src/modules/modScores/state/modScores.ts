@@ -4,7 +4,7 @@ import { observable, type ObservableObject } from "@legendapp/state";
 // domain
 import type { ModScore } from "../domain/ModScore";
 import { modScorers } from "../domain/ModScorer";
-import { Mod } from "#/domain/Mod";
+import type { Mod } from "#/domain/Mod";
 
 interface ModScoresObservable {
   ById: Map<string, ModscoreByName>;
