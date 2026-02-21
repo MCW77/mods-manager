@@ -10,7 +10,7 @@ import type {
 } from "./Profiles";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 interface ProfilesManagementObservable {
 	persistedData: PersistedDataWithProfiles;
@@ -40,7 +40,10 @@ interface ProfilesManagementObservable {
 	unequipMods: (mods: Mod[]) => void;
 	deleteMod: (modId: string) => void;
 	deleteMods: (mods: Mod[]) => void;
-	saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => void;
+	saveTarget: (
+		characterId: CharacterNames,
+		newTarget: OptimizationPlan,
+	) => void;
 }
 
 export type { ProfilesManagementObservable };

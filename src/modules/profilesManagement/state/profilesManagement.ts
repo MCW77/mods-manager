@@ -32,7 +32,7 @@ import type { ProfilesManagementObservable } from "../domain/ProfilesManagement"
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
-import { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 const isObservableMod = (
