@@ -32,6 +32,7 @@ import type { ProfilesManagementObservable } from "../domain/ProfilesManagement"
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
+import { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 
 const isObservableMod = (
@@ -248,6 +249,18 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 				profilesManagement$.deleteMod(mod.id);
 			}
 			endBatch();
+		},
+		saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => {
+			const character =
+				profilesManagement$.activeProfile.characterById[characterId];
+			const characterTarget = character.targets.find(
+				(target) => target.peek().id === newTarget.id,
+			);
+			if (characterTarget === undefined) {
+				character.targets.push(newTarget);
+			} else {
+				characterTarget.set(newTarget);
+			}
 		},
 	});
 

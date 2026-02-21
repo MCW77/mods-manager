@@ -208,16 +208,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			}
 		},
 		saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => {
-			const character =
-				profilesManagement$.activeProfile.characterById[characterId];
-			const characterTarget = character.targets.find(
-				(t) => t.peek().id === newTarget.id,
-			);
-			if (characterTarget === undefined) {
-				character.targets.push(newTarget);
-			} else {
-				characterTarget.set(newTarget);
-			}
+			profilesManagement$.saveTarget(characterId, newTarget);
 			compilations$.defaultCompilation.selectedCharacters
 				.find(
 					(selectedCharacter) => selectedCharacter.peek().id === characterId,
