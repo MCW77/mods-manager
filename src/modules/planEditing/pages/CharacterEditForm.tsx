@@ -468,7 +468,10 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									type={"button"}
 									variant={"destructive"}
 									onClick={() => {
-										compilations$.deleteTarget(character.id, target.id);
+										compilations$.deleteTarget(
+											character.id,
+											target$.target.id.peek(),
+										);
 										optimizerView$.view.set("basic");
 									}}
 								>
