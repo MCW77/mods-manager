@@ -181,6 +181,10 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			);
 		},
 		deleteTarget: (characterId: CharacterNames, targetName: string) => {
+			const characterIndex =
+				compilations$.defaultCompilation.selectedCharacters.findIndex(
+					(selectedCharacter) => selectedCharacter.peek().id === characterId,
+				);
 			const targetIndex = profilesManagement$.activeProfile.characterById[
 				characterId
 			].targets
@@ -190,7 +194,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				beginBatch();
 				compilations$.defaultCompilation.reoptimizationIndex.set(
 					Math.min(
-						targetIndex - 1,
+						characterIndex - 1,
 						compilations$.defaultCompilation.reoptimizationIndex.peek(),
 					),
 				);
@@ -198,9 +202,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 					characterId
 				].targets.splice(targetIndex, 1);
 				const selectedCharacter =
-					compilations$.defaultCompilation.selectedCharacters.find(
-						(selectedCharacter) => selectedCharacter.peek().id === characterId,
-					);
+					compilations$.defaultCompilation.selectedCharacters[characterIndex];
 				selectedCharacter?.target.set(
 					characterSettings[characterId].targets[0],
 				);
