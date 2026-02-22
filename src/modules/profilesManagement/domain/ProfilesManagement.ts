@@ -44,6 +44,8 @@ interface ProfilesManagementObservable {
 		characterId: CharacterNames,
 		newTarget: OptimizationPlan,
 	) => void;
+	indexOfTarget: (characterId: CharacterNames, targetId: string) => number;
+	deleteTarget: (characterId: CharacterNames, targetIndex: number) => void;
 }
 
 export type { ProfilesManagementObservable };

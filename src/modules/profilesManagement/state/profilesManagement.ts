@@ -262,6 +262,18 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 				characterTarget.set(newTarget);
 			}
 		},
+		deleteTarget: (characterId: CharacterNames, targetIndex: number) => {
+			const character =
+				profilesManagement$.activeProfile.characterById[characterId];
+			character.targets.splice(targetIndex, 1);
+		},
+		indexOfTarget: (characterId: CharacterNames, targetId: string) => {
+			return profilesManagement$.activeProfile.characterById[
+				characterId
+			].targets
+				.peek()
+				.findIndex((target) => target.id === targetId);
+		},
 	});
 
 let nowTimer = setInterval(() => {
