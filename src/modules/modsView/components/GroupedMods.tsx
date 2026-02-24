@@ -136,11 +136,13 @@ function GroupedMods() {
 
 	const modGroups: ModGroup[] = [];
 	for (const modGroup of transformedMods) {
-		modGroups.push({
-			isOpen: true,
-			id: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
-			mods: modGroup,
-		});
+		if (modGroup.length > 0) {
+			modGroups.push({
+				isOpen: true,
+				id: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
+				mods: modGroup,
+			});
+		}
 	}
 
 	const modGroups$ = observable<ObservableModGroups>({
