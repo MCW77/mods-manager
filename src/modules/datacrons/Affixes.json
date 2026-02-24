@@ -1101,6 +1101,25 @@
       "targetCharacter": ""
     }
   ],
+  "stat_set_focused_tenacity_30": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 30000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
   "stat_set_focused_tenacity_35": [
     {
       "abilityId": "",
@@ -1346,6 +1365,1512 @@
       "shortText": "",
       "targetCategory": "",
       "targetCharacter": ""
+    }
+  ],
+  "stat_set_critdamage_accuracy_maxheath_maxshield_defensepenetration_critchance_resistance_001": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 15000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 25,
+      "statValueMin": 35000000,
+      "statValueMax": 50000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_penetration",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_critdamage_accuracy_maxheath_maxshield_defensepenetration_critchance_resistance_002": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 35000000,
+      "statValueMax": 50000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 25,
+      "statValueMin": 50000000,
+      "statValueMax": 70000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_penetration",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_critdamage_accuracy_maxheath_maxshield_defensepenetration_critchance_resistance_003": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 50000000,
+      "statValueMax": 75000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 25,
+      "statValueMin": 70000000,
+      "statValueMax": 100000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_penetration",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_darkside_generic_027": [
+    {
+      "abilityId": "datacron_alignment_generic_014",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies inflict a debuff, they gain 2% Critical Chance (stacking) for 3 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies inflict a debuff, they gain 2% Critical Chance (stacking) for 3 turns.",
+      "shortText": "DS Debuff -> +2% Crit Chance (stacking)",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_029",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies use a Basic ability, they gain Critical Chance Up, Critical Damage Up, and Offense Up for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies use a Basic ability, they gain Critical Chance Up, Critical Damage Up, and Offense Up for 2 turns.",
+      "shortText": "DS Basic -> CritC/CritD/Off up",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_019",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies use a Special ability they gain 15% Turn Meter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies use a Special ability they gain 15% Turn Meter.",
+      "shortText": "DS Special -> +15% TM",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_013",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies critically hit enemies more than 4 times during their turn, they gain 5% Critical Damage (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies critically hit enemies more than 4 times during their turn, they gain 5% Critical Damage (stacking) until the end of battle.",
+      "shortText": "DS Ally 4 crits in turn -> +Crit D (stacking)",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_002",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies gain a buff, they recover 2% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies gain a buff, they recover 2% Health and Protection.",
+      "shortText": "DS gain buff -> 2% H/P",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_lightside_generic_028": [
+    {
+      "abilityId": "datacron_alignment_generic_011",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies are damaged by percent Health damage effects, they recover 2% Health.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies are damaged by percent Health damage effects, they recover 2% Health.",
+      "shortText": "LS Ally % H effect -> +2% H",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_031",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "At the start of the encounter {0} allies gain 15% Max Health and Max Protection for each other {0} ally.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of the encounter Light Side allies gain 15% Max Health and Max Protection for each other Light Side ally.",
+      "shortText": "LS +15% H/P per LS ally",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_021",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "{0} allies start the battle with +25% Turn Meter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Light Side allies start the battle with +25% Turn Meter.",
+      "shortText": "LS start +25% TM",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_009",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies inflict a debuff on an enemy, they deal damage to that enemy equal to 2% of that enemy's Max Health.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies inflict a debuff on an enemy, they deal damage to that enemy equal to 2% of that enemy's Max Health.",
+      "shortText": "LS debuff -> 2% Max H dmg",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_light_001",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "The first time each Light Side ally reaches 75%, 50%, and 25% Health grant them Protection Up (50%) for 2 turns, which can't be dispelled or prevented.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Light Side ally reaches 75%, 50%, and 25% Health grant them Protection Up (50%) for 2 turns, which can't be dispelled or prevented.",
+      "shortText": "LS Ally at 75/50/25% H -> Prot Up",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_imperialremnant_002": [
+    {
+      "abilityId": "datacron_faction_generic_005",
+      "targetRule": "target_datacron_imperialremnant",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_imperialremnant",
+      "description": "Whenever {0} allies start their turn with at least 2 debuffs that can be dispelled, they have a 65% chance to dispel all debuffs on themselves.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Imperial Remnant allies start their turn with at least 2 debuffs that can be dispelled, they have a 65% chance to dispel all debuffs on themselves.",
+      "shortText": "Imperial Remnant start turn with >= 2 debuffs -> 65% dispel",
+      "targetCategory": "affiliation_imperialremnant",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_004",
+      "targetRule": "target_datacron_imperialremnant",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_imperialremnant",
+      "description": "Whenever {0} allies use a Special ability during their turn, they Stun target enemy for 1 turn, which can't be evaded or resisted.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Imperial Remnant allies use a Special ability during their turn, they Stun target enemy for 1 turn, which can't be evaded or resisted.",
+      "shortText": "Imperial Remnant special -> Stun",
+      "targetCategory": "affiliation_imperialremnant",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_014",
+      "targetRule": "target_datacron_imperialremnant",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_imperialremnant",
+      "description": "Whenever a debuff on an enemy expires, {0} allies gain 2% Potency and Tenacity (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a debuff on an enemy expires, Imperial Remnant allies gain 2% Potency and Tenacity (stacking) until the end of battle.",
+      "shortText": "Enemy debuff expire -> Imperial Remnant +2% Pot/Ten",
+      "targetCategory": "affiliation_imperialremnant",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_040",
+      "targetRule": "target_datacron_imperialremnant",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_imperialremnant",
+      "description": "Whenever a {0} ally is critically hit, they gain 100% Critical Avoidance and Critical Chance for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Imperial Remnant ally is critically hit, they gain 100% Critical Avoidance and Critical Chance for 2 turns.",
+      "shortText": "Imp Rem ally is crit hit -> +100% C avoid, +100% Crit chance",
+      "targetCategory": "affiliation_imperialremnant",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_imperialremnant_002",
+      "targetRule": "target_datacron_imperialremnant",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_imperialremnant",
+      "description": "At the start of battle, all Imperial Remnant allies gain 45% Accuracy, 45% Potency, and 20 Speed until the end of encounter.\n\nWhenever an Imperial Remnant ally uses a Special ability, all Imperial Remnant allies gain Alert for 2 turns.\n\nWhenever an Imperial Remnant ally defeats an enemy, all Imperial Remnant allies gain 40% Offense (max +120%) until the end of encounter.\n\nWhenever an Imperial Remnant ally is inflicted with a debuff, they recover 10% Health and Protection.\n\nWhenever an enemy is inflicted with Armor Shred all Imperial Remnant allies gain 30% Critical Chance and Critical Damage (stacking) until the end of encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of battle, all Imperial Remnant allies gain 45% Accuracy, 45% Potency, and 20 Speed until the end of encounter.\n\nWhenever an Imperial Remnant ally uses a Special ability, all Imperial Remnant allies gain Alert for 2 turns.\n\nWhenever an Imperial Remnant ally defeats an enemy, all Imperial Remnant allies gain 40% Offense (max +120%) until the end of encounter.\n\nWhenever an Imperial Remnant ally is inflicted with a debuff, they recover 10% Health and Protection.\n\nWhenever an enemy is inflicted with Armor Shred all Imperial Remnant allies gain 30% Critical Chance and Critical Damage (stacking) until the end of encounter.",
+      "shortText": "Imperial Remnant bonuses at start of battle, when killing and other times",
+      "targetCategory": "affiliation_imperialremnant",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_badbatch_002": [
+    {
+      "abilityId": "datacron_faction_generic_001",
+      "targetRule": "target_datacron_badbatch",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.datacronui_affix_bad_batch",
+      "description": "At the start of the encounter and at the end of their turn, {0} allies gain 1 stack of Retaliate (max 3) for 3 turns, which can't be copied, dispelled, or prevented.\n\n[c][ffff33]Retaliate:[-][/c] When damaged by an attack, deal 20% of the damage received per stack to the attacker; this damage can't defeat enemies.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of the encounter and at the end of their turn, Bad Batch allies gain 1 stack of Retaliate (max 3) for 3 turns, which can't be copied, dispelled, or prevented.\n\n[c][ffff33]Retaliate: When damaged by an attack, deal 20% of the damage received per stack to the attacker; this damage can't defeat enemies.",
+      "shortText": "Bad Batch Retailiate (battle and turn start)",
+      "targetCategory": "affiliation_badbatch",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_011",
+      "targetRule": "target_datacron_badbatch",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.datacronui_affix_bad_batch",
+      "description": "At the end of their turn, {0} allies recover 50% Protection if they inflicted at least 5 debuffs that turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the end of their turn, Bad Batch allies recover 50% Protection if they inflicted at least 5 debuffs that turn.",
+      "shortText": "Bad Batch end of turn + 5 debuffs -> +50% Prot",
+      "targetCategory": "affiliation_badbatch",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_013",
+      "targetRule": "target_datacron_badbatch",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.datacronui_affix_bad_batch",
+      "description": "Whenever {0} allies recover Health, they recover Protection equal to the amount of Health recovered. {0} allies can't recover Protection this way more than once per turn or if their Health was full.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Bad Batch allies recover Health, they recover Protection equal to the amount of Health recovered. Bad Batch allies can't recover Protection this way more than once per turn or if their Health was full.",
+      "shortText": "Bad Batch +H -> +equal Prot",
+      "targetCategory": "affiliation_badbatch",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_badbatch_002",
+      "targetRule": "target_datacron_badbatch",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.datacronui_affix_bad_batch",
+      "description": "While a Bad Batch ally is Stealthed, they gain 20% Critical Chance and 20% Critical Damage.\n\nWhenever a Bad Batch ally uses an ability on a Marked enemy, they gain 25% Turn Meter.\n\nWhile a Bad Batch ally is Captive, Bad Batch allies deal an additional instance of damage to the target enemy on their turn.\n\nWhenever a Bad Batch ally defeats an enemy, they reset their cooldown and gain 25% Offense stacking (max 150%) until the end of encounter.\n\nWhenever a Bad Batch ally assists, they gain +20% Offense (stacking, max +80%) and +20% Turn Meter until the end of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "While a Bad Batch ally is Stealthed, they gain 20% Critical Chance and 20% Critical Damage.\n\nWhenever a Bad Batch ally uses an ability on a Marked enemy, they gain 25% Turn Meter.\n\nWhile a Bad Batch ally is Captive, Bad Batch allies deal an additional instance of damage to the target enemy on their turn.\n\nWhenever a Bad Batch ally defeats an enemy, they reset their cooldown and gain 25% Offense stacking (max 150%) until the end of encounter.\n\nWhenever a Bad Batch ally assists, they gain +20% Offense (stacking, max +80%) and +20% Turn Meter until the end of the encounter.",
+      "shortText": "Bad Batch wall of text",
+      "targetCategory": "affiliation_badbatch",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_017",
+      "targetRule": "target_datacron_badbatch",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.datacronui_affix_bad_batch",
+      "description": "The first time each {0} ally falls below 50% Health, all {0} allies reduce their cooldowns by 1 and gain 10% Turn Meter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Bad Batch ally falls below 50% Health, all Bad Batch allies reduce their cooldowns by 1 and gain 10% Turn Meter.",
+      "shortText": "Bad Batch < 50% H -> Allies cooldown reduce + 10% TM",
+      "targetCategory": "affiliation_badbatch",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_darktrooper_002": [
+    {
+      "abilityId": "datacron_character_generic_038",
+      "targetRule": "target_datacron_darktrooper",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_darktrooper",
+      "description": "Whenever {0} Stuns an enemy, {0} gains 10% Critical Damage (stacking, max 200%) and 5 Speed (stacking, max 50) until the end of the encounter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Dark Trooper Stuns an enemy, Dark Trooper gains 10% Critical Damage (stacking, max 200%) and 5 Speed (stacking, max 50) until the end of the encounter.",
+      "shortText": "Dark Trooper Stun -> Dark Trooper +10% Crit Dmg/+5 Speed (stacking)",
+      "targetCategory": "",
+      "targetCharacter": "DARKTROOPER"
+    }
+  ],
+  "ability_set_nighttrooper_002": [
+    {
+      "abilityId": "datacron_character_nighttrooper_001",
+      "targetRule": "target_datacron_nighttrooper",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_nighttrooper_a",
+      "description": "At the start of battle, Night Trooper gains 75% Potency and 25 Speed until the end of the encounter.\n\nWhenever an enemy is inflicted with a stack of Blight they inflict themselves with another stack, which can't be copied or evaded, until the end of the encounter or until they fully recover their Health.\n\nWhenever an enemy that already had Blight is inflicted with another stack of Blight by an ally, inflict Blight on another random enemy that doesn't have it, which can't be copied, evaded, or resisted, until the end of the encounter or until they fully recover their Health.\n\nWhenever Night Trooper uses Shambling Shot, they gain an additional 3 stacks of Blight which can't be copied or evaded, until the end of the encounter.\n\nWhenever an ally or an enemy gains or is inflicted with Blight, Night Trooper recovers 20% Health and gains 25% Offense per stack for 2 turns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of battle, Night Trooper gains 75% Potency and 25 Speed until the end of the encounter.\n\nWhenever an enemy is inflicted with a stack of Blight they inflict themselves with another stack, which can't be copied or evaded, until the end of the encounter or until they fully recover their Health.\n\nWhenever an enemy that already had Blight is inflicted with another stack of Blight by an ally, inflict Blight on another random enemy that doesn't have it, which can't be copied, evaded, or resisted, until the end of the encounter or until they fully recover their Health.\n\nWhenever Night Trooper uses Shambling Shot, they gain an additional 3 stacks of Blight which can't be copied or evaded, until the end of the encounter.\n\nWhenever an ally or an enemy gains or is inflicted with Blight, Night Trooper recovers 20% Health and gains 25% Offense per stack for 2 turns.",
+      "shortText": "Night trooper +75% Pot +25 Speed, Blight stuff",
+      "targetCategory": "",
+      "targetCharacter": "NIGHTTROOPER"
+    }
+  ],
+  "ability_set_scouttrooper_001": [
+    {
+      "abilityId": "datacron_character_generic_004",
+      "targetRule": "target_datacron_scouttrooper_v3",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_trooperscout",
+      "description": "Whenever {0} inflicts a debuff, they recover 25% of their Max Health and Max Protection (limit once per turn).",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Scout Trooper inflicts a debuff, they recover 25% of their Max Health and Max Protection (limit once per turn).",
+      "shortText": "Scout Trooper inflict debuff -> heal self 25% Max H/P",
+      "targetCategory": "",
+      "targetCharacter": "SCOUTTROOPER_V3"
+    }
+  ],
+  "ability_set_moffgideons1_002": [
+    {
+      "abilityId": "datacron_character_moffgideons1_001",
+      "targetRule": "target_datacron_moffgideons1",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_moffgideon",
+      "description": "Whenever Moff Gideon is inflicted with a debuff or gains a buff, he gains a stack of Insight and Stealths for 1 turn. Whenever he gains 4 stacks of Insight, he gains 100% Turn Meter, once every 4 turns.\nWhenever an Imperial Remnant ally is inflicted with a debuff, they recover 10% Health and Protection.\n\nWhenever an enemy is inflicted with Armor Shred, Blind all enemies for 1 turn, which can't be evaded or resisted.\n\nWhenever he uses Subversive Volley, he deals bonus Massive Damage to all enemies, which can't be evaded.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Moff Gideon is inflicted with a debuff or gains a buff, he gains a stack of Insight and Stealths for 1 turn. Whenever he gains 4 stacks of Insight, he gains 100% Turn Meter, once every 4 turns.\nWhenever an Imperial Remnant ally is inflicted with a debuff, they recover 10% Health and Protection.\n\nWhenever an enemy is inflicted with Armor Shred, Blind all enemies for 1 turn, which can't be evaded or resisted.\n\nWhenever he uses Subversive Volley, he deals bonus Massive Damage to all enemies, which can't be evaded.",
+      "shortText": "Moff Gid buff/debuff -> Insight/Stealth, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "MOFFGIDEONS1"
+    }
+  ],
+  "ability_set_moffgideons3_002": [
+    {
+      "abilityId": "datacron_character_moffgideons3_002",
+      "targetRule": "target_datacron_moffgideons3",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "imperialremnant",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_moffgideons3",
+      "description": "At the start of battle, Dark Trooper Moff Gideon gains 15% Accuracy and 15% Potency for 2 turns.\n\nWhenever Dark Trooper Moff Gideon gains a stack of insight, he gains 20% Offense (max 100%, stacking) until the end of the encounter and 10% Turn Meter and he ignores taunt.\n\nWhenever Dark trooper Moff Gideon Stuns on an enemy, All Imperial Remnant allies gain 30% Critical Chance and 30% Critical Damage for 2 Turns \n\nWhenever Dark Trooper Moff Gideon uses a Special ability, he gains 1 Insight stack.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of battle, Dark Trooper Moff Gideon gains 15% Accuracy and 15% Potency for 2 turns.\n\nWhenever Dark Trooper Moff Gideon gains a stack of insight, he gains 20% Offense (max 100%, stacking) until the end of the encounter and 10% Turn Meter and he ignores taunt.\n\nWhenever Dark trooper Moff Gideon Stuns on an enemy, All Imperial Remnant allies gain 30% Critical Chance and 30% Critical Damage for 2 Turns \n\nWhenever Dark Trooper Moff Gideon uses a Special ability, he gains 1 Insight stack.",
+      "shortText": "Dark Trooper Moff Gideon +15% Acc/15% Pot, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "MOFFGIDEONS3"
+    }
+  ],
+  "ability_set_echo_001": [
+    {
+      "abilityId": "datacron_character_generic_027",
+      "targetRule": "target_datacron_badbatchecho",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.charui_bb_echo",
+      "description": "Whenever {0} uses a Basic ability on their turn, other allies gain +25% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Echo uses a Basic ability on their turn, other allies gain +25% Turn Meter.",
+      "shortText": "Echo basic -> Allies +25% TM",
+      "targetCategory": "",
+      "targetCharacter": "BADBATCHECHO"
+    }
+  ],
+  "ability_set_hunters3_002": [
+    {
+      "abilityId": "datacron_character_hunters3_001",
+      "targetRule": "target_datacron_hunter",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.charui_hunters3",
+      "description": "At the start of the encounter, Hunter (Mercenary) gains 30 Speed and all other Mercenary allies gain 10 Speed for each Mercenary ally, till the end of the encounter or until Hunter (Mercenary) is defeated for the first time. Hunter (Mercenary) is immune to Ability Block, Cooldown Increase, and Turn Meter reduction.\n\nIf all allies are Mercenaries, Marked enemies deal 50% less damage. Whenever a Marked enemy deals damage to a Mercenary ally, dispel all debuffs on that Mercenary ally and they recover 15% Protection. Whenever Hunter (Mercenary) inflicts Marked on an enemy, dispel it and inflict Marked on them for 3 turns, which can't be dispelled, evaded, or resisted, and call all Mercenary allies with Soldier of Fortune to assist. Whenever a Mercenary ally takes a turn, the cooldown of Hunter's This Will Hurt is reduced by 1.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of the encounter, Hunter (Mercenary) gains 30 Speed and all other Mercenary allies gain 10 Speed for each Mercenary ally, till the end of the encounter or until Hunter (Mercenary) is defeated for the first time. Hunter (Mercenary) is immune to Ability Block, Cooldown Increase, and Turn Meter reduction.\n\nIf all allies are Mercenaries, Marked enemies deal 50% less damage. Whenever a Marked enemy deals damage to a Mercenary ally, dispel all debuffs on that Mercenary ally and they recover 15% Protection. Whenever Hunter (Mercenary) inflicts Marked on an enemy, dispel it and inflict Marked on them for 3 turns, which can't be dispelled, evaded, or resisted, and call all Mercenary allies with Soldier of Fortune to assist. Whenever a Mercenary ally takes a turn, the cooldown of Hunter's This Will Hurt is reduced by 1.",
+      "shortText": "Hunter (Merc) wall of text",
+      "targetCategory": "",
+      "targetCharacter": "HUNTERS3"
+    }
+  ],
+  "ability_set_badbatchwrecker_001": [
+    {
+      "abilityId": "datacron_character_generic_026",
+      "targetRule": "target_datacron_badbatchwrecker",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.charui_bb_wrecker",
+      "description": "Whenever {0} loses Taunt, remove 50% Turn Meter from all enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Wrecker loses Taunt, remove 50% Turn Meter from all enemies.",
+      "shortText": "Wrecker loses Taunt -> -50% TM from all enemies",
+      "targetCategory": "",
+      "targetCharacter": "BADBATCHWRECKER"
+    }
+  ],
+  "ability_set_crosshairs3_002": [
+    {
+      "abilityId": "datacron_character_crosshairs3_001",
+      "targetRule": "target_datacron_crosshairs3",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.charui_crosshair_scarred",
+      "description": "Whenever Crosshair (Scarred) loses a stack of Shaken, he loses another stack of Shaken.\n\nWhenever Crosshair (Scarred) doesn't score a critical hit, he inflicts Buff Immunity on target enemy for 2 turns, which can't be evaded or resisted.\n\nWhenever Crosshair (Scarred) deals damage to an enemy, the weakest ally without Stealth recovers 10% Health and Protection.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Crosshair (Scarred) loses a stack of Shaken, he loses another stack of Shaken.\n\nWhenever Crosshair (Scarred) doesn't score a critical hit, he inflicts Buff Immunity on target enemy for 2 turns, which can't be evaded or resisted.\n\nWhenever Crosshair (Scarred) deals damage to an enemy, the weakest ally without Stealth recovers 10% Health and Protection.",
+      "shortText": "Crosshair lose Shaken -> lose another, other crosshair bonuses",
+      "targetCategory": "",
+      "targetCharacter": "CROSSHAIRS3"
+    }
+  ],
+  "ability_set_omegas3_002": [
+    {
+      "abilityId": "datacron_character_generic_018",
+      "targetRule": "target_datacron_omegas3",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "badbatch"
+      ],
+      "scopeIcon": "tex.charui_omegas3",
+      "description": "At the start of {0}'s turn, dispel all debuffs on them. They recover 5% Health for each debuff dispelled this way.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of Omega (Fugitive)'s turn, dispel all debuffs on them. They recover 5% Health for each debuff dispelled this way.",
+      "shortText": "Start of Omega (Fugitive) turn -> dispel all debuffs, +5% H healed per debuff",
+      "targetCategory": "",
+      "targetCharacter": "OMEGAS3"
+    }
+  ],
+  "ability_set_focused_maulhatefueled_visasmar_001": [
+    {
+      "abilityId": "datacron_character_visasmarr_001",
+      "targetRule": "target_datacron_visasmarr",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "maulhatefueled"
+      ],
+      "scopeIcon": "tex.charui_visas",
+      "description": "Whenever Visas Marr revives an ally, she resets the cooldowns of all other allies, Deathmark the weakest enemy for 2 turns, which can't be resisted, and if Maul (Hate-Fueled) is an active ally, he takes a bonus turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Visas Marr revives an ally, she resets the cooldowns of all other allies, Deathmark the weakest enemy for 2 turns, which can't be resisted, and if Maul (Hate-Fueled) is an active ally, he takes a bonus turn.",
+      "shortText": "Visas Marr revives -> reset all ally cooldowns/deathmark enemy/spider maul bonus turn",
+      "targetCategory": "",
+      "targetCharacter": "VISASMARR"
+    }
+  ],
+  "ability_set_focused_maulhatefueled_barrissoffee_001": [
+    {
+      "abilityId": "datacron_character_barrissoffee_001",
+      "targetRule": "target_datacron_barrisoffee",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "maulhatefueled"
+      ],
+      "scopeIcon": "tex.charui_barriss_light",
+      "description": "Revive from allies can't be prevented.\n\nWhenever an enemy is inflicted with Daze, Shock, or Vulnerable, all allies recover 10% Health and Protection, and the weakest ally gains Perfect Defense for 2 turns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Revive from allies can't be prevented.\n\nWhenever an enemy is inflicted with Daze, Shock, or Vulnerable, all allies recover 10% Health and Protection, and the weakest ally gains Perfect Defense for 2 turns.",
+      "shortText": "(regular Barriss) Revive from allies can't be prevented, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "BARRISSOFFEE"
+    }
+  ],
+  "ability_set_focused_maulhatefueled_starkiller_001": [
+    {
+      "abilityId": "datacron_character_generic_052",
+      "targetRule": "target_datacron_starkiller",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "maulhatefueled"
+      ],
+      "scopeIcon": "tex.charui_starkiller",
+      "description": "Whenever an ally uses an ability on their turn, {0} assists (limit once per turn) dealing 10% more damage.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an ally uses an ability on their turn, Starkiller assists (limit once per turn) dealing 10% more damage.",
+      "shortText": "Ally use ability -> Starkiller assists",
+      "targetCategory": "",
+      "targetCharacter": "STARKILLER"
+    }
+  ],
+  "ability_set_focused_maulhatefueled_thestranger_001": [
+    {
+      "abilityId": "datacron_character_stranger_001",
+      "targetRule": "target_datacron_stranger",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "maulhatefueled"
+      ],
+      "scopeIcon": "tex.charui_stranger",
+      "description": "Whenever The Stranger is healed by an ally or attacks out of turn, he gains 5 Speed (stacking, max 100).\n\nWhenever The Stranger uses his Basic ability and damages a Stunned or Shocked enemy, reduce the cooldown of Was That Its Name? by 1.\n\nThe Stranger is immune to Daze.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever The Stranger is healed by an ally or attacks out of turn, he gains 5 Speed (stacking, max 100).\n\nWhenever The Stranger uses his Basic ability and damages a Stunned or Shocked enemy, reduce the cooldown of Was That Its Name? by 1.\n\nThe Stranger is immune to Daze.",
+      "shortText": "Stranger heal/assist -> +5 speed, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "STRANGER"
+    }
+  ],
+  "ability_set_focused_maulhatefueled_001": [
+    {
+      "abilityId": "datacron_character_maulhatefueled_001",
+      "targetRule": "target_datacron_maulhatefueled",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "maulhatefueled"
+      ],
+      "scopeIcon": "tex.charui_maulhatefueled",
+      "description": "Whenever an enemy takes damage from Bleed, Maul gains 2 stacks of Edge of Madness and 5% Turn Meter.\n\nIf Maul has 50 or more stacks of Edge of Madness, whenever he uses his Basic Ability, he inflicts Ability Block on target enemy for 1 turn, which can't be resisted.\n\nWhenever he gains a stack of Edge of Madness, he also gains 1% Max Health (stacking) until the end of battle. At 100 stacks of Edge of Madness, Maul's Basic attacks inflict Buff Immunity for 1 turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy takes damage from Bleed, Maul gains 2 stacks of Edge of Madness and 5% Turn Meter.\n\nIf Maul has 50 or more stacks of Edge of Madness, whenever he uses his Basic Ability, he inflicts Ability Block on target enemy for 1 turn, which can't be resisted.\n\nWhenever he gains a stack of Edge of Madness, he also gains 1% Max Health (stacking) until the end of battle. At 100 stacks of Edge of Madness, Maul's Basic attacks inflict Buff Immunity for 1 turn.",
+      "shortText": "(Spider Maul) Enemy bleed -> Maul +2 stacks of Edge/5% TM, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "MAULHATEFUELED"
+    }
+  ],
+  "ability_set_focused_vaderduelsend_royalguard_001": [
+    {
+      "abilityId": "datacron_character_generic_018",
+      "targetRule": "target_datacron_royalguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "vaderduelsend"
+      ],
+      "scopeIcon": "tex.charui_royalguard",
+      "description": "At the start of {0}'s turn, dispel all debuffs on them. They recover 5% Health for each debuff dispelled this way.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of Royal Guard's turn, dispel all debuffs on them. They recover 5% Health for each debuff dispelled this way.",
+      "shortText": "Start of Royal Guard turn -> dispel all debuffs, +5% H healed per debuff",
+      "targetCategory": "",
+      "targetCharacter": "ROYALGUARD"
+    }
+  ],
+  "ability_set_focused_vaderduelsend_grandmofftarkin_001": [
+    {
+      "abilityId": "datacron_character_grandmofftarkin_001",
+      "targetRule": "target_datacron_grandmofftarkin",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "vaderduelsend"
+      ],
+      "scopeIcon": "tex.charui_tarkinadmiral",
+      "description": "Whenever Grand Moff Tarkin damages an enemy, Shock that enemy for 2 turns, which can't be evaded or resisted.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Grand Moff Tarkin damages an enemy, Shock that enemy for 2 turns, which can't be evaded or resisted.",
+      "shortText": "Tarkin dmg enemy -> Shock",
+      "targetCategory": "",
+      "targetCharacter": "GRANDMOFFTARKIN"
+    }
+  ],
+  "ability_set_focused_vaderduelsend_emperorpalpatine_001": [
+    {
+      "abilityId": "datacron_character_generic_046",
+      "targetRule": "target_datacron_emperorpalpatine",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "vaderduelsend"
+      ],
+      "scopeIcon": "tex.charui_palpatineemperor",
+      "description": "Whenever an enemy is defeated by a {0}, that enemy can't be revived.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy is defeated by a Emperor Palpatine, that enemy can't be revived.",
+      "shortText": "Enemy is defeated by Emperor Palpatine, that enemy can't be revived",
+      "targetCategory": "",
+      "targetCharacter": "EMPERORPALPATINE"
+    }
+  ],
+  "ability_set_focused_vaderduelsend_marajade_001": [
+    {
+      "abilityId": "datacron_character_marajade_002",
+      "targetRule": "target_datacron_marajade",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "vaderduelsend"
+      ],
+      "scopeIcon": "tex.charui_marajade",
+      "description": "At the start of each other ally's turn, Mara Jade gains an additional stack of Loyal Hand until the end of encounter. Whenever an ally with less than 100% Turn Meter gains bonus Turn Meter, they gain 2% Critical Chance and Critical Damage (stacking, max 100%) until the end of encounter. Whenever an enemy is inflicted with Shock, they take damage equal to 5% of their Max Health. This damage can't defeat enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of each other ally's turn, Mara Jade gains an additional stack of Loyal Hand until the end of encounter. Whenever an ally with less than 100% Turn Meter gains bonus Turn Meter, they gain 2% Critical Chance and Critical Damage (stacking, max 100%) until the end of encounter. Whenever an enemy is inflicted with Shock, they take damage equal to 5% of their Max Health. This damage can't defeat enemies.",
+      "shortText": "(Mara Jade) ally turn -> MJ gets Loyal Hand, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "MARAJADE"
+    }
+  ],
+  "ability_set_focused_vaderduelsend_001": [
+    {
+      "abilityId": "datacron_character_vaderduelsend_001",
+      "targetRule": "target_datacron_vaderduelsend",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "vaderduelsend"
+      ],
+      "scopeIcon": "tex.charui_vaderduelsend",
+      "description": "Whenever an enemy attacks out of turn, Vader (Duel's End) takes a bonus turn (once per turn).\n\nVader (Duel's End) can't be defeated if Emperor Palpatine is active.\n\nAt the start of his turn, if Darth Vader (Duel's End) has less than 25% Health, he gains 10% Defense Penetration, Health Steal, and Offense for each active ally until the end of his turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy attacks out of turn, Vader (Duel's End) takes a bonus turn (once per turn).\n\nVader (Duel's End) can't be defeated if Emperor Palpatine is active.\n\nAt the start of his turn, if Darth Vader (Duel's End) has less than 25% Health, he gains 10% Defense Penetration, Health Steal, and Offense for each active ally until the end of his turn.",
+      "shortText": "Enemy attack out of turn -> Vader (Duel's End) bonus turn, cant die if Palp is alive",
+      "targetCategory": "",
+      "targetCharacter": "VADERDUELSEND"
+    }
+  ],
+  "ability_set_focused_stormtrooperluke_stormtrooperhan_001": [
+    {
+      "abilityId": "datacron_character_generic_029",
+      "targetRule": "target_datacron_stormtrooperhan",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "stormtrooperluke"
+      ],
+      "scopeIcon": "tex.charui_trooperstorm_han",
+      "description": "Whenever {0} deals damage to an enemy, remove 25% Turn Meter from that enemy.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Stormtrooper Han deals damage to an enemy, remove 25% Turn Meter from that enemy.",
+      "shortText": "Stormtrooper Han damage -> remove 25% TM",
+      "targetCategory": "",
+      "targetCharacter": "STORMTROOPERHAN"
+    }
+  ],
+  "ability_set_focused_stormtrooperluke_princessleia_001": [
+    {
+      "abilityId": "datacron_character_generic_050",
+      "targetRule": "target_datacron_princessleia",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "stormtrooperluke"
+      ],
+      "scopeIcon": "tex.charui_leia_princess",
+      "description": "Whenever {0} gains Stealth, they recover 25% Protection.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Princess Leia gains Stealth, they recover 25% Protection.",
+      "shortText": "Princess Leia gains Stealth -> +25% Prot",
+      "targetCategory": "",
+      "targetCharacter": "PRINCESSLEIA"
+    }
+  ],
+  "ability_set_focused_stormtrooperluke_001": [
+    {
+      "abilityId": "datacron_character_stormtrooperluke_001",
+      "targetRule": "target_datacron_stormtrooperluke",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "stormtrooperluke"
+      ],
+      "scopeIcon": "tex.charui_stormtrooperluke",
+      "description": "At the start of each encounter, Princess Leia gains Offense Up for 2 turns, and Stormtrooper Han gains Defense Up for 2 turns.\n\nWhenever an enemy is Distracted, Princess Leia resets her cooldown and gains a bonus turn (once per turn). If an enemy is defeated while Distracted, all allies recover 50% Health and Protection, Attacker allies gain 25% Offense (stacking), and Tank allies gain 25% Max Health (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of each encounter, Princess Leia gains Offense Up for 2 turns, and Stormtrooper Han gains Defense Up for 2 turns.\n\nWhenever an enemy is Distracted, Princess Leia resets her cooldown and gains a bonus turn (once per turn). If an enemy is defeated while Distracted, all allies recover 50% Health and Protection, Attacker allies gain 25% Offense (stacking), and Tank allies gain 25% Max Health (stacking) until the end of battle.",
+      "shortText": "(Stormtrooper Luke) Bonuses for Leia and ST Han",
+      "targetCategory": "",
+      "targetCharacter": "STORMTROOPERLUKE"
+    }
+  ],
+  "ability_set_focused_inquisitorbarris_ninthsister_001": [
+    {
+      "abilityId": "datacron_character_ninthsister_002",
+      "targetRule": "target_datacron_ninthsister",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "inquisitorbarriss"
+      ],
+      "scopeIcon": "tex.charui_ninthsister",
+      "description": "At the start of encounter, all Inquisitorius allies have +200% Max Health and are immune to Ability Block.\n\nNinth Sister deals 20% bonus True damage based on her Max Health with her Basic ability if the target enemy is inflicted with Purge.\n\nIf any enemy has 6 stacks of Purge when Ninth Sister is defeated for the first time, she consumes all stacks of Purge from a random enemy with 6 stacks of Purge, revives with 100% Max Health and Max Protection, and removes 50% Turn Meter from all enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of encounter, all Inquisitorius allies have +200% Max Health and are immune to Ability Block.\n\nNinth Sister deals 20% bonus True damage based on her Max Health with her Basic ability if the target enemy is inflicted with Purge.\n\nIf any enemy has 6 stacks of Purge when Ninth Sister is defeated for the first time, she consumes all stacks of Purge from a random enemy with 6 stacks of Purge, revives with 100% Max Health and Max Protection, and removes 50% Turn Meter from all enemies.",
+      "shortText": "(Ninth Sister) Inq Allies +200% Max H, revive 9th if enemy has 6 stacks of Purge",
+      "targetCategory": "",
+      "targetCharacter": "NINTHSISTER"
+    }
+  ],
+  "ability_set_focused_inquisitorbarris_secondsister_001": [
+    {
+      "abilityId": "datacron_character_secondsister_002",
+      "targetRule": "target_datacron_secondsister",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "inquisitorbarriss"
+      ],
+      "scopeIcon": "tex.charui_secondsister",
+      "description": "Whenever an enemy is inflicted with Purge, Second Sister gains 5% Offense and 5% Health Steal (stacking, max 120%), and 10 Speed (stacking, max 200) for the rest of the encounter.\n\nWhenever Second Sister defeats an enemy with Purge, she recovers 100% Health and Protection, and Ninth Sister gains Retaliate for 2 turns. ",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy is inflicted with Purge, Second Sister gains 5% Offense and 5% Health Steal (stacking, max 120%), and 10 Speed (stacking, max 200) for the rest of the encounter.\n\nWhenever Second Sister defeats an enemy with Purge, she recovers 100% Health and Protection, and Ninth Sister gains Retaliate for 2 turns.",
+      "shortText": "Enemy Purge -> 2nd Sis +5% Off/+5% HSteal/+10 Speed",
+      "targetCategory": "",
+      "targetCharacter": "SECONDSISTER"
+    }
+  ],
+  "ability_set_focused_inquisitorbarris_001": [
+    {
+      "abilityId": "datacron_character_inquisitorbarriss_001",
+      "targetRule": "target_datacron_inquisitorbarriss",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "inquisitorbarriss"
+      ],
+      "scopeIcon": "tex.charui_inquisitorbarriss",
+      "description": "At the start of each encounter, if Ninth Sister and Second Sister are allies, whenever Purge is dispelled or expires on an enemy, all Inquisitor allies gain 5% Turn Meter, and that enemy takes True Damage equal to 5% of their Max Health. This damage can't defeat enemies.\n\nWhile an Inquisitorius ally has Taunt, when an enemy targets an ally without Taunt, inflict Fear on that enemy for 2 turns (can't be evaded or resisted), and all enemies take True Damage equal to 25% of their Max Health.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of each encounter, if Ninth Sister and Second Sister are allies, whenever Purge is dispelled or expires on an enemy, all Inquisitor allies gain 5% Turn Meter, and that enemy takes True Damage equal to 5% of their Max Health. This damage can't defeat enemies.\n\nWhile an Inquisitorius ally has Taunt, when an enemy targets an ally without Taunt, inflict Fear on that enemy for 2 turns (can't be evaded or resisted), and all enemies take True Damage equal to 25% of their Max Health.",
+      "shortText": "(Inq Barriss) Bonuses for having 9th and 2nd Sis allies",
+      "targetCategory": "",
+      "targetCharacter": "INQUISITORBARRISS"
+    }
+  ],
+  "ability_set_focused_yodachewbacca_tarfful_001": [
+    {
+      "abilityId": "datacron_character_generic_051",
+      "targetRule": "target_datacron_tarfful",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "yodachewbacca"
+      ],
+      "scopeIcon": "tex.charui_tarfful",
+      "description": "Whenever another ally attacks during {0}'s turn, {0} and that ally gain +5% Accuracy (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever another ally attacks during Tarfful's turn, Tarfful and that ally gain +5% Accuracy (stacking) until the end of battle.",
+      "shortText": "Ally attacks during Tarfful's turn -> +5% Accuracy for both",
+      "targetCategory": "",
+      "targetCharacter": "TARFFUL"
+    }
+  ],
+  "ability_set_focused_yodachewbacca_clonewarchewbacca_001": [
+    {
+      "abilityId": "datacron_character_clonewarschewbacca_001",
+      "targetRule": "target_datacron_clonewarschewbacca",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "yodachewbacca"
+      ],
+      "scopeIcon": "tex.charui_chewbacca",
+      "description": "While Clone Wars Chewbacca has Taunt, all Wookiee allies deal True damage. While Clone Wars Chewbacca has Defense Up, all Wookiee allies have +100% Counter Chance.\n\nWhenever Clone Wars Chewbacca loses Taunt, he gains Protection Up (15%, stacking) for 2 turns, and reduces the cooldown of all Wookiee allies by 1.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "While Clone Wars Chewbacca has Taunt, all Wookiee allies deal True damage. While Clone Wars Chewbacca has Defense Up, all Wookiee allies have +100% Counter Chance.\n\nWhenever Clone Wars Chewbacca loses Taunt, he gains Protection Up (15%, stacking) for 2 turns, and reduces the cooldown of all Wookiee allies by 1.",
+      "shortText": "Clone Wars Chewbacca has Taunt -> all Wookiee allies deal True damage, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "CLONEWARSCHEWBACCA"
+    }
+  ],
+  "ability_set_focused_yodachewbacca_001": [
+    {
+      "abilityId": "datacron_character_yodachewbacca_001",
+      "targetRule": "target_datacron_yodachewbacca",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "yodachewbacca"
+      ],
+      "scopeIcon": "tex.charui_yodachewbacca",
+      "description": "Whenever Yoda & Chewie gain Foresight, they also gain +20% Turn Meter and Protection Up (20%) for 2 turns.\n\nWhenever a non-Tank Wookiee ally is critically hit, Wookiee Tanks Taunt for 1 turn. Whenever a Wookiee Taunts, the weakest ally gains 2 stacks of Bulwark for 1 turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Yoda & Chewie gain Foresight, they also gain +20% Turn Meter and Protection Up (20%) for 2 turns.\n\nWhenever a non-Tank Wookiee ally is critically hit, Wookiee Tanks Taunt for 1 turn. Whenever a Wookiee Taunts, the weakest ally gains 2 stacks of Bulwark for 1 turn.",
+      "shortText": "Yoda & Chewie Foresight -> +20% TM/+20% Prot Up, Wookiee bonuses",
+      "targetCategory": "",
+      "targetCharacter": "YODACHEWBACCA"
+    }
+  ],
+  "ability_set_focused_ig90_triplezero_001": [
+    {
+      "abilityId": "datacron_character_triplezero_002",
+      "targetRule": "target_datacron_triplezero",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "ig90"
+      ],
+      "scopeIcon": "tex.charui_triplezero",
+      "description": "While BT-1 is active, 0-0-0 is immune to Daze and Stun. Whenever 0-0-0 damages a Target Locked enemy, he gains Protection Up (20%, stacking) for 2 turns, 25% Turn Meter, and inflicts Protection Disruption for 1 turn, which can't be resisted.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "While BT-1 is active, 0-0-0 is immune to Daze and Stun. Whenever 0-0-0 damages a Target Locked enemy, he gains Protection Up (20%, stacking) for 2 turns, 25% Turn Meter, and inflicts Protection Disruption for 1 turn, which can't be resisted.",
+      "shortText": "(0-0-0) While BT-1 alive -> 000 immune to Daze/Stun, bonus for dmg target locks",
+      "targetCategory": "",
+      "targetCharacter": "TRIPLEZERO"
+    }
+  ],
+  "ability_set_focused_ig90_bt1_001": [
+    {
+      "abilityId": "datacron_character_bt1_002",
+      "targetRule": "target_datacron_bt1",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "ig90"
+      ],
+      "scopeIcon": "tex.charui_bt1",
+      "description": "Percent Health damage enemies receive is increased by 100%.\n\nWhile 0-0-0 is active, BT-1 is immune to Ability Block and Stun. Whenever BT-1 damages a Target Locked enemy, he gains Protection Up (20%, stacking) for 2 turns, 15% Turn Meter, and resets 0-0-0's cooldowns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Percent Health damage enemies receive is increased by 100%.\n\nWhile 0-0-0 is active, BT-1 is immune to Ability Block and Stun. Whenever BT-1 damages a Target Locked enemy, he gains Protection Up (20%, stacking) for 2 turns, 15% Turn Meter, and resets 0-0-0's cooldowns.",
+      "shortText": "(BT-1) Percent Health dmg doubled, bonuses while 000 alive and for dmg target locks",
+      "targetCategory": "",
+      "targetCharacter": "BT1"
+    }
+  ],
+  "ability_set_focused_ig90_001": [
+    {
+      "abilityId": "datacron_character_ig90_001",
+      "targetRule": "target_datacron_ig90",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "ig90"
+      ],
+      "scopeIcon": "tex.charui_ig-90",
+      "description": "Whenever IG-90 is dealt damage, reflect 50% of the damage dealt back onto the weakest enemy as True damage, which can't be evaded and inflicts Target Lock for 2 turns, which can't be resisted. This damage can't defeat enemies.\n\nWhenever IG-90 attacks an enemy with Target Lock, the healthiest enemy is inflicted with 2 stacks of Damage Over Time for 2 turns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever IG-90 is dealt damage, reflect 50% of the damage dealt back onto the weakest enemy as True damage, which can't be evaded and inflicts Target Lock for 2 turns, which can't be resisted. This damage can't defeat enemies.\n\nWhenever IG-90 attacks an enemy with Target Lock, the healthiest enemy is inflicted with 2 stacks of Damage Over Time for 2 turns.",
+      "shortText": "IG-90 dmged -> reflect 50% back to weakest enemy, target lock bonuses",
+      "targetCategory": "",
+      "targetCharacter": "IG90"
+    }
+  ],
+  "ability_set_focused_asajjventressdarkdisciple_fennec_001": [
+    {
+      "abilityId": "datacron_character_fennecshand_002",
+      "targetRule": "target_datacron_fennecshand",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "asajjdarkdisciple"
+      ],
+      "scopeIcon": "tex.charui_fennec",
+      "description": "Whenever a Bounty Hunter ally attacks out of turn, Fennec Shand gains Tenacity Up for 1 turn.\n\nWhenever Fennec Shand damages an enemy with Armor Shred, she deals bonus True damage equal to 3% of their Max Health to the target enemy, recovers 5% Protection, and dispels buffs from all enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever a Bounty Hunter ally attacks out of turn, Fennec Shand gains Tenacity Up for 1 turn.\n\nWhenever Fennec Shand damages an enemy with Armor Shred, she deals bonus True damage equal to 3% of their Max Health to the target enemy, recovers 5% Protection, and dispels buffs from all enemies.",
+      "shortText": "(Fennec Shand) BH ally atk out of turn -> FS Ten up, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "FENNECSHAND"
+    }
+  ],
+  "ability_set_focused_asajjventressdarkdisciple_4lom_001": [
+    {
+      "abilityId": "datacron_character_4lom_001",
+      "targetRule": "target_datacron_4lom",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "asajjdarkdisciple"
+      ],
+      "scopeIcon": "tex.charui_4lom",
+      "description": "At the start of each encounter, inflict all enemies with a stack of Corrupted Translation for 2 turns. If an enemy is defeated while they have 3 stacks of the Corrupted Translation, they can't be revived, and reset the cooldowns of all Bounty Hunter allies.\n\nWhenever 4-LOM uses Relative Mercy, each assisting ally deals 10% more damage for each stack of Corrupted Translation on the target enemy.\n\nWhenever Corrupted Translation expires on an enemy, inflict 2 stacks of Damage Over Time on them for 2 turns, and all Bounty Hunter allies gain 20% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of each encounter, inflict all enemies with a stack of Corrupted Translation for 2 turns. If an enemy is defeated while they have 3 stacks of the Corrupted Translation, they can't be revived, and reset the cooldowns of all Bounty Hunter allies.\n\nWhenever 4-LOM uses Relative Mercy, each assisting ally deals 10% more damage for each stack of Corrupted Translation on the target enemy.\n\nWhenever Corrupted Translation expires on an enemy, inflict 2 stacks of Damage Over Time on them for 2 turns, and all Bounty Hunter allies gain 20% Turn Meter.",
+      "shortText": "4-LOM giant wall of text",
+      "targetCategory": "",
+      "targetCharacter": "4LOM"
+    }
+  ],
+  "ability_set_focused_asajjventressdarkdisciple_001": [
+    {
+      "abilityId": "datacron_character_generic_015",
+      "targetRule": "target_datacron_asajjdarkdisciple",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "asajjdarkdisciple"
+      ],
+      "scopeIcon": "tex.charui_asajjdarkdisciple",
+      "description": "Whenever {0} critically hits an enemy, {0} gains 10% Critical Damage, Defense Penetration, and Offense (stacking, max 200%) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Asajj Ventress (Dark Disciple) critically hits an enemy, Asajj Ventress (Dark Disciple) gains 10% Critical Damage, Defense Penetration, and Offense (stacking, max 200%) until the end of battle.",
+      "shortText": "Asajj Ventress (Dark Disciple) crits -> +10% CD/DefPen/Off",
+      "targetCategory": "",
+      "targetCharacter": "ASAJJDARKDISCIPLE"
     }
   ],
   "stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_001": [
