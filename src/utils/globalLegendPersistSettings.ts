@@ -44,6 +44,14 @@ const storeNames = [
 	"StackRank",
 ];
 
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25] as const;
+type DBVersions = (typeof dbVersions)[number];
+const latestDBVersion = dbVersions[dbVersions.length - 1];
+const dbUpgrades = new Map<
+	DBVersions,
+	(db: IDBDatabase, transaction: IDBTransaction) => Promise<void>
+>();
+
 function itemUpgrade(
 	db: IDBDatabase,
 	transaction: IDBTransaction,
@@ -494,6 +502,7 @@ async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(18, upgradeTo18);
 
 async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -713,6 +722,7 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(19, upgradeTo19);
 
 async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -800,6 +810,7 @@ async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(20, upgradeTo20);
 
 async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -852,6 +863,7 @@ async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(21, upgradeTo21);
 
 async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -916,6 +928,7 @@ async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(22, upgradeTo22);
 
 async function upgradeTo23(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -946,6 +959,7 @@ async function upgradeTo23(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(23, upgradeTo23);
 
 async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -955,6 +969,7 @@ async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
+dbUpgrades.set(24, upgradeTo24);
 
 async function upgradeTo25(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
@@ -964,10 +979,7 @@ async function upgradeTo25(db: IDBDatabase, transaction: IDBTransaction) {
 		transaction.abort();
 	}
 }
-
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25] as const;
-type DBVersions = (typeof dbVersions)[number];
-const latestDBVersion = dbVersions[dbVersions.length - 1];
+dbUpgrades.set(25, upgradeTo25);
 
 const persistOptions = configureSynced({
 	persist: {
@@ -983,14 +995,11 @@ const persistOptions = configureSynced({
 					createStores(db);
 				}
 				if (transaction !== null) {
-					if (event.oldVersion < 18) await upgradeTo18(db, transaction);
-					if (event.oldVersion < 19) await upgradeTo19(db, transaction);
-					if (event.oldVersion < 20) await upgradeTo20(db, transaction);
-					if (event.oldVersion < 21) await upgradeTo21(db, transaction);
-					if (event.oldVersion < 22) await upgradeTo22(db, transaction);
-					if (event.oldVersion < 23) await upgradeTo23(db, transaction);
-					if (event.oldVersion < 24) await upgradeTo24(db, transaction);
-					if (event.oldVersion < 25) await upgradeTo25(db, transaction);
+					for (const [version, upgradeFunction] of dbUpgrades) {
+						if (event.oldVersion < version) {
+							await upgradeFunction(db, transaction);
+						}
+					}
 				}
 			},
 		}),
