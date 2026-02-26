@@ -23,6 +23,7 @@ import {
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
 	upgradeProfilesTo23,
+	type DBVersions,
 } from "#/utils/globalLegendPersistSettings";
 import {
 	LatestModsManagerBackupSchema,
@@ -30,19 +31,13 @@ import {
 	type ModsManagerBackupDataSchemaV19Output,
 	ModsManagerBackupSchemaV16,
 	ModsManagerBackupSchemaV18,
-	ModsManagerBackupSchemaV19,
-	ModsManagerBackupSchemaV20,
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupDataSchemaV20Output,
-	ModsManagerBackupSchemaV21,
 	type ModsManagerBackupDataSchemaV21Output,
-	ModsManagerBackupSchemaV22,
 	type ModsManagerBackupDataSchemaV22Output,
-	ModsManagerBackupSchemaV23,
 	type ModsManagerBackupDataSchemaV23Output,
-	ModsManagerBackupSchemaV24,
 	type ModsManagerBackupDataSchemaV24Output,
-	ModsManagerBackupSchemaV25,
+	modsManagerBackupSchemasByVersion,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
 import { fromGIMOBackup } from "../mappers/GIMOBackupMapper";
@@ -117,351 +112,328 @@ const normalizeBackupJSON = (params: {
 	return normalizedData;
 };
 
-const migrations = new Map<
-	number,
-	(normalizedBackup: NormalizedBackup) => NormalizedBackup
->([
-	[
-		0,
-		(normalizedBackup) => {
-			// Migrate GIMO backup to mods-manager v18 structure
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: normalizedBackup.data,
-				version: 18,
-			};
-		},
-	],
-	[
-		16,
-		(normalizedBackup) => {
-			// Migrate v16 to v18: Update character templates structure
-			const data = normalizedBackup.data as ModsManagerBackupSchemaV16Output;
+type MigrationFn = (normalizedBackup: NormalizedBackup) => NormalizedBackup;
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: {
-					characterTemplates: data.characterTemplates,
-					compilations: data.compilations,
-					defaultCompilation: {
-						category: "",
-						description: "",
-						flatCharacterModdings: [],
-						hasSelectionChanged: false,
-						id: "DefaultCompilation",
-						lastOptimized: null as Date | null,
-						optimizationConditions: null,
-						selectedCharacters: [],
-					},
-					incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-					lockedStatus: data.lockedStatus,
-					modsViewSetups: {
-						AllMods: {},
-						Calibrate: {},
-						Level: {},
-						Reveal: {},
-						Slice5Dot: {},
-						Slice6Dot: {},
-						Slice6E: {},
-					},
-					profilesManagement: {
-						activeAllycode: "",
-						lastUpdatedByAllycode: {},
-						playernameByAllycode: {},
-						profileByAllycode: {},
-					},
-					sessionIds: data.sessionIds,
-					settings: {},
+const migrationsRecord: Record<0 | DBVersions, MigrationFn> = {
+	0: (normalizedBackup) => {
+		// Migrate GIMO backup to mods-manager v18 structure
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: normalizedBackup.data,
+			version: 18,
+		};
+	},
+	16: (normalizedBackup) => {
+		// Migrate v16 to v18: Update character templates structure
+		const data = normalizedBackup.data as ModsManagerBackupSchemaV16Output;
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: {
+				characterTemplates: data.characterTemplates,
+				compilations: data.compilations,
+				defaultCompilation: {
+					category: "",
+					description: "",
+					flatCharacterModdings: [],
+					hasSelectionChanged: false,
+					id: "DefaultCompilation",
+					lastOptimized: null as Date | null,
+					optimizationConditions: null,
+					selectedCharacters: [],
 				},
-				version: 18,
-			};
-		},
-	],
-	[
-		18,
-		(normalizedBackup) => {
-			// Migrate v18 to v19: Convert TriState secondary settings to roll ranges
-			const data = normalizedBackup.data as ModsManagerBackupSchemaV18Output;
+				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+				lockedStatus: data.lockedStatus,
+				modsViewSetups: {
+					AllMods: {},
+					Calibrate: {},
+					Level: {},
+					Reveal: {},
+					Slice5Dot: {},
+					Slice6Dot: {},
+					Slice6E: {},
+				},
+				profilesManagement: {
+					activeAllycode: "",
+					lastUpdatedByAllycode: {},
+					playernameByAllycode: {},
+					profileByAllycode: {},
+				},
+				sessionIds: data.sessionIds,
+				settings: {},
+			},
+			version: 18,
+		};
+	},
+	18: (normalizedBackup) => {
+		// Migrate v18 to v19: Convert TriState secondary settings to roll ranges
+		const data = normalizedBackup.data as ModsManagerBackupSchemaV18Output;
 
-			if (data.modsViewSetups) {
-				for (const [, viewSetupsByIdForCategory] of objectEntries(
-					data.modsViewSetups,
-				)) {
-					for (const [, viewSetup] of objectEntries(
-						viewSetupsByIdForCategory,
-					)) {
-						if (viewSetup.filterById) {
-							for (const [, filter] of objectEntries(viewSetup.filterById)) {
-								upgradeFilterTo19(filter);
-							}
+		if (data.modsViewSetups) {
+			for (const [, viewSetupsByIdForCategory] of objectEntries(
+				data.modsViewSetups,
+			)) {
+				for (const [, viewSetup] of objectEntries(viewSetupsByIdForCategory)) {
+					if (viewSetup.filterById) {
+						for (const [, filter] of objectEntries(viewSetup.filterById)) {
+							upgradeFilterTo19(filter);
 						}
 					}
 				}
 			}
+		}
 
-			const newCompilations: Map<
-				string,
-				Map<string, Record<string, unknown>>
-			> = new Map();
-			if (data.compilations) {
-				for (const [allycode, compilationById] of objectEntries(
-					data.compilations,
+		const newCompilations: Map<
+			string,
+			Map<string, Record<string, unknown>>
+		> = new Map();
+		if (data.compilations) {
+			for (const [allycode, compilationById] of objectEntries(
+				data.compilations,
+			)) {
+				const newCompilationById = new Map<string, Record<string, unknown>>();
+				for (const [compilationId, compilation] of objectEntries(
+					compilationById,
 				)) {
-					const newCompilationById = new Map<string, Record<string, unknown>>();
-					for (const [compilationId, compilation] of objectEntries(
-						compilationById,
-					)) {
-						newCompilationById.set(compilationId, compilation);
-					}
-					newCompilations.set(allycode, newCompilationById);
-				}
-			}
-
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: newCompilations,
-				defaultCompilation: data.defaultCompilation,
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: data.lockedStatus,
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: data.profilesManagement,
-				sessionIds: data.sessionIds,
-				settings: data.settings,
-			};
-
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 19,
-			};
-		},
-	],
-	[
-		19,
-		(normalizedBackup) => {
-			// Migrate v19 to v20: Update locked status structure
-			const data =
-				normalizedBackup.data as ModsManagerBackupDataSchemaV19Output;
-
-			const newCompilations = new Map<
-				string,
-				Map<string, Record<string, unknown>>
-			>();
-			for (const [allycode, compilationById] of data.compilations) {
-				const newCompilationById = new Map<string, Record<string, unknown>>();
-				for (const [compilationId, compilation] of compilationById) {
-					newCompilationById.set(
-						compilationId,
-						upgradeCompilationTo20(compilation),
-					);
+					newCompilationById.set(compilationId, compilation);
 				}
 				newCompilations.set(allycode, newCompilationById);
 			}
+		}
 
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: newCompilations,
-				defaultCompilation: upgradeCompilationTo20(data.defaultCompilation),
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: upgradeLockedStatusTo20(data.lockedStatus),
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: data.profilesManagement,
-				sessionIds: data.sessionIds,
-				settings: data.settings,
-			};
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: newCompilations,
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+		};
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 20,
-			};
-		},
-	],
-	[
-		20,
-		(normalizedBackup) => {
-			// Migrate v20 to v21: Update session IDs structure
-			const data =
-				normalizedBackup.data as ModsManagerBackupDataSchemaV20Output;
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 19,
+		};
+	},
+	19: (normalizedBackup) => {
+		// Migrate v19 to v20: Update locked status structure
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV19Output;
 
-			const newSessionIDs = new Map<
-				string,
-				{ gimoSessionId: string; huSessionId: string }
-			>();
-			for (const [allycode, sessionId] of objectEntries(data.sessionIds)) {
-				newSessionIDs.set(allycode, {
-					gimoSessionId: sessionId,
-					huSessionId: "",
-				});
+		const newCompilations = new Map<
+			string,
+			Map<string, Record<string, unknown>>
+		>();
+		for (const [allycode, compilationById] of data.compilations) {
+			const newCompilationById = new Map<string, Record<string, unknown>>();
+			for (const [compilationId, compilation] of compilationById) {
+				newCompilationById.set(
+					compilationId,
+					upgradeCompilationTo20(compilation),
+				);
 			}
+			newCompilations.set(allycode, newCompilationById);
+		}
 
-			const newProfiles = upgradeProfilesTo21(data.profilesManagement);
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: data.compilations,
-				defaultCompilation: data.defaultCompilation,
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: data.lockedStatus,
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: newProfiles,
-				sessionIds: newSessionIDs,
-				settings: data.settings,
-			};
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: newCompilations,
+			defaultCompilation: upgradeCompilationTo20(data.defaultCompilation),
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: upgradeLockedStatusTo20(data.lockedStatus),
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+		};
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 21,
-			};
-		},
-	],
-	[
-		21,
-		(normalizedBackup) => {
-			// Migrate v21 to v22: Update characterModdings in compilations
-			const data =
-				normalizedBackup.data as ModsManagerBackupDataSchemaV21Output;
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 20,
+		};
+	},
+	20: (normalizedBackup) => {
+		// Migrate v20 to v21: Update session IDs structure
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV20Output;
 
-			const newCompilations = new Map<
-				string,
-				Map<string, Record<string, unknown>>
-			>();
-			for (const [allycode, compilationById] of data.compilations) {
-				const newCompilationById = new Map<string, Record<string, unknown>>();
-				for (const [compilationId, compilation] of compilationById) {
-					newCompilationById.set(
-						compilationId,
-						upgradeCompilationTo22(compilation),
-					);
-				}
-				newCompilations.set(allycode, newCompilationById);
+		const newSessionIDs = new Map<
+			string,
+			{ gimoSessionId: string; huSessionId: string }
+		>();
+		for (const [allycode, sessionId] of objectEntries(data.sessionIds)) {
+			newSessionIDs.set(allycode, {
+				gimoSessionId: sessionId,
+				huSessionId: "",
+			});
+		}
+
+		const newProfiles = upgradeProfilesTo21(data.profilesManagement);
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: data.compilations,
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: newProfiles,
+			sessionIds: newSessionIDs,
+			settings: data.settings,
+		};
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 21,
+		};
+	},
+	21: (normalizedBackup) => {
+		// Migrate v21 to v22: Update characterModdings in compilations
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV21Output;
+
+		const newCompilations = new Map<
+			string,
+			Map<string, Record<string, unknown>>
+		>();
+		for (const [allycode, compilationById] of data.compilations) {
+			const newCompilationById = new Map<string, Record<string, unknown>>();
+			for (const [compilationId, compilation] of compilationById) {
+				newCompilationById.set(
+					compilationId,
+					upgradeCompilationTo22(compilation),
+				);
 			}
+			newCompilations.set(allycode, newCompilationById);
+		}
 
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: newCompilations,
-				defaultCompilation: upgradeCompilationTo22(data.defaultCompilation),
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: data.lockedStatus,
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: data.profilesManagement,
-				sessionIds: data.sessionIds,
-				settings: data.settings,
-			};
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: newCompilations,
+			defaultCompilation: upgradeCompilationTo22(data.defaultCompilation),
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+		};
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 22,
-			};
-		},
-	],
-	[
-		22,
-		(normalizedBackup) => {
-			// Migrate v22 to v23: Update characters in persisted profiles
-			const data =
-				normalizedBackup.data as ModsManagerBackupDataSchemaV22Output;
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 22,
+		};
+	},
+	22: (normalizedBackup) => {
+		// Migrate v22 to v23: Update characters in persisted profiles
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV22Output;
 
-			const newProfiles = upgradeProfilesTo23(data.profilesManagement);
+		const newProfiles = upgradeProfilesTo23(data.profilesManagement);
 
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: data.compilations,
-				defaultCompilation: data.defaultCompilation,
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: data.lockedStatus,
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: newProfiles,
-				sessionIds: data.sessionIds,
-				settings: data.settings,
-			};
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: data.compilations,
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: newProfiles,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+		};
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 23,
-			};
-		},
-	],
-	[
-		23,
-		(normalizedBackup) => {
-			// Migrate v22 to v23: Update characters in persisted profiles
-			const data =
-				normalizedBackup.data as ModsManagerBackupDataSchemaV23Output;
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 23,
+		};
+	},
+	23: (normalizedBackup) => {
+		// Migrate v22 to v23: Update characters in persisted profiles
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV23Output;
 
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: data.compilations,
-				currencies: {},
-				datacrons: {},
-				defaultCompilation: data.defaultCompilation,
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: data.lockedStatus,
-				materials: {},
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: data.profilesManagement,
-				sessionIds: data.sessionIds,
-				settings: data.settings,
-			};
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: data.compilations,
+			currencies: {},
+			datacrons: {},
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: {},
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+		};
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 24,
-			};
-		},
-	],
-	[
-		24,
-		(normalizedBackup) => {
-			// Migrate v24 to v25: Add stackRank
-			const data =
-				normalizedBackup.data as ModsManagerBackupDataSchemaV24Output;
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 24,
+		};
+	},
+	24: (normalizedBackup) => {
+		// Migrate v24 to v25: Add stackRank
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV24Output;
 
-			const newData = {
-				characterTemplates: data.characterTemplates,
-				compilations: data.compilations,
-				currencies: data.currencies,
-				datacrons: data.datacrons,
-				defaultCompilation: data.defaultCompilation,
-				incrementalOptimizationIndices: data.incrementalOptimizationIndices,
-				lockedStatus: data.lockedStatus,
-				materials: data.materials,
-				modsViewSetups: data.modsViewSetups,
-				profilesManagement: data.profilesManagement,
-				sessionIds: data.sessionIds,
-				settings: data.settings,
-				stackRank: {},
-			};
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: data.compilations,
+			currencies: data.currencies,
+			datacrons: data.datacrons,
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: data.materials,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+			stackRank: {},
+		};
 
-			return {
-				appVersion: normalizedBackup.appVersion,
-				backupType: "fullBackup",
-				client: "mods-manager",
-				data: newData,
-				version: 25,
-			};
-		},
-	],
-]);
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 25,
+		};
+	},
+	25: (normalizedBackup) => {
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: normalizedBackup.data,
+			version: 26,
+		};
+	},
+};
+
+const migrations = new Map(
+	Object.entries(migrationsRecord).map(([k, v]) => [Number(k), v]),
+);
 
 function runMigrations(data: NormalizedBackup) {
 	let currentData = data;
@@ -482,6 +454,7 @@ function runMigrations(data: NormalizedBackup) {
 
 const convertBackup = (parsedJSON: unknown) => {
 	let backup: NormalizedBackup | null = null;
+	let version: DBVersions = 16;
 	const gimoParseResult = v.safeParse(GIMOBackupSchema, parsedJSON);
 	if (gimoParseResult.success) {
 		backup = normalizeBackupJSON({
@@ -492,12 +465,12 @@ const convertBackup = (parsedJSON: unknown) => {
 		});
 	}
 	if (backup === null) {
+		version = 16;
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV16,
 			parsedJSON,
 		);
 		if (modsManagerParseResult.success) {
-			// Pre-v19 backup - convert ISO dates
 			const dataWithDates = convertISODates(
 				modsManagerParseResult.output,
 			) as v.InferOutput<typeof ModsManagerBackupSchemaV16>;
@@ -505,12 +478,12 @@ const convertBackup = (parsedJSON: unknown) => {
 				appVersion: dataWithDates.version,
 				client: "mods-manager",
 				data: dataWithDates,
-				version: 16,
+				version,
 			});
 		}
 	}
 	if (backup === null) {
-		// Pre-v19 backup - convert ISO dates
+		version = 18;
 		const modsManagerParseResult = v.safeParse(
 			ModsManagerBackupSchemaV18,
 			convertISODates(parsedJSON),
@@ -520,64 +493,18 @@ const convertBackup = (parsedJSON: unknown) => {
 				appVersion: modsManagerParseResult.output.version,
 				client: "mods-manager",
 				data: modsManagerParseResult.output,
-				version: 18,
+				version,
 			});
 		}
 	}
 	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV19,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
-	}
-
-	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV20,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
-	}
-
-	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV21,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
-	}
-
-	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV22,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
-	}
-
-	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV23,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
-	}
-
-	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV24,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
-	}
-
-	if (backup === null) {
-		const modsManagerParseResult = v.safeParse(
-			ModsManagerBackupSchemaV25,
-			parsedJSON,
-		);
-		if (modsManagerParseResult.success) backup = modsManagerParseResult.output;
+		for (const [_version, schema] of modsManagerBackupSchemasByVersion) {
+			const parseResult = v.safeParse(schema, parsedJSON);
+			if (parseResult.success) {
+				backup = parseResult.output as NormalizedBackup;
+				break;
+			}
+		}
 	}
 
 	if (backup === null) {

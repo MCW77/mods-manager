@@ -275,6 +275,18 @@ type LatestModsManagerBackupSchemaOutput = v.InferOutput<
 const ModsManagerSchema = v.object({
 	client: v.literal("mods-manager"),
 });
+const modsManagerBackupSchemasByVersion = new Map<
+	number,
+	v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>
+>([
+	[19, ModsManagerBackupSchemaV19],
+	[20, ModsManagerBackupSchemaV20],
+	[21, ModsManagerBackupSchemaV21],
+	[22, ModsManagerBackupSchemaV22],
+	[23, ModsManagerBackupSchemaV23],
+	[24, ModsManagerBackupSchemaV24],
+	[25, ModsManagerBackupSchemaV25],
+]);
 
 export {
 	LatestModsManagerBackupSchema,
@@ -282,13 +294,7 @@ export {
 	type LatestModsManagerBackupDataSchemaOutput,
 	ModsManagerBackupSchemaV16,
 	ModsManagerBackupSchemaV18,
-	ModsManagerBackupSchemaV19,
-	ModsManagerBackupSchemaV20,
-	ModsManagerBackupSchemaV21,
-	ModsManagerBackupSchemaV22,
-	ModsManagerBackupSchemaV23,
-	ModsManagerBackupSchemaV24,
-	ModsManagerBackupSchemaV25,
+	modsManagerBackupSchemasByVersion,
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupSchemaV18Output,
 	type ModsManagerBackupDataSchemaV19Output,
