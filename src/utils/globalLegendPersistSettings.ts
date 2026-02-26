@@ -140,6 +140,116 @@ function itemUpgrade(
 	});
 }
 
+function multiStoreItemUpgrade(
+	db: IDBDatabase,
+	transaction: IDBTransaction,
+	readStoreNames: string[],
+	writeStoreName: string,
+	id: string,
+	upgradeFunction: (
+		dataByStoreName: Map<string, Array<RecordWithNestedEntities>>,
+	) => Array<RecordWithNestedEntities>,
+): Promise<void> {
+	return new Promise((resolve, reject) => {
+		try {
+			for (const storeName of readStoreNames) {
+				if (!db.objectStoreNames.contains(storeName)) {
+					reject(new Error(`Read store not found for ${id}: ${storeName}`));
+					return;
+				}
+			}
+
+			const dataByStoreName = new Map<
+				string,
+				Array<RecordWithNestedEntities>
+			>();
+
+			const readStoreAt = (index: number) => {
+				try {
+					if (index >= readStoreNames.length) {
+						try {
+							const newData = upgradeFunction(dataByStoreName);
+
+							if (!Array.isArray(newData) || newData.length === 0) {
+								resolve();
+								return;
+							}
+
+							if (db.objectStoreNames.contains(writeStoreName)) {
+								db.deleteObjectStore(writeStoreName);
+							}
+							const newStore = db.createObjectStore(writeStoreName, {
+								keyPath: "id",
+								autoIncrement: false,
+							});
+
+							let settled = false;
+							let remainingPuts = newData.length;
+							for (const item of newData) {
+								const putRequest = newStore.put(item);
+								putRequest.onsuccess = () => {
+									if (settled) return;
+									remainingPuts -= 1;
+									if (remainingPuts === 0) {
+										settled = true;
+										resolve();
+									}
+								};
+								putRequest.onerror = (putEvent: Event) => {
+									if (settled) return;
+									settled = true;
+									console.error(
+										`Error putting data to new store: ${writeStoreName}`,
+										(putEvent.target as IDBRequest).error,
+									);
+									reject((putEvent.target as IDBRequest).error);
+								};
+							}
+						} catch (error) {
+							console.error(
+								`Error processing data for ${writeStoreName}:${id}`,
+								error,
+							);
+							reject(error);
+						}
+						return;
+					}
+
+					const storeName = readStoreNames[index];
+					const readRequest = transaction.objectStore(storeName).getAll();
+					readRequest.onsuccess = (event: Event) => {
+						try {
+							const storeData = (event.target as IDBRequest)
+								.result as Array<RecordWithNestedEntities>;
+							dataByStoreName.set(storeName, storeData ?? []);
+							readStoreAt(index + 1);
+						} catch (error) {
+							console.error(
+								`Error processing read data for ${storeName}:${id}`,
+								error,
+							);
+							reject(error);
+						}
+					};
+					readRequest.onerror = (event: Event) => {
+						const error = (event.target as IDBRequest).error;
+						console.error(`Error reading data from store: ${storeName}`, error);
+						reject(error);
+					};
+				} catch (error) {
+					console.error(`Error reading store for ${id}`, error);
+					reject(error);
+				}
+			};
+
+			readStoreAt(0);
+		} catch (error) {
+			console.error(`Error upgrading:${id} with multi-store upgrade`, error);
+			reject(error);
+		}
+	});
+}
+
 function upgradeFilterTo18(
 	filter: Partial<Filter> & { secondariesscoretier?: unknown },
 ) {
