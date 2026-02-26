@@ -24,6 +24,10 @@ type RecordWithNestedEntities = {
 	[key: string]: Entity | string | unknown;
 };
 
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25] as const;
+type DBVersions = (typeof dbVersions)[number];
+const latestDBVersion = dbVersions[dbVersions.length - 1];
+
 const storeNames = [
 	"OptimizationSettings",
 	"IncrementalOptimization",
@@ -38,19 +42,33 @@ const storeNames = [
 	"LockedStatus",
 	"Compilations",
 	"DefaultCompilation",
+];
+
+const storeNamesByVersion: Map<DBVersions, string[]> = new Map([
+	[16, storeNames],
+]);
+storeNamesByVersion.set(24, [
+	...storeNames,
 	"Datacrons",
 	"Materials",
 	"Currencies",
-	"StackRank",
-];
+]);
+storeNamesByVersion.set(25, [...storeNames, "StackRank"]);
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25] as const;
-type DBVersions = (typeof dbVersions)[number];
-const latestDBVersion = dbVersions[dbVersions.length - 1];
 const dbUpgrades = new Map<
 	DBVersions,
 	(db: IDBDatabase, transaction: IDBTransaction) => Promise<void>
 >();
+
+function getStoreNamesForVersion(version: DBVersions): string[] {
+	const storeNames = [];
+	for (const [currentVersion, names] of storeNamesByVersion.entries()) {
+		if (currentVersion <= version) {
+			storeNames.push(...names);
+		}
+	}
+	return storeNames;
+}
 
 function itemUpgrade(
 	db: IDBDatabase,
@@ -306,8 +324,9 @@ function upgradeProfilesTo23(profiles: Record<string, unknown>) {
 	return profiles;
 }
 
-function createStores(db: IDBDatabase, stores: string[] = storeNames) {
-	for (const storeName of stores) {
+function createStores(db: IDBDatabase, version: DBVersions) {
+	const storeNames = getStoreNamesForVersion(version);
+	for (const storeName of storeNames ?? []) {
 		if (!db.objectStoreNames.contains(storeName)) {
 			db.createObjectStore(storeName, {
 				keyPath: "id",
@@ -963,7 +982,7 @@ dbUpgrades.set(23, upgradeTo23);
 
 async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
-		createStores(db, ["Datacrons", "Materials", "Currencies"]);
+		createStores(db, 24);
 	} catch (error) {
 		console.error("Error in upgradeTo24:", error);
 		transaction.abort();
@@ -973,7 +992,7 @@ dbUpgrades.set(24, upgradeTo24);
 
 async function upgradeTo25(db: IDBDatabase, transaction: IDBTransaction) {
 	try {
-		createStores(db, ["StackRank"]);
+		createStores(db, 25);
 	} catch (error) {
 		console.error("Error in upgradeTo25:", error);
 		transaction.abort();
@@ -986,13 +1005,13 @@ const persistOptions = configureSynced({
 		plugin: observablePersistIndexedDB({
 			databaseName: "GIMO",
 			version: latestDBVersion,
-			tableNames: storeNames,
+			tableNames: getStoreNamesForVersion(latestDBVersion),
 			onUpgradeNeeded: async (event) => {
 				const request = event.target as IDBOpenDBRequest;
 				const db = request.result as IDBDatabase;
 				const transaction = request.transaction;
 				if (event.oldVersion === 0) {
-					createStores(db);
+					createStores(db, latestDBVersion);
 				}
 				if (transaction !== null) {
 					for (const [version, upgradeFunction] of dbUpgrades) {
@@ -1009,15 +1028,13 @@ const persistOptions = configureSynced({
 const testing =
 	typeof process !== "undefined" && process.env.NODE_ENV === "test";
 
-const testOnlyCreateStores = testing ? createStores : undefined;
-const testOnlyStoreNames = testing ? storeNames : undefined;
-const testOnlyUpgradeTo18 = testing ? upgradeTo18 : undefined;
-const testOnlyUpgradeTo19 = testing ? upgradeTo19 : undefined;
-const testOnlyUpgradeTo20 = testing ? upgradeTo20 : undefined;
-const testOnlyUpgradeTo21 = testing ? upgradeTo21 : undefined;
-const testOnlyUpgradeTo22 = testing ? upgradeTo22 : undefined;
-const testOnlyUpgradeTo23 = testing ? upgradeTo23 : undefined;
-const testOnlyUpgradeTo24 = testing ? upgradeTo24 : undefined;
+const testOnly = testing
+	? {
+			createStores,
+			dbUpgrades,
+			dbVersions,
+		}
+	: undefined;
 
 export {
 	type DBVersions,
@@ -1029,13 +1046,5 @@ export {
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
 	upgradeProfilesTo23,
-	testOnlyCreateStores,
-	testOnlyStoreNames,
-	testOnlyUpgradeTo18,
-	testOnlyUpgradeTo19,
-	testOnlyUpgradeTo20,
-	testOnlyUpgradeTo21,
-	testOnlyUpgradeTo22,
-	testOnlyUpgradeTo23,
-	testOnlyUpgradeTo24,
+	testOnly,
 };

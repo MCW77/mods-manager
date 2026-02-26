@@ -3,15 +3,8 @@ import * as v from "valibot";
 
 // state
 import {
-	testOnlyCreateStores,
-	testOnlyStoreNames,
-	testOnlyUpgradeTo18,
-	testOnlyUpgradeTo19,
-	testOnlyUpgradeTo20,
-	testOnlyUpgradeTo21,
-	testOnlyUpgradeTo22,
-	testOnlyUpgradeTo23,
-	testOnlyUpgradeTo24,
+	type DBVersions,
+	testOnly,
 } from "../../utils/globalLegendPersistSettings";
 
 // domain
@@ -22,17 +15,6 @@ interface StoreData {
 	id: string;
 	[key: string]: unknown;
 }
-
-const storeNamesByVersion: Map<number, string[]> = new Map([
-	[16, testOnlyStoreNames || []],
-	[18, testOnlyStoreNames || []],
-	[19, testOnlyStoreNames || []],
-	[20, testOnlyStoreNames || []],
-	[21, testOnlyStoreNames || []],
-	[22, testOnlyStoreNames || []],
-	[23, testOnlyStoreNames || []],
-	[24, testOnlyStoreNames || []],
-]);
 
 /**
  * Validates migrated data against the latest schema
@@ -51,7 +33,7 @@ export function validateAgainstLatestSchema(data: unknown): boolean {
  */
 export async function createOldDatabase(
 	dbName: string,
-	version: number,
+	version: DBVersions,
 	fixtures: Record<string, StoreData[]>,
 ): Promise<IDBDatabase> {
 	return new Promise((resolve, reject) => {
@@ -64,11 +46,11 @@ export async function createOldDatabase(
 			const db = request.result as IDBDatabase;
 			const transaction = request.transaction as IDBTransaction;
 
-			if (!testOnlyCreateStores) {
+			if (!testOnly?.createStores) {
 				reject(new Error("testOnlyCreateStores function is not defined"));
 				return;
 			}
-			testOnlyCreateStores(db, storeNamesByVersion.get(version) || []);
+			testOnly.createStores(db, version);
 
 			for (const storeName of Object.keys(fixtures)) {
 				if (db.objectStoreNames.contains(storeName)) {
@@ -89,13 +71,17 @@ export async function createOldDatabase(
 	});
 }
 
+function getUpgradeFunctionForVersion(version: DBVersions) {
+	return testOnly?.dbUpgrades.get(version);
+}
+
 /**
  * Opens database and triggers migration from oldVersion to newVersion
  */
 export async function openDatabaseWithMigration(
 	dbName: string,
-	oldVersion: number,
-	newVersion: number,
+	oldVersion: DBVersions,
+	newVersion: DBVersions,
 ): Promise<IDBDatabase> {
 	return new Promise((resolve, reject) => {
 		const request = indexedDB.open(dbName, newVersion);
@@ -113,44 +99,29 @@ export async function openDatabaseWithMigration(
 
 			if (oldVersion === 16 && newVersion >= 18) {
 				// Simulate the actual upgrade logic from globalLegendPersistSettings
-				if (testOnlyUpgradeTo18) {
-					await testOnlyUpgradeTo18(db, transaction);
+				const upgradeFunction = getUpgradeFunctionForVersion(18);
+				if (upgradeFunction) {
+					await upgradeFunction(db, transaction);
 				}
 			}
 
-			if (oldVersion <= 18 && newVersion >= 19) {
-				if (testOnlyUpgradeTo19) {
-					await testOnlyUpgradeTo19(db, transaction);
-				}
-			}
-
-			if (oldVersion <= 19 && newVersion >= 20) {
-				if (testOnlyUpgradeTo20) {
-					await testOnlyUpgradeTo20(db, transaction);
-				}
-			}
-
-			if (oldVersion <= 20 && newVersion >= 21) {
-				if (testOnlyUpgradeTo21) {
-					await testOnlyUpgradeTo21(db, transaction);
-				}
-			}
-
-			if (oldVersion <= 21 && newVersion >= 22) {
-				if (testOnlyUpgradeTo22) {
-					await testOnlyUpgradeTo22(db, transaction);
-				}
-			}
-
-			if (oldVersion <= 22 && newVersion >= 23) {
-				if (testOnlyUpgradeTo23) {
-					await testOnlyUpgradeTo23(db, transaction);
-				}
-			}
-
-			if (oldVersion <= 23 && newVersion >= 24) {
-				if (testOnlyUpgradeTo24) {
-					await testOnlyUpgradeTo24(db, transaction);
+			if (testOnly !== undefined) {
+				for (
+					let dbVersionsIndex = 2;
+					dbVersionsIndex <= testOnly.dbVersions.length - 1;
+					dbVersionsIndex++
+				) {
+					const currentVersion = testOnly.dbVersions[dbVersionsIndex];
+					if (
+						oldVersion <= currentVersion - 1 &&
+						newVersion >= currentVersion
+					) {
+						const upgradeFunction =
+							getUpgradeFunctionForVersion(currentVersion);
+						if (upgradeFunction) {
+							await upgradeFunction(db, transaction);
+						}
+					}
 				}
 			}
 		};

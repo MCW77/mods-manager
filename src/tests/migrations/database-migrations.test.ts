@@ -6,12 +6,15 @@ import {
 	openDatabaseWithMigration,
 	getFromStore,
 } from "./migration-utils";
-import { latestDBVersion } from "../../utils/globalLegendPersistSettings";
+import {
+	type DBVersions,
+	latestDBVersion,
+} from "../../utils/globalLegendPersistSettings";
 
 const migrateData = async (
 	dbName: string,
-	oldDBVersion: number,
-	newDBVersion: number,
+	oldDBVersion: DBVersions,
+	newDBVersion: DBVersions,
 ) => {
 	const oldDb = await createOldDatabase(
 		dbName,
@@ -52,16 +55,15 @@ describe("Database Migrations", () => {
 			stores = await migrateData(dbName, oldDBVersion, newDBVersion);
 		});
 
-		it.concurrent.each(Object.keys(expectedFixture))(
-			"should migrate %s correctly",
-			async (storeName) => {
-				const migratedData = stores[storeName];
-				const expectedData = expectedFixture[storeName];
-				expect(superjson.stringify(migratedData)).toBe(
-					superjson.stringify(expectedData),
-				);
-			},
-		);
+		it.concurrent.each(
+			Object.keys(expectedFixture),
+		)("should migrate %s correctly", async (storeName) => {
+			const migratedData = stores[storeName];
+			const expectedData = expectedFixture[storeName];
+			expect(superjson.stringify(migratedData)).toBe(
+				superjson.stringify(expectedData),
+			);
+		});
 	});
 
 	describe("Version 18 to 19 Migration", async () => {
@@ -78,16 +80,15 @@ describe("Database Migrations", () => {
 			stores = await migrateData(dbName, oldDBVersion, newDBVersion);
 		});
 
-		it.concurrent.each(Object.keys(expectedFixture))(
-			"should migrate %s correctly",
-			async (storeName) => {
-				const migratedData = stores[storeName];
-				const expectedData = expectedFixture[storeName];
-				expect(superjson.stringify(migratedData)).toBe(
-					superjson.stringify(expectedData),
-				);
-			},
-		);
+		it.concurrent.each(
+			Object.keys(expectedFixture),
+		)("should migrate %s correctly", async (storeName) => {
+			const migratedData = stores[storeName];
+			const expectedData = expectedFixture[storeName];
+			expect(superjson.stringify(migratedData)).toBe(
+				superjson.stringify(expectedData),
+			);
+		});
 	});
 
 	describe("Full Migration Chain", async () => {
@@ -101,15 +102,14 @@ describe("Database Migrations", () => {
 			stores = await migrateData(dbName, oldDBVersion, newDBVersion);
 		});
 
-		it.concurrent.each(Object.keys(expectedFixture))(
-			"should migrate %s correctly",
-			async (storeName) => {
-				const migratedData = stores[storeName];
-				const expectedData = expectedFixture[storeName];
-				expect(superjson.stringify(migratedData)).toBe(
-					superjson.stringify(expectedData),
-				);
-			},
-		);
+		it.concurrent.each(
+			Object.keys(expectedFixture),
+		)("should migrate %s correctly", async (storeName) => {
+			const migratedData = stores[storeName];
+			const expectedData = expectedFixture[storeName];
+			expect(superjson.stringify(migratedData)).toBe(
+				superjson.stringify(expectedData),
+			);
+		});
 	});
 });
