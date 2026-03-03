@@ -45,10 +45,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			compilations$.persistedData1.compilationByIdByAllycode,
 		compilationByIdForActiveAllycode: () => {
 			const allycode = profilesManagement$.activeProfile.allycode.get();
-			return (
-				compilations$.compilationByIdByAllycode.get(allycode) ??
-				new Map<string, Compilation>()
-			);
+			return compilations$.compilationByIdByAllycode.get(allycode);
 		},
 		activeCompilation: () => {
 			const compilation$ =

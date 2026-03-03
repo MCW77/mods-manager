@@ -38,9 +38,9 @@ const lockedStatus$: ObservableObject<LockedStatusObservable> =
 		isCharacterLockedForActivePlayer: (
 			characterId: CharacterNames,
 		): boolean => {
-			return lockedStatus$.lockedCharactersForActivePlayer
-				.get()
-				.has(characterId);
+			const lockedCharactersForActivePlayer =
+				lockedStatus$.lockedCharactersForActivePlayer.get();
+			return lockedCharactersForActivePlayer?.has(characterId) ?? false;
 		},
 		addProfile: (allycode: string) => {
 			if (
