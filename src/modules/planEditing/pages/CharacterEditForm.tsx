@@ -416,6 +416,12 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			endBatch();
 		});
 
+		async function SubmitFormAction() {
+			saveTarget();
+			incrementalOptimization$.indicesByProfile[allycode].set(null);
+			optimizerView$.view.set("basic");
+		}
+
 		const saveTarget = () => {
 			let newTarget = structuredClone(target$.target.peek());
 			if (target$.isInAdvancedEditMode.peek())
@@ -431,12 +437,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					"character-edit-form w-full flex flex-col flex-gap-2 items-stretch justify-center p-8"
 				}
 				noValidate={targetIsInAdvancedEditMode}
-				onSubmit={(e) => {
-					e.preventDefault();
-					saveTarget();
-					incrementalOptimization$.indicesByProfile[allycode].set(null);
-					optimizerView$.view.set("basic");
-				}}
+				action={SubmitFormAction}
 			>
 				<div className={"flex flex-gap-4 justify-between"}>
 					<div className={"flex flex-gap-2 items-center"}>
