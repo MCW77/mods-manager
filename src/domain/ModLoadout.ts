@@ -10,10 +10,6 @@ import type { Mod } from "./Mod";
 
 export type ModLoadout = Record<ModTypes.GIMOSlots, Mod | null>;
 
-export const modSlotNotEmpty =
-	(loadout: ModLoadout) => (slot: ModTypes.GIMOSlots) =>
-		loadout[slot] !== null;
-
 export function createModLoadout(mods: (Mod | null)[]): ModLoadout {
 	const modLoadout: ModLoadout = {
 		square: null,
