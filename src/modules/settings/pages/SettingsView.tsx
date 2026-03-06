@@ -22,43 +22,43 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralSettingsView from "#/modules/settings/components/GeneralSettingsView";
 import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSettingsView";
 
-const SettingsView: React.FC = observer(() => {
+function Section({ sectionName }: { sectionName: SettingsSections }) {
 	const [t] = useTranslation("settings-ui");
+	const section = useValue(settings$.section);
+
+	return (
+		<div
+			className={`${sectionName} m-[0.2em] p-[0.4em] border-1 border-solid ${
+				sectionName === section ? "border-yellow-400" : "border-white"
+			} rounded-xl bg-transparent`}
+			onClick={() => settings$.section.set(sectionName)}
+			onKeyUp={(e) => {
+				if (e.key === "Enter") {
+					settings$.section.set(sectionName);
+				}
+			}}
+			role={"tab"}
+			tabIndex={0}
+			key={`settings-section-${sectionName}`}
+		>
+			{t(`${sectionName}.Title`)}
+		</div>
+	);
+}
+
+function Topic() {
+	const section = useValue(settings$.section);
+
+	return match(section)
+		.with("general", () => <GeneralSettingsView />)
+		.with("optimizer", () => <OptimizerSettingsView />)
+		.otherwise(() => {
+			return <div id={`settings-${section}`} />;
+		});
+}
+
+const SettingsView: React.FC = observer(() => {
 	const previousSection = useValue(ui$.previousSection);
-
-	const renderSection = (sectionName: SettingsSections) => {
-		const section = useValue(settings$.section);
-
-		return (
-			<div
-				className={`${sectionName} m-[0.2em] p-[0.4em] border-1 border-solid ${
-					sectionName === section ? "border-yellow-400" : "border-white"
-				} rounded-xl bg-transparent`}
-				onClick={() => settings$.section.set(sectionName)}
-				onKeyUp={(e) => {
-					if (e.key === "Enter") {
-						settings$.section.set(sectionName);
-					}
-				}}
-				role={"tab"}
-				tabIndex={0}
-				key={`settings-section-${sectionName}`}
-			>
-				{t(`${sectionName}.Title`)}
-			</div>
-		);
-	};
-
-	const renderTopic = () => {
-		const section = useValue(settings$.section);
-
-		return match(section)
-			.with("general", () => <GeneralSettingsView />)
-			.with("optimizer", () => <OptimizerSettingsView />)
-			.otherwise(() => {
-				return <div id={`settings-${section}`} />;
-			});
-	};
 
 	return (
 		<div className={"Settings-page flex flex-col grow-1"} key={"settings"}>
@@ -75,11 +75,13 @@ const SettingsView: React.FC = observer(() => {
 					</div>
 				)}
 
-				{renderSection("general")}
-				{renderSection("explorer")}
-				{renderSection("optimizer")}
+				<Section sectionName={"general"} />
+				<Section sectionName={"explorer"} />
+				<Section sectionName={"optimizer"} />
 			</nav>
-			<div className={"overflow-y-auto"}>{renderTopic()}</div>
+			<div className={"overflow-y-auto"}>
+				<Topic />
+			</div>
 		</div>
 	);
 });
