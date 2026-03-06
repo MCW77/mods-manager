@@ -173,8 +173,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
       '@unocss/preset-typography':
-        specifier: 66.6.5
-        version: 66.6.5
+        specifier: 66.6.6
+        version: 66.6.6
       '@unocss/preset-wind4':
         specifier: ^66.6.5
         version: 66.6.5
@@ -2360,9 +2360,6 @@ packages:
 
   '@unocss/preset-tagify@66.6.6':
     resolution: {integrity: sha512-KgBXYPYS0g4TVC3NLiIB78YIqUlvDLanz1EHIDo34rOTUfMgY8Uf5VuDJAzMu4Sc0LiwwBJbk6nIG9/Zm7ufWg==}
-
-  '@unocss/preset-typography@66.6.5':
-    resolution: {integrity: sha512-Cb63tdC0P2rgj/4t4DrSCl6RHebNpjUp9FQArg0KCnFnW75nWtKlsKpHuEXpi7KwrgOIx+rjlkwC1bDcsdNLHw==}
 
   '@unocss/preset-typography@66.6.6':
     resolution: {integrity: sha512-SM1km5nqt15z4sTabfOobSC633I5Ol5nnme6JFTra4wiyCUNs+Cg31nJ6jnopWDUT4SEAXqfUH7jKSSoCnI6ZA==}
@@ -6179,11 +6176,6 @@ snapshots:
   '@unocss/preset-tagify@66.6.6':
     dependencies:
       '@unocss/core': 66.6.6
-
-  '@unocss/preset-typography@66.6.5':
-    dependencies:
-      '@unocss/core': 66.6.5
-      '@unocss/rule-utils': 66.6.5
 
   '@unocss/preset-typography@66.6.6':
     dependencies:
