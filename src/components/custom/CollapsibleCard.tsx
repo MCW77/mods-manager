@@ -31,7 +31,7 @@ const CollapsibleCardHeader = React.forwardRef<
 CollapsibleCardHeader.displayName = "CollapsibleCardHeader";
 
 const CollapsibleCardTitle = React.forwardRef<
-	HTMLParagraphElement,
+	HTMLHeadingElement,
 	React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
 	<h3
