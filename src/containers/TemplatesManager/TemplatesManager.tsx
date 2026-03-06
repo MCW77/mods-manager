@@ -14,6 +14,7 @@ import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
+import type { Observable } from "@legendapp/state";
 import { For, observer, useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
@@ -22,7 +23,10 @@ const templates$ = stateLoader$.templates$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
-import type { CharacterTemplates } from "#/modules/templates/domain/CharacterTemplates";
+import type {
+	CharacterTemplate,
+	CharacterTemplates,
+} from "#/modules/templates/domain/CharacterTemplates";
 
 //components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,13 +35,105 @@ import { FileInput } from "#/components/FileInput/FileInput";
 
 import { Button } from "#ui/button";
 
+interface TemplateItemProps {
+	template$: Observable<CharacterTemplate>;
+	selectedTemplates: CharacterTemplates;
+	setSelectedTemplates: React.Dispatch<
+		React.SetStateAction<CharacterTemplates>
+	>;
+}
+
+function TemplateItem({
+	template$,
+	selectedTemplates,
+	setSelectedTemplates,
+}: TemplateItemProps) {
+	const template = useValue(template$);
+	const userTemplates = useValue(templates$.userTemplates);
+
+	return (
+		<li
+			className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
+			data-template={template.id}
+			key={`template-${template.id}`}
+			onClick={(event) => {
+				event.stopPropagation();
+				const target = event.currentTarget as HTMLLIElement;
+				if (
+					target.dataset.template !== undefined &&
+					target.dataset.template !== null
+				) {
+					const templateName = target.dataset.template;
+					const selectedTemplate = selectedTemplates.find(
+						(template) => template.id === templateName,
+					);
+					const wasSelected = selectedTemplate !== undefined;
+					const template = userTemplates.find(
+						(template) => template.id === templateName,
+					);
+					target.classList.toggle("selected");
+					target.dataset.selected =
+						selectedTemplate === undefined ? "true" : "false";
+					if (wasSelected) {
+						setSelectedTemplates(
+							selectedTemplates.toSpliced(
+								selectedTemplates.indexOf(selectedTemplate),
+								1,
+							),
+						);
+					} else {
+						if (template !== undefined)
+							setSelectedTemplates([...selectedTemplates, template]);
+					}
+				}
+			}}
+			onKeyUp={(event) => {
+				if (event.code === "Enter") {
+					const target = event.currentTarget as HTMLLIElement;
+					if (
+						target.dataset.template !== undefined &&
+						target.dataset.template !== null
+					) {
+						const templateName = target.dataset.template;
+						const selectedTemplate = selectedTemplates.find(
+							(template) => template.id === templateName,
+						);
+						const wasSelected = selectedTemplate !== undefined;
+						const template = userTemplates.find(
+							(template) => template.id === templateName,
+						);
+						target.classList.toggle("selected");
+						target.dataset.selected =
+							selectedTemplate === undefined ? "true" : "false";
+						if (wasSelected) {
+							setSelectedTemplates(
+								selectedTemplates.toSpliced(
+									selectedTemplates.indexOf(selectedTemplate),
+									1,
+								),
+							);
+						} else {
+							if (template !== undefined)
+								setSelectedTemplates([...selectedTemplates, template]);
+						}
+					}
+				}
+			}}
+		>
+			<span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">
+				&nbsp;
+			</span>
+			{template.id}
+		</li>
+	);
+}
+
 const TemplatesManager = observer(
 	React.memo(() => {
 		const [selectedTemplates, setSelectedTemplates] = useState(
 			[] as CharacterTemplates,
 		);
 		const [t] = useTranslation("settings-ui");
-		const userTemplates = useValue(templates$.userTemplates);
 
 		return (
 			<div>
@@ -106,92 +202,7 @@ const TemplatesManager = observer(
 					</Button>
 				</div>
 				<ul>
-					<For each={templates$.userTemplates}>
-						{(template$) => {
-							const template = useValue(template$);
-							return (
-								<li
-									className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
-									data-template={template.id}
-									key={`template-${template.id}`}
-									onClick={(event) => {
-										event.stopPropagation();
-										const target = event.currentTarget as HTMLLIElement;
-										if (
-											target.dataset.template !== undefined &&
-											target.dataset.template !== null
-										) {
-											const templateName = target.dataset.template;
-											const selectedTemplate = selectedTemplates.find(
-												(template) => template.id === templateName,
-											);
-											const wasSelected = selectedTemplate !== undefined;
-											const template = userTemplates.find(
-												(template) => template.id === templateName,
-											);
-											target.classList.toggle("selected");
-											target.dataset.selected =
-												selectedTemplate === undefined ? "true" : "false";
-											if (wasSelected) {
-												setSelectedTemplates(
-													selectedTemplates.toSpliced(
-														selectedTemplates.indexOf(selectedTemplate),
-														1,
-													),
-												);
-											} else {
-												if (template !== undefined)
-													setSelectedTemplates([
-														...selectedTemplates,
-														template,
-													]);
-											}
-										}
-									}}
-									onKeyUp={(event) => {
-										if (event.code === "Enter") {
-											const target = event.currentTarget as HTMLLIElement;
-											if (
-												target.dataset.template !== undefined &&
-												target.dataset.template !== null
-											) {
-												const templateName = target.dataset.template;
-												const selectedTemplate = selectedTemplates.find(
-													(template) => template.id === templateName,
-												);
-												const wasSelected = selectedTemplate !== undefined;
-												const template = userTemplates.find(
-													(template) => template.id === templateName,
-												);
-												target.classList.toggle("selected");
-												target.dataset.selected =
-													selectedTemplate === undefined ? "true" : "false";
-												if (wasSelected) {
-													setSelectedTemplates(
-														selectedTemplates.toSpliced(
-															selectedTemplates.indexOf(selectedTemplate),
-															1,
-														),
-													);
-												} else {
-													if (template !== undefined)
-														setSelectedTemplates([
-															...selectedTemplates,
-															template,
-														]);
-												}
-											}
-										}
-									}}
-								>
-									<span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">
-										&nbsp;
-									</span>
-									{template.id}
-								</li>
-							);
-						}}
-					</For>
+					<For each={templates$.userTemplates} item={TemplateItem} optimized />
 				</ul>
 			</div>
 		);
