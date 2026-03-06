@@ -5,7 +5,7 @@ export const gimoPrimaryNeutralStats = [
 	"Potency %",
 	"Tenacity %",
 ] as const;
-export type GIMOPrimaryNeutralStats = (typeof gimoPrimaryNeutralStats)[number];
+type GIMOPrimaryNeutralStats = (typeof gimoPrimaryNeutralStats)[number];
 
 export const gimoPrimaryOffensiveStats = [
 	"Accuracy %",
