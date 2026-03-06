@@ -107,7 +107,8 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 					mod && mod.characterID !== "null"
 						? baseCharacterById[mod.characterID]?.name || mod.characterID
 						: "";
-				if (character === undefined || modCharacter === null) return <div />;
+				if (character === undefined || modCharacter === null)
+					return <div key={mod.id} />;
 				const searchText = `${baseCharacterById[characterID]?.name || characterID}_${modCharacter}`;
 
 				return (
