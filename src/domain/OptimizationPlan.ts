@@ -43,7 +43,7 @@ export const statWeights = {
 	"Critical Avoidance %": 10,
 };
 
-interface ShortOptimizationPlanParam {
+export interface ShortOptimizationPlanParam {
 	id?: string;
 	desc?: string;
 	health?: number;

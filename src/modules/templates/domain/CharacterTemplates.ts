@@ -1,5 +1,8 @@
 // domain
-import type { SelectedCharacters } from "../../../domain/SelectedCharacters";
+import type {
+	SelectedCharacters,
+	ShortSelectedCharacters,
+} from "../../../domain/SelectedCharacters";
 
 /**
  * ```
@@ -14,6 +17,13 @@ import type { SelectedCharacters } from "../../../domain/SelectedCharacters";
  * ```
  */
 export type CharacterTemplates = CharacterTemplate[];
+export type ShortCharacterTemplates = ShortCharacterTemplate[];
+
+export interface ShortCharacterTemplate {
+	id: string;
+	category: string;
+	selectedCharacters: ShortSelectedCharacters;
+}
 
 /**
  * ```

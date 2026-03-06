@@ -6,9 +6,7 @@ import { persistOptions } from "#/utils/globalLegendPersistSettings";
 import { compilations$ } from "#/modules/compilations/state/compilations";
 
 // domain
-import defaultTemplates from "#/constants/characterTemplates.json" with {
-	type: "json",
-};
+import { defaultTemplates } from "#/constants/characterTemplates";
 
 import { convertTemplates } from "../domain/Backup";
 import type {
@@ -19,6 +17,7 @@ import type {
 import type { TemplatesAddingMode } from "../domain/TemplatesAddingMode";
 import type { TemplatesObservable } from "../domain/TemplatesObservable";
 import type { TemplateTypes } from "../domain/TemplateTypes";
+import { fromShortOptimizationPlan } from "#/domain/OptimizationPlan";
 
 const templates$: ObservableObject<TemplatesObservable> =
 	observable<TemplatesObservable>({
@@ -49,10 +48,17 @@ const templates$: ObservableObject<TemplatesObservable> =
 		userTemplatesNames: () => {
 			return Object.keys(templates$.userTemplatesByName.get());
 		},
-		builtinTemplates: defaultTemplates as CharacterTemplates,
-		builtinTemplatesNames: (defaultTemplates as CharacterTemplates).map(
-			({ id }) => id,
-		),
+		builtinTemplates: defaultTemplates.map((shortTemplate) => ({
+			id: shortTemplate.id,
+			category: shortTemplate.category,
+			selectedCharacters: shortTemplate.selectedCharacters.map(
+				({ id, target }) => ({
+					id,
+					target: fromShortOptimizationPlan(target),
+				}),
+			),
+		})),
+		builtinTemplatesNames: defaultTemplates.map(({ id }) => id),
 		templatesNames: () => {
 			const result: string[] = [];
 			return result.concat(

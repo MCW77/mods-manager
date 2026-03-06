@@ -1,9 +1,18 @@
 // domain
 import type { CharacterNames } from "../constants/CharacterNames";
 
-import type { OptimizationPlan } from "./OptimizationPlan";
+import type {
+	OptimizationPlan,
+	ShortOptimizationPlanParam,
+} from "./OptimizationPlan";
 
 export type SelectedCharacters = SelectedCharacter[];
+export type ShortSelectedCharacters = ShortSelectedCharacter[];
+
+export interface ShortSelectedCharacter {
+	id: CharacterNames;
+	target: ShortOptimizationPlanParam;
+}
 
 /**
  * ```
