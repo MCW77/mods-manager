@@ -23,7 +23,7 @@ export type Levels =
 	| "14"
 	| "15";
 
-export type DefinitionId = `${Set}${Pips}${Slots}`;
+export type DefinitionId = [Set, Pips, Slots];
 
 export type C3POModDTO = {
 	id: string;

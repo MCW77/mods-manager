@@ -32,6 +32,15 @@ const C3PO2GIMOTiersMap: {
 	1: ModTiersEnum.Grey,
 };
 
+const C3PO2GIMOPipsMap = {
+	"1": 1,
+	"2": 2,
+	"3": 3,
+	"4": 4,
+	"5": 5,
+	"6": 6,
+} as const satisfies Record<DTOs.C3PO.Pips, Pips>;
+
 const C3PO2GIMOSlotMap: Record<DTOs.C3PO.Slots, ModTypes.GIMOSlots> = {
 	"1": "square",
 	"2": "arrow",
@@ -41,10 +50,10 @@ const C3PO2GIMOSlotMap: Record<DTOs.C3PO.Slots, ModTypes.GIMOSlots> = {
 	"6": "cross",
 };
 
-const deconstructDefinitionId = (definitionId: string) => {
-	const set = C3PO2GIMOSetMap[definitionId[0] as DTOs.C3PO.Set];
-	const pips = Number(definitionId[1]);
-	const slot = C3PO2GIMOSlotMap[definitionId[2] as DTOs.C3PO.Slots];
+const deconstructDefinitionId = (definitionId: DTOs.C3PO.DefinitionId) => {
+	const set = C3PO2GIMOSetMap[definitionId[0]];
+	const pips = C3PO2GIMOPipsMap[definitionId[1]];
+	const slot = C3PO2GIMOSlotMap[definitionId[2]];
 	return { set, pips, slot };
 };
 
@@ -61,7 +70,7 @@ export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
 		definition.slot,
 		definition.set,
 		Number(mod.level) as ModTypes.Levels,
-		definition.pips as Pips,
+		definition.pips,
 		fromC3POPrimary(mod.primaryStat),
 		secondaryStats,
 		"null",
