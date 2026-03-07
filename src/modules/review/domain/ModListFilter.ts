@@ -28,8 +28,6 @@ interface ModListFilter {
 export {
 	type ModListFilter,
 	type ShowOptions,
-	type SortOptions,
-	type ViewOptions,
 	sortOptions,
 	viewOptions,
 	showOptions,
