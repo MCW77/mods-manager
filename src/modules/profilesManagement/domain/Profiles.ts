@@ -4,11 +4,6 @@ import type {
 	PlayerProfile,
 } from "../domain/PlayerProfile";
 
-interface PersistedDataWithPersistedProfiles {
-	id: "profiles";
-	profiles: PersistedProfiles;
-}
-
 interface PersistedDataWithProfiles {
 	id: "profiles";
 	profiles: Profiles;
@@ -28,9 +23,4 @@ interface PersistedProfiles {
 	profileByAllycode: Record<string, PersistedPlayerProfile>;
 }
 
-export type {
-	Profiles,
-	PersistedProfiles,
-	PersistedDataWithPersistedProfiles,
-	PersistedDataWithProfiles,
-};
+export type { Profiles, PersistedProfiles, PersistedDataWithProfiles };
