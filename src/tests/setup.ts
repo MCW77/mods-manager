@@ -1,4 +1,9 @@
-import { beforeEach, vi } from "vitest";
+import "fake-indexeddb/auto";
+import { IDBFactory } from "fake-indexeddb";
+import { vi, beforeEach } from "vitest";
+
+// Enhanced IndexedDB setup for migration testing
+// Use fake-indexeddb which provides a complete implementation
 
 // Mock navigator.storage (guarded): only define if missing; otherwise spy on estimate
 function setupNavigatorStorageMock(): void {
@@ -43,7 +48,14 @@ function setupNavigatorStorageMock(): void {
 
 setupNavigatorStorageMock();
 
-// Reset all mocks before each test
+// Global test utilities for database migration testing
+function resetIndexedDB() {
+	// biome-ignore lint/suspicious/noGlobalAssign: <This is the recommended way to reset fake-indexeddb>
+	indexedDB = new IDBFactory();
+}
+
+// Reset everything before each test
 beforeEach(() => {
 	vi.clearAllMocks();
+	resetIndexedDB();
 });

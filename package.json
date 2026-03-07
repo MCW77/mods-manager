@@ -12,8 +12,8 @@
 		"test:ui": "vitest --ui",
 		"test:run": "vitest run",
 		"test:coverage": "vitest run --coverage",
-		"test:migrations": "vitest run --config=vitest.migrations.config.ts",
-		"test:migrations:ui": "vitest --ui --config=vitest.migrations.config.ts"
+		"test:migrations": "vitest run src/tests/migrations",
+		"test:migrations:ui": "vitest --ui src/tests/migrations"
 	},
 	"dependencies": {
 		"@base-ui/react": "^1.2.0",

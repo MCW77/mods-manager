@@ -21,7 +21,7 @@ export default defineConfig({
 			},
 		},
 		globals: true,
-		setupFiles: ["./src/tests/migrations/setup.ts"],
+		setupFiles: ["./src/tests/setup.ts"],
 		include: ["src/tests/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
 		testTimeout: 30000, // Longer timeout for database operations
 		coverage: {
@@ -34,7 +34,6 @@ export default defineConfig({
 				"**/*.d.ts",
 				"vite.config.ts",
 				"vitest.config.ts",
-				"vitest.migrations.config.ts",
 			],
 			include: [
 				"src/utils/globalLegendPersistSettings.ts",
