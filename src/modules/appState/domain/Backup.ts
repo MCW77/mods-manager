@@ -552,4 +552,4 @@ const convertBackup = (parsedJSON: unknown) => {
 	};
 };
 
-export { convertBackup, type Backup, type BackupData, type NormalizedBackup };
+export { convertBackup, type Backup, type BackupData };

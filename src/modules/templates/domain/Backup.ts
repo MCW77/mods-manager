@@ -172,4 +172,4 @@ const normalizeTemplatesJSON = (parameters: {
 	return normalizedData;
 };
 
-export { convertTemplates, type NormalizedBackup };
+export { convertTemplates };

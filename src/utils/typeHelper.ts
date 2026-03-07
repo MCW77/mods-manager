@@ -1,16 +1,17 @@
-export type ElementType<T extends ReadonlyArray<unknown>> =
+type ElementType<T extends ReadonlyArray<unknown>> =
 	T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
-export type Indexed<T> = {
+type Indexed<T> = {
 	[key in keyof T]: T[key];
 };
 
-export type ExcludeMatchingProperties<T, V> = Pick<
+/*
+type ExcludeMatchingProperties<T, V> = Pick<
 	T,
 	{ [K in keyof T]-?: T[K] extends V ? never : K }[keyof T]
 >;
 
-export type ExpandRecursively<T> = T extends object
+type ExpandRecursively<T> = T extends object
 	? T extends (...args: never[]) => unknown
 		? T
 		: T extends infer O
@@ -18,17 +19,21 @@ export type ExpandRecursively<T> = T extends object
 			: never
 	: T;
 
-export type ExpandRecursivelyNoFuncs<T> = ExpandRecursively<
+type ExpandRecursivelyNoFuncs<T> = ExpandRecursively<
 	ExcludeMatchingProperties<T, (...args: never[]) => unknown>
 >;
 
-export type Prettify<T> = {
+type Prettify<T> = {
 	[K in keyof T]: T[K];
 } & {};
-export type PrettifyRecursively<T> = T extends object
+
+type PrettifyRecursively<T> = T extends object
 	? T extends (...args: never[]) => unknown
 		? T
 		: T extends infer O
 			? { [K in keyof O]: PrettifyRecursively<O[K]> }
 			: never
 	: T;
+*/
+
+export type { ElementType, Indexed };
