@@ -1,29 +1,23 @@
 import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
-export const gimoPrimaryNeutralStats = [
-	"Speed",
-	"Potency %",
-	"Tenacity %",
-] as const;
+const gimoPrimaryNeutralStats = ["Speed", "Potency %", "Tenacity %"] as const;
 type GIMOPrimaryNeutralStats = (typeof gimoPrimaryNeutralStats)[number];
 
-export const gimoPrimaryOffensiveStats = [
+const gimoPrimaryOffensiveStats = [
 	"Accuracy %",
 	"Critical Chance %",
 	"Critical Damage %",
 	"Offense %",
 ] as const;
-export type GIMOPrimaryOffensiveStats =
-	(typeof gimoPrimaryOffensiveStats)[number];
+type GIMOPrimaryOffensiveStats = (typeof gimoPrimaryOffensiveStats)[number];
 
-export const gimoPrimaryDefensiveStats = [
+const gimoPrimaryDefensiveStats = [
 	"Critical Avoidance %",
 	"Defense %",
 	"Health %",
 	"Protection %",
 ] as const;
-export type GIMOPrimaryDefensiveStats =
-	(typeof gimoPrimaryDefensiveStats)[number];
+type GIMOPrimaryDefensiveStats = (typeof gimoPrimaryDefensiveStats)[number];
 
 export const gimoPrimaryStatNames = [
 	...gimoPrimaryNeutralStats,
@@ -55,12 +49,9 @@ export const gimoSecondaryStatNames = [
 	...gimoSecondaryOffensiveStats,
 	...gimoSecondaryDefensiveStats,
 ] as const;
-export type GIMOSecondaryNeutralStats =
-	(typeof gimoSecondaryNeutralStats)[number];
-export type GIMOSecondaryOffensiveStats =
-	(typeof gimoSecondaryOffensiveStats)[number];
-export type GIMOSecondaryDefensiveStats =
-	(typeof gimoSecondaryDefensiveStats)[number];
+type GIMOSecondaryNeutralStats = (typeof gimoSecondaryNeutralStats)[number];
+type GIMOSecondaryOffensiveStats = (typeof gimoSecondaryOffensiveStats)[number];
+type GIMOSecondaryDefensiveStats = (typeof gimoSecondaryDefensiveStats)[number];
 
 export type GIMOSecondaryStatNames =
 	| GIMOSecondaryNeutralStats
@@ -82,7 +73,7 @@ export type GIMOSetStatNames = (typeof gimoSetStatNames)[number];
 // #endregion
 
 // #region CalculatedCharacterSummaryStatNames
-export type CalculatedCharacterSummaryStatNames =
+type CalculatedCharacterSummaryStatNames =
 	| "Effective Health (physical)"
 	| "Effective Health (special)"
 	| "Average Damage (physical)"
@@ -92,7 +83,7 @@ export type CalculatedCharacterSummaryStatNames =
 export type GIMOCharacterSummaryStatNames =
 	| CharacterStatNames.All
 	| CalculatedCharacterSummaryStatNames;
-export type NonCalculatedGIMOStatNames =
+type NonCalculatedGIMOStatNames =
 	| GIMOPrimaryStatNames
 	| GIMOSetStatNames
 	| GIMOSecondaryStatNames;
