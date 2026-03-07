@@ -3,6 +3,7 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
+import type { Observable } from "@legendapp/state";
 import {
 	For,
 	observer,
@@ -17,18 +18,36 @@ const modsView$ = stateLoader$.modsView$;
 // domain
 import type { Mod } from "#/domain/Mod";
 import { modTierColors } from "#/domain/ModTierColors";
-import { getStatScoreTier } from "#/domain/SecondaryStat";
+import { getStatScoreTier, type SecondaryStat } from "#/domain/SecondaryStat";
 
 // components
 import { Separator } from "#ui/separator";
 import { modScores$ } from "#/modules/modScores/state/modScores";
 
-type ComponentProps = {
+interface ScoreItemProps {
+	stat$: Observable<SecondaryStat>;
+}
+
+function ScoreItem({ stat$ }: ScoreItemProps) {
+	const id = useValue(stat$.id);
+	const scoreText = useValue(() => stat$.score.valueAsString.get());
+	const scoreTierCSS = useValue(
+		() => modTierColors[getStatScoreTier(stat$.score.get())],
+	);
+
+	return (
+		<li key={id} className={`leading-[1.2em] ${scoreTierCSS}`}>
+			{scoreText}
+		</li>
+	);
+}
+
+type ModScoresProps = {
 	mod: Mod;
 };
 
 const ModScores = observer(
-	memo(({ mod }: ComponentProps) => {
+	memo(({ mod }: ModScoresProps) => {
 		const [t] = useTranslation("domain");
 		const scoreName = useValue(
 			modsView$.activeViewSetupInActiveCategory.modScore,
@@ -44,23 +63,7 @@ const ModScores = observer(
 				<h4 className="uppercase">{t("Score_other")}</h4>
 				<ul className="text-[#c5f5f5]">
 					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
-						<For each={secondaryStats$}>
-							{(stat$) => {
-								const id = useValue(stat$.id);
-								const scoreText = useValue(() =>
-									stat$.score.valueAsString.get(),
-								);
-								const scoreTierCSS = useValue(
-									() => modTierColors[getStatScoreTier(stat$.score.get())],
-								);
-
-								return (
-									<li key={id} className={`leading-[1.2em] ${scoreTierCSS}`}>
-										{scoreText}
-									</li>
-								);
-							}}
-						</For>
+						<For each={secondaryStats$} item={ScoreItem} />
 					</Show>
 					<Separator className={"m-y-1 border-foreground"} />
 					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
