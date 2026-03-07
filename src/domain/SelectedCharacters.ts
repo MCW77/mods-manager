@@ -6,10 +6,7 @@ import type {
 	ShortOptimizationPlanParam,
 } from "./OptimizationPlan";
 
-export type SelectedCharacters = SelectedCharacter[];
-export type ShortSelectedCharacters = ShortSelectedCharacter[];
-
-export interface ShortSelectedCharacter {
+interface ShortSelectedCharacter {
 	id: CharacterNames;
 	target: ShortOptimizationPlanParam;
 }
@@ -22,12 +19,12 @@ export interface ShortSelectedCharacter {
  * }
  * ```
  */
-export interface SelectedCharacter {
+interface SelectedCharacter {
 	id: CharacterNames;
 	target: OptimizationPlan;
 }
 
-export type SelectedCharactersByTemplateName = Record<
-	string,
-	SelectedCharacters
->;
+type SelectedCharacters = SelectedCharacter[];
+type ShortSelectedCharacters = ShortSelectedCharacter[];
+
+export type { SelectedCharacters, ShortSelectedCharacters };
