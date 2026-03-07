@@ -20,7 +20,7 @@
  * Scale factor for converting between regular numbers and scaled integers.
  * Using 10^6 (1 million) provides 6 decimal places of precision.
  */
-export const SCALE = 1_000_000;
+const SCALE = 1_000_000;
 
 /**
  * Convert a regular number to a scaled integer.
