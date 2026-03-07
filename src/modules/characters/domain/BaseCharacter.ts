@@ -4,27 +4,27 @@ import groupByKey from "#/utils/groupByKey";
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 
-export type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
-export type BaseCharacterAlignments = "noforce" | "neutral" | "light" | "dark";
+type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
+type BaseCharacterAlignments = "noforce" | "neutral" | "light" | "dark";
 
-export interface BaseSkill {
+interface BaseSkill {
 	display: string;
 	key: string;
 	leader: boolean;
 	mode: APIBaseOmicronMode;
 }
 
-export interface APIBaseCharacterCategory {
+interface APIBaseCharacterCategory {
 	display: string;
 	key: string;
 }
-export interface APIBaseSkill {
+interface APIBaseSkill {
 	display: string;
 	key: string;
 	leader: boolean;
 	mode: keyof typeof APIBaseOmicronMode;
 }
-export interface APIBaseCharacter {
+interface APIBaseCharacter {
 	affiliation: APIBaseCharacterCategory[];
 	alignment: APIBaseCharacterAlignments;
 	baseId: CharacterNames;
@@ -135,8 +135,6 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 }
 
 export type BaseCharacterById = Record<CharacterNames, BaseCharacter>;
-
-export type BaseCharacters = BaseCharacter[];
 
 export const defaultBaseCharacter = {
 	alignment: "light",
