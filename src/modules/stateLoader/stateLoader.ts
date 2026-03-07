@@ -15,7 +15,7 @@ import type { MaterialsObservable } from "#/modules/materials/domain/MaterialsOb
 import type { CurrenciesObservable } from "#/modules/currencies/domain/CurrenciesObservable";
 import type { StackRankObservable } from "#/modules/stackRank/domain/StackRankObservable";
 
-export interface StateLoaderObservable {
+interface StateLoaderObservable {
 	isDone: boolean;
 	profilesManagement$: ObservableObject<ProfilesManagementObservable> | null;
 	compilations$: ObservableObject<CompilationsObservable> | null;
@@ -33,6 +33,7 @@ export interface StateLoaderObservable {
 	currencies$: ObservableObject<CurrenciesObservable> | null;
 	stackRank$: ObservableObject<StackRankObservable> | null;
 }
+
 const stateLoader$ = observable<StateLoaderObservable>({
 	isDone: false,
 	profilesManagement$: null,
