@@ -31,7 +31,7 @@ interface HUModsProfile {
 	target: string;
 }
 type HUModsProfiles = HUModsProfile[];
-export interface HUModsMoveProfile {
+interface HUModsMoveProfile {
 	units: HUModsProfiles;
 }
 
