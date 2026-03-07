@@ -67,7 +67,6 @@ const CompilationSchemaV20 = v.object({
 	reoptimizationIndex: v.number(),
 	selectedCharacters: SelectedCharactersSchema,
 });
-type CompilationSchemaV20Output = v.InferOutput<typeof CompilationSchemaV20>;
 
 const CompilationSchemaV22 = v.object({
 	category: v.string(),
@@ -90,12 +89,5 @@ const CompilationSchemaV22 = v.object({
 	reoptimizationIndex: v.number(),
 	selectedCharacters: SelectedCharactersSchema,
 });
-type CompilationSchemaV22Output = v.InferOutput<typeof CompilationSchemaV22>;
 
-export {
-	CompilationSchemaV22,
-	CompilationSchemaV20,
-	CompilationSchemaV18,
-	type CompilationSchemaV20Output,
-	type CompilationSchemaV22Output,
-};
+export { CompilationSchemaV22, CompilationSchemaV20, CompilationSchemaV18 };
