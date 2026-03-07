@@ -6,7 +6,7 @@ import type * as CharacterStatNames from "../modules/profilesManagement/domain/C
 import type { AllGIMOStatNames } from "./GIMOStatNames";
 
 // #region DisplayStatNames
-export type DisplayStatNames =
+type DisplayStatNames =
 	| "Health"
 	| "Protection"
 	| "Speed"
@@ -34,13 +34,13 @@ type Display2CSBasicStatNamesMap = Readonly<{
 	[key in DisplayStatNames]: Readonly<CharacterStatNames.All[]>;
 }>;
 
-export type GIMO2DisplayStatNamesMap = Readonly<{
+type GIMO2DisplayStatNamesMap = Readonly<{
 	[key in AllGIMOStatNames]: DisplayStatNames;
 }>;
 
-export type DisplayedStat = `${string} ${DisplayStatNames}`;
+type DisplayedStat = `${string} ${DisplayStatNames}`;
 
-export abstract class Stat {
+abstract class Stat {
 	static display2CSGIMOStatNamesMap: Display2CSBasicStatNamesMap =
 		Object.freeze({
 			Health: ["Health"],
@@ -176,3 +176,5 @@ export abstract class Stat {
     return result;
 */
 }
+
+export { type DisplayStatNames, type DisplayedStat, Stat };
