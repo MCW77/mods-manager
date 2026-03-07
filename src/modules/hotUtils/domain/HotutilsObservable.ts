@@ -27,4 +27,4 @@ interface HotutilsObservable {
 	fetchFullProfile: (allycode: string) => Promise<FetchedFullGIMOProfile>;
 }
 
-export type { HotutilsObservable, SessionIDsByProfile as SessionIdByProfile };
+export type { HotutilsObservable };
