@@ -22,7 +22,7 @@ export const slotSettingsSlots = [
 	"cross",
 ] as const;
 export type SlotSettingsSlots = (typeof slotSettingsSlots)[number];
-export interface SlotSettings extends BaseSettings {
+interface SlotSettings extends BaseSettings {
 	square: TriState;
 	arrow: TriState;
 	diamond: TriState;
@@ -42,7 +42,7 @@ export const setSettingsSets = [
 	"Health %",
 ] as const;
 export type SetSettingsSets = (typeof setSettingsSets)[number];
-export interface SetSettings extends BaseSettings {
+interface SetSettings extends BaseSettings {
 	"Potency %": TriState;
 	"Tenacity %": TriState;
 	"Speed %": TriState;
@@ -55,7 +55,7 @@ export interface SetSettings extends BaseSettings {
 
 export const raritySettingsRarities = ["5", "6"] as const;
 export type RaritySettingsRarities = (typeof raritySettingsRarities)[number];
-export interface RaritySettings extends BaseSettings {
+interface RaritySettings extends BaseSettings {
 	5: TriState;
 	6: TriState;
 }
@@ -70,11 +70,11 @@ interface ITierSettings extends BaseSettings {
 
 export const tierSettingsTiers = ["1", "2", "3", "4", "5"] as const;
 export type TierSettingsTiers = (typeof tierSettingsTiers)[number];
-export type TierSettings = UtilityTypes.Indexed<ITierSettings>;
+type TierSettings = UtilityTypes.Indexed<ITierSettings>;
 
-export type ScoreSettings = [number, number];
+type ScoreSettings = [number, number];
 
-export type SpeedRangeSettings = [number, number];
+type SpeedRangeSettings = [number, number];
 export const levelSettingsStringLevels = [
 	"1",
 	"3",
@@ -85,7 +85,7 @@ export const levelSettingsStringLevels = [
 ] as const;
 export type LevelSettingsStringLevels =
 	(typeof levelSettingsStringLevels)[number];
-export interface LevelSettings extends BaseSettings {
+interface LevelSettings extends BaseSettings {
 	1: TriState;
 	3: TriState;
 	6: TriState;
@@ -94,7 +94,7 @@ export interface LevelSettings extends BaseSettings {
 	15: TriState;
 }
 
-export interface EquippedSettings extends BaseSettings {
+interface EquippedSettings extends BaseSettings {
 	equipped: TriState;
 }
 
@@ -126,7 +126,7 @@ interface IPrimarySettings extends BaseSettings {
 	Speed: TriState;
 	"Tenacity %": TriState;
 }
-export type PrimarySettings = UtilityTypes.Indexed<IPrimarySettings>;
+type PrimarySettings = UtilityTypes.Indexed<IPrimarySettings>;
 
 export const secondarySettingsSecondaries = [
 	"Critical Chance %",
@@ -159,7 +159,7 @@ export interface SecondarySettings {
 	"Tenacity %": [number, number];
 }
 
-export interface AssignedSettings extends BaseSettings {
+interface AssignedSettings extends BaseSettings {
 	assigned: TriState;
 }
 
@@ -172,7 +172,7 @@ export const calibrationSettingsCalibrationPrices = [
 	"150",
 ] as const;
 
-export interface CalibrationSettings extends BaseSettings {
+interface CalibrationSettings extends BaseSettings {
 	"15": TriState;
 	"25": TriState;
 	"40": TriState;
@@ -337,7 +337,7 @@ export const quickFilter: Filter = {
 	speedRange: [0, 31],
 };
 
-export const defaultRevealFilter: Filter = structuredClone(quickFilter);
+const defaultRevealFilter: Filter = structuredClone(quickFilter);
 defaultRevealFilter.id = "DefaultReveal";
 defaultRevealFilter.rarity[6] = -1;
 defaultRevealFilter.tier[5] = -1;
@@ -347,32 +347,32 @@ defaultRevealFilter.level[14] = -1;
 defaultRevealFilter.level[15] = -1;
 defaultRevealFilter.score = [0, 100];
 
-export const defaultLevelFilter: Filter = structuredClone(quickFilter);
+const defaultLevelFilter: Filter = structuredClone(quickFilter);
 defaultLevelFilter.id = "DefaultLevel";
 defaultLevelFilter.level[15] = -1;
 defaultLevelFilter.score = [0, 100];
 
-export const defaultSlice5DotFilter: Filter = structuredClone(quickFilter);
+const defaultSlice5DotFilter: Filter = structuredClone(quickFilter);
 defaultSlice5DotFilter.id = "DefaultSlice5Dot";
 defaultSlice5DotFilter.rarity[5] = 1;
 defaultSlice5DotFilter.tier[5] = -1;
 defaultSlice5DotFilter.level[15] = 1;
 defaultSlice5DotFilter.score = [0, 100];
 
-export const defaultSlice6EFilter: Filter = structuredClone(quickFilter);
+const defaultSlice6EFilter: Filter = structuredClone(quickFilter);
 defaultSlice6EFilter.id = "DefaultSlice6E";
 defaultSlice6EFilter.rarity[5] = 1;
 defaultSlice6EFilter.tier[5] = 1;
 defaultSlice6EFilter.level[15] = 1;
 defaultSlice6EFilter.score = [0, 100];
 
-export const defaultSlice6DotFilter: Filter = structuredClone(quickFilter);
+const defaultSlice6DotFilter: Filter = structuredClone(quickFilter);
 defaultSlice6DotFilter.id = "DefaultSlice6Dot";
 defaultSlice6DotFilter.rarity[6] = 1;
 defaultSlice6DotFilter.tier[5] = -1;
 defaultSlice6DotFilter.score = [0, 100];
 
-export const defaultCalibrateFilter: Filter = structuredClone(quickFilter);
+const defaultCalibrateFilter: Filter = structuredClone(quickFilter);
 defaultCalibrateFilter.id = "DefaultCalibrate";
 defaultCalibrateFilter.rarity[6] = 1;
 defaultCalibrateFilter.score = [0, 100];
@@ -456,12 +456,6 @@ export const defaultViewSetupByCategory: Record<Categories, ViewSetup> = {
 	Slice6Dot: defaultSlice6DotSetup,
 	Calibrate: defaultCalibrateSetup,
 	AllMods: defaultAllModsSetup,
-};
-
-export const createFilter = (allycode: string) => {
-	const createdFilter = structuredClone(quickFilter);
-	createdFilter.id = `${allycode}-${crypto.randomUUID()}`;
-	return createdFilter;
 };
 
 export const builtinFilters = [
