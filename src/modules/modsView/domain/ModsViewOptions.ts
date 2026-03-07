@@ -11,7 +11,7 @@ import {
 
 export type TriState = -1 | 0 | 1;
 
-export type BaseSettings = Record<string, TriState>;
+type BaseSettings = Record<string, TriState>;
 
 export const slotSettingsSlots = [
 	"square",
@@ -113,7 +113,7 @@ export const primarySettingsPrimaries = [
 ] as const;
 export type PrimarySettingsPrimaries =
 	(typeof primarySettingsPrimaries)[number];
-export interface IPrimarySettings extends BaseSettings {
+interface IPrimarySettings extends BaseSettings {
 	"Accuracy %": TriState;
 	"Critical Avoidance %": TriState;
 	"Critical Chance %": TriState;
@@ -171,8 +171,7 @@ export const calibrationSettingsCalibrationPrices = [
 	"100",
 	"150",
 ] as const;
-export type CalibrationSettingsCalibrationPrices =
-	(typeof calibrationSettingsCalibrationPrices)[number];
+
 export interface CalibrationSettings extends BaseSettings {
 	"15": TriState;
 	"25": TriState;
@@ -193,9 +192,7 @@ const availableTriStateFilters = [
 	"assigned",
 	"calibration",
 ] as const;
-const availableFilters = [...availableTriStateFilters, "score"] as const;
 
-export type FilterKeys = UtilityTypes.ElementType<typeof availableFilters>;
 export type TriStateFilterKeys = UtilityTypes.ElementType<
 	typeof availableTriStateFilters
 >;
