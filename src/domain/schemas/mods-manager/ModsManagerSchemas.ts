@@ -113,9 +113,6 @@ const ModsManagerBackupSchemaV19 = v.object({
 	data: ModsManagerBackupDataSchemaV19,
 	version: v.literal(19),
 });
-type ModsManagerBackupSchemaV19Output = v.InferOutput<
-	typeof ModsManagerBackupSchemaV19
->;
 
 const ModsManagerBackupDataSchemaV20 = v.object({
 	characterTemplates: CharacterTemplateByNameSchema,
@@ -139,9 +136,6 @@ const ModsManagerBackupSchemaV20 = v.object({
 	data: ModsManagerBackupDataSchemaV20,
 	version: v.literal(20),
 });
-type ModsManagerBackupSchemaV20Output = v.InferOutput<
-	typeof ModsManagerBackupSchemaV20
->;
 
 const ModsManagerBackupDataSchemaV21 = v.object({
 	characterTemplates: CharacterTemplateByNameSchema,
@@ -268,9 +262,6 @@ type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 >;
 
 const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV25;
-type LatestModsManagerBackupSchemaOutput = v.InferOutput<
-	typeof LatestModsManagerBackupSchema
->;
 
 const ModsManagerSchema = v.object({
 	client: v.literal("mods-manager"),
@@ -290,7 +281,6 @@ const modsManagerBackupSchemasByVersion = new Map<
 
 export {
 	LatestModsManagerBackupSchema,
-	type LatestModsManagerBackupSchemaOutput,
 	type LatestModsManagerBackupDataSchemaOutput,
 	ModsManagerBackupSchemaV16,
 	ModsManagerBackupSchemaV18,
@@ -298,9 +288,7 @@ export {
 	type ModsManagerBackupSchemaV16Output,
 	type ModsManagerBackupSchemaV18Output,
 	type ModsManagerBackupDataSchemaV19Output,
-	type ModsManagerBackupSchemaV19Output,
 	type ModsManagerBackupDataSchemaV20Output,
-	type ModsManagerBackupSchemaV20Output,
 	type ModsManagerBackupDataSchemaV21Output,
 	type ModsManagerBackupDataSchemaV22Output,
 	type ModsManagerBackupDataSchemaV23Output,
