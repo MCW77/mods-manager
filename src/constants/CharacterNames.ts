@@ -1,5 +1,3 @@
-// utils
-import type * as UtilityTypes from "#/utils/typeHelper";
 export const characterNames = [
 	"4LOM",
 	"50RT",
@@ -320,6 +318,3 @@ export const characterNames = [
 ] as const;
 
 export type CharacterNames = string;
-export type StrictCharacterNames = UtilityTypes.ElementType<
-	typeof characterNames
->;

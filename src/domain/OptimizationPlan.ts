@@ -2,7 +2,6 @@
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as ModTypes from "#/domain/types/ModTypes";
 
 import type { SetRestrictions } from "#/domain/SetRestrictions";
@@ -330,5 +329,3 @@ export interface OptimizationPlan extends Record<OptimizableStats, number> {
 	targetStats: TargetStats;
 	useOnlyFullSets: boolean;
 }
-
-export type OptimizationPlansById = Record<CharacterNames, OptimizationPlan[]>;

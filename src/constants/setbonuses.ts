@@ -58,4 +58,3 @@ const setBonuses: SetBonuses = {
 Object.freeze(setBonuses);
 
 export default setBonuses;
-export type { SetBonuses };
