@@ -44,13 +44,12 @@ const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
 
 	const showStatElement = (
 		stat: SecondaryStats.SecondaryStat,
-		index: number,
 		speedRemainder: string,
 	) => {
 		const displayStat = `${translateStat(stat.show(), t)} ${speedRemainder}`;
 		return (
 			<li
-				key={index}
+				key={stat.id}
 				className={`leading-[1.2em] ${modTierColors[stat.getRollsTier()]}`}
 			>
 				<span>({stat.rolls})</span> {displayStat}
@@ -60,12 +59,12 @@ const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
 
 	const statsDisplay =
 		mod.secondaryStats.length > 0
-			? mod.secondaryStats.map((stat, index) => {
+			? mod.secondaryStats.map((stat) => {
 					let speedRemainder = "";
 					if (stat.type === "Speed" && mod.speedRemainder !== undefined) {
 						speedRemainder = ` R${mod.speedRemainder}`;
 					}
-					return showStatElement(stat, index, speedRemainder);
+					return showStatElement(stat, speedRemainder);
 				})
 			: [<li key={0}>None</li>];
 
