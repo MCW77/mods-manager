@@ -25,14 +25,14 @@ import { Separator } from "#ui/separator";
 import { modScores$ } from "#/modules/modScores/state/modScores";
 
 interface ScoreItemProps {
-	stat$: Observable<SecondaryStat>;
+	id: string;
+	item$: Observable<SecondaryStat>;
 }
 
-function ScoreItem({ stat$ }: ScoreItemProps) {
-	const id = useValue(stat$.id);
-	const scoreText = useValue(() => stat$.score.valueAsString.get());
+function ScoreItem({ id, item$ }: ScoreItemProps) {
+	const scoreText = useValue(() => item$.score.valueAsString.get());
 	const scoreTierCSS = useValue(
-		() => modTierColors[getStatScoreTier(stat$.score.get())],
+		() => modTierColors[getStatScoreTier(item$.score.get())],
 	);
 
 	return (
@@ -63,7 +63,7 @@ const ModScores = observer(
 				<h4 className="uppercase">{t("Score_other")}</h4>
 				<ul className="text-[#c5f5f5]">
 					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
-						<For each={secondaryStats$} item={ScoreItem} />
+						<For each={secondaryStats$} item={ScoreItem} optimized />
 					</Show>
 					<Separator className={"m-y-1 border-foreground"} />
 					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
