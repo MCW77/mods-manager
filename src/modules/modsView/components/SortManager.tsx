@@ -24,10 +24,10 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 interface SortItemProps {
-	sortConfig$: Observable<SortConfig>;
+	item$: Observable<SortConfig>;
 }
 
-function SortItem({ sortConfig$ }: SortItemProps) {
+function SortItem({ item$: sortConfig$ }: SortItemProps) {
 	const [t] = useTranslation("domain");
 	const sortConfig = useValue(sortConfig$);
 
