@@ -1,25 +1,19 @@
 {
 	"compilerOptions": {
-		"target": "ESNext",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"lib": ["DOM", "ESNext"],
 		"allowJs": true,
 		"skipLibCheck": true,
-		"allowSyntheticDefaultImports": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"module": "ESNext",
-		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
 		"noEmit": true,
 		"jsx": "react-jsx",
+		"rootDir": "./src",
 		"paths": {
 			"#/*": ["./src/*", "./dist/*", "./"],
 			"#lib/*": ["./src/lib/*"],
 			"#ui/*": ["./src/components/ui/*"]
 		},
 		"types": ["@legendapp/state/types/babel", "node"],
-		"downlevelIteration": true,
 		"noFallthroughCasesInSwitch": true,
 		"noErrorTruncation": true
 	},
