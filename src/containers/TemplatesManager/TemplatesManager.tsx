@@ -36,7 +36,7 @@ import { FileInput } from "#/components/FileInput/FileInput";
 import { Button } from "#ui/button";
 
 interface TemplateItemProps {
-	template$: Observable<CharacterTemplate>;
+	item$: Observable<CharacterTemplate>;
 	selectedTemplates: CharacterTemplates;
 	setSelectedTemplates: React.Dispatch<
 		React.SetStateAction<CharacterTemplates>
@@ -44,7 +44,7 @@ interface TemplateItemProps {
 }
 
 function TemplateItem({
-	template$,
+	item$: template$,
 	selectedTemplates,
 	setSelectedTemplates,
 }: TemplateItemProps) {
@@ -202,7 +202,12 @@ const TemplatesManager = observer(
 					</Button>
 				</div>
 				<ul>
-					<For each={templates$.userTemplates} item={TemplateItem} optimized />
+					<For
+						each={templates$.userTemplates}
+						item={TemplateItem}
+						itemProps={{ selectedTemplates, setSelectedTemplates }}
+						optimized
+					/>
 				</ul>
 			</div>
 		);
