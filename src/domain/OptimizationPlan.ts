@@ -2,11 +2,9 @@
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
 // domain
-import type * as ModTypes from "#/domain/types/ModTypes";
-
+import type { allowedPrimaryStatsBySlot } from "#/domain/GIMOStatNames";
 import type { SetRestrictions } from "#/domain/SetRestrictions";
 import type { TargetStats } from "#/domain/TargetStat";
-import type { GIMOPrimaryStatNames } from "./GIMOStatNames";
 
 // #region OptimizableStats
 export type OptimizableStats =
@@ -302,9 +300,9 @@ export const equals = (
 	);
 };
 
-export type PrimaryStatRestrictions = Partial<
-	Record<ModTypes.VariablePrimarySlots, GIMOPrimaryStatNames>
->;
+export type PrimaryStatRestrictions = Partial<{
+	[Slot in keyof typeof allowedPrimaryStatsBySlot]: (typeof allowedPrimaryStatsBySlot)[Slot][number];
+}>;
 
 export interface OptimizationPlan extends Record<OptimizableStats, number> {
 	id: string;

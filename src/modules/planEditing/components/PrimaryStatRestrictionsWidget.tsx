@@ -4,7 +4,12 @@ import { reactive, reactiveObserver, useValue } from "@legendapp/state/react";
 import { target$ } from "#/modules/planEditing/state/planEditing";
 
 // domain
-import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
+import type {
+	ArrowPrimaryStats,
+	CirclePrimaryStats,
+	CrossPrimaryStats,
+	TrianglePrimaryStats,
+} from "#/domain/GIMOStatNames";
 
 // components
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
@@ -51,7 +56,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.arrow.delete();
 							else
 								target$.target.primaryStatRestrictions.arrow.set(
-									value as GIMOPrimaryStatNames,
+									value as ArrowPrimaryStats,
 								);
 						}}
 					>
@@ -99,7 +104,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.triangle.delete();
 							else
 								target$.target.primaryStatRestrictions.triangle.set(
-									value as GIMOPrimaryStatNames,
+									value as TrianglePrimaryStats,
 								);
 						}}
 					>
@@ -146,7 +151,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.cross.delete();
 							else
 								target$.target.primaryStatRestrictions.cross.set(
-									value as GIMOPrimaryStatNames,
+									value as CrossPrimaryStats,
 								);
 						}}
 					>
@@ -193,7 +198,7 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 								target$.target.primaryStatRestrictions.circle.delete();
 							else
 								target$.target.primaryStatRestrictions.circle.set(
-									value as GIMOPrimaryStatNames,
+									value as CirclePrimaryStats,
 								);
 						}}
 					>

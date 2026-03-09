@@ -1,3 +1,5 @@
+// domain
+import type * as ModTypes from "#/domain/types/ModTypes";
 import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
 const gimoPrimaryNeutralStats = ["Speed", "Potency %", "Tenacity %"] as const;
@@ -91,3 +93,69 @@ type NonCalculatedGIMOStatNames =
 export type AllGIMOStatNames =
 	| NonCalculatedGIMOStatNames
 	| GIMOCharacterSummaryStatNames;
+
+export const arrowPrimaryStats = [
+	"Speed",
+	"Accuracy %",
+	"Critical Avoidance %",
+	"Defense %",
+	"Health %",
+	"Offense %",
+	"Protection %",
+] as const;
+export type ArrowPrimaryStats = (typeof arrowPrimaryStats)[number];
+
+export const circlePrimaryStats = ["Health %", "Protection %"] as const;
+export type CirclePrimaryStats = (typeof circlePrimaryStats)[number];
+
+export const crossPrimaryStats = [
+	"Potency %",
+	"Tenacity %",
+	"Defense %",
+	"Health %",
+	"Offense %",
+	"Protection %",
+] as const;
+export type CrossPrimaryStats = (typeof crossPrimaryStats)[number];
+
+export const trianglePrimaryStats = [
+	"Critical Chance %",
+	"Critical Damage %",
+	"Defense %",
+	"Health %",
+	"Offense %",
+	"Protection %",
+] as const;
+export type TrianglePrimaryStats = (typeof trianglePrimaryStats)[number];
+
+export const allowedPrimaryStatsBySlot = {
+	arrow: [
+		"Speed",
+		"Accuracy %",
+		"Critical Avoidance %",
+		"Defense %",
+		"Health %",
+		"Offense %",
+		"Protection %",
+	],
+	triangle: [
+		"Critical Chance %",
+		"Critical Damage %",
+		"Defense %",
+		"Health %",
+		"Offense %",
+		"Protection %",
+	],
+	circle: ["Health %", "Protection %"],
+	cross: [
+		"Potency %",
+		"Tenacity %",
+		"Defense %",
+		"Health %",
+		"Offense %",
+		"Protection %",
+	],
+} as const satisfies Record<
+	ModTypes.VariablePrimarySlots,
+	readonly GIMOPrimaryStatNames[]
+>;

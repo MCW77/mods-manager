@@ -2,8 +2,7 @@
 import * as v from "valibot";
 
 // domain
-import { variablePrimarySlots } from "#/domain/types/ModTypes";
-import { gimoPrimaryStatNames } from "#/domain/GIMOStatNames";
+import { allowedPrimaryStatsBySlot } from "#/domain/GIMOStatNames";
 import { TargetStatsSchema } from "./TargetStatsSchemas";
 
 const gimoSetStatNames = [
@@ -17,12 +16,12 @@ const gimoSetStatNames = [
 	"tenacity",
 ] as const;
 
-const VariablePrimarySlotSchema = v.picklist(variablePrimarySlots);
-const GIMOPrimaryStatNamesSchema = v.picklist(gimoPrimaryStatNames);
-const PrimaryStatRestrictionsSchema = v.record(
-	VariablePrimarySlotSchema,
-	GIMOPrimaryStatNamesSchema,
-);
+const PrimaryStatRestrictionsSchema = v.object({
+	arrow: v.optional(v.picklist(allowedPrimaryStatsBySlot.arrow)),
+	triangle: v.optional(v.picklist(allowedPrimaryStatsBySlot.triangle)),
+	circle: v.optional(v.picklist(allowedPrimaryStatsBySlot.circle)),
+	cross: v.optional(v.picklist(allowedPrimaryStatsBySlot.cross)),
+});
 
 const GIMOSetStatNamesSchema = v.picklist(gimoSetStatNames);
 const SetRestrictionsSchema = v.record(GIMOSetStatNamesSchema, v.number());
