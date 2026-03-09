@@ -21,6 +21,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
 
+type HelpSectionTabProps = {
+	sectionName: HelpSections;
+	currentSection: HelpSections;
+	sectionRef: React.RefObject<HTMLButtonElement | null>;
+	onSelect: (sectionName: HelpSections) => void;
+	label: string;
+};
+
+const HelpSectionTab: React.FC<HelpSectionTabProps> = ({
+	sectionName,
+	currentSection,
+	sectionRef,
+	onSelect,
+	label,
+}) => {
+	return (
+		<Button
+			variant={"ghost"}
+			role={"tab"}
+			aria-selected={sectionName === currentSection}
+			className={
+				"rounded-xl p-2 m-1 border border-solid border-white aria-selected:border-yellow-300"
+			}
+			ref={sectionRef}
+			onClick={() => onSelect(sectionName)}
+		>
+			{label}
+		</Button>
+	);
+};
+
 const HelpView: React.FC = observer(() => {
 	const helpSection = useValue(help$.section);
 	const helpTopic = useValue(help$.topic);
@@ -54,24 +85,9 @@ const HelpView: React.FC = observer(() => {
 	const topicCSS =
 		"prose dark:prose-invert m-x-auto max-w-[80ch] flex flex-col items-center text-balance";
 
-	const renderSection = (sectionName: HelpSections) => {
-		return (
-			<Button
-				variant={"ghost"}
-				role={"tab"}
-				aria-selected={sectionName === currentSection}
-				className={
-					"rounded-xl p-2 m-1 border border-solid border-white aria-selected:border-yellow-300"
-				}
-				ref={sectionElements[sectionName]}
-				onClick={() => {
-					changeCurrentTopic(0);
-					changeCurrentSection(sectionName);
-				}}
-			>
-				{t(`${sectionName}.Title`)}
-			</Button>
-		);
+	const handleSectionSelect = (sectionName: HelpSections) => {
+		changeCurrentTopic(0);
+		changeCurrentSection(sectionName);
 	};
 
 	const renderTopics = () => {
@@ -277,11 +293,41 @@ const HelpView: React.FC = observer(() => {
 						/>
 					</div>
 				</Show>
-				{renderSection("general")}
-				{renderSection("profiles")}
-				{renderSection("explorer")}
-				{renderSection("optimizer")}
-				{renderSection("editor")}
+				<HelpSectionTab
+					sectionName={"general"}
+					currentSection={currentSection}
+					sectionRef={sectionElements.general}
+					onSelect={handleSectionSelect}
+					label={t("general.Title")}
+				/>
+				<HelpSectionTab
+					sectionName={"profiles"}
+					currentSection={currentSection}
+					sectionRef={sectionElements.profiles}
+					onSelect={handleSectionSelect}
+					label={t("profiles.Title")}
+				/>
+				<HelpSectionTab
+					sectionName={"explorer"}
+					currentSection={currentSection}
+					sectionRef={sectionElements.explorer}
+					onSelect={handleSectionSelect}
+					label={t("explorer.Title")}
+				/>
+				<HelpSectionTab
+					sectionName={"optimizer"}
+					currentSection={currentSection}
+					sectionRef={sectionElements.optimizer}
+					onSelect={handleSectionSelect}
+					label={t("optimizer.Title")}
+				/>
+				<HelpSectionTab
+					sectionName={"editor"}
+					currentSection={currentSection}
+					sectionRef={sectionElements.editor}
+					onSelect={handleSectionSelect}
+					label={t("editor.Title")}
+				/>
 			</nav>
 			<div className={`${topicCSS} text-center`}>
 				{currentTopic === 0 ? renderTopics() : null}
