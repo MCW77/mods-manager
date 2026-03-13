@@ -620,7 +620,7 @@ const affectedTargetStatsBySet: Record<GIMOSetStatNames, TargetStatsNames[]> =
 		"Speed %": ["Speed"],
 	});
 
-const affectedTargetStatsByPtimaryStat: Record<
+const affectedTargetStatsByPrimaryStat: Record<
 	GIMOPrimaryStatNames,
 	TargetStatsNames[]
 > = Object.freeze({
@@ -928,7 +928,7 @@ function modHasScoreForTargetStat(mod: Mod, targetStat: TargetStat) {
 	if (affectedTargetStatsBySet[mod.modset.name].includes(targetStat.stat))
 		return true;
 	if (
-		affectedTargetStatsByPtimaryStat[mod.primaryStat.type].includes(
+		affectedTargetStatsByPrimaryStat[mod.primaryStat.type].includes(
 			targetStat.stat,
 		)
 	)
