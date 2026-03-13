@@ -1573,7 +1573,11 @@ function getModsetsInLoadout(loadout: Mod[]) {
 
 	for (const mod of loadout) {
 		const setName = mod.modset.name;
-		const fullOrHalf = mod.level === 15 ? 0 : 1;
+		const fullOrHalf =
+			mod.level === 15 ||
+			optimizationSettings$.activeSettings.simulateLevel15Mods.peek()
+				? 0
+				: 1;
 		modsetsCount[setName][fullOrHalf]++;
 	}
 	for (let [setName, [fullCount, halfCount]] of objectEntries(modsetsCount)) {
