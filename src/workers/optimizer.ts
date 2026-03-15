@@ -1612,7 +1612,7 @@ function getLoadoutScore(
 	}
 
 	for (const mod of loadout) {
-		modStatsScore += Math.trunc(scoreMod(mod, target));
+		modStatsScore += scoreMod(mod, target);
 	}
 	return modsetsScore + modStatsScore;
 }
