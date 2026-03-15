@@ -1771,11 +1771,13 @@ function optimizeMods(
 			const oldLoadoutForCharacter = usableMods.filter(
 				(mod) => mod.characterID === character.id,
 			);
-			const oldLoadoutScore = getLoadoutScore(
-				oldLoadoutForCharacter,
-				character,
-				realTarget,
-			);
+
+			const oldLoadoutScore =
+				previousModAssignments[index] !== undefined &&
+				previousModAssignments[index].characterId === characterID &&
+				previousModAssignments[index].previousScore !== 0
+					? previousModAssignments[index].previousScore
+					: getLoadoutScore(oldLoadoutForCharacter, character, realTarget);
 
 			// Assign the new loadout if any of the following are true:
 			let assignedLoadout: Mod[] = [];
