@@ -116,12 +116,6 @@ import type {
 
 // #region types
 interface Cache {
-	loadoutScores: (
-		loadout: Mod[],
-		id: string,
-		character: Character.Character,
-		target: OptimizationPlan,
-	) => number;
 	modsetScore: {
 		get: (
 			setName: GIMOSetStatNames,
@@ -146,8 +140,6 @@ interface Cache {
 	statValues: Map<string, StatValue[]>;
 	relatedStatValues: Map<string, Map<string, number>>;
 }
-
-type ScoreEntry = readonly [id: string, score: number];
 
 interface StatValue {
 	displayType: Stats.DisplayStatNames;
@@ -781,31 +773,6 @@ function deserializeTarget(target: OptimizationPlan) {
 
 // #region Caching variables
 
-const createLoadoutScoresCache = () => {
-	const scoresCache = new Map<string, number>();
-	return (
-		loadout: Mod[],
-		id: string,
-		character: Character.Character,
-		target: OptimizationPlan,
-	) => {
-		if (scoresCache.has(id)) {
-			return scoresCache.get(id) ?? 0;
-		}
-
-		const scoreEntries = perf.measureTime(scoreLoadout, "scoreLoadout")(
-			loadout,
-			id,
-			character,
-			target,
-		);
-		for (const scoreEntry of scoreEntries) {
-			scoresCache.set(scoreEntry[0], scoreEntry[1]);
-		}
-		return scoreEntries[scoreEntries.length - 1][1];
-	};
-};
-
 const createModStatsCache = () => {
 	const cache = new Map<string, StatValue[]>();
 	let currentCharacter: Character.Character | null = null;
@@ -885,7 +852,6 @@ const createModsetStatsCache = () => {
 };
 
 const cache: Cache = {
-	loadoutScores: createLoadoutScoresCache(),
 	modScores: new Map<string, number>(),
 	modStats: createModStatsCache(),
 	modUpgrades: new Map<string, Mod>(),
@@ -896,7 +862,6 @@ const cache: Cache = {
 };
 
 function resetCaches() {
-	cache.loadoutScores = createLoadoutScoresCache();
 	cache.modScores = new Map<string, number>();
 	cache.modStats = createModStatsCache();
 	cache.modsetScore = createModsetScoreCache();
@@ -1596,6 +1561,13 @@ function getModsetsInLoadout(loadout: Mod[]) {
 	return modsets;
 }
 
+/**
+ * Given a mod loadout, get the score of that loadout for a character
+ *
+ * @param loadout {Array<Mod>}
+ * @param character {Character}
+ * @param target {OptimizationPlan}
+ */
 function getLoadoutScore(
 	loadout: Mod[],
 	character: Character.Character,
@@ -1616,70 +1588,6 @@ function getLoadoutScore(
 	}
 	return modsetsScore + modStatsScore;
 }
-
-/**
- * Given a set of mods, get the value of that set for a character
- *
- * @param loadout {Array<Mod>}
- * @param character {Character}
- * @param target {OptimizationPlan}
- */
-function scoreLoadout(
-	loadout: Mod[],
-	id: string,
-	character: Character.Character,
-	target: OptimizationPlan,
-) {
-	const scoreEntries: ScoreEntry[] = [];
-	const loadoutsSplitBySet = splitLoadoutBySets(loadout);
-	if (loadoutsSplitBySet.size === 1) {
-		const setLoadout = loadoutsSplitBySet.values().next().value;
-		if (!setLoadout) {
-			scoreEntries.push(["", 0] as const);
-			return scoreEntries;
-		}
-		const score = getFlatStatsFromSetLoadout(setLoadout, character).reduce(
-			(score, stat) => score + scoreStat(stat, target),
-			0,
-		);
-		scoreEntries.push([id, score] as const);
-		return scoreEntries;
-	}
-	let totalScore = 0;
-	for (const setLoadout of loadoutsSplitBySet.values()) {
-		const id = generateLoadoutId(setLoadout.loadout);
-		const setLoadoutScore = scoreSetLoadout(setLoadout, id, character, target);
-		if (setLoadoutScore[0] !== "") {
-			scoreEntries.push(setLoadoutScore);
-		}
-		totalScore += setLoadoutScore[1];
-	}
-	scoreEntries.push([id, totalScore] as const);
-	return scoreEntries;
-}
-
-function scoreSetLoadout(
-	setLoadout: SetLoadout,
-	id: string,
-	character: Character.Character,
-	target: OptimizationPlan,
-) {
-	const cacheHit = cache.loadoutScores(
-		setLoadout.loadout,
-		id,
-		character,
-		target,
-	);
-	if (cacheHit) {
-		return ["", cacheHit] as const;
-	}
-	const score = getFlatStatsFromSetLoadout(setLoadout, character).reduce(
-		(score, stat) => score + scoreStat(stat, target),
-		0,
-	);
-	return [id, score] as const;
-}
-
 // #endregion
 
 // #region Startup code
