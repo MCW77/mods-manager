@@ -1,6 +1,7 @@
 import { defineConfig, type PluginOption } from "vite";
 import UnoCSS from "unocss/vite";
 import react from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 import dynamicImport from "vite-plugin-dynamic-import";
@@ -29,7 +30,7 @@ export default defineConfig({
 	build: {
 		sourcemap: true,
 		target: "esnext",
-		rollupOptions: {
+		rolldownOptions: {
 			//			treeshake: true,
 			input: {
 				index: "index.html",
@@ -40,9 +41,6 @@ export default defineConfig({
 	plugins: [
 		dynamicImport(),
 		react({
-			babel: {
-				configFile: true, // This tells it to use your babel.config.js
-			},
 			exclude: [
 				/.*\.worker\.ts$/,
 				/.*workers\/.*\.ts$/,
@@ -60,6 +58,9 @@ export default defineConfig({
 				/.*optimizationSettings\/state\/.*$/,
 				/.*templates\/state\/.*$/,
 			],
+		}),
+		babel({
+			plugins: ["@legendapp/state/babel"],
 		}),
 		VitePWA({
 			includeAssets: [
