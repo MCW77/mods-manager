@@ -5,6 +5,7 @@
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"dev": "vite --host=127.0.0.1",
+		"dev:scan": "set \"VITE_ENABLE_REACT_SCAN=true\"&& vite --host=127.0.0.1",
 		"build": "tsgo && vite build",
 		"forcedbuild": "vite build",
 		"serve": "vite preview",
