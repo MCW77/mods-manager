@@ -56,7 +56,7 @@ const FlexSidebar = ({
 				{sidebarContent}
 			</div>
 			<div
-				className={`flexsidebar-maincontent flex p-l-1.5em will-change-flex ${isCollapsed2 ? "flex-[0.000001_0_100vw)]" : "flex-[0.000001_1_calc(70vw_-_2em)]"}`}
+				className={`flexsidebar-maincontent flex p-l-1.5em will-change-flex ${isCollapsed2 ? "flex-[0.000001_0_100vw]" : "flex-[0.000001_1_calc(70vw_-_2em)]"}`}
 			>
 				{mainContent}
 			</div>

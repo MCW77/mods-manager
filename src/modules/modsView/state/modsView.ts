@@ -229,7 +229,7 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			const predicate = createCombinedPredicate(filter, modScore);
 			const predicates: ModFilterPredicate[] = [];
 			predicates.push(predicate);
-			// TEST: Add a unique ID to each array to force it to be seen as different
+			// Add a unique ID to each array to force it to be seen as different
 			return { predicates, id: quickFilterPredicateCallCount };
 		},
 		namedFiltersPredicates: () => {
