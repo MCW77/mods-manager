@@ -2489,10 +2489,20 @@ const characterSettings: CharacterSettingsIndexer = {
 	]),
 	EETHKOTH: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Special Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				spec: 50,
+				cc: 50,
+			}),
+			primaryRes: {
+				"arrow": "Speed",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		],
 		[],
 		DamageType.mixed,
@@ -2506,6 +2516,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 30,
 			cc: 5,
+			primaryRes: {
+				"arrow": "Speed",
+				"triangle": "Critical Damage %",
+				"circle": "Protection %",
+				"cross": "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 	]),
 	EMBO: createCharacterSettings([
@@ -2514,6 +2534,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 20,
 			spd: 100,
 			phys: 10,
+			primaryRes: {
+				"arrow": "Speed",
+				"triangle": "Protection %",
+				"circle": "Protection %",
+				"cross": "Protection %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 3",
@@ -2525,7 +2555,22 @@ const characterSettings: CharacterSettingsIndexer = {
 	]),
 	EMPERORPALPATINE: createCharacterSettings(
 		[
-			toRenamed(optimizationStrategy["Special Damage with Potency"], "Default"),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				spec: 50,
+				pot: 25,
+				primaryRes: {
+					"arrow": "Speed",
+					"triangle": "Protection %",
+					"circle": "Protection %",
+					"cross": "Potency %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Potency %": 1,
+				},				
+			}),
 			fromShortOptimizationPlan({
 				id: "Tanky",
 				prot: 100,
