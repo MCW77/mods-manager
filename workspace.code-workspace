@@ -8,10 +8,10 @@
 		"search.exclude": {
 			"**/dist": true
 		},
-		"typescript.implementationsCodeLens.enabled": true,
+		"typescript.implementationsCodeLens.enabled": false,
 		"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-		"typescript.referencesCodeLens.enabled": true,
-		"typescript.referencesCodeLens.showOnAllFunctions": true,
+		"typescript.referencesCodeLens.enabled": false,
+		"typescript.referencesCodeLens.showOnAllFunctions": false,
 		"typescript.suggest.completeFunctionCalls": true,
 		"typescript.suggest.jsdoc.generateReturns": false,
 		"typescript.suggest.completeJSDocs": false,
@@ -25,6 +25,9 @@
 				"approve": true,
 				"matchCommandLine": true
 			}
-		}
+		},
+		"js/ts.referencesCodeLens.enabled": true,
+		"js/ts.implementationsCodeLens.enabled": true,
+		"js/ts.referencesCodeLens.showOnAllFunctions": true
 	}
 }
