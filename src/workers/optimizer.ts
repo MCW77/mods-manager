@@ -1820,6 +1820,7 @@ function optimizeMods(
 						realTarget,
 					)
 				) {
+					foundLoadout.score = oldLoadoutScore;
 					assignmentMessages.push(
 						"Could not find a new mod set that satisfies the given restrictions. Leaving the old mods equipped.",
 					);
