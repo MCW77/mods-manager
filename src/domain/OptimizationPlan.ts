@@ -205,18 +205,6 @@ export const denormalize = (plan: OptimizationPlan) => {
 	};
 };
 
-export const toRenamed = (
-	plan: OptimizationPlan,
-	id: string,
-	description = "",
-) => {
-	return {
-		...plan,
-		description,
-		id,
-	};
-};
-
 function hasPrimaryStatRestrictions(target: OptimizationPlan) {
 	return Object.values(target.primaryStatRestrictions).some(
 		(restriction) => restriction !== undefined,

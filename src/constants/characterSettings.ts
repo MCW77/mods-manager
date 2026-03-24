@@ -1,16 +1,12 @@
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
-import optimizationStrategy from "#/constants/optimizationStrategy";
 
 import {
 	createCharacterSettings,
 	DamageType,
 	type CharacterSettingsIndexer,
 } from "#/domain/CharacterSettings";
-import {
-	fromShortOptimizationPlan,
-	toRenamed,
-} from "#/domain/OptimizationPlan";
+import { fromShortOptimizationPlan } from "#/domain/OptimizationPlan";
 import { createTargetStat } from "#/domain/TargetStat";
 
 const characterSettings: CharacterSettingsIndexer = {
@@ -26,7 +22,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 10,
 				ten: 35,
 				spec: 10,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
 					circle: "Protection %",
@@ -111,7 +106,6 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				desc: "Survivability",
 				health: 20,
 				prot: 20,
 				spd: 100,
@@ -124,7 +118,6 @@ const characterSettings: CharacterSettingsIndexer = {
 					"Speed %": 1,
 				},
 			}),
-			optimizationStrategy.Speed,
 		],
 		["AA", "Snackbar", "ABC"],
 	),
@@ -169,7 +162,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 20,
 				spd: 100,
 				spec: 10,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -183,7 +175,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				spec: 10,
-				minDots: 5,
 				primaryRes: {
 					triangle: "Health %",
 					cross: "Health %",
@@ -396,12 +387,11 @@ const characterSettings: CharacterSettingsIndexer = {
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
-				circle: "Protection %",
 				cross: "Offense %",
 			},
 			setRes: {
-				"Offense %": 1,
-				"Potency %": 1,
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
 			},
 		}),
 	]),
@@ -604,12 +594,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 50,
 			pot: 50,
 			ten: 25,
-			acc: 50,
+			acc: 10,
 			primaryRes: {
 				arrow: "Critical Avoidance %",
 				triangle: "Protection %",
 				circle: "Protection %",
 				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Tenacity %": 2,
 			},
 		}),
 		fromShortOptimizationPlan({
@@ -654,7 +648,6 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				desc: "Leader",
 				health: 10,
 				spd: 100,
 				pot: 50,
@@ -669,11 +662,6 @@ const characterSettings: CharacterSettingsIndexer = {
 					"Speed %": 1,
 				},
 			}),
-			toRenamed(
-				optimizationStrategy["Special Damage with Potency"],
-				"Non-leader",
-			),
-			toRenamed(optimizationStrategy["Special Damage"], "JKR Lead"),
 			fromShortOptimizationPlan({
 				id: "hSTR P2 Jedi",
 				spd: 100,
@@ -807,7 +795,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				phys: 25,
 			}),
-			optimizationStrategy.Speed,
 			fromShortOptimizationPlan({
 				id: "Tanky",
 				health: 5,
@@ -903,10 +890,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Critical Damage %": 1,
 			},
 		}),
-		toRenamed(
-			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-			"Speedy",
-		),
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 2",
 			spd: 100,
@@ -1172,7 +1155,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Speed %": 1,
 			},
 		}),
-		optimizationStrategy.Speed,
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 1",
 			spd: 100,
@@ -1228,7 +1210,9 @@ const characterSettings: CharacterSettingsIndexer = {
 		fromShortOptimizationPlan({
 			id: "Default",
 			desc: "Maul Lead",
-			cd: 50,
+			prot: 10,
+			spd: 15,
+			pot: 10,
 			phys: 100,
 			cc: 25,
 			primaryRes: {
@@ -1242,7 +1226,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Health %": 1,
 			},
 		}),
-		optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
 	]),
 	CAPTAINDROGAN: createCharacterSettings(
 		[
@@ -1431,7 +1414,6 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				desc: "Leader",
 				spd: 100,
 				cd: 50,
 				pot: 25,
@@ -1450,10 +1432,6 @@ const characterSettings: CharacterSettingsIndexer = {
 					"Speed %": 1,
 				},
 			}),
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Non-leader",
-			),
 		],
 		["zody"],
 		DamageType.mixed,
@@ -1592,7 +1570,11 @@ const characterSettings: CharacterSettingsIndexer = {
 					"Speed %": 1,
 				},
 			}),
-			toRenamed(optimizationStrategy["Speedy Chex Mix"], "Chex Mix"),
+			fromShortOptimizationPlan({
+				id: "Chex Mix",
+				spd: 50,
+				phys: 100,
+			}),
 		],
 		["Rogue 1", "Chaze", "Chiggs", "Chex Mix"],
 	),
@@ -1753,7 +1735,11 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 50,
 				phys: 50,
 			}),
-			toRenamed(optimizationStrategy["Speedy Chex Mix"], "Chex Mix"),
+			fromShortOptimizationPlan({
+				id: "Chex Mix",
+				spd: 50,
+				phys: 100,
+			}),
 			fromShortOptimizationPlan({
 				id: "Raids",
 				spd: 100,
@@ -1884,7 +1870,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 10,
 				spd: 100,
 			}),
-			toRenamed(optimizationStrategy.Speed, "Chex Mix"),
+			fromShortOptimizationPlan({
+				id: "Chex Mix",
+				spd: 100,
+			}),
 		],
 		["Titans"],
 	),
@@ -2496,13 +2485,13 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				spec: 50,
 				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
-			primaryRes: {
-				"arrow": "Speed",
-			},
-			setRes: {
-				"Health %": 3,
-			},
 		],
 		[],
 		DamageType.mixed,
@@ -2517,10 +2506,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 30,
 			cc: 5,
 			primaryRes: {
-				"arrow": "Speed",
-				"triangle": "Critical Damage %",
-				"circle": "Protection %",
-				"cross": "Offense %",
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -2535,10 +2524,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 10,
 			primaryRes: {
-				"arrow": "Speed",
-				"triangle": "Protection %",
-				"circle": "Protection %",
-				"cross": "Protection %",
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -2561,15 +2550,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 50,
 				pot: 25,
 				primaryRes: {
-					"arrow": "Speed",
-					"triangle": "Protection %",
-					"circle": "Protection %",
-					"cross": "Potency %",
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Potency %",
 				},
 				setRes: {
 					"Speed %": 1,
 					"Potency %": 1,
-				},				
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Tanky",
@@ -2591,16 +2580,21 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				ten: 100,
 				phys: 10,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Tenacity %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Speedy",
 				spd: 100,
 				pot: 10,
 			}),
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Offense",
-			),
 			fromShortOptimizationPlan({
 				id: "Tenacity",
 				health: 10,
@@ -2622,6 +2616,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cd: 50,
 				spec: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -2636,6 +2639,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				spec: 20,
 				cc: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
 			}),
 		],
 		[],
@@ -2649,12 +2660,11 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 50,
 				primaryRes: {
-					triangle: "Health %",
-					cross: "Tenacity %",
-					circle: "Health %",
+					arrow: "Speed",
 				},
 				setRes: {
-					"Health %": 3,
+					"Health %": 1,
+					"Speed %": 1,
 				},
 			}),
 		],
@@ -2669,15 +2679,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				phys: 50,
 				cc: 20,
-				minDots: 5,
 				primaryRes: {
-					triangle: "Offense %",
-					cross: "Potency %",
-					circle: "Health %",
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
 				},
 				setRes: {
-					"Offense %": 1,
-					"Potency %": 1,
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -2698,11 +2707,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			phys: 50,
 			cc: 50,
-			minDots: 5,
 			primaryRes: {
+				arrow: "Speed",
 				triangle: "Critical Damage %",
 				cross: "Offense %",
-				circle: "Health %",
+				circle: "Protection %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
 			},
 		}),
 		fromShortOptimizationPlan({
@@ -2728,7 +2741,12 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 10,
 			spd: 100,
 			pot: 5,
-			minDots: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
 			setRes: {
 				"Speed %": 1,
 				"Health %": 1,
@@ -2742,6 +2760,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				desc: "Offense",
 				spd: 100,
 				spec: 75,
+				primaryRes: {
+					arrow: "Offense %",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Health %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Crit. Dmg",
@@ -2762,6 +2789,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				ten: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -2769,10 +2806,24 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	FINN: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Slow Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 40,
+				spd: 80,
+				pot: 10,
+				arm: 15,
+				res: 15,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Tanky",
 				health: 30,
@@ -2803,20 +2854,65 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				phys: 50,
 				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Damage %": 1,
+					"Health %": 1,
+				},
 			}),
 		],
 		["Fox", "Panda", "Foe", "FO"],
 	),
 	FIRSTORDEROFFICERMALE: createCharacterSettings(
-		[toRenamed(optimizationStrategy.Speed, "Default", "Speed")],
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				cd: 60,
+				pot: 30,
+				ten: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
+			}),
+		],
 		["Foo", "FO"],
 	),
 	FIRSTORDERSPECIALFORCESPILOT: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 10,
+				spd: 40,
+				cd: 80,
+				pot: 15,
+				phys: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 		],
 		["SFTP", "FO"],
 		DamageType.mixed,
@@ -2830,6 +2926,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				pot: 10,
 				phys: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 		],
 		["FOTP", "FO"],
@@ -2843,6 +2948,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 10,
 				arm: 30,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 2,
+					"Defense %": 1,
+				},
 			}),
 		],
 		["FOST", "FO"],
@@ -2853,6 +2968,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 25,
 			cd: 100,
 			phys: 80,
+			primaryRes: {
+				arrow: "Offense %",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Tanky",
@@ -2864,10 +2988,29 @@ const characterSettings: CharacterSettingsIndexer = {
 	]),
 	FULCRUMAHSOKA: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Physical Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				prot: 5,
+				spd: 75,
+				cd: 30,
+				phys: 100,
+				pot: -25,
+				ten: -25,
+				cc: -50,
+				acc: 5,
+				arm: 5,
+				primaryRes: {
+					arrow: "Offense %",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Omicron",
 				health: 10,
@@ -2884,7 +3027,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: -30,
 				phys: 100,
 				cc: 50,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Offense %",
 					triangle: "Critical Damage %",
@@ -2903,6 +3045,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 75,
 				ten: 100,
 				arm: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 		],
 		["Piggy"],
@@ -2910,18 +3061,21 @@ const characterSettings: CharacterSettingsIndexer = {
 	GARSAXON: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
-			spd: 100,
-			pot: 25,
-			phys: 75,
-			minDots: 5,
+			health: 5,
+			prot: 25,
+			spd: 10,
+			ten: 100,
+			arm: 13,
+			res: 13,
+			phys: 25,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Offense %",
-				cross: "Offense %",
+				circle: "Protection %",
+				cross: "Tenacity %",
 			},
 			setRes: {
-				"Offense %": 1,
-				"Potency %": 1,
+				"Tenacity %": 3,
 			},
 		}),
 	]),
@@ -2934,6 +3088,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 10,
 				ca: 15,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Tenacity %": 1,
+				},
 			}),
 		],
 		[],
@@ -2950,6 +3113,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 12.5,
 				res: 12.5,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Balanced",
@@ -3005,6 +3177,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 10,
 				arm: 10,
 				res: 10,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Offense",
@@ -3033,11 +3215,12 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 5,
 			primaryRes: {
 				arrow: "Speed",
+				triangle: "Health %",
 				cross: "Potency %",
 			},
 			setRes: {
 				"Speed %": 1,
-				"Potency %": 1,
+				"Health %": 1,
 			},
 		}),
 	]),
@@ -3049,6 +3232,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 20,
 			spd: 100,
 			ten: 20,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Offense",
@@ -3066,13 +3259,36 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 90,
 			phys: 50,
 			cc: 100,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 	]),
 	GEONOSIANSPY: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, and Physical Damage"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			phys: 50,
+			cc: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 	]),
 	GLAHSOKATANO: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -3082,7 +3298,26 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 18,
 			res: 18,
 			primaryRes: {
-				arrow: "Health %",
+				arrow: "Speed",
+				triangle: "Health %",
+				cross: "Health %",
+				circle: "Health %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Defense %": 1,
+			},
+		}),
+	]),
+	GLHONDO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			pot: 5,
+			primaryRes: {
+				arrow: "Speed",
 				triangle: "Health %",
 				cross: "Health %",
 				circle: "Health %",
@@ -3091,15 +3326,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Speed %": 1,
 				"Health %": 1,
 			},
-		}),
-	]),
-	GLHONDO: createCharacterSettings([
-		fromShortOptimizationPlan({
-			id: "Default",
-			health: 5,
-			prot: 10,
-			spd: 100,
-			pot: 5,
 		}),
 	]),
 	GLLEIA: createCharacterSettings(
@@ -3113,7 +3339,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 5,
 				arm: 10,
 				res: 10,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
@@ -3121,6 +3346,7 @@ const characterSettings: CharacterSettingsIndexer = {
 					circle: "Health %",
 				},
 				setRes: {
+					"Health %": 1,
 					"Speed %": 1,
 				},
 			}),
@@ -3134,6 +3360,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			health: 50,
 			spd: 100,
 			phys: 15,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Offense",
@@ -3150,6 +3386,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 20,
 				spd: 100,
 				ten: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["GAT", "Imperial Grancor Maneuver", "Wampanader", "ABC", "Titans"],
@@ -3164,6 +3410,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 30,
 			cc: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
 		}),
 	]),
 	GRANDMASTERLUKE: createCharacterSettings(
@@ -3173,6 +3429,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 25,
 				spd: 100,
 				pot: 15,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["GMLS", "JMLS", "GLLS"],
@@ -3188,6 +3454,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				spec: 80,
 				cc: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Offense",
@@ -3233,6 +3509,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 15,
 				spec: 15,
 				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["GMT", "Auto Lightzader", "Imperial Grancor Maneuver"],
@@ -3248,6 +3534,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				ca: 16,
 				primaryRes: {
+					arrow: "Speed",
 					triangle: "Health %",
 					cross: "Health %",
 					circle: "Health %",
@@ -3270,13 +3557,22 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			phys: 25,
 			cc: 100,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 3",
 			cd: 100,
 			phys: 50,
 			cc: 50,
-			minDots: 5,
 			targetStats: [createTargetStat("Speed", "+", 170, 174, "null")],
 		}),
 	]),
@@ -3288,6 +3584,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 5,
 			ten: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	GRIEVOUS: createCharacterSettings(
@@ -3297,6 +3603,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 100,
 				spd: 80,
 				cd: 80,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Fast",
@@ -3321,7 +3636,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 15,
 			arm: 5,
 			res: 5,
-			minDots: 5,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	HANSOLO: createCharacterSettings(
@@ -3333,6 +3656,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				pot: 10,
 				phys: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Slow Han",
@@ -3353,7 +3685,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				phys: 50,
 				cc: 50,
-				minDots: 5,
 				targetStats: [createTargetStat("Speed", "+", 170, 174, "null")],
 			}),
 		],
@@ -3366,9 +3697,11 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 25,
 			ten: 20,
-			minDots: 5,
 			primaryRes: {
-				cross: "Potency %",
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
 			},
 			setRes: {
 				"Speed %": 1,
@@ -3377,7 +3710,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		}),
 	]),
 	HERMITYODA: createCharacterSettings(
-		[toRenamed(optimizationStrategy.Speed, "Default")],
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				arm: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Defense %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
+		],
 		["Hyoda", "Hoboda", "Hobo", "HY"],
 		DamageType.mixed,
 	),
@@ -3388,6 +3738,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 75,
 			phys: 50,
 			cc: 25,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 	]),
 	HONDO: createCharacterSettings(
@@ -3399,6 +3759,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cd: 75,
 				spec: 75,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -3411,6 +3780,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 20,
 				spd: 100,
 				pot: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["CHS", "CHolo", "Snolo", "Hoth Han"],
@@ -3424,16 +3802,39 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				phys: 25,
 				cc: 30,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 		],
 		["ROLO"],
 	),
 	HOTHREBELSCOUT: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Chance %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Mothma Lead",
 				health: 5,
@@ -3444,6 +3845,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 75,
 				cc: 100,
 				arm: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Chance %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 		],
 		["HRS", "Hoth Bros"],
@@ -3455,15 +3865,38 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 25,
 				prot: 25,
 				spd: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 		],
 		["HRS", "Hoth Bros"],
 	),
 	HUMANTHUG: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			pot: 25,
+			phys: 50,
+			cc: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Chance %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Speed %": 1,
+			},
+		}),
 	]),
 	HUNTERS3: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -3492,13 +3925,14 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 10,
 			primaryRes: {
-				arrow: "Offense %",
+				arrow: "Speed",
 				triangle: "Critical Damage %",
+				circle: "Health %",
 				cross: "Offense %",
 			},
 			setRes: {
 				"Critical Chance %": 1,
-				"Critical Damage %": 1,
+				"Offense %": 1,
 			},
 		}),
 	]),
@@ -3509,6 +3943,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			pot: 50,
 			phys: 25,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Critical Damage %": 1,
+				"Potency %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Wampa Slayer",
@@ -3529,6 +3973,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 5,
 			arm: 5,
 			res: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	IG12: createCharacterSettings([
@@ -3538,7 +3991,6 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 5,
 			spd: 100,
 			pot: 5,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Health %",
@@ -3552,17 +4004,42 @@ const characterSettings: CharacterSettingsIndexer = {
 		}),
 	]),
 	IG86SENTINELDROID: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, and Physical Damage"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			phys: 50,
+			cc: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 	]),
 	IG88: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, and Physical Damage"],
-			"Default",
-			"Damage",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Damage",
+			spd: 100,
+			cd: 100,
+			phys: 50,
+			cc: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 		fromShortOptimizationPlan({
 			id: "Nuke",
 			spd: 100,
@@ -3582,22 +4059,34 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 10,
 			primaryRes: {
 				arrow: "Speed",
+				triangle: "Protection %",
 				circle: "Protection %",
 				cross: "Tenacity %",
-				triangle: "Protection %",
 			},
 			setRes: {
-				"Tenacity %": 1,
 				"Speed %": 1,
+				"Tenacity %": 1,
 			},
 		}),
 	]),
 	IMAGUNDI: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
 		],
 		["IGD"],
 	),
@@ -3609,6 +4098,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 50,
 				prot: 50,
 				spd: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Offense",
@@ -3636,15 +4134,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 20,
 				phys: 100,
-				minDots: 5,
 				primaryRes: {
-					arrow: "Offense %",
+					arrow: "Speed",
 					triangle: "Offense %",
 					circle: "Protection %",
-					cross: "Offense %",
+					cross: "Tenacity %",
 				},
 				setRes: {
-					"Offense %": 1,
+					"Tenacity %": 3,
 				},
 			}),
 		],
@@ -3657,13 +4154,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 100,
 				spd: 40,
 				primaryRes: {
-					arrow: "Health %",
+					arrow: "Speed",
 					circle: "Health %",
 					cross: "Health %",
 					triangle: "Health %",
 				},
 				setRes: {
-					"Health %": 3,
+					"Health %": 1,
+					"Speed %": 1,
 				},
 			}),
 		],
@@ -3678,13 +4176,12 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 40,
 			primaryRes: {
 				arrow: "Speed",
-				triangle: "Offense %",
+				triangle: "Critical Damage %",
 				cross: "Offense %",
-				circle: "Health %",
 			},
 			setRes: {
-				"Health %": 1,
-				"Speed %": 1,
+				"Critical Chance %": 1,
+				"Offense %": 1,
 			},
 		}),
 	]),
@@ -3695,36 +4192,59 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 15,
 				spd: 100,
 				pot: 25,
-				ten: 50,
+				ten: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
 		DamageType.special,
 	),
 	JANGOFETT: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Damage",
+			spd: 100,
+			cd: 100,
+			pot: 25,
+			phys: 50,
+			cc: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 	]),
 	JARJARBINKS: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 0,
 				prot: 20,
 				spd: 100,
-				cd: 0,
 				pot: 40,
-				ten: 0,
-				phys: 0,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -3732,10 +4252,24 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	JAWA: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				pot: 25,
+				phys: 50,
+				spec: 50,
+				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Detonator",
 				health: 100,
@@ -3755,6 +4289,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				ten: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Detonator",
@@ -3775,6 +4319,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 50,
 			phys: 25,
 			cc: 100,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Detonator",
@@ -3792,12 +4345,11 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cd: 25,
 				phys: 75,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
 					circle: "Health %",
-					cross: "Offense %",
+					cross: "Health %",
 				},
 				setRes: {
 					"Health %": 1,
@@ -3810,7 +4362,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 35,
 				phys: 20,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Offense %",
@@ -3830,6 +4381,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "Healer",
 				health: 50,
 				spd: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 		],
 		["JC"],
@@ -3846,6 +4406,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 12.5,
 				res: 12.5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Defense %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 		],
 		["JKG"],
@@ -3861,6 +4429,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 50,
 				cc: 15,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Offense %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Non-leader",
@@ -3880,8 +4458,18 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				spd: 100,
-				cd: 50,
+				cd: 10,
 				spec: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Health",
@@ -3901,6 +4489,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cd: 25,
 				phys: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["JMK"],
@@ -3932,9 +4530,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 10,
 				phys: 30,
 				primaryRes: {
+					arrow: "Speed",
 					triangle: "Protection %",
 					cross: "Protection %",
 					circle: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
 				},
 			}),
 		],
@@ -3948,6 +4551,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 75,
 			ten: 100,
 			ca: 100,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Tenacity %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Health and Speed",
@@ -3969,6 +4581,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 90,
 			pot: 5,
 			arm: 15,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	JYNERSO: createCharacterSettings(
@@ -3980,6 +4601,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				phys: 20,
 				cc: 75,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Chance %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "AdRad",
@@ -3997,7 +4627,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 20,
 				cc: 50,
-				minDots: 5,
 				primaryRes: {
 					triangle: "Critical Damage %",
 					cross: "Potency %",
@@ -4017,6 +4646,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				ten: 50,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Tenacity %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "AdRad",
@@ -4027,7 +4665,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 50,
 				arm: 10,
 				res: 10,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Protection %",
 					triangle: "Protection %",
@@ -4041,20 +4678,19 @@ const characterSettings: CharacterSettingsIndexer = {
 	KANANJARRUSS3: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
-			health: 40,
+			health: 35,
+			prot: 10,
 			spd: 100,
-			phys: 10,
-			cc: 30,
-			minDots: 5,
+			arm: 25,
+			ca: 100,
 			primaryRes: {
 				arrow: "Speed",
-				triangle: "Health %",
-				cross: "Health %",
-				circle: "Health %",
+				triangle: "Protection %",
+				cross: "Protection %",
+				circle: "Protection %",
 			},
 			setRes: {
-				"Health %": 2,
-				"Tenacity %": 1,
+				"Health %": 3,
 			},
 		}),
 	]),
@@ -4064,7 +4700,6 @@ const characterSettings: CharacterSettingsIndexer = {
 			health: 20,
 			prot: 100,
 			spd: 50,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Protection %",
 				triangle: "Protection %",
@@ -4089,6 +4724,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 25,
 			arm: 10,
 			res: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Offense %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Offense",
@@ -4111,10 +4755,22 @@ const characterSettings: CharacterSettingsIndexer = {
 	]),
 	KITFISTO: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Physical Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 		],
 		["Fisty", "Fister"],
 	),
@@ -4124,7 +4780,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "Default",
 				health: 20,
 				spd: 100,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
@@ -4149,6 +4804,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 10,
 			ten: 10,
 			arm: 25,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Tenacity %",
+			},
+			setRes: {
+				"Tenacity %": 3,
+			},
 		}),
 	]),
 	KUIIL: createCharacterSettings(
@@ -4159,6 +4823,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				pot: 15,
+				primaryRes: {
+					arrow: "Speed",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -4174,6 +4846,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 5,
 			phys: 50,
 			arm: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	KYLOREN: createCharacterSettings(
@@ -4184,6 +4865,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				phys: 25,
 				cc: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Tenacity %": 1,
+				},
 			}),
 		],
 		["Old Kylo", "zylo", "FO"],
@@ -4192,10 +4883,19 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 75,
-				prot: 50,
+				health: 70,
+				prot: 10,
 				spd: 100,
-				arm: 30,
+				arm: 10,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Tanky",
@@ -4226,6 +4926,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 12.5,
 				res: 12.5,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Speedy",
@@ -4248,6 +4957,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 25,
 			arm: 12.5,
 			res: 12.5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	LOGRAY: createCharacterSettings(
@@ -4258,15 +4977,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cd: 40,
 				pot: 50,
-				minDots: 5,
 				primaryRes: {
-					triangle: "Critical Damage %",
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
 					cross: "Potency %",
-					circle: "Health %",
 				},
 				setRes: {
 					"Potency %": 1,
-					"Health %": 2,
+					"Speed %": 1,
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -4285,14 +5004,36 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 15,
 			spd: 100,
 			phys: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	LUKESKYWALKER: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				pot: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
 		],
 		["farmboi"],
 	),
@@ -4302,6 +5043,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			health: 40,
 			spd: 100,
 			pot: 25,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	LUTHENRAEL: createCharacterSettings(
@@ -4311,17 +5061,17 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 5,
 				prot: 10,
 				spd: 100,
-				cd: 0,
 				pot: 5,
-				ten: 0,
-				phys: 0,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Chance %",
+					circle: "Health %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["Luthen"],
@@ -4335,6 +5085,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				spec: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Slow/Tanky",
@@ -4346,10 +5105,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		DamageType.special,
 	),
 	MAGMATROOPER: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			cd: 100,
+			pot: 25,
+			phys: 50,
+			cc: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Offense %": 1,
+				"Tenacity %": 1,
+			},
+		}),
 		fromShortOptimizationPlan({
 			id: "Anti-Traya",
 			spd: 25,
@@ -4369,6 +5142,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			arm: 25,
 			ca: 100,
+			primaryRes: {
+				arrow: "Critical Avoidance %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Balanced",
@@ -4392,14 +5174,14 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 100,
 			arm: 12.5,
 			res: 12.5,
-			minDots: 5,
 			primaryRes: {
-				arrow: "Offense %",
+				arrow: "Speed",
 				triangle: "Offense %",
-				cross: "Offense %",
 				circle: "Health %",
+				cross: "Offense %",
 			},
 			setRes: {
+				"Health %": 1,
 				"Offense %": 1,
 			},
 		}),
@@ -4414,6 +5196,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				spec: 25,
 				cc: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Survivability",
@@ -4435,10 +5227,12 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 25,
 				primaryRes: {
 					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
 				},
 				setRes: {
-					"Speed %": 1,
 					"Critical Chance %": 1,
+					"Offense %": 1,
 				},
 			}),
 		],
@@ -4450,26 +5244,38 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				health: 15,
-				prot: 0,
 				spd: 100,
-				cd: 0,
-				pot: 0,
-				ten: 0,
-				phys: 0,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["MQG", "Quadme", "Queeni"],
 		DamageType.special,
 	),
 	MAUL: createCharacterSettings([
-		toRenamed(optimizationStrategy["Special Damage with Potency"], "Default"),
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			spec: 50,
+			pot: 25,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 	]),
 	MAULHATEFUELED: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -4492,11 +5298,20 @@ const characterSettings: CharacterSettingsIndexer = {
 	MAULS7: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
-			health: 25,
+			health: 15,
 			prot: 25,
 			spd: 100,
-			pot: 15,
-			phys: 50,
+			phys: 40,
+			arm: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "DS Mando",
@@ -4508,19 +5323,18 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 10,
+				health: 20,
+				prot: 20,
 				spd: 100,
-				ten: 40,
-				minDots: 5,
+				ten: 10,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
-					circle: "Health %",
-					cross: "Tenacity %",
+					cross: "Health %",
 				},
 				setRes: {
+					"Health %": 1,
 					"Speed %": 1,
-					"Tenacity %": 1,
 				},
 			}),
 		],
@@ -4531,32 +5345,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 15,
-				pot: 100,
-				spec: 40,
-				minDots: 5,
+				health: -25,
+				prot: 25,
+				spd: -100,
+				cd: -50,
+				pot: 5,
+				ten: 100,
+				cc: -50,
+				phys: 1,
+				arm: 10,
+				ca: 100,
 				primaryRes: {
-					cross: "Potency %",
-					circle: "Health %",
-				},
-				setRes: {
-					"Potency %": 3,
-				},
-			}),
-			fromShortOptimizationPlan({
-				id: "Tenacity",
-				health: 15,
-				pot: 20,
-				ten: 60,
-				spec: 30,
-				minDots: 5,
-				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
 					cross: "Tenacity %",
-					circle: "Health %",
 				},
 				setRes: {
-					"Tenacity %": 2,
-					"Potency %": 1,
+					"Tenacity %": 3,
 				},
 			}),
 		],
@@ -4569,41 +5375,77 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cd: 100,
 			phys: 75,
-			cc: 50,
+			cc: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 	]),
 	MOFFGIDEONS1: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
+			health: 10,
+			prot: 10,
 			spd: 100,
-			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	MOFFGIDEONS3: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
-			health: 3,
-			prot: 20,
+			health: 25,
+			prot: 5,
 			spd: 100,
-			pot: 4,
-			ten: 3,
-			phys: 2,
-			spec: 3,
-			cc: 4,
-			arm: 4,
-			res: 4,
+			pot: 10,
+			ten: 1,
+			phys: 5,
+			arm: 15,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	MONMOTHMA: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				desc: "Leader",
 				health: 5,
 				prot: 5,
 				spd: 100,
 				ten: 25,
 				phys: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Speed %": 1,
+					"Tenacity %": 1,
+				},
 			}),
 		],
 		["MM"],
@@ -4612,20 +5454,20 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 10,
-				prot: 20,
+				health: 15,
+				prot: 25,
 				spd: 100,
-				cd: 0,
-				pot: 0,
-				ten: 0,
-				phys: 0,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
+				ten: 50,
+				arm: 15,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Speed %": 1,
+				},
 			}),
 		],
 		["Morgan", "NS"],
@@ -4638,6 +5480,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				spec: 25,
 				cc: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					circle: "Health %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 4",
@@ -4664,6 +5516,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				spec: 50,
 				cc: 80,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 2",
@@ -4686,10 +5547,22 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	NIGHTSISTERINITIATE: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Physical Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				cd: 100,
+				phys: 50,
+				cc: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 3",
 				cc: 100,
@@ -4705,7 +5578,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				pot: 25,
 				phys: 75,
-				cc: 50,
+				cc: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 3",
@@ -4724,23 +5606,20 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 20,
 				spd: 100,
 				ten: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Weak Zombie",
-				health: 0,
-				prot: 0,
 				spd: 100,
-				cd: 0,
-				pot: 0,
-				ten: 0,
-				phys: 0,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 4",
@@ -4760,19 +5639,20 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				health: 50,
-				prot: 0,
 				spd: 100,
 				cd: 10,
-				pot: 0,
 				ten: 10,
 				phys: 25,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
 			}),
 		],
 		["NS", "NT"],
@@ -4785,14 +5665,37 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 40,
 			arm: 30,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	NUTEGUNRAY: createCharacterSettings([
-		toRenamed(optimizationStrategy["Speed with survivability"], "Default"),
-		toRenamed(
-			optimizationStrategy["Speed, Crit, and Physical Damage"],
-			"Damage",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 15,
+			spd: 100,
+			pot: 15,
+			ten: 5,
+			arm: 1,
+			res: 1,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Speed %": 1,
+			},
+		}),
 	]),
 	OLDBENKENOBI: createCharacterSettings(
 		[
@@ -4803,6 +5706,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				pot: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["OB"],
@@ -4812,16 +5725,17 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				health: 20,
+				prot: 20,
 				spd: 100,
-				ten: 25,
+				arm: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					cross: "Tenacity %",
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
 				},
 				setRes: {
-					"Speed %": 1,
-					"Health %": 1,
+					"Health %": 3,
 				},
 			}),
 		],
@@ -4855,12 +5769,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				phys: 65,
 				primaryRes: {
+					arrow: "Speed",
 					triangle: "Critical Damage %",
+					circle: "Health %",
 					cross: "Offense %",
 				},
 				setRes: {
+					"Health %": 1,
 					"Offense %": 1,
-					"Potency %": 1,
 				},
 			}),
 		],
@@ -4876,7 +5792,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
-				circle: "Protection %",
+				circle: "Health %",
 				cross: "Offense %",
 			},
 			setRes: {
@@ -4889,12 +5805,19 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 35,
+				health: 15,
 				spd: 100,
-				cd: 25,
-				pot: 15,
-				phys: 10,
-				cc: 10,
+				phys: 1,
+				arm: 1,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Slow",
@@ -4909,10 +5832,24 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	PAO: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 10,
+				spd: 100,
+				ten: 35,
+				phys: 10,
+				arm: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Health %": 2,
+					"Tenacity %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Mothma Lead",
 				health: 10,
@@ -4923,7 +5860,11 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 100,
 				arm: 5,
 			}),
-			toRenamed(optimizationStrategy["Speedy Chex Mix"], "Chex Mix"),
+			fromShortOptimizationPlan({
+				id: "Chex Mix",
+				spd: 50,
+				phys: 100,
+			}),
 		],
 		["Rogue 1", "Chex Mix"],
 	),
@@ -4931,16 +5872,16 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 20,
-				spd: 100,
-				ten: 10,
-				arm: 5,
-				res: 5,
-				minDots: 5,
+				health: 5,
+				prot: 25,
+				spd: 85,
+				ten: 15,
+				arm: 15,
 				primaryRes: {
-					triangle: "Health %",
-					cross: "Health %",
-					circle: "Health %",
+					arrow: "Speed",
+					triangle: "Protection %",
+					cross: "Protection %",
+					circle: "Protection %",
 				},
 				setRes: {
 					"Health %": 3,
@@ -4967,11 +5908,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			arm: 10,
 			res: 10,
-			minDots: 5,
 			primaryRes: {
+				arrow: "Speed",
 				triangle: "Health %",
 				cross: "Health %",
-				circle: "Health %",
 			},
 			setRes: {
 				"Health %": 3,
@@ -4984,7 +5924,6 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			arm: 10,
 			res: 10,
-			minDots: 5,
 			primaryRes: {
 				triangle: "Protection %",
 				cross: "Protection %",
@@ -5003,16 +5942,39 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				pot: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["FO"],
 	),
 	PLOKOON: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				prot: 5,
+				spd: 100,
+				pot: 10,
+				arm: 10,
+				ca: 50,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
 		],
 		[],
 		DamageType.mixed,
@@ -5026,6 +5988,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 40,
 			ten: 20,
 			arm: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	POGGLETHELESSER: createCharacterSettings([
@@ -5036,8 +6008,8 @@ const characterSettings: CharacterSettingsIndexer = {
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
-				cross: "Potency %",
 				circle: "Protection %",
+				cross: "Potency %",
 			},
 			setRes: {
 				"Health %": 1,
@@ -5054,26 +6026,37 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 40,
 			phys: 10,
 			cc: 80,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
-				cross: "Potency %",
-				circle: "Health %",
+				circle: "Protection %",
+				cross: "Offense %",
 			},
 			setRes: {
-				"Potency %": 1,
 				"Critical Chance %": 1,
-				"Health %": 1,
+				"Critical Damage %": 1,
 			},
 		}),
 	]),
 	PRINCESSLEIA: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Physical Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 20,
+				spd: 100,
+				cd: 50,
+				phys: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 2",
 				spd: 50,
@@ -5092,7 +6075,33 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				pot: 10,
 				phys: 50,
-				cc: 25,
+				cc: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Speed %": 1,
+				},
+			}),
+			fromShortOptimizationPlan({
+				id: "Lead",
+				spd: 100,
+				cd: 50,
+				pot: 10,
+				phys: 50,
+				cc: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Speed %": 1,
+				},
 			}),
 		],
 		["solo"],
@@ -5104,17 +6113,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 20,
 				prot: 10,
 				spd: 100,
-				cd: 0,
-				pot: 0,
-				ten: 0,
-				phys: 0,
-				spec: 0,
-				cc: 0,
-				arm: 0,
-				res: 0,
-				acc: 0,
-				ca: 0,
-				minDots: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		["Quadme", "Queeni"],
@@ -5127,7 +6135,6 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 40,
 			arm: 25,
 			res: 25,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Protection %",
 				triangle: "Protection %",
@@ -5135,16 +6142,30 @@ const characterSettings: CharacterSettingsIndexer = {
 				circle: "Protection %",
 			},
 			setRes: {
-				"Health %": 3,
+				"Defense %": 1,
+				"Health %": 2,
 			},
 		}),
 	]),
 	QUIGONJINN: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Special Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 3,
+				prot: 5,
+				spd: 100,
+				phys: 33,
+				arm: 1,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Omicron",
 				phys: 100,
@@ -5173,6 +6194,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				ten: 10,
 				cc: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 1",
@@ -5190,19 +6221,54 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	RANGETROOPER: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Physical Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				cd: 5,
+				cc: 5,
+				phys: 10,
+				arm: 5,
+				ca: 35,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
 		],
 		["Troopers"],
 	),
 	RESISTANCEPILOT: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Slow Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 10,
+				spd: 50,
+				cd: 35,
+				pot: 10,
+				phys: 5,
+				acc: 10,
+				cc: 5,
+				ca: 15,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
+			}),
 		],
 		["RP"],
 	),
@@ -5215,6 +6281,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 50,
 				cc: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 1",
@@ -5229,10 +6304,22 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
+				health: 25,
 				spd: 100,
-				cd: 100,
+				cd: 10,
 				phys: 25,
-				cc: 50,
+				cc: 5,
+				arm: 1,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Offense %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 1",
@@ -5248,11 +6335,22 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
+				health: 50,
+				prot: 5,
 				spd: 100,
-				cd: 100,
-				pot: 20,
-				phys: 20,
-				cc: 50,
+				pot: 15,
+				phys: 2,
+				arm: 10,
+				ca: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 1",
@@ -5286,6 +6384,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 20,
 				spec: 20,
 				cc: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -5295,27 +6402,45 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				desc: "Tanky",
-				health: 50,
-				prot: 50,
-				spd: 25,
-				ten: 25,
-				arm: 5,
-				res: 5,
-			}),
-			fromShortOptimizationPlan({
-				id: "LV Lead",
 				health: 100,
-				prot: 75,
+				prot: 1,
+				spd: 25,
+				pot: 3,
+				ten: 1,
+				arm: 15,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 		],
 		["RG", "Red Guard"],
 	),
 	SABINEWRENS3: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			cd: 50,
+			phys: 25,
+			pot: 10,
+			arm: 1,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
+		}),
 		fromShortOptimizationPlan({
 			id: "hSTR Phase 2",
 			health: 20,
@@ -5331,6 +6456,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				pot: 5,
 				spec: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -5343,6 +6478,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 100,
 				phys: 10,
 				arm: 50,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Balanced",
@@ -5366,6 +6510,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 20,
 			phys: 20,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	SCARIFREBEL: createCharacterSettings(
@@ -5380,10 +6534,14 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				arm: 10,
 				res: 10,
-				minDots: 5,
 				primaryRes: {
-					triangle: "Health %",
-					cross: "Health %",
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -5394,7 +6552,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				ten: 10,
 				arm: 10,
-				minDots: 5,
 				primaryRes: {
 					triangle: "Protection %",
 					cross: "Protection %",
@@ -5437,15 +6594,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 30,
 				ten: 10,
 				phys: 15,
-				minDots: 5,
 				primaryRes: {
 					arrow: "Speed",
-					triangle: "Offense %",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
 					cross: "Potency %",
 				},
 				setRes: {
-					"Speed %": 1,
 					"Potency %": 1,
+					"Speed %": 1,
 				},
 			}),
 		],
@@ -5461,6 +6618,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 75,
 				spec: 100,
 				cc: 30,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Offense %": 1,
+				},
 			}),
 		],
 		[],
@@ -5473,14 +6639,35 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 10,
 			spd: 100,
 			ten: 20,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Tenacity %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	SHAAKTI: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
 			health: 25,
-			prot: 25,
+			prot: 15,
 			spd: 100,
+			ten: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Nuke",
@@ -5512,7 +6699,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				phys: 25,
 				primaryRes: {
-					arrow: "Critical Avoidance %",
+					arrow: "Speed",
 					triangle: "Critical Damage %",
 					cross: "Offense %",
 				},
@@ -5529,10 +6716,19 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				desc: "Speedy Tank",
-				health: 50,
-				prot: 50,
-				spd: 100,
-				ten: 25,
+				health: 20,
+				prot: 30,
+				spd: 10,
+				arm: 20,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "LV Lead",
@@ -5543,15 +6739,51 @@ const characterSettings: CharacterSettingsIndexer = {
 		["ShT", "Troopers", "Imperial Grancor Maneuver"],
 	),
 	SITHASSASSIN: createCharacterSettings(
-		[toRenamed(optimizationStrategy["Special Damage with Potency"], "Default")],
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 10,
+				phys: 10,
+				arm: 1,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
+		],
 		["SA", "Sassy"],
 	),
 	SITHMARAUDER: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 25,
+				prot: 5,
+				spd: 75,
+				cd: 100,
+				pot: 15,
+				phys: 35,
+				arm: 5,
+				ca: 65,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Health %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 		],
 		["SM"],
 	),
@@ -5559,10 +6791,19 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 40,
+				health: 100,
 				prot: 5,
-				spd: 100,
-				spec: 5,
+				spd: 40,
+				arm: 5,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 		],
 		["SEE"],
@@ -5578,6 +6819,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 15,
 				arm: 25,
 				res: 25,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Defense %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "DR Lead",
@@ -5596,12 +6846,11 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 20,
 			cc: 30,
 			phys: 100,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Offense %",
 				triangle: "Critical Damage %",
-				cross: "Health %",
 				circle: "Health %",
+				cross: "Offense %",
 			},
 			setRes: {
 				"Health %": 1,
@@ -5611,10 +6860,26 @@ const characterSettings: CharacterSettingsIndexer = {
 	]),
 	SMUGGLERCHEWBACCA: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 70,
+				cd: 50,
+				pot: 5,
+				phys: 10,
+				cc: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "DefaultSpeedy Critter",
 				spd: 100,
@@ -5628,10 +6893,26 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	SMUGGLERHAN: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 50,
+				cd: 70,
+				pot: 15,
+				phys: 10,
+				cc: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "Speedy Critter",
 				spd: 100,
@@ -5650,6 +6931,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				phys: 50,
 				cc: 25,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Iden Lead",
@@ -5672,13 +6963,13 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 10,
 			phys: 50,
 			cc: 10,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
 				cross: "Offense %",
 			},
 			setRes: {
+				"Health %": 1,
 				"Speed %": 1,
 			},
 		}),
@@ -5690,15 +6981,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cd: 75,
 			phys: 50,
-		}),
-		fromShortOptimizationPlan({
-			id: "Default w/ Primaries",
-			health: 25,
-			spd: 100,
-			phys: 50,
-			minDots: 5,
 			primaryRes: {
+				arrow: "Speed",
 				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
 			},
 		}),
 		fromShortOptimizationPlan({
@@ -5707,7 +6998,6 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cd: 50,
 			phys: 30,
-			minDots: 5,
 			primaryRes: {
 				triangle: "Critical Damage %",
 			},
@@ -5724,6 +7014,15 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 25,
 				res: 25,
+				primaryRes: {
+					arrow: "Protection %",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Defense %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "LV Lead",
@@ -5735,19 +7034,6 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 75,
 				spd: 50,
 				arm: 100,
-			}),
-			// TODO: Check differing values
-			fromShortOptimizationPlan({
-				id: "Iden Lead w/ Primaries",
-				prot: 100,
-				spd: 50,
-				arm: 50,
-				minDots: 5,
-				primaryRes: {
-					arrow: "Defense %",
-					triangle: "Defense %",
-					cross: "Defense %",
-				},
 			}),
 		],
 		["Troopers"],
@@ -5762,6 +7048,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 100,
 				ten: 10,
 				arm: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Defense %": 1,
+					"Health %": 2,
+				},
 			}),
 		],
 		["STHan"],
@@ -5776,12 +7072,12 @@ const characterSettings: CharacterSettingsIndexer = {
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
-				cross: "Health %",
+				cross: "Protection %",
 				circle: "Protection %",
 			},
 			setRes: {
+				"Health %": 1,
 				"Speed %": 1,
-				"Tenacity %": 1,
 			},
 		}),
 	]),
@@ -5792,13 +7088,14 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 80,
 			phys: 40,
 			primaryRes: {
+				arrow: "Speed",
 				triangle: "Critical Damage %",
 				cross: "Health %",
 				circle: "Health %",
 			},
 			setRes: {
-				"Speed %": 1,
 				"Health %": 1,
+				"Speed %": 1,
 			},
 		}),
 	]),
@@ -5813,6 +7110,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 25,
 			arm: 12.5,
 			res: 12.5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	SUPREMELEADERKYLOREN: createCharacterSettings([
@@ -5823,6 +7129,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cd: 50,
 			phys: 30,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Offense",
@@ -5843,6 +7159,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				spec: 10,
 				cc: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Damage",
@@ -5870,10 +7196,25 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	TALIA: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Mixed Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				pot: 10,
+				ten: 10,
+				phys: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
 			fromShortOptimizationPlan({
 				id: "hSTR Phase 4",
 				phys: 100,
@@ -5891,12 +7232,11 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			arm: 50,
 			res: 50,
-			minDots: 5,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				cross: "Health %",
+				arrow: "Speed",
+				triangle: "Defense %",
 				circle: "Health %",
+				cross: "Defense %",
 			},
 			setRes: {
 				"Defense %": 3,
@@ -5911,13 +7251,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cd: 50,
 			phys: 40,
-			minDots: 5,
 			primaryRes: {
+				arrow: "Offense %",
 				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Offense %",
 			},
 			setRes: {
-				"Offense %": 1,
 				"Health %": 1,
+				"Offense %": 1,
 			},
 		}),
 		fromShortOptimizationPlan({
@@ -5926,7 +7268,6 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cd: 50,
 			phys: 60,
-			minDots: 5,
 			primaryRes: {
 				triangle: "Critical Damage %",
 			},
@@ -5943,11 +7284,11 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 10,
 				spd: 100,
 				pot: 100,
-				minDots: 5,
 				primaryRes: {
-					triangle: "Health %",
+					arrow: "Speed",
+					triangle: "Protection %",
+					circle: "Protection %",
 					cross: "Potency %",
-					circle: "Health %",
 				},
 				setRes: {
 					"Potency %": 3,
@@ -5965,6 +7306,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 15,
 			phys: 5,
 			cc: 30,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Damage %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Relic 7",
@@ -5988,6 +7338,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 15,
 			phys: 30,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
 		}),
 	]),
 	THIRDSISTER: createCharacterSettings([
@@ -5999,29 +7359,35 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 50,
 			arm: 5,
-		}),
-		// TODO: Check differing values
-		fromShortOptimizationPlan({
-			id: "Default w/ Primaries",
-			health: 30,
-			prot: 5,
-			spd: 100,
-			phys: 50,
-			arm: 5,
-			minDots: 5,
 			primaryRes: {
-				triangle: "Critical Damage %",
+				arrow: "Health %",
+				triangle: "Health %",
 				circle: "Health %",
 				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
 			},
 		}),
 	]),
 	TIEFIGHTERPILOT: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				pot: 10,
+				phys: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Speed %": 1,
+				},
+			}),
 		],
 		["TFP", "Auto Lightzader"],
 	),
@@ -6034,6 +7400,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 30,
 				spec: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -6046,6 +7422,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 30,
 				spec: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Offense %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
+				},
 			}),
 		],
 		[],
@@ -6058,6 +7444,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 10,
 			spd: 100,
 			ten: 30,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	TUSKENHUNTRESS: createCharacterSettings([
@@ -6068,13 +7463,38 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 10,
 			phys: 40,
 			cc: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Critical Damage %": 1,
+			},
 		}),
 	]),
 	TUSKENRAIDER: createCharacterSettings([
-		toRenamed(
-			optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-			"Default",
-		),
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 5,
+			prot: 10,
+			spd: 100,
+			phys: 25,
+			arm: 5,
+			ca: 35,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
+		}),
 	]),
 	TUSKENSHAMAN: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -6084,14 +7504,35 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 30,
 			ten: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	UGNAUGHT: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 10,
+				spd: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Chance %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
+			}),
 		],
 		[],
 		DamageType.mixed,
@@ -6104,6 +7545,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 25,
 			cc: 25,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Critical Chance %": 1,
+				"Offense %": 1,
+			},
 		}),
 	]),
 	URORRURRR: createCharacterSettings([
@@ -6114,6 +7564,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 10,
 			arm: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	VADER: createCharacterSettings(
@@ -6125,6 +7585,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 40,
 				phys: 20,
 				cc: 20,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Potency %",
+				},
+				setRes: {
+					"Offense %": 1,
+					"Potency %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Raids",
@@ -6140,18 +7610,20 @@ const characterSettings: CharacterSettingsIndexer = {
 	VADERDUELSEND: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
+			health: 10,
 			spd: 100,
+			cd: 10,
 			phys: 50,
 			cc: 20,
 			primaryRes: {
 				arrow: "Speed",
+				triangle: "Critical Damage %",
 				circle: "Health %",
 				cross: "Offense %",
-				triangle: "Critical Damage %",
 			},
 			setRes: {
-				"Speed %": 1,
-				"Critical Chance %": 1,
+				"Health %": 1,
+				"Offense %": 1,
 			},
 		}),
 	]),
@@ -6169,8 +7641,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				triangle: "Health %",
 			},
 			setRes: {
-				"Health %": 2,
-				"Defense %": 1,
+				"Health %": 3,
 			},
 		}),
 	]),
@@ -6194,13 +7665,22 @@ const characterSettings: CharacterSettingsIndexer = {
 			},
 		}),
 	]),
-
 	VEERS: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Mixed Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				spd: 100,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Protection %",
+				},
+				setRes: {
+					"Health %": 1,
+					"Speed %": 1,
+				},
+			}),
 		],
 		["Troopers"],
 		DamageType.mixed,
@@ -6208,12 +7688,20 @@ const characterSettings: CharacterSettingsIndexer = {
 	VISASMARR: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
-			health: 25,
+			health: 50,
 			spd: 100,
-			cd: 50,
+			cd: 5,
 			ten: 25,
-			phys: 50,
-			cc: 50,
+			phys: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Healer",
@@ -6234,12 +7722,24 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 10,
-				spd: 80,
-				cd: 100,
-				pot: 10,
+				health: 35,
+				prot: 1,
+				spd: 25,
+				cd: 5,
+				pot: 5,
+				ten: 25,
 				phys: 50,
-				cc: 50,
+				arm: 15,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Tenacity %",
+				},
+				setRes: {
+					"Health %": 2,
+					"Tenacity %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Omicron",
@@ -6280,17 +7780,41 @@ const characterSettings: CharacterSettingsIndexer = {
 		fromShortOptimizationPlan({
 			id: "Default",
 			health: 30,
+			prot: 30,
 			spd: 100,
-			pot: 25,
+			pot: 15,
 			ten: 10,
+			arm: 1,
+			primaryRes: {
+				arrow: "Speed",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	WEDGEANTILLES: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, and Physical Damage"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 5,
+				prot: 5,
+				spd: 100,
+				cd: 20,
+				phys: 20,
+				cc: 5,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
+			}),
 		],
 		["Wiggs", "chiggs", "SuperStar2D2"],
 	),
@@ -6302,39 +7826,16 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cd: 100,
 				phys: 40,
-				cc: 50,
-			}),
-			fromShortOptimizationPlan({
-				id: "Default w/ Primaries",
-				health: 5,
-				spd: 100,
-				cd: 100,
-				phys: 40,
-				cc: 50,
-				minDots: 5,
+				cc: 5,
 				primaryRes: {
+					arrow: "Speed",
 					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
-				},
-			}),
-			// TODO: Check differing values
-			fromShortOptimizationPlan({
-				id: "Default w/ Primaries & Sets",
-				health: 5,
-				spd: 100,
-				cd: 100,
-				phys: 60,
-				cc: 50,
-				minDots: 5,
-				primaryRes: {
-					triangle: "Critical Damage %",
-					circle: "Health %",
+					circle: "Protection %",
 					cross: "Offense %",
 				},
 				setRes: {
+					"Critical Chance %": 1,
 					"Critical Damage %": 1,
-					"Health %": 1,
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -6353,6 +7854,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			health: 10,
 			prot: 100,
 			spd: 50,
+			arm: 10,
 			primaryRes: {
 				arrow: "Protection %",
 				circle: "Protection %",
@@ -6360,8 +7862,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				triangle: "Protection %",
 			},
 			setRes: {
-				"Health %": 1,
-				"Speed %": 1,
+				"Defense %": 3,
 			},
 		}),
 	]),
@@ -6376,9 +7877,8 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 40,
 				primaryRes: {
 					arrow: "Speed",
-					circle: "Protection %",
-					cross: "Protection %",
 					triangle: "Defense %",
+					cross: "Defense %",
 				},
 				setRes: {
 					"Speed %": 1,
@@ -6410,11 +7910,21 @@ const characterSettings: CharacterSettingsIndexer = {
 		[
 			fromShortOptimizationPlan({
 				id: "Default",
-				health: 50,
+				health: 45,
+				prot: 5,
 				spd: 100,
-				cd: 50,
-				phys: 25,
-				cc: 50,
+				pot: 5,
+				ten: 5,
+				arm: 10,
+				primaryRes: {
+					arrow: "Health %",
+					triangle: "Health %",
+					circle: "Health %",
+					cross: "Health %",
+				},
+				setRes: {
+					"Health %": 3,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "Tanky",
@@ -6435,7 +7945,17 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				pot: 25,
 				phys: 50,
-				cc: 50,
+				cc: 10,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					circle: "Protection %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Critical Damage %": 1,
+				},
 			}),
 			fromShortOptimizationPlan({
 				id: "HAAT",
@@ -6448,10 +7968,22 @@ const characterSettings: CharacterSettingsIndexer = {
 	),
 	YOUNGLANDO: createCharacterSettings(
 		[
-			toRenamed(
-				optimizationStrategy["Speed, Crit, Physical Damage, Potency"],
-				"Default",
-			),
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 10,
+				prot: 5,
+				spd: 100,
+				phys: 35,
+				primaryRes: {
+					arrow: "Speed",
+					triangle: "Critical Damage %",
+					cross: "Offense %",
+				},
+				setRes: {
+					"Critical Chance %": 1,
+					"Offense %": 1,
+				},
+			}),
 		],
 		["solo"],
 	),
@@ -6464,6 +7996,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			ten: 50,
 			ca: 50,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 	]),
 	ZAMWESELL: createCharacterSettings([
@@ -6473,7 +8014,17 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 40,
 			pot: 50,
 			phys: 25,
-			cc: 40,
+			cc: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Offense %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Omicron",
@@ -6490,13 +8041,15 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 50,
 			phys: 20,
-			minDots: 5,
 			primaryRes: {
 				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
 				cross: "Potency %",
 			},
 			setRes: {
-				"Health %": 3,
+				"Critical Damage %": 1,
+				"Health %": 1,
 			},
 		}),
 	]),
@@ -6509,6 +8062,16 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			pot: 10,
 			phys: 20,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	ZUCKUSS: createCharacterSettings([
@@ -6519,9 +8082,8 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			arm: 5,
 			res: 5,
-			minDots: 5,
 			primaryRes: {
-				arrow: "Protection %",
+				arrow: "Speed",
 				triangle: "Protection %",
 				circle: "Protection %",
 				cross: "Tenacity %",
