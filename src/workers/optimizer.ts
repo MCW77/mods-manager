@@ -1760,13 +1760,33 @@ function optimizeMods(
 
 			const realTarget = combineTargetStats(absoluteTarget, character);
 
-			const foundLoadout = findBestLoadoutForCharacter(
+			let foundLoadout = findBestLoadoutForCharacter(
 				usableMods,
 				character,
 				order.length,
 				index,
 				realTarget,
 			);
+			if (foundLoadout.loadout.length === 0) {
+				const noRestrictionsTarget = {
+					...realTarget,
+					setRestrictions: {},
+					primaryStatRestrictions: {} as PrimaryStatRestrictions,
+					targetStats: [],
+					useOnlyFullSets: false,
+					minimumModDots: 0,
+				};
+				foundLoadout = findBestLoadoutForCharacter(
+					usableMods,
+					character,
+					order.length,
+					index,
+					noRestrictionsTarget,
+				);
+				foundLoadout.messages.push(
+					"Could not find a mod set that satisfies the given restrictions. Showing the best mod set with no restrictions.",
+				);
+			}
 
 			const oldLoadoutForCharacter = usableMods.filter(
 				(mod) => mod.characterID === character.id,
