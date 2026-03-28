@@ -94,7 +94,9 @@
 			"braces@<3.0.3": ">=3.0.3",
 			"preact@>=10.28.0 <10.28.2": ">=10.28.2",
 			"rollup@>=4.0.0 <4.59.0": ">=4.59.0",
-			"serialize-javascript@<=7.0.2": ">=7.0.3"
+			"serialize-javascript@<=7.0.2": ">=7.0.3",
+			"picomatch@<2.3.2": ">=2.3.2",
+			"picomatch@>=4.0.0 <4.0.4": ">=4.0.4"
 		},
 		"onlyBuiltDependencies": [
 			"@biomejs/biome",
