@@ -1784,11 +1784,11 @@ function optimizeMods(
 					noRestrictionsTarget,
 				);
 				foundLoadout.messages.push(
-					"Could not find a mod set that satisfies the given restrictions. Showing the best mod set with no restrictions.",
+					"Could not find a loadout that satisfies the given restrictions. Suggesting the best loadout with no restrictions instead.",
 				);
 			}
 
-			const oldLoadoutForCharacter = usableMods.filter(
+			const oldLoadoutForCharacter = availableMods.filter(
 				(mod) => mod.characterID === character.id,
 			);
 
