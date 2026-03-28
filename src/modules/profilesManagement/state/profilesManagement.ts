@@ -282,7 +282,7 @@ const startNowTimer = () => {
 	if (nowTimer !== null) return;
 	nowTimer = setInterval(() => {
 		profilesManagement$.now.set(Date.now());
-	}, 500);
+	}, 5000);
 };
 
 const stopNowTimer = () => {
