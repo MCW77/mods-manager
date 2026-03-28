@@ -70,28 +70,32 @@ const ActionsWidget = () => {
 		.filter(({ assignedMods }) => assignedMods.length);
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-wrap gap-4">
 			<div className="flex flex-col gap-2">
-				<Button
-					type={"button"}
-					size={"sm"}
-					onClick={() =>
-						dialog$.show(
-							<TextualReview modAssignments={movingModsByAssignedCharacter} />,
-						)
-					}
-				>
-					Show Summary
-				</Button>
-			</div>
-			<div className="flex flex-col gap-2">
-				<Label htmlFor="">I don't like these results...</Label>
-				<Button
-					type={"button"}
-					onClick={() => optimizerView$.view.set("basic")}
-				>
-					Change my selection
-				</Button>
+				<div className="flex flex-col gap-2">
+					<Button
+						type={"button"}
+						size={"sm"}
+						onClick={() =>
+							dialog$.show(
+								<TextualReview
+									modAssignments={movingModsByAssignedCharacter}
+								/>,
+							)
+						}
+					>
+						Show Summary
+					</Button>
+				</div>
+				<div className="flex flex-col gap-2">
+					<Label htmlFor="">I don't like these results...</Label>
+					<Button
+						type={"button"}
+						onClick={() => optimizerView$.view.set("basic")}
+					>
+						Change my selection
+					</Button>
+				</div>
 			</div>
 			<div id={`Hotutils-Actions-${actionsId}`} className="flex flex-col gap-2">
 				<Label htmlFor={`Hotutils-Actions-${actionsId}`}>HotUtils</Label>
