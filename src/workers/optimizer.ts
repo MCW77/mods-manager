@@ -3433,12 +3433,13 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		}
 		setlessMods = null;
 	} else {
-		// Otherwise, use any set bonus with positive value that fits into the set restriction
+		// Otherwise, use any allowed set that fits into the remaining slots.
+		// Even zero-value sets can unlock better full-loadout combinations than the single
+		// setless representative for a slot would expose.
 		for (const setBonus of Object.values(setBonuses)) {
 			if (
 				setBonus.numberOfModsRequired <= openModSlots &&
-				(availableSetsToUse[setBonus.name] ?? 0) !== -1 &&
-				scoreStat(setBonus.maxBonus, target) > 0
+				(availableSetsToUse[setBonus.name] ?? 0) !== -1
 			) {
 				potentialUsedSets.add(setBonus);
 			}
@@ -3500,6 +3501,20 @@ const findBestLoadoutWithoutChangingRestrictions = (
 
 	for (const loadout of candidateLoadouts) {
 		const loadoutScore = getLoadoutScore(loadout, character, target);
+		if (
+			loadout[0].characterID === "BOUSHH" &&
+			loadout[1].characterID === "JEDIMASTERMACEWINDU" &&
+			loadout[2].characterID === "STRANGER" &&
+			loadout[3].characterID === "LORDVADER" &&
+			loadout[4].characterID === "JEDIMASTERMACEWINDU" &&
+			loadout[5].characterID === "JEDIMASTERMACEWINDU"
+		) {
+			console.log(
+				"Evaluating loadout:",
+				loadout.map((mod) => mod.id),
+			);
+			console.log("Score:", loadoutScore);
+		}
 		if (loadoutScore > bestLoadoutScore) {
 			bestLoadout = loadout;
 			bestLoadoutScore = loadoutScore;
