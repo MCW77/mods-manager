@@ -1364,14 +1364,12 @@ function modSort(character: Character.Character, target: OptimizationPlan) {
 function scoreStat(stat: Stat, target: OptimizationPlan) {
 	// Because Optimization Plans treat all critical chance the same, we can't break it into physical and special crit
 	// chance for scoring. Catch this edge case so that we can properly value crit chance
-	//console.log(`951: stat.displayType: ${stat.displayType}`);
 	const targetProperties: WithoutCC[] | ["Critical Chance"] = [
 		"Critical Chance",
 		"Physical Critical Chance",
 	].includes(stat.displayType)
 		? ["Critical Chance"]
 		: (Stats.Stat.display2CSGIMOStatNamesMap[stat.displayType] as WithoutCC[]);
-	//console.log(`953: targetProperties: ${targetProperties}`);
 	return targetProperties.reduce(
 		(acc, targetProperty) =>
 			target[targetProperty] ? acc + target[targetProperty] * stat.value : acc,
