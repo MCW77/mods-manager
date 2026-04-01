@@ -251,6 +251,7 @@ export const characterNames = [
 	"ROYALGUARD",
 	"SABINEWRENS3",
 	"SANASTARROS",
+	"SATELESHAN",
 	"SAVAGEOPRESS",
 	"SAWGERRERA",
 	"SCARIFREBEL",
