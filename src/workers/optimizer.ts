@@ -123,6 +123,7 @@ interface Cache {
 			target: OptimizationPlan,
 		) => number;
 		has: (setName: GIMOSetStatNames) => boolean;
+		setRelevantStats: (target: OptimizationPlan) => void;
 	};
 	modsetStats: (
 		setName: GIMOSetStatNames,
@@ -136,6 +137,7 @@ interface Cache {
 		get: (mod: Mod) => StatValue[];
 		has: (mod: Mod) => boolean;
 		setCharacter: (character: Character.Character) => void;
+		setRelevantStats: (target: OptimizationPlan) => void;
 	};
 	statValues: Map<string, StatValue[]>;
 	relatedStatValues: Map<string, Map<string, number>>;
@@ -776,6 +778,7 @@ function deserializeTarget(target: OptimizationPlan) {
 const createModStatsCache = () => {
 	const cache = new Map<string, StatValue[]>();
 	let currentCharacter: Character.Character | null = null;
+	let relevantStats: Set<string> | null = null;
 	return {
 		get: (mod: Mod) => {
 			if (!currentCharacter) {
@@ -785,18 +788,20 @@ const createModStatsCache = () => {
 				return cache.get(mod.id) ?? [];
 			}
 
-			const flattenedStats: StatValue[] = [];
+			const flatStats: StatValue[] = [];
 			const workingMod = getUpgradedMod(mod);
 
-			flattenedStats.push(
-				...flattenStatValues(workingMod.primaryStat, currentCharacter),
-			);
+			if (relevantStats?.has(workingMod.primaryStat.displayType))
+				flatStats.push(
+					...flattenStatValues(workingMod.primaryStat, currentCharacter),
+				);
 			for (const stat of workingMod.secondaryStats) {
-				flattenedStats.push(...flattenStatValues(stat, currentCharacter));
+				if (relevantStats?.has(stat.displayType))
+					flatStats.push(...flattenStatValues(stat, currentCharacter));
 			}
 
-			cache.set(mod.id, flattenedStats);
-			return flattenedStats;
+			cache.set(mod.id, flatStats);
+			return flatStats;
 		},
 		has: (mod: Mod) => {
 			return cache.has(mod.id);
@@ -804,11 +809,61 @@ const createModStatsCache = () => {
 		setCharacter: (character: Character.Character) => {
 			currentCharacter = character;
 		},
+		setRelevantStats: (target: OptimizationPlan) => {
+			relevantStats = new Set<string>();
+			for (const targetStat of target.targetStats) {
+				relevantStats.add(targetStat.stat);
+			}
+			if (target.Health !== 0) {
+				relevantStats.add("Health");
+			}
+			if (target.Protection !== 0) {
+				relevantStats.add("Protection");
+			}
+			if (target.Armor !== 0) {
+				relevantStats.add("Armor");
+				relevantStats.add("Defense");
+			}
+			if (target.Resistance !== 0) {
+				relevantStats.add("Resistance");
+				relevantStats.add("Defense");
+			}
+			if (target.Speed !== 0) {
+				relevantStats.add("Speed");
+			}
+			if (target["Accuracy %"] !== 0) {
+				relevantStats.add("Accuracy");
+			}
+			if (target["Critical Avoidance %"] !== 0) {
+				relevantStats.add("Critical Avoidance");
+			}
+			if (target["Critical Chance"] !== 0) {
+				relevantStats.add("Critical Chance");
+			}
+			if (target["Critical Damage %"] !== 0) {
+				relevantStats.add("Critical Damage");
+			}
+			if (target["Potency %"] !== 0) {
+				relevantStats.add("Potency");
+			}
+			if (target["Tenacity %"] !== 0) {
+				relevantStats.add("Tenacity");
+			}
+			if (target["Physical Damage"] !== 0) {
+				relevantStats.add("Physical Damage");
+				relevantStats.add("Offense");
+			}
+			if (target["Special Damage"] !== 0) {
+				relevantStats.add("Special Damage");
+				relevantStats.add("Offense");
+			}
+		},
 	};
 };
 
 const createModsetScoreCache = () => {
 	const cache = new Map<GIMOSetStatNames, number>();
+	let relevantStats: Set<string> | null = null;
 	return {
 		get: (
 			setName: GIMOSetStatNames,
@@ -820,7 +875,9 @@ const createModsetScoreCache = () => {
 			}
 
 			const score = stats.reduce(
-				(acc, stat) => acc + scoreStat(stat, target),
+				(acc, stat) =>
+					acc +
+					(relevantStats?.has(stat.displayType) ? scoreStat(stat, target) : 0),
 				0,
 			);
 
@@ -829,6 +886,41 @@ const createModsetScoreCache = () => {
 		},
 		has: (setName: GIMOSetStatNames) => {
 			return cache.has(setName);
+		},
+		setRelevantStats: (target: OptimizationPlan) => {
+			relevantStats = new Set<string>();
+			if (target.Health !== 0) {
+				relevantStats.add("Health");
+			}
+			if (target.Armor !== 0) {
+				relevantStats.add("Armor");
+			}
+			if (target.Resistance !== 0) {
+				relevantStats.add("Resistance");
+			}
+			if (target.Speed !== 0) {
+				relevantStats.add("Speed");
+			}
+			if (target["Critical Chance"] !== 0) {
+				relevantStats.add("Critical Chance");
+				relevantStats.add("Physical Critical Chance");
+				relevantStats.add("Special Critical Chance");
+			}
+			if (target["Critical Damage %"] !== 0) {
+				relevantStats.add("Critical Damage %");
+			}
+			if (target["Potency %"] !== 0) {
+				relevantStats.add("Potency");
+			}
+			if (target["Tenacity %"] !== 0) {
+				relevantStats.add("Tenacity");
+			}
+			if (target["Physical Damage"] !== 0) {
+				relevantStats.add("Physical Damage");
+			}
+			if (target["Special Damage"] !== 0) {
+				relevantStats.add("Special Damage");
+			}
 		},
 	};
 };
@@ -1355,7 +1447,7 @@ function modSort(character: Character.Character, target: OptimizationPlan) {
 		return rightScore - leftScore;
 	};
 }
-
+const loggedStats = new Set<string>();
 /**
  * Return how valuable a particular stat is for an Optimization Plan
  * @param stat {Stat}
@@ -1364,12 +1456,23 @@ function modSort(character: Character.Character, target: OptimizationPlan) {
 function scoreStat(stat: Stat, target: OptimizationPlan) {
 	// Because Optimization Plans treat all critical chance the same, we can't break it into physical and special crit
 	// chance for scoring. Catch this edge case so that we can properly value crit chance
+	if (!loggedStats.has(stat.displayType)) {
+		loggedStats.add(stat.displayType);
+		console.log(
+			`Scoring stat ${stat.displayType} with value ${stat.value} and isPercentVersion ${stat.isPercentVersion}`,
+		);
+	}
 	const targetProperties: WithoutCC[] | ["Critical Chance"] = [
 		"Critical Chance",
 		"Physical Critical Chance",
 	].includes(stat.displayType)
 		? ["Critical Chance"]
 		: (Stats.Stat.display2CSGIMOStatNamesMap[stat.displayType] as WithoutCC[]);
+	if (targetProperties.length > 1) {
+		console.warn(
+			`Stat ${stat.displayType} maps to multiple target properties, which is unexpected. Check the display2CSGIMOStatNamesMap for this stat.`,
+		);
+	}
 	return targetProperties.reduce(
 		(acc, targetProperty) =>
 			target[targetProperty] ? acc + target[targetProperty] * stat.value : acc,
@@ -1651,6 +1754,7 @@ function optimizeMods(
 	// characters have changed, recalculate all characters
 	let recalculateMods =
 		compilations$.defaultCompilation.isReoptimizationNeeded.peek() === true;
+	recalculateMods = true;
 
 	// Filter out any mods that are on locked characters, including if all unselected characters are locked
 	const selectedCharacterIds = globalSettings.lockUnselectedCharacters
@@ -1736,6 +1840,8 @@ function optimizeMods(
 			}
 			recalculateMods = true;
 			cache.modStats.setCharacter(character);
+			cache.modStats.setRelevantStats(target);
+			cache.modsetScore.setRelevantStats(target);
 
 			if (globalSettings.optimizeWithPrimaryAndSetRestrictions === false) {
 				target.setRestrictions = {};
