@@ -139,7 +139,7 @@ interface Cache {
 		setCharacter: (character: Character.Character) => void;
 		setRelevantStats: (target: OptimizationPlan) => void;
 	};
-	statValues: Map<string, StatValue[]>;
+	flatStats: Map<string, StatValue[]>;
 	relatedStatValues: Map<string, Map<string, number>>;
 }
 
@@ -950,7 +950,7 @@ const cache: Cache = {
 	relatedStatValues: new Map<string, Map<string, number>>(),
 	modsetScore: createModsetScoreCache(),
 	modsetStats: createModsetStatsCache(),
-	statValues: new Map<string, StatValue[]>(),
+	flatStats: new Map<string, StatValue[]>(),
 };
 
 function resetCaches() {
@@ -958,7 +958,7 @@ function resetCaches() {
 	cache.modStats = createModStatsCache();
 	cache.modsetScore = createModsetScoreCache();
 	cache.modsetStats = createModsetStatsCache();
-	cache.statValues = new Map<string, StatValue[]>();
+	cache.flatStats = new Map<string, StatValue[]>();
 }
 // #endregion Caching variables
 
@@ -1175,7 +1175,7 @@ function getFlatStatsFromSetLoadout(
  */
 function flattenStatValues(stat: Stat, character: Character.Character) {
 	const cacheKey: StatValuesCacheKey = `${stat.displayType}${stat.isPercentVersion}${stat.value}`;
-	const cacheHit = cache.statValues.get(cacheKey);
+	const cacheHit = cache.flatStats.get(cacheKey);
 
 	if (cacheHit) {
 		return cacheHit;
@@ -1195,7 +1195,7 @@ function flattenStatValues(stat: Stat, character: Character.Character) {
 		};
 	});
 
-	cache.statValues.set(cacheKey, flattenedStats);
+	cache.flatStats.set(cacheKey, flattenedStats);
 	return flattenedStats;
 }
 
