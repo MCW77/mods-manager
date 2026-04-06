@@ -112,11 +112,11 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 
 				if (response.errorMessage) {
 					dialog$.showFlash(
-						"Error checking subscription status",
-						response.errorMessage,
+						"Allycode has no account on Hotutils",
+						"",
 						"",
 						undefined,
-						"error",
+						"info",
 					);
 					hotutils$.isSubscribed.set(false);
 					return false;
