@@ -101,6 +101,10 @@ const customCharacterFilterGroups = [
 				value: "Faction--Clone Trooper",
 			},
 			{
+				label: "Constable",
+				value: "Faction--Constable",
+			},
+			{
 				label: "Droid",
 				value: "Faction--Droid",
 			},

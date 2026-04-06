@@ -527,6 +527,7 @@ const getDefaultFilterSetup = () => {
 		"Bad Batch",
 		"Bounty Hunter",
 		"Clone Trooper",
+		"Constable",
 		"Droid",
 		"Empire",
 		"Ewok",
