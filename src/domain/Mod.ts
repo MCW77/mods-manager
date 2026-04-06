@@ -96,6 +96,22 @@ export class Mod {
 		this.assignedID = "null";
 	}
 
+	clone() {
+		return new Mod(
+			this.id,
+			this.slot,
+			this.modset,
+			this.level,
+			this.pips,
+			this.primaryStat,
+			this.secondaryStats.map((stat) => stat.clone()),
+			this.characterID,
+			this.reRolledCount,
+			this.speedRemainder,
+			this.tier,
+		);
+	}
+
 	isAssigned() {
 		return this.assignedID !== "null";
 	}

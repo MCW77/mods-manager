@@ -199,24 +199,36 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			return result;
 		},
 		reassignMod: (modId: string, newCharacterId: CharacterNames) => {
-			const modToReassign = profilesManagement$.activeProfile.modById[modId];
+			const modToReassign$ = profilesManagement$.activeProfile.modById[modId];
+			if (modToReassign$ === undefined) return;
+			const modToReassign = modToReassign$.peek() as Mod | undefined;
 			if (modToReassign === undefined) return;
 			const currentlyEquippedModId =
 				profilesManagement$.activeProfile.modById
 					.values()
 					.find(
 						(mod) =>
-							mod.slot === modToReassign.slot.peek() &&
+							mod.slot === modToReassign.slot &&
 							mod.characterID === newCharacterId,
 					)?.id ?? "";
 			beginBatch();
 			if (currentlyEquippedModId !== "") {
 				const currentlyEquippedMod$ =
 					profilesManagement$.activeProfile.modById[currentlyEquippedModId];
-				if (isObservableMod(currentlyEquippedMod$))
-					currentlyEquippedMod$.characterID.set("null");
+				if (isObservableMod(currentlyEquippedMod$)) {
+					const currentlyEquippedMod = currentlyEquippedMod$.peek() as
+						| Mod
+						| undefined;
+					if (currentlyEquippedMod !== undefined) {
+						const newMod = currentlyEquippedMod.clone();
+						newMod.characterID = "null";
+						currentlyEquippedMod$.set(newMod);
+					}
+				}
 			}
-			modToReassign.characterID.set(newCharacterId);
+			const newMod = modToReassign.clone();
+			newMod.characterID = newCharacterId;
+			modToReassign$.set(newMod);
 			endBatch();
 		},
 		reassignMods: (mods: Mod[], newCharacterId: CharacterNames) => {
@@ -227,9 +239,13 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			endBatch();
 		},
 		unequipMod: (modId: string) => {
-			const modToUnequip = profilesManagement$.activeProfile.modById[modId];
-			if (!isObservableMod(modToUnequip)) return;
-			modToUnequip.characterID.set("null");
+			const modToUnequip$ = profilesManagement$.activeProfile.modById[modId];
+			if (!isObservableMod(modToUnequip$)) return;
+			const modToUnequip = modToUnequip$.peek() as Mod | undefined;
+			if (modToUnequip === undefined) return;
+			const newMod = modToUnequip.clone();
+			newMod.characterID = "null";
+			modToUnequip$.set(newMod);
 		},
 		unequipMods: (mods: Mod[]) => {
 			beginBatch();

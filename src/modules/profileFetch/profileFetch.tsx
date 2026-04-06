@@ -239,7 +239,12 @@ function updatePlayerData(
 			const modById$ =
 				profilesManagement$.profiles.profileByAllycode[newAllycode].modById;
 			for (const modId of modById$.keys()) {
-				modById$[modId].characterID.set("null");
+				const mod = modById$[modId].peek() as Mod | undefined;
+				if (mod !== undefined) {
+					const newMod = mod.clone();
+					newMod.characterID = "null";
+					modById$[modId].set(newMod);
+				}
 			}
 		} else {
 			/*
@@ -259,10 +264,9 @@ function updatePlayerData(
 			);
 		if (fullProfile.mods) {
 			for (const mod of fullProfile.mods.mods) {
-				const profileMod =
-					profilesManagement$.profiles.profileByAllycode[newAllycode].modById[
-						mod.id
-					].peek();
+				const profileMod = profilesManagement$.profiles.profileByAllycode[
+					newAllycode
+				].modById[mod.id].peek() as Mod | undefined;
 				if (profileMod) profileMod.speedRemainder = mod.speedRemainder;
 			}
 		}
