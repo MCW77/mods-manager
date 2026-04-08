@@ -85,7 +85,7 @@
 		"unocss-preset-shadcn": "^1.0.1",
 		"vite": "^8.0.6",
 		"vite-plugin-pwa": "^1.2.0",
-		"vitest": "^4.1.2"
+		"vitest": "^4.1.3"
 	},
 	"config": {},
 	"packageManager": "pnpm@10.32.1",
