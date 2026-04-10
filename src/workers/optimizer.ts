@@ -1895,6 +1895,9 @@ function optimizeMods(
 			const oldLoadoutForCharacter = availableMods.filter(
 				(mod) => mod.characterID === character.id,
 			);
+			const remainingOldLoadoutForCharacter = usableMods.filter(
+				(mod) => mod.characterID === character.id,
+			);
 
 			const oldLoadoutScore =
 				previousModAssignments[index] !== undefined &&
@@ -1929,9 +1932,8 @@ function optimizeMods(
 				// If the new set is better than the old set
 				(foundLoadout.score / oldLoadoutScore) * 100 - 100 >
 					globalSettings.modChangeThreshold ||
-				// If the old set now has less than 6 mods and the new set has more mods
-				(oldLoadoutForCharacter.length < 6 &&
-					foundLoadout.loadout.length > oldLoadoutForCharacter.length)
+				// If the new loadout has more mods than the old
+				foundLoadout.loadout.length > remainingOldLoadoutForCharacter.length
 			) {
 				assignedLoadout = foundLoadout.loadout;
 				assignmentMessages = foundLoadout.messages;
