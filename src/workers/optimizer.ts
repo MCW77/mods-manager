@@ -55,8 +55,6 @@ if (typeof globalThis !== "undefined") {
 // utils
 import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
-import { objectEntries } from "#/utils/objectEntries";
-
 // state
 import { when } from "@legendapp/state";
 
@@ -236,6 +234,7 @@ type ModFilterPredicate = (mod: Mod) => boolean;
 
 // #endregion types
 
+let simulateLevel15Mods = false;
 // #region Messaging
 self.onmessage = async (message) => {
 	if (message.data.type === "Init") {
@@ -269,6 +268,8 @@ self.onmessage = async (message) => {
 					target: deserializeTarget(target),
 				}));
 
+		simulateLevel15Mods =
+			optimizationSettings$.activeSettings.simulateLevel15Mods.peek();
 		const optimizerResults = perf.measureTime(optimizeMods, "optimizeMods")(
 			allMods,
 			profile.characterById,
@@ -1702,43 +1703,16 @@ function splitLoadoutBySets(loadout: Mod[]) {
 	return setLoadoutsById;
 }
 
-function getModsetsInLoadout(loadout: Mod[]) {
-	const modsetsCount: Record<GIMOSetStatNames, [number, number]> = {
-		"Critical Chance %": [0, 0],
-		"Critical Damage %": [0, 0],
-		"Defense %": [0, 0],
-		"Health %": [0, 0],
-		"Offense %": [0, 0],
-		"Potency %": [0, 0],
-		"Speed %": [0, 0],
-		"Tenacity %": [0, 0],
-	};
-	const modsets = new Map<GIMOSetStatNames, number>();
-
-	for (const mod of loadout) {
-		const setName = mod.modset.name;
-		const fullOrHalf =
-			mod.level === 15 ||
-			optimizationSettings$.activeSettings.simulateLevel15Mods.peek()
-				? 0
-				: 1;
-		modsetsCount[setName][fullOrHalf]++;
-	}
-	for (let [setName, [fullCount, halfCount]] of objectEntries(modsetsCount)) {
-		const fullModsetCount = Math.floor(
-			fullCount / setBonuses[setName].numberOfModsRequired,
-		);
-		halfCount =
-			halfCount +
-			(fullCount - fullModsetCount * setBonuses[setName].numberOfModsRequired);
-		const halfModsetCount = Math.floor(
-			halfCount / setBonuses[setName].numberOfModsRequired,
-		);
-		if (fullModsetCount + halfModsetCount > 0)
-			modsets.set(setName, fullModsetCount * 2 + halfModsetCount);
-	}
-	return modsets;
-}
+const modsetNames: readonly GIMOSetStatNames[] = [
+	"Critical Chance %",
+	"Critical Damage %",
+	"Defense %",
+	"Health %",
+	"Offense %",
+	"Potency %",
+	"Speed %",
+	"Tenacity %",
+];
 
 /**
  * Given a mod loadout, get the score of that loadout for a character
@@ -1748,7 +1722,16 @@ function getModsetsInLoadout(loadout: Mod[]) {
  * @param target {OptimizationPlan}
  */
 function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
-	const setsInLoadout = getModsetsInLoadout(loadout);
+	const modsetCounts: Record<GIMOSetStatNames, [number, number]> = {
+		"Critical Chance %": [0, 0],
+		"Critical Damage %": [0, 0],
+		"Defense %": [0, 0],
+		"Health %": [0, 0],
+		"Offense %": [0, 0],
+		"Potency %": [0, 0],
+		"Speed %": [0, 0],
+		"Tenacity %": [0, 0],
+	};
 	let modsetsScore = 0;
 	let modStatsScore = 0;
 	let healthFraction = 0;
@@ -1757,11 +1740,18 @@ function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 	let specialDamageFraction = 0;
 	let armorFraction = 0;
 	let resistanceFraction = 0;
-	for (const [setName, count] of setsInLoadout.entries()) {
-		const { score, partiallyScoredStats: modsetPartiallyScoredStats } =
-			cache.modsetScore.get(setName, target, count);
-		modsetsScore += score;
-		for (const stat of modsetPartiallyScoredStats) {
+
+	for (const mod of loadout) {
+		const setName = mod.modset.name;
+		const fullOrHalf = mod.level === 15 || simulateLevel15Mods ? 0 : 1;
+		modsetCounts[setName][fullOrHalf]++;
+
+		const { score, partiallyScoredStats: modPartiallyScoredStats } = scoreMod(
+			mod,
+			target,
+		);
+		modStatsScore += score;
+		for (const stat of modPartiallyScoredStats) {
 			switch (stat.displayType) {
 				case "Health":
 					healthFraction += stat.fractional;
@@ -1785,13 +1775,26 @@ function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 		}
 	}
 
-	for (const mod of loadout) {
-		const { score, partiallyScoredStats: modPartiallyScoredStats } = scoreMod(
-			mod,
-			target,
+	for (const setName of modsetNames) {
+		const [fullCount, halfCount] = modsetCounts[setName];
+		const fullModsetCount = Math.floor(
+			fullCount / setBonuses[setName].numberOfModsRequired,
 		);
-		modStatsScore += score;
-		for (const stat of modPartiallyScoredStats) {
+		const remainingHalfCount =
+			halfCount +
+			(fullCount - fullModsetCount * setBonuses[setName].numberOfModsRequired);
+		const halfModsetCount = Math.floor(
+			remainingHalfCount / setBonuses[setName].numberOfModsRequired,
+		);
+		const modsetCount = fullModsetCount * 2 + halfModsetCount;
+		if (modsetCount === 0) {
+			continue;
+		}
+
+		const { score, partiallyScoredStats: modsetPartiallyScoredStats } =
+			cache.modsetScore.get(setName, target, modsetCount);
+		modsetsScore += score;
+		for (const stat of modsetPartiallyScoredStats) {
 			switch (stat.displayType) {
 				case "Health":
 					healthFraction += stat.fractional;
