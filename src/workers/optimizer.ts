@@ -1973,7 +1973,10 @@ function optimizeMods(
 				assignedMods: assignedLoadout.map((mod) => mod.id),
 				messages: assignmentMessages,
 				missedGoals: getMissedGoals(assignedLoadout, character, goalStats),
-				currentScore: foundLoadout.score,
+				currentScore:
+					assignedLoadout === foundLoadout.loadout
+						? foundLoadout.score
+						: oldLoadoutScore,
 				previousScore: oldLoadoutScore,
 			});
 
