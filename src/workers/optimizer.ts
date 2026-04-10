@@ -87,7 +87,12 @@ import { gimoSlots } from "../domain/constants/ModConsts";
 import type * as ModTypes from "../domain/types/ModTypes";
 
 import type * as Character from "../domain/Character";
-import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats";
+import type {
+	GIMOPrimaryStatNames,
+	GIMOSecondaryStatNames,
+	GIMOSetStatNames,
+} from "../domain/GIMOStatNames";
+
 import {
 	fromShortOptimizationPlan,
 	type OptimizableStats,
@@ -96,6 +101,8 @@ import {
 } from "../domain/OptimizationPlan";
 import type { SelectedCharacters } from "../domain/SelectedCharacters";
 import type { SetRestrictions } from "../domain/SetRestrictions";
+import type { DisplayStatNames } from "../domain/Stat";
+import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats";
 import type {
 	TargetStat,
 	TargetStats,
@@ -108,21 +115,16 @@ import type {
 import type { MissedGoals } from "../modules/compilations/domain/MissedGoals";
 import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings";
 import type { WithoutCC } from "../modules/profilesManagement/domain/CharacterStatNames";
-import type {
-	GIMOPrimaryStatNames,
-	GIMOSecondaryStatNames,
-	GIMOSetStatNames,
-} from "#/domain/GIMOStatNames";
 
 // #region types
 interface Cache {
 	modsetScore: {
 		get: (
-			setName: GIMOSetStatNames,
-			stats: StatValue[],
+			modsetName: GIMOSetStatNames,
 			target: OptimizationPlan,
-		) => number;
-		has: (setName: GIMOSetStatNames) => boolean;
+			modsetCount: number,
+		) => { score: number; partiallyScoredStats: StatValue[] };
+		setCharacter: (character: Character.Character) => void;
 		setRelevantStats: (target: OptimizationPlan) => void;
 	};
 	modsetStats: (
@@ -130,22 +132,27 @@ interface Cache {
 		fullOrHalf: FullOrHalf,
 		character: Character.Character,
 	) => StatValue[];
-	modScores: Map<string, number>;
+	modScores: Map<string, { score: number; partiallyScoredStats: StatValue[] }>;
 	modUpgrades: Map<string, Mod>;
 	// Closure-based modStats cache API (bound to current character)
 	modStats: {
 		get: (mod: Mod) => StatValue[];
-		has: (mod: Mod) => boolean;
 		setCharacter: (character: Character.Character) => void;
 		setRelevantStats: (target: OptimizationPlan) => void;
 	};
-	flatStats: Map<string, StatValue[]>;
+	flatStats: {
+		get: (stat: Stat) => StatValue[];
+		set: (key: FlatStatsCacheKey, flatStats: StatValue[]) => void;
+		setCharacter: (character: Character.Character) => void;
+	};
 	relatedStatValues: Map<string, Map<string, number>>;
 }
 
 interface StatValue {
 	displayType: Stats.DisplayStatNames;
 	value: number;
+	integral: number;
+	fractional: number;
 }
 
 interface Stat {
@@ -208,7 +215,9 @@ interface LoadoutAndMessages {
 	score: number;
 }
 
-type StatValuesCacheKey = `${string}${boolean | undefined}${number}`;
+type ModsetScoreCacheKey = `${GIMOSetStatNames}-${number}`;
+type FlatStatsCacheKey =
+	`${Stats.DisplayStatNames}${boolean | undefined}${number}`;
 type ModsAndSatisfiedSetRestrictions = [Mod[], SetRestrictions];
 type SetValues = Record<
 	TargetStatsNames,
@@ -652,6 +661,42 @@ const affectedTargetStatsBySecondaryStat: Record<
 	"Tenacity %": ["Tenacity"],
 });
 
+const wholeValueStats = new Set<Stats.DisplayStatNames>([
+	"Health",
+	"Protection",
+	"Speed",
+	"Physical Damage",
+	"Special Damage",
+	"Armor",
+	"Resistance",
+]);
+
+const display2CSGIMOStatNamesMap: Record<
+	DisplayStatNames,
+	WithoutCC | "Critical Chance"
+> = Object.freeze({
+	Health: "Health",
+	Protection: "Protection",
+	Speed: "Speed",
+	"Critical Damage": "Critical Damage %",
+	Potency: "Potency %",
+	Tenacity: "Tenacity %",
+	"Physical Damage": "Physical Damage",
+	"Special Damage": "Special Damage",
+	"Critical Chance": "Critical Chance",
+	"Physical Critical Chance": "Critical Chance",
+	"Special Critical Chance": "Critical Chance",
+	Armor: "Armor",
+	Resistance: "Resistance",
+	Accuracy: "Accuracy %",
+	"Critical Avoidance": "Critical Avoidance %",
+	"Effective Health (physical)": "Health",
+	"Effective Health (special)": "Health",
+	"Average Damage (physical)": "Health",
+	"Average Damage (special)": "Health",
+	Defense: "Health",
+	Offense: "Health",
+} as const);
 /**
  * Return the first value from an array, if one exists. Otherwise, return null.
  * @param mods {Array}
@@ -775,8 +820,36 @@ function deserializeTarget(target: OptimizationPlan) {
 
 // #region Caching variables
 
+const createFlatStatsCache = () => {
+	const cache = new Map<FlatStatsCacheKey, StatValue[]>();
+	let currentCharacter: Character.Character | null = null;
+
+	return {
+		get: (stat: Stat) => {
+			const cacheKey: FlatStatsCacheKey = `${stat.displayType}${stat.isPercentVersion}${stat.value}`;
+			const cacheHit = cache.get(cacheKey);
+			if (!currentCharacter) {
+				throw new Error("flatStats cache used before character was set");
+			}
+			if (cacheHit) {
+				return cacheHit;
+			}
+
+			const flatStats = flattenStatValues(stat, currentCharacter);
+			cache.set(cacheKey, flatStats);
+			return flatStats;
+		},
+		set: (key: FlatStatsCacheKey, flatStats: StatValue[]) => {
+			cache.set(key, flatStats);
+		},
+		setCharacter: (character: Character.Character) => {
+			currentCharacter = character;
+		},
+	};
+};
+
 const createModStatsCache = () => {
-	const cache = new Map<string, StatValue[]>();
+	const modStatsCache = new Map<string, StatValue[]>();
 	let currentCharacter: Character.Character | null = null;
 	let relevantStats: Set<string> | null = null;
 	return {
@@ -784,27 +857,47 @@ const createModStatsCache = () => {
 			if (!currentCharacter) {
 				throw new Error("modStats cache used before character was set");
 			}
-			if (cache.has(mod.id)) {
-				return cache.get(mod.id) ?? [];
+			const cacheHit = modStatsCache.get(mod.id);
+			if (cacheHit !== undefined) {
+				return cacheHit;
 			}
 
-			const flatStats: StatValue[] = [];
 			const workingMod = getUpgradedMod(mod);
+			let primaryFlatStats: StatValue[] = [];
+			const allFlatStats: StatValue[] = [];
+			const alreadyPushedStats = new Map<Stats.DisplayStatNames, StatValue>();
 
-			if (relevantStats?.has(workingMod.primaryStat.displayType))
-				flatStats.push(
-					...flattenStatValues(workingMod.primaryStat, currentCharacter),
-				);
-			for (const stat of workingMod.secondaryStats) {
-				if (relevantStats?.has(stat.displayType))
-					flatStats.push(...flattenStatValues(stat, currentCharacter));
+			if (relevantStats?.has(workingMod.primaryStat.displayType)) {
+				primaryFlatStats = cache.flatStats.get(workingMod.primaryStat) ?? [];
+				for (const flatStat of primaryFlatStats) {
+					const newStat = { ...flatStat };
+					allFlatStats.push(newStat);
+					alreadyPushedStats.set(newStat.displayType, newStat);
+				}
 			}
 
-			cache.set(mod.id, flatStats);
-			return flatStats;
-		},
-		has: (mod: Mod) => {
-			return cache.has(mod.id);
+			for (const stat of workingMod.secondaryStats) {
+				if (relevantStats?.has(stat.displayType)) {
+					const secondaryFlatStats = cache.flatStats.get(stat) ?? [];
+					for (const flatStat of secondaryFlatStats) {
+						if (!alreadyPushedStats.has(flatStat.displayType)) {
+							const newStat = { ...flatStat };
+							allFlatStats.push(newStat);
+							alreadyPushedStats.set(newStat.displayType, newStat);
+						} else {
+							const existingStat = alreadyPushedStats.get(flatStat.displayType);
+							if (existingStat) {
+								existingStat.value += flatStat.value;
+								existingStat.integral += flatStat.integral;
+								existingStat.fractional += flatStat.fractional;
+							}
+						}
+					}
+				}
+			}
+
+			modStatsCache.set(mod.id, allFlatStats);
+			return allFlatStats;
 		},
 		setCharacter: (character: Character.Character) => {
 			currentCharacter = character;
@@ -862,30 +955,58 @@ const createModStatsCache = () => {
 };
 
 const createModsetScoreCache = () => {
-	const cache = new Map<GIMOSetStatNames, number>();
+	const modsetScorecache = new Map<
+		ModsetScoreCacheKey,
+		{ score: number; partiallyScoredStats: StatValue[] }
+	>();
+	let currentCharacter: Character.Character | null = null;
 	let relevantStats: Set<string> | null = null;
 	return {
 		get: (
 			setName: GIMOSetStatNames,
-			stats: StatValue[],
 			target: OptimizationPlan,
+			modsetCount: number,
 		) => {
-			if (cache.has(setName)) {
-				return cache.get(setName) ?? 0;
+			if (!currentCharacter) {
+				throw new Error("modStats cache used before character was set");
 			}
 
-			const score = stats.reduce(
-				(acc, stat) =>
-					acc +
-					(relevantStats?.has(stat.displayType) ? scoreStat(stat, target) : 0),
-				0,
-			);
+			const cacheKey: ModsetScoreCacheKey = `${setName}-${modsetCount}`;
+			const cacheHit = modsetScorecache.get(cacheKey);
+			if (cacheHit !== undefined) {
+				return cacheHit;
+			}
 
-			cache.set(setName, score);
-			return score;
+			const flatStats = cache.modsetStats(setName, "half", currentCharacter);
+			const score = flatStats.reduce((acc, stat) => {
+				const newValue = stat.value * modsetCount;
+				const newIntegralPart = Math.trunc(newValue);
+				const countedStat = {
+					displayType: stat.displayType,
+					value: newValue,
+					integral: newIntegralPart,
+					fractional: newValue - newIntegralPart,
+				};
+				if (!relevantStats?.has(stat.displayType)) {
+					return acc;
+				}
+				const isWholeValueStat = wholeValueStats.has(stat.displayType);
+				return acc + scoreStat(countedStat, target, isWholeValueStat);
+			}, 0);
+
+			let partiallyScoredStats: StatValue[] = [];
+			if (
+				setName === "Health %" ||
+				setName === "Defense %" ||
+				setName === "Offense %"
+			) {
+				partiallyScoredStats = flatStats;
+			}
+			modsetScorecache.set(cacheKey, { score, partiallyScoredStats });
+			return { score, partiallyScoredStats };
 		},
-		has: (setName: GIMOSetStatNames) => {
-			return cache.has(setName);
+		setCharacter: (character: Character.Character) => {
+			currentCharacter = character;
 		},
 		setRelevantStats: (target: OptimizationPlan) => {
 			relevantStats = new Set<string>();
@@ -937,28 +1058,34 @@ const createModsetStatsCache = () => {
 			return cache.get(cacheKey) ?? [];
 		}
 
-		const setStats = getFlatStatsFromSet(setName, fullOrHalf, character);
+		const setStats = getFlatStatsFromSet(setName, fullOrHalf);
 		cache.set(cacheKey, setStats);
 		return setStats;
 	};
 };
 
 const cache: Cache = {
-	modScores: new Map<string, number>(),
+	modScores: new Map<
+		string,
+		{ score: number; partiallyScoredStats: StatValue[] }
+	>(),
 	modStats: createModStatsCache(),
 	modUpgrades: new Map<string, Mod>(),
 	relatedStatValues: new Map<string, Map<string, number>>(),
 	modsetScore: createModsetScoreCache(),
 	modsetStats: createModsetStatsCache(),
-	flatStats: new Map<string, StatValue[]>(),
+	flatStats: createFlatStatsCache(),
 };
 
 function resetCaches() {
-	cache.modScores = new Map<string, number>();
+	cache.modScores = new Map<
+		string,
+		{ score: number; partiallyScoredStats: StatValue[] }
+	>();
 	cache.modStats = createModStatsCache();
 	cache.modsetScore = createModsetScoreCache();
 	cache.modsetStats = createModsetStatsCache();
-	cache.flatStats = new Map<string, StatValue[]>();
+	cache.flatStats = createFlatStatsCache();
 }
 // #endregion Caching variables
 
@@ -1077,13 +1204,10 @@ function getOpenModSlots(setRestrictions: SetRestrictions): number {
 function getFlatStatsFromSet(
 	setName: GIMOSetStatNames,
 	fullOrHalf: FullOrHalf,
-	character: Character.Character,
 ) {
 	const setBonus = setBonuses[setName];
-	const flatStats: StatValue[] = [];
 	const bonus = fullOrHalf === "full" ? setBonus.maxBonus : setBonus.smallBonus;
-	flatStats.push(...flattenStatValues(bonus, character));
-	return flatStats;
+	return cache.flatStats.get(bonus);
 }
 
 function getFlatStatsFromSetLoadouts(
@@ -1113,56 +1237,26 @@ function getFlatStatsFromSetLoadout(
 	setLoadout: SetLoadout,
 	character: Character.Character,
 ) {
-	const flatStatsFromSet =
+	const flattenedStats =
 		setLoadout.setName !== "Setless"
-			? cache.modsetStats(setLoadout.setName, setLoadout.fullOrHalf, character)
+			? [
+					...cache.modsetStats(
+						setLoadout.setName,
+						setLoadout.fullOrHalf,
+						character,
+					),
+				]
 			: [];
 
-	const statsDirectlyFromMods: StatValue[] = [];
-	const flattenedStats: Stat[] = [];
-	const combinedStats: Partial<Record<Stats.DisplayStatNames, Stat>> = {};
-
 	for (const mod of setLoadout.loadout) {
-		statsDirectlyFromMods.push(...cache.modStats.get(mod));
-	}
-
-	flattenedStats.push(...flatStatsFromSet);
-
-	for (const stat of statsDirectlyFromMods) {
-		flattenedStats.push(...flattenStatValues(stat, character));
-	}
-
-	for (const stat of flattenedStats) {
-		const oldStat = combinedStats[stat.displayType];
-		if (oldStat) {
-			combinedStats[stat.displayType] = {
-				displayType: stat.displayType,
-				isPercentVersion: stat.isPercentVersion,
-				value: oldStat.value + stat.value,
-			};
-		} else {
-			combinedStats[stat.displayType] = stat;
+		const modStats = cache.modStats.get(mod);
+		for (const stat of modStats) {
+			flattenedStats.push(stat);
 		}
 	}
 
-	// Truncate any stat that can only have a whole value
-	return Object.values(combinedStats).map((stat) => {
-		const displayType = stat.displayType;
-		if (
-			displayType === "Health" ||
-			displayType === "Protection" ||
-			displayType === "Speed" ||
-			displayType === "Physical Damage" ||
-			displayType === "Armor" ||
-			displayType === "Special Damage" ||
-			displayType === "Resistance"
-		) {
-			return Object.assign(stat, {
-				value: Math.trunc(stat.value),
-			});
-		}
-		return stat;
-	});
+	return flattenedStats;
+	// return combineFlatStats(flattenedStats);
 }
 
 /**
@@ -1174,12 +1268,6 @@ function getFlatStatsFromSetLoadout(
  * @returns {Array<Stat>}
  */
 function flattenStatValues(stat: Stat, character: Character.Character) {
-	const cacheKey: StatValuesCacheKey = `${stat.displayType}${stat.isPercentVersion}${stat.value}`;
-	const cacheHit = cache.flatStats.get(cacheKey);
-
-	if (cacheHit) {
-		return cacheHit;
-	}
 	const statPropertyNames =
 		Stats.Stat.display2CSGIMOStatNamesMap[stat.displayType];
 
@@ -1188,14 +1276,15 @@ function flattenStatValues(stat: Stat, character: Character.Character) {
 		const value = !stat.isPercentVersion
 			? stat.value
 			: (stat.value * (character.playerValues.baseStats[statName] ?? 0)) / 100;
-
+		const integralValue = Math.trunc(value);
 		return {
 			displayType: displayName,
 			value,
+			integral: integralValue,
+			fractional: value % 1,
 		};
 	});
 
-	cache.flatStats.set(cacheKey, flattenedStats);
 	return flattenedStats;
 }
 
@@ -1432,8 +1521,8 @@ function getStatValueForCharacterWithMods(
  */
 function modSort(character: Character.Character, target: OptimizationPlan) {
 	return (left: Mod, right: Mod) => {
-		const leftScore = scoreMod(left, target);
-		const rightScore = scoreMod(right, target);
+		const leftScore = scoreMod(left, target).score;
+		const rightScore = scoreMod(right, target).score;
 		if (leftScore === rightScore) {
 			// If mods have equal value, then favor the one that's already equipped
 			if (left.characterID !== "null" && character.id === left.characterID) {
@@ -1447,37 +1536,23 @@ function modSort(character: Character.Character, target: OptimizationPlan) {
 		return rightScore - leftScore;
 	};
 }
-const loggedStats = new Set<string>();
+
 /**
  * Return how valuable a particular stat is for an Optimization Plan
  * @param stat {Stat}
  * @param target {OptimizationPlan}
  */
-function scoreStat(stat: Stat, target: OptimizationPlan) {
+function scoreStat(
+	stat: StatValue,
+	target: OptimizationPlan,
+	isWholeValueStat: boolean,
+) {
 	// Because Optimization Plans treat all critical chance the same, we can't break it into physical and special crit
 	// chance for scoring. Catch this edge case so that we can properly value crit chance
-	if (!loggedStats.has(stat.displayType)) {
-		loggedStats.add(stat.displayType);
-		console.log(
-			`Scoring stat ${stat.displayType} with value ${stat.value} and isPercentVersion ${stat.isPercentVersion}`,
-		);
-	}
-	const targetProperties: WithoutCC[] | ["Critical Chance"] = [
-		"Critical Chance",
-		"Physical Critical Chance",
-	].includes(stat.displayType)
-		? ["Critical Chance"]
-		: (Stats.Stat.display2CSGIMOStatNamesMap[stat.displayType] as WithoutCC[]);
-	if (targetProperties.length > 1) {
-		console.warn(
-			`Stat ${stat.displayType} maps to multiple target properties, which is unexpected. Check the display2CSGIMOStatNamesMap for this stat.`,
-		);
-	}
-	return targetProperties.reduce(
-		(acc, targetProperty) =>
-			target[targetProperty] ? acc + target[targetProperty] * stat.value : acc,
-		0,
-	);
+	const targetProperties: WithoutCC | "Critical Chance" =
+		display2CSGIMOStatNamesMap[stat.displayType];
+	const valueToScore = isWholeValueStat ? stat.integral : stat.value;
+	return target[targetProperties] * valueToScore;
 }
 
 /**
@@ -1492,18 +1567,21 @@ function scoreMod(mod: Mod, target: OptimizationPlan) {
 	if (cacheHit) {
 		return cacheHit;
 	}
+	const flattenedStatValues = cache.modStats.get(mod) ?? [];
+	const partiallyScoredStats: StatValue[] = [];
+	const modScore = flattenedStatValues.reduce((score, flatStat) => {
+		const isWholeValueStat = wholeValueStats.has(flatStat.displayType);
+		if (flatStat.displayType !== "Speed")
+			partiallyScoredStats.push({ ...flatStat });
+		return score + scoreStat(flatStat, target, isWholeValueStat);
+	}, 0);
 
-	const flattenedStatValues = cache.modStats.has(mod)
-		? cache.modStats.get(mod)
-		: [];
-
-	const modScore = flattenedStatValues.reduce(
-		(score, stat) => score + scoreStat(stat, target),
-		0,
-	);
-
-	cache.modScores.set(mod.id, modScore);
-	return modScore;
+	const result = {
+		score: modScore,
+		partiallyScoredStats,
+	};
+	cache.modScores.set(mod.id, result);
+	return result;
 }
 
 /**
@@ -1669,25 +1747,97 @@ function getModsetsInLoadout(loadout: Mod[]) {
  * @param character {Character}
  * @param target {OptimizationPlan}
  */
-function getLoadoutScore(
-	loadout: Mod[],
-	character: Character.Character,
-	target: OptimizationPlan,
-) {
+function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 	const setsInLoadout = getModsetsInLoadout(loadout);
 	let modsetsScore = 0;
 	let modStatsScore = 0;
-	let flatStatsFromModset: StatValue[];
+	let healthFraction = 0;
+	let protectionFraction = 0;
+	let physicalDamageFraction = 0;
+	let specialDamageFraction = 0;
+	let armorFraction = 0;
+	let resistanceFraction = 0;
 	for (const [setName, count] of setsInLoadout.entries()) {
-		flatStatsFromModset = cache.modsetStats(setName, "half", character);
-		modsetsScore +=
-			cache.modsetScore.get(setName, flatStatsFromModset, target) * count;
+		const { score, partiallyScoredStats: modsetPartiallyScoredStats } =
+			cache.modsetScore.get(setName, target, count);
+		modsetsScore += score;
+		for (const stat of modsetPartiallyScoredStats) {
+			switch (stat.displayType) {
+				case "Health":
+					healthFraction += stat.fractional;
+					break;
+				case "Protection":
+					protectionFraction += stat.fractional;
+					break;
+				case "Physical Damage":
+					physicalDamageFraction += stat.fractional;
+					break;
+				case "Special Damage":
+					specialDamageFraction += stat.fractional;
+					break;
+				case "Armor":
+					armorFraction += stat.fractional;
+					break;
+				case "Resistance":
+					resistanceFraction += stat.fractional;
+					break;
+			}
+		}
 	}
 
 	for (const mod of loadout) {
-		modStatsScore += scoreMod(mod, target);
+		const { score, partiallyScoredStats: modPartiallyScoredStats } = scoreMod(
+			mod,
+			target,
+		);
+		modStatsScore += score;
+		for (const stat of modPartiallyScoredStats) {
+			switch (stat.displayType) {
+				case "Health":
+					healthFraction += stat.fractional;
+					break;
+				case "Protection":
+					protectionFraction += stat.fractional;
+					break;
+				case "Physical Damage":
+					physicalDamageFraction += stat.fractional;
+					break;
+				case "Special Damage":
+					specialDamageFraction += stat.fractional;
+					break;
+				case "Armor":
+					armorFraction += stat.fractional;
+					break;
+				case "Resistance":
+					resistanceFraction += stat.fractional;
+					break;
+			}
+		}
 	}
-	return modsetsScore + modStatsScore;
+
+	let fractionsScore = 0;
+	if (healthFraction >= 1) {
+		fractionsScore += target.Health * Math.trunc(healthFraction);
+	}
+	if (protectionFraction >= 1) {
+		fractionsScore += target.Protection * Math.trunc(protectionFraction);
+	}
+	if (physicalDamageFraction >= 1) {
+		fractionsScore +=
+			target["Physical Damage"] * Math.trunc(physicalDamageFraction);
+	}
+	if (specialDamageFraction >= 1) {
+		fractionsScore +=
+			target["Special Damage"] * Math.trunc(specialDamageFraction);
+	}
+	if (armorFraction >= 1) {
+		fractionsScore += target.Armor * Math.trunc(armorFraction);
+	}
+	if (resistanceFraction >= 1) {
+		fractionsScore += target.Resistance * Math.trunc(resistanceFraction);
+	}
+
+	return modsetsScore + modStatsScore + fractionsScore;
 }
 // #endregion
 
@@ -1754,7 +1904,6 @@ function optimizeMods(
 	// characters have changed, recalculate all characters
 	let recalculateMods =
 		compilations$.defaultCompilation.isReoptimizationNeeded.peek() === true;
-	recalculateMods = true;
 
 	// Filter out any mods that are on locked characters, including if all unselected characters are locked
 	const selectedCharacterIds = globalSettings.lockUnselectedCharacters
@@ -1839,7 +1988,9 @@ function optimizeMods(
 				return modSuggestions;
 			}
 			recalculateMods = true;
+			cache.flatStats.setCharacter(character);
 			cache.modStats.setCharacter(character);
+			cache.modsetScore.setCharacter(character);
 			cache.modStats.setRelevantStats(target);
 			cache.modsetScore.setRelevantStats(target);
 
@@ -1904,7 +2055,7 @@ function optimizeMods(
 				previousModAssignments[index].characterId === characterID &&
 				previousModAssignments[index].previousScore !== 0
 					? previousModAssignments[index].previousScore
-					: getLoadoutScore(oldLoadoutForCharacter, character, realTarget);
+					: getLoadoutScore(oldLoadoutForCharacter, realTarget);
 
 			// Assign the new loadout if any of the following are true:
 			let assignedLoadout: Mod[] = [];
@@ -2172,10 +2323,6 @@ function findBestLoadoutForCharacter(
 		]),
 	);
 
-	for (const mod of usableMods) {
-		cache.modStats.get(mod);
-		scoreMod(mod, target);
-	}
 	progressMessage(
 		character.id,
 		characterCount,
@@ -2230,7 +2377,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	// {statName: {set, value}}
 	const setValues = getSetBonusesThatHaveValueForStats(
 		statNames,
-		character,
 		setRestrictions,
 	);
 
@@ -2277,11 +2423,6 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				: modFilters.noFilter,
 		]),
 	);
-
-	for (const mod of usableMods) {
-		cache.modStats.get(mod);
-		scoreMod(mod, target);
-	}
 
 	const [modValues, valuesBySlotByStat] = collectModValuesBySlot(
 		usableMods,
@@ -2588,7 +2729,6 @@ function getStatValuesForCharacter(
  */
 function getSetBonusesThatHaveValueForStats(
 	stats: TargetStatsNames[],
-	character: Character.Character,
 	setRestrictions: SetRestrictions,
 ): SetValues {
 	const setValues: Partial<SetValues> = {};
@@ -2601,7 +2741,7 @@ function getSetBonusesThatHaveValueForStats(
 		}
 
 		// TODO: Eventually support non-max bonuses
-		const setStats = flattenStatValues(setBonus.maxBonus, character);
+		const setStats = cache.flatStats.get(setBonus.maxBonus);
 
 		for (const stat of stats) {
 			// This works on the assumption that only one mod set could ever fill a given stat
@@ -2700,25 +2840,18 @@ function collectModValuesBySlot(
 
 	// Iterate through all the mods, filling out the objects as we go
 	for (const mod of mods) {
-		const modSummary = cache.modStats.has(mod) ? cache.modStats.get(mod) : [];
+		const modFlatStats = cache.modStats.get(mod) ?? [];
 
-		const combinedModSummary = {} as Record<Stats.DisplayStatNames, StatValue>;
+		const modFlatStatsByDisplayType: Map<Stats.DisplayStatNames, StatValue> =
+			new Map();
 
-		for (const stat of modSummary) {
-			const oldStat = combinedModSummary[stat.displayType];
-			if (oldStat) {
-				combinedModSummary[stat.displayType] = {
-					displayType: stat.displayType,
-					value: oldStat.value + stat.value,
-				};
-			} else {
-				combinedModSummary[stat.displayType] = stat;
-			}
+		for (const stat of modFlatStats) {
+			modFlatStatsByDisplayType.set(stat.displayType, stat);
 		}
 
 		for (const stat of stats) {
 			if (stat !== "Health+Protection") {
-				const statForTarget = combinedModSummary[stat];
+				const statForTarget = modFlatStatsByDisplayType.get(stat);
 				const statValue = statForTarget ? statForTarget.value : 0;
 
 				modValues[stat][mod.id] = statValue;
@@ -3049,7 +3182,7 @@ function filterMods(mods: Mod[]) {
  */
 const topMod = (candidates: Mod[]) => {
 	const mod: Mod | null = firstOrNull(candidates);
-	if (mod && (cache.modScores.get(mod.id) ?? 0) >= 0) {
+	if (mod && (cache.modScores.get(mod.id)?.score ?? 0) >= 0) {
 		return mod;
 	}
 	return null;
@@ -3488,7 +3621,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 				id: loadoutId,
 				loadout: loadout,
 				messages: messages,
-				score: getLoadoutScore(loadout, character, target),
+				score: getLoadoutScore(loadout, target),
 			};
 		}
 		return { id: "", loadout: [], messages: [] as string[], score: 0 };
@@ -3609,8 +3742,8 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let bestUnmovedMods = -1;
 
 	for (const loadout of candidateLoadouts) {
-		const loadoutScore = getLoadoutScore(loadout, character, target);
-		if (
+		const loadoutScore = getLoadoutScore(loadout, target);
+		/* 		if (
 			loadout[0].characterID === "BOUSHH" &&
 			loadout[1].characterID === "JEDIMASTERMACEWINDU" &&
 			loadout[2].characterID === "STRANGER" &&
@@ -3623,7 +3756,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 				loadout.map((mod) => mod.id),
 			);
 			console.log("Score:", loadoutScore);
-		}
+		} */
 		if (loadoutScore > bestLoadoutScore) {
 			bestLoadout = loadout;
 			bestLoadoutScore = loadoutScore;
