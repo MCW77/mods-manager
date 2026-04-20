@@ -1915,6 +1915,9 @@ function optimizeMods(
 	let recalculateMods =
 		compilations$.defaultCompilation.isReoptimizationNeeded.peek() === true;
 
+	//TODO: Remove forced recalculation after we are done benchmarking
+	recalculateMods = true; //
+
 	// Filter out any mods that are on locked characters, including if all unselected characters are locked
 	const selectedCharacterIds = globalSettings.lockUnselectedCharacters
 		? new Set(order.map(({ id }) => id))
