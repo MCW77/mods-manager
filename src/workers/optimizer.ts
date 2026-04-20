@@ -254,6 +254,8 @@ self.onmessage = async (message) => {
 	}
 
 	if (message.data.type === "Optimize") {
+		perf.resetPerformanceLog();
+
 		const profile = profilesManagement$.activeProfile.get();
 		const allMods = Array.from(
 			profile.modById.values().map((mod) => mod.serialize()),
@@ -702,6 +704,7 @@ const display2CSGIMOStatNamesMap: Record<
 	Defense: "Health",
 	Offense: "Health",
 } as const);
+
 /**
  * Return the first value from an array, if one exists. Otherwise, return null.
  * @param mods {Array}
