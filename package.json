@@ -17,7 +17,7 @@
 		"test:migrations:ui": "vitest --ui src/tests/migrations"
 	},
 	"dependencies": {
-		"@base-ui/react": "^1.4.0",
+		"@base-ui/react": "^1.4.1",
 		"@fortawesome/fontawesome-svg-core": "^7.2.0",
 		"@fortawesome/free-regular-svg-icons": "^7.2.0",
 		"@fortawesome/free-solid-svg-icons": "^7.2.0",
