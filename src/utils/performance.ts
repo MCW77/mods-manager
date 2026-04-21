@@ -104,6 +104,14 @@ function formatMissingMeasurementLog(fnName: string): Record<string, string> {
 }
 
 function emitPerformanceLog(payload: Record<string, string | number>): void {
+	if (typeof postMessage === "function") {
+		postMessage({
+			type: "PerformanceLog",
+			payload,
+		});
+		return;
+	}
+
 	console.log(`${performanceLogPrefix}${JSON.stringify(payload)}`);
 }
 
