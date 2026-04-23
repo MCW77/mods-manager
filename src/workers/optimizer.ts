@@ -254,6 +254,8 @@ self.onmessage = async (message) => {
 	}
 
 	if (message.data.type === "Optimize") {
+		perf.resetPerformanceLog();
+
 		const profile = profilesManagement$.activeProfile.get();
 		const allMods = Array.from(
 			profile.modById.values().map((mod) => mod.serialize()),
@@ -281,6 +283,10 @@ self.onmessage = async (message) => {
 
 		perf.logMeasures("optimizeMods");
 		perf.logMeasures("scoreLoadout");
+		perf.logMeasures("getLoadoutScore");
+		perf.logMeasures("findBestLoadoutWithoutChangingRestrictions");
+		perf.logMeasures("findStatValuesThatMeetTarget");
+		perf.logMeasures("slotRecursor");
 
 		optimizationSuccessMessage(optimizerResults);
 		self.close();
@@ -698,6 +704,7 @@ const display2CSGIMOStatNamesMap: Record<
 	Defense: "Health",
 	Offense: "Health",
 } as const);
+
 /**
  * Return the first value from an array, if one exists. Otherwise, return null.
  * @param mods {Array}
@@ -1908,6 +1915,9 @@ function optimizeMods(
 	let recalculateMods =
 		compilations$.defaultCompilation.isReoptimizationNeeded.peek() === true;
 
+	//TODO: Remove forced recalculation after we are done benchmarking
+	recalculateMods = true; //
+
 	// Filter out any mods that are on locked characters, including if all unselected characters are locked
 	const selectedCharacterIds = globalSettings.lockUnselectedCharacters
 		? new Set(order.map(({ id }) => id))
@@ -2058,7 +2068,10 @@ function optimizeMods(
 				previousModAssignments[index].characterId === characterID &&
 				previousModAssignments[index].previousScore !== 0
 					? previousModAssignments[index].previousScore
-					: getLoadoutScore(oldLoadoutForCharacter, realTarget);
+					: perf.measureTime(getLoadoutScore, "getLoadoutScore")(
+							oldLoadoutForCharacter,
+							realTarget,
+						);
 
 			// Assign the new loadout if any of the following are true:
 			let assignedLoadout: Mod[] = [];
@@ -2484,7 +2497,10 @@ const getPotentialModsToSatisfyTargetStats = function* (
 					((numSetsUsed - minSets + 1) / (maxSets - minSets + 1)) * 100;
 
 				modConfigurationsByStat[targetStat.stat][numSetsUsed] =
-					findStatValuesThatMeetTarget(
+					perf.measureTime(
+						findStatValuesThatMeetTarget,
+						"findStatValuesThatMeetTarget",
+					)(
 						valuesBySlotByStat[targetStat.stat],
 						targetStat.minimum - nonModValue,
 						targetStat.maximum - nonModValue,
@@ -2503,7 +2519,10 @@ const getPotentialModsToSatisfyTargetStats = function* (
 			}
 		} else {
 			modConfigurationsByStat[targetStat.stat] = {
-				0: findStatValuesThatMeetTarget(
+				0: perf.measureTime(
+					findStatValuesThatMeetTarget,
+					"findStatValuesThatMeetTarget",
+				)(
 					valuesBySlotByStat[targetStat.stat],
 					targetStat.minimum - characterValues[targetStat.stat],
 					targetStat.maximum - characterValues[targetStat.stat],
@@ -3017,7 +3036,11 @@ function findStatValuesThatMeetTarget(
 
 				// In-place mutation avoids Object.assign churn
 				valuesObject[currentSlot] = slotValue;
-				yield* slotRecursor(slotIndex + 1, valuesObject, prefixSum + slotValue);
+				yield* perf.measureTime(slotRecursor, "slotRecursor")(
+					slotIndex + 1,
+					valuesObject,
+					prefixSum + slotValue,
+				);
 				// Clean up for next iteration to avoid leaking values across branches
 				delete valuesObject[currentSlot];
 				firstOfSlot[slotIndex] = false;
@@ -3063,7 +3086,7 @@ function findStatValuesThatMeetTarget(
 		}
 	}
 
-	return Array.from(slotRecursor(0, {}, 0));
+	return Array.from(perf.measureTime(slotRecursor, "slotRecursor")(0, {}, 0));
 }
 
 const findBestLoadoutFromPotentialMods = (
@@ -3094,12 +3117,10 @@ const findBestLoadoutFromPotentialMods = (
 	};
 
 	for (const [loadout, candidateSetRestrictions] of potentialLoadouts) {
-		const loadoutAndMessages = findBestLoadoutWithoutChangingRestrictions(
-			loadout,
-			character,
-			target,
-			candidateSetRestrictions,
-		);
+		const loadoutAndMessages = perf.measureTime(
+			findBestLoadoutWithoutChangingRestrictions,
+			"findBestLoadoutWithoutChangingRestrictions",
+		)(loadout, character, target, candidateSetRestrictions);
 
 		const newModsSatisfyCharacterRestrictions =
 			loadoutSatisfiesCharacterRestrictions(
@@ -3759,7 +3780,10 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let bestUnmovedMods = -1;
 
 	for (const loadout of candidateLoadouts) {
-		const loadoutScore = getLoadoutScore(loadout, target);
+		const loadoutScore = perf.measureTime(getLoadoutScore, "getLoadoutScore")(
+			loadout,
+			target,
+		);
 		/* 		if (
 			loadout[0].characterID === "BOUSHH" &&
 			loadout[1].characterID === "JEDIMASTERMACEWINDU" &&

@@ -119,6 +119,9 @@ export function optimizeMods(): void {
 
 	optimizationWorker.onmessage = (message) => {
 		switch (message.data.type) {
+			case "PerformanceLog":
+				console.log(`[PERF] ${JSON.stringify(message.data.payload)}`);
+				break;
 			case "OptimizationSuccess":
 				finishModOptimization(
 					message.data.result,

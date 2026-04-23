@@ -8,6 +8,7 @@ interface MeasureData {
 }
 
 const times: Record<string, MeasureData> = {};
+const performanceLogPrefix = "[PERF] ";
 
 function isPromiseLike(value: unknown): value is PromiseLike<unknown> {
 	return typeof (value as { then?: unknown }).then === "function";
@@ -78,15 +79,54 @@ export function measureTime<TArgs extends unknown[], TReturn, TThis = unknown>(
 	return measured;
 }
 
-export function logMeasures(fnName: string) {
-	const measurement = times[fnName];
-	if (!measurement) {
-		console.log(`Function ${fnName} was not measured.`);
+function formatMeasureLogMessage(
+	fnName: string,
+	measurement: MeasureData,
+): Record<string, string | number> {
+	const { max, min, avg, total, count } = measurement;
+	return {
+		kind: "measure",
+		fnName,
+		min,
+		max,
+		avg,
+		total,
+		count,
+	};
+}
+
+function formatMissingMeasurementLog(fnName: string): Record<string, string> {
+	return {
+		kind: "missing",
+		fnName,
+		message: `Function ${fnName} was not measured.`,
+	};
+}
+
+function emitPerformanceLog(payload: Record<string, string | number>): void {
+	if (typeof postMessage === "function") {
+		postMessage({
+			type: "PerformanceLog",
+			payload,
+		});
 		return;
 	}
 
-	const { max, min, avg, total, count } = measurement;
-	console.log(
-		`Function ${fnName} took: min: ${min}ms, max: ${max}ms, avg: ${avg}ms, total: ${total}ms, count: ${count}`,
-	);
+	console.log(`${performanceLogPrefix}${JSON.stringify(payload)}`);
+}
+
+export function logMeasures(fnName: string) {
+	const measurement = times[fnName];
+	if (!measurement) {
+		emitPerformanceLog(formatMissingMeasurementLog(fnName));
+		return;
+	}
+
+	emitPerformanceLog(formatMeasureLogMessage(fnName, measurement));
+}
+
+export function resetPerformanceLog() {
+	for (const key of Object.keys(times)) {
+		delete times[key];
+	}
 }
