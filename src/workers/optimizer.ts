@@ -2966,9 +2966,18 @@ function findStatValuesThatMeetTarget(
 		const first = it.next();
 		return first.done ? 0 : (first.value as number);
 	});
+	const minPerSlot: number[] = gimoSlots.map((slot) => {
+		let last = 0;
+		for (const value of valuesBySlot[slot]) {
+			last = value;
+		}
+		return last;
+	});
 	const suffixMax: number[] = new Array(gimoSlots.length + 1).fill(0);
+	const suffixMin: number[] = new Array(gimoSlots.length + 1).fill(0);
 	for (let i = gimoSlots.length - 1; i >= 0; i--) {
 		suffixMax[i] = suffixMax[i + 1] + maxPerSlot[i];
+		suffixMin[i] = suffixMin[i + 1] + minPerSlot[i];
 	}
 
 	progressMessage(
@@ -2999,6 +3008,11 @@ function findStatValuesThatMeetTarget(
 				const optimistic = prefixSum + slotValue + suffixMax[slotIndex + 1];
 				if (optimistic < targetMin) {
 					break; // further values are smaller; break this slot's loop
+				}
+
+				// Early upper-bound pruning: even with minimum remaining, this branch is already too large.
+				if (prefixSum + slotValue + suffixMin[slotIndex + 1] > targetMax) {
+					continue;
 				}
 
 				// In-place mutation avoids Object.assign churn
