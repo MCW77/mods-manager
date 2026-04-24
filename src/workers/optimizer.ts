@@ -287,6 +287,7 @@ self.onmessage = async (message) => {
 		perf.logMeasures("findBestLoadoutWithoutChangingRestrictions");
 		perf.logMeasures("findStatValuesThatMeetTarget");
 		perf.logMeasures("slotRecursor");
+		perf.logMeasures("targetStatRecursor");
 
 		optimizationSuccessMessage(optimizerResults);
 		self.close();
@@ -2651,7 +2652,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 							);
 						}
 
-						yield* targetStatRecursor(
+						yield* perf.measureTime(targetStatRecursor, "targetStatRecursor")(
 							[modsThatFitGivenValues, updatedSetRestriction],
 							updatedTargetStats,
 							targetStatsCount,
@@ -2694,7 +2695,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 						);
 					}
 
-					yield* targetStatRecursor(
+					yield* perf.measureTime(targetStatRecursor, "targetStatRecursor")(
 						[modsThatFitGivenValues, setRestrictions],
 						updatedTargetStats,
 						targetStatsCount,
@@ -2704,7 +2705,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 		}
 	};
 
-	yield* targetStatRecursor(
+	yield* perf.measureTime(targetStatRecursor, "targetStatRecursor")(
 		[usableMods, setRestrictions],
 		target.targetStats,
 		target.targetStats.length,
