@@ -130,7 +130,15 @@ interface Cache {
 		fullOrHalf: FullOrHalf,
 		character: Character.Character,
 	) => StatValue[];
-	modScores: Map<string, { score: number; partiallyScoredStats: StatValue[] }>;
+	modScores: {
+		get: (mod: Mod) => { score: number; partiallyScoredStats: StatValue[] };
+		set: (
+			modId: string,
+			score: { score: number; partiallyScoredStats: StatValue[] },
+		) => void;
+		setCharacter: (character: Character.Character) => void;
+		setTarget: (target: OptimizationPlan) => void;
+	};
 	modUpgrades: Map<string, Mod>;
 	// Closure-based modStats cache API (bound to current character)
 	modStats: {
@@ -829,6 +837,59 @@ function deserializeTarget(target: OptimizationPlan) {
 
 // #region Caching variables
 
+const createModScoresCache = () => {
+	const modScoresCache = new Map<
+		string,
+		{ score: number; partiallyScoredStats: StatValue[] }
+	>();
+	let currentCharacter: Character.Character | null = null;
+	let currentTarget: OptimizationPlan | null = null;
+
+	return {
+		get: (mod: Mod) => {
+			if (!currentCharacter) {
+				throw new Error("flatStats cache used before character was set");
+			}
+			if (!currentTarget) {
+				throw new Error("modScores cache used before target was set");
+			}
+			const cacheHit = modScoresCache.get(mod.id);
+			if (cacheHit) {
+				return cacheHit;
+			}
+			const flattenedStatValues = cache.modStats.get(mod) ?? [];
+			const partiallyScoredStats: StatValue[] = [];
+			const target = currentTarget;
+			const modScore = flattenedStatValues.reduce((score, flatStat) => {
+				const isWholeValueStat = wholeValueStats.has(flatStat.displayType);
+				if (flatStat.displayType !== "Speed") {
+					partiallyScoredStats.push({ ...flatStat });
+				}
+				return score + scoreStat(flatStat, target, isWholeValueStat);
+			}, 0);
+
+			const result = {
+				score: modScore,
+				partiallyScoredStats,
+			};
+			modScoresCache.set(mod.id, result);
+			return result;
+		},
+		set: (
+			modId: string,
+			score: { score: number; partiallyScoredStats: StatValue[] },
+		) => {
+			modScoresCache.set(modId, score);
+		},
+		setCharacter: (character: Character.Character) => {
+			currentCharacter = character;
+		},
+		setTarget: (target: OptimizationPlan) => {
+			currentTarget = target;
+		},
+	};
+};
+
 const createFlatStatsCache = () => {
 	const cache = new Map<FlatStatsCacheKey, StatValue[]>();
 	let currentCharacter: Character.Character | null = null;
@@ -1074,10 +1135,7 @@ const createModsetStatsCache = () => {
 };
 
 const cache: Cache = {
-	modScores: new Map<
-		string,
-		{ score: number; partiallyScoredStats: StatValue[] }
-	>(),
+	modScores: createModScoresCache(),
 	modStats: createModStatsCache(),
 	modUpgrades: new Map<string, Mod>(),
 	relatedStatValues: new Map<string, Map<string, number>>(),
@@ -1087,10 +1145,7 @@ const cache: Cache = {
 };
 
 function resetCaches() {
-	cache.modScores = new Map<
-		string,
-		{ score: number; partiallyScoredStats: StatValue[] }
-	>();
+	cache.modScores = createModScoresCache();
 	cache.modStats = createModStatsCache();
 	cache.modsetScore = createModsetScoreCache();
 	cache.modsetStats = createModsetStatsCache();
@@ -1528,10 +1583,10 @@ function getStatValueForCharacterWithMods(
  *
  * @param character Character
  */
-function modSort(character: Character.Character, target: OptimizationPlan) {
+function modSort(character: Character.Character) {
 	return (left: Mod, right: Mod) => {
-		const leftScore = scoreMod(left, target).score;
-		const rightScore = scoreMod(right, target).score;
+		const leftScore = cache.modScores.get(left).score;
+		const rightScore = cache.modScores.get(right).score;
 		if (leftScore === rightScore) {
 			// If mods have equal value, then favor the one that's already equipped
 			if (left.characterID !== "null" && character.id === left.characterID) {
@@ -1562,35 +1617,6 @@ function scoreStat(
 		display2CSGIMOStatNamesMap[stat.displayType];
 	const valueToScore = isWholeValueStat ? stat.integral : stat.value;
 	return target[targetProperties] * valueToScore;
-}
-
-/**
- * Given a mod and an optimization plan, figure out the value for that mod
- *
- * @param mod {Mod}
- * @param character {Character} Character for whom the mod is being scored
- * @param target {OptimizationPlan} The plan that represents what each stat is worth
- */
-function scoreMod(mod: Mod, target: OptimizationPlan) {
-	const cacheHit = cache.modScores.get(mod.id);
-	if (cacheHit) {
-		return cacheHit;
-	}
-	const flattenedStatValues = cache.modStats.get(mod) ?? [];
-	const partiallyScoredStats: StatValue[] = [];
-	const modScore = flattenedStatValues.reduce((score, flatStat) => {
-		const isWholeValueStat = wholeValueStats.has(flatStat.displayType);
-		if (flatStat.displayType !== "Speed")
-			partiallyScoredStats.push({ ...flatStat });
-		return score + scoreStat(flatStat, target, isWholeValueStat);
-	}, 0);
-
-	const result = {
-		score: modScore,
-		partiallyScoredStats,
-	};
-	cache.modScores.set(mod.id, result);
-	return result;
 }
 
 /**
@@ -1754,10 +1780,8 @@ function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 		const fullOrHalf = mod.level === 15 || simulateLevel15Mods ? 0 : 1;
 		modsetCounts[setName][fullOrHalf]++;
 
-		const { score, partiallyScoredStats: modPartiallyScoredStats } = scoreMod(
-			mod,
-			target,
-		);
+		const { score, partiallyScoredStats: modPartiallyScoredStats } =
+			cache.modScores.get(mod);
 		modStatsScore += score;
 		for (const stat of modPartiallyScoredStats) {
 			switch (stat.displayType) {
@@ -2007,6 +2031,8 @@ function optimizeMods(
 			cache.modsetScore.setCharacter(character);
 			cache.modStats.setRelevantStats(target);
 			cache.modsetScore.setRelevantStats(target);
+			cache.modScores.setCharacter(character);
+			cache.modScores.setTarget(target);
 
 			if (globalSettings.optimizeWithPrimaryAndSetRestrictions === false) {
 				target.setRestrictions = {};
@@ -2468,8 +2494,8 @@ const getPotentialModsToSatisfyTargetStats = function* (
 				let bestMod = group[0];
 				for (const mod of group) {
 					if (
-						(cache.modScores.get(mod.id) ?? 0) >
-						(cache.modScores.get(bestMod.id) ?? 0)
+						(cache.modScores.get(mod)?.score ?? 0) >
+						(cache.modScores.get(bestMod)?.score ?? 0)
 					) {
 						bestMod = mod;
 					}
@@ -2924,8 +2950,8 @@ function buildBestModsIndex(
 		if (!existing) {
 			byKey.set(key, mod);
 		} else {
-			const existingScore = scores.get(existing.id) ?? 0;
-			const score = scores.get(mod.id) ?? 0;
+			const existingScore = scores.get(existing) ?? 0;
+			const score = scores.get(mod) ?? 0;
 			if (score > existingScore) byKey.set(key, mod);
 		}
 	}
@@ -3221,7 +3247,7 @@ function filterMods(mods: Mod[]) {
  */
 const topMod = (candidates: Mod[]) => {
 	const mod: Mod | null = firstOrNull(candidates);
-	if (mod && (cache.modScores.get(mod.id)?.score ?? 0) >= 0) {
+	if (mod && (cache.modScores.get(mod)?.score ?? 0) >= 0) {
 		return mod;
 	}
 	return null;
@@ -3627,7 +3653,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 
 	// Sort all the mods by score, then break them into sets.
 	// For each slot, try to use the most restrictions possible from what has been set for that character
-	usableMods.sort(modSort(character, target));
+	usableMods.sort(modSort(character));
 
 	({
 		square: squares,
