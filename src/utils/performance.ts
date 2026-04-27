@@ -11,7 +11,7 @@ const times: Record<string, MeasureData> = {};
 const performanceLogPrefix = "[PERF] ";
 
 function isPromiseLike(value: unknown): value is PromiseLike<unknown> {
-	return typeof (value as { then?: unknown }).then === "function";
+	return typeof (value as { then?: unknown })?.then === "function";
 }
 function isPromise(value: unknown): value is Promise<unknown> {
 	return typeof Promise !== "undefined" && value instanceof Promise;
