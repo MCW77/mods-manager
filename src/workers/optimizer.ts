@@ -1102,7 +1102,7 @@ const createModsetScoreCache = () => {
 				relevantStats.add("Special Critical Chance");
 			}
 			if (target["Critical Damage %"] !== 0) {
-				relevantStats.add("Critical Damage %");
+				relevantStats.add("Critical Damage");
 			}
 			if (target["Potency %"] !== 0) {
 				relevantStats.add("Potency");
