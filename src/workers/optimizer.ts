@@ -1615,8 +1615,12 @@ function scoreStat(
 	target: OptimizationPlan,
 	isWholeValueStat: boolean,
 ) {
-	// Because Optimization Plans treat all critical chance the same, we can't break it into physical and special crit
-	// chance for scoring. Catch this edge case so that we can properly value crit chance
+	// Special critical chance is tracked for summary display, but it does not contribute independently to
+	// optimization value. The original optimizer only scores the physical side of crit chance.
+	if (stat.displayType === "Special Critical Chance") {
+		return 0;
+	}
+
 	const targetProperties: WithoutCC | "Critical Chance" =
 		display2CSGIMOStatNamesMap[stat.displayType];
 	const valueToScore = isWholeValueStat ? stat.integral : stat.value;
