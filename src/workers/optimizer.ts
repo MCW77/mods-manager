@@ -1048,20 +1048,22 @@ const createModsetScoreCache = () => {
 			}
 
 			const flatStats = cache.modsetStats(setName, "half", currentCharacter);
-			const score = flatStats.reduce((acc, stat) => {
-				const newValue = stat.value * modsetCount;
-				const newIntegralPart = Math.trunc(newValue);
-				const countedStat = {
-					displayType: stat.displayType,
-					value: newValue,
-					integral: newIntegralPart,
-					fractional: newValue - newIntegralPart,
+			const countedStats = flatStats.map((stat) => {
+				const value = stat.value * modsetCount;
+				const integral = Math.trunc(value);
+				return {
+					...stat,
+					value,
+					integral,
+					fractional: value - integral,
 				};
+			});
+			const score = countedStats.reduce((acc, stat) => {
 				if (!relevantStats?.has(stat.displayType)) {
 					return acc;
 				}
 				const isWholeValueStat = wholeValueStats.has(stat.displayType);
-				return acc + scoreStat(countedStat, target, isWholeValueStat);
+				return acc + scoreStat(stat, target, isWholeValueStat);
 			}, 0);
 
 			let partiallyScoredStats: StatValue[] = [];
@@ -1070,10 +1072,12 @@ const createModsetScoreCache = () => {
 				setName === "Defense %" ||
 				setName === "Offense %"
 			) {
-				partiallyScoredStats = flatStats;
+				partiallyScoredStats = countedStats;
 			}
-			modsetScorecache.set(cacheKey, { score, partiallyScoredStats });
-			return { score, partiallyScoredStats };
+
+			const result = { score, partiallyScoredStats };
+			modsetScorecache.set(cacheKey, result);
+			return result;
 		},
 		setCharacter: (character: Character.Character) => {
 			currentCharacter = character;
