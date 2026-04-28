@@ -19,7 +19,7 @@ import type {
 export type CharacterTemplates = CharacterTemplate[];
 export type ShortCharacterTemplates = ShortCharacterTemplate[];
 
-export interface ShortCharacterTemplate {
+interface ShortCharacterTemplate {
 	id: string;
 	category: string;
 	selectedCharacters: ShortSelectedCharacters;

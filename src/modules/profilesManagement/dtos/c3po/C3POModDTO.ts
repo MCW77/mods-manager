@@ -6,7 +6,7 @@ export type Set = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
 export type Slots = "1" | "2" | "3" | "4" | "5" | "6";
 export type Pips = "1" | "2" | "3" | "4" | "5" | "6";
 export type Tier = "1" | "2" | "3" | "4" | "5";
-export type Levels =
+type Levels =
 	| "1"
 	| "2"
 	| "3"

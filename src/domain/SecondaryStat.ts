@@ -10,10 +10,10 @@ import {
 import type { GIMOSecondaryStatNames } from "./GIMOStatNames";
 import { Stat } from "./Stat";
 
-export type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
-export type HUOffensiveStats = "Offense" | "Offense %" | "Crit Chance %";
+type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
+type HUOffensiveStats = "Offense" | "Offense %" | "Crit Chance %";
 // #region HUDefensiveStats
-export type HUDefensiveStats =
+type HUDefensiveStats =
 	| "Defense"
 	| "Defense %"
 	| "Health"

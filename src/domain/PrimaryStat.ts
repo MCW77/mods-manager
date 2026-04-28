@@ -4,13 +4,13 @@ import type { GIMOPrimaryStatNames } from "./GIMOStatNames";
 import type { Pips } from "./Pips";
 import { Stat } from "./Stat";
 
-export type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
-export type HUOffensiveStats =
+type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
+type HUOffensiveStats =
 	| "Offense %"
 	| "Crit Chance %"
 	| "Crit Damage %"
 	| "Accuracy %";
-export type HUDefensiveStats =
+type HUDefensiveStats =
 	| "Defense %"
 	| "Health %"
 	| "Protection %"
