@@ -68,6 +68,7 @@ import {
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuLabel,
 	DropdownMenuRadioGroup,
 	DropdownMenuRadioItem,
@@ -505,45 +506,50 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 								$value={target$.target.id}
 							/>
 							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<Button variant="outline">Select</Button>
-								</DropdownMenuTrigger>
+								<DropdownMenuTrigger
+									render={<Button variant="outline">Select</Button>}
+								/>
 								<DropdownMenuContent className="w-56">
-									<DropdownMenuLabel>Targets</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									<DropdownMenuRadioGroup
-										value={targetName}
-										onValueChange={(value) => {
-											const foundTarget = targets.find(
-												(targetItem) => targetItem.id === value,
-											);
+									<DropdownMenuGroup>
+										<DropdownMenuLabel>Targets</DropdownMenuLabel>
+										<DropdownMenuSeparator />
+										<DropdownMenuRadioGroup
+											value={targetName}
+											onValueChange={(value) => {
+												const foundTarget = targets.find(
+													(targetItem) => targetItem.id === value,
+												);
 
-											if (foundTarget !== undefined) {
-												beginBatch();
-												compilations$.changeTarget(
-													currentCharacter.index,
-													foundTarget,
-												);
-												target$.target.set(foundTarget);
-												target$.uneditedTarget.set(
-													structuredClone(foundTarget),
-												);
-												endBatch();
-											}
-										}}
-									>
-										<For each={target$.namesOfAllTargets}>
-											{(targetName$) => {
-												const targetName = useValue(targetName$);
-
-												return (
-													<DropdownMenuRadioItem value={targetName}>
-														{targetName}
-													</DropdownMenuRadioItem>
-												);
+												if (foundTarget !== undefined) {
+													beginBatch();
+													compilations$.changeTarget(
+														currentCharacter.index,
+														foundTarget,
+													);
+													target$.target.set(foundTarget);
+													target$.uneditedTarget.set(
+														structuredClone(foundTarget),
+													);
+													endBatch();
+												}
 											}}
-										</For>
-									</DropdownMenuRadioGroup>
+										>
+											<For each={target$.namesOfAllTargets}>
+												{(targetName$) => {
+													const targetName = useValue(targetName$);
+
+													return (
+														<DropdownMenuRadioItem
+															closeOnClick
+															value={targetName}
+														>
+															{targetName}
+														</DropdownMenuRadioItem>
+													);
+												}}
+											</For>
+										</DropdownMenuRadioGroup>
+									</DropdownMenuGroup>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</div>
