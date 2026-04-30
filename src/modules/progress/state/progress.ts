@@ -22,6 +22,7 @@ interface Progress {
 	init: () => void;
 	start: () => void;
 	finish: () => void;
+	resetProgress: () => void;
 }
 
 const startOptimizationStatus: OptimizationStatus = {
@@ -56,13 +57,7 @@ const progress$: ObservableObject<Progress> = observable<Progress>({
 		progress$.optimizationStatus.characterCount.set(0);
 		progress$.optimizationStatus.characterIndex.set(0);
 		progress$.optimizationStatus.message.set("");
-		progress$.optimizationStatus.progress.set(0);
-		progress$.optimizationStatus.sets.set([]);
-		progress$.optimizationStatus.setsCount.set(0);
-		progress$.optimizationStatus.setsIndex.set(0);
-		progress$.optimizationStatus.targetStat.set("");
-		progress$.optimizationStatus.targetStatCount.set(0);
-		progress$.optimizationStatus.targetStatIndex.set(0);
+		progress$.resetProgress();
 		endBatch();
 	},
 	abort: () => {
@@ -88,13 +83,7 @@ const progress$: ObservableObject<Progress> = observable<Progress>({
 		progress$.optimizationStatus.characterCount.set(0);
 		progress$.optimizationStatus.characterIndex.set(0);
 		progress$.optimizationStatus.message.set("");
-		progress$.optimizationStatus.progress.set(0);
-		progress$.optimizationStatus.sets.set([]);
-		progress$.optimizationStatus.setsCount.set(0);
-		progress$.optimizationStatus.setsIndex.set(0);
-		progress$.optimizationStatus.targetStat.set("");
-		progress$.optimizationStatus.targetStatCount.set(0);
-		progress$.optimizationStatus.targetStatIndex.set(0);
+		progress$.resetProgress();
 		endBatch();
 	},
 	finish: () => {
@@ -104,6 +93,11 @@ const progress$: ObservableObject<Progress> = observable<Progress>({
 			progress$.optimizationStatus.characterCount.peek(),
 		);
 		progress$.optimizationStatus.message.set("Rendering your results");
+		progress$.resetProgress();
+		progress$.finished.set(true);
+		endBatch();
+	},
+	resetProgress: () => {
 		progress$.optimizationStatus.progress.set(0);
 		progress$.optimizationStatus.sets.set([]);
 		progress$.optimizationStatus.setsCount.set(0);
@@ -111,8 +105,6 @@ const progress$: ObservableObject<Progress> = observable<Progress>({
 		progress$.optimizationStatus.targetStat.set("");
 		progress$.optimizationStatus.targetStatCount.set(0);
 		progress$.optimizationStatus.targetStatIndex.set(0);
-		progress$.finished.set(true);
-		endBatch();
 	},
 });
 
