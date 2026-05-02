@@ -173,6 +173,10 @@ const customCharacterFilterGroups = [
 				value: "Faction--Mercenary",
 			},
 			{
+				label: "New Republic",
+				value: "Faction--New Republic",
+			},
+			{
 				label: "Nightsister",
 				value: "Faction--Nightsister",
 			},

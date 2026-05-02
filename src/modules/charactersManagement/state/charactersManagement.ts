@@ -545,6 +545,7 @@ const getDefaultFilterSetup = () => {
 		"Jedi Vanguard",
 		"Mandalorian",
 		"Mercenary",
+		"New Republic",
 		"Nightsister",
 		"Old Republic",
 		"Phoenix",
