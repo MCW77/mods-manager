@@ -3009,9 +3009,6 @@ function findStatValuesThatMeetTarget(
 		valuesBySlot.circle.size *
 		valuesBySlot.cross.size;
 	const onePercent = Math.max(1, Math.floor(total / denom));
-	let iterations = 0;
-	let abort = [false, false, false, false, false, false];
-	const firstOfSlot = [true, true, true, true, true, true];
 
 	// Precompute per-slot max and suffixMax for early lower-bound pruning.
 	// Sets are already in descending order; the first value is the max.
@@ -3047,81 +3044,91 @@ function findStatValuesThatMeetTarget(
 		progressMin,
 	);
 
-	// This is essentially a fancy nested for loop iterating over each value in each slot.
-	// That means this is O(n^6) for 6 mod slots (which is terrible!).
-	function* slotRecursor(
-		slotIndex: number,
-		valuesObject: Partial<Record<ModTypes.GIMOSlots, number>>,
-		prefixSum: number,
-	): Generator<Partial<Record<ModTypes.GIMOSlots, number>>> {
-		if (slotIndex < 6) {
-			const currentSlot = gimoSlots[slotIndex];
-			firstOfSlot[slotIndex] = true;
-			for (const slotValue of valuesBySlot[currentSlot]) {
-				// Early lower-bound pruning: even with maximum remaining, can't reach target
-				const optimistic = prefixSum + slotValue + suffixMax[slotIndex + 1];
-				if (optimistic < targetMin) {
-					break; // further values are smaller; break this slot's loop
+	// Convert iterator values to arrays for O(1) indexing
+	const slotArrays: number[][] = gimoSlots.map((slot) =>
+		Array.from(valuesBySlot[slot]),
+	);
+
+	const matchingValues: Partial<Record<ModTypes.GIMOSlots, number>>[] = [];
+
+	let iterations = 0;
+	let depth = 0;
+
+	// Use fixed-size plain arrays for iteration state
+	const indices = [0, 0, 0, 0, 0, 0];
+	const currentValues = [0, 0, 0, 0, 0, 0];
+	const sums = [0, 0, 0, 0, 0, 0];
+
+	function executeIterations() {
+		while (depth >= 0) {
+			if (depth === 6) {
+				if (iterations++ % onePercent === 0) {
+					progressMessage(
+						character.id,
+						characterCount,
+						characterIndex,
+						1,
+						0,
+						"",
+						1,
+						0,
+						"Step 1/2: Finding stat values to meet targets",
+						progressMin + iterations / onePercent,
+					);
 				}
 
-				// Early upper-bound pruning: even with minimum remaining, this branch is already too large.
-				if (prefixSum + slotValue + suffixMin[slotIndex + 1] > targetMax) {
+				const totalSum = sums[5] + currentValues[5];
+				if (totalSum >= targetMin && totalSum <= targetMax) {
+					matchingValues.push({
+						square: currentValues[0],
+						arrow: currentValues[1],
+						diamond: currentValues[2],
+						triangle: currentValues[3],
+						circle: currentValues[4],
+						cross: currentValues[5],
+					});
+				}
+				depth--;
+				continue;
+			}
+
+			const arr = slotArrays[depth];
+			// Explore current depth
+			if (indices[depth] < arr.length) {
+				const val = arr[indices[depth]++];
+
+				const pSum =
+					depth === 0 ? 0 : sums[depth - 1] + currentValues[depth - 1];
+				sums[depth] = pSum;
+				currentValues[depth] = val;
+
+				const optimistic = pSum + val + suffixMax[depth + 1];
+				if (optimistic < targetMin) {
+					// Since array is sorted descending, all subsequent elements are smaller or equal.
+					// None will meet targetMin. Skip remaining items.
+					indices[depth] = arr.length;
 					continue;
 				}
 
-				// In-place mutation avoids Object.assign churn
-				valuesObject[currentSlot] = slotValue;
-				yield* perf.measureTime(slotRecursor, "slotRecursor")(
-					slotIndex + 1,
-					valuesObject,
-					prefixSum + slotValue,
-				);
-				// Clean up for next iteration to avoid leaking values across branches
-				delete valuesObject[currentSlot];
-				firstOfSlot[slotIndex] = false;
-				if (abort[slotIndex]) {
-					return;
+				const pessimistic = pSum + val + suffixMin[depth + 1];
+				if (pessimistic > targetMax) {
+					// Current item too large. Next might be smaller, so continue checking them.
+					continue;
 				}
-			}
-		} else {
-			if (iterations++ % onePercent === 0) {
-				progressMessage(
-					character.id,
-					characterCount,
-					characterIndex,
-					1,
-					0,
-					"",
-					1,
-					0,
-					"Step 1/2: Finding stat values to meet targets",
-					progressMin + iterations / onePercent,
-				);
-			}
 
-			abort = [false, false, false, false, false, false];
-			if (prefixSum >= targetMin && prefixSum <= targetMax) {
-				// Yield a snapshot to avoid later in-place mutations corrupting prior results
-				yield { ...valuesObject };
-			} else if (prefixSum < targetMin) {
-				abort = [
-					firstOfSlot[1] &&
-						firstOfSlot[2] &&
-						firstOfSlot[3] &&
-						firstOfSlot[4] &&
-						firstOfSlot[5],
-					firstOfSlot[2] && firstOfSlot[3] && firstOfSlot[4] && firstOfSlot[5],
-					firstOfSlot[3] && firstOfSlot[4] && firstOfSlot[5],
-					firstOfSlot[4] && firstOfSlot[5],
-					firstOfSlot[5],
-					true,
-				];
-				return;
+				// Descent
+				depth++;
+			} else {
+				// Done with this depth
+				indices[depth] = 0;
+				depth--;
 			}
 		}
 	}
 
-	return Array.from(perf.measureTime(slotRecursor, "slotRecursor")(0, {}, 0));
+	perf.measureTime(executeIterations, "slotRecursor")();
+
+	return matchingValues;
 }
 
 const findBestLoadoutFromPotentialMods = (
