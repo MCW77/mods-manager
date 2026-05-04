@@ -9,25 +9,31 @@ type ComponentProps = {
 };
 
 const Pip = memo(() => (
-	<div className="size-[6px] m-0.5 bg-foreground rounded-full" />
+	<div className="size-[6px] bg-foreground rounded-full" />
 ));
 
 // Pre-rendered static components for the most common cases (5 and 6 pips)
 // These will only be rendered once and reused, significantly reducing re-renders
 const Pips5 = memo(() => (
-	<Badge variant="outline" className="w-17.5 p-1 items-start border-3">
+	<Badge
+		variant="outline"
+		className="w-17.5 h-auto p-1 items-center justify-between gap-0 border-3"
+	>
 		<Pip />
 		<Pip />
 		<Pip />
 		<Pip />
 		<Pip />
-		<div className="size-[5px] m-[2px]" />
+		<div className="size-[6px]" />
 	</Badge>
 ));
 Pips5.displayName = "Pips5";
 
 const Pips6 = memo(() => (
-	<Badge variant="outline" className="w-17.5 p-1 items-start border-3">
+	<Badge
+		variant="outline"
+		className="w-17.5 h-auto p-1 items-center justify-between gap-0 border-3"
+	>
 		<Pip />
 		<Pip />
 		<Pip />
@@ -41,16 +47,16 @@ Pips6.displayName = "Pips6";
 // Dynamic component for rare cases (1-4 pips)
 const PipsDynamic = memo(({ pips }: ComponentProps) => {
 	return (
-		<Badge variant="outline" className="w-17.5 p-1 items-start border-3">
+		<Badge
+			variant="outline"
+			className="w-17.5 h-auto p-1 items-center justify-between gap-0 border-3"
+		>
 			<Pip key={"pip-1"} />
-			{pips > 1 && <Pip key={"pip-2"} />}
-			{pips > 2 && <Pip key={"pip-3"} />}
-			{pips > 3 && <Pip key={"pip-4"} />}
-			{pips < 4 && <div className="size-[5px] m-[2px]" />}
-			{pips < 3 && <div className="size-[5px] m-[2px]" />}
-			{pips < 2 && <div className="size-[5px] m-[2px]" />}
-			<div className="size-[5px] m-[2px]" />
-			<div className="size-[5px] m-[2px]" />
+			{pips > 1 ? <Pip key={"pip-2"} /> : <div className="size-[6px]" />}
+			{pips > 2 ? <Pip key={"pip-3"} /> : <div className="size-[6px]" />}
+			{pips > 3 ? <Pip key={"pip-4"} /> : <div className="size-[6px]" />}
+			{pips > 4 ? <Pip key={"pip-5"} /> : <div className="size-[6px]" />}
+			{pips > 5 ? <Pip key={"pip-6"} /> : <div className="size-[6px]" />}
 		</Badge>
 	);
 });
