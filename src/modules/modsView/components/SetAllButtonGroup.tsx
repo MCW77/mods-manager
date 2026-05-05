@@ -33,7 +33,8 @@ const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Button
-							size="xxs"
+							size="xs"
+							className="h-3 p-0 aspect-square"
 							onClick={() => modsView$.massSetFilter(filterKey, 1)}
 						>
 							+
@@ -46,7 +47,8 @@ const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Button
-							size="xxs"
+							size="xs"
+							className="h-3 p-0 aspect-square"
 							onClick={() => modsView$.massSetFilter(filterKey, 0)}
 						>
 							o
@@ -59,7 +61,8 @@ const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
 				<Tooltip>
 					<TooltipTrigger asChild>
 						<Button
-							size="xxs"
+							size="xs"
+							className="h-3 p-0 aspect-square"
 							onClick={() => modsView$.massSetFilter(filterKey, -1)}
 						>
 							-

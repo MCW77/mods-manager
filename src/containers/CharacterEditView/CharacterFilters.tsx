@@ -390,7 +390,7 @@ const CharacterFilters: React.FC = observer(() => {
 											<Badge variant={"outline"}>
 												{filter}
 												<Button
-													size={"xxs"}
+													size={"xs"}
 													variant={"outline"}
 													onClick={() =>
 														charactersManagement$.filterSetup.filtersById.delete(

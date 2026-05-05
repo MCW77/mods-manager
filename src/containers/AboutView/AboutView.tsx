@@ -77,62 +77,72 @@ const AboutView = React.memo(() => {
 					<h2>This is my fork of GIMO that i continue developing</h2>
 				</div>
 				<div className="flex gap-2">
-					<Card className="size-fit">
+					<Card>
 						<CardHeader>
 							<CardTitle>Contribute</CardTitle>
 						</CardHeader>
-						<CardContent className="flex justify-center items-center">
-							<Button variant="link" asChild>
-								<a
-									href={"https://github.com/MCW77/mods-manager"}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<div className="flex gap-2 items-center">
-										<span className="i-skill-icons:github-light dark:i-skill-icons:github-dark text-16" />
-										<span>mods-manager on Github</span>
-									</div>
-								</a>
-							</Button>
+						<CardContent>
+							<Button
+								variant="link"
+								render={
+									<a
+										href={"https://github.com/MCW77/mods-manager"}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<div className="flex gap-2 items-center">
+											<span className="i-skill-icons:github-light dark:i-skill-icons:github-dark text-16" />
+											<span>mods-manager on Github</span>
+										</div>
+									</a>
+								}
+							/>
 						</CardContent>
 					</Card>
-					<Card className="size-fit">
+					<Card>
 						<CardHeader>
 							<CardTitle>Help & Feedback</CardTitle>
 						</CardHeader>
-						<CardContent className="flex justify-center items-center">
-							<Button variant="link" asChild>
-								<a
-									href={"https://discord.gg/WFKycSm"}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<span className="i-skill-icons:discord size-16" />
-									<div className="flex flex-col gap-2 p-l-4">
-										<div>Tag me on Grandivory's discord server.</div>
-										<div>@Gylbert Blackfyre</div>
-									</div>
-								</a>
-							</Button>
+						<CardContent>
+							<Button
+								variant="link"
+								render={
+									<a
+										href={"https://discord.gg/WFKycSm"}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{" "}
+										<span className="i-skill-icons:discord size-16" />
+										<div className="flex flex-col gap-2 p-l-4">
+											<div>Tag me on Grandivory's discord server.</div>
+											<div>@Gylbert Blackfyre</div>
+										</div>
+									</a>
+								}
+							/>
 						</CardContent>
 					</Card>
-					<Card className="size-fit">
+					<Card>
 						<CardHeader>
 							<CardTitle>Support</CardTitle>
 						</CardHeader>
-						<CardContent className="flex justify-center items-center">
-							<Button variant="link" asChild>
-								<a
-									href={"https://paypal.me/mcw077"}
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<span className="i-logos:paypal text-16" />
-									<span className="p-l-4">
-										Thank you for helping me work on this
-									</span>
-								</a>
-							</Button>
+						<CardContent>
+							<Button
+								variant="link"
+								render={
+									<a
+										href={"https://paypal.me/mcw077"}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<span className="i-logos:paypal text-16" />
+										<span className="p-l-4">
+											Thank you for helping me work on this
+										</span>
+									</a>
+								}
+							/>
 						</CardContent>
 					</Card>
 				</div>

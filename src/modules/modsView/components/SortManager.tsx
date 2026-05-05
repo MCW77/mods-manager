@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 // state
 import type { Observable } from "@legendapp/state";
-import { For, observer, Show, useValue } from "@legendapp/state/react";
+import { For, observer, useValue } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
@@ -16,8 +16,7 @@ import { modScorers } from "#/modules/modScores/domain/ModScorer";
 import type { SortConfig } from "../domain/SortConfig";
 
 // components
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
+import { ChevronDown } from "lucide-react";
 import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
@@ -76,8 +75,9 @@ function SortItem({ item$: sortConfig$ }: SortItemProps) {
 				selectedValue$={sortConfig$.sortBy}
 			/>
 			<Button
-				size={"xxs"}
+				size={"icon-xs"}
 				variant={"outline"}
+				className="h-4 p-0 aspect-square"
 				onClick={() => {
 					if (sortConfig$.sortOrder.peek() === "asc") {
 						sortConfig$.sortOrder.set("desc");
@@ -86,17 +86,13 @@ function SortItem({ item$: sortConfig$ }: SortItemProps) {
 					}
 				}}
 			>
-				<Show
-					if={() => sortConfig.sortOrder === "asc"}
-					else={() => (
-						<FontAwesomeIcon icon={faSortDown} title="Sort descending" />
-					)}
-				>
-					<FontAwesomeIcon icon={faSortUp} title="Sort ascending" />
-				</Show>
+				<ChevronDown
+					className={`m-r0 h-4 w-4 ${sortConfig.sortOrder === "asc" ? "transform rotate-180 transition-transform duration-300" : ""}`}
+				/>
 			</Button>
 			<Button
-				size={"xxs"}
+				size={"icon-xs"}
+				className="h-4 p-0 aspect-square"
 				variant={"outline"}
 				onClick={() =>
 					modsView$.activeViewSetupInActiveCategory.sort.delete(
