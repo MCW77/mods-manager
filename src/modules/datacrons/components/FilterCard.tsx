@@ -184,7 +184,7 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 			</CardHeader>
 			<CardContent className="">
 				<div className="flex flex-wrap gap-4">
-					<div className="grid">
+					<div className="grid gap-1">
 						<div>
 							<Label>Datacron Set</Label>
 							<ClearableSelect $value={datacronSet$} placeholder="Select Set">
@@ -204,7 +204,7 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 							</ClearableSelect>
 						</div>
 					</div>
-					<div className="grid">
+					<div className="grid gap-1">
 						<div>
 							<Label>Alignment</Label>
 							<ClearableSelect
@@ -230,7 +230,7 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 							</ClearableSelect>
 						</div>
 					</div>
-					<div className="grid">
+					<div className="grid gap-1">
 						<div>
 							<Label>Faction/Role</Label>
 							<ClearableSelect
@@ -253,7 +253,7 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 							</ClearableSelect>
 						</div>
 					</div>
-					<div className="grid">
+					<div className="grid gap-1">
 						<div>
 							<Label>Character</Label>
 							<ClearableSelect
@@ -279,7 +279,7 @@ function FilterCard({ showFilters }: { showFilters: boolean }) {
 							</ClearableSelect>
 						</div>
 					</div>
-					<div className="grid">
+					<div className="grid gap-1">
 						<div>
 							<Label>Named Status</Label>
 							<ClearableSelect
