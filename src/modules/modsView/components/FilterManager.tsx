@@ -2,13 +2,7 @@
 import React from "react";
 
 // state
-import {
-	For,
-	observer,
-	reactive,
-	Show,
-	useValue,
-} from "@legendapp/state/react";
+import { For, observer, Show, useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
@@ -20,40 +14,30 @@ import { builtinFilters } from "../domain/ModsViewOptions";
 import { TrashIcon } from "lucide-react";
 import { Button } from "#ui/button";
 import {
-	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 import { RenameButton } from "#/components/RenameButton";
-
-const ReactiveSelect = reactive(Select);
 
 const FilterManager = observer(
 	React.memo(() => {
 		const _activeViewSetupInActiveCategory = useValue(
 			modsView$.activeViewSetupInActiveCategory,
 		);
-		const idOfSelectedFilterInActiveCategory = useValue(
-			modsView$.idOfSelectedFilterInActiveCategory,
-		);
 
 		return (
 			<div className={"flex items-center"}>
-				<ReactiveSelect
-					$value={() => idOfSelectedFilterInActiveCategory}
-					onValueChange={(value) => {
-						modsView$.idOfSelectedFilterInActiveCategory.set(value);
-					}}
-				>
+				<ReactiveSelect $value={modsView$.idOfSelectedFilterInActiveCategory}>
 					<SelectTrigger
 						className={"h-4 px-2 mx-2 inline-flex"}
 						id={"selected-filter"}
 					>
 						<SelectValue />
 					</SelectTrigger>
-					<SelectContent position={"popper"} sideOffset={5}>
+					<SelectContent sideOffset={5}>
 						{
 							<For each={modsView$.activeViewSetupInActiveCategory.filterById}>
 								{(filter$) => {

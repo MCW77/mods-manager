@@ -4,13 +4,7 @@ import { objectEntries } from "#/utils/objectEntries";
 // react
 import type React from "react";
 import { useTranslation } from "react-i18next";
-import {
-	For,
-	observer,
-	reactive,
-	useValue,
-	useObservable,
-} from "@legendapp/state/react";
+import { For, observer, useValue, useObservable } from "@legendapp/state/react";
 
 // state
 import type { ObservableBoolean } from "@legendapp/state";
@@ -20,7 +14,6 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 
 // components
 import {
-	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
@@ -28,9 +21,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-
-// Create ReactiveSelect outside component to prevent recreation on every render
-const ReactiveSelect = reactive(Select);
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 type ComponentProps = {
 	isAddingProfile$: ObservableBoolean;
@@ -39,25 +30,40 @@ type ComponentProps = {
 const ProfileSelector: React.FC<ComponentProps> = observer(
 	({ isAddingProfile$ }: ComponentProps) => {
 		const [t] = useTranslation("global-ui");
-		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
+		const selectedItem$ = useObservable(
+			() =>
+				profilesManagement$.profiles.playernameByAllycode.get()[
+					profilesManagement$.profiles.activeAllycode.get() ?? ""
+				],
+		);
+
 		const nameByAllycode$ = useObservable(() =>
 			objectEntries(profilesManagement$.profiles.playernameByAllycode.get()),
 		);
+		const profileItems = useValue(() => {
+			const items = nameByAllycode$.map(([allycode$, playerName$]) => ({
+				value: allycode$.get(),
+				label: playerName$.get(),
+			}));
+			items.push({ value: "new", label: t("header.ProfileAdderNewCode") });
+			return items;
+		});
 
 		return (
 			<ReactiveSelect
-				$value={profilesManagement$.profiles.activeAllycode}
+				items={profileItems}
+				$value={selectedItem$}
 				onValueChange={(value) => {
+					if (value === undefined) return;
 					if (value === "new") {
 						isAddingProfile$.set(true);
-					} else {
-						if (value === "") return;
-						profilesManagement$.profiles.activeAllycode.set(value);
+						return;
 					}
+					profilesManagement$.profiles.activeAllycode.set(value);
 				}}
 			>
 				<SelectTrigger className="w-60 accent-blue">
-					<SelectValue placeholder={allycode} />
+					<SelectValue />
 				</SelectTrigger>
 				<SelectContent className="accent-blue">
 					<SelectGroup className="accent-blue">

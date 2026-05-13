@@ -17,7 +17,7 @@ import type { SortConfig } from "../domain/SortConfig";
 
 // components
 import { ChevronDown } from "lucide-react";
-import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
+import { ReactiveMultiColumnSelect } from "#/components/reactive/ReactiveMultiColumnSelect";
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
@@ -72,7 +72,7 @@ function SortItem({ item$: sortConfig$ }: SortItemProps) {
 			<ReactiveMultiColumnSelect
 				key={`sort-option-${sortConfig.id}`}
 				groups={sortOptions}
-				selectedValue$={sortConfig$.sortBy}
+				$value={sortConfig$.sortBy}
 			/>
 			<Button
 				size={"icon-xs"}

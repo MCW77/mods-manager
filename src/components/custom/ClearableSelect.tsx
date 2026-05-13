@@ -29,7 +29,7 @@ export function ClearableSelect({
 		<div className="relative w-full">
 			<Select
 				value={value}
-				onValueChange={(v) => onChange(v)}
+				onValueChange={(v) => onChange(v ?? undefined)}
 				disabled={disabled}
 			>
 				<SelectTrigger className={cn("gap-4", className)}>

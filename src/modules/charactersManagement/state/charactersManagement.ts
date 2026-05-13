@@ -32,6 +32,7 @@ import { DamageType } from "#/domain/CharacterSettings";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { Stat } from "#/domain/Stat";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import { factions } from "../domain/Factions";
 
 const addCategoryFilter = (
 	customFilterById: Map<string, CustomFilter>,
@@ -522,48 +523,7 @@ const getDefaultFilterSetup = () => {
 	]) {
 		addCategoryFilter(result.filterSetup.customFilterById, `Role--${role}`);
 	}
-	for (const faction of [
-		"501st",
-		"Bad Batch",
-		"Bounty Hunter",
-		"Clone Trooper",
-		"Constable",
-		"Droid",
-		"Empire",
-		"Ewok",
-		"First Order",
-		"Galactic Republic",
-		"Geonosian",
-		"Gungan",
-		"Hutt Cartel",
-		"Imperial Remnant",
-		"Imperial Trooper",
-		"Inquisitorius",
-		"ISB",
-		"Jawa",
-		"Jedi",
-		"Jedi Vanguard",
-		"Mandalorian",
-		"Mercenary",
-		"New Republic",
-		"Nightsister",
-		"Old Republic",
-		"Phoenix",
-		"Pirate",
-		"Rebel",
-		"Rebel Fighter",
-		"Resistance",
-		"Rogue One",
-		"Scoundrel",
-		"Separatist",
-		"Sith",
-		"Sith Empire",
-		"Smuggler",
-		"Spectre",
-		"Tusken",
-		"Unaligned Force User",
-		"Wookie",
-	]) {
+	for (const faction of factions) {
 		addCategoryFilter(
 			result.filterSetup.customFilterById,
 			`Faction--${faction}`,

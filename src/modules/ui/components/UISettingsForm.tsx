@@ -3,21 +3,24 @@ import { useId } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive } from "@legendapp/state/react";
+import { observer } from "@legendapp/state/react";
 
 import { ui$ } from "../state/ui";
 
 // components
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
-const ReactiveSelect = reactive(Select);
+const languageItems = [
+	{ label: "English", value: "en-US" },
+	{ label: "Deutsch", value: "de-DE" },
+];
 
 const UISettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
@@ -33,10 +36,7 @@ const UISettingsForm: React.FC = observer(() => {
 			<Label className={labelCSS} htmlFor={`languageId_${languageId}`}>
 				{t("general.display.Language")}
 			</Label>
-			<ReactiveSelect
-				$value={ui$.language}
-				onValueChange={(value) => ui$.language.set(value)}
-			>
+			<ReactiveSelect items={languageItems} $value={ui$.language}>
 				<SelectTrigger
 					className={`${inputCSS} w-[180px] accent-blue`}
 					id={`languageId_${languageId}`}

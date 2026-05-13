@@ -2,8 +2,6 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { reactive, useValue } from "@legendapp/state/react";
-
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
@@ -14,18 +12,15 @@ import { modScorers } from "#/modules/modScores/domain/ModScorer";
 // components
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-
-const ReactiveSelect = reactive(Select);
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 const ScoreSelector = () => {
 	const [t] = useTranslation("explore-ui");
-	const modScore = useValue(modsView$.activeViewSetupInActiveCategory.modScore);
 
 	return (
 		<div className={"flex items-center gap-2"}>
@@ -33,10 +28,7 @@ const ScoreSelector = () => {
 				{t("filter.ScoreHeadline")}:
 			</Label>
 			<ReactiveSelect
-				$value={() => modScore}
-				onValueChange={(value) => {
-					modsView$.activeViewSetupInActiveCategory.modScore.set(value);
-				}}
+				$value={modsView$.activeViewSetupInActiveCategory.modScore}
 			>
 				<SelectTrigger
 					className={"w-40 h-4 px-2 mx-2 inline-flex"}
@@ -44,11 +36,7 @@ const ScoreSelector = () => {
 				>
 					<SelectValue />
 				</SelectTrigger>
-				<SelectContent
-					className={"w-8 min-w-40"}
-					position={"popper"}
-					sideOffset={5}
-				>
+				<SelectContent className={"w-8 min-w-40"} sideOffset={5}>
 					{Array.from(modScorers.values()).map((modScorer) => (
 						<SelectItem
 							className={"w-40"}

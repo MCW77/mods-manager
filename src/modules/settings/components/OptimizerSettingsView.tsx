@@ -3,37 +3,36 @@ import type { ComponentProps } from "react";
 import { useTranslation } from "react-i18next";
 
 // state
-import { observer, reactive, useSelector } from "@legendapp/state/react";
+import { observer } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const templates$ = stateLoader$.templates$;
 
-// domain
-import type { TemplatesAddingMode } from "#/modules/templates/domain/TemplatesAddingMode";
-
 // components
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 // containers
 import TemplatesManager from "#/containers/TemplatesManager/TemplatesManager";
 import { StackRankSettingsForm } from "#/modules/stackRank/components/StackRankSettingsForm/StackRankSettingsForm";
 import OptimizationSettingsForm from "#/modules/optimizationSettings/components/OptimizationSettingsForm";
 
-const ReactiveSelect = reactive(Select);
-
 const OptimizerSettingsView: React.FC = observer(() => {
-	const templatesAddingMode = useSelector(templates$.templatesAddingMode);
 	const [t] = useTranslation("settings-ui");
+	const addingModeItems = [
+		{ label: t("optimizer.templates.Append"), value: "append" },
+		{ label: t("optimizer.templates.Replace"), value: "replace" },
+		{ label: t("optimizer.templates.Apply"), value: "apply targets only" },
+	];
 
 	const global =
 		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
@@ -59,13 +58,11 @@ const OptimizerSettingsView: React.FC = observer(() => {
 					</Label>
 					<FormInput>
 						<ReactiveSelect
+							items={addingModeItems}
 							$value={templates$.templatesAddingMode}
-							onValueChange={async (value: TemplatesAddingMode) => {
-								templates$.templatesAddingMode.set(value);
-							}}
 						>
 							<SelectTrigger className="w-[180px] accent-blue">
-								<SelectValue placeholder={templatesAddingMode} />
+								<SelectValue />
 							</SelectTrigger>
 							<SelectContent className="accent-blue">
 								<SelectGroup className="accent-blue">

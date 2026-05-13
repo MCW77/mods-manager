@@ -16,35 +16,34 @@ const characters$ = stateLoader$.characters$;
 
 // domain
 import type { PlanEditing } from "../domain/PlanEditing";
-import { type TargetStatsNames, targetStatsNames } from "#/domain/TargetStat";
+import { targetStatsNames } from "#/domain/TargetStat";
 
 // components
 import {
-	type Group,
+	type MultiColumnSelectGroup,
 	ReactiveMultiColumnSelect,
-} from "#/components/ReactiveMultiColumnSelect";
+} from "#/components/reactive/ReactiveMultiColumnSelect";
 import { Input } from "#/components/reactive/Input";
 import { Switch as ShadCNSwitch } from "#/components/reactive/Switch";
 import { Button } from "#ui/button";
 import { Card } from "#ui/card";
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
 
-const ReactiveSelect = reactive(Select);
 const ReactiveToggleGroup = reactive(ToggleGroup);
 
 type ComponentProps = {
 	target$: PlanEditing;
 	id: string;
-	baseCharacters: Group[];
+	baseCharacters: MultiColumnSelectGroup<string>[];
 };
 
 const TargetStatWidget: React.FC<ComponentProps> = observer(
@@ -160,7 +159,9 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						),
 					}}
 				</Switch>
-				<div className={"flex gap-4 justify-start items-center p-2"}>
+				<div
+					className={"flex flex-basis-0 gap-4 justify-around items-center p-2"}
+				>
 					<div className="flex flex-col items-start gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat${id}`}>
 							Stat:
@@ -168,16 +169,16 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						<ReactiveSelect
 							$value={targetStat$.stat}
 							onValueChange={(value) => {
+								if (value === undefined) return;
 								if (value === "Health+Protection") {
 									targetStat$.optimizeForTarget.set(false);
 								}
-								targetStat$.stat.set(value as TargetStatsNames);
 							}}
 						>
 							<SelectTrigger>
 								<SelectValue />
 							</SelectTrigger>
-							<SelectContent position={"popper"}>
+							<SelectContent alignItemWithTrigger={false}>
 								<SelectGroup>
 									{targetStatsNames.map((stat) => (
 										<SelectItem key={stat} value={stat}>
@@ -188,24 +189,24 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							</SelectContent>
 						</ReactiveSelect>
 					</div>
-					<div className="flex flex-col gap-1">
+					<div className="flex flex-col flex-basis-0 gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-min${id}`}>
 							Minimum:
 						</Label>
 						<Input
-							className={"w-24"}
+							className={""}
 							id={`target-stat-min${id}`}
 							min={type === "*" ? 0 : undefined}
 							type={"number"}
 							$value={targetStat$.minimum}
 						/>
 					</div>
-					<div className="flex flex-col gap-1">
+					<div className="flex flex-col flex-basis-0 gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-max${id}`}>
 							Maximum:
 						</Label>
 						<Input
-							className={"w-24"}
+							className={""}
 							id={`target-stat-max${id}`}
 							min={type === "*" ? 0 : undefined}
 							step={"any"}
@@ -224,7 +225,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 						</Label>
 						<ReactiveMultiColumnSelect
 							groups={baseCharacters}
-							selectedValue$={targetStat$.relativeCharacterId}
+							$value={targetStat$.relativeCharacterId}
 						/>
 					</div>
 					<div className="flex flex-col items-start justify-center gap-1">

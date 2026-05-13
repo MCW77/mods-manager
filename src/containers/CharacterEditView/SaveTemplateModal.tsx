@@ -1,11 +1,5 @@
 // react
-import {
-	Computed,
-	Show,
-	observer,
-	reactive,
-	useValue,
-} from "@legendapp/state/react";
+import { Computed, Show, observer, useValue } from "@legendapp/state/react";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -19,14 +13,12 @@ import { Input } from "#/components/reactive/Input";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-
-const ReactiveSelect = reactive(Select);
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 const SaveTemplateModal: React.FC = observer(() => {
 	const cannotSaveTemplate = useValue(
@@ -47,13 +39,8 @@ const SaveTemplateModal: React.FC = observer(() => {
 					/>
 					<div>
 						<Label htmlFor={"template-category"}>Category</Label>
-						<ReactiveSelect
-							$value={templates$.category}
-							onValueChange={(value: string) => {
-								templates$.category.set(value);
-							}}
-						>
-							<SelectTrigger>
+						<ReactiveSelect $value={templates$.category}>
+							<SelectTrigger className={"w-full"}>
 								<SelectValue />
 							</SelectTrigger>
 							<SelectContent>

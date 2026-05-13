@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 // state
 import type { Observable } from "@legendapp/state";
-import { observer, reactive, useValue } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 
 import { stackRank$ } from "../../state/stackRank";
 
@@ -12,15 +12,27 @@ import { Input } from "#/components/reactive/Input";
 import { Switch } from "#/components/reactive/Switch";
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
-const ReactiveSelect = reactive(Select);
+const usecaseItems = [
+	{ label: "GAC / TW / RotE", value: "0" },
+	{ label: "LS-TB", value: "1" },
+	{ label: "DS-TB", value: "2" },
+	{ label: "Arena only", value: "3" },
+];
+
+const alignmentFilterItems = [
+	{ label: "All", value: "0" },
+	{ label: "Light", value: "1" },
+	{ label: "Dark", value: "2" },
+	{ label: "Neutral", value: "3" },
+];
 
 const StackRankSettingsForm: React.FC = observer(() => {
 	const [t] = useTranslation("settings-ui");
@@ -38,18 +50,17 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				{t("optimizer.stackrank.UseCase")}:
 			</Label>
 			<ReactiveSelect
+				items={usecaseItems}
 				name={"use-case"}
 				$value={stackRank$.settingsForActiveAllycode.useCase}
-				onValueChange={(value) => {
-					stackRank$.settingsForActiveAllycode.useCase.set(
-						value as "0" | "1" | "2" | "3",
-					);
-				}}
 			>
 				<SelectTrigger className={inputCSS} id={"use-case"}>
 					<SelectValue />
 				</SelectTrigger>
-				<SelectContent className={"max-h-[50%]"}>
+				<SelectContent
+					className={"max-h-[50%] p-0"}
+					alignItemWithTrigger={false}
+				>
 					<SelectGroup>
 						<SelectItem value={"0"}>GAC / TW / RotE</SelectItem>
 						<SelectItem value={"1"}>LS-TB</SelectItem>
@@ -74,18 +85,14 @@ const StackRankSettingsForm: React.FC = observer(() => {
 				{t("optimizer.stackrank.Alignment")}:
 			</Label>
 			<ReactiveSelect
+				items={alignmentFilterItems}
 				name={"alignment-filter"}
 				$value={stackRank$.settingsForActiveAllycode.parameters.alignmentFilter}
-				onValueChange={(value) => {
-					stackRank$.settingsForActiveAllycode.parameters.alignmentFilter.set(
-						value as "0" | "1" | "2" | "3",
-					);
-				}}
 			>
 				<SelectTrigger className={inputCSS} id={"alignment-filter"}>
 					<SelectValue />
 				</SelectTrigger>
-				<SelectContent>
+				<SelectContent alignItemWithTrigger={false}>
 					<SelectGroup>
 						<SelectItem value={"0"}>
 							{t("optimizer.stackrank.AlignmentAll")}

@@ -2,7 +2,7 @@
 import React from "react";
 
 // state
-import { For, reactive, Show } from "@legendapp/state/react";
+import { For, Show } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
@@ -15,32 +15,25 @@ import { builtinViewSetups } from "../domain/ModsViewOptions";
 import { TrashIcon } from "lucide-react";
 import { Button } from "#ui/button";
 import {
-	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 import { RenameButton } from "#/components/RenameButton";
-
-const ReactiveSelect = reactive(Select);
 
 const ViewSetupManager = React.memo(() => {
 	return (
 		<div className={"flex items-center"}>
-			<ReactiveSelect
-				$value={modsView$.idOfActiveViewSetupInActiveCategory}
-				onValueChange={(value) => {
-					modsView$.idOfActiveViewSetupInActiveCategory.set(value);
-				}}
-			>
+			<ReactiveSelect $value={modsView$.idOfActiveViewSetupInActiveCategory}>
 				<SelectTrigger
 					className={"h-4 px-2 mx-2 inline-flex"}
 					id={"view-setup"}
 				>
 					<SelectValue />
 				</SelectTrigger>
-				<SelectContent position={"popper"} sideOffset={5}>
+				<SelectContent sideOffset={5}>
 					<For each={modsView$.viewSetupByIdInActiveCategory}>
 						{(setup$) => {
 							const id = setup$.id.peek();

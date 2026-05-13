@@ -53,12 +53,12 @@ import { Button } from "#ui/button";
 import { DialogClose } from "#/components/custom/dialog";
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 import {
 	Tabs,
 	TabsContent,
@@ -77,7 +77,6 @@ import {
 } from "#/components/ui/dropdown-menu";
 
 const ReactiveButton = reactive(Button);
-const ReactiveSelect = reactive(Select);
 enableReactComponents();
 
 const runIncrementalCalc = (
@@ -390,9 +389,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			compilations$.defaultCompilation.flatCharacterModdings,
 		);
 		const targetIsInAdvancedEditMode = useValue(target$.isInAdvancedEditMode);
-		const targetMinimumModDots = useValue(
-			() => target$.target.minimumModDots.get()?.toString() ?? "5",
-		);
 		const currentCharacter = useValue(optimizerView$.currentCharacter);
 		const targetName = useValue(target$.target.id);
 		const targetsNames = profilesManagement$.activeProfile.characterById[
@@ -575,13 +571,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									<span>
 										<ReactiveSelect
 											name={"mod-dots"}
-											$value={() => targetMinimumModDots}
-											onValueChange={(value) => {
-												if (value === "") return;
-												target$.target.minimumModDots.set(
-													Number.parseInt(value, 10),
-												);
-											}}
+											$value={target$.target.minimumModDots}
 										>
 											<SelectTrigger
 												className={"w-12 h-4 px-2 mx-2 inline-flex"}
@@ -591,18 +581,11 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 											</SelectTrigger>
 											<SelectContent
 												className={"w-8 min-w-12"}
-												position={"popper"}
+												alignItemWithTrigger={false}
 												sideOffset={5}
 											>
-												{[1, 2, 3, 4, 5, 6].map((dots) => (
-													<SelectItem
-														className={"w-8"}
-														key={dots}
-														value={dots.toString()}
-													>
-														{dots}
-													</SelectItem>
-												))}
+												<SelectItem value={5}>{5}</SelectItem>
+												<SelectItem value={6}>{6}</SelectItem>
 											</SelectContent>
 										</ReactiveSelect>
 									</span>

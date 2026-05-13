@@ -17,7 +17,14 @@ import { Switch } from "#/components/reactive/Switch";
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { ReactiveMultiColumnSelect } from "#/components/ReactiveMultiColumnSelect";
+import { ReactiveMultiColumnSelect } from "#/components/reactive/ReactiveMultiColumnSelect";
+
+import { factions } from "../../modules/charactersManagement/domain/Factions";
+
+const factionFilterItems = factions.map((faction) => ({
+	label: faction,
+	value: `Faction--${faction}`,
+}));
 
 const customCharacterFilterGroups = [
 	{
@@ -83,168 +90,7 @@ const customCharacterFilterGroups = [
 	},
 	{
 		label: "Faction",
-		items: [
-			{
-				label: "501ST",
-				value: "Faction--501st",
-			},
-			{
-				label: "Bad Batch",
-				value: "Faction--Bad Batch",
-			},
-			{
-				label: "Bounty Hunter",
-				value: "Faction--Bounty Hunter",
-			},
-			{
-				label: "Clone Trooper",
-				value: "Faction--Clone Trooper",
-			},
-			{
-				label: "Constable",
-				value: "Faction--Constable",
-			},
-			{
-				label: "Droid",
-				value: "Faction--Droid",
-			},
-			{
-				label: "Empire",
-				value: "Faction--Empire",
-			},
-			{
-				label: "Ewok",
-				value: "Faction--Ewok",
-			},
-			{
-				label: "First Order",
-				value: "Faction--First Order",
-			},
-			{
-				label: "Galactic Republic",
-				value: "Faction--Galactic Republic",
-			},
-			{
-				label: "Geonosian",
-				value: "Faction--Geonosian",
-			},
-			{
-				label: "Gungan",
-				value: "Faction--Gungan",
-			},
-			{
-				label: "Hutt Cartel",
-				value: "Faction--Hutt Cartel",
-			},
-			{
-				label: "Imperial Remnant",
-				value: "Faction--Imperial Remnant",
-			},
-			{
-				label: "Imperial Trooper",
-				value: "Faction--Imperial Trooper",
-			},
-			{
-				label: "Inquisitorius",
-				value: "Faction--Inquisitorius",
-			},
-			{
-				label: "ISB",
-				value: "Faction--ISB",
-			},
-			{
-				label: "Jawa",
-				value: "Faction--Jawa",
-			},
-			{
-				label: "Jedi",
-				value: "Faction--Jedi",
-			},
-			{
-				label: "Jedi Vanguard",
-				value: "Faction--Jedi Vanguard",
-			},
-			{
-				label: "Mandalorian",
-				value: "Faction--Mandalorian",
-			},
-			{
-				label: "Mercenary",
-				value: "Faction--Mercenary",
-			},
-			{
-				label: "New Republic",
-				value: "Faction--New Republic",
-			},
-			{
-				label: "Nightsister",
-				value: "Faction--Nightsister",
-			},
-			{
-				label: "Old Republic",
-				value: "Faction--Old Republic",
-			},
-			{
-				label: "Phoenix",
-				value: "Faction--Phoenix",
-			},
-			{
-				label: "Pirate",
-				value: "Faction--Pirate",
-			},
-			{
-				label: "Rebel",
-				value: "Faction--Rebel",
-			},
-			{
-				label: "Rebel Fighter",
-				value: "Faction--Rebel Fighter",
-			},
-			{
-				label: "Resistance",
-				value: "Faction--Resistance",
-			},
-			{
-				label: "Rogue One",
-				value: "Faction--Rogue One",
-			},
-			{
-				label: "Scoundrel",
-				value: "Faction--Scoundrel",
-			},
-			{
-				label: "Separatist",
-				value: "Faction--Separatist",
-			},
-			{
-				label: "Sith",
-				value: "Faction--Sith",
-			},
-			{
-				label: "Sith Empire",
-				value: "Faction--Sith Empire",
-			},
-			{
-				label: "Smuggler",
-				value: "Faction--Smuggler",
-			},
-			{
-				label: "Spectre",
-				value: "Faction--Spectre",
-			},
-			{
-				label: "Tusken",
-				value: "Faction--Tusken",
-			},
-			{
-				label: "Unaligned Force User",
-				value: "Faction--Unaligned Force User",
-			},
-			{
-				label: "Wookiee",
-				value: "Faction--Wookiee",
-			},
-		],
+		items: factionFilterItems,
 	},
 	{
 		label: "Role",
@@ -300,7 +146,7 @@ const customCharacterFilterGroups = [
 			},
 			{
 				label: "Maul/Sidious/Nute",
-				value: "Namboo-Maul/Sidious/Nute",
+				value: "Naboo-Maul/Sidious/Nute",
 			},
 			{
 				label: "KB",
@@ -344,9 +190,9 @@ const CharacterFilters: React.FC = observer(() => {
 						Custom filter
 					</Label>
 					<ReactiveMultiColumnSelect
-						id={"custom-character-filter"}
 						groups={customCharacterFilterGroups}
-						selectedValue$={charactersManagement$.filterSetup.customFilterId}
+						triggerProps={{ id: "custom-character-filter" }}
+						$value={charactersManagement$.filterSetup.customFilterId}
 					/>
 				</div>
 				<div className={"flex flex-col gap-1"}>

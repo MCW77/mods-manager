@@ -1,5 +1,5 @@
 // react
-import { reactive, useObservable, useValue } from "@legendapp/state/react";
+import { useObservable, useValue } from "@legendapp/state/react";
 import { useId } from "react";
 
 // utils
@@ -35,7 +35,6 @@ import * as ModListFilter from "#/modules/review/domain/ModListFilter";
 // components
 import { Label } from "#ui/label";
 import {
-	Select,
 	SelectContent,
 	SelectGroup,
 	SelectItem,
@@ -43,8 +42,22 @@ import {
 	SelectValue,
 } from "#ui/select";
 import { Switch } from "#/components/reactive/Switch";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
-const ReactiveSelect = reactive(Select);
+const showOptionsItems = [
+	{
+		label: "All assignments",
+		value: ModListFilter.showOptions.all,
+	},
+	{
+		label: "Changing characters",
+		value: ModListFilter.showOptions.change,
+	},
+	{
+		label: "Mod upgrades",
+		value: ModListFilter.showOptions.upgrades,
+	},
+];
 
 const DisplayWidget = () => {
 	const sortOptionsId = useId();
@@ -315,15 +328,13 @@ const DisplayWidget = () => {
 				Show me:
 			</Label>
 			<ReactiveSelect
+				items={showOptionsItems}
 				$value={review$.modListFilter.show}
-				onValueChange={(value: ModListFilter.ShowOptions) =>
-					review$.modListFilter.show.set(value)
-				}
 			>
 				<SelectTrigger className={inputCSS} id={"show"}>
 					<SelectValue />
 				</SelectTrigger>
-				<SelectContent className={"max-h-[50%]"}>
+				<SelectContent className={"max-h-[50%]"} alignItemWithTrigger={false}>
 					<SelectGroup>
 						<SelectItem value={ModListFilter.showOptions.all}>
 							All assignments
@@ -338,10 +349,7 @@ const DisplayWidget = () => {
 				</SelectContent>
 			</ReactiveSelect>
 			<Label htmlFor={"tag"}>Show characters by tag:</Label>
-			<ReactiveSelect
-				$value={review$.modListFilter.tag}
-				onValueChange={(value) => review$.modListFilter.tag.set(value)}
-			>
+			<ReactiveSelect $value={review$.modListFilter.tag}>
 				<SelectTrigger className={inputCSS} id={"tag"}>
 					<SelectValue />
 				</SelectTrigger>
