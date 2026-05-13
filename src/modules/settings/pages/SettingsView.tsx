@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // containers
 import GeneralSettingsView from "#/modules/settings/components/GeneralSettingsView";
 import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSettingsView";
+import { ScrollArea } from "../../../components/ui/scroll-area";
 
 function Section({ sectionName }: { sectionName: SettingsSections }) {
 	const [t] = useTranslation("settings-ui");
@@ -79,9 +80,9 @@ const SettingsView: React.FC = observer(() => {
 				<Section sectionName={"explorer"} />
 				<Section sectionName={"optimizer"} />
 			</nav>
-			<div className={"overflow-y-auto"}>
+			<ScrollArea>
 				<Topic />
-			</div>
+			</ScrollArea>
 		</div>
 	);
 });

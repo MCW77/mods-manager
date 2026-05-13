@@ -9,6 +9,7 @@ import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface FlexSidebarProps {
 	isCollapsed?: boolean;
@@ -51,9 +52,9 @@ const FlexSidebar = ({
 				/>
 			</Button>
 			<div
-				className={`relative ${isCollapsed2 ? "flex-[0.0000001_1_0]" : "flex-[0.0000001_0_30vw]"} h-full overflow-x-hidden overflow-y-auto transition-[flex] duration-1000 ease will-change-[flex]`}
+				className={`relative ${isCollapsed2 ? "flex-[0.0000001_1_0]" : "flex-[0.0000001_0_30vw]"} h-full overflow-x-hidden transition-[flex] duration-1000 ease will-change-[flex]`}
 			>
-				{sidebarContent}
+				<ScrollArea className="h-full">{sidebarContent}</ScrollArea>
 			</div>
 			<div
 				className={`flexsidebar-maincontent flex p-l-1.5em will-change-flex ${isCollapsed2 ? "flex-[0.000001_0_100vw]" : "flex-[0.000001_1_calc(70vw_-_2em)]"}`}

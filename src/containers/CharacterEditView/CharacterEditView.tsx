@@ -214,38 +214,40 @@ const CharacterEditView = observer(() => {
 				isSelectionExpanded ? "sort-view" : ""
 			}`}
 		>
-			<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%] overflow-auto">
-				<Memo>
-					<DefaultCollapsibleCard title="Filters">
-						<Suspense fallback={<div>Loading CharacterFilters</div>}>
-							<CharacterFilters />
+			<ScrollArea>
+				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%]">
+					<Memo>
+						<DefaultCollapsibleCard title="Filters">
+							<Suspense fallback={<div>Loading CharacterFilters</div>}>
+								<CharacterFilters />
+							</Suspense>
+						</DefaultCollapsibleCard>
+						<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
+							<Suspense fallback={<div>Loading CharacterActions</div>}>
+								<CharacterActions />
+							</Suspense>
+						</DefaultCollapsibleCard>
+					</Memo>
+					<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
+						<Suspense fallback={<div>Loading SelectionActions</div>}>
+							<SelectionActions
+								visibleCharacters={highlightedCharacters}
+								lastSelectedCharacterIndex={lastSelectedCharacter}
+								isSelectionExpanded$={isSelectionExpanded$}
+							/>
 						</Suspense>
 					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
-						<Suspense fallback={<div>Loading CharacterActions</div>}>
-							<CharacterActions />
+					<DefaultCollapsibleCard title="Templates">
+						<Suspense fallback={<div>Loading TemplatesActions</div>}>
+							<TemplatesActions
+								hasNoSelectedCharacters={selectedCharacters.length === 0}
+								visibleCharacters={highlightedCharacters}
+								lastSelectedCharacterIndex={lastSelectedCharacter}
+							/>
 						</Suspense>
 					</DefaultCollapsibleCard>
-				</Memo>
-				<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
-					<Suspense fallback={<div>Loading SelectionActions</div>}>
-						<SelectionActions
-							visibleCharacters={highlightedCharacters}
-							lastSelectedCharacterIndex={lastSelectedCharacter}
-							isSelectionExpanded$={isSelectionExpanded$}
-						/>
-					</Suspense>
-				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Templates">
-					<Suspense fallback={<div>Loading TemplatesActions</div>}>
-						<TemplatesActions
-							hasNoSelectedCharacters={selectedCharacters.length === 0}
-							visibleCharacters={highlightedCharacters}
-							lastSelectedCharacterIndex={lastSelectedCharacter}
-						/>
-					</Suspense>
-				</DefaultCollapsibleCard>
-			</div>
+				</div>
+			</ScrollArea>
 			<Computed>
 				<div className="flex h-[83%]">
 					<div
