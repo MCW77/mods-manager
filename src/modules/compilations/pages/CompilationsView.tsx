@@ -58,15 +58,15 @@ const CompilationsView: React.FC = observer(() => {
 				</CardHeader>
 				<CardContent className={"h-full flex items-center justify-center"}>
 					<Popover open={isFormOpen} onOpenChange={state$.isOpen.set}>
-						<PopoverTrigger className={"m-auto p-2"} asChild>
-							<Button variant={"outline"} className={"w-[86%] h-[60%] p-4"}>
-								+
-							</Button>
-						</PopoverTrigger>
-						<PopoverContent
-							className="w-80"
-							onPointerDownOutside={(e) => e.preventDefault()}
+						<PopoverTrigger
+							className={"m-auto p-2"}
+							render={
+								<Button variant={"outline"} className={"w-[86%] h-[60%] p-4"} />
+							}
 						>
+							+
+						</PopoverTrigger>
+						<PopoverContent className="w-80">
 							<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
 								<h4 className="font-medium text-sm text-primary-foreground">
 									Add compilation

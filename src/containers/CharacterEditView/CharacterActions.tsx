@@ -330,16 +330,11 @@ const CharacterActions: React.FC = observer(() => {
 				Optimize Mods
 			</Button>
 			<Popover open={isFormOpen} onOpenChange={state$.isFormOpen.set}>
-				<PopoverTrigger className={"m-auto p-2"} asChild>
-					<Button size="sm">
-						<FontAwesomeIcon icon={faSave} title={"Save"} />
-						Save Compilation
-					</Button>
+				<PopoverTrigger className={"m-auto p-2"} render={<Button size="sm" />}>
+					<FontAwesomeIcon icon={faSave} title={"Save"} />
+					Save Compilation
 				</PopoverTrigger>
-				<PopoverContent
-					className="w-80"
-					onPointerDownOutside={(e) => e.preventDefault()}
-				>
+				<PopoverContent className="w-80">
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
 						<h4 className="font-medium text-sm text-primary-foreground">
 							Save compilation

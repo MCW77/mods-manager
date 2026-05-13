@@ -36,22 +36,21 @@ const RenameButton: React.FC<RenameButtonProps> = observer(
 
 		return (
 			<Popover open={isPopoverOpen} onOpenChange={state$.isOpen.set}>
-				<PopoverTrigger asChild>
-					<Button
-						variant="ghost"
-						size="icon"
-						className="h-6 w-6 p-0 hover:bg-foreground focus-visible:ring-1 focus-visible:ring-nuted-foreground focus-visible:ring-offset-2 focus-visible:ring-muted-foreground"
-						onClick={handleRename}
-						onMouseDown={(e) => e.stopPropagation()}
-					>
-						<PencilIcon className="h-3 w-3 text-muted-foreground" />
-						<span className="sr-only">Rename {itemName}</span>
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent
-					className="w-80"
-					onPointerDownOutside={(e) => e.preventDefault()}
+				<PopoverTrigger
+					render={
+						<Button
+							variant="ghost"
+							size="icon"
+							className="h-6 w-6 p-0 hover:bg-foreground focus-visible:ring-1 focus-visible:ring-nuted-foreground focus-visible:ring-offset-2 focus-visible:ring-muted-foreground"
+							onClick={handleRename}
+							onMouseDown={(e) => e.stopPropagation()}
+						/>
+					}
 				>
+					<PencilIcon className="h-3 w-3 text-muted-foreground" />
+					<span className="sr-only">Rename {itemName}</span>
+				</PopoverTrigger>
+				<PopoverContent className="w-80">
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
 						<h4 className="font-medium text-sm text-popover">Rename Item</h4>
 						<Input
