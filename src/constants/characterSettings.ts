@@ -1425,6 +1425,25 @@ const characterSettings: CharacterSettingsIndexer = {
 		["Rogue 1", "SuperStar2D2"],
 		DamageType.mixed,
 	),
+	CASSIANUNDERCOVER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 10,
+			spd: 100,
+			cc: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	CC2224: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -1609,6 +1628,26 @@ const characterSettings: CharacterSettingsIndexer = {
 			setRes: {
 				"Health %": 1,
 				"Speed %": 1,
+			},
+		}),
+	]),
+	CINTA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			phys: 70,
+			cc: 2,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Protection %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
 			},
 		}),
 	]),
@@ -2360,6 +2399,63 @@ const characterSettings: CharacterSettingsIndexer = {
 			setRes: {
 				"Critical Chance %": 1,
 				"Critical Damage %": 1,
+			},
+		}),
+	]),
+	DEDRAMEERO: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 50,
+			prot: 10,
+			spd: 100,
+			phys: 40,
+			ten: 20,
+			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Meta",
+			health: 50,
+			prot: 10,
+			spd: 100,
+			phys: 40,
+			ten: 20,
+			pot: 10,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Defense",
+			health: 50,
+			prot: 10,
+			spd: 100,
+			phys: 40,
+			ten: 20,
+			pot: 10,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Defense %": 3,
 			},
 		}),
 	]),
@@ -4813,6 +4909,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	KLEYA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			phys: 50,
+			cc: 5,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Critical Damage %",
+				circle: "Health %",
+				cross: "Offense %",
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	KRRSANTAN: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -4854,6 +4970,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	KXSECURITYDROID: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			prot: 40,
+			spd: 100,
+			arm: 15,
+			res: 15,
+			primaryRes: {
+				arrow: "Health %",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Health %",
+			},
+			setRes: {
+				"Defense %": 1,
+				"Health %": 2,
+			},
+		}),
+	]),
 	KYLEKATARN: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -5182,6 +5318,25 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 25,
 			arm: 12.5,
 			res: 12.5,
+		}),
+	]),
+	MAJORPARTAGAZ: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 20,
+			spd: 100,
+			pot: 50,
+			primaryRes: {
+				arrow: "Speed",
+				triangle: "Health %",
+				circle: "Health %",
+				cross: "Potency %",
+			},
+			setRes: {
+				"Potency %": 1,
+				"Speed %": 1,
+			},
 		}),
 	]),
 	MANDALORBOKATAN: createCharacterSettings([
@@ -7721,6 +7876,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		["Troopers"],
 		DamageType.mixed,
 	),
+	VEL: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			spd: 100,
+			prot: 45,
+			health: 40,
+			arm: 25,
+			res: 25,
+			primaryRes: {
+				arrow: "Protection %",
+				triangle: "Protection %",
+				circle: "Protection %",
+				cross: "Protection %",
+			},
+			setRes: {
+				"Defense %": 1,
+				"Health %": 2,
+			},
+		}),
+	]),
 	VISASMARR: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
