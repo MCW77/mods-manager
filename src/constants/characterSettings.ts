@@ -234,6 +234,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 5,
 				res: 5,
+				primaryRes: {
+					arrow: "Speed",
+					cross: "Protection %",
+				},
 				setRes: {
 					"Health %": 3,
 				},
@@ -1352,6 +1356,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				triangle: "Protection %",
 				cross: "Potency %",
 			},
+			setRes: {
+				"Health %": 3,
+			},
 		}),
 		fromShortOptimizationPlan({
 			id: "Mothma Lead",
@@ -1377,6 +1384,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				triangle: "Critical Damage %",
 				circle: "Protection %",
 			},
+			setRes: {
+				"Critical Damage %": 1,
+				"Potency %": 1,
+			},
 		}),
 	]),
 	CASSIANANDOR: createCharacterSettings(
@@ -1391,6 +1402,10 @@ const characterSettings: CharacterSettingsIndexer = {
 					triangle: "Critical Damage %",
 					circle: "Protection %",
 					cross: "Potency %",
+				},
+				setRes: {
+					"Potency %": 1,
+					"Speed %": 1,
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -1632,6 +1647,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 12.5,
 				primaryRes: {
 					arrow: "Speed",
+				},
+				setRes: {
+					"Health %": 3,
 				},
 			}),
 		],
