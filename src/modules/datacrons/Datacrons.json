@@ -1,4 +1,1152 @@
 {
+	"datacron_set_30_base": {
+		"id": "datacron_set_30_base",
+		"setId": 30,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": [],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_darkside_generic_030",
+					"ability_set_lightside_generic_031"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_sith_005",
+					"ability_set_galacticrepublic_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 6,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": [
+					"ability_set_sithassassin_004",
+					"ability_set_macewindu_002",
+					"ability_set_emperorpalpatine_001",
+					"ability_set_darthmaul_001",
+					"ability_set_ahsokatano_snips_001",
+					"ability_set_countdooku_005",
+					"ability_set_jediknightanakin_001",
+					"ability_set_depabillaba_001",
+					"ability_set_sithtrooper_001",
+					"datacron_character_ct210408_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": true,
+		"focused": false,
+		"focusedIcon": "",
+		"focusedPrefab": ""
+	},
+	"datacron_set_30_focused_cassianundercover": {
+		"id": "datacron_set_30_focused_cassianundercover",
+		"setId": 30,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": ["cassianundercover"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_20"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_health_steal_10"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_focused_cassianundercover_cinta_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_defense_25"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_20"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": ["ability_set_focused_cassianundercover_vel_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_health_steal_30"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_40"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": [
+					"ability_set_focused_cassianundercover_kleya_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 10,
+				"affixTemplateSetId": ["stat_set_focused_defense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 11,
+				"affixTemplateSetId": ["stat_set_focused_health_steal_20"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 12,
+				"affixTemplateSetId": [
+					"ability_set_focused_cassianundercover_luthen_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 13,
+				"affixTemplateSetId": ["stat_set_focused_defense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 5,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 14,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_30"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 5,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 15,
+				"affixTemplateSetId": ["ability_set_focused_cassianundercover_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 5,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_dedrameero": {
+		"id": "datacron_set_30_focused_dedrameero",
+		"setId": 30,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": ["dedraneero"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_defense_25"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_critical_avoidance_35"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_focused_dedrameero_kxsecuritydroid_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_defense_25"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_health_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_focused_dedrameero_majorpartagaz_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_defense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_critical_avoidance_40"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": ["ability_set_focused_dedrameero_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_darthrevan": {
+		"id": "datacron_set_30_focused_darthrevan",
+		"setId": 30,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": ["darthrevan"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_30"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_health_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": ["ability_set_focused_darthrevan_darthmalak_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_40"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_armorpen_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_focused_darthrevan_bastila_fallen_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_health_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_armorpen_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": ["ability_set_focused_darthrevan_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_luminaraunduli": {
+		"id": "datacron_set_30_focused_luminaraunduli",
+		"setId": 30,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": ["luminaraunduli"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_offense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_focused_luminaraunduli_kitfisto_01"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_75"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_offense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_focused_luminaraunduli_kiadimundi_01"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_potency_75"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": ["ability_set_focused_luminaraunduli_01"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_cassianundercover_upgraded": {
+		"id": "datacron_set_30_focused_cassianundercover_upgraded",
+		"setId": 30,
+		"initialTiers": 15,
+		"referenceTemplateId": "",
+		"fixedTag": ["cassianundercover"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_20"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_health_steal_10"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_focused_cassianundercover_cinta_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_defense_25"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_20"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": ["ability_set_focused_cassianundercover_vel_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_health_steal_30"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_40"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": [
+					"ability_set_focused_cassianundercover_kleya_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 10,
+				"affixTemplateSetId": ["stat_set_focused_defense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 11,
+				"affixTemplateSetId": ["stat_set_focused_health_steal_20"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 12,
+				"affixTemplateSetId": [
+					"ability_set_focused_cassianundercover_luthen_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 13,
+				"affixTemplateSetId": ["stat_set_focused_defense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 5,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 14,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_30"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 5,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 15,
+				"affixTemplateSetId": ["ability_set_focused_cassianundercover_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 5,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_dedrameero_upgraded": {
+		"id": "datacron_set_30_focused_dedrameero_upgraded",
+		"setId": 30,
+		"initialTiers": 9,
+		"referenceTemplateId": "",
+		"fixedTag": ["dedraneero"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_defense_25"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_critical_avoidance_35"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_focused_dedrameero_kxsecuritydroid_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_defense_25"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_health_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_focused_dedrameero_majorpartagaz_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_defense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_critical_avoidance_40"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": ["ability_set_focused_dedrameero_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_darthrevan_upgraded": {
+		"id": "datacron_set_30_focused_darthrevan_upgraded",
+		"setId": 30,
+		"initialTiers": 9,
+		"referenceTemplateId": "",
+		"fixedTag": ["darthrevan"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_30"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_health_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": ["ability_set_focused_darthrevan_darthmalak_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_40"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_armorpen_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_focused_darthrevan_bastila_fallen_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_health_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_armorpen_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": ["ability_set_focused_darthrevan_001"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_30_focused_luminaraunduli_upgraded": {
+		"id": "datacron_set_30_focused_luminaraunduli_upgraded",
+		"setId": 30,
+		"initialTiers": 9,
+		"referenceTemplateId": "",
+		"fixedTag": ["luminaraunduli"],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": ["stat_set_focused_offense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_focused_luminaraunduli_kitfisto_01"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 1,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": ["stat_set_focused_tenacity_75"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": ["stat_set_focused_offense_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_focused_luminaraunduli_kiadimundi_01"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": ["stat_set_focused_criticaldamage_50"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": ["stat_set_focused_potency_75"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": ["ability_set_focused_luminaraunduli_01"],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 3,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 4
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": false,
+		"focused": true,
+		"focusedIcon": "tex.datacron_b_focused",
+		"focusedPrefab": "prefab.datacron_b_focused"
+	},
+	"datacron_set_29_base": {
+		"id": "datacron_set_29_base",
+		"setId": 29,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": [],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": [
+					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": [
+					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_darkside_generic_029",
+					"ability_set_lightside_generic_030"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": [
+					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": [
+					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_inquisitorius_005",
+					"ability_set_rebel_004"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 6,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": [
+					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": [
+					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": [
+					"ability_set_hera_syndulla_001",
+					"ability_set_grandinquisitor_003",
+					"ability_set_thirdsister_003",
+					"ability_set_captain_drogan_001",
+					"ability_set_marrok_002",
+					"ability_set_inquisitorbarris_002",
+					"ability_set_eighth_brother_001",
+					"datacron_character_chirrutimwe_002",
+					"ability_set_princess_leia_001",
+					"ability_set_admiralraddus_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": true,
+		"focused": false,
+		"focusedIcon": "",
+		"focusedPrefab": ""
+	},
 	"datacron_set_28_base": {
 		"id": "datacron_set_28_base",
 		"setId": 28,
@@ -1919,130 +3067,5 @@
 		"focused": true,
 		"focusedIcon": "tex.datacron_c_focused",
 		"focusedPrefab": "prefab.datacron_c_focused"
-	},
-	"datacron_set_26_base": {
-		"id": "datacron_set_26_base",
-		"setId": 26,
-		"initialTiers": 0,
-		"referenceTemplateId": "",
-		"fixedTag": [],
-		"tier": [
-			{
-				"id": 1,
-				"affixTemplateSetId": [
-					"stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 4,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 2,
-				"affixTemplateSetId": [
-					"stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 4,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 3,
-				"affixTemplateSetId": [
-					"ability_set_darkside_generic_026",
-					"ability_set_lightside_generic_027"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 4,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 4,
-				"affixTemplateSetId": [
-					"stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_002"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 6,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 5,
-				"affixTemplateSetId": [
-					"stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_002"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 6,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 6,
-				"affixTemplateSetId": [
-					"ability_set_bountyhunters_001",
-					"ability_set_droid_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 6,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 7,
-				"affixTemplateSetId": [
-					"stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_003"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 8,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 8,
-				"affixTemplateSetId": [
-					"stat_set_maxhealthpctadd_maxshieldpctadd_accuracy_critdamage_healthsteal_armorpen_criticalchancepctadd_003"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 8,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 9,
-				"affixTemplateSetId": [
-					"ability_set_aurrasing_001",
-					"ability_set_ig88_003",
-					"ability_set_bb8_004",
-					"ability_set_c3pochewbacca_002",
-					"ability_set_ig11_006",
-					"ability_set_choppers3_004",
-					"ability_set_fennecshand_004",
-					"ability_set_c3p0_006",
-					"ability_set_4lom_001",
-					"ability_set_huyang_001",
-					"ability_set_zuckuss_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 8,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			}
-		],
-		"maxRerolls": 0,
-		"allowReroll": true,
-		"focused": false,
-		"focusedIcon": "",
-		"focusedPrefab": ""
 	}
 }
