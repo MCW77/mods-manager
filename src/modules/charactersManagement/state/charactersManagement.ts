@@ -23,6 +23,8 @@ import {
 	type CustomFilter,
 } from "../domain/CharacterFilterById";
 import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
+import { eraByCharacter, eras } from "../domain/Eras";
+import { factions } from "../domain/Factions";
 
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
@@ -32,7 +34,6 @@ import { DamageType } from "#/domain/CharacterSettings";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { Stat } from "#/domain/Stat";
 import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
-import { factions } from "../domain/Factions";
 
 const addCategoryFilter = (
 	customFilterById: Map<string, CustomFilter>,
@@ -48,6 +49,18 @@ const addCategoryFilter = (
 		},
 	);
 	customFilterById.set(category, categoryFilter);
+};
+
+const addEraFilter = (
+	customFilterById: Map<string, CustomFilter>,
+	era: string,
+) => {
+	const filterString = era.replace("Era--", "");
+	const eraFilter = createCustomCharacterFilter(era, (character: Character) => {
+		if (eraByCharacter.get(character.id) === filterString) return true;
+		return false;
+	});
+	customFilterById.set(era, eraFilter);
 };
 
 const getDefaultFilterSetup = () => {
@@ -522,6 +535,9 @@ const getDefaultFilterSetup = () => {
 		"Tank",
 	]) {
 		addCategoryFilter(result.filterSetup.customFilterById, `Role--${role}`);
+	}
+	for (const era of eras) {
+		addEraFilter(result.filterSetup.customFilterById, `Era--${era}`);
 	}
 	for (const faction of factions) {
 		addCategoryFilter(

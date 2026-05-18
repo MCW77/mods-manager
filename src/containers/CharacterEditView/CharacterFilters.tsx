@@ -10,20 +10,28 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const charactersManagement$ = stateLoader$.charactersManagement$;
 
+// domain
+import { eras } from "#/modules/charactersManagement/domain/Eras";
+import { factions } from "#/modules/charactersManagement/domain/Factions";
+
 // components
 import { Input } from "#/components/reactive/Input";
+import { ReactiveMultiColumnSelect } from "#/components/reactive/ReactiveMultiColumnSelect";
 import { Slider } from "#/components/reactive/Slider";
 import { Switch } from "#/components/reactive/Switch";
+
 import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import { ReactiveMultiColumnSelect } from "#/components/reactive/ReactiveMultiColumnSelect";
-
-import { factions } from "../../modules/charactersManagement/domain/Factions";
 
 const factionFilterItems = factions.map((faction) => ({
 	label: faction,
 	value: `Faction--${faction}`,
+}));
+
+const eraFilterItems = eras.map((era) => ({
+	label: era,
+	value: `Era--${era}`,
 }));
 
 const customCharacterFilterGroups = [
@@ -165,6 +173,10 @@ const customCharacterFilterGroups = [
 				value: "Naboo-B2",
 			},
 		],
+	},
+	{
+		label: "Era",
+		items: eraFilterItems,
 	},
 ];
 
