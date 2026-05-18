@@ -25,6 +25,7 @@ import {
 import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
 import { eraByCharacter, eras } from "../domain/Eras";
 import { factions } from "../domain/Factions";
+import { roles } from "../domain/Roles";
 
 import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
@@ -523,17 +524,7 @@ const getDefaultFilterSetup = () => {
 			starsRange: [0, 7] as [number, number],
 		},
 	} as const;
-	for (const role of [
-		"Attacker",
-		"Crew Member",
-		"Fleet Commander",
-		"Galactic Legend",
-		"Healer",
-		"Leader",
-		"[c][ffff33]Order 66 Raid[-][/c]",
-		"Support",
-		"Tank",
-	]) {
+	for (const role of roles) {
 		addCategoryFilter(result.filterSetup.customFilterById, `Role--${role}`);
 	}
 	for (const era of eras) {

@@ -41,7 +41,4 @@ const factions = [
 	"Wookie",
 ] as const;
 
-type Faction = (typeof factions)[number];
-
 export { factions };
-export type { Faction };

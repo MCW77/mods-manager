@@ -13,6 +13,7 @@ const charactersManagement$ = stateLoader$.charactersManagement$;
 // domain
 import { eras } from "#/modules/charactersManagement/domain/Eras";
 import { factions } from "#/modules/charactersManagement/domain/Factions";
+import { roles } from "../../modules/charactersManagement/domain/Roles";
 
 // components
 import { Input } from "#/components/reactive/Input";
@@ -24,14 +25,19 @@ import { Badge } from "#ui/badge";
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
+const eraFilterItems = eras.map((era) => ({
+	label: era,
+	value: `Era--${era}`,
+}));
+
 const factionFilterItems = factions.map((faction) => ({
 	label: faction,
 	value: `Faction--${faction}`,
 }));
 
-const eraFilterItems = eras.map((era) => ({
-	label: era,
-	value: `Era--${era}`,
+const roleFilterItems = roles.map((role) => ({
+	label: role,
+	value: `Role--${role}`,
 }));
 
 const customCharacterFilterGroups = [
@@ -102,44 +108,7 @@ const customCharacterFilterGroups = [
 	},
 	{
 		label: "Role",
-		items: [
-			{
-				label: "Attacker",
-				value: "Role--Attacker",
-			},
-			{
-				label: "Fleet Commander",
-				value: "Role--Fleet Commander",
-			},
-			{
-				label: "Galactic Legend",
-				value: "Role--Galactic Legend",
-			},
-			{
-				label: "Healer",
-				value: "Role--Healer",
-			},
-			{
-				label: "Leader",
-				value: "Role--Leader",
-			},
-			{
-				label: "Order 66 Raid",
-				value: "Role--[c][ffff33]Order 66 Raid[-][/c]",
-			},
-			{
-				label: "Pilot",
-				value: "Role--Pilot",
-			},
-			{
-				label: "Support",
-				value: "Role--Support",
-			},
-			{
-				label: "Tank",
-				value: "Role--Tank",
-			},
-		],
+		items: roleFilterItems,
 	},
 	{
 		label: "Naboo Raid",
