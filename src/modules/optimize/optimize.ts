@@ -48,22 +48,7 @@ const finishModOptimization = (
 	);
 	compilations$.defaultCompilation.lastOptimized.set(new Date());
 
-	// If this was an incremental optimization, leave the user on their current page
-	if (
-		incrementalOptimization$.indicesByProfile[
-			profilesManagement$.profiles.activeAllycode.peek()
-		].peek() !== null
-	) {
-		return true;
-	}
-
-	review$.modListFilter.view.set("sets");
-	review$.modListFilter.sort.set("assignedCharacter");
-
-	optimizerView$.view.set("review");
-
 	// Create the content of the pop-up for any post-optimization messages
-
 	const resultsWithMessages = result
 		.filter((x) => null !== x)
 		.filter(
@@ -79,6 +64,21 @@ const finishModOptimization = (
 		}
 		progress$.setPostOptimizationMessages(doubledResultsWithMessages);
 	}
+
+	// If this was an incremental optimization, leave the user on their current page
+	if (
+		incrementalOptimization$.indicesByProfile[
+			profilesManagement$.profiles.activeAllycode.peek()
+		].peek() !== null
+	) {
+		return true;
+	}
+
+	review$.modListFilter.view.set("sets");
+	review$.modListFilter.sort.set("assignedCharacter");
+
+	optimizerView$.view.set("review");
+
 	return true;
 };
 
