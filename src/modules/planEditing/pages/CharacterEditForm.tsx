@@ -42,29 +42,19 @@ import type {
 } from "#/modules/compilations/domain/MissedGoals";
 
 // components
-import { Input } from "#/components/reactive/Input";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
-import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
-import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
-import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
-import TargetStatsWidget from "#/modules/planEditing/components/TargetStatsWidget";
-import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
-import { Button } from "#ui/button";
-import { DialogClose } from "#/components/custom/dialog";
-import { Label } from "#ui/label";
-import {
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#ui/select";
-import { Select as ReactiveSelect } from "#/components/reactive/Select";
+
 import {
 	Tabs,
 	TabsContent,
 	TabsList,
 	TabsTrigger,
 } from "#/components/custom/tabs-vertical";
+
+import { Input } from "#/components/reactive/Input";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
+
+import { Button } from "#ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -75,6 +65,20 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "#/components/ui/dropdown-menu";
+import { Label } from "#ui/label";
+import {
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "#ui/select";
+
+import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
+import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
+import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
+import TargetStatsWidget from "#/modules/planEditing/components/TargetStatsWidget";
+import { PrimaryStatRestrictionsWidget } from "#/modules/planEditing/components/PrimaryStatRestrictionsWidget";
+import { MissedGoals as MissedGoalsMessages } from "#/modules/progress/components/MissedGoals";
 
 const ReactiveButton = reactive(Button);
 enableReactComponents();
@@ -111,118 +115,10 @@ const runIncrementalCalc = (
 			const messages = progress$.postOptimizationMessages.peek();
 			if (messages.length > 0) {
 				dialog$.show(
-					<div className={"flex flex-col flex-gap-2"}>
-						<h3 className={"text-center"}>
-							Important messages regarding your selected targets
-						</h3>
-						<div className="flex items-center justify-center h-[75vh] px-4 md:px-6">
-							<div className="w-full max-w-4xl border rounded-lg">
-								<div className="grid w-full grid-cols-[1fr_1fr] border-b">
-									<div className="grid gap-1 p-4">
-										<div className="text-sm font-medium tracking-wide">
-											Character
-										</div>
-									</div>
-									<div className="grid gap-1 p-4">
-										<div className="text-sm font-medium tracking-wide">
-											Messages
-										</div>
-									</div>
-								</div>
-								<div className="h-[70vh] overflow-auto">
-									<div className="grid w-full grid-cols-[1fr_1fr]">
-										{messages.map(
-											(
-												{ characterId: id, target, messages, missedGoals },
-												index,
-											) => {
-												const tempStats = {
-													Health: 0,
-													Protection: 0,
-													Speed: 0,
-													"Critical Damage %": 0,
-													"Potency %": 0,
-													"Tenacity %": 0,
-													"Physical Damage": 0,
-													"Special Damage": 0,
-													Armor: 0,
-													Resistance: 0,
-													"Accuracy %": 0,
-													"Critical Avoidance %": 0,
-													"Physical Critical Chance %": 0,
-													"Special Critical Chance %": 0,
-												};
-												const character =
-													profilesManagement$.activeProfile.characterById[
-														id
-													].peek() ||
-													Character.createCharacter(
-														id,
-														{
-															level: 0,
-															stars: 0,
-															gearLevel: 0,
-															gearPieces: [],
-															galacticPower: 0,
-															baseStats: tempStats,
-															equippedStats: tempStats,
-															relicTier: 0,
-														},
-														[],
-														[],
-														[],
-													);
-
-												return index % 2 === 0 ? (
-													<div key={`${id}-Avatar`} className="grid gap-1 p-4">
-														<CharacterAvatar
-															character={character}
-															displayBadges={false}
-															displayStars={false}
-														/>
-														<br />
-														{baseCharacterById[id]
-															? baseCharacterById[id].name
-															: id}
-													</div>
-												) : (
-													<div
-														key={`${id}-Messages`}
-														className="grid gap-1 p-4"
-													>
-														<h4>{target.id}:</h4>
-														<ul>
-															{messages?.map((message) => (
-																<li key={message}>{message}</li>
-															))}
-														</ul>
-														<ul className={"text-red-600"}>
-															{missedGoals.map(([missedGoal, value]) => (
-																<li key={missedGoal.id}>
-																	{`Missed goal stat for ${
-																		missedGoal.stat
-																	}. Value of ${
-																		value % 1 ? value.toFixed(2) : value
-																	} was not between ${
-																		missedGoal.minimum
-																	} and ${missedGoal.maximum}.`}
-																</li>
-															))}
-														</ul>
-													</div>
-												);
-											},
-										)}
-									</div>
-								</div>
-							</div>
-						</div>
-						<div className={"flex justify-center"}>
-							<DialogClose asChild>
-								<Button>Close</Button>
-							</DialogClose>
-						</div>
-					</div>,
+					<MissedGoalsMessages
+						baseCharacterById={baseCharacterById}
+						flatCharacterModdings={messages}
+					/>,
 				);
 			}
 		}
