@@ -1,11 +1,10 @@
-import { defineConfig, type PluginOption } from "vite";
+import { defineConfig } from "vite";
 import UnoCSS from "unocss/vite";
 import react from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 import dynamicImport from "vite-plugin-dynamic-import";
-import { visualizer } from "rollup-plugin-visualizer";
 import { unstableRolldownAdapter } from "vite-bundle-analyzer";
 import { analyzer } from "vite-bundle-analyzer";
 
@@ -100,10 +99,6 @@ export default defineConfig({
 			mode: "global",
 			hmrTopLevelAwait: false,
 		}),
-		visualizer({
-			filename: "./dist/stats.html",
-			open: true,
-		}) as PluginOption,
 		unstableRolldownAdapter(analyzer()),
 	],
 	resolve: {
