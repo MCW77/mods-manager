@@ -6,6 +6,8 @@ import { VitePWA } from "vite-plugin-pwa";
 import path from "node:path";
 import dynamicImport from "vite-plugin-dynamic-import";
 import { visualizer } from "rollup-plugin-visualizer";
+import { unstableRolldownAdapter } from "vite-bundle-analyzer";
+import { analyzer } from "vite-bundle-analyzer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -102,6 +104,7 @@ export default defineConfig({
 			filename: "./dist/stats.html",
 			open: true,
 		}) as PluginOption,
+		unstableRolldownAdapter(analyzer()),
 	],
 	resolve: {
 		alias: {
