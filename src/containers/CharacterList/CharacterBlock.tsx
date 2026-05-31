@@ -10,7 +10,6 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
-const lockedStatus$ = stateLoader$.lockedStatus$;
 
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
@@ -74,14 +73,13 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			[allycode, character, index, target],
 		);
 		const activePlan = target.id;
-		const charactersLockedStatus = useValue(() =>
-			lockedStatus$.isCharacterLockedForActivePlayer(characterId),
-		);
 
 		return (
 			<div className={"p-x-0 p-y-1 m-0 w-60"} key={character.id}>
 				<article
-					className={`max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] grid-rows-[auto_20px] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab ${charactersLockedStatus ? "locked" : ""}`}
+					className={
+						"max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] grid-rows-[auto_20px] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab"
+					}
 					aria-label={`Character ${baseCharacterById[character.id]?.name || character.id} - draggable`}
 					draggable={true}
 					onDragStart={characterBlockDragStart(index)}

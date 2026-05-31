@@ -1,8 +1,8 @@
+// react
+import { Computed, useValue } from "@legendapp/state/react";
+
 // utils
 import { cn } from "#/lib/utils";
-
-// react
-import { useObservable } from "@legendapp/state/react";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -23,11 +23,8 @@ function CharacterTargetStatusIcons({
 	character: Character.Character;
 	target: OptimizationPlan.OptimizationPlan;
 }) {
-	const isLocked$ = useObservable(() => {
-		const _reactiveIsLocked =
-			lockedStatus$.lockedCharactersForActivePlayer.get();
-		return lockedStatus$.isCharacterLockedForActivePlayer(character.id);
-	});
+	const isLocked$ =
+		lockedStatus$.isCharacterLockedForActivePlayer[character.id];
 	const restrictionsActive = OptimizationPlan.hasRestrictions(target);
 	const targetStatActive = target.targetStats?.length > 0;
 	const negativeWeightsActive = OptimizationPlan.hasNegativeWeights(target);
@@ -79,12 +76,14 @@ function CharacterTargetStatusIcons({
 						: "This character's target has at least one stat given a value"
 				}
 			/>
-			<LockedToggle
-				$pressed={isLocked$}
-				onPressedChange={() => {
-					lockedStatus$.toggleCharacterForActivePlayer(character.id);
-				}}
-			/>
+			<Computed>
+				<LockedToggle
+					$pressed={isLocked$}
+					onPressedChange={() => {
+						lockedStatus$.toggleCharacterForActivePlayer(character.id);
+					}}
+				/>
+			</Computed>
 		</div>
 	);
 }

@@ -1,7 +1,7 @@
 // react
 import type React from "react";
 
-import { observer, useValue, useObservable } from "@legendapp/state/react";
+import { observer, useValue } from "@legendapp/state/react";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -21,7 +21,6 @@ import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
 
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 
-
 type CharacterBlockProps = {
 	character: Character.Character;
 	className: string;
@@ -39,11 +38,9 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 			compilations$.defaultCompilation.selectedCharacters,
 		);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
-		const isLocked$ = useObservable(() => {
-			const _reactiveIsLocked =
-				lockedStatus$.lockedCharactersForActivePlayer.get();
-			return lockedStatus$.isCharacterLockedForActivePlayer(character.id);
-		});
+
+		const isLocked$ =
+			lockedStatus$.isCharacterLockedForActivePlayer[character.id];
 		const classAttr = `${className} relative w-32 m-0.5em text-center`;
 
 		const isCharacterSelected = (characterID: CharacterNames) =>

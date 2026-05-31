@@ -1,6 +1,7 @@
 // state
 import {
 	beginBatch,
+	computed,
 	endBatch,
 	type Observable,
 	observable,
@@ -37,10 +38,13 @@ const lockedStatus$: ObservableObject<LockedStatusObservable> =
 		},
 		isCharacterLockedForActivePlayer: (
 			characterId: CharacterNames,
-		): boolean => {
-			const lockedCharactersForActivePlayer =
-				lockedStatus$.lockedCharactersForActivePlayer.get();
-			return lockedCharactersForActivePlayer?.has(characterId) ?? false;
+		): Observable<boolean> => {
+			return computed(
+				() =>
+					lockedStatus$.lockedCharactersForActivePlayer
+						?.get()
+						?.has(characterId) ?? false,
+			);
 		},
 		addProfile: (allycode: string) => {
 			if (

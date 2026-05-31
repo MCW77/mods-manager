@@ -13,7 +13,9 @@ interface LockedStatusObservable {
 	persistedData: LockedStatusPersistedData;
 	lockedCharactersByAllycode: () => Observable<LockedCharactersByAllycode>;
 	lockedCharactersForActivePlayer: () => Observable<LockedCharacters>;
-	isCharacterLockedForActivePlayer: (characterId: CharacterNames) => boolean;
+	isCharacterLockedForActivePlayer: (
+		characterId: CharacterNames,
+	) => Observable<boolean>;
 	addProfile: (allycode: string) => void;
 	deleteProfile: (allycode: string) => void;
 	lockAll: () => void;
