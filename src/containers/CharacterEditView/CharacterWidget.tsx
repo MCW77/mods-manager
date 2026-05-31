@@ -39,9 +39,6 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 			compilations$.defaultCompilation.selectedCharacters,
 		);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
-		const lastSelectedCharacter = selectedCharacters.length - 1;
-
-		// Track membership reactively on the observable Set itself (avoids stale subscriptions from `.get()`)
 		const isLocked$ = useObservable(() => {
 			const _reactiveIsLocked =
 				lockedStatus$.lockedCharactersForActivePlayer.get();
@@ -88,7 +85,8 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 						compilations$.selectCharacter(
 							character.id,
 							Character.defaultTarget(characterSettings, character),
-							lastSelectedCharacter,
+							compilations$.defaultCompilation.selectedCharacters.peek()
+								.length - 1,
 						)
 					}
 					role={"option"}
