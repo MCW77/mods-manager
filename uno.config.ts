@@ -11,6 +11,40 @@ export default defineConfig({
 	content: {
 		filesystem: ["src/**/*.{js,ts,jsx,tsx}", "index.html"],
 	},
+	variants: [
+		(matcher) => {
+			if (!matcher.startsWith("data-open:")) return;
+			const m = matcher.slice("data-open:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-open]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-closed:")) return;
+			const m = matcher.slice("data-closed:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-closed]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-inset:")) return;
+			const m = matcher.slice("data-inset:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-inset]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-popup-open:")) return;
+			const m = matcher.slice("data-popup-open:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-popup-open]`,
+			};
+		},
+	],
 	safelist: [
 		// Ensure mod color utilities are always included for dynamic usage
 		"text-mod-grey",
