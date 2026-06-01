@@ -4,7 +4,7 @@ import {
 	presetIcons,
 	presetTypography,
 } from "unocss";
-//import presetAnimations from "unocss-preset-animations";
+import presetAnimations from "unocss-preset-animations";
 import presetShadcn from "unocss-preset-shadcn";
 
 export default defineConfig({
@@ -62,6 +62,7 @@ export default defineConfig({
 				reset: true,
 			},
 		}),
+		presetAnimations(),
 		presetIcons(),
 		presetShadcn({
 			color: "slate",
