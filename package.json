@@ -52,7 +52,7 @@
 		"lucide-react": "^1.17.0",
 		"next-themes": "^0.4.6",
 		"react": "^19.2.7",
-		"react-dom": "^19.2.6",
+		"react-dom": "^19.2.7",
 		"react-i18next": "^17.0.8",
 		"react-scan": "^0.5.7",
 		"sonner": "^2.0.7",
