@@ -163,9 +163,6 @@ importers:
       '@iconify-json/skill-icons':
         specifier: ^1.2.4
         version: 1.2.4
-      '@types/big.js':
-        specifier: ^6.2.2
-        version: 6.2.2
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
@@ -2625,9 +2622,6 @@ packages:
 
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
-
-  '@types/big.js@6.2.2':
-    resolution: {integrity: sha512-e2cOW9YlVzFY2iScnGBBkplKsrn2CsObHQ2Hiw4V1sSyiGbgWL8IyqE3zFi1Pt5o1pdAtYkDAIsF3KKUPjdzaA==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -6982,8 +6976,6 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.7
     optional: true
-
-  '@types/big.js@6.2.2': {}
 
   '@types/chai@5.2.3':
     dependencies:
