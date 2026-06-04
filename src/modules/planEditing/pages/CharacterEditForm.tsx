@@ -114,12 +114,14 @@ const runIncrementalCalc = (
 
 			const messages = progress$.postOptimizationMessages.peek();
 			if (messages.length > 0) {
-				dialog$.show(
-					<MissedGoalsMessages
-						baseCharacterById={baseCharacterById}
-						flatCharacterModdings={messages}
-					/>,
-				);
+				dialog$.show({
+					content: (
+						<MissedGoalsMessages
+							baseCharacterById={baseCharacterById}
+							flatCharacterModdings={messages}
+						/>
+					),
+				});
 			}
 		}
 	});

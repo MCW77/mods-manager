@@ -77,11 +77,13 @@ const ActionsWidget = () => {
 						type={"button"}
 						size={"sm"}
 						onClick={() =>
-							dialog$.show(
-								<TextualReview
-									modAssignments={movingModsByAssignedCharacter}
-								/>,
-							)
+							dialog$.show({
+								content: (
+									<TextualReview
+										modAssignments={movingModsByAssignedCharacter}
+									/>
+								),
+							})
 						}
 					>
 						Show Summary
@@ -102,14 +104,14 @@ const ActionsWidget = () => {
 				<Button
 					type={"button"}
 					disabled={!hasActiveSession}
-					onClick={() => dialog$.show(<CreateProfileModal />)}
+					onClick={() => dialog$.show({ content: <CreateProfileModal /> })}
 				>
 					Create Loadout
 				</Button>
 				<Button
 					type={"button"}
 					disabled={!hasActiveSession}
-					onClick={() => dialog$.show(<MoveModsModal />)}
+					onClick={() => dialog$.show({ content: <MoveModsModal /> })}
 				>
 					Move mods in-game
 				</Button>

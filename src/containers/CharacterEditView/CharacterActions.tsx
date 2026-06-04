@@ -178,19 +178,21 @@ const CharacterActions: React.FC = observer(() => {
 
 									const messages = progress$.postOptimizationMessages.peek();
 									if (messages.length > 0) {
-										dialog$.show(
-											<MissedGoals
-												baseCharacterById={baseCharacterById}
-												flatCharacterModdings={messages}
-											/>,
-											true,
-										);
+										dialog$.show({
+											content: (
+												<MissedGoals
+													baseCharacterById={baseCharacterById}
+													flatCharacterModdings={messages}
+												/>
+											),
+											modal: true,
+										});
 									}
 								}
 							},
 						);
 
-						dialog$.show(<OptimizerProgress />, true);
+						dialog$.show({ content: <OptimizerProgress />, modal: true });
 						optimizeMods();
 					}
 				}}

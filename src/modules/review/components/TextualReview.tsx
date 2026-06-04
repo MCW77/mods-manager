@@ -10,7 +10,6 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
-import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
 import type * as Character from "#/domain/Character";
@@ -19,7 +18,16 @@ import type { BaseCharacterById } from "#/modules/characters/domain/BaseCharacte
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
 
 // components
+import { ScrollArea, ScrollBar } from "#/components/custom/ScrollArea";
+
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
 
 const capitalize = (text: string) => {
 	return text.charAt(0).toUpperCase() + text.slice(1);
@@ -93,34 +101,52 @@ const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 	);
 
 	return (
-		<div>
-			<h2>Move Summary</h2>
-			<pre
-				id={`summary_pre_${summaryId}`}
-				className={
-					"bg-background p-1 overflow-y-auto text-shadow-none max-h-[calc(100vh-27em)]"
-				}
+		<>
+			<DialogHeader>
+				<DialogTitle>Move Summary</DialogTitle>
+				<DialogDescription />
+			</DialogHeader>
+			<ScrollArea
+				className={"max-h-[60vh] w-full min-w-0 bg-background border rounded"}
 			>
-				{summaryListContent(baseCharacterById, characterById, modAssignments)}
-			</pre>
-			<div className={"flex justify-center gap-2"}>
-				<Button
-					type={"button"}
-					onClick={() =>
-						copySummaryToClipboard(
+				<div className="w-max min-w-full">
+					<pre
+						id={`summary_pre_${summaryId}`}
+						className={
+							"w-max min-w-full p-1 text-shadow-none max-h-[calc(100vh-27em)]"
+						}
+					>
+						{summaryListContent(
 							baseCharacterById,
 							characterById,
 							modAssignments,
-						)
-					}
-				>
-					Copy to Clipboard
-				</Button>
-				<Button type={"button"} onClick={() => dialog$.hide()}>
-					OK
-				</Button>
-			</div>
-		</div>
+						)}
+					</pre>
+				</div>
+				<ScrollBar orientation="horizontal" />
+			</ScrollArea>
+			<DialogFooter className="sm:justify-center pb-1">
+				<div className="flex flex-row gap-2 items-center justify-center">
+					<DialogClose
+						render={
+							<Button
+								type={"button"}
+								onClick={() =>
+									copySummaryToClipboard(
+										baseCharacterById,
+										characterById,
+										modAssignments,
+									)
+								}
+							>
+								Copy to Clipboard
+							</Button>
+						}
+					/>
+					<DialogClose render={<Button type={"button"}>OK</Button>} />
+				</div>
+			</DialogFooter>
+		</>
 	);
 };
 

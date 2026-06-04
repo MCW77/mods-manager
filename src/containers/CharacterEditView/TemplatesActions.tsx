@@ -1,5 +1,3 @@
-// react
-
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -39,7 +37,15 @@ const TemplatesActions = ({
 }: TemplatesActionsProps) => {
 	return (
 		<div className={"flex gap-2"}>
-			<Button size="sm" onClick={() => dialog$.show(<AddTemplateModal />)}>
+			<Button
+				size="sm"
+				onClick={() =>
+					dialog$.show({
+						content: <AddTemplateModal />,
+						contentStyle: "sm:max-w-[calc(100%-2rem)]",
+					})
+				}
+			>
 				<FontAwesomeIcon icon={faPlus} title={"Add template"} />
 			</Button>
 			<Button
@@ -74,7 +80,7 @@ const TemplatesActions = ({
 			<Button
 				size="sm"
 				disabled={hasNoSelectedCharacters}
-				onClick={() => dialog$.show(<SaveTemplateModal />)}
+				onClick={() => dialog$.show({ content: <SaveTemplateModal /> })}
 			>
 				<FontAwesomeIcon icon={faSave} title={"Save"} />
 			</Button>

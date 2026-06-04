@@ -1,17 +1,27 @@
-// state
+// react
 import { Computed, observer, useValue } from "@legendapp/state/react";
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
+// state
 import { modMove$ } from "#/modules/modMove/state/modMove";
 
 // components
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
 import { Progress } from "#ui/progress";
 
 const ModMoveProgress: React.FC = observer(() => {
 	return (
-		<div className={"flex flex-col gap-2"}>
-			<h3>Moving Your Mods...</h3>
+		<>
+			<DialogHeader>
+				<DialogTitle>Moving Your Mods...</DialogTitle>
+				<DialogDescription />
+			</DialogHeader>
 			<div>
 				<Computed>
 					{() => {
@@ -32,19 +42,22 @@ const ModMoveProgress: React.FC = observer(() => {
 					}}
 				</Computed>
 			</div>
-			<div>
-				<Button
-					type={"button"}
-					variant={"destructive"}
-					onClick={() => {
-						dialog$.hide();
-						modMove$.cancelModMove();
-					}}
-				>
-					Cancel
-				</Button>
-			</div>
-		</div>
+			<DialogFooter className="sm:justify-center pb-1">
+				<DialogClose
+					render={
+						<Button
+							type={"button"}
+							variant={"destructive"}
+							onClick={() => {
+								modMove$.cancelModMove();
+							}}
+						>
+							Cancel
+						</Button>
+					}
+				/>
+			</DialogFooter>
+		</>
 	);
 });
 

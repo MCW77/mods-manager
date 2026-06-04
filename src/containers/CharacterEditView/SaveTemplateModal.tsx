@@ -6,11 +6,18 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const templates$ = stateLoader$.templates$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-
 // components
 import { Input } from "#/components/reactive/Input";
+import { Select as ReactiveSelect } from "#/components/reactive/Select";
+
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
 import { Label } from "#ui/label";
 import {
 	SelectContent,
@@ -18,7 +25,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 const SaveTemplateModal: React.FC = observer(() => {
 	const cannotSaveTemplate = useValue(
@@ -27,8 +33,13 @@ const SaveTemplateModal: React.FC = observer(() => {
 	const templatesCategories = useValue(templates$.categories);
 
 	return (
-		<div className={"flex flex-col gap-2"}>
-			<h3>Please enter a name for this character template</h3>
+		<>
+			<DialogHeader>
+				<DialogTitle>Save Template</DialogTitle>
+				<DialogDescription>
+					Please enter a name (and category) for this character template
+				</DialogDescription>
+			</DialogHeader>
 			<Computed>
 				<div>
 					<Input
@@ -72,22 +83,23 @@ const SaveTemplateModal: React.FC = observer(() => {
 			>
 				<p />
 			</Show>
-			<div className={"flex gap-2 justify-center"}>
-				<Button type={"button"} onClick={() => dialog$.hide()}>
-					Cancel
-				</Button>
-				<Button
-					type={"button"}
-					disabled={cannotSaveTemplate}
-					onClick={() => {
-						dialog$.hide();
-						templates$.saveTemplate();
-					}}
-				>
-					Save
-				</Button>
-			</div>
-		</div>
+			<DialogFooter className="sm:justify-center pb-1">
+				<DialogClose render={<Button type={"button"}>Cancel</Button>} />
+				<DialogClose
+					render={
+						<Button
+							type={"button"}
+							disabled={cannotSaveTemplate}
+							onClick={() => {
+								templates$.saveTemplate();
+							}}
+						>
+							Save
+						</Button>
+					}
+				/>
+			</DialogFooter>
+		</>
 	);
 });
 

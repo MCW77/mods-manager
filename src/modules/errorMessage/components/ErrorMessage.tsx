@@ -7,7 +7,7 @@ import { errorMessage$ } from "../state/errorMessage";
 
 // components
 import { WarningLabel } from "#/components/WarningLabel/WarningLabel";
-import { DialogClose } from "#/components/custom/dialog";
+import { DialogClose } from "#ui/dialog";
 
 const ErrorMessage = React.memo(() => {
 	const errorMessage = useValue(errorMessage$);

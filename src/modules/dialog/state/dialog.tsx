@@ -12,13 +12,18 @@ import { ErrorMessage } from "#/modules/errorMessage/components/ErrorMessage";
 
 type Dialog = {
 	content: React.ReactNode;
+	contentStyle: string;
 	error: React.ReactNode;
 	reason: React.ReactNode;
 	solution: React.ReactNode;
 	isError: boolean;
 	modal: boolean;
 	open: boolean;
-	show: (content: React.ReactNode, modal?: boolean) => void;
+	show: (params: {
+		content: React.ReactNode;
+		contentStyle?: string;
+		modal?: boolean;
+	}) => void;
 	showError: (
 		error: React.ReactNode,
 		reason?: React.ReactNode,
@@ -36,15 +41,17 @@ type Dialog = {
 
 export const dialog$: ObservableObject<Dialog> = observable({
 	content: "" as React.ReactNode,
+	contentStyle: "",
 	error: "" as React.ReactNode,
 	reason: "" as React.ReactNode,
 	solution: "" as React.ReactNode,
 	isError: false,
 	modal: false,
 	open: false,
-	show: (content: React.ReactNode, modal = false) => {
+	show: ({ content, contentStyle = "", modal = false }) => {
 		if (dialog$.open.peek() === false) {
 			dialog$.content.set(content);
+			dialog$.contentStyle.set(contentStyle);
 			dialog$.modal.set(modal);
 			dialog$.open.set(true);
 			return;
@@ -52,6 +59,7 @@ export const dialog$: ObservableObject<Dialog> = observable({
 		const dispose = dialog$.open.onChange(({ value }) => {
 			if (value === false) {
 				dialog$.content.set(content);
+				dialog$.contentStyle.set(contentStyle);
 				dialog$.modal.set(modal);
 				dialog$.open.set(false);
 				dispose();

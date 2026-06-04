@@ -111,7 +111,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 					<Button
 						type={"button"}
 						variant={"destructive"}
-						onClick={() => dialog$.show(resetModal())}
+						onClick={() => dialog$.show({ content: resetModal() })}
 					>
 						<FontAwesomeIcon
 							className={"p-r-2"}

@@ -1,5 +1,3 @@
-// react
-
 // state
 import { observable, beginBatch, endBatch } from "@legendapp/state";
 
@@ -16,10 +14,8 @@ import type { MoveStatus } from "../domain/MoveStatus";
 import { Mod } from "#/domain/Mod";
 
 // components
-import LazyModMoveProgress from "../components/ModMoveProgress";
-
-// components
-import { ModMoveCancelModal } from "../../modMove/components/ModMoveCancelModal";
+import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
+import ModMoveProgress from "../components/ModMoveProgress";
 
 const _hotutilsv2mockbaseurl = "http://localhost:3001/humock";
 
@@ -93,7 +89,7 @@ const modMove$ = observable({
 					break;
 				default:
 					modMove$.isMoving.set(false);
-					dialog$.show(<ModMoveCancelModal />, true);
+					dialog$.show({ content: <ModMoveCancelModal />, modal: true });
 			}
 		} catch {
 			(error: Error) => {
@@ -148,7 +144,7 @@ const modMove$ = observable({
 					modMove$.isMoving.set(true);
 					dialog$.hide();
 					isBusy$.set(false);
-					dialog$.show(<LazyModMoveProgress />, true);
+					dialog$.show({ content: <ModMoveProgress />, modal: true });
 					modMove$.pollForModMoveStatus();
 					return true;
 				}

@@ -11,7 +11,6 @@ const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
 import { modMove$ } from "#/modules/modMove/state/modMove";
 
 // domain
@@ -24,6 +23,14 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 // components
 import { Credits } from "#/components/Credits/Credits";
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
+import { ScrollArea } from "#ui/scroll-area";
 
 interface HUModsProfile {
 	id: CharacterNames;
@@ -137,61 +144,69 @@ const MoveModsModal = () => {
 	};
 
 	return (
-		<div className={"flex flex-col gap-2"}>
-			<h2>Move mods in-game using HotUtils</h2>
-			<h3>
-				Moving your mods will cost
-				<br />
-				<span
-					className={
-						"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"
-					}
-				>
-					<strong className={"white"}>{formatNumber(modRemovalCost)}</strong>{" "}
-					<Credits />
-				</span>
-			</h3>
-			<p>
-				This will move all of your mods as recommended by Grandivory's Mods
-				Optimizer. Please note that{" "}
-				<strong className={"text-mod-gold"}>
-					this action will log you out of Galaxy of Heroes if you are currently
-					logged in
-				</strong>
-				.
-			</p>
-			<p>
-				Moving your mods can take several minutes. Please be patient and allow
-				the process to complete before refreshing or logging back into Galaxy of
-				Heroes.
-			</p>
-			<p>
-				<strong>Use at your own risk!</strong> HotUtils functionality breaks the
-				terms of service for Star Wars: Galaxy of Heroes. You assume all risk in
-				using this tool. Grandivory's Mods Optimizer is not associated with
-				HotUtils.
-			</p>
-			<div className={"flex gap-2 justify-center"}>
-				<Button
-					type={"button"}
-					variant={"destructive"}
-					onClick={() => dialog$.hide()}
-				>
-					Cancel
-				</Button>
-				<Button
-					type={"button"}
-					onClick={() => {
-						const profile: HUModsMoveProfile = {
-							units: generateHotUtilsProfile(),
-						};
-						modMove$.moveMods(profile);
-					}}
-				>
-					Move my mods
-				</Button>
-			</div>
-		</div>
+		<>
+			<DialogHeader>
+				<DialogTitle>Move mods in-game using HotUtils</DialogTitle>
+				<DialogDescription>
+					Moving your mods will cost
+					<br />
+					<span
+						className={
+							"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"
+						}
+					>
+						<strong className={"white"}>{formatNumber(modRemovalCost)}</strong>{" "}
+						<Credits />
+					</span>
+				</DialogDescription>
+			</DialogHeader>
+			<ScrollArea
+				className={"max-h-[60vh] w-full min-w-0 bg-background border rounded"}
+			>
+				<p>
+					This will move all of your mods as recommended by Grandivory's Mods
+					Optimizer. Please note that{" "}
+					<strong className={"text-mod-gold"}>
+						this action will log you out of Galaxy of Heroes if you are
+						currently logged in
+					</strong>
+					.
+				</p>
+				<p>
+					Moving your mods can take several minutes. Please be patient and allow
+					the process to complete before refreshing or logging back into Galaxy
+					of Heroes.
+				</p>
+				<p>
+					<strong>Use at your own risk!</strong> HotUtils functionality breaks
+					the terms of service for Star Wars: Galaxy of Heroes. You assume all
+					risk in using this tool. Grandivory's Mods Optimizer is not associated
+					with HotUtils.
+				</p>
+			</ScrollArea>
+			<DialogFooter className="sm:justify-center pb-1">
+				<div className="flex flex-row gap-2 items-center justify-center">
+					<DialogClose
+						render={
+							<Button type={"button"} variant={"destructive"}>
+								Cancel
+							</Button>
+						}
+					/>
+					<Button
+						type={"button"}
+						onClick={() => {
+							const profile: HUModsMoveProfile = {
+								units: generateHotUtilsProfile(),
+							};
+							modMove$.moveMods(profile);
+						}}
+					>
+						Move my mods
+					</Button>
+				</div>
+			</DialogFooter>
+		</>
 	);
 };
 

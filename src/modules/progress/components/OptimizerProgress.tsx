@@ -1,5 +1,3 @@
-// react
-
 // state
 import {
 	Memo,
@@ -17,7 +15,6 @@ const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 
 import { cancelOptimizer } from "#/modules/optimize/optimize";
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
 import { progress$ } from "../state/progress";
 
 // domain
@@ -27,6 +24,13 @@ import type * as Character from "#/domain/Character";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
 import { Label } from "#ui/label";
 import { Progress } from "#ui/progress";
 
@@ -40,113 +44,224 @@ const OptimizerProgress: React.FC = observer(() => {
 		const charId = progress$.optimizationStatus.character.get();
 		return charId === "" ? undefined : characterById[charId];
 	});
-	const isIncremental = incrementalOptimization$.activeIndex.peek() !== null;
-
-	const cancel = (closeModal: boolean) => {
-		cancelOptimizer();
-		if (closeModal) {
-			dialog$.hide();
-		}
-	};
+	const $isIncremental = useObservable(() => {
+		const activeIndex = incrementalOptimization$.activeIndex.get();
+		return activeIndex !== undefined && activeIndex !== null;
+	});
 
 	return (
-		<div className="w-600px">
-			<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
-			<div className={"flex flex-col gap-2"}>
-				<Show ifReady={character$}>
-					<Memo>
-						{() => {
-							const character = useValue(character$);
-							return (
-								<CharacterAvatar
-									character={character}
-									displayBadges={false}
-									displayStars={false}
-								/>
-							);
-						}}
-					</Memo>
-				</Show>
-				<div className={"step"}>
-					<Memo>
-						{() => {
-							const message = useValue(progress$.optimizationStatus.message);
-							return message;
-						}}
-					</Memo>
-				</div>
-				<div>
-					<Label>Character progress</Label>
-					<ReactiveProgress
-						$value={() =>
-							Math.trunc(
-								100 *
-									((progress$.optimizationStatus.characterIndex.get() + 1) /
-										progress$.optimizationStatus.characterCount.get()),
-							)
-						}
-					/>
-				</div>
-				<div>
-					<Label>
-						Sets progress:{" "}
+		<Show
+			if={$isIncremental}
+			else={
+				<>
+					<DialogHeader>
+						<DialogTitle className="text-[#a35ef9]">
+							Optimizing Your Mods...
+						</DialogTitle>
+						<DialogDescription />
+					</DialogHeader>
+					<div className={"flex flex-col gap-2"}>
+						<Show ifReady={character$}>
+							<Memo>
+								{() => {
+									const character = useValue(character$);
+									return (
+										<CharacterAvatar
+											character={character}
+											displayBadges={false}
+											displayStars={false}
+										/>
+									);
+								}}
+							</Memo>
+						</Show>
+						<div className={"step"}>
+							<Memo>
+								{() => {
+									const message = useValue(
+										progress$.optimizationStatus.message,
+									);
+									return message;
+								}}
+							</Memo>
+						</div>
+						<div>
+							<Label>Character progress</Label>
+							<ReactiveProgress
+								$value={() =>
+									Math.trunc(
+										100 *
+											((progress$.optimizationStatus.characterIndex.get() + 1) /
+												progress$.optimizationStatus.characterCount.get()),
+									)
+								}
+							/>
+						</div>
+						<div>
+							<Label>
+								Sets progress:{" "}
+								<Memo>
+									{() => {
+										const joinedSets = useValue(() =>
+											progress$.optimizationStatus.sets.get().join(" - "),
+										);
+										return joinedSets;
+									}}
+								</Memo>
+							</Label>
+							<ReactiveProgress
+								$value={() =>
+									Math.trunc(
+										100 *
+											(progress$.optimizationStatus.setsIndex.get() /
+												progress$.optimizationStatus.setsCount.get()),
+									)
+								}
+							/>
+						</div>
+						<div>
+							<Label>
+								TargetStats progress:{" "}
+								<Memo>
+									{() => {
+										const targetStat = useValue(
+											progress$.optimizationStatus.targetStat,
+										);
+										return targetStat;
+									}}
+								</Memo>
+							</Label>
+							<ReactiveProgress
+								$value={() =>
+									Math.trunc(
+										100 *
+											(progress$.optimizationStatus.targetStatIndex.get() /
+												progress$.optimizationStatus.targetStatCount.get()),
+									)
+								}
+							/>
+						</div>
+						<div>
+							<Label>permutations progress</Label>
+							<ReactiveProgress
+								$value={progress$.optimizationStatus.progress}
+							/>
+						</div>
+					</div>
+					<DialogFooter className="sm:justify-center">
+						<DialogClose
+							render={
+								<Button
+									type={"button"}
+									variant={"destructive"}
+									onClick={() => cancelOptimizer()}
+								>
+									Cancel
+								</Button>
+							}
+						/>
+					</DialogFooter>
+				</>
+			}
+		>
+			<div className="flex flex-col gap-2 max-w-600px">
+				<h3 className="text-[#a35ef9]">Optimizing Your Mods...</h3>
+				<div className={"flex flex-col gap-2"}>
+					<Show ifReady={character$}>
 						<Memo>
 							{() => {
-								const joinedSets = useValue(() =>
-									progress$.optimizationStatus.sets.get().join(" - "),
+								const character = useValue(character$);
+								return (
+									<CharacterAvatar
+										character={character}
+										displayBadges={false}
+										displayStars={false}
+									/>
 								);
-								return joinedSets;
 							}}
 						</Memo>
-					</Label>
-					<ReactiveProgress
-						$value={() =>
-							Math.trunc(
-								100 *
-									(progress$.optimizationStatus.setsIndex.get() /
-										progress$.optimizationStatus.setsCount.get()),
-							)
-						}
-					/>
-				</div>
-				<div>
-					<Label>
-						TargetStats progress:{" "}
+					</Show>
+					<div className={"step"}>
 						<Memo>
 							{() => {
-								const targetStat = useValue(
-									progress$.optimizationStatus.targetStat,
-								);
-								return targetStat;
+								const message = useValue(progress$.optimizationStatus.message);
+								return message;
 							}}
 						</Memo>
-					</Label>
-					<ReactiveProgress
-						$value={() =>
-							Math.trunc(
-								100 *
-									(progress$.optimizationStatus.targetStatIndex.get() /
-										progress$.optimizationStatus.targetStatCount.get()),
-							)
-						}
-					/>
+					</div>
+					<div>
+						<Label>Character progress</Label>
+						<ReactiveProgress
+							$value={() =>
+								Math.trunc(
+									100 *
+										((progress$.optimizationStatus.characterIndex.get() + 1) /
+											progress$.optimizationStatus.characterCount.get()),
+								)
+							}
+						/>
+					</div>
+					<div>
+						<Label>
+							Sets progress:{" "}
+							<Memo>
+								{() => {
+									const joinedSets = useValue(() =>
+										progress$.optimizationStatus.sets.get().join(" - "),
+									);
+									return joinedSets;
+								}}
+							</Memo>
+						</Label>
+						<ReactiveProgress
+							$value={() =>
+								Math.trunc(
+									100 *
+										(progress$.optimizationStatus.setsIndex.get() /
+											progress$.optimizationStatus.setsCount.get()),
+								)
+							}
+						/>
+					</div>
+					<div>
+						<Label>
+							TargetStats progress:{" "}
+							<Memo>
+								{() => {
+									const targetStat = useValue(
+										progress$.optimizationStatus.targetStat,
+									);
+									return targetStat;
+								}}
+							</Memo>
+						</Label>
+						<ReactiveProgress
+							$value={() =>
+								Math.trunc(
+									100 *
+										(progress$.optimizationStatus.targetStatIndex.get() /
+											progress$.optimizationStatus.targetStatCount.get()),
+								)
+							}
+						/>
+					</div>
+					<div>
+						<Label>permutations progress</Label>
+						<ReactiveProgress $value={progress$.optimizationStatus.progress} />
+					</div>
 				</div>
 				<div>
-					<Label>permutations progress</Label>
-					<ReactiveProgress $value={progress$.optimizationStatus.progress} />
+					<Button
+						type={"button"}
+						variant={"destructive"}
+						className={""}
+						onClick={() => cancelOptimizer()}
+					>
+						Cancel
+					</Button>
 				</div>
 			</div>
-			<div>
-				<Button
-					type={"button"}
-					variant={"destructive"}
-					className={""}
-					onClick={() => cancel(!isIncremental)}
-				>
-					Cancel
-				</Button>
-			</div>
-		</div>
+		</Show>
 	);
 });
 

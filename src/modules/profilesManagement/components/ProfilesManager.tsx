@@ -22,6 +22,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FileInput } from "#/components/FileInput/FileInput";
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
 import { Label } from "#ui/label";
 import { RadioGroup, RadioGroupItem } from "#ui/radio-group";
 
@@ -39,34 +46,41 @@ const ProfilesManager = React.memo(() => {
 	 */
 	const deleteAllycodeModal = () => {
 		return (
-			<div>
-				<h2>
-					{t("general.accounts.Delete")}{" "}
-					<strong>{formatAllycode(selectedProfile)}</strong>?
-				</h2>
-				<p>{t("general.accounts.DeletionConfirmation")}</p>
-				<p>
+			<>
+				<DialogHeader>
+					<DialogTitle>{t("general.accounts.Delete")}</DialogTitle>
+					<DialogDescription>
+						{t("general.accounts.DeletionConfirmation")}
+					</DialogDescription>
+				</DialogHeader>
+				<div>
 					{t("general.accounts.DeletionExplanation1")}{" "}
 					{t("general.accounts.DeletionExplanation2")}
-				</p>
-
-				<div className={"flex gap-2 justify-center p-1"}>
-					<Button type={"button"} onClick={() => dialog$.hide()}>
-						{t("general.accounts.Cancel")}
-					</Button>
-					<Button
-						type={"button"}
-						variant={"destructive"}
-						className={""}
-						onClick={() => {
-							profilesManagement$.deleteProfile(selectedProfile);
-							dialog$.hide();
-						}}
-					>
-						{t("general.accounts.Proceed")}
-					</Button>
 				</div>
-			</div>
+				<DialogFooter className="sm:justify-center pb-1">
+					<div className="flex flex-row gap-2 items-center justify-center">
+						<DialogClose
+							render={
+								<Button type={"button"}>{t("general.accounts.Cancel")}</Button>
+							}
+						/>
+						<DialogClose
+							render={
+								<Button
+									type={"button"}
+									variant={"destructive"}
+									className={""}
+									onClick={() => {
+										profilesManagement$.deleteProfile(selectedProfile);
+									}}
+								>
+									{t("general.accounts.Proceed")}
+								</Button>
+							}
+						/>
+					</div>
+				</DialogFooter>
+			</>
 		);
 	};
 
@@ -117,7 +131,7 @@ const ProfilesManager = React.memo(() => {
 					disabled={selectedProfile === ""}
 					type={"button"}
 					variant={"destructive"}
-					onClick={() => dialog$.show(deleteAllycodeModal())}
+					onClick={() => dialog$.show({ content: deleteAllycodeModal() })}
 				>
 					<FontAwesomeIcon
 						className="m-r-2"

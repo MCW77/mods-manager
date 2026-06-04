@@ -10,8 +10,6 @@ const compilations$ = stateLoader$.compilations$;
 const hotutils$ = stateLoader$.hotutils$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
-import { dialog$ } from "#/modules/dialog/state/dialog";
-
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 
@@ -20,7 +18,15 @@ import type { ProfileCreationData } from "#/modules/hotUtils/domain/ProfileCreat
 
 // components
 import { Input } from "#/components/reactive/Input";
+
 import { Button } from "#ui/button";
+import {
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "#ui/dialog";
 import { Label } from "#ui/label";
 
 const CreateProfileModal: React.FC = observer(() => {
@@ -84,12 +90,14 @@ const CreateProfileModal: React.FC = observer(() => {
 	};
 
 	return (
-		<div className={"flex flex-col gap-2"}>
-			<h2>Create a new HotUtils loudout</h2>
-			<p className={"text-center"}>
-				Please note that using the same name as an existing loudout will cause
-				it to be overwritten.
-			</p>
+		<>
+			<DialogHeader>
+				<DialogTitle>Create a new HotUtils loudout</DialogTitle>
+				<DialogDescription>
+					Please note that using the same name as an existing loudout will cause
+					it to be overwritten.
+				</DialogDescription>
+			</DialogHeader>
 			<div>
 				<Label htmlFor={"categoryName"}>Category:</Label>
 				<Input id={"categoryName"} type={"text"} $value={input$.category} />
@@ -98,26 +106,31 @@ const CreateProfileModal: React.FC = observer(() => {
 				<Label htmlFor={"loudoutName"}>Loudout Name:</Label>
 				<Input id={"loudoutName"} type={"text"} $value={input$.name} />
 			</div>
-			<div className={"flex gap-2 justify-center"}>
-				<Button
-					type={"button"}
-					variant={"destructive"}
-					onClick={() => dialog$.hide()}
-				>
-					Cancel
-				</Button>
-				<Button
-					type={"button"}
-					disabled={input.category === "" || input.name === ""}
-					onClick={() => {
-						dialog$.hide();
-						createLoudout();
-					}}
-				>
-					Create Loudout
-				</Button>
-			</div>
-		</div>
+			<DialogFooter className="sm:justify-center pb-1">
+				<div className="flex flex-row gap-2 items-center justify-center">
+					<DialogClose
+						render={
+							<Button type={"button"} variant={"destructive"}>
+								Cancel
+							</Button>
+						}
+					/>
+					<DialogClose
+						render={
+							<Button
+								type={"button"}
+								disabled={input.category === "" || input.name === ""}
+								onClick={() => {
+									createLoudout();
+								}}
+							>
+								Create Loudout
+							</Button>
+						}
+					/>
+				</div>
+			</DialogFooter>
+		</>
 	);
 });
 

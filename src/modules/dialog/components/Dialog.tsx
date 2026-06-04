@@ -5,12 +5,13 @@ import { reactive, useValue } from "@legendapp/state/react";
 import { dialog$ } from "../state/dialog";
 
 // components
-import * as DialogPrimitive from "#/components/Dialogs/Dialog/Dialog";
+import * as DialogPrimitive from "#ui/dialog";
 
 const ReactiveDialog = reactive(DialogPrimitive.Dialog);
 
 export const Dialog = () => {
 	const content = useValue(dialog$.content);
+	const contentStyle = useValue(dialog$.contentStyle);
 
 	return (
 		<ReactiveDialog
@@ -18,9 +19,10 @@ export const Dialog = () => {
 			$open={dialog$.open}
 			onOpenChange={(open) => dialog$.open.set(open)}
 		>
-			<DialogPrimitive.DialogContent>
-				<DialogPrimitive.DialogTitle />
-				<DialogPrimitive.DialogDescription />
+			<DialogPrimitive.DialogContent
+				showCloseButton={false}
+				className={contentStyle}
+			>
 				{content}
 			</DialogPrimitive.DialogContent>
 		</ReactiveDialog>

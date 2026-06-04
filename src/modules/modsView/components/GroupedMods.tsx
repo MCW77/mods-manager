@@ -177,7 +177,9 @@ function GroupedMods() {
 						size={"sm"}
 						variant={"destructive"}
 						onClick={() => {
-							dialog$.show(<DeleteModsModal groupedMods={transformedMods} />);
+							dialog$.show({
+								content: <DeleteModsModal groupedMods={transformedMods} />,
+							});
 						}}
 					>
 						<FontAwesomeIcon icon={faTrashCan} title={t("DeleteButton")} />
