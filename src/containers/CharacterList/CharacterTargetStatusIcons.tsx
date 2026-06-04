@@ -1,5 +1,5 @@
 // react
-import { Computed, useValue } from "@legendapp/state/react";
+import { Computed } from "@legendapp/state/react";
 
 // utils
 import { cn } from "#/lib/utils";
