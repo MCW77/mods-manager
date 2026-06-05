@@ -11,9 +11,9 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const charactersManagement$ = stateLoader$.charactersManagement$;
 
 // domain
-import { eras } from "#/modules/charactersManagement/domain/Eras";
-import { factions } from "#/modules/charactersManagement/domain/Factions";
-import { roles } from "../../modules/charactersManagement/domain/Roles";
+import { eras } from "../domain/Eras";
+import { factions } from "../domain/Factions";
+import { roles } from "../domain/Roles";
 
 // components
 import { Input } from "#/components/reactive/Input";

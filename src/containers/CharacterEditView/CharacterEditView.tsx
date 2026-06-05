@@ -26,7 +26,7 @@ import * as Character from "#/domain/Character";
 import SelectionActions from "./SelectionActions";
 import TemplatesActions from "./TemplatesActions";
 import CharacterActions from "./CharacterActions";
-import CharacterFilters from "./CharacterFilters";
+import CharacterFilters from "../../modules/charactersManagement/components/CharacterFilters";
 import CharacterWidget from "./CharacterWidget";
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
