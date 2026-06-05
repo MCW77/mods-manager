@@ -18,9 +18,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 
 import AddTemplateModal from "#/containers/CharacterEditView/AddTemplateModal";
-import SaveTemplateModal from "#/containers/CharacterEditView/SaveTemplateModal";
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
+import SaveTemplateModal from "#/modules/templates/components/SaveTemplateModal";
 
 import { Button } from "#ui/button";
 
