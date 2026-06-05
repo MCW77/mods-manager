@@ -281,7 +281,6 @@ type ComponentProps = {
 
 const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
-		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const modAssignments = useValue(
 			compilations$.defaultCompilation.flatCharacterModdings,
@@ -313,7 +312,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 
 		async function SubmitFormAction() {
 			saveTarget();
-			incrementalOptimization$.indicesByProfile[allycode].set(null);
+			incrementalOptimization$.activeIndex.set(null);
 			optimizerView$.view.set("basic");
 		}
 

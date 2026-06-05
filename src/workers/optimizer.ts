@@ -284,7 +284,7 @@ self.onmessage = async (message) => {
 			allMods,
 			profile.characterById,
 			selectedCharacters,
-			incrementalOptimization$.indicesByProfile[profile.allycode].peek(),
+			incrementalOptimization$.activeIndex.peek(),
 			optimizationSettings$.settingsByProfile.peek()[profile.allycode],
 			compilations$.defaultCompilation.flatCharacterModdings.peek(),
 		);

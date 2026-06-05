@@ -25,12 +25,11 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const showEditCharacterModal = (
-	allycode: string,
 	character: Character.Character,
 	index: number,
 	target: OptimizationPlan.OptimizationPlan,
 ) => {
-	incrementalOptimization$.indicesByProfile[allycode].set(index);
+	incrementalOptimization$.activeIndex.set(index);
 	optimizerView$.assign({
 		currentCharacter: {
 			id: character.id,
@@ -65,12 +64,11 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		const characterById = useValue(
 			profilesManagement$.activeProfile.characterById,
 		);
-		const allycode = useValue(profilesManagement$.profiles.activeAllycode);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const character = characterById[characterId];
 		const showEditCharacterModalCallback = useCallback(
-			() => showEditCharacterModal(allycode, character, index, target),
-			[allycode, character, index, target],
+			() => showEditCharacterModal(character, index, target),
+			[character, index, target],
 		);
 		const activePlan = target.id;
 

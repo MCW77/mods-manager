@@ -11,7 +11,6 @@ import {
 import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
@@ -108,9 +107,7 @@ const CharacterActions: React.FC = observer(() => {
 			<Button
 				type="button"
 				onClick={() => {
-					incrementalOptimization$.indicesByProfile[
-						profilesManagement$.profiles.activeAllycode.get()
-					].set(null);
+					incrementalOptimization$.activeIndex.set(null);
 
 					type IndexOfCharacters = { [id in CharacterNames]: number };
 					const minCharacterIndices: IndexOfCharacters =

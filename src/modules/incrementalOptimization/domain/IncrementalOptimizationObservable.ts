@@ -8,7 +8,7 @@ interface IncrementalOptimizationObservable {
 		indicesByProfile: IndicesByProfile;
 	};
 	indicesByProfile: () => Observable<IndicesByProfile>;
-	activeIndex: () => number | null;
+	activeIndex: () => Observable<number | null>;
 	addProfile: (allycode: string) => void;
 	reset: () => void;
 	deleteProfile: (allycode: string) => void;

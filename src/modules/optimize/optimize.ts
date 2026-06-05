@@ -66,11 +66,7 @@ const finishModOptimization = (
 	}
 
 	// If this was an incremental optimization, leave the user on their current page
-	if (
-		incrementalOptimization$.indicesByProfile[
-			profilesManagement$.profiles.activeAllycode.peek()
-		].peek() !== null
-	) {
+	if (incrementalOptimization$.activeIndex.peek() !== null) {
 		return true;
 	}
 

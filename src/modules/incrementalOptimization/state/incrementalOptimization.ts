@@ -15,11 +15,10 @@ const initialIndicesByProfile = {
 
 const incrementalOptimization$: ObservableObject<IncrementalOptimizationObservable> =
 	observable<IncrementalOptimizationObservable>({
-		activeIndex: () => {
-			return incrementalOptimization$.indicesByProfile[
+		activeIndex: () =>
+			incrementalOptimization$.indicesByProfile[
 				profilesManagement$.profiles.activeAllycode.get()
-			].get();
-		},
+			],
 		persistedData: initialIndicesByProfile,
 		indicesByProfile: () => {
 			return incrementalOptimization$.persistedData.indicesByProfile;
