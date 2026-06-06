@@ -44,6 +44,22 @@ export default defineConfig({
 				selector: (s) => `${s}[data-popup-open]`,
 			};
 		},
+		(matcher) => {
+			if (!matcher.startsWith("data-horizontal:")) return;
+			const m = matcher.slice("data-horizontal:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-orientation="horizontal"]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-vertical:")) return;
+			const m = matcher.slice("data-vertical:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-orientation="vertical"]`,
+			};
+		},
 	],
 	safelist: [
 		// Ensure mod color utilities are always included for dynamic usage
