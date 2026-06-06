@@ -1,3 +1,6 @@
+// react
+import { useTranslation } from "react-i18next";
+
 // state
 import {
 	Computed,
@@ -150,12 +153,14 @@ const customCharacterFilterGroups = [
 ];
 
 const CharacterFilters: React.FC = observer(() => {
+	const [t] = useTranslation("optimize-ui");
+
 	return (
 		<div className="p2 grid grid-cols-2 gap-2">
 			<div className="flex flex-col gap-2">
 				<div>
 					<Label className="p-r-2" htmlFor={"hide-selected"}>
-						Hide selected
+						{t("sidebar.filter.ShowUnselected")}
 					</Label>
 					<Memo>
 						<Switch
@@ -166,23 +171,23 @@ const CharacterFilters: React.FC = observer(() => {
 						/>
 					</Memo>
 				</div>
-				<div className={"flex gap-1"}>
-					<Label className="p-r-2" htmlFor={"custom-character-filter"}>
-						Custom filter
+				<div className={"flex flex-col gap-2"}>
+					<Label htmlFor={"custom-character-filter"}>
+						{t("sidebar.filter.CustomFilter")}
 					</Label>
 					<ReactiveMultiColumnSelect
 						groups={customCharacterFilterGroups}
-						triggerProps={{ id: "custom-character-filter" }}
+						triggerProps={{ className: "m-0", id: "custom-character-filter" }}
 						$value={charactersManagement$.filterSetup.customFilterId}
 					/>
 				</div>
 				<div className={"flex flex-col gap-1"}>
-					<div className={"flex gap-2 m-t-2"}>
+					<div className={"flex items-center gap-2"}>
 						<Memo>
 							<Input
-								className="mb-2 bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
+								className="bg-background text-foreground rounded-2 placeholder-muted-foreground placeholder-opacity-50"
 								type="text"
-								placeholder="name, tag, or acronym"
+								placeholder={t("sidebar.filter.Placeholder")}
 								$value={charactersManagement$.filterSetup.quickFilter.filter}
 								onChange={(value) =>
 									charactersManagement$.filterSetup.quickFilter.filter.set(
@@ -237,9 +242,9 @@ const CharacterFilters: React.FC = observer(() => {
 				</div>
 			</div>
 			<div className="flex flex-col gap-2">
-				<div>
+				<div className="flex flex-col gap-2">
 					<Label className="p-r-2" htmlFor={"stars-range"}>
-						Stars
+						{t("sidebar.filter.Stars")}
 					</Label>
 					<Computed>
 						<Slider
@@ -266,9 +271,9 @@ const CharacterFilters: React.FC = observer(() => {
 						/>
 					</Computed>
 				</div>
-				<div>
+				<div className="flex flex-col gap-2">
 					<Label className="p-r-2" htmlFor={"level-range"}>
-						Level
+						{t("sidebar.filter.Level")}
 					</Label>
 					<Computed>
 						<Slider
@@ -294,9 +299,9 @@ const CharacterFilters: React.FC = observer(() => {
 						/>
 					</Computed>
 				</div>
-				<div>
+				<div className="flex flex-col gap-2">
 					<Label className="p-r-2" htmlFor={"gearLevel-range"}>
-						Gear
+						{t("sidebar.filter.Gear")}
 					</Label>
 					<Computed>
 						<Slider

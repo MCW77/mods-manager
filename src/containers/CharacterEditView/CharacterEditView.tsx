@@ -1,6 +1,7 @@
 // react
 import type React from "react";
 import { Suspense, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 // state
 import { observable } from "@legendapp/state";
@@ -39,6 +40,7 @@ import { Computed } from "@legendapp/state/react";
 const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
+	const [t] = useTranslation("optimize-ui");
 	const characterById = useValue(
 		profilesManagement$.activeProfile.characterById,
 	);
@@ -217,18 +219,24 @@ const CharacterEditView = observer(() => {
 			<ScrollArea>
 				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%]">
 					<Memo>
-						<DefaultCollapsibleCard title="Filters">
+						<DefaultCollapsibleCard title={t("sidebar.filter.Title")}>
 							<Suspense fallback={<div>Loading CharacterFilters</div>}>
 								<CharacterFilters />
 							</Suspense>
 						</DefaultCollapsibleCard>
-						<DefaultCollapsibleCard className={"max-w-[30%]"} title="Actions">
+						<DefaultCollapsibleCard
+							className={"max-w-[30%]"}
+							title={t("sidebar.actions.Title")}
+						>
 							<Suspense fallback={<div>Loading CharacterActions</div>}>
 								<CharacterActions />
 							</Suspense>
 						</DefaultCollapsibleCard>
 					</Memo>
-					<DefaultCollapsibleCard className={"max-w-[25%]"} title="Selection">
+					<DefaultCollapsibleCard
+						className={"max-w-[25%]"}
+						title={t("sidebar.selection.Title")}
+					>
 						<Suspense fallback={<div>Loading SelectionActions</div>}>
 							<SelectionActions
 								visibleCharacters={highlightedCharacters}
@@ -237,7 +245,7 @@ const CharacterEditView = observer(() => {
 							/>
 						</Suspense>
 					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard title="Templates">
+					<DefaultCollapsibleCard title={t("sidebar.templates.Title")}>
 						<Suspense fallback={<div>Loading TemplatesActions</div>}>
 							<TemplatesActions
 								hasNoSelectedCharacters={selectedCharacters.length === 0}

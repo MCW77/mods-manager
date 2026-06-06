@@ -1,3 +1,6 @@
+// react
+import { useTranslation } from "react-i18next";
+
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -35,6 +38,8 @@ const TemplatesActions = ({
 	visibleCharacters,
 	lastSelectedCharacterIndex,
 }: TemplatesActionsProps) => {
+	const [t] = useTranslation("optimize-ui");
+
 	return (
 		<div className={"flex gap-2"}>
 			<Button
@@ -75,7 +80,7 @@ const TemplatesActions = ({
 					}
 				}}
 			>
-				Auto-generate List
+				{t("sidebar.templates.Auto")}
 			</Button>
 			<Button
 				size="sm"

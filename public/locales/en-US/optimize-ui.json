@@ -19,45 +19,85 @@
 		"Search": "Search by character name, tag, or common abbreviation",
 		"Show": "Available Characters Display",
 		"ShowAll": "Show all",
-		"ShowUnselected": "Hide selected",
-		"global": {
-			"Threshold": "Threshold to change mods:",
-			"Lock": "Lock all unselected characters:",
-			"Break": "Don't break mod sets:"
+		"filter": {
+			"Title": "Filters",
+			"ShowUnselected": "Hide selected",
+			"CustomFilter": "Custom filter",
+			"Placeholder": "name, tag, or acronym",
+			"Stars": "Stars",
+			"Gear": "Gear",
+			"Level": "Level"
 		},
 		"actions": {
+			"Title": "Actions",
 			"Optimize": "Optimize my mods!",
 			"Review": "Review recommendations",
-			"Lock": "Lock all characters",
-			"Unlock": "Unlock all characters",
-			"Reset": "Reset all targets"
+			"Lock": "Lock all",
+			"Unlock": "Unlock all",
+			"Save": "Save compilation"
+		},
+		"selection": {
+			"Title": "Selection",
+			"Clear": "Clear",
+			"Lock": "Lock all",
+			"Unlock": "Unlock all",
+			"Expand": "Expand view",
+			"Normal": "Normal view",
+			"AddAll": "Add all"
+		},
+		"templates": {
+			"Title": "Templates",
+			"Auto": "Auto prioritize"
 		}
 	},
 	"selected": {
 		"Title": "Selected Characters",
-		"Clear": "Clear",
-		"Lock": "Lock all",
-		"Unlock": "Unnlock all",
-		"Expand": "Expand view",
-		"Auto": "Auto generate list",
 		"Target": "Target:",
 		"Edit": "Edit",
-		"DropHere": "Drop characters here to select them for optimization",
-		"templates": {
-			"Title": "Character Templates",
-			"manage": {
-				"Text": "Manage",
-				"Save": "Save",
-				"Export": "Export",
-				"Load": "Load",
-				"Delete": "Delete"
+		"DropHere": "Drop characters here to select them for optimization"
+	},
+	"review": {
+		"display": {
+			"Title": "Display",
+			"group": {
+				"Label": "Group by character",
+				"Option1": "current",
+				"Option2": "assigned"
 			},
-			"apply": {
-				"Text": "Apply",
-				"Append": "Append",
-				"Replace": "Replace",
-				"TargetsOnly": "Apply targets only"
-			}
+			"showAs": {
+				"Label": "Show mods as",
+				"Option1": "loadout",
+				"Option2": "single mods"
+			},
+			"showMe": {
+				"Label": "Show me",
+				"Option1": "All assignments",
+				"Option2": "Changing characters",
+				"Option3": "Mod upgrades"
+			},
+			"tag": "Show characters by tag",
+			"tagAll": "All",
+			"placeholder": "name, tag or acronym"
+		},
+		"actions": {
+			"Title": "Actions",
+			"ShowSummary": "Show text summary",
+			"Reason": "Done or want to run new setup...",
+			"Back": "Back to planning",
+			"Create": "Create HU loadout",
+			"Move": "Move mods in-game"
+		},
+		"summary": {
+			"Title": "Summary",
+			"Costs": "Costs",
+			"MoveCost": "Moving your mods costs ",
+			"LevelUpCost": "and upgrading to level 15 costs ",
+			"ReassignedX_one": "{{count}} mod reassigned",
+			"ReassignedX_other": "{{count}} mods reassigned",
+			"Scores": "Scores",
+			"AllOld": "Sum of all old loadout scores",
+			"AllNew": "Sum of all new loadout scores",
+			"AllChange": "Overall change in score"
 		}
 	}
 }

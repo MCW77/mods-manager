@@ -1,6 +1,7 @@
 // react
 import { useObservable, useValue } from "@legendapp/state/react";
 import { useId } from "react";
+import { useTranslation } from "react-i18next";
 
 // utils
 import flatten from "lodash-es/flatten";
@@ -60,6 +61,7 @@ const showOptionsItems = [
 ];
 
 const DisplayWidget = () => {
+	const [t] = useTranslation("optimize-ui");
 	const sortOptionsId = useId();
 	const viewOptionsId = useId();
 	const isSortOptionsAssigned$ = useObservable(
@@ -276,13 +278,15 @@ const DisplayWidget = () => {
 	return (
 		<div className={global}>
 			<Label className={labelCSS} htmlFor={`sort-options-${sortOptionsId}`}>
-				Group by character:
+				{t("review.display.group.Label")}
 			</Label>
 			<div
 				className={`${inputCSS} flex gap-2 items-center`}
 				id={`sort-options-${sortOptionsId}`}
 			>
-				<Label htmlFor="sort-options-value">current</Label>
+				<Label htmlFor="sort-options-value">
+					{t("review.display.group.Option1")}
+				</Label>
 				<Switch
 					className="mr-2 ml-2"
 					id={"sort-options-value"}
@@ -296,18 +300,18 @@ const DisplayWidget = () => {
 					}
 				/>
 				<Label className={labelCSS} htmlFor="sort-options-value">
-					assigned
+					{t("review.display.group.Option2")}
 				</Label>
 			</div>
 			<Label className={labelCSS} htmlFor={`view-options-${viewOptionsId}`}>
-				Show mods as:
+				{t("review.display.showAs.Label")}
 			</Label>
 			<div
 				className={`${inputCSS} flex gap-2 items-center`}
 				id={`view-options-${viewOptionsId}`}
 			>
 				<Label htmlFor="view-options-value">
-					{ModListFilter.viewOptions.sets}
+					{t("review.display.showAs.Option1")}
 				</Label>
 				<Switch
 					id={"view-options-value"}
@@ -321,11 +325,11 @@ const DisplayWidget = () => {
 					}
 				/>
 				<Label htmlFor="view-options-value">
-					{ModListFilter.viewOptions.list}
+					{t("review.display.showAs.Option2")}
 				</Label>
 			</div>
 			<Label className={labelCSS} htmlFor={"show"}>
-				Show me:
+				{t("review.display.showMe.Label")}
 			</Label>
 			<ReactiveSelect
 				items={showOptionsItems}
@@ -337,25 +341,25 @@ const DisplayWidget = () => {
 				<SelectContent className={"max-h-[50%]"} alignItemWithTrigger={false}>
 					<SelectGroup>
 						<SelectItem value={ModListFilter.showOptions.all}>
-							All assignments
+							{t("review.display.showMe.Option1")}
 						</SelectItem>
 						<SelectItem value={ModListFilter.showOptions.change}>
-							Changing characters
+							{t("review.display.showMe.Option2")}
 						</SelectItem>
 						<SelectItem value={ModListFilter.showOptions.upgrades}>
-							Mod upgrades
+							{t("review.display.showMe.Option3")}
 						</SelectItem>
 					</SelectGroup>
 				</SelectContent>
 			</ReactiveSelect>
-			<Label htmlFor={"tag"}>Show characters by tag:</Label>
+			<Label htmlFor={"tag"}>{t("review.display.tag")}</Label>
 			<ReactiveSelect $value={review$.modListFilter.tag}>
 				<SelectTrigger className={inputCSS} id={"tag"}>
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent className={"max-h-[50%]"}>
 					<SelectGroup>
-						<SelectItem value={"All"}>All</SelectItem>
+						<SelectItem value={"All"}>{t("review.display.tagAll")}</SelectItem>
 						{tags.map((tag) => (
 							<SelectItem value={tag} key={tag}>
 								{tag}

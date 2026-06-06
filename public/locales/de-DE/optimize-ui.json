@@ -19,45 +19,85 @@
 		"Search": "Filtere nach Charaktername, Tag oder Kürzel",
 		"Show": "Charakteranzeige",
 		"ShowAll": "Zeige alle",
-		"ShowUnselected": "Verberge ausgewählte",
-		"global": {
-			"Threshold": "Schwellwert für Modtausch:",
-			"Lock": "Sperre nicht selektierte Charaktäre:",
-			"Break": "Erzwinge Modsets:"
+		"filter": {
+			"Title": "Filter",
+			"ShowUnselected": "Verberge ausgewählte",
+			"CustomFilter": "Spezifischer Filter",
+			"Placeholder": "Name, Tag oder Kürzel",
+			"Stars": "Sterne",
+			"Gear": "Ausrüstung",
+			"Level": "Level"
 		},
 		"actions": {
+			"Title": "Aktionen",
 			"Optimize": "Optimimire meine Mods!",
 			"Review": "Empfehlungen prüfen",
-			"Lock": "Alle Charaktere Sperren",
-			"Unlock": "Alle Charaktere Entsperren",
-			"Reset": "Zielwerte zurücksetzen"
+			"Lock": "Alle sperren",
+			"Unlock": "Alle entsperren",
+			"Save": "Kompilation speichern"
+		},
+		"selection": {
+			"Title": "Auswahl",
+			"Clear": "Löschen",
+			"Lock": "Alle sperren",
+			"Unlock": "Alle entsperren",
+			"Expand": "Vollansicht",
+			"Normal": "Normale Ansicht",
+			"AddAll": "Alle hinzufügen"
+		},
+		"templates": {
+			"Title": "Vorlagen",
+			"Auto": "Automatisch priorisieren"
 		}
 	},
 	"selected": {
 		"Title": "Gewählte Charactere",
-		"Clear": "Entfernen",
-		"Lock": "Sperren",
-		"Unlock": "Entsperren",
-		"Expand": "Vollansicht",
-		"Auto": "Auto generate list",
 		"Target": "Ziel:",
 		"Edit": "Ändern",
-		"DropHere": "Ziehe Charactere hierher, um sie für die Optimierung auszuwählen",
-		"templates": {
-			"Title": "Charakter Vorlagen",
-			"manage": {
-				"Text": "Verwalten",
-				"Save": "Speichern",
-				"Export": "Export",
-				"Load": "Laden",
-				"Delete": "Löschen"
+		"DropHere": "Ziehe Charactere hierher, um sie für die Optimierung auszuwählen"
+	},
+	"review": {
+		"display": {
+			"Title": "Anzeige",
+			"group": {
+				"Label": "Gruppiere Charaktere nach",
+				"Option1": "aktuell",
+				"Option2": "zugewiesen"
 			},
-			"apply": {
-				"Text": "Anwenden",
-				"Append": "Anhängen",
-				"Replace": "Ersetzen",
-				"TargetsOnly": "Wende nur Ziele an"
-			}
+			"showAs": {
+				"Label": "Zeige Mods als",
+				"Option1": "Ausrüstung",
+				"Option2": "Einzelne Mods"
+			},
+			"showMe": {
+				"Label": "Zeige mir",
+				"Option1": "Alle Zuweisungen",
+				"Option2": "Sich ändernde Characktere",
+				"Option3": "Mod Steigerungen"
+			},
+			"tag": "Zeige Charaktere nach Tag",
+			"tagAll": "Alle",
+			"placeholder": "Name, Tag oder Kürzel"
+		},
+		"actions": {
+			"Title": "Aktionen",
+			"ShowSummary": "Textresümee anzeigen",
+			"Reason": "Fertig oder neuen Plan probieren...",
+			"Back": "Zurück zur Planung",
+			"Create": "HU Loadout erstellen",
+			"Move": "Mods im Spiel zuweisen"
+		},
+		"summary": {
+			"Title": "Auswertung",
+			"Costs": "Kosten",
+			"MoveCost": "Der Umzug deiner Mods kostet ",
+			"LevelUpCost": "und auf Level 15 Ziehen kostet ",
+			"ReassignedX_one": "{{count}} Mod zugewiesen",
+			"ReassignedX_other": "{{count}} Mods zugewiesen",
+			"Scores": "Punkte",
+			"AllOld": "Summe aller alten Loadout Punkte",
+			"AllNew": "Summe aller neuen Loadout Punkte",
+			"AllChange": "Gesamtveränderung der Punkte"
 		}
 	}
 }

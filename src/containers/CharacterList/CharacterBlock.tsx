@@ -1,6 +1,7 @@
 // react
 import type React from "react";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Computed, observer, useValue } from "@legendapp/state/react";
 
 // state
@@ -61,6 +62,7 @@ const characterBlockDragStart = (index: number) => {
 
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 	({ characterId, target, index }: CharacterBlockProps) => {
+		const [t] = useTranslation("optimize-ui");
 		const characterById = useValue(
 			profilesManagement$.activeProfile.characterById,
 		);
@@ -115,14 +117,14 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 							className={"p-y-1 items-center grid grid-rows-[auto_20px] gap-2"}
 						>
 							<div className="flex items-center justify-between">
-								<Label className="align-middle">Target:</Label>
+								<Label className="align-middle">{t("selected.Target")}</Label>
 								<Button
 									className="px-5"
 									size={"xs"}
 									type={"button"}
 									onClick={() => showEditCharacterModalCallback()}
 								>
-									Edit
+									{t("selected.Edit")}
 								</Button>
 							</div>
 							<Label className="grid-row-2 align-middle dark:text-white light:text-black">

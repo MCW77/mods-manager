@@ -1,5 +1,6 @@
 // react
 import { observer, Show, useValue } from "@legendapp/state/react";
+import { useTranslation } from "react-i18next";
 
 // utils
 import flatten from "lodash-es/flatten";
@@ -164,6 +165,7 @@ const modUpgradeCosts: {
 };
 
 const Review: React.FC = observer(() => {
+	const [t] = useTranslation("optimize-ui");
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const filter = useValue(review$.modListFilter);
 	const modById = useValue(() =>
@@ -400,13 +402,13 @@ const Review: React.FC = observer(() => {
 	return (
 		<div className="flex flex-col h-full w-full overflow-hidden">
 			<div className="flex flex-wrap justify-center items-stretch p-y-2 gap-2">
-				<DefaultCollapsibleCard title="Display">
+				<DefaultCollapsibleCard title={t("review.display.Title")}>
 					<DisplayWidget />
 				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard title="Actions">
+				<DefaultCollapsibleCard title={t("review.actions.Title")}>
 					<ActionsWidget />
 				</DefaultCollapsibleCard>
-				<DefaultCollapsibleCard className="" title="Summary">
+				<DefaultCollapsibleCard className="" title={t("review.summary.Title")}>
 					<SummaryWidget
 						currentSetValue={currentLoadoutValue}
 						newSetValue={newLoadoutValue}

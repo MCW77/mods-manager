@@ -1,6 +1,9 @@
+// react
+import { useTranslation } from "react-i18next";
+import { Show, useValue } from "@legendapp/state/react";
+
 // state
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
-import { Show, useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const compilations$ = stateLoader$.compilations$;
@@ -36,6 +39,8 @@ const SelectionActions = ({
 	lastSelectedCharacterIndex,
 	isSelectionExpanded$,
 }: SelectionActionsProps) => {
+	const [t] = useTranslation("optimize-ui");
+
 	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
@@ -47,7 +52,8 @@ const SelectionActions = ({
 				type="button"
 				onClick={() => compilations$.unselectAllCharacters()}
 			>
-				<FontAwesomeIcon icon={faBan} title="Clear" /> Clear
+				<FontAwesomeIcon icon={faBan} title="Clear" />{" "}
+				{t("sidebar.selection.Clear")}
 			</Button>
 			<Button
 				className="flex flex-gap-2"
@@ -63,7 +69,7 @@ const SelectionActions = ({
 				}}
 			>
 				<FontAwesomeIcon icon={faLock} title="Lock All" />
-				Lock All
+				{t("sidebar.selection.Lock")}
 			</Button>
 			<Button
 				className="flex flex-gap-2"
@@ -79,7 +85,7 @@ const SelectionActions = ({
 				}}
 			>
 				<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
-				Unlock All
+				{t("sidebar.selection.Unlock")}
 			</Button>
 			<Button
 				className="flex flex-gap-2"
@@ -91,12 +97,12 @@ const SelectionActions = ({
 					else={() => (
 						<>
 							<FontAwesomeIcon icon={faExpand} title="Expand View" />
-							Expand View
+							{t("sidebar.selection.Expand")}
 						</>
 					)}
 				>
 					<FontAwesomeIcon icon={faCompress} title="Normal View" />
-					Normal View
+					{t("sidebar.selection.Normal")}
 				</Show>
 			</Button>
 			<Button
@@ -115,7 +121,7 @@ const SelectionActions = ({
 				}}
 			>
 				<FontAwesomeIcon icon={faPlus} title={"Add all"} />
-				Add all
+				{t("sidebar.selection.AddAll")}
 			</Button>
 		</div>
 	);

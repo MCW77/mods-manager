@@ -1,6 +1,9 @@
 // utils
 import { formatNumber } from "#/utils/formatNumber";
 
+// react
+import { useTranslation } from "react-i18next";
+
 // components
 import { Credits } from "#/components/Credits/Credits";
 
@@ -19,40 +22,44 @@ const SummaryWidget = ({
 	modUpgradeCost,
 	numMovingMods,
 }: ComponentProps) => {
+	const [t] = useTranslation("optimize-ui");
 	const valueChange = (100 * (newSetValue - currentSetValue)) / currentSetValue;
 
 	return (
 		<div className="flex gap-4 flex-wrap">
 			<div className="prose prose-sm dark:prose-invert text-sm">
-				<h4>Costs</h4>
+				<h4>{t("review.summary.Costs")}</h4>
 				<p>
-					<span>Reassigning {numMovingMods} mods</span>
-					<br />
 					<span>
-						Your mods will cost {formatNumber(modRemovalCost)} <Credits /> to
-						move,
+						{t("review.summary.ReassignedX", { count: numMovingMods })}
 					</span>
 					<br />
 					<span>
-						and an additional {formatNumber(modUpgradeCost)} <Credits /> to
-						level up to 15.
+						{t("review.summary.MoveCost")} {formatNumber(modRemovalCost)}{" "}
+						<Credits />
+					</span>
+					<br />
+					<span>
+						{t("review.summary.LevelUpCost")} {formatNumber(modUpgradeCost)}{" "}
+						<Credits />
 					</span>
 				</p>
 			</div>
 			<div className="prose prose-sm dark:prose-invert text-sm">
-				<h4>Set Value</h4>
+				<h4>{t("review.summary.Scores")}</h4>
 				<p>
 					<span>
-						Old set value sum:{" "}
+						{t("review.summary.AllOld")}:{" "}
 						{formatNumber(Number(currentSetValue.toFixed(2)))}
 					</span>
 					<br />
 					<span>
-						New set value sum: {formatNumber(Number(newSetValue.toFixed(2)))}
+						{t("review.summary.AllNew")}:{" "}
+						{formatNumber(Number(newSetValue.toFixed(2)))}
 					</span>
 					<br />
 					<span>
-						Overall change:{" "}
+						{t("review.summary.AllChange")}:{" "}
 						<span
 							className={
 								valueChange > 0

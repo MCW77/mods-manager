@@ -1,5 +1,6 @@
 // react
 import { useId } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Computed,
 	observer,
@@ -47,6 +48,7 @@ import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
 import { SettingsLink } from "#/modules/settings/components/SettingsLink";
 
 const CharacterActions: React.FC = observer(() => {
+	const [t] = useTranslation("optimize-ui");
 	const nameId = useId();
 	const descriptionId = useId();
 	const categoryId = useId();
@@ -203,17 +205,17 @@ const CharacterActions: React.FC = observer(() => {
 					/>
 					<FontAwesomeIcon icon={faGears} size="xs" transform="shrink-6" />
 				</span>
-				Optimize Mods
+				{t("sidebar.actions.Optimize")}
 			</Button>
 			<Popover open={isFormOpen} onOpenChange={state$.isFormOpen.set}>
-				<PopoverTrigger className={"m-auto p-2"} render={<Button size="sm" />}>
+				<PopoverTrigger className={"m-auto p-2"} render={<Button />}>
 					<FontAwesomeIcon icon={faSave} title={"Save"} />
-					Save Compilation
+					{t("sidebar.actions.Save")}
 				</PopoverTrigger>
 				<PopoverContent className="w-80">
 					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
 						<h4 className="font-medium text-sm text-primary-foreground">
-							Save compilation
+							{t("sidebar.actions.Save")}
 						</h4>
 						<Label htmlFor={`compilation_save_form_name-${nameId}`}>Name</Label>
 						<Computed>
@@ -273,26 +275,26 @@ const CharacterActions: React.FC = observer(() => {
 						optimizerView$.view.set("review");
 					}}
 				>
-					Review recommendations
+					{t("sidebar.actions.Review")}
 				</Button>
 			) : null}
 			<Button
 				type="button"
-				size="icon"
 				onClick={() => {
 					lockedStatus$.lockAll();
 				}}
 			>
-				<FontAwesomeIcon icon={faLock} title="Lock All" />
+				<FontAwesomeIcon icon={faLock} title={t("sidebar.actions.Lock")} />
+				{t("sidebar.actions.Lock")}
 			</Button>
 			<Button
 				type="button"
-				size="icon"
 				onClick={() => {
 					lockedStatus$.unlockAll();
 				}}
 			>
-				<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
+				<FontAwesomeIcon icon={faUnlock} title={t("sidebar.actions.Unlock")} />
+				{t("sidebar.actions.Unlock")}
 			</Button>
 			<HelpLink
 				title="Global Settings Helppage"

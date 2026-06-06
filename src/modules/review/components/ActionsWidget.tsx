@@ -1,5 +1,6 @@
 // react
 import { useId } from "react";
+import { useTranslation } from "react-i18next";
 
 // state
 import { useValue } from "@legendapp/state/react";
@@ -23,6 +24,7 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const ActionsWidget = () => {
+	const [t] = useTranslation("optimize-ui");
 	const actionsId = useId();
 	const modById = useValue(() =>
 		profilesManagement$.activeProfile.modById.get(),
@@ -86,16 +88,16 @@ const ActionsWidget = () => {
 							})
 						}
 					>
-						Show Summary
+						{t("review.actions.ShowSummary")}
 					</Button>
 				</div>
 				<div className="flex flex-col gap-2">
-					<Label htmlFor="">I don't like these results...</Label>
+					<Label htmlFor="">{t("review.actions.Reason")}</Label>
 					<Button
 						type={"button"}
 						onClick={() => optimizerView$.view.set("basic")}
 					>
-						Change my selection
+						{t("review.actions.Back")}
 					</Button>
 				</div>
 			</div>
@@ -106,14 +108,14 @@ const ActionsWidget = () => {
 					disabled={!hasActiveSession}
 					onClick={() => dialog$.show({ content: <CreateProfileModal /> })}
 				>
-					Create Loadout
+					{t("review.actions.Create")}
 				</Button>
 				<Button
 					type={"button"}
 					disabled={!hasActiveSession}
 					onClick={() => dialog$.show({ content: <MoveModsModal /> })}
 				>
-					Move mods in-game
+					{t("review.actions.Move")}
 				</Button>
 			</div>
 		</div>
