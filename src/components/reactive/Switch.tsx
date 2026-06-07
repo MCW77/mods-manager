@@ -7,6 +7,7 @@ import type { Observable } from "@legendapp/state";
 
 // components
 import { Switch as ShadCNSwitch } from "#ui/switch";
+import type { Switch as BaseUISwitch } from "@base-ui/react/switch";
 
 type ShadCNSwitchProps = ComponentProps<typeof ShadCNSwitch>;
 interface SwitchProps extends Omit<ShadCNSwitchProps, "checked"> {
@@ -23,9 +24,12 @@ function Switch({
 	const checked = useValue($checked);
 	const disabled = useValue(() => ($disabled ? $disabled.get() : false));
 
-	const handleCheckedChange = (newChecked: boolean) => {
+	const handleCheckedChange = (
+		newChecked: boolean,
+		eventDetails: BaseUISwitch.Root.ChangeEventDetails,
+	) => {
 		$checked.set(newChecked);
-		onCheckedChange?.(newChecked);
+		onCheckedChange?.(newChecked, eventDetails);
 	};
 
 	return (

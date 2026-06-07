@@ -13,6 +13,38 @@ export default defineConfig({
 	},
 	variants: [
 		(matcher) => {
+			if (!matcher.startsWith("aria-invalid:")) return;
+			const m = matcher.slice("aria-invalid:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[aria-invalid="true"]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-checked:")) return;
+			const m = matcher.slice("data-checked:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-checked]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-unchecked:")) return;
+			const m = matcher.slice("data-unchecked:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-unchecked]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("data-disabled:")) return;
+			const m = matcher.slice("data-disabled:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-disabled]`,
+			};
+		},
+		(matcher) => {
 			if (!matcher.startsWith("data-open:")) return;
 			const m = matcher.slice("data-open:".length);
 			return {
