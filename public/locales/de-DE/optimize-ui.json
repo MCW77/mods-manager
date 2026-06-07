@@ -43,7 +43,8 @@
 			"Unlock": "Alle entsperren",
 			"Expand": "Vollansicht",
 			"Normal": "Normale Ansicht",
-			"AddAll": "Alle hinzufügen"
+			"AddAll": "Alle hinzufügen",
+			"Last6DotGuaranteed": "Letzter Charakter mit sicherem 6-Dot Loadout"
 		},
 		"templates": {
 			"Title": "Vorlagen",

@@ -6,6 +6,8 @@ import { Show, useValue } from "@legendapp/state/react";
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const characters$ = stateLoader$.characters$;
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
@@ -41,88 +43,103 @@ const SelectionActions = ({
 }: SelectionActionsProps) => {
 	const [t] = useTranslation("optimize-ui");
 
+	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
+	const last6DotGuaranteedCharacter = useValue(() => {
+		const selectedCharacters =
+			compilations$.defaultCompilation.selectedCharacters.get();
+		const minimalFull6Dot = profilesManagement$.minimalFull6Dot.get();
+		return minimalFull6Dot > 0 && selectedCharacters.length >= minimalFull6Dot
+			? baseCharacterById[selectedCharacters[minimalFull6Dot - 1].id].name
+			: "";
+	});
 
 	return (
-		<div className="flex flex-wrap gap-2">
-			<Button
-				className="flex flex-gap-2"
-				type="button"
-				onClick={() => compilations$.unselectAllCharacters()}
-			>
-				<FontAwesomeIcon icon={faBan} title="Clear" />{" "}
-				{t("sidebar.selection.Clear")}
-			</Button>
-			<Button
-				className="flex flex-gap-2"
-				type="button"
-				onClick={() => {
-					beginBatch();
-					for (const selectedCharacter of selectedCharacters) {
-						lockedStatus$.lockedCharactersForActivePlayer.add(
-							selectedCharacter.id,
-						);
-					}
-					endBatch();
-				}}
-			>
-				<FontAwesomeIcon icon={faLock} title="Lock All" />
-				{t("sidebar.selection.Lock")}
-			</Button>
-			<Button
-				className="flex flex-gap-2"
-				type="button"
-				onClick={() => {
-					beginBatch();
-					for (const selectedCharacter of selectedCharacters) {
-						lockedStatus$.lockedCharactersForActivePlayer.delete(
-							selectedCharacter.id,
-						);
-					}
-					endBatch();
-				}}
-			>
-				<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
-				{t("sidebar.selection.Unlock")}
-			</Button>
-			<Button
-				className="flex flex-gap-2"
-				type="button"
-				onClick={() => isSelectionExpanded$.toggle()}
-			>
-				<Show
-					if={isSelectionExpanded$}
-					else={() => (
-						<>
-							<FontAwesomeIcon icon={faExpand} title="Expand View" />
-							{t("sidebar.selection.Expand")}
-						</>
-					)}
+		<div className={"flex flex-col gap-4"}>
+			<div className="flex flex-wrap gap-2">
+				<Button
+					className="flex flex-gap-2"
+					type="button"
+					onClick={() => compilations$.unselectAllCharacters()}
 				>
-					<FontAwesomeIcon icon={faCompress} title="Normal View" />
-					{t("sidebar.selection.Normal")}
-				</Show>
-			</Button>
-			<Button
-				className="flex flex-gap-2"
-				type="button"
-				onClick={() => {
-					isBusy$.set(true);
-					visibleCharacters.forEach((character, index) => {
-						compilations$.selectCharacter(
-							character.id,
-							Character.defaultTarget(characterSettings, character),
-							index + lastSelectedCharacterIndex,
-						);
-					});
-					isBusy$.set(false);
-				}}
-			>
-				<FontAwesomeIcon icon={faPlus} title={"Add all"} />
-				{t("sidebar.selection.AddAll")}
-			</Button>
+					<FontAwesomeIcon icon={faBan} title="Clear" />{" "}
+					{t("sidebar.selection.Clear")}
+				</Button>
+				<Button
+					className="flex flex-gap-2"
+					type="button"
+					onClick={() => {
+						beginBatch();
+						for (const selectedCharacter of selectedCharacters) {
+							lockedStatus$.lockedCharactersForActivePlayer.add(
+								selectedCharacter.id,
+							);
+						}
+						endBatch();
+					}}
+				>
+					<FontAwesomeIcon icon={faLock} title="Lock All" />
+					{t("sidebar.selection.Lock")}
+				</Button>
+				<Button
+					className="flex flex-gap-2"
+					type="button"
+					onClick={() => {
+						beginBatch();
+						for (const selectedCharacter of selectedCharacters) {
+							lockedStatus$.lockedCharactersForActivePlayer.delete(
+								selectedCharacter.id,
+							);
+						}
+						endBatch();
+					}}
+				>
+					<FontAwesomeIcon icon={faUnlock} title="Unlock All" />
+					{t("sidebar.selection.Unlock")}
+				</Button>
+				<Button
+					className="flex flex-gap-2"
+					type="button"
+					onClick={() => isSelectionExpanded$.toggle()}
+				>
+					<Show
+						if={isSelectionExpanded$}
+						else={() => (
+							<>
+								<FontAwesomeIcon icon={faExpand} title="Expand View" />
+								{t("sidebar.selection.Expand")}
+							</>
+						)}
+					>
+						<FontAwesomeIcon icon={faCompress} title="Normal View" />
+						{t("sidebar.selection.Normal")}
+					</Show>
+				</Button>
+				<Button
+					className="flex flex-gap-2"
+					type="button"
+					onClick={() => {
+						isBusy$.set(true);
+						visibleCharacters.forEach((character, index) => {
+							compilations$.selectCharacter(
+								character.id,
+								Character.defaultTarget(characterSettings, character),
+								index + lastSelectedCharacterIndex,
+							);
+						});
+						isBusy$.set(false);
+					}}
+				>
+					<FontAwesomeIcon icon={faPlus} title={"Add all"} />
+					{t("sidebar.selection.AddAll")}
+				</Button>
+			</div>
+			<div className="flex flex-col gap-1">
+				<span>{t("sidebar.selection.Last6DotGuaranteed")}</span>
+				<span>{last6DotGuaranteedCharacter}</span>
+			</div>
 		</div>
 	);
 };

@@ -46,6 +46,7 @@ interface ProfilesManagementObservable {
 	) => void;
 	indexOfTarget: (characterId: CharacterNames, targetId: string) => number;
 	deleteTarget: (characterId: CharacterNames, targetIndex: number) => void;
+	minimalFull6Dot: () => number;
 }
 
 export type { ProfilesManagementObservable };

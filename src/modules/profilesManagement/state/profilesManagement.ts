@@ -33,7 +33,7 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import type * as Character from "#/domain/Character";
 import { Mod } from "#/domain/Mod";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import type { GIMOFlatMod } from "#/domain/types/ModTypes";
+import { type GIMOFlatMod, gimoSlots } from "#/domain/types/ModTypes";
 
 const isObservableMod = (
 	mod: Observable<Mod | undefined> | Observable<Mod>,
@@ -289,6 +289,20 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			].targets
 				.peek()
 				.findIndex((target) => target.id === targetId);
+		},
+		minimalFull6Dot: () => {
+			const mods = Array.from(
+				profilesManagement$.activeProfile.modById.get().values(),
+			);
+			const all6DotMods = mods.filter((mod) => mod.pips === 6);
+			let minimalFull6Dot = all6DotMods.length;
+			for (const slot of gimoSlots) {
+				const modsInSlot = all6DotMods.filter((mod) => mod.slot === slot);
+				if (modsInSlot.length < minimalFull6Dot) {
+					minimalFull6Dot = modsInSlot.length;
+				}
+			}
+			return minimalFull6Dot;
 		},
 	});
 
