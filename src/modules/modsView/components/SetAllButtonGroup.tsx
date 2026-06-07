@@ -31,43 +31,49 @@ const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
 			<Label>All: </Label>
 			<TooltipProvider>
 				<Tooltip>
-					<TooltipTrigger asChild>
-						<Button
-							size="xs"
-							className="h-3 p-0 aspect-square"
-							onClick={() => modsView$.massSetFilter(filterKey, 1)}
-						>
-							+
-						</Button>
-					</TooltipTrigger>
+					<TooltipTrigger
+						render={
+							<Button
+								size="xs"
+								className="h-3 p-0 aspect-square"
+								onClick={() => modsView$.massSetFilter(filterKey, 1)}
+							>
+								+
+							</Button>
+						}
+					/>
 					<TooltipContent>
 						<p>Set all to must be</p>
 					</TooltipContent>
 				</Tooltip>
 				<Tooltip>
-					<TooltipTrigger asChild>
-						<Button
-							size="xs"
-							className="h-3 p-0 aspect-square"
-							onClick={() => modsView$.massSetFilter(filterKey, 0)}
-						>
-							o
-						</Button>
-					</TooltipTrigger>
+					<TooltipTrigger
+						render={
+							<Button
+								size="xs"
+								className="h-3 p-0 aspect-square"
+								onClick={() => modsView$.massSetFilter(filterKey, 0)}
+							>
+								o
+							</Button>
+						}
+					/>
 					<TooltipContent>
 						<p>Set all to no filter</p>
 					</TooltipContent>
 				</Tooltip>
 				<Tooltip>
-					<TooltipTrigger asChild>
-						<Button
-							size="xs"
-							className="h-3 p-0 aspect-square"
-							onClick={() => modsView$.massSetFilter(filterKey, -1)}
-						>
-							-
-						</Button>
-					</TooltipTrigger>
+					<TooltipTrigger
+						render={
+							<Button
+								size="xs"
+								className="h-3 p-0 aspect-square"
+								onClick={() => modsView$.massSetFilter(filterKey, -1)}
+							>
+								-
+							</Button>
+						}
+					/>
 					<TooltipContent>
 						<p>Set all to cannot be</p>
 					</TooltipContent>
