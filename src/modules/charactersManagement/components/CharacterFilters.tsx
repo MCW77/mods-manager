@@ -19,6 +19,8 @@ import { factions } from "../domain/Factions";
 import { roles } from "../domain/Roles";
 
 // components
+import type { SliderRoot } from "@base-ui/react";
+
 import { Input } from "#/components/reactive/Input";
 import { ReactiveMultiColumnSelect } from "#/components/reactive/ReactiveMultiColumnSelect";
 import { Slider } from "#/components/reactive/Slider";
@@ -254,7 +256,11 @@ const CharacterFilters: React.FC = observer(() => {
 							min={0}
 							step={1}
 							$value={charactersManagement$.filterSetup.starsRange}
-							onValueChange={(newValues: number[]) => {
+							onValueChange={(
+								newValues: number | readonly number[],
+								_eventDetails: SliderRoot.ChangeEventDetails,
+							) => {
+								if (typeof newValues === "number") return;
 								const [newMin, newMax] = newValues;
 								if (newMin <= newMax) {
 									charactersManagement$.filterSetup.starsRange.set([
@@ -282,7 +288,11 @@ const CharacterFilters: React.FC = observer(() => {
 							min={0}
 							step={1}
 							$value={charactersManagement$.filterSetup.levelRange}
-							onValueChange={(newValues: number[]) => {
+							onValueChange={(
+								newValues: number | readonly number[],
+								_eventDetails: SliderRoot.ChangeEventDetails,
+							) => {
+								if (typeof newValues === "number") return;
 								const [newMin, newMax] = newValues;
 								if (newMin <= newMax) {
 									charactersManagement$.filterSetup.levelRange.set([
@@ -310,7 +320,11 @@ const CharacterFilters: React.FC = observer(() => {
 							min={1}
 							step={1}
 							$value={charactersManagement$.filterSetup.gearLevelRange}
-							onValueChange={(newValues: number[]) => {
+							onValueChange={(
+								newValues: number | readonly number[],
+								_eventDetails: SliderRoot.ChangeEventDetails,
+							) => {
+								if (typeof newValues === "number") return;
 								const [newMin, newMax] = newValues;
 								if (newMin <= newMax) {
 									charactersManagement$.filterSetup.gearLevelRange.set([

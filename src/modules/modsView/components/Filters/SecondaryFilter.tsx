@@ -15,6 +15,7 @@ import {
 } from "../../domain/ModsViewOptions";
 
 // components
+import type { SliderRoot } from "@base-ui/react/slider";
 import { Slider } from "#/components/reactive/Slider";
 import { Label } from "#ui/label";
 
@@ -49,7 +50,11 @@ function SecondarySlider({
 				min={0}
 				step={1}
 				$value={secondaryState$}
-				onValueChange={(newValues: number[]) => {
+				onValueChange={(
+					newValues: number | readonly number[],
+					_eventDetails: SliderRoot.ChangeEventDetails,
+				) => {
+					if (typeof newValues === "number") return;
 					const [newMin, newMax] = newValues;
 					if (newMin <= newMax) {
 						modsView$.activeFilter.secondary[secondary].set([newMin, newMax]);

@@ -9,6 +9,7 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const modsView$ = stateLoader$.modsView$;
 
 // components
+import type { SliderRoot } from "@base-ui/react/slider";
 import { Slider } from "#/components/reactive/Slider";
 import { Label } from "#ui/label";
 
@@ -39,7 +40,11 @@ const SpeedFilter = () => {
 				min={0}
 				step={1}
 				$value={scoreRange$}
-				onValueChange={(newValues: number[]) => {
+				onValueChange={(
+					newValues: number | readonly number[],
+					_eventDetails: SliderRoot.ChangeEventDetails,
+				) => {
+					if (typeof newValues === "number") return;
 					const [newMin, newMax] = newValues;
 					if (newMin <= newMax) {
 						modsView$.activeFilter.speedRange.set([newMin, newMax]);

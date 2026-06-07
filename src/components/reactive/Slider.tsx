@@ -10,14 +10,18 @@ import type { Observable, ObservableParam } from "@legendapp/state";
 
 // components
 import { Slider as ShadCNSlider } from "#ui/slider";
+import type { Slider as BaseUISlider } from "@base-ui/react/slider";
 
 type ShadCNSliderProps = ComponentProps<typeof ShadCNSlider>;
+type OnValueChange = ShadCNSliderProps["onValueChange"];
+
 interface SliderProps
 	extends Omit<ShadCNSliderProps, "value" | "onValueChange"> {
 	$value: ObservableParam<number[]> | ObservableParam<number>;
 	$min?: ObservableParam<number>;
 	$max?: ObservableParam<number>;
-	onValueChange?: (newValue: number[]) => void;
+	//	onValueChange?: (newValue: number[]) => void;
+	onValueChange?: OnValueChange;
 }
 
 function Slider({
@@ -38,13 +42,12 @@ function Slider({
 	const derivedMin = useValue(() => ($min ? $min.get() : (min ?? 0)));
 	const derivedMax = useValue(() => ($max ? $max.get() : (max ?? 100)));
 
-	const handleValueChange = (newValue: number[]) => {
-		if (!Array.isArray($value.peek())) {
-			$value.set(newValue[0]);
-		} else {
-			$value.set(newValue);
-		}
-		onValueChange?.(newValue);
+	const handleValueChange = (
+		newValue: number | readonly number[],
+		eventDetails: BaseUISlider.Root.ChangeEventDetails,
+	) => {
+		$value.set(newValue);
+		onValueChange?.(newValue, eventDetails);
 	};
 	return (
 		<ShadCNSlider
