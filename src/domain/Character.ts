@@ -47,8 +47,15 @@ export const targets = (
 		(target) => target.id,
 	);
 	const playerTargets = groupByKey(char.targets, (target) => target.id);
+	const targets: OptimizationPlan[] = [...Object.values(defaultTargets)];
+	for (const playerTarget of Object.values(playerTargets)) {
+		if (playerTarget.id !== "Default") {
+			targets.push(playerTarget);
+		}
+	}
+	return targets;
 
-	return Object.values(Object.assign({}, defaultTargets, playerTargets));
+	//	return Object.values(Object.assign({}, defaultTargets, playerTargets));
 };
 
 export const defaultTarget = (
