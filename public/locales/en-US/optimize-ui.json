@@ -44,7 +44,8 @@
 			"Expand": "Expand view",
 			"Normal": "Normal view",
 			"AddAll": "Add all",
-			"Last6DotGuaranteed": "Last character guaranteed a 6-dot loadout"
+			"Last6DotGuaranteed": "Last character guaranteed a 6-dot loadout",
+			"MovePilots": "Move pilots"
 		},
 		"templates": {
 			"Title": "Templates",

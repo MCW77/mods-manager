@@ -44,6 +44,7 @@ interface CompilationsObservable {
 	ensureSelectedCharactersExist: (compilationId: string) => void;
 	resetOptimizationConditions: (allycode: string) => void;
 	reset: () => void;
+	ensurePilot6DotRequirements: () => void;
 }
 
 export type { CompilationsObservable };

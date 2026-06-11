@@ -30,7 +30,7 @@
 		},
 		"actions": {
 			"Title": "Aktionen",
-			"Optimize": "Optimimire meine Mods!",
+			"Optimize": "Optimiere meine Mods!",
 			"Review": "Empfehlungen prüfen",
 			"Lock": "Alle sperren",
 			"Unlock": "Alle entsperren",
@@ -44,7 +44,8 @@
 			"Expand": "Vollansicht",
 			"Normal": "Normale Ansicht",
 			"AddAll": "Alle hinzufügen",
-			"Last6DotGuaranteed": "Letzter Charakter mit sicherem 6-Dot Loadout"
+			"Last6DotGuaranteed": "Letzter Charakter mit sicherem 6-Dot Loadout",
+			"MovePilots": "Piloten verschieben"
 		},
 		"templates": {
 			"Title": "Vorlagen",

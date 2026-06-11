@@ -10,6 +10,7 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { characters$ } from "#/modules/characters/state/characters";
 
 // domain
 import { getDefaultCompilation, type Compilation } from "../domain/Compilation";
@@ -19,6 +20,8 @@ import {
 	fromShortOptimizationPlan,
 	type OptimizationPlan,
 } from "#/domain/OptimizationPlan";
+import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter";
 import type { CompilationsObservable } from "../domain/CompilationsObservable";
 
 const getinitialCompilations = () => {
@@ -282,6 +285,40 @@ const compilations$: ObservableObject<CompilationsObservable> =
 		reset: () => {
 			syncStatus$.reset();
 			syncStatus2$.reset();
+		},
+		ensurePilot6DotRequirements: () => {
+			const baseCharactersById = characters$.baseCharacterById.peek();
+			const selectedCharacters =
+				compilations$.defaultCompilation.selectedCharacters.peek();
+			const last6DotGuaranteedIndex =
+				profilesManagement$.minimalFull6Dot.peek() - 1;
+			const indicesOfPilots: number[] = [];
+			let selectedCharacter: SelectedCharacters[number];
+			let character: BaseCharacter;
+			for (
+				let index = last6DotGuaranteedIndex + 1;
+				index < selectedCharacters.length;
+				index++
+			) {
+				selectedCharacter = selectedCharacters[index];
+				character = baseCharactersById[selectedCharacter.id];
+				if (
+					character.categories.includes("Crew Member") &&
+					selectedCharacter.target.minimumModDots >= 6
+				) {
+					indicesOfPilots.push(index);
+				}
+			}
+			const firstInsertionIndex =
+				last6DotGuaranteedIndex - (indicesOfPilots.length - 1);
+			beginBatch();
+			for (let index = 0; index < indicesOfPilots.length; index++) {
+				compilations$.moveSelectedCharacter(
+					indicesOfPilots[index],
+					firstInsertionIndex - 1 + index,
+				);
+			}
+			endBatch();
 		},
 	});
 

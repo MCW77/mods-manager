@@ -20,6 +20,7 @@ import * as Character from "#/domain/Character";
 // component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+	faArrowUp,
 	faBan,
 	faCompress,
 	faExpand,
@@ -136,9 +137,22 @@ const SelectionActions = ({
 					{t("sidebar.selection.AddAll")}
 				</Button>
 			</div>
-			<div className="flex flex-col gap-1">
+			<div className="flex flex-col gap-1 items-start">
 				<span>{t("sidebar.selection.Last6DotGuaranteed")}</span>
 				<span>{last6DotGuaranteedCharacter}</span>
+				<Button
+					className="flex flex-gap-2"
+					type="button"
+					onClick={() => {
+						compilations$.ensurePilot6DotRequirements();
+					}}
+				>
+					<FontAwesomeIcon
+						icon={faArrowUp}
+						title={t("sidebar.selection.MovePilots")}
+					/>
+					{t("sidebar.selection.MovePilots")}
+				</Button>
 			</div>
 		</div>
 	);
