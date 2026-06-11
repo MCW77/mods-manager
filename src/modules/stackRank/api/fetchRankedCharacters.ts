@@ -4,6 +4,10 @@ import type { StackRankParameters } from "../domain/StackRankParameters";
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 
+const API_URL = import.meta.env.DEV
+	? "http://localhost:3005/stackrankmock"
+	: "https://api.mods-optimizer.swgoh.grandivory.com/characterlist";
+
 const post = async (url = "", data = {}) => {
 	const requestInit: RequestInit = {
 		method: "POST",
@@ -26,14 +30,11 @@ export const fetchRankedCharacters = async (
 	parameters: StackRankParameters,
 ): Promise<CharacterNames[]> => {
 	try {
-		const response = await post(
-			"https://api.mods-optimizer.swgoh.grandivory.com/characterlist",
-			{
-				allyCode: allycode,
-				mode: mode,
-				parameters: parameters,
-			},
-		);
+		const response = await post(API_URL, {
+			allyCode: allycode,
+			mode: mode,
+			parameters: parameters,
+		});
 		return response as CharacterNames[];
 	} catch (error) {
 		throw new Error("Failed post to fetch ranked characters", { cause: error });
