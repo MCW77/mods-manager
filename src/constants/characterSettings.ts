@@ -110,6 +110,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 20,
 				spd: 100,
 				ten: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 				},
@@ -129,6 +130,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 15,
 			phys: 10,
 			cc: 10,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				circle: "Protection %",
@@ -148,6 +150,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				spec: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 				},
@@ -194,6 +197,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				phys: 25,
 				cc: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -234,6 +238,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 5,
 				res: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					cross: "Protection %",
@@ -255,6 +260,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 25,
 				cc: 80,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -485,6 +491,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 15,
 			phys: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -521,6 +528,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "Default",
 				spd: 100,
 				pot: 20,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Offense %",
@@ -542,6 +550,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 30,
 			spd: 100,
 			pot: 15,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
@@ -839,6 +848,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				phys: 50,
 				cc: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -862,6 +872,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 50,
 				cc: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -883,6 +894,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			phys: 50,
 			cc: 50,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -941,6 +953,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				pot: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					cross: "Potency %",
@@ -1007,6 +1020,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 10,
 			ten: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
@@ -1179,6 +1193,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			phys: 50,
 			cc: 50,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -1241,6 +1256,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				spec: 70,
 				cc: 20,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -1379,6 +1395,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 50,
 			pot: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -1397,6 +1414,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 20,
 				spd: 100,
 				pot: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -1499,6 +1517,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				ten: 20,
 				spec: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -1619,6 +1638,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 20,
 			ten: 20,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				cross: "Protection %",
@@ -1659,6 +1679,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 70,
 				pot: 5,
 				phys: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -1880,6 +1901,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 50,
 			pot: 15,
 			phys: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Protection %",
 				triangle: "Protection %",
@@ -1912,6 +1934,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 5,
 				ten: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
@@ -2130,6 +2153,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 10,
 			spd: 100,
 			arm: 20,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Health %",
 				triangle: "Health %",
@@ -2181,6 +2205,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				spec: 10,
 				cc: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -2306,6 +2331,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 5,
 			phys: 50,
 			cc: 10,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -2356,6 +2382,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 25,
 				cc: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -2465,6 +2492,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 60,
 			cc: 100,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -2663,6 +2691,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				spec: 50,
 				pot: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -2821,6 +2850,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			phys: 50,
 			cc: 50,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -2903,6 +2933,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				ten: 20,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -2928,6 +2959,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 10,
 				arm: 15,
 				res: 15,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -2992,6 +3024,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 60,
 				pot: 30,
 				ten: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -3016,6 +3049,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 80,
 				pot: 15,
 				phys: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -3040,6 +3074,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				pot: 10,
 				phys: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -3062,6 +3097,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 10,
 				arm: 30,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -3082,6 +3118,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 25,
 			cd: 100,
 			phys: 80,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Offense %",
 				triangle: "Critical Damage %",
@@ -3182,6 +3219,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 13,
 			res: 13,
 			phys: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Offense %",
@@ -3202,6 +3240,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 10,
 				ca: 15,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -3227,6 +3266,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 12.5,
 				res: 12.5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Health %",
 					triangle: "Health %",
@@ -3373,6 +3413,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 90,
 			phys: 50,
 			cc: 100,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -3392,6 +3433,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			phys: 50,
 			cc: 50,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -3500,6 +3542,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 20,
 				spd: 100,
 				ten: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -3524,6 +3567,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 30,
 			cc: 5,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -3623,6 +3667,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 15,
 				spec: 15,
 				cc: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Offense %",
@@ -3717,6 +3762,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 100,
 				spd: 80,
 				cd: 80,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Health %",
 					triangle: "Critical Damage %",
@@ -3770,6 +3816,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 100,
 				pot: 10,
 				phys: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -3811,6 +3858,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 25,
 			ten: 20,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
@@ -4057,6 +4105,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			pot: 50,
 			phys: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -4144,6 +4193,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			phys: 50,
 			cc: 50,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -4248,6 +4298,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 20,
 				phys: 100,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Offense %",
@@ -4495,6 +4546,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "Healer",
 				health: 50,
 				spd: 100,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
@@ -4715,6 +4767,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				phys: 20,
 				cc: 75,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Chance %",
@@ -4760,6 +4813,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				ten: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Protection %",
 					triangle: "Protection %",
@@ -4797,6 +4851,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			arm: 25,
 			ca: 100,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
@@ -5000,6 +5055,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 5,
 			phys: 50,
 			arm: 5,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -5019,6 +5075,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				phys: 25,
 				cc: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -5041,6 +5098,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				arm: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Health %",
 					triangle: "Health %",
@@ -5080,6 +5138,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				arm: 12.5,
 				res: 12.5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Protection %",
 					triangle: "Protection %",
@@ -5239,6 +5298,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				spec: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
@@ -5439,6 +5499,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			spec: 50,
 			pot: 25,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -6013,6 +6074,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 35,
 				phys: 10,
 				arm: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Offense %",
@@ -6115,6 +6177,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				pot: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -6138,6 +6201,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 10,
 				arm: 10,
 				ca: 50,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Health %",
@@ -6161,6 +6225,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 40,
 			ten: 20,
 			arm: 5,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
@@ -6431,6 +6496,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				acc: 10,
 				cc: 5,
 				ca: 15,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -6454,6 +6520,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 50,
 				cc: 100,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -6483,6 +6550,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 25,
 				cc: 5,
 				arm: 1,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Health %",
 					triangle: "Health %",
@@ -6557,6 +6625,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 20,
 				spec: 20,
 				cc: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -6581,6 +6650,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 3,
 				ten: 1,
 				arm: 15,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Health %",
 					triangle: "Health %",
@@ -6604,6 +6674,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			pot: 10,
 			arm: 1,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -6725,6 +6796,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				arm: 10,
 				res: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Protection %",
@@ -6809,6 +6881,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 75,
 				spec: 100,
 				cc: 30,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -6911,6 +6984,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 30,
 				spd: 10,
 				arm: 20,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Protection %",
 					triangle: "Protection %",
@@ -6939,6 +7013,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 10,
 				phys: 10,
 				arm: 1,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -6964,6 +7039,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 35,
 				arm: 5,
 				ca: 65,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -7010,6 +7086,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 15,
 				arm: 25,
 				res: 25,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Protection %",
 					triangle: "Protection %",
@@ -7301,6 +7378,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 25,
 			arm: 12.5,
 			res: 12.5,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Protection %",
@@ -7350,6 +7428,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				spec: 10,
 				cc: 10,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -7529,6 +7608,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 15,
 			phys: 30,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Offense %",
@@ -7569,6 +7649,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 10,
 				phys: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -7776,6 +7857,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 40,
 				phys: 20,
 				cc: 20,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -8015,6 +8097,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 20,
 				phys: 20,
 				cc: 5,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -8185,6 +8268,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 5,
 				spd: 100,
 				phys: 35,
+				minDots: 6,
 				primaryRes: {
 					arrow: "Speed",
 					triangle: "Critical Damage %",
@@ -8252,6 +8336,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 50,
 			phys: 20,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
@@ -8273,6 +8358,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			pot: 10,
 			phys: 20,
+			minDots: 6,
 			primaryRes: {
 				arrow: "Speed",
 				triangle: "Critical Damage %",
