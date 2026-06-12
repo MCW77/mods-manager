@@ -149,8 +149,8 @@ importers:
         specifier: 66.7.0
         version: 66.7.0
       '@unocss/preset-wind4':
-        specifier: ^66.7.0
-        version: 66.7.0
+        specifier: ^66.7.2
+        version: 66.7.2
       '@vitejs/plugin-react':
         specifier: ^6.0.2
         version: 6.0.2(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.0.3)(vite@8.0.16(@types/node@25.9.3)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.48.0)(tsx@4.21.0)(yaml@2.9.0)))(vite@8.0.16(@types/node@25.9.3)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.48.0)(tsx@4.21.0)(yaml@2.9.0))
@@ -2374,9 +2374,6 @@ packages:
   '@unocss/core@66.7.2':
     resolution: {integrity: sha512-NNnhm9IVPEZ34drwztREP+mq1rio0L4Tp0u247qBKxJJWYec1+I+FTRsw7EvtukZKvr56YAxFA1qbBV+LjyV+Q==}
 
-  '@unocss/extractor-arbitrary-variants@66.7.0':
-    resolution: {integrity: sha512-iHMlXmb8aGtYgPQ8o3D4rMz9DKOqSp8g/LWvEoiM7arSjJF9jMpcpYlqZXzkg1mSQX23TRW76Qxj1gyI4lRd9w==}
-
   '@unocss/extractor-arbitrary-variants@66.7.2':
     resolution: {integrity: sha512-1R+ntws4zhi9gCsyovYeNCiAYGSceN6Rsy/4kyaw3npr1UBWhBJdQZtacxvqOssPfbbqq2vpatcuQ4rfZZYWFQ==}
 
@@ -2409,9 +2406,6 @@ packages:
 
   '@unocss/preset-wind3@66.7.2':
     resolution: {integrity: sha512-3WUmNZ3ibNotel6PAm1AgdK8BP2RqThRvEYU+svZgxsCX8E/RtVM68BFPOwzsEtuMD/R3Up6rHXqZsJvUQsg+A==}
-
-  '@unocss/preset-wind4@66.7.0':
-    resolution: {integrity: sha512-5o3y2BcImLbkxa0fNtwaH8iB47FrOKzT7Xogni5PIDOX/DsoHfDLNiNBRrHHHHBeZ3jqvjv2T9T5kEkD5/WtYQ==}
 
   '@unocss/preset-wind4@66.7.2':
     resolution: {integrity: sha512-yP1Np15QKm+zh945lBmpNC2FnD4oyd0eq9qA6j8r15uvhz7AF98t9dGqqzV5WrjX+IZpwg08nP3son1IjAerLw==}
@@ -6396,10 +6390,6 @@ snapshots:
 
   '@unocss/core@66.7.2': {}
 
-  '@unocss/extractor-arbitrary-variants@66.7.0':
-    dependencies:
-      '@unocss/core': 66.7.0
-
   '@unocss/extractor-arbitrary-variants@66.7.2':
     dependencies:
       '@unocss/core': 66.7.2
@@ -6457,12 +6447,6 @@ snapshots:
       '@unocss/core': 66.7.2
       '@unocss/preset-mini': 66.7.2
       '@unocss/rule-utils': 66.7.2
-
-  '@unocss/preset-wind4@66.7.0':
-    dependencies:
-      '@unocss/core': 66.7.0
-      '@unocss/extractor-arbitrary-variants': 66.7.0
-      '@unocss/rule-utils': 66.7.0
 
   '@unocss/preset-wind4@66.7.2':
     dependencies:
