@@ -298,6 +298,17 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 		reset: () => {
 			syncStatus$.reset();
 		},
+		updateActiveDatacrons: (datacrons: Datacron[]) => {
+			const oldDatacronById = datacrons$.datacronByIdForActiveAllycode.peek();
+			const newDatacronById: DatacronById = new Map<string, Datacron>();
+			for (const datacron of datacrons) {
+				newDatacronById.set(datacron.id, {
+					...datacron,
+					name: oldDatacronById.get(datacron.id)?.name ?? "",
+				});
+			}
+			datacrons$.datacronByIdForActiveAllycode.set(newDatacronById);
+		},
 	});
 
 profilesManagement$.lastProfileAdded.onChange(({ value }) => {

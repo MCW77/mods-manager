@@ -4,6 +4,7 @@ import type { Observable } from "@legendapp/state";
 // domain
 import type { DatacronFilter, DatacronSet } from "./DatacronFilter";
 import type {
+	Datacron,
 	DatacronById,
 	DatacronsPersistedData,
 	DatacronByIdForProfile,
@@ -38,6 +39,7 @@ interface DatacronsObservable {
 	deleteProfile: (allycode: string) => void;
 	resetFilters: () => void;
 	reset: () => void;
+	updateActiveDatacrons: (datacrons: Datacron[]) => void;
 }
 
 const getInitialDatacrons = (): DatacronsPersistedData => {

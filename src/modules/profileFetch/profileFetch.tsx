@@ -271,17 +271,10 @@ function updatePlayerData(
 			}
 		}
 
-		if (fullProfile.datacrons) {
-			for (const datacron of fullProfile.datacrons) {
-				const existingDatacron = datacrons$.datacronByIdForActiveAllycode
-					.peek()
-					.get(datacron.id);
-				datacrons$.datacronByIdForActiveAllycode.set(datacron.id, {
-					...datacron,
-					name: existingDatacron?.name ?? "",
-				});
-			}
-		}
+		datacrons$.updateActiveDatacrons(
+			fullProfile.datacrons.map((datacron) => ({ ...datacron, name: "" })) ??
+				[],
+		);
 
 		if (fullProfile.material) {
 			for (const material of fullProfile.material.material) {
