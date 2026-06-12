@@ -1652,6 +1652,1031 @@
       "targetCharacter": ""
     }
   ],
+  "stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_001": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 15000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 48,
+      "statValueMin": 1000000,
+      "statValueMax": 5000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_damage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_002": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 35000000,
+      "statValueMax": 50000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 48,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_damage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_003": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 50000000,
+      "statValueMax": 75000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 48,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_damage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_darkside_generic_031": [
+    {
+      "abilityId": "datacron_alignment_generic_032",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies grant a buff to another ally, that ally gains 5% Turn Meter (limit once per turn per ally).",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies grant a buff to another ally, that ally gains 5% Turn Meter (limit once per turn per ally).",
+      "shortText": "DS allies buff ally that ally gains 5% TM",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_003",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies Daze or Stun an enemy, they recover 10% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies Daze or Stun an enemy, they recover 10% Health and Protection.",
+      "shortText": "DS Daze/Stun an enemy -> 10% H/P",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_016",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "The first time each {0} ally is defeated, remaining {0} allies gain 15% Offense and 20 Speed (stacking) for the rest of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Dark Side ally is defeated, remaining Dark Side allies gain 15% Offense and 20 Speed (stacking) for the rest of the encounter.",
+      "shortText": "DS ally death -> +15% Off/+20 Speed",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_002",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies gain a buff, they recover 2% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies gain a buff, they recover 2% Health and Protection.",
+      "shortText": "DS gain buff -> 2% H/P",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_024",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "At the beginning of their turn, {0} allies have +25% chance to dispel all debuffs on themself.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the beginning of their turn, Dark Side allies have +25% chance to dispel all debuffs on themself.",
+      "shortText": "DS Ally start turn -> 25% chance to self dispel all",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_lightside_generic_032": [
+    {
+      "abilityId": "datacron_alignment_generic_025",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "{0} allies start the battle with Protection Up (20%) for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Light Side allies start the battle with Protection Up (20%) for 2 turns.",
+      "shortText": "LS Protection Up (20%) at start",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_020",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies inflict Damage Over Time on an enemy, they gain a stack of Protection Up (5%, stacking) until the end of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies inflict Damage Over Time on an enemy, they gain a stack of Protection Up (5%, stacking) until the end of the encounter.",
+      "shortText": "LS inflict DoT -> 5% Prot up",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_031",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "At the start of the encounter {0} allies gain 15% Max Health and Max Protection for each other {0} ally until the end of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of the encounter Light Side allies gain 15% Max Health and Max Protection for each other Light Side ally until the end of the encounter.",
+      "shortText": "LS +15% H/P per LS ally",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_022",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies resist a debuff they recover 2% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies resist a debuff they recover 2% Health and Protection.",
+      "shortText": "LS resist debuff -> 2% H/P",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_018",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "{0} allies recover 2% Health whenever they critically hit an enemy.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Light Side allies recover 2% Health whenever they critically hit an enemy.",
+      "shortText": "LS crit -> +2% Health",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_separatist_004": [
+    {
+      "abilityId": "datacron_faction_generic_040",
+      "targetRule": "target_datacron_separatist",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.datacronui_affix_separatists",
+      "description": "Whenever a {0} ally is critically hit, they gain 100% Critical Avoidance and Critical Chance for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Separatist ally is critically hit, they gain 100% Critical Avoidance and Critical Chance for 2 turns.",
+      "shortText": "Separatist ally is crit hit -> +100% C avoid, +100% Crit chance",
+      "targetCategory": "affiliation_separatist",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_034",
+      "targetRule": "target_datacron_separatist",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.datacronui_affix_separatists",
+      "description": "Whenever a {0} ally defeats an enemy, they take a bonus turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Separatist ally defeats an enemy, they take a bonus turn.",
+      "shortText": "Separatist ally kills -> Bonus turn",
+      "targetCategory": "affiliation_separatist",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_020",
+      "targetRule": "target_datacron_separatist",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.datacronui_affix_separatists",
+      "description": "Whenever {0} allies are revived, they gain Protection Over Time (25%) for 2 turns and 25% Turn Meter and reduce their cooldowns by 1.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Separatist allies are revived, they gain Protection Over Time (25%) for 2 turns and 25% Turn Meter and reduce their cooldowns by 1.",
+      "shortText": "Separatist revived -> +25% P over time, +25% TM, cooldowns reduced",
+      "targetCategory": "affiliation_separatist",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_separatist_001",
+      "targetRule": "target_datacron_separatist",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.datacronui_affix_separatists",
+      "description": "Separatist allies are immune to Daze. Enemies with Extortion have -100% Critical Chance and Potency. Whenever non-Droid Separatist allies use a Special ability on their turn, they gain Riposte for 1 turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Separatist allies are immune to Daze. Enemies with Extortion have -100% Critical Chance and Potency. Whenever non-Droid Separatist allies use a Special ability on their turn, they gain Riposte for 1 turn.",
+      "shortText": "Sep Daze immune, Extortion -> -100% CC and Pot, Special -> Riposte",
+      "targetCategory": "affiliation_separatist",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_separatist_002",
+      "targetRule": "target_datacron_separatist",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.datacronui_affix_separatists",
+      "description": "At the start of each Separatist ally's turn, inflict Target Lock on a random enemy that doesn't already have it for 1 turn, which can't be resisted. Whenever a Separatist ally gains bonus Turn Meter when they didn't have 100% Turn Meter, gain 3% Critical Damage (stacking) for the rest of the encounter. If the target enemy is Target Locked, whenever Separatist allies use a Special ability they gain 3% Max Health (stacking) for the rest of the encounter. ",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of each Separatist ally's turn, inflict Target Lock on a random enemy that doesn't already have it for 1 turn, which can't be resisted. Whenever a Separatist ally gains bonus Turn Meter when they didn't have 100% Turn Meter, gain 3% Critical Damage (stacking) for the rest of the encounter. If the target enemy is Target Locked, whenever Separatist allies use a Special ability they gain 3% Max Health (stacking) for the rest of the encounter.",
+      "shortText": "Sep ally start turn -> Target Lock, other bonuses",
+      "targetCategory": "affiliation_separatist",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_oldrepublic_003": [
+    {
+      "abilityId": "datacron_faction_generic_043",
+      "targetRule": "target_datacron_oldrepublic",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.datacronui_affix_oldrepublic",
+      "description": "Whenever {0} allies recover Protection, they gain 2% Max Protection (stacking, max 150%) until the end of battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Old Republic allies recover Protection, they gain 2% Max Protection (stacking, max 150%) until the end of battle.",
+      "shortText": "Whenever Old Republic allies recover Protection, they gain 2% Max Protection (stacking, max 150%) until the end of battle.",
+      "targetCategory": "affiliation_oldrepublic",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_030",
+      "targetRule": "target_datacron_oldrepublic",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.datacronui_affix_oldrepublic",
+      "description": "Whenever {0} allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Old Republic allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
+      "shortText": "Old Republic Stunned -> 50% TM/+25% H/P",
+      "targetCategory": "affiliation_oldrepublic",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_038",
+      "targetRule": "target_datacron_oldrepublic",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.datacronui_affix_oldrepublic",
+      "description": "Whenever a {0} ally falls below 100% Health, they gain a bonus turn. Limit once per character per battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Old Republic ally falls below 100% Health, they gain a bonus turn. Limit once per character per battle.",
+      "shortText": "Old Republic ally < 100% H -> Bonus turn",
+      "targetCategory": "affiliation_oldrepublic",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_031",
+      "targetRule": "target_datacron_oldrepublic",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.datacronui_affix_oldrepublic",
+      "description": "At the start of each turn, if non-Galactic Legend {0} allies have 50% or more Turn Meter, damage they receive is reduced by 75% until the end of the turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of each turn, if non-Galactic Legend Old Republic allies have 50% or more Turn Meter, damage they receive is reduced by 75% until the end of the turn.",
+      "shortText": "Old Republic >= 50% TM -> 75% less damage",
+      "targetCategory": "affiliation_oldrepublic",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_014",
+      "targetRule": "target_datacron_oldrepublic",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.datacronui_affix_oldrepublic",
+      "description": "Whenever a debuff on an enemy expires, {0} allies gain 2% Potency and Tenacity (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a debuff on an enemy expires, Old Republic allies gain 2% Potency and Tenacity (stacking) until the end of battle.",
+      "shortText": "Enemy debuff expire -> Old Republic +2% Pot/Ten",
+      "targetCategory": "affiliation_oldrepublic",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_droideka_001": [
+    {
+      "abilityId": "datacron_character_generic_033",
+      "targetRule": "target_datacron_droideka",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.charui_droideka",
+      "description": "Whenever {0} critically hits an enemy, {0} gains Damage Immunity for 1 turn, which can't be copied, 25% Turn Meter, and Blinds that enemy for 1 turn, which can't be evaded or resisted. If the enemy was Target Locked, {0} also gains Protection Up (100%), Retribution, and Speed Up for 2 turns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Droideka critically hits an enemy, Droideka gains Damage Immunity for 1 turn, which can't be copied, 25% Turn Meter, and Blinds that enemy for 1 turn, which can't be evaded or resisted. If the enemy was Target Locked, Droideka also gains Protection Up (100%), Retribution, and Speed Up for 2 turns.",
+      "shortText": "Droideka crits -> Dmg Imm + 25% TM, Blind enemy, if TL Prot/Speed Up + Retribution",
+      "targetCategory": "",
+      "targetCharacter": "DROIDEKA"
+    }
+  ],
+  "ability_set_generalgrievous_002": [
+    {
+      "abilityId": "datacron_character_generic_004",
+      "targetRule": "target_datacron_generalgrievous",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.charui_grievous",
+      "description": "Whenever {0} inflicts a debuff, they recover 25% of their Max Health and Max Protection (limit once per turn).",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever General Grievous inflicts a debuff, they recover 25% of their Max Health and Max Protection (limit once per turn).",
+      "shortText": "General Grievous inflict debuff -> heal self 25% Max H/P",
+      "targetCategory": "",
+      "targetCharacter": "GRIEVOUS"
+    }
+  ],
+  "ability_set_asajjventress_004": [
+    {
+      "abilityId": "datacron_character_generic_013",
+      "targetRule": "target_datacron_asajventress",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.charui_ventress",
+      "description": "Whenever an enemy takes a turn, {0} takes a bonus turn. During this bonus turn, {0} deals 100% more damage. This bonus turn can't trigger this effect on enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy takes a turn, Asajj Ventress takes a bonus turn. During this bonus turn, Asajj Ventress deals 100% more damage. This bonus turn can't trigger this effect on enemies.",
+      "shortText": "Enemy turn -> Asajj Ventress bonus turn, +100% Dmg",
+      "targetCategory": "",
+      "targetCharacter": "ASAJVENTRESS"
+    }
+  ],
+  "ability_set_sunfac_002": [
+    {
+      "abilityId": "datacron_character_sunfac_001",
+      "targetRule": "target_datacron_sunfac",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.charui_geonosian_sunfac",
+      "description": "Sun Fac has +100% counter chance and is immune to Daze and Stun.\\\\n\\\\nWhenever Sun Fac attacks out of turn, he dispels all debuffs on himself, Sun Fac deals bonus True damage equal to 15% of their Max Health to the enemy.\\\\n\\\\nFor each debuff dispelled this way, Geonosian allies gain 5% Defense, Max Health, and Max Protection until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Sun Fac has +100% counter chance and is immune to Daze and Stun.\\\\nWhenever Sun Fac attacks out of turn, he dispels all debuffs on himself, Sun Fac deals bonus True damage equal to 15% of their Max Health to the enemy.\\\\n\\\\nFor each debuff dispelled this way, Geonosian allies gain 5% Defense, Max Health, and Max Protection until the end of battle.",
+      "shortText": "Sun Fac +100% counter, immune to daze/stun, self dispel on counter",
+      "targetCategory": "",
+      "targetCharacter": "SUNFAC"
+    }
+  ],
+  "ability_set_trench_004": [
+    {
+      "abilityId": "datacron_character_trench_001",
+      "targetRule": "target_datacron_trench",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.charui_admiraltrench",
+      "description": "Non-Droid Separatist allies start the encounter with Tactical Supremacy for 2 turns. Whenever Separatist allies gain a stack of Heal Over Time they gain 5% Critical Chance (stacking, max 200%) for the rest of the encounter. Whenever Separatist allies gain a stack Protection Over Time they gain 5% Defense (stacking, max 200%) for the rest of the encounter. Whenever Admiral Trench uses his Basic ability on his turn, call all other allies with Riposte to assist. Whenever Trench Shocks an enemy, he gains Protection Up (25%) for 1 turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Non-Droid Separatist allies start the encounter with Tactical Supremacy for 2 turns. Whenever Separatist allies gain a stack of Heal Over Time they gain 5% Critical Chance (stacking, max 200%) for the rest of the encounter. Whenever Separatist allies gain a stack Protection Over Time they gain 5% Defense (stacking, max 200%) for the rest of the encounter. Whenever Admiral Trench uses his Basic ability on his turn, call all other allies with Riposte to assist. Whenever Trench Shocks an enemy, he gains Protection Up (25%) for 1 turn.",
+      "shortText": "(Trench) HoT/PoT bonuses, Trench Basic + Riposte -> all assist",
+      "targetCategory": "",
+      "targetCharacter": "TRENCH"
+    }
+  ],
+  "ability_set_jangofett_004": [
+    {
+      "abilityId": "datacron_character_jangofett_001",
+      "targetRule": "target_datacron_jangofett",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "separatist"
+      ],
+      "scopeIcon": "tex.charui_jangofett",
+      "description": "Whenever Jango Fett inflicts Burning, inflict Vulnerable on all enemies for 2 turns. Whenever an enemy dispels Burning, they are inflicted with Healing Immunity for 1 turn. \\\\n\\\\nIf Jango Fett is the ally in the Leader slot, complete Payout for all Bounty Hunter allies at the start of each encounter and all Bounty Hunter allies gain 300% Defense. Once Payout is active, whenever a Bounty Hunter ally uses a Special ability, Jango Fett gains 25% Offense (stacking, max 125%) until the end of battle. Whenever a Bounty Hunter ally critically hits an enemy, they attack again.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Jango Fett inflicts Burning, inflict Vulnerable on all enemies for 2 turns. Whenever an enemy dispels Burning, they are inflicted with Healing Immunity for 1 turn. \\\\nIf Jango Fett is the ally in the Leader slot, complete Payout for all Bounty Hunter allies at the start of each encounter and all Bounty Hunter allies gain 300% Defense. Once Payout is active, whenever a Bounty Hunter ally uses a Special ability, Jango Fett gains 25% Offense (stacking, max 125%) until the end of battle. Whenever a Bounty Hunter ally critically hits an enemy, they attack again.",
+      "shortText": "Jango Burn -> also Vuln, also other bonuses for Jango lead",
+      "targetCategory": "",
+      "targetCharacter": "JANGOFETT"
+    }
+  ],
+  "ability_set_carthonasi_003": [
+    {
+      "abilityId": "datacron_character_carthonasi_001",
+      "targetRule": "target_datacron_carthonasi",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.charui_carth",
+      "description": "Carth Onasi has +100% Max Health, Max Protection, and Potency and he gains 15% Turn Meter whenever another character ends their turn. Whenever he uses his Basic ability, he attacks two more times.\\\\n\\\\n Whenever an Old Republic ally is Dazed, they dispel it. When they dispel Daze, they gain 15% Turn Meter.\\\\n\\\\nWhenever an enemy is defeated, Carth gains 25% Offense (stacking) and Critical Damage (stacking) until the end of the battle, his cooldowns are reset, and he gains 100% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Carth Onasi has +100% Max Health, Max Protection, and Potency and he gains 15% Turn Meter whenever another character ends their turn. Whenever he uses his Basic ability, he attacks two more times.\\\\n Whenever an Old Republic ally is Dazed, they dispel it. When they dispel Daze, they gain 15% Turn Meter.\\\\n\\\\nWhenever an enemy is defeated, Carth gains 25% Offense (stacking) and Critical Damage (stacking) until the end of the battle, his cooldowns are reset, and he gains 100% Turn Meter.",
+      "shortText": "Carth Onasi giant wall of text",
+      "targetCategory": "",
+      "targetCharacter": "CARTHONASI"
+    }
+  ],
+  "ability_set_t3-m4_003": [
+    {
+      "abilityId": "datacron_character_generic_022",
+      "targetRule": "target_datacron_t3-m4",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.charui_t3m4",
+      "description": "Each time {0} inflicts Ability Block, they gain 10% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Each time T3-M4 inflicts Ability Block, they gain 10% Turn Meter.",
+      "shortText": "T3-M4 Ability Blocks -> +10% TM",
+      "targetCategory": "",
+      "targetCharacter": "T3_M4"
+    }
+  ],
+  "ability_set_50RT_004": [
+    {
+      "abilityId": "datacron_character_generic_045",
+      "targetRule": "target_datacron_50rt",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.charui_50rt",
+      "description": "{0} deals +25% more damage per Relic Amplifier level on all allies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "50R-T deals +25% more damage per Relic Amplifier level on all allies.",
+      "shortText": "50R-T deals +25% more damage per Relic Amplifier level on all allies",
+      "targetCategory": "",
+      "targetCharacter": "50RT"
+    }
+  ],
+  "ability_set_zaalbar_004": [
+    {
+      "abilityId": "datacron_character_zaalbar_002",
+      "targetRule": "target_datacron_zaalbar",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.charui_zaalbar",
+      "description": "At the start of his turn, Zaalbar gives Taunt for 1 turn to all Tank allies, and Tank allies are immune to Buff Immunity and Stun while he is active. Once per turn when Zaalbar inflicts Armor Shred on an enemy, he inflicts it on all other enemies until the end of the encounter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of his turn, Zaalbar gives Taunt for 1 turn to all Tank allies, and Tank allies are immune to Buff Immunity and Stun while he is active. Once per turn when Zaalbar inflicts Armor Shred on an enemy, he inflicts it on all other enemies until the end of the encounter.",
+      "shortText": "Zaalbar start of turn -> Taunt to tank allies, who are immune to stun/buff immunity, armor shred all",
+      "targetCategory": "",
+      "targetCharacter": "ZAALBAR"
+    }
+  ],
+  "ability_set_bastilashan_001": [
+    {
+      "abilityId": "datacron_character_bastilashan_001",
+      "targetRule": "target_datacron_bastilashan",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.charui_bastilashan",
+      "description": "At the start of battle, Old Republic allies gain 15% Turn Meter and Protection Up (200%, can't be dispelled), and Old Republic Tank allies Taunt for 1 turn. While Old Republic allies have Protection Up, they have +150% Tenacity and deal 35% more damage.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of battle, Old Republic allies gain 15% Turn Meter and Protection Up (200%, can't be dispelled), and Old Republic Tank allies Taunt for 1 turn. While Old Republic allies have Protection Up, they have +150% Tenacity and deal 35% more damage.",
+      "shortText": "(Bastilla) Start of battle -> OR +15% TM/Prot Up/Tanks taunt, bonus Ten/Dmg with Prot up",
+      "targetCategory": "",
+      "targetCharacter": "BASTILASHAN"
+    }
+  ],
+  "ability_set_sateleshan_001": [
+    {
+      "abilityId": "datacron_character_sateleshan_001",
+      "targetRule": "target_datacron_sateleshan",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "oldrepublic"
+      ],
+      "scopeIcon": "tex.charui_sateleshan",
+      "description": "If all allies are Old Republic then the following will be active:\\\\n\\\\n- The first time Satele Shan loses all Protection, she recovers 100% Protection\\\\n- At start of battle, Satele Taunts for 2 turns. While Satele is Taunting, Old Republic Jedi allies are immune to Turn Meter removal\\\\n- Whenever Satele attacks an enemy with Protection, she removes 2% Max Protection (stacking, max 20%) and all Old Republic allies gain 5% Max Protection (stacking, max 50%) until the end of battle\\\\n- Whenever Marked is dispelled or removed from an enemy, the next use of a Basic ability from an Old Republic Jedi ally will inflict Marked on the target enemy for 2 turns, which can't be dispelled or evaded",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "If all allies are Old Republic then the following will be active:\\\\n- The first time Satele Shan loses all Protection, she recovers 100% Protection\\\\n- At start of battle, Satele Taunts for 2 turns. While Satele is Taunting, Old Republic Jedi allies are immune to Turn Meter removal\\\\n- Whenever Satele attacks an enemy with Protection, she removes 2% Max Protection (stacking, max 20%) and all Old Republic allies gain 5% Max Protection (stacking, max 50%) until the end of battle\\\\n- Whenever Marked is dispelled or removed from an enemy, the next use of a Basic ability from an Old Republic Jedi ally will inflict Marked on the target enemy for 2 turns, which can't be dispelled or evaded",
+      "shortText": "(Satele) All Old Rep -> bunch of bonuses",
+      "targetCategory": "",
+      "targetCharacter": "SATELESHAN"
+    }
+  ],
   "stat_set_criticaldamage_accuracy_maxshield_resistance_maxhealth_defense_criticalchance_001": [
     {
       "abilityId": "",
@@ -2223,9 +3248,9 @@
         "sith"
       ],
       "scopeIcon": "tex.datacronui_affix_sith",
-      "description": "Whenever {0} allies Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
+      "description": "Whenever {0} allies inflict Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Sith allies Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
+      "fullText": "Whenever Sith allies inflict Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
       "shortText": "Sith Stagger/Stun -> 35% max health dmg",
       "targetCategory": "profession_sith",
       "targetCharacter": ""
@@ -2303,9 +3328,9 @@
         "sith"
       ],
       "scopeIcon": "tex.datacronui_affix_sith",
-      "description": "Whenever an enemy is inflicted with Fear, Pain, or Shock, Sith allies gain 5% Offense stacking until the end of battle.",
+      "description": "Whenever an enemy is inflicted with Fear, Pain, or Shock, Sith allies gain 5% Offense (stacking) until the end of battle.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever an enemy is inflicted with Fear, Pain, or Shock, Sith allies gain 5% Offense stacking until the end of battle.",
+      "fullText": "Whenever an enemy is inflicted with Fear, Pain, or Shock, Sith allies gain 5% Offense (stacking) until the end of battle.",
       "shortText": "Fear, Pain, or Shock -> Sith +5% Off",
       "targetCategory": "profession_sith",
       "targetCharacter": ""
@@ -2385,9 +3410,9 @@
         "galacticrepublic"
       ],
       "scopeIcon": "tex.datacronui_affix_galacticrepublic",
-      "description": "At the start of battle, if there are no Galactic Legend allies, whenever a Galactic Republic ally with Protection Up assists, if there are no enemies with Protection Disruption, they inflict Protection Disruption on the target enemy for 1 turn, which can't be dispelled, evaded, or resisted. While Galactic Republic allies have Protection Up they gain 50% Accuracy, counter chance, Critical Chance, Critical Damage, and can ignore Taunt effects.",
+      "description": "At the start of battle, if there are no Galactic Legend allies, whenever a Galactic Republic ally with Protection Up assists, if there are no enemies with Protection Disruption, they inflict Protection Disruption on the target enemy for 1 turn, which can't be dispelled, evaded, or resisted. While Galactic Republic allies have Protection Up they gain 50% Accuracy, Counter Chance, Critical Chance, Critical Damage, and can ignore Taunt effects.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "At the start of battle, if there are no Galactic Legend allies, whenever a Galactic Republic ally with Protection Up assists, if there are no enemies with Protection Disruption, they inflict Protection Disruption on the target enemy for 1 turn, which can't be dispelled, evaded, or resisted. While Galactic Republic allies have Protection Up they gain 50% Accuracy, counter chance, Critical Chance, Critical Damage, and can ignore Taunt effects.",
+      "fullText": "At the start of battle, if there are no Galactic Legend allies, whenever a Galactic Republic ally with Protection Up assists, if there are no enemies with Protection Disruption, they inflict Protection Disruption on the target enemy for 1 turn, which can't be dispelled, evaded, or resisted. While Galactic Republic allies have Protection Up they gain 50% Accuracy, Counter Chance, Critical Chance, Critical Damage, and can ignore Taunt effects.",
       "shortText": "Gal Rep bonuses for Prot Up",
       "targetCategory": "affiliation_republic",
       "targetCharacter": ""
@@ -2493,9 +3518,9 @@
         "sith"
       ],
       "scopeIcon": "tex.charui_maul",
-      "description": "If the ally in the Leader slot is Darth Maul, he gains 200% Offense for the rest of battle.\\n\\nWhenever Sith allies Stealth, they recover 30% Health and Protection. While Sith allies are Stealthed they gain 100% Critical Chance and Critical Damage.\\n\\nWhenever a Sith ally uses an ability, Darth Maul assists.",
+      "description": "If the ally in the Leader slot is Darth Maul, he gains 200% Offense for the rest of battle.\\\\n\\\\nWhenever Sith allies Stealth, they recover 30% Health and Protection. While Sith allies are Stealthed they gain 100% Critical Chance and Critical Damage.\\\\n\\\\nWhenever a Sith ally uses an ability, Darth Maul assists.",
       "name": "Bonus mechanics for {0}",
-      "fullText": "If the ally in the Leader slot is Darth Maul, he gains 200% Offense for the rest of battle.\\nWhenever Sith allies Stealth, they recover 30% Health and Protection. While Sith allies are Stealthed they gain 100% Critical Chance and Critical Damage.\\n\\nWhenever a Sith ally uses an ability, Darth Maul assists.",
+      "fullText": "If the ally in the Leader slot is Darth Maul, he gains 200% Offense for the rest of battle.\\\\nWhenever Sith allies Stealth, they recover 30% Health and Protection. While Sith allies are Stealthed they gain 100% Critical Chance and Critical Damage.\\\\n\\\\nWhenever a Sith ally uses an ability, Darth Maul assists.",
       "shortText": "Darth Maul leader bonuses, Sith stealth -> heal, other bonuses",
       "targetCategory": "",
       "targetCharacter": "MAUL"
@@ -2515,9 +3540,9 @@
         "sith"
       ],
       "scopeIcon": "tex.charui_palpatineemperor",
-      "description": "The first time Emperor Palpatine is defeated, if there is an active ally, the enemy who defeated him is instantly defeated.\\n\\nWhenever Shock or Stun expires from an enemy, inflict Buff Immunity, 1 stack of Damage Over Time, and Healing Immunity on all enemies for 1 turn.",
+      "description": "The first time Emperor Palpatine is defeated, if there is an active ally, the enemy who defeated him takes a bonus turn and then is instantly defeated.\\\\n\\\\nWhenever Shock or Stun expires from an enemy, inflict Buff Immunity, 1 stack of Damage Over Time, and Healing Immunity on all enemies for 1 turn.",
       "name": "Bonus mechanics for {0}",
-      "fullText": "The first time Emperor Palpatine is defeated, if there is an active ally, the enemy who defeated him is instantly defeated.\\nWhenever Shock or Stun expires from an enemy, inflict Buff Immunity, 1 stack of Damage Over Time, and Healing Immunity on all enemies for 1 turn.",
+      "fullText": "The first time Emperor Palpatine is defeated, if there is an active ally, the enemy who defeated him takes a bonus turn and then is instantly defeated.\\\\nWhenever Shock or Stun expires from an enemy, inflict Buff Immunity, 1 stack of Damage Over Time, and Healing Immunity on all enemies for 1 turn.",
       "shortText": "Emp Palp dies -> enemy who killed him defeated, other bonuses",
       "targetCategory": "",
       "targetCharacter": "EMPERORPALPATINE"
@@ -2856,9 +3881,9 @@
         "darthrevan"
       ],
       "scopeIcon": "tex.charui_sithrevan",
-      "description": "Whenever a Sith ally dispels Foresight, Blind that enemy for 1 turn. Whenever Darth Revan uses his Basic ability during his turn, call all Sith Empire allies to assist.\\n\\nAt the Start of Darth Raven's turn, if no other enemy has Corrupted Battle Meditation, inflict Corrupted Battle Meditation on a random enemy.",
+      "description": "Whenever a Sith ally dispels Foresight, Blind that enemy for 1 turn. Whenever Darth Revan uses his Basic ability during his turn, call all Sith Empire allies to assist.\\n\\nAt the start of Darth Revan's turn, if no other enemy has Corrupted Battle Meditation, inflict Corrupted Battle Meditation on a random enemy.",
       "name": "Bonus mechanics for {0}",
-      "fullText": "Whenever a Sith ally dispels Foresight, Blind that enemy for 1 turn. Whenever Darth Revan uses his Basic ability during his turn, call all Sith Empire allies to assist.\\nAt the Start of Darth Raven's turn, if no other enemy has Corrupted Battle Meditation, inflict Corrupted Battle Meditation on a random enemy.",
+      "fullText": "Whenever a Sith ally dispels Foresight, Blind that enemy for 1 turn. Whenever Darth Revan uses his Basic ability during his turn, call all Sith Empire allies to assist.\\nAt the start of Darth Revan's turn, if no other enemy has Corrupted Battle Meditation, inflict Corrupted Battle Meditation on a random enemy.",
       "shortText": "(Darth Revan) Various bonuses, allies assist his basic",
       "targetCategory": "",
       "targetCharacter": "DARTHREVAN"
@@ -3900,9 +4925,9 @@
         "rebel"
       ],
       "scopeIcon": "tex.datacronui_affix_rebel",
-      "description": "Whenever {0} allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "description": "Whenever {0} allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Rebel allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "fullText": "Whenever Rebel allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "shortText": "Rebel Stunned -> 50% TM/+25% H/P",
       "targetCategory": "affiliation_rebels",
       "targetCharacter": ""
@@ -8280,9 +9305,9 @@
         "lightattacker"
       ],
       "scopeIcon": "tex.datacronui_affix_attacker",
-      "description": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\n\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies' turns, they ignore Stealth and Taunt if they have no debuff on them.",
+      "description": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\n\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies'turns, they ignore Stealth and Taunt if they have no debuff on them.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies' turns, they ignore Stealth and Taunt if they have no debuff on them.",
+      "fullText": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies'turns, they ignore Stealth and Taunt if they have no debuff on them.",
       "shortText": "Ally debuff -> Attacker AccUp/+10% Off, ignore Taunt/Stealth if no debuff",
       "targetCategory": "role_attacker",
       "targetCharacter": ""
@@ -8380,9 +9405,9 @@
         "darkattacker"
       ],
       "scopeIcon": "tex.datacronui_affix_attacker",
-      "description": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\n\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies' turns, they ignore Stealth and Taunt if they have no debuff on them.",
+      "description": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\n\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies'turns, they ignore Stealth and Taunt if they have no debuff on them.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies' turns, they ignore Stealth and Taunt if they have no debuff on them.",
+      "fullText": "Whenever an ally inflicts a debuff on an enemy, all Attacker allies gain Accuracy Up for 1 turn and 5% Offense (stacking, max 120%) until the end of battle. Whenever an Attacker ally attacks out of turn, they deal bonus True damage, which can't be evaded, and gain 5% Defense Penetration (stacking, max 120%) until the end of battle.\\nWhenever an Attacker ally uses a Special ability, damage they deal to enemies that turn is increased by 5% for each buff on that enemy.\\n\\nDuring Attacker allies'turns, they ignore Stealth and Taunt if they have no debuff on them.",
       "shortText": "Ally debuff -> Attacker AccUp/+10% Off, ignore Taunt/Stealth if no debuff",
       "targetCategory": "role_attacker",
       "targetCharacter": ""
@@ -8442,9 +9467,9 @@
         "lighttank"
       ],
       "scopeIcon": "tex.datacronui_affix_tank",
-      "description": "Whenever {0} allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "description": "Whenever {0} allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Tank allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "fullText": "Whenever Tank allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "shortText": "Tank Stunned -> 50% TM/+25% H/P",
       "targetCategory": "role_tank",
       "targetCharacter": ""
@@ -8542,9 +9567,9 @@
         "darkside"
       ],
       "scopeIcon": "tex.datacronui_affix_tank",
-      "description": "Whenever {0} allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "description": "Whenever {0} allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Tank allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "fullText": "Whenever Tank allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "shortText": "Tank Stunned -> 50% TM/+25% H/P",
       "targetCategory": "role_tank",
       "targetCharacter": ""
@@ -10465,9 +11490,9 @@
         "darkside"
       ],
       "scopeIcon": "tex.datacronui_affix_pirate",
-      "description": "Whenever {0} allies Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
+      "description": "Whenever {0} allies inflict Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Pirate allies Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
+      "fullText": "Whenever Pirate allies inflict Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
       "shortText": "Pirate Stagger/Stun -> 35% max health dmg",
       "targetCategory": "profession_pirate",
       "targetCharacter": ""
@@ -16382,9 +17407,9 @@
         "sith"
       ],
       "scopeIcon": "tex.datacronui_affix_sith",
-      "description": "Whenever {0} allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "description": "Whenever {0} allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Sith allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "fullText": "Whenever Sith allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "shortText": "Sith Stunned -> 50% TM/+25% H/P",
       "targetCategory": "profession_sith",
       "targetCharacter": ""
@@ -20202,9 +21227,9 @@
         "rebel"
       ],
       "scopeIcon": "tex.datacronui_affix_rebel",
-      "description": "Whenever {0} allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "description": "Whenever {0} allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Rebel allies are Stunned, gain 50% Turn Meter and recover 25% Health and Protection.",
+      "fullText": "Whenever Rebel allies are Stunned, they gain 50% Turn Meter and recover 25% Health and Protection.",
       "shortText": "Rebel Stunned -> 50% TM/+25% H/P",
       "targetCategory": "affiliation_rebels",
       "targetCharacter": ""
@@ -22480,9 +23505,9 @@
         "oldrepublic"
       ],
       "scopeIcon": "tex.charui_carth",
-      "description": "Carth Onasi has +100% Max Health, Max Protection, and Potency and he gains 15% Turn Meter whenever another character ends their turn. Whenever he uses his Basic ability, he attacks two more times.\\n\\nWhenever an Old Republic ally resists a debuff, they dispel all debuffs on themselves and gain 10% Tenacity (stacking) until the end of battle. Whenever an Old Republic ally is Dazed, they dispel it. When they dispel Daze, they gain 15% Turn Meter.\\n\\nWhenever Carth uses a Special ability, he triggers the damage of all Damage Over Time debuffs on enemies.\\n\\nWhenever an enemy is defeated, Carth gains 25% Offense (stacking) and Critical Damage (stacking) until the end of the battle, his cooldowns are reset, and he gains 100% Turn Meter.   ",
+      "description": "Carth Onasi has +100% Max Health, Max Protection, and Potency and he gains 15% Turn Meter whenever another character ends their turn. Whenever he uses his Basic ability, he attacks two more times.\\n\\n Whenever an Old Republic ally is Dazed, they dispel it. When they dispel Daze, they gain 15% Turn Meter.\\n\\nWhenever an enemy is defeated, Carth gains 25% Offense (stacking) and Critical Damage (stacking) until the end of the battle, his cooldowns are reset, and he gains 100% Turn Meter.",
       "name": "Bonus mechanics for {0}",
-      "fullText": "Carth Onasi has +100% Max Health, Max Protection, and Potency and he gains 15% Turn Meter whenever another character ends their turn. Whenever he uses his Basic ability, he attacks two more times.\\nWhenever an Old Republic ally resists a debuff, they dispel all debuffs on themselves and gain 10% Tenacity (stacking) until the end of battle. Whenever an Old Republic ally is Dazed, they dispel it. When they dispel Daze, they gain 15% Turn Meter.\\n\\nWhenever Carth uses a Special ability, he triggers the damage of all Damage Over Time debuffs on enemies.\\n\\nWhenever an enemy is defeated, Carth gains 25% Offense (stacking) and Critical Damage (stacking) until the end of the battle, his cooldowns are reset, and he gains 100% Turn Meter.",
+      "fullText": "Carth Onasi has +100% Max Health, Max Protection, and Potency and he gains 15% Turn Meter whenever another character ends their turn. Whenever he uses his Basic ability, he attacks two more times.\\n Whenever an Old Republic ally is Dazed, they dispel it. When they dispel Daze, they gain 15% Turn Meter.\\n\\nWhenever an enemy is defeated, Carth gains 25% Offense (stacking) and Critical Damage (stacking) until the end of the battle, his cooldowns are reset, and he gains 100% Turn Meter.",
       "shortText": "Carth Onasi giant wall of text",
       "targetCategory": "",
       "targetCharacter": "CARTHONASI"
@@ -23972,9 +24997,9 @@
         "darkside"
       ],
       "scopeIcon": "tex.datacronui_affix_imperialremnant",
-      "description": "Whenever {0} allies Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
+      "description": "Whenever {0} allies inflict Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
       "name": "Bonus mechanics for {0} characters",
-      "fullText": "Whenever Imperial Remnant allies Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
+      "fullText": "Whenever Imperial Remnant allies inflict Stagger or Stun on an enemy, they deal bonus damage equal to 35% of that enemy's Max Health, which can't be evaded.",
       "shortText": "Imp Rem Stagger/Stun -> 35% max health dmg",
       "targetCategory": "affiliation_imperialremnant",
       "targetCharacter": ""
