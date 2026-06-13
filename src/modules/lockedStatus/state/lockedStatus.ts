@@ -59,8 +59,15 @@ const lockedStatus$: ObservableObject<LockedStatusObservable> =
 			].set(new Set<CharacterNames>());
 		},
 		deleteProfile: (allycode: string) => {
-			delete lockedStatus$.persistedData.lockedStatus
-				.lockedCharactersByAllycode[allycode];
+			const oldLockedCharactersByAllycode =
+				lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.peek();
+			const newLockedCharactersByAllycode = structuredClone(
+				oldLockedCharactersByAllycode,
+			);
+			delete newLockedCharactersByAllycode[allycode];
+			lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.set(
+				newLockedCharactersByAllycode,
+			);
 		},
 		lockAll: () => {
 			beginBatch();
