@@ -50,12 +50,14 @@ const FilterWidget = () => {
 					<CollapsibleCardTitle className={"w-[90%]"}>
 						Filter:
 					</CollapsibleCardTitle>
-					<CollapsibleCardTrigger asChild>
-						<Button variant="ghost" size="sm" className="w-9 p-0">
-							<ChevronsUpDown className="h-4 w-4" />
-							<span className="sr-only">Toggle</span>
-						</Button>
-					</CollapsibleCardTrigger>
+					<CollapsibleCardTrigger
+						render={
+							<Button variant="ghost" size="sm" className="w-9 p-0">
+								<ChevronsUpDown className="h-4 w-4" />
+								<span className="sr-only">Toggle</span>
+							</Button>
+						}
+					/>
 				</div>
 				<div className={"flex justify-center gap-2"}>
 					<FilterManager />

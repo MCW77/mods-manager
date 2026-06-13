@@ -6,11 +6,7 @@ import { Memo } from "@legendapp/state/react";
 
 // components
 import { ChevronsUpDown } from "lucide-react";
-import {
-	Collapsible,
-	CollapsibleTrigger,
-	CollapsibleContent,
-} from "@radix-ui/react-collapsible";
+import { Collapsible } from "@base-ui/react/collapsible";
 import { Button } from "#ui/button";
 import {
 	SelectTrigger,
@@ -75,17 +71,20 @@ function ReactiveMultiColumnSelect<
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{props.groups.map((group) => (
 						<SelectGroup key={group.label}>
-							<Collapsible key={group.label} defaultOpen={true}>
-								<CollapsibleTrigger asChild>
-									<div>
-										<Button variant="ghost" size="sm" className="w-9 p-0">
-											<ChevronsUpDown className="h-4 w-4" />
-											<span className="sr-only">Toggle</span>
-										</Button>
-										<SelectLabel>{group.label}</SelectLabel>
-									</div>
-								</CollapsibleTrigger>
-								<CollapsibleContent>
+							<Collapsible.Root key={group.label} defaultOpen={true}>
+								<Collapsible.Trigger
+									nativeButton={false}
+									render={
+										<div>
+											<Button variant="ghost" size="sm" className="w-9 p-0">
+												<ChevronsUpDown className="h-4 w-4" />
+												<span className="sr-only">Toggle</span>
+											</Button>
+											<SelectLabel>{group.label}</SelectLabel>
+										</div>
+									}
+								/>
+								<Collapsible.Panel keepMounted={true}>
 									<div>
 										{group.items.map((item) => (
 											<SelectItem key={item.value} value={item.value}>
@@ -93,8 +92,8 @@ function ReactiveMultiColumnSelect<
 											</SelectItem>
 										))}
 									</div>
-								</CollapsibleContent>
-							</Collapsible>
+								</Collapsible.Panel>
+							</Collapsible.Root>
 						</SelectGroup>
 					))}
 				</div>

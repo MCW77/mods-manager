@@ -28,7 +28,7 @@ import {
 	faAnglesUp,
 	faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import * as Collapsible from "@radix-ui/react-collapsible";
+import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 
 import ModDetail from "#/components/ModDetail/ModDetail";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
@@ -37,7 +37,7 @@ import DeleteModsModal from "./DeleteModsModal";
 
 import { Button } from "#ui/button";
 
-const ReactiveCollapsible = reactive(Collapsible.Root);
+const ReactiveCollapsible = reactive(CollapsiblePrimitive.Root);
 
 type ModGroup = {
 	isOpen: boolean;
@@ -69,29 +69,33 @@ function ModGroupItem({
 				modGroup$.isOpen.set(isOpen);
 			}}
 		>
-			<Collapsible.Trigger className="flex hover:cursor-pointer" asChild>
-				<div>
-					<span className="basis-20%">
-						{tDomain(`slots.name.${modGroup$.mods.peek()[0].slot}`)}
-					</span>
-					<span className="basis-30%">
-						{tDomain(`stats.${modGroup$.mods.peek()[0].modset}`)}
-					</span>
-					<span className="basis-30%">
-						{tDomain(
-							`stats.${modGroup$.mods.peek()[0].primaryStat.getDisplayType()}`,
-						)}
-					</span>
-					<span className="basis-20%">
-						(
-						{tDomain("ModWithCount", {
-							count: modGroup$.mods.peek().length,
-						})}
-						)
-					</span>
-				</div>
-			</Collapsible.Trigger>
-			<Collapsible.Content className="flex flex-row flex-wrap justify-evenly gap-4 p-y-2 text-center">
+			<CollapsiblePrimitive.Trigger
+				nativeButton={false}
+				className="flex hover:cursor-pointer"
+				render={
+					<div>
+						<span className="basis-20%">
+							{tDomain(`slots.name.${modGroup$.mods.peek()[0].slot}`)}
+						</span>
+						<span className="basis-30%">
+							{tDomain(`stats.${modGroup$.mods.peek()[0].modset}`)}
+						</span>
+						<span className="basis-30%">
+							{tDomain(
+								`stats.${modGroup$.mods.peek()[0].primaryStat.getDisplayType()}`,
+							)}
+						</span>
+						<span className="basis-20%">
+							(
+							{tDomain("ModWithCount", {
+								count: modGroup$.mods.peek().length,
+							})}
+							)
+						</span>
+					</div>
+				}
+			/>
+			<CollapsiblePrimitive.Panel className="flex flex-row flex-wrap justify-evenly gap-4 p-y-2 text-center">
 				<For
 					each={modGroup$.mods}
 					item={({ item$ }) => (
@@ -99,7 +103,7 @@ function ModGroupItem({
 					)}
 					optimized
 				/>
-			</Collapsible.Content>
+			</CollapsiblePrimitive.Panel>
 		</ReactiveCollapsible>
 	);
 }
