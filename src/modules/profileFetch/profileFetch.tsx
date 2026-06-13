@@ -272,7 +272,7 @@ function updatePlayerData(
 		}
 
 		datacrons$.updateActiveDatacrons(
-			fullProfile.datacrons.map((datacron) => ({ ...datacron, name: "" })) ??
+			fullProfile?.datacrons?.map((datacron) => ({ ...datacron, name: "" })) ??
 				[],
 		);
 
