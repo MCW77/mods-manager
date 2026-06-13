@@ -31,7 +31,8 @@ function DatacronItem({ item$ }: DatacronItemProps) {
 	const className = useValue(() => {
 		let className = "";
 		const abilitiesDisplayMode = datacrons$.abilitiesDisplayMode.get();
-		if (abilitiesDisplayMode === "Hide Abilities") className = "flex-1";
+		if (abilitiesDisplayMode === "Hide Abilities")
+			className = "flex-1 min-w-fit";
 		if (abilitiesDisplayMode === "Show Full Abilities") className = "w-full";
 		if (abilitiesDisplayMode === "Show Short Abilities")
 			className = "min-w-[49%] flex-1";
