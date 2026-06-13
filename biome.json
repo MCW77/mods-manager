@@ -9,6 +9,7 @@
 	},
 	"linter": {
 		"enabled": true,
+		"includes": ["src/**", "!src/modules/datacrons/*.json"],
 		"rules": {
 			"preset": "recommended",
 			"style": {
