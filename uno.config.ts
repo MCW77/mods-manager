@@ -21,6 +21,14 @@ export default defineConfig({
 			};
 		},
 		(matcher) => {
+			if (!matcher.startsWith("data-active:")) return;
+			const m = matcher.slice("data-active:".length);
+			return {
+				matcher: m,
+				selector: (s) => `${s}[data-active]`,
+			};
+		},
+		(matcher) => {
 			if (!matcher.startsWith("data-checked:")) return;
 			const m = matcher.slice("data-checked:".length);
 			return {
@@ -90,6 +98,24 @@ export default defineConfig({
 			return {
 				matcher: m,
 				selector: (s) => `${s}[data-orientation="vertical"]`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("group-data-horizontal\/tabs:")) return matcher;
+			const m = matcher.slice("group-data-horizontal\/tabs:".length);
+			return {
+				matcher: m,
+				selector: (s) =>
+					`${s}:is(:where(.group\\/tabs):where([data-orientation="horizontal"]) *)`,
+			};
+		},
+		(matcher) => {
+			if (!matcher.startsWith("group-data-vertical\/tabs:")) return matcher;
+			const m = matcher.slice("group-data-vertical\/tabs:".length);
+			return {
+				matcher: m,
+				selector: (s) =>
+					`${s}:is(:where(.group\\/tabs):where([data-orientation="vertical"]) *)`,
 			};
 		},
 	],

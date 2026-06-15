@@ -44,12 +44,7 @@ import type {
 // components
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "#/components/custom/tabs-vertical";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
 import { Input } from "#/components/reactive/Input";
 import { Select as ReactiveSelect } from "#/components/reactive/Select";
@@ -449,16 +444,26 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 					</div>
 				</div>
 				<Tabs
-					className="h-full w-full"
+					className="h-full w-full rounded-md p-1 border-3 border-white text-muted-foreground gap-1"
 					defaultValue="Mods"
 					orientation={"vertical"}
 				>
-					<TabsList>
-						<TabsTrigger value="Mods">Mods</TabsTrigger>
-						<TabsTrigger value="Weights">Weights</TabsTrigger>
-						<TabsTrigger value="Primaries">Primaries</TabsTrigger>
-						<TabsTrigger value="Sets">Sets</TabsTrigger>
-						<TabsTrigger value="Stat Targets">Target Stats</TabsTrigger>
+					<TabsList className={"h-auto! justify-start"}>
+						<TabsTrigger className={"grow-0"} value="Mods">
+							Mods
+						</TabsTrigger>
+						<TabsTrigger className={"grow-0"} value="Weights">
+							Weights
+						</TabsTrigger>
+						<TabsTrigger className={"grow-0"} value="Primaries">
+							Primaries
+						</TabsTrigger>
+						<TabsTrigger className={"grow-0"} value="Sets">
+							Sets
+						</TabsTrigger>
+						<TabsTrigger className={"grow-0"} value="Stat Targets">
+							Target Stats
+						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="Mods">
 						<div className={"flex flex-col flex-gap-4"}>
@@ -491,7 +496,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							</div>
 						</div>
 					</TabsContent>
-					<TabsContent value="Weights">
+					<TabsContent className={"flex-initial"} value="Weights">
 						<StatWeightsWidget />
 					</TabsContent>
 					<TabsContent value="Primaries">

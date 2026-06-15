@@ -34,7 +34,7 @@ const ModsView = React.memo(() => {
 						modsView$.activeCategory.set(category as Categories)
 					}
 				>
-					<TabsList className={"flex justify-around"}>
+					<TabsList className={"flex justify-around w-auto"}>
 						<TabsTrigger value="AllMods">{t("categories.All")}</TabsTrigger>
 						<TabsTrigger value="Reveal">{t("categories.Reveal")}</TabsTrigger>
 						<TabsTrigger value="Level">{t("categories.Level")}</TabsTrigger>
