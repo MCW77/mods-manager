@@ -73,5 +73,5 @@
 		"vitest": "^4.1.9"
 	},
 	"config": {},
-	"packageManager": "pnpm@11.7.0"
+	"packageManager": "pnpm@11.8.0"
 }
