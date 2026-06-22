@@ -217,7 +217,7 @@ const CharacterEditView = observer(() => {
 			}`}
 		>
 			<ScrollArea>
-				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[15%]">
+				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[20dvh]">
 					<Memo>
 						<DefaultCollapsibleCard title={t("sidebar.filter.Title")}>
 							<Suspense fallback={<div>Loading CharacterFilters</div>}>
