@@ -64,7 +64,7 @@
 		"@vitest/coverage-v8": "^4.1.9",
 		"@vitest/ui": "^4.1.9",
 		"fake-indexeddb": "^6.2.5",
-		"typescript": "6.0.3",
+		"typescript": "7.0.1-rc",
 		"unocss": "66.7.2",
 		"unocss-preset-shadcn": "^1.0.1",
 		"vite": "^8.0.16",
