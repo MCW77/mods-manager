@@ -60,7 +60,7 @@
 		"@types/react-dom": "^19.2.3",
 		"@unocss/preset-typography": "66.7.2",
 		"@unocss/preset-wind4": "^66.7.2",
-		"@vitejs/plugin-react": "^6.0.2",
+		"@vitejs/plugin-react": "^6.0.3",
 		"@vitest/coverage-v8": "^4.1.9",
 		"@vitest/ui": "^4.1.9",
 		"fake-indexeddb": "^6.2.5",
