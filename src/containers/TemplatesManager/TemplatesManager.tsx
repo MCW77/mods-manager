@@ -10,7 +10,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 // utils
-import { saveAs } from "file-saver";
 import { readFile } from "#/utils/readFile";
 
 // state
@@ -163,16 +162,7 @@ const TemplatesManager = observer(
 					<Button
 						disabled={selectedTemplates.length === 0}
 						onClick={() => {
-							const templatesSerialized = JSON.stringify(selectedTemplates);
-							const userData = new Blob([templatesSerialized], {
-								type: "application/json;charset=utf-8",
-							});
-							saveAs(
-								userData,
-								`modsOptimizerTemplates-${new Date()
-									.toISOString()
-									.slice(0, 10)}.json`,
-							);
+							templates$.exportTemplates(selectedTemplates);
 						}}
 					>
 						<FontAwesomeIcon
