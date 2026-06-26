@@ -289,7 +289,7 @@ export const equals = (
 };
 
 export type PrimaryStatRestrictions = Partial<{
-	[Slot in keyof typeof allowedPrimaryStatsBySlot]: (typeof allowedPrimaryStatsBySlot)[Slot][number];
+	[Slot in keyof typeof allowedPrimaryStatsBySlot]: (typeof allowedPrimaryStatsBySlot)[Slot][number][];
 }>;
 
 export interface OptimizationPlan extends Record<OptimizableStats, number> {

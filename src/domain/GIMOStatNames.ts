@@ -103,10 +103,12 @@ export const arrowPrimaryStats = [
 	"Offense %",
 	"Protection %",
 ] as const;
-export type ArrowPrimaryStats = (typeof arrowPrimaryStats)[number];
+export type ArrowPrimaryStat = (typeof arrowPrimaryStats)[number];
+export type ArrowPrimaryStats = ArrowPrimaryStat[];
 
 export const circlePrimaryStats = ["Health %", "Protection %"] as const;
-export type CirclePrimaryStats = (typeof circlePrimaryStats)[number];
+export type CirclePrimaryStat = (typeof circlePrimaryStats)[number];
+export type CirclePrimaryStats = CirclePrimaryStat[];
 
 export const crossPrimaryStats = [
 	"Potency %",
@@ -116,7 +118,8 @@ export const crossPrimaryStats = [
 	"Offense %",
 	"Protection %",
 ] as const;
-export type CrossPrimaryStats = (typeof crossPrimaryStats)[number];
+export type CrossPrimaryStat = (typeof crossPrimaryStats)[number];
+export type CrossPrimaryStats = CrossPrimaryStat[];
 
 export const trianglePrimaryStats = [
 	"Critical Chance %",
@@ -126,7 +129,8 @@ export const trianglePrimaryStats = [
 	"Offense %",
 	"Protection %",
 ] as const;
-export type TrianglePrimaryStats = (typeof trianglePrimaryStats)[number];
+export type TrianglePrimaryStat = (typeof trianglePrimaryStats)[number];
+export type TrianglePrimaryStats = TrianglePrimaryStat[];
 
 export const allowedPrimaryStatsBySlot = {
 	arrow: [
