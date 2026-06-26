@@ -22,7 +22,11 @@ export const defaultFixture = [
 					critAvoid: 0,
 					targetStats: [],
 					upgradeMods: true,
-					primaryStatRestrictions: {},
+					primaryStatRestrictions: {
+						arrow: "Speed",
+						triangle: "Critical Damage %",
+						cross: undefined,
+					},
 					setRestrictions: {},
 					useOnlyFullSets: false,
 				},

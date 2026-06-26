@@ -1,3 +1,5 @@
+import { array } from "valibot";
+
 export const defaultFixture = [
 	// V18 format - plain array of templates
 	{
@@ -24,7 +26,11 @@ export const defaultFixture = [
 					"Critical Avoidance %": 0,
 					targetStats: [],
 					minimumModDots: 1,
-					primaryStatRestrictions: {},
+					primaryStatRestrictions: {
+						arrow: "Speed",
+						triangle: "Critical Damage %",
+						cross: undefined,
+					},
 					setRestrictions: {},
 					useOnlyFullSets: false,
 				},

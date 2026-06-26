@@ -43,9 +43,8 @@ export const defaultFixture = {
 											description: "Speed",
 											minimumModDots: 5,
 											primaryStatRestrictions: {
-												"triangle": "Critical Damage %",
-												"cross": undefined,
-											},
+                        "triangle": ["Critical Damage %"],
+                      },
 											setRestrictions: {},
 											targetStats: [],
 											useOnlyFullSets: false,
@@ -72,6 +71,10 @@ export const defaultFixture = {
 			]),
 		},
 	],
+
+	Currencies: [],
+
+	Datacrons: [],
 
 	DefaultCompilation: [
 		{
@@ -177,6 +180,10 @@ export const defaultFixture = {
 			},
 		},
 	],
+
+	Materials: [],
+
+	StackRank: [],
 
 	OptimizationSettings: [
 		{
