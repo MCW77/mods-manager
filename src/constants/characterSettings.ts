@@ -23,10 +23,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 35,
 				spec: 10,
 				primaryRes: {
-					arrow: "Speed",
-					circle: "Protection %",
-					triangle: "Offense %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					circle: ["Protection %"],
+					triangle: ["Offense %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -46,10 +46,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 20,
 			arm: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -65,10 +65,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 10,
 			cc: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Chance %": 2,
@@ -91,10 +91,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 75,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -112,7 +112,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
+					arrow: ["Speed"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -132,9 +132,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 10,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -152,7 +152,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
+					arrow: ["Speed"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -166,10 +166,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				spec: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Protection %",
-					circle: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Protection %"],
+					circle: ["Protection %"],
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -179,9 +179,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				spec: 10,
 				primaryRes: {
-					triangle: "Health %",
-					cross: "Health %",
-					circle: "Health %",
+					triangle: ["Health %"],
+					cross: ["Health %"],
+					circle: ["Health %"],
 				},
 			}),
 		],
@@ -199,10 +199,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
-					circle: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
+					circle: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -240,8 +240,8 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -262,10 +262,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 80,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -328,9 +328,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 50,
 			phys: 30,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -345,9 +345,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 15,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -376,10 +376,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -395,9 +395,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 20,
 			pot: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -416,10 +416,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 10,
 				cc: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Damage %": 1,
@@ -452,10 +452,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -476,8 +476,8 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 20,
 			primaryRes: {
-				arrow: "Speed",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -493,10 +493,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -511,10 +511,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			phys: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -530,9 +530,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 20,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -552,10 +552,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 15,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 2,
@@ -571,10 +571,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 20,
 			pot: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -589,9 +589,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			phys: 75,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -609,10 +609,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 25,
 			acc: 10,
 			primaryRes: {
-				arrow: "Critical Avoidance %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Critical Avoidance %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -642,10 +642,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			health: 70,
 			spd: 50,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -666,9 +666,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				spec: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -693,10 +693,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 10,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -721,10 +721,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 20,
 			spd: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -742,9 +742,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 12.5,
 				res: 12.5,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -758,10 +758,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 12.5,
 				res: 12.5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -792,9 +792,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -827,9 +827,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 10,
 				spec: 70,
 				primaryRes: {
-					triangle: "Offense %",
-					circle: "Health %",
-					cross: "Offense %",
+					triangle: ["Offense %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -850,10 +850,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -874,10 +874,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 3,
@@ -896,10 +896,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 50,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -934,10 +934,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -955,8 +955,8 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -975,8 +975,8 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 10,
 			cc: 50,
 			primaryRes: {
-				arrow: "Speed",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -993,10 +993,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 84,
 			cc: 23,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -1015,10 +1015,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -1043,10 +1043,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -1063,10 +1063,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 10,
 				spec: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -1085,9 +1085,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -1104,10 +1104,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 80,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -1122,9 +1122,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 10,
 			primaryRes: {
-				arrow: "Offense %",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Offense %"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 		}),
 	]),
@@ -1137,9 +1137,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Tenacity %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -1153,9 +1153,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -1184,9 +1184,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 50,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -1204,10 +1204,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 12.5,
 			res: 12.5,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				cross: "Health %",
-				circle: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -1224,10 +1224,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 100,
 			cc: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -1247,10 +1247,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 20,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
-					circle: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
+					circle: ["Health %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -1270,8 +1270,8 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -1288,9 +1288,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 10,
 			cc: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -1307,9 +1307,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 5,
 				primaryRes: {
-					arrow: "Speed",
-					cross: "Potency %",
-					triangle: "Health %",
+					arrow: ["Speed"],
+					cross: ["Potency %"],
+					triangle: ["Health %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -1330,10 +1330,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -1350,10 +1350,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 20,
 			phys: 25,
 			primaryRes: {
-				arrow: "Speed",
-				circle: "Protection %",
-				triangle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				circle: ["Protection %"],
+				triangle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -1380,9 +1380,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Critical Damage %": 1,
@@ -1399,10 +1399,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -1417,9 +1417,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				spec: 10,
 				primaryRes: {
-					triangle: "Critical Chance %",
-					cross: "Potency %",
-					circle: "Protection %",
+					triangle: ["Critical Chance %"],
+					cross: ["Potency %"],
+					circle: ["Protection %"],
 				},
 			}),
 		],
@@ -1434,10 +1434,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cc: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -1457,10 +1457,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 12.5,
 				res: 12.5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Chance %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Chance %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -1482,10 +1482,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 12.5,
 			res: 12.5,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -1502,10 +1502,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Tenacity %": 3,
@@ -1538,9 +1538,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 12,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -1551,9 +1551,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "Speedy",
 				spd: 100,
 				primaryRes: {
-					triangle: "Critical Chance %",
-					cross: "Protection %",
-					circle: "Protection %",
+					triangle: ["Critical Chance %"],
+					cross: ["Protection %"],
+					circle: ["Protection %"],
 				},
 			}),
 		],
@@ -1566,10 +1566,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 50,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -1596,10 +1596,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 25,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -1623,10 +1623,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				cross: "Protection %",
-				circle: "Protection %",
-				triangle: "Protection %",
+				arrow: ["Speed"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
+				triangle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -1643,10 +1643,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 70,
 			cc: 2,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -1664,10 +1664,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -1689,7 +1689,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 12.5,
 				res: 12.5,
 				primaryRes: {
-					arrow: "Speed",
+					arrow: ["Speed"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -1708,10 +1708,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 5,
 				cc: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -1730,10 +1730,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				spec: 30,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -1746,10 +1746,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				spec: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -1777,10 +1777,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 25,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -1824,9 +1824,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -1846,10 +1846,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 25,
 				spec: 25,
 				primaryRes: {
-					arrow: "Speed",
-					circle: "Protection %",
-					triangle: "Critical Damage %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					circle: ["Protection %"],
+					triangle: ["Critical Damage %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -1866,9 +1866,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 40,
 			phys: 100,
 			primaryRes: {
-				arrow: "Accuracy %",
-				cross: "Offense %",
-				triangle: "Critical Damage %",
+				arrow: ["Accuracy %"],
+				cross: ["Offense %"],
+				triangle: ["Critical Damage %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -1886,10 +1886,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Defense %": 3,
@@ -1919,9 +1919,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -1950,9 +1950,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 75,
 				spec: 75,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -1998,10 +1998,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				ten: 15,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -2036,10 +2036,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -2052,10 +2052,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 20,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -2072,9 +2072,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 5,
 			phys: 60,
 			primaryRes: {
-				arrow: "Offense %",
-				triangle: "Offense %",
-				cross: "Offense %",
+				arrow: ["Offense %"],
+				triangle: ["Offense %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -2090,10 +2090,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 10,
 			phys: 25,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -2110,10 +2110,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 10,
 			arm: 10,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -2138,10 +2138,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 20,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -2157,10 +2157,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				ten: 60,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -2190,10 +2190,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -2212,10 +2212,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				phys: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 3,
@@ -2234,9 +2234,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				arm: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -2263,9 +2263,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -2283,10 +2283,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				spec: 15,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -2316,9 +2316,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 10,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -2336,10 +2336,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -2367,10 +2367,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -2401,10 +2401,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 100,
 			pot: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -2422,10 +2422,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			pot: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -2441,9 +2441,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			pot: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -2459,10 +2459,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			pot: 10,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Defense %": 3,
@@ -2477,10 +2477,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 100,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Damage %": 1,
@@ -2501,9 +2501,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 50,
 			phys: 40,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -2521,10 +2521,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -2542,10 +2542,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 40,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -2561,10 +2561,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 100,
 				spec: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 3,
@@ -2582,10 +2582,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			phys: 100,
 			primaryRes: {
-				arrow: "Offense %",
-				triangle: "Offense %",
-				cross: "Offense %",
-				circle: "Protection %",
+				arrow: ["Offense %"],
+				triangle: ["Offense %"],
+				cross: ["Offense %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -2611,7 +2611,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
+					arrow: ["Speed"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -2631,10 +2631,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 30,
 			cc: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -2649,10 +2649,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -2676,10 +2676,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -2707,10 +2707,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 100,
 				phys: 10,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Tenacity %",
+					arrow: ["Health %"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Tenacity %": 3,
@@ -2743,9 +2743,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				spec: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -2766,8 +2766,8 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 20,
 				cc: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -2786,7 +2786,7 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 50,
 				primaryRes: {
-					arrow: "Speed",
+					arrow: ["Speed"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -2806,9 +2806,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -2835,10 +2835,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 50,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
-				circle: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -2869,10 +2869,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -2888,9 +2888,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				spec: 75,
 				primaryRes: {
-					arrow: "Offense %",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Offense %"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -2918,10 +2918,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 20,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -2944,10 +2944,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 15,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -2984,10 +2984,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Damage %": 1,
@@ -3009,10 +3009,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -3034,10 +3034,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -3059,9 +3059,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -3082,10 +3082,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 30,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 2,
@@ -3103,9 +3103,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 80,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Offense %",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Offense %"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -3135,10 +3135,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				acc: 5,
 				arm: 5,
 				primaryRes: {
-					arrow: "Offense %",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Offense %"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3162,9 +3162,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 100,
 				cc: 50,
 				primaryRes: {
-					arrow: "Offense %",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Offense %"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 			}),
 		],
@@ -3180,10 +3180,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 100,
 				arm: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -3204,10 +3204,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				circle: "Protection %",
-				cross: "Tenacity %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				circle: ["Protection %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Tenacity %": 3,
@@ -3225,9 +3225,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				ca: 15,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -3251,10 +3251,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 12.5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -3315,10 +3315,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				res: 10,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3351,9 +3351,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -3370,10 +3370,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -3398,10 +3398,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 100,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -3418,10 +3418,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 50,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -3437,10 +3437,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 18,
 			res: 18,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				cross: "Health %",
-				circle: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -3456,10 +3456,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				cross: "Health %",
-				circle: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -3479,10 +3479,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				res: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					cross: "Health %",
-					circle: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					cross: ["Health %"],
+					circle: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3500,10 +3500,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 15,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -3527,10 +3527,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3552,10 +3552,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 5,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -3571,10 +3571,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 15,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3596,10 +3596,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 80,
 				cc: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3652,10 +3652,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -3676,10 +3676,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				ca: 16,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					cross: "Health %",
-					circle: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					cross: ["Health %"],
+					circle: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3700,10 +3700,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -3727,10 +3727,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 5,
 			ten: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -3747,10 +3747,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 80,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -3780,10 +3780,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 24,
 			res: 24,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -3801,9 +3801,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -3843,10 +3843,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -3863,9 +3863,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				arm: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Defense %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Defense %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3884,10 +3884,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -3905,9 +3905,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 75,
 				spec: 75,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3926,9 +3926,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -3948,10 +3948,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 25,
 				cc: 30,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -3971,9 +3971,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Chance %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Chance %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -3991,9 +3991,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 100,
 				arm: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Chance %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Chance %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -4011,10 +4011,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 25,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -4032,10 +4032,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Chance %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Chance %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -4050,10 +4050,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -4070,10 +4070,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -4090,10 +4090,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Damage %": 1,
@@ -4120,10 +4120,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 5,
 			res: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -4138,10 +4138,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				cross: "Health %",
-				circle: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -4157,10 +4157,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -4178,9 +4178,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 50,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -4205,10 +4205,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 20,
 			pot: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Tenacity %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Speed %": 1,
@@ -4226,9 +4226,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -4246,9 +4246,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 50,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -4283,10 +4283,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 100,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					circle: "Protection %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					circle: ["Protection %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Tenacity %": 3,
@@ -4302,10 +4302,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 100,
 				spd: 40,
 				primaryRes: {
-					arrow: "Speed",
-					circle: "Health %",
-					cross: "Health %",
-					triangle: "Health %",
+					arrow: ["Speed"],
+					circle: ["Health %"],
+					cross: ["Health %"],
+					triangle: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4323,9 +4323,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 40,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -4342,10 +4342,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				ten: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4366,9 +4366,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -4387,10 +4387,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				res: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -4412,10 +4412,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -4441,10 +4441,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 50,
 				ten: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4471,10 +4471,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -4497,10 +4497,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 25,
 				phys: 75,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4514,10 +4514,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 35,
 				phys: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					cross: "Potency %",
-					circle: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					cross: ["Potency %"],
+					circle: ["Health %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -4534,10 +4534,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -4559,9 +4559,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 12.5,
 				res: 12.5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Defense %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Defense %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -4582,10 +4582,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 15,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -4613,10 +4613,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 10,
 				spec: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4642,10 +4642,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 25,
 				phys: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4662,10 +4662,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -4682,10 +4682,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 10,
 				phys: 30,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Protection %",
-					circle: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Protection %"],
+					circle: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4704,10 +4704,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 100,
 			ca: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Tenacity %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -4734,10 +4734,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 5,
 			arm: 15,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -4755,9 +4755,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 75,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Chance %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Chance %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -4781,9 +4781,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 20,
 				cc: 50,
 				primaryRes: {
-					triangle: "Critical Damage %",
-					cross: "Potency %",
-					circle: "Health %",
+					triangle: ["Critical Damage %"],
+					cross: ["Potency %"],
+					circle: ["Health %"],
 				},
 			}),
 		],
@@ -4801,10 +4801,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Tenacity %": 3,
@@ -4820,10 +4820,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				res: 10,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					cross: "Tenacity %",
-					circle: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					cross: ["Tenacity %"],
+					circle: ["Protection %"],
 				},
 			}),
 		],
@@ -4839,10 +4839,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ca: 100,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -4856,10 +4856,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 100,
 			spd: 50,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -4880,9 +4880,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -4917,9 +4917,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4936,10 +4936,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 20,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					cross: "Health %",
-					circle: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					cross: ["Health %"],
+					circle: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -4959,10 +4959,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -4980,10 +4980,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 10,
 			arm: 25,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Tenacity %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Tenacity %": 3,
@@ -4999,8 +4999,8 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 15,
 				primaryRes: {
-					arrow: "Speed",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -5020,10 +5020,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 15,
 			res: 15,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Defense %": 1,
@@ -5043,9 +5043,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 5,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5063,10 +5063,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -5086,10 +5086,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -5126,10 +5126,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 12.5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -5157,10 +5157,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 12.5,
 			res: 12.5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5177,10 +5177,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 40,
 				pot: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -5204,10 +5204,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5224,10 +5224,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				pot: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -5243,10 +5243,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -5262,10 +5262,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Chance %",
-					circle: "Health %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Chance %"],
+					circle: ["Health %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -5286,10 +5286,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -5313,10 +5313,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -5343,10 +5343,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 25,
 			ca: 100,
 			primaryRes: {
-				arrow: "Critical Avoidance %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Critical Avoidance %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -5374,10 +5374,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			pot: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -5394,10 +5394,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 12.5,
 			res: 12.5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5416,10 +5416,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 25,
 				cc: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -5445,9 +5445,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				cc: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -5465,10 +5465,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				health: 15,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -5487,9 +5487,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 25,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -5505,10 +5505,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			cc: 20,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -5524,9 +5524,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 40,
 			arm: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5548,9 +5548,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -5576,10 +5576,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				ca: 100,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Tenacity %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Tenacity %": 3,
@@ -5597,10 +5597,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 75,
 			cc: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -5615,10 +5615,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 10,
 			spd: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5637,10 +5637,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 5,
 			arm: 15,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5658,9 +5658,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 25,
 				phys: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -5680,10 +5680,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 50,
 				arm: 15,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -5701,10 +5701,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 25,
 				cc: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					circle: "Health %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					circle: ["Health %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -5737,9 +5737,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				spec: 50,
 				cc: 80,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -5774,9 +5774,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -5800,9 +5800,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 75,
 				cc: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -5827,10 +5827,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				ten: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -5864,10 +5864,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				phys: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -5886,10 +5886,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 40,
 			arm: 30,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -5907,9 +5907,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 1,
 			res: 1,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -5927,10 +5927,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 50,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -5949,10 +5949,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				arm: 20,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -5969,10 +5969,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			phys: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -5989,10 +5989,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				phys: 65,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6010,10 +6010,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -6030,10 +6030,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 1,
 				arm: 1,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6062,9 +6062,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Health %": 2,
@@ -6099,10 +6099,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 15,
 				arm: 15,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					cross: "Protection %",
-					circle: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					cross: ["Protection %"],
+					circle: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6130,9 +6130,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -6146,9 +6146,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -6165,9 +6165,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6189,10 +6189,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ca: 50,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6213,10 +6213,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 5,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -6230,10 +6230,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			health: 20,
 			spd: 100,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -6251,10 +6251,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 10,
 			cc: 80,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -6271,10 +6271,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 50,
 				phys: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -6301,10 +6301,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -6318,10 +6318,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -6338,10 +6338,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6360,10 +6360,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 25,
 			res: 25,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Defense %": 1,
@@ -6381,9 +6381,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 33,
 				arm: 1,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6419,10 +6419,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				cc: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6453,10 +6453,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cd: 63,
 				phys: 47,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6477,10 +6477,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 60,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -6501,9 +6501,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 100,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -6531,10 +6531,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 1,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6563,10 +6563,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 10,
 				ca: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6603,9 +6603,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 35,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6628,10 +6628,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 75,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6652,9 +6652,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 1,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -6677,10 +6677,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 5,
 				spec: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6698,10 +6698,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			prot: 100,
 			spd: 50,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -6717,10 +6717,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 10,
 				arm: 50,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6749,10 +6749,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 20,
 			phys: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -6774,10 +6774,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6792,8 +6792,8 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				arm: 10,
 				primaryRes: {
-					triangle: "Protection %",
-					cross: "Protection %",
+					triangle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 			}),
 			fromShortOptimizationPlan({
@@ -6812,10 +6812,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			arm: 20,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 2,
@@ -6834,10 +6834,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				phys: 15,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -6859,9 +6859,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 30,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -6880,10 +6880,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Tenacity %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -6899,10 +6899,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -6939,9 +6939,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				phys: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -6962,10 +6962,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 20,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -6991,9 +6991,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 1,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -7015,10 +7015,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 20,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Health %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Health %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -7037,10 +7037,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 40,
 				arm: 5,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -7062,10 +7062,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				res: 25,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Defense %": 3,
@@ -7089,10 +7089,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cc: 30,
 			phys: 100,
 			primaryRes: {
-				arrow: "Offense %",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Offense %"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7112,10 +7112,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 10,
 				cc: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -7145,10 +7145,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 10,
 				cc: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -7174,10 +7174,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 25,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -7206,9 +7206,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7224,10 +7224,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 75,
 			phys: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7241,7 +7241,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 30,
 			primaryRes: {
-				triangle: "Critical Damage %",
+				triangle: ["Critical Damage %"],
 			},
 		}),
 	]),
@@ -7257,10 +7257,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 25,
 				res: 25,
 				primaryRes: {
-					arrow: "Protection %",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Protection %"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Defense %": 3,
@@ -7291,10 +7291,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				arm: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Defense %": 1,
@@ -7312,10 +7312,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 30,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				cross: "Protection %",
-				circle: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7330,10 +7330,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 80,
 			phys: 40,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Health %",
-				circle: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7354,10 +7354,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			res: 12.5,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -7373,10 +7373,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 30,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7404,10 +7404,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 10,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -7449,10 +7449,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 10,
 				phys: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -7477,10 +7477,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 50,
 			res: 50,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Defense %",
-				circle: "Health %",
-				cross: "Defense %",
+				arrow: ["Speed"],
+				triangle: ["Defense %"],
+				circle: ["Health %"],
+				cross: ["Defense %"],
 			},
 			setRes: {
 				"Defense %": 3,
@@ -7496,10 +7496,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 40,
 			primaryRes: {
-				arrow: "Offense %",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Offense %"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7513,7 +7513,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			cd: 50,
 			phys: 60,
 			primaryRes: {
-				triangle: "Critical Damage %",
+				triangle: ["Critical Damage %"],
 			},
 			setRes: {
 				"Offense %": 1,
@@ -7529,10 +7529,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				spd: 100,
 				pot: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Protection %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Protection %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 3,
@@ -7551,10 +7551,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 5,
 			cc: 30,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Damage %": 1,
@@ -7584,10 +7584,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 30,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7605,10 +7605,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			arm: 5,
 			primaryRes: {
-				arrow: "Health %",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7625,9 +7625,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -7647,10 +7647,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 30,
 				spec: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Tenacity %",
+					arrow: ["Speed"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -7669,10 +7669,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				pot: 30,
 				spec: 20,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Offense %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Potency %": 1,
@@ -7691,9 +7691,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 100,
 			ten: 30,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7710,10 +7710,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 40,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -7731,10 +7731,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 5,
 			ca: 35,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7751,10 +7751,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 30,
 			ten: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Potency %": 1,
@@ -7770,10 +7770,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				prot: 10,
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Chance %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Chance %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -7792,9 +7792,9 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 25,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Critical Chance %": 1,
@@ -7811,10 +7811,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			pot: 10,
 			arm: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7833,10 +7833,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 20,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Potency %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Potency %"],
 				},
 				setRes: {
 					"Offense %": 1,
@@ -7863,10 +7863,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 			cc: 20,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Health %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -7882,10 +7882,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 20,
 			arm: 50,
 			primaryRes: {
-				arrow: "Health %",
-				circle: "Health %",
-				cross: "Health %",
-				triangle: "Health %",
+				arrow: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
+				triangle: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -7901,10 +7901,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 10,
 			res: 10,
 			primaryRes: {
-				arrow: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
-				triangle: "Protection %",
+				arrow: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
+				triangle: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 2,
@@ -7918,10 +7918,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				id: "Default",
 				spd: 100,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Protection %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Protection %"],
 				},
 				setRes: {
 					"Health %": 1,
@@ -7941,10 +7941,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 25,
 			res: 25,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Defense %": 1,
@@ -7961,10 +7961,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 25,
 			phys: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Health %",
-				circle: "Health %",
-				cross: "Health %",
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
+				cross: ["Health %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -7995,10 +7995,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 40,
 				arm: 25,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Tenacity %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Tenacity %"],
 				},
 				setRes: {
 					"Health %": 2,
@@ -8050,7 +8050,7 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 10,
 			arm: 1,
 			primaryRes: {
-				arrow: "Speed",
+				arrow: ["Speed"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -8070,10 +8070,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				cc: 5,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -8093,10 +8093,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 40,
 				cc: 5,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -8121,10 +8121,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			spd: 50,
 			arm: 10,
 			primaryRes: {
-				arrow: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
-				triangle: "Protection %",
+				arrow: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
+				triangle: ["Protection %"],
 			},
 			setRes: {
 				"Defense %": 3,
@@ -8141,9 +8141,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 40,
 				res: 40,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Defense %",
-					cross: "Defense %",
+					arrow: ["Speed"],
+					triangle: ["Defense %"],
+					cross: ["Defense %"],
 				},
 				setRes: {
 					"Speed %": 1,
@@ -8158,10 +8158,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				arm: 40,
 				res: 40,
 				primaryRes: {
-					arrow: "Speed",
-					circle: "Protection %",
-					cross: "Defense %",
-					triangle: "Defense %",
+					arrow: ["Speed"],
+					circle: ["Protection %"],
+					cross: ["Defense %"],
+					triangle: ["Defense %"],
 				},
 				setRes: {
 					"Defense %": 3,
@@ -8182,10 +8182,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				ten: 5,
 				arm: 10,
 				primaryRes: {
-					arrow: "Health %",
-					triangle: "Health %",
-					circle: "Health %",
-					cross: "Health %",
+					arrow: ["Health %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -8212,10 +8212,10 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 50,
 				cc: 10,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					circle: "Protection %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					circle: ["Protection %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -8241,9 +8241,9 @@ const characterSettings: CharacterSettingsIndexer = {
 				phys: 35,
 				minDots: 6,
 				primaryRes: {
-					arrow: "Speed",
-					triangle: "Critical Damage %",
-					cross: "Offense %",
+					arrow: ["Speed"],
+					triangle: ["Critical Damage %"],
+					cross: ["Offense %"],
 				},
 				setRes: {
 					"Critical Chance %": 1,
@@ -8263,10 +8263,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 50,
 			ca: 50,
 			primaryRes: {
-				arrow: "Protection %",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 3,
@@ -8282,10 +8282,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 25,
 			cc: 10,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Offense %",
-				circle: "Protection %",
-				cross: "Offense %",
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -8309,10 +8309,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 20,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Potency %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Potency %"],
 			},
 			setRes: {
 				"Critical Damage %": 1,
@@ -8331,10 +8331,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 20,
 			minDots: 6,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Critical Damage %",
-				circle: "Protection %",
-				cross: "Protection %",
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
 			},
 			setRes: {
 				"Health %": 1,
@@ -8351,10 +8351,10 @@ const characterSettings: CharacterSettingsIndexer = {
 			arm: 5,
 			res: 5,
 			primaryRes: {
-				arrow: "Speed",
-				triangle: "Protection %",
-				circle: "Protection %",
-				cross: "Tenacity %",
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Tenacity %"],
 			},
 			setRes: {
 				"Speed %": 1,

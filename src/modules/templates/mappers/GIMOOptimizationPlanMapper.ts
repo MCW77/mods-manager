@@ -14,10 +14,26 @@ type GIMOOptimizationPlan = v.InferOutput<typeof GIMOOptimizationPlanSchema>;
 export const fromGIMOOptimizationPlan = (
 	target: GIMOOptimizationPlan,
 ): OptimizationPlan => {
+	const newPrimaryStatRestrictions: OptimizationPlan["primaryStatRestrictions"] =
+		{
+			...(target.primaryStatRestrictions.arrow === undefined
+				? {}
+				: { arrow: [target.primaryStatRestrictions.arrow] }),
+			...(target.primaryStatRestrictions.triangle === undefined
+				? {}
+				: { triangle: [target.primaryStatRestrictions.triangle] }),
+			...(target.primaryStatRestrictions.circle === undefined
+				? {}
+				: { circle: [target.primaryStatRestrictions.circle] }),
+			...(target.primaryStatRestrictions.cross === undefined
+				? {}
+				: { cross: [target.primaryStatRestrictions.cross] }),
+		};
+
 	return {
 		id: target.name,
 		description: "",
-		primaryStatRestrictions: target.primaryStatRestrictions,
+		primaryStatRestrictions: newPrimaryStatRestrictions,
 		setRestrictions: fromGIMOSetRestrictions(target.setRestrictions),
 		targetStats: fromGIMOTargetStats(target.targetStats),
 		useOnlyFullSets: target.useOnlyFullSets,

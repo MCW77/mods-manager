@@ -1,19 +1,23 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { loadFixture } from "./fixtures-loader";
-import { convertTemplates } from "../../modules/templates/domain/Backup";
+import {
+	convertTemplates,
+	latestTemplatesDBVersion,
+	type NewTemplatesDBVersions,
+} from "#/modules/templates/domain/Backup";
 
 describe("Template Migrations", () => {
-	let templatesV0: unknown;
-	let templatesV18: unknown;
+	const templates: Map<NewTemplatesDBVersions, unknown> = new Map();
 
 	beforeAll(async () => {
-		templatesV0 = await loadFixture(0, "templates");
-		templatesV18 = await loadFixture(18, "templates");
+		templates.set(0, await loadFixture(0, "templates"));
+		templates.set(18, await loadFixture(18, "templates"));
+		templates.set(26, await loadFixture(26, "templates"));
 	});
 
 	describe("GIMO to ModsManager Format", () => {
 		it("should convert GIMO template format", async () => {
-			const result = convertTemplates(templatesV0);
+			const result = convertTemplates(templates.get(0));
 
 			expect(result).toBeDefined();
 
@@ -48,7 +52,7 @@ describe("Template Migrations", () => {
 		});
 
 		it("should preserve selectedCharacters structure", async () => {
-			const result = convertTemplates(templatesV0);
+			const result = convertTemplates(templates.get(0));
 
 			expect(result).toBeDefined();
 			expect(result.backup).toBeDefined();
@@ -64,7 +68,7 @@ describe("Template Migrations", () => {
 	});
 	describe("Template Version Migrations", () => {
 		it("should migrate from version 0 to latest", async () => {
-			const result = convertTemplates(templatesV0);
+			const result = convertTemplates(templates.get(0));
 
 			expect(result).toBeDefined();
 			expect(result.backup).toBeDefined();
@@ -76,19 +80,19 @@ describe("Template Migrations", () => {
 			}
 		});
 		it("should handle already-migrated templates", async () => {
-			const result = convertTemplates(templatesV18);
+			const result = convertTemplates(templates.get(latestTemplatesDBVersion));
 
 			expect(result).toBeDefined();
 			expect(result.backup).toBeDefined();
 			expect(result.importError.errorMessage).toBe("");
 
 			if (result.backup) {
-				expect(result.backup.characterTemplates).toEqual(templatesV18);
+				expect(result.backup).toEqual(templates.get(latestTemplatesDBVersion));
 			}
 		});
 
 		it("should validate final template structure", async () => {
-			const result = convertTemplates(templatesV0);
+			const result = convertTemplates(templates.get(0));
 
 			expect(result).toBeDefined();
 			expect(result.backup).toBeDefined();

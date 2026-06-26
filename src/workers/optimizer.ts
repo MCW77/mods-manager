@@ -1207,19 +1207,12 @@ const modFilters = {
 	hasMinimumDots: (mod: Mod) => mod.pips >= modFilters.target.minimumModDots,
 	hasRestrictedPrimaryStat: (mod: Mod) => {
 		if (["square", "diamond"].includes(mod.slot)) return true;
-		if (
-			modFilters.target.primaryStatRestrictions[
-				mod.slot as ModTypes.VariablePrimarySlots
-			] === undefined
-		)
-			return true;
 
-		return (
-			mod.primaryStat.type ===
-			modFilters.target.primaryStatRestrictions[
-				mod.slot as ModTypes.VariablePrimarySlots
-			]
-		);
+		const restrictions = modFilters.target.primaryStatRestrictions[mod.slot as ModTypes.VariablePrimarySlots] as string[];
+
+		return (restrictions === undefined) ||
+			(restrictions.length === 0) ||
+			restrictions.includes(mod.primaryStat.type)
 	},
 	hasScoredStats: (mod: Mod) =>
 		modFilters.target.targetStats.some((targetStat: TargetStat) =>
@@ -1380,15 +1373,15 @@ const loadoutSatisfiesCharacterRestrictions = (
 			(Object.hasOwn(loadoutSlots, "arrow") &&
 				loadoutSlots.arrow?.primaryStat.type ===
 					target.primaryStatRestrictions.arrow)) &&
-		(!target.primaryStatRestrictions.triangle ||
+		(!Object.hasOwn(target.primaryStatRestrictions, "triangle") ||
 			(Object.hasOwn(loadoutSlots, "triangle") &&
 				loadoutSlots.triangle?.primaryStat.type ===
 					target.primaryStatRestrictions.triangle)) &&
-		(!target.primaryStatRestrictions.circle ||
+		(!Object.hasOwn(target.primaryStatRestrictions, "circle") ||
 			(Object.hasOwn(loadoutSlots, "circle") &&
 				loadoutSlots.circle?.primaryStat.type ===
 					target.primaryStatRestrictions.circle)) &&
-		(!target.primaryStatRestrictions.cross ||
+		(!Object.hasOwn(target.primaryStatRestrictions, "cross") ||
 			(Object.hasOwn(loadoutSlots, "cross") &&
 				loadoutSlots.cross?.primaryStat.type ===
 					target.primaryStatRestrictions.cross)) &&

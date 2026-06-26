@@ -6,12 +6,17 @@ import { latestDBVersion } from "#/utils/globalLegendPersistSettings";
 
 // domain
 import { fromGIMOCharacterTemplates } from "../mappers/GIMOCharacterTemplatesMapper";
-import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
+import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema, CharacterTemplatesOutputSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
 import {
 	CharacterTemplatesSchemaV18,
-	CharacterTemplatesSchemaV19,
+	CharacterTemplatesBackupSchemaV26,
 	LatestCharacterTemplatesSchema,
+	type CharacterTemplatesBackupSchemaV18Output,
 } from "#/domain/schemas/mods-manager/index";
+import type { CharacterTemplates } from "./CharacterTemplates";
+import type { PrimaryStatRestrictions } from "#/domain/OptimizationPlan";
+import { fromGIMOTargetStats } from "../mappers/GIMOTargetStatsMapper";
+import { fromGIMOSetRestrictions } from "../mappers/GIMOSetRestrictionsMapper";
 
 interface NormalizedBackup {
 	appVersion: string;
@@ -24,27 +29,147 @@ interface NormalizedBackup {
 interface Backup {
 	appVersion: string;
 	backupType: "characterTemplates";
-	characterTemplates: unknown;
+	characterTemplates: CharacterTemplates;
 	client: "mods-manager" | "gimo";
 	version: number;
 }
+type MigrationFn = (normalizedBackup: NormalizedBackup) => NormalizedBackup;
 
-const migrations = new Map<number, (data: unknown) => Backup>([]);
+const newTemplatesDBVersions = [0, 18, 26] as const;
+type NewTemplatesDBVersions = (typeof newTemplatesDBVersions)[number];
+const latestTemplatesDBVersion: NewTemplatesDBVersions =
+	newTemplatesDBVersions[newTemplatesDBVersions.length - 1];
+
+const migrationsRecord: Record<NewTemplatesDBVersions, MigrationFn> = {
+	0: (normalizedBackup) => {
+		// Migrate GIMO backup to mods-manager v18 structure
+		const gimoParseResult = v.safeParse(
+			CharacterTemplatesOutputSchema,
+			normalizedBackup.characterTemplates,
+		);
+
+		if (!gimoParseResult.success) {
+			throw new Error(
+				"Failed to parse GIMO character templates during migration to v18.",
+			);
+		}
+		const convertedTemplates = gimoParseResult.output.map((template) => {
+			return {
+				id: template.name,
+				category: "",
+				selectedCharacters: template.selectedCharacters.map(
+					(selectedCharacter) => {
+						return {
+							id: selectedCharacter.id,
+							target: {
+								id: selectedCharacter.target.name,
+								description: "",
+								primaryStatRestrictions:
+									selectedCharacter.target.primaryStatRestrictions,
+								setRestrictions: fromGIMOSetRestrictions(
+									selectedCharacter.target.setRestrictions,
+								),
+								targetStats: fromGIMOTargetStats(
+									selectedCharacter.target.targetStats,
+								),
+								useOnlyFullSets: selectedCharacter.target.useOnlyFullSets,
+								minimumModDots: 5,
+								Health: selectedCharacter.target.health,
+								Protection: selectedCharacter.target.protection,
+								Speed: selectedCharacter.target.speed,
+								"Critical Damage %": selectedCharacter.target.critDmg,
+								"Potency %": selectedCharacter.target.potency,
+								"Tenacity %": selectedCharacter.target.tenacity,
+								"Physical Damage": selectedCharacter.target.physDmg,
+								"Special Damage": selectedCharacter.target.specDmg,
+								"Critical Chance": selectedCharacter.target.critChance,
+								Armor: selectedCharacter.target.armor,
+								Resistance: selectedCharacter.target.resistance,
+								"Accuracy %": selectedCharacter.target.accuracy,
+								"Critical Avoidance %": selectedCharacter.target.critAvoid,
+							},
+						};
+					},
+				),
+			};
+		});
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "characterTemplates",
+			client: "mods-manager",
+			characterTemplates: convertedTemplates,
+			version: 18,
+		};
+	},
+	18: (normalizedBackup) => {
+		// Migrate v18 to v26: Convert primaryStatRestrictions to arrays
+
+		const oldTemplates =
+			normalizedBackup.characterTemplates as CharacterTemplatesBackupSchemaV18Output;
+		const newData: CharacterTemplates = oldTemplates.map((template) => {
+			const newSelectedCharacters = template.selectedCharacters.map(
+				(selectedCharacter) => {
+					const oldPrimaryStatRestrictions =
+						selectedCharacter.target.primaryStatRestrictions;
+					const newPrimaryStatRestrictions: PrimaryStatRestrictions = {
+						...(oldPrimaryStatRestrictions.arrow !== undefined
+							? { arrow: [oldPrimaryStatRestrictions.arrow] }
+							: {}),
+						...(oldPrimaryStatRestrictions.circle !== undefined
+							? { circle: [oldPrimaryStatRestrictions.circle] }
+							: {}),
+						...(oldPrimaryStatRestrictions.cross !== undefined
+							? { cross: [oldPrimaryStatRestrictions.cross] }
+							: {}),
+						...(oldPrimaryStatRestrictions.triangle !== undefined
+							? { triangle: [oldPrimaryStatRestrictions.triangle] }
+							: {}),
+					};
+					return {
+						id: selectedCharacter.id,
+						target: {
+							...selectedCharacter.target,
+							primaryStatRestrictions: newPrimaryStatRestrictions,
+						},
+					};
+				},
+			);
+
+			return {
+				id: template.id,
+				category: template.category,
+				selectedCharacters: newSelectedCharacters,
+			};
+		});
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "characterTemplates",
+			client: "mods-manager",
+			characterTemplates: newData,
+			version: 26,
+		};
+	},
+	26: (normalizedBackup) => {
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "characterTemplates",
+			client: "mods-manager",
+			characterTemplates: normalizedBackup.characterTemplates,
+			version: 27,
+		};
+	},
+};
+
+const migrations = new Map(
+	Object.entries(migrationsRecord).map(([k, v]) => [Number(k), v]),
+);
 
 function runMigrations(data: NormalizedBackup) {
 	let currentData = data;
 	if (currentData.version > latestDBVersion) {
 		return null;
-	} // For template backups, we don't need to run database migrations
-	// Just update the version to latest since the structure conversion
-	// already happened during normalization
-	// Note: For character templates, the latest version is 18, not the general latestDBVersion (19)
-	if (currentData.backupType === "characterTemplates") {
-		return {
-			...currentData,
-			client: "mods-manager" as const, // Convert any client to mods-manager after processing
-			version: 18,
-		};
 	}
 
 	while (currentData.version < latestDBVersion) {
@@ -64,13 +189,16 @@ const convertTemplates = (parsedJSON: unknown) => {
 	// Try all validations and store results for error reporting
 	const gimoParseResult = v.safeParse(GIMOCharacterTemplatesSchema, parsedJSON);
 	const v18ParseResult = v.safeParse(CharacterTemplatesSchemaV18, parsedJSON);
-	const v19ParseResult = v.safeParse(CharacterTemplatesSchemaV19, parsedJSON);
+	const v26ParseResult = v.safeParse(
+		CharacterTemplatesBackupSchemaV26,
+		parsedJSON,
+	);
 
 	if (gimoParseResult.success) {
 		templates = normalizeTemplatesJSON({
 			appVersion: "",
 			client: "gimo",
-			templates: fromGIMOCharacterTemplates(gimoParseResult.output),
+			templates: gimoParseResult.output,
 			version: 0,
 		});
 	} else if (v18ParseResult.success) {
@@ -80,14 +208,8 @@ const convertTemplates = (parsedJSON: unknown) => {
 			templates: v18ParseResult.output,
 			version: 18,
 		});
-	} else if (v19ParseResult.success) {
-		templates = {
-			appVersion: "",
-			backupType: "characterTemplates",
-			characterTemplates: v19ParseResult.output,
-			client: "mods-manager",
-			version: 19,
-		};
+	} else if (v26ParseResult.success) {
+		templates = v26ParseResult.output;
 	}
 	if (templates === null) {
 		// Collect all validation errors for debugging
@@ -96,7 +218,7 @@ const convertTemplates = (parsedJSON: unknown) => {
 				? "valid"
 				: v.flatten(gimoParseResult.issues),
 			v18: v18ParseResult.success ? "valid" : v.flatten(v18ParseResult.issues),
-			v19: v19ParseResult.success ? "valid" : v.flatten(v19ParseResult.issues),
+			v26: v26ParseResult.success ? "valid" : v.flatten(v26ParseResult.issues),
 		};
 		console.log(
 			"All template validations failed. Error details:",
@@ -172,4 +294,9 @@ const normalizeTemplatesJSON = (parameters: {
 	return normalizedData;
 };
 
-export { convertTemplates };
+export {
+	type Backup,
+	convertTemplates,
+	latestTemplatesDBVersion,
+	type NewTemplatesDBVersions,
+};

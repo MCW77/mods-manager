@@ -35,6 +35,7 @@ interface TemplatesObservable {
 	filteredTemplates: () => CharacterTemplates;
 	saveTemplate: () => void;
 	importTemplates: (templatesString: string) => void;
+	exportTemplates: (selectedTemplates: CharacterTemplates) => void;
 	reset: () => void;
 }
 

@@ -5,6 +5,7 @@ import * as v from "valibot";
 import {
 	ArbitraryCharacterNamesSchema,
 	OptimizationPlanSchema,
+	OptimizationPlanSchemaV26,
 } from "./index";
 
 const SelectedCharactersSchema = v.array(
@@ -14,4 +15,11 @@ const SelectedCharactersSchema = v.array(
 	}),
 );
 
-export { SelectedCharactersSchema };
+const SelectedCharactersSchemaV26 = v.array(
+	v.object({
+		id: ArbitraryCharacterNamesSchema,
+		target: OptimizationPlanSchemaV26,
+	}),
+);
+
+export { SelectedCharactersSchema, SelectedCharactersSchemaV26 };

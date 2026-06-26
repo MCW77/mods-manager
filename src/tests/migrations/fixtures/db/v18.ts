@@ -40,7 +40,10 @@ export const defaultFixture = {
 											id: "Default",
 											description: "Speed",
 											minimumModDots: 5,
-											primaryStatRestrictions: {},
+											primaryStatRestrictions: {
+												"triangle": "Critical Damage %",
+												"cross": undefined,
+											},
 											setRestrictions: {},
 											targetStats: [],
 											useOnlyFullSets: false,

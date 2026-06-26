@@ -23,6 +23,7 @@ import {
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
 	upgradeProfilesTo23,
+	upgradeCompilationTo26,
 	type DBVersions,
 } from "#/utils/globalLegendPersistSettings";
 import {
@@ -37,6 +38,7 @@ import {
 	type ModsManagerBackupDataSchemaV22Output,
 	type ModsManagerBackupDataSchemaV23Output,
 	type ModsManagerBackupDataSchemaV24Output,
+	type ModsManagerBackupDataSchemaV25Output,
 	modsManagerBackupSchemasByVersion,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
@@ -421,6 +423,49 @@ const migrationsRecord: Record<0 | DBVersions, MigrationFn> = {
 		};
 	},
 	25: (normalizedBackup) => {
+		// Migrate v25 to v26: Update primaryStatRestrictions in compilations
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV25Output;
+
+		const newCompilations = new Map<
+			string,
+			Map<string, Record<string, unknown>>
+		>();
+		for (const [allycode, compilationById] of data.compilations) {
+			const newCompilationById = new Map<string, Record<string, unknown>>();
+			for (const [compilationId, compilation] of compilationById) {
+				newCompilationById.set(
+					compilationId,
+					upgradeCompilationTo26(compilation),
+				);
+			}
+			newCompilations.set(allycode, newCompilationById);
+		}
+
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: newCompilations,
+			currencies: data.currencies,
+			datacrons: data.datacrons,
+			defaultCompilation: upgradeCompilationTo26(data.defaultCompilation),
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: data.materials,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+			stackRank: data.stackRank,
+		};
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 26,
+		};
+	},
+	26: (normalizedBackup) => {
 		return {
 			appVersion: normalizedBackup.appVersion,
 			backupType: "fullBackup",

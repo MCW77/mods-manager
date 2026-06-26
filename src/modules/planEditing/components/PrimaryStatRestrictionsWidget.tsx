@@ -18,16 +18,16 @@ const ReactiveToggleGroup = reactive(ToggleGroup);
 
 const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 	const arrowsPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.arrow.get() ?? "",
+		() => target$.target.primaryStatRestrictions.arrow.get() ?? [],
 	);
 	const trianglesPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.triangle.get() ?? "",
+		() => target$.target.primaryStatRestrictions.triangle.get() ?? [],
 	);
 	const crossesPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.cross.get() ?? "",
+		() => target$.target.primaryStatRestrictions.cross.get() ?? [],
 	);
 	const circlesPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.circle.get() ?? "",
+		() => target$.target.primaryStatRestrictions.circle.get() ?? [],
 	);
 
 	return (
@@ -49,15 +49,12 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 							"h-6 gap-1 border-1 border-gray-300 dark:border-gray-700 rounded-2xl"
 						}
 						orientation={"horizontal"}
-						type={"single"}
+						type={"multiple"}
 						$value={arrowsPrimaryStatRestrictions}
 						onValueChange={(value) => {
-							if (value === "")
-								target$.target.primaryStatRestrictions.arrow.delete();
-							else
-								target$.target.primaryStatRestrictions.arrow.set(
-									value as ArrowPrimaryStats,
-								);
+							target$.target.primaryStatRestrictions.arrow.set(
+								value as ArrowPrimaryStats,
+							);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
@@ -97,15 +94,12 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						size={"sm"}
-						type={"single"}
+						type={"multiple"}
 						$value={trianglesPrimaryStatRestrictions}
 						onValueChange={(value) => {
-							if (value === "")
-								target$.target.primaryStatRestrictions.triangle.delete();
-							else
-								target$.target.primaryStatRestrictions.triangle.set(
-									value as TrianglePrimaryStats,
-								);
+							target$.target.primaryStatRestrictions.triangle.set(
+								value as TrianglePrimaryStats,
+							);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
@@ -144,15 +138,12 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						size={"sm"}
-						type={"single"}
+						type={"multiple"}
 						$value={crossesPrimaryStatRestrictions}
 						onValueChange={(value) => {
-							if (value === "")
-								target$.target.primaryStatRestrictions.cross.delete();
-							else
-								target$.target.primaryStatRestrictions.cross.set(
-									value as CrossPrimaryStats,
-								);
+							target$.target.primaryStatRestrictions.cross.set(
+								value as CrossPrimaryStats,
+							);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
@@ -191,15 +182,12 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						size={"sm"}
-						type={"single"}
+						type={"multiple"}
 						$value={circlesPrimaryStatRestrictions}
 						onValueChange={(value) => {
-							if (value === "")
-								target$.target.primaryStatRestrictions.circle.delete();
-							else
-								target$.target.primaryStatRestrictions.circle.set(
-									value as CirclePrimaryStats,
-								);
+							target$.target.primaryStatRestrictions.circle.set(
+								value as CirclePrimaryStats,
+							);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>

@@ -710,9 +710,9 @@ const defaultTemplates = [
 					phys: 25,
 					cc: 30,
 					primaryRes: {
-						arrow: "Critical Avoidance %",
-						triangle: "Critical Damage %",
-						cross: "Potency %",
+						arrow: ["Critical Avoidance %"],
+						triangle: ["Critical Damage %"],
+						cross: ["Potency %"],
 					},
 					setRes: {
 						"Potency %": 2,
@@ -729,10 +729,10 @@ const defaultTemplates = [
 					pot: 25,
 					ten: 30,
 					primaryRes: {
-						arrow: "Critical Avoidance %",
-						triangle: "Health %",
-						circle: "Health %",
-						cross: "Health %",
+						arrow: ["Critical Avoidance %"],
+						triangle: ["Health %"],
+						circle: ["Health %"],
+						cross: ["Health %"],
 					},
 					setRes: {
 						"Health %": 3,
@@ -1045,9 +1045,9 @@ const defaultTemplates = [
 					spd: 100,
 					phys: 95,
 					primaryRes: {
-						arrow: "Offense %",
-						triangle: "Critical Damage %",
-						cross: "Offense %",
+						arrow: ["Offense %"],
+						triangle: ["Critical Damage %"],
+						cross: ["Offense %"],
 					},
 					setRes: {
 						"Critical Damage %": 1,
@@ -1071,7 +1071,7 @@ const defaultTemplates = [
 				target: {
 					id: "Krayt",
 					primaryRes: {
-						cross: "Potency %",
+						cross: ["Potency %"],
 					},
 					setRes: {
 						"Potency %": 2,
@@ -1166,7 +1166,7 @@ const defaultTemplates = [
 					phys: 54,
 					minDots: 6,
 					primaryRes: {
-						triangle: "Critical Damage %",
+						triangle: ["Critical Damage %"],
 					},
 					setRes: {
 						"Offense %": 1,
@@ -1203,9 +1203,9 @@ const defaultTemplates = [
 					cc: 56,
 					minDots: 6,
 					primaryRes: {
-						arrow: "Offense %",
-						triangle: "Critical Damage %",
-						cross: "Offense %",
+						arrow: ["Offense %"],
+						triangle: ["Critical Damage %"],
+						cross: ["Offense %"],
 					},
 					targetStats: [
 						{
@@ -1253,7 +1253,7 @@ const defaultTemplates = [
 					cc: 4,
 					minDots: 6,
 					primaryRes: {
-						triangle: "Critical Damage %",
+						triangle: ["Critical Damage %"],
 					},
 					targetStats: [
 						{
@@ -1334,10 +1334,10 @@ const defaultTemplates = [
 					spd: 100,
 					minDots: 6,
 					primaryRes: {
-						arrow: "Protection %",
-						triangle: "Protection %",
-						circle: "Protection %",
-						cross: "Protection %",
+						arrow: ["Protection %"],
+						triangle: ["Protection %"],
+						circle: ["Protection %"],
+						cross: ["Protection %"],
 					},
 					targetStats: [
 						{
@@ -1398,9 +1398,9 @@ const defaultTemplates = [
 					phys: 66,
 					minDots: 6,
 					primaryRes: {
-						arrow: "Offense %",
-						triangle: "Offense %",
-						cross: "Offense %",
+						arrow: ["Offense %"],
+						triangle: ["Offense %"],
+						cross: ["Offense %"],
 					},
 					targetStats: [
 						{
@@ -2385,7 +2385,7 @@ const defaultTemplates = [
 					health: 100,
 					cd: 80,
 					primaryRes: {
-						triangle: "Critical Damage %",
+						triangle: ["Critical Damage %"],
 					},
 					targetStats: [
 						{

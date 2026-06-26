@@ -1,14 +1,23 @@
+// utils
+import { saveAs } from "file-saver";
+
 // state
 import { observable, type ObservableObject } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+import {
+	latestDBVersion,
+	persistOptions,
+} from "#/utils/globalLegendPersistSettings";
 
-import { compilations$ } from "#/modules/compilations/state/compilations";
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const compilations$ = stateLoader$.compilations$;
+const about$ = stateLoader$.about$;
 
 // domain
 import { defaultTemplates } from "#/constants/characterTemplates";
 
-import { convertTemplates } from "../domain/Backup";
+import { type Backup, convertTemplates } from "../domain/Backup";
 import type {
 	CharacterTemplate,
 	CharacterTemplates,
@@ -141,6 +150,23 @@ const templates$: ObservableObject<TemplatesObservable> =
 					templates$.userTemplatesByName[template.id].set(template);
 				}
 			}
+		},
+		exportTemplates: (selectedTemplates) => {
+			const backup: Backup = {
+				appVersion: about$.version.peek(),
+				backupType: "characterTemplates",
+				characterTemplates: selectedTemplates,
+				client: "mods-manager",
+				version: latestDBVersion,
+			};
+			const serializedBackup = JSON.stringify(backup);
+			const userData = new Blob([serializedBackup], {
+				type: "application/json;charset=utf-8",
+			});
+			saveAs(
+				userData,
+				`mods-managerTemplates-${new Date().toISOString().slice(0, 10)}.json`,
+			);
 		},
 	});
 

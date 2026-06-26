@@ -3,7 +3,7 @@ import * as v from "valibot";
 
 // domain
 import { ArbitraryCharacterNamesSchema } from "./CharacterNamesSchemas";
-import { OptimizationPlanSchema } from "./OptimizationPlanSchemas";
+import { OptimizationPlanSchema, OptimizationPlanOutputSchema } from "./OptimizationPlanSchemas";
 
 const SelectedCharactersSchema = v.array(
 	v.object({
@@ -12,4 +12,11 @@ const SelectedCharactersSchema = v.array(
 	}),
 );
 
-export { SelectedCharactersSchema };
+const SelectedCharactersOutputSchema = v.array(
+	v.object({
+		id: ArbitraryCharacterNamesSchema,
+		target: OptimizationPlanOutputSchema,
+	}),
+);
+
+export { SelectedCharactersSchema, SelectedCharactersOutputSchema };

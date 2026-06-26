@@ -24,7 +24,7 @@ type RecordWithNestedEntities = {
 	[key: string]: Entity | string | unknown;
 };
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25] as const;
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -432,6 +432,30 @@ function upgradeProfilesTo23(profiles: Record<string, unknown>) {
 		}
 	}
 	return profiles;
+}
+
+function upgradeCompilationTo26(compilation: Record<string, unknown>) {
+	const newCompilation: Record<string, unknown> = structuredClone(compilation);
+	(newCompilation.selectedCharacters as {target: {primaryStatRestrictions: Record<string, unknown>}}[]).forEach(
+		(selectedCharacter) => {
+			const oldPrimaryStatRestrictions = selectedCharacter.target.primaryStatRestrictions;
+			const newPrimaryStatRestrictions: Record<string, string[]> = {};
+			if (Object.hasOwn(oldPrimaryStatRestrictions, "arrow") && oldPrimaryStatRestrictions.arrow !== undefined) {
+				newPrimaryStatRestrictions.arrow = [oldPrimaryStatRestrictions.arrow as string];
+			}
+			if (Object.hasOwn(oldPrimaryStatRestrictions, "triangle") && oldPrimaryStatRestrictions.triangle !== undefined) {
+				newPrimaryStatRestrictions.triangle = [oldPrimaryStatRestrictions.triangle as string];
+			}
+			if (Object.hasOwn(oldPrimaryStatRestrictions, "cross") && oldPrimaryStatRestrictions.cross !== undefined) {
+				newPrimaryStatRestrictions.cross = [oldPrimaryStatRestrictions.cross as string];
+			}
+			if (Object.hasOwn(oldPrimaryStatRestrictions, "circle") && oldPrimaryStatRestrictions.circle !== undefined) {
+				newPrimaryStatRestrictions.circle = [oldPrimaryStatRestrictions.circle as string];
+			}
+			selectedCharacter.target.primaryStatRestrictions = newPrimaryStatRestrictions;
+		},
+	);
+	return newCompilation;
 }
 
 function createStores(db: IDBDatabase, version: DBVersions) {
@@ -1110,6 +1134,71 @@ async function upgradeTo25(db: IDBDatabase, transaction: IDBTransaction) {
 }
 dbUpgrades.set(25, upgradeTo25);
 
+async function upgradeTo26(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(
+			db,
+			transaction,
+			"Compilations",
+			"compilationByIdByAllycode",
+			(oldCompilations) => {
+				const newCompilationsByAllycode: Map<
+					string,
+					Map<string, Record<string, unknown>>
+				> = new Map();
+				for (const [allycode, compilations] of oldCompilations[0]
+					.compilationByIdByAllycode as Map<
+					string,
+					Map<string, Record<string, unknown>>
+				>) {
+					const newCompilations: Map<
+						string,
+						Record<string, unknown>
+					> = new Map();
+					for (const [compilationId, compilation] of compilations) {
+						const newCompilation = upgradeCompilationTo26(compilation);
+						newCompilations.set(compilationId, newCompilation);
+					}
+					newCompilationsByAllycode.set(allycode, newCompilations);
+				}
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: newCompilationsByAllycode,
+					},
+				];
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"DefaultCompilation",
+			"defaultCompilation",
+			(oldDefaultCompilation) => {
+				const newDefaultCompilation = upgradeCompilationTo26(
+					oldDefaultCompilation[0].defaultCompilation as Record<
+						string,
+						unknown
+					>,
+				);
+				return [
+					{
+						id: "defaultCompilation",
+						defaultCompilation: {
+							...newDefaultCompilation,
+						},
+					},
+				];
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo26:", error);
+		transaction.abort();
+	}
+}
+dbUpgrades.set(26, upgradeTo26);
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
@@ -1156,5 +1245,6 @@ export {
 	upgradeProfilesTo21,
 	upgradeCompilationTo22,
 	upgradeProfilesTo23,
+	upgradeCompilationTo26,
 	testOnly,
 };

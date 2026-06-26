@@ -15,6 +15,13 @@ const PrimaryStatRestrictionsSchema = v.object({
 	cross: v.optional(v.picklist(allowedPrimaryStatsBySlot.cross)),
 });
 
+const PrimaryStatRestrictionsSchemaV26 = v.object({
+	arrow: v.optional(v.array(v.picklist(allowedPrimaryStatsBySlot.arrow))),
+	triangle: v.optional(v.array(v.picklist(allowedPrimaryStatsBySlot.triangle))),
+	circle: v.optional(v.array(v.picklist(allowedPrimaryStatsBySlot.circle))),
+	cross: v.optional(v.array(v.picklist(allowedPrimaryStatsBySlot.cross))),
+});
+
 const GIMOSetStatNamesSchema = v.picklist(gimoSetStatNames);
 const SetRestrictionsSchema = v.record(GIMOSetStatNamesSchema, v.number());
 
@@ -41,4 +48,27 @@ const OptimizationPlanSchema = v.object({
 	useOnlyFullSets: v.boolean(),
 });
 
-export { OptimizationPlanSchema };
+const OptimizationPlanSchemaV26 = v.object({
+	id: v.string(),
+	description: v.string(),
+	Health: v.number(),
+	Protection: v.number(),
+	Speed: v.number(),
+	"Critical Damage %": v.number(),
+	"Potency %": v.number(),
+	"Tenacity %": v.number(),
+	"Physical Damage": v.number(),
+	"Special Damage": v.number(),
+	"Critical Chance": v.number(),
+	Armor: v.number(),
+	Resistance: v.number(),
+	"Accuracy %": v.number(),
+	"Critical Avoidance %": v.number(),
+	targetStats: TargetStatsSchema,
+	minimumModDots: v.number(),
+	primaryStatRestrictions: PrimaryStatRestrictionsSchemaV26,
+	setRestrictions: SetRestrictionsSchema,
+	useOnlyFullSets: v.boolean(),
+});
+
+export { OptimizationPlanSchema, OptimizationPlanSchemaV26 };
