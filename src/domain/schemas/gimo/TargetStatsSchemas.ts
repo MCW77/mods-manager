@@ -21,4 +21,14 @@ const TargetStatSchema = v.object({
 });
 const TargetStatsSchema = v.array(TargetStatSchema);
 
-export { TargetStatSchema, TargetStatsSchema };
+const TargetStatOutputSchema = v.object({
+	optimizeForTarget: v.boolean(),
+	type: v.picklist(["+", "*"]),
+	stat: v.picklist(targetStatsNames),
+	relativeCharacterId: v.union([KnownCharacterNamesSchema, v.literal("null")]),
+	minimum: v.number(),
+	maximum: v.number(),
+});
+const TargetStatsOutputSchema = v.array(TargetStatOutputSchema);
+
+export { TargetStatSchema, TargetStatsSchema, TargetStatsOutputSchema };

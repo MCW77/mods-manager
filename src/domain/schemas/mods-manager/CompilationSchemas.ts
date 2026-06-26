@@ -7,8 +7,10 @@ import {
 	KnownCharacterNamesSchema,
 	LockedStatusByCharacterIdSchemaV18,
 	OptimizationPlanSchema,
+	OptimizationPlanSchemaV26,
 	ProfileOptimizationSettingsSchema,
 	SelectedCharactersSchema,
+	SelectedCharactersSchemaV26,
 	TargetStatSchema,
 } from "./index";
 
@@ -90,4 +92,26 @@ const CompilationSchemaV22 = v.object({
 	selectedCharacters: SelectedCharactersSchema,
 });
 
-export { CompilationSchemaV22, CompilationSchemaV20, CompilationSchemaV18 };
+const CompilationSchemaV26 = v.object({
+	category: v.string(),
+	description: v.string(),
+	flatCharacterModdings: v.array(
+		v.object({
+			assignedMods: v.array(v.string()),
+			characterId: KnownCharacterNamesSchema,
+			messages: v.optional(v.array(v.string())),
+			missedGoals: MissedGoalsSchema,
+			target: OptimizationPlanSchemaV26,
+			currentScore: v.number(),
+			previousScore: v.number(),
+		}),
+	),
+	id: v.string(),
+	isReoptimizationNeeded: v.boolean(),
+	lastOptimized: v.nullable(v.date()),
+	optimizationConditions: OptimizationConditionsSchemaV20,
+	reoptimizationIndex: v.number(),
+	selectedCharacters: SelectedCharactersSchemaV26,
+});
+
+export { CompilationSchemaV26, CompilationSchemaV22, CompilationSchemaV20, CompilationSchemaV18 };

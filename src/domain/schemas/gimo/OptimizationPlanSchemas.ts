@@ -3,7 +3,7 @@ import * as v from "valibot";
 
 // domain
 import { allowedPrimaryStatsBySlot } from "#/domain/GIMOStatNames";
-import { TargetStatsSchema } from "./TargetStatsSchemas";
+import { TargetStatsSchema, TargetStatsOutputSchema } from "./TargetStatsSchemas";
 
 const gimoSetStatNames = [
 	"critchance",
@@ -48,4 +48,26 @@ const OptimizationPlanSchema = v.object({
 	useOnlyFullSets: v.boolean(),
 });
 
-export { OptimizationPlanSchema, SetRestrictionsSchema };
+const OptimizationPlanOutputSchema = v.object({
+	name: v.string(),
+	health: v.number(),
+	protection: v.number(),
+	speed: v.number(),
+	critDmg: v.number(),
+	potency: v.number(),
+	tenacity: v.number(),
+	physDmg: v.number(),
+	specDmg: v.number(),
+	critChance: v.number(),
+	armor: v.number(),
+	resistance: v.number(),
+	accuracy: v.number(),
+	critAvoid: v.number(),
+	targetStats: TargetStatsOutputSchema,
+	upgradeMods: v.boolean(),
+	primaryStatRestrictions: PrimaryStatRestrictionsSchema,
+	setRestrictions: SetRestrictionsSchema,
+	useOnlyFullSets: v.boolean(),
+});
+
+export { OptimizationPlanSchema, OptimizationPlanOutputSchema, SetRestrictionsSchema };
