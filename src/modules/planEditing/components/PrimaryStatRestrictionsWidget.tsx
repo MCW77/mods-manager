@@ -1,5 +1,5 @@
 // state
-import { reactive, reactiveObserver, useValue } from "@legendapp/state/react";
+import { reactiveObserver } from "@legendapp/state/react";
 
 import { target$ } from "#/modules/planEditing/state/planEditing";
 
@@ -12,24 +12,10 @@ import type {
 } from "#/domain/GIMOStatNames";
 
 // components
-import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
-
-const ReactiveToggleGroup = reactive(ToggleGroup);
+import { ToggleGroupItem } from "#ui/toggle-group";
+import { ToggleGroup as ReactiveToggleGroup } from "#/components/reactive/ToggleGroup";
 
 const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
-	const arrowsPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.arrow.get() ?? [],
-	);
-	const trianglesPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.triangle.get() ?? [],
-	);
-	const crossesPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.cross.get() ?? [],
-	);
-	const circlesPrimaryStatRestrictions = useValue(
-		() => target$.target.primaryStatRestrictions.circle.get() ?? [],
-	);
-
 	return (
 		<div className="grid gap-4">
 			<div className={""}>
@@ -49,12 +35,15 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 							"h-6 gap-1 border-1 border-gray-300 dark:border-gray-700 rounded-2xl"
 						}
 						orientation={"horizontal"}
-						type={"multiple"}
-						$value={arrowsPrimaryStatRestrictions}
+						multiple={true}
+						$value={target$.target.primaryStatRestrictions.arrow}
 						onValueChange={(value) => {
-							target$.target.primaryStatRestrictions.arrow.set(
-								value as ArrowPrimaryStats,
-							);
+							if (value === undefined)
+								target$.target.primaryStatRestrictions.arrow.delete();
+							else
+								target$.target.primaryStatRestrictions.arrow.set(
+									value as ArrowPrimaryStats,
+								);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
@@ -94,12 +83,15 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						size={"sm"}
-						type={"multiple"}
-						$value={trianglesPrimaryStatRestrictions}
+						multiple={true}
+						$value={target$.target.primaryStatRestrictions.triangle}
 						onValueChange={(value) => {
-							target$.target.primaryStatRestrictions.triangle.set(
-								value as TrianglePrimaryStats,
-							);
+							if (value === undefined)
+								target$.target.primaryStatRestrictions.triangle.delete();
+							else
+								target$.target.primaryStatRestrictions.triangle.set(
+									value as TrianglePrimaryStats,
+								);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
@@ -138,12 +130,15 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						size={"sm"}
-						type={"multiple"}
-						$value={crossesPrimaryStatRestrictions}
+						multiple={true}
+						$value={target$.target.primaryStatRestrictions.cross}
 						onValueChange={(value) => {
-							target$.target.primaryStatRestrictions.cross.set(
-								value as CrossPrimaryStats,
-							);
+							if (value === undefined)
+								target$.target.primaryStatRestrictions.cross.delete();
+							else
+								target$.target.primaryStatRestrictions.cross.set(
+									value as CrossPrimaryStats,
+								);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
@@ -182,12 +177,15 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}
 						orientation={"horizontal"}
 						size={"sm"}
-						type={"multiple"}
-						$value={circlesPrimaryStatRestrictions}
+						multiple={true}
+						$value={target$.target.primaryStatRestrictions.circle}
 						onValueChange={(value) => {
-							target$.target.primaryStatRestrictions.circle.set(
-								value as CirclePrimaryStats,
-							);
+							if (value === undefined)
+								target$.target.primaryStatRestrictions.circle.delete();
+							else
+								target$.target.primaryStatRestrictions.circle.set(
+									value as CirclePrimaryStats,
+								);
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>

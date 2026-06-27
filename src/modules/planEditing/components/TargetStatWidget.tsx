@@ -4,7 +4,6 @@ import {
 	Memo,
 	Switch,
 	observer,
-	reactive,
 	useValue,
 	useObservable,
 } from "@legendapp/state/react";
@@ -36,9 +35,9 @@ import {
 	SelectValue,
 } from "#ui/select";
 import { Select as ReactiveSelect } from "#/components/reactive/Select";
-import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
-
-const ReactiveToggleGroup = reactive(ToggleGroup);
+import { ToggleGroupItem } from "#ui/toggle-group";
+import { ToggleGroup as ReactiveToggleGroup } from "#/components/reactive/ToggleGroup";
+import type { ToggleGroup } from "@base-ui/react/toggle-group";
 
 type ComponentProps = {
 	target$: PlanEditing;
@@ -238,12 +237,15 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							}
 							orientation={"horizontal"}
 							size={"sm"}
-							type={"single"}
 							variant={"outline"}
+							multiple={false}
 							$value={targetStat$.type}
-							onValueChange={(value: "+" | "*") => {
-								targetStat$.type.set(value);
-								if (value === "*") {
+							onValueChange={(
+								value: string[],
+								_eventDetails: ToggleGroup.ChangeEventDetails,
+							) => {
+								targetStat$.type.set(value[0] as "+" | "*");
+								if (value[0] === "*") {
 									if (targetStat$.minimum.get() < 0) {
 										targetStat$.minimum.set(0);
 									}

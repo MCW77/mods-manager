@@ -92,15 +92,15 @@ const templates$: ObservableObject<TemplatesObservable> =
 			templates$.builtinTemplates.get().concat(templates$.userTemplates.get()),
 		filteredTemplates: () => {
 			let templates: CharacterTemplates = [];
-			if (templates$.filter.get() === "all")
-				templates = templates$.allTemplates.get().slice();
-			if (templates$.filter.get() === "user")
-				templates = [...templates$.userTemplates.get()];
-			if (templates$.filter.get() === "builtin")
+			const filter = templates$.filter.get();
+			const selectedCategory = templates$.selectedCategory.get();
+			if (filter === "all") templates = templates$.allTemplates.get().slice();
+			if (filter === "user") templates = [...templates$.userTemplates.get()];
+			if (filter === "builtin")
 				templates = [...templates$.builtinTemplates.get()];
-			if (templates$.selectedCategory.get() !== "")
+			if (selectedCategory !== "" && selectedCategory !== undefined)
 				templates = templates.filter(
-					(template) => template.category === templates$.selectedCategory.get(),
+					(template) => template.category === selectedCategory,
 				);
 			return templates;
 		},

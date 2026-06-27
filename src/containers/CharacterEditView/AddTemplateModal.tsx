@@ -28,14 +28,13 @@ import {
 } from "#ui/dialog";
 import { Label } from "#ui/label";
 import { ScrollArea } from "#ui/scroll-area";
-import { ToggleGroup, ToggleGroupItem } from "#ui/toggle-group";
+import { ToggleGroupItem } from "#ui/toggle-group";
+import { ToggleGroup as ReactiveToggleGroup } from "#/components/reactive/ToggleGroup";
 
 const AddTemplateModal: React.FC = observer(() => {
 	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,
 	);
-	const templatesFilter = useValue(templates$.filter);
-	const selectedCategory = useValue(templates$.selectedCategory);
 	const selectedTemplate = useValue(templates$.selectedTemplate);
 	const filteredTemplates = useValue(templates$.filteredTemplates);
 
@@ -55,32 +54,26 @@ const AddTemplateModal: React.FC = observer(() => {
 				>
 					<div>
 						<Label htmlFor={"uservsbuiltin"}>User vs Builtin</Label>
-						<ToggleGroup
+						<ReactiveToggleGroup
 							className={"justify-start"}
 							id={"uservsbuiltin"}
-							type={"single"}
-							value={templatesFilter}
-							onValueChange={(value: TemplateTypes) => {
-								templates$.filter.set(value);
-							}}
+							multiple={false}
+							$value={templates$.filter}
 						>
 							{(["all", "user", "builtin"] as TemplateTypes[]).map((type) => (
 								<ToggleGroupItem key={type} value={type}>
 									{type}
 								</ToggleGroupItem>
 							))}
-						</ToggleGroup>
+						</ReactiveToggleGroup>
 					</div>
 					<div>
 						<Label htmlFor={"categories"}>Categories</Label>
-						<ToggleGroup
+						<ReactiveToggleGroup
 							className={"justify-start"}
 							id={"categories"}
-							type={"single"}
-							value={selectedCategory}
-							onValueChange={(value) => {
-								templates$.selectedCategory.set(value);
-							}}
+							multiple={false}
+							$value={templates$.selectedCategory}
 						>
 							{templates$.categories.map((category) => {
 								const cat = category.peek();
@@ -90,18 +83,15 @@ const AddTemplateModal: React.FC = observer(() => {
 									</ToggleGroupItem>
 								);
 							})}
-						</ToggleGroup>
+						</ReactiveToggleGroup>
 					</div>
 					<div>
 						<Label htmlFor={"templates"}>Templates</Label>
-						<ToggleGroup
+						<ReactiveToggleGroup
 							className={"flex flex-row gap-1 justify-start flex-wrap"}
 							id={"templates"}
-							type={"single"}
-							value={selectedTemplate}
-							onValueChange={(value) => {
-								templates$.selectedTemplate.set(value);
-							}}
+							multiple={false}
+							$value={templates$.selectedTemplate}
 						>
 							{filteredTemplates.map((template) => {
 								const id = template.id;
@@ -111,7 +101,7 @@ const AddTemplateModal: React.FC = observer(() => {
 									</ToggleGroupItem>
 								);
 							})}
-						</ToggleGroup>
+						</ReactiveToggleGroup>
 					</div>
 				</div>
 			</ScrollArea>
@@ -125,7 +115,7 @@ const AddTemplateModal: React.FC = observer(() => {
 					render={
 						<Button
 							type={"button"}
-							disabled={selectedTemplate === ""}
+							disabled={selectedTemplate[0] === ""}
 							onClick={() => {
 								const templateName = templates$.selectedTemplate.get();
 								if (templateName === null || templateName === "") return;
