@@ -1698,6 +1698,26 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["CWC"],
 	),
+	COBBVANTH: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			spd: 100,
+			cd: 39,
+			phys: 43,
+			arm: 21,
+			res: 21,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Health %": 1,
+				"Speed %": 1,
+			},
+		}),
+	]),
 	COLONELSTARCK: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
