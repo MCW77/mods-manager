@@ -215,16 +215,20 @@ const getDefaultFilterSetup = () => {
 						filterPredicate: (character: Character) => {
 							const baseCharacter =
 								characters$.baseCharacterById.peek()[character.id];
-							let possibleOmicronsCount = baseCharacter.omicrons.length;
-							let actualOmicronsCount = character.omis.length;
-							if (
+							let possibleOmicronsCount = baseCharacter.omicrons.filter(
+								(omicron) => omicron.mode === "gac",
+							).length;
+							let actualOmicronsCount = character.omis.filter(
+								(omicron) =>
+									baseCharacter.omicrons.find(
+										(omi) => omi.key === omicron.toUpperCase(),
+									)?.mode === "gac",
+							).length;
+
+							return (
 								possibleOmicronsCount > 0 &&
-								baseCharacter.omicrons[0].mode !== "gac"
-							) {
-								actualOmicronsCount = 0;
-								possibleOmicronsCount = 0;
-							}
-							return actualOmicronsCount < possibleOmicronsCount;
+								actualOmicronsCount < possibleOmicronsCount
+							);
 						},
 					},
 				],
@@ -237,17 +241,20 @@ const getDefaultFilterSetup = () => {
 						filterPredicate: (character: Character) => {
 							const baseCharacter =
 								characters$.baseCharacterById.peek()[character.id];
-							let possibleOmicronsCount = baseCharacter.omicrons.length;
-							let actualOmicronsCount = character.omis.length;
-							if (
-								possibleOmicronsCount > 0 &&
-								baseCharacter.omicrons[0].mode !== "tw"
-							) {
-								actualOmicronsCount = 0;
-								possibleOmicronsCount = 0;
-							}
+							let possibleOmicronsCount = baseCharacter.omicrons.filter(
+								(omicron) => omicron.mode === "tw",
+							).length;
+							let actualOmicronsCount = character.omis.filter(
+								(omicron) =>
+									baseCharacter.omicrons.find(
+										(omi) => omi.key === omicron.toUpperCase(),
+									)?.mode === "tw",
+							).length;
 
-							return actualOmicronsCount < possibleOmicronsCount;
+							return (
+								possibleOmicronsCount > 0 &&
+								actualOmicronsCount < possibleOmicronsCount
+							);
 						},
 					},
 				],
@@ -260,17 +267,20 @@ const getDefaultFilterSetup = () => {
 						filterPredicate: (character: Character) => {
 							const baseCharacter =
 								characters$.baseCharacterById.peek()[character.id];
-							let possibleOmicronsCount = baseCharacter.omicrons.length;
-							let actualOmicronsCount = character.omis.length;
-							if (
-								possibleOmicronsCount > 0 &&
-								baseCharacter.omicrons[0].mode !== "tb"
-							) {
-								actualOmicronsCount = 0;
-								possibleOmicronsCount = 0;
-							}
+							let possibleOmicronsCount = baseCharacter.omicrons.filter(
+								(omicron) => omicron.mode === "tb",
+							).length;
+							let actualOmicronsCount = character.omis.filter(
+								(omicron) =>
+									baseCharacter.omicrons.find(
+										(omi) => omi.key === omicron.toUpperCase(),
+									)?.mode === "tb",
+							).length;
 
-							return actualOmicronsCount < possibleOmicronsCount;
+							return (
+								possibleOmicronsCount > 0 &&
+								actualOmicronsCount < possibleOmicronsCount
+							);
 						},
 					},
 				],
