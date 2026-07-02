@@ -148,11 +148,11 @@ const TemplatesManager = observer(
 								(templatesString) => {
 									templates$.importTemplates(templatesString);
 									if (templates$.import.errorMessage.peek() !== "") {
-										dialog$.showError(
-											templates$.import.errorMessage.peek(),
-											templates$.import.errorReason.peek(),
-											templates$.import.errorSolution.peek(),
-										);
+										dialog$.showError({
+											error: templates$.import.errorMessage.peek(),
+											reason: templates$.import.errorReason.peek(),
+											solution: templates$.import.errorSolution.peek(),
+										});
 									}
 								},
 								() => {},

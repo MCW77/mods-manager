@@ -24,11 +24,12 @@ type Dialog = {
 		contentStyle?: string;
 		modal?: boolean;
 	}) => void;
-	showError: (
-		error: React.ReactNode,
-		reason?: React.ReactNode,
-		solution?: React.ReactNode,
-	) => void;
+	showError: (params: {
+		error: React.ReactNode;
+		reason?: React.ReactNode;
+		solution?: React.ReactNode;
+		contentStyle?: string;
+	}) => void;
 	showFlash: (
 		title: React.ReactNode,
 		description?: string,
@@ -66,16 +67,13 @@ export const dialog$: ObservableObject<Dialog> = observable({
 			}
 		});
 	},
-	showError(
-		error: React.ReactNode,
-		reason: React.ReactNode = "",
-		solution: React.ReactNode = "",
-	) {
+	showError({ error, reason = "", solution = "", contentStyle = "" }) {
 		dialog$.isError.set(true);
 		if (dialog$.open.peek() === false) {
 			errorMessage$.message.set(error);
 			errorMessage$.reason.set(reason);
 			errorMessage$.solution.set(solution);
+			dialog$.contentStyle.set(contentStyle);
 			dialog$.content.set(<ErrorMessage />);
 			dialog$.modal.set(false);
 			dialog$.open.set(true);
@@ -88,6 +86,7 @@ export const dialog$: ObservableObject<Dialog> = observable({
 				errorMessage$.solution.set("");
 				dialog$.modal.set(false);
 				dialog$.content.set(null);
+				dialog$.contentStyle.set("");
 				dialog$.open.set(false);
 				dialog$.isError.set(false);
 				dispose();

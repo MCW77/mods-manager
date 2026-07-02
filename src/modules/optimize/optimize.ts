@@ -1,3 +1,6 @@
+// utils
+import superjson from "superjson";
+
 // state
 import { beginBatch, endBatch } from "@legendapp/state";
 
@@ -157,6 +160,13 @@ export function optimizeMods(): void {
 					type: "Optimize",
 				});
 				break;
+			case "Error": {
+				const error: Error = superjson.parse(message.data.message);
+				console.error(error);
+				optimizationWorker?.terminate();
+				progress$.errorAbort(error);
+				break;
+			}
 			default:
 			// Do nothing
 		}

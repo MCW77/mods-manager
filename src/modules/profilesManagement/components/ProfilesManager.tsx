@@ -100,7 +100,7 @@ const ProfilesManager = React.memo(() => {
 								const { error, totalMods: importedModsCount } =
 									profilesManagement$.importModsFromC3PO(textInFile);
 								if (error !== "") {
-									dialog$.showError(error);
+									dialog$.showError({ error });
 									return;
 								}
 								if (importedModsCount > 0) {
@@ -122,7 +122,7 @@ const ProfilesManager = React.memo(() => {
 									);
 								}
 							},
-							(error) => dialog$.showError(error.message),
+							(error) => dialog$.showError({ error: error.message }),
 						)
 					}
 				/>

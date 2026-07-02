@@ -98,7 +98,7 @@ const GeneralSettingsView: React.FC = observer(() => {
 								readFile(
 									file,
 									(textInFile) => appState$.loadBackup(textInFile),
-									(error) => dialog$.showError(error.message),
+									(error) => dialog$.showError({ error: error.message }),
 								)
 							}
 						/>

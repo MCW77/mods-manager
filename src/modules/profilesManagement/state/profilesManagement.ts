@@ -405,33 +405,39 @@ const syncStatus$ = syncObservable(
 				load: (
 					value: { id: "profiles"; profiles: PersistedProfiles } & GIMOFlatMod,
 				) => {
-					if (hasPersistedProfileByAllycode(value.profiles)) {
-						const profiles = Object.values(value.profiles.profileByAllycode);
-						if (profiles.length > 0) {
-							if (isFullPersistedPlayerProfile(profiles[0])) {
-								const newProfileByAllycode: Record<string, PlayerProfile> = {};
-								for (const profile of profiles) {
-									if (hasModByIdRecord(profile)) {
-										newProfileByAllycode[profile.allycode] =
-											getProfileFromPersisted(profile);
+					try {
+						if (hasPersistedProfileByAllycode(value.profiles)) {
+							const profiles = Object.values(value.profiles.profileByAllycode);
+							if (profiles.length > 0) {
+								if (isFullPersistedPlayerProfile(profiles[0])) {
+									const newProfileByAllycode: Record<string, PlayerProfile> =
+										{};
+									for (const profile of profiles) {
+										if (hasModByIdRecord(profile)) {
+											newProfileByAllycode[profile.allycode] =
+												getProfileFromPersisted(profile);
+										}
 									}
+									const result = {
+										id: "profiles",
+										profiles: {
+											...value.profiles,
+											profileByAllycode: newProfileByAllycode,
+										},
+									};
+									return result;
 								}
-								const result = {
-									id: "profiles",
-									profiles: {
-										...value.profiles,
-										profileByAllycode: newProfileByAllycode,
-									},
-								};
-								return result;
 							}
 						}
-					}
 
-					if (Object.hasOwn(value, "mod_uid")) {
-						return Mod.deserialize(value);
+						if (Object.hasOwn(value, "mod_uid")) {
+							return Mod.deserialize(value);
+						}
+						return value;
+					} catch (error) {
+						console.error("Error loading persisted profile:", error);
+						syncStatus$.error.set(error as Error);
 					}
-					return value;
 				},
 				save: (value: { profiles: Partial<Profiles> }) => {
 					if (hasProfileByAllycode(value.profiles)) {

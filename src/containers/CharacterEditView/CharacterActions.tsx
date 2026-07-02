@@ -132,24 +132,27 @@ const CharacterActions: React.FC = observer(() => {
 						.map(({ id }) => id);
 
 					if (invalidTargets.length > 0) {
-						dialog$.showError(
-							"Didn't optimize your selected charcters!",
-							<div>
-								<p>You have invalid targets set!</p>,
-								<p>
-									For relative targets, the character compared to MUST be
-									earlier in the selected characters list. The following
-									characters don't follow this rule:
-								</p>
-								,
-								<ul>
-									{invalidTargets.map((id) => (
-										<li key={id}>{baseCharacterById[id]?.name ?? id}</li>
-									))}
-								</ul>
-							</div>,
-							"Just move the characters to the correct order and try again!",
-						);
+						dialog$.showError({
+							error: "Didn't optimize your selected charcters!",
+							reason: (
+								<div>
+									<p>You have invalid targets set!</p>
+									<p>
+										For relative targets, the character compared to MUST be
+										earlier in the selected characters list. The following
+										characters don't follow this rule:
+									</p>
+									,
+									<ul>
+										{invalidTargets.map((id) => (
+											<li key={id}>{baseCharacterById[id]?.name ?? id}</li>
+										))}
+									</ul>
+								</div>
+							),
+							solution:
+								"Just move the characters to the correct order and try again!",
+						});
 					} else {
 						const onFinishedDispose = progress$.finished.onChange(
 							({ value }) => {
@@ -157,21 +160,31 @@ const CharacterActions: React.FC = observer(() => {
 									onFinishedDispose();
 									dialog$.hide();
 									if (progress$.hasMissingCharacters.peek() === true) {
-										dialog$.showError(
-											"Optimization aborted!",
-											"Character data is missing",
-											"Please refetch to add the missing characters and try again!",
-										);
+										dialog$.showError({
+											error: "Optimization aborted!",
+											reason: "Character data is missing",
+											solution:
+												"Please refetch to add the missing characters and try again!",
+										});
 										return;
 									}
 
 									const error = progress$.error.peek();
 									if (error !== null) {
-										dialog$.showError(
-											"Optimization aborted!",
-											error.message,
-											"Please try again!",
-										);
+										const stack = `${error.stack?.replaceAll("\tat ", "\r\nat ") ?? ""}`;
+										dialog$.showError({
+											error: "Optimization aborted!",
+											reason: (
+												<div>
+													<p>{error.message}</p>
+													<pre className={"text-wrap"}>{stack}</pre>
+												</div>
+											),
+											solution:
+												"Please report on discord if stuck with this error!",
+											contentStyle: "sm:max-w-[70vw]",
+										});
+
 										return;
 									}
 

@@ -53,6 +53,7 @@ if (typeof globalThis !== "undefined") {
 }
 
 // utils
+import superjson from "superjson";
 import "../utils/globalLegendPersistSettings";
 import * as perf from "../utils/performance";
 // state
@@ -68,7 +69,7 @@ import {
 } from "#/modules/compilations/state/compilations";
 import {
 	incrementalOptimization$,
-	syncStatus$ as incrrementalOptimizationStatus$,
+	syncStatus$ as incrementalOptimizationStatus$,
 } from "#/modules/incrementalOptimization/state/incrementalOptimization";
 import {
 	lockedStatus$,
@@ -250,10 +251,36 @@ self.onmessage = async (message) => {
 			() =>
 				profilesManagementSyncStatus$.isPersistLoaded.get() &&
 				defaultCompilationStatus$.isPersistLoaded.get() &&
-				incrrementalOptimizationStatus$.isPersistLoaded.get() &&
+				incrementalOptimizationStatus$.isPersistLoaded.get() &&
 				lockedSyncStatus$.isPersistLoaded.get() &&
 				optimizationSettingsSyncStatus$.isPersistLoaded.get(),
 			() => {
+				const profilesManagementError =
+					profilesManagementSyncStatus$.error.peek();
+				const defaultCompilationError = defaultCompilationStatus$.error.peek();
+				const incrementalOptimizationError =
+					incrementalOptimizationStatus$.error.peek();
+				const lockedSyncError = lockedSyncStatus$.error.peek();
+				const optimizationSettingsError =
+					optimizationSettingsSyncStatus$.error.peek();
+				const firstError =
+					profilesManagementError ||
+					defaultCompilationError ||
+					incrementalOptimizationError ||
+					lockedSyncError ||
+					optimizationSettingsError;
+				if (firstError) {
+					const errorMessage = superjson.stringify({
+						cause: firstError.cause,
+						message: firstError.message,
+						stack: firstError.stack,
+					});
+					postMessage({
+						type: "Error",
+						message: errorMessage,
+					});
+					return;
+				}
 				postMessage({
 					type: "Ready",
 				});
@@ -1208,11 +1235,15 @@ const modFilters = {
 	hasRestrictedPrimaryStat: (mod: Mod) => {
 		if (["square", "diamond"].includes(mod.slot)) return true;
 
-		const restrictions = modFilters.target.primaryStatRestrictions[mod.slot as ModTypes.VariablePrimarySlots] as string[];
+		const restrictions = modFilters.target.primaryStatRestrictions[
+			mod.slot as ModTypes.VariablePrimarySlots
+		] as string[];
 
-		return (restrictions === undefined) ||
-			(restrictions.length === 0) ||
+		return (
+			restrictions === undefined ||
+			restrictions.length === 0 ||
 			restrictions.includes(mod.primaryStat.type)
+		);
 	},
 	hasScoredStats: (mod: Mod) =>
 		modFilters.target.targetStats.some((targetStat: TargetStat) =>

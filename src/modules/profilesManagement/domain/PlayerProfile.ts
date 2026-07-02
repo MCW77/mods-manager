@@ -32,9 +32,18 @@ export const createPlayerProfile = (
 export const getProfileFromPersisted = (
 	profile: PersistedPlayerProfile,
 ): PlayerProfile => {
-	const modById = new Map<string, Mod>(
-		profile.modById.entries().map(([key, mod]) => [key, Mod.deserialize(mod)]),
-	);
+	let modById: Map<string, Mod>;
+	try {
+		modById = new Map<string, Mod>(
+			profile.modById
+				.entries()
+				.map(([key, mod]) => [key, Mod.deserialize(mod)]),
+		);
+	} catch (error) {
+		modById = new Map<string, Mod>();
+		console.error("Error deserializing mods:", error);
+		throw new Error("Error deserializing mods.", { cause: error });
+	}
 
 	return {
 		allycode: profile.allycode,

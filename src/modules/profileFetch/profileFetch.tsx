@@ -84,36 +84,39 @@ export async function refreshPlayerData(
 	} catch (error) {
 		if (error instanceof Error) {
 			if (error.message === "Player not found") {
-				dialog$.showError(
-					"Sorry we couldn't fetch your data from hotutils",
-					`Player with allycode ${cleanedAllycode} not found`,
-					"Please check the allycode you entered and try again.",
-				);
+				dialog$.showError({
+					error: "Sorry we couldn't fetch your data from hotutils",
+					reason: `Player with allycode ${cleanedAllycode} not found`,
+					solution: "Please check the allycode you entered and try again.",
+				});
 				return;
 			}
-			dialog$.showError(
-				[
+			dialog$.showError({
+				error: [
 					<p key={1}>Sorry we couldn't fetch your data from hotutils</p>,
 					<p key={2}>{(error as Error).message}</p>,
 				],
-				"Internally used hotutils api didn't respond. Maybe your internet connection has a problem or the hotutils server is down.",
-				<>
-					Please check internet connectivity. If no such problem, you can check
-					out the{" "}
-					<a
-						className={
-							"underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-						}
-						href="https://discord.com/channels/470702742298689544/591758965335916565"
-						target={"_blank"}
-						rel="noreferrer"
-					>
-						hotutils discord
-					</a>
-					. Maybe hotutils is undergoing maintenance or has a known problem. If
-					so retry after maintenance is done or the bug has been fixed."
-				</>,
-			);
+				reason:
+					"Internally used hotutils api didn't respond. Maybe your internet connection has a problem or the hotutils server is down.",
+				solution: (
+					<>
+						Please check internet connectivity. If no such problem, you can
+						check out the{" "}
+						<a
+							className={
+								"underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+							}
+							href="https://discord.com/channels/470702742298689544/591758965335916565"
+							target={"_blank"}
+							rel="noreferrer"
+						>
+							hotutils discord
+						</a>
+						. Maybe hotutils is undergoing maintenance or has a known problem.
+						If so retry after maintenance is done or the bug has been fixed."
+					</>
+				),
+			});
 		}
 	} finally {
 		isBusy$.set(false);
@@ -292,8 +295,8 @@ function updatePlayerData(
 		endBatch();
 	} catch (error) {
 		const errorMessage = error instanceof DOMException ? error.message : "";
-		dialog$.showError(
-			`Error fetching your profile: ${errorMessage} Please try again`,
-		);
+		dialog$.showError({
+			error: `Error fetching your profile: ${errorMessage} Please try again`,
+		});
 	}
 }

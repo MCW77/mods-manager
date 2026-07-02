@@ -74,7 +74,8 @@ const TemplatesActions = ({
 						);
 						compilations$.applyRanking(ranking);
 					} catch (error) {
-						if (error instanceof Error) dialog$.showError(error.message);
+						if (error instanceof Error)
+							dialog$.showError({ error: error.message });
 					} finally {
 						isBusy$.set(false);
 					}

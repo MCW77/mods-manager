@@ -119,13 +119,13 @@ const modMove$ = observable({
 
 			if (response.errorMessage) {
 				dialog$.hide();
-				dialog$.showError(response.errorMessage);
+				dialog$.showError({ error: response.errorMessage });
 				return false;
 			}
 			switch (response.responseCode) {
 				case 0:
 					dialog$.hide();
-					dialog$.showError(response.responseMessage);
+					dialog$.showError({ error: response.responseMessage });
 					break;
 				default: {
 					modMove$.status.taskId.set(response.taskId);
@@ -152,7 +152,7 @@ const modMove$ = observable({
 			return false;
 		} catch {
 			(error: Error) => {
-				dialog$.showError(error.message);
+				dialog$.showError({ error: error.message });
 				return false;
 			};
 		} finally {
@@ -175,13 +175,13 @@ const modMove$ = observable({
 
 			if (response.errorMessage) {
 				dialog$.hide();
-				dialog$.showError(response.errorMessage);
+				dialog$.showError({ error: response.errorMessage });
 				return;
 			}
 			switch (response.responseCode) {
 				case 0:
 					dialog$.hide();
-					dialog$.showError(response.responseCode);
+					dialog$.showError({ error: response.responseCode });
 					break;
 				default:
 					modMove$.status.progress.assign(response.progress);
@@ -225,7 +225,7 @@ const modMove$ = observable({
 		} catch {
 			(error: Error) => {
 				dialog$.hide();
-				dialog$.showError(error.message);
+				dialog$.showError({ error: error.message });
 			};
 		}
 	},

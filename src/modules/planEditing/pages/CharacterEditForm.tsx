@@ -89,21 +89,30 @@ const runIncrementalCalc = (
 			onFinishedDispose();
 
 			if (progress$.hasMissingCharacters.peek() === true) {
-				dialog$.showError(
-					"Optimization aborted!",
-					"Character data is missing",
-					"Please refetch to add the missing characters and try again!",
-				);
+				dialog$.showError({
+					error: "Optimization aborted!",
+					reason: "Character data is missing",
+					solution:
+						"Please refetch to add the missing characters and try again!",
+				});
 				return;
 			}
 
 			const error = progress$.error.peek();
 			if (error !== null) {
-				dialog$.showError(
-					"Optimization aborted!",
-					error.message,
-					"Please try again!",
-				);
+				const stack = `${error.stack?.replaceAll("\tat ", "\r\nat ") ?? ""}`;
+				dialog$.showError({
+					error: "Optimization aborted!",
+					reason: (
+						<div>
+							<p>{error.message}</p>
+							<pre className={"text-wrap"}>{stack}</pre>
+						</div>
+					),
+					solution: "Please report on discord if stuck with this error!",
+					contentStyle: "sm:max-w-[70vw]",
+				});
+
 				return;
 			}
 

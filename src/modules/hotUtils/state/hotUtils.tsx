@@ -187,12 +187,12 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 				});
 
 				if (response.errorMessage) {
-					dialog$.showError(response.errorMessage);
+					dialog$.showError({ error: response.errorMessage });
 					return;
 				}
 				switch (response.responseCode) {
 					case 0:
-						dialog$.showError(response.responseMessage);
+						dialog$.showError({ error: response.responseMessage });
 						break;
 					case 1:
 						dialog$.showFlash(
@@ -204,11 +204,11 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 						);
 						break;
 					default:
-						dialog$.showError("Unknown response from HotUtils");
+						dialog$.showError({ error: "Unknown response from HotUtils" });
 				}
 			} catch {
 				(error: Error) => {
-					dialog$.showError(error.message);
+					dialog$.showError({ error: error.message });
 					return;
 				};
 			} finally {
