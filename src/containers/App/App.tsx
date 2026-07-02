@@ -7,6 +7,7 @@ import {
 	reactive,
 	useMount,
 	useObserve,
+	useValue,
 } from "@legendapp/state/react";
 
 // styles
@@ -69,6 +70,7 @@ const firstRender$ = observable(true);
 
 const AppContent = () => {
 	const [t] = useTranslation("global-ui");
+	const themeClass = useValue(ui$.themeClass);
 
 	useObserve(() => {
 		const hasProfiles = profilesManagement$.hasProfiles.get();
@@ -124,9 +126,7 @@ const AppContent = () => {
 	return (
 		<Suspense fallback={<div className={"bg-black h-full w-full"} />}>
 			<div
-				className={
-					"min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif]"
-				}
+				className={`${themeClass} min-w-1 grow-1 flex flex-col h-full font-[Helvetica_Arial_sans-serif]`}
 			>
 				<div
 					className={`flex grow-1 justify-stretch overflow-hidden text-foreground

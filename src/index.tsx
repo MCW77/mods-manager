@@ -10,9 +10,6 @@ import "./index.css";
 import "virtual:uno.css";
 import "./i18n";
 
-// state
-import { ui$ } from "./modules/ui/state/ui";
-
 // containers
 const App = lazy(() => import("./containers/App/App"));
 
@@ -25,7 +22,6 @@ if (import.meta.env.DEV && import.meta.env.VITE_ENABLE_REACT_SCAN === "true") {
 }
 
 const rootNode = document.getElementById("root");
-document.documentElement.classList.add(ui$.theme.get());
 
 if (rootNode !== null) {
 	const root = createRoot(rootNode);
