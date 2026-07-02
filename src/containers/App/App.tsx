@@ -36,6 +36,7 @@ import type { SectionNames } from "#/modules/ui/domain/SectionNames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
+import { ThemeToggle } from "#/modules/ui/components/ThemeToggle";
 import { Spinner as SimpleSpinner } from "#/components/Spinner/Spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
 import ProfileSwitcher from "#/modules/profilesManagement/components/ProfileSwitcher";
@@ -226,6 +227,7 @@ const AppContent = () => {
 							<Memo>
 								<ProfileSwitcher />
 							</Memo>
+							<ThemeToggle />
 						</div>
 						<Show if={profilesManagement$.hasProfiles}>
 							<Memo>
