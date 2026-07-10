@@ -35,9 +35,10 @@ export const getProfileFromPersisted = (
 	let modById: Map<string, Mod>;
 	try {
 		modById = new Map<string, Mod>(
-			profile.modById
-				.entries()
-				.map(([key, mod]) => [key, Mod.deserialize(mod)]),
+			Array.from(profile.modById.entries(), ([key, mod]) => [
+				key,
+				Mod.deserialize(mod),
+			]),
 		);
 	} catch (error) {
 		modById = new Map<string, Mod>();
