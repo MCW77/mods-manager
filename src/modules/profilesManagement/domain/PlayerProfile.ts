@@ -42,6 +42,7 @@ export const getProfileFromPersisted = (
 		);
 	} catch (error) {
 		modById = new Map<string, Mod>();
+		console.error("Deserializing mods for profile:", profile);
 		console.error("Error deserializing mods:", error);
 		throw new Error("Error deserializing mods.", { cause: error });
 	}
