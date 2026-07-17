@@ -16,7 +16,6 @@ import type { CurrenciesObservable } from "#/modules/currencies/domain/Currencie
 import type { StackRankObservable } from "#/modules/stackRank/domain/StackRankObservable";
 import type { ModsObservable } from "#/modules/mods/domain/ModsObservable";
 import type { RosterObservable } from "#/modules/roster/domain/RosterObservable";
-import { stat } from "fs";
 
 interface StateLoaderObservable {
 	isDone: boolean;
