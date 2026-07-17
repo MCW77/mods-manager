@@ -6,8 +6,8 @@ import { observer, Show, useValue } from "@legendapp/state/react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
+const roster$ = stateLoader$.roster$;
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
@@ -23,9 +23,7 @@ import CharacterBlock from "./CharacterBlock";
 const CharacterList = observer(
 	React.memo(() => {
 		const [t] = useTranslation("optimize-ui");
-		const characterById = useValue(
-			profilesManagement$.activeProfile.characterById,
-		);
+		const characterById = useValue(roster$.activeCharacterById);
 		const selectedCharacters = useValue(
 			compilations$.defaultCompilation.selectedCharacters,
 		);

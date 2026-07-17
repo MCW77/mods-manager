@@ -2,10 +2,11 @@ import { observable } from "@legendapp/state";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
+const mods$ = stateLoader$.mods$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
+const roster$ = stateLoader$.roster$;
 
 const activeCompilationById$ = compilations$.compilationByIdForActiveAllycode;
 
@@ -81,12 +82,12 @@ optimizationSettings$.activeSettings.onChange(({ value }) => {
 	reoptimizationNeeded$.handleChanges();
 });
 
-profilesManagement$.activeProfile.modById.onChange(() => {
+mods$.activeModById.onChange(() => {
 	reoptimizationNeeded$.forProfileUpdated.set(true);
 	reoptimizationNeeded$.handleChanges();
 });
 
-profilesManagement$.activeProfile.characterById.onChange(() => {
+roster$.activeCharacterById.onChange(() => {
 	reoptimizationNeeded$.forProfileUpdated.set(true);
 	reoptimizationNeeded$.handleChanges();
 });

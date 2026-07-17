@@ -26,7 +26,7 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 	observable<DatacronsObservable>({
 		persistedData: getInitialDatacrons(),
 		datacronByIdForActiveAllycode: () => {
-			const allycode = profilesManagement$.activeProfile.allycode.get();
+			const allycode = profilesManagement$.activeAllycode.get();
 			return (
 				datacrons$.persistedData[allycode]?.datacronById ??
 				observable(new Map<string, Datacron>() as DatacronById)
@@ -36,7 +36,7 @@ const datacrons$: ObservableObject<DatacronsObservable> =
 			return datacrons$.persistedData;
 		},
 		filteredDatacronsIdsForActiveAllycode: () => {
-			const allycode = profilesManagement$.activeProfile.allycode.get();
+			const allycode = profilesManagement$.activeAllycode.get();
 			const datacronById =
 				datacrons$.persistedData[allycode]?.datacronById.get();
 			let datacrons = datacronById ? Array.from(datacronById.values()) : [];

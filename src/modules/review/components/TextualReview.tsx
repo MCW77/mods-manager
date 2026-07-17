@@ -8,9 +8,8 @@ import { useValue } from "@legendapp/state/react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const roster$ = stateLoader$.roster$;
 const characters$ = stateLoader$.characters$;
-
 // domain
 import type * as Character from "#/domain/Character";
 
@@ -96,9 +95,7 @@ type TextualReviewProps = {
 const TextualReview = ({ modAssignments }: TextualReviewProps) => {
 	const summaryId = useId();
 	const baseCharacterById = useValue(characters$.baseCharacterById);
-	const characterById = useValue(
-		profilesManagement$.activeProfile.characterById,
-	);
+	const characterById = useValue(roster$.activeCharacterById);
 
 	return (
 		<>

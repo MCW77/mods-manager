@@ -7,7 +7,6 @@ import type {
 	Datacron,
 	DatacronById,
 	DatacronsPersistedData,
-	DatacronByIdForProfile,
 	Affix,
 } from "./Datacrons";
 
@@ -18,9 +17,7 @@ type AbilitiesDisplayMode =
 
 interface DatacronsObservable {
 	persistedData: DatacronsPersistedData;
-	datacronByIdByAllycode: () => Observable<
-		Record<string, DatacronByIdForProfile>
-	>;
+	datacronByIdByAllycode: () => Observable<DatacronsPersistedData>;
 	datacronByIdForActiveAllycode: () => Observable<DatacronById>;
 	filteredDatacronsIdsForActiveAllycode: () => string[];
 	availableDatacronSets: () => Map<number, DatacronSet>;

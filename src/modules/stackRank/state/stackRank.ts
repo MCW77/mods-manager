@@ -35,7 +35,7 @@ const stackRank$: ObservableObject<StackRankObservable> =
 	observable<StackRankObservable>({
 		persistedData: getInitialStackRank(),
 		settingsForActiveAllycode: () => {
-			const allycode = profilesManagement$.activeProfile.allycode.get();
+			const allycode = profilesManagement$.activeAllycode.get();
 			return stackRank$.settingsByAllycode[allycode]?.stackRankSettings;
 		},
 		settingsByAllycode: () => {

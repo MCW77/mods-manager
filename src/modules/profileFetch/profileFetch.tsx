@@ -12,6 +12,8 @@ import { currencies$ } from "../currencies/state/currencies";
 import { datacrons$ } from "#/modules/datacrons/state/datacrons";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 import { materials$ } from "#/modules/materials/state/materials";
+import { mods$ } from "#/modules/mods/state/mods";
+import { roster$ } from "#/modules/roster/state/roster";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -206,8 +208,7 @@ function updatePlayerData(
 			profile.playerValues,
 		)) {
 			const characterById$ =
-				profilesManagement$.profiles.profileByAllycode[newAllycode]
-					.characterById;
+				roster$.characterByIdByAllycode[newAllycode].characterById;
 			let omis: string[] = [];
 			let zetas: string[] = [];
 			if (fullProfile?.units?.units) {
@@ -239,8 +240,9 @@ function updatePlayerData(
 
 		if (keepOldMods) {
 			// If we're keeping the old mods, that means that any mod we don't see must be unequipped
-			const modById$ =
-				profilesManagement$.profiles.profileByAllycode[newAllycode].modById;
+
+			const modById$ = mods$.modByIdByAllycode[newAllycode].modById;
+
 			for (const modId of modById$.keys()) {
 				const mod = modById$[modId].peek() as Mod | undefined;
 				if (mod !== undefined) {
@@ -255,21 +257,17 @@ function updatePlayerData(
 				newAllycode
 			].modById.clear();
 */
-			profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
-				new Map<string, Mod>(),
-			);
+			mods$.modByIdByAllycode[newAllycode].modById.set(new Map<string, Mod>());
 		}
 		//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
-		for (const mod of profile.mods)
-			profilesManagement$.profiles.profileByAllycode[newAllycode].modById.set(
-				mod.id,
-				mod,
-			);
+		for (const mod of profile.mods) {
+			mods$.modByIdByAllycode[newAllycode].modById.set(mod.id, mod);
+		}
 		if (fullProfile.mods) {
 			for (const mod of fullProfile.mods.mods) {
-				const profileMod = profilesManagement$.profiles.profileByAllycode[
-					newAllycode
-				].modById[mod.id].peek() as Mod | undefined;
+				const profileMod = mods$.modByIdByAllycode[newAllycode].modById[
+					mod.id
+				].peek() as Mod | undefined;
 				if (profileMod) profileMod.speedRemainder = mod.speedRemainder;
 			}
 		}

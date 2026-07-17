@@ -6,7 +6,7 @@ import { Show, useValue } from "@legendapp/state/react";
 import { beginBatch, endBatch, type Observable } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 const characters$ = stateLoader$.characters$;
 const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
@@ -51,7 +51,7 @@ const SelectionActions = ({
 	const last6DotGuaranteedCharacter = useValue(() => {
 		const selectedCharacters =
 			compilations$.defaultCompilation.selectedCharacters.get();
-		const minimalFull6Dot = profilesManagement$.minimalFull6Dot.get();
+		const minimalFull6Dot = mods$.minimalFull6Dot.get();
 		return minimalFull6Dot > 0 && selectedCharacters.length >= minimalFull6Dot
 			? baseCharacterById[selectedCharacters[minimalFull6Dot - 1].id].name
 			: "";

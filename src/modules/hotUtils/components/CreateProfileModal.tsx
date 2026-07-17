@@ -5,10 +5,11 @@ import collectByKey from "#/utils/collectByKey";
 import { observer, useValue, useObservable } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const hotutils$ = stateLoader$.hotutils$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
+const mods$ = stateLoader$.mods$;
+const roster$ = stateLoader$.roster$;
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
@@ -30,15 +31,11 @@ import {
 import { Label } from "#ui/label";
 
 const CreateProfileModal: React.FC = observer(() => {
-	const modById = useValue(() =>
-		profilesManagement$.activeProfile.modById.get(),
-	);
+	const modById = useValue(() => mods$.activeModById.get());
 	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);
-	const characterById = useValue(
-		profilesManagement$.activeProfile.characterById,
-	);
+	const characterById = useValue(roster$.activeCharacterById);
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
 		modById.values().filter((mod) => mod.characterID !== "null"),

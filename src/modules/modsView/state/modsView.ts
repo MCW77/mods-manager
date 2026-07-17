@@ -15,7 +15,7 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 
 // domain
 import type { Mod } from "#/domain/Mod";
@@ -151,7 +151,7 @@ const modsView$: ObservableObject<ModsViewObservable> =
 			];
 		},
 		filteredMods: () => {
-			const modById = profilesManagement$.activeProfile.modById.get();
+			const modById = mods$.activeModById.get();
 			const mods = Array.from(modById.values());
 			const namedFiltersPredicates = modsView$.namedFiltersPredicates.get();
 			const quickFilterPredicateResult = modsView$.quickFilterPredicate.get();

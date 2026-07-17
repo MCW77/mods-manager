@@ -1,7 +1,7 @@
 // state
 import { observable, beginBatch, endBatch } from "@legendapp/state";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { mods$ } from "#/modules/mods/state/mods";
 import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
@@ -193,7 +193,7 @@ const modMove$ = observable({
 						);
 						beginBatch();
 						for (const mod of updatedMods) {
-							profilesManagement$.activeProfile.modById[mod.id].set(mod);
+							mods$.activeModById[mod.id].set(mod);
 						}
 						endBatch();
 						dialog$.hide();

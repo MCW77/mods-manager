@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
 const hotutils$ = stateLoader$.hotutils$;
+const mods$ = stateLoader$.mods$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
@@ -26,9 +26,7 @@ import { Label } from "#ui/label";
 const ActionsWidget = () => {
 	const [t] = useTranslation("optimize-ui");
 	const actionsId = useId();
-	const modById = useValue(() =>
-		profilesManagement$.activeProfile.modById.get(),
-	);
+	const modById = useValue(() => mods$.activeModById.get());
 	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);

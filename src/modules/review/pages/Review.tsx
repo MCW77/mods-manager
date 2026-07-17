@@ -11,7 +11,7 @@ import { groupBy } from "#/utils/groupBy";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 const compilations$ = stateLoader$.compilations$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
@@ -168,9 +168,7 @@ const Review: React.FC = observer(() => {
 	const [t] = useTranslation("optimize-ui");
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const filter = useValue(review$.modListFilter);
-	const modById = useValue(() =>
-		profilesManagement$.activeProfile.modById.get(),
-	);
+	const modById = useValue(() => mods$.activeModById.get());
 	const modAssignments = useValue(
 		compilations$.defaultCompilation.flatCharacterModdings,
 	);

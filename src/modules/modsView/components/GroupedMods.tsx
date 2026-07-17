@@ -13,7 +13,7 @@ import {
 } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 const modsView$ = stateLoader$.modsView$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
@@ -132,7 +132,7 @@ function GroupedMods() {
 	const [t] = useTranslation("explore-ui");
 	const [tDomain] = useTranslation("domain");
 
-	const allModsCount = useValue(profilesManagement$.activeProfile.modById.size);
+	const allModsCount = useValue(mods$.activeModById.size);
 	const transformedMods = useValue(modsView$.transformedMods);
 	const transformedModsCount = useValue(modsView$.transformedModsCount);
 

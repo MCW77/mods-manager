@@ -10,8 +10,8 @@ import {
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const roster$ = stateLoader$.roster$;
 
 import { cancelOptimizer } from "#/modules/optimize/optimize";
 
@@ -37,9 +37,7 @@ import { Progress } from "#ui/progress";
 const ReactiveProgress = reactive(Progress);
 
 const OptimizerProgress: React.FC = observer(() => {
-	const characterById = useValue(
-		profilesManagement$.activeProfile.characterById,
-	);
+	const characterById = useValue(roster$.activeCharacterById);
 	const character$ = useObservable<Character.Character | undefined>(() => {
 		const charId = progress$.optimizationStatus.character.get();
 		return charId === "" ? undefined : characterById[charId];

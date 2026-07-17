@@ -7,10 +7,10 @@ import { Computed, observer, useValue } from "@legendapp/state/react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
-const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
+const compilations$ = stateLoader$.compilations$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const roster$ = stateLoader$.roster$;
 
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
@@ -63,9 +63,7 @@ const characterBlockDragStart = (index: number) => {
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 	({ characterId, target, index }: CharacterBlockProps) => {
 		const [t] = useTranslation("optimize-ui");
-		const characterById = useValue(
-			profilesManagement$.activeProfile.characterById,
-		);
+		const characterById = useValue(roster$.activeCharacterById);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const character = characterById[characterId];
 		const showEditCharacterModalCallback = useCallback(

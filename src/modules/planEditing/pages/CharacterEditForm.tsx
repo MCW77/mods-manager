@@ -16,10 +16,10 @@ import { enableReactComponents } from "@legendapp/state/config/enableReactCompon
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
-const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
+const compilations$ = stateLoader$.compilations$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const roster$ = stateLoader$.roster$;
 
 import { optimizeMods } from "#/modules/optimize/optimize";
 
@@ -292,9 +292,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 		const targetIsInAdvancedEditMode = useValue(target$.isInAdvancedEditMode);
 		const currentCharacter = useValue(optimizerView$.currentCharacter);
 		const targetName = useValue(target$.target.id);
-		const targetsNames = profilesManagement$.activeProfile.characterById[
-			character.id
-		].targets
+		const targetsNames = roster$.activeCharacterById[character.id].targets
 			.peek()
 			.map((target) => target.id);
 		const targets = Character.targets(characterSettings, character);
