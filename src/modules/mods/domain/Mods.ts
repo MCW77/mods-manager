@@ -1,4 +1,7 @@
+// utils
+import superjson from "superjson";
 import * as v from "valibot";
+
 // domain
 import { Mod } from "#/domain/Mod";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
@@ -55,6 +58,7 @@ const getModsFromPersisted = (
 		}
 	} catch (error) {
 		console.error("Deserializing mods for profile:", profile);
+		console.error("Serialized profile:", superjson.stringify(profile));
 		console.error("Error deserializing mods:", error);
 		throw new Error("Error deserializing mods.", { cause: error });
 	}
