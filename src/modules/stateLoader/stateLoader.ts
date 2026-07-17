@@ -14,6 +14,9 @@ import type { DatacronsObservable } from "#/modules/datacrons/domain/DatacronsOb
 import type { MaterialsObservable } from "#/modules/materials/domain/MaterialsObservable";
 import type { CurrenciesObservable } from "#/modules/currencies/domain/CurrenciesObservable";
 import type { StackRankObservable } from "#/modules/stackRank/domain/StackRankObservable";
+import type { ModsObservable } from "#/modules/mods/domain/ModsObservable";
+import type { RosterObservable } from "#/modules/roster/domain/RosterObservable";
+import { stat } from "fs";
 
 interface StateLoaderObservable {
 	isDone: boolean;
@@ -30,6 +33,8 @@ interface StateLoaderObservable {
 	templates$: ObservableObject<TemplatesObservable> | null;
 	datacrons$: ObservableObject<DatacronsObservable> | null;
 	materials$: ObservableObject<MaterialsObservable> | null;
+	mods$: ObservableObject<ModsObservable> | null;
+	roster$: ObservableObject<RosterObservable> | null;
 	currencies$: ObservableObject<CurrenciesObservable> | null;
 	stackRank$: ObservableObject<StackRankObservable> | null;
 }
@@ -51,12 +56,16 @@ const stateLoader$ = observable<StateLoaderObservable>({
 	materials$: null,
 	currencies$: null,
 	stackRank$: null,
+	mods$: null,
+	roster$: null,
 });
 
 async function loadStateModules() {
 	try {
 		const [
 			profilesManagementModule,
+			modsModule,
+			rosterModule,
 			compilationsModule,
 			charactersModule,
 			charactersManagementModule,
@@ -73,6 +82,8 @@ async function loadStateModules() {
 			stackRankModule,
 		] = await Promise.all([
 			import("#/modules/profilesManagement/state/profilesManagement"),
+			import("#/modules/mods/state/mods"),
+			import("#/modules/roster/state/roster"),
 			import("#/modules/compilations/state/compilations"),
 			import("#/modules/characters/state/characters"),
 			import("#/modules/charactersManagement/state/charactersManagement"),
@@ -92,6 +103,8 @@ async function loadStateModules() {
 		stateLoader$.profilesManagement$.set(
 			profilesManagementModule.profilesManagement$,
 		);
+		stateLoader$.mods$.set(modsModule.mods$);
+		stateLoader$.roster$.set(rosterModule.roster$);
 		stateLoader$.compilations$.set(compilationsModule.compilations$);
 		stateLoader$.characters$.set(charactersModule.characters$);
 		stateLoader$.charactersManagement$.set(
@@ -114,6 +127,8 @@ async function loadStateModules() {
 		stateLoader$.stackRank$.set(stackRankModule.stackRank$);
 		await Promise.all([
 			when(profilesManagementModule.syncStatus$.isPersistLoaded),
+			when(modsModule.syncStatus$.isPersistLoaded),
+			when(rosterModule.syncStatus$.isPersistLoaded),
 			when(compilationsModule.syncStatus$.isPersistLoaded),
 			when(compilationsModule.syncStatus2$.isPersistLoaded),
 			when(charactersModule.syncStatus$.isPersistLoaded),

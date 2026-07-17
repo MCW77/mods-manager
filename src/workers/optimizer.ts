@@ -64,6 +64,14 @@ import {
 	syncStatus$ as profilesManagementSyncStatus$,
 } from "#/modules/profilesManagement/state/profilesManagement";
 import {
+	mods$,
+	syncStatus$ as modsSyncStatus$,
+} from "#/modules/mods/state/mods";
+import {
+	roster$,
+	syncStatus$ as rosterSyncStatus$,
+} from "#/modules/roster/state/roster";
+import {
 	compilations$,
 	syncStatus2$ as defaultCompilationStatus$,
 } from "#/modules/compilations/state/compilations";
@@ -250,25 +258,31 @@ self.onmessage = async (message) => {
 		await when(
 			() =>
 				profilesManagementSyncStatus$.isPersistLoaded.get() &&
+				modsSyncStatus$.isPersistLoaded.get() &&
 				defaultCompilationStatus$.isPersistLoaded.get() &&
 				incrementalOptimizationStatus$.isPersistLoaded.get() &&
 				lockedSyncStatus$.isPersistLoaded.get() &&
-				optimizationSettingsSyncStatus$.isPersistLoaded.get(),
+				optimizationSettingsSyncStatus$.isPersistLoaded.get() &&
+				rosterSyncStatus$.isPersistLoaded.get(),
 			() => {
 				const profilesManagementError =
 					profilesManagementSyncStatus$.error.peek();
+				const modsError = modsSyncStatus$.error.peek();
 				const defaultCompilationError = defaultCompilationStatus$.error.peek();
 				const incrementalOptimizationError =
 					incrementalOptimizationStatus$.error.peek();
 				const lockedSyncError = lockedSyncStatus$.error.peek();
 				const optimizationSettingsError =
 					optimizationSettingsSyncStatus$.error.peek();
+				const rosterError = rosterSyncStatus$.error.peek();
 				const firstError =
 					profilesManagementError ||
+					modsError ||
 					defaultCompilationError ||
 					incrementalOptimizationError ||
 					lockedSyncError ||
-					optimizationSettingsError;
+					optimizationSettingsError ||
+					rosterError;
 				if (firstError) {
 					const errorMessage = superjson.stringify({
 						cause: firstError.cause,
@@ -291,9 +305,10 @@ self.onmessage = async (message) => {
 	if (message.data.type === "Optimize") {
 		perf.resetPerformanceLog();
 
-		const profile = profilesManagement$.activeProfile.get();
+		const allycode = profilesManagement$.activeAllycode.get();
+
 		const allMods = Array.from(
-			profile.modById.values().map((mod) => mod.serialize()),
+			mods$.activeModById.values().map((mod) => mod.serialize()),
 			deserializeMod,
 		);
 
@@ -309,10 +324,10 @@ self.onmessage = async (message) => {
 			optimizationSettings$.activeSettings.simulateLevel15Mods.peek();
 		const optimizerResults = perf.measureTime(optimizeMods, "optimizeMods")(
 			allMods,
-			profile.characterById,
+			roster$.activeCharacterById.peek(),
 			selectedCharacters,
 			incrementalOptimization$.activeIndex.peek(),
-			optimizationSettings$.settingsByProfile.peek()[profile.allycode],
+			optimizationSettings$.settingsByProfile.peek()[allycode],
 			compilations$.defaultCompilation.flatCharacterModdings.peek(),
 		);
 
