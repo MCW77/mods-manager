@@ -24,8 +24,10 @@ const hotutils$ = stateLoader$.hotutils$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const materials$ = stateLoader$.materials$;
+const mods$ = stateLoader$.mods$;
 const modsView$ = stateLoader$.modsView$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
+const roster$ = stateLoader$.roster$;
 const templates$ = stateLoader$.templates$;
 const stackRank$ = stateLoader$.stackRank$;
 
@@ -36,8 +38,8 @@ import { ui$ } from "#/modules/ui/state/ui";
 // domain
 import { convertBackup, type Backup, type BackupData } from "../domain/Backup";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
-import { getProfileFromPersisted } from "#/modules/profilesManagement/domain/PlayerProfile";
 import type { LatestModsManagerBackupDataSchemaOutput } from "#/domain/schemas/mods-manager/index";
+import { Mod } from "#/domain/Mod";
 
 interface ImportError {
 	errorMessage: string;
@@ -55,29 +57,21 @@ type AppState = {
 const mergeProfilesManagement = (
 	profilesManagement: LatestModsManagerBackupDataSchemaOutput["profilesManagement"],
 ) => {
-	if (
-		!profilesManagement ||
-		Object.keys(profilesManagement.profileByAllycode).length === 0
-	) {
+	if (!profilesManagement) {
 		return;
 	}
 
 	// Process each profile from the imported data
-	for (const [allycode, persistedProfile] of Object.entries(
-		profilesManagement.profileByAllycode,
+	for (const [allycode, playerName] of Object.entries(
+		profilesManagement.playernameByAllycode,
 	)) {
 		beginBatch();
-		const profile = getProfileFromPersisted(persistedProfile);
-
-		if (profilesManagement$.hasProfileWithAllycode(allycode)) {
-			// Profile exists - update it
-			profilesManagement$.updateProfile(profile);
-		} else {
+		if (!profilesManagement$.hasProfileWithAllycode(allycode)) {
 			// Profile doesn't exist - add it
-			profilesManagement$.addProfile(allycode, profile.playerName);
-			// After adding, update with the full profile data
-			profilesManagement$.updateProfile(profile);
+			profilesManagement$.addProfile(allycode, playerName);
 		}
+		// Update the lastUpdated timestamp for the profile
+		profilesManagement$.updateProfile(allycode);
 		endBatch();
 	}
 
@@ -443,6 +437,39 @@ function mergeSettings(
 	}
 }
 
+function mergeMods(
+	backupMods: LatestModsManagerBackupDataSchemaOutput["mods"],
+): void {
+	if (!backupMods) return;
+
+	for (const [allycode, backupModsByIdForProfile] of objectEntries(
+		backupMods,
+	)) {
+		const modById = new Map<string, Mod>();
+		for (const [modId, mod] of backupModsByIdForProfile.modById) {
+			modById.set(modId, Mod.deserialize(mod));
+		}
+		mods$.modByIdByAllycode[allycode].set({
+			id: allycode,
+			modById: modById,
+		});
+	}
+}
+
+function mergeRoster(
+	backupRoster: LatestModsManagerBackupDataSchemaOutput["roster"],
+): void {
+	if (!backupRoster) return;
+	for (const [allycode, backupRosterByIdForProfile] of objectEntries(
+		backupRoster,
+	)) {
+		roster$.characterByIdByAllycode[allycode].set({
+			id: allycode,
+			characterById: backupRosterByIdForProfile.characterById,
+		});
+	}
+}
+
 const loadModsManagerBackup = (
 	backup: LatestModsManagerBackupDataSchemaOutput,
 ) => {
@@ -467,7 +494,9 @@ const loadModsManagerBackup = (
 	}
 	mergeLockedStatus(backup.lockedStatus);
 	mergeMaterials(backup.materials);
+	mergeMods(backup.mods);
 	mergeModsViewSetups(backup.modsViewSetups);
+	mergeRoster(backup.roster);
 	mergeSessionIds(backup.sessionIds);
 	mergeSettings(backup.settings);
 	mergeStackRank(backup.stackRank);
@@ -488,9 +517,11 @@ const appState$: ObservableObject<AppState> = observable({
 		hotutils$.reset();
 		incrementalOptimization$.reset();
 		lockedStatus$.reset();
+		mods$.reset();
 		modsView$.reset();
 		optimizationSettings$.reset();
 		profilesManagement$.reset();
+		roster$.reset();
 		ui$.currentSection.set("help");
 		endBatch();
 	},
@@ -543,7 +574,9 @@ const appState$: ObservableObject<AppState> = observable({
 				lockedStatus$.persistedData.lockedStatus.lockedCharactersByAllycode.peek(),
 			materials: materials$.persistedData.peek(),
 			modsViewSetups: modsView$.toPersistable(),
-			profilesManagement: profilesManagement$.toPersistable(),
+			mods: mods$.toPersistable(),
+			profilesManagement: profilesManagement$.persistedData.profiles.peek(),
+			roster: roster$.persistedData.peek(),
 			sessionIds: hotutils$.sessionIDsByProfile.peek(),
 			settings: optimizationSettings$.settingsByProfile.peek(),
 			stackRank: stackRank$.persistedData.peek(),
