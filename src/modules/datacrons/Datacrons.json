@@ -1,4 +1,128 @@
 {
+	"datacron_set_32_base": {
+		"id": "datacron_set_32_base",
+		"setId": 32,
+		"initialTiers": 0,
+		"referenceTemplateId": "",
+		"fixedTag": [],
+		"tier": [
+			{
+				"id": 1,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 2,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_001"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 3,
+				"affixTemplateSetId": [
+					"ability_set_healer_003",
+					"ability_set_tank_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 2,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 4,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 5,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_002"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 4,
+				"requiredRelicTier": 0,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 6,
+				"affixTemplateSetId": [
+					"ability_set_attacker_003",
+					"ability_set_support_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 6,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 7,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 8,
+				"affixTemplateSetId": [
+					"stat_set_criticaldamage_maxshield_accuracy_offenseperc_criticalchance_maxhealth_resistance_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			},
+			{
+				"id": 9,
+				"affixTemplateSetId": [
+					"ability_set_cobbvanth_001",
+					"ability_set_princesskneesaa_002",
+					"ability_set_batchers3_002",
+					"ability_set_jarjar_003",
+					"ability_set_chiefnebit_002",
+					"ability_set_tarfful_002",
+					"ability_set_ugnaught_002",
+					"ability_set_tuskenshaman_001",
+					"ability_set_paploo_002",
+					"ability_set_talia_003"
+				],
+				"initialAffixTemplateSetIds": [],
+				"requiredUnitTier": 0,
+				"requiredRelicTier": 8,
+				"overrideUpgradeCostRecipeId": "",
+				"overrideScopeIdentifier": 0
+			}
+		],
+		"maxRerolls": 0,
+		"allowReroll": true,
+		"focused": false,
+		"focusedIcon": "",
+		"focusedPrefab": ""
+	},
 	"datacron_set_31_base": {
 		"id": "datacron_set_31_base",
 		"setId": 31,
@@ -1148,129 +1272,5 @@
 		"focused": true,
 		"focusedIcon": "tex.datacron_b_focused",
 		"focusedPrefab": "prefab.datacron_b_focused"
-	},
-	"datacron_set_29_base": {
-		"id": "datacron_set_29_base",
-		"setId": 29,
-		"initialTiers": 0,
-		"referenceTemplateId": "",
-		"fixedTag": [],
-		"tier": [
-			{
-				"id": 1,
-				"affixTemplateSetId": [
-					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 2,
-				"requiredRelicTier": 0,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 2,
-				"affixTemplateSetId": [
-					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 2,
-				"requiredRelicTier": 0,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 3,
-				"affixTemplateSetId": [
-					"ability_set_darkside_generic_029",
-					"ability_set_lightside_generic_030"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 2,
-				"requiredRelicTier": 0,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 4,
-				"affixTemplateSetId": [
-					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_002"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 4,
-				"requiredRelicTier": 0,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 5,
-				"affixTemplateSetId": [
-					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_002"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 4,
-				"requiredRelicTier": 0,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 6,
-				"affixTemplateSetId": [
-					"ability_set_inquisitorius_005",
-					"ability_set_rebel_004"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 6,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 7,
-				"affixTemplateSetId": [
-					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_003"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 8,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 8,
-				"affixTemplateSetId": [
-					"stat_set_defense_criticaldamage_maxhealth_offense_maxshield_armorpen_suppen_accuracy_003"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 8,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			},
-			{
-				"id": 9,
-				"affixTemplateSetId": [
-					"ability_set_hera_syndulla_001",
-					"ability_set_grandinquisitor_003",
-					"ability_set_thirdsister_003",
-					"ability_set_captain_drogan_001",
-					"ability_set_marrok_002",
-					"ability_set_inquisitorbarris_002",
-					"ability_set_eighth_brother_001",
-					"datacron_character_chirrutimwe_002",
-					"ability_set_princess_leia_001",
-					"ability_set_admiralraddus_001"
-				],
-				"initialAffixTemplateSetIds": [],
-				"requiredUnitTier": 0,
-				"requiredRelicTier": 8,
-				"overrideUpgradeCostRecipeId": "",
-				"overrideScopeIdentifier": 0
-			}
-		],
-		"maxRerolls": 0,
-		"allowReroll": true,
-		"focused": false,
-		"focusedIcon": "",
-		"focusedPrefab": ""
 	}
 }
