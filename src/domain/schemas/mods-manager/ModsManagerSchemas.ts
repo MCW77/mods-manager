@@ -308,9 +308,6 @@ const ModsManagerBackupDataSchemaV27 = v.object({
 	settings: SettingsByProfileSchema,
 	stackRank: StackRankSchemaV25,
 });
-type ModsManagerBackupDataSchemaV27Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV27
->;
 
 const ModsManagerBackupSchemaV27 = v.object({
 	appVersion: v.string(),
