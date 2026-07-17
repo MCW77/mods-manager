@@ -1,12 +1,11 @@
 // utils
 import * as v from "valibot";
 
-// state
-import { latestDBVersion } from "#/utils/globalLegendPersistSettings";
-
 // domain
-import { fromGIMOCharacterTemplates } from "../mappers/GIMOCharacterTemplatesMapper";
-import { CharacterTemplatesSchema as GIMOCharacterTemplatesSchema, CharacterTemplatesOutputSchema } from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
+import {
+	CharacterTemplatesSchema as GIMOCharacterTemplatesSchema,
+	CharacterTemplatesOutputSchema,
+} from "#/domain/schemas/gimo/CharacterTemplatesSchemas";
 import {
 	CharacterTemplatesSchemaV18,
 	CharacterTemplatesBackupSchemaV26,
@@ -168,11 +167,11 @@ const migrations = new Map(
 
 function runMigrations(data: NormalizedBackup) {
 	let currentData = data;
-	if (currentData.version > latestDBVersion) {
+	if (currentData.version > latestTemplatesDBVersion) {
 		return null;
 	}
 
-	while (currentData.version < latestDBVersion) {
+	while (currentData.version < latestTemplatesDBVersion) {
 		const migrate = migrations.get(currentData.version);
 		if (!migrate) {
 			return null;
