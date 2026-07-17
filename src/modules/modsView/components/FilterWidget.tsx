@@ -2,11 +2,8 @@
 import { useTranslation } from "react-i18next";
 
 // state
-import { useValue } from "@legendapp/state/react";
-
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const modsView$ = stateLoader$.modsView$;
 
 // components
@@ -36,7 +33,6 @@ import {
 
 const FilterWidget = () => {
 	const [t] = useTranslation("explore-ui");
-	const _profile = useValue(profilesManagement$.activeProfile);
 
 	return (
 		<CollapsibleCard
