@@ -104,13 +104,27 @@ const PersistedProfilesSchemaV23 = v.object({
 	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV23),
 });
 
+const PersistedProfilesSchemaV27 = v.object({
+	activeAllycode: v.string(),
+	lastUpdatedByAllycode: v.record(
+		v.string(),
+		v.object({
+			id: v.string(),
+			lastUpdated: v.number(),
+		}),
+	),
+	playernameByAllycode: v.record(v.string(), v.string()),
+});
+
 type PersistedProfilesSchemaOutput = v.InferOutput<
 	typeof PersistedProfilesSchemaV21
 >;
 
 export {
+	GIMOFlatModSchema,
 	PersistedProfilesSchemaV18,
 	PersistedProfilesSchemaV21,
 	PersistedProfilesSchemaV23,
+	PersistedProfilesSchemaV27,
 	type PersistedProfilesSchemaOutput,
 };
