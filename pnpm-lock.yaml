@@ -24,8 +24,8 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0(@fortawesome/fontawesome-svg-core@7.3.1)(react@19.2.7)
       '@legendapp/state':
-        specifier: 3.0.0-beta.46
-        version: 3.0.0-beta.46(react@19.2.7)
+        specifier: 3.0.0-beta.48
+        version: 3.0.0-beta.48(react@19.2.7)
       '@rolldown/plugin-babel':
         specifier: ^0.2.3
         version: 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@26.1.1)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
@@ -918,8 +918,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@legendapp/state@3.0.0-beta.46':
-    resolution: {integrity: sha512-TcCabsE9jPW2r0sKQbUet46L0hbWiupKoun9UUkcHyF/6Jec1RyJCmLrdgFPnYZ9HwupJKIRxJVlxNrg2tG3SQ==}
+  '@legendapp/state@3.0.0-beta.48':
+    resolution: {integrity: sha512-aa7vpUSoBHnXQhYf2x/10C0w1EiesegRhR7LuxnIcEPyZzZyuSF2mevf1jphlh0zzqwIJm9QxnsayDNn8/kwcA==}
     peerDependencies:
       expo-sqlite: ^15.0.0
     peerDependenciesMeta:
@@ -5038,7 +5038,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@legendapp/state@3.0.0-beta.46(react@19.2.7)':
+  '@legendapp/state@3.0.0-beta.48(react@19.2.7)':
     dependencies:
       use-sync-external-store: 1.6.0(react@19.2.7)
     transitivePeerDependencies:
