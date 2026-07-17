@@ -12,6 +12,8 @@ export * from "./SettingsByProfileSchemas";
 export * from "./LockedStatusSchemas";
 export * from "./CompilationSchemas";
 export * from "./PersistedProfilesSchemas";
+export * from "./ModsSchemas";
+export * from "./RosterSchemas";
 export * from "./SettingsByProfileSchemas";
 export * from "./ModsViewSetupsSchemas";
 export * from "./HotutilsSchemas";

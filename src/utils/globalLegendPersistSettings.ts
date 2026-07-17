@@ -24,7 +24,7 @@ type RecordWithNestedEntities = {
 	[key: string]: Entity | string | unknown;
 };
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26] as const;
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -54,6 +54,7 @@ storeNamesByVersion.set(24, [
 	"Currencies",
 ]);
 storeNamesByVersion.set(25, [...storeNames, "StackRank"]);
+storeNamesByVersion.set(27, [...storeNames, "Mods", "Roster"]);
 
 const dbUpgrades = new Map<
 	DBVersions,
@@ -145,7 +146,6 @@ function multiStoreItemUpgrade(
 	transaction: IDBTransaction,
 	readStoreNames: string[],
 	writeStoreName: string,
-	id: string,
 	upgradeFunction: (
 		dataByStoreName: Map<string, Array<RecordWithNestedEntities>>,
 	) => Array<RecordWithNestedEntities>,
@@ -154,7 +154,7 @@ function multiStoreItemUpgrade(
 		try {
 			for (const storeName of readStoreNames) {
 				if (!db.objectStoreNames.contains(storeName)) {
-					reject(new Error(`Read store not found for ${id}: ${storeName}`));
+					reject(new Error(`Read store ${storeName} not found`));
 					return;
 				}
 			}
@@ -199,7 +199,7 @@ function multiStoreItemUpgrade(
 									if (settled) return;
 									settled = true;
 									console.error(
-										`Error putting data to new store: ${writeStoreName}`,
+										`Error putting data into store: ${writeStoreName}`,
 										(putEvent.target as IDBRequest).error,
 									);
 									reject((putEvent.target as IDBRequest).error);
@@ -207,7 +207,7 @@ function multiStoreItemUpgrade(
 							}
 						} catch (error) {
 							console.error(
-								`Error processing data for ${writeStoreName}:${id}`,
+								`Error processing data for store ${writeStoreName}`,
 								error,
 							);
 							reject(error);
@@ -225,7 +225,7 @@ function multiStoreItemUpgrade(
 							readStoreAt(index + 1);
 						} catch (error) {
 							console.error(
-								`Error processing read data for ${storeName}:${id}`,
+								`Error processing read data for store ${storeName}`,
 								error,
 							);
 							reject(error);
@@ -237,14 +237,17 @@ function multiStoreItemUpgrade(
 						reject(error);
 					};
 				} catch (error) {
-					console.error(`Error reading store for ${id}`, error);
+					console.error(`Error reading store ${readStoreNames[index]}`, error);
 					reject(error);
 				}
 			};
 
 			readStoreAt(0);
 		} catch (error) {
-			console.error(`Error upgrading:${id} with multi-store upgrade`, error);
+			console.error(
+				`Error upgrading ${writeStoreName} with multi-store upgrade`,
+				error,
+			);
 			reject(error);
 		}
 	});
@@ -436,26 +439,61 @@ function upgradeProfilesTo23(profiles: Record<string, unknown>) {
 
 function upgradeCompilationTo26(compilation: Record<string, unknown>) {
 	const newCompilation: Record<string, unknown> = structuredClone(compilation);
-	(newCompilation.selectedCharacters as {target: {primaryStatRestrictions: Record<string, unknown>}}[]).forEach(
-		(selectedCharacter) => {
-			const oldPrimaryStatRestrictions = selectedCharacter.target.primaryStatRestrictions;
-			const newPrimaryStatRestrictions: Record<string, string[]> = {};
-			if (Object.hasOwn(oldPrimaryStatRestrictions, "arrow") && oldPrimaryStatRestrictions.arrow !== undefined) {
-				newPrimaryStatRestrictions.arrow = [oldPrimaryStatRestrictions.arrow as string];
-			}
-			if (Object.hasOwn(oldPrimaryStatRestrictions, "triangle") && oldPrimaryStatRestrictions.triangle !== undefined) {
-				newPrimaryStatRestrictions.triangle = [oldPrimaryStatRestrictions.triangle as string];
-			}
-			if (Object.hasOwn(oldPrimaryStatRestrictions, "cross") && oldPrimaryStatRestrictions.cross !== undefined) {
-				newPrimaryStatRestrictions.cross = [oldPrimaryStatRestrictions.cross as string];
-			}
-			if (Object.hasOwn(oldPrimaryStatRestrictions, "circle") && oldPrimaryStatRestrictions.circle !== undefined) {
-				newPrimaryStatRestrictions.circle = [oldPrimaryStatRestrictions.circle as string];
-			}
-			selectedCharacter.target.primaryStatRestrictions = newPrimaryStatRestrictions;
-		},
-	);
+	(
+		newCompilation.selectedCharacters as {
+			target: { primaryStatRestrictions: Record<string, unknown> };
+		}[]
+	).forEach((selectedCharacter) => {
+		const oldPrimaryStatRestrictions =
+			selectedCharacter.target.primaryStatRestrictions;
+		const newPrimaryStatRestrictions: Record<string, string[]> = {};
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
+			oldPrimaryStatRestrictions.arrow !== undefined
+		) {
+			newPrimaryStatRestrictions.arrow = [
+				oldPrimaryStatRestrictions.arrow as string,
+			];
+		}
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
+			oldPrimaryStatRestrictions.triangle !== undefined
+		) {
+			newPrimaryStatRestrictions.triangle = [
+				oldPrimaryStatRestrictions.triangle as string,
+			];
+		}
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
+			oldPrimaryStatRestrictions.cross !== undefined
+		) {
+			newPrimaryStatRestrictions.cross = [
+				oldPrimaryStatRestrictions.cross as string,
+			];
+		}
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
+			oldPrimaryStatRestrictions.circle !== undefined
+		) {
+			newPrimaryStatRestrictions.circle = [
+				oldPrimaryStatRestrictions.circle as string,
+			];
+		}
+		selectedCharacter.target.primaryStatRestrictions =
+			newPrimaryStatRestrictions;
+	});
 	return newCompilation;
+}
+
+function upgradeProfilesTo27(profiles: Record<string, unknown>) {
+	if (
+		Object.hasOwn(profiles, "profileByAllycode") &&
+		typeof profiles.profileByAllycode === "object" &&
+		profiles.profileByAllycode !== null
+	) {
+		delete profiles.profileByAllycode;
+	}
+	return profiles;
 }
 
 function createStores(db: IDBDatabase, version: DBVersions) {
@@ -1199,6 +1237,125 @@ async function upgradeTo26(db: IDBDatabase, transaction: IDBTransaction) {
 }
 dbUpgrades.set(26, upgradeTo26);
 
+async function upgradeTo27(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		createStores(db, 27);
+		await multiStoreItemUpgrade(
+			db,
+			transaction,
+			["Profiles"],
+			"Mods",
+			(dataByStoreName) => {
+				const oldProfiles = dataByStoreName.get("Profiles") ?? [];
+				if (oldProfiles.length === 0) {
+					const modsEntries: Array<{
+						id: string;
+						modById: Map<string, GIMOFlatMod>;
+					}> = [];
+					return modsEntries;
+				}
+				const profilesEntry = oldProfiles[0];
+				if (!Object.hasOwn(profilesEntry, "profiles")) {
+					throw new Error("Profiles entry does not contain 'profiles' key");
+				}
+				if (
+					!Object.hasOwn(
+						profilesEntry.profiles as Record<string, unknown>,
+						"profileByAllycode",
+					)
+				) {
+					throw new Error(
+						"Profiles entry does not contain 'profileByAllycode' key",
+					);
+				}
+				const profileByAllycode = (
+					profilesEntry.profiles as Record<string, unknown>
+				).profileByAllycode as Record<string, unknown>;
+				const modsEntries: Array<{
+					id: string;
+					modById: Map<string, GIMOFlatMod>;
+				}> = [];
+				for (const [allycode, profile] of Object.entries(profileByAllycode)) {
+					modsEntries.push({
+						id: allycode,
+						modById: (profile as Record<string, unknown>).modById as Map<
+							string,
+							GIMOFlatMod
+						>,
+					});
+				}
+				return modsEntries;
+			},
+		);
+		await multiStoreItemUpgrade(
+			db,
+			transaction,
+			["Profiles"],
+			"Roster",
+			(dataByStoreName) => {
+				const oldProfiles = dataByStoreName.get("Profiles") ?? [];
+				if (oldProfiles.length === 0) {
+					const rosterEntries: Array<{
+						id: string;
+						characterById: Record<string, unknown>;
+					}> = [];
+					return rosterEntries;
+				}
+				const profilesEntry = oldProfiles[0];
+				if (!Object.hasOwn(profilesEntry, "profiles")) {
+					throw new Error("Profiles entry does not contain 'profiles' key");
+				}
+				if (
+					!Object.hasOwn(
+						profilesEntry.profiles as Record<string, unknown>,
+						"profileByAllycode",
+					)
+				) {
+					throw new Error(
+						"Profiles entry does not contain 'profileByAllycode' key",
+					);
+				}
+				const profileByAllycode = (
+					profilesEntry.profiles as Record<string, unknown>
+				).profileByAllycode as Record<string, unknown>;
+				const rosterEntries: Array<{
+					id: string;
+					characterById: Record<string, unknown>;
+				}> = [];
+				for (const [allycode, profile] of Object.entries(profileByAllycode)) {
+					rosterEntries.push({
+						id: allycode,
+						characterById: (profile as Record<string, unknown>)
+							.characterById as Record<string, unknown>,
+					});
+				}
+				return rosterEntries;
+			},
+		);
+		await itemUpgrade(
+			db,
+			transaction,
+			"Profiles",
+			"profiles",
+			(oldProfiles) => {
+				const newProfiles = upgradeProfilesTo27(
+					oldProfiles[0].profiles as Record<string, unknown>,
+				);
+				return [
+					{
+						id: "profiles",
+						profiles: newProfiles,
+					},
+				];
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo27:", error);
+		transaction.abort();
+	}
+}
+dbUpgrades.set(27, upgradeTo27);
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
@@ -1246,5 +1403,6 @@ export {
 	upgradeCompilationTo22,
 	upgradeProfilesTo23,
 	upgradeCompilationTo26,
+	upgradeProfilesTo27,
 	testOnly,
 };

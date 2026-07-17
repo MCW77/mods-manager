@@ -16,7 +16,7 @@ const materials$: ObservableObject<MaterialsObservable> =
 	observable<MaterialsObservable>({
 		persistedData: getInitialMaterials(),
 		materialByIdForActiveAllycode: () => {
-			const allycode = profilesManagement$.activeProfile.allycode.get();
+			const allycode = profilesManagement$.activeAllycode.get();
 			return (
 				materials$.materialByIdByAllycode[allycode]?.materialById ??
 				observable(new Map<string, Material>() as MaterialById)

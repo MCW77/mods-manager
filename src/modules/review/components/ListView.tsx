@@ -1,5 +1,3 @@
-// react
-
 // utils
 import flatten from "lodash-es/flatten";
 
@@ -8,8 +6,9 @@ import { useValue } from "@legendapp/state/react";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
+const mods$ = stateLoader$.mods$;
+const roster$ = stateLoader$.roster$;
 
 import { review$ } from "../state/review";
 
@@ -41,9 +40,7 @@ interface ListViewProps {
  */
 const ListView = ({ displayedMods }: ListViewProps) => {
 	const baseCharacterById = useValue(characters$.baseCharacterById);
-	const characterById = useValue(
-		profilesManagement$.activeProfile.characterById,
-	);
+	const characterById = useValue(roster$.activeCharacterById);
 	const filter = useValue(review$.modListFilter);
 
 	let individualMods: {
@@ -141,15 +138,13 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 							<div className={"grid grid-cols-1 gap-2 justify-items-stretch"}>
 								<Button
 									type={"button"}
-									onClick={() => profilesManagement$.unequipMod(mod.id)}
+									onClick={() => mods$.unequipMod(mod.id)}
 								>
 									I removed this mod
 								</Button>
 								<Button
 									type={"button"}
-									onClick={() =>
-										profilesManagement$.reassignMod(mod.id, characterID)
-									}
+									onClick={() => mods$.reassignMod(mod.id, characterID)}
 								>
 									I reassigned this mod
 								</Button>

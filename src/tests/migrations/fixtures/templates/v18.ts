@@ -1,5 +1,3 @@
-import { array } from "valibot";
-
 export const defaultFixture = [
 	// V18 format - plain array of templates
 	{

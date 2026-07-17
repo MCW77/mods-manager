@@ -12,8 +12,8 @@ import { groupBy } from "#/utils/groupBy";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
+const mods$ = stateLoader$.mods$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
 
@@ -72,9 +72,7 @@ const DisplayWidget = () => {
 	const isListView$ = useObservable(
 		() => review$.modListFilter.view.get() === ModListFilter.viewOptions.list,
 	);
-	const modById = useValue(() =>
-		profilesManagement$.activeProfile.modById.get(),
-	);
+	const modById = useValue(() => mods$.activeModById.get());
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const filter = useValue(review$.modListFilter);
 	const flatCharacterModdings = useValue(

@@ -6,9 +6,11 @@ import { objectEntries } from "#/utils/objectEntries";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
 import type { IndicesByProfile } from "#/modules/incrementalOptimization/domain/IncrementalOptimizationObservable";
 import type { LockedCharactersByAllycode } from "#/modules/lockedStatus/domain/LockedStatusByCharacterId";
+import type { PersistedModByIdForProfileByAllycode } from "#/modules/mods/domain/Mods";
 import type { PersistableModsViewSetupByIdByCategory } from "#/modules/modsView/domain/ModsViewOptions";
 import type { SettingsByProfile } from "#/modules/optimizationSettings/domain/OptimizationSettingsObservable";
-import type { PersistedProfiles } from "#/modules/profilesManagement/domain/Profiles";
+import type { Profiles } from "#/modules/profilesManagement/domain/Profiles";
+import type { RosterPersistedData } from "#/modules/roster/domain/Roster";
 import type { CharacterTemplatesByName } from "#/modules/templates/domain/CharacterTemplates";
 import type { CurrenciesPersistedData } from "#/modules/currencies/domain/Currencies";
 import type { DatacronsPersistedData } from "#/modules/datacrons/domain/Datacrons";
@@ -24,6 +26,7 @@ import {
 	upgradeCompilationTo22,
 	upgradeProfilesTo23,
 	upgradeCompilationTo26,
+	upgradeProfilesTo27,
 	type DBVersions,
 } from "#/utils/globalLegendPersistSettings";
 import {
@@ -39,6 +42,7 @@ import {
 	type ModsManagerBackupDataSchemaV23Output,
 	type ModsManagerBackupDataSchemaV24Output,
 	type ModsManagerBackupDataSchemaV25Output,
+	type ModsManagerBackupDataSchemaV26Output,
 	modsManagerBackupSchemasByVersion,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
@@ -53,8 +57,10 @@ interface BackupData {
 	incrementalOptimizationIndices: IndicesByProfile;
 	lockedStatus: LockedCharactersByAllycode;
 	materials: MaterialsPersistedData;
+	mods: PersistedModByIdForProfileByAllycode;
 	modsViewSetups: PersistableModsViewSetupByIdByCategory;
-	profilesManagement: PersistedProfiles;
+	profilesManagement: Profiles;
+	roster: RosterPersistedData;
 	sessionIds: Map<string, { gimoSessionId: string; huSessionId: string }>;
 	settings: SettingsByProfile;
 	stackRank: StackRankPersistedData;
@@ -466,12 +472,55 @@ const migrationsRecord: Record<0 | DBVersions, MigrationFn> = {
 		};
 	},
 	26: (normalizedBackup) => {
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV26Output;
+		const profileByAllycode = data.profilesManagement.profileByAllycode;
+		const mods: Record<string, unknown> = {};
+		const roster: Record<string, unknown> = {};
+		for (const [allycode, profile] of objectEntries(profileByAllycode)) {
+			mods[allycode] = {
+				id: allycode,
+				modById: profile.modById,
+			};
+			roster[allycode] = {
+				id: allycode,
+				characterById: profile.characterById,
+			};
+		}
+		const newProfiles = upgradeProfilesTo27(data.profilesManagement);
+
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: data.compilations,
+			currencies: data.currencies,
+			datacrons: data.datacrons,
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: data.materials,
+			mods: mods,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: newProfiles,
+			roster: roster,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+			stackRank: data.stackRank,
+		};
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 27,
+		};
+	},
+	27: (normalizedBackup) => {
 		return {
 			appVersion: normalizedBackup.appVersion,
 			backupType: "fullBackup",
 			client: "mods-manager",
 			data: normalizedBackup.data,
-			version: 26,
+			version: 27,
 		};
 	},
 };

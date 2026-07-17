@@ -5,7 +5,6 @@ import { formatTimespan } from "../utils/formatTimespan";
 import {
 	type ObservableObject,
 	observable,
-	type Observable,
 	beginBatch,
 	endBatch,
 	when,
@@ -14,40 +13,15 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 // domain
-import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po/index";
-import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po/index";
-import {
-	type PersistedPlayerProfile,
-	type PlayerProfile,
-	createPlayerProfile,
-	getProfileFromPersisted,
-	getProfileToPersist,
-} from "../domain/PlayerProfile";
-import type {
-	Profiles,
-	PersistedProfiles,
-	PersistedDataWithProfiles,
-} from "../domain/Profiles";
+import type { ProfilesManagementPersistedData } from "../domain/Profiles";
 import type { ProfilesManagementObservable } from "../domain/ProfilesManagement";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type * as Character from "#/domain/Character";
-import { Mod } from "#/domain/Mod";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import { type GIMOFlatMod, gimoSlots } from "#/domain/types/ModTypes";
-
-const isObservableMod = (
-	mod: Observable<Mod | undefined> | Observable<Mod>,
-): mod is Observable<Mod> => {
-	return mod.peek() !== undefined;
-};
 
 const getInitialProfiles = () => {
-	const initialProfiles: PersistedDataWithProfiles = {
+	const initialProfiles: ProfilesManagementPersistedData = {
 		id: "profiles",
 		profiles: {
 			activeAllycode: "",
 			playernameByAllycode: {},
-			profileByAllycode: {},
 			lastUpdatedByAllycode: {},
 		},
 	};
@@ -57,16 +31,11 @@ const getInitialProfiles = () => {
 const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 	observable<ProfilesManagementObservable>({
 		persistedData: getInitialProfiles(),
-		defaultProfile: {
-			allycode: "",
-			characterById: {} as Character.CharacterById,
-			modById: new Map<string, Mod>(),
-			playerName: "",
-		},
 		now: Date.now(),
 		profiles: () => profilesManagement$.persistedData.profiles,
 		lastProfileAdded: "",
 		lastProfileDeleted: "",
+		activeAllycode: () => profilesManagement$.profiles.activeAllycode.get(),
 		activeLastUpdated: () => {
 			const allycode = profilesManagement$.profiles.activeAllycode.get();
 			const elapsedTime =
@@ -77,7 +46,7 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			return formatTimespan(elapsedTime);
 		},
 		activePlayer: () => {
-			const activeAllycode = profilesManagement$.profiles.activeAllycode.get();
+			const activeAllycode = profilesManagement$.activeAllycode.get();
 			if (activeAllycode in profilesManagement$.profiles.playernameByAllycode) {
 				return profilesManagement$.profiles.playernameByAllycode[
 					activeAllycode
@@ -85,24 +54,14 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			}
 			return "";
 		},
-		activeProfile: () => {
-			if (!profilesManagement$.hasProfiles.get()) {
-				return profilesManagement$.defaultProfile;
-			}
-			const activeAllycode = profilesManagement$.profiles.activeAllycode.get();
-			if (activeAllycode === "") {
-				return profilesManagement$.defaultProfile;
-			}
-			return profilesManagement$.profiles.profileByAllycode[activeAllycode];
-		},
 		hasProfileWithAllycode: (allycode: string) => {
 			const profile =
-				profilesManagement$.profiles.profileByAllycode[allycode].peek();
+				profilesManagement$.profiles.playernameByAllycode[allycode].peek();
 			return profile !== undefined;
 		},
 		hasProfiles: () => {
 			return (
-				Object.keys(profilesManagement$.profiles.profileByAllycode.get())
+				Object.keys(profilesManagement$.profiles.playernameByAllycode.get())
 					.length > 0
 			);
 		},
@@ -111,34 +70,27 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 				profilesManagement$.lastProfileAdded.set(allycode);
 				return;
 			}
-			const profile: PlayerProfile = createPlayerProfile(allycode, name);
 			beginBatch();
-			profilesManagement$.profiles.profileByAllycode.set({
-				...profilesManagement$.profiles.profileByAllycode.peek(),
-				[profile.allycode]: profile,
-			});
 			profilesManagement$.profiles.playernameByAllycode.set({
 				...profilesManagement$.profiles.playernameByAllycode.peek(),
-				[profile.allycode]: profile.playerName,
+				[allycode]: name,
 			});
 			profilesManagement$.lastProfileAdded.set(allycode);
 			endBatch();
 		},
 		clearProfiles: () => {
-			profilesManagement$.profiles.profileByAllycode.set({});
 			profilesManagement$.profiles.playernameByAllycode.set({});
 			profilesManagement$.profiles.activeAllycode.set("");
 			profilesManagement$.lastProfileDeleted.set("all");
 		},
 		deleteProfile: (allycode: string) => {
 			beginBatch();
-			profilesManagement$.profiles.profileByAllycode[allycode].delete();
 			profilesManagement$.profiles.playernameByAllycode[allycode].delete();
 			profilesManagement$.profiles.lastUpdatedByAllycode[allycode].delete();
 			const activeAllycode = profilesManagement$.profiles.activeAllycode.peek();
 			if (activeAllycode === allycode) {
 				const profilesByAllycode =
-					profilesManagement$.profiles.profileByAllycode.peek();
+					profilesManagement$.profiles.playernameByAllycode.peek();
 				profilesManagement$.profiles.activeAllycode.set(
 					Object.keys(profilesByAllycode).length > 0
 						? Object.keys(profilesByAllycode)[0]
@@ -148,161 +100,15 @@ const profilesManagement$: ObservableObject<ProfilesManagementObservable> =
 			profilesManagement$.lastProfileDeleted.set(allycode);
 			endBatch();
 		},
-		updateProfile: (profile: PlayerProfile) => {
-			profilesManagement$.profiles.profileByAllycode[profile.allycode].set(
-				profile,
-			);
+		updateProfile: (allycode: string) => {
 			profilesManagement$.profiles.lastUpdatedByAllycode.set({
 				...profilesManagement$.profiles.lastUpdatedByAllycode.peek(),
-				[profile.allycode]: { id: profile.allycode, lastUpdated: Date.now() },
+				[allycode]: { id: allycode, lastUpdated: Date.now() },
 			});
 		},
 		reset: () => {
 			syncStatus$.reset();
 			profilesManagement$.lastProfileDeleted.set("all");
-		},
-		importModsFromC3PO: (modsJSON: string) => {
-			let totalMods = 0;
-			try {
-				const unequippedC3POMods: C3POMods.C3POModDTO[] =
-					JSON.parse(modsJSON).inventory.unequippedMod;
-				const unequippedMods = unequippedC3POMods.map((mod) =>
-					C3POMappers.ModMapper.fromC3PO(mod),
-				);
-				for (const mod of unequippedMods) {
-					profilesManagement$.activeProfile.modById[mod.id].set(mod);
-				}
-				totalMods = unequippedMods.length;
-				return {
-					error: "",
-					totalMods: totalMods,
-				};
-			} catch (error) {
-				return {
-					error: (error as Error).message,
-					totalMods: 0,
-				};
-			}
-		},
-		toPersistable: () => {
-			let result = {} as PersistedProfiles;
-			const profiles = profilesManagement$.profiles.peek();
-			const allycodeProfiles = Object.values(profiles.profileByAllycode);
-			const newProfileByAllycode: Record<string, PersistedPlayerProfile> = {};
-			for (const profile of allycodeProfiles) {
-				newProfileByAllycode[profile.allycode] = getProfileToPersist(profile);
-			}
-			result = {
-				...profiles,
-				profileByAllycode: newProfileByAllycode,
-			};
-			return result;
-		},
-		reassignMod: (modId: string, newCharacterId: CharacterNames) => {
-			const modToReassign$ = profilesManagement$.activeProfile.modById[modId];
-			if (modToReassign$ === undefined) return;
-			const modToReassign = modToReassign$.peek() as Mod | undefined;
-			if (modToReassign === undefined) return;
-			const currentlyEquippedModId =
-				profilesManagement$.activeProfile.modById
-					.values()
-					.find(
-						(mod) =>
-							mod.slot === modToReassign.slot &&
-							mod.characterID === newCharacterId,
-					)?.id ?? "";
-			beginBatch();
-			if (currentlyEquippedModId !== "") {
-				const currentlyEquippedMod$ =
-					profilesManagement$.activeProfile.modById[currentlyEquippedModId];
-				if (isObservableMod(currentlyEquippedMod$)) {
-					const currentlyEquippedMod = currentlyEquippedMod$.peek() as
-						| Mod
-						| undefined;
-					if (currentlyEquippedMod !== undefined) {
-						const newMod = currentlyEquippedMod.clone();
-						newMod.characterID = "null";
-						currentlyEquippedMod$.set(newMod);
-					}
-				}
-			}
-			const newMod = modToReassign.clone();
-			newMod.characterID = newCharacterId;
-			modToReassign$.set(newMod);
-			endBatch();
-		},
-		reassignMods: (mods: Mod[], newCharacterId: CharacterNames) => {
-			beginBatch();
-			for (const mod of mods) {
-				profilesManagement$.reassignMod(mod.id, newCharacterId);
-			}
-			endBatch();
-		},
-		unequipMod: (modId: string) => {
-			const modToUnequip$ = profilesManagement$.activeProfile.modById[modId];
-			if (!isObservableMod(modToUnequip$)) return;
-			const modToUnequip = modToUnequip$.peek() as Mod | undefined;
-			if (modToUnequip === undefined) return;
-			const newMod = modToUnequip.clone();
-			newMod.characterID = "null";
-			modToUnequip$.set(newMod);
-		},
-		unequipMods: (mods: Mod[]) => {
-			beginBatch();
-			for (const mod of mods) {
-				profilesManagement$.unequipMod(mod.id);
-			}
-			endBatch();
-		},
-		deleteMod: (modId: string) => {
-			const modToDelete = profilesManagement$.activeProfile.modById[modId];
-			if (modToDelete.peek() === undefined) return;
-			profilesManagement$.activeProfile.modById.delete(modId);
-		},
-		deleteMods: (mods: Mod[]) => {
-			beginBatch();
-			for (const mod of mods) {
-				profilesManagement$.deleteMod(mod.id);
-			}
-			endBatch();
-		},
-		saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => {
-			const character =
-				profilesManagement$.activeProfile.characterById[characterId];
-			const characterTarget = character.targets.find(
-				(target) => target.peek().id === newTarget.id,
-			);
-			if (characterTarget === undefined) {
-				character.targets.push(newTarget);
-			} else {
-				characterTarget.set(newTarget);
-			}
-		},
-		deleteTarget: (characterId: CharacterNames, targetIndex: number) => {
-			const character =
-				profilesManagement$.activeProfile.characterById[characterId];
-			character.targets.splice(targetIndex, 1);
-		},
-		indexOfTarget: (characterId: CharacterNames, targetId: string) => {
-			return profilesManagement$.activeProfile.characterById[
-				characterId
-			].targets
-				.peek()
-				.findIndex((target) => target.id === targetId);
-		},
-		minimalFull6Dot: () => {
-			const mods = Array.from(
-				profilesManagement$.activeProfile.modById.get().values(),
-			);
-			const all6DotMods = mods.filter((mod) => mod.pips === 6);
-			let minimalFull6Dot = all6DotMods.length;
-			for (const slot of gimoSlots) {
-				const modsInSlot = all6DotMods.filter((mod) => mod.slot === slot);
-				if (modsInSlot.length < minimalFull6Dot) {
-					minimalFull6Dot = modsInSlot.length;
-				}
-			}
-			return minimalFull6Dot;
 		},
 	});
 
@@ -335,63 +141,6 @@ when(
 	},
 );
 
-const hasModByIdKey = (obj: object): obj is { modById: unknown } => {
-	return Object.hasOwn(obj, "modById");
-};
-
-const hasModByIdMap = (obj: unknown): obj is { modById: Map<string, Mod> } => {
-	return (
-		typeof obj === "object" &&
-		obj !== null &&
-		hasModByIdKey(obj) &&
-		obj.modById instanceof Map
-	);
-};
-
-const hasModByIdRecord = (
-	obj: unknown,
-): obj is { modById: Record<string, GIMOFlatMod> } => {
-	return (
-		typeof obj === "object" &&
-		obj !== null &&
-		hasModByIdKey(obj) &&
-		obj.modById instanceof Object
-	);
-};
-
-const hasProfileByAllycode = (
-	obj: object,
-): obj is { profileByAllycode: Record<string, Partial<PlayerProfile>> } => {
-	return Object.hasOwn(obj, "profileByAllycode");
-};
-
-const hasPersistedProfileByAllycode = (
-	obj: object,
-): obj is { profileByAllycode: Record<string, PersistedPlayerProfile> } => {
-	return Object.hasOwn(obj, "profileByAllycode");
-};
-
-const isFullPlayerProfile = (obj: unknown): obj is PlayerProfile => {
-	return (
-		obj !== undefined &&
-		obj !== null &&
-		typeof obj === "object" &&
-		Object.hasOwn(obj, "allycode") &&
-		Object.hasOwn(obj, "modById") &&
-		Object.hasOwn(obj, "characterById")
-	);
-};
-
-const isFullPersistedPlayerProfile = (
-	obj: object,
-): obj is PersistedPlayerProfile => {
-	return (
-		Object.hasOwn(obj, "allycode") &&
-		Object.hasOwn(obj, "modById") &&
-		Object.hasOwn(obj, "characterById")
-	);
-};
-
 const syncStatus$ = syncObservable(
 	profilesManagement$.persistedData,
 	persistOptions({
@@ -399,99 +148,6 @@ const syncStatus$ = syncObservable(
 			name: "Profiles",
 			indexedDB: {
 				itemID: "profiles",
-			},
-
-			transform: {
-				load: (
-					value: { id: "profiles"; profiles: PersistedProfiles } & GIMOFlatMod,
-				) => {
-					try {
-						if (hasPersistedProfileByAllycode(value.profiles)) {
-							const profiles = Object.values(value.profiles.profileByAllycode);
-							if (profiles.length > 0) {
-								if (isFullPersistedPlayerProfile(profiles[0])) {
-									const newProfileByAllycode: Record<string, PlayerProfile> =
-										{};
-									for (const profile of profiles) {
-										if (hasModByIdRecord(profile)) {
-											newProfileByAllycode[profile.allycode] =
-												getProfileFromPersisted(profile);
-										}
-									}
-									const result = {
-										id: "profiles",
-										profiles: {
-											...value.profiles,
-											profileByAllycode: newProfileByAllycode,
-										},
-									};
-									return result;
-								}
-							}
-						}
-
-						if (Object.hasOwn(value, "mod_uid")) {
-							return Mod.deserialize(value);
-						}
-						return value;
-					} catch (error) {
-						console.error("Error loading persisted profile:", error);
-						syncStatus$.error.set(error as Error);
-					}
-				},
-				save: (value: { profiles: Partial<Profiles> }) => {
-					if (hasProfileByAllycode(value.profiles)) {
-						const profiles = Object.values(value.profiles.profileByAllycode);
-						if (profiles.length > 0) {
-							if (isFullPlayerProfile(profiles[0])) {
-								const newProfileByAllycode: Record<
-									string,
-									PersistedPlayerProfile
-								> = {};
-								for (const profile of profiles) {
-									newProfileByAllycode[profile.allycode] =
-										getProfileToPersist(profile);
-								}
-								const result = {
-									profiles: {
-										profileByAllycode: newProfileByAllycode,
-									},
-								};
-								return result;
-							}
-							if (hasModByIdMap(profiles[0])) {
-								const allycode = Object.keys(
-									value.profiles.profileByAllycode,
-								)[0];
-								const oldModById =
-									value.profiles.profileByAllycode[allycode].modById;
-								const newModById: Map<string, GIMOFlatMod> = new Map<
-									string,
-									GIMOFlatMod
-								>(
-									oldModById.size === 0
-										? Object.entries(oldModById).map(([key, mod]) => [
-												key,
-												mod.serialize(),
-											])
-										: oldModById
-												.entries()
-												.map(([key, mod]) => [key, mod.serialize()]),
-								);
-								return {
-									profiles: {
-										profileByAllycode: {
-											[allycode]: {
-												modById: newModById,
-											},
-										},
-									},
-								};
-							}
-						}
-					}
-					return structuredClone(value);
-				},
 			},
 		},
 		initial: getInitialProfiles(),

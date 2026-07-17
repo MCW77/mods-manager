@@ -10,6 +10,8 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { mods$ } from "#/modules/mods/state/mods";
+import { roster$ } from "#/modules/roster/state/roster";
 import { characters$ } from "#/modules/characters/state/characters";
 
 // domain
@@ -47,7 +49,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 		compilationByIdByAllycode: () =>
 			compilations$.persistedData1.compilationByIdByAllycode,
 		compilationByIdForActiveAllycode: () => {
-			const allycode = profilesManagement$.activeProfile.allycode.get();
+			const allycode = profilesManagement$.activeAllycode.get();
 			return compilations$.compilationByIdByAllycode.get(allycode);
 		},
 		activeCompilation: () => {
@@ -185,10 +187,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				compilations$.defaultCompilation.selectedCharacters.findIndex(
 					(selectedCharacter) => selectedCharacter.peek().id === characterId,
 				);
-			const targetIndex = profilesManagement$.indexOfTarget(
-				characterId,
-				targetName,
-			);
+			const targetIndex = roster$.indexOfTarget(characterId, targetName);
 			if (targetIndex >= 0) {
 				beginBatch();
 				compilations$.defaultCompilation.reoptimizationIndex.set(
@@ -197,7 +196,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 						compilations$.defaultCompilation.reoptimizationIndex.peek(),
 					),
 				);
-				profilesManagement$.deleteTarget(characterId, targetIndex);
+				roster$.deleteTarget(characterId, targetIndex);
 				const selectedCharacter =
 					compilations$.defaultCompilation.selectedCharacters[characterIndex];
 				selectedCharacter?.target.set(
@@ -207,7 +206,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			}
 		},
 		saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => {
-			profilesManagement$.saveTarget(characterId, newTarget);
+			roster$.saveTarget(characterId, newTarget);
 			compilations$.defaultCompilation.selectedCharacters
 				.find(
 					(selectedCharacter) => selectedCharacter.peek().id === characterId,
@@ -252,7 +251,6 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			compilations$.defaultCompilation.reoptimizationIndex.set(-1);
 		},
 		ensureSelectedCharactersExist: (compilationId: string) => {
-			const profile$ = profilesManagement$.activeProfile;
 			const compilation$ =
 				compilationId === "DefaultCompilation"
 					? compilations$.defaultCompilation
@@ -268,7 +266,9 @@ const compilations$: ObservableObject<CompilationsObservable> =
 				index,
 				selectedCharacter,
 			] of compilation.selectedCharacters.entries()) {
-				if (profile$.characterById[selectedCharacter.id].peek() === undefined) {
+				if (
+					roster$.activeCharacterById[selectedCharacter.id].peek() === undefined
+				) {
 					compilation$.selectedCharacters.splice(index, 1);
 				}
 			}
@@ -290,8 +290,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			const baseCharactersById = characters$.baseCharacterById.peek();
 			const selectedCharacters =
 				compilations$.defaultCompilation.selectedCharacters.peek();
-			const last6DotGuaranteedIndex =
-				profilesManagement$.minimalFull6Dot.peek() - 1;
+			const last6DotGuaranteedIndex = mods$.minimalFull6Dot.peek() - 1;
 			const indicesOfPilots: number[] = [];
 			let selectedCharacter: SelectedCharacters[number];
 			let character: BaseCharacter;

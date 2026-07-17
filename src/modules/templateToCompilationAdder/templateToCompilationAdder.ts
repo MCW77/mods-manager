@@ -1,7 +1,7 @@
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const roster$ = stateLoader$.roster$;
 const compilations$ = stateLoader$.compilations$;
 const templates$ = stateLoader$.templates$;
 
@@ -17,9 +17,9 @@ const appendTemplate = (templateName: string) => {
 	const splitSelectedCharacters = Object.groupBy(
 		template.selectedCharacters,
 		(selectedCharacter) =>
-			Object.keys(
-				profilesManagement$.activeProfile.characterById.peek(),
-			).includes(selectedCharacter.id)
+			Object.keys(roster$.activeCharacterById.peek()).includes(
+				selectedCharacter.id,
+			)
 				? "existing"
 				: "missing",
 	);
@@ -44,9 +44,7 @@ const appendTemplate = (templateName: string) => {
 			selectedCharacter.target.set(selectedCharacterInTemplate.target);
 		}
 		const character =
-			profilesManagement$.activeProfile.characterById[
-				selectedCharacterInTemplate.id
-			];
+			roster$.activeCharacterById[selectedCharacterInTemplate.id];
 		if (character === undefined) continue;
 		const characterTarget = character.targets.find(
 			(t) => t.peek().id === selectedCharacterInTemplate.target.id,
@@ -76,9 +74,9 @@ const replaceWithTemplate = (templateName: string) => {
 	const splitSelectedCharacters = Object.groupBy(
 		template.selectedCharacters,
 		(selectedCharacter) =>
-			Object.keys(
-				profilesManagement$.activeProfile.characterById.peek(),
-			).includes(selectedCharacter.id)
+			Object.keys(roster$.activeCharacterById.peek()).includes(
+				selectedCharacter.id,
+			)
 				? "existing"
 				: "missing",
 	);
@@ -91,9 +89,7 @@ const replaceWithTemplate = (templateName: string) => {
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
 		const target = structuredClone(selectedCharacterInTemplate.target);
 		const character =
-			profilesManagement$.activeProfile.characterById[
-				selectedCharacterInTemplate.id
-			];
+			roster$.activeCharacterById[selectedCharacterInTemplate.id];
 		if (character === undefined) continue;
 		const characterTarget = character.targets.find(
 			(t) => t.peek().id === selectedCharacterInTemplate.target.id,

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 
 // domain
 import type { Mod } from "#/domain/Mod";
@@ -47,7 +47,7 @@ const DeleteModsModal = ({ groupedMods }: ComponentProps) => {
 								onClick={() => {
 									beginBatch();
 									for (const mods of groupedMods) {
-										profilesManagement$.deleteMods(mods);
+										mods$.deleteMods(mods);
 									}
 									endBatch();
 								}}

@@ -4,7 +4,7 @@ import React from "react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 // domain
 import type { Mod } from "#/domain/Mod";
 
@@ -24,7 +24,7 @@ const SellModButton = React.memo(({ mod, ...buttonProps }: ComponentProps) => {
 			size={"xs"}
 			className={"absolute top-0 right-0 m-2"}
 			onClick={() => {
-				profilesManagement$.deleteMod(mod.id);
+				mods$.deleteMod(mod.id);
 			}}
 			{...buttonProps}
 		>

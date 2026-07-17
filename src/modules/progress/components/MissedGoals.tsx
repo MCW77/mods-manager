@@ -1,7 +1,7 @@
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const roster$ = stateLoader$.roster$;
 
 //domain
 import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter";
@@ -68,7 +68,7 @@ function MissedGoals({
 									"Special Critical Chance %": 0,
 								};
 								const character =
-									profilesManagement$.activeProfile.characterById[id].peek() ||
+									roster$.activeCharacterById[id].peek() ||
 									createCharacter(
 										id,
 										{

@@ -2,51 +2,24 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { PlayerProfile } from "./PlayerProfile";
-import type {
-	Profiles,
-	PersistedProfiles,
-	PersistedDataWithProfiles,
-} from "./Profiles";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type { Mod } from "#/domain/Mod";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { Profiles, ProfilesManagementPersistedData } from "./Profiles";
 
 interface ProfilesManagementObservable {
-	persistedData: PersistedDataWithProfiles;
-	defaultProfile: PlayerProfile;
+	persistedData: ProfilesManagementPersistedData;
 	lastProfileAdded: string;
 	lastProfileDeleted: string;
 	profiles: () => Observable<Profiles>;
 	now: number;
+	activeAllycode: () => string;
 	activeLastUpdated: () => string;
 	activePlayer: () => string;
-	activeProfile: () => Observable<PlayerProfile>;
 	hasProfileWithAllycode: (allycode: string) => boolean;
 	hasProfiles: () => boolean;
 	addProfile: (allycode: string, name: string) => void;
 	clearProfiles: () => void;
 	deleteProfile: (allycode: string) => void;
-	updateProfile: (profile: PlayerProfile) => void;
+	updateProfile: (allycode: string) => void;
 	reset: () => void;
-	importModsFromC3PO: (modsJSON: string) => {
-		error: string;
-		totalMods: number;
-	};
-	toPersistable: () => PersistedProfiles;
-	reassignMod: (modId: string, characterId: CharacterNames) => void;
-	reassignMods: (mods: Mod[], characterId: CharacterNames) => void;
-	unequipMod: (modId: string) => void;
-	unequipMods: (mods: Mod[]) => void;
-	deleteMod: (modId: string) => void;
-	deleteMods: (mods: Mod[]) => void;
-	saveTarget: (
-		characterId: CharacterNames,
-		newTarget: OptimizationPlan,
-	) => void;
-	indexOfTarget: (characterId: CharacterNames, targetId: string) => number;
-	deleteTarget: (characterId: CharacterNames, targetIndex: number) => void;
-	minimalFull6Dot: () => number;
 }
 
 export type { ProfilesManagementObservable };

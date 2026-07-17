@@ -8,8 +8,9 @@ import collectByKey from "#/utils/collectByKey";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
+const mods$ = stateLoader$.mods$;
+const roster$ = stateLoader$.roster$;
 
 import { review$ } from "../state/review";
 
@@ -42,11 +43,9 @@ type SetsViewProps = {
 const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const modAssignments$ = useObservable(modAssignments);
 	const baseCharacterById = useValue(characters$.baseCharacterById);
-	const characterById = useValue(
-		profilesManagement$.activeProfile.characterById,
-	);
+	const characterById = useValue(roster$.activeCharacterById);
 	const filter = useValue(review$.modListFilter);
-	const modById = useValue(profilesManagement$.activeProfile.modById);
+	const modById = useValue(mods$.activeModById);
 
 	const currentModsByCharacter: Record<CharacterNames, Mod[]> = useMemo(
 		() =>
@@ -131,7 +130,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 												filter.sort && (
 												<Button
 													type={"button"}
-													onClick={() => profilesManagement$.unequipMods(mods)}
+													onClick={() => mods$.unequipMods(mods)}
 												>
 													I removed these mods
 												</Button>
@@ -140,9 +139,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 												filter.sort && (
 												<Button
 													type={"button"}
-													onClick={() =>
-														profilesManagement$.reassignMods(mods, characterID)
-													}
+													onClick={() => mods$.reassignMods(mods, characterID)}
 												>
 													I reassigned these mods
 												</Button>

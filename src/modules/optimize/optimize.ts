@@ -6,10 +6,11 @@ import { beginBatch, endBatch } from "@legendapp/state";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
-const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
+const optimizationSettings$ = stateLoader$.optimizationSettings$;
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const roster$ = stateLoader$.roster$;
 
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 import { progress$ } from "#/modules/progress/state/progress";
@@ -88,14 +89,12 @@ export function optimizeMods(): void {
 	progress$.init();
 	// If any of the characters being optimized don't have stats, then show an error message
 	if (
-		Object.values(profilesManagement$.activeProfile.characterById.peek()).some(
-			(character) => {
-				return (
-					null === character.playerValues.baseStats ||
-					null === character.playerValues.equippedStats
-				);
-			},
-		)
+		Object.values(roster$.activeCharacterById.peek()).some((character) => {
+			return (
+				null === character.playerValues.baseStats ||
+				null === character.playerValues.equippedStats
+			);
+		})
 	) {
 		progress$.abort();
 		return;

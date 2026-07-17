@@ -15,6 +15,7 @@ import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
+const mods$ = stateLoader$.mods$;
 import { dialog$ } from "#/modules/dialog/state/dialog";
 
 //components
@@ -98,7 +99,7 @@ const ProfilesManager = React.memo(() => {
 							file,
 							(textInFile) => {
 								const { error, totalMods: importedModsCount } =
-									profilesManagement$.importModsFromC3PO(textInFile);
+									mods$.importModsFromC3PO(textInFile);
 								if (error !== "") {
 									dialog$.showError({ error });
 									return;
@@ -112,7 +113,7 @@ const ProfilesManager = React.memo(() => {
 											</span>{" "}
 											mods for player{" "}
 											<span className={"text-mod-gold"}>
-												{profilesManagement$.activeProfile.playerName.peek()}
+												{profilesManagement$.activePlayer.peek()}
 											</span>
 										</p>,
 										"",

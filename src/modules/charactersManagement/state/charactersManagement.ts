@@ -9,7 +9,7 @@ import {
 	toScaled,
 } from "#/utils/scaledNumber";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
+import { mods$ } from "#/modules/mods/state/mods";
 import { compilations$ } from "#/modules/compilations/state/compilations";
 import { characters$ } from "#/modules/characters/state/characters";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
@@ -110,7 +110,7 @@ const getDefaultFilterSetup = () => {
 							if (modsAssignedToCharacter !== undefined)
 								return modsAssignedToCharacter.assignedMods.length < 6;
 							const modsEquippedOnCharacter = [
-								...profilesManagement$.activeProfile.modById.peek().values(),
+								...mods$.activeModById.peek().values(),
 							].filter((mod) => mod.characterID === character.id);
 							return modsEquippedOnCharacter.length < 6;
 						},
@@ -133,9 +133,7 @@ const getDefaultFilterSetup = () => {
 									...modsAssignedToCharacter,
 									assignedMods: modsAssignedToCharacter.assignedMods
 										.map((modId) => {
-											return profilesManagement$.activeProfile.modById
-												.peek()
-												.get(modId);
+											return mods$.activeModById.peek().get(modId);
 										})
 										.filter((mod) => mod !== undefined),
 								};
@@ -144,7 +142,7 @@ const getDefaultFilterSetup = () => {
 								);
 							}
 							const modsEquippedOnCharacter = [
-								...profilesManagement$.activeProfile.modById.peek().values(),
+								...mods$.activeModById.peek().values(),
 							].filter((mod) => mod.characterID === character.id);
 							return modsEquippedOnCharacter.some((mod) => mod.level < 15);
 						},
@@ -215,10 +213,10 @@ const getDefaultFilterSetup = () => {
 						filterPredicate: (character: Character) => {
 							const baseCharacter =
 								characters$.baseCharacterById.peek()[character.id];
-							let possibleOmicronsCount = baseCharacter.omicrons.filter(
+							const possibleOmicronsCount = baseCharacter.omicrons.filter(
 								(omicron) => omicron.mode === "gac",
 							).length;
-							let actualOmicronsCount = character.omis.filter(
+							const actualOmicronsCount = character.omis.filter(
 								(omicron) =>
 									baseCharacter.omicrons.find(
 										(omi) => omi.key === omicron.toUpperCase(),
@@ -241,10 +239,10 @@ const getDefaultFilterSetup = () => {
 						filterPredicate: (character: Character) => {
 							const baseCharacter =
 								characters$.baseCharacterById.peek()[character.id];
-							let possibleOmicronsCount = baseCharacter.omicrons.filter(
+							const possibleOmicronsCount = baseCharacter.omicrons.filter(
 								(omicron) => omicron.mode === "tw",
 							).length;
-							let actualOmicronsCount = character.omis.filter(
+							const actualOmicronsCount = character.omis.filter(
 								(omicron) =>
 									baseCharacter.omicrons.find(
 										(omi) => omi.key === omicron.toUpperCase(),
@@ -267,10 +265,10 @@ const getDefaultFilterSetup = () => {
 						filterPredicate: (character: Character) => {
 							const baseCharacter =
 								characters$.baseCharacterById.peek()[character.id];
-							let possibleOmicronsCount = baseCharacter.omicrons.filter(
+							const possibleOmicronsCount = baseCharacter.omicrons.filter(
 								(omicron) => omicron.mode === "tb",
 							).length;
-							let actualOmicronsCount = character.omis.filter(
+							const actualOmicronsCount = character.omis.filter(
 								(omicron) =>
 									baseCharacter.omicrons.find(
 										(omi) => omi.key === omicron.toUpperCase(),

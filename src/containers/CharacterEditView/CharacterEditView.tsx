@@ -8,11 +8,11 @@ import { observable } from "@legendapp/state";
 import { Memo, observer, useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
-const compilations$ = stateLoader$.compilations$;
 const characters$ = stateLoader$.characters$;
 const charactersManagement$ = stateLoader$.charactersManagement$;
+const compilations$ = stateLoader$.compilations$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
+const roster$ = stateLoader$.roster$;
 
 import "#/modules/reoptimizationNeeded/state/reoptimizationNeeded";
 
@@ -41,9 +41,7 @@ const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
 	const [t] = useTranslation("optimize-ui");
-	const characterById = useValue(
-		profilesManagement$.activeProfile.characterById,
-	);
+	const characterById = useValue(roster$.activeCharacterById);
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const selectedCharacters = useValue(
 		compilations$.defaultCompilation.selectedCharacters,

@@ -9,7 +9,7 @@ import { memo } from "react";
 import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
+const roster$ = stateLoader$.roster$;
 
 // domain
 import { ModTiersEnum } from "#/constants/enums";
@@ -157,9 +157,7 @@ const ModImage = memo(
 	({ className = "", mod, showAvatar = false }: ComponentProps) => {
 		const character = useValue(() => {
 			if (mod.characterID === "null") return null;
-			return profilesManagement$.activeProfile.characterById[
-				mod.characterID
-			].get();
+			return roster$.activeCharacterById[mod.characterID].get();
 		});
 
 		// #region Slot Match

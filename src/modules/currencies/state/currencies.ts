@@ -19,7 +19,7 @@ const currencies$: ObservableObject<CurrenciesObservable> =
 			return currencies$.persistedData;
 		},
 		currencyByIdForActiveAllycode: () => {
-			const allycode = profilesManagement$.activeProfile.allycode.get();
+			const allycode = profilesManagement$.activeAllycode.get();
 			return (
 				currencies$.currencyByIdByAllycode[allycode]?.currencyById ??
 				observable(new Map<string, Currency>() as CurrencyById)

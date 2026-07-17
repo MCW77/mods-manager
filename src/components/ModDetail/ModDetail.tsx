@@ -5,8 +5,8 @@ import { memo, Suspense } from "react";
 import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const profilesManagement$ = stateLoader$.profilesManagement$;
 const characters$ = stateLoader$.characters$;
+const roster$ = stateLoader$.roster$;
 
 // domain
 import type * as Character from "#/domain/Character";
@@ -50,10 +50,7 @@ type ModDetailProps = {
 const ModDetail = memo(({ assignedTarget, mod }: ModDetailProps) => {
 	const character = useValue(() => {
 		if (mod.characterID === "null") return null;
-		return (
-			profilesManagement$.activeProfile.characterById[mod.characterID].get() ||
-			null
-		);
+		return roster$.activeCharacterById[mod.characterID].get() || null;
 	});
 
 	return (
