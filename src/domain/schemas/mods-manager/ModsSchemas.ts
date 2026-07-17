@@ -3,7 +3,6 @@ import * as v from "valibot";
 
 // domain
 import { GIMOFlatModSchema } from "./index";
-import { P } from "ts-pattern";
 
 const PersistedModByIdForProfileByAllycodeSchema = v.record(
 	v.string(),
