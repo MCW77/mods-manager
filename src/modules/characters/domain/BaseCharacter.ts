@@ -138,7 +138,7 @@ export type BaseCharacterById = Record<CharacterNames, BaseCharacter>;
 
 export const defaultBaseCharacter = {
 	alignment: "light",
-	avatarUrl: "https://swgoh.gg/static/img/assets/blank-character.png",
+	avatarUrl: "",
 	categories: [],
 	description: "",
 	galacticLegend: false,
