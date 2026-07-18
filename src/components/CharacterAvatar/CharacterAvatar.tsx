@@ -67,6 +67,8 @@ const CharacterAvatar = React.memo(
 			id: character.id,
 			name: character.id,
 		};
+		const avatarUrl =
+			baseCharacter.avatarUrl === "" ? undefined : baseCharacter.avatarUrl;
 		const gearClass = match([
 			character.playerValues.gearLevel,
 			baseCharacter.alignment,
@@ -148,7 +150,7 @@ const CharacterAvatar = React.memo(
 						>
 							<img
 								className={"rounded-full"}
-								src={baseCharacter.avatarUrl}
+								src={avatarUrl}
 								loading={"lazy"}
 								alt={baseCharacter.name}
 								title={baseCharacter.name}
