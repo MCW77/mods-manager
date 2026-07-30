@@ -15,7 +15,10 @@ const characters$ = observable<CharactersObservable>({
 		try {
 			return await fetchCharacters();
 		} catch (error) {
-			throw new Error("Failed to fetch base characters", { cause: error });
+			throw new Error(
+				"Mods-manager failed fetching character definitions from HotUtils. Some characters may not optimize properly until you fetch again.",
+				{ cause: error },
+			);
 		}
 	},
 });
