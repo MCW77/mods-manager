@@ -863,6 +863,45 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Wiggs", "Chiggs"],
 	),
+	BISHOP: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			prot: 20,
+			spd: 100,
+			pot: 40,
+			phys: 40,
+			cc: 5,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Potency %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Peempo",
+			health: 30,
+			prot: 20,
+			spd: 100,
+			pot: 40,
+			phys: 40,
+			cc: 5,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Offense %"],
+				circle: ["Health %"],
+				cross: ["Potency %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Potency %": 1,
+			},
+		}),
+	]),
 	BISTAN: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -1193,6 +1232,26 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Critical Damage %": 1,
 			},
 		}),
+		fromShortOptimizationPlan({
+			id: "With Rotta",
+			health: 30,
+			spd: 100,
+			cd: 50,
+			pot: 25,
+			phys: 60,
+			cc: 10,
+			minDots: 6,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+		}),
 	]),
 	CALKESTIS: createCharacterSettings([
 		fromShortOptimizationPlan({
@@ -1368,6 +1427,27 @@ const characterSettings: CharacterSettingsIndexer = {
 			ten: 20,
 			phys: 5,
 			arm: 5,
+		}),
+	]),
+	CARSONTEVA: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 30,
+			prot: 20,
+			spd: 100,
+			phys: 50,
+			cd: 60,
+			cc: 5,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Critical Chance %": 1,
+			},
 		}),
 	]),
 	CARTHONASI: createCharacterSettings([
@@ -3195,15 +3275,18 @@ const characterSettings: CharacterSettingsIndexer = {
 			fromShortOptimizationPlan({
 				id: "Default",
 				health: 75,
-				spd: 100,
-				pot: 75,
-				ten: 100,
-				arm: 50,
+				prot: 55,
+				spd: 50,
+				pot: 5,
+				ten: 10,
+				arm: 35,
+				res: 35,
+				ca: 40,
 				primaryRes: {
 					arrow: ["Speed"],
-					triangle: ["Protection %"],
-					circle: ["Protection %"],
-					cross: ["Protection %"],
+					triangle: ["Health %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
 				},
 				setRes: {
 					"Health %": 3,
@@ -3537,6 +3620,28 @@ const characterSettings: CharacterSettingsIndexer = {
 			phys: 50,
 		}),
 	]),
+	GOPHERANTS: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 45,
+			prot: 25,
+			spd: 100,
+			ten: 30,
+			phys: 10,
+			arm: 5,
+			res: 5,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Tenacity %"],
+				circle: ["Health %"],
+			},
+			setRes: {
+				"Speed %": 1,
+				"Tenacity %": 1,
+			},
+		}),
+	]),
 	GRANDADMIRALTHRAWN: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -3728,6 +3833,25 @@ const characterSettings: CharacterSettingsIndexer = {
 			setRes: {
 				"Critical Chance %": 1,
 				"Critical Damage %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "With Rotta",
+			health: 25,
+			spd: 100,
+			cd: 50,
+			pot: 40,
+			phys: 50,
+			cc: 10,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Potency %": 1,
 			},
 		}),
 		fromShortOptimizationPlan({
@@ -4046,15 +4170,17 @@ const characterSettings: CharacterSettingsIndexer = {
 	HUMANTHUG: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
+			health: 40,
+			prot: 30,
 			spd: 100,
-			cd: 100,
-			pot: 25,
-			phys: 50,
-			cc: 50,
+			cd: 25,
+			pot: 40,
+			phys: 25,
+			cc: 5,
 			primaryRes: {
 				arrow: ["Speed"],
-				triangle: ["Critical Chance %"],
-				circle: ["Protection %"],
+				triangle: ["Health %"],
+				circle: ["Health %"],
 				cross: ["Potency %"],
 			},
 			setRes: {
@@ -6463,6 +6589,106 @@ const characterSettings: CharacterSettingsIndexer = {
 		["Trashcan", "R2z2", "SuperStar2D2"],
 		DamageType.mixed,
 	),
+	R5D4: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 40,
+			prot: 35,
+			spd: 100,
+			pot: 35,
+			phys: 25,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Health %"],
+				cross: ["Potency %"],
+				circle: ["Health %"],
+			},
+			setRes: {
+				"Speed %": 1,
+				"Potency %": 1,
+			},
+		}),
+	]),
+	RACCOON: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 45,
+			spd: 100,
+			cd: 70,
+			phys: 65,
+			arm: 12,
+			res: 12,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Peempo",
+			health: 45,
+			spd: 100,
+			cd: 70,
+			phys: 65,
+			arm: 12,
+			res: 12,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Health %"],
+				circle: ["Health %"],
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
+	RANGERZEB: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 55,
+			prot: 65,
+			spd: 100,
+			ten: 5,
+			phys: 20,
+			arm: 32,
+			res: 32,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Protection %"],
+				cross: ["Protection %"],
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+		fromShortOptimizationPlan({
+			id: "Peempo",
+			health: 55,
+			prot: 65,
+			spd: 100,
+			ten: 5,
+			phys: 20,
+			arm: 32,
+			res: 32,
+			primaryRes: {
+				arrow: ["Protection %", "Health %"],
+				triangle: ["Protection %", "Health %"],
+				cross: ["Protection %", "Health %"],
+			},
+			setRes: {
+				"Health %": 2,
+				"Defense %": 1,
+			},
+		}),
+	]),
 	RANGETROOPER: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -6486,6 +6712,27 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Troopers"],
 	),
+	REMNANTSNOWCOMMANDER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 35,
+			prot: 80,
+			spd: 100,
+			phys: 25,
+			arm: 30,
+			res: 30,
+			primaryRes: {
+				arrow: ["Protection %"],
+				triangle: ["Protection %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
+			},
+			setRes: {
+				"Speed %": 1,
+				"Health %": 1,
+			},
+		}),
+	]),
 	RESISTANCEPILOT: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
