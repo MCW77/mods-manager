@@ -216,16 +216,17 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			}
 		},
 		fetchProfile: async (allycode: string) => {
-			const response = await post(
-				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/",
-				{
-					action: "getprofile",
-					sessionId: hotutils$.getGIMOSessionIdOfProfile(allycode),
-					payload: {
-						allyCode: allycode,
-					},
+			const API_URL = import.meta.env.DEV
+				? "http://localhost:3005/gimomock-profile"
+				: "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/";
+
+			const response = await post(API_URL, {
+				action: "getprofile",
+				sessionId: hotutils$.getGIMOSessionIdOfProfile(allycode),
+				payload: {
+					allyCode: allycode,
 				},
-			);
+			});
 
 			if (response.errorMessage) {
 				throw new Error(response.errorMessage);
@@ -258,12 +259,16 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			} as FetchedGIMOProfile;
 		},
 		fetchFullProfile: async (allycode: string) => {
+			const API_URL = import.meta.env.DEV
+				? "http://localhost:3005/gimomock-fullprofile"
+				: "https://api-test.mods-manager.pages.dev/huAll";
+
 			if (hotutils$.getHUSessionIdOfProfile(allycode) === "") {
 				return {} as FetchedFullGIMOProfile;
 			}
 			// Use Cloudflare Pages Function as proxy to set custom headers
 			const response = await post(
-				"https://api-test.mods-manager.pages.dev/huAll", // Your Cloudflare function endpoint
+				API_URL, // Your Cloudflare function endpoint
 				{
 					data: {
 						sessionId: hotutils$.getHUSessionIdOfProfile(allycode),
