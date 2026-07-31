@@ -27,6 +27,8 @@ import {
 	upgradeProfilesTo23,
 	upgradeCompilationTo26,
 	upgradeProfilesTo27,
+	upgradeCharacterTemplatesTo28,
+	upgradeCompilationTo28,
 	type DBVersions,
 } from "#/utils/globalLegendPersistSettings";
 import {
@@ -43,6 +45,7 @@ import {
 	type ModsManagerBackupDataSchemaV24Output,
 	type ModsManagerBackupDataSchemaV25Output,
 	type ModsManagerBackupDataSchemaV26Output,
+	type ModsManagerBackupDataSchemaV27Output,
 	modsManagerBackupSchemasByVersion,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
@@ -515,12 +518,63 @@ const migrationsRecord: Record<0 | DBVersions, MigrationFn> = {
 		};
 	},
 	27: (normalizedBackup) => {
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV27Output;
+
+		const oldTemplates = Object.entries(data.characterTemplates).map(
+			([name, template]) => ({
+				...template,
+				id: name,
+			}),
+		);
+		const newTemplates = upgradeCharacterTemplatesTo28(oldTemplates);
+
+		const newCompilations = new Map<
+			string,
+			Map<string, Record<string, unknown>>
+		>();
+		for (const [allycode, compilationById] of data.compilations) {
+			const newCompilationById = new Map<string, Record<string, unknown>>();
+			for (const [compilationId, compilation] of compilationById) {
+				newCompilationById.set(
+					compilationId,
+					upgradeCompilationTo28(compilation),
+				);
+			}
+			newCompilations.set(allycode, newCompilationById);
+		}
+		const newData = {
+			characterTemplates: newTemplates,
+			compilations: newCompilations,
+			currencies: data.currencies,
+			datacrons: data.datacrons,
+			defaultCompilation: upgradeCompilationTo28(data.defaultCompilation),
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: data.materials,
+			mods: data.mods,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			roster: data.roster,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+			stackRank: data.stackRank,
+		};
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 28,
+		};
+	},
+	28: (normalizedBackup) => {
 		return {
 			appVersion: normalizedBackup.appVersion,
 			backupType: "fullBackup",
 			client: "mods-manager",
 			data: normalizedBackup.data,
-			version: 27,
+			version: 28,
 		};
 	},
 };

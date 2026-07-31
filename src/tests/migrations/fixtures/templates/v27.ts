@@ -39,5 +39,5 @@ export const defaultFixture = {
 		},
 	],
 	client: "mods-manager",
-	version: 26,
+	version: 27,
 };

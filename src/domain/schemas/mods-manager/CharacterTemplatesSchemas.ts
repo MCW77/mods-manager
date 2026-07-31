@@ -42,7 +42,15 @@ const CharacterTemplatesBackupSchemaV26 = v.object({
 	version: v.literal(26),
 });
 
-const LatestCharacterTemplatesSchema = CharacterTemplatesBackupSchemaV26;
+const CharacterTemplatesBackupSchemaV27 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("characterTemplates"),
+	characterTemplates: CharacterTemplatesSchemaV26,
+	client: v.literal("mods-manager"),
+	version: v.literal(27),
+});
+
+const LatestCharacterTemplatesSchema = CharacterTemplatesBackupSchemaV27;
 
 export {
 	CharacterTemplateByNameSchema,
@@ -50,6 +58,7 @@ export {
 	CharacterTemplatesSchemaV18,
 	CharacterTemplatesSchemaV26,
 	CharacterTemplatesBackupSchemaV26,
+	CharacterTemplatesBackupSchemaV27,
 	type CharacterTemplatesBackupSchemaV18Output,
 	type CharacterTemplatesBackupSchemaV26Output,
 	LatestCharacterTemplatesSchema,

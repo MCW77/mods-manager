@@ -115,7 +115,7 @@ const AddTemplateModal: React.FC = observer(() => {
 					render={
 						<Button
 							type={"button"}
-							disabled={selectedTemplate[0] === ""}
+							disabled={selectedTemplate === ""}
 							onClick={() => {
 								const templateName = templates$.selectedTemplate.get();
 								if (templateName === null || templateName === "") return;

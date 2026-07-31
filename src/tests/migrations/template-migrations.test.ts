@@ -13,6 +13,7 @@ describe("Template Migrations", () => {
 		templates.set(0, await loadFixture(0, "templates"));
 		templates.set(18, await loadFixture(18, "templates"));
 		templates.set(26, await loadFixture(26, "templates"));
+		templates.set(27, await loadFixture(27, "templates"));
 	});
 
 	describe("GIMO to ModsManager Format", () => {

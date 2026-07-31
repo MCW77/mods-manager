@@ -24,7 +24,7 @@ type RecordWithNestedEntities = {
 	[key: string]: Entity | string | unknown;
 };
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27] as const;
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -494,6 +494,145 @@ function upgradeProfilesTo27(profiles: Record<string, unknown>) {
 		delete profiles.profileByAllycode;
 	}
 	return profiles;
+}
+
+function upgradeCharacterTemplatesTo28(
+	templates: Array<RecordWithNestedEntities>,
+) {
+	const isTemplates = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		category: string;
+		selectedCharacters: Array<{
+			target: {
+				primaryStatRestrictions: Record<string, string | string[]>;
+			};
+		}>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			(obj.length === 0 ||
+				(Object.hasOwn(obj[0], "id") && Object.hasOwn(obj[0], "category")))
+		) {
+			result = true;
+		}
+		return result;
+	};
+
+	const isTemplatesWithStringPrimaries = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		category: string;
+		selectedCharacters: Array<{
+			target: {
+				primaryStatRestrictions: Record<string, string>;
+			};
+		}>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			obj.length > 0 &&
+			Object.hasOwn(obj[0], "id") &&
+			Object.hasOwn(obj[0], "category") &&
+			Object.hasOwn(obj[0], "selectedCharacters") &&
+			Array.isArray(obj[0].selectedCharacters) &&
+			obj[0].selectedCharacters.length > 0 &&
+			Object.hasOwn(obj[0].selectedCharacters[0], "target") &&
+			Object.hasOwn(
+				obj[0].selectedCharacters[0].target,
+				"primaryStatRestrictions",
+			) &&
+			Object.keys(
+				obj[0].selectedCharacters[0].target.primaryStatRestrictions,
+			).some(
+				(slot) =>
+					typeof obj[0].selectedCharacters[0].target.primaryStatRestrictions[
+						slot
+					] === "string",
+			)
+		) {
+			result = true;
+		}
+		return result;
+	};
+
+	const newTemplates = structuredClone(templates);
+	if (isTemplatesWithStringPrimaries(templates) && isTemplates(newTemplates)) {
+		for (const template of newTemplates) {
+			for (const character of template.selectedCharacters) {
+				const newPrimaryStatRestrictions: Record<string, string[]> = {};
+				for (const [stat, restriction] of Object.entries(
+					character.target.primaryStatRestrictions as Record<string, string>,
+				)) {
+					newPrimaryStatRestrictions[stat] = [restriction];
+				}
+				character.target.primaryStatRestrictions = newPrimaryStatRestrictions;
+			}
+		}
+	}
+
+	return newTemplates;
+}
+
+function upgradeCompilationTo28(compilation: Record<string, unknown>) {
+	const isString = (obj: unknown): obj is string => typeof obj === "string";
+	const newCompilation: Record<string, unknown> = structuredClone(compilation);
+	(
+		newCompilation.flatCharacterModdings as {
+			target: { primaryStatRestrictions: Record<string, string | string[]> };
+		}[]
+	).forEach((characterModding) => {
+		const oldPrimaryStatRestrictions =
+			characterModding.target.primaryStatRestrictions;
+		const newPrimaryStatRestrictions: Record<string, string[]> = {};
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
+			oldPrimaryStatRestrictions.arrow !== undefined
+		) {
+			newPrimaryStatRestrictions.arrow = isString(
+				oldPrimaryStatRestrictions.arrow,
+			)
+				? [oldPrimaryStatRestrictions.arrow]
+				: oldPrimaryStatRestrictions.arrow;
+		}
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
+			oldPrimaryStatRestrictions.triangle !== undefined
+		) {
+			newPrimaryStatRestrictions.triangle = isString(
+				oldPrimaryStatRestrictions.triangle,
+			)
+				? [oldPrimaryStatRestrictions.triangle]
+				: oldPrimaryStatRestrictions.triangle;
+		}
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
+			oldPrimaryStatRestrictions.cross !== undefined
+		) {
+			newPrimaryStatRestrictions.cross = isString(
+				oldPrimaryStatRestrictions.cross,
+			)
+				? [oldPrimaryStatRestrictions.cross]
+				: oldPrimaryStatRestrictions.cross;
+		}
+		if (
+			Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
+			oldPrimaryStatRestrictions.circle !== undefined
+		) {
+			newPrimaryStatRestrictions.circle = isString(
+				oldPrimaryStatRestrictions.circle,
+			)
+				? [oldPrimaryStatRestrictions.circle]
+				: oldPrimaryStatRestrictions.circle;
+		}
+		characterModding.target.primaryStatRestrictions =
+			newPrimaryStatRestrictions;
+	});
+	return newCompilation;
 }
 
 function createStores(db: IDBDatabase, version: DBVersions) {
@@ -1356,6 +1495,75 @@ async function upgradeTo27(db: IDBDatabase, transaction: IDBTransaction) {
 }
 dbUpgrades.set(27, upgradeTo27);
 
+async function upgradeTo28(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(db, transaction, "Templates", "", (oldTemplates) => {
+			const newTemplates = upgradeCharacterTemplatesTo28(oldTemplates);
+			return newTemplates;
+		});
+		await itemUpgrade(
+			db,
+			transaction,
+			"Compilations",
+			"compilationByIdByAllycode",
+			(oldCompilations) => {
+				const newCompilationsByAllycode: Map<
+					string,
+					Map<string, Record<string, unknown>>
+				> = new Map();
+				for (const [allycode, compilations] of oldCompilations[0]
+					.compilationByIdByAllycode as Map<
+					string,
+					Map<string, Record<string, unknown>>
+				>) {
+					const newCompilations: Map<
+						string,
+						Record<string, unknown>
+					> = new Map();
+					for (const [compilationId, compilation] of compilations) {
+						const newCompilation = upgradeCompilationTo28(compilation);
+						newCompilations.set(compilationId, newCompilation);
+					}
+					newCompilationsByAllycode.set(allycode, newCompilations);
+				}
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: newCompilationsByAllycode,
+					},
+				];
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"DefaultCompilation",
+			"defaultCompilation",
+			(oldDefaultCompilation) => {
+				const newDefaultCompilation = upgradeCompilationTo28(
+					oldDefaultCompilation[0].defaultCompilation as Record<
+						string,
+						unknown
+					>,
+				);
+				return [
+					{
+						id: "defaultCompilation",
+						defaultCompilation: {
+							...newDefaultCompilation,
+						},
+					},
+				];
+			},
+		);
+	} catch (error) {
+		console.error("Error in upgradeTo28:", error);
+		transaction.abort();
+	}
+}
+dbUpgrades.set(28, upgradeTo28);
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
@@ -1404,5 +1612,7 @@ export {
 	upgradeProfilesTo23,
 	upgradeCompilationTo26,
 	upgradeProfilesTo27,
+	upgradeCharacterTemplatesTo28,
+	upgradeCompilationTo28,
 	testOnly,
 };

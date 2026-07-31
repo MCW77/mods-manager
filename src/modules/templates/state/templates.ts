@@ -4,10 +4,7 @@ import { saveAs } from "file-saver";
 // state
 import { observable, type ObservableObject } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
-import {
-	latestDBVersion,
-	persistOptions,
-} from "#/utils/globalLegendPersistSettings";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
@@ -17,7 +14,11 @@ const about$ = stateLoader$.about$;
 // domain
 import { defaultTemplates } from "#/constants/characterTemplates";
 
-import { type Backup, convertTemplates } from "../domain/Backup";
+import {
+	type Backup,
+	convertTemplates,
+	latestTemplatesDBVersion,
+} from "../domain/Backup";
 import type {
 	CharacterTemplate,
 	CharacterTemplates,
@@ -157,7 +158,7 @@ const templates$: ObservableObject<TemplatesObservable> =
 				backupType: "characterTemplates",
 				characterTemplates: selectedTemplates,
 				client: "mods-manager",
-				version: latestDBVersion,
+				version: latestTemplatesDBVersion,
 			};
 			const serializedBackup = JSON.stringify(backup);
 			const userData = new Blob([serializedBackup], {

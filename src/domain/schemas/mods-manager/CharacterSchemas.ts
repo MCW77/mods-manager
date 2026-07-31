@@ -6,7 +6,11 @@ import {
 	type CharacterNames,
 	characterNames,
 } from "#/constants/CharacterNames";
-import { KnownCharacterNamesSchema, OptimizationPlanSchema } from "./index";
+import {
+	KnownCharacterNamesSchema,
+	OptimizationPlanSchema,
+	OptimizationPlanSchemaV26,
+} from "./index";
 import type { Character } from "#/domain/Character";
 
 const CharacterStatsDTOSchema = v.object({
@@ -113,6 +117,25 @@ const createDefaultCharacterV23 = (
 	zetas: [] as string[],
 });
 
+const createDefaultCharacterV26 = (
+	characterId: v.InferInput<typeof KnownCharacterNamesSchema>,
+) => ({
+	id: characterId,
+	omis: [] as string[],
+	playerValues: {
+		galacticPower: 0,
+		gearLevel: 0,
+		gearPieces: [] as string[],
+		level: 0,
+		relicTier: 0,
+		stars: 0,
+		baseStats: { ...defaultCharacterStats },
+		equippedStats: { ...defaultCharacterStats },
+	},
+	targets: [] as v.InferInput<typeof OptimizationPlanSchemaV26>[],
+	zetas: [] as string[],
+});
+
 const CharacterByIdSchema = v.pipe(
 	v.record(v.string(), CharacterSchema),
 	v.transform((input) => {
@@ -141,4 +164,35 @@ const CharacterByIdSchemaV23 = v.pipe(
 	}),
 );
 
-export { CharacterByIdSchema, CharacterByIdSchemaV23 };
+const CharacterSchemaV26 = v.object({
+	id: KnownCharacterNamesSchema,
+	omis: v.array(v.string()),
+	playerValues: v.object({
+		galacticPower: v.number(),
+		gearLevel: v.number(),
+		gearPieces: v.array(v.string()),
+		level: v.number(),
+		relicTier: v.number(),
+		stars: v.number(),
+		baseStats: CharacterStatsDTOSchema,
+		equippedStats: CharacterStatsDTOSchema,
+	}),
+	targets: v.array(OptimizationPlanSchemaV26),
+	zetas: v.array(v.string()),
+});
+
+const CharacterByIdSchemaV26 = v.pipe(
+	v.record(v.string(), CharacterSchemaV26),
+	v.transform((input) => {
+		// Add missing character entries with default values
+		const result = { ...input };
+		for (const characterName of characterNames) {
+			if (!(characterName in result)) {
+				result[characterName] = createDefaultCharacterV26(characterName);
+			}
+		}
+		return result as Record<CharacterNames, Character>;
+	}),
+);
+
+export { CharacterByIdSchema, CharacterByIdSchemaV23, CharacterByIdSchemaV26 };

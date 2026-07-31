@@ -9,6 +9,7 @@ import {
 import {
 	CharacterTemplatesSchemaV18,
 	CharacterTemplatesBackupSchemaV26,
+	CharacterTemplatesBackupSchemaV27,
 	LatestCharacterTemplatesSchema,
 	type CharacterTemplatesBackupSchemaV18Output,
 } from "#/domain/schemas/mods-manager/index";
@@ -34,7 +35,7 @@ interface Backup {
 }
 type MigrationFn = (normalizedBackup: NormalizedBackup) => NormalizedBackup;
 
-const newTemplatesDBVersions = [0, 18, 26] as const;
+const newTemplatesDBVersions = [0, 18, 26, 27] as const;
 type NewTemplatesDBVersions = (typeof newTemplatesDBVersions)[number];
 const latestTemplatesDBVersion: NewTemplatesDBVersions =
 	newTemplatesDBVersions[newTemplatesDBVersions.length - 1];
@@ -159,6 +160,15 @@ const migrationsRecord: Record<NewTemplatesDBVersions, MigrationFn> = {
 			version: 27,
 		};
 	},
+	27: (normalizedBackup) => {
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "characterTemplates",
+			client: "mods-manager",
+			characterTemplates: normalizedBackup.characterTemplates,
+			version: 28,
+		};
+	},
 };
 
 const migrations = new Map(
@@ -192,6 +202,10 @@ const convertTemplates = (parsedJSON: unknown) => {
 		CharacterTemplatesBackupSchemaV26,
 		parsedJSON,
 	);
+	const v27ParseResult = v.safeParse(
+		CharacterTemplatesBackupSchemaV27,
+		parsedJSON,
+	);
 
 	if (gimoParseResult.success) {
 		templates = normalizeTemplatesJSON({
@@ -209,6 +223,8 @@ const convertTemplates = (parsedJSON: unknown) => {
 		});
 	} else if (v26ParseResult.success) {
 		templates = v26ParseResult.output;
+	} else if (v27ParseResult.success) {
+		templates = v27ParseResult.output;
 	}
 	if (templates === null) {
 		// Collect all validation errors for debugging
@@ -218,6 +234,7 @@ const convertTemplates = (parsedJSON: unknown) => {
 				: v.flatten(gimoParseResult.issues),
 			v18: v18ParseResult.success ? "valid" : v.flatten(v18ParseResult.issues),
 			v26: v26ParseResult.success ? "valid" : v.flatten(v26ParseResult.issues),
+			v27: v27ParseResult.success ? "valid" : v.flatten(v27ParseResult.issues),
 		};
 		console.log(
 			"All template validations failed. Error details:",
