@@ -103,11 +103,14 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
-			react: path.resolve(__dirname, "./node_modules/react"),
-			"react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
-			"#": path.resolve(__dirname, "./src"),
-			"#lib": path.resolve(__dirname, "./src/lib"),
-			"#ui": path.resolve(__dirname, "./src/components/ui"),
+			react: path.resolve(import.meta.dirname, "./node_modules/react"),
+			"react-dom": path.resolve(
+				import.meta.dirname,
+				"./node_modules/react-dom",
+			),
+			"#": path.resolve(import.meta.dirname, "./src"),
+			"#lib": path.resolve(import.meta.dirname, "./src/lib"),
+			"#ui": path.resolve(import.meta.dirname, "./src/components/ui"),
 			"use-sync-external-store/shim/index.js": "react",
 		},
 		conditions: ["import", "module", "browser", "default"],
