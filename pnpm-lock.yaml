@@ -124,8 +124,8 @@ importers:
         specifier: ^66.7.5
         version: 66.7.5
       '@vitejs/plugin-react':
-        specifier: ^6.0.3
-        version: 6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+        specifier: ^6.0.5
+        version: 6.0.5(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
       '@vitest/coverage-v8':
         specifier: ^4.1.10
         version: 4.1.10(vitest@4.1.10)
@@ -2103,8 +2103,8 @@ packages:
     peerDependencies:
       vite: ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0 || ^8.0.0-0
 
-  '@vitejs/plugin-react@6.0.3':
-    resolution: {integrity: sha512-vmFvco5/QuC2f9Oj+wTk0+9XeDFkHxSamwZKYc7MxYwKICfvUvlMhqKI0VuICPltGqh1neqBKDvO4kes1ya8vg==}
+  '@vitejs/plugin-react@6.0.5':
+    resolution: {integrity: sha512-BOVzne/NL162sMdResB25mUv+vWMF5NoAjNf09TeGlE7ZpszZWSD3winycicLJw72yeVsoCn/2kOhEuCvEShMA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rolldown/plugin-babel': ^0.1.7 || ^0.2.0
@@ -6039,7 +6039,7 @@ snapshots:
       unplugin-utils: 0.3.2
       vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
 
-  '@vitejs/plugin-react@6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
+  '@vitejs/plugin-react@6.0.5(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
       vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
