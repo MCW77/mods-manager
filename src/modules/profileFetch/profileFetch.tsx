@@ -54,14 +54,45 @@ export async function refreshPlayerData(
 	try {
 		await characters$.baseCharacterById();
 	} catch (_error) {
-		messages.push(
-			"Error when fetching character definitions from HotUtils. Some characters may not optimize properly until you fetch again.",
-		);
-		messages.push(`This is an error with an API that the optimizer uses (HotUtils) and NOT
-      an error in the optimizer itself. Feel free to discuss it on the
-      optimizer's discord server, but know that there are no changes that
-      can be made to the optimizer to fix this issue.`);
-		return;
+		if (_error instanceof Error) {
+			const causes = [];
+			let currentError: Error | undefined = _error;
+			while (
+				Object.hasOwn(currentError, "cause") &&
+				currentError.cause instanceof Error
+			) {
+				causes.push(currentError.message);
+				currentError = currentError.cause as Error;
+			}
+			causes.push(currentError.cause?.toString() ?? "Unknown error");
+			dialog$.showError({
+				error: _error.message,
+				reason: (
+					<>
+						<p>
+							This is an error with the HotUtils API that the optimizer uses and
+							NOT an error in the optimizer itself.
+						</p>
+						<details>
+							<summary>Errors:</summary>
+							<ul>
+								{causes.map((cause, index) => {
+									const key = `error-cause-${index}`;
+									return <li key={key}>{cause}</li>;
+								})}
+							</ul>
+						</details>
+						<details>
+							<summary>Stacktrace: </summary>
+							{_error.stack}
+						</details>
+					</>
+				),
+				solution:
+					"You can check out the HotUtils discord server to see if this is a known issue or if they are undergoing maintenance.",
+			});
+			return;
+		}
 	}
 
 	// Then, fetch the player's data from HotUtils
