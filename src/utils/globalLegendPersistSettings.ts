@@ -581,57 +581,59 @@ function upgradeCharacterTemplatesTo28(
 function upgradeCompilationTo28(compilation: Record<string, unknown>) {
 	const isString = (obj: unknown): obj is string => typeof obj === "string";
 	const newCompilation: Record<string, unknown> = structuredClone(compilation);
-	(
-		newCompilation.flatCharacterModdings as {
-			target: { primaryStatRestrictions: Record<string, string | string[]> };
-		}[]
-	).forEach((characterModding) => {
-		const oldPrimaryStatRestrictions =
-			characterModding.target.primaryStatRestrictions;
-		const newPrimaryStatRestrictions: Record<string, string[]> = {};
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
-			oldPrimaryStatRestrictions.arrow !== undefined
-		) {
-			newPrimaryStatRestrictions.arrow = isString(
-				oldPrimaryStatRestrictions.arrow,
-			)
-				? [oldPrimaryStatRestrictions.arrow]
-				: oldPrimaryStatRestrictions.arrow;
-		}
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
-			oldPrimaryStatRestrictions.triangle !== undefined
-		) {
-			newPrimaryStatRestrictions.triangle = isString(
-				oldPrimaryStatRestrictions.triangle,
-			)
-				? [oldPrimaryStatRestrictions.triangle]
-				: oldPrimaryStatRestrictions.triangle;
-		}
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
-			oldPrimaryStatRestrictions.cross !== undefined
-		) {
-			newPrimaryStatRestrictions.cross = isString(
-				oldPrimaryStatRestrictions.cross,
-			)
-				? [oldPrimaryStatRestrictions.cross]
-				: oldPrimaryStatRestrictions.cross;
-		}
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
-			oldPrimaryStatRestrictions.circle !== undefined
-		) {
-			newPrimaryStatRestrictions.circle = isString(
-				oldPrimaryStatRestrictions.circle,
-			)
-				? [oldPrimaryStatRestrictions.circle]
-				: oldPrimaryStatRestrictions.circle;
-		}
-		characterModding.target.primaryStatRestrictions =
-			newPrimaryStatRestrictions;
-	});
+	if (Object.hasOwn(newCompilation, "flatCharacterModdings")) {
+		(
+			newCompilation.flatCharacterModdings as {
+				target: { primaryStatRestrictions: Record<string, string | string[]> };
+			}[]
+		).forEach((characterModding) => {
+			const oldPrimaryStatRestrictions =
+				characterModding.target.primaryStatRestrictions;
+			const newPrimaryStatRestrictions: Record<string, string[]> = {};
+			if (
+				Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
+				oldPrimaryStatRestrictions.arrow !== undefined
+			) {
+				newPrimaryStatRestrictions.arrow = isString(
+					oldPrimaryStatRestrictions.arrow,
+				)
+					? [oldPrimaryStatRestrictions.arrow]
+					: oldPrimaryStatRestrictions.arrow;
+			}
+			if (
+				Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
+				oldPrimaryStatRestrictions.triangle !== undefined
+			) {
+				newPrimaryStatRestrictions.triangle = isString(
+					oldPrimaryStatRestrictions.triangle,
+				)
+					? [oldPrimaryStatRestrictions.triangle]
+					: oldPrimaryStatRestrictions.triangle;
+			}
+			if (
+				Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
+				oldPrimaryStatRestrictions.cross !== undefined
+			) {
+				newPrimaryStatRestrictions.cross = isString(
+					oldPrimaryStatRestrictions.cross,
+				)
+					? [oldPrimaryStatRestrictions.cross]
+					: oldPrimaryStatRestrictions.cross;
+			}
+			if (
+				Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
+				oldPrimaryStatRestrictions.circle !== undefined
+			) {
+				newPrimaryStatRestrictions.circle = isString(
+					oldPrimaryStatRestrictions.circle,
+				)
+					? [oldPrimaryStatRestrictions.circle]
+					: oldPrimaryStatRestrictions.circle;
+			}
+			characterModding.target.primaryStatRestrictions =
+				newPrimaryStatRestrictions;
+		});
+	}
 	return newCompilation;
 }
 
