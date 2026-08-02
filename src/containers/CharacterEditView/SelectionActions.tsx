@@ -8,7 +8,8 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const mods$ = stateLoader$.mods$;
 const characters$ = stateLoader$.characters$;
-const compilations$ = stateLoader$.compilations$;
+//const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -46,11 +47,11 @@ const SelectionActions = ({
 
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const selectedCharacters = useValue(
-		compilations$.defaultCompilation.selectedCharacters,
+		defaultCompilation$.data.selectedCharacters,
 	);
 	const last6DotGuaranteedCharacter = useValue(() => {
 		const selectedCharacters =
-			compilations$.defaultCompilation.selectedCharacters.get();
+			defaultCompilation$.data.selectedCharacters.get();
 		const minimalFull6Dot = mods$.minimalFull6Dot.get();
 		return minimalFull6Dot > 0 && selectedCharacters.length >= minimalFull6Dot
 			? baseCharacterById[selectedCharacters[minimalFull6Dot - 1].id].name
@@ -63,7 +64,7 @@ const SelectionActions = ({
 				<Button
 					className="flex flex-gap-2"
 					type="button"
-					onClick={() => compilations$.unselectAllCharacters()}
+					onClick={() => defaultCompilation$.unselectAllCharacters()}
 				>
 					<FontAwesomeIcon icon={faBan} title="Clear" />{" "}
 					{t("sidebar.selection.Clear")}
@@ -124,7 +125,7 @@ const SelectionActions = ({
 					onClick={() => {
 						isBusy$.set(true);
 						visibleCharacters.forEach((character, index) => {
-							compilations$.selectCharacter(
+							defaultCompilation$.selectCharacter(
 								character.id,
 								Character.defaultTarget(characterSettings, character),
 								index + lastSelectedCharacterIndex,
@@ -144,7 +145,7 @@ const SelectionActions = ({
 					className="flex flex-gap-2"
 					type="button"
 					onClick={() => {
-						compilations$.ensurePilot6DotRequirements();
+						defaultCompilation$.ensurePilot6DotRequirements();
 					}}
 				>
 					<FontAwesomeIcon

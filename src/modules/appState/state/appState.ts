@@ -17,6 +17,7 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const about$ = stateLoader$.about$;
 const currencies$ = stateLoader$.currencies$;
 const datacrons$ = stateLoader$.datacrons$;
@@ -567,7 +568,7 @@ const appState$: ObservableObject<AppState> = observable({
 			compilations: compilations$.compilationByIdByAllycode.peek(),
 			currencies: currencies$.persistedData.peek(),
 			datacrons: datacrons$.persistedData.peek(),
-			defaultCompilation: compilations$.defaultCompilation.peek(),
+			defaultCompilation: defaultCompilation$.data.peek(),
 			incrementalOptimizationIndices:
 				incrementalOptimization$.indicesByProfile.peek(),
 			lockedStatus:

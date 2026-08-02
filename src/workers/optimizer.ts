@@ -72,9 +72,9 @@ import {
 	syncStatus$ as rosterSyncStatus$,
 } from "#/modules/roster/state/roster";
 import {
-	compilations$,
-	syncStatus2$ as defaultCompilationStatus$,
-} from "#/modules/compilations/state/compilations";
+	defaultCompilation$,
+	syncStatus$ as defaultCompilationStatus$,
+} from "#/modules/defaultCompilation/state/defaultCompilation";
 import {
 	incrementalOptimization$,
 	syncStatus$ as incrementalOptimizationStatus$,
@@ -313,7 +313,7 @@ self.onmessage = async (message) => {
 		);
 
 		const selectedCharacters: SelectedCharacters =
-			compilations$.defaultCompilation.selectedCharacters
+			defaultCompilation$.data.selectedCharacters
 				.peek()
 				.map(({ id, target }) => ({
 					id: id,
@@ -328,7 +328,7 @@ self.onmessage = async (message) => {
 			selectedCharacters,
 			incrementalOptimization$.activeIndex.peek(),
 			optimizationSettings$.settingsByProfile.peek()[allycode],
-			compilations$.defaultCompilation.flatCharacterModdings.peek(),
+			defaultCompilation$.data.flatCharacterModdings.peek(),
 		);
 
 		perf.logMeasures("optimizeMods");
@@ -1212,7 +1212,7 @@ function canReusePreviousAssignment(params: {
 
 	return (
 		!recalculateMods &&
-		index <= compilations$.defaultCompilation.reoptimizationIndex.peek() &&
+		index <= defaultCompilation$.data.reoptimizationIndex.peek() &&
 		!!previousModAssignments[index]
 	);
 }
@@ -1985,7 +1985,7 @@ function optimizeMods(
 	// We only want to recalculate mods if settings have changed between runs. If global settings or locked
 	// characters have changed, recalculate all characters
 	let recalculateMods =
-		compilations$.defaultCompilation.isReoptimizationNeeded.peek() === true;
+		defaultCompilation$.data.isReoptimizationNeeded.peek() === true;
 
 	//TODO: Remove forced recalculation after we are done benchmarking
 	recalculateMods = true; //

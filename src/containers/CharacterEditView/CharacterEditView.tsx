@@ -10,7 +10,7 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const characters$ = stateLoader$.characters$;
 const charactersManagement$ = stateLoader$.charactersManagement$;
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const roster$ = stateLoader$.roster$;
 
@@ -44,7 +44,7 @@ const CharacterEditView = observer(() => {
 	const characterById = useValue(roster$.activeCharacterById);
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const selectedCharacters = useValue(
-		compilations$.defaultCompilation.selectedCharacters,
+		defaultCompilation$.data.selectedCharacters,
 	);
 	const isSelectionExpanded = useValue(isSelectionExpanded$);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -200,7 +200,7 @@ const CharacterEditView = observer(() => {
 			case "move": {
 				// This is coming from the selected characters - remove the character from the list
 				const characterIndex = +event.dataTransfer.getData("text/plain");
-				compilations$.unselectCharacter(characterIndex);
+				defaultCompilation$.unselectCharacter(characterIndex);
 				break;
 			}
 			default:

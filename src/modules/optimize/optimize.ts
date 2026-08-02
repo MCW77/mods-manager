@@ -6,7 +6,7 @@ import { beginBatch, endBatch } from "@legendapp/state";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const profilesManagement$ = stateLoader$.profilesManagement$;
@@ -42,15 +42,15 @@ const finishModOptimization = (
 	result: FlatCharacterModdings,
 	settings: OptimizationConditions,
 ) => {
-	compilations$.defaultCompilation.reoptimizationIndex.set(
-		compilations$.defaultCompilation.selectedCharacters.length,
+	defaultCompilation$.data.reoptimizationIndex.set(
+		defaultCompilation$.data.selectedCharacters.length,
 	);
-	compilations$.defaultCompilation.isReoptimizationNeeded.set(false);
-	compilations$.defaultCompilation.flatCharacterModdings.set(result);
-	compilations$.defaultCompilation.optimizationConditions.set(
+	defaultCompilation$.data.isReoptimizationNeeded.set(false);
+	defaultCompilation$.data.flatCharacterModdings.set(result);
+	defaultCompilation$.data.optimizationConditions.set(
 		structuredClone(settings),
 	);
-	compilations$.defaultCompilation.lastOptimized.set(new Date());
+	defaultCompilation$.data.lastOptimized.set(new Date());
 
 	// Create the content of the pop-up for any post-optimization messages
 	const resultsWithMessages = result

@@ -6,7 +6,7 @@ import { observer, useValue } from "@legendapp/state/react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const characters$ = stateLoader$.characters$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 
@@ -35,7 +35,7 @@ type CharacterBlockProps = {
 const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 	({ character, className }) => {
 		const selectedCharacters = useValue(
-			compilations$.defaultCompilation.selectedCharacters,
+			defaultCompilation$.data.selectedCharacters,
 		);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 
@@ -79,11 +79,10 @@ const CharacterWidget: React.FC<CharacterBlockProps> = observer(
 						isCharacterSelected(character.id) ? undefined : dragStart(character)
 					}
 					onDoubleClick={() =>
-						compilations$.selectCharacter(
+						defaultCompilation$.selectCharacter(
 							character.id,
 							Character.defaultTarget(characterSettings, character),
-							compilations$.defaultCompilation.selectedCharacters.peek()
-								.length - 1,
+							defaultCompilation$.data.selectedCharacters.peek().length - 1,
 						)
 					}
 					role={"option"}

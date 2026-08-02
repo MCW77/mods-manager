@@ -10,7 +10,7 @@ import {
 } from "#/utils/scaledNumber";
 
 import { mods$ } from "#/modules/mods/state/mods";
-import { compilations$ } from "#/modules/compilations/state/compilations";
+import { defaultCompilation$ } from "#/modules/defaultCompilation/state/defaultCompilation";
 import { characters$ } from "#/modules/characters/state/characters";
 import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
@@ -86,7 +86,7 @@ const getDefaultFilterSetup = () => {
 						filter: "Has Stat Targets",
 						filterPredicate: (character: Character) => {
 							const selectedCharacters =
-								compilations$.defaultCompilation.selectedCharacters.peek();
+								defaultCompilation$.data.selectedCharacters.peek();
 							const selectedCharacter = selectedCharacters.find(
 								(c) => c.id === character.id,
 							);
@@ -103,7 +103,7 @@ const getDefaultFilterSetup = () => {
 						filter: "Missing Mods",
 						filterPredicate: (character: Character) => {
 							const modAssignments =
-								compilations$.defaultCompilation.flatCharacterModdings.peek();
+								defaultCompilation$.data.flatCharacterModdings.peek();
 							const modsAssignedToCharacter = modAssignments.find(
 								(ma) => ma.characterId === character.id,
 							);
@@ -124,7 +124,7 @@ const getDefaultFilterSetup = () => {
 						filter: "Needs Leveling",
 						filterPredicate: (character: Character) => {
 							const modAssignments =
-								compilations$.defaultCompilation.flatCharacterModdings.peek();
+								defaultCompilation$.data.flatCharacterModdings.peek();
 							const modsAssignedToCharacter = modAssignments.find(
 								(ma) => ma.characterId === character.id,
 							);

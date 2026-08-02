@@ -6,7 +6,7 @@ import { observer, Show, useValue } from "@legendapp/state/react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const roster$ = stateLoader$.roster$;
 
 // domain
@@ -25,7 +25,7 @@ const CharacterList = observer(
 		const [t] = useTranslation("optimize-ui");
 		const characterById = useValue(roster$.activeCharacterById);
 		const selectedCharacters = useValue(
-			compilations$.defaultCompilation.selectedCharacters,
+			defaultCompilation$.data.selectedCharacters,
 		);
 
 		const containerRef = useRef<HTMLDivElement>(null);
@@ -133,7 +133,7 @@ const CharacterList = observer(
 						"text/plain",
 					) as CharacterNames;
 					const movingCharacter = characterById[movingCharacterID];
-					compilations$.selectCharacter(
+					defaultCompilation$.selectCharacter(
 						movingCharacterID,
 						Character.defaultTarget(characterSettings, movingCharacter),
 						dragOverIndex,
@@ -143,7 +143,7 @@ const CharacterList = observer(
 				case "move": {
 					const movingCharacterIndex =
 						+event.dataTransfer.getData("text/plain");
-					compilations$.moveSelectedCharacter(
+					defaultCompilation$.moveSelectedCharacter(
 						movingCharacterIndex,
 						dragOverIndex,
 					);
@@ -227,9 +227,7 @@ const CharacterList = observer(
 				<ScrollArea className="h-full p-y-1 p-r-1 m-r-2 snap-y snap-mandatory scroll-smooth overscroll-contain">
 					<div className="group-[&.sort-view]:grid group-[&.sort-view]:grid-cols-[repeat(auto-fit,minmax(240px,1fr))] group-[&.sort-view]:auto-rows-min group-[&.sort-view]:gap-2">
 						<Show
-							if={
-								compilations$.defaultCompilation.selectedCharacters.length === 0
-							}
+							if={defaultCompilation$.data.selectedCharacters.length === 0}
 							else={() =>
 								selectedCharacters.map(({ id, target }, index) => (
 									<RenderIfVisible

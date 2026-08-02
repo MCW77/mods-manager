@@ -8,8 +8,8 @@ import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
 const about$ = stateLoader$.about$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 
 // domain
 import { defaultTemplates } from "#/constants/characterTemplates";
@@ -110,7 +110,7 @@ const templates$: ObservableObject<TemplatesObservable> =
 				id: templates$.id.peek(),
 				category: templates$.category.peek(),
 				selectedCharacters: structuredClone(
-					compilations$.defaultCompilation.selectedCharacters.peek(),
+					defaultCompilation$.data.selectedCharacters.peek(),
 				),
 			});
 		},

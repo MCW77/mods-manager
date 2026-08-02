@@ -2,21 +2,14 @@
 import type { Observable } from "@legendapp/state";
 
 // domain
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { Compilation } from "./Compilation";
 
 interface CompilationsObservable {
-	persistedData1: {
+	persistedData: {
 		id: "compilationByIdByAllycode";
 		compilationByIdByAllycode: Map<string, Map<string, Compilation>>;
 	};
-	persistedData2: {
-		id: "defaultCompilation";
-		defaultCompilation: Compilation;
-	};
 	activeCompilationId: string;
-	defaultCompilation: () => Observable<Compilation>;
 	compilationByIdByAllycode: () => Observable<
 		Map<string, Map<string, Compilation>>
 	>;
@@ -26,25 +19,9 @@ interface CompilationsObservable {
 	deleteProfile: (allycode: string) => void;
 	addCompilation: (id: string, description: string, category: string) => void;
 	deleteCompilation: (id: string) => void;
-	selectCharacter: (
-		characterID: CharacterNames,
-		target: OptimizationPlan,
-		prevIndex: number | null,
-	) => void;
-	unselectCharacter: (characterIndex: number) => void;
-	unselectAllCharacters: () => void;
-	moveSelectedCharacter: (fromIndex: number, toIndex: number | null) => void;
-	deleteTarget: (characterId: CharacterNames, targetName: string) => void;
-	saveTarget: (
-		characterId: CharacterNames,
-		newTarget: OptimizationPlan,
-	) => void;
-	changeTarget: (index: number, target: OptimizationPlan) => void;
-	applyRanking: (ranking: CharacterNames[]) => void;
 	ensureSelectedCharactersExist: (compilationId: string) => void;
 	resetOptimizationConditions: (allycode: string) => void;
 	reset: () => void;
-	ensurePilot6DotRequirements: () => void;
 }
 
 export type { CompilationsObservable };

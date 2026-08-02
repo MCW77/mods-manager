@@ -13,6 +13,7 @@ import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const characters$ = stateLoader$.characters$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
@@ -55,10 +56,10 @@ const CharacterActions: React.FC = observer(() => {
 
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const selectedCharacters = useValue(
-		compilations$.defaultCompilation.selectedCharacters,
+		defaultCompilation$.data.selectedCharacters,
 	);
 	const modAssignments = useValue(
-		compilations$.defaultCompilation.flatCharacterModdings,
+		defaultCompilation$.data.flatCharacterModdings,
 	);
 
 	const state$ = useObservable({
@@ -88,7 +89,7 @@ const CharacterActions: React.FC = observer(() => {
 			);
 		}
 		compilations$.compilationByIdForActiveAllycode[state$.name.peek()].set(
-			structuredClone(compilations$.defaultCompilation.peek()),
+			structuredClone(defaultCompilation$.data.peek()),
 		);
 		compilations$.compilationByIdForActiveAllycode[state$.name.peek()].id.set(
 			state$.name.peek(),

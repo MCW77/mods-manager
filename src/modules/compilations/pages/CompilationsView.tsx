@@ -7,6 +7,7 @@ import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 
 import { ui$ } from "#/modules/ui/state/ui";
 
@@ -170,14 +171,12 @@ const CompilationsView: React.FC = observer(() => {
 												compilations$.ensureSelectedCharactersExist(
 													compilation$.id.peek(),
 												);
-												compilations$.defaultCompilation.set(
+												defaultCompilation$.data.set(
 													structuredClone(compilation$.peek()),
 												);
-												compilations$.defaultCompilation.id.set(
-													"DefaultCompilation",
-												);
-												compilations$.defaultCompilation.category.set("");
-												compilations$.defaultCompilation.description.set(
+												defaultCompilation$.data.id.set("DefaultCompilation");
+												defaultCompilation$.data.category.set("");
+												defaultCompilation$.data.description.set(
 													"Default compilation used until saved under own name",
 												);
 												endBatch();

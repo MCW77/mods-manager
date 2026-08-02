@@ -5,7 +5,7 @@ import collectByKey from "#/utils/collectByKey";
 import { observer, useValue, useObservable } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const hotutils$ = stateLoader$.hotutils$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const mods$ = stateLoader$.mods$;
@@ -33,7 +33,7 @@ import { Label } from "#ui/label";
 const CreateProfileModal: React.FC = observer(() => {
 	const modById = useValue(() => mods$.activeModById.get());
 	const modAssignments = useValue(
-		compilations$.defaultCompilation.flatCharacterModdings,
+		defaultCompilation$.data.flatCharacterModdings,
 	);
 	const characterById = useValue(roster$.activeCharacterById);
 

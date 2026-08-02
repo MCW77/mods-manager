@@ -6,7 +6,7 @@ import { beginBatch, endBatch } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
@@ -61,7 +61,7 @@ const TemplatesActions = ({
 						beginBatch();
 						if (hasNoSelectedCharacters) {
 							visibleCharacters.forEach((character, index) => {
-								compilations$.selectCharacter(
+								defaultCompilation$.selectCharacter(
 									character.id,
 									Character.defaultTarget(characterSettings, character),
 									index + lastSelectedCharacterIndex,
@@ -72,7 +72,7 @@ const TemplatesActions = ({
 						const ranking = await stackRank$.fetch(
 							profilesManagement$.profiles.activeAllycode.get(),
 						);
-						compilations$.applyRanking(ranking);
+						defaultCompilation$.applyRanking(ranking);
 					} catch (error) {
 						if (error instanceof Error)
 							dialog$.showError({ error: error.message });

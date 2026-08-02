@@ -4,7 +4,7 @@ import { observer, useValue } from "@legendapp/state/react";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const templates$ = stateLoader$.templates$;
 
 import {
@@ -33,7 +33,7 @@ import { ToggleGroup as ReactiveToggleGroup } from "#/components/reactive/Toggle
 
 const AddTemplateModal: React.FC = observer(() => {
 	const selectedCharacters = useValue(
-		compilations$.defaultCompilation.selectedCharacters,
+		defaultCompilation$.data.selectedCharacters,
 	);
 	const selectedTemplate = useValue(templates$.selectedTemplate);
 	const filteredTemplates = useValue(templates$.filteredTemplates);

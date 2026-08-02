@@ -3,6 +3,7 @@ import { observable } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const mods$ = stateLoader$.mods$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
@@ -39,7 +40,7 @@ const reoptimizationNeeded$ = observable({
 			reoptimizationNeeded$.forOptimizationSettingsByCompilationId
 				.get("DefaultCompilation")
 				.get();
-		compilations$.defaultCompilation.isReoptimizationNeeded.set(
+		defaultCompilation$.data.isReoptimizationNeeded.set(
 			forLockedCharacters || forOptimizationSettings || forProfileUpdated,
 		);
 
@@ -73,11 +74,11 @@ optimizationSettings$.activeSettings.onChange(({ value }) => {
 		}
 	}
 	const defaultCompilationsSettings =
-		compilations$.defaultCompilation.optimizationConditions?.peek();
+		defaultCompilation$.data.optimizationConditions?.peek();
 	const isDifferent =
 		JSON.stringify(defaultCompilationsSettings) !== JSON.stringify(value);
 	reoptimizationNeeded$.forOptimizationSettingsByCompilationId
-		.get(compilations$.defaultCompilation.id.peek())
+		.get(defaultCompilation$.data.id.peek())
 		.set(isDifferent);
 	reoptimizationNeeded$.handleChanges();
 });

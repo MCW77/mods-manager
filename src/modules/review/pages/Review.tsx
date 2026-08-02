@@ -12,7 +12,7 @@ import { groupBy } from "#/utils/groupBy";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const mods$ = stateLoader$.mods$;
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
 
@@ -170,7 +170,7 @@ const Review: React.FC = observer(() => {
 	const filter = useValue(review$.modListFilter);
 	const modById = useValue(() => mods$.activeModById.get());
 	const modAssignments = useValue(
-		compilations$.defaultCompilation.flatCharacterModdings,
+		defaultCompilation$.data.flatCharacterModdings,
 	);
 
 	const getModAssignmentsByCurrentCharacter = (

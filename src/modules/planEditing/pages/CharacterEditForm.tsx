@@ -17,7 +17,7 @@ import { enableReactComponents } from "@legendapp/state/config/enableReactCompon
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const characters$ = stateLoader$.characters$;
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const roster$ = stateLoader$.roster$;
 
@@ -287,7 +287,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const modAssignments = useValue(
-			compilations$.defaultCompilation.flatCharacterModdings,
+			defaultCompilation$.data.flatCharacterModdings,
 		);
 		const targetIsInAdvancedEditMode = useValue(target$.isInAdvancedEditMode);
 		const currentCharacter = useValue(optimizerView$.currentCharacter);
@@ -324,7 +324,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				newTarget = OptimizationPlan.denormalize(newTarget);
 			const charId = target$.characterId.peek();
 
-			compilations$.saveTarget(charId, newTarget);
+			defaultCompilation$.saveTarget(charId, newTarget);
 		};
 
 		return (
@@ -365,7 +365,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									type={"button"}
 									variant={"destructive"}
 									onClick={() => {
-										compilations$.deleteTarget(
+										defaultCompilation$.deleteTarget(
 											character.id,
 											target$.target.id.peek(),
 										);
@@ -417,7 +417,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 
 												if (foundTarget !== undefined) {
 													beginBatch();
-													compilations$.changeTarget(
+													defaultCompilation$.changeTarget(
 														currentCharacter.index,
 														foundTarget,
 													);

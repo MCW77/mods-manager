@@ -1,6 +1,7 @@
 import { observable, type ObservableObject, when } from "@legendapp/state";
 import type { ProfilesManagementObservable } from "#/modules/profilesManagement/domain/ProfilesManagement";
 import type { CompilationsObservable } from "#/modules/compilations/domain/CompilationsObservable";
+import type { DefaultCompilationObservable } from "#/modules/defaultCompilation/domain/DefaultCompilationObservable";
 import type { CharactersObservable } from "#/modules/characters/domain/CharactersObservable";
 import type { CharactersManagementObservable } from "#/modules/charactersManagement/domain/CharactersManagementObservable";
 import type { AboutObservable } from "#/modules/about/domain/AboutObservable";
@@ -21,6 +22,7 @@ interface StateLoaderObservable {
 	isDone: boolean;
 	profilesManagement$: ObservableObject<ProfilesManagementObservable> | null;
 	compilations$: ObservableObject<CompilationsObservable> | null;
+	defaultCompilation$: ObservableObject<DefaultCompilationObservable> | null;
 	characters$: ObservableObject<CharactersObservable> | null;
 	charactersManagement$: ObservableObject<CharactersManagementObservable> | null;
 	about$: ObservableObject<AboutObservable> | null;
@@ -42,6 +44,7 @@ const stateLoader$ = observable<StateLoaderObservable>({
 	isDone: false,
 	profilesManagement$: null,
 	compilations$: null,
+	defaultCompilation$: null,
 	characters$: null,
 	charactersManagement$: null,
 	about$: null,
@@ -66,6 +69,7 @@ async function loadStateModules() {
 			modsModule,
 			rosterModule,
 			compilationsModule,
+			defaultCompilationModule,
 			charactersModule,
 			charactersManagementModule,
 			aboutModule,
@@ -84,6 +88,7 @@ async function loadStateModules() {
 			import("#/modules/mods/state/mods"),
 			import("#/modules/roster/state/roster"),
 			import("#/modules/compilations/state/compilations"),
+			import("#/modules/defaultCompilation/state/defaultCompilation"),
 			import("#/modules/characters/state/characters"),
 			import("#/modules/charactersManagement/state/charactersManagement"),
 			import("#/modules/about/state/about"),
@@ -105,6 +110,9 @@ async function loadStateModules() {
 		stateLoader$.mods$.set(modsModule.mods$);
 		stateLoader$.roster$.set(rosterModule.roster$);
 		stateLoader$.compilations$.set(compilationsModule.compilations$);
+		stateLoader$.defaultCompilation$.set(
+			defaultCompilationModule.defaultCompilation$,
+		);
 		stateLoader$.characters$.set(charactersModule.characters$);
 		stateLoader$.charactersManagement$.set(
 			charactersManagementModule.charactersManagement$,
@@ -129,7 +137,7 @@ async function loadStateModules() {
 			when(modsModule.syncStatus$.isPersistLoaded),
 			when(rosterModule.syncStatus$.isPersistLoaded),
 			when(compilationsModule.syncStatus$.isPersistLoaded),
-			when(compilationsModule.syncStatus2$.isPersistLoaded),
+			when(defaultCompilationModule.syncStatus$.isPersistLoaded),
 			when(charactersModule.syncStatus$.isPersistLoaded),
 			when(charactersManagementModule.syncStatus$.isPersistLoaded),
 			when(aboutModule.syncStatus$.isPersistLoaded),

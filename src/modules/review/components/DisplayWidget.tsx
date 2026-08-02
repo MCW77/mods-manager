@@ -12,7 +12,7 @@ import { groupBy } from "#/utils/groupBy";
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const mods$ = stateLoader$.mods$;
 const optimizationSettings$ = stateLoader$.optimizationSettings$;
 const characters$ = stateLoader$.characters$;
@@ -76,7 +76,7 @@ const DisplayWidget = () => {
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const filter = useValue(review$.modListFilter);
 	const flatCharacterModdings = useValue(
-		compilations$.defaultCompilation.flatCharacterModdings,
+		defaultCompilation$.data.flatCharacterModdings,
 	);
 
 	const getModAssignmentsByCurrentCharacter = (

@@ -2,7 +2,7 @@
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const roster$ = stateLoader$.roster$;
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const templates$ = stateLoader$.templates$;
 
 // domain
@@ -25,20 +25,19 @@ const appendTemplate = (templateName: string) => {
 	);
 
 	if (splitSelectedCharacters.existing === undefined) return [];
-	compilations$.defaultCompilation.reoptimizationIndex.set(-1);
+	defaultCompilation$.data.reoptimizationIndex.set(-1);
 
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
 		const target = structuredClone(selectedCharacterInTemplate.target);
-		const selectedCharacter =
-			compilations$.defaultCompilation.selectedCharacters.find(
-				(selectedCharacter) =>
-					selectedCharacter.peek().id === selectedCharacterInTemplate.id,
-			);
+		const selectedCharacter = defaultCompilation$.data.selectedCharacters.find(
+			(selectedCharacter) =>
+				selectedCharacter.peek().id === selectedCharacterInTemplate.id,
+		);
 		if (selectedCharacter === undefined) {
-			compilations$.selectCharacter(
+			defaultCompilation$.selectCharacter(
 				selectedCharacterInTemplate.id,
 				target,
-				compilations$.defaultCompilation.selectedCharacters.length - 1,
+				defaultCompilation$.data.selectedCharacters.length - 1,
 			);
 		} else {
 			selectedCharacter.target.set(selectedCharacterInTemplate.target);
@@ -80,10 +79,10 @@ const replaceWithTemplate = (templateName: string) => {
 				? "existing"
 				: "missing",
 	);
-	compilations$.defaultCompilation.selectedCharacters.set(
+	defaultCompilation$.data.selectedCharacters.set(
 		splitSelectedCharacters.existing?.slice() ?? [],
 	);
-	compilations$.defaultCompilation.reoptimizationIndex.set(-1);
+	defaultCompilation$.data.reoptimizationIndex.set(-1);
 
 	if (splitSelectedCharacters.existing === undefined) return [];
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
@@ -119,7 +118,7 @@ const applyTemplateTargets = (templateName: string) => {
 	const splitSelectedCharacters = Object.groupBy(
 		template.selectedCharacters,
 		(templateSelectedCharacter) =>
-			compilations$.defaultCompilation.selectedCharacters
+			defaultCompilation$.data.selectedCharacters
 				.peek()
 				.some(
 					(selectedCharacter) =>
@@ -131,14 +130,13 @@ const applyTemplateTargets = (templateName: string) => {
 
 	if (splitSelectedCharacters.existing === undefined) return [];
 	for (const selectedCharacterInTemplate of splitSelectedCharacters.existing) {
-		const selectedCharacter =
-			compilations$.defaultCompilation.selectedCharacters.find(
-				(selectedCharacter) =>
-					selectedCharacter.peek().id === selectedCharacterInTemplate.id,
-			);
+		const selectedCharacter = defaultCompilation$.data.selectedCharacters.find(
+			(selectedCharacter) =>
+				selectedCharacter.peek().id === selectedCharacterInTemplate.id,
+		);
 		if (selectedCharacter === undefined) continue;
 		selectedCharacter.target.set(selectedCharacterInTemplate.target);
-		compilations$.defaultCompilation.reoptimizationIndex.set(-1);
+		defaultCompilation$.data.reoptimizationIndex.set(-1);
 	}
 
 	if (splitSelectedCharacters.missing?.length) {

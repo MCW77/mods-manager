@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const hotutils$ = stateLoader$.hotutils$;
 const mods$ = stateLoader$.mods$;
 
@@ -28,7 +28,7 @@ const ActionsWidget = () => {
 	const actionsId = useId();
 	const modById = useValue(() => mods$.activeModById.get());
 	const modAssignments = useValue(
-		compilations$.defaultCompilation.flatCharacterModdings,
+		defaultCompilation$.data.flatCharacterModdings,
 	);
 	const hasActiveSession = useValue(hotutils$.hasActiveSession);
 

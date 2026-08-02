@@ -7,7 +7,7 @@ import { formatNumber } from "#/utils/formatNumber";
 import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const lockedStatus$ = stateLoader$.lockedStatus$;
 const mods$ = stateLoader$.mods$;
 const roster$ = stateLoader$.roster$;
@@ -56,7 +56,7 @@ const modRemovalCosts = {
 const MoveModsModal = () => {
 	const modById = useValue(() => mods$.activeModById.get());
 	const flatCharacterModdings = useValue(
-		compilations$.defaultCompilation.flatCharacterModdings,
+		defaultCompilation$.data.flatCharacterModdings,
 	);
 	const characterById = useValue(roster$.activeCharacterById);
 

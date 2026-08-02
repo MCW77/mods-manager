@@ -8,7 +8,7 @@ import { Computed, observer, useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const characters$ = stateLoader$.characters$;
-const compilations$ = stateLoader$.compilations$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
 const incrementalOptimization$ = stateLoader$.incrementalOptimization$;
 const roster$ = stateLoader$.roster$;
 
@@ -81,7 +81,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					aria-label={`Character ${baseCharacterById[character.id]?.name || character.id} - draggable`}
 					draggable={true}
 					onDragStart={characterBlockDragStart(index)}
-					onDoubleClick={() => compilations$.unselectCharacter(index)}
+					onDoubleClick={() => defaultCompilation$.unselectCharacter(index)}
 				>
 					<CharacterAvatar
 						character={character}

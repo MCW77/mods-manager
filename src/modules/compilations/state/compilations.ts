@@ -1,7 +1,5 @@
 // state
 import {
-	beginBatch,
-	endBatch,
 	type Observable,
 	observable,
 	type ObservableObject,
@@ -10,20 +8,11 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { mods$ } from "#/modules/mods/state/mods";
+import { defaultCompilation$ } from "#/modules/defaultCompilation/state/defaultCompilation";
 import { roster$ } from "#/modules/roster/state/roster";
-import { characters$ } from "#/modules/characters/state/characters";
 
 // domain
-import { getDefaultCompilation, type Compilation } from "../domain/Compilation";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import { characterSettings } from "#/constants/characterSettings";
-import {
-	fromShortOptimizationPlan,
-	type OptimizationPlan,
-} from "#/domain/OptimizationPlan";
-import type { SelectedCharacters } from "#/domain/SelectedCharacters";
-import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter";
+import type { Compilation } from "../domain/Compilation";
 import type { CompilationsObservable } from "../domain/CompilationsObservable";
 
 const getinitialCompilations = () => {
@@ -43,11 +32,9 @@ const isCompilation = (
 const compilations$: ObservableObject<CompilationsObservable> =
 	observable<CompilationsObservable>({
 		activeCompilationId: "DefaultCompilation",
-		persistedData1: getinitialCompilations(),
-		persistedData2: getDefaultCompilation(),
-		defaultCompilation: () => compilations$.persistedData2.defaultCompilation,
+		persistedData: getinitialCompilations(),
 		compilationByIdByAllycode: () =>
-			compilations$.persistedData1.compilationByIdByAllycode,
+			compilations$.persistedData.compilationByIdByAllycode,
 		compilationByIdForActiveAllycode: () => {
 			const allycode = profilesManagement$.activeAllycode.get();
 			return compilations$.compilationByIdByAllycode.get(allycode);
@@ -58,7 +45,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 					compilations$.activeCompilationId.get()
 				];
 			if (isCompilation(compilation$)) return compilation$;
-			return compilations$.defaultCompilation;
+			return defaultCompilation$.data;
 		},
 		addProfile: (allycode: string) => {
 			if (!compilations$.compilationByIdByAllycode.has(allycode)) {
@@ -92,174 +79,12 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			if (id === "DefaultCompilation") return;
 			compilations$.compilationByIdForActiveAllycode.delete(id);
 		},
-		selectCharacter: (
-			characterID: CharacterNames,
-			target: OptimizationPlan,
-			prevIndex: number | null = null,
-		) => {
-			const selectedCharacter = { id: characterID, target: target };
-			if (
-				compilations$.defaultCompilation.selectedCharacters.some(
-					(sc) => sc.peek().id === characterID,
-				)
-			)
-				return;
-			if (null === prevIndex) {
-				compilations$.defaultCompilation.selectedCharacters.unshift(
-					selectedCharacter,
-				);
-				compilations$.defaultCompilation.reoptimizationIndex.set(-1);
-			} else {
-				compilations$.defaultCompilation.selectedCharacters.splice(
-					prevIndex + 1,
-					0,
-					selectedCharacter,
-				);
-				compilations$.defaultCompilation.reoptimizationIndex.set(
-					Math.min(
-						prevIndex,
-						compilations$.defaultCompilation.reoptimizationIndex.peek(),
-					),
-				);
-			}
-		},
-		unselectCharacter: (characterIndex: number) => {
-			if (
-				characterIndex >=
-				compilations$.defaultCompilation.selectedCharacters.length
-			)
-				return;
-			compilations$.defaultCompilation.reoptimizationIndex.set(
-				Math.min(
-					characterIndex - 1,
-					compilations$.defaultCompilation.reoptimizationIndex.peek(),
-				),
-			);
-			compilations$.defaultCompilation.selectedCharacters.splice(
-				characterIndex,
-				1,
-			);
-		},
-		unselectAllCharacters: () => {
-			compilations$.defaultCompilation.selectedCharacters.set([]);
-			compilations$.defaultCompilation.reoptimizationIndex.set(-1);
-		},
-		moveSelectedCharacter: (fromIndex: number, toIndex: number | null) => {
-			if (fromIndex === toIndex) return;
-			compilations$.defaultCompilation.reoptimizationIndex.set(
-				Math.min(
-					fromIndex - 1,
-					(toIndex ?? fromIndex) - 1,
-					compilations$.defaultCompilation.reoptimizationIndex.peek(),
-				),
-			);
-			/*
-			const selectedCharacters =
-				compilations$.defaultCompilation.selectedCharacters.peek();
-*/
-			const [selectedCharacter] =
-				compilations$.defaultCompilation.selectedCharacters.splice(
-					fromIndex,
-					1,
-				);
-			if (null === toIndex) {
-				compilations$.defaultCompilation.selectedCharacters.unshift(
-					selectedCharacter,
-				);
-				return;
-			}
-			if (fromIndex < toIndex) {
-				compilations$.defaultCompilation.selectedCharacters.splice(
-					toIndex,
-					0,
-					selectedCharacter,
-				);
-				return;
-			}
-			compilations$.defaultCompilation.selectedCharacters.splice(
-				toIndex + 1,
-				0,
-				selectedCharacter,
-			);
-		},
-		deleteTarget: (characterId: CharacterNames, targetName: string) => {
-			const characterIndex =
-				compilations$.defaultCompilation.selectedCharacters.findIndex(
-					(selectedCharacter) => selectedCharacter.peek().id === characterId,
-				);
-			const targetIndex = roster$.indexOfTarget(characterId, targetName);
-			if (targetIndex >= 0) {
-				beginBatch();
-				compilations$.defaultCompilation.reoptimizationIndex.set(
-					Math.min(
-						characterIndex - 1,
-						compilations$.defaultCompilation.reoptimizationIndex.peek(),
-					),
-				);
-				roster$.deleteTarget(characterId, targetIndex);
-				const selectedCharacter =
-					compilations$.defaultCompilation.selectedCharacters[characterIndex];
-				selectedCharacter?.target.set(
-					characterSettings[characterId].targets[0],
-				);
-				endBatch();
-			}
-		},
-		saveTarget: (characterId: CharacterNames, newTarget: OptimizationPlan) => {
-			roster$.saveTarget(characterId, newTarget);
-			compilations$.defaultCompilation.selectedCharacters
-				.find(
-					(selectedCharacter) => selectedCharacter.peek().id === characterId,
-				)
-				?.target.set(newTarget);
-		},
-		changeTarget: (index: number, target: OptimizationPlan) => {
-			if (index >= compilations$.defaultCompilation.selectedCharacters.length)
-				return;
-			compilations$.defaultCompilation.selectedCharacters[index].target.set(
-				target,
-			);
-			compilations$.defaultCompilation.reoptimizationIndex.set(
-				Math.min(
-					index - 1,
-					compilations$.defaultCompilation.reoptimizationIndex.peek(),
-				),
-			);
-		},
-		applyRanking: (ranking: CharacterNames[]) => {
-			const selectedCharacters =
-				compilations$.defaultCompilation.selectedCharacters.peek();
-			const rankingForSelected = ranking.filter((characterId) =>
-				selectedCharacters.some(
-					(selectedCharacter) => selectedCharacter.id === characterId,
-				),
-			);
-			const newSelectedCharacters = rankingForSelected.map((characterId) => {
-				const selectedCharacter = selectedCharacters.find(
-					(selectedCharacter) => selectedCharacter.id === characterId,
-				);
-				return (
-					selectedCharacter ?? {
-						id: characterId,
-						target: fromShortOptimizationPlan({ id: "none" }),
-					}
-				);
-			});
-			compilations$.defaultCompilation.selectedCharacters.set(
-				newSelectedCharacters,
-			);
-			compilations$.defaultCompilation.reoptimizationIndex.set(-1);
-		},
 		ensureSelectedCharactersExist: (compilationId: string) => {
 			const compilation$ =
 				compilationId === "DefaultCompilation"
-					? compilations$.defaultCompilation
+					? defaultCompilation$.data
 					: compilations$.compilationByIdForActiveAllycode[compilationId];
-			/*
-				compilations$.compilationByIdByAllycode[profile$.allycode.peek()][
-					compilationId
-				];
-*/
+
 			const compilation = compilation$.peek();
 			if (compilation === undefined) return;
 			for (const [
@@ -274,7 +99,7 @@ const compilations$: ObservableObject<CompilationsObservable> =
 			}
 		},
 		resetOptimizationConditions: (allycode: string) => {
-			compilations$.defaultCompilation.optimizationConditions.set(null);
+			defaultCompilation$.data.optimizationConditions.set(null);
 			const compilationById$ =
 				compilations$.compilationByIdByAllycode[allycode];
 			if (compilationById$.peek() === undefined) return;
@@ -284,40 +109,6 @@ const compilations$: ObservableObject<CompilationsObservable> =
 		},
 		reset: () => {
 			syncStatus$.reset();
-			syncStatus2$.reset();
-		},
-		ensurePilot6DotRequirements: () => {
-			const baseCharactersById = characters$.baseCharacterById.peek();
-			const selectedCharacters =
-				compilations$.defaultCompilation.selectedCharacters.peek();
-			const last6DotGuaranteedIndex = mods$.minimalFull6Dot.peek() - 1;
-			const indicesOfPilots: number[] = [];
-			let selectedCharacter: SelectedCharacters[number];
-			let character: BaseCharacter;
-			for (
-				let index = last6DotGuaranteedIndex + 1;
-				index < selectedCharacters.length;
-				index++
-			) {
-				selectedCharacter = selectedCharacters[index];
-				character = baseCharactersById[selectedCharacter.id];
-				if (
-					character.categories.includes("Crew Member") &&
-					selectedCharacter.target.minimumModDots >= 6
-				) {
-					indicesOfPilots.push(index);
-				}
-			}
-			const firstInsertionIndex =
-				last6DotGuaranteedIndex - (indicesOfPilots.length - 1);
-			beginBatch();
-			for (let index = 0; index < indicesOfPilots.length; index++) {
-				compilations$.moveSelectedCharacter(
-					indicesOfPilots[index],
-					firstInsertionIndex - 1 + index,
-				);
-			}
-			endBatch();
 		},
 	});
 
@@ -340,7 +131,7 @@ profilesManagement$.profiles.activeAllycode.onChange(() => {
 });
 
 const syncStatus$ = syncObservable(
-	compilations$.persistedData1,
+	compilations$.persistedData,
 	persistOptions({
 		persist: {
 			name: "Compilations",
@@ -352,17 +143,4 @@ const syncStatus$ = syncObservable(
 	}),
 );
 
-const syncStatus2$ = syncObservable(
-	compilations$.persistedData2,
-	persistOptions({
-		persist: {
-			name: "DefaultCompilation",
-			indexedDB: {
-				itemID: "defaultCompilation",
-			},
-		},
-		initial: getDefaultCompilation(),
-	}),
-);
-
-export { compilations$, syncStatus$, syncStatus2$ };
+export { compilations$, syncStatus$ };
