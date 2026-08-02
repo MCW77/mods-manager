@@ -5,9 +5,9 @@ import path from "node:path";
 export default defineConfig({
 	resolve: {
 		alias: {
-			"#": path.resolve(__dirname, "./src"),
-			"#lib": path.resolve(__dirname, "./src/lib"),
-			"#ui": path.resolve(__dirname, "./src/components/ui"),
+			"#": path.resolve(import.meta.dirname, "./src"),
+			"#lib": path.resolve(import.meta.dirname, "./src/lib"),
+			"#ui": path.resolve(import.meta.dirname, "./src/components/ui"),
 			"use-sync-external-store/shim/index.js": "react",
 		},
 		conditions: ["import", "module", "browser", "default"],
