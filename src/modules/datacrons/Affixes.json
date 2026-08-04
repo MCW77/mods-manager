@@ -1652,6 +1652,1260 @@
       "targetCharacter": ""
     }
   ],
+  "stat_set_accuracy_criticaldamage_maxshield_resistance_maxhealth_defense_criticalchance_001": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 15000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 49,
+      "statValueMin": 25000000,
+      "statValueMax": 50000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_armor",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_accuracy_criticaldamage_maxshield_resistance_maxhealth_defense_criticalchance_002": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 35000000,
+      "statValueMax": 50000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 49,
+      "statValueMin": 50000000,
+      "statValueMax": 75000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_armor",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_accuracy_criticaldamage_maxshield_resistance_maxhealth_defense_criticalchance_003": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 50000000,
+      "statValueMax": 75000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 49,
+      "statValueMin": 75000000,
+      "statValueMax": 100000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_armor",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_darkside_generic_033": [
+    {
+      "abilityId": "datacron_alignment_generic_033",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "{0} allies have +100% Critical Chance while attacking out of turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Dark Side allies have +100% Critical Chance while attacking out of turn.",
+      "shortText": "Dark Side allies have +100% Critical Chance while attacking out of turn.",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_015",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies evade an attack, they gain Offense Up for 1 turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies evade an attack, they gain Offense Up for 1 turn.",
+      "shortText": "DS Ally evades -> Off Up",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_016",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "The first time each {0} ally is defeated, remaining {0} allies gain 15% Offense and 20 Speed (stacking) for the rest of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Dark Side ally is defeated, remaining Dark Side allies gain 15% Offense and 20 Speed (stacking) for the rest of the encounter.",
+      "shortText": "DS ally death -> +15% Off/+20 Speed",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_029",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies use a Basic ability, they gain Critical Chance Up, Critical Damage Up, and Offense Up for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies use a Basic ability, they gain Critical Chance Up, Critical Damage Up, and Offense Up for 2 turns.",
+      "shortText": "DS Basic -> CritC/CritD/Off up",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_007",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies start their turn with fewer than 3 buffs, they recover 5% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies start their turn with fewer than 3 buffs, they recover 5% Health and Protection.",
+      "shortText": "DS < 3 buffs -> +5% H/P",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_lightside_generic_034": [
+    {
+      "abilityId": "datacron_alignment_generic_026",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "At the start of the encounter, the weakest ally gains 20% Turn Meter for every {0} ally.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of the encounter, the weakest ally gains 20% Turn Meter for every Light Side ally.",
+      "shortText": "Start of battle -> Weakest Ally +20% TM for each Light Side ally",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_027",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies use a Special ability, they gain Evasion Up, Health Steal Up, and Health Up  for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies use a Special ability, they gain Evasion Up, Health Steal Up, and Health Up  for 2 turns.",
+      "shortText": "LS Special -> Evasion/HSteal/Health up",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_002",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies gain a buff, they recover 2% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies gain a buff, they recover 2% Health and Protection.",
+      "shortText": "LS gain buff -> 2% H/P",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_024",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "At the beginning of their turn, {0} allies have +25% chance to dispel all debuffs on themself.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the beginning of their turn, Light Side allies have +25% chance to dispel all debuffs on themself.",
+      "shortText": "LS 25% dispel debuffs at turn start",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_012",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies are evaded by an enemy, that ally gains Accuracy Up for 2 turns, and they inflict Evasion Down for 2 turns on that enemy, which can't be evaded.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies are evaded by an enemy, that ally gains Accuracy Up for 2 turns, and they inflict Evasion Down for 2 turns on that enemy, which can't be evaded.",
+      "shortText": "LS attack evaded -> Ally Acc Up, enemy Evasion Down",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_firstorder_007": [
+    {
+      "abilityId": "datacron_faction_firstorder_001",
+      "targetRule": "target_datacron_firstorder",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_firstorder",
+      "description": "Whenever First Order allies are critically hit they gain 10% Critical Damage (stacking) until the end of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever First Order allies are critically hit they gain 10% Critical Damage (stacking) until the end of the encounter.",
+      "shortText": "FO crit hit -> +10% Crit Dmg",
+      "targetCategory": "affiliation_firstorder",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_022",
+      "targetRule": "target_datacron_firstorder",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_firstorder",
+      "description": "Whenever {0} allies Stun an enemy, they gain Speed Up and Offense Up for 2 turns and inflict Expose for 2 turns at the end of that turn, which can't be evaded.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever First Order allies Stun an enemy, they gain Speed Up and Offense Up for 2 turns and inflict Expose for 2 turns at the end of that turn, which can't be evaded.",
+      "shortText": "FO Stun -> Speed/Off up + expose enemy",
+      "targetCategory": "affiliation_firstorder",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_025",
+      "targetRule": "target_datacron_firstorder",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_firstorder",
+      "description": "Whenever a {0} ally has full Health and Protection at the start of their turn, they deal +100% more Damage on their turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a First Order ally has full Health and Protection at the start of their turn, they deal +100% more Damage on their turn.",
+      "shortText": "First Order full H/P start turn -> +100% more Damage",
+      "targetCategory": "affiliation_firstorder",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_001",
+      "targetRule": "target_datacron_firstorder",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_firstorder",
+      "description": "At the start of the encounter and at the end of their turn, {0} allies gain 1 stack of Retaliate (max 3) for 3 turns, which can't be copied, dispelled, or prevented.\\n\\n[c][ffff33]Retaliate:[-][/c] When damaged by an attack, deal 20% of the damage received per stack to the attacker; this damage can't defeat enemies.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of the encounter and at the end of their turn, First Order allies gain 1 stack of Retaliate (max 3) for 3 turns, which can't be copied, dispelled, or prevented.\\n[c][ffff33]Retaliate: When damaged by an attack, deal 20% of the damage received per stack to the attacker; this damage can't defeat enemies.",
+      "shortText": "First Order Retailiate (battle and turn start)",
+      "targetCategory": "affiliation_firstorder",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_firstorder_004",
+      "targetRule": "target_datacron_firstorder",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_firstorder",
+      "description": "At the start of battle, First Order allies gain 20% Health Steal, Offense, and Retribution for 1 turn. Whenever a First Order ally counterattacks, that ally gains 10% Critical Damage (stacking, max 50%) until the end of the encounter. Whenever a First Order ally Stuns an enemy, First Order allies recover 10% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of battle, First Order allies gain 20% Health Steal, Offense, and Retribution for 1 turn. Whenever a First Order ally counterattacks, that ally gains 10% Critical Damage (stacking, max 50%) until the end of the encounter. Whenever a First Order ally Stuns an enemy, First Order allies recover 10% Health and Protection.",
+      "shortText": "First Order +20% Off/HSteal at start, bonuses for counters/stuns",
+      "targetCategory": "affiliation_firstorder",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_resistance_005": [
+    {
+      "abilityId": "datacron_faction_generic_017",
+      "targetRule": "target_datacron_resistance",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.datacronui_affix_resistance",
+      "description": "The first time each {0} ally falls below 50% Health, all {0} allies reduce their cooldowns by 1 and gain 10% Turn Meter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Resistance ally falls below 50% Health, all Resistance allies reduce their cooldowns by 1 and gain 10% Turn Meter.",
+      "shortText": "Res < 50% H -> allies cooldowns - 1 + 10% TM",
+      "targetCategory": "affiliation_resistance",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_resistance_002",
+      "targetRule": "target_datacron_resistance",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.datacronui_affix_resistance",
+      "description": "Whenever a Resistance ally is critically hit, they gain 100% Critical Avoidance and 100% Critical Chance for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Resistance ally is critically hit, they gain 100% Critical Avoidance and 100% Critical Chance for 2 turns.",
+      "shortText": "Res ally takes crit hit -> +100% Crit Avoid + +100% Crit Chance",
+      "targetCategory": "affiliation_resistance",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_033",
+      "targetRule": "target_datacron_resistance",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.datacronui_affix_resistance",
+      "description": "Whenever an enemy is defeated by a {0} ally, that enemy can't be revived.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever an enemy is defeated by a Resistance ally, that enemy can't be revived.",
+      "shortText": "Resistance ally kills -> No Revive",
+      "targetCategory": "affiliation_resistance",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_resistance_004",
+      "targetRule": "target_datacron_resistance",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.datacronui_affix_resistance",
+      "description": "Whenever a Resistance ally falls below 50% Health for the first time, that ally gains Protection Over Time (50%) for 2 turns. Whenever a Resistance ally scores a critical hit, that ally gains 10% Health Steal (stacking, max 100%) until the end of the encounter. Whenever any Resistance ally assists, that ally gains 15% Turn Meter. Whenever a Resistance ally defeats an enemy, Resistance allies gain 10% Critical Damage (stacking, max 150%) until the end of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Resistance ally falls below 50% Health for the first time, that ally gains Protection Over Time (50%) for 2 turns. Whenever a Resistance ally scores a critical hit, that ally gains 10% Health Steal (stacking, max 100%) until the end of the encounter. Whenever any Resistance ally assists, that ally gains 15% Turn Meter. Whenever a Resistance ally defeats an enemy, Resistance allies gain 10% Critical Damage (stacking, max 150%) until the end of the encounter.",
+      "shortText": "Resistance <50% H -> PoT; crit -> HSteal; assist -> +15% TM; kill -> +CD",
+      "targetCategory": "affiliation_resistance",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_004",
+      "targetRule": "target_datacron_resistance",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.datacronui_affix_resistance",
+      "description": "Whenever {0} allies use a Special ability during their turn, they Stun target enemy for 1 turn, which can't be evaded or resisted.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Resistance allies use a Special ability during their turn, they Stun target enemy for 1 turn, which can't be evaded or resisted.",
+      "shortText": "Resistance special -> Stun",
+      "targetCategory": "affiliation_resistance",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_darkrey_001": [
+    {
+      "abilityId": "datacron_character_darkrey_001",
+      "targetRule": "target_datacron_darkrey",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_darkrey",
+      "description": "Whenever Rey (Dark Side Vision) inflicts Fear, reduce the cooldowns of First Order allies by 1. Whenever Rey (Dark Side Vision) uses Malevolent Lineage, if all enemies are Shocked, deal bonus damage equal to 20% of their Max Health to all enemies, which can't be evaded. While Rey (Dark Side Vision) is Untargetable, she gains 20% Offense and First Order allies gain 20% Critical Damage.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Rey (Dark Side Vision) inflicts Fear, reduce the cooldowns of First Order allies by 1. Whenever Rey (Dark Side Vision) uses Malevolent Lineage, if all enemies are Shocked, deal bonus damage equal to 20% of their Max Health to all enemies, which can't be evaded. While Rey (Dark Side Vision) is Untargetable, she gains 20% Offense and First Order allies gain 20% Critical Damage.",
+      "shortText": "Rey (Dark Side Vision) Fear -> FO cooldowns -1; Untargetable -> +20% Off, FO +20% CD",
+      "targetCategory": "",
+      "targetCharacter": "DARKREY"
+    }
+  ],
+  "ability_set_kylorenunmasked_002": [
+    {
+      "abilityId": "datacron_character_kylorenunmasked_001",
+      "targetRule": "target_datacron_kylorenunmasked",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_kylo_unmasked",
+      "description": "Whenever Kylo Ren (Unmasked) takes damage while Taunting, he gains 10% Defense (stacking, max 100%) and Max Health (stacking, max 100%) until the end of the encounter, and First Order allies gain 10% Offense (stacking, max 100%) until the end of the encounter. Whenever Kylo Ren (Unmasked) attacks out of turn, he inflicts Offense Down on target enemy for 2 turns. Whenever Kylo Ren (Unmasked) Stuns an enemy, increase that enemy's cooldowns by 1 and First Order allies gain Offense Up for 2 turns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Kylo Ren (Unmasked) takes damage while Taunting, he gains 10% Defense (stacking, max 100%) and Max Health (stacking, max 100%) until the end of the encounter, and First Order allies gain 10% Offense (stacking, max 100%) until the end of the encounter. Whenever Kylo Ren (Unmasked) attacks out of turn, he inflicts Offense Down on target enemy for 2 turns. Whenever Kylo Ren (Unmasked) Stuns an enemy, increase that enemy's cooldowns by 1 and First Order allies gain Offense Up for 2 turns.",
+      "shortText": "Kylo Ren (Unmasked) dmg while Taunt -> +Def/H, FO +Off; Stun -> enemy cooldown +1, FO Off Up",
+      "targetCategory": "",
+      "targetCharacter": "KYLORENUNMASKED"
+    }
+  ],
+  "ability_set_kyloren_003": [
+    {
+      "abilityId": "datacron_character_generic_042",
+      "targetRule": "target_datacron_kyloren",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_kyloren",
+      "description": "Whenever {0} attacks out of turn, they recover 20% Health and Protection and all other allies with Retribution assist.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Kylo Ren attacks out of turn, they recover 20% Health and Protection and all other allies with Retribution assist.",
+      "shortText": "Kylo Ren atk out of turn -> +30% H/P heal, allies with Retri assist",
+      "targetCategory": "",
+      "targetCharacter": "KYLOREN"
+    }
+  ],
+  "ability_set_phasma_001": [
+    {
+      "abilityId": "datacron_character_generic_029",
+      "targetRule": "target_datacron_phasma",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_phasma",
+      "description": "Whenever {0} deals damage to an enemy, remove 25% Turn Meter from that enemy.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Captain Phasma deals damage to an enemy, remove 25% Turn Meter from that enemy.",
+      "shortText": "Captain Phasma damage -> remove 25% TM",
+      "targetCategory": "",
+      "targetCharacter": "PHASMA"
+    }
+  ],
+  "ability_set_foexecutioner_003": [
+    {
+      "abilityId": "datacron_character_generic_015",
+      "targetRule": "target_datacron_firstorderexecutioner",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "firstorder",
+        "darkside"
+      ],
+      "scopeIcon": "tex.charui_firstorder_executioner",
+      "description": "Whenever {0} critically hits an enemy, {0} gains 10% Critical Damage, Defense Penetration, and Offense (stacking, max 200%) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever First Order Executioner critically hits an enemy, First Order Executioner gains 10% Critical Damage, Defense Penetration, and Offense (stacking, max 200%) until the end of battle.",
+      "shortText": "First Order Executioner crits -> +10% CD/DefPen/Off",
+      "targetCategory": "",
+      "targetCharacter": "FIRSTORDEREXECUTIONER"
+    }
+  ],
+  "ability_set_glrey_004": [
+    {
+      "abilityId": "datacron_character_glrey_001",
+      "targetRule": "target_datacron_glrey",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.charui_rey_tros",
+      "description": "Heir to the Jedi deals 75% more damage for each other active ally.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Heir to the Jedi deals 75% more damage for each other active ally.",
+      "shortText": "(Rey) Heir to the Jedi deals 75% more dmg per ally",
+      "targetCategory": "",
+      "targetCharacter": "GLREY"
+    }
+  ],
+  "ability_set_amilynholdo_002": [
+    {
+      "abilityId": "datacron_character_generic_041",
+      "targetRule": "target_datacron_amilynholdo",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.charui_holdo",
+      "description": "Whenever {0} gains Foresight, they also gain +20% Turn Meter and Protection Up (20%, stacking) for 2 turns.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Amilyn Holdo gains Foresight, they also gain +20% Turn Meter and Protection Up (20%, stacking) for 2 turns.",
+      "shortText": "Amilyn Holdo Foresight -> +20% TM + Prot Up",
+      "targetCategory": "",
+      "targetCharacter": "AMILYNHOLDO"
+    }
+  ],
+  "ability_set_reyscavenger_001": [
+    {
+      "abilityId": "datacron_character_generic_045",
+      "targetRule": "target_datacron_scavengerrey",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.charui_reyjakku",
+      "description": "{0} deals +25% more damage per Relic Amplifier level on all allies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Rey (Scavenger) deals +25% more damage per Relic Amplifier level on all allies.",
+      "shortText": "Rey (Scavenger) deals +25% more damage per Relic Amplifier level on all allies.",
+      "targetCategory": "",
+      "targetCharacter": "REY"
+    }
+  ],
+  "ability_set_veteranchewbacca_001": [
+    {
+      "abilityId": "datacron_character_generic_001",
+      "targetRule": "target_datacron_smugglerchewbacca",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.charui_tfa_chewbacca",
+      "description": "Whenever an enemy is Stunned, {0} takes a bonus turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy is Stunned, Veteran Smuggler Chewbacca takes a bonus turn.",
+      "shortText": "Stun -> Veteran Smuggler Chewbacca bonus turn",
+      "targetCategory": "",
+      "targetCharacter": "SMUGGLERCHEWBACCA"
+    }
+  ],
+  "ability_set_bb8_005": [
+    {
+      "abilityId": "datacron_character_bb8_001",
+      "targetRule": "target_datacron_bb8",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "resistance"
+      ],
+      "scopeIcon": "tex.charui_bb8",
+      "description": "At the start of battle, if all other allies are Droids, all allies gain the Resistance tag until the end of battle. At the start of battle, Resistance allies gain Secret Intel for 2 turns. Whenever an ally gains Secret Intel, Resistance allies gain 10% Critical Chance (stacking, max 100%) and Critical Damage (stacking, max 100%) until the end of the encounter. The first time a Resistance ally falls below 50% Health, BB-8 resets the cooldown of Illuminated Destiny. Whenever BB-8 uses a Special ability, inflict Buff Immunity on a random enemy for 2 turns, which can't be resisted.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of battle, if all other allies are Droids, all allies gain the Resistance tag until the end of battle. At the start of battle, Resistance allies gain Secret Intel for 2 turns. Whenever an ally gains Secret Intel, Resistance allies gain 10% Critical Chance (stacking, max 100%) and Critical Damage (stacking, max 100%) until the end of the encounter. The first time a Resistance ally falls below 50% Health, BB-8 resets the cooldown of Illuminated Destiny. Whenever BB-8 uses a Special ability, inflict Buff Immunity on a random enemy for 2 turns, which can't be resisted.",
+      "shortText": "BB-8: all Droid allies -> Resistance tag; Secret Intel -> +CC/CD; Special -> enemy Buff Immunity",
+      "targetCategory": "",
+      "targetCharacter": "BB8"
+    }
+  ],
+  "ability_set_focused_bishop_gopher_001": [
+    {
+      "abilityId": "datacron_character_gopherants_001",
+      "targetRule": "target_datacron_gopherants",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "bishop"
+      ],
+      "scopeIcon": "tex.charui_groguanz",
+      "description": "Whenever Grogu & Anzellans uses Strapped In, the target New Republic ally also gains Critical Hit Immunity for 2 turns and 30% Turn Meter. Whenever Grogu & Anzellans uses Tune Up, New Republic allies also gain Protection (50%) and Speed Up for 2 turns. Whenever an enemy gains a stack of On the Run, Grogu & Anzellans gains 1 additional stack of Force Connection. Whenever an enemy with Force Influence uses an ability, that enemy deals bonus True damage equal to 30% of their Max Health to themselves, which can't be evaded.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Grogu & Anzellans uses Strapped In, the target New Republic ally also gains Critical Hit Immunity for 2 turns and 30% Turn Meter. Whenever Grogu & Anzellans uses Tune Up, New Republic allies also gain Protection (50%) and Speed Up for 2 turns. Whenever an enemy gains a stack of On the Run, Grogu & Anzellans gains 1 additional stack of Force Connection. Whenever an enemy with Force Influence uses an ability, that enemy deals bonus True damage equal to 30% of their Max Health to themselves, which can't be evaded.",
+      "shortText": "Grogu & Anzellans: Strapped In -> NR CritImm/+TM; Tune Up -> NR Prot/Speed; Force Infl -> self dmg",
+      "targetCategory": "",
+      "targetCharacter": "GOPHERANTS"
+    }
+  ],
+  "ability_set_focused_bishop_carsonteva_001": [
+    {
+      "abilityId": "datacron_character_carsonteva_001",
+      "targetRule": "target_datacron_carsonteva",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "bishop"
+      ],
+      "scopeIcon": "tex.charui_carsonteva",
+      "description": "Carson Teva gains 30% Offense (stacking, max 150%) each time he counterattacks until the end of the encounter. Carson Teva can't be defeated while other allies are active. Whenever Carson Teva uses Keeping the Peace, a New Republic Tank ally assists. The first time each enemy reaches 5 stacks of On the Run, New Republic allies gain 50% Turn Meter until the end of battle. Carson Teva recovers 30% Health and Protection and gains 30% Critical Damage (stacking, max 180%) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Carson Teva gains 30% Offense (stacking, max 150%) each time he counterattacks until the end of the encounter. Carson Teva can't be defeated while other allies are active. Whenever Carson Teva uses Keeping the Peace, a New Republic Tank ally assists. The first time each enemy reaches 5 stacks of On the Run, New Republic allies gain 50% Turn Meter until the end of battle. Carson Teva recovers 30% Health and Protection and gains 30% Critical Damage (stacking, max 180%) until the end of battle.",
+      "shortText": "Carson Teva: counter -> +Off; unkillable w/ allies; Keeping the Peace -> NR Tank assist",
+      "targetCategory": "",
+      "targetCharacter": "CARSONTEVA"
+    }
+  ],
+  "ability_set_focused_bishop_r5d4_001": [
+    {
+      "abilityId": "datacron_character_r5d4_001",
+      "targetRule": "target_datacron_r5d4",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "bishop"
+      ],
+      "scopeIcon": "tex.charui_r5d4",
+      "description": "Whenever R5-D4 gains Retaliate, he also gains Defense Up and Potency Up for 2 turns. Whenever a New Republic ally counterattacks an enemy, that ally inflicts 2 stacks of Damage Over Time on that enemy for 2 turns, which can't be resisted. Whenever an enemy with Damage Over Time uses an ability, the ally in the Leader slot gains 30% Offense (stacking, max 210%) and reduces the cooldown of Bad Motivator by 5 until the end of the encounter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever R5-D4 gains Retaliate, he also gains Defense Up and Potency Up for 2 turns. Whenever a New Republic ally counterattacks an enemy, that ally inflicts 2 stacks of Damage Over Time on that enemy for 2 turns, which can't be resisted. Whenever an enemy with Damage Over Time uses an ability, the ally in the Leader slot gains 30% Offense (stacking, max 210%) and reduces the cooldown of Bad Motivator by 5 until the end of the encounter.",
+      "shortText": "R5-D4: Retaliate -> Def/Pot Up; NR counter -> 2 DoT; enemy DoT ability -> Leader +Off",
+      "targetCategory": "",
+      "targetCharacter": "R5D4"
+    }
+  ],
+  "ability_set_focused_bishop_zeb_001": [
+    {
+      "abilityId": "datacron_character_rangerzeb_001",
+      "targetRule": "target_datacron_rangerzeb",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "bishop"
+      ],
+      "scopeIcon": "tex.charui_rangerzeb",
+      "description": "While Zeb Orrelios (New Republic Pilot) is Taunting, New Republic allies are immune to Ability Block, Daze, and Stun, can't be instantly defeated, and take 30% less damage. Whenever Zeb Orrelios (New Republic Pilot) loses Taunt, he gains Taunt for 1 turn. The first time Zeb Orrelios (New Republic Pilot), Carson Teva, R5-D4, Colonel Ward or Grogu & Anzellans falls below 50% Health, that ally gains Damage Immunity for 2 turns and New Republic allies gain 30% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "While Zeb Orrelios (New Republic Pilot) is Taunting, New Republic allies are immune to Ability Block, Daze, and Stun, can't be instantly defeated, and take 30% less damage. Whenever Zeb Orrelios (New Republic Pilot) loses Taunt, he gains Taunt for 1 turn. The first time Zeb Orrelios (New Republic Pilot), Carson Teva, R5-D4, Colonel Ward or Grogu & Anzellans falls below 50% Health, that ally gains Damage Immunity for 2 turns and New Republic allies gain 30% Turn Meter.",
+      "shortText": "Zeb Orrelios (NR Pilot) Taunt -> NR debuff immune, -30% dmg; ally <50% -> Dmg Imm, NR +TM",
+      "targetCategory": "",
+      "targetCharacter": "RANGERZEB"
+    }
+  ],
+  "ability_set_focused_bishop_001": [
+    {
+      "abilityId": "datacron_character_bishop_001",
+      "targetRule": "target_datacron_bishop",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "bishop"
+      ],
+      "scopeIcon": "tex.charui_colonelward",
+      "description": "Whenever Colonel Ward inflicts a debuff on an enemy, she gains 30% Potency and Max Health (each stacking, max 150%) until the end of the encounter. Whenever a New Republic ally damages an Exposed enemy, that ally recovers 30% Protection and inflicts Ability Block on that enemy for 2 turns, which can't be resisted. Whenever Colonel Ward uses New Republic's Most Wanted, the target ally gains a bonus turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Colonel Ward inflicts a debuff on an enemy, she gains 30% Potency and Max Health (each stacking, max 150%) until the end of the encounter. Whenever a New Republic ally damages an Exposed enemy, that ally recovers 30% Protection and inflicts Ability Block on that enemy for 2 turns, which can't be resisted. Whenever Colonel Ward uses New Republic's Most Wanted, the target ally gains a bonus turn.",
+      "shortText": "Colonel Ward debuff -> +Pot/H; NR dmg Exposed -> +Prot, enemy AB; Most Wanted -> ally bonus turn",
+      "targetCategory": "",
+      "targetCharacter": "BISHOP"
+    }
+  ],
+  "ability_set_focused_remnantsnowtroopercommander_tiefighterpilot_001": [
+    {
+      "abilityId": "datacron_character_generic_023",
+      "targetRule": "target_datacron_tiefighterpilot",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "remnantsnowtroopercommander"
+      ],
+      "scopeIcon": "tex.charui_tiepilot",
+      "description": "Whenever another ally uses an ability on their turn, {0} assists (limit once per turn) dealing 50% more damage.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever another ally uses an ability on their turn, TIE Fighter Pilot assists (limit once per turn) dealing 50% more damage.",
+      "shortText": "Ally use ability -> TIE Fighter Pilot assists",
+      "targetCategory": "",
+      "targetCharacter": "TIEFIGHTERPILOT"
+    }
+  ],
+  "ability_set_focused_remnantsnowtroopercommander_snowtrooper_001": [
+    {
+      "abilityId": "datacron_character_generic_047",
+      "targetRule": "target_datacron_snowtrooper",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "remnantsnowtroopercommander"
+      ],
+      "scopeIcon": "tex.charui_troopersnow",
+      "description": "Whenever an ally takes a bonus turn, all allies recover 20% Health and Protection and {0} gains 20% Offense (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an ally takes a bonus turn, all allies recover 20% Health and Protection and Snowtrooper gains 20% Offense (stacking) until the end of battle.",
+      "shortText": "Ally bonus turn -> All heal 20% H/P + Snowtrooper gains 20% Off",
+      "targetCategory": "",
+      "targetCharacter": "SNOWTROOPER"
+    }
+  ],
+  "ability_set_focused_remnantsnowtroopercommander_001": [
+    {
+      "abilityId": "datacron_character_remnantsnowcommander_001",
+      "targetRule": "target_datacron_remnantsnowcommander",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "remnantsnowtroopercommander"
+      ],
+      "scopeIcon": "tex.charui_remnantsnowcommander",
+      "description": "At the start of Snowtrooper Commander's turn, he gains 15% Defense for each active Imperial Remnant ally for 1 turn. The first time each Imperial Remnant ally is defeated, Snowtrooper Commander revives that ally with 30% Health and Protection. Whenever an Imperial Remnant ally inflicts Ability Block on an enemy, that ally also inflicts Buff Immunity on that enemy for 2 turns. Whenever Snowtrooper Commander uses Rifle Butt, he inflicts Fracture until the start of Snowtrooper Commander's next turn or Snowtrooper Commander is defeated, which can't be copied, dispelled, or evaded.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of Snowtrooper Commander's turn, he gains 15% Defense for each active Imperial Remnant ally for 1 turn. The first time each Imperial Remnant ally is defeated, Snowtrooper Commander revives that ally with 30% Health and Protection. Whenever an Imperial Remnant ally inflicts Ability Block on an enemy, that ally also inflicts Buff Immunity on that enemy for 2 turns. Whenever Snowtrooper Commander uses Rifle Butt, he inflicts Fracture until the start of Snowtrooper Commander's next turn or Snowtrooper Commander is defeated, which can't be copied, dispelled, or evaded.",
+      "shortText": "Snowtrooper Commander: +Def per Imp Remnant ally; ally defeat -> revive; Rifle Butt -> Fracture",
+      "targetCategory": "",
+      "targetCharacter": "REMNANTSNOWCOMMANDER"
+    }
+  ],
+  "ability_set_focused_raccoon_gamorreanguard_001": [
+    {
+      "abilityId": "datacron_character_gamorreanguard_002",
+      "targetRule": "target_datacron_gamorreanguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "raccoon"
+      ],
+      "scopeIcon": "tex.charui_gamorreanguard",
+      "description": "At the start of encounter, Gamorrean Guard gains 5 stacks of My Kind of Scum, 100% Potency, 50 Speed. Then he gains 20% Counter Chance for each Hutt Cartel ally.\\n\\nWhenever Gamorrean Guard inflicts a stack of Damage Over Time, he gains Riposte for 2 turns.\\n\\nWhile Taunting, he takes 30% reduced damage from enemies with a stack of Damage Over Time or Thermal Detonators.\\n\\nWhenever Gamorrean Guard removes Turn Meter from an enemy, reduce the cooldown of his abilities by 1.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of encounter, Gamorrean Guard gains 5 stacks of My Kind of Scum, 100% Potency, 50 Speed. Then he gains 20% Counter Chance for each Hutt Cartel ally.\\nWhenever Gamorrean Guard inflicts a stack of Damage Over Time, he gains Riposte for 2 turns.\\n\\nWhile Taunting, he takes 30% reduced damage from enemies with a stack of Damage Over Time or Thermal Detonators.\\n\\nWhenever Gamorrean Guard removes Turn Meter from an enemy, reduce the cooldown of his abilities by 1.",
+      "shortText": "Gam Guard start battle -> gain scum, potency, speed and counter chance, other bonuses",
+      "targetCategory": "",
+      "targetCharacter": "GAMORREANGUARD"
+    }
+  ],
+  "ability_set_focused_raccoon_mobenforcer_001": [
+    {
+      "abilityId": "datacron_character_mobenforcer_001",
+      "targetRule": "target_datacron_humanthug",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "raccoon"
+      ],
+      "scopeIcon": "tex.charui_mob_enforcer",
+      "description": "If the ally in the Leader slot is Hutt Cartel, whenever they use an ability, Mob Enforcer assists, dealing 50% more damage.\\n\\nAt the start of Mob Enforcer's turn, all enemies inflicted with Thermal Detonators are inflicted with Buff Immunity for 1 turn.\\n\\nWhenever Mob Enforcer attacks out of turn, she always scores a critical hit, if able.\\n\\nWhenever an enemy critically hits Mob Enforcer, that enemy is inflicted with a stack of Thermal Detonator for 2 turns, which can't be evaded or resisted.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "If the ally in the Leader slot is Hutt Cartel, whenever they use an ability, Mob Enforcer assists, dealing 50% more damage.\\nAt the start of Mob Enforcer's turn, all enemies inflicted with Thermal Detonators are inflicted with Buff Immunity for 1 turn.\\n\\nWhenever Mob Enforcer attacks out of turn, she always scores a critical hit, if able.\\n\\nWhenever an enemy critically hits Mob Enforcer, that enemy is inflicted with a stack of Thermal Detonator for 2 turns, which can't be evaded or resisted.",
+      "shortText": "(Mob Enforcer) If HC lead, ME assists allies, dets -> buff immunity at start of ME turn",
+      "targetCategory": "",
+      "targetCharacter": "HUMANTHUG"
+    }
+  ],
+  "ability_set_focused_raccoon_greedo_001": [
+    {
+      "abilityId": "datacron_character_generic_015",
+      "targetRule": "target_datacron_greedo",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "raccoon"
+      ],
+      "scopeIcon": "tex.charui_greedo",
+      "description": "Whenever {0} critically hits an enemy, {0} gains 10% Critical Damage, Defense Penetration, and Offense (stacking, max 200%) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Greedo critically hits an enemy, Greedo gains 10% Critical Damage, Defense Penetration, and Offense (stacking, max 200%) until the end of battle.",
+      "shortText": "Greedo crits -> +10% CD/DefPen/Off",
+      "targetCategory": "",
+      "targetCharacter": "GREEDO"
+    }
+  ],
+  "ability_set_focused_raccoon_cadbane_001": [
+    {
+      "abilityId": "datacron_character_generic_003",
+      "targetRule": "target_datacron_cadbane",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "raccoon"
+      ],
+      "scopeIcon": "tex.charui_cadbane",
+      "description": "Whenever another ally recovers Protection, {0} gains Foresight for 1 turn.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever another ally recovers Protection, Cad Bane gains Foresight for 1 turn.",
+      "shortText": "Ally recovers Protection -> Cad Bane Foresight",
+      "targetCategory": "",
+      "targetCharacter": "CADBANE"
+    }
+  ],
+  "ability_set_focused_raccoon_001": [
+    {
+      "abilityId": "datacron_character_raccoon_001",
+      "targetRule": "target_datacron_raccoon",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "raccoon"
+      ],
+      "scopeIcon": "tex.charui_rotta",
+      "description": "Rotta the Hutt's solo effects are active even when he has allies. Whenever Rotta the Hutt critically hits, he gains 10% Critical Chance (stacking, max 100%) until the end of the encounter. Whenever Rotta uses Knock 'Em Dead, if any enemy is inflicted with Off Balance, Hutt Cartel allies recover 15% Health and Protection. Whenever Rotta defeats an enemy, he gains 10% Offense (stacking, max 80%) until the end of the encounter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Rotta the Hutt's solo effects are active even when he has allies. Whenever Rotta the Hutt critically hits, he gains 10% Critical Chance (stacking, max 100%) until the end of the encounter. Whenever Rotta uses Knock 'Em Dead, if any enemy is inflicted with Off Balance, Hutt Cartel allies recover 15% Health and Protection. Whenever Rotta defeats an enemy, he gains 10% Offense (stacking, max 80%) until the end of the encounter.",
+      "shortText": "Rotta the Hutt: solo effects w/ allies; crit -> +CC; Knock 'Em Dead -> Cartel heal; kill -> +Off",
+      "targetCategory": "",
+      "targetCharacter": "RACCOON"
+    }
+  ],
   "ability_set_healer_003": [
     {
       "abilityId": "datacron_faction_generic_018",
@@ -2088,7 +3342,7 @@
       "scopeIcon": "tex.charui_batcher",
       "description": "Batcher is immune to Daze and Stun. Whenever Batcher damages an enemy, she removes 15% Turn Meter from them and gains that much Turn Meter.\\n\\nIf there are no Galactic Legends, enemies can't gain bonus Turn Meter.\\n\\nWhenever another Bad Batch ally is inflicted with Captive, reset the cooldowns of Batcher's abilities, she dispels all debuffs on her, and she takes a bonus turn.",
       "name": "Bonus mechanics for {0}",
-      "fullText": "Batcher is immune to Daze and Stun. Whenever Batcher damages an enemy, she removes 15% Turn Meter from them and gains that much Turn Meter.\\nIf there are no Galactic Legends, enemies can't gain bonus Turn Meter.\\\n\\nWhenever another Bad Batch ally is inflicted with Captive, reset the cooldowns of Batcher's abilities, she dispels all debuffs on her, and she takes a bonus turn.",
+      "fullText": "Batcher is immune to Daze and Stun. Whenever Batcher damages an enemy, she removes 15% Turn Meter from them and gains that much Turn Meter.\\nIf there are no Galactic Legends, enemies can't gain bonus Turn Meter.\\n\\nWhenever another Bad Batch ally is inflicted with Captive, reset the cooldowns of Batcher's abilities, she dispels all debuffs on her, and she takes a bonus turn.",
       "shortText": "Batcher immune to Daze and Stun, prevent enemy TM gain, more bonuses",
       "targetCategory": "",
       "targetCharacter": "BATCHERS3"
