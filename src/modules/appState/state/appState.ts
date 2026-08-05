@@ -461,11 +461,9 @@ function mergeRoster(
 	backupRoster: LatestModsManagerBackupDataSchemaOutput["roster"],
 ): void {
 	if (!backupRoster) return;
-	for (const [allycode, backupRosterByIdForProfile] of objectEntries(
-		backupRoster,
-	)) {
-		roster$.characterByIdByAllycode[allycode].set({
-			id: allycode,
+	for (const backupRosterByIdForProfile of Object.values(backupRoster)) {
+		roster$.characterByIdByAllycode[backupRosterByIdForProfile.id].set({
+			id: backupRosterByIdForProfile.id,
 			characterById: backupRosterByIdForProfile.characterById,
 		});
 	}
