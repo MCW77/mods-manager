@@ -690,8 +690,7 @@ export const defaultFixture = {
 							description: "Speed",
 							minimumModDots: 5,
 							primaryStatRestrictions: {
-								triangle: "Critical Damage %",
-								cross: undefined,
+								triangle: ["Critical Damage %"],
 							},
 							setRestrictions: {},
 							targetStats: [],

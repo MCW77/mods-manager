@@ -1,4 +1,6 @@
 // utils
+import * as v from "valibot";
+
 import { objectEntries } from "./objectEntries";
 import { objectKeys } from "./objectKeys";
 
@@ -14,6 +16,10 @@ import type {
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 import type { Character } from "#/domain/Character";
+import {
+	CharacterByIdSchemaV23,
+	CharacterByIdSchemaV26,
+} from "../domain/schemas/mods-manager";
 
 // Entity type with id and other properties
 type Entity = { id: string; [key: string]: unknown };
@@ -24,7 +30,9 @@ type RecordWithNestedEntities = {
 	[key: string]: Entity | string | unknown;
 };
 
-const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28] as const;
+const dbVersions = [
+	16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
@@ -635,6 +643,90 @@ function upgradeCompilationTo28(compilation: Record<string, unknown>) {
 		});
 	}
 	return newCompilation;
+}
+
+function upgradeRostersTo29(
+	rosters: Array<RecordWithNestedEntities>,
+): Array<RecordWithNestedEntities> {
+	const isRostersWithStringPrimaries = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		characterById: Record<
+			string,
+			{
+				targets: {
+					primaryStatRestrictions: Record<string, string>;
+				}[];
+			}
+		>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			obj.length > 0 &&
+			Object.hasOwn(obj[0], "id") &&
+			Object.hasOwn(obj[0], "characterById")
+		) {
+			const characterById = obj[0].characterById;
+			const schemaResult = v.safeParse(CharacterByIdSchemaV23, characterById);
+			if (schemaResult.success) {
+				result = true;
+			}
+		}
+		return result;
+	};
+	const isRosters = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		characterById: Record<
+			string,
+			{
+				targets: {
+					primaryStatRestrictions: Record<string, string | string[]>;
+				}[];
+			}
+		>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			obj.length > 0 &&
+			Object.hasOwn(obj[0], "id") &&
+			Object.hasOwn(obj[0], "characterById")
+		) {
+			const characterById = obj[0].characterById;
+			const schemaResult23 = v.safeParse(CharacterByIdSchemaV23, characterById);
+			const schemaResult26 = v.safeParse(CharacterByIdSchemaV26, characterById);
+			if (schemaResult23.success || schemaResult26.success) {
+				result = true;
+			}
+		}
+		return result;
+	};
+
+	const newRosters = structuredClone(rosters);
+
+	if (isRostersWithStringPrimaries(rosters) && isRosters(newRosters)) {
+		for (const roster of newRosters) {
+			for (const character of Object.values(roster.characterById)) {
+				for (const target of character.targets) {
+					const newPrimaryStatRestrictions: Record<string, string[]> = {};
+					for (const [key, value] of Object.entries(
+						target.primaryStatRestrictions,
+					)) {
+						if (value === undefined || value === null) continue;
+						newPrimaryStatRestrictions[key] = Array.isArray(value)
+							? value
+							: [value];
+					}
+					target.primaryStatRestrictions = newPrimaryStatRestrictions;
+				}
+			}
+		}
+	}
+	return newRosters;
 }
 
 function createStores(db: IDBDatabase, version: DBVersions) {
@@ -1566,6 +1658,19 @@ async function upgradeTo28(db: IDBDatabase, transaction: IDBTransaction) {
 }
 dbUpgrades.set(28, upgradeTo28);
 
+async function upgradeTo29(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
+			const newRosters = upgradeRostersTo29(oldRosters);
+			return newRosters;
+		});
+	} catch (error) {
+		console.error("Error in upgradeTo29:", error);
+		transaction.abort();
+	}
+}
+dbUpgrades.set(29, upgradeTo29);
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
@@ -1616,5 +1721,6 @@ export {
 	upgradeProfilesTo27,
 	upgradeCharacterTemplatesTo28,
 	upgradeCompilationTo28,
+	upgradeRostersTo29,
 	testOnly,
 };
