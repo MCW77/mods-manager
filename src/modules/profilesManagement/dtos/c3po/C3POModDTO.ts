@@ -4,7 +4,7 @@ import type { C3POSecondaryStatDTO } from "./C3POSecondaryStatDTO";
 export type Set = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
 
 export type Slots = "1" | "2" | "3" | "4" | "5" | "6";
-export type Pips = "1" | "2" | "3" | "4" | "5" | "6";
+export type Pips = "5" | "6";
 export type Tier = "1" | "2" | "3" | "4" | "5";
 type Levels =
 	| "1"

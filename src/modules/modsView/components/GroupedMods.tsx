@@ -20,6 +20,7 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
 import type { Mod } from "#/domain/Mod";
+import { getDisplayType } from "#/domain/Stat";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -82,7 +83,7 @@ function ModGroupItem({
 						</span>
 						<span className="basis-30%">
 							{tDomain(
-								`stats.${modGroup$.mods.peek()[0].primaryStat.getDisplayType()}`,
+								`stats.${getDisplayType(modGroup$.mods.peek()[0].primaryStat)}`,
 							)}
 						</span>
 						<span className="basis-20%">
@@ -143,7 +144,7 @@ function GroupedMods() {
 		if (modGroup.length > 0) {
 			modGroups.push({
 				isOpen: true,
-				id: `${modGroup[0].slot}-${modGroup[0].modset}-${modGroup[0].primaryStat.getDisplayType()}`,
+				id: `${modGroup[0].slot}-${modGroup[0].modset}-${getDisplayType(modGroup[0].primaryStat)}`,
 				mods: modGroup,
 			});
 		}

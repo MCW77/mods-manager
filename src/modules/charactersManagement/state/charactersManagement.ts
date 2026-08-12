@@ -33,8 +33,19 @@ import { characterSettings } from "#/constants/characterSettings";
 import type { Character } from "#/domain/Character";
 import { DamageType } from "#/domain/CharacterSettings";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import { Stat } from "#/domain/Stat";
-import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import {
+	type Stat,
+	display2CSGIMOStatNamesMap,
+	gimo2DisplayStatNamesMap,
+	mixedTypes,
+	getDisplayType,
+	getStatValue,
+} from "#/domain/Stat";
+import {
+	type CharacterSummaryStat,
+	createCharacterSummaryStat,
+	getDisplayType as getCSDisplayType,
+} from "#/domain/CharacterSummaryStat";
 
 const addCategoryFilter = (
 	customFilterById: Map<string, CustomFilter>,
@@ -574,18 +585,16 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 		 */
 		getFlatValuesForCharacter: (character: Character, stat: Stat) => {
 			const statPropertyNames =
-				Stat.display2CSGIMOStatNamesMap[stat.getDisplayType()];
+				display2CSGIMOStatNamesMap[getDisplayType(stat)];
 
 			return statPropertyNames.map((statName) => {
-				const displayName = Stat.gimo2DisplayStatNamesMap[statName];
+				const displayName = gimo2DisplayStatNamesMap[statName];
 				const statType: CharacterStatNames.All = (
-					Stat.mixedTypes.includes(displayName)
-						? displayName
-						: `${displayName} %`
+					mixedTypes.includes(displayName) ? displayName : `${displayName} %`
 				) as CharacterStatNames.All;
 
 				if (stat.isPercentVersion && character.playerValues?.baseStats) {
-					return new CSStats.CharacterSummaryStat(
+					return createCharacterSummaryStat(
 						statType,
 						`${fromScaled(
 							divScaled(
@@ -599,7 +608,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 					);
 				}
 				if (!stat.isPercentVersion) {
-					return new CSStats.CharacterSummaryStat(statType, stat.valueString);
+					return createCharacterSummaryStat(statType, stat.stringValue);
 				}
 				throw new Error(
 					`Stat is given as a percentage, but ${character.id} has no base stats`,
@@ -615,12 +624,12 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 		getOptimizationValue: (
 			character: Character,
 			target: OptimizationPlan,
-			stat: Stat,
+			stat: CharacterSummaryStat,
 		) => {
 			// Optimization Plans don't have separate physical and special critical chances, since both are always affected
 			// equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit
 			// chance, ignore it altogether.
-			if (stat.getDisplayType() === "Special Critical Chance") {
+			if (getCSDisplayType(stat) === "Special Critical Chance") {
 				return 0;
 			}
 
@@ -629,10 +638,10 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 				| Readonly<"Critical Chance"[]>;
 
 			const statTypes: OptStats =
-				"Physical Critical Chance" === stat.getDisplayType()
+				"Physical Critical Chance" === getCSDisplayType(stat)
 					? ["Critical Chance"]
-					: (Stat.display2CSGIMOStatNamesMap[
-							stat.getDisplayType()
+					: (display2CSGIMOStatNamesMap[
+							getCSDisplayType(stat)
 						] as CharacterStatNames.WithoutCC[]);
 
 			if (!statTypes) {
@@ -648,7 +657,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 								(character.playerValues.baseStats[
 									statType as CharacterStatNames.All
 								] *
-									stat.value) /
+									getStatValue(stat)) /
 									100,
 							),
 					)

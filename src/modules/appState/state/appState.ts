@@ -40,7 +40,7 @@ import { ui$ } from "#/modules/ui/state/ui";
 import { convertBackup, type Backup, type BackupData } from "../domain/Backup";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
 import type { LatestModsManagerBackupDataSchemaOutput } from "#/domain/schemas/mods-manager/index";
-import { Mod } from "#/domain/Mod";
+import { deserializeMod, type Mod } from "#/domain/Mod";
 
 interface ImportError {
 	errorMessage: string;
@@ -448,7 +448,7 @@ function mergeMods(
 	)) {
 		const modById = new Map<string, Mod>();
 		for (const [modId, mod] of backupModsByIdForProfile.modById) {
-			modById.set(modId, Mod.deserialize(mod));
+			modById.set(modId, deserializeMod(mod));
 		}
 		mods$.modByIdByAllycode[allycode].set({
 			id: allycode,

@@ -8,7 +8,13 @@ import {
 
 // domain
 import type { GIMOSecondaryStatNames } from "./GIMOStatNames";
-import { Stat } from "./Stat";
+import {
+	type Stat,
+	mixedTypes,
+	getDisplayType,
+	setStatValue,
+	createStat,
+} from "./Stat";
 
 type HUNeutralStats = "Speed" | "Potency %" | "Resistance %";
 type HUOffensiveStats = "Offense" | "Offense %" | "Crit Chance %";
@@ -28,152 +34,11 @@ export type Rolls = 1 | 2 | 3 | 4 | 5;
 export const strRolls = ["1", "2", "3", "4", "5"] as const;
 export type StrRolls = (typeof strRolls)[number];
 
-export class SecondaryStat extends Stat {
-	static statNames: Readonly<GIMOSecondaryStatNames[]> = [
-		"Speed",
-		"Potency %",
-		"Tenacity %",
-		"Critical Chance %",
-		"Offense",
-		"Offense %",
-		"Defense",
-		"Defense %",
-		"Health",
-		"Health %",
-		"Protection",
-		"Protection %",
-	] as const;
-
-	static HU2GIMOStatNamesMap: { [key in HUStatNames]: GIMOSecondaryStatNames } =
-		{
-			"Crit Chance %": "Critical Chance %",
-			Defense: "Defense",
-			"Defense %": "Defense %",
-			Health: "Health",
-			"Health %": "Health %",
-			Offense: "Offense",
-			"Offense %": "Offense %",
-			"Potency %": "Potency %",
-			Protection: "Protection",
-			"Protection %": "Protection %",
-			"Resistance %": "Tenacity %",
-			Speed: "Speed",
-		};
-
-	static scaledUpgradeFactors: { [key in GIMOSecondaryStatNames]: number } = {
-		"Critical Chance %": toScaled(1.045),
-		Defense: toScaled(1.63),
-		"Defense %": toScaled(2.34),
-		Health: toScaled(1.26),
-		"Health %": toScaled(1.86),
-		Offense: toScaled(1.1),
-		"Offense %": toScaled(3.02),
-		"Potency %": toScaled(1.33),
-		Protection: toScaled(1.11),
-		"Protection %": toScaled(1.33),
-		Speed: toScaled(1),
-		"Tenacity %": toScaled(1.33),
-	};
-
+interface SecondaryStat extends Stat {
 	id: string;
-	type: GIMOSecondaryStatNames;
 	rolls: Rolls;
 	score: SecondaryStatScore;
-
-	constructor(
-		id: string,
-		type: GIMOSecondaryStatNames,
-		value: string,
-		rolls: Rolls = 1,
-	) {
-		super(value);
-		this.id = id;
-		this.type = type;
-		this.rolls = rolls;
-		this.displayModifier = this.type.endsWith("%") ? "%" : "";
-		this.isPercentVersion =
-			this.displayModifier === "%" &&
-			Stat.mixedTypes.includes(this.getDisplayType());
-		this.score = { scaledValue: 0, valueAsString: "0%" };
-	}
-
-	clone(): this {
-		return new SecondaryStat(
-			this.id,
-			this.type,
-			this.stringValue,
-			this.rolls,
-		) as this;
-	}
-
-	static fromHotUtils(
-		id: string,
-		type: HUStatNames,
-		value: string,
-		rolls: StrRolls = "1",
-	) {
-		return new SecondaryStat(
-			id,
-			SecondaryStat.HU2GIMOStatNamesMap[type],
-			value,
-			+rolls as Rolls,
-		);
-	}
-
-	calcScore() {
-		this.score = createStatScore(this);
-	}
-
-	/**
-	 * Return the value this stat would have if it were upgraded on a mod sliced from 5A to 6E
-	 * @returns {SecondaryStat}
-	 */
-	upgrade(): SecondaryStat {
-		const upgradedValue = mulScaled(
-			this.scaledValue,
-			SecondaryStat.scaledUpgradeFactors[this.type],
-		);
-		const result = new SecondaryStat(
-			this.id,
-			this.type,
-			`${fromScaled(upgradedValue)}`,
-			this.rolls,
-		);
-
-		if (this.type === "Speed")
-			result.value = fromScaled(result.scaledValue + toScaled(1));
-
-		return result;
-	}
-
-	downgrade(): SecondaryStat {
-		const downgradedValue = divScaled(
-			this.scaledValue,
-			SecondaryStat.scaledUpgradeFactors[this.type],
-		);
-		const result = new SecondaryStat(
-			this.id,
-			this.type,
-			`${fromScaled(downgradedValue)}`,
-			this.rolls,
-		);
-
-		if (this.type === "Speed")
-			result.value = fromScaled(result.scaledValue - toScaled(1));
-
-		return result;
-	}
-
-	serialize(): [GIMOSecondaryStatNames, string, StrRolls] {
-		return [this.type, this.stringValue, `${this.rolls}` as StrRolls];
-	}
-
-	/**
-	 * Return a CSS class to represent this stat
-	 */
-	getRollsTier() {
-		return this.rolls - 1;
-	}
+	type: GIMOSecondaryStatNames;
 }
 
 interface SecondaryStatScore {
@@ -274,6 +139,157 @@ function createStatScore(stat: SecondaryStat): SecondaryStatScore {
 	};
 }
 
-export function getStatScoreTier(statScore: SecondaryStatScore) {
+function getStatScoreTier(statScore: SecondaryStatScore) {
 	return Math.floor(fromScaled(divScaled(statScore.scaledValue, toScaled(20))));
 }
+
+function cloneStat(stat: SecondaryStat): SecondaryStat {
+	return createSecondaryStat(stat.id, stat.type, stat.stringValue, stat.rolls);
+}
+
+function downgradeSecondaryStat(stat: SecondaryStat): SecondaryStat {
+	const downgradedValue = divScaled(
+		stat.scaledValue,
+		scaledUpgradeFactors[stat.type],
+	);
+	const result = createSecondaryStat(
+		stat.id,
+		stat.type,
+		`${fromScaled(downgradedValue)}`,
+		stat.rolls,
+	);
+
+	if (stat.type === "Speed")
+		setStatValue(result, fromScaled(result.scaledValue - toScaled(1)));
+
+	return result;
+}
+
+/**
+ * Return the value this stat would have if it were upgraded on a mod sliced from 5A to 6E
+ * @returns {SecondaryStat}
+ */
+function upgradeSecondaryStat(stat: SecondaryStat): SecondaryStat {
+	const upgradedValue = mulScaled(
+		stat.scaledValue,
+		scaledUpgradeFactors[stat.type],
+	);
+	const result = createSecondaryStat(
+		stat.id,
+		stat.type,
+		`${fromScaled(upgradedValue)}`,
+		stat.rolls,
+	);
+
+	if (stat.type === "Speed")
+		setStatValue(result, fromScaled(result.scaledValue + toScaled(1)));
+
+	return result;
+}
+
+function fromHotUtils(
+	id: string,
+	type: HUStatNames,
+	value: string,
+	rolls: StrRolls = "1",
+) {
+	return createSecondaryStat(
+		id,
+		HU2GIMOStatNamesMap[type],
+		value,
+		+rolls as Rolls,
+	);
+}
+
+function serializeSecondaryStat(
+	stat: SecondaryStat,
+): [GIMOSecondaryStatNames, string, StrRolls] {
+	return [stat.type, stat.stringValue, `${stat.rolls}` as StrRolls];
+}
+
+/**
+ * Return a CSS class to represent this stat
+ */
+function getRollsTier(stat: SecondaryStat): number {
+	return stat.rolls - 1;
+}
+
+function calculateScore(stat: SecondaryStat): void {
+	stat.score = createStatScore(stat);
+}
+
+function createSecondaryStat(
+	id: string,
+	type: GIMOSecondaryStatNames,
+	value: string,
+	rolls = 1 as Rolls,
+): SecondaryStat {
+	const stat = createStat(value) as SecondaryStat;
+	stat.id = id;
+	stat.rolls = rolls;
+	stat.type = type;
+	stat.displayModifier = stat.type.endsWith("%") ? "%" : "";
+	stat.isPercentVersion =
+		stat.displayModifier === "%" && mixedTypes.includes(getDisplayType(stat));
+	stat.score = { scaledValue: 0, valueAsString: "0%" };
+	return stat;
+}
+
+const HU2GIMOStatNamesMap: { [key in HUStatNames]: GIMOSecondaryStatNames } = {
+	"Crit Chance %": "Critical Chance %",
+	Defense: "Defense",
+	"Defense %": "Defense %",
+	Health: "Health",
+	"Health %": "Health %",
+	Offense: "Offense",
+	"Offense %": "Offense %",
+	"Potency %": "Potency %",
+	Protection: "Protection",
+	"Protection %": "Protection %",
+	"Resistance %": "Tenacity %",
+	Speed: "Speed",
+};
+
+const scaledUpgradeFactors: { [key in GIMOSecondaryStatNames]: number } = {
+	"Critical Chance %": toScaled(1.045),
+	Defense: toScaled(1.63),
+	"Defense %": toScaled(2.34),
+	Health: toScaled(1.26),
+	"Health %": toScaled(1.86),
+	Offense: toScaled(1.1),
+	"Offense %": toScaled(3.02),
+	"Potency %": toScaled(1.33),
+	Protection: toScaled(1.11),
+	"Protection %": toScaled(1.33),
+	Speed: toScaled(1),
+	"Tenacity %": toScaled(1.33),
+};
+
+const statNames: Readonly<GIMOSecondaryStatNames[]> = [
+	"Speed",
+	"Potency %",
+	"Tenacity %",
+	"Critical Chance %",
+	"Offense",
+	"Offense %",
+	"Defense",
+	"Defense %",
+	"Health",
+	"Health %",
+	"Protection",
+	"Protection %",
+] as const;
+
+export {
+	calculateScore,
+	cloneStat,
+	createSecondaryStat,
+	downgradeSecondaryStat,
+	fromHotUtils,
+	getRollsTier,
+	getStatScoreTier,
+	serializeSecondaryStat,
+	upgradeSecondaryStat,
+	statNames,
+	type SecondaryStat,
+};

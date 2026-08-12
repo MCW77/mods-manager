@@ -106,10 +106,15 @@ import {
 	type OptimizationPlan,
 	type PrimaryStatRestrictions,
 } from "../domain/OptimizationPlan";
+import { GIMO2DisplayStatNamesMap } from "../domain/PrimaryStat";
 import type { SelectedCharacters } from "../domain/SelectedCharacters";
 import type { SetRestrictions } from "../domain/SetRestrictions";
-import type { DisplayStatNames } from "../domain/Stat";
-import { PrimaryStats, SecondaryStats, Stats } from "../domain/Stats";
+import {
+	type DisplayStatNames,
+	display2CSGIMOStatNamesMap,
+	gimo2DisplayStatNamesMap,
+	mixedTypes,
+} from "../domain/Stat";
 import type {
 	TargetStat,
 	TargetStats,
@@ -148,7 +153,6 @@ interface Cache {
 		setCharacter: (character: Character.Character) => void;
 		setTarget: (target: OptimizationPlan) => void;
 	};
-	modUpgrades: Map<string, Mod>;
 	// Closure-based modStats cache API (bound to current character)
 	modStats: {
 		get: (mod: Mod) => StatValue[];
@@ -164,28 +168,28 @@ interface Cache {
 }
 
 interface StatValue {
-	displayType: Stats.DisplayStatNames;
+	displayType: DisplayStatNames;
 	value: number;
 	integral: number;
 	fractional: number;
 }
 
 interface Stat {
-	displayType: Stats.DisplayStatNames;
+	displayType: DisplayStatNames;
 	isPercentVersion?: boolean;
 	value: number;
 }
 
 interface PrimaryStat {
 	type: GIMOPrimaryStatNames;
-	displayType: Stats.DisplayStatNames;
+	displayType: DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
 }
 
 interface SecondaryStat {
 	type: GIMOSecondaryStatNames;
-	displayType: Stats.DisplayStatNames;
+	displayType: DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
 }
@@ -198,6 +202,8 @@ interface SetBonus {
 }
 
 type FullOrHalf = "full" | "half";
+type Pips = 5 | 6;
+
 interface SetLoadout {
 	loadout: Mod[];
 	setName: GIMOSetStatNames | "Setless";
@@ -206,7 +212,7 @@ interface SetLoadout {
 
 interface SetStat {
 	type: GIMOSetStatNames;
-	displayType: Stats.DisplayStatNames;
+	displayType: DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
 }
@@ -216,11 +222,10 @@ interface Mod {
 	slot: ModTypes.GIMOSlots;
 	modset: SetBonus;
 	level: number;
-	pips: number;
+	pips: Pips;
 	primaryStat: PrimaryStat;
 	secondaryStats: SecondaryStat[];
 	characterID: CharacterNames | "null";
-	tier: number;
 }
 
 interface LoadoutAndMessages {
@@ -231,8 +236,7 @@ interface LoadoutAndMessages {
 }
 
 type ModsetScoreCacheKey = `${GIMOSetStatNames}-${number}`;
-type FlatStatsCacheKey =
-	`${Stats.DisplayStatNames}${boolean | undefined}${number}`;
+type FlatStatsCacheKey = `${DisplayStatNames}${boolean | undefined}${number}`;
 type ModsAndSatisfiedSetRestrictions = [Mod[], SetRestrictions];
 type SetValues = Record<
 	TargetStatsNames,
@@ -248,10 +252,8 @@ type SetRestrictionsEntries = [GIMOSetStatNames, number][];
 type BestModsIndex = Map<ModTypes.GIMOSlots, Map<number, Map<string, Mod>>>;
 type BestModsArrayLookup = Map<ModTypes.GIMOSlots, Map<number, Mod[]>>;
 type ModFilterPredicate = (mod: Mod) => boolean;
-
 // #endregion types
 
-let simulateLevel15Mods = false;
 // #region Messaging
 self.onmessage = async (message) => {
 	if (message.data.type === "Init") {
@@ -306,10 +308,16 @@ self.onmessage = async (message) => {
 		perf.resetPerformanceLog();
 
 		const allycode = profilesManagement$.activeAllycode.get();
+		const modDeserializer = (mod: ModTypes.GIMOFlatMod) =>
+			deserializeMod(
+				mod,
+				optimizationSettings$.activeSettings.simulateLevel15Mods.peek(),
+				optimizationSettings$.activeSettings.simulate6EModSlice.peek(),
+			);
 
 		const allMods = Array.from(
-			mods$.activeModById.values().map((mod) => mod.serialize()),
-			deserializeMod,
+			mods$.persistedModByIdByAllycode[allycode].modById.values(),
+			modDeserializer,
 		);
 
 		const selectedCharacters: SelectedCharacters =
@@ -320,8 +328,6 @@ self.onmessage = async (message) => {
 					target: deserializeTarget(target),
 				}));
 
-		simulateLevel15Mods =
-			optimizationSettings$.activeSettings.simulateLevel15Mods.peek();
 		const optimizerResults = perf.measureTime(optimizeMods, "optimizeMods")(
 			allMods,
 			roster$.activeCharacterById.peek(),
@@ -541,113 +547,67 @@ const setBonuses: Record<GIMOSetStatNames, SetBonus> = Object.freeze({
 
 // Map pips to maximum value at level 15 for each primary stat type
 const maxStatPrimaries: Readonly<
-	Partial<Record<Stats.DisplayStatNames, Record<number, number>>>
+	Partial<Record<DisplayStatNames, Record<Pips, number>>>
 > = Object.freeze({
 	Offense: {
-		1: 1.88,
-		2: 2,
-		3: 3.88,
-		4: 4,
 		5: 5.88,
 		6: 8.5,
 	},
 	Defense: {
-		1: 3.75,
-		2: 4,
-		3: 7.75,
-		4: 8,
 		5: 11.75,
 		6: 20,
 	},
 	Health: {
-		1: 1.88,
-		2: 2,
-		3: 3.88,
-		4: 4,
 		5: 5.88,
 		6: 16,
 	},
 	Protection: {
-		1: 7.5,
-		2: 8,
-		3: 15.5,
-		4: 16,
 		5: 23.5,
 		6: 24,
 	},
 	Speed: {
-		1: 17,
-		2: 19,
-		3: 21,
-		4: 26,
 		5: 30,
 		6: 32,
 	},
 	Accuracy: {
-		1: 7.5,
-		2: 8,
-		3: 8.75,
-		4: 10.5,
 		5: 12,
 		6: 30,
 	},
 	"Critical Avoidance": {
-		1: 15,
-		2: 16,
-		3: 18,
-		4: 21,
 		5: 24,
 		6: 35,
 	},
 	"Critical Chance": {
-		1: 7.5,
-		2: 8,
-		3: 8.75,
-		4: 10.5,
 		5: 12,
 		6: 20,
 	},
 	"Critical Damage": {
-		1: 22.5,
-		2: 24,
-		3: 27,
-		4: 31.5,
 		5: 36,
 		6: 42,
 	},
 	Potency: {
-		1: 15,
-		2: 16,
-		3: 18,
-		4: 21,
 		5: 24,
 		6: 30,
 	},
 	Tenacity: {
-		1: 15,
-		2: 16,
-		3: 18,
-		4: 21,
 		5: 24,
 		6: 35,
 	},
 });
 
-const statSlicingUpgradeFactors: Readonly<
-	Partial<Record<GIMOSecondaryStatNames, number>>
-> = Object.freeze({
+const statSlicingUpgradeFactors = Object.freeze({
 	"Offense %": 3.02,
 	"Defense %": 2.34,
 	"Health %": 1.86,
 	Defense: 1.63,
-	Tenacity: 1.33,
-	Potency: 1.33,
+	"Tenacity %": 1.33,
+	"Potency %": 1.33,
 	"Protection %": 1.33,
 	Health: 1.26,
 	Protection: 1.11,
 	Offense: 1.1,
-	"Critical Chance": 1.04,
-});
+	"Critical Chance %": 1.04,
+} as const satisfies Record<Exclude<GIMOSecondaryStatNames, "Speed">, number>);
 
 const statWeights = Object.freeze({
 	Health: 2000,
@@ -719,7 +679,7 @@ const affectedTargetStatsBySecondaryStat: Record<
 	"Tenacity %": ["Tenacity"],
 });
 
-const wholeValueStats = new Set<Stats.DisplayStatNames>([
+const wholeValueStats = new Set<DisplayStatNames>([
 	"Health",
 	"Protection",
 	"Speed",
@@ -729,7 +689,7 @@ const wholeValueStats = new Set<Stats.DisplayStatNames>([
 	"Resistance",
 ]);
 
-const display2CSGIMOStatNamesMap: Record<
+const display2CSGIMOStatNameMap: Record<
 	DisplayStatNames,
 	WithoutCC | "Critical Chance"
 > = Object.freeze({
@@ -787,13 +747,20 @@ function chooseFromArray<T>(input: readonly T[], choices: number) {
 	return combinations;
 }
 
-function deserializePrimaryStat(type: GIMOPrimaryStatNames, value: string) {
-	const displayType = PrimaryStats.PrimaryStat.GIMO2DisplayStatNamesMap[type];
+function deserializePrimaryStat(
+	type: GIMOPrimaryStatNames,
+	value: string,
+	pips: Pips,
+	simulateLevel15: boolean,
+) {
+	const displayType = GIMO2DisplayStatNamesMap[type];
 	const rawValue = value.replace(/[+%]/g, "");
-	const realValue = +rawValue;
+	const realValue = simulateLevel15
+		? (maxStatPrimaries[displayType]?.[pips] ?? 0)
+		: +rawValue;
 	const isPercentVersion =
 		(type.endsWith("%") || value.endsWith("%")) &&
-		Stats.Stat.mixedTypes.includes(displayType);
+		mixedTypes.includes(displayType);
 
 	return {
 		type: type,
@@ -803,14 +770,23 @@ function deserializePrimaryStat(type: GIMOPrimaryStatNames, value: string) {
 	} as PrimaryStat;
 }
 
-function deserializeSecondaryStat(type: GIMOSecondaryStatNames, value: string) {
-	const displayType =
-		SecondaryStats.SecondaryStat.gimo2DisplayStatNamesMap[type];
+function deserializeSecondaryStat(
+	type: GIMOSecondaryStatNames,
+	value: string,
+	simulate6E: boolean,
+) {
+	const displayType = gimo2DisplayStatNamesMap[type];
 	const rawValue = value.replace(/[+%]/g, "");
-	const realValue = +rawValue;
 	const isPercentVersion =
 		(type.endsWith("%") || value.endsWith("%")) &&
-		Stats.Stat.mixedTypes.includes(displayType);
+		mixedTypes.includes(displayType);
+
+	const realValue =
+		simulate6E === false
+			? +rawValue
+			: type === "Speed"
+				? +rawValue + 1
+				: statSlicingUpgradeFactors[type] * +rawValue;
 
 	return {
 		type: type,
@@ -820,31 +796,40 @@ function deserializeSecondaryStat(type: GIMOSecondaryStatNames, value: string) {
 	} as SecondaryStat;
 }
 
-function deserializeMod(mod: ModTypes.GIMOFlatMod) {
+function deserializeMod(
+	mod: ModTypes.GIMOFlatMod,
+	simulateLevel15: boolean,
+	simulate6E: boolean,
+): Mod {
+	const doLevel15 = (simulateLevel15 || simulate6E) && mod.level < 15;
+	const do6E = simulate6E && mod.pips === 5;
+
 	const primaryStat = deserializePrimaryStat(
 		mod.primaryBonusType,
 		mod.primaryBonusValue,
+		mod.pips,
+		doLevel15,
 	);
 	const secondaryStats: SecondaryStat[] = [];
 
 	if (null !== mod.secondaryType_1 && "" !== mod.secondaryValue_1) {
 		secondaryStats.push(
-			deserializeSecondaryStat(mod.secondaryType_1, mod.secondaryValue_1),
+			deserializeSecondaryStat(mod.secondaryType_1, mod.secondaryValue_1, do6E),
 		);
 	}
 	if (null !== mod.secondaryType_2 && "" !== mod.secondaryValue_2) {
 		secondaryStats.push(
-			deserializeSecondaryStat(mod.secondaryType_2, mod.secondaryValue_2),
+			deserializeSecondaryStat(mod.secondaryType_2, mod.secondaryValue_2, do6E),
 		);
 	}
 	if (null !== mod.secondaryType_3 && "" !== mod.secondaryValue_3) {
 		secondaryStats.push(
-			deserializeSecondaryStat(mod.secondaryType_3, mod.secondaryValue_3),
+			deserializeSecondaryStat(mod.secondaryType_3, mod.secondaryValue_3, do6E),
 		);
 	}
 	if (null !== mod.secondaryType_4 && "" !== mod.secondaryValue_4) {
 		secondaryStats.push(
-			deserializeSecondaryStat(mod.secondaryType_4, mod.secondaryValue_4),
+			deserializeSecondaryStat(mod.secondaryType_4, mod.secondaryValue_4, do6E),
 		);
 	}
 
@@ -855,12 +840,11 @@ function deserializeMod(mod: ModTypes.GIMOFlatMod) {
 		id: mod.mod_uid,
 		slot: mod.slot.toLowerCase(),
 		modset: setBonus,
-		level: mod.level,
-		pips: mod.pips,
+		level: doLevel15 ? 15 : mod.level,
+		pips: do6E ? 6 : mod.pips,
 		primaryStat: primaryStat,
 		secondaryStats: secondaryStats,
 		characterID: mod.characterID,
-		tier: mod.tier,
 	} as Mod;
 }
 
@@ -974,13 +958,13 @@ const createModStatsCache = () => {
 				return cacheHit;
 			}
 
-			const workingMod = getUpgradedMod(mod);
+			//			const workingMod = getUpgradedMod(mod);
 			let primaryFlatStats: StatValue[] = [];
 			const allFlatStats: StatValue[] = [];
-			const alreadyPushedStats = new Map<Stats.DisplayStatNames, StatValue>();
+			const alreadyPushedStats = new Map<DisplayStatNames, StatValue>();
 
-			if (relevantStats?.has(workingMod.primaryStat.displayType)) {
-				primaryFlatStats = cache.flatStats.get(workingMod.primaryStat) ?? [];
+			if (relevantStats?.has(mod.primaryStat.displayType)) {
+				primaryFlatStats = cache.flatStats.get(mod.primaryStat) ?? [];
 				for (const flatStat of primaryFlatStats) {
 					const newStat = { ...flatStat };
 					allFlatStats.push(newStat);
@@ -988,7 +972,7 @@ const createModStatsCache = () => {
 				}
 			}
 
-			for (const stat of workingMod.secondaryStats) {
+			for (const stat of mod.secondaryStats) {
 				if (relevantStats?.has(stat.displayType)) {
 					const secondaryFlatStats = cache.flatStats.get(stat) ?? [];
 					for (const flatStat of secondaryFlatStats) {
@@ -1183,7 +1167,6 @@ const createModsetStatsCache = () => {
 const cache: Cache = {
 	modScores: createModScoresCache(),
 	modStats: createModStatsCache(),
-	modUpgrades: new Map<string, Mod>(),
 	relatedStatValues: new Map<string, Map<string, number>>(),
 	modsetScore: createModsetScoreCache(),
 	modsetStats: createModsetStatsCache(),
@@ -1375,8 +1358,7 @@ function getFlatStatsFromSetLoadout(
  * @returns {Array<Stat>}
  */
 function flattenStatValues(stat: Stat, character: Character.Character) {
-	const statPropertyNames =
-		Stats.Stat.display2CSGIMOStatNamesMap[stat.displayType];
+	const statPropertyNames = display2CSGIMOStatNamesMap[stat.displayType];
 
 	const flattenedStats: StatValue[] = statPropertyNames.map((statName) => {
 		const displayName = statDisplayNames[statName];
@@ -1567,16 +1549,16 @@ function getStatValueForCharacterWithMods(
 ) {
 	if (
 		stat !== "Health+Protection" &&
-		Stats.Stat.display2CSGIMOStatNamesMap[stat] &&
-		Stats.Stat.display2CSGIMOStatNamesMap[stat].length > 1
+		display2CSGIMOStatNamesMap[stat] &&
+		display2CSGIMOStatNamesMap[stat].length > 1
 	) {
 		throw new Error(
 			"Trying to set an ambiguous target stat. Offense, Crit Chance, etc. need to be broken into physical or special.",
 		);
 	}
 	if (stat === "Health+Protection") {
-		const healthProperty = Stats.Stat.display2CSGIMOStatNamesMap.Health[0];
-		const protProperty = Stats.Stat.display2CSGIMOStatNamesMap.Protection[0];
+		const healthProperty = display2CSGIMOStatNamesMap.Health[0];
+		const protProperty = display2CSGIMOStatNamesMap.Protection[0];
 		const baseValue =
 			character.playerValues.equippedStats[healthProperty] +
 			character.playerValues.equippedStats[protProperty];
@@ -1595,7 +1577,7 @@ function getStatValueForCharacterWithMods(
 		}, 0);
 		return baseValue + setValue;
 	}
-	const statProperty = Stats.Stat.display2CSGIMOStatNamesMap[stat][0];
+	const statProperty = display2CSGIMOStatNamesMap[stat][0];
 	const baseValue = character.playerValues.equippedStats[statProperty];
 
 	const setStats = getFlatStatsFromSetLoadouts(
@@ -1661,78 +1643,9 @@ function scoreStat(
 	}
 
 	const targetProperties: WithoutCC | "Critical Chance" =
-		display2CSGIMOStatNamesMap[stat.displayType];
+		display2CSGIMOStatNameMap[stat.displayType];
 	const valueToScore = isWholeValueStat ? stat.integral : stat.value;
 	return target[targetProperties] * valueToScore;
-}
-
-/**
- * Get the stats that a mod would have were it upgraded to level 15 and/or sliced to 6E,
- * based on the optimization target of the given character
- * @param mod {Mod}
- * @param character {Character}
- * @param target {OptimizationPlan}
- * @returns {Mod}
- */
-function getUpgradedMod(mod: Mod) {
-	const cacheHit = cache.modUpgrades.get(mod.id);
-	if (cacheHit) {
-		return cacheHit;
-	}
-
-	const workingMod: Mod = Object.assign({}, mod);
-
-	// Level the mod if the target says to
-
-	if (
-		15 > workingMod.level &&
-		optimizationSettings$.activeSettings.simulateLevel15Mods.peek()
-	) {
-		workingMod.primaryStat = {
-			displayType: workingMod.primaryStat.displayType,
-			isPercentVersion: workingMod.primaryStat.isPercentVersion,
-			type: workingMod.primaryStat.type,
-			value:
-				maxStatPrimaries[workingMod.primaryStat.displayType]?.[
-					workingMod.pips
-				] ?? 0,
-		};
-		workingMod.level = 15;
-	}
-
-	// Slice the mod to 6E if needed
-	if (
-		15 === workingMod.level &&
-		5 === workingMod.pips &&
-		optimizationSettings$.activeSettings.simulate6EModSlice.peek()
-	) {
-		workingMod.pips = 6;
-		workingMod.primaryStat = {
-			displayType: workingMod.primaryStat.displayType,
-			isPercentVersion: workingMod.primaryStat.isPercentVersion,
-			type: workingMod.primaryStat.type,
-			value: maxStatPrimaries[workingMod.primaryStat.displayType]?.[6] ?? 0,
-		};
-		workingMod.secondaryStats = workingMod.secondaryStats.map((stat) => {
-			const statName: GIMOSecondaryStatNames = stat.isPercentVersion
-				? (`${stat.displayType} %` as GIMOSecondaryStatNames)
-				: (stat.displayType as GIMOSecondaryStatNames);
-
-			return {
-				displayType: stat.displayType,
-				isPercentVersion: stat.isPercentVersion,
-				type: stat.type,
-				value:
-					"Speed" === stat.displayType
-						? stat.value + 1
-						: (statSlicingUpgradeFactors[statName] ?? 0) * stat.value,
-			};
-		});
-		workingMod.tier = 1;
-	}
-
-	cache.modUpgrades.set(mod.id, workingMod);
-	return workingMod;
 }
 
 function splitLoadoutBySets(loadout: Mod[]) {
@@ -1824,7 +1737,7 @@ function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 
 	for (const mod of loadout) {
 		const setName = mod.modset.name;
-		const fullOrHalf = mod.level === 15 || simulateLevel15Mods ? 0 : 1;
+		const fullOrHalf = mod.level === 15 ? 0 : 1;
 		modsetCounts[setName][fullOrHalf]++;
 
 		const { score, partiallyScoredStats: modPartiallyScoredStats } =
@@ -2801,7 +2714,7 @@ function getStatValuesForCharacter(
 		if (stat === "Health+Protection") {
 			throw new Error("Cannot optimize Health+Protection. Use as Report Only.");
 		}
-		const characterStatProperties = Stats.Stat.display2CSGIMOStatNamesMap[stat];
+		const characterStatProperties = display2CSGIMOStatNamesMap[stat];
 		if (1 < characterStatProperties.length) {
 			throw new Error(
 				"Trying to set an ambiguous target stat. Offense, Crit Chance, etc. need to be broken into physical or special.",
@@ -2938,7 +2851,7 @@ function collectModValuesBySlot(
 	for (const mod of mods) {
 		const modFlatStats = cache.modStats.get(mod) ?? [];
 
-		const modFlatStatsByDisplayType: Map<Stats.DisplayStatNames, StatValue> =
+		const modFlatStatsByDisplayType: Map<DisplayStatNames, StatValue> =
 			new Map();
 
 		for (const stat of modFlatStats) {

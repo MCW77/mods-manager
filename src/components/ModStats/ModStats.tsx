@@ -14,20 +14,25 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 import type { Mod } from "#/domain/Mod";
 import { modTierColors } from "#/domain/ModTierColors";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import type { SecondaryStats, Stats } from "#/domain/Stats";
+import { type SecondaryStat, getRollsTier } from "#/domain/SecondaryStat";
+import {
+	getDisplayValueAndTypeString,
+	type DisplayStatNames,
+	type DisplayedStat,
+} from "#/domain/Stat";
 
 // components
 import ModScores from "../ModScores/ModScores";
 
 const translateStat = (
-	displayText: Stats.DisplayedStat,
+	displayText: DisplayedStat,
 	t: TFunction<"domain", undefined>,
 ) => {
 	const seperatorPos = displayText.indexOf(" ");
 	const statValue = displayText.substring(0, seperatorPos);
-	const statName: Stats.DisplayStatNames = displayText.substring(
+	const statName: DisplayStatNames = displayText.substring(
 		seperatorPos + 1,
-	) as Stats.DisplayStatNames;
+	) as DisplayStatNames;
 	const translatedStatName = t(`stats.${statName}`);
 	const parts = [statValue, translatedStatName];
 
@@ -42,15 +47,12 @@ type ComponentProps = {
 const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
 	const [t] = useTranslation("domain");
 
-	const showStatElement = (
-		stat: SecondaryStats.SecondaryStat,
-		speedRemainder: string,
-	) => {
-		const displayStat = `${translateStat(stat.show(), t)} ${speedRemainder}`;
+	const showStatElement = (stat: SecondaryStat, speedRemainder: string) => {
+		const displayStat = `${translateStat(getDisplayValueAndTypeString(stat), t)} ${speedRemainder}`;
 		return (
 			<li
 				key={stat.id}
-				className={`leading-[1.2em] ${modTierColors[stat.getRollsTier()]}`}
+				className={`leading-[1.2em] ${modTierColors[getRollsTier(stat)]}`}
 			>
 				<span>({stat.rolls})</span> {displayStat}
 			</li>
@@ -73,7 +75,7 @@ const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
 			<h4 className="uppercase">{t("Primary")}</h4>
 			<ul className="m-b-[0.5em]">
 				<li className={"leading-[1.2em]"}>
-					{translateStat(mod.primaryStat.show(), t)}
+					{translateStat(getDisplayValueAndTypeString(mod.primaryStat), t)}
 				</li>
 			</ul>
 			<div className="flex justify-between">

@@ -1,5 +1,9 @@
 import type { GIMOSecondaryStatNames } from "#/domain/GIMOStatNames";
-import { type Rolls, SecondaryStat } from "#/domain/SecondaryStat";
+import {
+	createSecondaryStat,
+	type Rolls,
+	type SecondaryStat,
+} from "#/domain/SecondaryStat";
 import type * as C3PO from "../../dtos/c3po/index";
 
 const c3PO2GIMOSecondaryStatNameMap: {
@@ -35,7 +39,7 @@ const fromC3PO = (
 			Math.trunc(Number(secondary.stat.statValueDecimal) / 10000),
 		);
 	} else statValue = (Number(secondary.stat.statValueDecimal) / 100).toFixed(2);
-	return new SecondaryStat(
+	return createSecondaryStat(
 		id,
 		c3PO2GIMOSecondaryStatNameMap[secondary.stat.unitStatId],
 		statValue,

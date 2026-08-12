@@ -6,13 +6,15 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import type { Mod } from "#/domain/Mod";
 import type {
 	ModById,
+	ModByIdForProfile,
 	ModsDataToPersist,
 	PersistedModByIdForProfileByAllycode,
 } from "./Mods";
 
 interface ModsObservable {
 	persistedData: ModsDataToPersist;
-	modByIdByAllycode: () => Observable<ModsDataToPersist>;
+	persistedModByIdByAllycode: PersistedModByIdForProfileByAllycode;
+	modByIdByAllycode: (allycode: string) => Observable<ModByIdForProfile>;
 	activeModById: () => Observable<ModById>;
 	addProfile: (allycode: string) => void;
 	deleteProfile: (allycode: string) => void;
@@ -36,4 +38,9 @@ const getInitialMods = (): ModsDataToPersist => {
 	return mods;
 };
 
-export { getInitialMods, type ModsObservable };
+const getinitialPersistedMods = (): PersistedModByIdForProfileByAllycode => {
+	const persistedMods: PersistedModByIdForProfileByAllycode = {};
+	return persistedMods;
+};
+
+export { getInitialMods, getinitialPersistedMods, type ModsObservable };

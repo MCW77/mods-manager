@@ -1,57 +1,57 @@
-import { SetStats } from "../domain/Stats";
-import SetBonus from "../domain/SetBonus";
+import { createSetStat } from "../domain/SetStat";
+import { createSetBonus, type SetBonus } from "../domain/SetBonus";
 import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 
 type SetBonuses = Record<GIMOSetStatNames, SetBonus>;
 
 const setBonuses: SetBonuses = {
-	"Health %": new SetBonus(
+	"Health %": createSetBonus(
 		"Health %",
 		2,
-		new SetStats.SetStat("Health %", "5"),
-		new SetStats.SetStat("Health %", "10"),
+		createSetStat("Health %", "5"),
+		createSetStat("Health %", "10"),
 	),
-	"Defense %": new SetBonus(
+	"Defense %": createSetBonus(
 		"Defense %",
 		2,
-		new SetStats.SetStat("Defense %", "12.5"),
-		new SetStats.SetStat("Defense %", "25"),
+		createSetStat("Defense %", "12.5"),
+		createSetStat("Defense %", "25"),
 	),
-	"Critical Damage %": new SetBonus(
+	"Critical Damage %": createSetBonus(
 		"Critical Damage %",
 		4,
-		new SetStats.SetStat("Critical Damage %", "15"),
-		new SetStats.SetStat("Critical Damage %", "30"),
+		createSetStat("Critical Damage %", "15"),
+		createSetStat("Critical Damage %", "30"),
 	),
-	"Critical Chance %": new SetBonus(
+	"Critical Chance %": createSetBonus(
 		"Critical Chance %",
 		2,
-		new SetStats.SetStat("Critical Chance %", "4"),
-		new SetStats.SetStat("Critical Chance %", "8"),
+		createSetStat("Critical Chance %", "4"),
+		createSetStat("Critical Chance %", "8"),
 	),
-	"Tenacity %": new SetBonus(
+	"Tenacity %": createSetBonus(
 		"Tenacity %",
 		2,
-		new SetStats.SetStat("Tenacity %", "10"),
-		new SetStats.SetStat("Tenacity %", "20"),
+		createSetStat("Tenacity %", "10"),
+		createSetStat("Tenacity %", "20"),
 	),
-	"Offense %": new SetBonus(
+	"Offense %": createSetBonus(
 		"Offense %",
 		4,
-		new SetStats.SetStat("Offense %", "7.5"),
-		new SetStats.SetStat("Offense %", "15"),
+		createSetStat("Offense %", "7.5"),
+		createSetStat("Offense %", "15"),
 	),
-	"Potency %": new SetBonus(
+	"Potency %": createSetBonus(
 		"Potency %",
 		2,
-		new SetStats.SetStat("Potency %", "7.5"),
-		new SetStats.SetStat("Potency %", "15"),
+		createSetStat("Potency %", "7.5"),
+		createSetStat("Potency %", "15"),
 	),
-	"Speed %": new SetBonus(
+	"Speed %": createSetBonus(
 		"Speed %",
 		4,
-		new SetStats.SetStat("Speed %", "5"),
-		new SetStats.SetStat("Speed %", "10"),
+		createSetStat("Speed %", "5"),
+		createSetStat("Speed %", "10"),
 	),
 };
 

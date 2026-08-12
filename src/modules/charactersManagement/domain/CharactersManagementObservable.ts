@@ -24,7 +24,7 @@ interface CharactersManagementObservable {
 	getOptimizationValue: (
 		character: Character,
 		target: OptimizationPlan,
-		stat: Stat,
+		stat: CharacterSummaryStat,
 	) => number;
 }
 

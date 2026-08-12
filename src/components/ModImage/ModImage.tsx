@@ -1,5 +1,5 @@
 // utils
-import { match, P } from "ts-pattern";
+import { match } from "ts-pattern";
 import { cn } from "#/lib/utils";
 
 // react
@@ -191,27 +191,27 @@ const ModImage = memo(
 				() => SLOT_BG_POSITIONS.GREY_6_CROSS,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "square", ModTiersEnum.Grey],
+				[5, "square", ModTiersEnum.Grey],
 				() => SLOT_BG_POSITIONS.GREY_OTHER_SQUARE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "arrow", ModTiersEnum.Grey],
+				[5, "arrow", ModTiersEnum.Grey],
 				() => SLOT_BG_POSITIONS.GREY_OTHER_ARROW,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "diamond", ModTiersEnum.Grey],
+				[5, "diamond", ModTiersEnum.Grey],
 				() => SLOT_BG_POSITIONS.GREY_OTHER_DIAMOND,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "triangle", ModTiersEnum.Grey],
+				[5, "triangle", ModTiersEnum.Grey],
 				() => SLOT_BG_POSITIONS.GREY_OTHER_TRIANGLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "circle", ModTiersEnum.Grey],
+				[5, "circle", ModTiersEnum.Grey],
 				() => SLOT_BG_POSITIONS.GREY_OTHER_CIRCLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "cross", ModTiersEnum.Grey],
+				[5, "cross", ModTiersEnum.Grey],
 				() => SLOT_BG_POSITIONS.GREY_OTHER_CROSS,
 			)
 			.with(
@@ -239,27 +239,27 @@ const ModImage = memo(
 				() => SLOT_BG_POSITIONS.GREEN_6_CROSS,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "square", ModTiersEnum.Green],
+				[5, "square", ModTiersEnum.Green],
 				() => SLOT_BG_POSITIONS.GREEN_OTHER_SQUARE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "arrow", ModTiersEnum.Green],
+				[5, "arrow", ModTiersEnum.Green],
 				() => SLOT_BG_POSITIONS.GREEN_OTHER_ARROW,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "diamond", ModTiersEnum.Green],
+				[5, "diamond", ModTiersEnum.Green],
 				() => SLOT_BG_POSITIONS.GREEN_OTHER_DIAMOND,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "triangle", ModTiersEnum.Green],
+				[5, "triangle", ModTiersEnum.Green],
 				() => SLOT_BG_POSITIONS.GREEN_OTHER_TRIANGLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "circle", ModTiersEnum.Green],
+				[5, "circle", ModTiersEnum.Green],
 				() => SLOT_BG_POSITIONS.GREEN_OTHER_CIRCLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "cross", ModTiersEnum.Green],
+				[5, "cross", ModTiersEnum.Green],
 				() => SLOT_BG_POSITIONS.GREEN_OTHER_CROSS,
 			)
 			.with(
@@ -287,27 +287,27 @@ const ModImage = memo(
 				() => SLOT_BG_POSITIONS.BLUE_6_CROSS,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "square", ModTiersEnum.Blue],
+				[5, "square", ModTiersEnum.Blue],
 				() => SLOT_BG_POSITIONS.BLUE_OTHER_SQUARE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "arrow", ModTiersEnum.Blue],
+				[5, "arrow", ModTiersEnum.Blue],
 				() => SLOT_BG_POSITIONS.BLUE_OTHER_ARROW,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "diamond", ModTiersEnum.Blue],
+				[5, "diamond", ModTiersEnum.Blue],
 				() => SLOT_BG_POSITIONS.BLUE_OTHER_DIAMOND,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "triangle", ModTiersEnum.Blue],
+				[5, "triangle", ModTiersEnum.Blue],
 				() => SLOT_BG_POSITIONS.BLUE_OTHER_TRIANGLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "circle", ModTiersEnum.Blue],
+				[5, "circle", ModTiersEnum.Blue],
 				() => SLOT_BG_POSITIONS.BLUE_OTHER_CIRCLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "cross", ModTiersEnum.Blue],
+				[5, "cross", ModTiersEnum.Blue],
 				() => SLOT_BG_POSITIONS.BLUE_OTHER_CROSS,
 			)
 			.with(
@@ -335,27 +335,27 @@ const ModImage = memo(
 				() => SLOT_BG_POSITIONS.PURPLE_6_CROSS,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "square", ModTiersEnum.Purple],
+				[5, "square", ModTiersEnum.Purple],
 				() => SLOT_BG_POSITIONS.PURPLE_OTHER_SQUARE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "arrow", ModTiersEnum.Purple],
+				[5, "arrow", ModTiersEnum.Purple],
 				() => SLOT_BG_POSITIONS.PURPLE_OTHER_ARROW,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "diamond", ModTiersEnum.Purple],
+				[5, "diamond", ModTiersEnum.Purple],
 				() => SLOT_BG_POSITIONS.PURPLE_OTHER_DIAMOND,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "triangle", ModTiersEnum.Purple],
+				[5, "triangle", ModTiersEnum.Purple],
 				() => SLOT_BG_POSITIONS.PURPLE_OTHER_TRIANGLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "circle", ModTiersEnum.Purple],
+				[5, "circle", ModTiersEnum.Purple],
 				() => SLOT_BG_POSITIONS.PURPLE_OTHER_CIRCLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "cross", ModTiersEnum.Purple],
+				[5, "cross", ModTiersEnum.Purple],
 				() => SLOT_BG_POSITIONS.PURPLE_OTHER_CROSS,
 			)
 			.with(
@@ -383,27 +383,27 @@ const ModImage = memo(
 				() => SLOT_BG_POSITIONS.GOLD_6_CROSS,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "square", ModTiersEnum.Gold],
+				[5, "square", ModTiersEnum.Gold],
 				() => SLOT_BG_POSITIONS.GOLD_OTHER_SQUARE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "arrow", ModTiersEnum.Gold],
+				[5, "arrow", ModTiersEnum.Gold],
 				() => SLOT_BG_POSITIONS.GOLD_OTHER_ARROW,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "diamond", ModTiersEnum.Gold],
+				[5, "diamond", ModTiersEnum.Gold],
 				() => SLOT_BG_POSITIONS.GOLD_OTHER_DIAMOND,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "triangle", ModTiersEnum.Gold],
+				[5, "triangle", ModTiersEnum.Gold],
 				() => SLOT_BG_POSITIONS.GOLD_OTHER_TRIANGLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "circle", ModTiersEnum.Gold],
+				[5, "circle", ModTiersEnum.Gold],
 				() => SLOT_BG_POSITIONS.GOLD_OTHER_CIRCLE,
 			)
 			.with(
-				[P.union(1, 2, 3, 4, 5), "cross", ModTiersEnum.Gold],
+				[5, "cross", ModTiersEnum.Gold],
 				() => SLOT_BG_POSITIONS.GOLD_OTHER_CROSS,
 			)
 			.otherwise(() => {

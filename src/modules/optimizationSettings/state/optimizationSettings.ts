@@ -11,20 +11,27 @@ import * as ModConsts from "#/domain/constants/ModConsts";
 import setBonuses from "#/constants/setbonuses";
 
 import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
-import type { Mod } from "#/domain/Mod";
+import { levelUpMod, sliceMod, type Mod } from "#/domain/Mod";
 import type * as Character from "#/domain/Character";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
-import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import {
-	Stats,
-	CharacterSummaryStats as CSStats,
-	SetStats,
-} from "#/domain/Stats";
+	type CharacterSummaryStat,
+	addCSStats,
+	createCharacterSummaryStat,
+	getDisplayType,
+} from "#/domain/CharacterSummaryStat";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import { statNames } from "#/domain/SetStat";
+import {
+	type DisplayStatNames,
+	mixedTypes,
+	updateDisplayValue,
+	getStatValue,
+	setStatValue,
+} from "#/domain/Stat";
 import type { OptimizationSettingsObservable } from "../domain/OptimizationSettingsObservable";
 import type { ModLoadout } from "#/domain/ModLoadout";
-import type SetBonus from "#/domain/SetBonus";
-
-const CSStat = CSStats.CharacterSummaryStat;
+import type { SetBonus } from "#/domain/SetBonus";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 	observable<OptimizationSettingsObservable>({
@@ -92,28 +99,34 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 		) {
 			let workingMod = mod;
 			const summary: {
-				[key in CharacterStatNames.All]: CSStats.CharacterSummaryStat;
+				[key in CharacterStatNames.All]: CharacterSummaryStat;
 			} = {
-				Health: new CSStat("Health", "0"),
-				Protection: new CSStat("Protection", "0"),
-				Speed: new CSStat("Speed", "0"),
-				"Critical Damage %": new CSStat("Critical Damage %", "0"),
-				"Potency %": new CSStat("Potency %", "0"),
-				"Tenacity %": new CSStat("Tenacity %", "0"),
-				"Physical Damage": new CSStat("Physical Damage", "0"),
-				"Physical Critical Chance %": new CSStat(
+				Health: createCharacterSummaryStat("Health", "0"),
+				Protection: createCharacterSummaryStat("Protection", "0"),
+				Speed: createCharacterSummaryStat("Speed", "0"),
+				"Critical Damage %": createCharacterSummaryStat(
+					"Critical Damage %",
+					"0",
+				),
+				"Potency %": createCharacterSummaryStat("Potency %", "0"),
+				"Tenacity %": createCharacterSummaryStat("Tenacity %", "0"),
+				"Physical Damage": createCharacterSummaryStat("Physical Damage", "0"),
+				"Physical Critical Chance %": createCharacterSummaryStat(
 					"Physical Critical Chance %",
 					"0",
 				),
-				Armor: new CSStat("Armor", "0"),
-				"Special Damage": new CSStat("Special Damage", "0"),
-				"Special Critical Chance %": new CSStat(
+				Armor: createCharacterSummaryStat("Armor", "0"),
+				"Special Damage": createCharacterSummaryStat("Special Damage", "0"),
+				"Special Critical Chance %": createCharacterSummaryStat(
 					"Special Critical Chance %",
 					"0",
 				),
-				Resistance: new CSStat("Resistance", "0"),
-				"Accuracy %": new CSStat("Accuracy %", "0"),
-				"Critical Avoidance %": new CSStat("Critical Avoidance %", "0"),
+				Resistance: createCharacterSummaryStat("Resistance", "0"),
+				"Accuracy %": createCharacterSummaryStat("Accuracy %", "0"),
+				"Critical Avoidance %": createCharacterSummaryStat(
+					"Critical Avoidance %",
+					"0",
+				),
 			};
 
 			if (withUpgrades) {
@@ -122,28 +135,36 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 					15 > workingMod.level &&
 					optimizationSettings$.activeSettings.simulateLevel15Mods.peek()
 				) {
-					workingMod = workingMod.levelUp();
+					workingMod = levelUpMod(workingMod);
 				}
 				if (
 					15 === workingMod.level &&
 					5 === workingMod.pips &&
 					optimizationSettings$.activeSettings.simulate6EModSlice.peek()
 				) {
-					workingMod = workingMod.slice();
+					workingMod = sliceMod(workingMod);
 				}
 			}
 
-			for (const modStat of [workingMod.primaryStat as Stats.Stat].concat(
-				workingMod.secondaryStats,
-			)) {
-				const flatStats = charactersManagement$.getFlatValuesForCharacter(
-					character,
-					modStat,
+			const flatStats = charactersManagement$.getFlatValuesForCharacter(
+				character,
+				workingMod.primaryStat,
+			);
+
+			for (const secondaryStat of workingMod.secondaryStats) {
+				flatStats.push(
+					...charactersManagement$.getFlatValuesForCharacter(
+						character,
+						secondaryStat,
+					),
 				);
-				for (const stat of flatStats) {
-					summary[stat.type as CharacterStatNames.All] =
-						summary[stat.type as CharacterStatNames.All].plus(stat);
-				}
+			}
+
+			for (const stat of flatStats) {
+				summary[stat.type as CharacterStatNames.All] = addCSStats(
+					summary[stat.type as CharacterStatNames.All],
+					stat,
+				);
 			}
 
 			return summary;
@@ -154,37 +175,31 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			withUpgrades: boolean,
 		) {
 			const loadoutSummary: {
-				[key in CharacterStatNames.All]: CSStats.CharacterSummaryStat;
+				[key in CharacterStatNames.All]: CharacterSummaryStat;
 			} = {
-				Health: new CSStats.CharacterSummaryStat("Health", "0"),
-				Protection: new CSStats.CharacterSummaryStat("Protection", "0"),
-				Speed: new CSStats.CharacterSummaryStat("Speed", "0"),
-				"Critical Damage %": new CSStats.CharacterSummaryStat(
+				Health: createCharacterSummaryStat("Health", "0"),
+				Protection: createCharacterSummaryStat("Protection", "0"),
+				Speed: createCharacterSummaryStat("Speed", "0"),
+				"Critical Damage %": createCharacterSummaryStat(
 					"Critical Damage %",
 					"0",
 				),
-				"Potency %": new CSStats.CharacterSummaryStat("Potency %", "0"),
-				"Tenacity %": new CSStats.CharacterSummaryStat("Tenacity %", "0"),
-				"Physical Damage": new CSStats.CharacterSummaryStat(
-					"Physical Damage",
-					"0",
-				),
-				"Physical Critical Chance %": new CSStats.CharacterSummaryStat(
+				"Potency %": createCharacterSummaryStat("Potency %", "0"),
+				"Tenacity %": createCharacterSummaryStat("Tenacity %", "0"),
+				"Physical Damage": createCharacterSummaryStat("Physical Damage", "0"),
+				"Physical Critical Chance %": createCharacterSummaryStat(
 					"Physical Critical Chance %",
 					"0",
 				),
-				Armor: new CSStats.CharacterSummaryStat("Armor", "0"),
-				"Special Damage": new CSStats.CharacterSummaryStat(
-					"Special Damage",
-					"0",
-				),
-				"Special Critical Chance %": new CSStats.CharacterSummaryStat(
+				Armor: createCharacterSummaryStat("Armor", "0"),
+				"Special Damage": createCharacterSummaryStat("Special Damage", "0"),
+				"Special Critical Chance %": createCharacterSummaryStat(
 					"Special Critical Chance %",
 					"0",
 				),
-				Resistance: new CSStats.CharacterSummaryStat("Resistance", "0"),
-				"Accuracy %": new CSStats.CharacterSummaryStat("Accuracy %", "0"),
-				"Critical Avoidance %": new CSStats.CharacterSummaryStat(
+				Resistance: createCharacterSummaryStat("Resistance", "0"),
+				"Accuracy %": createCharacterSummaryStat("Accuracy %", "0"),
+				"Critical Avoidance %": createCharacterSummaryStat(
 					"Critical Avoidance %",
 					"0",
 				),
@@ -210,7 +225,7 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				let stat: CharacterStatNames.All;
 				for (stat in modStats) {
 					loadoutSummary[stat] = loadoutSummary[stat]
-						? loadoutSummary[stat].plus(modStats[stat])
+						? addCSStats(loadoutSummary[stat], modStats[stat])
 						: modStats[stat];
 				}
 
@@ -230,7 +245,7 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			}
 
 			// Update the summary for each stat from each complete mod set
-			for (const setKey of SetStats.SetStat.statNames) {
+			for (const setKey of statNames) {
 				const setDescription = setBonuses[setKey];
 
 				// Add in any set bonuses
@@ -258,8 +273,10 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				);
 				for (const stat of maxSetStats) {
 					for (let i = 0; i < maxSetMultiplier; i++) {
-						loadoutSummary[stat.type as CharacterStatNames.All] =
-							loadoutSummary[stat.type as CharacterStatNames.All].plus(stat);
+						loadoutSummary[stat.type as CharacterStatNames.All] = addCSStats(
+							loadoutSummary[stat.type as CharacterStatNames.All],
+							stat,
+						);
 					}
 				}
 
@@ -269,8 +286,10 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				);
 				for (const stat of smallSetStats) {
 					for (let i = 0; i < smallSetMultiplier; i++) {
-						loadoutSummary[stat.type as CharacterStatNames.All] =
-							loadoutSummary[stat.type as CharacterStatNames.All].plus(stat);
+						loadoutSummary[stat.type as CharacterStatNames.All] = addCSStats(
+							loadoutSummary[stat.type as CharacterStatNames.All],
+							stat,
+						);
 					}
 				}
 			}
@@ -278,16 +297,12 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			// Update the summary to mark the stats that should always be displayed as percentages
 			// Also update all stats to be the correct precision
 			for (const stat of Object.values(loadoutSummary)) {
-				if (
-					!Stats.Stat.mixedTypes.includes(
-						stat.getDisplayType() as Stats.DisplayStatNames,
-					)
-				) {
+				if (!mixedTypes.includes(getDisplayType(stat) as DisplayStatNames)) {
 					stat.displayModifier = "%";
 				} else {
-					stat.value = Math.trunc(stat.value);
+					setStatValue(stat, Math.trunc(getStatValue(stat)));
 				}
-				stat.updateDisplayValue();
+				updateDisplayValue(stat);
 			}
 
 			return loadoutSummary;

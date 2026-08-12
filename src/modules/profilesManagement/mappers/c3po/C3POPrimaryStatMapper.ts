@@ -1,5 +1,5 @@
 import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
-import { PrimaryStats } from "../../../../domain/Stats";
+import { createPrimaryStat, type PrimaryStat } from "#/domain/PrimaryStat";
 import type * as C3PODTOs from "../../dtos/c3po/index";
 
 const c3PO2GIMOPrimaryStatNameMap: {
@@ -18,9 +18,7 @@ const c3PO2GIMOPrimaryStatNameMap: {
 	56: "Protection %",
 };
 
-const fromC3PO = (
-	primary: C3PODTOs.C3POPrimaryStatDTO,
-): PrimaryStats.PrimaryStat => {
+const fromC3PO = (primary: C3PODTOs.C3POPrimaryStatDTO): PrimaryStat => {
 	let statValue = "";
 	if (primary.stat.unitStatId === 5) {
 		statValue = String(
@@ -28,7 +26,7 @@ const fromC3PO = (
 		);
 	} else statValue = (Number(primary.stat.statValueDecimal) / 100).toFixed(2);
 
-	return new PrimaryStats.PrimaryStat(
+	return createPrimaryStat(
 		c3PO2GIMOPrimaryStatNameMap[primary.stat.unitStatId],
 		statValue,
 	);

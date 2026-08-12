@@ -10,7 +10,7 @@ const roster$ = stateLoader$.roster$;
 
 // domain
 import type * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
+import { getModCalibrationPrice, type Mod } from "#/domain/Mod";
 import type * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 // components
@@ -86,7 +86,8 @@ const ModDetail = memo(({ assignedTarget, mod }: ModDetailProps) => {
 							>
 								<Label>Calibrations:</Label>
 								<span className={"text-sm"}>
-									{mod.reRolledCount}/{mod.tier + 1} at {mod.reRollPrice()}
+									{mod.reRolledCount}/{mod.tier + 1} at{" "}
+									{getModCalibrationPrice(mod)}
 								</span>
 							</div>
 						)}

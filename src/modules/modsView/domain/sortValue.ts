@@ -6,7 +6,8 @@ import { modScores$ } from "#/modules/modScores/state/modScores";
 
 // domain
 import type { Mod } from "#/domain/Mod";
-import { SecondaryStat } from "#/domain/SecondaryStat";
+import { statNames } from "#/domain/SecondaryStat";
+import { getStatValue } from "#/domain/Stat";
 import { modScorers } from "#/modules/modScores/domain/ModScorer";
 
 type SortValueHandler = (mod: Mod) => string | number;
@@ -14,10 +15,10 @@ type SortValueHandler = (mod: Mod) => string | number;
 const sortValueHandlers = new Map<string, SortValueHandler>();
 
 // Register Stat and StatScore handlers
-for (const statName of SecondaryStat.statNames) {
+for (const statName of statNames) {
 	sortValueHandlers.set(`Stat${statName}`, (mod: Mod) => {
 		for (const stat of mod.secondaryStats) {
-			if (stat.type === statName) return stat.value;
+			if (stat.type === statName) return getStatValue(stat);
 		}
 		return 0;
 	});

@@ -2,6 +2,7 @@
 import {
 	beginBatch,
 	endBatch,
+	linked,
 	observable,
 	type Observable,
 	type ObservableObject,
@@ -17,16 +18,19 @@ import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po/index";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import { type GIMOFlatMod, gimoSlots } from "#/domain/types/ModTypes";
 
-import { Mod } from "#/domain/Mod";
+import { cloneMod, deserializeMod, serializeMod, type Mod } from "#/domain/Mod";
 
-import { getInitialMods, type ModsObservable } from "../domain/ModsObservable";
 import {
-	getModsFromPersisted,
-	isPersistedModByIdForProfileByAllycode,
-	type ModById,
-	type ModsDataToPersist,
-	type PersistedModById,
-	type PersistedModByIdForProfileByAllycode,
+	getInitialMods,
+	getinitialPersistedMods,
+	type ModsObservable,
+} from "../domain/ModsObservable";
+import type {
+	ModByIdForProfile,
+	ModById,
+	PersistedModById,
+	PersistedModByIdForProfile,
+	PersistedModByIdForProfileByAllycode,
 } from "../domain/Mods";
 
 const isObservableMod = (
@@ -37,29 +41,57 @@ const isObservableMod = (
 
 const mods$: ObservableObject<ModsObservable> = observable({
 	persistedData: getInitialMods(),
+	persistedModByIdByAllycode: getinitialPersistedMods(),
 	activeModById: () => {
 		const activeAllycode = profilesManagement$.activeAllycode.get();
 		return (
-			mods$.persistedData[activeAllycode]?.modById ??
+			mods$.modByIdByAllycode[activeAllycode]?.modById ??
 			observable(new Map<string, Mod>() as ModById)
 		);
 	},
-	modByIdByAllycode: () => {
-		return mods$.persistedData;
+	modByIdByAllycode: (allycode: string) => {
+		return linked({
+			get: () => {
+				const modByIdByAllycode = mods$.persistedModByIdByAllycode.get();
+				const profile = modByIdByAllycode[allycode];
+				const newModById: ModByIdForProfile = {
+					id: allycode,
+					modById: new Map<string, Mod>(),
+				};
+				if (profile !== undefined) {
+					for (const [modId, mod] of profile.modById.entries()) {
+						newModById.modById.set(modId, deserializeMod(mod));
+					}
+				}
+				return observable(newModById);
+			},
+			set: ({ value }) => {
+				const newPersistedModById: PersistedModByIdForProfile = {
+					id: allycode,
+					modById: new Map<string, GIMOFlatMod>(),
+				};
+				for (const [modId, mod] of value.modById.entries()) {
+					newPersistedModById.modById.set(modId, serializeMod(mod));
+				}
+				mods$.persistedModByIdByAllycode[allycode].set(newPersistedModById);
+			},
+		});
 	},
 	addProfile: (allycode: string) => {
-		if (Object.hasOwn(mods$.modByIdByAllycode.peek(), allycode)) return;
-		mods$.persistedData[allycode].set({
+		if (Object.hasOwn(mods$.persistedModByIdByAllycode.peek(), allycode))
+			return;
+		mods$.persistedModByIdByAllycode[allycode].set({
 			id: allycode,
-			modById: new Map<string, Mod>(),
+			modById: new Map<string, GIMOFlatMod>(),
 		});
 	},
 	deleteProfile: (allycode: string) => {
-		delete mods$.persistedData[allycode];
+		delete mods$.persistedModByIdByAllycode[allycode];
 	},
 	reset: () => {
 		beginBatch();
 		mods$.persistedData.set(getInitialMods());
+		mods$.persistedModByIdByAllycode.set(getinitialPersistedMods());
 		endBatch();
 	},
 	toPersistable: () => {
@@ -69,7 +101,7 @@ const mods$: ObservableObject<ModsObservable> = observable({
 		for (const allycode of allycodes) {
 			const modById: PersistedModById = new Map<string, GIMOFlatMod>();
 			for (const [modId, mod] of modsPersistedData[allycode].modById) {
-				modById.set(modId, mod.serialize());
+				modById.set(modId, serializeMod(mod));
 			}
 			result[allycode] = {
 				id: allycode,
@@ -122,13 +154,13 @@ const mods$: ObservableObject<ModsObservable> = observable({
 					| Mod
 					| undefined;
 				if (currentlyEquippedMod !== undefined) {
-					const newMod = currentlyEquippedMod.clone();
+					const newMod = cloneMod(currentlyEquippedMod);
 					newMod.characterID = "null";
 					currentlyEquippedMod$.set(newMod);
 				}
 			}
 		}
-		const newMod = modToReassign.clone();
+		const newMod = cloneMod(modToReassign);
 		newMod.characterID = newCharacterId;
 		modToReassign$.set(newMod);
 		endBatch();
@@ -145,7 +177,7 @@ const mods$: ObservableObject<ModsObservable> = observable({
 		if (!isObservableMod(modToUnequip$)) return;
 		const modToUnequip = modToUnequip$.peek() as Mod | undefined;
 		if (modToUnequip === undefined) return;
-		const newMod = modToUnequip.clone();
+		const newMod = cloneMod(modToUnequip);
 		newMod.characterID = "null";
 		modToUnequip$.set(newMod);
 	},
@@ -188,86 +220,19 @@ profilesManagement$.lastProfileAdded.onChange(({ value }) => {
 
 profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
 	if (value === "all") {
-		mods$.modByIdByAllycode.set({});
+		mods$.persistedModByIdByAllycode.set({});
 		return;
 	}
 	mods$.deleteProfile(value);
 });
 
-const hasIdKey = (obj: object): obj is { id: unknown; modById: ModById } => {
-	return (
-		obj !== undefined &&
-		Object.hasOwn(obj, "id") &&
-		Object.hasOwn(obj, "modById")
-	);
-};
-
 const syncStatus$ = syncObservable(
-	mods$.persistedData,
+	mods$.persistedModByIdByAllycode,
 	persistOptions({
 		persist: {
 			name: "Mods",
-			transform: {
-				load: (value: PersistedModByIdForProfileByAllycode & GIMOFlatMod) => {
-					// console.log("Loading mods data:", value);
-					if (isPersistedModByIdForProfileByAllycode(value)) {
-						try {
-							const newModsToPersist = getModsFromPersisted(value);
-							return newModsToPersist;
-						} catch (error) {
-							console.error("Error loading persisted mods:", error);
-							syncStatus$.error.set(error as Error);
-						}
-					}
-
-					if (Object.hasOwn(value, "mod_uid")) {
-						return Mod.deserialize(value);
-					}
-					return value;
-				},
-				save: (
-					value: ModsDataToPersist | Record<string, { modById: ModById }>,
-				) => {
-					//					console.log("Saving mods data:", value);
-					const allycode = Object.keys(value)[0];
-					const profile = value[allycode];
-					if (hasIdKey(profile)) {
-						const result = {
-							[allycode]: {
-								id: profile.id,
-								modById: new Map<string, GIMOFlatMod>(
-									profile.modById.size === 0
-										? Object.entries(profile.modById).map(([key, mod]) => [
-												key,
-												mod.serialize(),
-											])
-										: profile.modById
-												.entries()
-												.map(([key, mod]) => [key, mod.serialize()]),
-								),
-							},
-						};
-						return result;
-					}
-					const result = {
-						[allycode]: {
-							modById: new Map<string, GIMOFlatMod>(
-								profile.modById.size === 0
-									? Object.entries(profile.modById).map(([key, mod]) => [
-											key,
-											mod.serialize(),
-										])
-									: profile.modById
-											.entries()
-											.map(([key, mod]) => [key, mod.serialize()]),
-							),
-						},
-					};
-					return result;
-				},
-			},
 		},
-		initial: getInitialMods(),
+		initial: getinitialPersistedMods(),
 	}),
 );
 

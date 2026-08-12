@@ -7,7 +7,7 @@ import { target$ } from "#/modules/planEditing/state/planEditing";
 import setBonuses from "#/constants/setbonuses";
 
 import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
-import type SetBonus from "#/domain/SetBonus";
+import type { SetBonus } from "#/domain/SetBonus";
 
 // components
 import { Input } from "#/components/reactive/Input";

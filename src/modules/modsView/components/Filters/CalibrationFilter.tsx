@@ -9,7 +9,7 @@ const modsView$ = stateLoader$.modsView$;
 
 // domain
 import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
-import { Mod } from "#/domain/Mod";
+import { reRollPrices } from "#/domain/Mod";
 
 // components
 import SetAllButtonGroup from "../SetAllButtonGroup";
@@ -50,7 +50,7 @@ const CalibrationFilter = () => {
 				id={"calibration-filter1"}
 				className="flex flex-row gap-1 justify-center flex-wrap"
 			>
-				{Mod.reRollPrices.map((calibrationCost) => {
+				{reRollPrices.map((calibrationCost) => {
 					const inputName = `calibration-filter-${calibrationCost}`;
 
 					return (

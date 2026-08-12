@@ -11,7 +11,7 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import type { Loadout } from "../domain/Loudout";
 import type { MoveStatus } from "../domain/MoveStatus";
 
-import { Mod } from "#/domain/Mod";
+import { type Mod, fromHotUtils } from "#/domain/Mod";
 
 // components
 import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
@@ -188,9 +188,8 @@ const modMove$ = observable({
 					modMove$.status.message.set(response.responseMessage);
 					if (!response.running) {
 						modMove$.isMoving.set(false);
-						const updatedMods: Mod[] = response.mods.profiles[0].mods.map(
-							Mod.fromHotUtils,
-						);
+						const updatedMods: Mod[] =
+							response.mods.profiles[0].mods.map(fromHotUtils);
 						beginBatch();
 						for (const mod of updatedMods) {
 							mods$.activeModById[mod.id].set(mod);

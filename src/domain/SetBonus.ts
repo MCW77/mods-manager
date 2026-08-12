@@ -1,14 +1,26 @@
 // domain
 import type { GIMOSetStatNames } from "./GIMOStatNames";
-import type { SetStats } from "./Stats";
+import type { SetStat } from "./SetStat";
 
-class SetBonus {
-	constructor(
-		public name: GIMOSetStatNames,
-		public numberOfModsRequired: number,
-		public smallBonus: SetStats.SetStat,
-		public maxBonus: SetStats.SetStat,
-	) {}
+interface SetBonus {
+	name: GIMOSetStatNames;
+	numberOfModsRequired: 2 | 4;
+	smallBonus: SetStat;
+	maxBonus: SetStat;
 }
 
-export default SetBonus;
+function createSetBonus(
+	name: GIMOSetStatNames,
+	numberOfModsRequired: 2 | 4,
+	smallBonus: SetStat,
+	maxBonus: SetStat,
+): SetBonus {
+	return {
+		name,
+		numberOfModsRequired,
+		smallBonus,
+		maxBonus,
+	};
+}
+
+export { createSetBonus, type SetBonus };

@@ -4,10 +4,10 @@ import { ModTiersEnum } from "../../../../constants/enums";
 import type * as DTOs from "../../dtos/index";
 import { fromC3PO as fromC3POPrimary } from "./C3POPrimaryStatMapper";
 import { fromC3PO as fromC3POSecondary } from "./C3POSecondaryStatMapper";
-import * as GIMOMods from "../../../../domain/Mod";
-import type * as GIMOStats from "../../../../domain/Stats";
+import type { SecondaryStat } from "#/domain/SecondaryStat";
 import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 import type { Pips } from "#/domain/Pips";
+import { createMod, type Mod } from "#/domain/Mod";
 
 const C3PO2GIMOSetMap: {
 	[key in DTOs.C3PO.Set]: GIMOSetStatNames;
@@ -33,10 +33,6 @@ const C3PO2GIMOTiersMap: {
 };
 
 const C3PO2GIMOPipsMap = {
-	"1": 1,
-	"2": 2,
-	"3": 3,
-	"4": 4,
 	"5": 5,
 	"6": 6,
 } as const satisfies Record<DTOs.C3PO.Pips, Pips>;
@@ -57,15 +53,15 @@ const deconstructDefinitionId = (definitionId: DTOs.C3PO.DefinitionId) => {
 	return { set, pips, slot };
 };
 
-export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): GIMOMods.Mod {
-	const secondaryStats: GIMOStats.SecondaryStats.SecondaryStat[] = [];
+export function fromC3PO(mod: DTOs.C3PO.C3POModDTO): Mod {
+	const secondaryStats: SecondaryStat[] = [];
 	for (const [index, secondaryStat] of mod.secondaryStat.entries()) {
 		secondaryStats.push(fromC3POSecondary(String(index), secondaryStat));
 	}
 
 	const definition = deconstructDefinitionId(mod.definitionId);
 
-	return new GIMOMods.Mod(
+	return createMod(
 		mod.id,
 		definition.slot,
 		definition.set,

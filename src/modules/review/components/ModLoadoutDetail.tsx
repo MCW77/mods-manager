@@ -10,7 +10,19 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 // domain
 import type * as Character from "#/domain/Character";
 import type { ModLoadout } from "#/domain/ModLoadout";
-import { CharacterSummaryStats as CSStats } from "#/domain/Stats";
+import {
+	createCharacterSummaryStat,
+	getDisplayType,
+	subtractCSStats,
+	type CalculatedStatNames,
+	type DisplayStatNames,
+	type CharacterSummaryStat,
+} from "#/domain/CharacterSummaryStat";
+import {
+	getDisplayValueString,
+	getStatValue,
+	setStatValue,
+} from "#/domain/Stat";
 import type { TargetStat } from "#/domain/TargetStat";
 
 import type { CharacterModding } from "#/modules/compilations/domain/CharacterModdings";
@@ -20,14 +32,14 @@ import type * as CharacterStatNames from "#/modules/profilesManagement/domain/Ch
 import ModLoadoutView from "./ModLoadoutView";
 
 interface PlayerStat {
-	name: CSStats.DisplayStatNames;
+	name: DisplayStatNames;
 	displayModifier: string;
 	currentValue: number;
-	currentStat: CSStats.CharacterSummaryStat | null;
+	currentStat: CharacterSummaryStat | null;
 	recommendedValue: number;
 	optimizationValue: number;
-	recommendedStat: CSStats.CharacterSummaryStat | null;
-	diffStat: CSStats.CharacterSummaryStat | null;
+	recommendedStat: CharacterSummaryStat | null;
+	diffStat: CharacterSummaryStat | null;
 	missedGoal: [TargetStat, number] | undefined;
 }
 
@@ -152,7 +164,7 @@ const ModLoadoutDetail = React.memo(
 						(recommendedStats.specCritChance / 100));
 
 			const statObject = (
-				name: CSStats.CalculatedStatNames,
+				name: CalculatedStatNames,
 				currentValue: number,
 				recommendedValue: number,
 			): PlayerStat => ({
@@ -163,7 +175,7 @@ const ModLoadoutDetail = React.memo(
 				recommendedValue: Math.floor(recommendedValue),
 				optimizationValue: 0,
 				recommendedStat: null,
-				diffStat: new CSStats.CharacterSummaryStat(
+				diffStat: createCharacterSummaryStat(
 					name,
 					`${Math.floor(recommendedValue - currentValue)}`,
 				),
@@ -213,18 +225,20 @@ const ModLoadoutDetail = React.memo(
 
 		// Pull all the player's stats into an object that can be displayed without further calculation.
 		const playerStats: PlayerStat[] = Object.values(newSummary).map(
-			(stat: CSStats.CharacterSummaryStat) => {
-				const diffStat = stat.minus(
+			(stat: CharacterSummaryStat) => {
+				const diffStat = subtractCSStats(
+					stat,
 					oldSummary[stat.type as CharacterStatNames.All],
 				);
 				const statName: CharacterStatNames.All =
 					stat.type as CharacterStatNames.All;
 				let statValue =
-					character.playerValues.equippedStats[statName] + stat.value;
+					character.playerValues.equippedStats[statName] + getStatValue(stat);
 
 				let originalStat = oldSummary[stat.type as CharacterStatNames.All];
 				let originalStatValue =
-					character.playerValues.equippedStats[statName] + originalStat.value;
+					character.playerValues.equippedStats[statName] +
+					getStatValue(originalStat);
 				const optimizationValue = charactersManagement$.getOptimizationValue(
 					character,
 					target,
@@ -242,17 +256,19 @@ const ModLoadoutDetail = React.memo(
 						(character.playerValues.level * 7.5 + statValue);
 
 					const statIncrease = statValue - baseStatValue;
-					stat.value =
+					setStatValue(
+						stat,
 						statIncrease % 1
 							? Math.round(statIncrease * 100) / 100
-							: statIncrease;
+							: statIncrease,
+					);
 
 					if (originalStat) {
 						originalStatValue =
 							(100 * originalStatValue) /
 							(character.playerValues.level * 7.5 + originalStatValue);
 						const originalStatIncrease = originalStatValue - baseStatValue;
-						originalStat = new CSStats.CharacterSummaryStat(
+						originalStat = createCharacterSummaryStat(
 							statName,
 							`${originalStatIncrease % 1 ? Math.round(originalStatIncrease * 100) / 100 : originalStatIncrease}`,
 						);
@@ -260,7 +276,7 @@ const ModLoadoutDetail = React.memo(
 				}
 
 				return {
-					name: stat.getDisplayType(),
+					name: getDisplayType(stat),
 					displayModifier: stat.displayModifier,
 					currentValue: originalStatValue,
 					currentStat: originalStat,
@@ -269,7 +285,7 @@ const ModLoadoutDetail = React.memo(
 					recommendedStat: stat,
 					diffStat: diffStat,
 					missedGoal: missedGoals.find(
-						([goal]) => goal.stat === stat.getDisplayType(),
+						([goal]) => goal.stat === getDisplayType(stat),
 					),
 				};
 			},
@@ -290,9 +306,9 @@ const ModLoadoutDetail = React.memo(
 						</td>
 						{stat.diffStat && (
 							<td
-								className={`${stat.diffStat.value > 0 ? "text-green-500 after:content-['+']" : stat.diffStat.value < 0 ? "text-red-500" : ""}`}
+								className={`${getStatValue(stat.diffStat) > 0 ? "text-green-500 after:content-['+']" : getStatValue(stat.diffStat) < 0 ? "text-red-500" : ""}`}
 							>
-								{stat.diffStat.showValue()}
+								{getDisplayValueString(stat.diffStat)}
 							</td>
 						)}
 					</tr>
@@ -325,7 +341,7 @@ const ModLoadoutDetail = React.memo(
 							</span>
 							{stat.currentStat && (
 								<span className={"text-teal-400"}>
-									({stat.currentStat.showValue()})
+									({getDisplayValueString(stat.currentStat)})
 								</span>
 							)}
 						</td>
@@ -346,7 +362,7 @@ const ModLoadoutDetail = React.memo(
 						</span>
 						{stat.recommendedStat && (
 							<span className={"text-teal-400"}>
-								({stat.recommendedStat.showValue()})
+								({getDisplayValueString(stat.recommendedStat)})
 							</span>
 						)}
 					</td>
@@ -357,9 +373,9 @@ const ModLoadoutDetail = React.memo(
 					</td>
 					{stat.diffStat && (
 						<td
-							className={`w-[4em] p-x-[0.5em] p-y-[0.2em] text-[0.95em] ${stat.diffStat.value > 0 ? "text-green-500 after:content-['+']" : stat.diffStat.value < 0 ? "text-red-500" : ""}`}
+							className={`w-[4em] p-x-[0.5em] p-y-[0.2em] text-[0.95em] ${getStatValue(stat.diffStat) > 0 ? "text-green-500 after:content-['+']" : getStatValue(stat.diffStat) < 0 ? "text-red-500" : ""}`}
 						>
-							{stat.diffStat.showValue()}
+							{getDisplayValueString(stat.diffStat)}
 						</td>
 					)}
 				</tr>

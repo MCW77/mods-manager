@@ -11,7 +11,7 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 const modsView$ = stateLoader$.modsView$;
 
 // domain
-import { SecondaryStats } from "#/domain/Stats";
+import { statNames } from "#/domain/SecondaryStat";
 import { modScorers } from "#/modules/modScores/domain/ModScorer";
 import type { SortConfig } from "../domain/SortConfig";
 
@@ -46,14 +46,14 @@ function SortItem({ item$: sortConfig$ }: SortItemProps) {
 		},
 		{
 			label: "Stats",
-			items: SecondaryStats.SecondaryStat.statNames.map((stat) => ({
+			items: statNames.map((stat) => ({
 				value: `Stat${stat}`,
 				label: t(`stats.${stat}`),
 			})),
 		},
 		{
 			label: "Stat Scores",
-			items: SecondaryStats.SecondaryStat.statNames.map((stat) => ({
+			items: statNames.map((stat) => ({
 				value: `StatScore${stat}`,
 				label: t(`stats.${stat}`),
 			})),

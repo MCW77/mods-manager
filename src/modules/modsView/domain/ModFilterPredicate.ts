@@ -2,12 +2,13 @@
 import { modScores$ } from "#/modules/modScores/state/modScores";
 
 // domain
-import type { Mod } from "#/domain/Mod";
+import { getModCalibrationPrice, isModAssigned, type Mod } from "#/domain/Mod";
 import type {
 	Filter,
 	PartialFilter,
 	TriStateFilterKeys,
 } from "./ModsViewOptions";
+import { getStatValue } from "#/domain/Stat";
 
 type ModFilterPredicate = (mod: Mod) => boolean;
 
@@ -39,9 +40,10 @@ function combineFilters(filters: ModFilterPredicate[]): ModFilterPredicate {
 function extractSpeedFilter(filter: Filter): ModFilterPredicate {
 	return (mod: Mod) => {
 		const [min, max] = filter.speedRange;
-		const modSpeed =
-			mod.secondaryStats.find((secondary) => secondary.type === "Speed")
-				?.value ?? 0;
+		const speedStat = mod.secondaryStats.find(
+			(secondary) => secondary.type === "Speed",
+		);
+		const modSpeed = speedStat === undefined ? 0 : getStatValue(speedStat);
 		return min <= modSpeed && modSpeed <= max;
 	};
 }
@@ -166,11 +168,12 @@ function createSelectedOptionsFilter(
 			)
 		)
 			return false;
-		if (selectedOptions.assigned.length > 0 && !mod.isAssigned()) return false;
+		if (selectedOptions.assigned.length > 0 && !isModAssigned(mod))
+			return false;
 		if (
 			selectedOptions.calibration.length > 0 &&
 			!selectedOptions.calibration.every(
-				(calibrationCost) => mod.reRollPrice() === calibrationCost,
+				(calibrationCost) => getModCalibrationPrice(mod) === calibrationCost,
 			)
 		)
 			return false;
@@ -222,11 +225,12 @@ function createUnselectedOptionsFilter(
 		if (
 			unselectedOptions.calibration.length > 0 &&
 			!unselectedOptions.calibration.every(
-				(calibrationCost) => mod.reRollPrice() !== calibrationCost,
+				(calibrationCost) => getModCalibrationPrice(mod) !== calibrationCost,
 			)
 		)
 			return false;
-		if (unselectedOptions.assigned.length > 0 && mod.isAssigned()) return false;
+		if (unselectedOptions.assigned.length > 0 && isModAssigned(mod))
+			return false;
 		return true;
 	};
 }

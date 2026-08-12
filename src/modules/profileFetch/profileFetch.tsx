@@ -24,7 +24,7 @@ import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFu
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 
 import * as Character from "#/domain/Character";
-import type { Mod } from "#/domain/Mod";
+import { cloneMod, type Mod } from "#/domain/Mod";
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -277,7 +277,7 @@ function updatePlayerData(
 			for (const modId of modById$.keys()) {
 				const mod = modById$[modId].peek() as Mod | undefined;
 				if (mod !== undefined) {
-					const newMod = mod.clone();
+					const newMod = cloneMod(mod);
 					newMod.characterID = "null";
 					modById$[modId].set(newMod);
 				}

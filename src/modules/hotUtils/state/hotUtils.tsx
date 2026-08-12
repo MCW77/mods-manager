@@ -22,7 +22,7 @@ import type { ProfileCreationData } from "../domain/ProfileCreationData";
 import type * as DTOs from "#/modules/profilesManagement/dtos/index";
 import * as Mappers from "#/modules/profilesManagement/mappers/index";
 import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
-import { Mod } from "#/domain/Mod";
+import { fromHotUtils } from "#/domain/Mod";
 import type { HotutilsObservable } from "../domain/HotutilsObservable";
 
 const hotutilsv2baseurl =
@@ -235,7 +235,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			const playerProfile: FetchedHUProfile = response.mods.profiles[0];
 
 			// Convert mods to the serialized format recognized by the optimizer
-			const profileMods = playerProfile.mods.map(Mod.fromHotUtils);
+			const profileMods = playerProfile.mods.map(fromHotUtils);
 
 			// Convert each character to a PlayerValues object
 			const profileValues: PlayerValuesByCharacter =

@@ -3,7 +3,7 @@ import superjson from "superjson";
 import * as v from "valibot";
 
 // domain
-import { Mod } from "#/domain/Mod";
+import { deserializeMod, type Mod } from "#/domain/Mod";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 import { PersistedModByIdForProfileByAllycodeSchema } from "#/domain/schemas/mods-manager/index";
 
@@ -51,7 +51,7 @@ const getModsFromPersisted = (
 				modById: new Map<string, Mod>(
 					Array.from(profile[allycode].modById.entries(), ([key, mod]) => [
 						key,
-						Mod.deserialize(mod),
+						deserializeMod(mod),
 					]),
 				),
 			};
