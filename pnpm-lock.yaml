@@ -28,7 +28,7 @@ importers:
         version: 3.0.0-beta.47(react@19.2.8)
       '@rolldown/plugin-babel':
         specifier: ^0.2.3
-        version: 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+        version: 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -85,7 +85,7 @@ importers:
         version: 5.9.0
       unocss-preset-animations:
         specifier: ^1.3.0
-        version: 1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))
+        version: 1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))
       valibot:
         specifier: 1.4.2
         version: 1.4.2(typescript@7.0.2)
@@ -109,8 +109,8 @@ importers:
         specifier: ^4.17.12
         version: 4.17.12
       '@types/node':
-        specifier: ^26.1.2
-        version: 26.1.2
+        specifier: ^26.2.0
+        version: 26.2.0
       '@types/react':
         specifier: ^19.2.18
         version: 19.2.18
@@ -125,7 +125,7 @@ importers:
         version: 66.7.5
       '@vitejs/plugin-react':
         specifier: ^6.0.5
-        version: 6.0.5(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+        version: 6.0.5(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
       '@vitest/coverage-v8':
         specifier: ^4.1.10
         version: 4.1.10(vitest@4.1.10)
@@ -140,22 +140,22 @@ importers:
         version: 7.0.2
       unocss:
         specifier: 66.7.5
-        version: 66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+        version: 66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
       unocss-preset-shadcn:
         specifier: ^1.0.1
-        version: 1.0.1(unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))))(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))
+        version: 1.0.1(unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))))(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))
       vite:
         specifier: ^8.2.0
-        version: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+        version: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
       vite-bundle-analyzer:
         specifier: ^1.3.9
         version: 1.3.9
       vite-plugin-pwa:
         specifier: ^1.3.0
-        version: 1.3.0(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1)(workbox-window@7.4.1)
+        version: 1.3.0(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1)(workbox-window@7.4.1)
       vitest:
         specifier: ^4.1.10
-        version: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.1.2)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+        version: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
 
 packages:
 
@@ -1885,9 +1885,6 @@ packages:
 
   '@types/lodash@4.17.24':
     resolution: {integrity: sha512-gIW7lQLZbue7lRSWEFql49QJJWThrTFFeIMJdp3eH4tKoxm1OvEPg02rm4wCCSHS0cL3/Fizimb35b7k8atwsQ==}
-
-  '@types/node@26.1.2':
-    resolution: {integrity: sha512-Vu4a5UFA9rIIFJ7rB/Vaafh9lrCQszopTCx6KjFboXTGQbPNasehVR5TEiithSDGyd1DEiUByggTZsg8jukeIg==}
 
   '@types/node@26.2.0':
     resolution: {integrity: sha512-5IviulTZeRNp2vAJ514cc/HUlY5nZ9fCbq9DMyC52BrhFZACo3nI0R7qBxhQmo/d27NFe96ur/b7Wwxklda+kg==}
@@ -5472,14 +5469,14 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.2.1':
     optional: true
 
-  '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
+  '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@babel/core': 7.29.7
       picomatch: 4.0.4
       rolldown: 1.2.1
     optionalDependencies:
       '@babel/runtime': 7.29.7
-      vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
 
   '@rolldown/pluginutils@1.0.1': {}
 
@@ -5691,10 +5688,6 @@ snapshots:
 
   '@types/lodash@4.17.24': {}
 
-  '@types/node@26.1.2':
-    dependencies:
-      undici-types: 8.3.0
-
   '@types/node@26.2.0':
     dependencies:
       undici-types: 8.3.0
@@ -5895,7 +5888,7 @@ snapshots:
     dependencies:
       '@unocss/core': 66.7.5
 
-  '@unocss/vite@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
+  '@unocss/vite@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@jridgewell/remapping': 2.3.5
       '@unocss/config': 66.7.5
@@ -5906,14 +5899,14 @@ snapshots:
       pathe: 2.0.3
       tinyglobby: 0.2.17
       unplugin-utils: 0.3.2
-      vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
 
-  '@vitejs/plugin-react@6.0.5(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
+  '@vitejs/plugin-react@6.0.5(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
     optionalDependencies:
-      '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7)(@babel/runtime@7.29.7)(rolldown@1.2.1)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
 
   '@vitest/coverage-v8@4.1.10(vitest@4.1.10)':
     dependencies:
@@ -5927,7 +5920,7 @@ snapshots:
       obug: 2.1.3
       std-env: 4.1.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.1.2)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
 
   '@vitest/expect@4.1.10':
     dependencies:
@@ -5938,13 +5931,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.10(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
+  '@vitest/mocker@4.1.10(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))':
     dependencies:
       '@vitest/spy': 4.1.10
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
 
   '@vitest/pretty-format@4.1.10':
     dependencies:
@@ -5973,7 +5966,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
-      vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.1.2)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      vitest: 4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
 
   '@vitest/utils@4.1.10':
     dependencies:
@@ -7861,18 +7854,18 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))):
+  unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))):
     dependencies:
-      unocss: 66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      unocss: 66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
     optionalDependencies:
       '@unocss/preset-wind3': 66.7.5
 
-  unocss-preset-shadcn@1.0.1(unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))))(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))):
+  unocss-preset-shadcn@1.0.1(unocss-preset-animations@1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))))(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))):
     dependencies:
-      unocss: 66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
-      unocss-preset-animations: 1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))
+      unocss: 66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      unocss-preset-animations: 1.3.0(@unocss/preset-wind3@66.7.5)(unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))
 
-  unocss@66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)):
+  unocss@66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)):
     dependencies:
       '@unocss/cli': 66.7.5
       '@unocss/core': 66.7.5
@@ -7890,7 +7883,7 @@ snapshots:
       '@unocss/transformer-compile-class': 66.7.5
       '@unocss/transformer-directives': 66.7.5
       '@unocss/transformer-variant-group': 66.7.5
-      '@unocss/vite': 66.7.5(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      '@unocss/vite': 66.7.5(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
     transitivePeerDependencies:
       - vite
 
@@ -7942,18 +7935,18 @@ snapshots:
       fast-glob: 3.3.3
       magic-string: 0.30.21
 
-  vite-plugin-pwa@1.3.0(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1)(workbox-window@7.4.1):
+  vite-plugin-pwa@1.3.0(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1)(workbox-window@7.4.1):
     dependencies:
       debug: 4.4.3
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.17
-      vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
       workbox-build: 7.4.1
       workbox-window: 7.4.1
     transitivePeerDependencies:
       - supports-color
 
-  vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0):
+  vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.5
@@ -7961,16 +7954,16 @@ snapshots:
       rolldown: 1.2.1
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 26.1.2
+      '@types/node': 26.2.0
       fsevents: 2.3.3
       jiti: 2.7.0
       terser: 5.49.0
       yaml: 2.9.0
 
-  vitest@4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.1.2)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)):
+  vitest@4.1.10(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(@vitest/coverage-v8@4.1.10)(@vitest/ui@4.1.10)(happy-dom@20.11.2)(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)):
     dependencies:
       '@vitest/expect': 4.1.10
-      '@vitest/mocker': 4.1.10(vite@8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      '@vitest/mocker': 4.1.10(vite@8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
       '@vitest/pretty-format': 4.1.10
       '@vitest/runner': 4.1.10
       '@vitest/snapshot': 4.1.10
@@ -7987,11 +7980,11 @@ snapshots:
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
-      vite: 8.2.0(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
+      vite: 8.2.0(@types/node@26.2.0)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
-      '@types/node': 26.1.2
+      '@types/node': 26.2.0
       '@vitest/coverage-v8': 4.1.10(vitest@4.1.10)
       '@vitest/ui': 4.1.10(vitest@4.1.10)
       happy-dom: 20.11.2
