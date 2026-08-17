@@ -45,7 +45,7 @@ import { Toaster } from "#ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
 
 // containers
-const AboutView = lazy(() => import("#/containers/AboutView/AboutView"));
+const AboutView = lazy(() => import("#/modules/about/pages/AboutView"));
 const CompilationsView = lazy(
 	() => import("#/modules/compilations/pages/CompilationsView"),
 );
