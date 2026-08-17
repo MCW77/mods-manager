@@ -13,9 +13,6 @@ import { ui$ } from "#/modules/ui/state/ui";
 
 // components
 import { Button } from "#ui/button";
-import { Input } from "#ui/input";
-import { Label } from "#ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 import {
 	Card,
 	CardContent,
@@ -23,6 +20,9 @@ import {
 	CardHeader,
 	CardTitle,
 } from "#/components/ui/card";
+import { Input } from "#ui/input";
+import { Label } from "#ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 
 const CompilationsView: React.FC = observer(() => {
 	const state$ = useObservable({

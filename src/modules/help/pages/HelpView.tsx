@@ -18,6 +18,7 @@ import type { HelpSections } from "../domain/HelpSections";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Button } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
 
@@ -341,4 +342,4 @@ const HelpView: React.FC = observer(() => {
 
 HelpView.displayName = "HelpView";
 
-export { HelpView };
+export default HelpView;

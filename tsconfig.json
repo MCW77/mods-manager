@@ -15,6 +15,7 @@
 		},
 		"types": ["@legendapp/state/types/babel", "node"],
 		"noFallthroughCasesInSwitch": true,
+		"allowImportingTsExtensions": true,
 		"noErrorTruncation": true
 	},
 	"include": ["src/**/*"],

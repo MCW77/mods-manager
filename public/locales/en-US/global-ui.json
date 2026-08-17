@@ -1,22 +1,23 @@
 {
-  "header": {
-    "NavAbout": "About",
-    "NavHelp": "Help",
-    "NavMods": "Mods",
-    "NavModCompilations": "Mod Compilations",
-    "NavExploreMods": "Explore my mods",
-    "NavOptimizeMods": "Optimize my mods",
-    "NavSettings": "Settings",
-    "SubtitleFor": "for",
-    "ProfileAdderNewCode": "New allycode...",
-    "ProfileSelectionPlayer": "Player",
-    "ProfileSelectionAllycode": "Ally code",
-    "ProfileSelectionPlaceholder": "Enter allycode here",
-    "Fetch": "Fetch my data",
-    "FetchHot": "Fetch with HotUtils"
-  },
-  "sidebar": {
-    "Toggle-show": "show sidebar",
-    "Toggle-collapse": "collapse sidebar"
-  }
+	"header": {
+		"NavAbout": "About",
+		"NavDatacrons": "Datacrons",
+		"NavHelp": "Help",
+		"NavMods": "Mods",
+		"NavModCompilations": "Mod Compilations",
+		"NavExploreMods": "Explore my mods",
+		"NavOptimizeMods": "Optimize my mods",
+		"NavSettings": "Settings",
+		"SubtitleFor": "for",
+		"ProfileAdderNewCode": "New allycode...",
+		"ProfileSelectionPlayer": "Player",
+		"ProfileSelectionAllycode": "Ally code",
+		"ProfileSelectionPlaceholder": "Enter allycode here",
+		"Fetch": "Fetch my data",
+		"FetchHot": "Fetch with HotUtils"
+	},
+	"sidebar": {
+		"Toggle-show": "show sidebar",
+		"Toggle-collapse": "collapse sidebar"
+	}
 }

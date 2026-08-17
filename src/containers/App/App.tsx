@@ -1,7 +1,7 @@
 // react
-import { lazy, Suspense, useCallback } from "react";
-import { useTranslation } from "react-i18next";
+import { Suspense, useCallback } from "react";
 import {
+	For,
 	Memo,
 	Show,
 	reactive,
@@ -12,13 +12,6 @@ import {
 
 // styles
 import "./App.css";
-import {
-	faGear,
-	faInfo,
-	faMagnifyingGlass,
-	faQuestion,
-	faWrench,
-} from "@fortawesome/free-solid-svg-icons";
 
 // state
 import { observable } from "@legendapp/state";
@@ -33,33 +26,16 @@ import { ui$ } from "#/modules/ui/state/ui";
 import type { SectionNames } from "#/modules/ui/domain/SectionNames";
 
 // components
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { Spinner } from "#/modules/busyIndication/components/Spinner";
+import { PageContent } from "#/modules/ui/components/PageContent";
+import { PageTab } from "#/modules/ui/components/PageTab";
 import { ThemeToggle } from "#/modules/ui/components/ThemeToggle";
 import { Spinner as SimpleSpinner } from "#/components/Spinner/Spinner";
 import { Dialog } from "#/modules/dialog/components/Dialog";
 import ProfileSwitcher from "#/modules/profilesManagement/components/ProfileSwitcher";
 
 import { Toaster } from "#ui/sonner";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "#ui/tabs";
-
-// containers
-const AboutView = lazy(() => import("#/modules/about/pages/AboutView"));
-const CompilationsView = lazy(
-	() => import("#/modules/compilations/pages/CompilationsView"),
-);
-import { HelpView } from "#/modules/help/pages/HelpView";
-const ModsView = lazy(() => import("#/modules/modsView/pages/ModsView"));
-const OptimizerView = lazy(
-	() => import("#/modules/optimizerView/pages/OptimizerView"),
-);
-const SettingsView = lazy(
-	() => import("#/modules/settings/pages/SettingsView"),
-);
-const DatacronsView = lazy(
-	() => import("#/modules/datacrons/pages/DatacronsView"),
-);
+import { Tabs, TabsList } from "#ui/tabs";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const about$ = stateLoader$.about$;
@@ -69,8 +45,13 @@ const ReactiveTabs = reactive(Tabs);
 
 const firstRender$ = observable(true);
 
+profilesManagement$.hasProfiles.onChange(({ value }) => {
+	if (value === true) {
+		ui$.loadAllPageModules();
+	}
+});
+
 const AppContent = () => {
-	const [t] = useTranslation("global-ui");
 	const themeClass = useValue(ui$.themeClass);
 
 	useObserve(() => {
@@ -85,8 +66,6 @@ const AppContent = () => {
 	const handleSectionChange = useCallback((section: string) => {
 		ui$.currentSection.set(section as SectionNames);
 	}, []);
-	const tabStyle =
-		"flex data-[state=active]:grow-1 data-[state=inactive]:m-t-0 min-h-0";
 
 	useMount(() => {
 		if (firstRender$.peek() === true) {
@@ -152,76 +131,12 @@ const AppContent = () => {
 									src={"/img/gold-crit-dmg-arrow-mod-cropped.webp"}
 								/>
 								<TabsList>
-									<Show if={profilesManagement$.hasProfiles}>
-										<TabsTrigger value="mods">
-											<div className={"flex flex-gap-1 items-center"}>
-												<FontAwesomeIcon
-													icon={faMagnifyingGlass}
-													title={t("header.NavMods")}
-												/>
-												{t("header.NavMods")}
-											</div>
-										</TabsTrigger>
-									</Show>
-									<Show if={profilesManagement$.hasProfiles}>
-										<TabsTrigger value="mod compilations">
-											<div className={"flex flex-gap-1 items-center"}>
-												<FontAwesomeIcon
-													icon={faMagnifyingGlass}
-													title={t("header.NavModCompilations")}
-												/>
-												{t("header.NavModCompilations")}
-											</div>
-										</TabsTrigger>
-									</Show>
-									<Show if={profilesManagement$.hasProfiles}>
-										<TabsTrigger value="optimize">
-											<div className={"flex flex-gap-1 items-center"}>
-												<FontAwesomeIcon
-													icon={faWrench}
-													title={t("header.NavOptimizeMods")}
-												/>
-												{t("header.NavOptimizeMods")}
-											</div>
-										</TabsTrigger>
-									</Show>
-									<Show if={profilesManagement$.hasProfiles}>
-										<TabsTrigger value="datacrons">
-											<div className={"flex flex-gap-1 items-center"}>
-												<FontAwesomeIcon icon={faWrench} title={"Datacrons"} />
-												{"Datacrons"}
-											</div>
-										</TabsTrigger>
-									</Show>
-									<Show if={profilesManagement$.hasProfiles}>
-										<TabsTrigger value="settings">
-											<div className={"flex flex-gap-1 items-center"}>
-												<FontAwesomeIcon
-													icon={faGear}
-													title={t("header.NavSettings")}
-												/>
-												{t("header.NavSettings")}
-											</div>
-										</TabsTrigger>
-									</Show>
-									<TabsTrigger value="help">
-										<div className={"flex flex-gap-1 items-center"}>
-											<FontAwesomeIcon
-												icon={faQuestion}
-												title={t("header.NavHelp")}
-											/>
-											{t("header.NavHelp")}
-										</div>
-									</TabsTrigger>
-									<TabsTrigger value="about">
-										<div className={"flex flex-gap-1 items-center"}>
-											<FontAwesomeIcon
-												icon={faInfo}
-												title={t("header.NavAbout")}
-											/>
-											{t("header.NavAbout")}
-										</div>
-									</TabsTrigger>
+									<For each={ui$.orderedSectionRegistry}>
+										{(section$) => {
+											const section = section$.get();
+											return <PageTab section={section} key={section.name} />;
+										}}
+									</For>
 								</TabsList>
 							</div>
 							<Memo>
@@ -229,62 +144,18 @@ const AppContent = () => {
 							</Memo>
 							<ThemeToggle />
 						</div>
-						<Show if={profilesManagement$.hasProfiles}>
-							<Memo>
-								<TabsContent className={tabStyle} value="mods">
-									<Suspense fallback={null}>
-										<ModsView />
-									</Suspense>
-								</TabsContent>
-							</Memo>
-						</Show>
-						<Show if={profilesManagement$.hasProfiles}>
-							<Memo>
-								<TabsContent className={tabStyle} value="mod compilations">
-									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-										<CompilationsView />
-									</Suspense>
-								</TabsContent>
-							</Memo>
-						</Show>
-						<Show if={profilesManagement$.hasProfiles}>
-							<Memo>
-								<TabsContent className={tabStyle} value="optimize">
-									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-										<OptimizerView />
-									</Suspense>
-								</TabsContent>
-							</Memo>
-						</Show>
-						<Show if={profilesManagement$.hasProfiles}>
-							<Memo>
-								<TabsContent className={tabStyle} value="datacrons">
-									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-										<DatacronsView />
-									</Suspense>
-								</TabsContent>
-							</Memo>
-						</Show>
-
-						<Show if={profilesManagement$.hasProfiles}>
-							<Memo>
-								<TabsContent className={tabStyle} value="settings">
-									<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-										<SettingsView />
-									</Suspense>
-								</TabsContent>
-							</Memo>
-						</Show>
-						<TabsContent className={tabStyle} value="help">
-							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-								<HelpView />
-							</Suspense>
-						</TabsContent>
-						<TabsContent className={tabStyle} value="about">
-							<Suspense fallback={<SimpleSpinner isVisible={true} />}>
-								<AboutView />
-							</Suspense>
-						</TabsContent>
+						<For each={ui$.orderedSectionRegistry}>
+							{(section$) => {
+								const section = section$.get();
+								return (
+									<PageContent
+										section$={section$}
+										hasProfiles$={profilesManagement$.hasProfiles}
+										key={section.name}
+									/>
+								);
+							}}
+						</For>
 					</ReactiveTabs>
 				</div>
 			</div>
