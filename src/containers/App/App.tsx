@@ -52,7 +52,7 @@ const CompilationsView = lazy(
 import { HelpView } from "#/modules/help/pages/HelpView";
 const ModsView = lazy(() => import("#/modules/modsView/pages/ModsView"));
 const OptimizerView = lazy(
-	() => import("#/containers/OptimizerView/OptimizerView"),
+	() => import("#/modules/optimizerView/pages/OptimizerView"),
 );
 const SettingsView = lazy(
 	() => import("#/modules/settings/pages/SettingsView"),
