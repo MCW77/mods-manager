@@ -7,10 +7,10 @@ import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const profilesManagement$ = stateLoader$.profilesManagement$;
 const defaultCompilation$ = stateLoader$.defaultCompilation$;
+const stackRank$ = stateLoader$.stackRank$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
-import { stackRank$ } from "#/modules/stackRank/state/stackRank";
 
 // domain
 import { characterSettings } from "#/constants/characterSettings";

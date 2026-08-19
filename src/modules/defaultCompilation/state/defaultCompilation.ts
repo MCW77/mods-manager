@@ -8,11 +8,9 @@ import {
 import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
-import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
-
-const characters$ = stateLoader$.characters$;
-const mods$ = stateLoader$.mods$;
-const roster$ = stateLoader$.roster$;
+import { characters$ } from "#/modules/characters/state/characters";
+import { mods$ } from "#/modules/mods/state/mods";
+import { roster$ } from "#/modules/roster/state/roster";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";

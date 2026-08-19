@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import type { Observable } from "@legendapp/state";
 import { observer, useValue } from "@legendapp/state/react";
 
-import { stackRank$ } from "../../state/stackRank";
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+
+const stackRank$ = stateLoader$.stackRank$;
 
 // components
 import { Input } from "#/components/reactive/Input";
