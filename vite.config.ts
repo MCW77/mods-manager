@@ -31,13 +31,6 @@ export default defineConfig({
 	build: {
 		sourcemap: true,
 		target: "esnext",
-		rolldownOptions: {
-			//			treeshake: true,
-			input: {
-				index: "index.html",
-				optimizer: "src/workers/optimizer.ts",
-			},
-		},
 	},
 	plugins: [
 		dynamicImport(),
