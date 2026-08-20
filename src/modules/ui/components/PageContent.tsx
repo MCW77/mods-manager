@@ -1,6 +1,6 @@
 // react
 import { lazy, Suspense } from "react";
-import { Memo, Show, Switch } from "@legendapp/state/react";
+import { Memo, Show, Switch, useValue } from "@legendapp/state/react";
 
 // state
 import type { Observable } from "@legendapp/state";
@@ -45,23 +45,25 @@ function Content({ section$ }: ContentProps) {
 		<Switch value={section$.name}>
 			{{
 				about: () => <AboutView />,
-				compilations: () => <CompilationsView />,
+				"mod compilations": () => <CompilationsView />,
 				help: () => <HelpView />,
 				mods: () => <ModsView />,
-				optimizer: () => <OptimizerView />,
+				optimize: () => <OptimizerView />,
 				settings: () => <SettingsView />,
 				datacrons: () => <DatacronsView />,
+				default: () => <div>Section not found</div>,
 			}}
 		</Switch>
 	);
 }
 
 function PageContent({ section$, hasProfiles$ }: PageContentProps) {
+	const sectionName = useValue(section$.name);
 	return (
 		<Switch value={section$.isAlwaysVisible}>
 			{{
 				true: () => (
-					<TabsContent className={tabStyle} value={section$.name}>
+					<TabsContent className={tabStyle} value={sectionName}>
 						<Suspense
 							fallback={
 								section$.hasNullSuspenseFallback ? null : (
@@ -76,7 +78,7 @@ function PageContent({ section$, hasProfiles$ }: PageContentProps) {
 				default: () => (
 					<Show if={hasProfiles$}>
 						<Memo>
-							<TabsContent className={tabStyle} value={section$.name}>
+							<TabsContent className={tabStyle} value={sectionName}>
 								<Suspense
 									fallback={
 										section$.hasNullSuspenseFallback ? null : (
