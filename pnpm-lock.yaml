@@ -118,8 +118,8 @@ importers:
         specifier: ^19.2.4
         version: 19.2.4(@types/react@19.2.18)
       '@unocss/preset-typography':
-        specifier: 66.7.5
-        version: 66.7.5
+        specifier: 66.8.0
+        version: 66.8.0
       '@unocss/preset-wind4':
         specifier: ^66.8.0
         version: 66.8.0
@@ -2020,9 +2020,6 @@ packages:
   '@unocss/config@66.8.0':
     resolution: {integrity: sha512-iW6A4h4PaXADWMskdWvjqodQWPegyRhzzP7JAVt+e8uIgcvreQiq0NseQ1WATHW6/x4DvkpYBud/y4jlXJE2Iw==}
 
-  '@unocss/core@66.7.5':
-    resolution: {integrity: sha512-UdJb8MiMywcau8QrWEVgUAz0kvoFHyR+sACwYCgmBh/BpKJGyR/zw/Ys3wvysbm0f+i/20VGBex/QQxYVlzdyQ==}
-
   '@unocss/core@66.8.0':
     resolution: {integrity: sha512-XQjALtWyK2aDKlBbIAufCwSu8QD6iv6qEGygeYcP1DLsQzRwBy8zQq3A+DqVUyFNJGMhXHSNeWeiLKjFnTzBOg==}
 
@@ -2044,9 +2041,6 @@ packages:
   '@unocss/preset-tagify@66.8.0':
     resolution: {integrity: sha512-LZcJtPMBtgGS5j68XsjlzRBXJjZjiXY3yYp/ghKPkb9AyMFL1yNZ3f9zcmQ8OiWbDbzUX7YzHM9P2SjDiW6UdQ==}
 
-  '@unocss/preset-typography@66.7.5':
-    resolution: {integrity: sha512-2dxC8LT9KYa29UZT4muDFl7DbIXvKktTfeSMbUGMdZKbHcuMtKSP2U52wti1PL5I9duqp4v+8G33EeVutGTUaQ==}
-
   '@unocss/preset-typography@66.8.0':
     resolution: {integrity: sha512-tsm9fV5Hhzxb3knykKQtk71fndWaZ2w8b7aXC6B4+BUUUQj51ohh3N3k3QqpP4gOVFyBoltYsEEDvReWxu+Bgw==}
 
@@ -2064,9 +2058,6 @@ packages:
 
   '@unocss/preset-wind@66.8.0':
     resolution: {integrity: sha512-Q3FO0IA35um9BA4vGOpTaAdcCrQIj25w/xcqBVxd4xFF3s4vbtE3CvWxWddXIbv1fonRDgw5XWuCM0AL6cziyA==}
-
-  '@unocss/rule-utils@66.7.5':
-    resolution: {integrity: sha512-/AKHBRF6ZOexE3EDDv8ZEYh40P5e2Eha41IYUbE1wjigW7++ssmvimSTdufJzZvU5DGP++E3B3WEsFPprZMjAg==}
 
   '@unocss/rule-utils@66.8.0':
     resolution: {integrity: sha512-nRO1oP6ziMKJ3ut7NsxDNitNF+9sJ5mXj/fqO2sPRuDeS8Jkp3mqqCgC1E4lTrb3icXA9VPUoquYhHohAGVdDA==}
@@ -5754,8 +5745,6 @@ snapshots:
       consola: 3.4.2
       unconfig: 7.5.0
 
-  '@unocss/core@66.7.5': {}
-
   '@unocss/core@66.8.0': {}
 
   '@unocss/extractor-arbitrary-variants@66.8.0':
@@ -5790,11 +5779,6 @@ snapshots:
     dependencies:
       '@unocss/core': 66.8.0
 
-  '@unocss/preset-typography@66.7.5':
-    dependencies:
-      '@unocss/core': 66.7.5
-      '@unocss/rule-utils': 66.7.5
-
   '@unocss/preset-typography@66.8.0':
     dependencies:
       '@unocss/core': 66.8.0
@@ -5826,11 +5810,6 @@ snapshots:
     dependencies:
       '@unocss/core': 66.8.0
       '@unocss/preset-wind3': 66.8.0
-
-  '@unocss/rule-utils@66.7.5':
-    dependencies:
-      '@unocss/core': 66.7.5
-      magic-string: 0.30.21
 
   '@unocss/rule-utils@66.8.0':
     dependencies:
