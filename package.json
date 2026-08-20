@@ -59,7 +59,7 @@
 		"@unocss/preset-typography": "66.7.5",
 		"@unocss/preset-wind4": "^66.7.5",
 		"@vitejs/plugin-react": "^6.0.5",
-		"@vitest/coverage-v8": "^4.1.10",
+		"@vitest/coverage-v8": "^4.1.11",
 		"@vitest/ui": "^4.1.11",
 		"fake-indexeddb": "^6.2.5",
 		"typescript": "7.0.2",
