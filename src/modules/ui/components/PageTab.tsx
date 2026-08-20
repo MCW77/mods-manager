@@ -13,7 +13,6 @@ import type { SectionData } from "../domain/SectionRegistry";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { TabsTrigger } from "#ui/tabs";
-import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 interface PageTabProps {
 	section: SectionData;
