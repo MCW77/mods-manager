@@ -5,4 +5,4 @@ writeFileSync(
 	"./public/version.json",
 	JSON.stringify({ version: pkg.version }),
 );
-console.log("Wrote version.json:", pkg.version);
+writeFileSync("./.env", `VITE_VERSION=${pkg.version}`);
