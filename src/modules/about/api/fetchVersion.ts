@@ -9,7 +9,6 @@ const post = async (url = "", data = {}, extras = {}) => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(data),
-				mode: "cors",
 			},
 			extras,
 		) as RequestInit,
@@ -27,7 +26,9 @@ async function fetchVersion() {
 	try {
 		const response = await post(
 			"https://api-test.mods-manager.pages.dev/version",
-			{},
+			{
+				data: {},
+			},
 		);
 		return response.version;
 	} catch (error) {
