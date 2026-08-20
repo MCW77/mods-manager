@@ -1,9 +1,9 @@
-const getFetch = async (url = "", data = {}, extras = {}) => {
+const post = async (url = "", data = {}, extras = {}) => {
 	const response = await fetch(
 		url,
 		Object.assign(
 			{
-				method: "GET",
+				method: "POST",
 				headers: {
 					Accept: "application/json",
 					"Content-Type": "application/json",
@@ -25,8 +25,9 @@ const getFetch = async (url = "", data = {}, extras = {}) => {
 
 async function fetchVersion() {
 	try {
-		const response = await getFetch(
+		const response = await post(
 			"https://api-test.mods-manager.pages.dev/version",
+			{},
 		);
 		return response.version;
 	} catch (error) {

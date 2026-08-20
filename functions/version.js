@@ -1,8 +1,8 @@
 export async function onRequest(context) {
 	const { request } = context;
 
-	// Only handle GET requests
-	if (request.method !== "GET") {
+	// Only handle POST requests
+	if (request.method !== "POST") {
 		return new Response("Method not allowed", { status: 405 });
 	}
 
@@ -17,7 +17,7 @@ export async function onRequest(context) {
 			headers: {
 				"Content-Type": "application/json",
 				"Access-Control-Allow-Origin": "*",
-				"Access-Control-Allow-Methods": "GET, OPTIONS",
+				"Access-Control-Allow-Methods": "POST, OPTIONS",
 				"Access-Control-Allow-Headers": "Content-Type",
 			},
 		});
@@ -38,7 +38,7 @@ export async function onRequestOptions() {
 		status: 204,
 		headers: {
 			"Access-Control-Allow-Origin": "*",
-			"Access-Control-Allow-Methods": "GET, OPTIONS",
+			"Access-Control-Allow-Methods": "POST, OPTIONS",
 			"Access-Control-Allow-Headers": "Content-Type",
 		},
 	});
