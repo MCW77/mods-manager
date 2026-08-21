@@ -22,6 +22,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
 
+const topicsBySection: Record<HelpSections, number[]> = {
+	general: [1, 2, 3, 4, 5],
+	profiles: [1, 2, 3, 4, 5],
+	explorer: [1, 2],
+	optimizer: [1, 2, 3, 4],
+	editor: [1, 2, 3],
+};
+
+const topicCSS =
+	"prose dark:prose-invert m-x-auto max-w-[80ch] flex flex-col items-center text-balance";
+
 type HelpSectionTabProps = {
 	sectionName: HelpSections;
 	currentSection: HelpSections;
@@ -53,6 +64,219 @@ const HelpSectionTab: React.FC<HelpSectionTabProps> = ({
 	);
 };
 
+interface TopicsProps {
+	currentSection: HelpSections;
+	currentTopic: number;
+	changeCurrentTopic: (topic: number) => void;
+}
+
+function Topics({
+	currentSection,
+	currentTopic,
+	changeCurrentTopic,
+}: TopicsProps) {
+	const [t] = useTranslation("help-ui");
+	if (currentTopic !== 0) return null;
+	return topicsBySection[currentSection].map((topic: number) => {
+		return (
+			<h1
+				key={`${currentSection}-${topic}`}
+				onClick={() => changeCurrentTopic(topic)}
+				onKeyUp={(event) => {
+					if (event.code === "Enter") {
+						changeCurrentTopic(topic);
+					}
+				}}
+			>
+				{t(`${currentSection}.topics.${topic}`, "")}
+			</h1>
+		);
+	});
+}
+
+interface TopicProps {
+	currentSection: HelpSections;
+	currentTopic: number;
+}
+
+function Topic({ currentSection, currentTopic }: TopicProps) {
+	const [t] = useTranslation("help-ui");
+	return match([currentSection, currentTopic])
+		.with(["optimizer", 1], () => <GlobalOptimizationSettingsTopic />)
+		.with(["optimizer", 2], () => <CharacterTemplatesTopic />)
+		.with(["optimizer", 3], () => <AutoGenerationTopic />)
+		.with(["editor", 3], () => <OptimizationPlanEditorWeightsTopic />)
+		.with(["profiles", 4], () => <FetchUnequippedModsWithHUTopic />)
+		.otherwise(() => {
+			const title = t(
+				`${currentSection}.topicById.${currentTopic}.Headline`,
+				"",
+			) as string;
+			let counter = 1;
+			const paragraphs: string[] = [];
+			let paragraph = t(
+				`${currentSection}.topicById.${currentTopic}.${counter}`,
+				"",
+			) as string;
+			while (paragraph !== "") {
+				paragraphs.push(paragraph);
+				counter++;
+				paragraph = t(
+					`${currentSection}.topicById.${currentTopic}.${counter}`,
+					"",
+				);
+			}
+
+			return (
+				<div className={topicCSS}>
+					{title !== "" && <h2>{title}</h2>}
+					{paragraphs.map((p) => (
+						<p key={p}>{p}</p>
+					))}
+				</div>
+			);
+		});
+}
+
+function OptimizationPlanEditorWeightsTopic() {
+	const [t] = useTranslation("help-ui");
+	const topicPath = "editor.topicById.3.";
+
+	return (
+		<div className={topicCSS}>
+			<h2>{t(`${topicPath}Headline`)}</h2>
+			<div>{t(`${topicPath}1`)}</div>
+			<div>
+				<p>{t(`${topicPath}2`)}</p>
+				<p>{t(`${topicPath}3`)}</p>
+			</div>
+		</div>
+	);
+}
+
+function CharacterTemplatesTopic() {
+	const [t] = useTranslation("help-ui");
+
+	return (
+		<div className={topicCSS}>
+			<h2>{t("optimizer.topicById.2.Headline")}</h2>
+			<p>
+				{t("optimizer.topicById.2.1")}
+				<strong>{t("optimizer.topicById.2.2")}</strong>
+				{t("optimizer.topicById.2.3")}
+				<strong>{t("optimizer.topicById.2.4")}</strong>
+				{t("optimizer.topicById.2.5")}
+			</p>
+			<h3>{t("optimizer.topicById.2.6")}</h3>
+			<p>
+				<strong>{t("optimizer.topicById.2.7")}</strong> -{" "}
+				{t("optimizer.topicById.2.8")}
+				<br />
+				<strong>{t("optimizer.topicById.2.9")}</strong> -{" "}
+				{t("optimizer.topicById.2.10")}
+				<br />
+				<strong>{t("optimizer.topicById.2.11")}</strong> -{" "}
+				{t("optimizer.topicById.2.12")}
+				<br />
+				<strong>{t("optimizer.topicById.2.13")}</strong> -{" "}
+				{t("optimizer.topicById.2.14")}
+			</p>
+			<h3>{t("optimizer.topicById.2.15")}</h3>
+			<p>
+				<strong>{t("optimizer.topicById.2.16")}</strong> -{" "}
+				{t("optimizer.topicById.2.17")}
+				<br />
+				<strong>{t("optimizer.topicById.2.18")}</strong> -{" "}
+				{t("optimizer.topicById.2.19")}
+				<br />
+				<strong>{t("optimizer.topicById.2.20")}</strong> -{" "}
+				{t("optimizer.topicById.2.21")}
+			</p>
+		</div>
+	);
+}
+
+function GlobalOptimizationSettingsTopic() {
+	const [t] = useTranslation("help-ui");
+
+	return (
+		<div className={topicCSS}>
+			<h2>{t("optimizer.topicById.1.Headline")}</h2>
+			<div>{t("optimizer.topicById.1.1")}</div>
+			<div>
+				<p>
+					<strong>{t("optimizer.topicById.1.2")}</strong> -{" "}
+					{t("optimizer.topicById.1.3")}
+				</p>
+				<p>
+					<strong>{t("optimizer.topicById.1.4")}</strong> -{" "}
+					{t("optimizer.topicById.1.5")}
+				</p>
+				<p>
+					<strong>{t("optimizer.topicById.1.6")}</strong> -{" "}
+					{t("optimizer.topicById.1.7")}
+				</p>
+			</div>
+		</div>
+	);
+}
+
+function AutoGenerationTopic() {
+	const [t] = useTranslation("help-ui");
+
+	return (
+		<div className={topicCSS}>
+			<h1>{t("optimizer.topicById.3.Headline")}</h1>
+			<p>{t("optimizer.topicById.3.1")}</p>
+			<h2>{t("optimizer.topicById.3.2")}</h2>
+			<section>
+				<Label>{t("optimizer.topicById.3.3")}:</Label>
+				<p>{t("optimizer.topicById.3.4")}</p>
+				<Label>{t("optimizer.topicById.3.5")}:</Label>
+				<p>{t("optimizer.topicById.3.6")}</p>
+				<Label>{t("optimizer.topicById.3.7")}:</Label>
+				<p>{t("optimizer.topicById.3.8")}</p>
+				<Label>{t("optimizer.topicById.3.9")}:</Label>
+				<p>{t("optimizer.topicById.3.10")}</p>
+			</section>
+		</div>
+	);
+}
+
+function FetchUnequippedModsWithHUTopic() {
+	const [t] = useTranslation("help-ui");
+
+	return (
+		<div className={topicCSS}>
+			<p>
+				{t("profiles.topicById.4.1")} {t("profiles.topicById.4.2")}
+			</p>
+			<p>
+				<strong>{t("profiles.topicById.4.3")}</strong>
+				<br />
+				{t("profiles.topicById.4.4")} {t("profiles.topicById.4.5")}{" "}
+				{t("profiles.topicById.4.6")}
+			</p>
+			<p>
+				<a
+					href={"https://www.hotutils.com/"}
+					target={"_blank"}
+					rel={"noopener noreferrer"}
+				>
+					https://www.hotutils.com/
+				</a>
+			</p>
+			<p>
+				<img
+					className={"w-full"}
+					src={"/img/hotsauce512.webp"}
+					alt={"hotsauce"}
+				/>
+			</p>
+		</div>
+	);
+}
+
 const HelpView: React.FC = observer(() => {
 	const helpSection = useValue(help$.section);
 	const helpTopic = useValue(help$.topic);
@@ -63,14 +287,6 @@ const HelpView: React.FC = observer(() => {
 	const [t] = useTranslation("help-ui");
 	const [currentSection, changeCurrentSection] = useState(helpSection);
 	const [currentTopic, changeCurrentTopic] = useState(helpTopic);
-
-	const topicsBySection: Record<HelpSections, number[]> = {
-		general: [1, 2, 3, 4, 5],
-		profiles: [1, 2, 3, 4, 5],
-		explorer: [1, 2],
-		optimizer: [1, 2, 3, 4],
-		editor: [1, 2, 3],
-	};
 
 	const sectionElements: Record<
 		string,
@@ -83,201 +299,9 @@ const HelpView: React.FC = observer(() => {
 		editor: React.createRef<HTMLButtonElement>(),
 	};
 
-	const topicCSS =
-		"prose dark:prose-invert m-x-auto max-w-[80ch] flex flex-col items-center text-balance";
-
 	const handleSectionSelect = (sectionName: HelpSections) => {
 		changeCurrentTopic(0);
 		changeCurrentSection(sectionName);
-	};
-
-	const renderTopics = () => {
-		if (currentTopic !== 0) return null;
-
-		return topicsBySection[currentSection].map((topic: number) => {
-			return (
-				<h1
-					key={`${currentSection}-${topic}`}
-					onClick={() => changeCurrentTopic(topic)}
-					onKeyUp={(event) => {
-						if (event.code === "Enter") {
-							changeCurrentTopic(topic);
-						}
-					}}
-				>
-					{t(`${currentSection}.topics.${topic}`, "")}
-				</h1>
-			);
-		});
-	};
-
-	const renderTopic = () => {
-		return match([currentSection, currentTopic])
-			.with(["optimizer", 1], () => renderGlobalOptimizationSettingsTopic())
-			.with(["optimizer", 2], () => renderCharacterTemplatesTopic())
-			.with(["optimizer", 3], () => renderAutoGenerationTopic())
-			.with(["editor", 3], () => renderOptimizationPlanEditorWeightsTopic())
-			.with(["profiles", 4], () => renderFetchUnequippedModsWithHUTopic())
-			.otherwise(() => {
-				const title = t(
-					`${currentSection}.topicById.${currentTopic}.Headline`,
-					"",
-				) as string;
-				let counter = 1;
-				const paragraphs: string[] = [];
-				let paragraph = t(
-					`${currentSection}.topicById.${currentTopic}.${counter}`,
-					"",
-				) as string;
-				while (paragraph !== "") {
-					paragraphs.push(paragraph);
-					counter++;
-					paragraph = t(
-						`${currentSection}.topicById.${currentTopic}.${counter}`,
-						"",
-					);
-				}
-
-				return (
-					<div className={topicCSS}>
-						{title !== "" && <h2>{title}</h2>}
-						{paragraphs.map((p) => (
-							<p key={p}>{p}</p>
-						))}
-					</div>
-				);
-			});
-	};
-
-	const renderOptimizationPlanEditorWeightsTopic = () => {
-		const topicPath = "editor.topicById.3.";
-		return (
-			<div className={topicCSS}>
-				<h2>{t(`${topicPath}Headline`)}</h2>
-				<div>{t(`${topicPath}1`)}</div>
-				<div>
-					<p>{t(`${topicPath}2`)}</p>
-					<p>{t(`${topicPath}3`)}</p>
-				</div>
-			</div>
-		);
-	};
-	/**
-	 * Renders a help description for pulling unequipped mods with HotUtils
-	 */
-	const renderFetchUnequippedModsWithHUTopic = () => {
-		return (
-			<div className={topicCSS}>
-				<p>
-					{t("profiles.topicById.4.1")} {t("profiles.topicById.4.2")}
-				</p>
-				<p>
-					<strong>{t("profiles.topicById.4.3")}</strong>
-					<br />
-					{t("profiles.topicById.4.4")} {t("profiles.topicById.4.5")}{" "}
-					{t("profiles.topicById.4.6")}
-				</p>
-				<p>
-					<a
-						href={"https://www.hotutils.com/"}
-						target={"_blank"}
-						rel={"noopener noreferrer"}
-					>
-						https://www.hotutils.com/
-					</a>
-				</p>
-				<p>
-					<img
-						className={"w-full"}
-						src={"/img/hotsauce512.webp"}
-						alt={"hotsauce"}
-					/>
-				</p>
-			</div>
-		);
-	};
-
-	const renderGlobalOptimizationSettingsTopic = () => {
-		return (
-			<div className={topicCSS}>
-				<h2>{t("optimizer.topicById.1.Headline")}</h2>
-				<div>{t("optimizer.topicById.1.1")}</div>
-				<div>
-					<p>
-						<strong>{t("optimizer.topicById.1.2")}</strong> -{" "}
-						{t("optimizer.topicById.1.3")}
-					</p>
-					<p>
-						<strong>{t("optimizer.topicById.1.4")}</strong> -{" "}
-						{t("optimizer.topicById.1.5")}
-					</p>
-					<p>
-						<strong>{t("optimizer.topicById.1.6")}</strong> -{" "}
-						{t("optimizer.topicById.1.7")}
-					</p>
-				</div>
-			</div>
-		);
-	};
-
-	const renderCharacterTemplatesTopic = () => {
-		return (
-			<div className={topicCSS}>
-				<h2>{t("optimizer.topicById.2.Headline")}</h2>
-				<p>
-					{t("optimizer.topicById.2.1")}
-					<strong>{t("optimizer.topicById.2.2")}</strong>
-					{t("optimizer.topicById.2.3")}
-					<strong>{t("optimizer.topicById.2.4")}</strong>
-					{t("optimizer.topicById.2.5")}
-				</p>
-				<h3>{t("optimizer.topicById.2.6")}</h3>
-				<p>
-					<strong>{t("optimizer.topicById.2.7")}</strong> -{" "}
-					{t("optimizer.topicById.2.8")}
-					<br />
-					<strong>{t("optimizer.topicById.2.9")}</strong> -{" "}
-					{t("optimizer.topicById.2.10")}
-					<br />
-					<strong>{t("optimizer.topicById.2.11")}</strong> -{" "}
-					{t("optimizer.topicById.2.12")}
-					<br />
-					<strong>{t("optimizer.topicById.2.13")}</strong> -{" "}
-					{t("optimizer.topicById.2.14")}
-				</p>
-				<h3>{t("optimizer.topicById.2.15")}</h3>
-				<p>
-					<strong>{t("optimizer.topicById.2.16")}</strong> -{" "}
-					{t("optimizer.topicById.2.17")}
-					<br />
-					<strong>{t("optimizer.topicById.2.18")}</strong> -{" "}
-					{t("optimizer.topicById.2.19")}
-					<br />
-					<strong>{t("optimizer.topicById.2.20")}</strong> -{" "}
-					{t("optimizer.topicById.2.21")}
-				</p>
-			</div>
-		);
-	};
-
-	const renderAutoGenerationTopic = () => {
-		return (
-			<div className={topicCSS}>
-				<h1>{t("optimizer.topicById.3.Headline")}</h1>
-				<p>{t("optimizer.topicById.3.1")}</p>
-				<h2>{t("optimizer.topicById.3.2")}</h2>
-				<section>
-					<Label>{t("optimizer.topicById.3.3")}:</Label>
-					<p>{t("optimizer.topicById.3.4")}</p>
-					<Label>{t("optimizer.topicById.3.5")}:</Label>
-					<p>{t("optimizer.topicById.3.6")}</p>
-					<Label>{t("optimizer.topicById.3.7")}:</Label>
-					<p>{t("optimizer.topicById.3.8")}</p>
-					<Label>{t("optimizer.topicById.3.9")}:</Label>
-					<p>{t("optimizer.topicById.3.10")}</p>
-				</section>
-			</div>
-		);
 	};
 
 	return (
@@ -331,10 +355,18 @@ const HelpView: React.FC = observer(() => {
 				/>
 			</nav>
 			<div className={`${topicCSS} text-center`}>
-				{currentTopic === 0 ? renderTopics() : null}
+				<Show if={currentTopic === 0}>
+					<Topics
+						currentSection={currentSection}
+						currentTopic={currentTopic}
+						changeCurrentTopic={changeCurrentTopic}
+					/>
+				</Show>
 			</div>
 			<div className={"overflow-y-auto"}>
-				{currentTopic !== 0 ? renderTopic() : null}
+				<Show if={currentTopic !== 0}>
+					<Topic currentSection={currentSection} currentTopic={currentTopic} />
+				</Show>
 			</div>
 		</div>
 	);
