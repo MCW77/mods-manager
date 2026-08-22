@@ -2,6 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 // state
+import { useValue } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
@@ -17,6 +18,7 @@ import { Switch } from "#/components/reactive/Switch";
 
 function ViewSetupWidget() {
 	const [t] = useTranslation("explore-ui");
+	const _activeViewSetup = useValue(modsView$.activeViewSetupInActiveCategory);
 
 	return (
 		<div
