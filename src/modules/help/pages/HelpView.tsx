@@ -27,7 +27,7 @@ const topicsBySection: Record<HelpSections, number[]> = {
 	profiles: [1, 2, 3, 4, 5],
 	explorer: [1, 2],
 	optimizer: [1, 2, 3, 4],
-	editor: [1, 2, 3],
+	editor: [1, 2, 3, 4, 5, 6],
 };
 
 const topicCSS =

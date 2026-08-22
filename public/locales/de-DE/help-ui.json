@@ -119,7 +119,7 @@
 		"Title": "Optimierungsplan-Editor",
 		"topics": {
 			"1": "Übersicht",
-			"2": "Mod Verbesserungen",
+			"2": "Mods",
 			"3": "Gewichte",
 			"4": "Primärwerte",
 			"5": "Modsets",
@@ -128,11 +128,14 @@
 		"topicById": {
 			"1": {
 				"Headline": "Übersicht",
-				"1": ""
+				"1": "Der Optimierungsplan-Editor hat 3 Bereiche: oben links, oben rechts und unten.",
+				"2": "Im oberen linken Bereich siehst du den Charakter, auf den der Optimierungsplan angewendet wird.",
+				"3": "Im oberen rechten Bereich kannst du den Optimierungsplan verwalten. Du kannst Optimierungspläne hinzufügen, löschen, zurücksetzen und auswählen, Änderungen speichern oder abbrechen.",
+				"4": "Im unteren Bereich kannst du den Optimierungsplan bearbeiten. Die Einstellungen sind in Kategorien unterteilt."
 			},
 			"2": {
 				"Headline": "Mods",
-				"1": ""
+				"1": "In dieser Kategorie kannst du gerade nur einschränken, ob nur 6-Punkt-Mods erlaubt sind."
 			},
 			"3": {
 				"Headline": "Gewichte",
@@ -142,15 +145,20 @@
 			},
 			"4": {
 				"Headline": "Primärwerte",
-				"1": ""
+				"1": "In dieser Kategorie kannst du auswählen, welche Primärwerte für jeden variablen Mod-Slot erlaubt sind. Keine Auswahl für einen Slot erlaubt jeden Primärwert für diesen Slot. Wenn du einen oder mehrere Primärwerte auswählst, dann sind nur diese ausgewählten für diesen Slot erlaubt.",
+				"2": "Die Einschränkungen für Primärwerte werden ignoriert, es sei denn, du aktivierst die globale Optimierungseinstellung \"Mit Primär- und Set-Einschränkungen optimieren\""
 			},
 			"5": {
 				"Headline": "Sets",
-				"1": ""
+				"1": "In dieser Kategorie kannst du definieren, ob es erlaubt ist, Modsets zu brechen und welche Modsets erlaubt sind. Wenn du ein oder mehrere Modsets auswählst, dann sind nur diese ausgewählten erlaubt.",
+				"2": "Die Einschränkungen für Modsets werden ignoriert, es sei denn, du aktivierst die globale Optimierungseinstellung \"Mit Primär- und Set-Einschränkungen optimieren\""
 			},
 			"6": {
 				"Headline": "Zielvorgaben",
-				"1": ""
+				"1": "In dieser Kategorie kannst du Zielvorgaben definieren. Sie beginnt leer, außer mit der Schaltfläche \"Zielwert hinzufügen\". Jeder hinzugefügte Zielwert zeigt eine Karte an, um diesen Zielwert zu bearbeiten.",
+				"2": "Mit einer Zielvorgabe kannst du den Bereich definieren, in dem der ausgewählte Wert liegen muss. Dieser Bereich kann im Vergleich zum gleichen Wert auf einem ausgewählten Charakter festgelegt werden. Wenn ja, kann der Bereich absolut oder relativ zum Vergleichswert sein.",
+				"3": "Du kannst zwischen dem Modus \"Nur berichten\" und \"Optimieren\" wechseln. Im Standardmodus \"Optimieren\" durchläuft der Optimierer alle Mod-Kombinationen und wählt die aus, die die Zielvorgaben erfüllt und die höchste Mod-Punktzahl hat. Im Modus \"Nur berichten\" wählt der Optimierer einfach die am höchsten bewertete Modkobination aus und berichtet, ob sie die Zielvorgaben erfüllt.",
+				"4": "Das Durchlaufen aller Mod-Kombinationen im Modus \"Optimieren\" kann sehr zeitaufwendig sein. Du kannst die benötigte Zeit reduzieren, indem du einen kleinen Bereich wählst oder durch das Entfernen von zu berücksichtigen Mods mit den anderen Einschränkungen."
 			}
 		}
 	},

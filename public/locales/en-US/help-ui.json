@@ -128,11 +128,14 @@
 		"topicById": {
 			"1": {
 				"Headline": "Overview",
-				"1": ""
+				"1": "The optimizationplan editor has 3 areas. top-left, top-right and bottom.",
+				"2": "In the top-left area you see the character the optimization plan is applied to.",
+				"3": "In the top-right area you can manage the optimization plan. You can add, delete, reset and select optimization plans, save changes made or cancel.",
+				"4": "In the bottom area you can edit the optimization plan. The settings are split in categories."
 			},
 			"2": {
 				"Headline": "Mods",
-				"1": ""
+				"1": "In this category you can just restrict if only 6-dot mods are allowed"
 			},
 			"3": {
 				"Headline": "Weights",
@@ -142,15 +145,20 @@
 			},
 			"4": {
 				"Headline": "Primaries",
-				"1": ""
+				"1": "In this category you can select which primary stats are allowed for each variable mod slot. No selection for a slot allows any primary stat for that slot. If you select one or more primary stats, then only those selected will be allowed for that slot.",
+				"2": "The primary stat restrictions are ignored unless you enable the global optimizer setting \"Optimize with primary and set restrictions\""
 			},
 			"5": {
 				"Headline": "Sets",
-				"1": ""
+				"1": "In this category you can define if it is allowed to break modsets and the modsets allowed. If you select one or more modsets, then only those selected will be allowed.",
+				"2": "The modset restrictions are ignored unless you enable the global optimizer setting \"Optimize with primary and set restrictions\""
 			},
 			"6": {
 				"Headline": "Target Stats",
-				"1": ""
+				"1": "In this category you can define target stats. It starts empty except for the add target stat button. Each added target stat will show a card to edit that target stat.",
+				"2": "With a target stat you can define the range the selected stat has to fall in. This range can be set in comparison to the same stat on a selected character. If so the range can be absolute or relative.",
+				"3": "You can switch between \"Report Only\" and \"Optimize\" mode. In the default \"Optimize\" mode the optimizer will iterate all mod permutations and select the loadout matching the target stat restriction with the highest mod score. In \"Report Only\" mode the optimizer just selects the highest scoring loadout and reports if it satisfies the target stat restriction.",
+				"4": "Iterating all mod permutations in \"Optimize\" mode can be very time consuming. You can reduce the needed time by selecting a small range or by removing mods to look at with any of the other restrictions"
 			}
 		}
 	},
