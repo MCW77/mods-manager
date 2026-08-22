@@ -19,7 +19,7 @@ import type { HelpSections } from "../domain/HelpSections";
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Button } from "#/components/ui/button";
+import { Button, buttonVariants } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
 
 const topicsBySection: Record<HelpSections, number[]> = {
@@ -251,6 +251,20 @@ function FetchUnequippedModsWithHUTopic() {
 			<p>
 				{t("profiles.topicById.4.1")} {t("profiles.topicById.4.2")}
 			</p>
+			<p>
+				{t("profiles.topicById.4.7")}
+				<a
+					className={buttonVariants({ variant: "link" })}
+					href={
+						"https://discord.com/channels/451567765879259136/451569250650292244/1317618806230618174"
+					}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Discord
+				</a>
+				{t("profiles.topicById.4.8")}
+			</p>{" "}
 			<p>
 				<strong>{t("profiles.topicById.4.3")}</strong>
 				<br />

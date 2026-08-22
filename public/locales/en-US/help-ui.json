@@ -6,17 +6,20 @@
 			"2": "Deleting a profile",
 			"3": "Fetching your mods",
 			"4": "Fetching your mods as a HotUtils customer",
-			"5": "Importing unequipped mods from C3PO"
+			"5": "Importing unequipped mods using C-3PO bot"
 		},
 		"topicById": {
 			"1": {
 				"Headline": "Adding profiles",
-				"1": "there 1"
+				"1": "To get started you just need to enter your allycode in the box in the header. The application will then fetch your profile's data and create a new profile for you.",
+				"2": "If you want to add another profile, open the profiles dropdown at the top and select \"New Allycode...\". Then enter the allycode for that profile and hit enter.",
+				"3": "If you added multiple profiles, you can switch between them by selecting the profile you want to use in the profiles dropdown at the top.",
+				"4": "You can also import profiles from a backup file. When you have at least one profile, you can open the settings. Go to the \"Basics\" section (default), where you can find the \"Backups & Reset\" settings. There you can import a backup file that contains one or more profiles. The data will be merged with your existing profiles."
 			},
 			"2": {
 				"Headline": "Deleting a profile",
-				"1": "First you have to select the profile you want to delete in the profiles dropdown at the top. Then you can hit the red trash can button to delete that profile.",
-				"2": "After deletion of a profile you can always create it again by entering the allycode and fetching the profile's data again."
+				"1": "To make mods-manager forget your profile, go to the \"Basics\" section in the settings and select the profile you want to delete in the \"Accounts\" widget. It lists all profiles with allycode and in-game name. Then click the \"Delete account <allycode>\" button. This will remove all data for that profile from mods-manager.",
+				"2": "After deletion of a profile you can always create it again by entering the allycode and fetching the profile's data (mods, characters,...) again, but anything you changed manually like compilations, targets will be lost unless you have a recent backup file that contains the profile."
 			},
 			"4": {
 				"Headline": "Fetching your mods as a HotUtils customer",
@@ -25,7 +28,16 @@
 				"3": "Use at your own risk!",
 				"4": "HotUtils functionality breaks the terms of service for Star Wars: Galaxy of Heroes.",
 				"5": "You assume all risk in using this tool.",
-				"6": "Grandivory's Mods Optimizer is not associated with HotUtils."
+				"6": "Grandivory's Mods Optimizer is not associated with HotUtils.",
+				"7": "To use HotUtils with mods-manager, it needs your HotUtils Session ID. i put detailed instructions on how to get it on ",
+				"8": "After successfully adding your HotUtils Session ID, the fetch button will show a samall flame to indicate it now uses HotUtils"
+			},
+			"5": {
+				"Headline": "Importing unequipped mods using C-3PO bot",
+				"1": "You can import unequipped mods using the C-3PO bot on Discord. This is slightly more complicated than using HotUtils, but it's also free.",
+				"2": "Use the \"/allycode auth ea_connect\" command to connect the bot with the game. ",
+				"3": "After connecting the bot, you can use the command \"/inventory export\". The bot will then fetch the mod data and generate a file that you can import into mods-manager.",
+				"4": "You can find the import in the settings under \"Basics\" (default) in the \"Accounts\" section. There you can import the file that the C-3PO bot created."
 			}
 		}
 	},
@@ -56,7 +68,7 @@
 		"topicById": {
 			"1": {
 				"Headline": "Global optimization settings",
-				"1": "Global settings are a quick way to make changes that apply to every character during an optimization. They always override any character-specific settings that you have set.",
+				"1": "The global settings apply to every character during an optimization. They always override any character-specific settings that you have set.",
 				"2": "Threshold to change mods",
 				"3": "As the optimizer is running, its normal behavior is to always recommend the absolute best mod set it can find, based on the target you have selected. If this number is above 0, then the optimizer will only recommend that you change mods on a character if the new recommended set is at least this much better than what the character previously had, or if the character's mods were moved to a character higher in your list and needed to be replaced.",
 				"4": "Lock all unselected characters",
@@ -119,7 +131,7 @@
 				"1": ""
 			},
 			"2": {
-				"Headline": "Mod Upgrades",
+				"Headline": "Mods",
 				"1": ""
 			},
 			"3": {
@@ -133,11 +145,11 @@
 				"1": ""
 			},
 			"5": {
-				"Headline": "Modsets",
+				"Headline": "Sets",
 				"1": ""
 			},
 			"6": {
-				"Headline": "Targetstats",
+				"Headline": "Target Stats",
 				"1": ""
 			}
 		}

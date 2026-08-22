@@ -6,17 +6,20 @@
 			"2": "Ein Profil löschen",
 			"3": "Mods abrufen",
 			"4": "Mods als HotUtils Kunde abrufen",
-			"5": "Unausgerüstete Mods von C3PO importieren"
+			"5": "Unausgerüstete Mods über den C-3PO Bot importieren"
 		},
 		"topicById": {
 			"1": {
 				"Headline": "Profile hinzufügen",
-				"1": "there 1"
+				"1": "Um loszulegen, musst du nur deinen Bündniscode in das Feld in der Kopfzeile eingeben. Die Anwendung ruft dann die Daten deines Profils ab und erstellt ein neues Profil für dich.",
+				"2": "Wenn du ein weiteres Profil hinzufügen möchtest, öffne das Dropdown-Menü für Profile oben und wähle \"Neuer Bündniscode...\". Gib dann den Bündniscode für dieses Profil ein und drücke die Eingabetaste.",
+				"3": "Wenn du mehrere Profile hinzugefügt hast, kannst du oben im Dropdown-Menü das Profil auswählen, das du verwenden möchtest.",
+				"4": "Du kannst auch Profile aus einer Sicherungsdatei importieren. Wenn du mindestens ein Profil hast, kannst du die Einstellungen öffnen. Gehe zum Abschnitt \"Allgemein\" (Standard), wo du die Einstellungen \"Sicherheitskopie & Neustart\" findest. Dort kannst du eine Sicherungsdatei importieren, die ein oder mehrere Profile enthält. Die Daten werden mit deinen vorhandenen Profilen zusammengeführt."
 			},
 			"2": {
 				"Headline": "Löschen eines Profils",
-				"1": "Zunächst muss das zu löschende Profil in der Profilauswahl oben ausgewählt werden. Dann kann es über einen Klick auf den roten Papierkorb-Knopf gelöscht werden.",
-				"2": "Ein gelöschtes Profil kann man einfach erneut erstellen indem man wieder den Bündniscode eingibt und die Daten abruft."
+				"1": "Um mods-manager dein Profil vergessen zu lassen, gehe zum Abschnitt \"Allgemein\" in den Einstellungen und wähle im Widget \"Konten\" das Profil aus, das du löschen möchtest. Es listet alle Profile mit Bündniscode und In-Game-Namen auf. Klicke dann auf die Schaltfläche \"Konto <Bündniscode> löschen\". Dadurch werden alle Daten für dieses Profil im mods-manager entfernt.",
+				"2": "Nach dem Löschen eines Profils kannst du es jederzeit wieder erstellen, indem du den Bündniscode eingibst und die Profildaten (Mods, Charaktere, ...) erneut abrufst. Alles, was du manuell geändert hast, wie Zusammenstellungen und Ziele, geht jedoch ohne eine aktuelle Sicherungsdatei, die das Profil enthält, verloren."
 			},
 			"4": {
 				"Headline": "Mods als HotUtils Kunde abrufen",
@@ -25,7 +28,16 @@
 				"3": "Gebrauch auf eigene Gefahr!",
 				"4": "Die HotUtils Functionalität verstößt gegen die Vertragsbedingungen von Star Wars: Galaxy of Heroes.",
 				"5": "Sie übernehmen das gesamte Risiko bei Nutzung des Tools.",
-				"6": "Grandivory's Mods Optimizer und HotUtils gehören nicht zusammen."
+				"6": "Grandivory's Mods Optimizer und HotUtils gehören nicht zusammen.",
+				"7": "Um HotUtils mit dem mods-manager zu verwenden, benötigt er deine HotUtils Session ID. Eine detaillierte Erklärung dazu auf findest du auf ",
+				"8": "Nach erfolgreicher Eingabe deiner HotUtils Session ID, zeigt der Knopf für den Mod-Abruf mit einer kleinen Flamme an, dass jetzt HotUtils verwendet wird."
+			},
+			"5": {
+				"Headline": "Unausgerüstete Mods über den C-3PO Bot importieren",
+				"1": "Du kannst unausgerüstete Mods über den C-3PO Bot auf Discord importieren. Dies ist etwas komplizierter als mit HotUtils, dafür aber auch kostenlos.",
+				"2": "Verwende das Kommando \"/allycode auth ea_connect\", um den Bot mit dem Spiel zu verbinden.",
+				"3": "Nachdem du den Bot verbunden hast, kannst du das Kommando \"/inventory export\" verwenden. Der Bot wird dann die Mod-Daten abrufen und eine Datei generieren, die du im mods-manager importieren kannst.",
+				"4": "Den Import findest du in den Einstellungen unter \"Allgemein\" (Standard) im Abschnitt \"Konten\". Dort kannst du die Datei importieren, die der C-3PO Bot erstellt hat."
 			}
 		}
 	},
@@ -55,8 +67,8 @@
 		},
 		"topicById": {
 			"1": {
-				"Headline": "Global optimization settings",
-				"1": "Global settings are a quick way to make changes that apply to every character during an optimization. They always override any character-specific settings that you have set.",
+				"Headline": "Globale Optimierungs-Einstellungen",
+				"1": "Die globalen Einstellungen gelten für jeden Charakter während einer Optimierung. Sie überschreiben immer alle charakter-spezifischen Einstellungen, die du festgelegt hast.",
 				"2": "Threshold to change mods",
 				"3": "As the optimizer is running, its normal behavior is to always recommend the absolute best mod set it can find, based on the target you have selected. If this number is above 0, then the optimizer will only recommend that you change mods on a character if the new recommended set is at least this much better than what the character previously had, or if the character's mods were moved to a character higher in your list and needed to be replaced.",
 				"4": "Lock all unselected characters",
@@ -119,12 +131,12 @@
 				"1": ""
 			},
 			"2": {
-				"Headline": "Mod Verbesserungen",
+				"Headline": "Mods",
 				"1": ""
 			},
 			"3": {
 				"Headline": "Gewichte",
-				"1": "Der Wert eines Mods ist die gewichtete Summe der Charakterwerte. Die Gewichte werden hier bestimmt. Es gibt zwei Modi die Gewichte einzustellen, 'Einfach' und 'Fortgeschritten'.",
+				"1": "Die Punktzahl eines Mods ist die gewichtete Summe der Charakterwerte. Die Gewichte werden hier bestimmt. Es gibt zwei Modi die Gewichte einzustellen, 'Einfach' und 'Fortgeschritten'.",
 				"2": "Einfach: Gewichte werden normalisiert, um zum Wertebereich des Wertes zu passen. Alle Gewichte liegen zwischen -100 und 100. Gibt man zum Beispiel Tempo und Schutz dasselbe Gewicht, bedeutet das, dass 1 Punkt Tempo denselben Wert des Mods ergibt wie 200 Schutz (Da ein Mod etwa 200 mal mehr Schutz als Tempo geben kann).",
 				"3": "Fortgeschritten: Nun gibt es keinen Wertebereich für Gewichte und sie werden direkt mit dem Charakterwert multipliziert. Wenn zwei Charakterwerte das gleiche Gewicht haben, erhöht ein Punkt im ersten Charakterwert den Modwert genauso wie einer im zweiten. Ich empfehle, im einfachen Modus zu bleiben, bis man ein Gefühl für Gewichte bekommen hat."
 			},
@@ -133,7 +145,7 @@
 				"1": ""
 			},
 			"5": {
-				"Headline": "Modsets",
+				"Headline": "Sets",
 				"1": ""
 			},
 			"6": {
