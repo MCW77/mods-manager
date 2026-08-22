@@ -314,6 +314,7 @@ const CharacterActions: React.FC = observer(() => {
 				title="Global Settings Helppage"
 				section="optimizer"
 				topic={1}
+				showTitle={false}
 			/>
 			<SettingsLink title="Global Settings" section="optimizer" />
 		</div>

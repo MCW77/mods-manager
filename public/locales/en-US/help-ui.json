@@ -44,17 +44,35 @@
 	"explorer": {
 		"Title": "Mod Explorer",
 		"topics": {
-			"1": "Mod Explorer ??",
-			"2": "Filters"
+			"1": "Overview",
+			"2": "View Options",
+			"3": "Grouping/Filtering/Sorting Setup",
+			"4": "Grouping",
+			"5": "Sorting"
 		},
 		"topicById": {
 			"1": {
 				"Headline": "Mod Explorer",
-				"1": "hello"
+				"1": "The \"Mods Explorer\" allows you to view all your mods. You have many options to group/filter/sort your viewed mods in the collapsible sidebar on the left",
+				"2": "The mods are displayed in the main area on the right. There is one view of mods, grouped/filtered/sorted according to your settings, for each stage in the lifecycle of a mod and a view for all mods (the default)."
 			},
 			"2": {
-				"Headline": "Filters",
+				"Headline": "View Options",
 				"1": "there"
+			},
+			"3": {
+				"Headline": "Grouping/Filtering/Sorting Setup",
+				"1": "At the top you have a button to add a new grouping/filtering/sorting setup. You can have any number of setups and switch between them with the dropdown at the top. Each setup has its own grouping, filtering and sorting settings. The dropdown also let's you delete or rename existing setups",
+				"2": "Each mod lifecycle stage has its own list of grouping/filtering/sorting setups and comes with one default setup that will only show mods in that stage."
+			},
+			"4": {
+				"Headline": "Grouping",
+				"1": "You can only enable or disable grouping. With grouping enabled, the mods will be grouped by slot, modset and primary stat. With grouping disabled, all mods are in the same group. With grouping enabled (and some sorting) you can quickly compare all mods with the same characteristics.",
+				"2": "On the right you get the list of all groups. (Just one group if grouping is disabled). Each group can be collapsed or expanded by clicking it's header showing the slot, modset, primary stat and the number of mods in that group. There are also buttons to collapse/expand all groups"
+			},
+			"5": {
+				"Headline": "Sorting",
+				"1": "After grouping and filtering your mods they will be sorted according to your sorting settings. You can add any number of sorting criteria. The mods will be sorted by the first criteria, and if there are mods with the same value for that criteria, they will be sorted by the second criteria, and so on. Each sort can be ascending or descending."
 			}
 		}
 	},

@@ -1,5 +1,5 @@
 // react
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { observer, Show, useValue } from "@legendapp/state/react";
 
@@ -21,11 +21,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Button, buttonVariants } from "#/components/ui/button";
 import { Label } from "#/components/ui/label";
+import { HelpLink } from "../components/HelpLink";
 
 const topicsBySection: Record<HelpSections, number[]> = {
 	general: [1, 2, 3, 4, 5],
 	profiles: [1, 2, 3, 4, 5],
-	explorer: [1, 2],
+	explorer: [1, 2, 3],
 	optimizer: [1, 2, 3, 4],
 	editor: [1, 2, 3, 4, 5, 6],
 };
@@ -64,27 +65,25 @@ const HelpSectionTab: React.FC<HelpSectionTabProps> = ({
 	);
 };
 
-interface TopicsProps {
-	currentSection: HelpSections;
-	currentTopic: number;
-	changeCurrentTopic: (topic: number) => void;
-}
-
-function Topics({
-	currentSection,
-	currentTopic,
-	changeCurrentTopic,
-}: TopicsProps) {
+function Topics() {
 	const [t] = useTranslation("help-ui");
+	const currentSection = useValue(help$.section);
+	const currentTopic = useValue(help$.topic);
 	if (currentTopic !== 0) return null;
 	return topicsBySection[currentSection].map((topic: number) => {
 		return (
 			<h1
 				key={`${currentSection}-${topic}`}
-				onClick={() => changeCurrentTopic(topic)}
+				onClick={() =>
+					/*changeCurrentTopic(topic)*/ help$.setHelpPosition(
+						currentSection,
+						topic,
+					)
+				}
 				onKeyUp={(event) => {
 					if (event.code === "Enter") {
-						changeCurrentTopic(topic);
+						//						changeCurrentTopic(topic);
+						help$.setHelpPosition(currentSection, topic);
 					}
 				}}
 			>
@@ -94,14 +93,13 @@ function Topics({
 	});
 }
 
-interface TopicProps {
-	currentSection: HelpSections;
-	currentTopic: number;
-}
-
-function Topic({ currentSection, currentTopic }: TopicProps) {
+function Topic() {
 	const [t] = useTranslation("help-ui");
+	const currentSection = useValue(help$.section);
+	const currentTopic = useValue(help$.topic);
+
 	return match([currentSection, currentTopic])
+		.with(["explorer", 2], () => <ViewOptionsTopic />)
 		.with(["optimizer", 1], () => <GlobalOptimizationSettingsTopic />)
 		.with(["optimizer", 2], () => <CharacterTemplatesTopic />)
 		.with(["optimizer", 3], () => <AutoGenerationTopic />)
@@ -136,6 +134,36 @@ function Topic({ currentSection, currentTopic }: TopicProps) {
 				</div>
 			);
 		});
+}
+
+function ViewOptionsTopic() {
+	const [t] = useTranslation("help-ui");
+
+	return (
+		<div className={topicCSS}>
+			<h2>{t("explorer.topicById.2.Headline")}</h2>
+			<div className="flex flex-col gap-2 w-full">
+				<HelpLink
+					title={t("explorer.topicById.3.Headline")}
+					section="explorer"
+					topic={3}
+					showTitle={true}
+				/>
+				<HelpLink
+					title={t("explorer.topicById.4.Headline")}
+					section="explorer"
+					topic={4}
+					showTitle={true}
+				/>
+				<HelpLink
+					title={t("explorer.topicById.5.Headline")}
+					section="explorer"
+					topic={5}
+					showTitle={true}
+				/>
+			</div>
+		</div>
+	);
 }
 
 function OptimizationPlanEditorWeightsTopic() {
@@ -292,15 +320,9 @@ function FetchUnequippedModsWithHUTopic() {
 }
 
 const HelpView: React.FC = observer(() => {
+	const [t] = useTranslation("help-ui");
 	const helpSection = useValue(help$.section);
 	const helpTopic = useValue(help$.topic);
-	const previousSectionIsNotHelp = useValue(
-		() => ui$.previousSection.get() !== "help",
-	);
-
-	const [t] = useTranslation("help-ui");
-	const [currentSection, changeCurrentSection] = useState(helpSection);
-	const [currentTopic, changeCurrentTopic] = useState(helpTopic);
 
 	const sectionElements: Record<
 		string,
@@ -314,72 +336,70 @@ const HelpView: React.FC = observer(() => {
 	};
 
 	const handleSectionSelect = (sectionName: HelpSections) => {
-		changeCurrentTopic(0);
-		changeCurrentSection(sectionName);
+		help$.setHelpPosition(sectionName, 0);
 	};
 
 	return (
 		<div className={"w-full flex flex-col"}>
 			<nav className="flex flex-wrap justify-evenly p-4">
-				<Show if={previousSectionIsNotHelp}>
-					<div className="m-1 p-2 rounded-xl">
-						<FontAwesomeIcon
-							icon={faCircleLeft}
-							title={"Go back"}
-							onClick={() => {
+				<div className="m-1 p-2 rounded-xl">
+					<FontAwesomeIcon
+						icon={faCircleLeft}
+						size="2xl"
+						title={"Go back"}
+						onClick={() => {
+							if (help$.history.length === 0) {
 								ui$.goToPreviousSection();
-							}}
-						/>
-					</div>
-				</Show>
+							} else {
+								help$.goBack();
+							}
+						}}
+					/>
+				</div>
 				<HelpSectionTab
 					sectionName={"general"}
-					currentSection={currentSection}
+					currentSection={helpSection}
 					sectionRef={sectionElements.general}
 					onSelect={handleSectionSelect}
 					label={t("general.Title")}
 				/>
 				<HelpSectionTab
 					sectionName={"profiles"}
-					currentSection={currentSection}
+					currentSection={helpSection}
 					sectionRef={sectionElements.profiles}
 					onSelect={handleSectionSelect}
 					label={t("profiles.Title")}
 				/>
 				<HelpSectionTab
 					sectionName={"explorer"}
-					currentSection={currentSection}
+					currentSection={helpSection}
 					sectionRef={sectionElements.explorer}
 					onSelect={handleSectionSelect}
 					label={t("explorer.Title")}
 				/>
 				<HelpSectionTab
 					sectionName={"optimizer"}
-					currentSection={currentSection}
+					currentSection={helpSection}
 					sectionRef={sectionElements.optimizer}
 					onSelect={handleSectionSelect}
 					label={t("optimizer.Title")}
 				/>
 				<HelpSectionTab
 					sectionName={"editor"}
-					currentSection={currentSection}
+					currentSection={helpSection}
 					sectionRef={sectionElements.editor}
 					onSelect={handleSectionSelect}
 					label={t("editor.Title")}
 				/>
 			</nav>
 			<div className={`${topicCSS} text-center`}>
-				<Show if={currentTopic === 0}>
-					<Topics
-						currentSection={currentSection}
-						currentTopic={currentTopic}
-						changeCurrentTopic={changeCurrentTopic}
-					/>
+				<Show if={helpTopic === 0}>
+					<Topics />
 				</Show>
 			</div>
 			<div className={"overflow-y-auto"}>
-				<Show if={currentTopic !== 0}>
-					<Topic currentSection={currentSection} currentTopic={currentTopic} />
+				<Show if={helpTopic !== 0}>
+					<Topic />
 				</Show>
 			</div>
 		</div>

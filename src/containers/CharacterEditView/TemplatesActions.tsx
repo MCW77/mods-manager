@@ -90,7 +90,7 @@ const TemplatesActions = ({
 			>
 				<FontAwesomeIcon icon={faSave} title={"Save"} />
 			</Button>
-			<HelpLink title="" section="optimizer" topic={2} />
+			<HelpLink title="" section="optimizer" topic={2} showTitle={false} />
 		</div>
 	);
 };

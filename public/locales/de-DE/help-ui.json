@@ -44,17 +44,35 @@
 	"explorer": {
 		"Title": "Mod Übersicht",
 		"topics": {
-			"1": "Mod Übersicht ??",
-			"2": "Filter"
+			"1": "Übersicht",
+			"2": "Ansichtseinstellungen",
+			"3": "Gruppierungs/Filter/Sortierungs Konfigurationen",
+			"4": "Gruppierung",
+			"5": "Sortierung"
 		},
 		"topicById": {
 			"1": {
-				"Headline": "Mod Übersicht ??",
-				"1": "halli"
+				"Headline": "Übersicht",
+				"1": "Die \"Mods\" Ansicht ermöglicht es dir, alle deine Mods zu betrachten. In der zusammenklappbaren Seitenleiste zur linken hast du viele Optionen, um die angezeigten Mods zu gruppieren, filtern und sortieren",
+				"2": "Die Mods werden im Hauptbereich auf der rechten Seite angezeigt. Es gibt eine Ansicht von Mods, gruppiert/gefiltert/ sortiert nach deinen Einstellungen, für jede Phase im Lebenszyklus eines Mods und eine Ansicht für alle Mods (Standard)"
 			},
 			"2": {
-				"Headline": "Filter",
-				"1": "hallo"
+				"Headline": "Ansichtseinstellungen",
+				"1": "there"
+			},
+			"3": {
+				"Headline": "Gruppierungs/Filter/Sortierungs Konfigurationen",
+				"1": "Ganz oben ist ein Knopf um neue Konfigurationen hinzuzufügen. Du kannst eine beliebige Anzahl von Konfigurationen erstellen und über die Auswahl oben zwischen ihnen wechseln. Jede Konfiguration speichert ihre eigenen Gruppierungs-, Filter- und Sortierungseinstellungen. In der Konfigurationsauswahl kannst du auch existierende Konfigurationen umbenennen oder löschen.",
+				"2": "Jede Mod-Lebenszyklusphase hat ihre eigene Liste von Gruppierungs-/Filter-/Sortierungskonfigurationen und wird mit einer Standardkonfiguration geliefert, die nur Mods in dieser Phase anzeigt."
+			},
+			"4": {
+				"Headline": "Gruppierung",
+				"1": "Du kannst die Gruppierung nur aktivieren oder deaktivieren. Mit aktivierter Gruppierung werden die Mods nach Slot, Modset und Primärwert gruppiert. Mit deaktivierter Gruppierung sind alle Mods in derselben Gruppe. Mit aktivierter Gruppierung (und passender Sortierung) kannst du schnell alle Mods mit denselben Eigenschaften vergleichen",
+				"2": "Auf der rechten Seite erhältst du die Liste aller Gruppen. (Nur eine Gruppe, wenn die Gruppierung deaktiviert ist). Jede Gruppe kann durch Klicken auf ihre Kopfzeile, die den Slot, das Modset, den Primärwert und die Anzahl der Mods in dieser Gruppe anzeigt, ein- oder ausgeklappt werden. Es gibt auch Schaltflächen zum Ein- / Ausklappen aller Gruppen"
+			},
+			"5": {
+				"Headline": "Sortierung",
+				"1": "Nachdem die Mods gruppiert und gefiltert wurde, werden sie entsprechend deiner Sortierungseinstellungen sortiert. Du kannst nach beliebig vielen Kriterien sortieren. Die Mods werden zuerst nach dem ersten Kriterium sortiert, sind Mods nach dem ersten Kriterium gleich, werden sie nach dem zweiten Kriterium sortiert, und so weiter. Jedes einzelne Sortierungskriterium kann auf- oder absteigend sortiert werden."
 			}
 		}
 	},
