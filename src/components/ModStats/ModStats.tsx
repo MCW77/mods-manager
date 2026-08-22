@@ -78,7 +78,7 @@ const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
 					{translateStat(getDisplayValueAndTypeString(mod.primaryStat), t)}
 				</li>
 			</ul>
-			<div className="flex justify-between">
+			<div className="flex justify-between gap-2 w-fit">
 				<div>
 					<h4 className="uppercase">{t("Secondary_other")}</h4>
 					<ul className="m-b-[0.5em]">{statsDisplay}</ul>
