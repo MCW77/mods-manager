@@ -15,6 +15,12 @@
 		"InstructionsPart8": "If you want more fine-tuned control over the stat values, you can switch to \"advanced\" mode. In advanced mode, the values given are the value for each point of the listed stat. In advanced mode, if speed and protection are both given a value of 100, then the tool will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works.",
 		"InstructionsPart9": "I hope that you enjoy the tool! Happy modding!"
 	},
+	"selected": {
+		"Title": "Selected Characters",
+		"Target": "Target:",
+		"Edit": "Edit",
+		"DropHere": "Drop characters here to select them for optimization"
+	},
 	"sidebar": {
 		"Search": "Search by character name, tag, or common abbreviation",
 		"Show": "Available Characters Display",
@@ -52,11 +58,56 @@
 			"Auto": "Auto prioritize"
 		}
 	},
-	"selected": {
-		"Title": "Selected Characters",
-		"Target": "Target:",
-		"Edit": "Edit",
-		"DropHere": "Drop characters here to select them for optimization"
+	"target": {
+		"Name": "Target Name",
+		"Cancel": "Cancel",
+		"Save": "Save",
+		"Delete": "Delete target",
+		"Reset": "Reset target",
+		"Select": "Select",
+		"sections": {
+			"mods": {
+				"Title": "Mods",
+				"Pips1": "Use only Mods with at least",
+				"Pips2": "dots"
+			},
+			"weights": {
+				"Title": "Weights",
+				"Basic": "Basic",
+				"Advanced": "Advanced",
+				"Zero": "Zero all weights"
+			},
+			"primaries": {
+				"Title": "Primaries",
+				"Heading": "Restrict Primary Stats"
+			},
+			"sets": {
+				"Title": "Sets",
+				"Heading": "Restrict Set Bonuses",
+				"Break": "Don't break mod sets",
+				"Select": "Click on a set bonus to add it to or remove it from the selected sets",
+				"Selected": "Selected Sets"
+			},
+			"targetstats": {
+				"Title": "Target Stats",
+				"Report": "Report only",
+				"Optimize": "Optimize",
+				"Minimum": "Minimum",
+				"Maximum": "Maximum",
+				"MinMaxText2": " must be between ",
+				"MinMaxText3": " and ",
+				"MinMaxText4": " compared to the ",
+				"MinMaxText5": " of ",
+				"MinMaxText6": "% and ",
+				"MinMaxText7": "% of the ",
+				"MinMaxText8": "",
+				"CompareTo": "Compare to",
+				"Using": "Using",
+				"IncrementalOptimization": "Incremental Optimization",
+				"NoData": "No optimization data yet!",
+				"RunIncrementalOptimization": "Run incremental optimization"
+			}
+		}
 	},
 	"review": {
 		"display": {

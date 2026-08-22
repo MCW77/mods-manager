@@ -15,6 +15,12 @@
 		"InstructionsPart8": "Für eine bessere Kontrolle über die Zielwerte gibt es den  \"fortgeschritten\" Modus. In advanced mode, the values given are the value for each point of the listed stat. In advanced mode, if speed and protection are both given a value of 100, then the tool will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works.",
 		"InstructionsPart9": "Ich hoffe euch gefällt dieses Werkzeug! Fröhliches Modden!"
 	},
+	"selected": {
+		"Title": "Gewählte Charactere",
+		"Target": "Ziel:",
+		"Edit": "Ändern",
+		"DropHere": "Ziehe Charactere hierher, um sie für die Optimierung auszuwählen"
+	},
 	"sidebar": {
 		"Search": "Filtere nach Charaktername, Tag oder Kürzel",
 		"Show": "Charakteranzeige",
@@ -52,11 +58,56 @@
 			"Auto": "Automatisch priorisieren"
 		}
 	},
-	"selected": {
-		"Title": "Gewählte Charactere",
-		"Target": "Ziel:",
-		"Edit": "Ändern",
-		"DropHere": "Ziehe Charactere hierher, um sie für die Optimierung auszuwählen"
+	"target": {
+		"Name": "Zielname",
+		"Cancel": "Abbrechen",
+		"Save": "Speichern",
+		"Delete": "Ziel löschen",
+		"Reset": "Ziel zurücksetzen",
+		"Select": "Auswählen",
+		"sections": {
+			"mods": {
+				"Title": "Mods",
+				"Pips1": "Verwende nur Mods mit mindestens",
+				"Pips2": "Pips"
+			},
+			"weights": {
+				"Title": "Gewichte",
+				"Basic": "Einfach",
+				"Advanced": "Fortgeschritten",
+				"Zero": "Alle Gewichte auf 0 setzen"
+			},
+			"primaries": {
+				"Title": "Primärwerte",
+				"Heading": "Erlaubte Primärwerte"
+			},
+			"sets": {
+				"Title": "Sets",
+				"Heading": "Erlaubte Modsets",
+				"Break": "Modsets nicht aufbrechen",
+				"Select": "Klicke auf ein Modset, um es zu den erlaubten Sets hinzuzufügen oder aus diesen zu entfernen",
+				"Selected": "Ausgewählte Sets"
+			},
+			"targetstats": {
+				"Title": "Zielwerte",
+				"Report": "Berichten",
+				"Optimize": "Optimieren",
+				"Minimum": "Minimum",
+				"Maximum": "Maximum",
+				"MinMaxText2": " muss zwischen ",
+				"MinMaxText3": " und ",
+				"MinMaxText4": " liegen im Vergleich mit ",
+				"MinMaxText5": " von ",
+				"MinMaxText6": "% und ",
+				"MinMaxText7": "% ",
+				"MinMaxText8": " liegen",
+				"CompareTo": "Vergleiche mit",
+				"Using": "Nutze",
+				"IncrementalOptimization": "Inkrementelle Optimierung",
+				"NoData": "Noch keine Optimierungsdaten vorhanden!",
+				"RunIncrementalOptimization": "Starte Inkrementelle Optimierung"
+			}
+		}
 	},
 	"review": {
 		"display": {

@@ -1,3 +1,6 @@
+// react
+import { useTranslation } from "react-i18next";
+
 // state
 import { reactiveObserver } from "@legendapp/state/react";
 
@@ -16,10 +19,13 @@ import { ToggleGroupItem } from "#ui/toggle-group";
 import { ToggleGroup as ReactiveToggleGroup } from "#/components/reactive/ToggleGroup";
 
 const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
+	const [t] = useTranslation("domain");
+	const [tOptimize] = useTranslation("optimize-ui");
+
 	return (
 		<div className="grid gap-4">
 			<div className={""}>
-				<h1>Restrict Primary Stats:</h1>
+				<h1>{tOptimize("target.sections.primaries.Heading")}</h1>
 			</div>
 			<div className={"flex flex-col gap-4 p-2"}>
 				<div>
@@ -47,25 +53,25 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
-							Protection
+							{t("stats.Protection")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Health %"}>
-							Health
+							{t("stats.Health")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Offense %"}>
-							Offense
+							{t("stats.Offense")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Defense %"}>
-							Defense
+							{t("stats.Defense")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Speed"}>
-							Speed
+							{t("stats.Speed")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Accuracy %"}>
-							Accuracy
+							{t("stats.Accuracy")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Critical Avoidance %"}>
-							Critical Avoidance
+							{t("stats.Critical Avoidance")}
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
 				</div>
@@ -95,22 +101,22 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
-							Protection
+							{t("stats.Protection")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Health %"}>
-							Health
+							{t("stats.Health")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Offense %"}>
-							Offense
+							{t("stats.Offense")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Defense %"}>
-							Defense
+							{t("stats.Defense")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Critical Chance %"}>
-							Critical Chance
+							{t("stats.Critical Chance")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Critical Damage %"}>
-							Critical Damage
+							{t("stats.Critical Damage")}
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
 				</div>
@@ -142,22 +148,22 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
-							Protection
+							{t("stats.Protection")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Health %"}>
-							Health
+							{t("stats.Health")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Offense %"}>
-							Offense
+							{t("stats.Offense")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Defense %"}>
-							Defense
+							{t("stats.Defense")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Potency %"}>
-							Potency
+							{t("stats.Potency")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Tenacity %"}>
-							Tenacity
+							{t("stats.Tenacity")}
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
 				</div>
@@ -189,10 +195,10 @@ const PrimaryStatRestrictionsWidget: React.FC = reactiveObserver(() => {
 						}}
 					>
 						<ToggleGroupItem className={"h-6"} value={"Protection %"}>
-							Protection
+							{t("stats.Protection")}
 						</ToggleGroupItem>
 						<ToggleGroupItem className={"h-6"} value={"Health %"}>
-							Health
+							{t("stats.Health")}
 						</ToggleGroupItem>
 					</ReactiveToggleGroup>
 				</div>

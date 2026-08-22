@@ -1,3 +1,6 @@
+// react
+import { useTranslation } from "react-i18next";
+
 // state
 import { observer } from "@legendapp/state/react";
 
@@ -11,9 +14,11 @@ import { Label } from "#ui/label";
 
 const AdvancedInput: React.FC<StatWeightsInputProps> = observer(
 	({ target$, stat }: StatWeightsInputProps) => {
+		const [t] = useTranslation("domain");
+
 		return (
 			<div>
-				<Label htmlFor={`${stat}-stat-advanced`}>{`${stat}: `}:</Label>
+				<Label htmlFor={`${stat}-stat-advanced`}>{t(`stats.${stat}`)}:</Label>
 				<Input
 					id={`${stat}-stat-advanced`}
 					max={100 / OptimizationPlan.statWeights[stat]}

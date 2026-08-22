@@ -1,3 +1,6 @@
+// react
+import { useTranslation } from "react-i18next";
+
 // state
 import { useValue } from "@legendapp/state/react";
 
@@ -98,6 +101,7 @@ function SelectedSetButton({ setName }: SelectedSetButtonProps) {
 }
 
 function SetRestrictionsWidget() {
+	const [t] = useTranslation("optimize-ui");
 	const { emptySlots, selectedSets } = useValue(() => {
 		const nextSelectedSets = getSelectedSetOccurrences(
 			target$.target.setRestrictions.get(),
@@ -111,10 +115,12 @@ function SetRestrictionsWidget() {
 
 	return (
 		<div>
-			<h4>Restrict Set Bonuses:</h4>
+			<h4>{t("target.sections.sets.Heading")}</h4>
 			<div className={"flex flex-col gap-4"}>
 				<div className={"flex gap-2"}>
-					<Label htmlFor={"use-full-sets"}>Don't break mod sets</Label>
+					<Label htmlFor={"use-full-sets"}>
+						{t("target.sections.sets.Break")}
+					</Label>
 					<Input
 						className={"w-auto h-auto"}
 						id={"use-full-sets"}
@@ -122,9 +128,7 @@ function SetRestrictionsWidget() {
 						$value={target$.target.useOnlyFullSets}
 					/>
 				</div>
-				<p className={""}>
-					Click on a set bonus to add it to or remove it from the selected sets.
-				</p>
+				<p className={""}>{t("target.sections.sets.Select")}</p>
 				<div className={"flex flex-col gap-4"}>
 					{setBonusGroups.map((group) => (
 						<div className="flex flex-row gap-4" key={group.modsRequired}>
@@ -139,7 +143,7 @@ function SetRestrictionsWidget() {
 					))}
 				</div>
 				<div className={"selected-sets"}>
-					<p>Selected Sets:</p>
+					<p>{t("target.sections.sets.Selected")}:</p>
 					<div className="flex gap-2 min-h-[5rem]">
 						{selectedSets.map(({ occurrence, setName }) => (
 							<SelectedSetButton

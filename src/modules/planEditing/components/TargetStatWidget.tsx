@@ -1,5 +1,7 @@
 // react
+import type { ParseKeys } from "i18next";
 import type React from "react";
+import { useTranslation } from "react-i18next";
 import {
 	Memo,
 	Switch,
@@ -47,10 +49,14 @@ type ComponentProps = {
 
 const TargetStatWidget: React.FC<ComponentProps> = observer(
 	({ target$, id, baseCharacters }: ComponentProps) => {
+		const [t] = useTranslation("optimize-ui");
+		const [tDomain] = useTranslation("domain");
 		const targetStat$ = target$.target.targetStats.find(
 			(ts) => ts.peek().id === id,
 		) as NonNullable<ReturnType<typeof target$.target.targetStats.find>>;
 
+		const statName = useValue(targetStat$.stat);
+		const statKey: ParseKeys<"domain"> = `stats.${statName}`;
 		const type = useValue(targetStat$.type);
 
 		const baseCharacterById$ = characters$.baseCharacterById;
@@ -69,7 +75,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 				<div className="flex justify-between py-4 px-6">
 					<div className="flex justify-center p-2 ml-auto mr-auto">
 						<Label className="p-r-2" htmlFor={`optimize-for-target${id}`}>
-							Report Only
+							{t("target.sections.targetstats.Report")}
 						</Label>
 						<ShadCNSwitch
 							$checked={targetStat$.optimizeForTarget}
@@ -80,7 +86,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							id={`optimize-for-target${id}`}
 						/>
 						<Label className="p-l-2" htmlFor={`optimize-for-target${id}`}>
-							Optimize
+							{t("target.sections.targetstats.Optimize")}
 						</Label>
 					</div>
 					<div className={"flex justify-end items-center"}>
@@ -99,9 +105,12 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 					{{
 						null: () => (
 							<Label>
-								The <Memo>{targetStat$.stat}</Memo> must be between{" "}
-								<Memo>{targetStat$.minimum}</Memo> and{" "}
+								<Memo>{tDomain(statKey)}</Memo>
+								{t("target.sections.targetstats.MinMaxText2")}
+								<Memo>{targetStat$.minimum}</Memo>
+								{t("target.sections.targetstats.MinMaxText3")}
 								<Memo>{targetStat$.maximum}</Memo>
+								{t("target.sections.targetstats.MinMaxText8")}
 							</Label>
 						),
 						default: () => (
@@ -110,7 +119,8 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 									"+": () => (
 										<div className={"flex flex-col flex-gap-1"}>
 											<Label>
-												The <Memo>{targetStat$.stat}</Memo> must be between{" "}
+												<Memo>{tDomain(statKey)}</Memo>
+												{t("target.sections.targetstats.MinMaxText2")}
 											</Label>
 											<Label>
 												<Memo>
@@ -120,7 +130,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 														}).format(targetStat$.minimum.get())
 													}
 												</Memo>
-												{" and "}
+												{t("target.sections.targetstats.MinMaxText3")}
 												<Memo>
 													{() =>
 														Intl.NumberFormat("en-US", {
@@ -128,9 +138,9 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 														}).format(targetStat$.maximum.get())
 													}
 												</Memo>
-												{" compared to the "}
-												<Memo>{targetStat$.stat}</Memo>
-												{" of "}
+												{t("target.sections.targetstats.MinMaxText4")}
+												<Memo>{tDomain(statKey)}</Memo>
+												{t("target.sections.targetstats.MinMaxText5")}
 												<Memo>{relativeCharacterName$}</Memo>
 											</Label>
 										</div>
@@ -138,18 +148,18 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 									"*": () => (
 										<div className={"flex flex-col flex-gap-1"}>
 											<Label>
-												{"The "}
-												<Memo>{targetStat$.stat}</Memo>
-												{" must be between"}
+												<Memo>{tDomain(statKey)}</Memo>
+												{t("target.sections.targetstats.MinMaxText2")}
 											</Label>
 											<Label>
 												<Memo>{targetStat$.minimum}</Memo>
-												{"% and "}
+												{t("target.sections.targetstats.MinMaxText6")}
 												<Memo>{targetStat$.maximum}</Memo>
-												{"% of the "}
-												<Memo>{targetStat$.stat}</Memo>
-												{" of "}
+												{t("target.sections.targetstats.MinMaxText7")}
+												<Memo>{tDomain(statKey)}</Memo>
+												{t("target.sections.targetstats.MinMaxText5")}
 												<Memo>{relativeCharacterName$}</Memo>
+												{t("target.sections.targetstats.MinMaxText8")}
 											</Label>
 										</div>
 									),
@@ -163,7 +173,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 				>
 					<div className="flex flex-col items-start gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat${id}`}>
-							Stat:
+							{tDomain("Stat")}:
 						</Label>
 						<ReactiveSelect
 							$value={targetStat$.stat}
@@ -175,13 +185,17 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							}}
 						>
 							<SelectTrigger>
-								<SelectValue />
+								<SelectValue>
+									{(value: typeof statName) => (
+										<span>{tDomain(`stats.${value}`)}</span>
+									)}
+								</SelectValue>
 							</SelectTrigger>
 							<SelectContent alignItemWithTrigger={false}>
 								<SelectGroup>
 									{targetStatsNames.map((stat) => (
 										<SelectItem key={stat} value={stat}>
-											{stat}
+											{tDomain(`stats.${stat}`)}
 										</SelectItem>
 									))}
 								</SelectGroup>
@@ -190,7 +204,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 					</div>
 					<div className="flex flex-col flex-basis-0 gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-min${id}`}>
-							Minimum:
+							{t("target.sections.targetstats.Minimum")}:
 						</Label>
 						<Input
 							className={""}
@@ -202,7 +216,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 					</div>
 					<div className="flex flex-col flex-basis-0 gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-max${id}`}>
-							Maximum:
+							{t("target.sections.targetstats.Maximum")}:
 						</Label>
 						<Input
 							className={""}
@@ -220,7 +234,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 							className="p-r-2"
 							htmlFor={`target-stat-relative-character${id}`}
 						>
-							Compare to:
+							{t("target.sections.targetstats.CompareTo")}:
 						</Label>
 						<ReactiveMultiColumnSelect
 							groups={baseCharacters}
@@ -229,7 +243,7 @@ const TargetStatWidget: React.FC<ComponentProps> = observer(
 					</div>
 					<div className="flex flex-col items-start justify-center gap-1">
 						<Label className="p-r-2" htmlFor={`target-stat-type${id}`}>
-							Using:
+							{t("target.sections.targetstats.Using")}:
 						</Label>
 						<ReactiveToggleGroup
 							className={

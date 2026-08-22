@@ -1,4 +1,5 @@
 // react
+import { useTranslation } from "react-i18next";
 import {
 	For,
 	Memo,
@@ -145,12 +146,13 @@ type RerunButtonProps = {
 };
 
 function RerunButton({ saveTarget, baseCharacterById }: RerunButtonProps) {
+	const [t] = useTranslation("optimize-ui");
 	return (
 		<Button
 			type={"button"}
 			onClick={() => runIncrementalCalc(saveTarget, baseCharacterById)}
 		>
-			Run Incremental Optimization
+			{t("target.sections.targetstats.RunIncrementalOptimization")}
 		</Button>
 	);
 }
@@ -220,6 +222,7 @@ function IncrementalOptimizationResults({
 	saveTarget,
 	baseCharacterById,
 }: IncrementalOptimizationSectionProps) {
+	const [t] = useTranslation("optimize-ui");
 	const modAssignments$ = useObservable(modAssignments);
 	const hasModAssignments$ = useObservable(
 		() => modAssignments$.get() !== null,
@@ -231,7 +234,7 @@ function IncrementalOptimizationResults({
 				else={() => (
 					<div>
 						<div>
-							<span>No optimization data yet!</span>
+							<span>{t("target.sections.targetstats.NoData")}</span>
 						</div>
 						<RerunButton
 							saveTarget={saveTarget}
@@ -259,13 +262,14 @@ function IncrementalOptimizationSection({
 	saveTarget,
 	baseCharacterById,
 }: IncrementalOptimizationSectionProps) {
+	const [t] = useTranslation("optimize-ui");
 	if ((target$.target.targetStats.peek() || []).length === 0) {
 		return <div />;
 	}
 
 	return (
 		<div>
-			<div>Incremental Optimization</div>
+			<div>{t("target.sections.targetstats.IncrementalOptimization")}</div>
 			<hr />
 			<div>
 				<IncrementalOptimizationResults
@@ -285,6 +289,7 @@ type ComponentProps = {
 
 const CharacterEditForm: React.FC<ComponentProps> = observer(
 	({ character, target }: ComponentProps) => {
+		const [t] = useTranslation("optimize-ui");
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const modAssignments = useValue(
 			defaultCompilation$.data.flatCharacterModdings,
@@ -357,7 +362,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 										target$.target.set({ ...target$.uneditedTarget.peek() });
 									}}
 								>
-									Reset target
+									{t("target.Reset")}
 								</Button>
 							</Show>
 							<Show if={target$.canDeleteTarget}>
@@ -372,7 +377,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 										optimizerView$.view.set("basic");
 									}}
 								>
-									Delete target
+									{t("target.Delete")}
 								</Button>
 							</Show>
 							<Button
@@ -381,18 +386,18 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 									optimizerView$.view.set("basic");
 								}}
 							>
-								Cancel
+								{t("target.Cancel")}
 							</Button>
 							<Memo>
 								<ReactiveButton
 									$disabled={target$.isUnsaveable}
 									type={"submit"}
 								>
-									Save
+									{t("target.Save")}
 								</ReactiveButton>
 							</Memo>
 						</div>
-						<Label htmlFor={"plan-name"}>Target Name: </Label>
+						<Label htmlFor={"plan-name"}>{t("target.Name")}: </Label>
 						<div className={"flex flex-nowrap items-center"}>
 							<Input
 								className={"w-fit"}
@@ -402,7 +407,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 							/>
 							<DropdownMenu>
 								<DropdownMenuTrigger
-									render={<Button variant="outline">Select</Button>}
+									render={
+										<Button variant="outline">{t("target.Select")}</Button>
+									}
 								/>
 								<DropdownMenuContent className="w-56">
 									<DropdownMenuGroup>
@@ -457,26 +464,26 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 				>
 					<TabsList className={"h-auto! justify-start"}>
 						<TabsTrigger className={"grow-0"} value="Mods">
-							Mods
+							{t("target.sections.mods.Title")}
 						</TabsTrigger>
 						<TabsTrigger className={"grow-0"} value="Weights">
-							Weights
+							{t("target.sections.weights.Title")}
 						</TabsTrigger>
 						<TabsTrigger className={"grow-0"} value="Primaries">
-							Primaries
+							{t("target.sections.primaries.Title")}
 						</TabsTrigger>
 						<TabsTrigger className={"grow-0"} value="Sets">
-							Sets
+							{t("target.sections.sets.Title")}
 						</TabsTrigger>
 						<TabsTrigger className={"grow-0"} value="Stat Targets">
-							Target Stats
+							{t("target.sections.targetstats.Title")}
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="Mods">
 						<div className={"flex flex-col flex-gap-4"}>
 							<div>
 								<Label htmlFor="mod-dots" id={"mod-dots-label"}>
-									Use only mods with at least&nbsp;
+									{t("target.sections.mods.Pips1")}&nbsp;
 									<span>
 										<ReactiveSelect
 											name={"mod-dots"}
@@ -498,7 +505,7 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 											</SelectContent>
 										</ReactiveSelect>
 									</span>
-									&nbsp;dot(s)
+									&nbsp;{t("target.sections.mods.Pips2")}
 								</Label>
 							</div>
 						</div>

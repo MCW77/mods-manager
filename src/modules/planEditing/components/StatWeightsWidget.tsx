@@ -1,4 +1,5 @@
 // react
+import { useTranslation } from "react-i18next";
 import { Switch, reactiveObserver } from "@legendapp/state/react";
 
 // state
@@ -18,11 +19,12 @@ import { Label } from "#ui/label";
 import { Switch as SHadCNSwich } from "#/components/reactive/Switch";
 
 export const StatWeightsWidget: React.FC = reactiveObserver(() => {
+	const [t] = useTranslation("optimize-ui");
 	return (
 		<div className={""}>
-			<div>
+			<div className="flex">
 				<Label className="p-r-2" htmlFor={"basic-advanced-switch"}>
-					Basic
+					{t("target.sections.weights.Basic")}
 				</Label>
 				<SHadCNSwich
 					$checked={target$.isInAdvancedEditMode}
@@ -41,7 +43,7 @@ export const StatWeightsWidget: React.FC = reactiveObserver(() => {
 					id={"basic-advanced-switch"}
 				/>
 				<Label className="p-l-2" htmlFor={"basic-advanced-switch"}>
-					Advanced
+					{t("target.sections.weights.Advanced")}
 				</Label>
 			</div>
 			<div className="flex flex-col flex-gap-4 justify-center p-2">
@@ -56,7 +58,7 @@ export const StatWeightsWidget: React.FC = reactiveObserver(() => {
 					}}
 				</Switch>
 				<Button type={"button"} onClick={() => target$.zeroAll()}>
-					Zero all weights
+					{t("target.sections.weights.Zero")}
 				</Button>
 			</div>
 		</div>
