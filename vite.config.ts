@@ -58,6 +58,9 @@ export default defineConfig({
 		}),
 		VitePWA({
 			injectRegister: false,
+			workbox: {
+				clientsClaim: true,
+			},
 			includeAssets: [
 				"favicon.svg",
 				"favicon.ico",
