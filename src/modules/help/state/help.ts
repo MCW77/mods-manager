@@ -4,7 +4,6 @@ import { beginBatch, endBatch, observable } from "@legendapp/state";
 // domain
 import type { HelpSections } from "../domain/HelpSections";
 import { ui$ } from "#/modules/ui/state/ui";
-import { last } from "lodash-es";
 
 interface Help {
 	section: HelpSections;
