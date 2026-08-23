@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-pwa/client" />
 
 import type { ObservableParam } from "@legendapp/state";
 import type { ReactNode } from "react";

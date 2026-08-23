@@ -57,6 +57,7 @@ export default defineConfig({
 			plugins: ["@legendapp/state/babel"],
 		}),
 		VitePWA({
+			injectRegister: false,
 			includeAssets: [
 				"favicon.svg",
 				"favicon.ico",

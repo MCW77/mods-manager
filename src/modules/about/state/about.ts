@@ -4,6 +4,7 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
+import { updateToLatestVersion } from "#/pwa";
 
 // api
 import { fetchVersion } from "../api/fetchVersion";
@@ -28,7 +29,7 @@ const about$: ObservableObject<AboutObservable> = observable<AboutObservable>({
             Your version: ${currentVersion}`,
 					"",
 					"Get new version",
-					() => window.location.assign(`${location.href}?reload=${Date.now()}`),
+					updateToLatestVersion,
 					"warning",
 				);
 			}

@@ -9,6 +9,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import "virtual:uno.css";
 import "./i18n";
+import "./pwa";
 
 // containers
 const App = lazy(() => import("./containers/App/App"));
