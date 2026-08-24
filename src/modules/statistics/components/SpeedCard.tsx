@@ -33,8 +33,8 @@ const CustomTooltip = ({
 			}}
 		>
 			{isVisible && (
-				<Item className="bg-black h-full">
-					<ItemContent className="h-full">
+				<Item className="bg-black">
+					<ItemContent>
 						<ItemTitle>{`Speed ${label}${isUsingAccumulatedDistribution ? "+" : ""}`}</ItemTitle>
 						<div className="flex flex-col">
 							<div># 5-dot mods: {firstPayload.payload.count5Dot}</div>

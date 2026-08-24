@@ -12,6 +12,59 @@ const statistics$: ObservableObject<StatisticsObservable> =
 		allMods: () => {
 			return Array.from(mods$.activeModById.values());
 		},
+		defenseSecondaryMods: () => {
+			const filteredMods = modsView$.filteredMods.get();
+			return filteredMods.filter((mod) => {
+				const defenseSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Defense %",
+				);
+				return defenseSecondaryStat !== undefined;
+			});
+		},
+		defenseGreaterThan9: () => {
+			const defenseMods = statistics$.defenseSecondaryMods.get();
+			const defenseModsGreaterThan9 = defenseMods.filter((mod) => {
+				const defenseSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Defense %",
+				);
+				return (
+					defenseSecondaryStat !== undefined &&
+					Number(defenseSecondaryStat.stringValue) > 9
+				);
+			});
+			return defenseModsGreaterThan9.length;
+		},
+		defenseGreaterThan14: () => {
+			const defenseMods = statistics$.defenseSecondaryMods.get();
+			const defenseModsGreaterThan14 = defenseMods.filter((mod) => {
+				const defenseSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Defense %",
+				);
+				return (
+					defenseSecondaryStat !== undefined &&
+					Number(defenseSecondaryStat.stringValue) > 14
+				);
+			});
+			return defenseModsGreaterThan14.length;
+		},
+		offenseSecondaryMods: () => {
+			const filteredMods = modsView$.filteredMods.get();
+			return filteredMods.filter((mod) => {
+				const offenseSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Offense %",
+				);
+				return offenseSecondaryStat !== undefined;
+			});
+		},
+		speedSecondaryMods: () => {
+			const filteredMods = modsView$.filteredMods.get();
+			return filteredMods.filter((mod) => {
+				const speedSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Speed",
+				);
+				return speedSecondaryStat !== undefined;
+			});
+		},
 		averageSpeed: () => {
 			const filteredMods = modsView$.filteredMods.get();
 			const nonSpeedArrows = filteredMods.filter(
@@ -33,6 +86,30 @@ const statistics$: ObservableObject<StatisticsObservable> =
 				);
 			}, 0);
 			return nonSpeedArrows.length > 0 ? totalSpeed / nonSpeedArrows.length : 0;
+		},
+		offenseGreaterThan4: () => {
+			const offenseMods = statistics$.offenseSecondaryMods.get();
+			const offenseModsGreaterThan4 = offenseMods.filter((mod) => {
+				const offenseSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Offense %",
+				);
+				return (
+					offenseSecondaryStat && Number(offenseSecondaryStat.stringValue) >= 4
+				);
+			});
+			return offenseModsGreaterThan4.length;
+		},
+		offenseGreaterThan6: () => {
+			const offenseMods = statistics$.offenseSecondaryMods.get();
+			const offenseModsGreaterThan6 = offenseMods.filter((mod) => {
+				const offenseSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Offense %",
+				);
+				return (
+					offenseSecondaryStat && Number(offenseSecondaryStat.stringValue) >= 6
+				);
+			});
+			return offenseModsGreaterThan6.length;
 		},
 		speedGreaterThanTen: () => {
 			const filteredMods = modsView$.filteredMods.get();
