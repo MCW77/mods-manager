@@ -7,9 +7,10 @@ import {
 	mapAPI2BaseCharacterById,
 } from "../domain/BaseCharacter";
 
-const API_URL = import.meta.env.DEV
-	? "http://localhost:3005/gimomock-characters"
-	: "https://api.mods-optimizer.swgoh.grandivory.com/characters/";
+const API_URL =
+	import.meta.env.DEV && !import.meta.env.VITE_NoMock
+		? "http://localhost:3005/gimomock-characters"
+		: "https://api.mods-optimizer.swgoh.grandivory.com/characters/";
 
 export async function fetchCharacters(): Promise<BaseCharacterById> {
 	try {

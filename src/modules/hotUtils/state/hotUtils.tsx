@@ -216,9 +216,10 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			}
 		},
 		fetchProfile: async (allycode: string) => {
-			const API_URL = import.meta.env.DEV
-				? "http://localhost:3005/gimomock-profile"
-				: "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/";
+			const API_URL =
+				import.meta.env.DEV && !import.meta.env.VITE_NoMock
+					? "http://localhost:3005/gimomock-profile"
+					: "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/";
 
 			const response = await post(API_URL, {
 				action: "getprofile",
@@ -259,9 +260,10 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			} as FetchedGIMOProfile;
 		},
 		fetchFullProfile: async (allycode: string) => {
-			const API_URL = import.meta.env.DEV
-				? "http://localhost:3005/gimomock-fullprofile"
-				: "https://api-test.mods-manager.pages.dev/huAll";
+			const API_URL =
+				import.meta.env.DEV && !import.meta.env.VITE_NoMock
+					? "http://localhost:3005/gimomock-fullprofile"
+					: "https://api-test.mods-manager.pages.dev/huAll";
 
 			if (hotutils$.getHUSessionIdOfProfile(allycode) === "") {
 				return {} as FetchedFullGIMOProfile;

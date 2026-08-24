@@ -4,9 +4,10 @@ import type { StackRankParameters } from "../domain/StackRankParameters";
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
 
-const API_URL = import.meta.env.DEV
-	? "http://localhost:3005/stackrankmock"
-	: "https://api.mods-optimizer.swgoh.grandivory.com/characterlist";
+const API_URL =
+	import.meta.env.DEV && !import.meta.env.VITE_NoMock
+		? "http://localhost:3005/stackrankmock"
+		: "https://api.mods-optimizer.swgoh.grandivory.com/characterlist";
 
 const post = async (url = "", data = {}) => {
 	const requestInit: RequestInit = {
