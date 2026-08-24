@@ -27,6 +27,9 @@ const SettingsView = lazy(
 const DatacronsView = lazy(
 	() => import("#/modules/datacrons/pages/DatacronsView"),
 );
+const StatisticsView = lazy(
+	() => import("#/modules/statistics/pages/StatisticsView"),
+);
 
 const tabStyle =
 	"flex data-[state=active]:grow-1 data-[state=inactive]:m-t-0 min-h-0";
@@ -51,6 +54,7 @@ function Content({ section$ }: ContentProps) {
 				optimize: () => <OptimizerView />,
 				settings: () => <SettingsView />,
 				datacrons: () => <DatacronsView />,
+				statistics: () => <StatisticsView />,
 				default: () => <div>Section not found</div>,
 			}}
 		</Switch>

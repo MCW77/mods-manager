@@ -9,6 +9,6 @@ ui$.registerSection({
 	isAlwaysVisible: false,
 	name: "settings",
 	titleKey: "header.NavSettings",
-	position: 5,
+	position: 6,
 	hasNullSuspenseFallback: false,
 });

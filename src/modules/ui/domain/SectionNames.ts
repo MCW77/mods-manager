@@ -4,5 +4,6 @@ export type SectionNames =
 	| "optimize"
 	| "datacrons"
 	| "settings"
+	| "statistics"
 	| "help"
 	| "about";

@@ -9,6 +9,6 @@ ui$.registerSection({
 	isAlwaysVisible: true,
 	name: "help",
 	titleKey: "header.NavHelp",
-	position: 6,
+	position: 7,
 	hasNullSuspenseFallback: false,
 });
