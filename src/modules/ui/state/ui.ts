@@ -19,6 +19,8 @@ const lazyPageModules = {
 		import("#/modules/settings/pages/Section.tsx"),
 	"/src/modules/optimizerView/pages/Section.tsx": () =>
 		import("#/modules/optimizerView/pages/Section.tsx"),
+	"/src/modules/statistics/pages/Section.tsx": () =>
+		import("#/modules/statistics/pages/Section.tsx"),
 	"/src/modules/help/pages/Section.tsx": () =>
 		import("#/modules/help/pages/Section.tsx"),
 	"/src/modules/about/pages/Section.tsx": () =>
@@ -31,6 +33,7 @@ const profilePageModules = [
 	lazyPageModules["/src/modules/optimizerView/pages/Section.tsx"],
 	lazyPageModules["/src/modules/settings/pages/Section.tsx"],
 	lazyPageModules["/src/modules/datacrons/pages/Section.tsx"],
+	lazyPageModules["/src/modules/statistics/pages/Section.tsx"],
 ] as const;
 
 interface UI {
