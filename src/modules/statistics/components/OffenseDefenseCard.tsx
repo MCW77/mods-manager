@@ -7,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { Label } from "#ui/label";
 
 function OffenseDefenseCard() {
-	const defenseGreaterThan9 = useValue(statistics$.defenseGreaterThan9);
-	const defenseGreaterThan14 = useValue(statistics$.defenseGreaterThan14);
-	const offenseGreaterThan4 = useValue(statistics$.offenseGreaterThan4);
-	const offenseGreaterThan6 = useValue(statistics$.offenseGreaterThan6);
+	const defense9OrGreater = useValue(statistics$.defense9OrGreater);
+	const defense14OrGreater = useValue(statistics$.defense14OrGreater);
+	const offense4OrGreater = useValue(statistics$.offense4OrGreater);
+	const offense6OrGreater = useValue(statistics$.offense6OrGreater);
 
 	return (
 		<Card className="w-fit">
@@ -24,23 +24,23 @@ function OffenseDefenseCard() {
 					<div className="flex flex-col gap-2">
 						<div className="flex gap-2 items-center">
 							<Label htmlFor="offense-greater-than-4">{"Offense >= 4%"}</Label>
-							<div className="text-lg font-bold">{offenseGreaterThan4}</div>
+							<div className="text-lg font-bold">{offense4OrGreater}</div>
 						</div>
 						<div className="flex gap-2 items-center">
 							<Label htmlFor="offense-greater-than-6">{"Offense >= 6%"}</Label>
-							<div className="text-lg font-bold">{offenseGreaterThan6}</div>
+							<div className="text-lg font-bold">{offense6OrGreater}</div>
 						</div>
 					</div>
 					<div className="flex flex-col gap-2">
 						<div className="flex gap-2 items-center">
 							<Label htmlFor="defense-greater-than-9">{"Defense >= 9%"}</Label>
-							<div className="text-lg font-bold">{defenseGreaterThan9}</div>
+							<div className="text-lg font-bold">{defense9OrGreater}</div>
 						</div>
 						<div className="flex gap-2 items-center">
 							<Label htmlFor="defense-greater-than-14">
 								{"Defense >= 14%"}
 							</Label>
-							<div className="text-lg font-bold">{defenseGreaterThan14}</div>
+							<div className="text-lg font-bold">{defense14OrGreater}</div>
 						</div>
 					</div>
 				</div>

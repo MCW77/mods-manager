@@ -5,15 +5,15 @@ interface StatisticsObservable {
 	allMods: () => Mod[];
 	speedSecondaryMods: () => Mod[];
 	defenseSecondaryMods: () => Mod[];
-	defenseGreaterThan9: () => number;
-	defenseGreaterThan14: () => number;
+	defense9OrGreater: () => number;
+	defense14OrGreater: () => number;
 	offenseSecondaryMods: () => Mod[];
-	offenseGreaterThan4: () => number;
-	offenseGreaterThan6: () => number;
-	speedGreaterThanTen: () => [number, number];
-	speedGreaterThanFifteen: () => [number, number];
-	speedGreaterThanTwenty: () => [number, number];
-	speedGreaterThanTwentyFive: () => [number, number];
+	offense4OrGreater: () => number;
+	offense6OrGreater: () => number;
+	speed10OrGreater: () => [number, number];
+	speed15OrGreater: () => [number, number];
+	speed20OrGreater: () => [number, number];
+	speed25OrGreater: () => [number, number];
 	averageSpeed: () => number;
 	speedDistributionAccumulated: () => {
 		speed: number;
