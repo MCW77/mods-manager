@@ -3,6 +3,7 @@ import type { Mod } from "#/domain/Mod";
 
 interface StatisticsObservable {
 	allMods: () => Mod[];
+	modsByModset: () => { modset: string; count: number }[];
 	speedSecondaryMods: () => Mod[];
 	defenseSecondaryMods: () => Mod[];
 	defense9OrGreater: () => number;

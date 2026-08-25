@@ -6,11 +6,27 @@ import { modsView$ } from "#/modules/modsView/state/modsView";
 
 // domain
 import type { StatisticsObservable } from "../domain/StatisticsObservable";
+import type { Mod } from "#/domain/Mod";
 
 const statistics$: ObservableObject<StatisticsObservable> =
 	observable<StatisticsObservable>({
 		allMods: () => {
 			return Array.from(mods$.activeModById.values());
+		},
+		modsByModset: () => {
+			const mods = modsView$.filteredMods.get();
+			const modsByModset = new Map<string, Mod[]>();
+			for (const mod of mods) {
+				const modset = mod.modset;
+				if (!modsByModset.has(modset)) {
+					modsByModset.set(modset, []);
+				}
+				modsByModset.get(modset)?.push(mod);
+			}
+			return Array.from(modsByModset.entries()).map(([modset, mods]) => ({
+				modset,
+				count: mods.length,
+			}));
 		},
 		defenseSecondaryMods: () => {
 			const filteredMods = modsView$.filteredMods.get();
