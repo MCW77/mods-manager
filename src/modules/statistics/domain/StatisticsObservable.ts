@@ -13,9 +13,14 @@ interface StatisticsObservable {
 	offense6OrGreater: () => number;
 	speed10OrGreater: () => [number, number];
 	speed15OrGreater: () => [number, number];
+	speed15OrGreaterAllMods: () => number;
 	speed20OrGreater: () => [number, number];
+	speed20OrGreaterAllMods: () => number;
 	speed25OrGreater: () => [number, number];
+	speed25OrGreaterAllMods: () => number;
 	averageSpeed: () => number;
+	modQualityDSR: () => number;
+	modQualityHU: () => number;
 	speedDistributionAccumulated: () => {
 		speed: number;
 		count5Dot: number;
@@ -26,6 +31,7 @@ interface StatisticsObservable {
 		count5Dot: number;
 		count6Dot: number;
 	}[];
+	squadGP: () => number;
 }
 
 export type { StatisticsObservable };

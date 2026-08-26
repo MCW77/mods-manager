@@ -20,6 +20,7 @@ interface RosterObservable {
 	) => void;
 	indexOfTarget: (characterId: CharacterNames, targetId: string) => number;
 	deleteTarget: (characterId: CharacterNames, targetIndex: number) => void;
+	squadGP: () => number;
 }
 
 const getInitialRoster = (): RosterPersistedData => {

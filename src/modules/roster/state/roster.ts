@@ -67,6 +67,12 @@ const roster$: ObservableObject<RosterObservable> = observable({
 			.peek()
 			.findIndex((target) => target.id === targetId);
 	},
+	squadGP: () => {
+		const characters = roster$.activeCharacterById.peek();
+		return Object.values(characters).reduce((totalGP, character) => {
+			return totalGP + character.playerValues.galacticPower;
+		}, 0);
+	},
 });
 
 profilesManagement$.lastProfileAdded.onChange(({ value }) => {

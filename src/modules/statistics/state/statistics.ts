@@ -3,6 +3,7 @@ import { type ObservableObject, observable } from "@legendapp/state";
 
 import { mods$ } from "#/modules/mods/state/mods";
 import { modsView$ } from "#/modules/modsView/state/modsView";
+import { roster$ } from "#/modules/roster/state/roster";
 
 // domain
 import type { StatisticsObservable } from "../domain/StatisticsObservable";
@@ -161,6 +162,20 @@ const statistics$: ObservableObject<StatisticsObservable> =
 			});
 			return [speedMods.length - speedMods6E.length, speedMods6E.length];
 		},
+		speed15OrGreaterAllMods: () => {
+			const filteredMods = statistics$.allMods.get();
+			const speedMods = filteredMods.filter((mod) => {
+				const speedSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Speed",
+				);
+				const modSpeed =
+					speedSecondaryStat !== undefined
+						? Number(speedSecondaryStat.stringValue)
+						: 0;
+				return modSpeed >= 15;
+			});
+			return speedMods.length;
+		},
 		speed20OrGreater: () => {
 			const filteredMods = modsView$.filteredMods.get();
 			const speedMods = filteredMods.filter((mod) => {
@@ -178,6 +193,20 @@ const statistics$: ObservableObject<StatisticsObservable> =
 			});
 			return [speedMods.length - speedMods6E.length, speedMods6E.length];
 		},
+		speed20OrGreaterAllMods: () => {
+			const filteredMods = statistics$.allMods.get();
+			const speedMods = filteredMods.filter((mod) => {
+				const speedSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Speed",
+				);
+				const modSpeed =
+					speedSecondaryStat !== undefined
+						? Number(speedSecondaryStat.stringValue)
+						: 0;
+				return modSpeed >= 20;
+			});
+			return speedMods.length;
+		},
 		speed25OrGreater: () => {
 			const filteredMods = modsView$.filteredMods.get();
 			const speedMods = filteredMods.filter((mod) => {
@@ -194,6 +223,20 @@ const statistics$: ObservableObject<StatisticsObservable> =
 				return mod.pips === 6;
 			});
 			return [speedMods.length - speedMods6E.length, speedMods6E.length];
+		},
+		speed25OrGreaterAllMods: () => {
+			const filteredMods = statistics$.allMods.get();
+			const speedMods = filteredMods.filter((mod) => {
+				const speedSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Speed",
+				);
+				const modSpeed =
+					speedSecondaryStat !== undefined
+						? Number(speedSecondaryStat.stringValue)
+						: 0;
+				return modSpeed >= 25;
+			});
+			return speedMods.length;
 		},
 		speedDistributionAccumulated: () => {
 			const speedGreaterThanTen = statistics$.speed10OrGreater.get();
@@ -265,6 +308,28 @@ const statistics$: ObservableObject<StatisticsObservable> =
 				speedDitribution.push({ speed, count5Dot, count6Dot });
 			}
 			return speedDitribution;
+		},
+		modQualityDSR: () => {
+			const modsSpeedGreaterThan15 = statistics$.speed15OrGreaterAllMods.get();
+			return modsSpeedGreaterThan15 / (statistics$.squadGP.get() / 100000);
+		},
+		modQualityHU: () => {
+			const modsSpeedGreaterThan25 = statistics$.speed25OrGreaterAllMods.get();
+			const modsSpeed20To24 =
+				statistics$.speed20OrGreaterAllMods.get() - modsSpeedGreaterThan25;
+			const modsSpeed15To19 =
+				statistics$.speed15OrGreaterAllMods.get() -
+				modsSpeed20To24 -
+				modsSpeedGreaterThan25;
+			return (
+				(modsSpeed15To19 * 0.8 +
+					modsSpeed20To24 +
+					modsSpeedGreaterThan25 * 1.6) /
+				(statistics$.squadGP.get() / 100000)
+			);
+		},
+		squadGP: () => {
+			return roster$.squadGP.get();
 		},
 	});
 
