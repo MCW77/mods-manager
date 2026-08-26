@@ -1,6 +1,6 @@
 {
 	"name": "mods-manager",
-	"version": "29.8.8",
+	"version": "29.8.9",
 	"type": "module",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
