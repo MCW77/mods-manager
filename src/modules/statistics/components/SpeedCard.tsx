@@ -129,7 +129,11 @@ function SpeedCard() {
 							? chartConfigAccumulated
 							: chartConfigFull
 					}
-					className="min-h-[200px] w-100"
+					style={{
+						width: "100%",
+						maxWidth: "800px",
+						minHeight: "300px",
+					}}
 				>
 					<BarChart<{ speed: number; count5Dot: number; count6Dot: number }>
 						accessibilityLayer
