@@ -102,7 +102,7 @@ function SpeedCard() {
 		},
 		speed: {
 			label: "Speed",
-			color: "var(--chart-2)",
+			color: "red",
 		},
 	} satisfies ChartConfig;
 
@@ -134,7 +134,7 @@ function SpeedCard() {
 					<BarChart<{ speed: number; count5Dot: number; count6Dot: number }>
 						accessibilityLayer
 						barSize={24}
-						barCategoryGap={3}
+						barCategoryGap={"20px"}
 						data={speedDistribution}
 						margin={{ top: 20, left: 20, right: 20, bottom: 20 }}
 						responsive
@@ -175,6 +175,7 @@ function SpeedCard() {
 							fill="var(--color-count6Dot)"
 							radius={4}
 							stackId={"a"}
+							label={{ position: "top" }}
 						/>
 						<ReferenceLine
 							x={averageSpeed}
