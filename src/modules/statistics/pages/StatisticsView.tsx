@@ -1,6 +1,7 @@
 // components
 import { ModQualityCard } from "../components/ModQualityCard";
 import { ModsetsCard } from "../components/ModsetsCard";
+import { ModSlots } from "../components/ModSlots";
 import { OffenseDefenseCard } from "../components/OffenseDefenseCard";
 import { SpeedCard } from "../components/SpeedCard";
 
@@ -13,6 +14,7 @@ function StatisticsView() {
 				<ModQualityCard />
 			</div>
 			<ModsetsCard />
+			<ModSlots />
 		</div>
 	);
 }

@@ -1,9 +1,19 @@
 // domain
 import type { Mod } from "#/domain/Mod";
+import type { GIMOSlots } from "#/domain/types/ModTypes";
 
 interface StatisticsObservable {
 	allMods: () => Mod[];
 	modsByModset: () => { modset: string; count: number }[];
+	modsBySlot: () => {
+		speed: number;
+		square: number;
+		arrow: number;
+		diamond: number;
+		triangle: number;
+		circle: number;
+		cross: number;
+	}[];
 	speedSecondaryMods: () => Mod[];
 	defenseSecondaryMods: () => Mod[];
 	defense9OrGreater: () => number;

@@ -29,6 +29,54 @@ const statistics$: ObservableObject<StatisticsObservable> =
 				count: mods.length,
 			}));
 		},
+		modsBySlot: () => {
+			const mods = modsView$.filteredMods.get();
+			const resultModsBySlot = [];
+			const modsBySpeed = new Map<number, Mod[]>();
+			for (const mod of mods) {
+				const speedSecondaryStat = mod.secondaryStats.find(
+					(stat) => stat.type === "Speed",
+				);
+				if (speedSecondaryStat) {
+					const speed = Number(speedSecondaryStat.stringValue);
+					if (!modsBySpeed.has(speed)) {
+						modsBySpeed.set(speed, []);
+					}
+					modsBySpeed.get(speed)?.push(mod);
+				} else {
+					if (mod.primaryStat.type === "Speed") {
+						const speed = Number(mod.primaryStat.stringValue);
+						if (!modsBySpeed.has(speed)) {
+							modsBySpeed.set(speed, []);
+						}
+						modsBySpeed.get(speed)?.push(mod);
+					} else {
+						if (!modsBySpeed.has(0)) {
+							modsBySpeed.set(0, []);
+						}
+						modsBySpeed.get(0)?.push(mod);
+					}
+				}
+			}
+			for (const [speed, speedMods] of modsBySpeed.entries()) {
+				const squareMods = speedMods.filter((mod) => mod.slot === "square");
+				const arrowMods = speedMods.filter((mod) => mod.slot === "arrow");
+				const diamondMods = speedMods.filter((mod) => mod.slot === "diamond");
+				const triangleMods = speedMods.filter((mod) => mod.slot === "triangle");
+				const circleMods = speedMods.filter((mod) => mod.slot === "circle");
+				const crossMods = speedMods.filter((mod) => mod.slot === "cross");
+				resultModsBySlot.push({
+					speed,
+					square: squareMods.length,
+					arrow: arrowMods.length,
+					diamond: diamondMods.length,
+					triangle: triangleMods.length,
+					circle: circleMods.length,
+					cross: crossMods.length,
+				});
+			}
+			return resultModsBySlot;
+		},
 		defenseSecondaryMods: () => {
 			const filteredMods = modsView$.filteredMods.get();
 			return filteredMods.filter((mod) => {
