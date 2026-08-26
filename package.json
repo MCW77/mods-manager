@@ -55,7 +55,7 @@
 		"@iconify-json/skill-icons": "^1.2.4",
 		"@types/file-saver": "^2.0.7",
 		"@types/lodash-es": "^4.17.12",
-		"@types/node": "^26.2.0",
+		"@types/node": "^26.3.0",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.5",
 		"@unocss/preset-typography": "66.8.1",
