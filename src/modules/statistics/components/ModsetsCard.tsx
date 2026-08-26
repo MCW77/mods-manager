@@ -3,13 +3,7 @@ import { useValue } from "@legendapp/state/react";
 import { statistics$ } from "../state/statistics";
 
 // components
-import {
-	PieChart,
-	Pie,
-	Legend,
-	ResponsiveContainer,
-	type LegendPayload,
-} from "recharts";
+import { PieChart, Pie, Legend, type LegendPayload } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 
 function isPayload(
@@ -95,43 +89,33 @@ function ModsetsCard() {
 	];
 
 	return (
-		<Card className="w-fit">
+		<Card className="min-w-0 w-full max-w-[600px]">
 			<CardHeader className="flex flex-col items-stretch justify-between sm:flex-row">
 				<div>
 					<CardTitle>Modsets</CardTitle>
 				</div>
 			</CardHeader>
-			<CardContent>
-				<div className="min-h-[200px] flex items-center justify-center">
-					<ResponsiveContainer
-						width="100%"
-						height="100%"
-						minHeight={"200px"}
-						minWidth={"400px"}
-					>
-						<PieChart<{
-							count: number;
-							modset: string;
-							label: string;
-							fill: string;
-						}>
-							style={{
-								maxWidth: "500px",
-								maxHeight: "500px",
-								aspectRatio: 1,
-							}}
-							responsive
-						>
-							<Pie data={data} dataKey="count" label={true} cx={"35%"} />
-							<Legend
-								formatter={(_value, entry, _index) => [
-									`${isPayload(entry) ? entry.payload.label : ""}`,
-								]}
-								position={"right"}
-							/>
-						</PieChart>
-					</ResponsiveContainer>
-				</div>
+			<CardContent className="h-[300px]">
+				<PieChart<{
+					count: number;
+					modset: string;
+					label: string;
+					fill: string;
+				}>
+					style={{
+						width: "100%",
+						height: "100%",
+					}}
+					responsive
+				>
+					<Pie data={data} dataKey="count" label={true} />
+					<Legend
+						formatter={(_value, entry, _index) => [
+							`${isPayload(entry) ? entry.payload.label : ""}`,
+						]}
+						position={"right"}
+					/>
+				</PieChart>
 			</CardContent>
 		</Card>
 	);
