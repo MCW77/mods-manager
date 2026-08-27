@@ -3,6 +3,7 @@ import type { Observable } from "@legendapp/state";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
+import type { RequirementsCountByCombination } from "#/domain/Combination";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { Compilation } from "#/modules/compilations/domain/Compilation";
 
@@ -29,6 +30,7 @@ interface DefaultCompilationObservable {
 	applyRanking: (ranking: CharacterNames[]) => void;
 	reset: () => void;
 	ensurePilot6DotRequirements: () => void;
+	hardRequirements: () => RequirementsCountByCombination;
 }
 
 export type { DefaultCompilationObservable };

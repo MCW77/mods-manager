@@ -1,4 +1,5 @@
 // domain
+import type { RequirementsCountByCombination } from "#/domain/Combination";
 import type { Mod } from "#/domain/Mod";
 import type { GIMOSlots } from "#/domain/types/ModTypes";
 
@@ -42,6 +43,9 @@ interface StatisticsObservable {
 		count6Dot: number;
 	}[];
 	squadGP: () => number;
+	modsToFarm: () => RequirementsCountByCombination;
+	modsToFarmOfModset: (modset: string) => RequirementsCountByCombination;
+	modsOfSlotAndModset: (slotAndModset: string) => Mod[];
 }
 
 export type { StatisticsObservable };

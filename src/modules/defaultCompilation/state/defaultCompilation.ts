@@ -16,12 +16,19 @@ import { roster$ } from "#/modules/roster/state/roster";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import { characterSettings } from "#/constants/characterSettings";
 import {
+	type Combination,
+	type CombinationKey,
+	getCombinationKey,
+} from "#/domain/Combination";
+import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
+import {
 	fromShortOptimizationPlan,
 	type OptimizationPlan,
 } from "#/domain/OptimizationPlan";
+import type { Pips } from "#/domain/Pips";
 import type { SelectedCharacters } from "#/domain/SelectedCharacters";
+import { gimoSlots } from "#/domain/types/ModTypes";
 import type { BaseCharacter } from "#/modules/characters/domain/BaseCharacter";
-
 import { getDefaultCompilation } from "../domain/DefaultCompilation";
 import type { DefaultCompilationObservable } from "../domain/DefaultCompilationObservable";
 
@@ -201,6 +208,63 @@ const defaultCompilation$: ObservableObject<DefaultCompilationObservable> =
 				);
 			}
 			endBatch();
+		},
+		hardRequirements: () => {
+			const hardRequirementsByCombination = new Map<
+				CombinationKey,
+				{ combination: Combination; count: number }
+			>();
+			const selectedCharacters =
+				defaultCompilation$.data.selectedCharacters.peek();
+			const targets = selectedCharacters.map(
+				(selectedCharacter) => selectedCharacter.target,
+			);
+			for (const target of targets) {
+				const setRestrictions = target.setRestrictions;
+				const entries = Object.entries(setRestrictions);
+				if (entries.length === 0) continue;
+				const accumulatedRequirements = new Map<GIMOSetStatNames, number>();
+				for (const [setName, requiredCount] of entries) {
+					const currentCount =
+						accumulatedRequirements.get(setName as GIMOSetStatNames) ?? 0;
+					accumulatedRequirements.set(
+						setName as GIMOSetStatNames,
+						requiredCount + currentCount,
+					);
+				}
+				if (accumulatedRequirements.size === 1) {
+					const [setName, count] = [...accumulatedRequirements.entries()][0];
+					if (count === 3) {
+						for (const slot of gimoSlots) {
+							let primaryStatRestrictions: string[] = [""];
+							if (slot !== "square" && slot !== "diamond") {
+								primaryStatRestrictions = [
+									...(target.primaryStatRestrictions?.[slot] ?? [""]),
+								];
+							}
+							const combination = {
+								slot,
+								modset: setName,
+								primaryStats: primaryStatRestrictions,
+								pips: target.minimumModDots as Pips,
+							};
+							const combinationKey = getCombinationKey({
+								slot,
+								modset: setName,
+								primaryStats: primaryStatRestrictions,
+								pips: target.minimumModDots as Pips,
+							});
+							hardRequirementsByCombination.set(combinationKey, {
+								combination,
+								count:
+									(hardRequirementsByCombination.get(combinationKey)?.count ??
+										0) + 1,
+							});
+						}
+					}
+				}
+			}
+			return hardRequirementsByCombination;
 		},
 	});
 

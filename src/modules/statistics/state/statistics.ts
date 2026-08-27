@@ -1,13 +1,16 @@
 // state
 import { type ObservableObject, observable } from "@legendapp/state";
 
+import { defaultCompilation$ } from "#/modules/defaultCompilation/state/defaultCompilation";
 import { mods$ } from "#/modules/mods/state/mods";
 import { modsView$ } from "#/modules/modsView/state/modsView";
 import { roster$ } from "#/modules/roster/state/roster";
 
 // domain
 import type { StatisticsObservable } from "../domain/StatisticsObservable";
+import type { Combination, CombinationKey } from "#/domain/Combination";
 import type { Mod } from "#/domain/Mod";
+import { gimoSlots } from "#/domain/types/ModTypes";
 
 const statistics$: ObservableObject<StatisticsObservable> =
 	observable<StatisticsObservable>({
@@ -378,6 +381,177 @@ const statistics$: ObservableObject<StatisticsObservable> =
 		},
 		squadGP: () => {
 			return roster$.squadGP.get();
+		},
+		modsToFarm: () => {
+			const requirements = defaultCompilation$.hardRequirements.get();
+			return requirements;
+		},
+		modsToFarmOfModset: (modset: string) => {
+			const modsToFarm = structuredClone(statistics$.modsToFarm.get());
+			const modsRequiredOfModset = new Map<
+				CombinationKey,
+				{ combination: Combination; count: number }
+			>();
+			for (const [key, entry] of modsToFarm.entries()) {
+				if (entry.combination.modset === modset) {
+					modsRequiredOfModset.set(key, entry);
+				}
+			}
+
+			for (const slot of gimoSlots) {
+				const entriesOfSlot = [...modsRequiredOfModset.entries()]
+					.filter(
+						([, entry]) =>
+							entry.combination.slot === slot &&
+							entry.combination.modset === modset,
+					)
+					.sort(([_aKey, aEntry], [_bKey, bEntry]) => {
+						return (
+							aEntry.combination.primaryStats.length -
+							bEntry.combination.primaryStats.length
+						);
+					});
+				if (entriesOfSlot.length === 0) continue;
+				const singlePrimaryStatEntries = entriesOfSlot.filter(
+					([, entry]) => entry.combination.primaryStats.length === 1,
+				);
+				const multiplePrimaryStatEntries = entriesOfSlot.filter(
+					([, entry]) => entry.combination.primaryStats.length > 1,
+				);
+				const noPrimaryStatEntries = entriesOfSlot.filter(
+					([, entry]) => entry.combination.primaryStats.length === 0,
+				);
+				const availablePrimaryStatRestrictions = new Set<string>();
+				for (const [_key, entry] of entriesOfSlot) {
+					for (const primaryStat of entry.combination.primaryStats) {
+						availablePrimaryStatRestrictions.add(primaryStat);
+					}
+				}
+				const modsOfSlotAndModsetByPrimaryStat = new Map<string, Mod[]>();
+				for (const primaryStat of availablePrimaryStatRestrictions) {
+					const modsOfPrimaryStat = statistics$.modsOfSlotAndModset[
+						`${slot}-${modset}`
+					]
+						.get()
+						.filter((mod) => {
+							return primaryStat === "" || mod.primaryStat.type === primaryStat;
+						});
+					modsOfSlotAndModsetByPrimaryStat.set(primaryStat, modsOfPrimaryStat);
+				}
+				const remainingModCountOfPipsByPrimaryStat = new Map<
+					string,
+					{ pips5: number; pips6: number }
+				>();
+				for (const primaryStat of availablePrimaryStatRestrictions) {
+					const modsOfPrimaryStat =
+						modsOfSlotAndModsetByPrimaryStat.get(primaryStat) ?? [];
+					const pips5Count = modsOfPrimaryStat.filter(
+						(mod) => mod.pips === 5,
+					).length;
+					const pips6Count = modsOfPrimaryStat.filter(
+						(mod) => mod.pips === 6,
+					).length;
+					remainingModCountOfPipsByPrimaryStat.set(primaryStat, {
+						pips5: pips5Count,
+						pips6: pips6Count,
+					});
+				}
+
+				const handleSlotEntries = (
+					entries: [
+						CombinationKey,
+						{ combination: Combination; count: number },
+					][],
+				) => {
+					const visitedCombos = new Set<string>();
+					for (const [_key, entry] of entries) {
+						const comboKey = `${entry.combination.slot}-${entry.combination.modset}-${entry.combination.primaryStats.join(",")}`;
+						if (visitedCombos.has(comboKey)) {
+							continue;
+						}
+						visitedCombos.add(comboKey);
+						const primaryStatsKey = entry.combination.primaryStats.join(",");
+						const requirement6Dot = entries.find(
+							([, entry]) =>
+								entry.combination.pips === 6 &&
+								entry.combination.primaryStats.join(",") === primaryStatsKey,
+						);
+						const requirement5Dot = entries.find(
+							([, entry]) =>
+								entry.combination.pips === 5 &&
+								entry.combination.primaryStats.join(",") === primaryStatsKey,
+						);
+
+						if (requirement6Dot !== undefined) {
+							for (const primaryStat of requirement6Dot[1].combination
+								.primaryStats) {
+								const remainingMods =
+									remainingModCountOfPipsByPrimaryStat.get(primaryStat);
+								if (remainingMods === undefined || remainingMods.pips6 <= 0)
+									continue;
+
+								const [key6dot, entry6dot] = requirement6Dot;
+								const modsTaken = Math.min(
+									entry6dot.count,
+									remainingMods.pips6,
+								);
+								entry6dot.count = entry6dot.count - modsTaken;
+								remainingMods.pips6 -= modsTaken;
+								if (entry6dot.count <= 0) {
+									modsRequiredOfModset.delete(key6dot);
+									break;
+								}
+							}
+						}
+
+						if (requirement5Dot !== undefined) {
+							for (const primaryStat of requirement5Dot[1].combination
+								.primaryStats) {
+								const remainingMods =
+									remainingModCountOfPipsByPrimaryStat.get(primaryStat);
+								if (remainingMods === undefined || remainingMods.pips5 <= 0)
+									continue;
+
+								const [key5dot, entry5dot] = requirement5Dot;
+								const modsTaken6Dot = Math.min(
+									entry5dot.count,
+									remainingMods.pips6,
+								);
+								entry5dot.count = entry5dot.count - modsTaken6Dot;
+
+								remainingMods.pips6 -= modsTaken6Dot;
+								if (entry5dot.count > 0) {
+									const modsTaken5Dot = Math.min(
+										entry5dot.count,
+										remainingMods.pips5,
+									);
+									entry5dot.count = entry5dot.count - modsTaken5Dot;
+									remainingMods.pips5 -= modsTaken5Dot;
+								}
+
+								if (entry5dot.count <= 0) {
+									modsRequiredOfModset.delete(key5dot);
+									break;
+								}
+							}
+						}
+					}
+				};
+
+				handleSlotEntries(singlePrimaryStatEntries);
+				handleSlotEntries(multiplePrimaryStatEntries);
+				handleSlotEntries(noPrimaryStatEntries);
+			}
+
+			return modsRequiredOfModset;
+		},
+		modsOfSlotAndModset: (slotAndModset: string) => {
+			const [slot, modset] = slotAndModset.split("-");
+			const allMods = statistics$.allMods.get();
+			const healthSlotMods = allMods.filter((mod) => {
+				return mod.slot === slot && mod.modset === modset;
+			});
+			return healthSlotMods;
 		},
 	});
 
