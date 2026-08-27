@@ -41,6 +41,7 @@ import type * as ModTypes from "../domain/types/ModTypes";
 
 import type * as Character from "../domain/Character";
 import type {
+	allowedPrimaryStatsBySlot,
 	GIMOPrimaryStatNames,
 	GIMOSecondaryStatNames,
 	GIMOSetStatNames,
@@ -126,12 +127,55 @@ interface Stat {
 	value: number;
 }
 
-interface PrimaryStat {
-	type: GIMOPrimaryStatNames;
+interface SquarePrimaryStat {
+	type: "Offense %";
 	displayType: DisplayStatNames;
 	value: number;
 	isPercentVersion: boolean;
 }
+
+interface ArrowPrimaryStat {
+	type: (typeof allowedPrimaryStatsBySlot.arrow)[number];
+	displayType: DisplayStatNames;
+	value: number;
+	isPercentVersion: boolean;
+}
+
+interface DiamondPrimaryStat {
+	type: "Defense %";
+	displayType: DisplayStatNames;
+	value: number;
+	isPercentVersion: boolean;
+}
+
+interface TrianglePrimaryStat {
+	type: (typeof allowedPrimaryStatsBySlot.triangle)[number];
+	displayType: DisplayStatNames;
+	value: number;
+	isPercentVersion: boolean;
+}
+
+interface CirclePrimaryStat {
+	type: (typeof allowedPrimaryStatsBySlot.circle)[number];
+	displayType: DisplayStatNames;
+	value: number;
+	isPercentVersion: boolean;
+}
+
+interface CrossPrimaryStat {
+	type: (typeof allowedPrimaryStatsBySlot.cross)[number];
+	displayType: DisplayStatNames;
+	value: number;
+	isPercentVersion: boolean;
+}
+
+type PrimaryStat =
+	| SquarePrimaryStat
+	| ArrowPrimaryStat
+	| DiamondPrimaryStat
+	| TrianglePrimaryStat
+	| CirclePrimaryStat
+	| CrossPrimaryStat;
 
 interface SecondaryStat {
 	type: GIMOSecondaryStatNames;
@@ -163,16 +207,79 @@ interface SetStat {
 	isPercentVersion: boolean;
 }
 
-interface Mod {
+interface SquareMod {
 	id: string;
-	slot: ModTypes.GIMOSlots;
+	slot: "square";
 	modset: SetBonus;
 	level: number;
 	pips: Pips;
-	primaryStat: PrimaryStat;
+	primaryStat: SquarePrimaryStat;
 	secondaryStats: SecondaryStat[];
 	characterID: CharacterNames | "null";
 }
+
+interface ArrowMod {
+	id: string;
+	slot: "arrow";
+	modset: SetBonus;
+	level: number;
+	pips: Pips;
+	primaryStat: ArrowPrimaryStat;
+	secondaryStats: SecondaryStat[];
+	characterID: CharacterNames | "null";
+}
+
+interface DiamondMod {
+	id: string;
+	slot: "diamond";
+	modset: SetBonus;
+	level: number;
+	pips: Pips;
+	primaryStat: DiamondPrimaryStat;
+	secondaryStats: SecondaryStat[];
+	characterID: CharacterNames | "null";
+}
+
+interface TriangleMod {
+	id: string;
+	slot: "triangle";
+	modset: SetBonus;
+	level: number;
+	pips: Pips;
+	primaryStat: TrianglePrimaryStat;
+	secondaryStats: SecondaryStat[];
+	characterID: CharacterNames | "null";
+}
+
+interface CircleMod {
+	id: string;
+	slot: "circle";
+	modset: SetBonus;
+	level: number;
+	pips: Pips;
+	primaryStat: CirclePrimaryStat;
+	secondaryStats: SecondaryStat[];
+	characterID: CharacterNames | "null";
+}
+
+interface CrossMod {
+	id: string;
+	slot: "cross";
+	modset: SetBonus;
+	level: number;
+	pips: Pips;
+	primaryStat: CrossPrimaryStat;
+	secondaryStats: SecondaryStat[];
+	characterID: CharacterNames | "null";
+}
+
+type Mod =
+	| SquareMod
+	| ArrowMod
+	| DiamondMod
+	| TriangleMod
+	| CircleMod
+	| CrossMod;
 
 interface LoadoutAndMessages {
 	id: string;
@@ -1336,29 +1443,50 @@ const loadoutSatisfiesCharacterRestrictions = (
 	satisfiesTargetStats = false,
 ) => {
 	const minimumDots = target.minimumModDots;
-	const loadoutSlots: Partial<Record<ModTypes.GIMOSlots, Mod>> = {};
+	type ModBySlot = {
+		[Slot in ModTypes.GIMOSlots]: Extract<Mod, { slot: Slot }>;
+	};
+
+	type PartialModBySlot = Partial<ModBySlot>;
+	const loadoutSlots: PartialModBySlot = {};
 	for (const mod of loadout) {
-		loadoutSlots[mod.slot] = mod;
+		(loadoutSlots as Partial<Record<ModTypes.GIMOSlots, Mod>>)[mod.slot] = mod;
 	}
 
 	return (
 		loadout.every((mod) => mod.pips >= minimumDots) &&
 		(!Object.hasOwn(target.primaryStatRestrictions, "arrow") ||
+			target.primaryStatRestrictions.arrow === undefined ||
+			target.primaryStatRestrictions.arrow.length === 0 ||
 			(Object.hasOwn(loadoutSlots, "arrow") &&
-				loadoutSlots.arrow?.primaryStat.type ===
-					target.primaryStatRestrictions.arrow)) &&
+				loadoutSlots.arrow !== undefined &&
+				target.primaryStatRestrictions.arrow.includes(
+					loadoutSlots.arrow.primaryStat.type,
+				))) &&
 		(!Object.hasOwn(target.primaryStatRestrictions, "triangle") ||
+			target.primaryStatRestrictions.triangle === undefined ||
+			target.primaryStatRestrictions.triangle.length === 0 ||
 			(Object.hasOwn(loadoutSlots, "triangle") &&
-				loadoutSlots.triangle?.primaryStat.type ===
-					target.primaryStatRestrictions.triangle)) &&
+				loadoutSlots.triangle !== undefined &&
+				target.primaryStatRestrictions.triangle.includes(
+					loadoutSlots.triangle.primaryStat.type,
+				))) &&
 		(!Object.hasOwn(target.primaryStatRestrictions, "circle") ||
+			target.primaryStatRestrictions.circle === undefined ||
+			target.primaryStatRestrictions.circle.length === 0 ||
 			(Object.hasOwn(loadoutSlots, "circle") &&
-				loadoutSlots.circle?.primaryStat.type ===
-					target.primaryStatRestrictions.circle)) &&
+				loadoutSlots.circle !== undefined &&
+				target.primaryStatRestrictions.circle.includes(
+					loadoutSlots.circle.primaryStat.type,
+				))) &&
 		(!Object.hasOwn(target.primaryStatRestrictions, "cross") ||
+			target.primaryStatRestrictions.cross === undefined ||
+			target.primaryStatRestrictions.cross.length === 0 ||
 			(Object.hasOwn(loadoutSlots, "cross") &&
-				loadoutSlots.cross?.primaryStat.type ===
-					target.primaryStatRestrictions.cross)) &&
+				loadoutSlots.cross !== undefined &&
+				target.primaryStatRestrictions.cross.includes(
+					loadoutSlots.cross.primaryStat.type,
+				))) &&
 		(!target.useOnlyFullSets || loadoutFulfillsFullSetRestriction(loadout)) &&
 		loadoutFulfillsSetRestriction(loadout, target.setRestrictions) &&
 		(satisfiesTargetStats ||
