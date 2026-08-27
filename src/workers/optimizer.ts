@@ -2096,6 +2096,7 @@ function optimizeMods(
 				index,
 				realTarget,
 			);
+			const messages = structuredClone(foundLoadout.messages);
 			if (foundLoadout.loadout.length === 0) {
 				const noRestrictionsTarget = {
 					...realTarget,
@@ -2112,6 +2113,9 @@ function optimizeMods(
 					index,
 					noRestrictionsTarget,
 				);
+				for (const message of messages) {
+					foundLoadout.messages.push(message);
+				}
 				foundLoadout.messages.push(
 					"Could not find a loadout that satisfies the given restrictions. Suggesting the best loadout with no restrictions instead.",
 				);
@@ -3355,6 +3359,7 @@ function narrowToAvailableSets(
 	triangles: Mod[];
 	circles: Mod[];
 	crosses: Mod[];
+	failedSet: string;
 } {
 	const setsBySlot = getSetsBySlot(
 		squares,
@@ -3422,6 +3427,7 @@ function narrowToAvailableSets(
 					triangles,
 					circles,
 					crosses,
+					failedSet: setName,
 				};
 			}
 			const remaining = requiredSlots - assigned;
@@ -3444,6 +3450,7 @@ function narrowToAvailableSets(
 					triangles,
 					circles,
 					crosses,
+					failedSet: setName,
 				};
 			}
 
@@ -3661,6 +3668,7 @@ function narrowToAvailableSets(
 		triangles: filteredTriangles,
 		circles: filteredCircles,
 		crosses: filteredCrosses,
+		failedSet: "",
 	};
 }
 
@@ -3691,6 +3699,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 	let setlessMods: NullablePartialModBySlot;
 	let availableSetsToUse: SetRestrictions = {};
 	let canFulfillSetRestrictions = true;
+	let failedSet = "";
 
 	// Sort all the mods by score, then break them into sets.
 	// For each slot, try to use the most restrictions possible from what has been set for that character
@@ -3742,6 +3751,7 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		triangles,
 		circles,
 		crosses,
+		failedSet,
 	} = narrowToAvailableSets(
 		setsToUse,
 		target.useOnlyFullSets,
@@ -3753,7 +3763,12 @@ const findBestLoadoutWithoutChangingRestrictions = (
 		crosses,
 	));
 	if (!canFulfillSetRestrictions) {
-		return { loadout: [], id: "", messages: [] as string[], score: 0 };
+		return {
+			loadout: [],
+			id: "",
+			messages: [`Failed to fulfill set restrictions for ${failedSet}`],
+			score: 0,
+		};
 	}
 	// Use refined set restrictions going forward
 	const effectiveSetsToUse = availableSetsToUse;
