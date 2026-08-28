@@ -1,7 +1,6 @@
 // domain
 import type { RequirementsCountByCombination } from "#/domain/Combination";
 import type { Mod } from "#/domain/Mod";
-import type { GIMOSlots } from "#/domain/types/ModTypes";
 
 interface StatisticsObservable {
 	allMods: () => Mod[];

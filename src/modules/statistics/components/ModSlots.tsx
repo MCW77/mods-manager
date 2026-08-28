@@ -10,7 +10,6 @@ import {
 	YAxis,
 	type TooltipContentProps,
 	Legend,
-	ResponsiveContainer,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "#ui/card";
 import { type ChartConfig, ChartContainer, ChartTooltip } from "#ui/charts";
