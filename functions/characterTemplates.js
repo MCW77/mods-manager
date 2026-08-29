@@ -13,7 +13,7 @@ export async function onRequest(context) {
 		// Extract the target URL and custom headers from the request
 		const { character } = requestBody;
 
-		const templates = await env.MMUT.get(character, "json");
+		let templates = await env.MMUT.get(character, "json");
 
 		if (templates === null) {
 			const url = `https://swgoh.gg/api/v2/units/${character}/template-data/`;
