@@ -13,28 +13,33 @@ export async function onRequest(context) {
 		// Extract the target URL and custom headers from the request
 		const { character } = requestBody;
 
-		const url = `https://swgoh.gg/api/v2/units/${character}/template-data/`;
-		console.log(url);
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {
-				"content-type": "application/json",
-				"x-gg-bot-access": env["swgohgg-apikey"],
-			},
-		});
+		const templates = await env.MMUT.get(character, "json");
 
-		// Get response data
-		const responseData = await response.text();
+		if (templates === null) {
+			const url = `https://swgoh.gg/api/v2/units/${character}/template-data/`;
 
-		// Try to parse as JSON, fall back to text
-		let parsedData;
-		try {
-			parsedData = JSON.parse(responseData);
-		} catch {
-			parsedData = responseData;
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {
+					"content-type": "application/json",
+					"x-gg-bot-access": env["swgohgg-apikey"],
+				},
+			});
+
+			// Get response data
+			const responseData = await response.text();
+
+			// Try to parse as JSON, fall back to text
+			let parsedData;
+			try {
+				parsedData = JSON.parse(responseData);
+			} catch {
+				parsedData = responseData;
+			}
+			templates = parsedData.data.templates;
+			await env.MMUT.put(character, JSON.stringify(templates));
 		}
-
-		return new Response(JSON.stringify(parsedData), {
+		return new Response(JSON.stringify(templates), {
 			status: response.status,
 			headers: {
 				"Content-Type": "application/json",
