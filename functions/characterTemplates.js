@@ -39,8 +39,9 @@ export async function onRequest(context) {
 			templates = parsedData.data.templates;
 			await env.MMUT.put(character, JSON.stringify(templates));
 		}
+		const responseStatus = templates === null ? response.status : 200;
 		return new Response(JSON.stringify(templates), {
-			status: response.status,
+			status: responseStatus,
 			headers: {
 				"Content-Type": "application/json",
 			},
