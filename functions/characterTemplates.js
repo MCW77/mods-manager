@@ -11,10 +11,9 @@ export async function onRequest(context) {
 		const requestBody = await request.json();
 
 		// Extract the target URL and custom headers from the request
-		const { data } = requestBody;
-		const jsonData = JSON.stringify(data);
+		const { character } = requestBody;
 
-		const url = `https://swgoh.gg/api/v2/units/${data.character}/template-data/`;
+		const url = `https://swgoh.gg/api/v2/units/${character}/template-data/`;
 		console.log(url);
 		const response = await fetch(url, {
 			method: "GET",
