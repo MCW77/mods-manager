@@ -1,4 +1,5 @@
 // components
+import { MissingModsOfSlots } from "../components/MissingModsOfSlots";
 import { ModQualityCard } from "../components/ModQualityCard";
 import { ModsetsCard } from "../components/ModsetsCard";
 import { ModSlots } from "../components/ModSlots";
@@ -17,6 +18,7 @@ function StatisticsView() {
 			<ModsetsCard />
 			<ModSlots />
 			<ModsToFarm />
+			<MissingModsOfSlots />
 		</div>
 	);
 }

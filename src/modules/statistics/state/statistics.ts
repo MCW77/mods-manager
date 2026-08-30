@@ -554,6 +554,34 @@ const statistics$: ObservableObject<StatisticsObservable> =
 			});
 			return healthSlotMods;
 		},
+		missingModsOfSlot: (slot: string) => {
+			const modsOfSlot = statistics$.allMods
+				.get()
+				.filter((mod) => mod.slot === slot);
+			const available6Dot = modsOfSlot.filter((mod) => mod.pips === 6).length;
+			const available5Dot = modsOfSlot.length - available6Dot;
+			const selectedCharacters =
+				defaultCompilation$.data.selectedCharacters.peek();
+			const required6Dot = selectedCharacters
+				.map((selectedCharacter) => selectedCharacter.target.minimumModDots)
+				.filter((pips) => pips === 6).length;
+			const required5Dot = selectedCharacters.length - required6Dot;
+			const missing6Dot = Math.max(0, required6Dot - available6Dot);
+			const missing5Dot = Math.max(
+				0,
+				required5Dot -
+					available5Dot -
+					Math.max(0, available6Dot - required6Dot),
+			);
+			return {
+				available5Dot,
+				available6Dot,
+				missing5Dot,
+				missing6Dot,
+				required5Dot,
+				required6Dot,
+			};
+		},
 	});
 
 export { statistics$ };

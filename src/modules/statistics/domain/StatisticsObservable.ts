@@ -45,6 +45,14 @@ interface StatisticsObservable {
 	modsToFarm: () => RequirementsCountByCombination;
 	modsToFarmOfModset: (modset: string) => RequirementsCountByCombination;
 	modsOfSlotAndModset: (slotAndModset: string) => Mod[];
+	missingModsOfSlot(slot: string): {
+		available5Dot: number;
+		available6Dot: number;
+		missing5Dot: number;
+		missing6Dot: number;
+		required5Dot: number;
+		required6Dot: number;
+	};
 }
 
 export type { StatisticsObservable };
