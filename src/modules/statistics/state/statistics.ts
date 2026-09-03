@@ -15,7 +15,8 @@ import { gimoSlots } from "#/domain/types/ModTypes";
 const statistics$: ObservableObject<StatisticsObservable> =
 	observable<StatisticsObservable>({
 		allMods: () => {
-			return Array.from(mods$.activeModById.values());
+			const activeModById = mods$.activeModById.get();
+			return Array.from(activeModById.values());
 		},
 		modsByModset: () => {
 			const mods = modsView$.filteredMods.get();
