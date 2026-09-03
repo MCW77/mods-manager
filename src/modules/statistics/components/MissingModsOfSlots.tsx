@@ -35,7 +35,7 @@ function MissingModsOfSlot({ slot, missingMods$ }: MissingModsOfSlotProps) {
 					<Tooltip>
 						<TooltipTrigger>
 							<Item variant={"muted"} size={"xs"} className="flex-nowrap">
-								<ItemTitle>6 dot:</ItemTitle>
+								<ItemTitle className="text-nowrap">6-dot:</ItemTitle>
 								<ItemContent
 									className={`text-lg${missingMods$.missing6Dot.peek() > 0 ? " text-red-500" : ""}`}
 								>
@@ -59,7 +59,7 @@ function MissingModsOfSlot({ slot, missingMods$ }: MissingModsOfSlotProps) {
 					<Tooltip>
 						<TooltipTrigger>
 							<Item variant={"muted"} className="flex-nowrap">
-								<ItemTitle>5 dot:</ItemTitle>
+								<ItemTitle className="text-nowrap">5-dot:</ItemTitle>
 								<ItemContent
 									className={`text-lg${missingMods$.missing5Dot.peek() > 0 ? " text-red-500" : ""}`}
 								>
