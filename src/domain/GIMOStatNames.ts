@@ -21,13 +21,13 @@ const gimoPrimaryDefensiveStats = [
 ] as const;
 type GIMOPrimaryDefensiveStats = (typeof gimoPrimaryDefensiveStats)[number];
 
-export const gimoPrimaryStatNames = [
+const gimoPrimaryStatNames = [
 	...gimoPrimaryNeutralStats,
 	...gimoPrimaryOffensiveStats,
 	...gimoPrimaryDefensiveStats,
 ] as const;
 
-export type GIMOPrimaryStatNames =
+type GIMOPrimaryStatNames =
 	| GIMOPrimaryNeutralStats
 	| GIMOPrimaryOffensiveStats
 	| GIMOPrimaryDefensiveStats;
@@ -46,7 +46,7 @@ const gimoSecondaryDefensiveStats = [
 	"Protection",
 	"Protection %",
 ] as const;
-export const gimoSecondaryStatNames = [
+const gimoSecondaryStatNames = [
 	...gimoSecondaryNeutralStats,
 	...gimoSecondaryOffensiveStats,
 	...gimoSecondaryDefensiveStats,
@@ -55,13 +55,13 @@ type GIMOSecondaryNeutralStats = (typeof gimoSecondaryNeutralStats)[number];
 type GIMOSecondaryOffensiveStats = (typeof gimoSecondaryOffensiveStats)[number];
 type GIMOSecondaryDefensiveStats = (typeof gimoSecondaryDefensiveStats)[number];
 
-export type GIMOSecondaryStatNames =
+type GIMOSecondaryStatNames =
 	| GIMOSecondaryNeutralStats
 	| GIMOSecondaryOffensiveStats
 	| GIMOSecondaryDefensiveStats;
 
 // #region GIMOSetStatNames
-export const gimoSetStatNames = [
+const gimoSetStatNames = [
 	"Offense %",
 	"Speed %",
 	"Defense %",
@@ -71,7 +71,7 @@ export const gimoSetStatNames = [
 	"Tenacity %",
 	"Potency %",
 ] as const;
-export type GIMOSetStatNames = (typeof gimoSetStatNames)[number];
+type GIMOSetStatNames = (typeof gimoSetStatNames)[number];
 // #endregion
 
 // #region CalculatedCharacterSummaryStatNames
@@ -82,7 +82,7 @@ type CalculatedCharacterSummaryStatNames =
 	| "Average Damage (special)";
 //#endregion
 
-export type GIMOCharacterSummaryStatNames =
+type GIMOCharacterSummaryStatNames =
 	| CharacterStatNames.All
 	| CalculatedCharacterSummaryStatNames;
 type NonCalculatedGIMOStatNames =
@@ -90,11 +90,11 @@ type NonCalculatedGIMOStatNames =
 	| GIMOSetStatNames
 	| GIMOSecondaryStatNames;
 
-export type AllGIMOStatNames =
+type AllGIMOStatNames =
 	| NonCalculatedGIMOStatNames
 	| GIMOCharacterSummaryStatNames;
 
-export const arrowPrimaryStats = [
+const arrowPrimaryStats = [
 	"Speed",
 	"Accuracy %",
 	"Critical Avoidance %",
@@ -103,14 +103,14 @@ export const arrowPrimaryStats = [
 	"Offense %",
 	"Protection %",
 ] as const;
-export type ArrowPrimaryStat = (typeof arrowPrimaryStats)[number];
-export type ArrowPrimaryStats = ArrowPrimaryStat[];
+type ArrowPrimaryStat = (typeof arrowPrimaryStats)[number];
+type ArrowPrimaryStats = ArrowPrimaryStat[];
 
-export const circlePrimaryStats = ["Health %", "Protection %"] as const;
-export type CirclePrimaryStat = (typeof circlePrimaryStats)[number];
-export type CirclePrimaryStats = CirclePrimaryStat[];
+const circlePrimaryStats = ["Health %", "Protection %"] as const;
+type CirclePrimaryStat = (typeof circlePrimaryStats)[number];
+type CirclePrimaryStats = CirclePrimaryStat[];
 
-export const crossPrimaryStats = [
+const crossPrimaryStats = [
 	"Potency %",
 	"Tenacity %",
 	"Defense %",
@@ -118,10 +118,10 @@ export const crossPrimaryStats = [
 	"Offense %",
 	"Protection %",
 ] as const;
-export type CrossPrimaryStat = (typeof crossPrimaryStats)[number];
-export type CrossPrimaryStats = CrossPrimaryStat[];
+type CrossPrimaryStat = (typeof crossPrimaryStats)[number];
+type CrossPrimaryStats = CrossPrimaryStat[];
 
-export const trianglePrimaryStats = [
+const trianglePrimaryStats = [
 	"Critical Chance %",
 	"Critical Damage %",
 	"Defense %",
@@ -129,10 +129,10 @@ export const trianglePrimaryStats = [
 	"Offense %",
 	"Protection %",
 ] as const;
-export type TrianglePrimaryStat = (typeof trianglePrimaryStats)[number];
-export type TrianglePrimaryStats = TrianglePrimaryStat[];
+type TrianglePrimaryStat = (typeof trianglePrimaryStats)[number];
+type TrianglePrimaryStats = TrianglePrimaryStat[];
 
-export const allowedPrimaryStatsBySlot = {
+const allowedPrimaryStatsBySlot = {
 	arrow: [
 		"Speed",
 		"Accuracy %",
@@ -163,3 +163,28 @@ export const allowedPrimaryStatsBySlot = {
 	ModTypes.VariablePrimarySlots,
 	readonly GIMOPrimaryStatNames[]
 >;
+
+export {
+	type AllGIMOStatNames,
+	type ArrowPrimaryStat,
+	type ArrowPrimaryStats,
+	type CalculatedCharacterSummaryStatNames,
+	type CirclePrimaryStat,
+	type CirclePrimaryStats,
+	type CrossPrimaryStat,
+	type CrossPrimaryStats,
+	type GIMOCharacterSummaryStatNames,
+	type GIMOPrimaryStatNames,
+	type GIMOSecondaryStatNames,
+	type GIMOSetStatNames,
+	type TrianglePrimaryStat,
+	type TrianglePrimaryStats,
+	allowedPrimaryStatsBySlot,
+	arrowPrimaryStats,
+	circlePrimaryStats,
+	crossPrimaryStats,
+	gimoPrimaryStatNames,
+	gimoSecondaryStatNames,
+	gimoSetStatNames,
+	trianglePrimaryStats,
+};
