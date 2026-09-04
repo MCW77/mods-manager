@@ -1,9 +1,9 @@
 import type { GIMOPrimaryStatNames } from "#/domain/GIMOStatNames";
 import { createPrimaryStat, type PrimaryStat } from "#/domain/PrimaryStat";
-import type * as C3PODTOs from "../../dtos/c3po/index";
+import type { C3POPrimaryStatNames, C3POPrimaryStat } from "./C3POPrimaryStat";
 
 const c3PO2GIMOPrimaryStatNameMap: {
-	[key in C3PODTOs.PrimaryStatNames]: GIMOPrimaryStatNames;
+	[key in C3POPrimaryStatNames]: GIMOPrimaryStatNames;
 } = {
 	5: "Speed",
 	16: "Critical Damage %",
@@ -18,7 +18,7 @@ const c3PO2GIMOPrimaryStatNameMap: {
 	56: "Protection %",
 };
 
-const fromC3PO = (primary: C3PODTOs.C3POPrimaryStatDTO): PrimaryStat => {
+const fromC3PO = (primary: C3POPrimaryStat): PrimaryStat => {
 	let statValue = "";
 	if (primary.stat.unitStatId === 5) {
 		statValue = String(

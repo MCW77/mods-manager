@@ -1,22 +1,10 @@
-export type SecondaryStatNames =
-	| 1
-	| 5
-	| 17
-	| 18
-	| 28
-	| 41
-	| 42
-	| 48
-	| 49
-	| 53
-	| 55
-	| 56;
+type C3POPrimaryStatNames = 5 | 16 | 17 | 18 | 48 | 49 | 52 | 53 | 54 | 55 | 56;
 
-export interface C3POSecondaryStatDTO {
+interface C3POPrimaryStat {
 	roll: string[];
 	unscaledRollValue: number[];
 	stat: {
-		unitStatId: SecondaryStatNames;
+		unitStatId: C3POPrimaryStatNames;
 		statValueDecimal: string;
 		unscaledDecimalValue: string;
 		uiDisplayOverrideValue: string;
@@ -26,3 +14,5 @@ export interface C3POSecondaryStatDTO {
 	statRollerBoundsMax: string;
 	statRollerBoundsMin: string;
 }
+
+export type { C3POPrimaryStatNames, C3POPrimaryStat };

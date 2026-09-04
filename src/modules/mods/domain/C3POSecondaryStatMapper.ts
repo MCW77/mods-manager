@@ -4,10 +4,13 @@ import {
 	type Rolls,
 	type SecondaryStat,
 } from "#/domain/SecondaryStat";
-import type * as C3PO from "../../dtos/c3po/index";
+import type {
+	C3POSecondaryStatNames,
+	C3POSecondaryStat,
+} from "./C3POSecondaryStat";
 
 const c3PO2GIMOSecondaryStatNameMap: {
-	[key in C3PO.SecondaryStatNames]: GIMOSecondaryStatNames;
+	[key in C3POSecondaryStatNames]: GIMOSecondaryStatNames;
 } = {
 	1: "Health",
 	5: "Speed",
@@ -23,10 +26,7 @@ const c3PO2GIMOSecondaryStatNameMap: {
 	56: "Protection %",
 };
 
-const fromC3PO = (
-	id: string,
-	secondary: C3PO.C3POSecondaryStatDTO,
-): SecondaryStat => {
+const fromC3PO = (id: string, secondary: C3POSecondaryStat): SecondaryStat => {
 	let statValue = "";
 	if (
 		secondary.stat.unitStatId === 1 ||

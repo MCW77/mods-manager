@@ -13,18 +13,13 @@ import { persistOptions } from "#/utils/globalLegendPersistSettings";
 import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
 
 // domain
-import type * as C3POMods from "#/modules/profilesManagement/dtos/c3po/index";
-import * as C3POMappers from "#/modules/profilesManagement/mappers/c3po/index";
 import type { CharacterNames } from "#/constants/CharacterNames";
-import { type GIMOFlatMod, gimoSlots } from "#/domain/types/ModTypes";
 
+import { type GIMOFlatMod, gimoSlots } from "#/domain/types/ModTypes";
 import { cloneMod, deserializeMod, serializeMod, type Mod } from "#/domain/Mod";
 
-import {
-	getInitialMods,
-	getinitialPersistedMods,
-	type ModsObservable,
-} from "../domain/ModsObservable";
+import type { C3POMod } from "../domain/C3POMod";
+import { fromC3PO } from "../domain/C3POModMapper";
 import type {
 	ModByIdForProfile,
 	ModById,
@@ -32,6 +27,11 @@ import type {
 	PersistedModByIdForProfile,
 	PersistedModByIdForProfileByAllycode,
 } from "../domain/Mods";
+import {
+	getInitialMods,
+	getinitialPersistedMods,
+	type ModsObservable,
+} from "../domain/ModsObservable";
 
 const isObservableMod = (
 	mod: Observable<Mod | undefined> | Observable<Mod>,
@@ -113,11 +113,9 @@ const mods$: ObservableObject<ModsObservable> = observable({
 	importModsFromC3PO: (modsJSON: string) => {
 		let totalMods = 0;
 		try {
-			const unequippedC3POMods: C3POMods.C3POModDTO[] =
+			const unequippedC3POMods: C3POMod[] =
 				JSON.parse(modsJSON).inventory.unequippedMod;
-			const unequippedMods = unequippedC3POMods.map((mod) =>
-				C3POMappers.ModMapper.fromC3PO(mod),
-			);
+			const unequippedMods = unequippedC3POMods.map((mod) => fromC3PO(mod));
 			for (const mod of unequippedMods) {
 				mods$.activeModById[mod.id].set(mod);
 			}
