@@ -1,13 +1,15 @@
-// state
-import { type ObservableObject, observable } from "@legendapp/state";
-import { syncObservable } from "@legendapp/state/sync";
-import { persistOptions } from "#/utils/globalLegendPersistSettings";
+// utils
 import {
 	fromScaled,
 	mulScaled,
 	divScaled,
 	toScaled,
 } from "#/utils/scaledNumber";
+
+// state
+import { type ObservableObject, observable } from "@legendapp/state";
+import { syncObservable } from "@legendapp/state/sync";
+import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 import { mods$ } from "#/modules/mods/state/mods";
 import { defaultCompilation$ } from "#/modules/defaultCompilation/state/defaultCompilation";
@@ -32,6 +34,11 @@ import type * as CharacterStatNames from "#/modules/profilesManagement/domain/Ch
 import { characterSettings } from "#/constants/characterSettings";
 import type { Character } from "#/domain/Character";
 import { DamageType } from "#/domain/CharacterSettings";
+import {
+	createCharacterSummaryStat,
+	getDisplayType as getCSDisplayType,
+	type NonCalculatedCharacterSummaryStat,
+} from "#/domain/CharacterSummaryStat";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import {
 	type Stat,
@@ -41,11 +48,6 @@ import {
 	getDisplayType,
 	getStatValue,
 } from "#/domain/Stat";
-import {
-	createCharacterSummaryStat,
-	getDisplayType as getCSDisplayType,
-	type NonCalculatedCharacterSummaryStat,
-} from "#/domain/CharacterSummaryStat";
 
 const addCategoryFilter = (
 	customFilterById: Map<string, CustomFilter>,
