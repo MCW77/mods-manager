@@ -58,7 +58,7 @@
 		"@types/node": "^26.4.1",
 		"@types/react": "^19.2.18",
 		"@types/react-dom": "^19.2.7",
-		"@unocss/preset-typography": "66.9.2",
+		"@unocss/preset-typography": "66.10.0",
 		"@unocss/preset-wind4": "^66.10.0",
 		"@vitejs/plugin-react": "^6.1.1",
 		"@vitest/coverage-v8": "^4.1.11",
