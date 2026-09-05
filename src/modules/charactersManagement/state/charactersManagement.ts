@@ -43,8 +43,6 @@ import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import {
 	type Stat,
 	display2CSGIMOStatNamesMap,
-	gimo2DisplayStatNamesMap,
-	mixedTypes,
 	getDisplayType,
 	getStatValue,
 } from "#/domain/Stat";
@@ -590,14 +588,9 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 				display2CSGIMOStatNamesMap[getDisplayType(stat)];
 
 			return statPropertyNames.map((statName) => {
-				const displayName = gimo2DisplayStatNamesMap[statName];
-				const statType = (
-					mixedTypes.includes(displayName) ? displayName : `${displayName} %`
-				) as CharacterStatNames.All;
-
 				if (stat.isPercentVersion && character.playerValues?.baseStats) {
 					return createCharacterSummaryStat(
-						statType,
+						statName,
 						`${fromScaled(
 							divScaled(
 								mulScaled(
@@ -610,7 +603,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 					);
 				}
 				if (!stat.isPercentVersion) {
-					return createCharacterSummaryStat(statType, stat.stringValue);
+					return createCharacterSummaryStat(statName, stat.stringValue);
 				}
 				throw new Error(
 					`Stat is given as a percentage, but ${character.id} has no base stats`,
