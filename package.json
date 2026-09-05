@@ -62,7 +62,7 @@
 		"@unocss/preset-wind4": "^66.10.0",
 		"@vitejs/plugin-react": "^6.1.1",
 		"@vitest/coverage-v8": "^4.1.11",
-		"@vitest/ui": "^4.1.11",
+		"@vitest/ui": "^5.0.0",
 		"fake-indexeddb": "^6.2.5",
 		"typescript": "7.0.2",
 		"unocss": "66.10.0",
