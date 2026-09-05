@@ -26,7 +26,6 @@ import {
 import type { TargetStat } from "#/domain/TargetStat";
 
 import type { CharacterModding } from "#/modules/compilations/domain/CharacterModdings";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // components
 import ModLoadoutView from "./ModLoadoutView";
@@ -224,72 +223,65 @@ const ModLoadoutDetail = React.memo(
 		);
 
 		// Pull all the player's stats into an object that can be displayed without further calculation.
-		const playerStats: PlayerStat[] = Object.values(newSummary).map(
-			(stat: CharacterSummaryStat) => {
-				const diffStat = subtractCSStats(
+		const playerStats: PlayerStat[] = Object.values(newSummary).map((stat) => {
+			const diffStat = subtractCSStats(stat, oldSummary[stat.type]);
+			const statName = stat.type;
+			let statValue =
+				character.playerValues.equippedStats[statName] + getStatValue(stat);
+
+			let originalStat = oldSummary[stat.type];
+			let originalStatValue =
+				character.playerValues.equippedStats[statName] +
+				getStatValue(originalStat);
+			const optimizationValue = charactersManagement$.getOptimizationValue(
+				character,
+				target,
+				stat,
+			);
+
+			if (["Armor", "Resistance"].includes(statName)) {
+				// Convert armor and resistance to percent stats
+				const baseStat = character.playerValues.equippedStats[statName];
+				const baseStatValue =
+					(100 * baseStat) / (character.playerValues.level * 7.5 + baseStat);
+
+				statValue =
+					(100 * statValue) / (character.playerValues.level * 7.5 + statValue);
+
+				const statIncrease = statValue - baseStatValue;
+				setStatValue(
 					stat,
-					oldSummary[stat.type as CharacterStatNames.All],
-				);
-				const statName: CharacterStatNames.All =
-					stat.type as CharacterStatNames.All;
-				let statValue =
-					character.playerValues.equippedStats[statName] + getStatValue(stat);
-
-				let originalStat = oldSummary[stat.type as CharacterStatNames.All];
-				let originalStatValue =
-					character.playerValues.equippedStats[statName] +
-					getStatValue(originalStat);
-				const optimizationValue = charactersManagement$.getOptimizationValue(
-					character,
-					target,
-					stat,
+					statIncrease % 1
+						? Math.round(statIncrease * 100) / 100
+						: statIncrease,
 				);
 
-				if (["Armor", "Resistance"].includes(statName)) {
-					// Convert armor and resistance to percent stats
-					const baseStat = character.playerValues.equippedStats[statName];
-					const baseStatValue =
-						(100 * baseStat) / (character.playerValues.level * 7.5 + baseStat);
-
-					statValue =
-						(100 * statValue) /
-						(character.playerValues.level * 7.5 + statValue);
-
-					const statIncrease = statValue - baseStatValue;
-					setStatValue(
-						stat,
-						statIncrease % 1
-							? Math.round(statIncrease * 100) / 100
-							: statIncrease,
+				if (originalStat) {
+					originalStatValue =
+						(100 * originalStatValue) /
+						(character.playerValues.level * 7.5 + originalStatValue);
+					const originalStatIncrease = originalStatValue - baseStatValue;
+					originalStat = createCharacterSummaryStat(
+						statName,
+						`${originalStatIncrease % 1 ? Math.round(originalStatIncrease * 100) / 100 : originalStatIncrease}`,
 					);
-
-					if (originalStat) {
-						originalStatValue =
-							(100 * originalStatValue) /
-							(character.playerValues.level * 7.5 + originalStatValue);
-						const originalStatIncrease = originalStatValue - baseStatValue;
-						originalStat = createCharacterSummaryStat(
-							statName,
-							`${originalStatIncrease % 1 ? Math.round(originalStatIncrease * 100) / 100 : originalStatIncrease}`,
-						);
-					}
 				}
+			}
 
-				return {
-					name: getDisplayType(stat),
-					displayModifier: stat.displayModifier,
-					currentValue: originalStatValue,
-					currentStat: originalStat,
-					recommendedValue: statValue,
-					optimizationValue: optimizationValue,
-					recommendedStat: stat,
-					diffStat: diffStat,
-					missedGoal: missedGoals.find(
-						([goal]) => goal.stat === getDisplayType(stat),
-					),
-				};
-			},
-		);
+			return {
+				name: getDisplayType(stat),
+				displayModifier: stat.displayModifier,
+				currentValue: originalStatValue,
+				currentStat: originalStat,
+				recommendedValue: statValue,
+				optimizationValue: optimizationValue,
+				recommendedStat: stat,
+				diffStat: diffStat,
+				missedGoal: missedGoals.find(
+					([goal]) => goal.stat === getDisplayType(stat),
+				),
+			};
+		});
 
 		// Add effective health and average damage to the stats display
 		addCalculatedStatsToPlayerValues(playerStats);

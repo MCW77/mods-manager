@@ -42,9 +42,9 @@ import {
 	getStatValue,
 } from "#/domain/Stat";
 import {
-	type CharacterSummaryStat,
 	createCharacterSummaryStat,
 	getDisplayType as getCSDisplayType,
+	type NonCalculatedCharacterSummaryStat,
 } from "#/domain/CharacterSummaryStat";
 
 const addCategoryFilter = (
@@ -589,7 +589,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 
 			return statPropertyNames.map((statName) => {
 				const displayName = gimo2DisplayStatNamesMap[statName];
-				const statType: CharacterStatNames.All = (
+				const statType = (
 					mixedTypes.includes(displayName) ? displayName : `${displayName} %`
 				) as CharacterStatNames.All;
 
@@ -624,7 +624,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 		getOptimizationValue: (
 			character: Character,
 			target: OptimizationPlan,
-			stat: CharacterSummaryStat,
+			stat: NonCalculatedCharacterSummaryStat,
 		) => {
 			// Optimization Plans don't have separate physical and special critical chances, since both are always affected
 			// equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit

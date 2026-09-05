@@ -3,7 +3,7 @@ import type { Observable } from "@legendapp/state";
 
 // domain
 import type { Character } from "#/domain/Character";
-import type { CharacterSummaryStat } from "#/domain/CharacterSummaryStat";
+import type { NonCalculatedCharacterSummaryStat } from "#/domain/CharacterSummaryStat";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import type { Stat } from "#/domain/Stat";
 import type { CharacterFilterPredicate } from "./CharacterFilterById";
@@ -20,11 +20,11 @@ interface CharactersManagementObservable {
 	getFlatValuesForCharacter: (
 		character: Character,
 		stat: Stat,
-	) => CharacterSummaryStat[];
+	) => NonCalculatedCharacterSummaryStat[];
 	getOptimizationValue: (
 		character: Character,
 		target: OptimizationPlan,
-		stat: CharacterSummaryStat,
+		stat: NonCalculatedCharacterSummaryStat,
 	) => number;
 }
 

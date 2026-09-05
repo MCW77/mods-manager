@@ -34,7 +34,6 @@ import {
 import type { OptimizationSettingsObservable } from "../domain/OptimizationSettingsObservable";
 import type { ModLoadout } from "#/domain/ModLoadout";
 import type { SetBonus } from "#/domain/SetBonus";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 	observable<OptimizationSettingsObservable>({
@@ -162,10 +161,7 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			}
 
 			for (const stat of flatStats) {
-				summary[stat.type as CharacterStatNames.All] = addCSStats(
-					summary[stat.type as CharacterStatNames.All],
-					stat,
-				);
+				summary[stat.type] = addCSStats(summary[stat.type], stat);
 			}
 
 			return summary;
@@ -221,11 +217,10 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 					character,
 					withUpgrades,
 				);
-				let stat: CharacterStatNames.All;
-				for (stat in modStats) {
+				for (const [stat, value] of objectEntries(modStats)) {
 					loadoutSummary[stat] = loadoutSummary[stat]
-						? addCSStats(loadoutSummary[stat], modStats[stat])
-						: modStats[stat];
+						? addCSStats(loadoutSummary[stat], value)
+						: value;
 				}
 
 				// Get a count of how many mods are in each set
@@ -272,8 +267,8 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				);
 				for (const stat of maxSetStats) {
 					for (let i = 0; i < maxSetMultiplier; i++) {
-						loadoutSummary[stat.type as CharacterStatNames.All] = addCSStats(
-							loadoutSummary[stat.type as CharacterStatNames.All],
+						loadoutSummary[stat.type] = addCSStats(
+							loadoutSummary[stat.type],
 							stat,
 						);
 					}
@@ -285,8 +280,8 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 				);
 				for (const stat of smallSetStats) {
 					for (let i = 0; i < smallSetMultiplier; i++) {
-						loadoutSummary[stat.type as CharacterStatNames.All] = addCSStats(
-							loadoutSummary[stat.type as CharacterStatNames.All],
+						loadoutSummary[stat.type] = addCSStats(
+							loadoutSummary[stat.type],
 							stat,
 						);
 					}
