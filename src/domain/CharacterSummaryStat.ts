@@ -1,7 +1,13 @@
-// domain
+// utils
 import { fromScaled } from "../utils/scaledNumber";
-import type { GIMOCharacterSummaryStatNames } from "./GIMOStatNames";
+
+// domain
+import type {
+	CalculatedCharacterSummaryStatNames,
+	GIMOCharacterSummaryStatNames,
+} from "./GIMOStatNames";
 import { createStat, setStatValue, type Stat } from "./Stat";
+import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // #region DisplayStatNames
 export type DisplayStatNames =
@@ -25,10 +31,17 @@ export type DisplayStatNames =
 	| "Average Damage (special)";
 // #endregion
 
-
-interface CharacterSummaryStat extends Stat {
-	type: GIMOCharacterSummaryStatNames;
+interface CalculatedCharacterSummaryStat extends Stat {
+	type: CalculatedCharacterSummaryStatNames;
 }
+
+interface NonCalculatedCharacterSummaryStat extends Stat {
+	type: CharacterStatNames.All;
+}
+
+type CharacterSummaryStat =
+	| NonCalculatedCharacterSummaryStat
+	| CalculatedCharacterSummaryStat;
 
 function cloneStat(stat: CharacterSummaryStat): CharacterSummaryStat {
 	return createCharacterSummaryStat(stat.type, stat.stringValue);
@@ -126,6 +139,7 @@ function createCharacterSummaryStat(
 
 export {
 	type CharacterSummaryStat,
+	type NonCalculatedCharacterSummaryStat,
 	addCSStats,
 	createCharacterSummaryStat,
 	getDisplayType,
