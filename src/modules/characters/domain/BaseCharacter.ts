@@ -110,7 +110,7 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 
 				return {
 					alignment: API2BaseCharacterAlignment[bc.alignment],
-					avatarUrl: `https://api.hotutils.com/images${bc.baseImage}`,
+					avatarUrl: bc.baseImage,
 					categories: categories,
 					description: bc.description,
 					galacticLegend: bc.galacticLegend,
