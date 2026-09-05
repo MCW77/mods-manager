@@ -1,3 +1,6 @@
+// utils
+import { objectEntries } from "#/utils/objectEntries";
+
 // state
 import { type ObservableObject, observable } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -13,8 +16,8 @@ import setBonuses from "#/constants/setbonuses";
 import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
 import { levelUpMod, sliceMod, type Mod } from "#/domain/Mod";
 import type * as Character from "#/domain/Character";
+import type { CharacterSummary } from "#/domain/CharacterSummary";
 import {
-	type CharacterSummaryStat,
 	addCSStats,
 	createCharacterSummaryStat,
 	getDisplayType,
@@ -98,9 +101,7 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			withUpgrades = true,
 		) {
 			let workingMod = mod;
-			const summary: {
-				[key in CharacterStatNames.All]: CharacterSummaryStat;
-			} = {
+			const summary: CharacterSummary = {
 				Health: createCharacterSummaryStat("Health", "0"),
 				Protection: createCharacterSummaryStat("Protection", "0"),
 				Speed: createCharacterSummaryStat("Speed", "0"),
@@ -174,9 +175,7 @@ const optimizationSettings$: ObservableObject<OptimizationSettingsObservable> =
 			character: Character.Character,
 			withUpgrades: boolean,
 		) {
-			const loadoutSummary: {
-				[key in CharacterStatNames.All]: CharacterSummaryStat;
-			} = {
+			const loadoutSummary: CharacterSummary = {
 				Health: createCharacterSummaryStat("Health", "0"),
 				Protection: createCharacterSummaryStat("Protection", "0"),
 				Speed: createCharacterSummaryStat("Speed", "0"),

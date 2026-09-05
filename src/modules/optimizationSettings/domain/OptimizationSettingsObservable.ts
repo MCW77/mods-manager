@@ -4,10 +4,8 @@ import type { Observable } from "@legendapp/state";
 // domain
 import type { ProfileOptimizationSettings } from "../domain/ProfileOptimizationSettings";
 
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
-
 import type * as Character from "#/domain/Character";
-import type { CharacterSummaryStat } from "#/domain/CharacterSummaryStat";
+import type { CharacterSummary } from "#/domain/CharacterSummary";
 import type { Mod } from "#/domain/Mod";
 import type { ModLoadout } from "#/domain/ModLoadout";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
@@ -29,16 +27,12 @@ interface OptimizationSettingsObservable {
 		mod: Mod,
 		character: Character.Character,
 		withUpgrades: boolean,
-	) => {
-		[key in CharacterStatNames.All]: CharacterSummaryStat;
-	};
+	) => CharacterSummary;
 	getSummary: (
 		modLoadout: ModLoadout,
 		character: Character.Character,
 		withUpgrades: boolean,
-	) => {
-		[key in CharacterStatNames.All]: CharacterSummaryStat;
-	};
+	) => CharacterSummary;
 	shouldLevelMod: (mod: Mod, target: OptimizationPlan) => boolean;
 	shouldSliceMod: (mod: Mod, target: OptimizationPlan) => boolean;
 	shouldUpgradeMods: (target: OptimizationPlan) => boolean;
