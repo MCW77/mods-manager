@@ -43,8 +43,10 @@ type CharacterSummaryStat =
 	| NonCalculatedCharacterSummaryStat
 	| CalculatedCharacterSummaryStat;
 
-function cloneStat(stat: CharacterSummaryStat): CharacterSummaryStat {
-	return createCharacterSummaryStat(stat.type, stat.stringValue);
+function cloneStat<
+	T extends CalculatedCharacterSummaryStat | NonCalculatedCharacterSummaryStat,
+>(stat: T): T {
+	return createCharacterSummaryStat(stat.type, stat.stringValue) as T;
 }
 
 /**
@@ -53,10 +55,9 @@ function cloneStat(stat: CharacterSummaryStat): CharacterSummaryStat {
  * @param stat2 {CharacterSummaryStat}
  * @returns {CharacterSummmaryStat} with the same type and a value representing the sum
  */
-function addCSStats(
-	stat1: CharacterSummaryStat,
-	stat2: CharacterSummaryStat,
-): CharacterSummaryStat {
+function addCSStats<
+	T extends CalculatedCharacterSummaryStat | NonCalculatedCharacterSummaryStat,
+>(stat1: T, stat2: T) {
 	if (
 		getDisplayType(stat2) !== getDisplayType(stat1) ||
 		stat2.isPercentVersion !== stat1.isPercentVersion
@@ -76,10 +77,9 @@ function addCSStats(
  * @param stat2 {CharacterSummaryStat}
  * @returns {CharacterSummmaryStat} with the same type and a value representing the difference
  */
-function subtractCSStats(
-	stat1: CharacterSummaryStat,
-	stat2: CharacterSummaryStat,
-): CharacterSummaryStat {
+function subtractCSStats<
+	T extends CalculatedCharacterSummaryStat | NonCalculatedCharacterSummaryStat,
+>(stat1: T, stat2: T): T {
 	if (stat2.type !== stat1.type) {
 		throw new Error(
 			"Can't take the difference between Stats of different types",
@@ -127,14 +127,18 @@ function getDisplayType(stat: CharacterSummaryStat): DisplayStatNames {
 	return csGIMO2DisplayStatNamesMap[stat.type];
 }
 
-function createCharacterSummaryStat(
-	type: GIMOCharacterSummaryStatNames,
+function createCharacterSummaryStat<T extends GIMOCharacterSummaryStatNames>(
+	type: T,
 	value: string,
-): CharacterSummaryStat {
+): T extends CalculatedCharacterSummaryStatNames
+	? CharacterSummaryStat
+	: NonCalculatedCharacterSummaryStat {
 	const stat = createStat(value);
 	stat.type = type;
 	stat.displayModifier = stat.type.endsWith("%") ? "%" : "";
-	return stat as CharacterSummaryStat;
+	return stat as T extends CalculatedCharacterSummaryStatNames
+		? CharacterSummaryStat
+		: NonCalculatedCharacterSummaryStat;
 }
 
 export {
