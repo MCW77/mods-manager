@@ -25,13 +25,6 @@ export type DisplayStatNames =
 	| "Average Damage (special)";
 // #endregion
 
-// #region CalculatedStatNames
-export type CalculatedStatNames =
-	| "Effective Health (physical)"
-	| "Effective Health (special)"
-	| "Average Damage (physical)"
-	| "Average Damage (special)";
-//#endregion
 
 interface CharacterSummaryStat extends Stat {
 	type: GIMOCharacterSummaryStatNames;

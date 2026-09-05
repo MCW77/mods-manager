@@ -9,15 +9,15 @@ const optimizationSettings$ = stateLoader$.optimizationSettings$;
 
 // domain
 import type * as Character from "#/domain/Character";
-import type { ModLoadout } from "#/domain/ModLoadout";
 import {
 	createCharacterSummaryStat,
 	getDisplayType,
 	subtractCSStats,
-	type CalculatedStatNames,
 	type DisplayStatNames,
 	type CharacterSummaryStat,
 } from "#/domain/CharacterSummaryStat";
+import type { CalculatedCharacterSummaryStatNames } from "#/domain/GIMOStatNames";
+import type { ModLoadout } from "#/domain/ModLoadout";
 import {
 	getDisplayValueString,
 	getStatValue,
@@ -164,7 +164,7 @@ const ModLoadoutDetail = React.memo(
 						(recommendedStats.specCritChance / 100));
 
 			const statObject = (
-				name: CalculatedStatNames,
+				name: CalculatedCharacterSummaryStatNames,
 				currentValue: number,
 				recommendedValue: number,
 			): PlayerStat => ({
