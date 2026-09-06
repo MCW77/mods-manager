@@ -1652,6 +1652,987 @@
       "targetCharacter": ""
     }
   ],
+  "stat_set_criticaldamage_maxshield_accuracy_armorpenetration_criticalchance_maxhealth_resistance_001": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 15000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 25,
+      "statValueMin": 1000000,
+      "statValueMax": 5000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_penetration",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 10000000,
+      "statValueMax": 25000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_criticaldamage_maxshield_accuracy_armorpenetration_criticalchance_maxhealth_resistance_002": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 35000000,
+      "statValueMax": 50000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 25,
+      "statValueMin": 5000000,
+      "statValueMax": 10000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_penetration",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 25000000,
+      "statValueMax": 35000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "stat_set_criticaldamage_maxshield_accuracy_armorpenetration_criticalchance_maxhealth_resistance_003": [
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 16,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticaldamage",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 56,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_protection",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 17,
+      "statValueMin": 50000000,
+      "statValueMax": 75000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_potency",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 25,
+      "statValueMin": 10000000,
+      "statValueMax": 20000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_penetration",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 53,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_criticalchance",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 55,
+      "statValueMin": 20000000,
+      "statValueMax": 30000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_maxhealth",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "",
+      "targetRule": "",
+      "statType": 18,
+      "statValueMin": 35000000,
+      "statValueMax": 45000000,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [],
+      "scopeIcon": "icon_stat_tenacity",
+      "description": "",
+      "name": "",
+      "fullText": "",
+      "shortText": "",
+      "targetCategory": "",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_darkside_generic_034": [
+    {
+      "abilityId": "datacron_alignment_generic_029",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies use a Basic ability, they gain Critical Chance Up, Critical Damage Up, and Offense Up for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies use a Basic ability, they gain Critical Chance Up, Critical Damage Up, and Offense Up for 2 turns.",
+      "shortText": "DS Basic -> CritC/CritD/Off up",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_009",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "Whenever {0} allies inflict a debuff on an enemy, they deal damage to that enemy equal to 2% of that enemy's Max Health.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Dark Side allies inflict a debuff on an enemy, they deal damage to that enemy equal to 2% of that enemy's Max Health.",
+      "shortText": "DS debuff -> 2% Max H dmg",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_016",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "The first time each {0} ally is defeated, remaining {0} allies gain 15% Offense and 20 Speed (stacking) for the rest of the encounter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Dark Side ally is defeated, remaining Dark Side allies gain 15% Offense and 20 Speed (stacking) for the rest of the encounter.",
+      "shortText": "DS ally death -> +15% Off/+20 Speed",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_018",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "{0} allies recover 2% Health whenever they critically hit an enemy.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Dark Side allies recover 2% Health whenever they critically hit an enemy.",
+      "shortText": "DS crit -> +2% Health",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_024",
+      "targetRule": "target_datacron_darkside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_darkside",
+      "description": "At the beginning of their turn, {0} allies have +25% chance to dispel all debuffs on themself.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the beginning of their turn, Dark Side allies have +25% chance to dispel all debuffs on themself.",
+      "shortText": "DS Ally start turn -> 25% chance to self dispel all",
+      "targetCategory": "alignment_dark",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_lightside_generic_035": [
+    {
+      "abilityId": "datacron_alignment_generic_027",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies use a Special ability, they gain Evasion Up, Health Steal Up, and Health Up  for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies use a Special ability, they gain Evasion Up, Health Steal Up, and Health Up  for 2 turns.",
+      "shortText": "LS Special -> Evasion/HSteal/Health up",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_002",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies gain a buff, they recover 2% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies gain a buff, they recover 2% Health and Protection.",
+      "shortText": "LS gain buff -> 2% H/P",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_006",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies grant a buff to another ally, that other ally recovers 3% Health and Protection.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies grant a buff to another ally, that other ally recovers 3% Health and Protection.",
+      "shortText": "LS buff ally -> +3% H/P",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_030",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "Whenever {0} allies use a Basic ability, they gain Speed Up for 2 turns.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Light Side allies use a Basic ability, they gain Speed Up for 2 turns.",
+      "shortText": "LS Basic -> Speed up",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_alignment_generic_026",
+      "targetRule": "target_datacron_lightside",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside"
+      ],
+      "scopeIcon": "tex.datacronui_affix_lightside",
+      "description": "At the start of the encounter, the weakest ally gains 20% Turn Meter for every {0} ally.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of the encounter, the weakest ally gains 20% Turn Meter for every Light Side ally.",
+      "shortText": "Start of battle -> Weakest Ally +20% TM for each Light Side ally",
+      "targetCategory": "alignment_light",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_empire_003": [
+    {
+      "abilityId": "datacron_faction_empire_002",
+      "targetRule": "target_datacron_empire",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.datacronui_affix_empire",
+      "description": "Whenever an enemy loses Turn Meter, {0} allies gain Protection Up (stacking, 10%) for 2 turns.  Whenever an ally loses Protection Up they gain 10% Turn Meter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever an enemy loses Turn Meter, Empire allies gain Protection Up (stacking, 10%) for 2 turns.  Whenever an ally loses Protection Up they gain 10% Turn Meter.",
+      "shortText": "Enemy lose TM -> Empire allies gain Prot Up, Ally lose Prot Up -> +10% TM",
+      "targetCategory": "affiliation_empire",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_038",
+      "targetRule": "target_datacron_empire",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.datacronui_affix_empire",
+      "description": "Whenever a {0} ally falls below 100% Health, they gain a bonus turn. Limit once per character per battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a Empire ally falls below 100% Health, they gain a bonus turn. Limit once per character per battle.",
+      "shortText": "Empire ally < 100% H -> Bonus turn",
+      "targetCategory": "affiliation_empire",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_031",
+      "targetRule": "target_datacron_empire",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.datacronui_affix_empire",
+      "description": "At the start of each turn, if non-Galactic Legend {0} allies have 50% or more Turn Meter, damage they receive is reduced by 75% until the end of the turn.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of each turn, if non-Galactic Legend Empire allies have 50% or more Turn Meter, damage they receive is reduced by 75% until the end of the turn.",
+      "shortText": "Empire >= 50% TM -> 75% less damage",
+      "targetCategory": "affiliation_empire",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_041",
+      "targetRule": "target_datacron_empire",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.datacronui_affix_empire",
+      "description": "{0} allies can ignore Taunt to target a debuffed enemy.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Empire allies can ignore Taunt to target a debuffed enemy.",
+      "shortText": "Empire allies can ignore Taunt to target a debuffed enemy",
+      "targetCategory": "affiliation_empire",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_032",
+      "targetRule": "target_datacron_empire",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.datacronui_affix_empire",
+      "description": "Whenever a debuff on an enemy expires, {0} allies gain 2% Offense, doubled if that debuff was dispelled, until the end of battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever a debuff on an enemy expires, Empire allies gain 2% Offense, doubled if that debuff was dispelled, until the end of battle.",
+      "shortText": "Enemy debuff expires -> Empire +2% Off (x2 if dispelled)",
+      "targetCategory": "affiliation_empire",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_jedivanguard_002": [
+    {
+      "abilityId": "datacron_faction_generic_003",
+      "targetRule": "target_datacron_jedivanguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.datacronui_affix_jedivanguard",
+      "description": "Whenever {0} allies grant a buff to another ally, that ally gains 10% Turn Meter (limit once per turn per ally).",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever Jedi Vanguard allies grant a buff to another ally, that ally gains 10% Turn Meter (limit once per turn per ally).",
+      "shortText": "Jedi Vanguard buff ally -> ally gains 10% TM",
+      "targetCategory": "affiliation_jedivanguard",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_012",
+      "targetRule": "target_datacron_jedivanguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.datacronui_affix_jedivanguard",
+      "description": "At the start of their first turn, {0} allies gain Offense equal to 400% of their current Defense until the end of battle. Then they lose 50% Defense until the end of battle.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the start of their first turn, Jedi Vanguard allies gain Offense equal to 400% of their current Defense until the end of battle. Then they lose 50% Defense until the end of battle.",
+      "shortText": "Jedi Vanguard start of first turn -> +400% of Def as Off, then -50% Def",
+      "targetCategory": "affiliation_jedivanguard",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_008",
+      "targetRule": "target_datacron_jedivanguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.datacronui_affix_jedivanguard",
+      "description": "At the end of each turn, {0} allies recover Health and Protection equal to 50% of the amount enemies recovered that turn. This recovery can't trigger this effect on enemies.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "At the end of each turn, Jedi Vanguard allies recover Health and Protection equal to 50% of the amount enemies recovered that turn. This recovery can't trigger this effect on enemies.",
+      "shortText": "End of turn -> Jedi Vanguard allies heal half of enemy heals",
+      "targetCategory": "affiliation_jedivanguard",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_generic_017",
+      "targetRule": "target_datacron_jedivanguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.datacronui_affix_jedivanguard",
+      "description": "The first time each {0} ally falls below 50% Health, all {0} allies reduce their cooldowns by 1 and gain 10% Turn Meter.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "The first time each Jedi Vanguard ally falls below 50% Health, all Jedi Vanguard allies reduce their cooldowns by 1 and gain 10% Turn Meter.",
+      "shortText": "Jedi Vanguard < 50% H -> Allies cooldown reduce + 10% TM",
+      "targetCategory": "affiliation_jedivanguard",
+      "targetCharacter": ""
+    },
+    {
+      "abilityId": "datacron_faction_jedi_vanguard_002",
+      "targetRule": "target_datacron_jedivanguard",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.datacronui_affix_jedivanguard",
+      "description": "Whenever an enemy gains a stack of Investigation, they are Provoked for 2 turns, which can't be evaded or resisted, and Jedi Vanguard allies gain 20% Critical Damage (stacking, max 200%) until the end of the encounter. Whenever an enemy becomes Revealed, that enemy takes True damage equal to 25% of their Max Health and is inflicted with Armor Shred until the end of battle, and all enemies are Exposed for 2 turns, which can't be evaded or resisted.",
+      "name": "Bonus mechanics for {0} characters",
+      "fullText": "Whenever an enemy gains a stack of Investigation, they are Provoked for 2 turns, which can't be evaded or resisted, and Jedi Vanguard allies gain 20% Critical Damage (stacking, max 200%) until the end of the encounter. Whenever an enemy becomes Revealed, that enemy takes True damage equal to 25% of their Max Health and is inflicted with Armor Shred until the end of battle, and all enemies are Exposed for 2 turns, which can't be evaded or resisted.",
+      "shortText": "Jedi Vanguard bonuses for Investigation/Revealed",
+      "targetCategory": "affiliation_jedivanguard",
+      "targetCharacter": ""
+    }
+  ],
+  "ability_set_majorpartagaz_001": [
+    {
+      "abilityId": "datacron_character_majorpartagaz_01",
+      "targetRule": "target_datacron_majorpartagaz",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.charui_majorpartagaz",
+      "description": "Whenever Major Partagaz inflicts a debuff on an enemy, ISB allies gain Advantage for 1 turn. Whenever an ISB ally uses an ability while they have Tactical Supremacy, ISB allies gain 5% Critical Damage (stacking, max 100%) until the end of the encounter. Whenever ISB allies increase their Rank, ISB allies gain 15% Offense (stacking, max 120%) until the end of the encounter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Major Partagaz inflicts a debuff on an enemy, ISB allies gain Advantage for 1 turn. Whenever an ISB ally uses an ability while they have Tactical Supremacy, ISB allies gain 5% Critical Damage (stacking, max 100%) until the end of the encounter. Whenever ISB allies increase their Rank, ISB allies gain 15% Offense (stacking, max 120%) until the end of the encounter.",
+      "shortText": "Major Partagaz debuff enemy -> ISB bonuses",
+      "targetCategory": "",
+      "targetCharacter": "MAJORPARTAGAZ"
+    }
+  ],
+  "ability_set_grandmofftarkin_001": [
+    {
+      "abilityId": "datacron_character_generic_035",
+      "targetRule": "target_datacron_grandmofftarkin",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.charui_tarkinadmiral",
+      "description": "Whenever {0} uses an ability, they deal more damage (max 100%) equal to half their Potency percentage. This effect will only trigger if {0} has more than 0% Potency.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Grand Moff Tarkin uses an ability, they deal more damage (max 100%) equal to half their Potency percentage. This effect will only trigger if Grand Moff Tarkin has more than 0% Potency.",
+      "shortText": "Grand Moff Tarkin ability -> +dmg = 1/2 Potency",
+      "targetCategory": "",
+      "targetCharacter": "GRANDMOFFTARKIN"
+    }
+  ],
+  "ability_set_darthvader_004": [
+    {
+      "abilityId": "datacron_character_generic_047",
+      "targetRule": "target_datacron_vader",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.charui_vader",
+      "description": "Whenever an ally takes a bonus turn, all allies recover 20% Health and Protection and {0} gains 20% Offense (stacking) until the end of battle.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an ally takes a bonus turn, all allies recover 20% Health and Protection and Darth Vader gains 20% Offense (stacking) until the end of battle.",
+      "shortText": "Ally bonus turn -> All heal 20% H/P + Darth Vader gains 20% Off",
+      "targetCategory": "",
+      "targetCharacter": "VADER"
+    }
+  ],
+  "ability_set_grandadmiralthrawn_001": [
+    {
+      "abilityId": "datacron_character_thrawn_001",
+      "targetRule": "target_datacron_grandadmiralthrawn",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.charui_thrawn",
+      "description": "At the start of Grand Admiral Thrawn's turn, inflict Damage Over Time on Empire allies for 2 turn, which can't be evaded or resisted. Whenever an Empire ally gains a debuff, they gain an additional 40% Turn Meter (once per turn) and 40% more damage until the end of the encounter. Whenever an Empire ally uses Maneuver, Empire allies reduce their cooldowns by 1 and gain Critical Hit Immunity, Defense Up, Potency Up, and Tenacity Up for 2 turns, and all enemies lose 15% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "At the start of Grand Admiral Thrawn's turn, inflict Damage Over Time on Empire allies for 2 turn, which can't be evaded or resisted. Whenever an Empire ally gains a debuff, they gain an additional 40% Turn Meter (once per turn) and 40% more damage until the end of the encounter. Whenever an Empire ally uses Maneuver, Empire allies reduce their cooldowns by 1 and gain Critical Hit Immunity, Defense Up, Potency Up, and Tenacity Up for 2 turns, and all enemies lose 15% Turn Meter.",
+      "shortText": "Thrawn start turn -> DoT on allies, when allied debuffed -> +40% TM/+dmg",
+      "targetCategory": "",
+      "targetCharacter": "GRANDADMIRALTHRAWN"
+    }
+  ],
+  "ability_set_idenversioempire_003": [
+    {
+      "abilityId": "datacron_character_idenversio_02",
+      "targetRule": "target_datacron_idenversioempire",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "darkside",
+        "empire"
+      ],
+      "scopeIcon": "tex.charui_idenversioempire",
+      "description": "Whenever an Imperial Trooper ally uses an ability on an enemy with Vulnerable, they deal 40% more damage, reduce that enemy's Turn Meter by 30%, and gain 25% Turn Meter. Whenever an enemy with Vulnerable is defeated, Iden's cooldowns are reset. Whenever an Imperial Trooper ally gains We Adapt, Or Die, they gain 40% Critical Damage and Max Protection (stacking, max 200%) until the end of battle.\\n\\nWhenever an Imperial Trooper ally is defeated while having We Adapt, Or Die, Imperial Trooper allies gain Retribution for 2 turns. Whenever We Adapt, Or Die is dispelled from an Imperial Trooper ally, inflict Defense Down and Vulnerable on all enemies for 2 turns, which can't be evaded or resisted.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an Imperial Trooper ally uses an ability on an enemy with Vulnerable, they deal 40% more damage, reduce that enemy's Turn Meter by 30%, and gain 25% Turn Meter. Whenever an enemy with Vulnerable is defeated, Iden's cooldowns are reset. Whenever an Imperial Trooper ally gains We Adapt, Or Die, they gain 40% Critical Damage and Max Protection (stacking, max 200%) until the end of battle.\\nWhenever an Imperial Trooper ally is defeated while having We Adapt, Or Die, Imperial Trooper allies gain Retribution for 2 turns. Whenever We Adapt, Or Die is dispelled from an Imperial Trooper ally, inflict Defense Down and Vulnerable on all enemies for 2 turns, which can't be evaded or resisted.",
+      "shortText": "(Iden) IT ally bonuses for vuln or adapt or die",
+      "targetCategory": "",
+      "targetCharacter": "IDENVERSIOEMPIRE"
+    }
+  ],
+  "ability_set_jediknightguardian_001": [
+    {
+      "abilityId": "datacron_character_jediknightguardian_001",
+      "targetRule": "target_datacron_jediknightguardian",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.charui_jedi_guardian_01",
+      "description": "While Jedi Knight Guardian is below 50% Health, she gains Critical Hit Immunity, Defense Up, and a stack Heal Over Time at the start of each of her turns. The first time she falls below 50% Health, Jedi and Unaligned Force User allies gain Protection Up (50%) for 2 turns. Whenever an enemy targets Jedi Knight Guardian with an ability, that enemy takes True damage equal to 40% of that enemy's Max Health. This damage can't defeat enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "While Jedi Knight Guardian is below 50% Health, she gains Critical Hit Immunity, Defense Up, and a stack Heal Over Time at the start of each of her turns. The first time she falls below 50% Health, Jedi and Unaligned Force User allies gain Protection Up (50%) for 2 turns. Whenever an enemy targets Jedi Knight Guardian with an ability, that enemy takes True damage equal to 40% of that enemy's Max Health. This damage can't defeat enemies.",
+      "shortText": "Jedi Knight Guardian wall of text",
+      "targetCategory": "",
+      "targetCharacter": "JEDIKNIGHTGUARDIAN"
+    }
+  ],
+  "ability_set_quigonjinn_003": [
+    {
+      "abilityId": "datacron_character_generic_014",
+      "targetRule": "target_datacron_quigonjinn",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.charui_quigon",
+      "description": "Whenever {0} evades an attack, they gain Critical Chance Up and Critical Damage Up for 2 turns and 50% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Qui-Gon Jinn evades an attack, they gain Critical Chance Up and Critical Damage Up for 2 turns and 50% Turn Meter.",
+      "shortText": "Qui-Gon Jinn evade -> CC Up, CD Up, +50% TM",
+      "targetCategory": "",
+      "targetCharacter": "QUIGONJINN"
+    }
+  ],
+  "ability_set_jocastanu_001": [
+    {
+      "abilityId": "datacron_character_generic_013",
+      "targetRule": "target_datacron_jocastanu",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.charui_jocastanu_blaster",
+      "description": "Whenever an enemy takes a turn, {0} takes a bonus turn. During this bonus turn, {0} deals 100% more damage. This bonus turn can't trigger this effect on enemies.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever an enemy takes a turn, Jocasta Nu takes a bonus turn. During this bonus turn, Jocasta Nu deals 100% more damage. This bonus turn can't trigger this effect on enemies.",
+      "shortText": "Enemy turn -> Jocasta Nu bonus turn, +100% Dmg",
+      "targetCategory": "",
+      "targetCharacter": "JOCASTANU"
+    }
+  ],
+  "ability_set_shaakti_002": [
+    {
+      "abilityId": "datacron_character_generic_042",
+      "targetRule": "target_datacron_shaakti",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.charui_shaakti",
+      "description": "Whenever {0} attacks out of turn, they recover 20% Health and Protection and all other allies with Retribution assist.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "Whenever Shaak Ti attacks out of turn, they recover 20% Health and Protection and all other allies with Retribution assist.",
+      "shortText": "Shaak atk out of turn -> +30% H/P heal, allies with Retri assist",
+      "targetCategory": "",
+      "targetCharacter": "SHAAKTI"
+    }
+  ],
+  "ability_set_barrisoffee_004": [
+    {
+      "abilityId": "datacron_character_generic_028",
+      "targetRule": "target_datacron_barrisoffee",
+      "statType": 0,
+      "statValueMin": 0,
+      "statValueMax": 0,
+      "minTier": 0,
+      "maxTier": 0,
+      "tag": [
+        "lightside",
+        "jedivanguard"
+      ],
+      "scopeIcon": "tex.charui_barriss_light",
+      "description": "The first time {0} goes below 100% Health, recover 100% Health and Protection and gain 100% Turn Meter.",
+      "name": "Bonus mechanics for {0}",
+      "fullText": "The first time Barriss Offee goes below 100% Health, recover 100% Health and Protection and gain 100% Turn Meter.",
+      "shortText": "Barriss Offee < 100% Health (1st time) -> recover 100% H/P and 100% TM",
+      "targetCategory": "",
+      "targetCharacter": "BARRISSOFFEE"
+    }
+  ],
   "stat_set_accuracy_criticaldamage_maxshield_resistance_maxhealth_defense_criticalchance_001": [
     {
       "abilityId": "",
@@ -2667,9 +3648,9 @@
         "bishop"
       ],
       "scopeIcon": "tex.charui_carsonteva",
-      "description": "Carson Teva gains 30% Offense (stacking, max 150%) each time he counterattacks until the end of the encounter. Carson Teva can't be defeated while other allies are active. Whenever Carson Teva uses Keeping the Peace, a New Republic Tank ally assists. The first time each enemy reaches 5 stacks of On the Run, New Republic allies gain 50% Turn Meter until the end of battle. Carson Teva recovers 30% Health and Protection and gains 30% Critical Damage (stacking, max 180%) until the end of battle.",
+      "description": "Carson Teva gains 30% Offense (stacking, max 150%) each time he counterattacks until the end of the encounter. Carson Teva can't be defeated while other allies are active and not Captive. Whenever Carson Teva uses Keeping the Peace, a New Republic Tank ally assists. The first time each enemy reaches 5 stacks of On the Run, New Republic allies gain 50% Turn Meter until the end of battle. Carson Teva recovers 30% Health and Protection and gains 30% Critical Damage (stacking, max 180%) until the end of battle.",
       "name": "Bonus mechanics for {0}",
-      "fullText": "Carson Teva gains 30% Offense (stacking, max 150%) each time he counterattacks until the end of the encounter. Carson Teva can't be defeated while other allies are active. Whenever Carson Teva uses Keeping the Peace, a New Republic Tank ally assists. The first time each enemy reaches 5 stacks of On the Run, New Republic allies gain 50% Turn Meter until the end of battle. Carson Teva recovers 30% Health and Protection and gains 30% Critical Damage (stacking, max 180%) until the end of battle.",
+      "fullText": "Carson Teva gains 30% Offense (stacking, max 150%) each time he counterattacks until the end of the encounter. Carson Teva can't be defeated while other allies are active and not Captive. Whenever Carson Teva uses Keeping the Peace, a New Republic Tank ally assists. The first time each enemy reaches 5 stacks of On the Run, New Republic allies gain 50% Turn Meter until the end of battle. Carson Teva recovers 30% Health and Protection and gains 30% Critical Damage (stacking, max 180%) until the end of battle.",
       "shortText": "Carson Teva: counter -> +Off; unkillable w/ allies; Keeping the Peace -> NR Tank assist",
       "targetCategory": "",
       "targetCharacter": "CARSONTEVA"
