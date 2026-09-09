@@ -87,10 +87,12 @@ const compilations$: ObservableObject<CompilationsObservable> =
 
 			const compilation = compilation$.peek();
 			if (compilation === undefined) return;
-			for (const [
-				index,
-				selectedCharacter,
-			] of compilation.selectedCharacters.entries()) {
+			for (
+				let index = compilation.selectedCharacters.length - 1;
+				index >= 0;
+				index--
+			) {
+				const selectedCharacter = compilation.selectedCharacters[index];
 				if (
 					roster$.activeCharacterById[selectedCharacter.id].peek() === undefined
 				) {
