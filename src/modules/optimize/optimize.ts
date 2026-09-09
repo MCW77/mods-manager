@@ -90,10 +90,7 @@ export function optimizeMods(): void {
 	// If any of the characters being optimized don't have stats, then show an error message
 	if (
 		Object.values(roster$.activeCharacterById.peek()).some((character) => {
-			return (
-				null === character.playerValues.baseStats ||
-				null === character.playerValues.equippedStats
-			);
+			return null === character.playerValues.equippedStats;
 		})
 	) {
 		progress$.abort();

@@ -26,6 +26,7 @@ import {
 	HotutilsSchemaV18,
 	HotutilsSchemaV21,
 	StackRankSchemaV25,
+	PersistedRosterSchemaV30,
 } from "./index";
 
 const ModsManagerBackupSchemaV16 = v.pipe(
@@ -349,20 +350,54 @@ const ModsManagerBackupSchemaV28 = v.object({
 	version: v.literal(28),
 });
 
+const ModsManagerBackupDataSchemaV29 = ModsManagerBackupDataSchemaV28;
+type ModsManagerBackupDataSchemaV29Output = v.InferOutput<
+	typeof ModsManagerBackupDataSchemaV29
+>;
+
 const ModsManagerBackupSchemaV29 = v.object({
 	appVersion: v.string(),
 	backupType: v.literal("fullBackup"),
 	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV28,
+	data: ModsManagerBackupDataSchemaV29,
 	version: v.literal(29),
 });
 
-const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV28;
+const ModsManagerBackupDataSchemaV30 = v.object({
+	characterTemplates: CharacterTemplateByNameSchemaV26,
+	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
+	currencies: CurrenciesSchemaV24,
+	datacrons: DatacronsSchemaV24,
+	defaultCompilation: CompilationSchemaV26,
+	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+	materials: MaterialsSchemaV24,
+	modsViewSetups: ModsViewSetupsSchemaV19,
+	mods: PersistedModsSchemaV27,
+	profilesManagement: PersistedProfilesSchemaV27,
+	roster: PersistedRosterSchemaV30,
+	sessionIds: HotutilsSchemaV21,
+	settings: SettingsByProfileSchema,
+	stackRank: StackRankSchemaV25,
+});
+type _ModsManagerBackupDataSchemaV30Output = v.InferOutput<
+	typeof ModsManagerBackupDataSchemaV30
+>;
+
+const ModsManagerBackupSchemaV30 = v.object({
+	appVersion: v.string(),
+	backupType: v.literal("fullBackup"),
+	client: v.literal("mods-manager"),
+	data: ModsManagerBackupDataSchemaV30,
+	version: v.literal(30),
+});
+
+const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV30;
 type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
 	typeof LatestModsManagerBackupDataSchema
 >;
 
-const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV29;
+const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV30;
 
 const ModsManagerSchema = v.object({
 	client: v.literal("mods-manager"),
@@ -382,6 +417,7 @@ const modsManagerBackupSchemasByVersion = new Map<
 	[27, ModsManagerBackupSchemaV27],
 	[28, ModsManagerBackupSchemaV28],
 	[29, ModsManagerBackupSchemaV29],
+	[30, ModsManagerBackupSchemaV30],
 ]);
 
 export {
@@ -402,5 +438,6 @@ export {
 	type ModsManagerBackupDataSchemaV26Output,
 	type ModsManagerBackupDataSchemaV27Output,
 	type ModsManagerBackupDataSchemaV28Output,
+	type ModsManagerBackupDataSchemaV29Output,
 	ModsManagerSchema,
 };

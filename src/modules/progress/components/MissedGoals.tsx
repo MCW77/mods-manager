@@ -77,7 +77,6 @@ function MissedGoals({
 											gearLevel: 0,
 											gearPieces: [],
 											galacticPower: 0,
-											baseStats: tempStats,
 											equippedStats: tempStats,
 											relicTier: 0,
 										},

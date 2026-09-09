@@ -19,7 +19,6 @@ const fromHU = (
 		gearLevel: valuesDTO.gearLevel,
 		gearPieces: valuesDTO.equipment,
 		galacticPower: valuesDTO.power,
-		baseStats: baseStats,
 		equippedStats: equippedStats,
 		relicTier: valuesDTO.relicTier,
 	};

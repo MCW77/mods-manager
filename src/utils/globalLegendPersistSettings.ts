@@ -19,6 +19,7 @@ import type { Character } from "#/domain/Character";
 import {
 	CharacterByIdSchemaV23,
 	CharacterByIdSchemaV26,
+	CharacterByIdSchemaV30,
 } from "../domain/schemas/mods-manager";
 
 // Entity type with id and other properties
@@ -31,7 +32,7 @@ type RecordWithNestedEntities = {
 };
 
 const dbVersions = [
-	16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+	16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
 ] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
@@ -723,6 +724,99 @@ function upgradeRostersTo29(
 					}
 					target.primaryStatRestrictions = newPrimaryStatRestrictions;
 				}
+			}
+		}
+	}
+	return newRosters;
+}
+
+function upgradeRostersTo30(
+	rosters: Array<RecordWithNestedEntities>,
+): Array<RecordWithNestedEntities> {
+	const isOldRosters = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		characterById: Record<
+			string,
+			{
+				playerValues: {
+					baseStats: Record<string, number>;
+					equippedStats: Record<string, number>;
+					galacticPower: number;
+					gearLevel: number;
+					gearPieces: string[];
+					level: number;
+					relicTier: number;
+					stars: number;
+				};
+			}
+		>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			obj.length > 0 &&
+			Object.hasOwn(obj[0], "id") &&
+			Object.hasOwn(obj[0], "characterById")
+		) {
+			const characterById = obj[0].characterById;
+			const schemaResult26 = v.safeParse(CharacterByIdSchemaV26, characterById);
+			if (schemaResult26.success) {
+				result = true;
+			}
+		}
+		return result;
+	};
+	const isNewRosters = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		characterById: Record<
+			string,
+			{
+				playerValues: {
+					equippedStats: Record<string, number>;
+					galacticPower: number;
+					gearLevel: number;
+					gearPieces: string[];
+					level: number;
+					relicTier: number;
+					stars: number;
+				};
+			}
+		>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			obj.length > 0 &&
+			Object.hasOwn(obj[0], "id") &&
+			Object.hasOwn(obj[0], "characterById")
+		) {
+			const characterById = obj[0].characterById;
+			const schemaResult30 = v.safeParse(CharacterByIdSchemaV30, characterById);
+			if (schemaResult30.success) {
+				result = true;
+			}
+		}
+		return result;
+	};
+	const newRosters = structuredClone(rosters);
+
+	if (isOldRosters(newRosters) || isNewRosters(newRosters)) {
+		for (const roster of newRosters) {
+			for (const character of Object.values(roster.characterById)) {
+				const newPlayerValues = {
+					level: character.playerValues.level,
+					stars: character.playerValues.stars,
+					gearLevel: character.playerValues.gearLevel,
+					gearPieces: character.playerValues.gearPieces,
+					galacticPower: character.playerValues.galacticPower,
+					equippedStats: character.playerValues.equippedStats,
+					relicTier: character.playerValues.relicTier,
+				};
+				character.playerValues = newPlayerValues;
 			}
 		}
 	}
@@ -1671,6 +1765,19 @@ async function upgradeTo29(db: IDBDatabase, transaction: IDBTransaction) {
 }
 dbUpgrades.set(29, upgradeTo29);
 
+async function upgradeTo30(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
+			const newRosters = upgradeRostersTo30(oldRosters);
+			return newRosters;
+		});
+	} catch (error) {
+		console.error("Error in upgradeTo30:", error);
+		transaction.abort();
+	}
+}
+dbUpgrades.set(30, upgradeTo30);
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
@@ -1722,5 +1829,6 @@ export {
 	upgradeCharacterTemplatesTo28,
 	upgradeCompilationTo28,
 	upgradeRostersTo29,
+	upgradeRostersTo30,
 	testOnly,
 };

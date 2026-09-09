@@ -6,7 +6,6 @@ interface PlayerValuesDTO {
 	gearLevel: number;
 	gearPieces: string[];
 	galacticPower: number;
-	baseStats: CharacterStatsDTO;
 	equippedStats: CharacterStatsDTO;
 	relicTier: number;
 }

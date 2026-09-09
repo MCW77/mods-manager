@@ -12,6 +12,8 @@ import {
 	OptimizationPlanSchemaV26,
 } from "./index";
 import type { Character } from "#/domain/Character";
+import type { OptimizationPlan } from "#/domain/OptimizationPlan";
+import type { CharacterStatsDTO } from "#/modules/profilesManagement/dtos/gimo/CharacterStatsDTO";
 
 const CharacterStatsDTOSchema = v.object({
 	"Accuracy %": v.number(),
@@ -136,6 +138,24 @@ const createDefaultCharacterV26 = (
 	zetas: [] as string[],
 });
 
+const createDefaultCharacterV30 = (
+	characterId: v.InferInput<typeof KnownCharacterNamesSchema>,
+) => ({
+	id: characterId,
+	omis: [] as string[],
+	playerValues: {
+		galacticPower: 0,
+		gearLevel: 0,
+		gearPieces: [] as string[],
+		level: 0,
+		relicTier: 0,
+		stars: 0,
+		equippedStats: { ...defaultCharacterStats },
+	},
+	targets: [] as v.InferInput<typeof OptimizationPlanSchemaV26>[],
+	zetas: [] as string[],
+});
+
 const CharacterByIdSchema = v.pipe(
 	v.record(v.string(), CharacterSchema),
 	v.transform((input) => {
@@ -146,7 +166,25 @@ const CharacterByIdSchema = v.pipe(
 				result[characterName] = createDefaultCharacter(characterName);
 			}
 		}
-		return result as Record<CharacterNames, Character>;
+		return result as Record<
+			CharacterNames,
+			{
+				id: CharacterNames;
+				omis: string[];
+				playerValues: {
+					level: number;
+					stars: number;
+					gearLevel: number;
+					gearPieces: string[];
+					galacticPower: number;
+					baseStats: CharacterStatsDTO;
+					equippedStats: CharacterStatsDTO;
+					relicTier: number;
+				};
+				targets: OptimizationPlan[];
+				zetas: string[];
+			}
+		>;
 	}),
 );
 
@@ -195,4 +233,39 @@ const CharacterByIdSchemaV26 = v.pipe(
 	}),
 );
 
-export { CharacterByIdSchema, CharacterByIdSchemaV23, CharacterByIdSchemaV26 };
+const CharacterSchemaV30 = v.object({
+	id: KnownCharacterNamesSchema,
+	omis: v.array(v.string()),
+	playerValues: v.object({
+		galacticPower: v.number(),
+		gearLevel: v.number(),
+		gearPieces: v.array(v.string()),
+		level: v.number(),
+		relicTier: v.number(),
+		stars: v.number(),
+		equippedStats: CharacterStatsDTOSchema,
+	}),
+	targets: v.array(OptimizationPlanSchemaV26),
+	zetas: v.array(v.string()),
+});
+
+const CharacterByIdSchemaV30 = v.pipe(
+	v.record(v.string(), CharacterSchemaV30),
+	v.transform((input) => {
+		// Add missing character entries with default values
+		const result = { ...input };
+		for (const characterName of characterNames) {
+			if (!(characterName in result)) {
+				result[characterName] = createDefaultCharacterV30(characterName);
+			}
+		}
+		return result as Record<CharacterNames, Character>;
+	}),
+);
+
+export {
+	CharacterByIdSchema,
+	CharacterByIdSchemaV23,
+	CharacterByIdSchemaV26,
+	CharacterByIdSchemaV30,
+};

@@ -31,6 +31,7 @@ import {
 	upgradeCompilationTo28,
 	upgradeRostersTo29,
 	type DBVersions,
+	upgradeRostersTo30,
 } from "#/utils/globalLegendPersistSettings";
 import {
 	LatestModsManagerBackupSchema,
@@ -48,6 +49,7 @@ import {
 	type ModsManagerBackupDataSchemaV26Output,
 	type ModsManagerBackupDataSchemaV27Output,
 	type ModsManagerBackupDataSchemaV28Output,
+	type ModsManagerBackupDataSchemaV29Output,
 	modsManagerBackupSchemasByVersion,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
@@ -601,12 +603,42 @@ const migrationsRecord: Record<0 | DBVersions, MigrationFn> = {
 		};
 	},
 	29: (normalizedBackup) => {
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV29Output;
+		const newRoster = upgradeRostersTo30(Object.values(data.roster));
+
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: data.compilations,
+			currencies: data.currencies,
+			datacrons: data.datacrons,
+			defaultCompilation: data.defaultCompilation,
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: data.materials,
+			mods: data.mods,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			roster: newRoster,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+			stackRank: data.stackRank,
+		};
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 30,
+		};
+	},
+	30: (normalizedBackup) => {
 		return {
 			appVersion: normalizedBackup.appVersion,
 			backupType: "fullBackup",
 			client: "mods-manager",
 			data: normalizedBackup.data,
-			version: 29,
+			version: 30,
 		};
 	},
 };

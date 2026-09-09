@@ -2,7 +2,7 @@
 import * as v from "valibot";
 
 // domain
-import { CharacterByIdSchemaV26 } from "./index";
+import { CharacterByIdSchemaV26, CharacterByIdSchemaV30 } from "./index";
 
 const PersistedRosterSchemaV27 = v.record(
 	v.string(),
@@ -12,4 +12,12 @@ const PersistedRosterSchemaV27 = v.record(
 	}),
 );
 
-export { PersistedRosterSchemaV27 };
+const PersistedRosterSchemaV30 = v.record(
+	v.string(),
+	v.object({
+		id: v.string(),
+		characterById: CharacterByIdSchemaV30,
+	}),
+);
+
+export { PersistedRosterSchemaV27, PersistedRosterSchemaV30 };
