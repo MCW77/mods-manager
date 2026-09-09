@@ -1417,7 +1417,8 @@ function flattenStatValues(stat: Stat, character: Character.Character) {
 		const displayName = statDisplayNames[statName];
 		const value = !stat.isPercentVersion
 			? stat.value
-			: (stat.value * (character.playerValues.baseStats[statName] ?? 0)) / 100;
+			: (stat.value * (character.playerValues.equippedStats[statName] ?? 0)) /
+				100;
 		const integralValue = Math.trunc(value);
 		return {
 			displayType: displayName,

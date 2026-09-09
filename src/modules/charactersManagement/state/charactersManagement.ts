@@ -588,14 +588,16 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 				display2CSGIMOStatNamesMap[getDisplayType(stat)];
 
 			return statPropertyNames.map((statName) => {
-				if (stat.isPercentVersion && character.playerValues?.baseStats) {
+				if (stat.isPercentVersion && character.playerValues?.equippedStats) {
 					return createCharacterSummaryStat(
 						statName,
 						`${fromScaled(
 							divScaled(
 								mulScaled(
 									stat.scaledValue,
-									toScaled(character?.playerValues?.baseStats[statName] ?? 0),
+									toScaled(
+										character?.playerValues?.equippedStats[statName] ?? 0,
+									),
 								),
 								toScaled(100),
 							),
@@ -649,7 +651,7 @@ const charactersManagement$: ObservableObject<CharactersManagementObservable> =
 						(statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
 							target[statType] *
 							Math.floor(
-								(character.playerValues.baseStats[
+								(character.playerValues.equippedStats[
 									statType as CharacterStatNames.All
 								] *
 									getStatValue(stat)) /
