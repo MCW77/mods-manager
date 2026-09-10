@@ -71,6 +71,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 			[character, index, target],
 		);
 		const activePlan = target.id;
+		const ariaLabel = `Character ${baseCharacterById[character.id]?.name || character.id} - draggable`;
 
 		return (
 			<div className={"p-x-0 p-y-1 m-0 w-60"} key={character.id}>
@@ -78,7 +79,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					className={
 						"max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] grid-rows-[auto_20px] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab"
 					}
-					aria-label={`Character ${baseCharacterById[character.id]?.name || character.id} - draggable`}
+					aria-label={ariaLabel}
 					draggable={true}
 					onDragStart={characterBlockDragStart(index)}
 					onDoubleClick={() => defaultCompilation$.unselectCharacter(index)}
