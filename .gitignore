@@ -9,3 +9,4 @@ dist-ssr
 /statMod.json
 ,*.*
 *.npmrc
+.github/context-mode
