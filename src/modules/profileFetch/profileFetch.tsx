@@ -22,6 +22,7 @@ import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 // domain
 import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFullGIMOProfile";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
+import type { ModById } from "#/modules/mods/domain/Mods";
 
 import * as Character from "#/domain/Character";
 import { cloneMod, type Mod } from "#/domain/Mod";
@@ -268,37 +269,39 @@ function updatePlayerData(
 		});
 
 		// If "Remember Existing Mods" is selected, then only overwrite the mods we see in this profile
+		const modById$ = mods$.modByIdByAllycode[newAllycode].modById;
 
 		if (keepOldMods) {
 			// If we're keeping the old mods, that means that any mod we don't see must be unequipped
 
-			const modById$ = mods$.modByIdByAllycode[newAllycode].modById;
-
+			const newModById: ModById = new Map<string, Mod>();
 			for (const modId of modById$.keys()) {
 				const mod = modById$[modId].peek() as Mod | undefined;
 				if (mod !== undefined) {
 					const newMod = cloneMod(mod);
 					newMod.characterID = "null";
-					modById$[modId].set(newMod);
+					newModById.set(modId, newMod);
 				}
 			}
+			modById$.set(newModById);
 		} else {
 			/*
 			profilesManagement$.profiles.profileByAllycode[
 				newAllycode
 			].modById.clear();
 */
-			mods$.modByIdByAllycode[newAllycode].modById.set(new Map<string, Mod>());
+			modById$.set(new Map<string, Mod>());
 		}
 		//			for (const mod of profile.mods) profilesManagement$.profiles.profilesByAllycode[newAllycode].modById[mod.id].set(mod);
+		const newModById: ModById = new Map<string, Mod>();
 		for (const mod of profile.mods) {
-			mods$.modByIdByAllycode[newAllycode].modById.set(mod.id, mod);
+			newModById.set(mod.id, mod);
 		}
+		modById$.set(newModById);
+
 		if (fullProfile.mods) {
 			for (const mod of fullProfile.mods.mods) {
-				const profileMod = mods$.modByIdByAllycode[newAllycode].modById[
-					mod.id
-				].peek() as Mod | undefined;
+				const profileMod = modById$[mod.id].peek() as Mod | undefined;
 				if (profileMod) profileMod.speedRemainder = mod.speedRemainder;
 			}
 		}
