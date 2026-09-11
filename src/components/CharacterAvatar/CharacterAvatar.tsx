@@ -6,7 +6,13 @@ import { match, P } from "ts-pattern";
 import * as React from "react";
 
 // state
-import { Show, Switch, useValue, useObservable } from "@legendapp/state/react";
+import {
+	Show,
+	Switch,
+	useValue,
+	useObservable,
+	Computed,
+} from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const characters$ = stateLoader$.characters$;
@@ -29,6 +35,81 @@ import {
 	Stars6,
 	Stars7,
 } from "./Stars";
+import { roster$ } from "../../modules/roster/state/roster";
+
+interface LevelProps {
+	characterId: string;
+}
+
+function Level({ characterId }: LevelProps) {
+	const level = useValue(
+		() => roster$.activeCharacterById[characterId]?.playerValues.level,
+	);
+	return (
+		<div className="h-10 w-4 row-1 col-1 grid">
+			<div className="size-4 rounded-full justify-self-end self-center inline-flex items-center border border-transparent text-xs font-semibold bg-primary-foreground text-primary">
+				{level}
+			</div>
+		</div>
+	);
+}
+
+function Omis({ characterId }: LevelProps) {
+	const omis = useValue(
+		() => roster$.activeCharacterById[characterId]?.omis.length,
+	);
+
+	return (
+		<div className="size-10 grid place-content-center place-items-center grid-rows-1 grid-cols-1">
+			<div className="size-10 row-1 col-1 bg-[url(/img/omicron.webp)] bg-size-[40px_40px]" />
+			<div className="size-4 row-1 col-1 rounded-full inline-flex items-center justify-center border border-transparent text-xs bg-primary-foreground text-primary">
+				{omis}
+			</div>
+		</div>
+	);
+}
+
+function Zetas({ characterId }: LevelProps) {
+	const zetas = useValue(
+		() => roster$.activeCharacterById[characterId]?.zetas.length,
+	);
+	return (
+		<div className="size-10 text-center vertical-middle text-3/10 bg-[url(/img/zeta.webp)] bg-size-[40px_40px]">
+			{zetas}
+		</div>
+	);
+}
+
+interface RelicTierProps {
+	baseCharacter: BaseCharacter;
+	charcterId: string;
+}
+
+function RelicTier({ baseCharacter, charcterId }: RelicTierProps) {
+	const relicTier = useValue(
+		() =>
+			roster$.activeCharacterById[charcterId]?.playerValues.relicTier.get() - 2,
+	);
+	let badgePosition = "bg-[position:left_0px_top_0px]";
+	if (baseCharacter.galacticLegend) {
+		badgePosition = "bg-[position:left_0px_top_-120px]";
+	} else {
+		if (baseCharacter.alignment === "neutral") {
+			badgePosition = "bg-[position:left_0px_top_-80px]";
+		}
+		if (baseCharacter.alignment === "dark") {
+			badgePosition = "bg-[position:left_0px_top_-40px]";
+		}
+	}
+
+	return (
+		<div
+			className={`size-10 text-center vertical-middle text-3/10 bg-[url(/img/badge-atlas-ultimate.webp)] bg-size-[40px_160px] ${badgePosition}`}
+		>
+			{relicTier}
+		</div>
+	);
+}
 
 type ComponentProps = {
 	character?: Character.Character;
@@ -113,18 +194,6 @@ const CharacterAvatar = React.memo(
 			className,
 		);
 
-		let badgePosition = "bg-[position:left_0px_top_0px]";
-		if (baseCharacter.galacticLegend) {
-			badgePosition = "bg-[position:left_0px_top_-120px]";
-		} else {
-			if (baseCharacter.alignment === "neutral") {
-				badgePosition = "bg-[position:left_0px_top_-80px]";
-			}
-			if (baseCharacter.alignment === "dark") {
-				badgePosition = "bg-[position:left_0px_top_-40px]";
-			}
-		}
-
 		return (
 			<div className="flex flex-col items-center justify-center">
 				<div className={avatarClassName} id={id}>
@@ -161,27 +230,19 @@ const CharacterAvatar = React.memo(
 				</div>
 				<Show if={displayBadges$}>
 					<div className="flex">
-						<div className="h-10 w-4 row-1 col-1 grid">
-							<div className="size-4 rounded-full justify-self-end self-center inline-flex items-center border border-transparent text-xs font-semibold bg-primary-foreground text-primary">
-								{character.playerValues.level}
-							</div>
-						</div>
+						<Computed>{() => <Level characterId={character.id} />}</Computed>
 						<Show if={isReliced$}>
-							<div
-								className={`size-10 text-center vertical-middle text-3/10 bg-[url(/img/badge-atlas-ultimate.webp)] bg-size-[40px_160px] ${badgePosition}`}
-							>
-								{character.playerValues.relicTier - 2}
-							</div>
+							<Computed>
+								{() => (
+									<RelicTier
+										baseCharacter={baseCharacter}
+										charcterId={character.id}
+									/>
+								)}
+							</Computed>
 						</Show>
-						<div className="size-10 text-center vertical-middle text-3/10 bg-[url(/img/zeta.webp)] bg-size-[40px_40px]">
-							{character.zetas.length}
-						</div>
-						<div className="size-10 grid place-content-center place-items-center grid-rows-1 grid-cols-1">
-							<div className="size-10 row-1 col-1 bg-[url(/img/omicron.webp)] bg-size-[40px_40px]" />
-							<div className="size-4 row-1 col-1 rounded-full inline-flex items-center justify-center border border-transparent text-xs bg-primary-foreground text-primary">
-								{character.omis.length}
-							</div>
-						</div>
+						<Computed>{() => <Zetas characterId={character.id} />}</Computed>
+						<Computed>{() => <Omis characterId={character.id} />}</Computed>
 					</div>
 				</Show>
 			</div>
