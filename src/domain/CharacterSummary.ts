@@ -1,4 +1,4 @@
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
+import type * as CharacterStatNames from "./CharacterStatNames";
 import type { NonCalculatedCharacterSummaryStat } from "./CharacterSummaryStat";
 
 type CharacterSummary = Record<

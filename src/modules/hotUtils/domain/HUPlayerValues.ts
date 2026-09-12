@@ -1,8 +1,8 @@
 import type { CharacterNames } from "#/constants/CharacterNames";
 
-import type { HUCharacterStatsDTO } from "./HUCharacterStatsDTO";
+import type { HUCharacterStats } from "./HUCharacterStats";
 
-interface HUPlayerValuesDTO {
+interface HUPlayerValues {
 	baseId: CharacterNames;
 	equipment: string[];
 	gearLevel: number;
@@ -12,9 +12,9 @@ interface HUPlayerValuesDTO {
 	rarity: number;
 	relicTier: number;
 	stats: {
-		base: HUCharacterStatsDTO;
-		gear?: HUCharacterStatsDTO;
+		base: HUCharacterStats;
+		gear?: HUCharacterStats;
 	};
 }
 
-export type { HUPlayerValuesDTO };
+export type { HUPlayerValues };

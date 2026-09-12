@@ -4,18 +4,17 @@ import groupByKey from "../utils/groupByKey";
 // domain
 import type { CharacterNames } from "../constants/CharacterNames";
 
-import type * as DTOs from "../modules/profilesManagement/dtos/index";
-
 import type { CharacterSettingsIndexer } from "./CharacterSettings";
 import {
 	createOptimizationPlan,
 	type OptimizationPlan,
 } from "./OptimizationPlan";
+import type { PlayerValues } from "./PlayerValues";
 
 export interface Character {
 	id: CharacterNames;
 	omis: string[];
-	playerValues: DTOs.GIMO.PlayerValuesDTO;
+	playerValues: PlayerValues;
 	targets: OptimizationPlan[];
 	zetas: string[];
 }
@@ -24,7 +23,7 @@ export type CharacterById = Record<CharacterNames, Character>;
 
 export const createCharacter = (
 	id: CharacterNames,
-	playerValues: DTOs.GIMO.PlayerValuesDTO,
+	playerValues: PlayerValues,
 	targets: OptimizationPlan[],
 	omis: string[],
 	zetas: string[],

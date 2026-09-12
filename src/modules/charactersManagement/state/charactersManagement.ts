@@ -29,11 +29,10 @@ import { eraByCharacter, eras } from "../domain/Eras";
 import { factions } from "../domain/Factions";
 import { roles } from "../domain/Roles";
 
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
-
 import { characterSettings } from "#/constants/characterSettings";
 import type { Character } from "#/domain/Character";
 import { DamageType } from "#/domain/CharacterSettings";
+import type * as CharacterStatNames from "#/domain/CharacterStatNames";
 import {
 	createCharacterSummaryStat,
 	getDisplayType as getCSDisplayType,

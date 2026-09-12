@@ -1,6 +1,6 @@
 // domain
+import type * as CharacterStatNames from "./CharacterStatNames";
 import type * as ModTypes from "#/domain/types/ModTypes";
-import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
 
 const gimoPrimaryNeutralStats = ["Speed", "Potency %", "Tenacity %"] as const;
 type GIMOPrimaryNeutralStats = (typeof gimoPrimaryNeutralStats)[number];

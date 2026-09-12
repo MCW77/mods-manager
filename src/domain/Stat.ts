@@ -2,7 +2,7 @@
 import { toScaled, fromScaled } from "../utils/scaledNumber";
 
 // domain
-import type * as CharacterStatNames from "../modules/profilesManagement/domain/CharacterStatNames";
+import type * as CharacterStatNames from "./CharacterStatNames";
 import type { AllGIMOStatNames } from "./GIMOStatNames";
 
 // #region DisplayStatNames

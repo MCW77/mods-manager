@@ -73,7 +73,7 @@ import type {
 } from "../modules/compilations/domain/CharacterModdings";
 import type { MissedGoals } from "../modules/compilations/domain/MissedGoals";
 import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings";
-import type { WithoutCC } from "../modules/profilesManagement/domain/CharacterStatNames";
+import type { WithoutCC } from "#/domain/CharacterStatNames";
 
 // #region types
 interface Cache {

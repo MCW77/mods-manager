@@ -1,4 +1,4 @@
-interface HUCharacterStatsDTO {
+interface HUCharacterStats {
 	health?: number;
 	protection?: number;
 	speed?: number;
@@ -15,4 +15,4 @@ interface HUCharacterStatsDTO {
 	"Physical Accuracy"?: number;
 }
 
-export type { HUCharacterStatsDTO };
+export type { HUCharacterStats };

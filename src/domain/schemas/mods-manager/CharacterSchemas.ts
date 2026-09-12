@@ -12,8 +12,8 @@ import {
 	OptimizationPlanSchemaV26,
 } from "./index";
 import type { Character } from "#/domain/Character";
+import type { CharacterStats } from "#/domain/CharacterStats";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import type { CharacterStatsDTO } from "#/modules/profilesManagement/dtos/gimo/CharacterStatsDTO";
 
 const CharacterStatsDTOSchema = v.object({
 	"Accuracy %": v.number(),
@@ -177,8 +177,8 @@ const CharacterByIdSchema = v.pipe(
 					gearLevel: number;
 					gearPieces: string[];
 					galacticPower: number;
-					baseStats: CharacterStatsDTO;
-					equippedStats: CharacterStatsDTO;
+					baseStats: CharacterStats;
+					equippedStats: CharacterStats;
 					relicTier: number;
 				};
 				targets: OptimizationPlan[];

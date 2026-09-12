@@ -2,12 +2,12 @@
 import { fromScaled } from "../utils/scaledNumber";
 
 // domain
+import type * as CharacterStatNames from "./CharacterStatNames";
 import type {
 	CalculatedCharacterSummaryStatNames,
 	GIMOCharacterSummaryStatNames,
 } from "./GIMOStatNames";
 import { createStat, setStatValue, type Stat } from "./Stat";
-import type * as CharacterStatNames from "#/modules/profilesManagement/domain/CharacterStatNames";
 
 // #region DisplayStatNames
 export type DisplayStatNames =

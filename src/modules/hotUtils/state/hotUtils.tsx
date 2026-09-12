@@ -18,11 +18,11 @@ import {
 	type FetchedFullGIMOProfile,
 } from "../domain/FetchedFullGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
+import * as HUPlayerValuesMapper from "../domain/HUPlayerValuesMapper";
 import type { ProfileCreationData } from "../domain/ProfileCreationData";
-import type * as DTOs from "#/modules/profilesManagement/dtos/index";
-import * as Mappers from "#/modules/profilesManagement/mappers/index";
-import type { PlayerValuesByCharacter } from "#/modules/profilesManagement/domain/PlayerValues";
 import { fromHotUtils } from "#/domain/Mod";
+import type { PlayerValuesByCharacter } from "#/domain/PlayerValues";
+import type { HUPlayerValues } from "../domain/HUPlayerValues";
 import type { HotutilsObservable } from "../domain/HotutilsObservable";
 
 const hotutilsv2baseurl =
@@ -241,12 +241,9 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			// Convert each character to a PlayerValues object
 			const profileValues: PlayerValuesByCharacter =
 				playerProfile.characters.reduce(
-					(
-						characters: PlayerValuesByCharacter,
-						character: DTOs.HU.HUPlayerValuesDTO,
-					) => {
+					(characters: PlayerValuesByCharacter, character: HUPlayerValues) => {
 						characters[character.baseId] =
-							Mappers.HU.HUPlayerValuesMapper.fromHU(character);
+							HUPlayerValuesMapper.fromHU(character);
 						return characters;
 					},
 					{} as PlayerValuesByCharacter,
