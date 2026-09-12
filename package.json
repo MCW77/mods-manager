@@ -10,6 +10,8 @@
 		"prebuild": "node scripts/write-version.js",
 		"build": "tsc && vite build",
 		"forcedbuild": "vite build",
+		"lint": "biome lint ./src ./public",
+		"lint:fix": "biome lint --write ./src ./public",
 		"serve": "vite preview",
 		"test": "vitest",
 		"test:ui": "vitest --ui",
