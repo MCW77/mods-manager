@@ -3,6 +3,8 @@
 	"version": "30.0.0",
 	"type": "module",
 	"scripts": {
+		"check": "tsc && pn lint && pn test:run",
+		"check:fix": "tsc && pn lint:fix && pn test:run",
 		"preinstall": "npx only-allow pnpm",
 		"dev": "vite --host=127.0.0.1",
 		"dev:scan": "set \"VITE_ENABLE_REACT_SCAN=true\" && vite --host=127.0.0.1",
