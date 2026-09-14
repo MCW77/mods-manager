@@ -200,6 +200,7 @@ export const characterNames = [
 	"KYLOREN",
 	"KYLORENUNMASKED",
 	"L3_37",
+	"LEIAJEDITRAINING",
 	"LOBOT",
 	"LOGRAY",
 	"LORDVADER",

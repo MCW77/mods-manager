@@ -5294,6 +5294,62 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["solo"],
 	),
+	LEIAJEDITRAINING: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 60,
+			spd: 50,
+			phys: 100,
+			primaryRes: {
+				arrow: ["Protection %", "Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Protection %"],
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
+			targetStats: [
+				{
+					id: "spd",
+					maximum: 500,
+					minimum: 290,
+					optimizeForTarget: false,
+					relativeCharacterId: "null",
+					stat: "Speed",
+					type: "+",
+				},
+				{
+					id: "prot",
+					maximum: 300000,
+					minimum: 110000,
+					optimizeForTarget: false,
+					relativeCharacterId: "null",
+					stat: "Protection",
+					type: "+",
+				},
+				{
+					id: "phys",
+					maximum: 30000,
+					minimum: 10000,
+					optimizeForTarget: false,
+					relativeCharacterId: "null",
+					stat: "Physical Damage",
+					type: "+",
+				},
+				{
+					id: "cc",
+					maximum: 200,
+					minimum: 100,
+					optimizeForTarget: false,
+					relativeCharacterId: "null",
+					stat: "Physical Critical Chance",
+					type: "+",
+				},
+			],
+		}),
+	]),
 	LOBOT: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
