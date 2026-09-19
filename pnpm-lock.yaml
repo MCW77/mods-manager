@@ -121,8 +121,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@unocss/preset-typography':
-        specifier: 66.10.2
-        version: 66.10.2
+        specifier: 66.10.5
+        version: 66.10.5
       '@unocss/preset-wind4':
         specifier: ^66.10.5
         version: 66.10.5
@@ -2068,9 +2068,6 @@ packages:
   '@unocss/config@66.10.5':
     resolution: {integrity: sha512-ddmmmsJ+Vjg9oS4c5ElP8vR1oftID9dqG0yASDWLsLNY4uKo295EuCQXIBVbkyRnBZcdjpnOUfo71iwElaCeyA==}
 
-  '@unocss/core@66.10.2':
-    resolution: {integrity: sha512-KerWey/koorvS8DlBn0Vy98oFYvD0x3wAz+Huw8EDijlXg6rBgmY97lv388at2k98gercEP8eIun1h73JB+Nwg==}
-
   '@unocss/core@66.10.5':
     resolution: {integrity: sha512-fukv4bL32z/kWIiKgDy5ih452Jzf7S76p8RnP4N+3utqMFeqWayEApiqRidGv5b6NwPguTsKXaLsy+mbK9aMfA==}
 
@@ -2091,9 +2088,6 @@ packages:
 
   '@unocss/preset-tagify@66.10.5':
     resolution: {integrity: sha512-8lefFZt4H4N+hu48vp+aqqQcTG2P28ox4tTRXgpTrhk4toYFrY2YreMqa3BFvOmZsBRunr/pdd7ZwDi5vt5nmg==}
-
-  '@unocss/preset-typography@66.10.2':
-    resolution: {integrity: sha512-OA1pREIFd5LVJX6Y+hsuFHuo4IItiPpS38fJq3313QUvsp7TcLcHq3vNolH9TC2RqwrS8XxgwxbTr5nok1B3MQ==}
 
   '@unocss/preset-typography@66.10.5':
     resolution: {integrity: sha512-b7hP1v4LyopVRrzJiI+ymnJEZMoLW1DdBo0SFWyPnFZXJv7umtDFlZ9plb+8AJvviyRgZ3qI03adRLXA4QCt2g==}
@@ -2123,9 +2117,6 @@ packages:
         optional: true
       rollup:
         optional: true
-
-  '@unocss/rule-utils@66.10.2':
-    resolution: {integrity: sha512-iqLEQBwUylcz7eFtLHx59bUdTzw7mEcb1E6W1KQ1wWqC4RbUpxhS2hG2w/0aBtfna7JnqxoVmNoHQh3V6JLcdQ==}
 
   '@unocss/rule-utils@66.10.5':
     resolution: {integrity: sha512-ePcz9fJfEVN4VXJgx2bPdGSZ/ujdyUhiJOnMTwIWRxlUdZ2Wgc5aT6zTb9W9AjOB0eWxO2Iyb0HGhA9GGuIY8g==}
@@ -3253,9 +3244,6 @@ packages:
 
   magic-string@1.2.3:
     resolution: {integrity: sha512-Bpb0W2TbLKOZ7vJnOUnVRGq3WL2p+ISV29M6hYPL1AFCpyKZpdr5ytiXoTSSxRVhg8YW7f65+6gbG8WG6PCa/g==}
-
-  magic-string@1.3.1:
-    resolution: {integrity: sha512-rm91zr2Ou+XueDTohjQQjdQEcYM6zVi8KVUCG8Ec3vHwUEKrhSdCNyfuIywkA6hcCAteIn0ZOtAHA6eGpiX+Pg==}
 
   magic-string@1.4.1:
     resolution: {integrity: sha512-8lyCu36ErXR0J9uaGKlKQoiLZKmtI63YGLE8G2o9jyRPdr4X47LusSOwgOJOzcVtp81fTAAjxR7BwKz682Jhow==}
@@ -5944,8 +5932,6 @@ snapshots:
       consola: 3.4.2
       unconfig: 7.5.0
 
-  '@unocss/core@66.10.2': {}
-
   '@unocss/core@66.10.5': {}
 
   '@unocss/extractor-arbitrary-variants@66.10.5':
@@ -5985,11 +5971,6 @@ snapshots:
   '@unocss/preset-tagify@66.10.5':
     dependencies:
       '@unocss/core': 66.10.5
-
-  '@unocss/preset-typography@66.10.2':
-    dependencies:
-      '@unocss/core': 66.10.2
-      '@unocss/rule-utils': 66.10.2
 
   '@unocss/preset-typography@66.10.5':
     dependencies:
@@ -6036,11 +6017,6 @@ snapshots:
     optionalDependencies:
       rolldown: 1.2.8
       rollup: 4.62.2
-
-  '@unocss/rule-utils@66.10.2':
-    dependencies:
-      '@unocss/core': 66.10.2
-      magic-string: 1.3.1
 
   '@unocss/rule-utils@66.10.5':
     dependencies:
@@ -7204,10 +7180,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.5
 
   magic-string@1.2.3:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.6.0
-
-  magic-string@1.3.1:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
 
