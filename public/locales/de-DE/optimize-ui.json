@@ -106,6 +106,14 @@
 				"IncrementalOptimization": "Inkrementelle Optimierung",
 				"NoData": "Noch keine Optimierungsdaten vorhanden!",
 				"RunIncrementalOptimization": "Starte Inkrementelle Optimierung"
+			},
+			"relicSimulation": {
+				"Title": "Relikt Simulation",
+				"Heading": "Simuliere Relikt-Level",
+				"AlreadyMaxed": "Der Charakter ist bereits auf dem maximalen Relikt-Level",
+				"NoSimulation": "Keine Simulation",
+				"RegularStatsTitle": "Normale Werte",
+				"SimulatedStatsTitle": "Simulierte Werte"
 			}
 		}
 	},

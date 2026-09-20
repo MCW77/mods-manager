@@ -106,6 +106,14 @@
 				"IncrementalOptimization": "Incremental Optimization",
 				"NoData": "No optimization data yet!",
 				"RunIncrementalOptimization": "Run incremental optimization"
+			},
+			"relicSimulation": {
+				"Title": "Relic Simulation",
+				"Heading": "Simulate relic level",
+				"AlreadyMaxed": "The character is already at the maximum relic level",
+				"NoSimulation": "No simulation",
+				"RegularStatsTitle": "Regular Stats",
+				"SimulatedStatsTitle": "Simulated Stats"
 			}
 		}
 	},

@@ -70,6 +70,7 @@ import {
 } from "#ui/select";
 
 import OptimizerProgress from "#/modules/progress/components/OptimizerProgress";
+import { RelicSimulationWidget } from "#/modules/planEditing/components/RelicSimulationWidget";
 import { SetRestrictionsWidget } from "#/modules/planEditing/components/SetRestrictionsWidget";
 import { StatWeightsWidget } from "#/modules/planEditing/components/StatWeightsWidget";
 import TargetStatsWidget from "#/modules/planEditing/components/TargetStatsWidget";
@@ -478,6 +479,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 						<TabsTrigger className={"grow-0"} value="Stat Targets">
 							{t("target.sections.targetstats.Title")}
 						</TabsTrigger>
+						<TabsTrigger className={"grow-0"} value="Relic Simulation">
+							{t("target.sections.relicSimulation.Title")}
+						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="Mods">
 						<div className={"flex flex-col flex-gap-4"}>
@@ -540,6 +544,9 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 								baseCharacterById={baseCharacterById}
 							/>
 						</div>
+					</TabsContent>
+					<TabsContent value="Relic Simulation">
+						<RelicSimulationWidget />
 					</TabsContent>
 				</Tabs>
 			</form>

@@ -26,6 +26,7 @@ type PlanEditing = ObservableObject<{
 	removeSetBonus: (setName: GIMOSetStatNames) => void;
 	removeTargetStatById: (id: string) => void;
 	zeroAll: () => void;
+	changeSimulatedRelicLevel: (level: number) => Promise<void>;
 }>;
 
 export type { PlanEditing };

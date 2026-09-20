@@ -6,12 +6,14 @@ import { characterSettings } from "#/constants/characterSettings";
 import setBonuses from "#/constants/setbonuses";
 import type { PlanEditing } from "../domain/PlanEditing";
 import type { CharacterSettings } from "#/domain/CharacterSettings";
+import type { CharacterStats } from "#/domain/CharacterStats";
 import type { GIMOSetStatNames } from "#/domain/GIMOStatNames";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 import type { SetRestrictions } from "#/domain/SetRestrictions";
 import { createTargetStat, type TargetStat } from "#/domain/TargetStat";
 
 const target = OptimizationPlan.createOptimizationPlan("");
+const API_URL = "https://mods-manager.pages.dev/characterTemplates";
 
 const target$: PlanEditing = observable({
 	characterId: "PAO",
@@ -135,6 +137,113 @@ const target$: PlanEditing = observable({
 		target$.target["Accuracy %"].set(0);
 		target$.target["Critical Avoidance %"].set(0);
 		endBatch();
+	},
+	changeSimulatedRelicLevel: async (level: number) => {
+		const isCharacterTemplates = (
+			obj: unknown,
+		): obj is {
+			templateKey: string;
+			data: { statDict: Record<string, number> };
+		}[] => {
+			if (!Array.isArray(obj)) {
+				return false;
+			}
+			return obj.every(
+				(
+					item,
+				): item is {
+					templateKey: string;
+					data: { statDict: Record<string, number> };
+				} => {
+					return (
+						typeof item === "object" &&
+						item !== null &&
+						"templateKey" in item &&
+						typeof item.templateKey === "string" &&
+						"data" in item &&
+						typeof item.data === "object" &&
+						item.data !== null &&
+						"statDict" in item.data &&
+						typeof item.data.statDict === "object" &&
+						item.data.statDict !== null
+					);
+				},
+			);
+		};
+
+		target$.target.simulatedRelicLevel.set(level);
+		if (level === 0) {
+			target$.target.simulatedStats.set(null);
+		} else {
+			const characterId = target$.characterId.get();
+			const characterTemplatesResponse = await fetch(API_URL, {
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					character: characterId,
+				}),
+				mode: "cors",
+			});
+			const characterTemplates = await characterTemplatesResponse.json();
+			if (isCharacterTemplates(characterTemplates)) {
+				const templateKeys = new Map<number, string>([
+					[2, "GEAR_13"],
+					[3, "RELIC_1"],
+					[4, "RELIC_2"],
+					[5, "RELIC_3"],
+					[6, "RELIC_4"],
+					[7, "RELIC_5"],
+					[8, "RELIC_6"],
+					[9, "RELIC_7"],
+					[10, "RELIC_8"],
+					[11, "RELIC_9"],
+					[12, "RELIC_10"],
+				]);
+				const template = characterTemplates.find(
+					(template) => template.templateKey === templateKeys.get(level),
+				);
+				if (template === undefined || template === null) {
+					console.error(
+						"Template not found for character:",
+						characterId,
+						"and level:",
+						level,
+					);
+					return;
+				}
+
+				let armor = template.data.statDict[8] ?? 0;
+				let resistance = template.data.statDict[9] ?? 0;
+				armor = (armor * 85 * 7.5) / (100 - armor);
+				resistance = (resistance * 85 * 7.5) / (100 - resistance);
+				const simulatedStats: CharacterStats = {
+					Health: template.data.statDict[1] ?? 0,
+					Protection: template.data.statDict[28] ?? 0,
+					Speed: template.data.statDict[5] ?? 0,
+					"Critical Damage %": (template.data.statDict[16] ?? 0) * 100,
+					"Potency %": (template.data.statDict[17] ?? 0) * 100,
+					"Tenacity %": (template.data.statDict[18] ?? 0) * 100,
+					"Physical Damage": template.data.statDict[6] ?? 0,
+					"Special Damage": template.data.statDict[7] ?? 0,
+					"Physical Critical Chance %": template.data.statDict[14] ?? 0,
+					"Special Critical Chance %": template.data.statDict[15] ?? 0,
+					Armor: armor,
+					Resistance: resistance,
+					"Accuracy %": template.data.statDict[37] ?? 0,
+					"Critical Avoidance %": template.data.statDict[39] ?? 0,
+				};
+				target$.target.simulatedStats.set(simulatedStats);
+				return;
+			}
+			console.error(
+				"Invalid character templates response:",
+				characterTemplates,
+			);
+			return;
+		}
 	},
 });
 
