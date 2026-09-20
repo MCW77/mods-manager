@@ -10,8 +10,11 @@ import {
 	CharacterTemplatesSchemaV18,
 	CharacterTemplatesBackupSchemaV26,
 	CharacterTemplatesBackupSchemaV27,
+	CharacterTemplatesBackupSchemaV31,
 	LatestCharacterTemplatesSchema,
 	type CharacterTemplatesBackupSchemaV18Output,
+	type CharacterTemplatesSchemaV26Output,
+	type CharacterTemplatesSchemaV31Output,
 } from "#/domain/schemas/mods-manager/index";
 import type { CharacterTemplates } from "./CharacterTemplates";
 import type { PrimaryStatRestrictions } from "#/domain/OptimizationPlan";
@@ -35,7 +38,7 @@ interface Backup {
 }
 type MigrationFn = (normalizedBackup: NormalizedBackup) => NormalizedBackup;
 
-const newTemplatesDBVersions = [0, 18, 26, 27] as const;
+const newTemplatesDBVersions = [0, 18, 26, 27, 31] as const;
 type NewTemplatesDBVersions = (typeof newTemplatesDBVersions)[number];
 const latestTemplatesDBVersion: NewTemplatesDBVersions =
 	newTemplatesDBVersions[newTemplatesDBVersions.length - 1];
@@ -107,41 +110,43 @@ const migrationsRecord: Record<NewTemplatesDBVersions, MigrationFn> = {
 
 		const oldTemplates =
 			normalizedBackup.characterTemplates as CharacterTemplatesBackupSchemaV18Output;
-		const newData: CharacterTemplates = oldTemplates.map((template) => {
-			const newSelectedCharacters = template.selectedCharacters.map(
-				(selectedCharacter) => {
-					const oldPrimaryStatRestrictions =
-						selectedCharacter.target.primaryStatRestrictions;
-					const newPrimaryStatRestrictions: PrimaryStatRestrictions = {
-						...(oldPrimaryStatRestrictions.arrow !== undefined
-							? { arrow: [oldPrimaryStatRestrictions.arrow] }
-							: {}),
-						...(oldPrimaryStatRestrictions.circle !== undefined
-							? { circle: [oldPrimaryStatRestrictions.circle] }
-							: {}),
-						...(oldPrimaryStatRestrictions.cross !== undefined
-							? { cross: [oldPrimaryStatRestrictions.cross] }
-							: {}),
-						...(oldPrimaryStatRestrictions.triangle !== undefined
-							? { triangle: [oldPrimaryStatRestrictions.triangle] }
-							: {}),
-					};
-					return {
-						id: selectedCharacter.id,
-						target: {
-							...selectedCharacter.target,
-							primaryStatRestrictions: newPrimaryStatRestrictions,
-						},
-					};
-				},
-			);
+		const newData: CharacterTemplatesSchemaV26Output = oldTemplates.map(
+			(template) => {
+				const newSelectedCharacters = template.selectedCharacters.map(
+					(selectedCharacter) => {
+						const oldPrimaryStatRestrictions =
+							selectedCharacter.target.primaryStatRestrictions;
+						const newPrimaryStatRestrictions: PrimaryStatRestrictions = {
+							...(oldPrimaryStatRestrictions.arrow !== undefined
+								? { arrow: [oldPrimaryStatRestrictions.arrow] }
+								: {}),
+							...(oldPrimaryStatRestrictions.circle !== undefined
+								? { circle: [oldPrimaryStatRestrictions.circle] }
+								: {}),
+							...(oldPrimaryStatRestrictions.cross !== undefined
+								? { cross: [oldPrimaryStatRestrictions.cross] }
+								: {}),
+							...(oldPrimaryStatRestrictions.triangle !== undefined
+								? { triangle: [oldPrimaryStatRestrictions.triangle] }
+								: {}),
+						};
+						return {
+							id: selectedCharacter.id,
+							target: {
+								...selectedCharacter.target,
+								primaryStatRestrictions: newPrimaryStatRestrictions,
+							},
+						};
+					},
+				);
 
-			return {
-				id: template.id,
-				category: template.category,
-				selectedCharacters: newSelectedCharacters,
-			};
-		});
+				return {
+					id: template.id,
+					category: template.category,
+					selectedCharacters: newSelectedCharacters,
+				};
+			},
+		);
 
 		return {
 			appVersion: normalizedBackup.appVersion,
@@ -161,12 +166,48 @@ const migrationsRecord: Record<NewTemplatesDBVersions, MigrationFn> = {
 		};
 	},
 	27: (normalizedBackup) => {
+		// Migrate v18 to v26: Convert primaryStatRestrictions to arrays
+
+		const oldTemplates =
+			normalizedBackup.characterTemplates as CharacterTemplatesSchemaV26Output;
+		const newData: CharacterTemplatesSchemaV31Output = oldTemplates.map(
+			(template) => {
+				const newSelectedCharacters = template.selectedCharacters.map(
+					(selectedCharacter) => {
+						return {
+							id: selectedCharacter.id,
+							target: {
+								...selectedCharacter.target,
+								simulatedRelicLevel: 0,
+								simulatedStats: null,
+							},
+						};
+					},
+				);
+
+				return {
+					id: template.id,
+					category: template.category,
+					selectedCharacters: newSelectedCharacters,
+				};
+			},
+		);
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "characterTemplates",
+			client: "mods-manager",
+			characterTemplates: newData,
+			version: 31,
+		};
+	},
+	31: (normalizedBackup) => {
 		return {
 			appVersion: normalizedBackup.appVersion,
 			backupType: "characterTemplates",
 			client: "mods-manager",
 			characterTemplates: normalizedBackup.characterTemplates,
-			version: 28,
+			version: 32,
 		};
 	},
 };
@@ -206,6 +247,10 @@ const convertTemplates = (parsedJSON: unknown) => {
 		CharacterTemplatesBackupSchemaV27,
 		parsedJSON,
 	);
+	const v31ParseResult = v.safeParse(
+		CharacterTemplatesBackupSchemaV31,
+		parsedJSON,
+	);
 
 	if (gimoParseResult.success) {
 		templates = normalizeTemplatesJSON({
@@ -225,6 +270,8 @@ const convertTemplates = (parsedJSON: unknown) => {
 		templates = v26ParseResult.output;
 	} else if (v27ParseResult.success) {
 		templates = v27ParseResult.output;
+	} else if (v31ParseResult.success) {
+		templates = v31ParseResult.output;
 	}
 	if (templates === null) {
 		// Collect all validation errors for debugging
@@ -235,6 +282,7 @@ const convertTemplates = (parsedJSON: unknown) => {
 			v18: v18ParseResult.success ? "valid" : v.flatten(v18ParseResult.issues),
 			v26: v26ParseResult.success ? "valid" : v.flatten(v26ParseResult.issues),
 			v27: v27ParseResult.success ? "valid" : v.flatten(v27ParseResult.issues),
+			v31: v31ParseResult.success ? "valid" : v.flatten(v31ParseResult.issues),
 		};
 		console.log(
 			"All template validations failed. Error details:",
@@ -314,5 +362,6 @@ export {
 	type Backup,
 	convertTemplates,
 	latestTemplatesDBVersion,
+	newTemplatesDBVersions,
 	type NewTemplatesDBVersions,
 };

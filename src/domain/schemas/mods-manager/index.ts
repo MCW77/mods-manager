@@ -4,6 +4,7 @@ export * from "./DatacronsSchemas";
 export * from "./MaterialsSchemas";
 export * from "./StackRankSchemas";
 export * from "./TargetStatsSchemas";
+export * from "./CharacterStatsSchemas";
 export * from "./OptimizationPlanSchemas";
 export * from "./CharacterSchemas";
 export * from "./SelectedCharactersSchemas";

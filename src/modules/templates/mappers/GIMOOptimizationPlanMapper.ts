@@ -35,6 +35,8 @@ export const fromGIMOOptimizationPlan = (
 		description: "",
 		primaryStatRestrictions: newPrimaryStatRestrictions,
 		setRestrictions: fromGIMOSetRestrictions(target.setRestrictions),
+		simulatedRelicLevel: 0,
+		simulatedStats: null,
 		targetStats: fromGIMOTargetStats(target.targetStats),
 		useOnlyFullSets: target.useOnlyFullSets,
 		minimumModDots: 5,

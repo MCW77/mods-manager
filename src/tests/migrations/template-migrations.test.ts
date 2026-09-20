@@ -3,6 +3,7 @@ import { loadFixture } from "./fixtures-loader";
 import {
 	convertTemplates,
 	latestTemplatesDBVersion,
+	newTemplatesDBVersions,
 	type NewTemplatesDBVersions,
 } from "#/modules/templates/domain/Backup";
 
@@ -10,10 +11,9 @@ describe("Template Migrations", () => {
 	const templates: Map<NewTemplatesDBVersions, unknown> = new Map();
 
 	beforeAll(async () => {
-		templates.set(0, await loadFixture(0, "templates"));
-		templates.set(18, await loadFixture(18, "templates"));
-		templates.set(26, await loadFixture(26, "templates"));
-		templates.set(27, await loadFixture(27, "templates"));
+		for (const version of newTemplatesDBVersions) {
+			templates.set(version, await loadFixture(version, "templates"));
+		}
 	});
 
 	describe("GIMO to ModsManager Format", () => {

@@ -6,6 +6,7 @@ import {
 	ArbitraryCharacterNamesSchema,
 	OptimizationPlanSchema,
 	OptimizationPlanSchemaV26,
+	OptimizationPlanSchemaV31,
 } from "./index";
 
 const SelectedCharactersSchema = v.array(
@@ -22,4 +23,15 @@ const SelectedCharactersSchemaV26 = v.array(
 	}),
 );
 
-export { SelectedCharactersSchema, SelectedCharactersSchemaV26 };
+const SelectedCharactersSchemaV31 = v.array(
+	v.object({
+		id: ArbitraryCharacterNamesSchema,
+		target: OptimizationPlanSchemaV31,
+	}),
+);
+
+export {
+	SelectedCharactersSchema,
+	SelectedCharactersSchemaV26,
+	SelectedCharactersSchemaV31,
+};

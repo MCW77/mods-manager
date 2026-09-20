@@ -18,6 +18,7 @@ import type { MaterialsPersistedData } from "#/modules/materials/domain/Material
 import type { StackRankPersistedData } from "#/modules/stackRank/domain/StackRankSettings";
 
 import {
+	type DBVersions,
 	latestDBVersion,
 	upgradeCompilationTo20,
 	upgradeFilterTo19,
@@ -30,8 +31,8 @@ import {
 	upgradeCharacterTemplatesTo28,
 	upgradeCompilationTo28,
 	upgradeRostersTo29,
-	type DBVersions,
 	upgradeRostersTo30,
+	upgradeCompilationTo31,
 } from "#/utils/globalLegendPersistSettings";
 import {
 	LatestModsManagerBackupSchema,
@@ -50,6 +51,7 @@ import {
 	type ModsManagerBackupDataSchemaV27Output,
 	type ModsManagerBackupDataSchemaV28Output,
 	type ModsManagerBackupDataSchemaV29Output,
+	type ModsManagerBackupDataSchemaV30Output,
 	modsManagerBackupSchemasByVersion,
 } from "#/domain/schemas/mods-manager/index";
 import { BackupSchema as GIMOBackupSchema } from "#/domain/schemas/gimo/BackupSchemas";
@@ -633,12 +635,55 @@ const migrationsRecord: Record<0 | DBVersions, MigrationFn> = {
 		};
 	},
 	30: (normalizedBackup) => {
+		const data = normalizedBackup.data as ModsManagerBackupDataSchemaV30Output;
+
+		const newCompilations = new Map<
+			string,
+			Map<string, Record<string, unknown>>
+		>();
+		for (const [allycode, compilationById] of data.compilations) {
+			const newCompilationById = new Map<string, Record<string, unknown>>();
+			for (const [compilationId, compilation] of compilationById) {
+				newCompilationById.set(
+					compilationId,
+					upgradeCompilationTo31(compilation),
+				);
+			}
+			newCompilations.set(allycode, newCompilationById);
+		}
+		const newData = {
+			characterTemplates: data.characterTemplates,
+			compilations: newCompilations,
+			currencies: data.currencies,
+			datacrons: data.datacrons,
+			defaultCompilation: upgradeCompilationTo31(data.defaultCompilation),
+			incrementalOptimizationIndices: data.incrementalOptimizationIndices,
+			lockedStatus: data.lockedStatus,
+			materials: data.materials,
+			mods: data.mods,
+			modsViewSetups: data.modsViewSetups,
+			profilesManagement: data.profilesManagement,
+			roster: data.roster,
+			sessionIds: data.sessionIds,
+			settings: data.settings,
+			stackRank: data.stackRank,
+		};
+
+		return {
+			appVersion: normalizedBackup.appVersion,
+			backupType: "fullBackup",
+			client: "mods-manager",
+			data: newData,
+			version: 31,
+		};
+	},
+	31: (normalizedBackup) => {
 		return {
 			appVersion: normalizedBackup.appVersion,
 			backupType: "fullBackup",
 			client: "mods-manager",
 			data: normalizedBackup.data,
-			version: 30,
+			version: 31,
 		};
 	},
 };

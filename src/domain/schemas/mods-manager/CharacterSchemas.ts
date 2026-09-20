@@ -7,30 +7,15 @@ import {
 	characterNames,
 } from "#/constants/CharacterNames";
 import {
+	CharacterStatsSchema,
 	KnownCharacterNamesSchema,
 	OptimizationPlanSchema,
 	OptimizationPlanSchemaV26,
+	OptimizationPlanSchemaV31,
 } from "./index";
 import type { Character } from "#/domain/Character";
 import type { CharacterStats } from "#/domain/CharacterStats";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-
-const CharacterStatsDTOSchema = v.object({
-	"Accuracy %": v.number(),
-	Armor: v.number(),
-	"Critical Avoidance %": v.number(),
-	"Physical Critical Chance %": v.number(),
-	"Special Critical Chance %": v.number(),
-	"Critical Damage %": v.number(),
-	"Physical Damage": v.number(),
-	"Special Damage": v.number(),
-	Health: v.number(),
-	"Potency %": v.number(),
-	Protection: v.number(),
-	Resistance: v.number(),
-	Speed: v.number(),
-	"Tenacity %": v.number(),
-});
 
 const CharacterSchema = v.object({
 	id: KnownCharacterNamesSchema,
@@ -41,8 +26,8 @@ const CharacterSchema = v.object({
 		level: v.number(),
 		relicTier: v.number(),
 		stars: v.number(),
-		baseStats: CharacterStatsDTOSchema,
-		equippedStats: CharacterStatsDTOSchema,
+		baseStats: CharacterStatsSchema,
+		equippedStats: CharacterStatsSchema,
 	}),
 	targets: v.array(OptimizationPlanSchema),
 });
@@ -57,12 +42,13 @@ const CharacterSchemaV23 = v.object({
 		level: v.number(),
 		relicTier: v.number(),
 		stars: v.number(),
-		baseStats: CharacterStatsDTOSchema,
-		equippedStats: CharacterStatsDTOSchema,
+		baseStats: CharacterStatsSchema,
+		equippedStats: CharacterStatsSchema,
 	}),
 	targets: v.array(OptimizationPlanSchema),
 	zetas: v.array(v.string()),
 });
+type CharacterSchemaV23Output = v.InferOutput<typeof CharacterSchemaV23>;
 
 // Default character stats with all values set to 0
 const defaultCharacterStats = {
@@ -156,6 +142,24 @@ const createDefaultCharacterV30 = (
 	zetas: [] as string[],
 });
 
+const createDefaultCharacterV31 = (
+	characterId: v.InferInput<typeof KnownCharacterNamesSchema>,
+) => ({
+	id: characterId,
+	omis: [] as string[],
+	playerValues: {
+		galacticPower: 0,
+		gearLevel: 0,
+		gearPieces: [] as string[],
+		level: 0,
+		relicTier: 0,
+		stars: 0,
+		equippedStats: { ...defaultCharacterStats },
+	},
+	targets: [] as v.InferInput<typeof OptimizationPlanSchemaV31>[],
+	zetas: [] as string[],
+});
+
 const CharacterByIdSchema = v.pipe(
 	v.record(v.string(), CharacterSchema),
 	v.transform((input) => {
@@ -198,7 +202,7 @@ const CharacterByIdSchemaV23 = v.pipe(
 				result[characterName] = createDefaultCharacterV23(characterName);
 			}
 		}
-		return result as Record<CharacterNames, Character>;
+		return result as Record<CharacterNames, CharacterSchemaV23Output>;
 	}),
 );
 
@@ -212,12 +216,13 @@ const CharacterSchemaV26 = v.object({
 		level: v.number(),
 		relicTier: v.number(),
 		stars: v.number(),
-		baseStats: CharacterStatsDTOSchema,
-		equippedStats: CharacterStatsDTOSchema,
+		baseStats: CharacterStatsSchema,
+		equippedStats: CharacterStatsSchema,
 	}),
 	targets: v.array(OptimizationPlanSchemaV26),
 	zetas: v.array(v.string()),
 });
+type CharacterSchemav26Output = v.InferOutput<typeof CharacterSchemaV26>;
 
 const CharacterByIdSchemaV26 = v.pipe(
 	v.record(v.string(), CharacterSchemaV26),
@@ -229,7 +234,7 @@ const CharacterByIdSchemaV26 = v.pipe(
 				result[characterName] = createDefaultCharacterV26(characterName);
 			}
 		}
-		return result as Record<CharacterNames, Character>;
+		return result as Record<CharacterNames, CharacterSchemav26Output>;
 	}),
 );
 
@@ -243,7 +248,7 @@ const CharacterSchemaV30 = v.object({
 		level: v.number(),
 		relicTier: v.number(),
 		stars: v.number(),
-		equippedStats: CharacterStatsDTOSchema,
+		equippedStats: CharacterStatsSchema,
 	}),
 	targets: v.array(OptimizationPlanSchemaV26),
 	zetas: v.array(v.string()),
@@ -263,9 +268,41 @@ const CharacterByIdSchemaV30 = v.pipe(
 	}),
 );
 
+const CharacterSchemaV31 = v.object({
+	id: KnownCharacterNamesSchema,
+	omis: v.array(v.string()),
+	playerValues: v.object({
+		galacticPower: v.number(),
+		gearLevel: v.number(),
+		gearPieces: v.array(v.string()),
+		level: v.number(),
+		relicTier: v.number(),
+		stars: v.number(),
+		equippedStats: CharacterStatsSchema,
+	}),
+	targets: v.array(OptimizationPlanSchemaV31),
+	zetas: v.array(v.string()),
+});
+type CharacterSchemaV31Output = v.InferOutput<typeof CharacterSchemaV31>;
+
+const CharacterByIdSchemaV31 = v.pipe(
+	v.record(v.string(), CharacterSchemaV31),
+	v.transform((input) => {
+		// Add missing character entries with default values
+		const result = { ...input };
+		for (const characterName of characterNames) {
+			if (!(characterName in result)) {
+				result[characterName] = createDefaultCharacterV31(characterName);
+			}
+		}
+		return result as Record<CharacterNames, CharacterSchemaV31Output>;
+	}),
+);
+
 export {
 	CharacterByIdSchema,
 	CharacterByIdSchemaV23,
 	CharacterByIdSchemaV26,
 	CharacterByIdSchemaV30,
+	CharacterByIdSchemaV31,
 };

@@ -32,7 +32,7 @@ type RecordWithNestedEntities = {
 };
 
 const dbVersions = [
-	16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+	16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
 ] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
@@ -817,6 +817,238 @@ function upgradeRostersTo30(
 					relicTier: character.playerValues.relicTier,
 				};
 				character.playerValues = newPlayerValues;
+			}
+		}
+	}
+	return newRosters;
+}
+
+function upgradeCharacterTemplatesTo31(
+	templates: Array<RecordWithNestedEntities>,
+) {
+	const isTemplates = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		category: string;
+		selectedCharacters: Array<{
+			target: Record<string, unknown>;
+		}>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			(obj.length === 0 ||
+				(Object.hasOwn(obj[0], "id") && Object.hasOwn(obj[0], "category")))
+		) {
+			result = true;
+		}
+		return result;
+	};
+
+	const newTemplates = structuredClone(templates);
+	if (isTemplates(newTemplates)) {
+		for (const template of newTemplates) {
+			for (const character of template.selectedCharacters) {
+				const oldTarget = character.target;
+				const newTarget = {
+					id: character.target.id,
+					description: oldTarget.description,
+					minimumModDots: oldTarget.minimumModDots,
+					primaryStatRestrictions: oldTarget.primaryStatRestrictions,
+					setRestrictions: oldTarget.setRestrictions,
+					simulatedRelicLevel: 0,
+					simulatedStats: null,
+					targetStats: oldTarget.targetStats,
+					useOnlyFullSets: oldTarget.useOnlyFullSets,
+					Health: oldTarget.Health,
+					Protection: oldTarget.Protection,
+					Speed: oldTarget.Speed,
+					"Critical Damage %": oldTarget["Critical Damage %"],
+					"Potency %": oldTarget["Potency %"],
+					"Tenacity %": oldTarget["Tenacity %"],
+					"Physical Damage": oldTarget["Physical Damage"],
+					"Special Damage": oldTarget["Special Damage"],
+					"Critical Chance": oldTarget["Critical Chance"],
+					Armor: oldTarget.Armor,
+					Resistance: oldTarget.Resistance,
+					"Accuracy %": oldTarget["Accuracy %"],
+					"Critical Avoidance %": oldTarget["Critical Avoidance %"],
+				};
+				character.target = newTarget;
+			}
+		}
+	}
+
+	return newTemplates;
+}
+
+function upgradeCompilationTo31(compilation: Record<string, unknown>) {
+	const isCompilation = (
+		obj: unknown,
+	): obj is {
+		flatCharacterModdings: Array<{
+			target: Record<string, unknown>;
+		}>;
+		selectedCharacters: Array<{
+			target: Record<string, unknown>;
+		}>;
+	} => {
+		let result = false;
+		if (
+			typeof obj === "object" &&
+			obj !== null &&
+			"flatCharacterModdings" in obj &&
+			"selectedCharacters" in obj
+		) {
+			const flatCharacterModdings = obj.flatCharacterModdings;
+			const selectedCharacters = obj.selectedCharacters;
+			if (
+				Array.isArray(selectedCharacters) &&
+				selectedCharacters.every(
+					(selectedCharacter) =>
+						typeof selectedCharacter === "object" &&
+						selectedCharacter !== null &&
+						"target" in selectedCharacter,
+				) &&
+				Array.isArray(flatCharacterModdings) &&
+				flatCharacterModdings.every(
+					(flatCharacterModding) =>
+						typeof flatCharacterModding === "object" &&
+						flatCharacterModding !== null &&
+						"target" in flatCharacterModding,
+				)
+			) {
+				result = true;
+			}
+		}
+		return result;
+	};
+	const newCompilation: Record<string, unknown> = structuredClone(compilation);
+
+	if (isCompilation(newCompilation)) {
+		newCompilation.selectedCharacters.forEach((selectedCharacter) => {
+			const oldTarget = selectedCharacter.target;
+			const newTarget = {
+				id: oldTarget.id,
+				description: oldTarget.description,
+				minimumModDots: oldTarget.minimumModDots,
+				primaryStatRestrictions: oldTarget.primaryStatRestrictions,
+				setRestrictions: oldTarget.setRestrictions,
+				simulatedRelicLevel: 0,
+				simulatedStats: null,
+				targetStats: oldTarget.targetStats,
+				useOnlyFullSets: oldTarget.useOnlyFullSets,
+				Health: oldTarget.Health,
+				Protection: oldTarget.Protection,
+				Speed: oldTarget.Speed,
+				"Critical Damage %": oldTarget["Critical Damage %"],
+				"Potency %": oldTarget["Potency %"],
+				"Tenacity %": oldTarget["Tenacity %"],
+				"Physical Damage": oldTarget["Physical Damage"],
+				"Special Damage": oldTarget["Special Damage"],
+				"Critical Chance": oldTarget["Critical Chance"],
+				Armor: oldTarget.Armor,
+				Resistance: oldTarget.Resistance,
+				"Accuracy %": oldTarget["Accuracy %"],
+				"Critical Avoidance %": oldTarget["Critical Avoidance %"],
+			};
+			selectedCharacter.target = newTarget;
+		});
+		newCompilation.flatCharacterModdings.forEach((flatCharacterModding) => {
+			const oldTarget = flatCharacterModding.target;
+			const newTarget = {
+				id: oldTarget.id,
+				description: oldTarget.description,
+				minimumModDots: oldTarget.minimumModDots,
+				primaryStatRestrictions: oldTarget.primaryStatRestrictions,
+				setRestrictions: oldTarget.setRestrictions,
+				simulatedRelicLevel: 0,
+				simulatedStats: null,
+				targetStats: oldTarget.targetStats,
+				useOnlyFullSets: oldTarget.useOnlyFullSets,
+				Health: oldTarget.Health,
+				Protection: oldTarget.Protection,
+				Speed: oldTarget.Speed,
+				"Critical Damage %": oldTarget["Critical Damage %"],
+				"Potency %": oldTarget["Potency %"],
+				"Tenacity %": oldTarget["Tenacity %"],
+				"Physical Damage": oldTarget["Physical Damage"],
+				"Special Damage": oldTarget["Special Damage"],
+				"Critical Chance": oldTarget["Critical Chance"],
+				Armor: oldTarget.Armor,
+				Resistance: oldTarget.Resistance,
+				"Accuracy %": oldTarget["Accuracy %"],
+				"Critical Avoidance %": oldTarget["Critical Avoidance %"],
+			};
+			flatCharacterModding.target = newTarget;
+		});
+	}
+	return newCompilation;
+}
+
+function upgradeRostersTo31(
+	rosters: Array<RecordWithNestedEntities>,
+): Array<RecordWithNestedEntities> {
+	const isRosters = (
+		obj: unknown,
+	): obj is Array<{
+		id: string;
+		characterById: Record<
+			string,
+			{
+				targets: Record<string, unknown>[];
+			}
+		>;
+	}> => {
+		let result = false;
+		if (
+			Array.isArray(obj) &&
+			obj.length > 0 &&
+			Object.hasOwn(obj[0], "id") &&
+			Object.hasOwn(obj[0], "characterById")
+		) {
+			const characterById = obj[0].characterById;
+			const schemaResult = v.safeParse(CharacterByIdSchemaV30, characterById);
+			if (schemaResult.success) {
+				result = true;
+			}
+		}
+		return result;
+	};
+
+	const newRosters = structuredClone(rosters);
+
+	if (isRosters(newRosters)) {
+		for (const roster of newRosters) {
+			for (const character of Object.values(roster.characterById)) {
+				for (const target of character.targets) {
+					const newTarget = {
+						id: target.id,
+						description: target.description,
+						minimumModDots: target.minimumModDots,
+						primaryStatRestrictions: target.primaryStatRestrictions,
+						setRestrictions: target.setRestrictions,
+						simulatedRelicLevel: 0,
+						simulatedStats: null,
+						targetStats: target.targetStats,
+						useOnlyFullSets: target.useOnlyFullSets,
+						Health: target.Health,
+						Protection: target.Protection,
+						Speed: target.Speed,
+						"Critical Damage %": target["Critical Damage %"],
+						"Potency %": target["Potency %"],
+						"Tenacity %": target["Tenacity %"],
+						"Physical Damage": target["Physical Damage"],
+						"Special Damage": target["Special Damage"],
+						"Critical Chance": target["Critical Chance"],
+						Armor: target.Armor,
+						Resistance: target.Resistance,
+						"Accuracy %": target["Accuracy %"],
+						"Critical Avoidance %": target["Critical Avoidance %"],
+					};
+					character.targets[character.targets.indexOf(target)] = newTarget;
+				}
 			}
 		}
 	}
@@ -1778,6 +2010,81 @@ async function upgradeTo30(db: IDBDatabase, transaction: IDBTransaction) {
 }
 dbUpgrades.set(30, upgradeTo30);
 
+async function upgradeTo31(db: IDBDatabase, transaction: IDBTransaction) {
+	try {
+		await itemUpgrade(db, transaction, "Templates", "", (oldTemplates) => {
+			const newTemplates = upgradeCharacterTemplatesTo31(oldTemplates);
+			return newTemplates;
+		});
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"Compilations",
+			"compilationByIdByAllycode",
+			(oldCompilations) => {
+				const newCompilationsByAllycode: Map<
+					string,
+					Map<string, Record<string, unknown>>
+				> = new Map();
+				for (const [allycode, compilations] of oldCompilations[0]
+					.compilationByIdByAllycode as Map<
+					string,
+					Map<string, Record<string, unknown>>
+				>) {
+					const newCompilations: Map<
+						string,
+						Record<string, unknown>
+					> = new Map();
+					for (const [compilationId, compilation] of compilations) {
+						const newCompilation = upgradeCompilationTo31(compilation);
+						newCompilations.set(compilationId, newCompilation);
+					}
+					newCompilationsByAllycode.set(allycode, newCompilations);
+				}
+				return [
+					{
+						id: "compilationByIdByAllycode",
+						compilationByIdByAllycode: newCompilationsByAllycode,
+					},
+				];
+			},
+		);
+
+		await itemUpgrade(
+			db,
+			transaction,
+			"DefaultCompilation",
+			"defaultCompilation",
+			(oldDefaultCompilation) => {
+				const newDefaultCompilation = upgradeCompilationTo31(
+					oldDefaultCompilation[0].defaultCompilation as Record<
+						string,
+						unknown
+					>,
+				);
+				return [
+					{
+						id: "defaultCompilation",
+						defaultCompilation: {
+							...newDefaultCompilation,
+						},
+					},
+				];
+			},
+		);
+
+		await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
+			const newRosters = upgradeRostersTo31(oldRosters);
+			return newRosters;
+		});
+	} catch (error) {
+		console.error("Error in upgradeTo31:", error);
+		transaction.abort();
+	}
+}
+dbUpgrades.set(31, upgradeTo31);
+
 const persistOptions = configureSynced({
 	persist: {
 		plugin: observablePersistIndexedDB({
@@ -1830,5 +2137,6 @@ export {
 	upgradeCompilationTo28,
 	upgradeRostersTo29,
 	upgradeRostersTo30,
+	upgradeCompilationTo31,
 	testOnly,
 };

@@ -6,7 +6,7 @@ import {
 	allowedPrimaryStatsBySlot,
 	gimoSetStatNames,
 } from "#/domain/GIMOStatNames";
-import { TargetStatsSchema } from "./index";
+import { CharacterStatsSchema, TargetStatsSchema } from "./index";
 
 const PrimaryStatRestrictionsSchema = v.object({
 	arrow: v.optional(v.picklist(allowedPrimaryStatsBySlot.arrow)),
@@ -71,4 +71,33 @@ const OptimizationPlanSchemaV26 = v.object({
 	useOnlyFullSets: v.boolean(),
 });
 
-export { OptimizationPlanSchema, OptimizationPlanSchemaV26 };
+const OptimizationPlanSchemaV31 = v.object({
+	id: v.string(),
+	description: v.string(),
+	Health: v.number(),
+	Protection: v.number(),
+	Speed: v.number(),
+	"Critical Damage %": v.number(),
+	"Potency %": v.number(),
+	"Tenacity %": v.number(),
+	"Physical Damage": v.number(),
+	"Special Damage": v.number(),
+	"Critical Chance": v.number(),
+	Armor: v.number(),
+	Resistance: v.number(),
+	"Accuracy %": v.number(),
+	"Critical Avoidance %": v.number(),
+	targetStats: TargetStatsSchema,
+	minimumModDots: v.number(),
+	primaryStatRestrictions: PrimaryStatRestrictionsSchemaV26,
+	setRestrictions: SetRestrictionsSchema,
+	useOnlyFullSets: v.boolean(),
+	simulatedRelicLevel: v.number(),
+	simulatedStats: v.nullable(CharacterStatsSchema),
+});
+
+export {
+	OptimizationPlanSchema,
+	OptimizationPlanSchemaV26,
+	OptimizationPlanSchemaV31,
+};

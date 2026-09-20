@@ -2,6 +2,7 @@
 import areObjectsEquivalent from "#/utils/areObjectsEquivalent";
 
 // domain
+import type { CharacterStats } from "./CharacterStats";
 import type { allowedPrimaryStatsBySlot } from "#/domain/GIMOStatNames";
 import type { SetRestrictions } from "#/domain/SetRestrictions";
 import type { TargetStats } from "#/domain/TargetStat";
@@ -93,6 +94,8 @@ export const createOptimizationPlan = (
 		setRestrictions: setRestrictions,
 		targetStats: targetStats,
 		useOnlyFullSets: useOnlyFullSets,
+		simulatedRelicLevel: 0,
+		simulatedStats: null,
 
 		Health: health || 0,
 		Protection: protection || 0,
@@ -131,7 +134,7 @@ export const fromShortOptimizationPlan = ({
 	setRes = {},
 	targetStats = [],
 	fullSets = false,
-}: ShortOptimizationPlanParam) => {
+}: ShortOptimizationPlanParam): OptimizationPlan => {
 	return {
 		id: id,
 		description: desc,
@@ -140,6 +143,8 @@ export const fromShortOptimizationPlan = ({
 		setRestrictions: setRes,
 		targetStats: targetStats,
 		useOnlyFullSets: fullSets,
+		simulatedRelicLevel: 0,
+		simulatedStats: null,
 
 		Health: health,
 		Protection: prot,
@@ -284,7 +289,9 @@ export const equals = (
 		areObjectsEquivalent(first.setRestrictions, second.setRestrictions) &&
 		areObjectsEquivalent(first.targetStats, second.targetStats) &&
 		first.useOnlyFullSets === second.useOnlyFullSets &&
-		first.minimumModDots === second.minimumModDots
+		first.minimumModDots === second.minimumModDots &&
+		first.simulatedRelicLevel === second.simulatedRelicLevel &&
+		areObjectsEquivalent(first.simulatedStats, second.simulatedStats)
 	);
 };
 
@@ -314,4 +321,6 @@ export interface OptimizationPlan extends Record<OptimizableStats, number> {
 	setRestrictions: SetRestrictions;
 	targetStats: TargetStats;
 	useOnlyFullSets: boolean;
+	simulatedRelicLevel: number;
+	simulatedStats: CharacterStats | null;
 }
