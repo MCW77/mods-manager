@@ -72,7 +72,18 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 						target,
 					} = value.get();
 					const modAssignment = value.get();
-					const character = characterById[value.characterId.peek()];
+					const character = structuredClone(
+						characterById[value.characterId.peek()],
+					);
+					if (
+						target.simulatedRelicLevel > 1 &&
+						target.simulatedStats !== undefined &&
+						target.simulatedStats !== null
+					) {
+						character.playerValues.equippedStats = target.simulatedStats;
+						character.playerValues.gearLevel = 13;
+						character.playerValues.relicTier = target.simulatedRelicLevel;
+					}
 					if (character === undefined) return <div />;
 					let searchText =
 						baseCharacterById[character.id]?.name || character.id;

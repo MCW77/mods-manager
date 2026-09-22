@@ -40,6 +40,7 @@ import { gimoSlots } from "../domain/constants/ModConsts";
 import type * as ModTypes from "../domain/types/ModTypes";
 
 import type * as Character from "../domain/Character";
+import type { CharacterStats } from "../domain/CharacterStats";
 import type {
 	allowedPrimaryStatsBySlot,
 	GIMOPrimaryStatNames,
@@ -109,7 +110,6 @@ interface Cache {
 	flatStats: {
 		get: (stat: Stat) => StatValue[];
 		set: (key: FlatStatsCacheKey, flatStats: StatValue[]) => void;
-		setCharacter: (character: Character.Character) => void;
 	};
 	relatedStatValues: Map<string, Map<string, number>>;
 }
@@ -411,6 +411,7 @@ function optimizationSuccessMessage(result: FlatCharacterModdings) {
 }
 
 let lastProgressUpdated: number | undefined;
+let currentCharacterStats: CharacterStats;
 function progressMessage(
 	characterId: CharacterNames,
 	characterCount: number,
@@ -971,28 +972,21 @@ const createModScoresCache = () => {
 
 const createFlatStatsCache = () => {
 	const cache = new Map<FlatStatsCacheKey, StatValue[]>();
-	let currentCharacter: Character.Character | null = null;
 
 	return {
 		get: (stat: Stat) => {
 			const cacheKey: FlatStatsCacheKey = `${stat.displayType}${stat.isPercentVersion}${stat.value}`;
 			const cacheHit = cache.get(cacheKey);
-			if (!currentCharacter) {
-				throw new Error("flatStats cache used before character was set");
-			}
 			if (cacheHit) {
 				return cacheHit;
 			}
 
-			const flatStats = flattenStatValues(stat, currentCharacter);
+			const flatStats = flattenStatValues(stat);
 			cache.set(cacheKey, flatStats);
 			return flatStats;
 		},
 		set: (key: FlatStatsCacheKey, flatStats: StatValue[]) => {
 			cache.set(key, flatStats);
-		},
-		setCharacter: (character: Character.Character) => {
-			currentCharacter = character;
 		},
 	};
 };
@@ -1410,15 +1404,14 @@ function getFlatStatsFromSetLoadout(
  *
  * @returns {Array<Stat>}
  */
-function flattenStatValues(stat: Stat, character: Character.Character) {
+function flattenStatValues(stat: Stat) {
 	const statPropertyNames = display2CSGIMOStatNamesMap[stat.displayType];
 
 	const flattenedStats: StatValue[] = statPropertyNames.map((statName) => {
 		const displayName = statDisplayNames[statName];
 		const value = !stat.isPercentVersion
 			? stat.value
-			: (stat.value * (character.playerValues.equippedStats[statName] ?? 0)) /
-				100;
+			: (stat.value * (currentCharacterStats[statName] ?? 0)) / 100;
 		const integralValue = Math.trunc(value);
 		return {
 			displayType: displayName,
@@ -1635,8 +1628,8 @@ function getStatValueForCharacterWithMods(
 		const healthProperty = display2CSGIMOStatNamesMap.Health[0];
 		const protProperty = display2CSGIMOStatNamesMap.Protection[0];
 		const baseValue =
-			character.playerValues.equippedStats[healthProperty] +
-			character.playerValues.equippedStats[protProperty];
+			currentCharacterStats[healthProperty] +
+			currentCharacterStats[protProperty];
 
 		const setStats = getFlatStatsFromSetLoadouts(
 			splitLoadoutBySets(loadout),
@@ -1653,7 +1646,7 @@ function getStatValueForCharacterWithMods(
 		return baseValue + setValue;
 	}
 	const statProperty = display2CSGIMOStatNamesMap[stat][0];
-	const baseValue = character.playerValues.equippedStats[statProperty];
+	const baseValue = currentCharacterStats[statProperty];
 
 	const setStats = getFlatStatsFromSetLoadouts(
 		splitLoadoutBySets(loadout),
@@ -2061,13 +2054,18 @@ function optimizeMods(
 				return modSuggestions;
 			}
 			recalculateMods = true;
-			cache.flatStats.setCharacter(character);
 			cache.modStats.setCharacter(character);
 			cache.modsetScore.setCharacter(character);
 			cache.modStats.setRelevantStats(target);
 			cache.modsetScore.setRelevantStats(target);
 			cache.modScores.setCharacter(character);
 			cache.modScores.setTarget(target);
+			currentCharacterStats =
+				target.simulatedRelicLevel > 1 &&
+				target.simulatedStats !== undefined &&
+				target.simulatedStats !== null
+					? target.simulatedStats
+					: character.playerValues.equippedStats;
 
 			if (globalSettings.optimizeWithPrimaryAndSetRestrictions === false) {
 				target.setRestrictions = {};
@@ -2465,7 +2463,7 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	// First, get the base values of each stat on the character so they can be subtracted
 	// from what's needed for the min and max
 	// {statName: value}
-	const characterValues = getStatValuesForCharacter(character, statNames);
+	const characterValues = getStatValuesForCharacter(statNames);
 
 	// Determine the sets of values for each target stat that will satisfy it
 	// {statName: {setCount: [{slot: slotValue}]}}
@@ -2778,16 +2776,10 @@ const getPotentialModsToSatisfyTargetStats = function* (
 };
 
 /**
- * Given a character and a list of stats, return an object with the character's value for that stat from level, stars,
- * and gear.
- *
- * @param character {Character}
+ * Given a list of stats, return an object with the character's value for each stat
  * @param stats {Array<Stat>}
  */
-function getStatValuesForCharacter(
-	character: Character.Character,
-	stats: TargetStatsNames[],
-) {
+function getStatValuesForCharacter(stats: TargetStatsNames[]) {
 	const characterValues = {} as Record<TargetStatsNames, number>;
 	for (const stat of stats) {
 		if (stat === "Health+Protection") {
@@ -2800,7 +2792,7 @@ function getStatValuesForCharacter(
 			);
 		}
 		characterValues[stat] =
-			character.playerValues.equippedStats[characterStatProperties[0]] || 0;
+			currentCharacterStats[characterStatProperties[0]] || 0;
 	}
 
 	return characterValues;

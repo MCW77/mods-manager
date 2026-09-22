@@ -66,6 +66,16 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 		const characterById = useValue(roster$.activeCharacterById);
 		const baseCharacterById = useValue(characters$.baseCharacterById);
 		const character = characterById[characterId];
+		const displayedCharacter = structuredClone(character);
+		if (
+			target.simulatedRelicLevel > 1 &&
+			target.simulatedStats !== undefined &&
+			target.simulatedStats !== null
+		) {
+			displayedCharacter.playerValues.equippedStats = target.simulatedStats;
+			displayedCharacter.playerValues.gearLevel = 13;
+			displayedCharacter.playerValues.relicTier = target.simulatedRelicLevel;
+		}
 		const showEditCharacterModalCallback = useCallback(
 			() => showEditCharacterModal(character, index, target),
 			[character, index, target],
@@ -85,7 +95,7 @@ const CharacterBlock: React.FC<CharacterBlockProps> = observer(
 					onDoubleClick={() => defaultCompilation$.unselectCharacter(index)}
 				>
 					<CharacterAvatar
-						character={character}
+						character={displayedCharacter}
 						displayBadges={false}
 						displayStars={false}
 						className={

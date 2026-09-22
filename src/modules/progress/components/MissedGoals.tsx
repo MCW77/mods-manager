@@ -67,23 +67,33 @@ function MissedGoals({
 									"Physical Critical Chance %": 0,
 									"Special Critical Chance %": 0,
 								};
-								const character =
-									roster$.activeCharacterById[id].peek() ||
-									createCharacter(
-										id,
-										{
-											level: 0,
-											stars: 0,
-											gearLevel: 0,
-											gearPieces: [],
-											galacticPower: 0,
-											equippedStats: tempStats,
-											relicTier: 0,
-										},
-										[],
-										[],
-										[],
-									);
+								const character = structuredClone(
+									roster$.activeCharacterById[id].peek() ??
+										createCharacter(
+											id,
+											{
+												level: 0,
+												stars: 0,
+												gearLevel: 0,
+												gearPieces: [],
+												galacticPower: 0,
+												equippedStats: tempStats,
+												relicTier: 0,
+											},
+											[],
+											[],
+											[],
+										),
+								);
+								if (
+									target.simulatedRelicLevel > 1 &&
+									target.simulatedStats !== undefined &&
+									target.simulatedStats !== null
+								) {
+									character.playerValues.equippedStats = target.simulatedStats;
+									character.playerValues.gearLevel = 13;
+									character.playerValues.relicTier = target.simulatedRelicLevel;
+								}
 
 								return index % 2 === 0 ? (
 									<div key={`${id}-Avatar`} className="grid gap-1 p-4">

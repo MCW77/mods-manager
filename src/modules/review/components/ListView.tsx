@@ -99,7 +99,16 @@ const ListView = ({ displayedMods }: ListViewProps) => {
 	return (
 		<div className={"grid grid-cols-1 gap-2 justify-items-center"}>
 			{individualMods.map(({ id: characterID, target, mod }) => {
-				const character = characterById[characterID];
+				const character = structuredClone(characterById[characterID]);
+				if (
+					target.simulatedRelicLevel > 1 &&
+					target.simulatedStats !== undefined &&
+					target.simulatedStats !== null
+				) {
+					character.playerValues.equippedStats = target.simulatedStats;
+					character.playerValues.gearLevel = 13;
+					character.playerValues.relicTier = target.simulatedRelicLevel;
+				}
 				const modCharacter =
 					mod && mod.characterID !== "null"
 						? baseCharacterById[mod.characterID]?.name || mod.characterID
