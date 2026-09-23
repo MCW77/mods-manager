@@ -1777,10 +1777,9 @@ const modsetNames: readonly GIMOSetStatNames[] = [
 ];
 
 /**
- * Given a mod loadout, get the score of that loadout for a character
+ * Given a mod loadout, get the score of that loadout for an OptimizationPlan
  *
  * @param loadout {Array<Mod>}
- * @param character {Character}
  * @param target {OptimizationPlan}
  */
 function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
