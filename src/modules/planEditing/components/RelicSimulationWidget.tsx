@@ -198,7 +198,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 1;
+											return relicTier < 3;
 										}}
 									>
 										<SelectItem value={3}>{1}</SelectItem>
@@ -206,7 +206,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 2;
+											return relicTier < 4;
 										}}
 									>
 										<SelectItem value={4}>{2}</SelectItem>
@@ -214,7 +214,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 3;
+											return relicTier < 5;
 										}}
 									>
 										<SelectItem value={5}>{3}</SelectItem>
@@ -222,7 +222,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 4;
+											return relicTier < 6;
 										}}
 									>
 										<SelectItem value={6}>{4}</SelectItem>
@@ -230,7 +230,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 5;
+											return relicTier < 7;
 										}}
 									>
 										<SelectItem value={7}>{5}</SelectItem>
@@ -238,7 +238,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 6;
+											return relicTier < 8;
 										}}
 									>
 										<SelectItem value={8}>{6}</SelectItem>
@@ -246,7 +246,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 7;
+											return relicTier < 9;
 										}}
 									>
 										<SelectItem value={9}>{7}</SelectItem>
@@ -254,7 +254,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 8;
+											return relicTier < 10;
 										}}
 									>
 										<SelectItem value={10}>{8}</SelectItem>
@@ -262,7 +262,7 @@ function RelicSimulationWidget() {
 									<Show
 										if={() => {
 											const relicTier = relicTier$.get();
-											return relicTier < 9;
+											return relicTier < 11;
 										}}
 									>
 										<SelectItem value={11}>{9}</SelectItem>
