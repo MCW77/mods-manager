@@ -2011,7 +2011,7 @@ function optimizeMods(
 			{ id: characterID, target },
 			index,
 		) => {
-			const character = characterById[characterID];
+			const character = structuredClone(characterById[characterID]);
 
 			// If the character is locked, skip it
 			if (lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) {
@@ -2065,7 +2065,14 @@ function optimizeMods(
 				target.simulatedStats !== null
 					? target.simulatedStats
 					: character.playerValues.equippedStats;
-
+			if (
+				target.simulatedRelicLevel > 1 &&
+				target.simulatedStats !== undefined &&
+				target.simulatedStats !== null
+			) {
+				character.playerValues.gearLevel = 13;
+				character.playerValues.relicTier = target.simulatedRelicLevel;
+			}
 			if (globalSettings.optimizeWithPrimaryAndSetRestrictions === false) {
 				target.setRestrictions = {};
 				target.primaryStatRestrictions = {} as PrimaryStatRestrictions;
