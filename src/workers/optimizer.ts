@@ -391,7 +391,6 @@ self.onmessage = async (message) => {
 		);
 
 		perf.logMeasures("optimizeMods");
-		perf.logMeasures("scoreLoadout");
 		perf.logMeasures("getLoadoutScore");
 		perf.logMeasures("findBestLoadoutWithoutChangingRestrictions");
 		perf.logMeasures("findStatValuesThatMeetTarget");
@@ -1776,6 +1775,17 @@ const modsetNames: readonly GIMOSetStatNames[] = [
 	"Tenacity %",
 ];
 
+const modsetIndexByName: Record<GIMOSetStatNames, number> = {
+	"Critical Chance %": 0,
+	"Critical Damage %": 1,
+	"Defense %": 2,
+	"Health %": 3,
+	"Offense %": 4,
+	"Potency %": 5,
+	"Speed %": 6,
+	"Tenacity %": 7,
+};
+
 /**
  * Given a mod loadout, get the score of that loadout for an OptimizationPlan
  *
@@ -1783,16 +1793,7 @@ const modsetNames: readonly GIMOSetStatNames[] = [
  * @param target {OptimizationPlan}
  */
 function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
-	const modsetCounts: Record<GIMOSetStatNames, [number, number]> = {
-		"Critical Chance %": [0, 0],
-		"Critical Damage %": [0, 0],
-		"Defense %": [0, 0],
-		"Health %": [0, 0],
-		"Offense %": [0, 0],
-		"Potency %": [0, 0],
-		"Speed %": [0, 0],
-		"Tenacity %": [0, 0],
-	};
+	const modsetCounts = new Uint8Array(modsetNames.length * 2);
 	let modsetsScore = 0;
 	let modStatsScore = 0;
 	let healthFraction = 0;
@@ -1805,7 +1806,7 @@ function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 	for (const mod of loadout) {
 		const setName = mod.modset.name;
 		const fullOrHalf = mod.level === 15 ? 0 : 1;
-		modsetCounts[setName][fullOrHalf]++;
+		modsetCounts[modsetIndexByName[setName] * 2 + fullOrHalf]++;
 
 		const { score, partiallyScoredStats: modPartiallyScoredStats } =
 			cache.modScores.get(mod);
@@ -1834,8 +1835,10 @@ function getLoadoutScore(loadout: Mod[], target: OptimizationPlan) {
 		}
 	}
 
-	for (const setName of modsetNames) {
-		const [fullCount, halfCount] = modsetCounts[setName];
+	for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+		const setName = modsetNames[setIndex];
+		const fullCount = modsetCounts[setIndex * 2];
+		const halfCount = modsetCounts[setIndex * 2 + 1];
 		const fullModsetCount = Math.floor(
 			fullCount / setBonuses[setName].numberOfModsRequired,
 		);
