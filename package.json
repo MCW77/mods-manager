@@ -11,6 +11,7 @@
 		"dev:nomock": "set \"VITE_NoMock=true\" && vite --host=127.0.0.1",
 		"prebuild": "node scripts/write-version.js",
 		"build": "tsc && vite build",
+		"build:show-analyzer": "set \"VITE_SHOW_ANALYZER=true\" && tsc && vite build",
 		"forcedbuild": "vite build",
 		"lint": "biome lint ./src ./public",
 		"lint:fix": "biome lint --write ./src ./public",

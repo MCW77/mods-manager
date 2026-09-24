@@ -8,6 +8,8 @@ import dynamicImport from "vite-plugin-dynamic-import";
 import { unstableRolldownAdapter } from "vite-bundle-analyzer";
 import { analyzer } from "vite-bundle-analyzer";
 
+const showAnalyzer = process.env.VITE_SHOW_ANALYZER === "true";
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	worker: {
@@ -96,7 +98,11 @@ export default defineConfig({
 			mode: "global",
 			hmrTopLevelAwait: false,
 		}),
-		unstableRolldownAdapter(analyzer()),
+		unstableRolldownAdapter(
+			analyzer({
+				enabled: showAnalyzer,
+			}),
+		),
 	],
 	resolve: {
 		alias: {
