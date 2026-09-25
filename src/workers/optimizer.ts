@@ -76,7 +76,7 @@ import type { MissedGoals } from "../modules/compilations/domain/MissedGoals";
 import type { ProfileOptimizationSettings } from "../modules/optimizationSettings/domain/ProfileOptimizationSettings";
 import type { WithoutCC } from "#/domain/CharacterStatNames";
 
-const linterror = 2;
+const linterror = 3;
 // #region types
 interface Cache {
 	modsetScore: {
