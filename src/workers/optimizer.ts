@@ -1275,6 +1275,7 @@ const modFilters = {
 	no4SlotSets: (mod: Mod) => mod.modset.numberOfModsRequired !== 4,
 	no6Dot: (mod: Mod) => mod.pips < 6,
 	only6Dot: (mod: Mod) => mod.pips === 6,
+	hasMaxLevel: (mod: Mod) => mod.level === 15,
 	hasMinimumDots: (mod: Mod) => mod.pips >= modFilters.target.minimumModDots,
 	hasRestrictedPrimaryStat: (mod: Mod) => {
 		if (["square", "diamond"].includes(mod.slot)) return true;
@@ -2503,6 +2504,9 @@ const getPotentialModsToSatisfyTargetStats = function* (
 	modFilters.setNames = setRestrictionsNames;
 	let usableMods = allMods.filter(
 		combineModFilters([
+			optimizationSettings$.activeSettings.simulateLevel15Mods.peek() === true
+				? modFilters.hasMaxLevel
+				: modFilters.noFilter,
 			modFilters.hasMinimumDots,
 			modFilters.hasScoredStats,
 			modFilters.hasRestrictedPrimaryStat,
