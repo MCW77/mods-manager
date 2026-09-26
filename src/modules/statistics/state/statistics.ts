@@ -33,6 +33,22 @@ const statistics$: ObservableObject<StatisticsObservable> =
 				count: mods.length,
 			}));
 		},
+		mods6DotBySlot: () => {
+			const mods = modsView$.filteredMods.get();
+			const mods6DotBySlot = new Map<string, Mod[]>();
+			for (const mod of mods) {
+				if (mod.pips === 6) {
+					if (!mods6DotBySlot.has(mod.slot)) {
+						mods6DotBySlot.set(mod.slot, []);
+					}
+					mods6DotBySlot.get(mod.slot)?.push(mod);
+				}
+			}
+			return Array.from(mods6DotBySlot.entries()).map(([slot, mods]) => ({
+				slot,
+				count: mods.length,
+			}));
+		},
 		modsBySlot: () => {
 			const mods = modsView$.filteredMods.get();
 			const resultModsBySlot = [];

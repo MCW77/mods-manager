@@ -3,6 +3,7 @@ import { MissingModsOfSlots } from "../components/MissingModsOfSlots";
 import { ModQualityCard } from "../components/ModQualityCard";
 import { ModsetsCard } from "../components/ModsetsCard";
 import { ModSlots } from "../components/ModSlots";
+import { Mods6DotBySlot } from "../components/Mods6DotBySlot";
 import { ModsToFarm } from "../components/ModsToFarm";
 import { OffenseDefenseCard } from "../components/OffenseDefenseCard";
 import { SpeedCard } from "../components/SpeedCard";
@@ -19,6 +20,7 @@ function StatisticsView() {
 				</div>
 				<ModsetsCard />
 				<ModSlots />
+				<Mods6DotBySlot />
 				<ModsToFarm />
 				<MissingModsOfSlots />
 			</div>
