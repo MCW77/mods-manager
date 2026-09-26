@@ -5,6 +5,10 @@ import type { Mod } from "#/domain/Mod";
 interface StatisticsObservable {
 	allMods: () => Mod[];
 	modsByModset: () => { modset: string; count: number }[];
+	mods6DotBySlot: () => {
+		slot: string;
+		count: number;
+	}[];
 	modsBySlot: () => {
 		speed: number;
 		square: number;
