@@ -288,6 +288,14 @@ interface LoadoutAndMessages {
 	score: number;
 }
 
+type ModsetCompositionRequirement = Uint8Array;
+type ModsetDistribution = (GIMOSetStatNames | null)[];
+interface TargetStatHeapNode {
+	indices: Uint16Array;
+	counts: Uint8Array;
+	targetValues: Float64Array;
+	modScore: number;
+}
 type ModsetScoreCacheKey = `${GIMOSetStatNames}-${number}`;
 type FlatStatsCacheKey = `${DisplayStatNames}${boolean | undefined}${number}`;
 type ModsAndSatisfiedSetRestrictions = [Mod[], SetRestrictions];
@@ -396,6 +404,9 @@ self.onmessage = async (message) => {
 		perf.logMeasures("findStatValuesThatMeetTarget");
 		perf.logMeasures("slotRecursor");
 		perf.logMeasures("targetStatRecursor");
+		perf.logMeasures("modsetsMatchesComposition");
+		perf.logMeasures("findBestLoadoutFulfillingTargetStats");
+		perf.logMeasures("loadoutFulfillsTargetStatRestriction");
 
 		optimizationSuccessMessage(optimizerResults);
 		self.close();
@@ -465,6 +476,21 @@ const statDisplayNames = Object.freeze({
 	"Critical Avoidance %": "Critical Avoidance",
 	"Physical Critical Avoidance": "Physical Critical Avoidance",
 	"Special Critical Avoidance": "Special Critical Avoidance",
+});
+
+const requiredModsOfModsets = new Uint8Array([2, 4, 2, 2, 4, 2, 4, 2]);
+const modsetCompositionRequirementsIndicesBySetName: Record<
+	GIMOSetStatNames,
+	number
+> = Object.freeze({
+	"Critical Chance %": 0,
+	"Critical Damage %": 1,
+	"Defense %": 2,
+	"Health %": 3,
+	"Offense %": 4,
+	"Potency %": 5,
+	"Speed %": 6,
+	"Tenacity %": 7,
 });
 
 const setBonuses: Record<GIMOSetStatNames, SetBonus> = Object.freeze({
@@ -677,6 +703,20 @@ const statWeights = Object.freeze({
 	Resistance: 33,
 	"Accuracy %": 10,
 	"Critical Avoidance %": 10,
+});
+
+const affectedOptimizableStatsBySet: Record<
+	GIMOSetStatNames,
+	OptimizableStats[]
+> = Object.freeze({
+	"Health %": ["Health"],
+	"Defense %": ["Armor", "Resistance"],
+	"Critical Damage %": ["Critical Damage %"],
+	"Critical Chance %": ["Critical Chance"],
+	"Tenacity %": ["Tenacity %"],
+	"Offense %": ["Physical Damage", "Special Damage"],
+	"Potency %": ["Potency %"],
+	"Speed %": ["Speed"],
 });
 
 const affectedTargetStatsBySet: Record<GIMOSetStatNames, TargetStatsNames[]> =
@@ -1584,6 +1624,7 @@ function loadoutFulfillsTargetStatRestriction(
 	loadout: Mod[],
 	character: Character.Character,
 	target: OptimizationPlan,
+	modsetValues: Record<TargetStatsNames, number> | null = null,
 ) {
 	const targetStats = target.targetStats;
 
@@ -1597,6 +1638,7 @@ function loadoutFulfillsTargetStatRestriction(
 			loadout,
 			character,
 			targetStat.stat,
+			modsetValues,
 		);
 		return totalValue <= targetStat.maximum && totalValue >= targetStat.minimum;
 	});
@@ -1608,13 +1650,17 @@ function loadoutFulfillsTargetStatRestriction(
  * @param loadout {Array<Mod>}
  * @param character {Character}
  * @param stat {String}
- * @param target {OptimizationPlan}
+ * @param passedModsetValues {Object<String, Number>}
+ * @returns {Number}
  */
 function getStatValueForCharacterWithMods(
 	loadout: Mod[],
 	character: Character.Character,
 	stat: TargetStatsNames,
+	passedModsetValues: Record<TargetStatsNames, number> | null = null,
 ) {
+	let modsetValue =
+		passedModsetValues === null ? null : passedModsetValues[stat];
 	if (
 		stat !== "Health+Protection" &&
 		display2CSGIMOStatNamesMap[stat] &&
@@ -1631,35 +1677,55 @@ function getStatValueForCharacterWithMods(
 			currentCharacterStats[healthProperty] +
 			currentCharacterStats[protProperty];
 
+		if (modsetValue === null) {
+			const setStats = getFlatStatsFromSetLoadouts(
+				splitLoadoutBySets(loadout),
+				character,
+			);
+
+			modsetValue = setStats.reduce((setValueSum, setStat) => {
+				// Check to see if the stat is health or protection. If it is, add its value to the total.
+				return setStat.displayType === "Health" ||
+					setStat.displayType === "Protection"
+					? setValueSum + setStat.value
+					: setValueSum;
+			}, 0);
+		}
+		return baseValue + modsetValue;
+	}
+	const statProperty = display2CSGIMOStatNamesMap[stat][0];
+	const baseValue = currentCharacterStats[statProperty];
+
+	if (modsetValue === null) {
 		const setStats = getFlatStatsFromSetLoadouts(
 			splitLoadoutBySets(loadout),
 			character,
 		);
 
-		const setValue = setStats.reduce((setValueSum, setStat) => {
-			// Check to see if the stat is health or protection. If it is, add its value to the total.
-			return setStat.displayType === "Health" ||
-				setStat.displayType === "Protection"
+		modsetValue = setStats.reduce((setValueSum, setStat) => {
+			// Check to see if the stat is the target stat. If it is, add its value to the total.
+			return setStat.displayType === stat
 				? setValueSum + setStat.value
 				: setValueSum;
 		}, 0);
-		return baseValue + setValue;
+	} else {
+		const loadoutStatsValues = loadout.reduce(
+			(loadoutStats, mod) => {
+				const modStats = cache.modStats.get(mod);
+				if (modStats) {
+					modStats.forEach(({ value, displayType }) => {
+						if (displayType === stat) {
+							loadoutStats[stat] += value;
+						}
+					});
+				}
+				return loadoutStats;
+			},
+			{ [stat]: 0 } as Record<TargetStatsNames, number>,
+		);
+		modsetValue += loadoutStatsValues[stat];
 	}
-	const statProperty = display2CSGIMOStatNamesMap[stat][0];
-	const baseValue = currentCharacterStats[statProperty];
-
-	const setStats = getFlatStatsFromSetLoadouts(
-		splitLoadoutBySets(loadout),
-		character,
-	);
-
-	const setValue = setStats.reduce((setValueSum, setStat) => {
-		// Check to see if the stat is the target stat. If it is, add its value to the total.
-		return setStat.displayType === stat
-			? setValueSum + setStat.value
-			: setValueSum;
-	}, 0);
-	let returnValue = baseValue + setValue;
+	let returnValue = baseValue + modsetValue;
 
 	// Change target stat to a percentage for Armor and Resistance
 	// so Reo'Ris shuts up about it in the Discord.
@@ -2376,6 +2442,7 @@ function findBestLoadoutForCharacter(
 	// First, check to see if there is any target stat
 	if (0 < targetStats.length) {
 		// If so, create an array of potential mod sets that could fill it
+		/*
 		const potentialMods = getPotentialModsToSatisfyTargetStats(
 			mods,
 			character,
@@ -2388,6 +2455,11 @@ function findBestLoadoutForCharacter(
 			character,
 			target,
 		);
+*/
+		foundLoadout = perf.measureTime(
+			findBestLoadoutFulfillingTargetStats,
+			"findBestLoadoutFulfillingTargetStats",
+		)(mods, character, characterCount, characterIndex, target);
 
 		if (foundLoadout.loadout.length === 0) {
 			foundLoadout.messages.push("Could not fulfill targetstats restriction");
@@ -2425,17 +2497,951 @@ function findBestLoadoutForCharacter(
 		"Finding the best loadout",
 		0,
 	);
-	foundLoadout = findBestLoadoutWithoutChangingRestrictions(
-		usableMods,
-		character,
-		target,
-		setRestrictions,
-	);
+	foundLoadout = perf.measureTime(
+		findBestLoadoutWithoutChangingRestrictions,
+		"findBestLoadoutWithoutChangingRestrictions",
+	)(usableMods, character, target, setRestrictions);
 	if (foundLoadout.loadout.length === 0) {
 		foundLoadout.messages.push("Could not fulfill restrictions");
 	}
 
 	return foundLoadout;
+}
+
+function buildModsetCompositionsRequirements(
+	setRestrictions: SetRestrictions,
+	target: OptimizationPlan,
+) {
+	const modsetRequirement: ModsetCompositionRequirement = new Uint8Array([
+		Math.max(setRestrictions["Critical Chance %"] || 0, 0) * 2,
+		Math.max(setRestrictions["Critical Damage %"] || 0, 0) * 4,
+		Math.max(setRestrictions["Defense %"] || 0, 0) * 2,
+		Math.max(setRestrictions["Health %"] || 0, 0) * 2,
+		Math.max(setRestrictions["Offense %"] || 0, 0) * 4,
+		Math.max(setRestrictions["Potency %"] || 0, 0) * 2,
+		Math.max(setRestrictions["Speed %"] || 0, 0) * 4,
+		Math.max(setRestrictions["Tenacity %"] || 0, 0) * 2,
+	]);
+	const modsetRequirements: ModsetCompositionRequirement[] = [
+		modsetRequirement,
+	];
+	const openModSlots = getOpenModSlots(setRestrictions);
+	if (openModSlots < 2) return modsetRequirements;
+
+	const scoreRelevantSets = Object.values(setBonuses).filter(
+		(setBonus) =>
+			setRestrictions[setBonus.name] !== -1 &&
+			affectedOptimizableStatsBySet[setBonus.name].some(
+				(stat) => target[stat] !== undefined && target[stat] !== 0,
+			),
+	);
+
+	const addCompositions = (
+		startIndex: number,
+		remainingSlots: number,
+		composition: ModsetCompositionRequirement,
+	) => {
+		for (let index = startIndex; index < scoreRelevantSets.length; index++) {
+			const setBonus = scoreRelevantSets[index];
+			if (setBonus.numberOfModsRequired > remainingSlots) continue;
+
+			const updatedComposition = composition.slice();
+			const setIndex =
+				modsetCompositionRequirementsIndicesBySetName[setBonus.name];
+			updatedComposition[setIndex] += setBonus.numberOfModsRequired;
+			modsetRequirements.push(updatedComposition);
+
+			const slotsLeft = remainingSlots - setBonus.numberOfModsRequired;
+			if (slotsLeft >= 2) {
+				addCompositions(index, slotsLeft, updatedComposition);
+			}
+		}
+	};
+
+	addCompositions(0, openModSlots, modsetRequirement);
+
+	return modsetRequirements;
+}
+
+function* generateModsetDistributions(
+	composition: ModsetCompositionRequirement,
+	baseModsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	scoredSetNames: GIMOSetStatNames[],
+): Generator<ModsetDistribution> {
+	const distribution: ModsetDistribution = Array(gimoSlots.length).fill(null);
+	const counts = new Uint8Array(modsetNames.length);
+	const maximumCounts = composition.slice();
+	const scoredSetIndices = new Set(
+		scoredSetNames.map((setName) => modsetIndexByName[setName]),
+	);
+	const trackedSetNames = modsetNames
+		.filter((setName) => {
+			const setIndex = modsetIndexByName[setName];
+			return scoredSetIndices.has(setIndex) || composition[setIndex] > 0;
+		})
+		.map((setName) => setName as GIMOSetStatNames);
+	const compositionSlots = composition.reduce(
+		(total, modCount) => total + modCount,
+		0,
+	);
+	const openSlotsAfterComposition = gimoSlots.length - compositionSlots;
+	for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+		maximumCounts[setIndex] = scoredSetIndices.has(setIndex)
+			? composition[setIndex] +
+				Math.min(openSlotsAfterComposition, requiredModsOfModsets[setIndex] - 1)
+			: trackedSetNames.includes(modsetNames[setIndex])
+				? gimoSlots.length
+				: 0;
+	}
+
+	const hasAvailableMod = (
+		slot: ModTypes.GIMOSlots,
+		setName: GIMOSetStatNames | null,
+	) =>
+		baseModsBySlot[slot].some((mod) =>
+			setName === null
+				? !scoredSetNames.includes(mod.modset.name)
+				: mod.modset.name === setName,
+		);
+
+	const canStillCompleteComposition = (nextSlotIndex: number) => {
+		const remainingSlots = gimoSlots.length - nextSlotIndex;
+		let requiredSlots = 0;
+		for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+			requiredSlots += Math.max(0, composition[setIndex] - counts[setIndex]);
+		}
+		return requiredSlots <= remainingSlots;
+	};
+
+	function* recurse(slotIndex: number): Generator<ModsetDistribution> {
+		if (slotIndex === gimoSlots.length) {
+			for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+				const completedSets = Math.floor(
+					counts[setIndex] / requiredModsOfModsets[setIndex],
+				);
+				const requiredSets = Math.floor(
+					composition[setIndex] / requiredModsOfModsets[setIndex],
+				);
+				if (
+					scoredSetIndices.has(setIndex) &&
+					Math.floor(counts[setIndex] / requiredModsOfModsets[setIndex]) !==
+						requiredSets
+				) {
+					return;
+				}
+				if (
+					!scoredSetIndices.has(setIndex) &&
+					composition[setIndex] > 0 &&
+					completedSets < requiredSets
+				) {
+					return;
+				}
+			}
+			yield distribution.slice();
+			return;
+		}
+
+		const slot = gimoSlots[slotIndex];
+		const candidateSetNames = trackedSetNames.filter((setName) => {
+			const setIndex = modsetIndexByName[setName];
+			return (
+				counts[setIndex] < maximumCounts[setIndex] &&
+				(scoredSetIndices.has(setIndex) && composition[setIndex] > 0
+					? true
+					: scoredSetIndices.has(setIndex)
+						? requiredModsOfModsets[setIndex] <= openSlotsAfterComposition
+						: true)
+			);
+		});
+		candidateSetNames.push(null as unknown as GIMOSetStatNames);
+
+		for (const setName of candidateSetNames) {
+			if (!hasAvailableMod(slot, setName)) continue;
+			if (setName === null) {
+				distribution[slotIndex] = null;
+				yield* recurse(slotIndex + 1);
+				continue;
+			}
+
+			const setIndex = modsetIndexByName[setName];
+			counts[setIndex]++;
+			if (canStillCompleteComposition(slotIndex + 1)) {
+				distribution[slotIndex] = setName;
+				yield* recurse(slotIndex + 1);
+			}
+			counts[setIndex]--;
+		}
+	}
+
+	yield* recurse(0);
+}
+
+function createMaxHeap<T>(compare: (left: T, right: T) => number) {
+	const values: T[] = [];
+	const swap = (left: number, right: number) => {
+		const value = values[left];
+		values[left] = values[right];
+		values[right] = value;
+	};
+
+	return {
+		get size() {
+			return values.length;
+		},
+		push(value: T) {
+			values.push(value);
+			let index = values.length - 1;
+			while (index > 0) {
+				const parent = Math.floor((index - 1) / 2);
+				if (compare(values[parent], values[index]) >= 0) break;
+				swap(parent, index);
+				index = parent;
+			}
+		},
+		pop() {
+			if (values.length === 0) return undefined;
+			const first = values[0];
+			const last = values.pop();
+			if (values.length > 0 && last !== undefined) {
+				values[0] = last;
+				let index = 0;
+				while (true) {
+					const left = index * 2 + 1;
+					const right = left + 1;
+					let largest = index;
+					if (
+						left < values.length &&
+						compare(values[left], values[largest]) > 0
+					) {
+						largest = left;
+					}
+					if (
+						right < values.length &&
+						compare(values[right], values[largest]) > 0
+					) {
+						largest = right;
+					}
+					if (largest === index) break;
+					swap(index, largest);
+					index = largest;
+				}
+			}
+			return first;
+		},
+	};
+}
+
+function getCompositionSetScore(
+	composition: ModsetCompositionRequirement,
+	target: OptimizationPlan,
+) {
+	let score = 0;
+	for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+		const modCount = composition[setIndex];
+		if (modCount === 0) continue;
+		const setName = modsetNames[setIndex];
+		const setCount = modCount / requiredModsOfModsets[setIndex];
+		score += cache.modsetScore.get(setName, target, setCount * 2).score;
+	}
+	return score;
+}
+
+function getCompositionFractionalScoreUpperBound(
+	composition: ModsetCompositionRequirement,
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	target: OptimizationPlan,
+) {
+	const maximumFractions: Partial<Record<DisplayStatNames, number>> = {};
+	for (const slot of gimoSlots) {
+		const slotMaximums: Partial<Record<DisplayStatNames, number>> = {};
+		for (const mod of modsBySlot[slot]) {
+			for (const stat of cache.modScores.get(mod).partiallyScoredStats) {
+				slotMaximums[stat.displayType] = Math.max(
+					slotMaximums[stat.displayType] ?? 0,
+					stat.fractional,
+				);
+			}
+		}
+		for (const [stat, fraction] of Object.entries(slotMaximums)) {
+			maximumFractions[stat as DisplayStatNames] =
+				(maximumFractions[stat as DisplayStatNames] ?? 0) + fraction;
+		}
+	}
+
+	for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+		const modCount = composition[setIndex];
+		if (modCount === 0) continue;
+		const setName = modsetNames[setIndex];
+		for (const stat of cache.modsetScore.get(
+			setName,
+			target,
+			(modCount / requiredModsOfModsets[setIndex]) * 2,
+		).partiallyScoredStats) {
+			maximumFractions[stat.displayType] =
+				(maximumFractions[stat.displayType] ?? 0) + stat.fractional;
+		}
+	}
+
+	let score = 0;
+	for (const [stat, fraction] of Object.entries(maximumFractions)) {
+		const targetProperty = display2CSGIMOStatNameMap[stat as DisplayStatNames];
+		const weight = target[targetProperty];
+		if (weight > 0) score += weight * Math.trunc(fraction);
+	}
+	return score;
+}
+
+function getTargetStatDisplayNames(stat: TargetStatsNames): DisplayStatNames[] {
+	if (stat === "Health+Protection") return ["Health", "Protection"];
+	return display2CSGIMOStatNamesMap[stat].map(
+		(statName) => statDisplayNames[statName],
+	);
+}
+
+function getTargetStatBounds(
+	targetStat: TargetStat,
+	character: Character.Character,
+): [number, number] {
+	if (targetStat.stat === "Health+Protection") {
+		const baseValue =
+			currentCharacterStats.Health + currentCharacterStats.Protection;
+		return [targetStat.minimum - baseValue, targetStat.maximum - baseValue];
+	}
+
+	const property = display2CSGIMOStatNamesMap[targetStat.stat][0];
+	if (property === "Armor" || property === "Resistance") {
+		const baseDefense = character.playerValues.level * 7.5;
+		const toRawValue = (percentage: number) =>
+			percentage >= 100
+				? Number.POSITIVE_INFINITY
+				: (percentage * baseDefense) / (100 - percentage);
+		return [
+			toRawValue(targetStat.minimum) - currentCharacterStats[property],
+			toRawValue(targetStat.maximum) - currentCharacterStats[property],
+		];
+	}
+
+	return [
+		targetStat.minimum - currentCharacterStats[property],
+		targetStat.maximum - currentCharacterStats[property],
+	];
+}
+
+function getStatsValueForTargetStat(
+	stats: StatValue[],
+	targetStat: TargetStatsNames,
+) {
+	const displayNames = getTargetStatDisplayNames(targetStat);
+	return displayNames.reduce(
+		(total, displayName) =>
+			total +
+			(stats.find((stat) => stat.displayType === displayName)?.value ?? 0),
+		0,
+	);
+}
+
+function getMaximumPossibleSetValue(
+	targetStat: TargetStatsNames,
+	character: Character.Character,
+) {
+	let maximum = 0;
+	for (const setBonus of Object.values(setBonuses)) {
+		const setValue = getStatsValueForTargetStat(
+			cache.modsetStats(setBonus.name, "full", character),
+			targetStat,
+		);
+		maximum +=
+			Math.floor(6 / setBonus.numberOfModsRequired) * Math.max(setValue, 0);
+	}
+	return maximum;
+}
+
+function pruneModsByTargetStats(
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	character: Character.Character,
+	target: OptimizationPlan,
+) {
+	if (target.targetStats.length === 0) return;
+
+	const valuesByTargetStat = new Map<TargetStatsNames, Map<string, number>>();
+	const setUpperBounds = new Map<TargetStatsNames, number>();
+	const targetBounds = new Map<TargetStatsNames, [number, number]>();
+
+	for (const targetStat of target.targetStats) {
+		const values = new Map<string, number>();
+		for (const slot of gimoSlots) {
+			for (const mod of modsBySlot[slot]) {
+				values.set(
+					mod.id,
+					getStatsValueForTargetStat(cache.modStats.get(mod), targetStat.stat),
+				);
+			}
+		}
+		valuesByTargetStat.set(targetStat.stat, values);
+		setUpperBounds.set(
+			targetStat.stat,
+			getMaximumPossibleSetValue(targetStat.stat, character),
+		);
+		targetBounds.set(
+			targetStat.stat,
+			getTargetStatBounds(targetStat, character),
+		);
+	}
+
+	let changed = true;
+	while (changed) {
+		changed = false;
+		for (const targetStat of target.targetStats) {
+			const values = valuesByTargetStat.get(targetStat.stat);
+			const bounds = targetBounds.get(targetStat.stat);
+			if (!values || !bounds) continue;
+
+			const minBySlot = new Map<ModTypes.GIMOSlots, number>();
+			const maxBySlot = new Map<ModTypes.GIMOSlots, number>();
+			let totalMinimum = 0;
+			let totalMaximum = 0;
+			for (const slot of gimoSlots) {
+				const slotValues = modsBySlot[slot].map(
+					(mod) => values.get(mod.id) ?? 0,
+				);
+				const slotMinimum = Math.min(...slotValues);
+				const slotMaximum = Math.max(...slotValues);
+				minBySlot.set(slot, slotMinimum);
+				maxBySlot.set(slot, slotMaximum);
+				totalMinimum += slotMinimum;
+				totalMaximum += slotMaximum;
+			}
+
+			for (const slot of gimoSlots) {
+				const retainedMods = modsBySlot[slot].filter((mod) => {
+					const value = values.get(mod.id) ?? 0;
+					const maximumReachable =
+						value +
+						(totalMaximum - (maxBySlot.get(slot) ?? 0)) +
+						(setUpperBounds.get(targetStat.stat) ?? 0);
+					const minimumReachable =
+						value + totalMinimum - (minBySlot.get(slot) ?? 0);
+					return maximumReachable >= bounds[0] && minimumReachable <= bounds[1];
+				});
+				if (retainedMods.length !== modsBySlot[slot].length) {
+					changed = true;
+					modsBySlot[slot] = retainedMods;
+				}
+			}
+		}
+		if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) return;
+	}
+}
+
+function deduplicateEquivalentModsBySlot(
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	character: Character.Character,
+	target: OptimizationPlan,
+) {
+	for (const slot of gimoSlots) {
+		const bestBySignature = new Map<string, Mod>();
+		for (const mod of modsBySlot[slot]) {
+			const modScore = cache.modScores.get(mod);
+			const targetValues = target.targetStats.map((targetStat) =>
+				getStatsValueForTargetStat(cache.modStats.get(mod), targetStat.stat),
+			);
+			const fractionalValues = modScore.partiallyScoredStats
+				.map((stat) => [stat.displayType, stat.fractional] as const)
+				.sort(([left], [right]) => left.localeCompare(right));
+			const signature = JSON.stringify([
+				mod.modset.name,
+				targetValues,
+				fractionalValues,
+			]);
+			const existing = bestBySignature.get(signature);
+			if (
+				existing === undefined ||
+				modScore.score > cache.modScores.get(existing).score ||
+				(modScore.score === cache.modScores.get(existing).score &&
+					mod.characterID === character.id &&
+					existing.characterID !== character.id)
+			) {
+				bestBySignature.set(signature, mod);
+			}
+		}
+		modsBySlot[slot] = Array.from(bestBySignature.values()).sort(
+			modSort(character),
+		);
+	}
+}
+
+function canCompositionReachTargetStats(
+	composition: ModsetCompositionRequirement,
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	character: Character.Character,
+	target: OptimizationPlan,
+) {
+	const maximumOptionalSetValues = target.targetStats.map((targetStat) => {
+		const compositionSlots = composition.reduce(
+			(total, modCount) => total + modCount,
+			0,
+		);
+		const remainingSlots = 6 - compositionSlots;
+		const maximumValues = new Array<number>(remainingSlots + 1).fill(0);
+		for (let slots = 1; slots <= remainingSlots; slots++) {
+			for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+				if (composition[setIndex] > 0) continue;
+				const setName = modsetNames[setIndex];
+				if (
+					affectedOptimizableStatsBySet[setName].some(
+						(stat) => target[stat] !== undefined && target[stat] !== 0,
+					)
+				) {
+					continue;
+				}
+				const requiredSlots = requiredModsOfModsets[setIndex];
+				if (requiredSlots > slots) continue;
+				const setValue = Math.max(
+					getStatsValueForTargetStat(
+						cache.modsetStats(setName, "full", character),
+						targetStat.stat,
+					),
+					0,
+				);
+				maximumValues[slots] = Math.max(
+					maximumValues[slots],
+					maximumValues[slots - requiredSlots] + setValue,
+				);
+			}
+		}
+		return maximumValues[remainingSlots];
+	});
+	const fixedSetValues = target.targetStats.map((targetStat) => {
+		let value = 0;
+		for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+			const modCount = composition[setIndex];
+			if (modCount === 0) continue;
+			value +=
+				getStatsValueForTargetStat(
+					cache.modsetStats(modsetNames[setIndex], "full", character),
+					targetStat.stat,
+				) *
+				(modCount / requiredModsOfModsets[setIndex]);
+		}
+		return value;
+	});
+
+	for (
+		let targetStatIndex = 0;
+		targetStatIndex < target.targetStats.length;
+		targetStatIndex++
+	) {
+		const targetStat = target.targetStats[targetStatIndex];
+		const [minimum, maximum] = getTargetStatBounds(targetStat, character);
+		let minimumModsValue = 0;
+		let maximumModsValue = 0;
+
+		for (const slot of gimoSlots) {
+			const values = modsBySlot[slot].map((mod) =>
+				getStatsValueForTargetStat(cache.modStats.get(mod), targetStat.stat),
+			);
+			if (values.length === 0) return false;
+			minimumModsValue += Math.min(...values);
+			maximumModsValue += Math.max(...values);
+		}
+
+		if (
+			maximumModsValue +
+				fixedSetValues[targetStatIndex] +
+				maximumOptionalSetValues[targetStatIndex] <
+				minimum ||
+			minimumModsValue + fixedSetValues[targetStatIndex] > maximum
+		) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function findBestLoadoutFulfillingTargetStats(
+	mods: Mod[],
+	character: Character.Character,
+	characterCount: number,
+	characterIndex: number,
+	target: OptimizationPlan,
+) {
+	let bestLoadoutAndMessages: LoadoutAndMessages = {
+		id: "",
+		loadout: [],
+		messages: [],
+		score: 0,
+	};
+	const setRestrictions = target.setRestrictions;
+	const compositions = buildModsetCompositionsRequirements(
+		setRestrictions,
+		target,
+	);
+	const setNames = getSetRestrictionsNames(setRestrictions);
+	addPossibleSetRestrictionsNames(setNames, getOpenModSlots(setRestrictions));
+	for (const [setName, count] of Object.entries(
+		setRestrictions,
+	) as SetRestrictionsEntries) {
+		if (count === -1) setNames.delete(setName);
+	}
+
+	modFilters.target = target;
+	modFilters.openModSlots = getOpenModSlots(setRestrictions);
+	modFilters.setNames = setNames;
+	const baseModsBySlot = filterMods(
+		mods
+			.filter(
+				combineModFilters([
+					(mod) => mod.level === 15,
+					modFilters.hasMinimumDots,
+					modFilters.hasRestrictedPrimaryStat,
+					modFilters.hasSet,
+					character.playerValues.gearLevel < 12
+						? modFilters.no6Dot
+						: modFilters.noFilter,
+				]),
+			)
+			.slice(),
+	);
+	for (const slot of gimoSlots) baseModsBySlot[slot].sort(modSort(character));
+
+	const scoredSetNames = Object.values(setBonuses)
+		.filter(
+			(setBonus) =>
+				setRestrictions[setBonus.name] !== -1 &&
+				affectedOptimizableStatsBySet[setBonus.name].some(
+					(stat) => target[stat] !== undefined && target[stat] !== 0,
+				),
+		)
+		.map((setBonus) => setBonus.name);
+	const scoredSets = new Set(
+		scoredSetNames.map((setName) => modsetIndexByName[setName]),
+	);
+	const requiredSetsForRestrictions = new Set<number>();
+	for (const [setName, count] of Object.entries(
+		setRestrictions,
+	) as SetRestrictionsEntries) {
+		if (count > 0) {
+			requiredSetsForRestrictions.add(modsetIndexByName[setName]);
+		}
+	}
+
+	const targetStatCount = target.targetStats.length;
+
+	let bestScore = Number.NEGATIVE_INFINITY;
+	progressMessage(
+		character.id,
+		characterCount,
+		characterIndex,
+		compositions.length,
+		0,
+		"",
+		1,
+		0,
+		"Finding target-stat loadouts",
+		0,
+	);
+
+	for (const composition of compositions) {
+		if (
+			!canCompositionReachTargetStats(
+				composition,
+				baseModsBySlot,
+				character,
+				target,
+			)
+		) {
+			continue;
+		}
+		for (const distribution of generateModsetDistributions(
+			composition,
+			baseModsBySlot,
+			scoredSetNames,
+		)) {
+			const modsBySlot: Record<ModTypes.GIMOSlots, Mod[]> = {
+				square: [],
+				arrow: [],
+				diamond: [],
+				triangle: [],
+				circle: [],
+				cross: [],
+			};
+			let hasEmptySlot = false;
+			for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+				const slot = gimoSlots[slotIndex];
+				const assignedSet = distribution[slotIndex];
+				modsBySlot[slot] = baseModsBySlot[slot].filter((mod) =>
+					assignedSet === null
+						? !scoredSets.has(modsetIndexByName[mod.modset.name])
+						: mod.modset.name === assignedSet,
+				);
+				if (modsBySlot[slot].length === 0) {
+					hasEmptySlot = true;
+					break;
+				}
+			}
+			if (hasEmptySlot) continue;
+
+			pruneModsByTargetStats(modsBySlot, character, target);
+			deduplicateEquivalentModsBySlot(modsBySlot, character, target);
+			if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) continue;
+
+			const modTargetValues = new Map<string, Float64Array>();
+			for (const slot of gimoSlots) {
+				for (const mod of modsBySlot[slot]) {
+					modTargetValues.set(
+						mod.id,
+						Float64Array.from(
+							target.targetStats.map((targetStat) =>
+								getStatsValueForTargetStat(
+									cache.modStats.get(mod),
+									targetStat.stat,
+								),
+							),
+						),
+					);
+				}
+			}
+
+			const suffixMinimums = target.targetStats.map((_, targetStatIndex) =>
+				gimoSlots.map((slot) => {
+					const values = new Float64Array(modsBySlot[slot].length + 1);
+					values[values.length - 1] = Number.POSITIVE_INFINITY;
+					for (let index = values.length - 2; index >= 0; index--) {
+						values[index] = Math.min(
+							modTargetValues.get(modsBySlot[slot][index].id)?.[
+								targetStatIndex
+							] ?? 0,
+							values[index + 1],
+						);
+					}
+					return values;
+				}),
+			);
+			const suffixMaximums = target.targetStats.map((_, targetStatIndex) =>
+				gimoSlots.map((slot) => {
+					const values = new Float64Array(modsBySlot[slot].length + 1);
+					values[values.length - 1] = Number.NEGATIVE_INFINITY;
+					for (let index = values.length - 2; index >= 0; index--) {
+						values[index] = Math.max(
+							modTargetValues.get(modsBySlot[slot][index].id)?.[
+								targetStatIndex
+							] ?? 0,
+							values[index + 1],
+						);
+					}
+					return values;
+				}),
+			);
+
+			const fixedCompositionSetValues = compositions.map((composition) =>
+				Float64Array.from(
+					target.targetStats.map((targetStat) => {
+						let value = 0;
+						for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+							const modCount = composition[setIndex];
+							if (modCount === 0) continue;
+							value +=
+								getStatsValueForTargetStat(
+									cache.modsetStats(modsetNames[setIndex], "full", character),
+									targetStat.stat,
+								) *
+								(modCount / requiredModsOfModsets[setIndex]);
+						}
+						return value;
+					}),
+				),
+			);
+			const maximumSetValues = Float64Array.from(
+				target.targetStats.map((targetStat) =>
+					getMaximumPossibleSetValue(targetStat.stat, character),
+				),
+			);
+			const canDescendantReachTarget = (
+				node: TargetStatHeapNode,
+				compositionIndex: number,
+			) => {
+				const fixedSetValues = fixedCompositionSetValues[compositionIndex];
+				for (
+					let targetStatIndex = 0;
+					targetStatIndex < targetStatCount;
+					targetStatIndex++
+				) {
+					const [minimum, maximum] = getTargetStatBounds(
+						target.targetStats[targetStatIndex],
+						character,
+					);
+					let minimumModsValue = 0;
+					let maximumModsValue = 0;
+					for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+						minimumModsValue +=
+							suffixMinimums[targetStatIndex][slotIndex][
+								node.indices[slotIndex]
+							];
+						maximumModsValue +=
+							suffixMaximums[targetStatIndex][slotIndex][
+								node.indices[slotIndex]
+							];
+					}
+					if (
+						maximumModsValue + maximumSetValues[targetStatIndex] < minimum ||
+						minimumModsValue + fixedSetValues[targetStatIndex] > maximum
+					) {
+						return false;
+					}
+				}
+				return true;
+			};
+
+			const getInitialNode = (): TargetStatHeapNode => {
+				const indices = new Uint16Array(gimoSlots.length);
+				const counts = new Uint8Array(modsetNames.length);
+				const targetValues = new Float64Array(targetStatCount);
+				let modScore = 0;
+				for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+					const mod = modsBySlot[gimoSlots[slotIndex]][0];
+					modScore += cache.modScores.get(mod).score;
+					counts[modsetIndexByName[mod.modset.name]]++;
+					const values = modTargetValues.get(mod.id);
+					if (values) {
+						for (
+							let targetStatIndex = 0;
+							targetStatIndex < targetStatCount;
+							targetStatIndex++
+						) {
+							targetValues[targetStatIndex] += values[targetStatIndex];
+						}
+					}
+				}
+				return { indices, counts, targetValues, modScore };
+			};
+
+			const heap = createMaxHeap<TargetStatHeapNode>(
+				(left, right) => left.modScore - right.modScore,
+			);
+			const visited = new Set<string>();
+			const initialNode = getInitialNode();
+			const fixedSetScore = getCompositionSetScore(composition, target);
+			const fractionalScoreUpperBound = getCompositionFractionalScoreUpperBound(
+				composition,
+				modsBySlot,
+				target,
+			);
+			if (
+				!canDescendantReachTarget(
+					initialNode,
+					compositions.indexOf(composition),
+				)
+			)
+				continue;
+			heap.push(initialNode);
+			visited.add(initialNode.indices.join(","));
+
+			const statValuesOfModsets: Record<TargetStatsNames, number> =
+				target.targetStats.reduce(
+					(acc, targetStat, targetStatIndex) => {
+						acc[targetStat.stat] =
+							fixedCompositionSetValues[compositions.indexOf(composition)][
+								targetStatIndex
+							];
+						return acc;
+					},
+					{} as Record<TargetStatsNames, number>,
+				);
+
+			while (heap.size > 0) {
+				const node = heap.pop();
+				if (!node) break;
+				if (
+					bestScore !== Number.NEGATIVE_INFINITY &&
+					node.modScore + fixedSetScore + fractionalScoreUpperBound <= bestScore
+				)
+					break;
+
+				const loadout = gimoSlots.map(
+					(slot, slotIndex) => modsBySlot[slot][node.indices[slotIndex]],
+				);
+				if (
+					perf.measureTime(
+						loadoutFulfillsTargetStatRestriction,
+						"loadoutFulfillsTargetStatRestriction",
+					)(loadout, character, target, statValuesOfModsets)
+				) {
+					const score = getLoadoutScore(loadout, target);
+					const unmovedMods = loadout.filter(
+						(mod) => mod.characterID === character.id,
+					).length;
+					const bestUnmovedMods = bestLoadoutAndMessages.loadout.filter(
+						(mod) => mod.characterID === character.id,
+					).length;
+					if (
+						score > bestScore ||
+						(score === bestScore && unmovedMods > bestUnmovedMods) ||
+						(score === bestScore &&
+							unmovedMods === bestUnmovedMods &&
+							loadout.length > bestLoadoutAndMessages.loadout.length)
+					) {
+						bestScore = score;
+						bestLoadoutAndMessages = {
+							id: generateLoadoutId(loadout),
+							loadout,
+							messages: [],
+							score,
+						};
+					}
+				}
+
+				for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+					const slot = gimoSlots[slotIndex];
+					const nextIndex = node.indices[slotIndex] + 1;
+					if (nextIndex >= modsBySlot[slot].length) continue;
+					const childIndices = node.indices.slice();
+					childIndices[slotIndex] = nextIndex;
+					const key = childIndices.join(",");
+					if (visited.has(key)) continue;
+					visited.add(key);
+					const oldMod = modsBySlot[slot][node.indices[slotIndex]];
+					const newMod = modsBySlot[slot][nextIndex];
+					const childCounts = node.counts.slice();
+					childCounts[modsetIndexByName[oldMod.modset.name]]--;
+					childCounts[modsetIndexByName[newMod.modset.name]]++;
+					const childTargetValues = node.targetValues.slice();
+					const oldTargetValues = modTargetValues.get(oldMod.id);
+					const newTargetValues = modTargetValues.get(newMod.id);
+					if (oldTargetValues && newTargetValues) {
+						for (
+							let targetStatIndex = 0;
+							targetStatIndex < targetStatCount;
+							targetStatIndex++
+						) {
+							childTargetValues[targetStatIndex] +=
+								newTargetValues[targetStatIndex] -
+								oldTargetValues[targetStatIndex];
+						}
+					}
+					const childNode: TargetStatHeapNode = {
+						indices: childIndices,
+						counts: childCounts,
+						targetValues: childTargetValues,
+						modScore:
+							node.modScore +
+							cache.modScores.get(newMod).score -
+							cache.modScores.get(oldMod).score,
+					};
+					if (
+						!canDescendantReachTarget(
+							childNode,
+							compositions.indexOf(composition),
+						)
+					)
+						continue;
+					heap.push(childNode);
+				}
+			}
+		}
+	}
+
+	return bestLoadoutAndMessages;
 }
 
 // TODO: Refactor this function
