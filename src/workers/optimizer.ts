@@ -1110,6 +1110,9 @@ const createModStatsCache = () => {
 				relevantStats.add("Special Damage");
 				relevantStats.add("Offense");
 			}
+			if (relevantStats.has("Armor") || relevantStats.has("Resistance")) {
+				relevantStats.add("Defense");
+			}
 		},
 	};
 };
