@@ -2938,47 +2938,61 @@ function deduplicateEquivalentModsBySlot(
 	}
 }
 
+function getMaximumOptionalSetValues(
+	composition: ModsetCompositionRequirement,
+	character: Character.Character,
+	target: OptimizationPlan,
+) {
+	const compositionSlots = composition.reduce(
+		(total, modCount) => total + modCount,
+		0,
+	);
+	const remainingSlots = 6 - compositionSlots;
+	return Float64Array.from(
+		target.targetStats.map((targetStat) => {
+			const maximumValues = new Array<number>(remainingSlots + 1).fill(0);
+			for (let slots = 1; slots <= remainingSlots; slots++) {
+				for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+					if (composition[setIndex] > 0) continue;
+					const setName = modsetNames[setIndex];
+					if (
+						affectedOptimizableStatsBySet[setName].some(
+							(stat) => target[stat] !== undefined && target[stat] !== 0,
+						)
+					) {
+						continue;
+					}
+					const requiredSlots = requiredModsOfModsets[setIndex];
+					if (requiredSlots > slots) continue;
+					const setValue = Math.max(
+						getStatsValueForTargetStat(
+							cache.modsetStats(setName, "full", character),
+							targetStat.stat,
+						),
+						0,
+					);
+					maximumValues[slots] = Math.max(
+						maximumValues[slots],
+						maximumValues[slots - requiredSlots] + setValue,
+					);
+				}
+			}
+			return maximumValues[remainingSlots];
+		}),
+	);
+}
+
 function canCompositionReachTargetStats(
 	composition: ModsetCompositionRequirement,
 	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
 	character: Character.Character,
 	target: OptimizationPlan,
 ) {
-	const maximumOptionalSetValues = target.targetStats.map((targetStat) => {
-		const compositionSlots = composition.reduce(
-			(total, modCount) => total + modCount,
-			0,
-		);
-		const remainingSlots = 6 - compositionSlots;
-		const maximumValues = new Array<number>(remainingSlots + 1).fill(0);
-		for (let slots = 1; slots <= remainingSlots; slots++) {
-			for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
-				if (composition[setIndex] > 0) continue;
-				const setName = modsetNames[setIndex];
-				if (
-					affectedOptimizableStatsBySet[setName].some(
-						(stat) => target[stat] !== undefined && target[stat] !== 0,
-					)
-				) {
-					continue;
-				}
-				const requiredSlots = requiredModsOfModsets[setIndex];
-				if (requiredSlots > slots) continue;
-				const setValue = Math.max(
-					getStatsValueForTargetStat(
-						cache.modsetStats(setName, "full", character),
-						targetStat.stat,
-					),
-					0,
-				);
-				maximumValues[slots] = Math.max(
-					maximumValues[slots],
-					maximumValues[slots - requiredSlots] + setValue,
-				);
-			}
-		}
-		return maximumValues[remainingSlots];
-	});
+	const maximumOptionalSetValues = getMaximumOptionalSetValues(
+		composition,
+		character,
+		target,
+	);
 	const fixedSetValues = target.targetStats.map((targetStat) => {
 		let value = 0;
 		for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
@@ -3220,16 +3234,17 @@ function findBestLoadoutFulfillingTargetStats(
 					}),
 				),
 			);
-			const maximumSetValues = Float64Array.from(
-				target.targetStats.map((targetStat) =>
-					getMaximumPossibleSetValue(targetStat.stat, character),
-				),
+			const maximumOptionalSetValues = compositions.map((composition) =>
+				getMaximumOptionalSetValues(composition, character, target),
 			);
 			const canDescendantReachTarget = (
 				node: TargetStatHeapNode,
 				compositionIndex: number,
 			) => {
 				const fixedSetValues = fixedCompositionSetValues[compositionIndex];
+				const optionalSetValues = maximumOptionalSetValues[compositionIndex];
+
+				let keep: any = null;
 				for (
 					let targetStatIndex = 0;
 					targetStatIndex < targetStatCount;
@@ -3251,8 +3266,17 @@ function findBestLoadoutFulfillingTargetStats(
 								node.indices[slotIndex]
 							];
 					}
+					keep = {
+						minimumModsValue,
+						maximumModsValue,
+						minimum,
+						maximum,
+					};
 					if (
-						maximumModsValue + maximumSetValues[targetStatIndex] < minimum ||
+						maximumModsValue +
+							fixedSetValues[targetStatIndex] +
+							optionalSetValues[targetStatIndex] <
+							minimum ||
 						minimumModsValue + fixedSetValues[targetStatIndex] > maximum
 					) {
 						return false;
@@ -3398,6 +3422,7 @@ function findBestLoadoutFulfillingTargetStats(
 							cache.modScores.get(newMod).score -
 							cache.modScores.get(oldMod).score,
 					};
+					/*
 					if (
 						!canDescendantReachTarget(
 							childNode,
@@ -3405,6 +3430,7 @@ function findBestLoadoutFulfillingTargetStats(
 						)
 					)
 						continue;
+*/
 					heap.push(childNode);
 				}
 			}
