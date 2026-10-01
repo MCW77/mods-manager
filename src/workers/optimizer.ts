@@ -2535,6 +2535,8 @@ function* generateModsetDistributions(
 	composition: ModsetCompositionRequirement,
 	baseModsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
 	scoredSetNames: GIMOSetStatNames[],
+	character: Character.Character,
+	target: OptimizationPlan,
 ): Generator<ModsetDistribution> {
 	const distribution: ModsetDistribution = Array(gimoSlots.length).fill(null);
 	const counts = new Uint8Array(modsetNames.length);
@@ -2553,6 +2555,29 @@ function* generateModsetDistributions(
 		0,
 	);
 	const openSlotsAfterComposition = gimoSlots.length - compositionSlots;
+	const constraintTargetStats = target.targetStats.filter((targetStat) => {
+		if (targetStat.stat === "Health+Protection") return false;
+		const property = display2CSGIMOStatNamesMap[
+			targetStat.stat
+		][0] as OptimizableStats;
+		return target[property] === 0;
+	});
+	const fixedSetValues = constraintTargetStats.map((targetStat) => {
+		let value = 0;
+		for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+			if (composition[setIndex] === 0) continue;
+			value +=
+				getStatsValueForTargetStat(
+					cache.modsetStats(modsetNames[setIndex], "full", character),
+					targetStat.stat,
+				) *
+				(composition[setIndex] / requiredModsOfModsets[setIndex]);
+		}
+		return value;
+	});
+	const optionalSetValues = constraintTargetStats.length
+		? getMaximumOptionalSetValues(composition, character, target)
+		: new Float64Array();
 	for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
 		maximumCounts[setIndex] = scoredSetIndices.has(setIndex)
 			? composition[setIndex] +
@@ -2580,8 +2605,65 @@ function* generateModsetDistributions(
 		}
 		return requiredSlots <= remainingSlots;
 	};
+	const candidateSetNamesForSlot = () => {
+		const candidateSetNames = trackedSetNames.filter((setName) => {
+			const setIndex = modsetIndexByName[setName];
+			return (
+				counts[setIndex] < maximumCounts[setIndex] &&
+				(scoredSetIndices.has(setIndex) && composition[setIndex] > 0
+					? true
+					: scoredSetIndices.has(setIndex)
+						? requiredModsOfModsets[setIndex] <= openSlotsAfterComposition
+						: true)
+			);
+		});
+		candidateSetNames.push(null as unknown as GIMOSetStatNames);
+		return candidateSetNames;
+	};
+
+	const canPartialDistributionReachTargets = (nextSlotIndex: number) => {
+		for (
+			let targetStatIndex = 0;
+			targetStatIndex < constraintTargetStats.length;
+			targetStatIndex++
+		) {
+			const targetStat = constraintTargetStats[targetStatIndex];
+			const [minimum, maximum] = getTargetStatBounds(targetStat, character);
+			let minimumModsValue = 0;
+			let maximumModsValue = 0;
+			for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+				const slot = gimoSlots[slotIndex];
+				let possibleMods = baseModsBySlot[slot];
+				if (slotIndex < nextSlotIndex) {
+					const assignedSet = distribution[slotIndex];
+					possibleMods = baseModsBySlot[slot].filter((mod) =>
+						assignedSet === null
+							? !scoredSetIndices.has(modsetIndexByName[mod.modset.name])
+							: mod.modset.name === assignedSet,
+					);
+				}
+				if (possibleMods.length === 0) return false;
+				const values = possibleMods.map((mod) =>
+					getStatsValueForTargetStat(cache.modStats.get(mod), targetStat.stat),
+				);
+				minimumModsValue += Math.min(...values);
+				maximumModsValue += Math.max(...values);
+			}
+			if (
+				maximumModsValue +
+					fixedSetValues[targetStatIndex] +
+					(optionalSetValues[targetStatIndex] ?? 0) <
+					minimum ||
+				minimumModsValue + fixedSetValues[targetStatIndex] > maximum
+			) {
+				return false;
+			}
+		}
+		return true;
+	};
 
 	function* recurse(slotIndex: number): Generator<ModsetDistribution> {
+		if (!canPartialDistributionReachTargets(slotIndex)) return;
 		if (slotIndex === gimoSlots.length) {
 			for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
 				const completedSets = Math.floor(
@@ -2610,18 +2692,7 @@ function* generateModsetDistributions(
 		}
 
 		const slot = gimoSlots[slotIndex];
-		const candidateSetNames = trackedSetNames.filter((setName) => {
-			const setIndex = modsetIndexByName[setName];
-			return (
-				counts[setIndex] < maximumCounts[setIndex] &&
-				(scoredSetIndices.has(setIndex) && composition[setIndex] > 0
-					? true
-					: scoredSetIndices.has(setIndex)
-						? requiredModsOfModsets[setIndex] <= openSlotsAfterComposition
-						: true)
-			);
-		});
-		candidateSetNames.push(null as unknown as GIMOSetStatNames);
+		const candidateSetNames = candidateSetNamesForSlot();
 
 		for (const setName of candidateSetNames) {
 			if (!hasAvailableMod(slot, setName)) continue;
@@ -3139,6 +3210,8 @@ function findBestLoadoutFulfillingTargetStats(
 			composition,
 			baseModsBySlot,
 			scoredSetNames,
+			character,
+			target,
 		)) {
 			const modsBySlot: Record<ModTypes.GIMOSlots, Mod[]> = {
 				square: [],
@@ -3244,7 +3317,6 @@ function findBestLoadoutFulfillingTargetStats(
 				const fixedSetValues = fixedCompositionSetValues[compositionIndex];
 				const optionalSetValues = maximumOptionalSetValues[compositionIndex];
 
-				let keep: any = null;
 				for (
 					let targetStatIndex = 0;
 					targetStatIndex < targetStatCount;
@@ -3266,12 +3338,6 @@ function findBestLoadoutFulfillingTargetStats(
 								node.indices[slotIndex]
 							];
 					}
-					keep = {
-						minimumModsValue,
-						maximumModsValue,
-						minimum,
-						maximum,
-					};
 					if (
 						maximumModsValue +
 							fixedSetValues[targetStatIndex] +
