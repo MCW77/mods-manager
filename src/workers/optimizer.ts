@@ -3112,6 +3112,30 @@ function canCompositionReachTargetStats(
 	return true;
 }
 
+function getModsetValuesForCounts(
+	counts: Uint8Array,
+	character: Character.Character,
+	target: OptimizationPlan,
+) {
+	const values = {} as Record<TargetStatsNames, number>;
+	for (const targetStat of target.targetStats) {
+		let value = 0;
+		for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+			const completedSets = Math.floor(
+				counts[setIndex] / requiredModsOfModsets[setIndex],
+			);
+			if (completedSets === 0) continue;
+			value +=
+				getStatsValueForTargetStat(
+					cache.modsetStats(modsetNames[setIndex], "full", character),
+					targetStat.stat,
+				) * completedSets;
+		}
+		values[targetStat.stat] = value;
+	}
+	return values;
+}
+
 function findBestLoadoutFulfillingTargetStats(
 	mods: Mod[],
 	character: Character.Character,
@@ -3394,18 +3418,10 @@ function findBestLoadoutFulfillingTargetStats(
 				continue;
 			heap.push(initialNode);
 			visited.add(initialNode.indices.join(","));
-
-			const statValuesOfModsets: Record<TargetStatsNames, number> =
-				target.targetStats.reduce(
-					(acc, targetStat, targetStatIndex) => {
-						acc[targetStat.stat] =
-							fixedCompositionSetValues[compositions.indexOf(composition)][
-								targetStatIndex
-							];
-						return acc;
-					},
-					{} as Record<TargetStatsNames, number>,
-				);
+			const modsetValuesCache = new Map<
+				string,
+				Record<TargetStatsNames, number>
+			>();
 
 			while (heap.size > 0) {
 				const node = heap.pop();
@@ -3419,6 +3435,16 @@ function findBestLoadoutFulfillingTargetStats(
 				const loadout = gimoSlots.map(
 					(slot, slotIndex) => modsBySlot[slot][node.indices[slotIndex]],
 				);
+				const countsKey = node.counts.join(",");
+				let statValuesOfModsets = modsetValuesCache.get(countsKey);
+				if (statValuesOfModsets === undefined) {
+					statValuesOfModsets = getModsetValuesForCounts(
+						node.counts,
+						character,
+						target,
+					);
+					modsetValuesCache.set(countsKey, statValuesOfModsets);
+				}
 				if (
 					loadoutFulfillsTargetStatRestriction(
 						loadout,
