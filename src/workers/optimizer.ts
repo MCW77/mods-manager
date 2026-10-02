@@ -2879,31 +2879,33 @@ function getStatsValueForTargetStat(
 	);
 }
 
-function getMaximumPossibleSetValue(
-	targetStat: TargetStatsNames,
-	character: Character.Character,
-) {
-	let maximum = 0;
-	for (const setBonus of Object.values(setBonuses)) {
-		const setValue = getStatsValueForTargetStat(
-			cache.modsetStats(setBonus.name, "full", character),
-			targetStat,
-		);
-		maximum +=
-			Math.floor(6 / setBonus.numberOfModsRequired) * Math.max(setValue, 0);
-	}
-	return maximum;
-}
-
 function pruneModsByTargetStats(
 	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
 	character: Character.Character,
 	target: OptimizationPlan,
+	composition: ModsetCompositionRequirement,
 ) {
 	if (target.targetStats.length === 0) return;
 
 	const valuesByTargetStat = new Map<TargetStatsNames, Map<string, number>>();
-	const setUpperBounds = new Map<TargetStatsNames, number>();
+	const fixedSetValues = target.targetStats.map((targetStat) => {
+		let value = 0;
+		for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+			if (composition[setIndex] === 0) continue;
+			value +=
+				getStatsValueForTargetStat(
+					cache.modsetStats(modsetNames[setIndex], "full", character),
+					targetStat.stat,
+				) *
+				(composition[setIndex] / requiredModsOfModsets[setIndex]);
+		}
+		return value;
+	});
+	const optionalSetValues = getMaximumOptionalSetValues(
+		composition,
+		character,
+		target,
+	);
 	const targetBounds = new Map<TargetStatsNames, [number, number]>();
 
 	for (const targetStat of target.targetStats) {
@@ -2917,10 +2919,6 @@ function pruneModsByTargetStats(
 			}
 		}
 		valuesByTargetStat.set(targetStat.stat, values);
-		setUpperBounds.set(
-			targetStat.stat,
-			getMaximumPossibleSetValue(targetStat.stat, character),
-		);
 		targetBounds.set(
 			targetStat.stat,
 			getTargetStatBounds(targetStat, character),
@@ -2930,7 +2928,12 @@ function pruneModsByTargetStats(
 	let changed = true;
 	while (changed) {
 		changed = false;
-		for (const targetStat of target.targetStats) {
+		for (
+			let targetStatIndex = 0;
+			targetStatIndex < target.targetStats.length;
+			targetStatIndex++
+		) {
+			const targetStat = target.targetStats[targetStatIndex];
 			const values = valuesByTargetStat.get(targetStat.stat);
 			const bounds = targetBounds.get(targetStat.stat);
 			if (!values || !bounds) continue;
@@ -2957,9 +2960,13 @@ function pruneModsByTargetStats(
 					const maximumReachable =
 						value +
 						(totalMaximum - (maxBySlot.get(slot) ?? 0)) +
-						(setUpperBounds.get(targetStat.stat) ?? 0);
+						fixedSetValues[targetStatIndex] +
+						optionalSetValues[targetStatIndex];
 					const minimumReachable =
-						value + totalMinimum - (minBySlot.get(slot) ?? 0);
+						value +
+						totalMinimum -
+						(minBySlot.get(slot) ?? 0) +
+						fixedSetValues[targetStatIndex];
 					return maximumReachable >= bounds[0] && minimumReachable <= bounds[1];
 				});
 				if (retainedMods.length !== modsBySlot[slot].length) {
@@ -3261,7 +3268,7 @@ function findBestLoadoutFulfillingTargetStats(
 			}
 			if (hasEmptySlot) continue;
 
-			pruneModsByTargetStats(modsBySlot, character, target);
+			pruneModsByTargetStats(modsBySlot, character, target, composition);
 			deduplicateEquivalentModsBySlot(modsBySlot, character, target);
 			if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) continue;
 
