@@ -1615,12 +1615,17 @@ function loadoutFulfillsTargetStatRestriction(
 
 	// Check each target stat individually
 	return targetStats.every((targetStat) => {
-		const totalValue = getStatValueForCharacterWithMods(
+		if (targetStat.stat === "Health+Protection") return true;
+		let totalValue = getStatValueForCharacterWithMods(
 			loadout,
 			character,
 			targetStat.stat,
 			modsetValues,
 		);
+		if (targetStat.stat === "Armor" || targetStat.stat === "Resistance") {
+			totalValue =
+				(100 * totalValue) / (character.playerValues.level * 7.5 + totalValue);
+		}
 		return totalValue <= targetStat.maximum && totalValue >= targetStat.minimum;
 	});
 }
@@ -2496,11 +2501,13 @@ function buildModsetCompositionsRequirements(
 	const openModSlots = getOpenModSlots(setRestrictions);
 	if (openModSlots < 2) return modsetRequirements;
 
-	const scoreRelevantSets = Object.values(setBonuses).filter(
+	const modsetsNeededForScoringOrTargetStats = Object.values(setBonuses).filter(
 		(setBonus) =>
 			setRestrictions[setBonus.name] !== -1 &&
 			affectedOptimizableStatsBySet[setBonus.name].some(
-				(stat) => target[stat] !== undefined && target[stat] !== 0,
+				(stat) =>
+					(target[stat] !== undefined && target[stat] !== 0) ||
+					target.targetStats.some((targetStat) => targetStat.stat === stat),
 			),
 	);
 
@@ -2509,8 +2516,12 @@ function buildModsetCompositionsRequirements(
 		remainingSlots: number,
 		composition: ModsetCompositionRequirement,
 	) => {
-		for (let index = startIndex; index < scoreRelevantSets.length; index++) {
-			const setBonus = scoreRelevantSets[index];
+		for (
+			let index = startIndex;
+			index < modsetsNeededForScoringOrTargetStats.length;
+			index++
+		) {
+			const setBonus = modsetsNeededForScoringOrTargetStats[index];
 			if (setBonus.numberOfModsRequired > remainingSlots) continue;
 
 			const updatedComposition = composition.slice();
@@ -2979,6 +2990,163 @@ function pruneModsByTargetStats(
 	}
 }
 
+function pruneModsCrossTargetStats(
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	character: Character.Character,
+	target: OptimizationPlan,
+	composition: ModsetCompositionRequirement,
+) {
+	if (target.targetStats.length < 2) return;
+	if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) return;
+
+	const targetStatCount = target.targetStats.length;
+
+	const fixedSetValues = new Float64Array(targetStatCount);
+	for (let t = 0; t < targetStatCount; t++) {
+		const targetStat = target.targetStats[t];
+		for (let s = 0; s < modsetNames.length; s++) {
+			if (composition[s] === 0) continue;
+			fixedSetValues[t] +=
+				getStatsValueForTargetStat(
+					cache.modsetStats(modsetNames[s], "full", character),
+					targetStat.stat,
+				) *
+				(composition[s] / requiredModsOfModsets[s]);
+		}
+	}
+	const optionalSetValues = getMaximumOptionalSetValues(
+		composition,
+		character,
+		target,
+	);
+
+	const lowerBounds = new Float64Array(targetStatCount);
+	const upperBounds = new Float64Array(targetStatCount);
+	for (let t = 0; t < targetStatCount; t++) {
+		const [lower, upper] = getTargetStatBounds(
+			target.targetStats[t],
+			character,
+		);
+		lowerBounds[t] = lower;
+		upperBounds[t] = upper;
+	}
+
+	const slotCount = gimoSlots.length;
+	const modValues: Float64Array[] = [];
+	const slotMin: Float64Array[] = [];
+	const slotMax: Float64Array[] = [];
+
+	for (let si = 0; si < slotCount; si++) {
+		const slotMods = modsBySlot[gimoSlots[si]];
+		const values = new Float64Array(slotMods.length * targetStatCount);
+		const min = new Float64Array(targetStatCount).fill(
+			Number.POSITIVE_INFINITY,
+		);
+		const max = new Float64Array(targetStatCount).fill(
+			Number.NEGATIVE_INFINITY,
+		);
+
+		for (let mi = 0; mi < slotMods.length; mi++) {
+			const modStats = cache.modStats.get(slotMods[mi]);
+			for (let t = 0; t < targetStatCount; t++) {
+				const v = getStatsValueForTargetStat(
+					modStats,
+					target.targetStats[t].stat,
+				);
+				values[mi * targetStatCount + t] = v;
+				if (v < min[t]) min[t] = v;
+				if (v > max[t]) max[t] = v;
+			}
+		}
+
+		modValues[si] = values;
+		slotMin[si] = min;
+		slotMax[si] = max;
+	}
+
+	const remainingMin: Float64Array[][] = [];
+	const remainingMax: Float64Array[][] = [];
+
+	for (let si = 0; si < slotCount; si++) {
+		remainingMin[si] = [];
+		remainingMax[si] = [];
+		for (let oi = 0; oi < slotCount; oi++) {
+			if (oi === si) {
+				remainingMin[si][oi] = new Float64Array(targetStatCount);
+				remainingMax[si][oi] = new Float64Array(targetStatCount);
+				continue;
+			}
+			const min = new Float64Array(targetStatCount);
+			const max = new Float64Array(targetStatCount);
+			for (let ri = 0; ri < slotCount; ri++) {
+				if (ri === si || ri === oi) continue;
+				for (let t = 0; t < targetStatCount; t++) {
+					min[t] += slotMin[ri][t];
+					max[t] += slotMax[ri][t];
+				}
+			}
+			remainingMin[si][oi] = min;
+			remainingMax[si][oi] = max;
+		}
+	}
+
+	for (let si = 0; si < slotCount; si++) {
+		const slot = gimoSlots[si];
+		const slotMods = modsBySlot[slot];
+		const slotModValues = modValues[si];
+
+		const retained: Mod[] = [];
+		for (let mi = 0; mi < slotMods.length; mi++) {
+			let isValid = true;
+
+			for (let oi = 0; oi < slotCount && isValid; oi++) {
+				if (oi === si) continue;
+
+				const otherSlotMods = modsBySlot[gimoSlots[oi]];
+				const otherSlotModValues = modValues[oi];
+				const remMin = remainingMin[si][oi];
+				const remMax = remainingMax[si][oi];
+
+				let hasCompatible = false;
+				for (let omi = 0; omi < otherSlotMods.length; omi++) {
+					let compatible = true;
+					for (let t = 0; t < targetStatCount; t++) {
+						const modValue = slotModValues[mi * targetStatCount + t];
+						const otherModValue = otherSlotModValues[omi * targetStatCount + t];
+						const reqMax = upperBounds[t] - modValue - fixedSetValues[t];
+						const reqMin =
+							lowerBounds[t] -
+							modValue -
+							fixedSetValues[t] -
+							optionalSetValues[t];
+
+						if (
+							otherModValue + remMin[t] > reqMax ||
+							otherModValue + remMax[t] < reqMin
+						) {
+							compatible = false;
+							break;
+						}
+					}
+					if (compatible) {
+						hasCompatible = true;
+						break;
+					}
+				}
+
+				if (!hasCompatible) {
+					isValid = false;
+				}
+			}
+
+			if (isValid) retained.push(slotMods[mi]);
+		}
+
+		if (retained.length !== slotMods.length) {
+			modsBySlot[slot] = retained;
+		}
+	}
+}
 function deduplicateEquivalentModsBySlot(
 	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
 	character: Character.Character,
@@ -3269,6 +3437,7 @@ function findBestLoadoutFulfillingTargetStats(
 			if (hasEmptySlot) continue;
 
 			pruneModsByTargetStats(modsBySlot, character, target, composition);
+			pruneModsCrossTargetStats(modsBySlot, character, target, composition);
 			deduplicateEquivalentModsBySlot(modsBySlot, character, target);
 			if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) continue;
 
@@ -3461,19 +3630,25 @@ function findBestLoadoutFulfillingTargetStats(
 					)
 				) {
 					const score = getLoadoutScore(loadout, target);
-					const unmovedMods = loadout.filter(
-						(mod) => mod.characterID === character.id,
-					).length;
-					const bestUnmovedMods = bestLoadoutAndMessages.loadout.filter(
-						(mod) => mod.characterID === character.id,
-					).length;
-					if (
-						score > bestScore ||
-						(score === bestScore && unmovedMods > bestUnmovedMods) ||
-						(score === bestScore &&
-							unmovedMods === bestUnmovedMods &&
-							loadout.length > bestLoadoutAndMessages.loadout.length)
-					) {
+					let isBestScoreBeaten = false;
+					if (score > bestScore) {
+						isBestScoreBeaten = true;
+					} else if (score === bestScore) {
+						const unmovedMods = loadout.filter(
+							(mod) => mod.characterID === character.id,
+						).length;
+						const bestUnmovedMods = bestLoadoutAndMessages.loadout.filter(
+							(mod) => mod.characterID === character.id,
+						).length;
+						if (
+							unmovedMods > bestUnmovedMods ||
+							(unmovedMods === bestUnmovedMods &&
+								loadout.length > bestLoadoutAndMessages.loadout.length)
+						) {
+							isBestScoreBeaten = true;
+						}
+					}
+					if (isBestScoreBeaten) {
 						bestScore = score;
 						bestLoadoutAndMessages = {
 							id: generateLoadoutId(loadout),
@@ -3521,7 +3696,6 @@ function findBestLoadoutFulfillingTargetStats(
 							cache.modScores.get(newMod).score -
 							cache.modScores.get(oldMod).score,
 					};
-					/*
 					if (
 						!canDescendantReachTarget(
 							childNode,
@@ -3529,7 +3703,6 @@ function findBestLoadoutFulfillingTargetStats(
 						)
 					)
 						continue;
-*/
 					heap.push(childNode);
 				}
 			}
