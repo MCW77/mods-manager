@@ -3329,54 +3329,12 @@ function findBestLoadoutFulfillingTargetStats(
 		setRestrictions,
 		target,
 	);
-	const setNames = getSetRestrictionsNames(setRestrictions);
-	addPossibleSetRestrictionsNames(setNames, getOpenModSlots(setRestrictions));
-	for (const [setName, count] of Object.entries(
-		setRestrictions,
-	) as SetRestrictionsEntries) {
-		if (count === -1) setNames.delete(setName);
-	}
 
-	modFilters.target = target;
-	modFilters.openModSlots = getOpenModSlots(setRestrictions);
-	modFilters.setNames = setNames;
-	const baseModsBySlot = filterMods(
-		mods
-			.filter(
-				combineModFilters([
-					(mod) => mod.level === 15,
-					modFilters.hasMinimumDots,
-					modFilters.hasRestrictedPrimaryStat,
-					modFilters.hasSet,
-					character.playerValues.gearLevel < 12
-						? modFilters.no6Dot
-						: modFilters.noFilter,
-				]),
-			)
-			.slice(),
-	);
-	for (const slot of gimoSlots) baseModsBySlot[slot].sort(modSort(character));
-
-	const scoredSetNames = Object.values(setBonuses)
-		.filter(
-			(setBonus) =>
-				setRestrictions[setBonus.name] !== -1 &&
-				affectedOptimizableStatsBySet[setBonus.name].some(
-					(stat) => target[stat] !== undefined && target[stat] !== 0,
-				),
-		)
-		.map((setBonus) => setBonus.name);
+	const baseModsBySlot = getBaseModsBySlot(character, target, mods);
+	const scoredSetNames = getScoredSetNames(target);
 	const scoredSets = new Set(
 		scoredSetNames.map((setName) => modsetIndexByName[setName]),
 	);
-	const requiredSetsForRestrictions = new Set<number>();
-	for (const [setName, count] of Object.entries(
-		setRestrictions,
-	) as SetRestrictionsEntries) {
-		if (count > 0) {
-			requiredSetsForRestrictions.add(modsetIndexByName[setName]);
-		}
-	}
 
 	const targetStatCount = target.targetStats.length;
 
@@ -3710,6 +3668,56 @@ function findBestLoadoutFulfillingTargetStats(
 	}
 
 	return bestLoadoutAndMessages;
+}
+
+function getBaseModsBySlot(
+	character: Character.Character,
+	target: OptimizationPlan,
+	mods: Mod[],
+) {
+	const setRestrictions = target.setRestrictions;
+	const setNames = getSetRestrictionsNames(setRestrictions);
+	addPossibleSetRestrictionsNames(setNames, getOpenModSlots(setRestrictions));
+	for (const [setName, count] of Object.entries(
+		setRestrictions,
+	) as SetRestrictionsEntries) {
+		if (count === -1) setNames.delete(setName);
+	}
+
+	modFilters.target = target;
+	modFilters.openModSlots = getOpenModSlots(setRestrictions);
+	modFilters.setNames = setNames;
+	const baseModsBySlot = filterMods(
+		mods
+			.filter(
+				combineModFilters([
+					(mod) => mod.level === 15,
+					modFilters.hasMinimumDots,
+					modFilters.hasRestrictedPrimaryStat,
+					modFilters.hasSet,
+					character.playerValues.gearLevel < 12
+						? modFilters.no6Dot
+						: modFilters.noFilter,
+				]),
+			)
+			.slice(),
+	);
+	for (const slot of gimoSlots) baseModsBySlot[slot].sort(modSort(character));
+
+	return baseModsBySlot;
+}
+
+function getScoredSetNames(target: OptimizationPlan) {
+	const setRestrictions = target.setRestrictions;
+	return Object.values(setBonuses)
+		.filter(
+			(setBonus) =>
+				setRestrictions[setBonus.name] !== -1 &&
+				affectedOptimizableStatsBySet[setBonus.name].some(
+					(stat) => target[stat] !== undefined && target[stat] !== 0,
+				),
+		)
+		.map((setBonus) => setBonus.name);
 }
 
 function generateLoadoutId(loadout: Mod[]) {
