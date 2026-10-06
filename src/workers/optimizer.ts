@@ -2700,8 +2700,9 @@ function* generateModsetDistributions(
 	};
 
 	function* recurse(slotIndex: number): Generator<ModsetDistribution> {
-		if (!canPartialDistributionReachTargets(slotIndex)) return;
-		if (slotIndex === gimoSlots.length) {
+		if (!canPartialDistributionReachTargets(slotOrder[slotIndex]?.index ?? 6))
+			return;
+		if (slotIndex === slotOrder.length) {
 			for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
 				const completedSets = Math.floor(
 					counts[setIndex] / requiredModsOfModsets[setIndex],
@@ -2728,13 +2729,13 @@ function* generateModsetDistributions(
 			return;
 		}
 
-		const slot = gimoSlots[slotIndex];
+		const slot = slotOrder[slotIndex].slot;
 		const candidateSetNames = candidateSetNamesForSlot();
 
 		for (const setName of candidateSetNames) {
 			if (!hasAvailableMod(slot, setName)) continue;
 			if (setName === null) {
-				distribution[slotIndex] = null;
+				distribution[slotOrder[slotIndex].index] = null;
 				yield* recurse(slotIndex + 1);
 				continue;
 			}
@@ -2742,12 +2743,16 @@ function* generateModsetDistributions(
 			const setIndex = modsetIndexByName[setName];
 			counts[setIndex]++;
 			if (canStillCompleteComposition(slotIndex + 1)) {
-				distribution[slotIndex] = setName;
+				distribution[slotOrder[slotIndex].index] = setName;
 				yield* recurse(slotIndex + 1);
 			}
 			counts[setIndex]--;
 		}
 	}
+
+	const slotOrder = gimoSlots
+		.map((slot, index) => ({ slot, index, count: baseModsBySlot[slot].length }))
+		.sort((a, b) => a.count - b.count);
 
 	yield* recurse(0);
 }
