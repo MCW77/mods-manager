@@ -3011,6 +3011,8 @@ function pruneModsCrossTargetStats(
 	character: Character.Character,
 	target: OptimizationPlan,
 	composition: ModsetCompositionRequirement,
+	lowerTargetStatsBounds: Float64Array,
+	upperTargetStatsBounds: Float64Array,
 ) {
 	if (target.targetStats.length < 2) return;
 	if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) return;
@@ -3035,17 +3037,6 @@ function pruneModsCrossTargetStats(
 		character,
 		target,
 	);
-
-	const lowerBounds = new Float64Array(targetStatCount);
-	const upperBounds = new Float64Array(targetStatCount);
-	for (let t = 0; t < targetStatCount; t++) {
-		const [lower, upper] = getTargetStatBounds(
-			target.targetStats[t],
-			character,
-		);
-		lowerBounds[t] = lower;
-		upperBounds[t] = upper;
-	}
 
 	const slotCount = gimoSlots.length;
 	const modValues: Float64Array[] = [];
@@ -3129,9 +3120,10 @@ function pruneModsCrossTargetStats(
 					for (let t = 0; t < targetStatCount; t++) {
 						const modValue = slotModValues[mi * targetStatCount + t];
 						const otherModValue = otherSlotModValues[omi * targetStatCount + t];
-						const reqMax = upperBounds[t] - modValue - fixedSetValues[t];
+						const reqMax =
+							upperTargetStatsBounds[t] - modValue - fixedSetValues[t];
 						const reqMin =
-							lowerBounds[t] -
+							lowerTargetStatsBounds[t] -
 							modValue -
 							fixedSetValues[t] -
 							optionalSetValues[t];
@@ -3412,8 +3404,26 @@ function findBestLoadoutFulfillingTargetStats(
 			}
 			if (hasEmptySlot) continue;
 
+			const lowerTargetStatsBounds = new Float64Array(targetStatCount);
+			const upperTargetStatsBounds = new Float64Array(targetStatCount);
+			for (let t = 0; t < targetStatCount; t++) {
+				const [lower, upper] = getTargetStatBounds(
+					target.targetStats[t],
+					character,
+				);
+				lowerTargetStatsBounds[t] = lower;
+				upperTargetStatsBounds[t] = upper;
+			}
+
 			pruneModsByTargetStats(modsBySlot, character, target, composition);
-			pruneModsCrossTargetStats(modsBySlot, character, target, composition);
+			pruneModsCrossTargetStats(
+				modsBySlot,
+				character,
+				target,
+				composition,
+				lowerTargetStatsBounds,
+				upperTargetStatsBounds,
+			);
 			deduplicateEquivalentModsBySlot(modsBySlot, character, target);
 			if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) continue;
 
@@ -3578,12 +3588,15 @@ function findBestLoadoutFulfillingTargetStats(
 					modsetValuesCache.set(countsKey, statValuesOfModsets);
 				}
 				if (
-					loadoutFulfillsTargetStatRestriction(
-						loadout,
-						character,
-						target,
-						statValuesOfModsets,
-					)
+					target.targetStats.every((targetStat, targetStatIndex) => {
+						const value =
+							node.targetValues[targetStatIndex] +
+							statValuesOfModsets[targetStat.stat];
+						return (
+							value >= lowerTargetStatsBounds[targetStatIndex] &&
+							value <= upperTargetStatsBounds[targetStatIndex]
+						);
+					})
 				) {
 					const score = getLoadoutScore(loadout, target);
 					let isBestScoreBeaten = false;
