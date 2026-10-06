@@ -2841,13 +2841,6 @@ function getCompositionFractionalScoreUpperBound(
 	return score;
 }
 
-function getTargetStatDisplayNames(stat: TargetStatsNames): DisplayStatNames[] {
-	if (stat === "Health+Protection") return ["Health", "Protection"];
-	return display2CSGIMOStatNamesMap[stat].map(
-		(statName) => statDisplayNames[statName],
-	);
-}
-
 function getTargetStatBounds(
 	targetStat: TargetStat,
 	character: Character.Character,
@@ -2881,13 +2874,10 @@ function getStatsValueForTargetStat(
 	stats: StatValue[],
 	targetStat: TargetStatsNames,
 ) {
-	const displayNames = getTargetStatDisplayNames(targetStat);
-	return displayNames.reduce(
-		(total, displayName) =>
-			total +
-			(stats.find((stat) => stat.displayType === displayName)?.value ?? 0),
-		0,
-	);
+	return targetStat === "Health+Protection"
+		? (stats.find((stat) => stat.displayType === "Health")?.value ?? 0) +
+				(stats.find((stat) => stat.displayType === "Protection")?.value ?? 0)
+		: (stats.find((stat) => stat.displayType === targetStat)?.value ?? 0);
 }
 
 function pruneModsByTargetStats(
