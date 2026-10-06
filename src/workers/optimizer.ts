@@ -103,6 +103,9 @@ interface Cache {
 		setCharacter: (character: Character.Character) => void;
 		setRelevantStats: (target: OptimizationPlan) => void;
 	};
+	modTargetStats: {
+		get: (mod: Mod, targetStats: TargetStat[]) => Float64Array;
+	};
 	flatStats: {
 		get: (stat: Stat) => StatValue[];
 		set: (key: FlatStatsCacheKey, flatStats: StatValue[]) => void;
@@ -1117,6 +1120,27 @@ const createModStatsCache = () => {
 	};
 };
 
+const createModTargetStatsCache = () => {
+	const modTargetStatsCache = new Map<string, Float64Array>();
+	return {
+		get: (mod: Mod, targetStats: TargetStat[]) => {
+			const cacheKey = `${mod.id}`;
+			const cacheHit = modTargetStatsCache.get(cacheKey);
+			if (cacheHit !== undefined) {
+				return cacheHit;
+			}
+			const modStats = cache.modStats.get(mod) ?? [];
+			const targetStatsValues = Float64Array.from(
+				targetStats.map((targetStat) =>
+					getStatsValueForTargetStat(modStats, targetStat.stat),
+				),
+			);
+			modTargetStatsCache.set(cacheKey, targetStatsValues);
+			return targetStatsValues;
+		},
+	};
+};
+
 const createModsetScoreCache = () => {
 	const modsetScorecache = new Map<
 		ModsetScoreCacheKey,
@@ -1237,6 +1261,7 @@ const cache: Cache = {
 	relatedStatValues: new Map<string, Map<string, number>>(),
 	modsetScore: createModsetScoreCache(),
 	modsetStats: createModsetStatsCache(),
+	modTargetStats: createModTargetStatsCache(),
 	flatStats: createFlatStatsCache(),
 };
 
@@ -1245,6 +1270,7 @@ function resetCaches() {
 	cache.modStats = createModStatsCache();
 	cache.modsetScore = createModsetScoreCache();
 	cache.modsetStats = createModsetStatsCache();
+	cache.modTargetStats = createModTargetStatsCache();
 	cache.flatStats = createFlatStatsCache();
 }
 // #endregion Caching variables
@@ -3391,32 +3417,16 @@ function findBestLoadoutFulfillingTargetStats(
 			deduplicateEquivalentModsBySlot(modsBySlot, character, target);
 			if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) continue;
 
-			const modTargetValues = new Map<string, Float64Array>();
-			for (const slot of gimoSlots) {
-				for (const mod of modsBySlot[slot]) {
-					modTargetValues.set(
-						mod.id,
-						Float64Array.from(
-							target.targetStats.map((targetStat) =>
-								getStatsValueForTargetStat(
-									cache.modStats.get(mod),
-									targetStat.stat,
-								),
-							),
-						),
-					);
-				}
-			}
-
 			const suffixMinimums = target.targetStats.map((_, targetStatIndex) =>
 				gimoSlots.map((slot) => {
 					const values = new Float64Array(modsBySlot[slot].length + 1);
 					values[values.length - 1] = Number.POSITIVE_INFINITY;
 					for (let index = values.length - 2; index >= 0; index--) {
 						values[index] = Math.min(
-							modTargetValues.get(modsBySlot[slot][index].id)?.[
-								targetStatIndex
-							] ?? 0,
+							cache.modTargetStats.get(
+								modsBySlot[slot][index],
+								target.targetStats,
+							)?.[targetStatIndex] ?? 0,
 							values[index + 1],
 						);
 					}
@@ -3429,9 +3439,10 @@ function findBestLoadoutFulfillingTargetStats(
 					values[values.length - 1] = Number.NEGATIVE_INFINITY;
 					for (let index = values.length - 2; index >= 0; index--) {
 						values[index] = Math.max(
-							modTargetValues.get(modsBySlot[slot][index].id)?.[
-								targetStatIndex
-							] ?? 0,
+							cache.modTargetStats.get(
+								modsBySlot[slot][index],
+								target.targetStats,
+							)?.[targetStatIndex] ?? 0,
 							values[index + 1],
 						);
 					}
@@ -3510,7 +3521,7 @@ function findBestLoadoutFulfillingTargetStats(
 					const mod = modsBySlot[gimoSlots[slotIndex]][0];
 					modScore += cache.modScores.get(mod).score;
 					counts[modsetIndexByName[mod.modset.name]]++;
-					const values = modTargetValues.get(mod.id);
+					const values = cache.modTargetStats.get(mod, target.targetStats);
 					if (values) {
 						for (
 							let targetStatIndex = 0;
@@ -3618,8 +3629,14 @@ function findBestLoadoutFulfillingTargetStats(
 					childCounts[modsetIndexByName[oldMod.modset.name]]--;
 					childCounts[modsetIndexByName[newMod.modset.name]]++;
 					const childTargetValues = node.targetValues.slice();
-					const oldTargetValues = modTargetValues.get(oldMod.id);
-					const newTargetValues = modTargetValues.get(newMod.id);
+					const oldTargetValues = cache.modTargetStats.get(
+						oldMod,
+						target.targetStats,
+					);
+					const newTargetValues = cache.modTargetStats.get(
+						newMod,
+						target.targetStats,
+					);
 					if (oldTargetValues && newTargetValues) {
 						for (
 							let targetStatIndex = 0;
