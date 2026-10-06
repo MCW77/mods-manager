@@ -3353,6 +3353,8 @@ function findBestLoadoutFulfillingTargetStats(
 		) {
 			continue;
 		}
+		const compositionIndex = compositions.indexOf(composition);
+
 		for (const distribution of generateModsetDistributions(
 			composition,
 			baseModsBySlot,
@@ -3533,13 +3535,7 @@ function findBestLoadoutFulfillingTargetStats(
 				modsBySlot,
 				target,
 			);
-			if (
-				!canDescendantReachTarget(
-					initialNode,
-					compositions.indexOf(composition),
-				)
-			)
-				continue;
+			if (!canDescendantReachTarget(initialNode, compositionIndex)) continue;
 			heap.push(initialNode);
 			visited.add(initialNode.indices.join(","));
 			const modsetValuesCache = new Map<
@@ -3644,13 +3640,7 @@ function findBestLoadoutFulfillingTargetStats(
 							cache.modScores.get(newMod).score -
 							cache.modScores.get(oldMod).score,
 					};
-					if (
-						!canDescendantReachTarget(
-							childNode,
-							compositions.indexOf(composition),
-						)
-					)
-						continue;
+					if (!canDescendantReachTarget(childNode, compositionIndex)) continue;
 					heap.push(childNode);
 				}
 			}
