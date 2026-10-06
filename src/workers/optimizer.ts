@@ -415,6 +415,10 @@ function progressMessage(
 	step: string,
 	progress = 100,
 ) {
+	// Stop progress messages to get better performance timeline
+	// Only in dev to prevent accidental shipping of disabled progress to production
+	// Comment out for normal behaviour
+	if (import.meta.env.DEV) return;
 	if (
 		lastProgressUpdated === undefined ||
 		performance.now() - lastProgressUpdated > 10
