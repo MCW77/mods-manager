@@ -3624,6 +3624,8 @@ function findBestLoadoutFulfillingTargetStats(
 					const key = childIndices.join(",");
 					if (visited.has(key)) continue;
 					visited.add(key);
+					if (!canDescendantReachTarget(childIndices, compositionIndex))
+						continue;
 					const oldMod = modsBySlot[slot][node.indices[slotIndex]];
 					const newMod = modsBySlot[slot][nextIndex];
 					const childCounts = node.counts.slice();
@@ -3658,8 +3660,6 @@ function findBestLoadoutFulfillingTargetStats(
 							cache.modScores.get(newMod).score -
 							cache.modScores.get(oldMod).score,
 					};
-					if (!canDescendantReachTarget(childIndices, compositionIndex))
-						continue;
 					heap.push(childNode);
 				}
 			}
