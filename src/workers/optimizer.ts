@@ -3472,7 +3472,7 @@ function findBestLoadoutFulfillingTargetStats(
 				getMaximumOptionalSetValues(composition, character, target),
 			);
 			const canDescendantReachTarget = (
-				node: TargetStatHeapNode,
+				nodeIndices: Uint16Array<ArrayBufferLike>,
 				compositionIndex: number,
 			) => {
 				const fixedSetValues = fixedCompositionSetValues[compositionIndex];
@@ -3492,11 +3492,11 @@ function findBestLoadoutFulfillingTargetStats(
 					for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
 						minimumModsValue +=
 							suffixMinimums[targetStatIndex][slotIndex][
-								node.indices[slotIndex]
+								nodeIndices[slotIndex]
 							];
 						maximumModsValue +=
 							suffixMaximums[targetStatIndex][slotIndex][
-								node.indices[slotIndex]
+								nodeIndices[slotIndex]
 							];
 					}
 					if (
@@ -3546,7 +3546,8 @@ function findBestLoadoutFulfillingTargetStats(
 				modsBySlot,
 				target,
 			);
-			if (!canDescendantReachTarget(initialNode, compositionIndex)) continue;
+			if (!canDescendantReachTarget(initialNode.indices, compositionIndex))
+				continue;
 			heap.push(initialNode);
 			visited.add(initialNode.indices.join(","));
 			const modsetValuesCache = new Map<
@@ -3657,7 +3658,8 @@ function findBestLoadoutFulfillingTargetStats(
 							cache.modScores.get(newMod).score -
 							cache.modScores.get(oldMod).score,
 					};
-					if (!canDescendantReachTarget(childNode, compositionIndex)) continue;
+					if (!canDescendantReachTarget(childIndices, compositionIndex))
+						continue;
 					heap.push(childNode);
 				}
 			}
