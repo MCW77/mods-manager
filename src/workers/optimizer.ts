@@ -3616,57 +3616,78 @@ function findBestLoadoutFulfillingTargetStats(
 				}
 
 				for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
-					const slot = gimoSlots[slotIndex];
-					const nextIndex = node.indices[slotIndex] + 1;
-					if (nextIndex >= modsBySlot[slot].length) continue;
-					const childIndices = node.indices.slice();
-					childIndices[slotIndex] = nextIndex;
-					const key = childIndices.join(",");
-					if (visited.has(key)) continue;
-					visited.add(key);
-					if (!canDescendantReachTarget(childIndices, compositionIndex))
-						continue;
-					const oldMod = modsBySlot[slot][node.indices[slotIndex]];
-					const newMod = modsBySlot[slot][nextIndex];
-					const childCounts = node.counts.slice();
-					childCounts[modsetIndexByName[oldMod.modset.name]]--;
-					childCounts[modsetIndexByName[newMod.modset.name]]++;
-					const childTargetValues = node.targetValues.slice();
-					const oldTargetValues = cache.modTargetStats.get(
-						oldMod,
-						target.targetStats,
+					addChildNodeOfSlot(
+						heap,
+						node,
+						slotIndex,
+						modsBySlot,
+						modsetIndexByName,
+						target,
+						compositionIndex,
+						visited,
+						targetStatCount,
+						canDescendantReachTarget,
 					);
-					const newTargetValues = cache.modTargetStats.get(
-						newMod,
-						target.targetStats,
-					);
-					if (oldTargetValues && newTargetValues) {
-						for (
-							let targetStatIndex = 0;
-							targetStatIndex < targetStatCount;
-							targetStatIndex++
-						) {
-							childTargetValues[targetStatIndex] +=
-								newTargetValues[targetStatIndex] -
-								oldTargetValues[targetStatIndex];
-						}
-					}
-					const childNode: TargetStatHeapNode = {
-						indices: childIndices,
-						counts: childCounts,
-						targetValues: childTargetValues,
-						modScore:
-							node.modScore +
-							cache.modScores.get(newMod).score -
-							cache.modScores.get(oldMod).score,
-					};
-					heap.push(childNode);
 				}
 			}
 		}
 	}
 
 	return bestLoadoutAndMessages;
+}
+
+function addChildNodeOfSlot(
+	heap: ReturnType<typeof createMaxHeap<TargetStatHeapNode>>,
+	node: TargetStatHeapNode,
+	slotIndex: number,
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	modsetIndexByName: Record<string, number>,
+	target: OptimizationPlan,
+	compositionIndex: number,
+	visited: Set<string>,
+	targetStatCount: number,
+	canDescendantReachTarget: (
+		nodeIndices: Uint16Array<ArrayBufferLike>,
+		compositionIndex: number,
+	) => boolean,
+) {
+	const slot = gimoSlots[slotIndex];
+	const nextIndex = node.indices[slotIndex] + 1;
+	if (nextIndex >= modsBySlot[slot].length) return;
+	const childIndices = node.indices.slice();
+	childIndices[slotIndex] = nextIndex;
+	const key = childIndices.join(",");
+	if (visited.has(key)) return;
+	visited.add(key);
+	if (!canDescendantReachTarget(childIndices, compositionIndex)) return;
+	const oldMod = modsBySlot[slot][node.indices[slotIndex]];
+	const newMod = modsBySlot[slot][nextIndex];
+	const childCounts = node.counts.slice();
+	childCounts[modsetIndexByName[oldMod.modset.name]]--;
+	childCounts[modsetIndexByName[newMod.modset.name]]++;
+	const childTargetValues = node.targetValues.slice();
+	const oldTargetValues = cache.modTargetStats.get(oldMod, target.targetStats);
+	const newTargetValues = cache.modTargetStats.get(newMod, target.targetStats);
+	if (oldTargetValues && newTargetValues) {
+		for (
+			let targetStatIndex = 0;
+			targetStatIndex < targetStatCount;
+			targetStatIndex++
+		) {
+			childTargetValues[targetStatIndex] +=
+				newTargetValues[targetStatIndex] - oldTargetValues[targetStatIndex];
+		}
+	}
+	const childNode: TargetStatHeapNode = {
+		indices: childIndices,
+		counts: childCounts,
+		targetValues: childTargetValues,
+		modScore:
+			node.modScore +
+			cache.modScores.get(newMod).score -
+			cache.modScores.get(oldMod).score,
+	};
+	heap.push(childNode);
 }
 
 function getBaseModsBySlot(
