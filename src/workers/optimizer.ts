@@ -1641,7 +1641,6 @@ function loadoutFulfillsTargetStatRestriction(
 
 	// Check each target stat individually
 	return targetStats.every((targetStat) => {
-		if (targetStat.stat === "Health+Protection") return true;
 		let totalValue = getStatValueForCharacterWithMods(
 			loadout,
 			character,
