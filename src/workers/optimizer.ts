@@ -3623,6 +3623,13 @@ function findBestLoadoutFulfillingTargetStats(
 				const node = heap.pop();
 				if (!node) break;
 				if (
+					node.indices.some(
+						(index, slotIndex) =>
+							index >= modsBySlot[gimoSlots[slotIndex]].length,
+					)
+				)
+					break;
+				if (
 					bestScore !== Number.NEGATIVE_INFINITY &&
 					node.modScore + fixedSetScore + scoreBounds.totalScore <= bestScore
 				) {
@@ -3703,6 +3710,9 @@ function findBestLoadoutFulfillingTargetStats(
 						targetStatCount,
 						canDescendantReachTarget,
 						lastFeasibleIndicesOfSlots,
+						bestScore,
+						scoreBounds.totalScore,
+						fixedSetScore,
 					);
 				}
 			}
@@ -3753,6 +3763,9 @@ function addChildNodeOfSlot(
 		compositionIndex: number,
 	) => boolean,
 	maxIndices: number[],
+	bestScore: number,
+	fractionalScoreUpperBound: number,
+	fixedSetScore: number,
 ) {
 	const slot = gimoSlots[slotIndex];
 	const nextIndex = node.indices[slotIndex] + 1;
@@ -3781,14 +3794,16 @@ function addChildNodeOfSlot(
 				newTargetValues[targetStatIndex] - oldTargetValues[targetStatIndex];
 		}
 	}
+	const score =
+		node.modScore +
+		cache.modScores.get(newMod).score -
+		cache.modScores.get(oldMod).score;
+	if (score + fixedSetScore + fractionalScoreUpperBound < bestScore) return;
 	const childNode: TargetStatHeapNode = {
 		indices: childIndices,
 		counts: childCounts,
 		targetValues: childTargetValues,
-		modScore:
-			node.modScore +
-			cache.modScores.get(newMod).score -
-			cache.modScores.get(oldMod).score,
+		modScore: score,
 	};
 	heap.push(childNode);
 }
