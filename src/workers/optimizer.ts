@@ -2838,20 +2838,31 @@ function getCompositionFractionalScoreUpperBound(
 	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
 	target: OptimizationPlan,
 ) {
-	const maximumFractions: Partial<Record<DisplayStatNames, number>> = {};
-	for (const slot of gimoSlots) {
-		const slotMaximums: Partial<Record<DisplayStatNames, number>> = {};
+	const totalMaximumFractions: Partial<Record<DisplayStatNames, number>> = {};
+	const perSlotMaximumFractions: Partial<Record<DisplayStatNames, number>>[] = [
+		{},
+		{},
+		{},
+		{},
+		{},
+		{},
+	];
+	for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+		const slot = gimoSlots[slotIndex];
 		for (const mod of modsBySlot[slot]) {
 			for (const stat of cache.modScores.get(mod).partiallyScoredStats) {
-				slotMaximums[stat.displayType] = Math.max(
-					slotMaximums[stat.displayType] ?? 0,
+				if (!wholeValueStats.has(stat.displayType)) continue;
+				perSlotMaximumFractions[slotIndex][stat.displayType] = Math.max(
+					perSlotMaximumFractions[slotIndex][stat.displayType] ?? 0,
 					stat.fractional,
 				);
 			}
 		}
-		for (const [stat, fraction] of Object.entries(slotMaximums)) {
-			maximumFractions[stat as DisplayStatNames] =
-				(maximumFractions[stat as DisplayStatNames] ?? 0) + fraction;
+		for (const [stat, fraction] of Object.entries(
+			perSlotMaximumFractions[slotIndex],
+		)) {
+			totalMaximumFractions[stat as DisplayStatNames] =
+				(totalMaximumFractions[stat as DisplayStatNames] ?? 0) + fraction;
 		}
 	}
 
@@ -2864,18 +2875,30 @@ function getCompositionFractionalScoreUpperBound(
 			target,
 			(modCount / requiredModsOfModsets[setIndex]) * 2,
 		).partiallyScoredStats) {
-			maximumFractions[stat.displayType] =
-				(maximumFractions[stat.displayType] ?? 0) + stat.fractional;
+			totalMaximumFractions[stat.displayType] =
+				(totalMaximumFractions[stat.displayType] ?? 0) + stat.fractional;
 		}
 	}
 
-	let score = 0;
-	for (const [stat, fraction] of Object.entries(maximumFractions)) {
+	let totalScore = 0;
+	const perSlotScores = [0, 0, 0, 0, 0, 0];
+	for (const [stat, fraction] of Object.entries(totalMaximumFractions)) {
 		const targetProperty = display2CSGIMOStatNameMap[stat as DisplayStatNames];
 		const weight = target[targetProperty];
-		if (weight > 0) score += weight * Math.trunc(fraction);
+		if (weight > 0) totalScore += weight * Math.trunc(fraction);
 	}
-	return score;
+	for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+		for (const [stat] of Object.keys(perSlotMaximumFractions[slotIndex])) {
+			const targetProperty =
+				display2CSGIMOStatNameMap[stat as DisplayStatNames];
+			const weight = target[targetProperty];
+			if (weight > 0) perSlotScores[slotIndex] += weight;
+		}
+	}
+	return {
+		totalScore,
+		perSlotScores,
+	};
 }
 
 function getTargetStatBounds(
@@ -3470,6 +3493,15 @@ function findBestLoadoutFulfillingTargetStats(
 			deduplicateEquivalentModsBySlot(modsBySlot, character, target);
 			if (gimoSlots.some((slot) => modsBySlot[slot].length === 0)) continue;
 
+			const lastFeasibleIndicesOfSlots = [
+				modsBySlot.square.length - 1,
+				modsBySlot.arrow.length - 1,
+				modsBySlot.diamond.length - 1,
+				modsBySlot.triangle.length - 1,
+				modsBySlot.circle.length - 1,
+				modsBySlot.cross.length - 1,
+			];
+
 			const suffixMinimums = target.targetStats.map((_, targetStatIndex) =>
 				gimoSlots.map((slot) => {
 					const values = new Float64Array(modsBySlot[slot].length + 1);
@@ -3573,7 +3605,7 @@ function findBestLoadoutFulfillingTargetStats(
 			const visited = new Set<string>();
 			const initialNode = getInitialNode();
 			const fixedSetScore = getCompositionSetScore(composition, target);
-			const fractionalScoreUpperBound = getCompositionFractionalScoreUpperBound(
+			const scoreBounds = getCompositionFractionalScoreUpperBound(
 				composition,
 				modsBySlot,
 				target,
@@ -3592,7 +3624,7 @@ function findBestLoadoutFulfillingTargetStats(
 				if (!node) break;
 				if (
 					bestScore !== Number.NEGATIVE_INFINITY &&
-					node.modScore + fixedSetScore + fractionalScoreUpperBound <= bestScore
+					node.modScore + fixedSetScore + scoreBounds.totalScore <= bestScore
 				) {
 					heap.clear();
 					break;
@@ -3648,6 +3680,13 @@ function findBestLoadoutFulfillingTargetStats(
 							messages: [],
 							score,
 						};
+						getIndicesOfLastFeasibleInEachSlot(
+							modsBySlot,
+							loadout,
+							node,
+							scoreBounds.perSlotScores,
+							lastFeasibleIndicesOfSlots,
+						);
 					}
 				}
 
@@ -3663,6 +3702,7 @@ function findBestLoadoutFulfillingTargetStats(
 						visited,
 						targetStatCount,
 						canDescendantReachTarget,
+						lastFeasibleIndicesOfSlots,
 					);
 				}
 			}
@@ -3670,6 +3710,32 @@ function findBestLoadoutFulfillingTargetStats(
 	}
 
 	return bestLoadoutAndMessages;
+}
+
+function getIndicesOfLastFeasibleInEachSlot(
+	modsBySlot: Record<ModTypes.GIMOSlots, Mod[]>,
+	bestLoadout: Mod[],
+	bestNode: TargetStatHeapNode,
+	perSlotScoreBounds: number[],
+	indices: number[],
+) {
+	for (let slotIndex = 0; slotIndex < gimoSlots.length; slotIndex++) {
+		const slot = gimoSlots[slotIndex];
+		const bestModInSlot = bestLoadout[slotIndex];
+		const bestModScore = cache.modScores.get(bestModInSlot).score;
+		for (
+			let modIndex = bestNode.indices[slotIndex] + 1;
+			modIndex < modsBySlot[slot].length;
+			modIndex++
+		) {
+			const currentMod = modsBySlot[slot][modIndex];
+			const currentModScore = cache.modScores.get(currentMod).score;
+			if (currentModScore + perSlotScoreBounds[slotIndex] < bestModScore) {
+				indices[slotIndex] = modIndex - 1;
+				break;
+			}
+		}
+	}
 }
 
 function addChildNodeOfSlot(
@@ -3686,10 +3752,11 @@ function addChildNodeOfSlot(
 		nodeIndices: Uint16Array<ArrayBufferLike>,
 		compositionIndex: number,
 	) => boolean,
+	maxIndices: number[],
 ) {
 	const slot = gimoSlots[slotIndex];
 	const nextIndex = node.indices[slotIndex] + 1;
-	if (nextIndex >= modsBySlot[slot].length) return;
+	if (nextIndex >= maxIndices[slotIndex]) return;
 	const childIndices = node.indices.slice();
 	childIndices[slotIndex] = nextIndex;
 	const key = childIndices.join(",");
