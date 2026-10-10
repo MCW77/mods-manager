@@ -3368,7 +3368,17 @@ function findBestLoadoutFulfillingTargetStats(
 		0,
 	);
 
-	for (const composition of compositions) {
+	// Sort compositions by descending set score to get high bestScore early
+	const sortedCompositions = compositions
+		.map((composition, idx) => ({
+			composition,
+			idx,
+			score: getCompositionSetScore(composition, target),
+		}))
+		.sort((a, b) => b.score - a.score)
+		.map(({ composition }) => composition);
+
+	for (const composition of sortedCompositions) {
 		if (
 			!canCompositionReachTargetStats(
 				composition,
@@ -3379,9 +3389,9 @@ function findBestLoadoutFulfillingTargetStats(
 		) {
 			continue;
 		}
-		const compositionIndex = compositions.indexOf(composition);
+		const compositionIndex = sortedCompositions.indexOf(composition);
 
-		const fixedCompositionSetValues = compositions.map((composition) =>
+		const fixedCompositionSetValues = sortedCompositions.map((composition) =>
 			Float64Array.from(
 				target.targetStats.map((targetStat) => {
 					let value = 0;
@@ -3399,7 +3409,7 @@ function findBestLoadoutFulfillingTargetStats(
 				}),
 			),
 		);
-		const maximumOptionalSetValues = compositions.map((composition) =>
+		const maximumOptionalSetValues = sortedCompositions.map((composition) =>
 			getMaximumOptionalSetValues(composition, character, target),
 		);
 
