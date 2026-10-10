@@ -2772,6 +2772,9 @@ function createMaxHeap<T>(compare: (left: T, right: T) => number) {
 		get size() {
 			return values.length;
 		},
+		clear() {
+			values.length = 0;
+		},
 		push(value: T) {
 			values.push(value);
 			let index = values.length - 1;
@@ -3590,9 +3593,10 @@ function findBestLoadoutFulfillingTargetStats(
 				if (
 					bestScore !== Number.NEGATIVE_INFINITY &&
 					node.modScore + fixedSetScore + fractionalScoreUpperBound <= bestScore
-				)
+				) {
+					heap.clear();
 					break;
-
+				}
 				const loadout = gimoSlots.map(
 					(slot, slotIndex) => modsBySlot[slot][node.indices[slotIndex]],
 				);
