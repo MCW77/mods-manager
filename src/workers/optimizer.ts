@@ -3381,6 +3381,28 @@ function findBestLoadoutFulfillingTargetStats(
 		}
 		const compositionIndex = compositions.indexOf(composition);
 
+		const fixedCompositionSetValues = compositions.map((composition) =>
+			Float64Array.from(
+				target.targetStats.map((targetStat) => {
+					let value = 0;
+					for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
+						const modCount = composition[setIndex];
+						if (modCount === 0) continue;
+						value +=
+							getStatsValueForTargetStat(
+								cache.modsetStats(modsetNames[setIndex], "full", character),
+								targetStat.stat,
+							) *
+							(modCount / requiredModsOfModsets[setIndex]);
+					}
+					return value;
+				}),
+			),
+		);
+		const maximumOptionalSetValues = compositions.map((composition) =>
+			getMaximumOptionalSetValues(composition, character, target),
+		);
+
 		for (const distribution of generateModsetDistributions(
 			composition,
 			baseModsBySlot,
@@ -3468,27 +3490,6 @@ function findBestLoadoutFulfillingTargetStats(
 				}),
 			);
 
-			const fixedCompositionSetValues = compositions.map((composition) =>
-				Float64Array.from(
-					target.targetStats.map((targetStat) => {
-						let value = 0;
-						for (let setIndex = 0; setIndex < modsetNames.length; setIndex++) {
-							const modCount = composition[setIndex];
-							if (modCount === 0) continue;
-							value +=
-								getStatsValueForTargetStat(
-									cache.modsetStats(modsetNames[setIndex], "full", character),
-									targetStat.stat,
-								) *
-								(modCount / requiredModsOfModsets[setIndex]);
-						}
-						return value;
-					}),
-				),
-			);
-			const maximumOptionalSetValues = compositions.map((composition) =>
-				getMaximumOptionalSetValues(composition, character, target),
-			);
 			const canDescendantReachTarget = (
 				nodeIndices: Uint16Array<ArrayBufferLike>,
 				compositionIndex: number,
