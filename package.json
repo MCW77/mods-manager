@@ -1,6 +1,6 @@
 {
 	"name": "mods-manager",
-	"version": "31.0.1",
+	"version": "31.1.0",
 	"type": "module",
 	"scripts": {
 		"check": "tsc --noemit && pn lint && pn test:run",
