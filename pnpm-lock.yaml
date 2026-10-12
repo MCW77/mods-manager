@@ -291,8 +291,8 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2(vitest@5.0.3)
       '@vitest/ui':
-        specifier: ^5.0.2
-        version: 5.0.2(vitest@5.0.3)
+        specifier: ^5.0.3
+        version: 5.0.3(vitest@5.0.3)
       fake-indexeddb:
         specifier: ^6.2.5
         version: 6.2.5
@@ -316,7 +316,7 @@ importers:
         version: 1.3.0(supports-color@7.2.0)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))(workbox-build@7.4.1(supports-color@7.2.0))(workbox-window@7.4.1)
       vitest:
         specifier: ^5.0.3
-        version: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.2)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+        version: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.3)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
       workbox-window:
         specifier: ^7.4.1
         version: 7.4.1
@@ -2340,19 +2340,19 @@ packages:
       vite:
         optional: true
 
-  '@vitest/pretty-format@5.0.2':
-    resolution: {integrity: sha512-YHM+mQQ7N1ROHMugJ7P/M+fC/q1G4zs/iAMZZCvhHcY8WkwPQcXBHD+z18oz+808Cfa12K7jOr3XPQMcLIovjw==}
+  '@vitest/pretty-format@5.0.3':
+    resolution: {integrity: sha512-3hr5eV5z2ff0l2Q1vaKQbB4j3M3tElw8stDokEOTqXJB3Es5VrT8gBRIMY59gGuFp8Y61sWlWFK1aNUH5dHDYw==}
 
   '@vitest/spy@5.0.3':
     resolution: {integrity: sha512-XhFysQTB8AZ+P4gMi+Lpo99vg2AZi0qKpaB9yXQl37+CaMEAPO3iH/wGVnSyL5MPERiLezpqTVtrR6UZH5GCXg==}
 
-  '@vitest/ui@5.0.2':
-    resolution: {integrity: sha512-FRGWhLK/S+aaAtty/5d+jTtY5l+9pGNcjz6IHbyUiP3VWs6a+zIgU4lc1SzWCR7H+OXgetAI06i/VpCWQmVorQ==}
+  '@vitest/ui@5.0.3':
+    resolution: {integrity: sha512-9dfvqDBvSbHM6y9YVXxAypkl2z7mrWozK/JFo237qI0cj/3M/kzDKiVZqzi3TE54Ler7Jditud7OMBZCyUvRHA==}
     peerDependencies:
-      vitest: 5.0.2
+      vitest: 5.0.3
 
-  '@vitest/utils@5.0.2':
-    resolution: {integrity: sha512-mgpUtxFhKeOKVaArBVHNJGdYHAeRh135o59l13uVmPUCS1OUtis5pBqXEgE25iqRgFqEBwXvJlkhknRsYnMeqg==}
+  '@vitest/utils@5.0.3':
+    resolution: {integrity: sha512-77fDTZv8eu1CzlIfgPU2yrl5MXSUaUAOvgdZEeVm3X3WIxUubIX2SforqS6176lT32HCF6uBVMYVqfHxw7o6eg==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -6231,7 +6231,7 @@ snapshots:
       obug: 2.2.1
       std-env: 4.2.0
       tinyrainbow: 3.1.1
-      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.2)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.3)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
 
   '@vitest/istanbul-lib-coverage@1.0.1': {}
 
@@ -6248,25 +6248,25 @@ snapshots:
     optionalDependencies:
       vite: 8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
 
-  '@vitest/pretty-format@5.0.2':
+  '@vitest/pretty-format@5.0.3':
     dependencies:
       tinyrainbow: 3.1.1
 
   '@vitest/spy@5.0.3': {}
 
-  '@vitest/ui@5.0.2(vitest@5.0.3)':
+  '@vitest/ui@5.0.3(vitest@5.0.3)':
     dependencies:
-      '@vitest/utils': 5.0.2
+      '@vitest/utils': 5.0.3
       fflate: 0.8.3
       flatted: 3.4.4
       pathe: 2.0.3
       sirv: 3.0.2
       tinyrainbow: 3.1.1
-      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.2)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
+      vitest: 5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.3)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
 
-  '@vitest/utils@5.0.2':
+  '@vitest/utils@5.0.3':
     dependencies:
-      '@vitest/pretty-format': 5.0.2
+      '@vitest/pretty-format': 5.0.3
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
@@ -8367,7 +8367,7 @@ snapshots:
       terser: 5.49.0
       yaml: 2.9.0
 
-  vitest@5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.2)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)):
+  vitest@5.0.3(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(@vitest/coverage-v8@5.0.2)(@vitest/ui@5.0.3)(happy-dom@20.14.6)(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/mocker': 5.0.3(vite@8.3.4(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
@@ -8387,7 +8387,7 @@ snapshots:
       '@opentelemetry/api': 1.9.1
       '@types/node': 26.6.5
       '@vitest/coverage-v8': 5.0.2(vitest@5.0.3)
-      '@vitest/ui': 5.0.2(vitest@5.0.3)
+      '@vitest/ui': 5.0.3(vitest@5.0.3)
       happy-dom: 20.14.6
     transitivePeerDependencies:
       - msw
