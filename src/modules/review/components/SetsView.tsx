@@ -1,9 +1,5 @@
 // react
-import { useMemo } from "react";
 import { For, useMount, useObservable, useValue } from "@legendapp/state/react";
-
-// utils
-import collectByKey from "#/utils/collectByKey";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -16,8 +12,6 @@ import { review$ } from "../state/review";
 
 // domain
 import * as ModListFilter from "../domain/ModListFilter";
-import type { CharacterNames } from "#/constants/CharacterNames";
-import type { Mod } from "#/domain/Mod";
 import { createModLoadout } from "#/domain/ModLoadout";
 
 import type { CharacterModdings } from "#/modules/compilations/domain/CharacterModdings";
@@ -45,16 +39,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const characterById = useValue(roster$.activeCharacterById);
 	const filter = useValue(review$.modListFilter);
-	const modById = useValue(mods$.activeModById);
-
-	const currentModsByCharacter: Record<CharacterNames, Mod[]> = useMemo(
-		() =>
-			collectByKey(
-				modById.values().filter((mod) => mod.characterID !== "null"),
-				(mod: Mod) => mod.characterID,
-			),
-		[modById],
-	);
+	const loadoutOfCharacters = useValue(review$.loadoutOfCharacters);
 
 	useMount(() => {
 		modAssignments$.set(modAssignments);
@@ -164,7 +149,7 @@ const SetsView = ({ modAssignments }: SetsViewProps) => {
 									<ModLoadoutDetail
 										newLoadout={createModLoadout(mods)}
 										oldLoadout={createModLoadout(
-											currentModsByCharacter[characterID] || [],
+											loadoutOfCharacters[characterID] || [],
 										)}
 										character={character}
 										useUpgrades={true}
