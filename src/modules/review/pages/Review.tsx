@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 // utils
 import flatten from "lodash-es/flatten";
 import mapValues from "lodash-es/mapValues";
-import collectByKey from "#/utils/collectByKey";
 import { groupBy } from "#/utils/groupBy";
 
 // state
@@ -50,6 +49,7 @@ const Review: React.FC = observer(() => {
 	const modAssignments = useValue(
 		defaultCompilation$.data.flatCharacterModdings,
 	);
+	const loadoutOfCharacters = useValue(review$.loadoutOfCharacters);
 
 	const getModAssignmentsByCurrentCharacter = (
 		modAssignments: CharacterModdings,
@@ -215,12 +215,6 @@ const Review: React.FC = observer(() => {
 		0,
 	);
 
-	const currentModsByCharacter: {
-		[key in CharacterNames]: Mod[];
-	} = collectByKey(
-		modById.values().filter((mod) => mod.characterID !== "null"),
-		(mod: Mod) => mod.characterID,
-	);
 	const currentLoadoutValue = modAssignments.reduce(
 		(scoreSum, { previousScore }) => scoreSum + previousScore,
 		0,
@@ -250,8 +244,8 @@ const Review: React.FC = observer(() => {
 	const removedMods = flatten(
 		movingModsByAssignedCharacter.map(({ id, assignedMods }) => {
 			const changingSlots = assignedMods.map((mod) => mod.slot);
-			return currentModsByCharacter[id]
-				? currentModsByCharacter[id].filter((mod) =>
+			return loadoutOfCharacters[id]
+				? loadoutOfCharacters[id].filter((mod) =>
 						changingSlots.includes(mod.slot),
 					)
 				: [];
