@@ -168,7 +168,7 @@ importers:
     dependencies:
       '@base-ui/react':
         specifier: ^1.9.0
-        version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
+        version: 1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@fortawesome/fontawesome-svg-core':
         specifier: ^7.3.1
         version: 7.3.1
@@ -216,25 +216,25 @@ importers:
         version: 1.58.0(@types/react@19.3.0)(react@19.3.1)
       next-themes:
         specifier: ^0.4.6
-        version: 0.4.6(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
+        version: 0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: ^19.3.1
         version: 19.3.1
       react-dom:
-        specifier: ^19.3.0
-        version: 19.3.0(react@19.3.1)
+        specifier: ^19.3.1
+        version: 19.3.1(react@19.3.1)
       react-i18next:
         specifier: ^17.0.19
-        version: 17.0.19(i18next@26.4.7(typescript@7.0.2))(react-dom@19.3.0(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
+        version: 17.0.19(i18next@26.4.7(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
       react-scan:
         specifier: ^0.5.7
-        version: 0.5.7(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(eslint@10.5.0(jiti@2.7.0)(supports-color@7.2.0))(react-dom@19.3.0(react@19.3.1))(react@19.3.1)(rollup@4.62.2)(supports-color@7.2.0)
+        version: 0.5.7(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(eslint@10.5.0(jiti@2.7.0)(supports-color@7.2.0))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(rollup@4.62.2)(supports-color@7.2.0)
       recharts:
         specifier: ^3.10.1
-        version: 3.10.1(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react-is@19.2.8)(react@19.3.1)(redux@5.0.1)
+        version: 3.10.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react-is@19.2.8)(react@19.3.1)(redux@5.0.1)
       sonner:
         specifier: ^2.0.8
-        version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
+        version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       superjson:
         specifier: ^2.2.6
         version: 2.2.6
@@ -3653,10 +3653,10 @@ packages:
     engines: {node: ^20.19.0 || >=22.13.0}
     hasBin: true
 
-  react-dom@19.3.0:
-    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
+  react-dom@19.3.1:
+    resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
     peerDependencies:
-      react: ^19.3.0
+      react: ^19.3.1
 
   react-grab@0.2.0:
     resolution: {integrity: sha512-ohhsfXD4qN0j6cMQd56aaVJBPDF3kUdviF/Od1Eak/rEIXQ3svQ4gjkwTfuTZwTBnxHRL16p9JqdlVQO5nUHqA==}
@@ -5145,24 +5145,24 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@base-ui/react@1.9.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react@19.3.1)':
+  '@base-ui/react@1.9.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@babel/runtime': 7.29.7
-      '@base-ui/utils': 0.5.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
-      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.0(react@19.3.1))(react@19.3.1)
+      '@base-ui/utils': 0.5.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@floating-ui/utils': 0.2.12
       react: 19.3.1
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
       use-sync-external-store: 1.7.0(react@19.3.1)
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@base-ui/utils@0.5.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react@19.3.1)':
+  '@base-ui/utils@0.5.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@floating-ui/utils': 0.2.12
       react: 19.3.1
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
       reselect: 5.3.0
       use-sync-external-store: 1.7.0(react@19.3.1)
     optionalDependencies:
@@ -5260,11 +5260,11 @@ snapshots:
       '@floating-ui/core': 1.8.0
       '@floating-ui/utils': 0.2.12
 
-  '@floating-ui/react-dom@2.1.9(react-dom@19.3.0(react@19.3.1))(react@19.3.1)':
+  '@floating-ui/react-dom@2.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       react: 19.3.1
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
 
   '@floating-ui/utils@0.2.12': {}
 
@@ -7397,10 +7397,10 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-themes@0.4.6(react-dom@19.3.0(react@19.3.1))(react@19.3.1):
+  next-themes@0.4.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       react: 19.3.1
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
 
   node-fetch-native@1.6.7: {}
 
@@ -7665,7 +7665,7 @@ snapshots:
       - supports-color
       - vite-plus
 
-  react-dom@19.3.0(react@19.3.1):
+  react-dom@19.3.1(react@19.3.1):
     dependencies:
       react: 19.3.1
       scheduler: 0.28.0
@@ -7677,7 +7677,7 @@ snapshots:
     optionalDependencies:
       react: 19.3.1
 
-  react-i18next@17.0.19(i18next@26.4.7(typescript@7.0.2))(react-dom@19.3.0(react@19.3.1))(react@19.3.1)(typescript@7.0.2):
+  react-i18next@17.0.19(i18next@26.4.7(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2):
     dependencies:
       '@babel/runtime': 7.29.7
       html-parse-stringify: 4.0.1
@@ -7685,7 +7685,7 @@ snapshots:
       react: 19.3.1
       use-sync-external-store: 1.7.0(react@19.3.1)
     optionalDependencies:
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
       typescript: 7.0.2
 
   react-is@19.2.8: {}
@@ -7699,7 +7699,7 @@ snapshots:
       '@types/react': 19.3.0
       redux: 5.0.1
 
-  react-scan@0.5.7(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(eslint@10.5.0(jiti@2.7.0)(supports-color@7.2.0))(react-dom@19.3.0(react@19.3.1))(react@19.3.1)(rollup@4.62.2)(supports-color@7.2.0):
+  react-scan@0.5.7(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(eslint@10.5.0(jiti@2.7.0)(supports-color@7.2.0))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(rollup@4.62.2)(supports-color@7.2.0):
     dependencies:
       '@babel/core': 7.29.7(supports-color@7.2.0)
       '@babel/types': 7.29.7
@@ -7712,7 +7712,7 @@ snapshots:
       prompts: 2.4.2
       react: 19.3.1
       react-doctor: 0.9.18(@opentelemetry/core@2.9.0(@opentelemetry/api@1.9.1))(eslint@10.5.0(jiti@2.7.0)(supports-color@7.2.0))(react@19.3.1)(supports-color@7.2.0)
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
       react-grab: 0.2.0(react@19.3.1)
     optionalDependencies:
       unplugin: 3.0.0
@@ -7729,7 +7729,7 @@ snapshots:
 
   readdirp@5.1.1: {}
 
-  recharts@3.10.1(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react-is@19.2.8)(react@19.3.1)(redux@5.0.1):
+  recharts@3.10.1(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react-is@19.2.8)(react@19.3.1)(redux@5.0.1):
     dependencies:
       '@reduxjs/toolkit': 2.12.0(react-redux@9.3.0(@types/react@19.3.0)(react@19.3.1)(redux@5.0.1))(react@19.3.1)
       clsx: 2.1.1
@@ -7738,7 +7738,7 @@ snapshots:
       eventemitter3: 5.0.4
       immer: 11.1.18
       react: 19.3.1
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
       react-is: 19.2.8
       react-redux: 9.3.0(@types/react@19.3.0)(react@19.3.1)(redux@5.0.1)
       reselect: 5.2.0
@@ -7980,10 +7980,10 @@ snapshots:
 
   smob@1.6.2: {}
 
-  sonner@2.0.8(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.1))(react@19.3.1):
+  sonner@2.0.8(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       react: 19.3.1
-      react-dom: 19.3.0(react@19.3.1)
+      react-dom: 19.3.1(react@19.3.1)
     optionalDependencies:
       '@types/react': 19.3.0
 
