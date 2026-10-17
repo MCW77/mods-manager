@@ -279,8 +279,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@unocss/preset-typography':
-        specifier: 66.10.5
-        version: 66.10.5
+        specifier: 66.11.0
+        version: 66.11.0
       '@unocss/preset-wind4':
         specifier: ^66.11.0
         version: 66.11.0
@@ -2263,9 +2263,6 @@ packages:
   '@unocss/preset-tagify@66.11.0':
     resolution: {integrity: sha512-6PcgSVd2eKblMZX/YjaFtpyS0dRX/ZUbWamTlgDRhnf6j2nfA5DQHU3BZJNeUr83oXullDxFflPwpfGrV1aOxA==}
 
-  '@unocss/preset-typography@66.10.5':
-    resolution: {integrity: sha512-b7hP1v4LyopVRrzJiI+ymnJEZMoLW1DdBo0SFWyPnFZXJv7umtDFlZ9plb+8AJvviyRgZ3qI03adRLXA4QCt2g==}
-
   '@unocss/preset-typography@66.11.0':
     resolution: {integrity: sha512-s/xbtXG1f0E0n288m2gtxN3GcNMoHPNZZk1Qud60MlZzAtdXVE4G01GRPnUjhUa2xlSHDReJV3ewufrQWyyh+w==}
 
@@ -3429,9 +3426,6 @@ packages:
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
-
-  magic-string@1.4.1:
-    resolution: {integrity: sha512-8lyCu36ErXR0J9uaGKlKQoiLZKmtI63YGLE8G2o9jyRPdr4X47LusSOwgOJOzcVtp81fTAAjxR7BwKz682Jhow==}
 
   magic-string@1.4.3:
     resolution: {integrity: sha512-z12OxmaPGE0F4xlpGdjuAUckipLpQlTAuAmyGhNoD7ODpYUzvDfvtxUbjM/jwznyP178oju/KDdyi220wNJ0RQ==}
@@ -6134,7 +6128,8 @@ snapshots:
       consola: 3.4.2
       unconfig: 7.5.0
 
-  '@unocss/core@66.10.5': {}
+  '@unocss/core@66.10.5':
+    optional: true
 
   '@unocss/core@66.11.0': {}
 
@@ -6202,11 +6197,6 @@ snapshots:
     dependencies:
       '@unocss/core': 66.11.0
 
-  '@unocss/preset-typography@66.10.5':
-    dependencies:
-      '@unocss/core': 66.10.5
-      '@unocss/rule-utils': 66.10.5
-
   '@unocss/preset-typography@66.11.0':
     dependencies:
       '@unocss/core': 66.11.0
@@ -6263,7 +6253,8 @@ snapshots:
   '@unocss/rule-utils@66.10.5':
     dependencies:
       '@unocss/core': 66.10.5
-      magic-string: 1.4.1
+      magic-string: 1.4.3
+    optional: true
 
   '@unocss/rule-utils@66.11.0':
     dependencies:
@@ -7423,10 +7414,6 @@ snapshots:
   magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
-
-  magic-string@1.4.1:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.6.0
 
   magic-string@1.4.3:
     dependencies:
