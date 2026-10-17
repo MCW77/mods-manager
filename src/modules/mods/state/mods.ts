@@ -146,17 +146,7 @@ const mods$: ObservableObject<ModsObservable> = observable({
 				)?.id ?? "";
 		beginBatch();
 		if (currentlyEquippedModId !== "") {
-			const currentlyEquippedMod$ = mods$.activeModById[currentlyEquippedModId];
-			if (isObservableMod(currentlyEquippedMod$)) {
-				const currentlyEquippedMod = currentlyEquippedMod$.peek() as
-					| Mod
-					| undefined;
-				if (currentlyEquippedMod !== undefined) {
-					const newMod = cloneMod(currentlyEquippedMod);
-					newMod.characterID = "null";
-					currentlyEquippedMod$.set(newMod);
-				}
-			}
+			mods$.unequipMod(currentlyEquippedModId);
 		}
 		const newMod = cloneMod(modToReassign);
 		newMod.characterID = newCharacterId;
