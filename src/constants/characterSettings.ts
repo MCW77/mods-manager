@@ -2200,6 +2200,58 @@ const characterSettings: CharacterSettingsIndexer = {
 			},
 		}),
 	]),
+	DARTHJARJAR: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 30,
+				prot: 10,
+				spd: 100,
+				phys: 30,
+				primaryRes: {
+					arrow: ["Speed"],
+					triangle: ["Offense %"],
+					circle: ["Health %"],
+					cross: ["Health %"],
+				},
+				setRes: {
+					"Speed %": 1,
+					"Health %": 1,
+				},
+				targetStats: [
+					{
+						id: "Speed",
+						stat: "Speed",
+						type: "+",
+						minimum: 340,
+						maximum: 380,
+						optimizeForTarget: true,
+						relativeCharacterId: "null",
+					},
+					{
+						id: "Health",
+						stat: "Health",
+						type: "+",
+						minimum: 60000,
+						maximum: 150000,
+						optimizeForTarget: true,
+						relativeCharacterId: "null",
+					},
+					{
+						id: "specDmg",
+						stat: "Special Damage",
+						type: "+",
+						minimum: 11500,
+						maximum: 20000,
+						optimizeForTarget: true,
+						relativeCharacterId: "null",
+					},
+				],
+			}),
+		],
+		[],
+		DamageType.special,
+	),
 	DARTHMALAK: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -4634,6 +4686,54 @@ const characterSettings: CharacterSettingsIndexer = {
 			ca: 100,
 		}),
 	]),
+	JAXXON: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			desc: "Damage",
+			health: 20,
+			spd: 100,
+			phys: 80,
+			primaryRes: {
+				arrow: ["Offense %"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+			targetStats: [
+				{
+					id: "spd",
+					stat: "Speed",
+					type: "+",
+					maximum: 330,
+					minimum: 260,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "health",
+					stat: "Health",
+					type: "+",
+					maximum: 100000,
+					minimum: 60000,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "phys",
+					stat: "Physical Damage",
+					type: "+",
+					maximum: 20000,
+					minimum: 11000,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+			],
+		}),
+	]),
 	JEDIKNIGHTCAL: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -5429,6 +5529,45 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["farmboi"],
 	),
+	LUKESTARKILLER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 10,
+			prot: 10,
+			spd: 100,
+			pot: 25,
+			phys: 50,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				cross: ["Potency %"],
+			},
+			setRes: {
+				"Speed %": 1,
+				"Potency %": 1,
+			},
+			targetStats: [
+				{
+					id: "spd",
+					stat: "Speed",
+					type: "+",
+					maximum: 420,
+					minimum: 350,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "pot",
+					stat: "Potency",
+					type: "+",
+					maximum: 150,
+					minimum: 85,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+			],
+		}),
+	]),
 	LUMINARAUNDULI: createCharacterSettings([
 		fromShortOptimizationPlan({
 			id: "Default",
@@ -5629,6 +5768,54 @@ const characterSettings: CharacterSettingsIndexer = {
 		[],
 		DamageType.special,
 	),
+	MARAJADESKYWALKER: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 20,
+			prot: 10,
+			spd: 80,
+			phys: 100,
+			primaryRes: {
+				arrow: ["Offense %"],
+				triangle: ["Critical Damage %"],
+				circle: ["Health %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Offense %": 1,
+				"Health %": 1,
+			},
+			targetStats: [
+				{
+					id: "spd",
+					stat: "Speed",
+					type: "+",
+					maximum: 400,
+					minimum: 315,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "phys",
+					stat: "Physical Damage",
+					type: "+",
+					maximum: 15000,
+					minimum: 9500,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "health",
+					stat: "Health",
+					type: "+",
+					maximum: 150000,
+					minimum: 70000,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+			],
+		}),
+	]),
 	MARROK: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -7594,6 +7781,54 @@ const characterSettings: CharacterSettingsIndexer = {
 		],
 		["Troopers"],
 	),
+	STORMTROOPERCONCEPT: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			health: 25,
+			prot: 20,
+			spd: 80,
+			arm: 50,
+			res: 50,
+			primaryRes: {
+				arrow: ["Health %"],
+				triangle: ["Health %"],
+				cross: ["Protection %"],
+				circle: ["Protection %"],
+			},
+			setRes: {
+				"Defense %": 3,
+			},
+			targetStats: [
+				{
+					id: "spd",
+					stat: "Speed",
+					type: "+",
+					maximum: 350,
+					minimum: 230,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "health",
+					stat: "Health",
+					type: "+",
+					maximum: 200000,
+					minimum: 100000,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "prot",
+					stat: "Protection",
+					type: "+",
+					maximum: 200000,
+					minimum: 105000,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+			],
+		}),
+	]),
 	STORMTROOPERHAN: createCharacterSettings(
 		[
 			fromShortOptimizationPlan({
@@ -7907,6 +8142,53 @@ const characterSettings: CharacterSettingsIndexer = {
 				"Health %": 1,
 				"Offense %": 1,
 			},
+		}),
+	]),
+	THERONIN: createCharacterSettings([
+		fromShortOptimizationPlan({
+			id: "Default",
+			prot: 20,
+			spd: 100,
+			phys: 70,
+			primaryRes: {
+				arrow: ["Speed"],
+				triangle: ["Critical Damage %"],
+				circle: ["Protection %"],
+				cross: ["Offense %"],
+			},
+			setRes: {
+				"Health %": 1,
+				"Offense %": 1,
+			},
+			targetStats: [
+				{
+					id: "spd",
+					stat: "Speed",
+					type: "+",
+					maximum: 400,
+					minimum: 320,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "prot",
+					stat: "Protection",
+					type: "+",
+					maximum: 150000,
+					minimum: 90000,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+				{
+					id: "phys",
+					stat: "Physical Damage",
+					type: "+",
+					maximum: 12000,
+					minimum: 8500,
+					optimizeForTarget: true,
+					relativeCharacterId: "null",
+				},
+			],
 		}),
 	]),
 	THIRDSISTER: createCharacterSettings([
@@ -8480,6 +8762,48 @@ const characterSettings: CharacterSettingsIndexer = {
 				setRes: {
 					"Defense %": 3,
 				},
+			}),
+		],
+		[],
+		DamageType.special,
+	),
+	YODADSV: createCharacterSettings(
+		[
+			fromShortOptimizationPlan({
+				id: "Default",
+				health: 30,
+				prot: 15,
+				spd: 100,
+				primaryRes: {
+					arrow: ["Speed"],
+					circle: ["Health %"],
+					cross: ["Health %"],
+					triangle: ["Health %"],
+				},
+				setRes: {
+					"Speed %": 1,
+					"Health %": 1,
+				},
+				targetStats: [
+					{
+						id: "spd",
+						stat: "Speed",
+						type: "+",
+						maximum: 420,
+						minimum: 350,
+						optimizeForTarget: true,
+						relativeCharacterId: "null",
+					},
+					{
+						id: "health",
+						stat: "Health",
+						type: "+",
+						maximum: 200000,
+						minimum: 125000,
+						optimizeForTarget: true,
+						relativeCharacterId: "null",
+					},
+				],
 			}),
 		],
 		[],
