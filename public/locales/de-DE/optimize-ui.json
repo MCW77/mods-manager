@@ -118,6 +118,7 @@
 		}
 	},
 	"review": {
+		"AllModsMoved": "Keine Mods mehr zu verschieben mit diesem Filter",
 		"display": {
 			"Title": "Anzeige",
 			"group": {
