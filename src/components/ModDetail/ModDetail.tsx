@@ -54,7 +54,7 @@ const ModDetail = memo(({ assignedTarget, mod }: ModDetailProps) => {
 	});
 
 	return (
-		<Card key={mod.id}>
+		<Card key={mod.id} className="py-0">
 			<CardContent className={"p-2"}>
 				<div
 					className={

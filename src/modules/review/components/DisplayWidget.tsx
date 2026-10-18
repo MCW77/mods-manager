@@ -1,6 +1,5 @@
 // react
-import { useObservable, useValue } from "@legendapp/state/react";
-import { useId } from "react";
+import { useValue } from "@legendapp/state/react";
 import { useTranslation } from "react-i18next";
 
 // utils
@@ -42,7 +41,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "#ui/select";
-import { Switch } from "#/components/reactive/Switch";
 import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 const showOptionsItems = [
@@ -62,16 +60,6 @@ const showOptionsItems = [
 
 const DisplayWidget = () => {
 	const [t] = useTranslation("optimize-ui");
-	const sortOptionsId = useId();
-	const viewOptionsId = useId();
-	const isSortOptionsAssigned$ = useObservable(
-		() =>
-			review$.modListFilter.sort.get() ===
-			ModListFilter.sortOptions.assignedCharacter,
-	);
-	const isListView$ = useObservable(
-		() => review$.modListFilter.view.get() === ModListFilter.viewOptions.list,
-	);
 	const modById = useValue(() => mods$.activeModById.get());
 	const baseCharacterById = useValue(characters$.baseCharacterById);
 	const filter = useValue(review$.modListFilter);
@@ -275,57 +263,6 @@ const DisplayWidget = () => {
 
 	return (
 		<div className={global}>
-			<Label className={labelCSS} htmlFor={`sort-options-${sortOptionsId}`}>
-				{t("review.display.group.Label")}
-			</Label>
-			<div
-				className={`${inputCSS} flex gap-2 items-center`}
-				id={`sort-options-${sortOptionsId}`}
-			>
-				<Label htmlFor="sort-options-value">
-					{t("review.display.group.Option1")}
-				</Label>
-				<Switch
-					className="mr-2 ml-2"
-					id={"sort-options-value"}
-					$checked={isSortOptionsAssigned$}
-					onCheckedChange={(checked) =>
-						review$.modListFilter.sort.set(
-							checked
-								? ModListFilter.sortOptions.assignedCharacter
-								: ModListFilter.sortOptions.currentCharacter,
-						)
-					}
-				/>
-				<Label className={labelCSS} htmlFor="sort-options-value">
-					{t("review.display.group.Option2")}
-				</Label>
-			</div>
-			<Label className={labelCSS} htmlFor={`view-options-${viewOptionsId}`}>
-				{t("review.display.showAs.Label")}
-			</Label>
-			<div
-				className={`${inputCSS} flex gap-2 items-center`}
-				id={`view-options-${viewOptionsId}`}
-			>
-				<Label htmlFor="view-options-value">
-					{t("review.display.showAs.Option1")}
-				</Label>
-				<Switch
-					id={"view-options-value"}
-					$checked={isListView$}
-					onCheckedChange={(checked) =>
-						review$.modListFilter.view.set(
-							checked
-								? ModListFilter.viewOptions.list
-								: ModListFilter.viewOptions.sets,
-						)
-					}
-				/>
-				<Label htmlFor="view-options-value">
-					{t("review.display.showAs.Option2")}
-				</Label>
-			</div>
 			<Label className={labelCSS} htmlFor={"show"}>
 				{t("review.display.showMe.Label")}
 			</Label>

@@ -1,5 +1,6 @@
 // react
 import React from "react";
+import { Show, useObservable } from "@legendapp/state/react";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -29,6 +30,7 @@ import type { CharacterModding } from "#/modules/compilations/domain/CharacterMo
 
 // components
 import ModLoadoutView from "./ModLoadoutView";
+import { Switch } from "#/components/reactive/Switch";
 
 interface PlayerStat {
 	name: DisplayStatNames;
@@ -58,6 +60,7 @@ const ModLoadoutDetail = React.memo(
 		useUpgrades,
 		modAssignment: { target, missedGoals, previousScore, currentScore },
 	}: ComponentProps) => {
+		const showOldLoadoud$ = useObservable(false);
 		const addCalculatedStatsToPlayerValues = (playerStats: PlayerStat[]) => {
 			const currentStats = {
 				health: 0,
@@ -385,7 +388,21 @@ const ModLoadoutDetail = React.memo(
 					"mod-set-detail relative flex gap-2 border-1 border-solid border-blue-500 p-2 bg-blue-200 dark:bg-blue-900 dark:bg-opacity-40 text-foreground text-shadow-md"
 				}
 			>
-				<ModLoadoutView modLoadout={newLoadout} assignedTarget={target} />
+				<div className="flex flex-col gap-2 items-center">
+					<div className="flex flex-gap-2">
+						New Loadout
+						<Switch $checked={showOldLoadoud$} />
+						Old Loadout
+					</div>
+					<Show
+						if={showOldLoadoud$}
+						else={
+							<ModLoadoutView modLoadout={newLoadout} assignedTarget={target} />
+						}
+					>
+						<ModLoadoutView modLoadout={oldLoadout} assignedTarget={target} />
+					</Show>
+				</div>
 				<div className={"summary flex flex-col gap-4"}>
 					<table>
 						<thead>

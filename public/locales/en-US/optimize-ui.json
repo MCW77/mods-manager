@@ -118,6 +118,7 @@
 		}
 	},
 	"review": {
+		"AllModsMoved": "No more mods to move under that filter",
 		"display": {
 			"Title": "Display",
 			"group": {
