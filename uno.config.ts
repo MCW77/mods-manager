@@ -6,6 +6,7 @@ import {
 } from "unocss";
 import presetAnimations from "unocss-preset-animations";
 import presetShadcn from "unocss-preset-shadcn";
+import { presetScrollbar } from "unocss-preset-scrollbar";
 
 export default defineConfig({
 	content: {
@@ -177,6 +178,7 @@ export default defineConfig({
 			darkSelector: ".dark",
 		}),
 		presetTypography(),
+		presetScrollbar(),
 	],
 	theme: {
 		containers: {
