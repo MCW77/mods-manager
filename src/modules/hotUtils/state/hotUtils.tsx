@@ -26,7 +26,7 @@ import type { HUPlayerValues } from "../domain/HUPlayerValues";
 import type { HotutilsObservable } from "../domain/HotutilsObservable";
 
 const hotutilsv2baseurl =
-	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2";
+	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils";
 
 const initialPersistedData = {
 	id: "sessionIDsByProfile",
@@ -219,7 +219,7 @@ const hotutils$: ObservableObject<HotutilsObservable> =
 			const API_URL =
 				import.meta.env.DEV && !import.meta.env.VITE_NoMock
 					? "http://localhost:3005/gimomock-profile"
-					: "https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2/";
+					: hotutilsv2baseurl;
 
 			const response = await post(API_URL, {
 				action: "getprofile",
