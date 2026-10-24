@@ -18,6 +18,12 @@ import { ModMoveCancelModal } from "../components/ModMoveCancelModal";
 import ModMoveProgress from "../components/ModMoveProgress";
 
 const _hotutilsv2mockbaseurl = "http://localhost:3001/humock";
+const hotutilsv2baseurl =
+	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils";
+const API_URL =
+	import.meta.env.DEV && !import.meta.env.VITE_NoMock
+		? _hotutilsv2mockbaseurl
+		: hotutilsv2baseurl;
 
 const post = async (url = "", data = {}, extras = {}) => {
 	const response = await fetch(
@@ -56,16 +62,13 @@ const modMove$ = observable({
 	cancelModMove: async () => {
 		isBusy$.set(true);
 		try {
-			const response = await post(
-				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-				{
-					action: "cancelmove",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: {
-						taskId: modMove$.status.taskId.get(),
-					},
+			const response = await post(API_URL, {
+				action: "cancelmove",
+				sessionId: hotutils$.activeSessionId.get(),
+				payload: {
+					taskId: modMove$.status.taskId.get(),
 				},
-			);
+			});
 
 			if (response.errorMessage) {
 				dialog$.showFlash(
@@ -108,14 +111,11 @@ const modMove$ = observable({
 	moveMods: async (loadout: Loadout) => {
 		isBusy$.set(true);
 		try {
-			const response = await post(
-				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-				{
-					action: "movemods",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: loadout,
-				},
-			);
+			const response = await post(API_URL, {
+				action: "movemods",
+				sessionId: hotutils$.activeSessionId.get(),
+				payload: loadout,
+			});
 
 			if (response.errorMessage) {
 				dialog$.hide();
@@ -162,16 +162,13 @@ const modMove$ = observable({
 	},
 	pollForModMoveStatus: async () => {
 		try {
-			const response = await post(
-				"https://api.mods-optimizer.swgoh.grandivory.com/hotutils-v2",
-				{
-					action: "checkmovestatus",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: {
-						taskId: modMove$.status.taskId.get(),
-					},
+			const response = await post(API_URL, {
+				action: "checkmovestatus",
+				sessionId: hotutils$.activeSessionId.get(),
+				payload: {
+					taskId: modMove$.status.taskId.get(),
 				},
-			);
+			});
 
 			if (response.errorMessage) {
 				dialog$.hide();
