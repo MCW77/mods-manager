@@ -225,7 +225,7 @@ const eraByCharacter: Map<CharacterNames, Era> = new Map([
 	["LOGRAY", "Legacy Era"],
 	["LORDVADER", "Legacy Era"],
 	["LUKESKYWALKER", "Legacy Era"],
-	["LUKESTARKILLER", "Era of Anniversary"],
+	["LUKESTARKILLER", "Era of Myths & Legends"],
 	["LUMINARAUNDULI", "Legacy Era"],
 	["LUTHENRAEL", "Legacy Era"],
 	["MACEWINDU", "Legacy Era"],
