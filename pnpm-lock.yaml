@@ -209,8 +209,8 @@ importers:
         specifier: ^8.2.1
         version: 8.2.1
       i18next-http-backend:
-        specifier: ^4.0.3
-        version: 4.0.3
+        specifier: ^4.0.6
+        version: 4.0.6
       lodash-es:
         specifier: ^4.18.1
         version: 4.18.1
@@ -3087,8 +3087,8 @@ packages:
   i18next-browser-languagedetector@8.2.1:
     resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
 
-  i18next-http-backend@4.0.3:
-    resolution: {integrity: sha512-B5GJysCsJwqiDQRpUcikWsut82Vmekix58WIyiCpYtxaZ/wY8kwJCicMRvVcMoIa1x84siiRl5vBt6iCBVO6zg==}
+  i18next-http-backend@4.0.6:
+    resolution: {integrity: sha512-k5OPDXAQH9CZ2Ju2DDw1ZC4WiYmjKUjOE4lcd51tNQyWjVDfpuwPcE9Y5VzDpz1tR1Z4wxkkj4H+ImxgwbfpeQ==}
     engines: {node: '>=18'}
 
   i18next@26.5.11:
@@ -7152,7 +7152,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.7
 
-  i18next-http-backend@4.0.3: {}
+  i18next-http-backend@4.0.6: {}
 
   i18next@26.5.11(typescript@7.0.2):
     optionalDependencies:
