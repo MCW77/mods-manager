@@ -514,8 +514,8 @@ const getDefaultFilterSetup = () => {
 							const maxGear =
 								charactersManagement$.filterSetup.gearLevelRange.peek()[1];
 
-							const minGearLevel = minGear > 13 ? 13 : minGear;
-							const maxGearLevel = maxGear > 13 ? 13 : maxGear;
+							const minGearLevel = Math.min(minGear, 13);
+							const maxGearLevel = Math.min(maxGear, 13);
 							const minRelicLevel = minGear > 12 ? minGear - 13 : 0;
 							const maxRelicLevel = maxGear > 12 ? maxGear - 13 : 0;
 
