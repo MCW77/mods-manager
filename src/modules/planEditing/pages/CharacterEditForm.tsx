@@ -283,6 +283,21 @@ function IncrementalOptimizationSection({
 	);
 }
 
+async function SubmitFormAction() {
+	saveTarget();
+	incrementalOptimization$.activeIndex.set(null);
+	optimizerView$.view.set("basic");
+}
+
+const saveTarget = () => {
+	let newTarget = structuredClone(target$.target.peek());
+	if (target$.isInAdvancedEditMode.peek())
+		newTarget = OptimizationPlan.denormalize(newTarget);
+	const charId = target$.characterId.peek();
+
+	defaultCompilation$.saveTarget(charId, newTarget);
+};
+
 type ComponentProps = {
 	character: Character.Character;
 	target: OptimizationPlan.OptimizationPlan;
@@ -317,21 +332,6 @@ const CharacterEditForm: React.FC<ComponentProps> = observer(
 			target$.namesOfUserTargets.set(targetsNames);
 			endBatch();
 		});
-
-		async function SubmitFormAction() {
-			saveTarget();
-			incrementalOptimization$.activeIndex.set(null);
-			optimizerView$.view.set("basic");
-		}
-
-		const saveTarget = () => {
-			let newTarget = structuredClone(target$.target.peek());
-			if (target$.isInAdvancedEditMode.peek())
-				newTarget = OptimizationPlan.denormalize(newTarget);
-			const charId = target$.characterId.peek();
-
-			defaultCompilation$.saveTarget(charId, newTarget);
-		};
 
 		return (
 			<form
