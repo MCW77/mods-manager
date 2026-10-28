@@ -282,8 +282,8 @@ importers:
         specifier: 66.11.0
         version: 66.11.0
       '@unocss/preset-wind4':
-        specifier: ^66.11.0
-        version: 66.11.0
+        specifier: ^66.12.0
+        version: 66.12.0
       '@vitejs/plugin-react':
         specifier: ^6.1.2
         version: 6.1.2(@rolldown/plugin-babel@0.2.4(@babel/core@7.29.7(supports-color@7.2.0))(@babel/runtime@7.29.7)(rolldown@1.2.15)(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)))(vite@8.3.5(@types/node@26.6.5)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0))
@@ -2313,9 +2313,6 @@ packages:
 
   '@unocss/preset-wind3@66.12.0':
     resolution: {integrity: sha512-gp5YFh0o9TtyZ+MtjKalB6Fig1bZ1V01GBbYSBAkW+gKj2APUvNUkDI9zw0cjarrHs4ekpeb/jfOU/ghijVF0g==}
-
-  '@unocss/preset-wind4@66.11.0':
-    resolution: {integrity: sha512-ETXP3l0z8ceI1xPEhNld0ihYAH6y6tKmHlG/D37MmWSA1eQoSZoNriWed/eo9leQVkV5sP7j85DXBG/oAffbQg==}
 
   '@unocss/preset-wind4@66.12.0':
     resolution: {integrity: sha512-7P52d9ZykqBpAPfVMVVcZTnPhtWzJxQ4UAJ5mqlA49so89IQ0hyG+Dj7mijqN81GWtpjBwITK4wBxRis9Zdm8Q==}
@@ -6274,12 +6271,6 @@ snapshots:
       '@unocss/preset-mini': 66.12.0
       '@unocss/rule-utils': 66.12.0
 
-  '@unocss/preset-wind4@66.11.0':
-    dependencies:
-      '@unocss/core': 66.11.0
-      '@unocss/extractor-arbitrary-variants': 66.11.0
-      '@unocss/rule-utils': 66.11.0
-
   '@unocss/preset-wind4@66.12.0':
     dependencies:
       '@unocss/core': 66.12.0
@@ -6308,7 +6299,7 @@ snapshots:
   '@unocss/rule-utils@66.10.5':
     dependencies:
       '@unocss/core': 66.10.5
-      magic-string: 1.4.3
+      magic-string: 1.4.5
     optional: true
 
   '@unocss/rule-utils@66.11.0':
