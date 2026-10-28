@@ -1,5 +1,5 @@
 // react
-import * as React from "react";
+import { memo } from "react";
 import { Switch, useValue } from "@legendapp/state/react";
 
 // state
@@ -9,11 +9,12 @@ const roster$ = stateLoader$.roster$;
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // containers
-import CharacterEditForm from "#/modules/planEditing/pages/CharacterEditForm";
-import Review from "#/modules/review/pages/Review";
 import CharacterEditView from "#/containers/CharacterEditView/CharacterEditView";
 
-const OptimizerView = React.memo(() => {
+import CharacterEditForm from "#/modules/planEditing/pages/CharacterEditForm";
+import ReviewWrapper from "#/modules/review/pages/ReviewWrapper";
+
+const OptimizerView = memo(() => {
 	const characterById = useValue(roster$.activeCharacterById);
 	const currentCharacterId = useValue(optimizerView$.currentCharacter.id);
 	const currentCharacterTarget = useValue(
@@ -31,7 +32,7 @@ const OptimizerView = React.memo(() => {
 							target={currentCharacterTarget}
 						/>
 					),
-					review: () => <Review />,
+					review: () => <ReviewWrapper />,
 				}}
 			</Switch>
 		</div>
