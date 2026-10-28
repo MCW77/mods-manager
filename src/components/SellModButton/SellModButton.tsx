@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import * as React from "react";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
