@@ -1,5 +1,5 @@
 // react
-import React from "react";
+import * as React from "react";
 import { Show } from "@legendapp/state/react";
 
 // state
