@@ -20,7 +20,7 @@ import * as Character from "#/domain/Character";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSave } from "@fortawesome/free-solid-svg-icons";
 
-import AddTemplateModal from "#/containers/CharacterEditView/AddTemplateModal";
+import AddTemplateModal from "./AddTemplateModal";
 
 import { HelpLink } from "#/modules/help/components/HelpLink";
 import SaveTemplateModal from "#/modules/templates/components/SaveTemplateModal";

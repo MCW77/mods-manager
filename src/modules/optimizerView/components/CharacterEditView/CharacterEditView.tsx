@@ -1,6 +1,7 @@
 // react
 import type React from "react";
 import { Suspense, useEffect, useRef } from "react";
+import { Computed } from "@legendapp/state/react";
 import { useTranslation } from "react-i18next";
 
 // state
@@ -27,15 +28,14 @@ import * as Character from "#/domain/Character";
 import SelectionActions from "./SelectionActions";
 import TemplatesActions from "./TemplatesActions";
 import CharacterActions from "./CharacterActions";
-import CharacterFilters from "../../modules/charactersManagement/components/CharacterFilters";
 import CharacterWidget from "./CharacterWidget";
+import CharacterList from "../CharacterList/CharacterList";
 
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 import { RenderIfVisible } from "#/components/RenderIfVisible/RenderIfVisible";
 import { ScrollArea } from "#ui/scroll-area";
 
-import CharacterList from "#/containers/CharacterList/CharacterList";
-import { Computed } from "@legendapp/state/react";
+import CharacterFilters from "#/modules/charactersManagement/components/CharacterFilters";
 
 const isSelectionExpanded$ = observable(false);
 
