@@ -9,7 +9,7 @@ const roster$ = stateLoader$.roster$;
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // containers
-import CharacterEditView from "#/containers/CharacterEditView/CharacterEditView";
+import CharacterEditView from "../components/CharacterEditView/CharacterEditView";
 
 import CharacterEditForm from "#/modules/planEditing/pages/CharacterEditForm";
 import ReviewWrapper from "#/modules/review/pages/ReviewWrapper";
