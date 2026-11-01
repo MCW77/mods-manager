@@ -30,7 +30,7 @@ const ReviewMobile: React.FC = observer(() => {
 	const modRemovalCost = useValue(review$.modRemovalCost);
 	const removedModsCount = useValue(review$.removedModsCount);
 
-	const focusedIndex = useValue(review$.focusedCharacterIndex);
+	const focusedIndex = useValue(review$.selectedCharacterIndex);
 
 	const focusedCharacterIndex = Math.min(
 		focusedIndex,
@@ -68,7 +68,7 @@ const ReviewMobile: React.FC = observer(() => {
 			0,
 			Math.min(charactersInCompilation.length - 1, index),
 		);
-		review$.focusedCharacterIndex.set(clamped);
+		review$.selectedCharacterIndex.set(clamped);
 		review$.selectedCharacter.set(charactersInCompilation[clamped].id);
 		listRef.current?.scrollToIndex({
 			index: clamped,
@@ -79,11 +79,11 @@ const ReviewMobile: React.FC = observer(() => {
 	};
 
 	const selectPrevious = () => {
-		selectCharacterAt(review$.focusedCharacterIndex.get() - 1);
+		selectCharacterAt(review$.selectedCharacterIndex.get() - 1);
 	};
 
 	const selectNext = () => {
-		selectCharacterAt(review$.focusedCharacterIndex.get() + 1);
+		selectCharacterAt(review$.selectedCharacterIndex.get() + 1);
 	};
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -102,7 +102,7 @@ const ReviewMobile: React.FC = observer(() => {
 			selectCharacterAt(charactersInCompilation.length - 1);
 		} else if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
-			const currentIndex = review$.focusedCharacterIndex.get();
+			const currentIndex = review$.selectedCharacterIndex.get();
 			if (currentIndex >= 0 && currentIndex < charactersInCompilation.length) {
 				review$.selectedCharacter.set(charactersInCompilation[currentIndex].id);
 			}
