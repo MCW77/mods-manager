@@ -3,6 +3,9 @@ import * as React from "react";
 import { observer, Show, useValue } from "@legendapp/state/react";
 import { useTranslation } from "react-i18next";
 
+// utils
+import { useOrientation } from "#/utils/legend-kit/web/useOrientation";
+
 // state
 import { review$ } from "#/modules/review/state/review";
 
@@ -19,6 +22,7 @@ import { SummaryWidget } from "../components/SummaryWidget";
 import { DefaultCollapsibleCard } from "#/components/DefaultCollapsibleCard";
 
 import { Label } from "#ui/label";
+import { ScrollArea } from "#ui/scroll-area";
 
 const ReviewMobile: React.FC = observer(() => {
 	const [t] = useTranslation("optimize-ui");
@@ -29,13 +33,9 @@ const ReviewMobile: React.FC = observer(() => {
 	const modUpgradeCost = useValue(review$.modUpgradeCost);
 	const modRemovalCost = useValue(review$.modRemovalCost);
 	const removedModsCount = useValue(review$.removedModsCount);
-
-	const focusedIndex = useValue(review$.selectedCharacterIndex);
-
-	const focusedCharacterIndex = Math.min(
-		focusedIndex,
-		Math.max(0, charactersInCompilation.length - 1),
-	);
+	const selectedCharacterIndex = useValue(review$.selectedCharacterIndex);
+	const orientation$ = useOrientation();
+	const orientation = useValue(orientation$);
 
 	const listRef = React.useRef<LegendListRef>(null);
 
@@ -110,9 +110,9 @@ const ReviewMobile: React.FC = observer(() => {
 	};
 
 	return (
-		<div className="flex flex-col h-full w-full overflow-hidden">
-			<div className="flex flex-wrap justify-center items-stretch p-y-2 gap-2">
-				<div className="h-24 w-[90%] flex flex-gap-4 items-center">
+		<ScrollArea className="flex flex-col h-full w-full">
+			<div className="flex flex-wrap justify-center items-stretch p-2 gap-2">
+				<div className="h-20 w-[90%] flex flex-gap-4 items-center">
 					<button
 						type="button"
 						aria-label="Select previous character"
@@ -134,7 +134,7 @@ const ReviewMobile: React.FC = observer(() => {
 						tabIndex={0}
 						role="listbox"
 						aria-label="Characters"
-						aria-activedescendant={`character-option-${focusedCharacterIndex}`}
+						aria-activedescendant={`character-option-${selectedCharacterIndex}`}
 						onKeyDown={handleKeyDown}
 					/>
 					<button
@@ -147,7 +147,9 @@ const ReviewMobile: React.FC = observer(() => {
 					</button>
 				</div>
 			</div>
-			<div className="flex gap-4 justify-center">
+			<div
+				className={`flex ${orientation === "landscape" ? "flex-row" : "flex-col"} gap-4 p-4 justify-center items-stretch`}
+			>
 				<Show
 					if={() => 0 === charactersInCompilation.length}
 					else={<CharacterModdingView characterName={selectedCharacter} />}
@@ -163,7 +165,7 @@ const ReviewMobile: React.FC = observer(() => {
 					</Show>
 				</Show>
 				<DefaultCollapsibleCard>
-					<div className="flex flex-col justify-center items-stretch p-y-2 gap-4">
+					<div className="flex flex-col justify-center items-stretch p-4 gap-4">
 						<DisplayWidget />
 						<ActionsWidget />
 						<SummaryWidget
@@ -174,9 +176,9 @@ const ReviewMobile: React.FC = observer(() => {
 							numMovingMods={removedModsCount}
 						/>
 					</div>
-				</DefaultCollapsibleCard>{" "}
+				</DefaultCollapsibleCard>
 			</div>
-		</div>
+		</ScrollArea>
 	);
 });
 

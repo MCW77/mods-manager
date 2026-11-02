@@ -1,6 +1,9 @@
 // react
 import * as React from "react";
-import { Show, useObservable } from "@legendapp/state/react";
+import { Show, useObservable, useValue } from "@legendapp/state/react";
+
+// utils
+import { useOrientation } from "#/utils/legend-kit/web/useOrientation";
 
 // state
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
@@ -61,6 +64,8 @@ const ModLoadoutDetail = React.memo(
 		modAssignment: { target, missedGoals, previousScore, currentScore },
 	}: ComponentProps) => {
 		const showOldLoadoud$ = useObservable(false);
+		const orientation$ = useOrientation();
+		const orientation = useValue(orientation$);
 		const addCalculatedStatsToPlayerValues = (playerStats: PlayerStat[]) => {
 			const currentStats = {
 				health: 0,
@@ -384,11 +389,9 @@ const ModLoadoutDetail = React.memo(
 
 		return (
 			<div
-				className={
-					"mod-set-detail relative flex gap-2 border-1 border-solid border-blue-500 p-2 bg-blue-200 dark:bg-blue-900 dark:bg-opacity-40 text-foreground text-shadow-md"
-				}
+				className={`relative flex ${orientation === "landscape" ? "flex-row" : "flex-col"} flex-wrap gap-4 border-1 border-solid border-blue-500 p-2 bg-blue-200 dark:bg-blue-900 dark:bg-opacity-40 text-foreground text-shadow-md`}
 			>
-				<div className="flex flex-col gap-2 items-center">
+				<div className="flex flex-col gap-2 items-stretch min-w-0">
 					<div className="flex flex-gap-2">
 						New Loadout
 						<Switch $checked={showOldLoadoud$} />

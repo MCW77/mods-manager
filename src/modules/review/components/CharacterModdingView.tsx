@@ -27,10 +27,37 @@ const CharacterModdingView = ({ characterName }: CharacterModdingViewProps) => {
 	const character = characterById[characterName] || {
 		id: characterName,
 		name: characterName,
+		omis: [],
+		playerValues: {
+			equippedStats: {
+				"Accuracy %": 0,
+				Armor: 0,
+				"Critical Avoidance %": 0,
+				"Critical Damage %": 0,
+				Health: 0,
+				"Potency %": 0,
+				Protection: 0,
+				"Physical Critical Chance %": 0,
+				"Physical Damage": 0,
+				Resistance: 0,
+				"Special Critical Chance %": 0,
+				"Special Damage": 0,
+				Speed: 0,
+				"Tenacity %": 0,
+			},
+			galacticPower: 0,
+			gearLevel: 13,
+			gearPieces: [],
+			level: 85,
+			relicTier: 0,
+			stars: 7,
+		},
+		targets: [],
+		zetas: [],
 	};
 
 	return (
-		<div className={"grid grid-cols-1 gap-6 justify-items-center"}>
+		<div className={"grid grid-cols-1 gap-6 justify-items-stretch"}>
 			<ModLoadoutDetail
 				newLoadout={createModLoadout(newLoadout)}
 				oldLoadout={createModLoadout(oldLoadout)}
