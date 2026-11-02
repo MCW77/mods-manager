@@ -7,6 +7,7 @@ import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 // components
 import ModDetail from "#/components/ModDetail/ModDetail";
+import { ScrollArea, ScrollBar } from "#ui/scroll-area";
 
 type ComponentProps = {
 	modLoadout: ModLoadout.ModLoadout;
@@ -25,9 +26,12 @@ const ModLoadoutView = React.memo(
 			));
 		}
 		return (
-			<div className={"relative inline-grid grid-cols-2 grid-rows-3 gap-2"}>
-				{modDetails}
-			</div>
+			<ScrollArea>
+				<div className={"relative grid grid-flow-col grid-rows-3 gap-2"}>
+					{modDetails}
+				</div>
+				<ScrollBar orientation="horizontal" />
+			</ScrollArea>
 		);
 	},
 );
