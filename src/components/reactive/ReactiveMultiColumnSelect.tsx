@@ -64,6 +64,7 @@ function ReactiveMultiColumnSelect<
 			</SelectTrigger>
 			<SelectContent
 				alignItemWithTrigger={true}
+				className={"w-auto"}
 				side={"bottom"}
 				align={"start"}
 				sideOffset={5}
