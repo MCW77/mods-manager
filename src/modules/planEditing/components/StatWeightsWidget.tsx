@@ -19,50 +19,42 @@ import { Label } from "#ui/label";
 import { Switch as SHadCNSwich } from "#/components/reactive/Switch";
 
 export const StatWeightsWidget: React.FC = reactiveObserver(() => {
-	const [t] = useTranslation("optimize-ui");
-	return (
-		<div className={""}>
-			<div className="flex">
-				<Label className="p-r-2" htmlFor={"basic-advanced-switch"}>
-					{t("target.sections.weights.Basic")}
-				</Label>
-				<SHadCNSwich
-					$checked={target$.isInAdvancedEditMode}
-					onCheckedChange={(checked) => {
-						beginBatch();
-						target$.isInAdvancedEditMode.set(checked);
-						checked
-							? target$.target.set(
-									OptimizationPlan.normalize(target$.target.peek()),
-								)
-							: target$.target.set(
-									OptimizationPlan.denormalize(target$.target.peek()),
-								);
-						endBatch();
-					}}
-					id={"basic-advanced-switch"}
-				/>
-				<Label className="p-l-2" htmlFor={"basic-advanced-switch"}>
-					{t("target.sections.weights.Advanced")}
-				</Label>
-			</div>
-			<div className="flex flex-col flex-gap-4 justify-center p-2">
-				<Switch value={target$.isInAdvancedEditMode}>
-					{{
-						false: () => (
-							<StatWeightsForm target$={target$} StatInput={BasicInput} />
-						),
-						true: () => (
-							<StatWeightsForm target$={target$} StatInput={AdvancedInput} />
-						),
-					}}
-				</Switch>
-				<Button type={"button"} onClick={() => target$.zeroAll()}>
-					{t("target.sections.weights.Zero")}
-				</Button>
-			</div>
-		</div>
-	);
+  const [t] = useTranslation("optimize-ui");
+  return (
+    <div className={""}>
+      <div className="flex">
+        <Label className="p-r-2" htmlFor={"basic-advanced-switch"}>
+          {t("target.sections.weights.Basic")}
+        </Label>
+        <SHadCNSwich
+          $checked={target$.isInAdvancedEditMode}
+          onCheckedChange={(checked) => {
+            beginBatch();
+            target$.isInAdvancedEditMode.set(checked);
+            if (checked === true)
+              target$.target.set(OptimizationPlan.normalize(target$.target.peek()));
+            else target$.target.set(OptimizationPlan.denormalize(target$.target.peek()));
+            endBatch();
+          }}
+          id={"basic-advanced-switch"}
+        />
+        <Label className="p-l-2" htmlFor={"basic-advanced-switch"}>
+          {t("target.sections.weights.Advanced")}
+        </Label>
+      </div>
+      <div className="flex flex-col flex-gap-4 justify-center p-2">
+        <Switch value={target$.isInAdvancedEditMode}>
+          {{
+            false: () => <StatWeightsForm target$={target$} StatInput={BasicInput} />,
+            true: () => <StatWeightsForm target$={target$} StatInput={AdvancedInput} />,
+          }}
+        </Switch>
+        <Button type={"button"} onClick={() => target$.zeroAll()}>
+          {t("target.sections.weights.Zero")}
+        </Button>
+      </div>
+    </div>
+  );
 });
 
 StatWeightsWidget.displayName = "StatWeightsWidget";

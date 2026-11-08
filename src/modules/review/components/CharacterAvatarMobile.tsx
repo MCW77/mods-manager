@@ -11,23 +11,15 @@ import { review$ } from "#/modules/review/state/review";
 const CharacterAvatarMobile = React.memo(
   ({ characterId, index }: { characterId: string; index: number }) => {
     const baseCharacterById = useValue(characters$.baseCharacterById);
-    const isSelected = useValue(
-      () => review$.selectedCharacter.get() === characterId,
-    );
+    const isSelected = useValue(() => review$.selectedCharacter.get() === characterId);
 
-    if (
-      characterId === undefined ||
-      characterId === null ||
-      characterId === "null"
-    )
-      return null;
+    if (characterId === undefined || characterId === null || characterId === "null") return null;
 
     const baseCharacter = baseCharacterById[characterId] ?? {
       id: characterId,
       name: characterId,
     };
-    const avatarUrl =
-      baseCharacter.avatarUrl === "" ? undefined : baseCharacter.avatarUrl;
+    const avatarUrl = baseCharacter.avatarUrl === "" ? undefined : baseCharacter.avatarUrl;
 
     const handleSelect = () => {
       review$.selectedCharacter.set(characterId);

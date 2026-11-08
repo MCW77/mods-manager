@@ -1,3 +1,3 @@
 export const formatNumber = (num: number) => {
-	return num.toLocaleString(navigator.language, { useGrouping: true });
+  return num.toLocaleString(navigator.language, { useGrouping: true });
 };

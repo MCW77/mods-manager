@@ -8,80 +8,80 @@ import { Input } from "#ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "#ui/popover";
 
 interface RenameButtonProps {
-	itemId: string;
-	itemName: string;
-	onRename: (id: string, newName: string) => void;
+  itemId: string;
+  itemName: string;
+  onRename: (id: string, newName: string) => void;
 }
 
 const RenameButton: React.FC<RenameButtonProps> = observer(
-	({ itemId, itemName, onRename }: RenameButtonProps) => {
-		const state$ = useObservable({
-			isOpen: false,
-			newName: itemName,
-		});
-		const isPopoverOpen = useValue(state$.isOpen);
-		const newName = useValue(state$.newName);
+  ({ itemId, itemName, onRename }: RenameButtonProps) => {
+    const state$ = useObservable({
+      isOpen: false,
+      newName: itemName,
+    });
+    const isPopoverOpen = useValue(state$.isOpen);
+    const newName = useValue(state$.newName);
 
-		const handleRename = (e: React.MouseEvent) => {
-			e.preventDefault();
-			e.stopPropagation();
-			state$.isOpen.set(true);
-		};
+    const handleRename = (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      state$.isOpen.set(true);
+    };
 
-		const handleSubmit = (e: React.FormEvent) => {
-			e.preventDefault();
-			onRename(itemId, newName);
-			state$.isOpen.set(false);
-		};
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      onRename(itemId, newName);
+      state$.isOpen.set(false);
+    };
 
-		return (
-			<Popover open={isPopoverOpen} onOpenChange={state$.isOpen.set}>
-				<PopoverTrigger
-					render={
-						<Button
-							variant="ghost"
-							size="icon"
-							className="h-6 w-6 p-0 hover:bg-foreground focus-visible:ring-1 focus-visible:ring-nuted-foreground focus-visible:ring-offset-2 focus-visible:ring-muted-foreground"
-							onClick={handleRename}
-							onMouseDown={(e) => e.stopPropagation()}
-						/>
-					}
-				>
-					<PencilIcon className="h-3 w-3 text-muted-foreground" />
-					<span className="sr-only">Rename {itemName}</span>
-				</PopoverTrigger>
-				<PopoverContent className="w-80">
-					<form onSubmit={handleSubmit} className="flex flex-col space-y-2">
-						<h4 className="font-medium text-sm text-popover">Rename Item</h4>
-						<Input
-							value={newName}
-							onChange={(e) => state$.newName.set(e.target.value)}
-							placeholder="Enter new name"
-							className="h-8 text-sm"
-						/>
-						<div className="flex justify-end space-x-2">
-							<Button
-								type="button"
-								variant="outline"
-								size="sm"
-								onClick={() => state$.isOpen.set(false)}
-								className="h-8 px-3 text-xs"
-							>
-								Cancel
-							</Button>
-							<Button
-								type="submit"
-								size="sm"
-								className="h-8 px-3 text-xs bg-primary-foreground text-primary hover:bg-accent"
-							>
-								Save
-							</Button>
-						</div>
-					</form>
-				</PopoverContent>
-			</Popover>
-		);
-	},
+    return (
+      <Popover open={isPopoverOpen} onOpenChange={(isOpen) => state$.isOpen.set(isOpen)}>
+        <PopoverTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 p-0 hover:bg-foreground focus-visible:ring-1 focus-visible:ring-nuted-foreground focus-visible:ring-offset-2 focus-visible:ring-muted-foreground"
+              onClick={handleRename}
+              onMouseDown={(e) => e.stopPropagation()}
+            />
+          }
+        >
+          <PencilIcon className="h-3 w-3 text-muted-foreground" />
+          <span className="sr-only">Rename {itemName}</span>
+        </PopoverTrigger>
+        <PopoverContent className="w-80">
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
+            <h4 className="font-medium text-sm text-popover">Rename Item</h4>
+            <Input
+              value={newName}
+              onChange={(e) => state$.newName.set(e.target.value)}
+              placeholder="Enter new name"
+              className="h-8 text-sm"
+            />
+            <div className="flex justify-end space-x-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => state$.isOpen.set(false)}
+                className="h-8 px-3 text-xs"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                size="sm"
+                className="h-8 px-3 text-xs bg-primary-foreground text-primary hover:bg-accent"
+              >
+                Save
+              </Button>
+            </div>
+          </form>
+        </PopoverContent>
+      </Popover>
+    );
+  },
 );
 
 RenameButton.displayName = "RenameButton";

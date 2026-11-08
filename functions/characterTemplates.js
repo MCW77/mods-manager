@@ -1,72 +1,72 @@
 const corsHeaders = {
-	"Access-Control-Allow-Origin": "*",
-	"Access-Control-Allow-Methods": "POST, OPTIONS",
-	"Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
 };
 
 export async function onRequest(context) {
-	const { request, env } = context;
+  const { request, env } = context;
 
-	// Only handle POST requests
-	if (request.method !== "POST") {
-		return new Response("Method not allowed", { status: 405 });
-	}
+  // Only handle POST requests
+  if (request.method !== "POST") {
+    return new Response("Method not allowed", { status: 405 });
+  }
 
-	try {
-		// Get the request body
-		const requestBody = await request.json();
+  try {
+    // Get the request body
+    const requestBody = await request.json();
 
-		// Extract the target URL and custom headers from the request
-		const { character } = requestBody;
+    // Extract the target URL and custom headers from the request
+    const { character } = requestBody;
 
-		let templates = await env.MMUT.get(character, "json");
+    let templates = await env.MMUT.get(character, "json");
 
-		if (templates === null) {
-			const url = `https://swgoh.gg/api/v2/units/${character}/template-data/`;
+    if (templates === null) {
+      const url = `https://swgoh.gg/api/v2/units/${character}/template-data/`;
 
-			const response = await fetch(url, {
-				method: "GET",
-				headers: {
-					"content-type": "application/json",
-					"x-gg-bot-access": env["swgohgg-apikey"],
-				},
-			});
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          "x-gg-bot-access": env["swgohgg-apikey"],
+        },
+      });
 
-			// Get response data
-			const responseData = await response.text();
+      // Get response data
+      const responseData = await response.text();
 
-			// Try to parse as JSON, fall back to text
-			let parsedData;
-			try {
-				parsedData = JSON.parse(responseData);
-			} catch {
-				parsedData = responseData;
-			}
-			templates = parsedData.data.templates;
-			await env.MMUT.put(character, JSON.stringify(templates));
-		}
-		const responseStatus = templates === null ? response.status : 200;
-		return new Response(JSON.stringify(templates), {
-			status: responseStatus,
-			headers: {
-				...corsHeaders,
-				"Content-Type": "application/json",
-			},
-		});
-	} catch (error) {
-		return new Response(JSON.stringify({ error: error.message }), {
-			status: 500,
-			headers: {
-				...corsHeaders,
-				"Content-Type": "application/json",
-			},
-		});
-	}
+      // Try to parse as JSON, fall back to text
+      let parsedData;
+      try {
+        parsedData = JSON.parse(responseData);
+      } catch {
+        parsedData = responseData;
+      }
+      templates = parsedData.data.templates;
+      await env.MMUT.put(character, JSON.stringify(templates));
+    }
+    const responseStatus = templates === null ? response.status : 200;
+    return new Response(JSON.stringify(templates), {
+      status: responseStatus,
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: {
+        ...corsHeaders,
+        "Content-Type": "application/json",
+      },
+    });
+  }
 }
 
 export async function onRequestOptions() {
-	return new Response(null, {
-		status: 204,
-		headers: corsHeaders,
-	});
+  return new Response(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
 }

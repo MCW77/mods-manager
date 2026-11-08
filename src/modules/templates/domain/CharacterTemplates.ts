@@ -1,7 +1,7 @@
 // domain
 import type {
-	SelectedCharacters,
-	ShortSelectedCharacters,
+  SelectedCharacters,
+  ShortSelectedCharacters,
 } from "../../../domain/SelectedCharacters";
 
 /**
@@ -20,9 +20,9 @@ export type CharacterTemplates = CharacterTemplate[];
 export type ShortCharacterTemplates = ShortCharacterTemplate[];
 
 interface ShortCharacterTemplate {
-	id: string;
-	category: string;
-	selectedCharacters: ShortSelectedCharacters;
+  id: string;
+  category: string;
+  selectedCharacters: ShortSelectedCharacters;
 }
 
 /**
@@ -38,9 +38,9 @@ interface ShortCharacterTemplate {
  * ```
  */
 export interface CharacterTemplate {
-	id: string;
-	category: string;
-	selectedCharacters: SelectedCharacters;
+  id: string;
+  category: string;
+  selectedCharacters: SelectedCharacters;
 }
 
 /**

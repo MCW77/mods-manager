@@ -4,29 +4,29 @@ import type { CharacterNames } from "#/constants/CharacterNames";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 
 export const DamageType = {
-	physical: 1,
-	special: 0,
-	mixed: 0.5,
+  physical: 1,
+  special: 0,
+  mixed: 0.5,
 } as const;
 
 export interface CharacterSettings {
-	targets: OptimizationPlan[];
-	extraTags: string[];
-	damageType: number;
+  targets: OptimizationPlan[];
+  extraTags: string[];
+  damageType: number;
 }
 
 export const createCharacterSettings = (
-	targets: OptimizationPlan[] = [],
-	extraTags: string[] = [],
-	damageType: number = DamageType.physical,
+  targets: OptimizationPlan[] = [],
+  extraTags: string[] = [],
+  damageType: number = DamageType.physical,
 ) => {
-	return {
-		targets,
-		extraTags,
-		damageType,
-	};
+  return {
+    targets,
+    extraTags,
+    damageType,
+  };
 };
 
 export type CharacterSettingsIndexer = {
-	[key in CharacterNames]: CharacterSettings;
+  [key in CharacterNames]: CharacterSettings;
 };

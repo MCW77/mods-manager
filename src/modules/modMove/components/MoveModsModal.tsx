@@ -25,186 +25,160 @@ import type { CharacterModdings } from "#/modules/compilations/domain/CharacterM
 import { Credits } from "#/components/Credits/Credits";
 import { Button } from "#ui/button";
 import {
-	DialogClose,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
+  DialogClose,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "#ui/dialog";
 import { ScrollArea } from "#ui/scroll-area";
 
 interface HUModsProfile {
-	id: CharacterNames;
-	modIds: string[];
-	target: string;
+  id: CharacterNames;
+  modIds: string[];
+  target: string;
 }
 type HUModsProfiles = HUModsProfile[];
 interface HUModsMoveProfile {
-	units: HUModsProfiles;
+  units: HUModsProfiles;
 }
 
 // A map from number of pips that a mod has to the cost to remove it
 const modRemovalCosts = {
-	1: 550,
-	2: 1050,
-	3: 1900,
-	4: 3000,
-	5: 4750,
-	6: 8000,
+  1: 550,
+  2: 1050,
+  3: 1900,
+  4: 3000,
+  5: 4750,
+  6: 8000,
 };
 
 const MoveModsModal = () => {
-	const modById = useValue(() => mods$.activeModById.get());
-	const flatCharacterModdings = useValue(
-		defaultCompilation$.data.flatCharacterModdings,
-	);
-	const characterById = useValue(roster$.activeCharacterById);
+  const modById = useValue(() => mods$.activeModById.get());
+  const flatCharacterModdings = useValue(defaultCompilation$.data.flatCharacterModdings);
+  const characterById = useValue(roster$.activeCharacterById);
 
-	const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
-		modById.values().filter((mod) => mod.characterID !== "null"),
-		(mod: Mod) => mod.characterID,
-	);
+  const currentModsByCharacter: Record<CharacterNames, Mod[]> = collectByKey(
+    modById.values().filter((mod) => mod.characterID !== "null"),
+    (mod: Mod) => mod.characterID,
+  );
 
-	const modAssignments: CharacterModdings = flatCharacterModdings
-		.filter((x) => null !== x)
-		.map(({ characterId, target, assignedMods, missedGoals }) => ({
-			characterId,
-			target,
-			assignedMods: assignedMods
-				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
-				: [],
-			missedGoals: missedGoals || [],
-		})) as CharacterModdings;
+  const modAssignments: CharacterModdings = flatCharacterModdings
+    .filter((x) => null !== x)
+    .map(({ characterId, target, assignedMods, missedGoals }) => ({
+      characterId,
+      target,
+      assignedMods: assignedMods
+        ? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
+        : [],
+      missedGoals: missedGoals || [],
+    })) as CharacterModdings;
 
-	const movingModsByAssignedCharacter = modAssignments
-		.map(({ characterId, target, assignedMods }) => ({
-			characterId,
-			target,
-			assignedMods: assignedMods.filter(
-				(mod) => mod.characterID !== characterId,
-			),
-		}))
-		.filter(({ assignedMods }) => assignedMods.length);
+  const movingModsByAssignedCharacter = modAssignments
+    .map(({ characterId, target, assignedMods }) => ({
+      characterId,
+      target,
+      assignedMods: assignedMods.filter((mod) => mod.characterID !== characterId),
+    }))
+    .filter(({ assignedMods }) => assignedMods.length);
 
-	const movingMods = flatten(
-		movingModsByAssignedCharacter.map(({ assignedMods }) => assignedMods),
-	).filter((mod) => mod.characterID);
+  const movingMods = flatten(
+    movingModsByAssignedCharacter.map(({ assignedMods }) => assignedMods),
+  ).filter((mod) => mod.characterID);
 
-	// Mod cost is the cost of all mods that are being REMOVED. Every mod
-	// being assigned to a new character (so that isn't already unassigned) is
-	// being removed from that character. Then, any mods that used to be equipped
-	// are also being removed.
-	const removedMods = flatten(
-		movingModsByAssignedCharacter.map(({ characterId, assignedMods }) => {
-			const changingSlots = assignedMods.map((mod) => mod.slot);
-			return currentModsByCharacter[characterId]
-				? currentModsByCharacter[characterId].filter((mod) =>
-						changingSlots.includes(mod.slot),
-					)
-				: [];
-		}),
-	).filter((mod) => !movingMods.includes(mod));
+  // Mod cost is the cost of all mods that are being REMOVED. Every mod
+  // being assigned to a new character (so that isn't already unassigned) is
+  // being removed from that character. Then, any mods that used to be equipped
+  // are also being removed.
+  const removedMods = flatten(
+    movingModsByAssignedCharacter.map(({ characterId, assignedMods }) => {
+      const changingSlots = assignedMods.map((mod) => mod.slot);
+      return currentModsByCharacter[characterId]
+        ? currentModsByCharacter[characterId].filter((mod) => changingSlots.includes(mod.slot))
+        : [];
+    }),
+  ).filter((mod) => !movingMods.includes(mod));
 
-	const modCostBasis = movingMods.concat(removedMods);
-	// Get a count of how much it will cost to move the mods. It only costs money to remove mods
-	const modRemovalCost = modCostBasis.reduce(
-		(cost, mod) => cost + modRemovalCosts[mod.pips],
-		0,
-	);
+  const modCostBasis = movingMods.concat(removedMods);
+  // Get a count of how much it will cost to move the mods. It only costs money to remove mods
+  const modRemovalCost = modCostBasis.reduce((cost, mod) => cost + modRemovalCosts[mod.pips], 0);
 
-	const generateHotUtilsProfile = () => {
-		const assignedMods = flatCharacterModdings
-			.filter((x) => null !== x)
-			.filter(
-				({ characterId }) =>
-					characterById[characterId].playerValues.level >= 50,
-			)
-			.map(({ characterId, assignedMods, target }) => ({
-				id: characterId,
-				modIds: assignedMods,
-				target: target.id,
-			}));
+  const generateHotUtilsProfile = () => {
+    const assignedMods = flatCharacterModdings
+      .filter((x) => null !== x)
+      .filter(({ characterId }) => characterById[characterId].playerValues.level >= 50)
+      .map(({ characterId, assignedMods, target }) => ({
+        id: characterId,
+        modIds: assignedMods,
+        target: target.id,
+      }));
 
-		const lockedMods = (
-			Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][]
-		)
-			.filter(([characterId]) =>
-				lockedStatus$.lockedCharactersForActivePlayer.has(characterId),
-			)
-			.map(([characterId, mods]) => ({
-				id: characterId,
-				modIds: mods.map(({ id }) => id),
-				target: "locked",
-			}));
+    const lockedMods = (Object.entries(currentModsByCharacter) as [CharacterNames, Mod[]][])
+      .filter(([characterId]) => lockedStatus$.lockedCharactersForActivePlayer.has(characterId))
+      .map(([characterId, mods]) => ({
+        id: characterId,
+        modIds: mods.map(({ id }) => id),
+        target: "locked",
+      }));
 
-		return assignedMods.concat(lockedMods);
-	};
+    return assignedMods.concat(lockedMods);
+  };
 
-	return (
-		<>
-			<DialogHeader>
-				<DialogTitle>Move mods in-game using HotUtils</DialogTitle>
-				<DialogDescription>
-					Moving your mods will cost
-					<br />
-					<span
-						className={
-							"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"
-						}
-					>
-						<strong className={"white"}>{formatNumber(modRemovalCost)}</strong>{" "}
-						<Credits />
-					</span>
-				</DialogDescription>
-			</DialogHeader>
-			<ScrollArea
-				className={"max-h-[60vh] w-full min-w-0 bg-background border rounded"}
-			>
-				<p>
-					This will move all of your mods as recommended by Grandivory's Mods
-					Optimizer. Please note that{" "}
-					<strong className={"text-mod-gold"}>
-						this action will log you out of Galaxy of Heroes if you are
-						currently logged in
-					</strong>
-					.
-				</p>
-				<p>
-					Moving your mods can take several minutes. Please be patient and allow
-					the process to complete before refreshing or logging back into Galaxy
-					of Heroes.
-				</p>
-				<p>
-					<strong>Use at your own risk!</strong> HotUtils functionality breaks
-					the terms of service for Star Wars: Galaxy of Heroes. You assume all
-					risk in using this tool. Grandivory's Mods Optimizer is not associated
-					with HotUtils.
-				</p>
-			</ScrollArea>
-			<DialogFooter className="sm:justify-center pb-1">
-				<div className="flex flex-row gap-2 items-center justify-center">
-					<DialogClose
-						render={
-							<Button type={"button"} variant={"destructive"}>
-								Cancel
-							</Button>
-						}
-					/>
-					<Button
-						type={"button"}
-						onClick={() => {
-							const profile: HUModsMoveProfile = {
-								units: generateHotUtilsProfile(),
-							};
-							modMove$.moveMods(profile);
-						}}
-					>
-						Move my mods
-					</Button>
-				</div>
-			</DialogFooter>
-		</>
-	);
+  return (
+    <>
+      <DialogHeader>
+        <DialogTitle>Move mods in-game using HotUtils</DialogTitle>
+        <DialogDescription>
+          Moving your mods will cost
+          <br />
+          <span className={"inline-block border-1 border-solid border-[dodgerblue] p-[.25em]"}>
+            <strong className={"white"}>{formatNumber(modRemovalCost)}</strong> <Credits />
+          </span>
+        </DialogDescription>
+      </DialogHeader>
+      <ScrollArea className={"max-h-[60vh] w-full min-w-0 bg-background border rounded"}>
+        <p>
+          This will move all of your mods as recommended by Grandivory's Mods Optimizer. Please note
+          that{" "}
+          <strong className={"text-mod-gold"}>
+            this action will log you out of Galaxy of Heroes if you are currently logged in
+          </strong>
+          .
+        </p>
+        <p>
+          Moving your mods can take several minutes. Please be patient and allow the process to
+          complete before refreshing or logging back into Galaxy of Heroes.
+        </p>
+        <p>
+          <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service
+          for Star Wars: Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods
+          Optimizer is not associated with HotUtils.
+        </p>
+      </ScrollArea>
+      <DialogFooter className="sm:justify-center pb-1">
+        <div className="flex flex-row gap-2 items-center justify-center">
+          <DialogClose
+            render={
+              <Button type={"button"} variant={"destructive"}>
+                Cancel
+              </Button>
+            }
+          />
+          <Button
+            type={"button"}
+            onClick={() => {
+              const profile: HUModsMoveProfile = {
+                units: generateHotUtilsProfile(),
+              };
+              void modMove$.moveMods(profile);
+            }}
+          >
+            Move my mods
+          </Button>
+        </div>
+      </DialogFooter>
+    </>
+  );
 };
 
 MoveModsModal.displayName = "MoveModsModal";

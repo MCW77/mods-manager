@@ -11,65 +11,52 @@ import type { AbilitiesDisplayMode } from "../domain/DatacronsObservable";
 // components
 import { Filter, Info } from "lucide-react";
 import { Button } from "#ui/button";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
 import DatacronsList from "../components/DatacronsList";
 import FilterCard from "../components/FilterCard";
 import MaterialsCard from "../components/MaterialsCard";
 
 export default function DatacronsView() {
-	const [showFilters, setShowFilters] = useState(false);
-	const [showInfo, setShowInfo] = useState(false);
-	const abilitiesDisplayMode = useValue(datacrons$.abilitiesDisplayMode);
+  const [showFilters, setShowFilters] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const abilitiesDisplayMode = useValue(datacrons$.abilitiesDisplayMode);
 
-	return (
-		<div className="relative flex h-full w-full flex-col overflow-hidden">
-			<div className="flex shrink-0 items-center justify-around border-b px-6 py-4">
-				<Button
-					variant={"outline"}
-					onClick={() => setShowFilters(!showFilters)}
-				>
-					<Filter className="mr-2 h-4 w-4" />
-					{showFilters ? "Hide" : "Show"} Filters
-				</Button>
-				<Select
-					value={abilitiesDisplayMode}
-					onValueChange={(value) =>
-						datacrons$.abilitiesDisplayMode.set(value as AbilitiesDisplayMode)
-					}
-				>
-					<SelectTrigger className="w-[200px]">
-						<SelectValue placeholder="Abilities Display Mode" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="Show Full Abilities">
-							Show Full Abilities
-						</SelectItem>
-						<SelectItem value="Show Short Abilities">
-							Show Short Abilities
-						</SelectItem>
-						<SelectItem value="Hide Abilities">Hide Abilities</SelectItem>
-					</SelectContent>
-				</Select>
+  return (
+    <div className="relative flex h-full w-full flex-col overflow-hidden">
+      <div className="flex shrink-0 items-center justify-around border-b px-6 py-4">
+        <Button variant={"outline"} onClick={() => setShowFilters(!showFilters)}>
+          <Filter className="mr-2 h-4 w-4" />
+          {showFilters ? "Hide" : "Show"} Filters
+        </Button>
+        <Select
+          value={abilitiesDisplayMode}
+          onValueChange={(value) =>
+            datacrons$.abilitiesDisplayMode.set(value as AbilitiesDisplayMode)
+          }
+        >
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Abilities Display Mode" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Show Full Abilities">Show Full Abilities</SelectItem>
+            <SelectItem value="Show Short Abilities">Show Short Abilities</SelectItem>
+            <SelectItem value="Hide Abilities">Hide Abilities</SelectItem>
+          </SelectContent>
+        </Select>
 
-				<Button variant={"outline"} onClick={() => setShowInfo(!showInfo)}>
-					<Info className="mr-2 h-4 w-4" />
-					{showInfo ? "Hide" : "Show"} Materials Info
-				</Button>
-			</div>
+        <Button variant={"outline"} onClick={() => setShowInfo(!showInfo)}>
+          <Info className="mr-2 h-4 w-4" />
+          {showInfo ? "Hide" : "Show"} Materials Info
+        </Button>
+      </div>
 
-			<div className="flex min-h-0 flex-1 flex-col">
-				<div className="flex shrink-0 flex-wrap gap-4 p-4">
-					<FilterCard showFilters={showFilters} />
-					<MaterialsCard showInfo={showInfo} />
-				</div>
-				<DatacronsList />
-			</div>
-		</div>
-	);
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div className="flex shrink-0 flex-wrap gap-4 p-4">
+          <FilterCard showFilters={showFilters} />
+          <MaterialsCard showInfo={showInfo} />
+        </div>
+        <DatacronsList />
+      </div>
+    </div>
+  );
 }

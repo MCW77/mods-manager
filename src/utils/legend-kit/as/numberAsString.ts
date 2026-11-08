@@ -8,40 +8,38 @@
 
 import { linked, type ObservableParam } from "@legendapp/state";
 
-export const numberAsString = (
-	num$: ObservableParam<number | undefined | null>,
-) =>
-	linked({
-		get: () => {
-			const num = num$.get();
-			if (num === undefined) {
-				return "";
-			}
-			if (num === null) {
-				return "";
-			}
-			if (Number.isNaN(num)) {
-				return "";
-			}
-			// biome-ignore lint/style/useTemplate: <This should be as fast as possible>
-			return num + "";
-		},
-		set: ({ value }) => {
-			if (value === undefined) {
-				num$?.set(undefined);
-				return;
-			}
-			if (value === null) {
-				num$?.set(null);
-				return;
-			}
-			if (value === "") {
-				num$?.set(null);
-				return;
-			}
-			num$?.set(+value);
-		},
-	});
+export const numberAsString = (num$: ObservableParam<number | undefined | null>) =>
+  linked({
+    get: () => {
+      const num = num$.get();
+      if (num === undefined) {
+        return "";
+      }
+      if (num === null) {
+        return "";
+      }
+      if (Number.isNaN(num)) {
+        return "";
+      }
+      // biome-ignore lint/style/useTemplate: <This should be as fast as possible>
+      return num + "";
+    },
+    set: ({ value }) => {
+      if (value === undefined) {
+        num$?.set(undefined);
+        return;
+      }
+      if (value === null) {
+        num$?.set(null);
+        return;
+      }
+      if (value === "") {
+        num$?.set(null);
+        return;
+      }
+      num$?.set(+value);
+    },
+  });
 
 /**
 Usage Examples:

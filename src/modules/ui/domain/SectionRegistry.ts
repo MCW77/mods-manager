@@ -5,12 +5,12 @@ type TKeys = ParseKeys<"global-ui">;
 
 // `#/components/icons/fa${Capitalize<IconName>}`
 interface SectionData {
-	icon: IconDefinition;
-	isAlwaysVisible: boolean;
-	name: string;
-	hasNullSuspenseFallback: boolean;
-	titleKey: TKeys;
-	position: number;
+  icon: IconDefinition;
+  isAlwaysVisible: boolean;
+  name: string;
+  hasNullSuspenseFallback: boolean;
+  titleKey: TKeys;
+  position: number;
 }
 
 type SectionRegistry = SectionData[];

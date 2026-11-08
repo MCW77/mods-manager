@@ -1,9 +1,7 @@
-
-
 .flexsidebar-container .flexsidebar-maincontent > div {
-  width: calc(70vw - 2em)
+  width: calc(70vw - 2em);
 }
 
 .flexsidebar-container.collapsed .flexsidebar-maincontent > div {
-  width: calc(100vw - 2em)
+  width: calc(100vw - 2em);
 }

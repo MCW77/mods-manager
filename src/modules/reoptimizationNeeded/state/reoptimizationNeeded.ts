@@ -12,83 +12,74 @@ const roster$ = stateLoader$.roster$;
 const activeCompilationById$ = compilations$.compilationByIdForActiveAllycode;
 
 const reoptimizationNeeded$ = observable({
-	forLockedCharacters: false,
-	forProfileUpdated: false,
-	forOptimizationSettingsByCompilationId: new Map<string, boolean>(
-		[...activeCompilationById$.keys()].map((key) => [key, false]),
-	),
-	handleChanges: () => {
-		const forLockedCharacters =
-			reoptimizationNeeded$.forLockedCharacters.peek();
-		const forProfileUpdated = reoptimizationNeeded$.forProfileUpdated.peek();
-		const activeCompilationById = activeCompilationById$.peek();
-		if (activeCompilationById !== undefined) {
-			for (const compilationId of activeCompilationById.keys()) {
-				const forOptimizationSettings =
-					reoptimizationNeeded$.forOptimizationSettingsByCompilationId
-						.get(compilationId)
-						.get();
+  forLockedCharacters: false,
+  forProfileUpdated: false,
+  forOptimizationSettingsByCompilationId: new Map<string, boolean>(
+    [...activeCompilationById$.keys()].map((key) => [key, false]),
+  ),
+  handleChanges: () => {
+    const forLockedCharacters = reoptimizationNeeded$.forLockedCharacters.peek();
+    const forProfileUpdated = reoptimizationNeeded$.forProfileUpdated.peek();
+    const activeCompilationById = activeCompilationById$.peek();
+    if (activeCompilationById !== undefined) {
+      for (const compilationId of activeCompilationById.keys()) {
+        const forOptimizationSettings = reoptimizationNeeded$.forOptimizationSettingsByCompilationId
+          .get(compilationId)
+          .get();
 
-				compilations$.compilationByIdForActiveAllycode[
-					compilationId
-				].isReoptimizationNeeded.set(
-					forLockedCharacters || forOptimizationSettings || forProfileUpdated,
-				);
-			}
-		}
-		const forOptimizationSettings =
-			reoptimizationNeeded$.forOptimizationSettingsByCompilationId
-				.get("DefaultCompilation")
-				.get();
-		defaultCompilation$.data.isReoptimizationNeeded.set(
-			forLockedCharacters || forOptimizationSettings || forProfileUpdated,
-		);
+        compilations$.compilationByIdForActiveAllycode[compilationId].isReoptimizationNeeded.set(
+          forLockedCharacters || forOptimizationSettings || forProfileUpdated,
+        );
+      }
+    }
+    const forOptimizationSettings = reoptimizationNeeded$.forOptimizationSettingsByCompilationId
+      .get("DefaultCompilation")
+      .get();
+    defaultCompilation$.data.isReoptimizationNeeded.set(
+      forLockedCharacters || forOptimizationSettings || forProfileUpdated,
+    );
 
-		reoptimizationNeeded$.forLockedCharacters.set(false);
-		reoptimizationNeeded$.forProfileUpdated.set(false);
-	},
+    reoptimizationNeeded$.forLockedCharacters.set(false);
+    reoptimizationNeeded$.forProfileUpdated.set(false);
+  },
 });
 
 lockedStatus$.lockedCharactersForActivePlayer.onChange(
-	() => {
-		reoptimizationNeeded$.forLockedCharacters.set(true);
-		reoptimizationNeeded$.handleChanges();
-	},
-	{
-		immediate: true,
-		trackingType: undefined,
-	},
+  () => {
+    reoptimizationNeeded$.forLockedCharacters.set(true);
+    reoptimizationNeeded$.handleChanges();
+  },
+  {
+    immediate: true,
+    trackingType: undefined,
+  },
 );
 
 optimizationSettings$.activeSettings.onChange(({ value }) => {
-	const activeCompilationById =
-		compilations$.compilationByIdForActiveAllycode.peek();
-	if (activeCompilationById !== undefined) {
-		for (const [compilationId, compilation] of activeCompilationById) {
-			const compilationSettings = compilation.optimizationConditions;
-			const isDifferent =
-				JSON.stringify(compilationSettings) !== JSON.stringify(value);
-			reoptimizationNeeded$.forOptimizationSettingsByCompilationId
-				.get(compilationId)
-				.set(isDifferent);
-		}
-	}
-	const defaultCompilationsSettings =
-		defaultCompilation$.data.optimizationConditions?.peek();
-	const isDifferent =
-		JSON.stringify(defaultCompilationsSettings) !== JSON.stringify(value);
-	reoptimizationNeeded$.forOptimizationSettingsByCompilationId
-		.get(defaultCompilation$.data.id.peek())
-		.set(isDifferent);
-	reoptimizationNeeded$.handleChanges();
+  const activeCompilationById = compilations$.compilationByIdForActiveAllycode.peek();
+  if (activeCompilationById !== undefined) {
+    for (const [compilationId, compilation] of activeCompilationById) {
+      const compilationSettings = compilation.optimizationConditions;
+      const isDifferent = JSON.stringify(compilationSettings) !== JSON.stringify(value);
+      reoptimizationNeeded$.forOptimizationSettingsByCompilationId
+        .get(compilationId)
+        .set(isDifferent);
+    }
+  }
+  const defaultCompilationsSettings = defaultCompilation$.data.optimizationConditions?.peek();
+  const isDifferent = JSON.stringify(defaultCompilationsSettings) !== JSON.stringify(value);
+  reoptimizationNeeded$.forOptimizationSettingsByCompilationId
+    .get(defaultCompilation$.data.id.peek())
+    .set(isDifferent);
+  reoptimizationNeeded$.handleChanges();
 });
 
 mods$.activeModById.onChange(() => {
-	reoptimizationNeeded$.forProfileUpdated.set(true);
-	reoptimizationNeeded$.handleChanges();
+  reoptimizationNeeded$.forProfileUpdated.set(true);
+  reoptimizationNeeded$.handleChanges();
 });
 
 roster$.activeCharacterById.onChange(() => {
-	reoptimizationNeeded$.forProfileUpdated.set(true);
-	reoptimizationNeeded$.handleChanges();
+  reoptimizationNeeded$.forProfileUpdated.set(true);
+  reoptimizationNeeded$.handleChanges();
 });

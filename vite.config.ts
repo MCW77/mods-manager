@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, lazyPlugins } from "vite-plus";
 import UnoCSS from "unocss/vite";
 import react from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
@@ -12,118 +12,117 @@ const showAnalyzer = process.env.VITE_SHOW_ANALYZER === "true";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	worker: {
-		format: "es",
-		plugins: () => [
-			UnoCSS({
-				mode: "global",
-				hmrTopLevelAwait: false,
-			}),
-		],
-	},
-	define: {
-		"process.env.NODE_ENV": JSON.stringify(
-			process.env.NODE_ENV || "development",
-		),
-	},
-	optimizeDeps: {
-		include: ["unocss"],
-		exclude: ["@legendapp/state", "@legendapp/state/react"],
-	},
-	build: {
-		sourcemap: true,
-		target: "esnext",
-	},
-	plugins: [
-		dynamicImport(),
-		react({
-			exclude: [
-				/.*\.worker\.ts$/,
-				/.*workers\/.*\.ts$/,
-				/.*\/stateLoader\/.*\.ts$/,
-				/.*\/state\/.*\.ts$/,
-				/.*profilesManagement\/state\/.*$/,
-				/.*compilations\/state\/.*$/,
-				/.*characters\/state\/.*$/,
-				/.*charactersManagement\/state\/.*$/,
-				/.*about\/state\/.*$/,
-				/.*hotUtils\/state\/.*$/,
-				/.*incrementalOptimization\/state\/.*$/,
-				/.*lockedStatus\/state\/.*$/,
-				/.*modsView\/state\/.*$/,
-				/.*optimizationSettings\/state\/.*$/,
-				/.*templates\/state\/.*$/,
-			],
-		}),
-		babel({
-			plugins: ["@legendapp/state/babel"],
-		}),
-		VitePWA({
-			injectRegister: false,
-			workbox: {
-				clientsClaim: true,
-			},
-			includeAssets: [
-				"favicon.svg",
-				"favicon.ico",
-				"robots.txt",
-				"apple-touch-icon.png",
-			],
-			manifest: {
-				name: `Grandivory's Mods Optimizer`,
-				short_name: "GIMO",
-				description: `Grandivory's mods optimizer will allow you to equip the optimum mod set on every character you have in Star Wars: Galaxy of Heroes™. It will fetch your mods and characters, and find the best set to equip for each character in a list you provide.`,
-				theme_color: "#000000",
-				icons: [
-					{
-						src: "pwa-192x192.png",
-						sizes: "192x192",
-						type: "image/png",
-					},
-					{
-						src: "pwa-512x512.png",
-						sizes: "512x512",
-						type: "image/png",
-					},
-					{
-						src: "pwa-512x512.png",
-						sizes: "512x512",
-						type: "image/png",
-						purpose: "any maskable",
-					},
-				],
-			},
-		}),
-		UnoCSS({
-			mode: "global",
-			hmrTopLevelAwait: false,
-		}),
-		unstableRolldownAdapter(
-			analyzer({
-				enabled: showAnalyzer,
-			}),
-		),
-	],
-	resolve: {
-		alias: {
-			react: path.resolve(import.meta.dirname, "./node_modules/react"),
-			"react-dom": path.resolve(
-				import.meta.dirname,
-				"./node_modules/react-dom",
-			),
-			"#": path.resolve(import.meta.dirname, "./src"),
-			"#lib": path.resolve(import.meta.dirname, "./src/lib"),
-			"#ui": path.resolve(import.meta.dirname, "./src/components/ui"),
-			"use-sync-external-store/shim/index.js": "react",
-		},
-		conditions: ["import", "module", "browser", "default"],
-		mainFields: ["module", "main"],
-	},
-	server: {
-		port: 3000,
-		hmr: {
-			port: 3001,
-			overlay: false,
-		},
-	},
+  staged: {
+    "*": "vp check --fix",
+  },
+  fmt: {},
+  lint: {
+    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
+    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
+    options: { typeAware: true, typeCheck: true },
+  },
+  worker: {
+    format: "es",
+    plugins: () => [
+      UnoCSS({
+        mode: "global",
+        hmrTopLevelAwait: false,
+      }),
+    ],
+  },
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+  },
+  optimizeDeps: {
+    include: ["unocss"],
+    exclude: ["@legendapp/state", "@legendapp/state/react"],
+  },
+  build: {
+    sourcemap: true,
+    target: "esnext",
+  },
+  plugins: lazyPlugins(() => [
+    dynamicImport(),
+    react({
+      exclude: [
+        /.*\.worker\.ts$/,
+        /.*workers\/.*\.ts$/,
+        /.*\/stateLoader\/.*\.ts$/,
+        /.*\/state\/.*\.ts$/,
+        /.*profilesManagement\/state\/.*$/,
+        /.*compilations\/state\/.*$/,
+        /.*characters\/state\/.*$/,
+        /.*charactersManagement\/state\/.*$/,
+        /.*about\/state\/.*$/,
+        /.*hotUtils\/state\/.*$/,
+        /.*incrementalOptimization\/state\/.*$/,
+        /.*lockedStatus\/state\/.*$/,
+        /.*modsView\/state\/.*$/,
+        /.*optimizationSettings\/state\/.*$/,
+        /.*templates\/state\/.*$/,
+      ],
+    }),
+    babel({
+      plugins: ["@legendapp/state/babel"],
+    }),
+    VitePWA({
+      injectRegister: false,
+      workbox: {
+        clientsClaim: true,
+      },
+      includeAssets: ["favicon.svg", "favicon.ico", "robots.txt", "apple-touch-icon.png"],
+      manifest: {
+        name: `Grandivory's Mods Optimizer`,
+        short_name: "GIMO",
+        description: `Grandivory's mods optimizer will allow you to equip the optimum mod set on every character you have in Star Wars: Galaxy of Heroes™. It will fetch your mods and characters, and find the best set to equip for each character in a list you provide.`,
+        theme_color: "#000000",
+        icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable",
+          },
+        ],
+      },
+    }),
+    UnoCSS({
+      mode: "global",
+      hmrTopLevelAwait: false,
+    }),
+    unstableRolldownAdapter(
+      analyzer({
+        enabled: showAnalyzer,
+      }),
+    ),
+  ]),
+  resolve: {
+    alias: {
+      react: path.resolve(import.meta.dirname, "./node_modules/react"),
+      "react-dom": path.resolve(import.meta.dirname, "./node_modules/react-dom"),
+      "#": path.resolve(import.meta.dirname, "./src"),
+      "#lib": path.resolve(import.meta.dirname, "./src/lib"),
+      "#ui": path.resolve(import.meta.dirname, "./src/components/ui"),
+      "use-sync-external-store/shim/index.js": "react",
+    },
+    conditions: ["import", "module", "browser", "default"],
+    mainFields: ["module", "main"],
+  },
+  server: {
+    port: 3000,
+    hmr: {
+      port: 3001,
+      overlay: false,
+    },
+  },
 });

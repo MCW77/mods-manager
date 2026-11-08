@@ -1,3 +1,6 @@
+// react
+import { renderToString } from "react-dom/server.node";
+
 // state
 import { observable } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -14,46 +17,44 @@ import { BaseError } from "#/domain/BaseError";
 const insideWebWorker = !Object.hasOwn(self, "document");
 
 const dialogModule =
-	insideWebWorker === false
-		? await import("#/modules/dialog/state/dialog")
-		: undefined;
+  insideWebWorker === false ? await import("#/modules/dialog/state/dialog") : undefined;
 
 const characters$ = observable<CharactersObservable>({
-	baseCharacterById: async () => {
-		try {
-			return await fetchCharacters();
-		} catch (error) {
-			if (error instanceof BaseError && dialogModule !== undefined) {
-				dialogModule.dialog$.showError({
-					error: error.error,
-					reason: error.reason,
-					solution: error.solution,
-				});
-			} else {
-				if (error instanceof BaseError) {
-					console.error(error.error);
-					console.error(`Reason: ${error.reason}`);
-					console.error(`Solution: ${error.solution}`);
-				} else {
-					console.error(
-						"Unexpected error while fetching base characters:",
-						error,
-					);
-				}
-			}
-			return {} as BaseCharacterById; // Return an empty object to satisfy the return type
-		}
-	},
+  baseCharacterById: {} as BaseCharacterById,
+  fetchBaseCharacters: async () => {
+    try {
+      const baseCharacterById = await fetchCharacters();
+      characters$.baseCharacterById.set(baseCharacterById);
+      return baseCharacterById;
+    } catch (error) {
+      if (error instanceof BaseError && dialogModule !== undefined) {
+        dialogModule.dialog$.showError({
+          error: error.error,
+          reason: error.reason,
+          solution: error.solution,
+        });
+      } else {
+        if (error instanceof BaseError) {
+          console.error(error.error);
+          console.error(`Reason: ${renderToString(error.reason)}`);
+          console.error(`Solution: ${renderToString(error.solution)}`);
+        } else {
+          console.error("Unexpected error while fetching base characters:", error);
+        }
+      }
+      return {} as BaseCharacterById; // Return an empty object to satisfy the return type
+    }
+  },
 });
 
 const syncStatus$ = syncObservable(
-	characters$.baseCharacterById,
-	persistOptions({
-		persist: {
-			name: "Characters",
-		},
-		initial: {} as BaseCharacterById,
-	}),
+  characters$.baseCharacterById,
+  persistOptions({
+    persist: {
+      name: "Characters",
+    },
+    initial: {} as BaseCharacterById,
+  }),
 );
 
 export { characters$, syncStatus$ };

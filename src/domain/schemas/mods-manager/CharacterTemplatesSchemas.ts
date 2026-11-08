@@ -3,96 +3,81 @@ import * as v from "valibot";
 
 // domain
 import {
-	SelectedCharactersSchema,
-	SelectedCharactersSchemaV26,
-	SelectedCharactersSchemaV31,
+  SelectedCharactersSchema,
+  SelectedCharactersSchemaV26,
+  SelectedCharactersSchemaV31,
 } from "./index";
 
 const CharacterTemplateSchema = v.object({
-	id: v.string(),
-	category: v.string(),
-	selectedCharacters: SelectedCharactersSchema,
+  id: v.string(),
+  category: v.string(),
+  selectedCharacters: SelectedCharactersSchema,
 });
 
 const CharacterTemplateSchemaV26 = v.object({
-	id: v.string(),
-	category: v.string(),
-	selectedCharacters: SelectedCharactersSchemaV26,
+  id: v.string(),
+  category: v.string(),
+  selectedCharacters: SelectedCharactersSchemaV26,
 });
 
 const CharacterTemplateSchemaV31 = v.object({
-	id: v.string(),
-	category: v.string(),
-	selectedCharacters: SelectedCharactersSchemaV31,
+  id: v.string(),
+  category: v.string(),
+  selectedCharacters: SelectedCharactersSchemaV31,
 });
 
-const CharacterTemplateByNameSchema = v.record(
-	v.string(),
-	CharacterTemplateSchema,
-);
+const CharacterTemplateByNameSchema = v.record(v.string(), CharacterTemplateSchema);
 
-const CharacterTemplateByNameSchemaV26 = v.record(
-	v.string(),
-	CharacterTemplateSchemaV26,
-);
+const CharacterTemplateByNameSchemaV26 = v.record(v.string(), CharacterTemplateSchemaV26);
 
-const CharacterTemplateByNameSchemaV31 = v.record(
-	v.string(),
-	CharacterTemplateSchemaV31,
-);
+const CharacterTemplateByNameSchemaV31 = v.record(v.string(), CharacterTemplateSchemaV31);
 
 const CharacterTemplatesSchemaV18 = v.array(CharacterTemplateSchema, "");
-type CharacterTemplatesBackupSchemaV18Output = v.InferOutput<
-	typeof CharacterTemplatesSchemaV18
->;
+type CharacterTemplatesBackupSchemaV18Output = v.InferOutput<typeof CharacterTemplatesSchemaV18>;
 
 const CharacterTemplatesSchemaV26 = v.array(CharacterTemplateSchemaV26, "");
-type CharacterTemplatesSchemaV26Output = v.InferOutput<
-	typeof CharacterTemplatesSchemaV26
->;
+type CharacterTemplatesSchemaV26Output = v.InferOutput<typeof CharacterTemplatesSchemaV26>;
 
 const CharacterTemplatesSchemaV31 = v.array(CharacterTemplateSchemaV31, "");
-type CharacterTemplatesSchemaV31Output = v.InferOutput<
-	typeof CharacterTemplatesSchemaV31
->;
+type CharacterTemplatesSchemaV31Output = v.InferOutput<typeof CharacterTemplatesSchemaV31>;
 
 const CharacterTemplatesBackupSchemaV26 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("characterTemplates"),
-	characterTemplates: CharacterTemplatesSchemaV26,
-	client: v.literal("mods-manager"),
-	version: v.literal(26),
+  appVersion: v.string(),
+  backupType: v.literal("characterTemplates"),
+  characterTemplates: CharacterTemplatesSchemaV26,
+  client: v.literal("mods-manager"),
+  version: v.literal(26),
 });
 
 const CharacterTemplatesBackupSchemaV27 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("characterTemplates"),
-	characterTemplates: CharacterTemplatesSchemaV26,
-	client: v.literal("mods-manager"),
-	version: v.literal(27),
+  appVersion: v.string(),
+  backupType: v.literal("characterTemplates"),
+  characterTemplates: CharacterTemplatesSchemaV26,
+  client: v.literal("mods-manager"),
+  version: v.literal(27),
 });
 
 const CharacterTemplatesBackupSchemaV31 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("characterTemplates"),
-	characterTemplates: CharacterTemplatesSchemaV31,
-	client: v.literal("mods-manager"),
-	version: v.literal(31),
+  appVersion: v.string(),
+  backupType: v.literal("characterTemplates"),
+  characterTemplates: CharacterTemplatesSchemaV31,
+  client: v.literal("mods-manager"),
+  version: v.literal(31),
 });
 
 const LatestCharacterTemplatesSchema = CharacterTemplatesBackupSchemaV31;
 
 export {
-	CharacterTemplateByNameSchema,
-	CharacterTemplateByNameSchemaV26,
-	CharacterTemplateByNameSchemaV31,
-	CharacterTemplatesSchemaV18,
-	CharacterTemplatesSchemaV26,
-	CharacterTemplatesBackupSchemaV26,
-	CharacterTemplatesBackupSchemaV27,
-	CharacterTemplatesBackupSchemaV31,
-	type CharacterTemplatesBackupSchemaV18Output,
-	type CharacterTemplatesSchemaV26Output,
-	type CharacterTemplatesSchemaV31Output,
-	LatestCharacterTemplatesSchema,
+  CharacterTemplateByNameSchema,
+  CharacterTemplateByNameSchemaV26,
+  CharacterTemplateByNameSchemaV31,
+  CharacterTemplatesSchemaV18,
+  CharacterTemplatesSchemaV26,
+  CharacterTemplatesBackupSchemaV26,
+  CharacterTemplatesBackupSchemaV27,
+  CharacterTemplatesBackupSchemaV31,
+  type CharacterTemplatesBackupSchemaV18Output,
+  type CharacterTemplatesSchemaV26Output,
+  type CharacterTemplatesSchemaV31Output,
+  LatestCharacterTemplatesSchema,
 };

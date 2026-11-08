@@ -1,223 +1,223 @@
 {
-	"profiles": {
-		"Title": "Profile",
-		"topics": {
-			"1": "Profile hinzufügen",
-			"2": "Ein Profil löschen",
-			"3": "Mods abrufen",
-			"4": "Mods als HotUtils Kunde abrufen",
-			"5": "Unausgerüstete Mods über den C-3PO Bot importieren"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Profile hinzufügen",
-				"1": "Um loszulegen, musst du nur deinen Bündniscode in das Feld in der Kopfzeile eingeben. Die Anwendung ruft dann die Daten deines Profils ab und erstellt ein neues Profil für dich.",
-				"2": "Wenn du ein weiteres Profil hinzufügen möchtest, öffne das Dropdown-Menü für Profile oben und wähle \"Neuer Bündniscode...\". Gib dann den Bündniscode für dieses Profil ein und drücke die Eingabetaste.",
-				"3": "Wenn du mehrere Profile hinzugefügt hast, kannst du oben im Dropdown-Menü das Profil auswählen, das du verwenden möchtest.",
-				"4": "Du kannst auch Profile aus einer Sicherungsdatei importieren. Wenn du mindestens ein Profil hast, kannst du die Einstellungen öffnen. Gehe zum Abschnitt \"Allgemein\" (Standard), wo du die Einstellungen \"Sicherheitskopie & Neustart\" findest. Dort kannst du eine Sicherungsdatei importieren, die ein oder mehrere Profile enthält. Die Daten werden mit deinen vorhandenen Profilen zusammengeführt."
-			},
-			"2": {
-				"Headline": "Löschen eines Profils",
-				"1": "Um mods-manager dein Profil vergessen zu lassen, gehe zum Abschnitt \"Allgemein\" in den Einstellungen und wähle im Widget \"Konten\" das Profil aus, das du löschen möchtest. Es listet alle Profile mit Bündniscode und In-Game-Namen auf. Klicke dann auf die Schaltfläche \"Konto <Bündniscode> löschen\". Dadurch werden alle Daten für dieses Profil im mods-manager entfernt.",
-				"2": "Nach dem Löschen eines Profils kannst du es jederzeit wieder erstellen, indem du den Bündniscode eingibst und die Profildaten (Mods, Charaktere, ...) erneut abrufst. Alles, was du manuell geändert hast, wie Zusammenstellungen und Ziele, geht jedoch ohne eine aktuelle Sicherungsdatei, die das Profil enthält, verloren."
-			},
-			"4": {
-				"Headline": "Mods als HotUtils Kunde abrufen",
-				"1": "HotUtils ist ein weiteres SWGoH Tool, das sich für Kunden direkt im Spiel anmelden kann.",
-				"2": "Ein Vorteil hiervon ist, dass es alle Mod-Daten abrufen kann, auch von nicht ausgerüsteten Mods.",
-				"3": "Gebrauch auf eigene Gefahr!",
-				"4": "Die HotUtils Functionalität verstößt gegen die Vertragsbedingungen von Star Wars: Galaxy of Heroes.",
-				"5": "Sie übernehmen das gesamte Risiko bei Nutzung des Tools.",
-				"6": "Grandivory's Mods Optimizer und HotUtils gehören nicht zusammen.",
-				"7": "Um HotUtils mit dem mods-manager zu verwenden, benötigt er deine HotUtils Session ID. Eine detaillierte Erklärung dazu auf findest du auf ",
-				"8": "Nach erfolgreicher Eingabe deiner HotUtils Session ID, zeigt der Knopf für den Mod-Abruf mit einer kleinen Flamme an, dass jetzt HotUtils verwendet wird."
-			},
-			"5": {
-				"Headline": "Unausgerüstete Mods über den C-3PO Bot importieren",
-				"1": "Du kannst unausgerüstete Mods über den C-3PO Bot auf Discord importieren. Dies ist etwas komplizierter als mit HotUtils, dafür aber auch kostenlos.",
-				"2": "Verwende das Kommando \"/allycode auth ea_connect\", um den Bot mit dem Spiel zu verbinden.",
-				"3": "Nachdem du den Bot verbunden hast, kannst du das Kommando \"/inventory export\" verwenden. Der Bot wird dann die Mod-Daten abrufen und eine Datei generieren, die du im mods-manager importieren kannst.",
-				"4": "Den Import findest du in den Einstellungen unter \"Allgemein\" (Standard) im Abschnitt \"Konten\". Dort kannst du die Datei importieren, die der C-3PO Bot erstellt hat."
-			}
-		}
-	},
-	"explorer": {
-		"Title": "Mod Übersicht",
-		"topics": {
-			"1": "Übersicht",
-			"2": "Ansichtseinstellungen",
-			"3": "Gruppierungs/Filter/Sortierungs Konfigurationen",
-			"4": "Gruppierung",
-			"5": "Sortierung"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Übersicht",
-				"1": "Die \"Mods\" Ansicht ermöglicht es dir, alle deine Mods zu betrachten. In der zusammenklappbaren Seitenleiste zur linken hast du viele Optionen, um die angezeigten Mods zu gruppieren, filtern und sortieren",
-				"2": "Die Mods werden im Hauptbereich auf der rechten Seite angezeigt. Es gibt eine Ansicht von Mods, gruppiert/gefiltert/ sortiert nach deinen Einstellungen, für jede Phase im Lebenszyklus eines Mods und eine Ansicht für alle Mods (Standard)"
-			},
-			"2": {
-				"Headline": "Ansichtseinstellungen",
-				"1": "there"
-			},
-			"3": {
-				"Headline": "Gruppierungs/Filter/Sortierungs Konfigurationen",
-				"1": "Ganz oben ist ein Knopf um neue Konfigurationen hinzuzufügen. Du kannst eine beliebige Anzahl von Konfigurationen erstellen und über die Auswahl oben zwischen ihnen wechseln. Jede Konfiguration speichert ihre eigenen Gruppierungs-, Filter- und Sortierungseinstellungen. In der Konfigurationsauswahl kannst du auch existierende Konfigurationen umbenennen oder löschen.",
-				"2": "Jede Mod-Lebenszyklusphase hat ihre eigene Liste von Gruppierungs-/Filter-/Sortierungskonfigurationen und wird mit einer Standardkonfiguration geliefert, die nur Mods in dieser Phase anzeigt."
-			},
-			"4": {
-				"Headline": "Gruppierung",
-				"1": "Du kannst die Gruppierung nur aktivieren oder deaktivieren. Mit aktivierter Gruppierung werden die Mods nach Slot, Modset und Primärwert gruppiert. Mit deaktivierter Gruppierung sind alle Mods in derselben Gruppe. Mit aktivierter Gruppierung (und passender Sortierung) kannst du schnell alle Mods mit denselben Eigenschaften vergleichen",
-				"2": "Auf der rechten Seite erhältst du die Liste aller Gruppen. (Nur eine Gruppe, wenn die Gruppierung deaktiviert ist). Jede Gruppe kann durch Klicken auf ihre Kopfzeile, die den Slot, das Modset, den Primärwert und die Anzahl der Mods in dieser Gruppe anzeigt, ein- oder ausgeklappt werden. Es gibt auch Schaltflächen zum Ein- / Ausklappen aller Gruppen"
-			},
-			"5": {
-				"Headline": "Sortierung",
-				"1": "Nachdem die Mods gruppiert und gefiltert wurde, werden sie entsprechend deiner Sortierungseinstellungen sortiert. Du kannst nach beliebig vielen Kriterien sortieren. Die Mods werden zuerst nach dem ersten Kriterium sortiert, sind Mods nach dem ersten Kriterium gleich, werden sie nach dem zweiten Kriterium sortiert, und so weiter. Jedes einzelne Sortierungskriterium kann auf- oder absteigend sortiert werden."
-			}
-		}
-	},
-	"optimizer": {
-		"Title": "Mod Optimierer",
-		"topics": {
-			"1": "Globale Einstellungen",
-			"2": "Charakter Vorlagen",
-			"3": "Rangreihenfolge"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Globale Optimierungs-Einstellungen",
-				"1": "Die globalen Einstellungen gelten für jeden Charakter während einer Optimierung. Sie überschreiben immer alle charakter-spezifischen Einstellungen, die du festgelegt hast.",
-				"2": "Threshold to change mods",
-				"3": "As the optimizer is running, its normal behavior is to always recommend the absolute best mod set it can find, based on the target you have selected. If this number is above 0, then the optimizer will only recommend that you change mods on a character if the new recommended set is at least this much better than what the character previously had, or if the character's mods were moved to a character higher in your list and needed to be replaced.",
-				"4": "Lock all unselected characters",
-				"5": "If this box is checked, then no mods will be taken from characters that aren't in your selected list. If you have a number of unassigned mods, this can be a quick way to make use of them without triggering a major remod of your whole roster.",
-				"6": "Don't break mod sets",
-				"7": "If this box is checked, the optimizer will try to keep mod sets together, so you always get the maximum set bonuses. Sometimes it's not possible to do so, either because of other restrictions on a character's target or because you don't have enough mods left to make a full set. In these cases, the optimizer will still drop this restriction to try to recommend the best set."
-			},
-			"2": {
-				"Headline": "Character Templates",
-				"1": "Character Templates are a way to work with groups of ",
-				"2": "selected characters ",
-				"3": "and their ",
-				"4": "targets ",
-				"5": "independently of the rest of your data. They can be used to set up teams for a particular use and shared with your friends, guildmates, or on the Mods Optimizer discord server to quickly allow other people to copy your settings. Here is a quick description of the buttons to interact with character templates:",
-				"6": "Managing templates",
-				"7": "Save",
-				"8": "Save your current selected characters and their targets as a new template. You'll be asked to give your template a name, which you can then use to apply it or export it later.",
-				"9": "Export",
-				"10": "Export one or all of your templates to a file that can be shared with others.",
-				"11": "Load",
-				"12": "Load templates from a file into the optimizer. This won't apply the templates, but will instead add them to the list of known templates that you can work with.",
-				"13": "Delete",
-				"14": "Delete one of your templates from the optimizer. This only works on templates that you have created or loaded from a file. The default templates in the optimizer can't be deleted.",
-				"15": "Applying templates",
-				"16": "Append",
-				"17": "Add the characters from a template to the end of your selected characters.",
-				"18": "Replace",
-				"19": "Clear your selected characters and replace them with those from a template.",
-				"20": "Apply targets only",
-				"21": "Don't change which characters you have selected or their order, but for any that are in a template, change their targets to match."
-			},
-			"3": {
-				"Headline": "Rangreihenfolge",
-				"1": "Bestimme dynamisch die Reihenfolge, basierend auf deinem derzeitigen Roster und dem gewählten Verwendungszweck.",
-				"2": "Einstellungen",
-				"3": "Verwendungszweck",
-				"4": "Wähle die Spielmodi, für die optimiert wird.",
-				"5": "Minimales Ausrüstungslevel",
-				"6": "Ziehe nur Charaktere in Betracht, die mindestens dieses Ausrüstungslevel haben.",
-				"7": "Maximale Listenlänge",
-				"8": "Die maximale Anzahl von Charakteren, die in die Vorlage aufgenommen werden sollen.",
-				"9": "Omicron-Verstärkungen",
-				"10": "Wähle die Spielmodi, bei denen Charaktere mit Omicrons für den jeweiligen Spielmodus bevorzugt werden."
-			}
-		}
-	},
-	"editor": {
-		"Title": "Optimierungsplan-Editor",
-		"topics": {
-			"1": "Übersicht",
-			"2": "Mods",
-			"3": "Gewichte",
-			"4": "Primärwerte",
-			"5": "Modsets",
-			"6": "Zielvorgaben"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Übersicht",
-				"1": "Der Optimierungsplan-Editor hat 3 Bereiche: oben links, oben rechts und unten.",
-				"2": "Im oberen linken Bereich siehst du den Charakter, auf den der Optimierungsplan angewendet wird.",
-				"3": "Im oberen rechten Bereich kannst du den Optimierungsplan verwalten. Du kannst Optimierungspläne hinzufügen, löschen, zurücksetzen und auswählen, Änderungen speichern oder abbrechen.",
-				"4": "Im unteren Bereich kannst du den Optimierungsplan bearbeiten. Die Einstellungen sind in Kategorien unterteilt."
-			},
-			"2": {
-				"Headline": "Mods",
-				"1": "In dieser Kategorie kannst du gerade nur einschränken, ob nur 6-Punkt-Mods erlaubt sind."
-			},
-			"3": {
-				"Headline": "Gewichte",
-				"1": "Die Punktzahl eines Mods ist die gewichtete Summe der Charakterwerte. Die Gewichte werden hier bestimmt. Es gibt zwei Modi die Gewichte einzustellen, 'Einfach' und 'Fortgeschritten'.",
-				"2": "Einfach: Gewichte werden normalisiert, um zum Wertebereich des Wertes zu passen. Alle Gewichte liegen zwischen -100 und 100. Gibt man zum Beispiel Tempo und Schutz dasselbe Gewicht, bedeutet das, dass 1 Punkt Tempo denselben Wert des Mods ergibt wie 200 Schutz (Da ein Mod etwa 200 mal mehr Schutz als Tempo geben kann).",
-				"3": "Fortgeschritten: Nun gibt es keinen Wertebereich für Gewichte und sie werden direkt mit dem Charakterwert multipliziert. Wenn zwei Charakterwerte das gleiche Gewicht haben, erhöht ein Punkt im ersten Charakterwert den Modwert genauso wie einer im zweiten. Ich empfehle, im einfachen Modus zu bleiben, bis man ein Gefühl für Gewichte bekommen hat."
-			},
-			"4": {
-				"Headline": "Primärwerte",
-				"1": "In dieser Kategorie kannst du auswählen, welche Primärwerte für jeden variablen Mod-Slot erlaubt sind. Keine Auswahl für einen Slot erlaubt jeden Primärwert für diesen Slot. Wenn du einen oder mehrere Primärwerte auswählst, dann sind nur diese ausgewählten für diesen Slot erlaubt.",
-				"2": "Die Einschränkungen für Primärwerte werden ignoriert, es sei denn, du aktivierst die globale Optimierungseinstellung \"Mit Primär- und Set-Einschränkungen optimieren\""
-			},
-			"5": {
-				"Headline": "Sets",
-				"1": "In dieser Kategorie kannst du definieren, ob es erlaubt ist, Modsets zu brechen und welche Modsets erlaubt sind. Wenn du ein oder mehrere Modsets auswählst, dann sind nur diese ausgewählten erlaubt.",
-				"2": "Die Einschränkungen für Modsets werden ignoriert, es sei denn, du aktivierst die globale Optimierungseinstellung \"Mit Primär- und Set-Einschränkungen optimieren\""
-			},
-			"6": {
-				"Headline": "Zielvorgaben",
-				"1": "In dieser Kategorie kannst du Zielvorgaben definieren. Sie beginnt leer, außer mit der Schaltfläche \"Zielwert hinzufügen\". Jeder hinzugefügte Zielwert zeigt eine Karte an, um diesen Zielwert zu bearbeiten.",
-				"2": "Mit einer Zielvorgabe kannst du den Bereich definieren, in dem der ausgewählte Wert liegen muss. Dieser Bereich kann im Vergleich zum gleichen Wert auf einem ausgewählten Charakter festgelegt werden. Wenn ja, kann der Bereich absolut oder relativ zum Vergleichswert sein.",
-				"3": "Du kannst zwischen dem Modus \"Nur berichten\" und \"Optimieren\" wechseln. Im Standardmodus \"Optimieren\" durchläuft der Optimierer alle Mod-Kombinationen und wählt die aus, die die Zielvorgaben erfüllt und die höchste Mod-Punktzahl hat. Im Modus \"Nur berichten\" wählt der Optimierer einfach die am höchsten bewertete Modkobination aus und berichtet, ob sie die Zielvorgaben erfüllt.",
-				"4": "Das Durchlaufen aller Mod-Kombinationen im Modus \"Optimieren\" kann sehr zeitaufwendig sein. Du kannst die benötigte Zeit reduzieren, indem du einen kleinen Bereich wählst oder durch das Entfernen von zu berücksichtigen Mods mit den anderen Einschränkungen."
-			}
-		}
-	},
-	"general": {
-		"Title": "Grundlegendes",
-		"topics": {
-			"1": "Willkommen",
-			"2": "Grundlagen der Modoptimierung",
-			"3": "Auswahl der Charaktere",
-			"4": "Auswahl einer Zielvorgabe",
-			"5": "Auswahl der Zielwerte"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Wilkommen zu Grandivorys Mod Optimierer für Star Wars: Galaxy of Heroes™!",
-				"1": "Mit dieser App kannst du die besten Mods für jeden deiner Charaktere finden. Hierfür wird jedem Wert, den ein Mod geben kann, ein Gewicht zugeordnet, das die Bedeutung dieses Wertes für den Charakter widerspiegelt. Du gibst eine Liste von zu optimierenden Charakteren mit den gewünschten Werten an und die App geht die Liste dann nacheinander durch und errechnet die jeweils besten Mods.",
-				"2": "Um loszulegen, gebe oben im Eingabefeld deinen Bündniscode ein. Sobald du die Eingabe mit 'Enter' bestätigst werden deine Daten (Charaktere, Mods) abgerufen."
-			},
-			"2": {
-				"Headline": "Wie funktioniert die Mod Optimierung?",
-				"1": "Willkommen zu meinem Mod Optimierer für Star Wars: Galaxy of Heroes!",
-				"2": "Dieses Programm arbeitet nach einem einfachen Prinzip:",
-				"3": "Jede Eigenschaft eines Charakters hat eine bestimmte Bedeutung für diesen und wenn wir Werte für die Wichtigkeit jedes Charakterwertes haben, dann können wir einen Gesamtwert für ein Mod oder ein Modset für diesen Charakter berechnen. Somit kann das Programm für jeden Charakter automatisch das beste Modset finden, das den höchsten Gesamtwert für diesen liefert, ohne dass du hierfür über alle Mods in deinem Inventar drüberschauen müsstest."
-			},
-			"3": {
-				"Headline": "Auswahl der zu optimierenden Charaktere",
-				"1": "Der Mod Optimierer zieht zunächst alle nicht ausgerüsteten Mods und solche, die auf nicht gesperrten Charakteren ausgerüstet sind, in Betracht. Dann wird die Liste der ausgewählten Charaktere der Reihe nach abgearbeitet. Für jeden Charakter werden die besten Mods basierend auf den gewählten Zielwerten vorgeschlagen. Mit jedem Modding-Vorschlag für einen Charakter werden die vorgeschlagenen Mods aus der Betrachtung für die folgenden Charaktere entfernt.",
-				"2": "Daher sollten die Charaktere, die deine absolut besten Mods bekommen sollen, an der Spitze der zu optimierenden Charaktere stehen. In der Regel beginnt die Liste mit den Charakteren, für die Tempo besonders wichtig ist."
-			},
-			"4": {
-				"Headline": "Eine Zielvorgabe auswählen",
-				"1": "Für jeden Charakter im Spiel gibt es Zielvorgaben. (Eine Sammlung von Gewichten für jeden Charakterwert und manchmal auch Mod-Restriktionen) Der Optimierer wählt anhand der gegebenen Gewichte und Restriktionen die Mods mit dem höchsten Gesamtwert. Die Zielvorgaben sind nach ihrem Zweck benannt. Z.B. 'hSTR Phase 1' oder 'PvP'. Manche Charaktere haben mehrere Zielvorgaben zur Auswahl.",
-				"2": "Daher sollten die Charaktere, die deine absolut besten Mods bekommen sollen, an der Spitze der zu optimierenden Charaktere stehen. In der Regel beginnt die Liste mit den Charakteren, für die Tempo besonders wichtig ist.",
-				"3": "Es gibt viele Gründe, warum Du andere Werte als die standardmäßig im Optimierer aufgelisteten wählen möchtest: Du möchtest vielleicht für einen anderen Zweck optimieren (z.B. ein hSTR Phase 3 Team, bei dem Tempo nachteilig sein kann), Du möchtest vielleicht einen anderen Optimierungsansatz verfolgen, oder Du hast einfach einen besseren Satz von Werten, die Du verwenden möchtest.",
-				"4": "Am einfachsten beginnt man die Optimierung mit der Auswahl einer der enthaltenen Charakter-Vorlagen. Diese enthalten Sätze von Charakteren und Zielen, die für verschiedene Spielmodi geeignet sind. Wenn es keine Vorlage gibt, die genau deinen Bedürfnissen entspricht, kannst du eine als Ausgangspunkt verwenden oder eine von Grund auf neu erstellen. Gibt es für einen Charakter kein passendes Ziel, kannst du ein vorhandenes editieren und (unter neuem Namen) speichern."
-			},
-			"5": {
-				"Headline": "Gewichte auswählen",
-				"1": "Bei den meisten Charakteren ist standardmäßig der \"Einfach\" Modus ausgewählt. In diesem wählst du für alle Charakterwerte einen Wert zwischen -100 und 100. Diese Werte sind Gewichtungen, die jedem Charakterwert zugewiesen werden, um seine Wichtigkeit für diesen Charakter zu bestimmen. Wenn du zwei identische Gewichte einstellst, bedeutet das, dass die Charakterwerte für den Charakter gleich wichtig sind. Im einfachen Modus passt der Optimierer die Gewichtung automatisch an den Wertebereich an, den man im Spiel für diese Eigenschaft sieht. Ein Beispiel, Tempo und Schutz jeweils einen Wert von 100 zu geben, bedeutet, dass 1 Tempo etwa 200 Schutz entspricht (da man bei Mods viel mehr Schutz als Tempo findet).",
-				"2": "Für mehr Kontrolle über die Gewichte kann in den \"Erweitert\" Modus gewechselt werden. Im erweiterten Modus werden die angegebenen Gewichte direkt mit ihrem Charakterwert multipliziert. Wenn im erweiterten Modus sowohl für Tempo als auch für Schutz ein Gewicht von 100 angegeben wird, wählt das Tool niemals Tempo aus, weil es dem Charakter viel leichter einen höheren Schutz geben kann. Ich schlage vor, im Basismodus zu bleiben, bis du ein Gefühl dafür bekommen hast, wie das Tool funktioniert."
-			}
-		}
-	}
+  "profiles": {
+    "Title": "Profile",
+    "topics": {
+      "1": "Profile hinzufügen",
+      "2": "Ein Profil löschen",
+      "3": "Mods abrufen",
+      "4": "Mods als HotUtils Kunde abrufen",
+      "5": "Unausgerüstete Mods über den C-3PO Bot importieren"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Profile hinzufügen",
+        "1": "Um loszulegen, musst du nur deinen Bündniscode in das Feld in der Kopfzeile eingeben. Die Anwendung ruft dann die Daten deines Profils ab und erstellt ein neues Profil für dich.",
+        "2": "Wenn du ein weiteres Profil hinzufügen möchtest, öffne das Dropdown-Menü für Profile oben und wähle \"Neuer Bündniscode...\". Gib dann den Bündniscode für dieses Profil ein und drücke die Eingabetaste.",
+        "3": "Wenn du mehrere Profile hinzugefügt hast, kannst du oben im Dropdown-Menü das Profil auswählen, das du verwenden möchtest.",
+        "4": "Du kannst auch Profile aus einer Sicherungsdatei importieren. Wenn du mindestens ein Profil hast, kannst du die Einstellungen öffnen. Gehe zum Abschnitt \"Allgemein\" (Standard), wo du die Einstellungen \"Sicherheitskopie & Neustart\" findest. Dort kannst du eine Sicherungsdatei importieren, die ein oder mehrere Profile enthält. Die Daten werden mit deinen vorhandenen Profilen zusammengeführt."
+      },
+      "2": {
+        "Headline": "Löschen eines Profils",
+        "1": "Um mods-manager dein Profil vergessen zu lassen, gehe zum Abschnitt \"Allgemein\" in den Einstellungen und wähle im Widget \"Konten\" das Profil aus, das du löschen möchtest. Es listet alle Profile mit Bündniscode und In-Game-Namen auf. Klicke dann auf die Schaltfläche \"Konto <Bündniscode> löschen\". Dadurch werden alle Daten für dieses Profil im mods-manager entfernt.",
+        "2": "Nach dem Löschen eines Profils kannst du es jederzeit wieder erstellen, indem du den Bündniscode eingibst und die Profildaten (Mods, Charaktere, ...) erneut abrufst. Alles, was du manuell geändert hast, wie Zusammenstellungen und Ziele, geht jedoch ohne eine aktuelle Sicherungsdatei, die das Profil enthält, verloren."
+      },
+      "4": {
+        "Headline": "Mods als HotUtils Kunde abrufen",
+        "1": "HotUtils ist ein weiteres SWGoH Tool, das sich für Kunden direkt im Spiel anmelden kann.",
+        "2": "Ein Vorteil hiervon ist, dass es alle Mod-Daten abrufen kann, auch von nicht ausgerüsteten Mods.",
+        "3": "Gebrauch auf eigene Gefahr!",
+        "4": "Die HotUtils Functionalität verstößt gegen die Vertragsbedingungen von Star Wars: Galaxy of Heroes.",
+        "5": "Sie übernehmen das gesamte Risiko bei Nutzung des Tools.",
+        "6": "Grandivory's Mods Optimizer und HotUtils gehören nicht zusammen.",
+        "7": "Um HotUtils mit dem mods-manager zu verwenden, benötigt er deine HotUtils Session ID. Eine detaillierte Erklärung dazu auf findest du auf ",
+        "8": "Nach erfolgreicher Eingabe deiner HotUtils Session ID, zeigt der Knopf für den Mod-Abruf mit einer kleinen Flamme an, dass jetzt HotUtils verwendet wird."
+      },
+      "5": {
+        "Headline": "Unausgerüstete Mods über den C-3PO Bot importieren",
+        "1": "Du kannst unausgerüstete Mods über den C-3PO Bot auf Discord importieren. Dies ist etwas komplizierter als mit HotUtils, dafür aber auch kostenlos.",
+        "2": "Verwende das Kommando \"/allycode auth ea_connect\", um den Bot mit dem Spiel zu verbinden.",
+        "3": "Nachdem du den Bot verbunden hast, kannst du das Kommando \"/inventory export\" verwenden. Der Bot wird dann die Mod-Daten abrufen und eine Datei generieren, die du im mods-manager importieren kannst.",
+        "4": "Den Import findest du in den Einstellungen unter \"Allgemein\" (Standard) im Abschnitt \"Konten\". Dort kannst du die Datei importieren, die der C-3PO Bot erstellt hat."
+      }
+    }
+  },
+  "explorer": {
+    "Title": "Mod Übersicht",
+    "topics": {
+      "1": "Übersicht",
+      "2": "Ansichtseinstellungen",
+      "3": "Gruppierungs/Filter/Sortierungs Konfigurationen",
+      "4": "Gruppierung",
+      "5": "Sortierung"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Übersicht",
+        "1": "Die \"Mods\" Ansicht ermöglicht es dir, alle deine Mods zu betrachten. In der zusammenklappbaren Seitenleiste zur linken hast du viele Optionen, um die angezeigten Mods zu gruppieren, filtern und sortieren",
+        "2": "Die Mods werden im Hauptbereich auf der rechten Seite angezeigt. Es gibt eine Ansicht von Mods, gruppiert/gefiltert/ sortiert nach deinen Einstellungen, für jede Phase im Lebenszyklus eines Mods und eine Ansicht für alle Mods (Standard)"
+      },
+      "2": {
+        "Headline": "Ansichtseinstellungen",
+        "1": "there"
+      },
+      "3": {
+        "Headline": "Gruppierungs/Filter/Sortierungs Konfigurationen",
+        "1": "Ganz oben ist ein Knopf um neue Konfigurationen hinzuzufügen. Du kannst eine beliebige Anzahl von Konfigurationen erstellen und über die Auswahl oben zwischen ihnen wechseln. Jede Konfiguration speichert ihre eigenen Gruppierungs-, Filter- und Sortierungseinstellungen. In der Konfigurationsauswahl kannst du auch existierende Konfigurationen umbenennen oder löschen.",
+        "2": "Jede Mod-Lebenszyklusphase hat ihre eigene Liste von Gruppierungs-/Filter-/Sortierungskonfigurationen und wird mit einer Standardkonfiguration geliefert, die nur Mods in dieser Phase anzeigt."
+      },
+      "4": {
+        "Headline": "Gruppierung",
+        "1": "Du kannst die Gruppierung nur aktivieren oder deaktivieren. Mit aktivierter Gruppierung werden die Mods nach Slot, Modset und Primärwert gruppiert. Mit deaktivierter Gruppierung sind alle Mods in derselben Gruppe. Mit aktivierter Gruppierung (und passender Sortierung) kannst du schnell alle Mods mit denselben Eigenschaften vergleichen",
+        "2": "Auf der rechten Seite erhältst du die Liste aller Gruppen. (Nur eine Gruppe, wenn die Gruppierung deaktiviert ist). Jede Gruppe kann durch Klicken auf ihre Kopfzeile, die den Slot, das Modset, den Primärwert und die Anzahl der Mods in dieser Gruppe anzeigt, ein- oder ausgeklappt werden. Es gibt auch Schaltflächen zum Ein- / Ausklappen aller Gruppen"
+      },
+      "5": {
+        "Headline": "Sortierung",
+        "1": "Nachdem die Mods gruppiert und gefiltert wurde, werden sie entsprechend deiner Sortierungseinstellungen sortiert. Du kannst nach beliebig vielen Kriterien sortieren. Die Mods werden zuerst nach dem ersten Kriterium sortiert, sind Mods nach dem ersten Kriterium gleich, werden sie nach dem zweiten Kriterium sortiert, und so weiter. Jedes einzelne Sortierungskriterium kann auf- oder absteigend sortiert werden."
+      }
+    }
+  },
+  "optimizer": {
+    "Title": "Mod Optimierer",
+    "topics": {
+      "1": "Globale Einstellungen",
+      "2": "Charakter Vorlagen",
+      "3": "Rangreihenfolge"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Globale Optimierungs-Einstellungen",
+        "1": "Die globalen Einstellungen gelten für jeden Charakter während einer Optimierung. Sie überschreiben immer alle charakter-spezifischen Einstellungen, die du festgelegt hast.",
+        "2": "Threshold to change mods",
+        "3": "As the optimizer is running, its normal behavior is to always recommend the absolute best mod set it can find, based on the target you have selected. If this number is above 0, then the optimizer will only recommend that you change mods on a character if the new recommended set is at least this much better than what the character previously had, or if the character's mods were moved to a character higher in your list and needed to be replaced.",
+        "4": "Lock all unselected characters",
+        "5": "If this box is checked, then no mods will be taken from characters that aren't in your selected list. If you have a number of unassigned mods, this can be a quick way to make use of them without triggering a major remod of your whole roster.",
+        "6": "Don't break mod sets",
+        "7": "If this box is checked, the optimizer will try to keep mod sets together, so you always get the maximum set bonuses. Sometimes it's not possible to do so, either because of other restrictions on a character's target or because you don't have enough mods left to make a full set. In these cases, the optimizer will still drop this restriction to try to recommend the best set."
+      },
+      "2": {
+        "Headline": "Character Templates",
+        "1": "Character Templates are a way to work with groups of ",
+        "2": "selected characters ",
+        "3": "and their ",
+        "4": "targets ",
+        "5": "independently of the rest of your data. They can be used to set up teams for a particular use and shared with your friends, guildmates, or on the Mods Optimizer discord server to quickly allow other people to copy your settings. Here is a quick description of the buttons to interact with character templates:",
+        "6": "Managing templates",
+        "7": "Save",
+        "8": "Save your current selected characters and their targets as a new template. You'll be asked to give your template a name, which you can then use to apply it or export it later.",
+        "9": "Export",
+        "10": "Export one or all of your templates to a file that can be shared with others.",
+        "11": "Load",
+        "12": "Load templates from a file into the optimizer. This won't apply the templates, but will instead add them to the list of known templates that you can work with.",
+        "13": "Delete",
+        "14": "Delete one of your templates from the optimizer. This only works on templates that you have created or loaded from a file. The default templates in the optimizer can't be deleted.",
+        "15": "Applying templates",
+        "16": "Append",
+        "17": "Add the characters from a template to the end of your selected characters.",
+        "18": "Replace",
+        "19": "Clear your selected characters and replace them with those from a template.",
+        "20": "Apply targets only",
+        "21": "Don't change which characters you have selected or their order, but for any that are in a template, change their targets to match."
+      },
+      "3": {
+        "Headline": "Rangreihenfolge",
+        "1": "Bestimme dynamisch die Reihenfolge, basierend auf deinem derzeitigen Roster und dem gewählten Verwendungszweck.",
+        "2": "Einstellungen",
+        "3": "Verwendungszweck",
+        "4": "Wähle die Spielmodi, für die optimiert wird.",
+        "5": "Minimales Ausrüstungslevel",
+        "6": "Ziehe nur Charaktere in Betracht, die mindestens dieses Ausrüstungslevel haben.",
+        "7": "Maximale Listenlänge",
+        "8": "Die maximale Anzahl von Charakteren, die in die Vorlage aufgenommen werden sollen.",
+        "9": "Omicron-Verstärkungen",
+        "10": "Wähle die Spielmodi, bei denen Charaktere mit Omicrons für den jeweiligen Spielmodus bevorzugt werden."
+      }
+    }
+  },
+  "editor": {
+    "Title": "Optimierungsplan-Editor",
+    "topics": {
+      "1": "Übersicht",
+      "2": "Mods",
+      "3": "Gewichte",
+      "4": "Primärwerte",
+      "5": "Modsets",
+      "6": "Zielvorgaben"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Übersicht",
+        "1": "Der Optimierungsplan-Editor hat 3 Bereiche: oben links, oben rechts und unten.",
+        "2": "Im oberen linken Bereich siehst du den Charakter, auf den der Optimierungsplan angewendet wird.",
+        "3": "Im oberen rechten Bereich kannst du den Optimierungsplan verwalten. Du kannst Optimierungspläne hinzufügen, löschen, zurücksetzen und auswählen, Änderungen speichern oder abbrechen.",
+        "4": "Im unteren Bereich kannst du den Optimierungsplan bearbeiten. Die Einstellungen sind in Kategorien unterteilt."
+      },
+      "2": {
+        "Headline": "Mods",
+        "1": "In dieser Kategorie kannst du gerade nur einschränken, ob nur 6-Punkt-Mods erlaubt sind."
+      },
+      "3": {
+        "Headline": "Gewichte",
+        "1": "Die Punktzahl eines Mods ist die gewichtete Summe der Charakterwerte. Die Gewichte werden hier bestimmt. Es gibt zwei Modi die Gewichte einzustellen, 'Einfach' und 'Fortgeschritten'.",
+        "2": "Einfach: Gewichte werden normalisiert, um zum Wertebereich des Wertes zu passen. Alle Gewichte liegen zwischen -100 und 100. Gibt man zum Beispiel Tempo und Schutz dasselbe Gewicht, bedeutet das, dass 1 Punkt Tempo denselben Wert des Mods ergibt wie 200 Schutz (Da ein Mod etwa 200 mal mehr Schutz als Tempo geben kann).",
+        "3": "Fortgeschritten: Nun gibt es keinen Wertebereich für Gewichte und sie werden direkt mit dem Charakterwert multipliziert. Wenn zwei Charakterwerte das gleiche Gewicht haben, erhöht ein Punkt im ersten Charakterwert den Modwert genauso wie einer im zweiten. Ich empfehle, im einfachen Modus zu bleiben, bis man ein Gefühl für Gewichte bekommen hat."
+      },
+      "4": {
+        "Headline": "Primärwerte",
+        "1": "In dieser Kategorie kannst du auswählen, welche Primärwerte für jeden variablen Mod-Slot erlaubt sind. Keine Auswahl für einen Slot erlaubt jeden Primärwert für diesen Slot. Wenn du einen oder mehrere Primärwerte auswählst, dann sind nur diese ausgewählten für diesen Slot erlaubt.",
+        "2": "Die Einschränkungen für Primärwerte werden ignoriert, es sei denn, du aktivierst die globale Optimierungseinstellung \"Mit Primär- und Set-Einschränkungen optimieren\""
+      },
+      "5": {
+        "Headline": "Sets",
+        "1": "In dieser Kategorie kannst du definieren, ob es erlaubt ist, Modsets zu brechen und welche Modsets erlaubt sind. Wenn du ein oder mehrere Modsets auswählst, dann sind nur diese ausgewählten erlaubt.",
+        "2": "Die Einschränkungen für Modsets werden ignoriert, es sei denn, du aktivierst die globale Optimierungseinstellung \"Mit Primär- und Set-Einschränkungen optimieren\""
+      },
+      "6": {
+        "Headline": "Zielvorgaben",
+        "1": "In dieser Kategorie kannst du Zielvorgaben definieren. Sie beginnt leer, außer mit der Schaltfläche \"Zielwert hinzufügen\". Jeder hinzugefügte Zielwert zeigt eine Karte an, um diesen Zielwert zu bearbeiten.",
+        "2": "Mit einer Zielvorgabe kannst du den Bereich definieren, in dem der ausgewählte Wert liegen muss. Dieser Bereich kann im Vergleich zum gleichen Wert auf einem ausgewählten Charakter festgelegt werden. Wenn ja, kann der Bereich absolut oder relativ zum Vergleichswert sein.",
+        "3": "Du kannst zwischen dem Modus \"Nur berichten\" und \"Optimieren\" wechseln. Im Standardmodus \"Optimieren\" durchläuft der Optimierer alle Mod-Kombinationen und wählt die aus, die die Zielvorgaben erfüllt und die höchste Mod-Punktzahl hat. Im Modus \"Nur berichten\" wählt der Optimierer einfach die am höchsten bewertete Modkobination aus und berichtet, ob sie die Zielvorgaben erfüllt.",
+        "4": "Das Durchlaufen aller Mod-Kombinationen im Modus \"Optimieren\" kann sehr zeitaufwendig sein. Du kannst die benötigte Zeit reduzieren, indem du einen kleinen Bereich wählst oder durch das Entfernen von zu berücksichtigen Mods mit den anderen Einschränkungen."
+      }
+    }
+  },
+  "general": {
+    "Title": "Grundlegendes",
+    "topics": {
+      "1": "Willkommen",
+      "2": "Grundlagen der Modoptimierung",
+      "3": "Auswahl der Charaktere",
+      "4": "Auswahl einer Zielvorgabe",
+      "5": "Auswahl der Zielwerte"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Wilkommen zu Grandivorys Mod Optimierer für Star Wars: Galaxy of Heroes™!",
+        "1": "Mit dieser App kannst du die besten Mods für jeden deiner Charaktere finden. Hierfür wird jedem Wert, den ein Mod geben kann, ein Gewicht zugeordnet, das die Bedeutung dieses Wertes für den Charakter widerspiegelt. Du gibst eine Liste von zu optimierenden Charakteren mit den gewünschten Werten an und die App geht die Liste dann nacheinander durch und errechnet die jeweils besten Mods.",
+        "2": "Um loszulegen, gebe oben im Eingabefeld deinen Bündniscode ein. Sobald du die Eingabe mit 'Enter' bestätigst werden deine Daten (Charaktere, Mods) abgerufen."
+      },
+      "2": {
+        "Headline": "Wie funktioniert die Mod Optimierung?",
+        "1": "Willkommen zu meinem Mod Optimierer für Star Wars: Galaxy of Heroes!",
+        "2": "Dieses Programm arbeitet nach einem einfachen Prinzip:",
+        "3": "Jede Eigenschaft eines Charakters hat eine bestimmte Bedeutung für diesen und wenn wir Werte für die Wichtigkeit jedes Charakterwertes haben, dann können wir einen Gesamtwert für ein Mod oder ein Modset für diesen Charakter berechnen. Somit kann das Programm für jeden Charakter automatisch das beste Modset finden, das den höchsten Gesamtwert für diesen liefert, ohne dass du hierfür über alle Mods in deinem Inventar drüberschauen müsstest."
+      },
+      "3": {
+        "Headline": "Auswahl der zu optimierenden Charaktere",
+        "1": "Der Mod Optimierer zieht zunächst alle nicht ausgerüsteten Mods und solche, die auf nicht gesperrten Charakteren ausgerüstet sind, in Betracht. Dann wird die Liste der ausgewählten Charaktere der Reihe nach abgearbeitet. Für jeden Charakter werden die besten Mods basierend auf den gewählten Zielwerten vorgeschlagen. Mit jedem Modding-Vorschlag für einen Charakter werden die vorgeschlagenen Mods aus der Betrachtung für die folgenden Charaktere entfernt.",
+        "2": "Daher sollten die Charaktere, die deine absolut besten Mods bekommen sollen, an der Spitze der zu optimierenden Charaktere stehen. In der Regel beginnt die Liste mit den Charakteren, für die Tempo besonders wichtig ist."
+      },
+      "4": {
+        "Headline": "Eine Zielvorgabe auswählen",
+        "1": "Für jeden Charakter im Spiel gibt es Zielvorgaben. (Eine Sammlung von Gewichten für jeden Charakterwert und manchmal auch Mod-Restriktionen) Der Optimierer wählt anhand der gegebenen Gewichte und Restriktionen die Mods mit dem höchsten Gesamtwert. Die Zielvorgaben sind nach ihrem Zweck benannt. Z.B. 'hSTR Phase 1' oder 'PvP'. Manche Charaktere haben mehrere Zielvorgaben zur Auswahl.",
+        "2": "Daher sollten die Charaktere, die deine absolut besten Mods bekommen sollen, an der Spitze der zu optimierenden Charaktere stehen. In der Regel beginnt die Liste mit den Charakteren, für die Tempo besonders wichtig ist.",
+        "3": "Es gibt viele Gründe, warum Du andere Werte als die standardmäßig im Optimierer aufgelisteten wählen möchtest: Du möchtest vielleicht für einen anderen Zweck optimieren (z.B. ein hSTR Phase 3 Team, bei dem Tempo nachteilig sein kann), Du möchtest vielleicht einen anderen Optimierungsansatz verfolgen, oder Du hast einfach einen besseren Satz von Werten, die Du verwenden möchtest.",
+        "4": "Am einfachsten beginnt man die Optimierung mit der Auswahl einer der enthaltenen Charakter-Vorlagen. Diese enthalten Sätze von Charakteren und Zielen, die für verschiedene Spielmodi geeignet sind. Wenn es keine Vorlage gibt, die genau deinen Bedürfnissen entspricht, kannst du eine als Ausgangspunkt verwenden oder eine von Grund auf neu erstellen. Gibt es für einen Charakter kein passendes Ziel, kannst du ein vorhandenes editieren und (unter neuem Namen) speichern."
+      },
+      "5": {
+        "Headline": "Gewichte auswählen",
+        "1": "Bei den meisten Charakteren ist standardmäßig der \"Einfach\" Modus ausgewählt. In diesem wählst du für alle Charakterwerte einen Wert zwischen -100 und 100. Diese Werte sind Gewichtungen, die jedem Charakterwert zugewiesen werden, um seine Wichtigkeit für diesen Charakter zu bestimmen. Wenn du zwei identische Gewichte einstellst, bedeutet das, dass die Charakterwerte für den Charakter gleich wichtig sind. Im einfachen Modus passt der Optimierer die Gewichtung automatisch an den Wertebereich an, den man im Spiel für diese Eigenschaft sieht. Ein Beispiel, Tempo und Schutz jeweils einen Wert von 100 zu geben, bedeutet, dass 1 Tempo etwa 200 Schutz entspricht (da man bei Mods viel mehr Schutz als Tempo findet).",
+        "2": "Für mehr Kontrolle über die Gewichte kann in den \"Erweitert\" Modus gewechselt werden. Im erweiterten Modus werden die angegebenen Gewichte direkt mit ihrem Charakterwert multipliziert. Wenn im erweiterten Modus sowohl für Tempo als auch für Schutz ein Gewicht von 100 angegeben wird, wählt das Tool niemals Tempo aus, weil es dem Charakter viel leichter einen höheren Schutz geben kann. Ich schlage vor, im Basismodus zu bleiben, bis du ein Gefühl dafür bekommen hast, wie das Tool funktioniert."
+      }
+    }
+  }
 }

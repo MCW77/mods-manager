@@ -17,7 +17,6 @@ type ModscoreByName = Map<string, ModScore>;
 const modScores$: ObservableObject<ModScoresObservable> = observable({
   ById: new Map<string, ModscoreByName>(),
   getModScore: (mod, scoreName) => {
-
     const modId = mod.id;
     if (!modScores$.ById.has(modId)) {
       modScores$.ById.set(modId, new Map<string, ModScore>());
@@ -32,9 +31,10 @@ const modScores$: ObservableObject<ModScoresObservable> = observable({
 
       const modsScoreValue = modScorer.scoringAlgorithm(mod);
       const modsScore: ModScore = {
-        displayValue: modScorer.isFlatOrPercentage === "IsFlat"
-								? `${modsScoreValue}`
-								: `${Math.floor(modsScoreValue * 100) / 100}%`,
+        displayValue:
+          modScorer.isFlatOrPercentage === "IsFlat"
+            ? `${modsScoreValue}`
+            : `${Math.floor(modsScoreValue * 100) / 100}%`,
         value: modsScoreValue,
       };
       modScoresOfId.set(scoreName, modsScore);

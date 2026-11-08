@@ -26,125 +26,112 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 const showEditCharacterModal = (
-	character: Character.Character,
-	index: number,
-	target: OptimizationPlan.OptimizationPlan,
+  character: Character.Character,
+  index: number,
+  target: OptimizationPlan.OptimizationPlan,
 ) => {
-	incrementalOptimization$.activeIndex.set(index);
-	optimizerView$.assign({
-		currentCharacter: {
-			id: character.id,
-			index: index,
-			target: structuredClone(target),
-		},
-		view: "edit",
-	});
+  incrementalOptimization$.activeIndex.set(index);
+  optimizerView$.assign({
+    currentCharacter: {
+      id: character.id,
+      index: index,
+      target: structuredClone(target),
+    },
+    view: "edit",
+  });
 };
 
 type CharacterBlockProps = {
-	characterId: CharacterNames;
-	target: OptimizationPlan.OptimizationPlan;
-	index: number;
+  characterId: CharacterNames;
+  target: OptimizationPlan.OptimizationPlan;
+  index: number;
 };
 
 const characterBlockDragStart = (index: number) => {
-	return (event: React.DragEvent<HTMLDivElement>) => {
-		event.dataTransfer.dropEffect = "move";
-		event.dataTransfer.effectAllowed = "move";
-		event.dataTransfer.setData("text/plain", `${index}`);
-		// We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
-		const options = {
-			effect: "move",
-		};
-		event.dataTransfer.setData("application/json", JSON.stringify(options));
-	};
+  return (event: React.DragEvent<HTMLDivElement>) => {
+    event.dataTransfer.dropEffect = "move";
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", `${index}`);
+    // We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
+    const options = {
+      effect: "move",
+    };
+    event.dataTransfer.setData("application/json", JSON.stringify(options));
+  };
 };
 
 const CharacterBlock: React.FC<CharacterBlockProps> = observer(
-	({ characterId, target, index }: CharacterBlockProps) => {
-		const [t] = useTranslation("optimize-ui");
-		const characterById = useValue(roster$.activeCharacterById);
-		const baseCharacterById = useValue(characters$.baseCharacterById);
-		const character = characterById[characterId];
-		const displayedCharacter = structuredClone(character);
-		if (
-			target.simulatedRelicLevel > 1 &&
-			target.simulatedStats !== undefined &&
-			target.simulatedStats !== null
-		) {
-			displayedCharacter.playerValues.equippedStats = target.simulatedStats;
-			displayedCharacter.playerValues.gearLevel = 13;
-			displayedCharacter.playerValues.relicTier = target.simulatedRelicLevel;
-		}
-		const showEditCharacterModalCallback = useCallback(
-			() => showEditCharacterModal(character, index, target),
-			[character, index, target],
-		);
-		const activePlan = target.id;
-		const ariaLabel = `Character ${baseCharacterById[character.id]?.name || character.id} - draggable`;
+  ({ characterId, target, index }: CharacterBlockProps) => {
+    const [t] = useTranslation("optimize-ui");
+    const characterById = useValue(roster$.activeCharacterById);
+    const baseCharacterById = useValue(characters$.baseCharacterById);
+    const character = characterById[characterId];
+    const displayedCharacter = structuredClone(character);
+    if (
+      target.simulatedRelicLevel > 1 &&
+      target.simulatedStats !== undefined &&
+      target.simulatedStats !== null
+    ) {
+      displayedCharacter.playerValues.equippedStats = target.simulatedStats;
+      displayedCharacter.playerValues.gearLevel = 13;
+      displayedCharacter.playerValues.relicTier = target.simulatedRelicLevel;
+    }
+    const showEditCharacterModalCallback = useCallback(
+      () => showEditCharacterModal(character, index, target),
+      [character, index, target],
+    );
+    const activePlan = target.id;
+    const ariaLabel = `Character ${baseCharacterById[character.id]?.name || character.id} - draggable`;
 
-		return (
-			<div className={"p-x-0 p-y-1 m-0 w-60"} key={character.id}>
-				<article
-					className={
-						"max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] grid-rows-[auto_20px] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab"
-					}
-					aria-label={ariaLabel}
-					draggable={true}
-					onDragStart={characterBlockDragStart(index)}
-					onDoubleClick={() => defaultCompilation$.unselectCharacter(index)}
-				>
-					<CharacterAvatar
-						character={displayedCharacter}
-						displayBadges={false}
-						displayStars={false}
-						className={
-							"row-start-1 row-end-1 col-start-1 col-end-1 text-size-3.2"
-						}
-					/>
-					<div
-						className={
-							"inline-block grid-row-2 col-start-1 col-end-3 align-middle pointer-events-none"
-						}
-					>
-						{baseCharacterById[character.id]
-							? baseCharacterById[character.id].name
-							: character.id}
-					</div>
-					<div
-						className={
-							"grid-row-1 grid-col-2 flex flex-col gap-2 justify-center"
-						}
-					>
-						<Computed>
-							<CharacterTargetStatusIcons
-								character={character}
-								target={target}
-							/>
-						</Computed>
-						<div
-							className={"p-y-1 items-center grid grid-rows-[auto_20px] gap-2"}
-						>
-							<div className="flex items-center justify-between">
-								<Label className="align-middle">{t("selected.Target")}</Label>
-								<Button
-									className="px-5"
-									size={"xs"}
-									type={"button"}
-									onClick={() => showEditCharacterModalCallback()}
-								>
-									{t("selected.Edit")}
-								</Button>
-							</div>
-							<Label className="grid-row-2 align-middle dark:text-white light:text-black">
-								{activePlan}
-							</Label>
-						</div>
-					</div>
-				</article>
-			</div>
-		);
-	},
+    return (
+      <div className={"p-x-0 p-y-1 m-0 w-60"} key={character.id}>
+        <article
+          className={
+            "max-w-full p-1 bg-blue-700/20 border-1 border-solid border-[dodgerblue] grid grid-cols-[fit-content(1em)_auto] grid-rows-[auto_20px] gap-x-2 text-left [&.drop-character]:shadow-[0_2px_3px_0_darkred] cursor-grab"
+          }
+          aria-label={ariaLabel}
+          draggable={true}
+          onDragStart={characterBlockDragStart(index)}
+          onDoubleClick={() => defaultCompilation$.unselectCharacter(index)}
+        >
+          <CharacterAvatar
+            character={displayedCharacter}
+            displayBadges={false}
+            displayStars={false}
+            className={"row-start-1 row-end-1 col-start-1 col-end-1 text-size-3.2"}
+          />
+          <div
+            className={
+              "inline-block grid-row-2 col-start-1 col-end-3 align-middle pointer-events-none"
+            }
+          >
+            {baseCharacterById[character.id] ? baseCharacterById[character.id].name : character.id}
+          </div>
+          <div className={"grid-row-1 grid-col-2 flex flex-col gap-2 justify-center"}>
+            <Computed>
+              <CharacterTargetStatusIcons character={character} target={target} />
+            </Computed>
+            <div className={"p-y-1 items-center grid grid-rows-[auto_20px] gap-2"}>
+              <div className="flex items-center justify-between">
+                <Label className="align-middle">{t("selected.Target")}</Label>
+                <Button
+                  className="px-5"
+                  size={"xs"}
+                  type={"button"}
+                  onClick={() => showEditCharacterModalCallback()}
+                >
+                  {t("selected.Edit")}
+                </Button>
+              </div>
+              <Label className="grid-row-2 align-middle dark:text-white light:text-black">
+                {activePlan}
+              </Label>
+            </div>
+          </div>
+        </article>
+      </div>
+    );
+  },
 );
 
 CharacterBlock.displayName = "CharacterBlock";

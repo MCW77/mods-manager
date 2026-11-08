@@ -1,35 +1,36 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"search.exclude": {
-			"**/dist": true
-		},
-		"typescript.implementationsCodeLens.enabled": false,
-		"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-		"typescript.referencesCodeLens.enabled": false,
-		"typescript.referencesCodeLens.showOnAllFunctions": false,
-		"typescript.suggest.completeFunctionCalls": true,
-		"typescript.suggest.jsdoc.generateReturns": false,
-		"typescript.suggest.completeJSDocs": false,
-		"gitlens.codeLens.scopes": ["document", "containers", "blocks"],
-		"LineCount.statistics": false,
-		"LineCount.includes": ["src/**/*"],
-		"chat.tools.terminal.autoApprove": {
-			"q": true,
-			"tsgo": true,
-			"/^pnpm exec biome lint \\./src \\./public$/": {
-				"approve": true,
-				"matchCommandLine": true
-			}
-		},
-		"js/ts.referencesCodeLens.enabled": true,
-		"js/ts.implementationsCodeLens.enabled": true,
-		"js/ts.referencesCodeLens.showOnAllFunctions": true,
-		"js/ts.experimental.useTsgo": true,
-		"js/ts.tsdk.path": "./node_modules/typescript/lib"
-	}
+  "folders": [
+    {
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/dist": true,
+    },
+    "typescript.implementationsCodeLens.enabled": false,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.referencesCodeLens.enabled": false,
+    "typescript.referencesCodeLens.showOnAllFunctions": false,
+    "typescript.suggest.completeFunctionCalls": true,
+    "typescript.suggest.jsdoc.generateReturns": false,
+    "typescript.suggest.completeJSDocs": false,
+    "gitlens.codeLens.scopes": ["document", "containers", "blocks"],
+    "LineCount.statistics": false,
+    "LineCount.includes": ["src/**/*"],
+    "chat.tools.terminal.autoApprove": {
+      "q": true,
+      "tsgo": true,
+      "/^pnpm exec biome lint \\./src \\./public$/": {
+        "approve": true,
+        "matchCommandLine": true,
+      },
+    },
+    "js/ts.referencesCodeLens.enabled": true,
+    "js/ts.implementationsCodeLens.enabled": true,
+    "js/ts.referencesCodeLens.showOnAllFunctions": true,
+    "js/ts.experimental.useTsgo": true,
+    "js/ts.tsdk.path": "./node_modules/typescript/lib",
+    "git.enabled": true,
+  },
 }

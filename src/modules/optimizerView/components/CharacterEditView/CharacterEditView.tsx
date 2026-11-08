@@ -40,290 +40,257 @@ import CharacterFilters from "#/modules/charactersManagement/components/Characte
 const isSelectionExpanded$ = observable(false);
 
 const CharacterEditView = observer(() => {
-	const [t] = useTranslation("optimize-ui");
-	const characterById = useValue(roster$.activeCharacterById);
-	const baseCharacterById = useValue(characters$.baseCharacterById);
-	const selectedCharacters = useValue(
-		defaultCompilation$.data.selectedCharacters,
-	);
-	const isSelectionExpanded = useValue(isSelectionExpanded$);
-	const containerRef = useRef<HTMLDivElement>(null);
-	const lastSelectedCharacter = selectedCharacters.length - 1;
+  const [t] = useTranslation("optimize-ui");
+  const characterById = useValue(roster$.activeCharacterById);
+  const baseCharacterById = useValue(characters$.baseCharacterById);
+  const selectedCharacters = useValue(defaultCompilation$.data.selectedCharacters);
+  const isSelectionExpanded = useValue(isSelectionExpanded$);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lastSelectedCharacter = selectedCharacters.length - 1;
 
-	let availableCharacters = [] as Character.Character[];
-	availableCharacters = Object.values(characterById)
-		.filter((character) => character.playerValues.level >= 50)
-		.filter(
-			(character) =>
-				!charactersManagement$.filterSetup.hideSelectedCharacters.get() ||
-				!selectedCharacters.map(({ id }) => id).includes(character.id),
-		)
-		.sort((left, right) => Character.compareGP(left, right));
+  let availableCharacters = [] as Character.Character[];
+  availableCharacters = Object.values(characterById)
+    .filter((character) => character.playerValues.level >= 50)
+    .filter(
+      (character) =>
+        !charactersManagement$.filterSetup.hideSelectedCharacters.get() ||
+        !selectedCharacters.map(({ id }) => id).includes(character.id),
+    )
+    .sort((left, right) => Character.compareGP(left, right));
 
-	const createFilterFunction = (characterFilter: CharacterFilter) => {
-		/**
-		 * Checks whether a character matches the filter string in name or tags
-		 * @param character {Character} The character to check
-		 * @returns boolean
-		 */
-		const filterCharacters = (character: Character.Character) => {
-			const baseCharacter = baseCharacterById[character.id] ?? {
-				...defaultBaseCharacter,
-				id: character.id,
-				name: character.id,
-			};
-			const filter = characterFilter.filter;
+  const createFilterFunction = (characterFilter: CharacterFilter) => {
+    /**
+     * Checks whether a character matches the filter string in name or tags
+     * @param character {Character} The character to check
+     * @returns boolean
+     */
+    const filterCharacters = (character: Character.Character) => {
+      const baseCharacter = baseCharacterById[character.id] ?? {
+        ...defaultBaseCharacter,
+        id: character.id,
+        name: character.id,
+      };
+      const filter = characterFilter.filter;
 
-			return (
-				filter === "" ||
-				baseCharacter.name.toLowerCase().includes(filter) ||
-				(["lock", "locked"].includes(filter) &&
-					lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) ||
-				(["unlock", "unlocked"].includes(filter) &&
-					!lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) ||
-				baseCharacter.categories
-					.concat(
-						characterSettings[character.id]
-							? characterSettings[character.id].extraTags
-							: [],
-					)
-					.some((tag) => tag.toLowerCase().includes(filter))
-			);
-		};
+      return (
+        filter === "" ||
+        baseCharacter.name.toLowerCase().includes(filter) ||
+        (["lock", "locked"].includes(filter) &&
+          lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) ||
+        (["unlock", "unlocked"].includes(filter) &&
+          !lockedStatus$.lockedCharactersForActivePlayer.has(character.id)) ||
+        baseCharacter.categories
+          .concat(characterSettings[character.id] ? characterSettings[character.id].extraTags : [])
+          .some((tag) => tag.toLowerCase().includes(filter))
+      );
+    };
 
-		switch (characterFilter.type) {
-			case "text":
-				return filterCharacters;
-			case "custom":
-				return characterFilter.filterPredicate;
-			default:
-				return () => true;
-		}
-	};
+    switch (characterFilter.type) {
+      case "text":
+        return filterCharacters;
+      case "custom":
+        return characterFilter.filterPredicate;
+      default:
+        return () => true;
+    }
+  };
 
-	let highlightedCharacters = availableCharacters.filter(
-		createFilterFunction(charactersManagement$.filterSetup.quickFilter.get()),
-	);
-	for (const filter of charactersManagement$.filterSetup.filtersById
-		.get()
-		.values()) {
-		if (filter !== undefined)
-			highlightedCharacters = highlightedCharacters.filter(
-				createFilterFunction(filter),
-			);
-	}
-	if (charactersManagement$.filterSetup.customFilterId.get() !== "None") {
-		highlightedCharacters = highlightedCharacters.filter(
-			charactersManagement$.activeCustomFilter(),
-		);
-	}
+  let highlightedCharacters = availableCharacters.filter(
+    createFilterFunction(charactersManagement$.filterSetup.quickFilter.get()),
+  );
+  for (const filter of charactersManagement$.filterSetup.filtersById.get().values()) {
+    if (filter !== undefined)
+      highlightedCharacters = highlightedCharacters.filter(createFilterFunction(filter));
+  }
+  if (charactersManagement$.filterSetup.customFilterId.get() !== "None") {
+    highlightedCharacters = highlightedCharacters.filter(
+      charactersManagement$.activeCustomFilter(),
+    );
+  }
 
-	const _starsReactivity = useValue(
-		charactersManagement$.filterSetup.starsRange,
-	);
-	const _levelReactivity = useValue(
-		charactersManagement$.filterSetup.levelRange,
-	);
-	const _gearLevelReactivity = useValue(
-		charactersManagement$.filterSetup.gearLevelRange,
-	);
-	highlightedCharacters = highlightedCharacters.filter(
-		charactersManagement$.filterSetup.permanentFilterById.peek().get("stars")
-			?.filterPredicate ?? (() => true),
-	);
-	highlightedCharacters = highlightedCharacters.filter(
-		charactersManagement$.filterSetup.permanentFilterById.peek().get("level")
-			?.filterPredicate ?? (() => true),
-	);
-	highlightedCharacters = highlightedCharacters.filter(
-		charactersManagement$.filterSetup.permanentFilterById
-			.peek()
-			.get("gearLevel")?.filterPredicate ?? (() => true),
-	);
-	const filteredCharacters = availableCharacters.filter(
-		(character) => !highlightedCharacters.includes(character),
-	);
+  const _starsReactivity = useValue(charactersManagement$.filterSetup.starsRange);
+  const _levelReactivity = useValue(charactersManagement$.filterSetup.levelRange);
+  const _gearLevelReactivity = useValue(charactersManagement$.filterSetup.gearLevelRange);
+  highlightedCharacters = highlightedCharacters.filter(
+    charactersManagement$.filterSetup.permanentFilterById.peek().get("stars")?.filterPredicate ??
+      (() => true),
+  );
+  highlightedCharacters = highlightedCharacters.filter(
+    charactersManagement$.filterSetup.permanentFilterById.peek().get("level")?.filterPredicate ??
+      (() => true),
+  );
+  highlightedCharacters = highlightedCharacters.filter(
+    charactersManagement$.filterSetup.permanentFilterById.peek().get("gearLevel")
+      ?.filterPredicate ?? (() => true),
+  );
+  const filteredCharacters = availableCharacters.filter(
+    (character) => !highlightedCharacters.includes(character),
+  );
 
-	// Disable scroll snap while actively scrolling
-	useEffect(() => {
-		const container = containerRef.current;
-		if (!container) return;
-		// Find the ScrollArea viewport element (it has the class 'rounded-[inherit]')
-		const viewport = container.querySelector(
-			'[class*="rounded-[inherit]"]',
-		) as HTMLElement;
-		if (!viewport) return;
+  // Disable scroll snap while actively scrolling
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    // Find the ScrollArea viewport element (it has the class 'rounded-[inherit]')
+    const viewport = container.querySelector('[class*="rounded-[inherit]"]') as HTMLElement;
+    if (!viewport) return;
 
-		let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: NodeJS.Timeout;
 
-		const handleScroll = () => {
-			// Disable snap type while scrolling
-			viewport.style.scrollSnapType = "none";
+    const handleScroll = () => {
+      // Disable snap type while scrolling
+      viewport.style.scrollSnapType = "none";
 
-			// Clear any existing timeout
-			clearTimeout(scrollTimeout);
+      // Clear any existing timeout
+      clearTimeout(scrollTimeout);
 
-			// Re-enable snap type after 300ms of no scrolling
-			scrollTimeout = setTimeout(() => {
-				viewport.style.scrollSnapType = "y proximity";
-			}, 30);
-		};
+      // Re-enable snap type after 300ms of no scrolling
+      scrollTimeout = setTimeout(() => {
+        viewport.style.scrollSnapType = "y proximity";
+      }, 30);
+    };
 
-		viewport.addEventListener("scroll", handleScroll, { passive: true });
+    viewport.addEventListener("scroll", handleScroll, { passive: true });
 
-		return () => {
-			viewport.removeEventListener("scroll", handleScroll);
-			clearTimeout(scrollTimeout);
-		};
-	}, []);
+    return () => {
+      viewport.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
-	const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-	};
+  const dragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
 
-	const dragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		(event.target as HTMLDivElement).classList.remove("drop-character");
-	};
+  const dragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    (event.target as HTMLDivElement).classList.remove("drop-character");
+  };
 
-	const availableCharactersDragEnter = (
-		event: React.DragEvent<HTMLDivElement>,
-	) => {
-		event.preventDefault();
-	};
+  const availableCharactersDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
 
-	const availableCharactersDrop = (event: React.DragEvent<HTMLDivElement>) => {
-		event.preventDefault();
-		const options = JSON.parse(event.dataTransfer.getData("application/json"));
+  const availableCharactersDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const options = JSON.parse(event.dataTransfer.getData("application/json"));
 
-		switch (options.effect) {
-			case "move": {
-				// This is coming from the selected characters - remove the character from the list
-				const characterIndex = +event.dataTransfer.getData("text/plain");
-				defaultCompilation$.unselectCharacter(characterIndex);
-				break;
-			}
-			default:
-			// Do nothing
-		}
-	};
+    switch (options.effect) {
+      case "move": {
+        // This is coming from the selected characters - remove the character from the list
+        const characterIndex = +event.dataTransfer.getData("text/plain");
+        defaultCompilation$.unselectCharacter(characterIndex);
+        break;
+      }
+      default:
+      // Do nothing
+    }
+  };
 
-	return (
-		<div
-			className={`character-edit flex flex-col flex-grow-1 gap-2 overflow-hidden group ${
-				isSelectionExpanded ? "sort-view" : ""
-			}`}
-		>
-			<ScrollArea>
-				<div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[20dvh]">
-					<Memo>
-						<DefaultCollapsibleCard title={t("sidebar.filter.Title")}>
-							<Suspense fallback={<div>Loading CharacterFilters</div>}>
-								<CharacterFilters />
-							</Suspense>
-						</DefaultCollapsibleCard>
-						<DefaultCollapsibleCard
-							className={"max-w-[30%]"}
-							title={t("sidebar.actions.Title")}
-						>
-							<Suspense fallback={<div>Loading CharacterActions</div>}>
-								<CharacterActions />
-							</Suspense>
-						</DefaultCollapsibleCard>
-					</Memo>
-					<DefaultCollapsibleCard
-						className={"max-w-[25%]"}
-						title={t("sidebar.selection.Title")}
-					>
-						<Suspense fallback={<div>Loading SelectionActions</div>}>
-							<SelectionActions
-								visibleCharacters={highlightedCharacters}
-								lastSelectedCharacterIndex={lastSelectedCharacter}
-								isSelectionExpanded$={isSelectionExpanded$}
-							/>
-						</Suspense>
-					</DefaultCollapsibleCard>
-					<DefaultCollapsibleCard title={t("sidebar.templates.Title")}>
-						<Suspense fallback={<div>Loading TemplatesActions</div>}>
-							<TemplatesActions
-								hasNoSelectedCharacters={selectedCharacters.length === 0}
-								visibleCharacters={highlightedCharacters}
-								lastSelectedCharacterIndex={lastSelectedCharacter}
-							/>
-						</Suspense>
-					</DefaultCollapsibleCard>
-				</div>
-			</ScrollArea>
-			<Computed>
-				<div className="flex h-[83%]">
-					<div
-						ref={containerRef}
-						className="flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
-						role="application"
-						aria-label="Available characters drop zone"
-						onDragEnter={availableCharactersDragEnter}
-						onDragOver={dragOver}
-						onDragLeave={dragLeave}
-						onDrop={availableCharactersDrop}
-					>
-						<ScrollArea className="h-full snap-y snap-proximity">
-							<Suspense fallback={null}>
-								<div
-									className={
-										"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"
-									}
-								>
-									{highlightedCharacters.map((character) => (
-										<RenderIfVisible
-											className="snap-start"
-											key={character.id}
-											defaultHeight={161}
-											root={containerRef}
-											searchableText={
-												baseCharacterById[character.id]?.name || character.id
-											}
-											visibleOffset={1610}
-										>
-											<CharacterWidget
-												key={character.id}
-												character={character}
-												className={"active"}
-											/>
-										</RenderIfVisible>
-									))}
-									{filteredCharacters.map((character) => (
-										<RenderIfVisible
-											className="snap-start"
-											key={character.id}
-											defaultHeight={161}
-											root={containerRef}
-											searchableText={
-												baseCharacterById[character.id]?.name || character.id
-											}
-											visibleOffset={1610}
-										>
-											<CharacterWidget
-												key={character.id}
-												character={character}
-												className={"opacity-25"}
-											/>
-										</RenderIfVisible>
-									))}
-								</div>
-							</Suspense>
-						</ScrollArea>
-					</div>
-					<div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
-						<Suspense fallback={null}>
-							<Memo>
-								<CharacterList />
-							</Memo>
-						</Suspense>
-					</div>
-				</div>
-			</Computed>
-		</div>
-	);
+  return (
+    <div
+      className={`character-edit flex flex-col flex-grow-1 gap-2 overflow-hidden group ${
+        isSelectionExpanded ? "sort-view" : ""
+      }`}
+    >
+      <ScrollArea>
+        <div className="flex flex-gap-2 flex-wrap justify-around items-stretch w-full p-y-2 max-h-[20dvh]">
+          <Memo>
+            <DefaultCollapsibleCard title={t("sidebar.filter.Title")}>
+              <Suspense fallback={<div>Loading CharacterFilters</div>}>
+                <CharacterFilters />
+              </Suspense>
+            </DefaultCollapsibleCard>
+            <DefaultCollapsibleCard className={"max-w-[30%]"} title={t("sidebar.actions.Title")}>
+              <Suspense fallback={<div>Loading CharacterActions</div>}>
+                <CharacterActions />
+              </Suspense>
+            </DefaultCollapsibleCard>
+          </Memo>
+          <DefaultCollapsibleCard className={"max-w-[25%]"} title={t("sidebar.selection.Title")}>
+            <Suspense fallback={<div>Loading SelectionActions</div>}>
+              <SelectionActions
+                visibleCharacters={highlightedCharacters}
+                lastSelectedCharacterIndex={lastSelectedCharacter}
+                isSelectionExpanded$={isSelectionExpanded$}
+              />
+            </Suspense>
+          </DefaultCollapsibleCard>
+          <DefaultCollapsibleCard title={t("sidebar.templates.Title")}>
+            <Suspense fallback={<div>Loading TemplatesActions</div>}>
+              <TemplatesActions
+                hasNoSelectedCharacters={selectedCharacters.length === 0}
+                visibleCharacters={highlightedCharacters}
+                lastSelectedCharacterIndex={lastSelectedCharacter}
+              />
+            </Suspense>
+          </DefaultCollapsibleCard>
+        </div>
+      </ScrollArea>
+      <Computed>
+        <div className="flex h-[83%]">
+          <div
+            ref={containerRef}
+            className="flex-grow-1 group-[&.sort-view]:flex-grow-0 group-[&.sort-view]:w-0"
+            role="application"
+            aria-label="Available characters drop zone"
+            onDragEnter={availableCharactersDragEnter}
+            onDragOver={dragOver}
+            onDragLeave={dragLeave}
+            onDrop={availableCharactersDrop}
+          >
+            <ScrollArea className="h-full snap-y snap-proximity">
+              <Suspense fallback={null}>
+                <div
+                  className={"grid grid-cols-[repeat(auto-fit,_minmax(160px,_1fr))] p-x-1 gap-2"}
+                >
+                  {highlightedCharacters.map((character) => (
+                    <RenderIfVisible
+                      className="snap-start"
+                      key={character.id}
+                      defaultHeight={161}
+                      root={containerRef}
+                      searchableText={baseCharacterById[character.id]?.name || character.id}
+                      visibleOffset={1610}
+                    >
+                      <CharacterWidget
+                        key={character.id}
+                        character={character}
+                        className={"active"}
+                      />
+                    </RenderIfVisible>
+                  ))}
+                  {filteredCharacters.map((character) => (
+                    <RenderIfVisible
+                      className="snap-start"
+                      key={character.id}
+                      defaultHeight={161}
+                      root={containerRef}
+                      searchableText={baseCharacterById[character.id]?.name || character.id}
+                      visibleOffset={1610}
+                    >
+                      <CharacterWidget
+                        key={character.id}
+                        character={character}
+                        className={"opacity-25"}
+                      />
+                    </RenderIfVisible>
+                  ))}
+                </div>
+              </Suspense>
+            </ScrollArea>
+          </div>
+          <div className="w-64 flex-grow-0 group-[&.sort-view]:flex-grow-1 group-[&.sort-view]:w-initial m-l-1em">
+            <Suspense fallback={null}>
+              <Memo>
+                <CharacterList />
+              </Memo>
+            </Suspense>
+          </div>
+        </div>
+      </Computed>
+    </div>
+  );
 });
 
 export default CharacterEditView;

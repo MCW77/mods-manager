@@ -3,128 +3,123 @@ import * as v from "valibot";
 
 // domain
 import {
-	CharacterByIdSchema,
-	CharacterByIdSchemaV23,
-	ArbitraryCharacterNamesSchema,
+  CharacterByIdSchema,
+  CharacterByIdSchemaV23,
+  ArbitraryCharacterNamesSchema,
 } from "./index";
 import { setSettingsSets } from "#/modules/modsView/domain/ModsViewOptions";
 import { gimoSlots, levels } from "#/domain/types/ModTypes";
 import { ModTiersEnum } from "#/constants/enums";
-import {
-	gimoPrimaryStatNames,
-	gimoSecondaryStatNames,
-} from "#/domain/GIMOStatNames";
+import { gimoPrimaryStatNames, gimoSecondaryStatNames } from "#/domain/GIMOStatNames";
 import { strRolls } from "#/domain/SecondaryStat";
 import { pips } from "#/domain/Pips";
 
 const GIMOFlatModSchema = v.object({
-	mod_uid: v.string(),
-	primaryBonusType: v.picklist(gimoPrimaryStatNames),
-	primaryBonusValue: v.string(),
+  mod_uid: v.string(),
+  primaryBonusType: v.picklist(gimoPrimaryStatNames),
+  primaryBonusValue: v.string(),
 
-	secondaryType_1: v.nullable(v.picklist(gimoSecondaryStatNames)),
-	secondaryValue_1: v.string(),
-	secondaryRoll_1: v.nullable(v.picklist(strRolls)),
-	secondaryType_2: v.nullable(v.picklist(gimoSecondaryStatNames)),
-	secondaryValue_2: v.string(),
-	secondaryRoll_2: v.nullable(v.picklist(strRolls)),
-	secondaryType_3: v.nullable(v.picklist(gimoSecondaryStatNames)),
-	secondaryValue_3: v.string(),
-	secondaryRoll_3: v.nullable(v.picklist(strRolls)),
-	secondaryType_4: v.nullable(v.picklist(gimoSecondaryStatNames)),
-	secondaryValue_4: v.string(),
-	secondaryRoll_4: v.nullable(v.picklist(strRolls)),
+  secondaryType_1: v.nullable(v.picklist(gimoSecondaryStatNames)),
+  secondaryValue_1: v.string(),
+  secondaryRoll_1: v.nullable(v.picklist(strRolls)),
+  secondaryType_2: v.nullable(v.picklist(gimoSecondaryStatNames)),
+  secondaryValue_2: v.string(),
+  secondaryRoll_2: v.nullable(v.picklist(strRolls)),
+  secondaryType_3: v.nullable(v.picklist(gimoSecondaryStatNames)),
+  secondaryValue_3: v.string(),
+  secondaryRoll_3: v.nullable(v.picklist(strRolls)),
+  secondaryType_4: v.nullable(v.picklist(gimoSecondaryStatNames)),
+  secondaryValue_4: v.string(),
+  secondaryRoll_4: v.nullable(v.picklist(strRolls)),
 
-	slot: v.picklist(gimoSlots),
-	set: v.picklist(setSettingsSets),
-	level: v.picklist(levels),
-	pips: v.picklist(pips),
-	tier: v.enum(ModTiersEnum),
-	characterID: v.union([v.literal("null"), ArbitraryCharacterNamesSchema]),
-	reRolledCount: v.number(),
+  slot: v.picklist(gimoSlots),
+  set: v.picklist(setSettingsSets),
+  level: v.picklist(levels),
+  pips: v.picklist(pips),
+  tier: v.enum(ModTiersEnum),
+  characterID: v.union([v.literal("null"), ArbitraryCharacterNamesSchema]),
+  reRolledCount: v.number(),
 });
 
 const PersistedPlayerProfileSchemaV18 = v.object({
-	allycode: v.string(),
-	characterById: CharacterByIdSchema,
-	modById: v.record(v.string(), GIMOFlatModSchema),
-	playerName: v.string(),
+  allycode: v.string(),
+  characterById: CharacterByIdSchema,
+  modById: v.record(v.string(), GIMOFlatModSchema),
+  playerName: v.string(),
 });
 
 const PersistedPlayerProfileSchemaV21 = v.object({
-	allycode: v.string(),
-	characterById: CharacterByIdSchema,
-	modById: v.map(v.string(), GIMOFlatModSchema),
-	playerName: v.string(),
+  allycode: v.string(),
+  characterById: CharacterByIdSchema,
+  modById: v.map(v.string(), GIMOFlatModSchema),
+  playerName: v.string(),
 });
 
 const PersistedPlayerProfileSchemaV23 = v.object({
-	allycode: v.string(),
-	characterById: CharacterByIdSchemaV23,
-	modById: v.map(v.string(), GIMOFlatModSchema),
-	playerName: v.string(),
+  allycode: v.string(),
+  characterById: CharacterByIdSchemaV23,
+  modById: v.map(v.string(), GIMOFlatModSchema),
+  playerName: v.string(),
 });
 
 const PersistedProfilesSchemaV18 = v.object({
-	activeAllycode: v.string(),
-	lastUpdatedByAllycode: v.record(
-		v.string(),
-		v.object({
-			id: v.string(),
-			lastUpdated: v.number(),
-		}),
-	),
-	playernameByAllycode: v.record(v.string(), v.string()),
-	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV18),
+  activeAllycode: v.string(),
+  lastUpdatedByAllycode: v.record(
+    v.string(),
+    v.object({
+      id: v.string(),
+      lastUpdated: v.number(),
+    }),
+  ),
+  playernameByAllycode: v.record(v.string(), v.string()),
+  profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV18),
 });
 
 const PersistedProfilesSchemaV21 = v.object({
-	activeAllycode: v.string(),
-	lastUpdatedByAllycode: v.record(
-		v.string(),
-		v.object({
-			id: v.string(),
-			lastUpdated: v.number(),
-		}),
-	),
-	playernameByAllycode: v.record(v.string(), v.string()),
-	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV21),
+  activeAllycode: v.string(),
+  lastUpdatedByAllycode: v.record(
+    v.string(),
+    v.object({
+      id: v.string(),
+      lastUpdated: v.number(),
+    }),
+  ),
+  playernameByAllycode: v.record(v.string(), v.string()),
+  profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV21),
 });
 
 const PersistedProfilesSchemaV23 = v.object({
-	activeAllycode: v.string(),
-	lastUpdatedByAllycode: v.record(
-		v.string(),
-		v.object({
-			id: v.string(),
-			lastUpdated: v.number(),
-		}),
-	),
-	playernameByAllycode: v.record(v.string(), v.string()),
-	profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV23),
+  activeAllycode: v.string(),
+  lastUpdatedByAllycode: v.record(
+    v.string(),
+    v.object({
+      id: v.string(),
+      lastUpdated: v.number(),
+    }),
+  ),
+  playernameByAllycode: v.record(v.string(), v.string()),
+  profileByAllycode: v.record(v.string(), PersistedPlayerProfileSchemaV23),
 });
 
 const PersistedProfilesSchemaV27 = v.object({
-	activeAllycode: v.string(),
-	lastUpdatedByAllycode: v.record(
-		v.string(),
-		v.object({
-			id: v.string(),
-			lastUpdated: v.number(),
-		}),
-	),
-	playernameByAllycode: v.record(v.string(), v.string()),
+  activeAllycode: v.string(),
+  lastUpdatedByAllycode: v.record(
+    v.string(),
+    v.object({
+      id: v.string(),
+      lastUpdated: v.number(),
+    }),
+  ),
+  playernameByAllycode: v.record(v.string(), v.string()),
 });
 
-type PersistedProfilesSchemaOutput = v.InferOutput<
-	typeof PersistedProfilesSchemaV21
->;
+type PersistedProfilesSchemaOutput = v.InferOutput<typeof PersistedProfilesSchemaV21>;
 
 export {
-	GIMOFlatModSchema,
-	PersistedProfilesSchemaV18,
-	PersistedProfilesSchemaV21,
-	PersistedProfilesSchemaV23,
-	PersistedProfilesSchemaV27,
-	type PersistedProfilesSchemaOutput,
+  GIMOFlatModSchema,
+  PersistedProfilesSchemaV18,
+  PersistedProfilesSchemaV21,
+  PersistedProfilesSchemaV23,
+  PersistedProfilesSchemaV27,
+  type PersistedProfilesSchemaOutput,
 };

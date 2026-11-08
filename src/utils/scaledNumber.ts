@@ -32,7 +32,7 @@ const SCALE = 1_000_000;
  * toScaled(1.045)  // Returns 1045000
  */
 export function toScaled(value: number): number {
-	return Math.round(value * SCALE);
+  return Math.round(value * SCALE);
 }
 
 /**
@@ -45,7 +45,7 @@ export function toScaled(value: number): number {
  * fromScaled(1045000)  // Returns 1.045
  */
 export function fromScaled(scaled: number): number {
-	return scaled / SCALE;
+  return scaled / SCALE;
 }
 
 /**
@@ -59,7 +59,7 @@ export function fromScaled(scaled: number): number {
  * mulScaled(14357000, 1045000) // Returns 14983065
  */
 export function mulScaled(a: number, b: number): number {
-	return Math.round((a * b) / SCALE);
+  return Math.round((a * b) / SCALE);
 }
 
 /**
@@ -73,5 +73,5 @@ export function mulScaled(a: number, b: number): number {
  * divScaled(14357000, 1045000) // Returns 13739234
  */
 export function divScaled(a: number, b: number): number {
-	return Math.round((a * SCALE) / b);
+  return Math.round((a * SCALE) / b);
 }

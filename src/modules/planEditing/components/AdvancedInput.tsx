@@ -13,23 +13,23 @@ import { Input } from "#/components/reactive/Input";
 import { Label } from "#ui/label";
 
 const AdvancedInput: React.FC<StatWeightsInputProps> = observer(
-	({ target$, stat }: StatWeightsInputProps) => {
-		const [t] = useTranslation("domain");
+  ({ target$, stat }: StatWeightsInputProps) => {
+    const [t] = useTranslation("domain");
 
-		return (
-			<div>
-				<Label htmlFor={`${stat}-stat-advanced`}>{t(`stats.${stat}`)}:</Label>
-				<Input
-					id={`${stat}-stat-advanced`}
-					max={100 / OptimizationPlan.statWeights[stat]}
-					min={-100 / OptimizationPlan.statWeights[stat]}
-					step={0.01}
-					type={"number"}
-					$value={target$.target[stat]}
-				/>
-			</div>
-		);
-	},
+    return (
+      <div>
+        <Label htmlFor={`${stat}-stat-advanced`}>{t(`stats.${stat}`)}:</Label>
+        <Input
+          id={`${stat}-stat-advanced`}
+          max={100 / OptimizationPlan.statWeights[stat]}
+          min={-100 / OptimizationPlan.statWeights[stat]}
+          step={0.01}
+          type={"number"}
+          $value={target$.target[stat]}
+        />
+      </div>
+    );
+  },
 );
 
 AdvancedInput.displayName = "AdvancedInput";

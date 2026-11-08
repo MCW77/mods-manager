@@ -9,1297 +9,1177 @@ import { configureSynced } from "@legendapp/state/sync";
 import { observablePersistIndexedDB } from "@legendapp/state/persist-plugins/indexeddb";
 
 // domain
-import type {
-	Filter,
-	SecondarySettings,
-} from "#/modules/modsView/domain/ModsViewOptions";
+import type { Filter, SecondarySettings } from "#/modules/modsView/domain/ModsViewOptions";
 import type { CharacterNames } from "#/constants/CharacterNames";
 import type { GIMOFlatMod } from "#/domain/types/ModTypes";
 import type { Character } from "#/domain/Character";
 import {
-	CharacterByIdSchemaV23,
-	CharacterByIdSchemaV26,
-	CharacterByIdSchemaV30,
+  CharacterByIdSchemaV23,
+  CharacterByIdSchemaV26,
+  CharacterByIdSchemaV30,
 } from "../domain/schemas/mods-manager";
-
-// Entity type with id and other properties
-type Entity = { id: string; [key: string]: unknown };
 
 // For nested entities that need to be accessed with their id
 type RecordWithNestedEntities = {
-	id: string;
-	[key: string]: Entity | string | unknown;
+  id: string;
+  [key: string]: unknown;
 };
 
-const dbVersions = [
-	16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-] as const;
+const dbVersions = [16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31] as const;
 type DBVersions = (typeof dbVersions)[number];
 const latestDBVersion = dbVersions[dbVersions.length - 1];
 
 const storeNames = [
-	"OptimizationSettings",
-	"IncrementalOptimization",
-	"Profiles",
-	"CharactersManagement",
-	"HotUtils",
-	"About",
-	"Templates",
-	"TemplatesAddingMode",
-	"ViewSetup",
-	"Characters",
-	"LockedStatus",
-	"Compilations",
-	"DefaultCompilation",
+  "OptimizationSettings",
+  "IncrementalOptimization",
+  "Profiles",
+  "CharactersManagement",
+  "HotUtils",
+  "About",
+  "Templates",
+  "TemplatesAddingMode",
+  "ViewSetup",
+  "Characters",
+  "LockedStatus",
+  "Compilations",
+  "DefaultCompilation",
 ];
 
-const storeNamesByVersion: Map<DBVersions, string[]> = new Map([
-	[16, storeNames],
-]);
-storeNamesByVersion.set(24, [
-	...storeNames,
-	"Datacrons",
-	"Materials",
-	"Currencies",
-]);
+const storeNamesByVersion: Map<DBVersions, string[]> = new Map([[16, storeNames]]);
+storeNamesByVersion.set(24, [...storeNames, "Datacrons", "Materials", "Currencies"]);
 storeNamesByVersion.set(25, [...storeNames, "StackRank"]);
 storeNamesByVersion.set(27, [...storeNames, "Mods", "Roster"]);
 
 const dbUpgrades = new Map<
-	DBVersions,
-	(db: IDBDatabase, transaction: IDBTransaction) => Promise<void>
+  DBVersions,
+  (db: IDBDatabase, transaction: IDBTransaction) => Promise<void>
 >();
 
 function getStoreNamesForVersion(version: DBVersions): string[] {
-	const storeNames = [];
-	for (const [currentVersion, names] of storeNamesByVersion.entries()) {
-		if (currentVersion <= version) {
-			storeNames.push(...names);
-		}
-	}
-	return storeNames;
+  const storeNames = [];
+  for (const [currentVersion, names] of storeNamesByVersion.entries()) {
+    if (currentVersion <= version) {
+      storeNames.push(...names);
+    }
+  }
+  return storeNames;
 }
 
 function itemUpgrade(
-	db: IDBDatabase,
-	transaction: IDBTransaction,
-	storeName: string,
-	id: string,
-	upgradeFunction: (
-		oldData: Array<RecordWithNestedEntities>,
-	) => Array<RecordWithNestedEntities>,
+  db: IDBDatabase,
+  transaction: IDBTransaction,
+  storeName: string,
+  id: string,
+  upgradeFunction: (oldData: Array<RecordWithNestedEntities>) => Array<RecordWithNestedEntities>,
 ): Promise<void> {
-	return new Promise((resolve, reject) => {
-		try {
-			if (db.objectStoreNames.contains(storeName)) {
-				const oldStore = transaction.objectStore(storeName);
-				const request = oldStore.getAll();
+  return new Promise((resolve, reject) => {
+    try {
+      if (db.objectStoreNames.contains(storeName)) {
+        const oldStore = transaction.objectStore(storeName);
+        const request = oldStore.getAll();
 
-				request.onsuccess = (event: Event) => {
-					try {
-						const oldData = (event.target as IDBRequest)
-							.result as Array<RecordWithNestedEntities>;
-						if (oldData && Array.isArray(oldData) && oldData.length > 0) {
-							const newData = upgradeFunction(oldData);
+        request.onsuccess = (event: Event) => {
+          try {
+            const oldData = (event.target as IDBRequest).result as Array<RecordWithNestedEntities>;
+            if (oldData && Array.isArray(oldData) && oldData.length > 0) {
+              const newData = upgradeFunction(oldData);
 
-							// Delete and recreate the store in the current versionchange transaction
-							db.deleteObjectStore(storeName);
-							const newStore = db.createObjectStore(storeName, {
-								keyPath: "id",
-								autoIncrement: false,
-							});
+              // Delete and recreate the store in the current versionchange transaction
+              db.deleteObjectStore(storeName);
+              const newStore = db.createObjectStore(storeName, {
+                keyPath: "id",
+                autoIncrement: false,
+              });
 
-							// Add the data back
-							for (const item of newData as Array<RecordWithNestedEntities>) {
-								const putRequest = newStore.put(item);
-								putRequest.onsuccess = () => resolve();
-								putRequest.onerror = (putEvent: Event) => {
-									console.error(
-										`Error putting data to new store: ${storeName}`,
-										(putEvent.target as IDBRequest).error,
-									);
-									reject((putEvent.target as IDBRequest).error);
-								};
-							}
-						} else {
-							resolve();
-						}
-					} catch (error) {
-						console.error(
-							`Error processing data for ${storeName}:${id}`,
-							error,
-						);
-						reject(error);
-					}
-				};
-				request.onerror = (event: Event) => {
-					const error = (event.target as IDBRequest).error;
-					console.error(
-						`Error reading data from old store: ${storeName}`,
-						error,
-					);
-					reject(error);
-				};
-			} else {
-				resolve();
-			}
-		} catch (error) {
-			console.error(`Error upgrading:${id} in ${storeName}`, error);
-			reject(error);
-		}
-	});
+              // Add the data back
+              for (const item of newData as Array<RecordWithNestedEntities>) {
+                const putRequest = newStore.put(item);
+                putRequest.onsuccess = () => resolve();
+                putRequest.onerror = (putEvent: Event) => {
+                  console.error(
+                    `Error putting data to new store: ${storeName}`,
+                    (putEvent.target as IDBRequest).error,
+                  );
+                  reject((putEvent.target as IDBRequest).error);
+                };
+              }
+            } else {
+              resolve();
+            }
+          } catch (error) {
+            console.error(`Error processing data for ${storeName}:${id}`, error);
+            reject(error);
+          }
+        };
+        request.onerror = (event: Event) => {
+          const error = (event.target as IDBRequest).error;
+          console.error(`Error reading data from old store: ${storeName}`, error);
+          reject(error);
+        };
+      } else {
+        resolve();
+      }
+    } catch (error) {
+      console.error(`Error upgrading:${id} in ${storeName}`, error);
+      reject(error);
+    }
+  });
 }
 
 function multiStoreItemUpgrade(
-	db: IDBDatabase,
-	transaction: IDBTransaction,
-	readStoreNames: string[],
-	writeStoreName: string,
-	upgradeFunction: (
-		dataByStoreName: Map<string, Array<RecordWithNestedEntities>>,
-	) => Array<RecordWithNestedEntities>,
+  db: IDBDatabase,
+  transaction: IDBTransaction,
+  readStoreNames: string[],
+  writeStoreName: string,
+  upgradeFunction: (
+    dataByStoreName: Map<string, Array<RecordWithNestedEntities>>,
+  ) => Array<RecordWithNestedEntities>,
 ): Promise<void> {
-	return new Promise((resolve, reject) => {
-		try {
-			for (const storeName of readStoreNames) {
-				if (!db.objectStoreNames.contains(storeName)) {
-					reject(new Error(`Read store ${storeName} not found`));
-					return;
-				}
-			}
+  return new Promise((resolve, reject) => {
+    try {
+      for (const storeName of readStoreNames) {
+        if (!db.objectStoreNames.contains(storeName)) {
+          reject(new Error(`Read store ${storeName} not found`));
+          return;
+        }
+      }
 
-			const dataByStoreName = new Map<
-				string,
-				Array<RecordWithNestedEntities>
-			>();
+      const dataByStoreName = new Map<string, Array<RecordWithNestedEntities>>();
 
-			const readStoreAt = (index: number) => {
-				try {
-					if (index >= readStoreNames.length) {
-						try {
-							const newData = upgradeFunction(dataByStoreName);
+      const readStoreAt = (index: number) => {
+        try {
+          if (index >= readStoreNames.length) {
+            try {
+              const newData = upgradeFunction(dataByStoreName);
 
-							if (!Array.isArray(newData) || newData.length === 0) {
-								resolve();
-								return;
-							}
+              if (!Array.isArray(newData) || newData.length === 0) {
+                resolve();
+                return;
+              }
 
-							if (db.objectStoreNames.contains(writeStoreName)) {
-								db.deleteObjectStore(writeStoreName);
-							}
-							const newStore = db.createObjectStore(writeStoreName, {
-								keyPath: "id",
-								autoIncrement: false,
-							});
+              if (db.objectStoreNames.contains(writeStoreName)) {
+                db.deleteObjectStore(writeStoreName);
+              }
+              const newStore = db.createObjectStore(writeStoreName, {
+                keyPath: "id",
+                autoIncrement: false,
+              });
 
-							let settled = false;
-							let remainingPuts = newData.length;
-							for (const item of newData) {
-								const putRequest = newStore.put(item);
-								putRequest.onsuccess = () => {
-									if (settled) return;
-									remainingPuts -= 1;
-									if (remainingPuts === 0) {
-										settled = true;
-										resolve();
-									}
-								};
-								putRequest.onerror = (putEvent: Event) => {
-									if (settled) return;
-									settled = true;
-									console.error(
-										`Error putting data into store: ${writeStoreName}`,
-										(putEvent.target as IDBRequest).error,
-									);
-									reject((putEvent.target as IDBRequest).error);
-								};
-							}
-						} catch (error) {
-							console.error(
-								`Error processing data for store ${writeStoreName}`,
-								error,
-							);
-							reject(error);
-						}
-						return;
-					}
+              let settled = false;
+              let remainingPuts = newData.length;
+              for (const item of newData) {
+                const putRequest = newStore.put(item);
+                putRequest.onsuccess = () => {
+                  if (settled) return;
+                  remainingPuts -= 1;
+                  if (remainingPuts === 0) {
+                    settled = true;
+                    resolve();
+                  }
+                };
+                putRequest.onerror = (putEvent: Event) => {
+                  if (settled) return;
+                  settled = true;
+                  console.error(
+                    `Error putting data into store: ${writeStoreName}`,
+                    (putEvent.target as IDBRequest).error,
+                  );
+                  reject((putEvent.target as IDBRequest).error);
+                };
+              }
+            } catch (error) {
+              console.error(`Error processing data for store ${writeStoreName}`, error);
+              reject(error);
+            }
+            return;
+          }
 
-					const storeName = readStoreNames[index];
-					const readRequest = transaction.objectStore(storeName).getAll();
-					readRequest.onsuccess = (event: Event) => {
-						try {
-							const storeData = (event.target as IDBRequest)
-								.result as Array<RecordWithNestedEntities>;
-							dataByStoreName.set(storeName, storeData ?? []);
-							readStoreAt(index + 1);
-						} catch (error) {
-							console.error(
-								`Error processing read data for store ${storeName}`,
-								error,
-							);
-							reject(error);
-						}
-					};
-					readRequest.onerror = (event: Event) => {
-						const error = (event.target as IDBRequest).error;
-						console.error(`Error reading data from store: ${storeName}`, error);
-						reject(error);
-					};
-				} catch (error) {
-					console.error(`Error reading store ${readStoreNames[index]}`, error);
-					reject(error);
-				}
-			};
+          const storeName = readStoreNames[index];
+          const readRequest = transaction.objectStore(storeName).getAll();
+          readRequest.onsuccess = (event: Event) => {
+            try {
+              const storeData = (event.target as IDBRequest)
+                .result as Array<RecordWithNestedEntities>;
+              dataByStoreName.set(storeName, storeData ?? []);
+              readStoreAt(index + 1);
+            } catch (error) {
+              console.error(`Error processing read data for store ${storeName}`, error);
+              reject(error);
+            }
+          };
+          readRequest.onerror = (event: Event) => {
+            const error = (event.target as IDBRequest).error;
+            console.error(`Error reading data from store: ${storeName}`, error);
+            reject(error);
+          };
+        } catch (error) {
+          console.error(`Error reading store ${readStoreNames[index]}`, error);
+          reject(error);
+        }
+      };
 
-			readStoreAt(0);
-		} catch (error) {
-			console.error(
-				`Error upgrading ${writeStoreName} with multi-store upgrade`,
-				error,
-			);
-			reject(error);
-		}
-	});
+      readStoreAt(0);
+    } catch (error) {
+      console.error(`Error upgrading ${writeStoreName} with multi-store upgrade`, error);
+      reject(error);
+    }
+  });
 }
 
-function upgradeFilterTo18(
-	filter: Partial<Filter> & { secondariesscoretier?: unknown },
-) {
-	if (filter === undefined) return;
-	filter.assigned = { assigned: filter.assigned?.assigned ?? 0 };
-	filter.calibration = {
-		"15": 0,
-		"25": 0,
-		"40": 0,
-		"75": 0,
-		"100": 0,
-		"150": 0,
-	};
-	filter.score = [0, 100];
-	if (filter.secondariesscoretier !== undefined)
-		Reflect.deleteProperty(filter, "secondariesscoretier");
-	filter.speedRange = [0, 31];
+function upgradeFilterTo18(filter: Partial<Filter> & { secondariesscoretier?: unknown }) {
+  if (filter === undefined) return;
+  filter.assigned = { assigned: filter.assigned?.assigned ?? 0 };
+  filter.calibration = {
+    "15": 0,
+    "25": 0,
+    "40": 0,
+    "75": 0,
+    "100": 0,
+    "150": 0,
+  };
+  filter.score = [0, 100];
+  if (filter.secondariesscoretier !== undefined)
+    Reflect.deleteProperty(filter, "secondariesscoretier");
+  filter.speedRange = [0, 31];
 }
 
 function upgradeFilterTo19(
-	filter:
-		| Partial<Filter>
-		| (Omit<Partial<Filter>, "secondary"> & {
-				secondary: Record<keyof SecondarySettings, number>;
-		  }),
+  filter:
+    | Partial<Filter>
+    | (Omit<Partial<Filter>, "secondary"> & {
+        secondary: Record<keyof SecondarySettings, number>;
+      }),
 ) {
-	if (filter === undefined) return;
-	// Convert TriState secondary values to roll ranges
-	if (filter.secondary) {
-		const newSecondary: SecondarySettings = {
-			"Critical Chance %": [0, 5],
-			Defense: [0, 5],
-			"Defense %": [0, 5],
-			Health: [0, 5],
-			"Health %": [0, 5],
-			Offense: [0, 5],
-			"Offense %": [0, 5],
-			"Potency %": [0, 5],
-			Protection: [0, 5],
-			"Protection %": [0, 5],
-			Speed: [0, 5],
-			"Tenacity %": [0, 5],
-		};
-		for (const [statType, triStateValue] of objectEntries(filter.secondary)) {
-			// Map TriState to roll ranges: 0 → [0,5], -1 → [0,0], 1 → [1,5]
-			switch (triStateValue) {
-				case -1:
-					newSecondary[statType] = [0, 0]; // Cannot be present
-					break;
-				case 1:
-					newSecondary[statType] = [1, 5]; // Must be present
-					break;
-				default:
-					newSecondary[statType] = [0, 5]; // Any mod (default)
-					break;
-			}
-		}
-		filter.secondary = newSecondary;
-	}
+  if (filter === undefined) return;
+  // Convert TriState secondary values to roll ranges
+  if (filter.secondary) {
+    const newSecondary: SecondarySettings = {
+      "Critical Chance %": [0, 5],
+      Defense: [0, 5],
+      "Defense %": [0, 5],
+      Health: [0, 5],
+      "Health %": [0, 5],
+      Offense: [0, 5],
+      "Offense %": [0, 5],
+      "Potency %": [0, 5],
+      Protection: [0, 5],
+      "Protection %": [0, 5],
+      Speed: [0, 5],
+      "Tenacity %": [0, 5],
+    };
+    for (const [statType, triStateValue] of objectEntries(filter.secondary)) {
+      // Map TriState to roll ranges: 0 → [0,5], -1 → [0,0], 1 → [1,5]
+      switch (triStateValue) {
+        case -1:
+          newSecondary[statType] = [0, 0]; // Cannot be present
+          break;
+        case 1:
+          newSecondary[statType] = [1, 5]; // Must be present
+          break;
+        default:
+          newSecondary[statType] = [0, 5]; // Any mod (default)
+          break;
+      }
+    }
+    filter.secondary = newSecondary;
+  }
 }
 
 function upgradeCompilationTo20(compilation: Record<string, unknown>) {
-	const newCompilation: Record<string, unknown> = {};
-	for (const [key, value] of objectEntries(compilation).sort(([keyA], [keyB]) =>
-		keyA.localeCompare(keyB),
-	)) {
-		if (key === "hasSelectionChanged") {
-		} else if (key === "id") {
-			newCompilation[key] = value;
-			newCompilation.isReoptimizationNeeded = true;
-		} else if (key === "optimizationConditions") {
-			newCompilation[key] =
-				(value as Record<string, unknown> | null)?.globalSettings ?? null;
-			newCompilation.reoptimizationIndex = -1;
-		} else {
-			newCompilation[key] = value;
-		}
-	}
-	return newCompilation;
+  const newCompilation: Record<string, unknown> = {};
+  for (const [key, value] of objectEntries(compilation).sort(([keyA], [keyB]) =>
+    keyA.localeCompare(keyB),
+  )) {
+    if (key === "hasSelectionChanged") {
+    } else if (key === "id") {
+      newCompilation[key] = value;
+      newCompilation.isReoptimizationNeeded = true;
+    } else if (key === "optimizationConditions") {
+      newCompilation[key] = (value as Record<string, unknown> | null)?.globalSettings ?? null;
+      newCompilation.reoptimizationIndex = -1;
+    } else {
+      newCompilation[key] = value;
+    }
+  }
+  return newCompilation;
 }
 
-function getLockedStatusUpgradedTo20(
-	lockedStatus: Record<string, boolean> | Set<CharacterNames>,
-) {
-	const newLockedStatus: Set<CharacterNames> = new Set<CharacterNames>();
-	for (const characterId of objectKeys(lockedStatus)) {
-		if (lockedStatus[characterId] === true) {
-			newLockedStatus.add(characterId);
-		}
-	}
-	return newLockedStatus;
+function getLockedStatusUpgradedTo20(lockedStatus: Record<string, boolean> | Set<CharacterNames>) {
+  const newLockedStatus: Set<CharacterNames> = new Set<CharacterNames>();
+  for (const characterId of objectKeys(lockedStatus)) {
+    if (lockedStatus[characterId] === true) {
+      newLockedStatus.add(characterId);
+    }
+  }
+  return newLockedStatus;
 }
 
 function upgradeLockedStatusTo20(
-	lockedStatus: Record<string, Record<string, boolean> | Set<CharacterNames>>,
+  lockedStatus: Record<string, Record<string, boolean> | Set<CharacterNames>>,
 ) {
-	const newLockedStatus: Record<string, Set<CharacterNames>> = {};
-	for (const [allycode, lockedStatusOfCharacterId] of objectEntries(
-		lockedStatus,
-	)) {
-		newLockedStatus[allycode] = getLockedStatusUpgradedTo20(
-			lockedStatusOfCharacterId,
-		);
-	}
-	return newLockedStatus;
+  const newLockedStatus: Record<string, Set<CharacterNames>> = {};
+  for (const [allycode, lockedStatusOfCharacterId] of objectEntries(lockedStatus)) {
+    newLockedStatus[allycode] = getLockedStatusUpgradedTo20(lockedStatusOfCharacterId);
+  }
+  return newLockedStatus;
 }
 
 function upgradeProfilesTo21(profiles: Record<string, unknown>) {
-	if (
-		Object.hasOwn(profiles, "profileByAllycode") &&
-		typeof profiles.profileByAllycode === "object" &&
-		profiles.profileByAllycode !== null
-	) {
-		for (const profile of Object.values(profiles.profileByAllycode)) {
-			if (
-				typeof profile === "object" &&
-				profile !== null &&
-				Object.hasOwn(profile, "modById")
-			) {
-				const newModById: Map<string, GIMOFlatMod> = new Map();
-				for (const mod of Object.values(
-					profile.modById as Record<string, GIMOFlatMod>,
-				)) {
-					mod.speedRemainder = 0;
-					newModById.set(mod.mod_uid, mod);
-				}
-				profile.modById = newModById;
-			}
-		}
-	}
-	return profiles;
+  if (
+    Object.hasOwn(profiles, "profileByAllycode") &&
+    typeof profiles.profileByAllycode === "object" &&
+    profiles.profileByAllycode !== null
+  ) {
+    for (const profile of Object.values(profiles.profileByAllycode)) {
+      if (typeof profile === "object" && profile !== null && Object.hasOwn(profile, "modById")) {
+        const newModById: Map<string, GIMOFlatMod> = new Map();
+        for (const mod of Object.values(profile.modById as Record<string, GIMOFlatMod>)) {
+          mod.speedRemainder = 0;
+          newModById.set(mod.mod_uid, mod);
+        }
+        profile.modById = newModById;
+      }
+    }
+  }
+  return profiles;
 }
 
 function upgradeCompilationTo22(compilation: Record<string, unknown>) {
-	const newCompilation: Record<string, unknown> = structuredClone(compilation);
-	(newCompilation.flatCharacterModdings as Record<string, unknown>[]).forEach(
-		(charModding) => {
-			charModding.currentScore = 0;
-			charModding.previousScore = 0;
-		},
-	);
-	return newCompilation;
+  const newCompilation: Record<string, unknown> = structuredClone(compilation);
+  (newCompilation.flatCharacterModdings as Record<string, unknown>[]).forEach((charModding) => {
+    charModding.currentScore = 0;
+    charModding.previousScore = 0;
+  });
+  return newCompilation;
 }
 
 function upgradeCharactersTo23(characters: Array<RecordWithNestedEntities>) {
-	const newCharacters: Array<RecordWithNestedEntities> =
-		structuredClone(characters);
-	for (const character of newCharacters) {
-		character.galacticLegend = false;
-	}
-	return newCharacters;
+  const newCharacters: Array<RecordWithNestedEntities> = structuredClone(characters);
+  for (const character of newCharacters) {
+    character.galacticLegend = false;
+  }
+  return newCharacters;
 }
 
 function upgradeProfilesTo23(profiles: Record<string, unknown>) {
-	if (
-		Object.hasOwn(profiles, "profileByAllycode") &&
-		typeof profiles.profileByAllycode === "object" &&
-		profiles.profileByAllycode !== null
-	) {
-		for (const profile of Object.values(profiles.profileByAllycode)) {
-			if (
-				typeof profile === "object" &&
-				profile !== null &&
-				Object.hasOwn(profile, "characterById")
-			) {
-				const newCharacterById: Record<string, Character> = {};
-				for (const character of Object.values(
-					profile.characterById as Record<string, Character>,
-				)) {
-					newCharacterById[character.id] = {
-						id: character.id,
-						omis: [],
-						playerValues: character.playerValues,
-						targets: character.targets,
-						zetas: [],
-					};
-				}
-				profile.characterById = newCharacterById;
-			}
-		}
-	}
-	return profiles;
+  if (
+    Object.hasOwn(profiles, "profileByAllycode") &&
+    typeof profiles.profileByAllycode === "object" &&
+    profiles.profileByAllycode !== null
+  ) {
+    for (const profile of Object.values(profiles.profileByAllycode)) {
+      if (
+        typeof profile === "object" &&
+        profile !== null &&
+        Object.hasOwn(profile, "characterById")
+      ) {
+        const newCharacterById: Record<string, Character> = {};
+        for (const character of Object.values(profile.characterById as Record<string, Character>)) {
+          newCharacterById[character.id] = {
+            id: character.id,
+            omis: [],
+            playerValues: character.playerValues,
+            targets: character.targets,
+            zetas: [],
+          };
+        }
+        profile.characterById = newCharacterById;
+      }
+    }
+  }
+  return profiles;
 }
 
 function upgradeCompilationTo26(compilation: Record<string, unknown>) {
-	const newCompilation: Record<string, unknown> = structuredClone(compilation);
-	(
-		newCompilation.selectedCharacters as {
-			target: { primaryStatRestrictions: Record<string, unknown> };
-		}[]
-	).forEach((selectedCharacter) => {
-		const oldPrimaryStatRestrictions =
-			selectedCharacter.target.primaryStatRestrictions;
-		const newPrimaryStatRestrictions: Record<string, string[]> = {};
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
-			oldPrimaryStatRestrictions.arrow !== undefined
-		) {
-			newPrimaryStatRestrictions.arrow = [
-				oldPrimaryStatRestrictions.arrow as string,
-			];
-		}
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
-			oldPrimaryStatRestrictions.triangle !== undefined
-		) {
-			newPrimaryStatRestrictions.triangle = [
-				oldPrimaryStatRestrictions.triangle as string,
-			];
-		}
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
-			oldPrimaryStatRestrictions.cross !== undefined
-		) {
-			newPrimaryStatRestrictions.cross = [
-				oldPrimaryStatRestrictions.cross as string,
-			];
-		}
-		if (
-			Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
-			oldPrimaryStatRestrictions.circle !== undefined
-		) {
-			newPrimaryStatRestrictions.circle = [
-				oldPrimaryStatRestrictions.circle as string,
-			];
-		}
-		selectedCharacter.target.primaryStatRestrictions =
-			newPrimaryStatRestrictions;
-	});
-	return newCompilation;
+  const newCompilation: Record<string, unknown> = structuredClone(compilation);
+  (
+    newCompilation.selectedCharacters as {
+      target: { primaryStatRestrictions: Record<string, unknown> };
+    }[]
+  ).forEach((selectedCharacter) => {
+    const oldPrimaryStatRestrictions = selectedCharacter.target.primaryStatRestrictions;
+    const newPrimaryStatRestrictions: Record<string, string[]> = {};
+    if (
+      Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
+      oldPrimaryStatRestrictions.arrow !== undefined
+    ) {
+      newPrimaryStatRestrictions.arrow = [oldPrimaryStatRestrictions.arrow as string];
+    }
+    if (
+      Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
+      oldPrimaryStatRestrictions.triangle !== undefined
+    ) {
+      newPrimaryStatRestrictions.triangle = [oldPrimaryStatRestrictions.triangle as string];
+    }
+    if (
+      Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
+      oldPrimaryStatRestrictions.cross !== undefined
+    ) {
+      newPrimaryStatRestrictions.cross = [oldPrimaryStatRestrictions.cross as string];
+    }
+    if (
+      Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
+      oldPrimaryStatRestrictions.circle !== undefined
+    ) {
+      newPrimaryStatRestrictions.circle = [oldPrimaryStatRestrictions.circle as string];
+    }
+    selectedCharacter.target.primaryStatRestrictions = newPrimaryStatRestrictions;
+  });
+  return newCompilation;
 }
 
 function upgradeProfilesTo27(profiles: Record<string, unknown>) {
-	if (
-		Object.hasOwn(profiles, "profileByAllycode") &&
-		typeof profiles.profileByAllycode === "object" &&
-		profiles.profileByAllycode !== null
-	) {
-		delete profiles.profileByAllycode;
-	}
-	return profiles;
+  if (
+    Object.hasOwn(profiles, "profileByAllycode") &&
+    typeof profiles.profileByAllycode === "object" &&
+    profiles.profileByAllycode !== null
+  ) {
+    delete profiles.profileByAllycode;
+  }
+  return profiles;
 }
 
-function upgradeCharacterTemplatesTo28(
-	templates: Array<RecordWithNestedEntities>,
-) {
-	const isTemplates = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		category: string;
-		selectedCharacters: Array<{
-			target: {
-				primaryStatRestrictions: Record<string, string | string[]>;
-			};
-		}>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			(obj.length === 0 ||
-				(Object.hasOwn(obj[0], "id") && Object.hasOwn(obj[0], "category")))
-		) {
-			result = true;
-		}
-		return result;
-	};
+function upgradeCharacterTemplatesTo28(templates: Array<RecordWithNestedEntities>) {
+  const isTemplates = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    category: string;
+    selectedCharacters: Array<{
+      target: {
+        primaryStatRestrictions: Record<string, string | string[]>;
+      };
+    }>;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      (obj.length === 0 || (Object.hasOwn(obj[0], "id") && Object.hasOwn(obj[0], "category")))
+    ) {
+      result = true;
+    }
+    return result;
+  };
 
-	const isTemplatesWithStringPrimaries = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		category: string;
-		selectedCharacters: Array<{
-			target: {
-				primaryStatRestrictions: Record<string, string>;
-			};
-		}>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			obj.length > 0 &&
-			Object.hasOwn(obj[0], "id") &&
-			Object.hasOwn(obj[0], "category") &&
-			Object.hasOwn(obj[0], "selectedCharacters") &&
-			Array.isArray(obj[0].selectedCharacters) &&
-			obj[0].selectedCharacters.length > 0 &&
-			Object.hasOwn(obj[0].selectedCharacters[0], "target") &&
-			Object.hasOwn(
-				obj[0].selectedCharacters[0].target,
-				"primaryStatRestrictions",
-			) &&
-			Object.keys(
-				obj[0].selectedCharacters[0].target.primaryStatRestrictions,
-			).some(
-				(slot) =>
-					typeof obj[0].selectedCharacters[0].target.primaryStatRestrictions[
-						slot
-					] === "string",
-			)
-		) {
-			result = true;
-		}
-		return result;
-	};
+  const isTemplatesWithStringPrimaries = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    category: string;
+    selectedCharacters: Array<{
+      target: {
+        primaryStatRestrictions: Record<string, string>;
+      };
+    }>;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      obj.length > 0 &&
+      Object.hasOwn(obj[0], "id") &&
+      Object.hasOwn(obj[0], "category") &&
+      Object.hasOwn(obj[0], "selectedCharacters") &&
+      Array.isArray(obj[0].selectedCharacters) &&
+      obj[0].selectedCharacters.length > 0 &&
+      Object.hasOwn(obj[0].selectedCharacters[0], "target") &&
+      Object.hasOwn(obj[0].selectedCharacters[0].target, "primaryStatRestrictions") &&
+      Object.keys(obj[0].selectedCharacters[0].target.primaryStatRestrictions).some(
+        (slot) =>
+          typeof obj[0].selectedCharacters[0].target.primaryStatRestrictions[slot] === "string",
+      )
+    ) {
+      result = true;
+    }
+    return result;
+  };
 
-	const newTemplates = structuredClone(templates);
-	if (isTemplatesWithStringPrimaries(templates) && isTemplates(newTemplates)) {
-		for (const template of newTemplates) {
-			for (const character of template.selectedCharacters) {
-				const newPrimaryStatRestrictions: Record<string, string[]> = {};
-				for (const [stat, restriction] of Object.entries(
-					character.target.primaryStatRestrictions as Record<string, string>,
-				)) {
-					newPrimaryStatRestrictions[stat] = [restriction];
-				}
-				character.target.primaryStatRestrictions = newPrimaryStatRestrictions;
-			}
-		}
-	}
+  const newTemplates = structuredClone(templates);
+  if (isTemplatesWithStringPrimaries(templates) && isTemplates(newTemplates)) {
+    for (const template of newTemplates) {
+      for (const character of template.selectedCharacters) {
+        const newPrimaryStatRestrictions: Record<string, string[]> = {};
+        for (const [stat, restriction] of Object.entries(
+          character.target.primaryStatRestrictions as Record<string, string>,
+        )) {
+          newPrimaryStatRestrictions[stat] = [restriction];
+        }
+        character.target.primaryStatRestrictions = newPrimaryStatRestrictions;
+      }
+    }
+  }
 
-	return newTemplates;
+  return newTemplates;
 }
 
 function upgradeCompilationTo28(compilation: Record<string, unknown>) {
-	const isString = (obj: unknown): obj is string => typeof obj === "string";
-	const newCompilation: Record<string, unknown> = structuredClone(compilation);
-	if (Object.hasOwn(newCompilation, "flatCharacterModdings")) {
-		(
-			newCompilation.flatCharacterModdings as {
-				target: { primaryStatRestrictions: Record<string, string | string[]> };
-			}[]
-		).forEach((characterModding) => {
-			const oldPrimaryStatRestrictions =
-				characterModding.target.primaryStatRestrictions;
-			const newPrimaryStatRestrictions: Record<string, string[]> = {};
-			if (
-				Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
-				oldPrimaryStatRestrictions.arrow !== undefined
-			) {
-				newPrimaryStatRestrictions.arrow = isString(
-					oldPrimaryStatRestrictions.arrow,
-				)
-					? [oldPrimaryStatRestrictions.arrow]
-					: oldPrimaryStatRestrictions.arrow;
-			}
-			if (
-				Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
-				oldPrimaryStatRestrictions.triangle !== undefined
-			) {
-				newPrimaryStatRestrictions.triangle = isString(
-					oldPrimaryStatRestrictions.triangle,
-				)
-					? [oldPrimaryStatRestrictions.triangle]
-					: oldPrimaryStatRestrictions.triangle;
-			}
-			if (
-				Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
-				oldPrimaryStatRestrictions.cross !== undefined
-			) {
-				newPrimaryStatRestrictions.cross = isString(
-					oldPrimaryStatRestrictions.cross,
-				)
-					? [oldPrimaryStatRestrictions.cross]
-					: oldPrimaryStatRestrictions.cross;
-			}
-			if (
-				Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
-				oldPrimaryStatRestrictions.circle !== undefined
-			) {
-				newPrimaryStatRestrictions.circle = isString(
-					oldPrimaryStatRestrictions.circle,
-				)
-					? [oldPrimaryStatRestrictions.circle]
-					: oldPrimaryStatRestrictions.circle;
-			}
-			characterModding.target.primaryStatRestrictions =
-				newPrimaryStatRestrictions;
-		});
-	}
-	return newCompilation;
+  const isString = (obj: unknown): obj is string => typeof obj === "string";
+  const newCompilation: Record<string, unknown> = structuredClone(compilation);
+  if (Object.hasOwn(newCompilation, "flatCharacterModdings")) {
+    (
+      newCompilation.flatCharacterModdings as {
+        target: { primaryStatRestrictions: Record<string, string | string[]> };
+      }[]
+    ).forEach((characterModding) => {
+      const oldPrimaryStatRestrictions = characterModding.target.primaryStatRestrictions;
+      const newPrimaryStatRestrictions: Record<string, string[]> = {};
+      if (
+        Object.hasOwn(oldPrimaryStatRestrictions, "arrow") &&
+        oldPrimaryStatRestrictions.arrow !== undefined
+      ) {
+        newPrimaryStatRestrictions.arrow = isString(oldPrimaryStatRestrictions.arrow)
+          ? [oldPrimaryStatRestrictions.arrow]
+          : oldPrimaryStatRestrictions.arrow;
+      }
+      if (
+        Object.hasOwn(oldPrimaryStatRestrictions, "triangle") &&
+        oldPrimaryStatRestrictions.triangle !== undefined
+      ) {
+        newPrimaryStatRestrictions.triangle = isString(oldPrimaryStatRestrictions.triangle)
+          ? [oldPrimaryStatRestrictions.triangle]
+          : oldPrimaryStatRestrictions.triangle;
+      }
+      if (
+        Object.hasOwn(oldPrimaryStatRestrictions, "cross") &&
+        oldPrimaryStatRestrictions.cross !== undefined
+      ) {
+        newPrimaryStatRestrictions.cross = isString(oldPrimaryStatRestrictions.cross)
+          ? [oldPrimaryStatRestrictions.cross]
+          : oldPrimaryStatRestrictions.cross;
+      }
+      if (
+        Object.hasOwn(oldPrimaryStatRestrictions, "circle") &&
+        oldPrimaryStatRestrictions.circle !== undefined
+      ) {
+        newPrimaryStatRestrictions.circle = isString(oldPrimaryStatRestrictions.circle)
+          ? [oldPrimaryStatRestrictions.circle]
+          : oldPrimaryStatRestrictions.circle;
+      }
+      characterModding.target.primaryStatRestrictions = newPrimaryStatRestrictions;
+    });
+  }
+  return newCompilation;
 }
 
 function upgradeRostersTo29(
-	rosters: Array<RecordWithNestedEntities>,
+  rosters: Array<RecordWithNestedEntities>,
 ): Array<RecordWithNestedEntities> {
-	const isRostersWithStringPrimaries = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		characterById: Record<
-			string,
-			{
-				targets: {
-					primaryStatRestrictions: Record<string, string>;
-				}[];
-			}
-		>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			obj.length > 0 &&
-			Object.hasOwn(obj[0], "id") &&
-			Object.hasOwn(obj[0], "characterById")
-		) {
-			const characterById = obj[0].characterById;
-			const schemaResult = v.safeParse(CharacterByIdSchemaV23, characterById);
-			if (schemaResult.success) {
-				result = true;
-			}
-		}
-		return result;
-	};
-	const isRosters = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		characterById: Record<
-			string,
-			{
-				targets: {
-					primaryStatRestrictions: Record<string, string | string[]>;
-				}[];
-			}
-		>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			obj.length > 0 &&
-			Object.hasOwn(obj[0], "id") &&
-			Object.hasOwn(obj[0], "characterById")
-		) {
-			const characterById = obj[0].characterById;
-			const schemaResult23 = v.safeParse(CharacterByIdSchemaV23, characterById);
-			const schemaResult26 = v.safeParse(CharacterByIdSchemaV26, characterById);
-			if (schemaResult23.success || schemaResult26.success) {
-				result = true;
-			}
-		}
-		return result;
-	};
+  const isRostersWithStringPrimaries = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    characterById: Record<
+      string,
+      {
+        targets: {
+          primaryStatRestrictions: Record<string, string>;
+        }[];
+      }
+    >;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      obj.length > 0 &&
+      Object.hasOwn(obj[0], "id") &&
+      Object.hasOwn(obj[0], "characterById")
+    ) {
+      const characterById = obj[0].characterById;
+      const schemaResult = v.safeParse(CharacterByIdSchemaV23, characterById);
+      if (schemaResult.success) {
+        result = true;
+      }
+    }
+    return result;
+  };
+  const isRosters = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    characterById: Record<
+      string,
+      {
+        targets: {
+          primaryStatRestrictions: Record<string, string | string[]>;
+        }[];
+      }
+    >;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      obj.length > 0 &&
+      Object.hasOwn(obj[0], "id") &&
+      Object.hasOwn(obj[0], "characterById")
+    ) {
+      const characterById = obj[0].characterById;
+      const schemaResult23 = v.safeParse(CharacterByIdSchemaV23, characterById);
+      const schemaResult26 = v.safeParse(CharacterByIdSchemaV26, characterById);
+      if (schemaResult23.success || schemaResult26.success) {
+        result = true;
+      }
+    }
+    return result;
+  };
 
-	const newRosters = structuredClone(rosters);
+  const newRosters = structuredClone(rosters);
 
-	if (isRostersWithStringPrimaries(rosters) && isRosters(newRosters)) {
-		for (const roster of newRosters) {
-			for (const character of Object.values(roster.characterById)) {
-				for (const target of character.targets) {
-					const newPrimaryStatRestrictions: Record<string, string[]> = {};
-					for (const [key, value] of Object.entries(
-						target.primaryStatRestrictions,
-					)) {
-						if (value === undefined || value === null) continue;
-						newPrimaryStatRestrictions[key] = Array.isArray(value)
-							? value
-							: [value];
-					}
-					target.primaryStatRestrictions = newPrimaryStatRestrictions;
-				}
-			}
-		}
-	}
-	return newRosters;
+  if (isRostersWithStringPrimaries(rosters) && isRosters(newRosters)) {
+    for (const roster of newRosters) {
+      for (const character of Object.values(roster.characterById)) {
+        for (const target of character.targets) {
+          const newPrimaryStatRestrictions: Record<string, string[]> = {};
+          for (const [key, value] of Object.entries(target.primaryStatRestrictions)) {
+            if (value === undefined || value === null) continue;
+            newPrimaryStatRestrictions[key] = Array.isArray(value) ? value : [value];
+          }
+          target.primaryStatRestrictions = newPrimaryStatRestrictions;
+        }
+      }
+    }
+  }
+  return newRosters;
 }
 
 function upgradeRostersTo30(
-	rosters: Array<RecordWithNestedEntities>,
+  rosters: Array<RecordWithNestedEntities>,
 ): Array<RecordWithNestedEntities> {
-	const isOldRosters = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		characterById: Record<
-			string,
-			{
-				playerValues: {
-					baseStats: Record<string, number>;
-					equippedStats: Record<string, number>;
-					galacticPower: number;
-					gearLevel: number;
-					gearPieces: string[];
-					level: number;
-					relicTier: number;
-					stars: number;
-				};
-			}
-		>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			obj.length > 0 &&
-			Object.hasOwn(obj[0], "id") &&
-			Object.hasOwn(obj[0], "characterById")
-		) {
-			const characterById = obj[0].characterById;
-			const schemaResult26 = v.safeParse(CharacterByIdSchemaV26, characterById);
-			if (schemaResult26.success) {
-				result = true;
-			}
-		}
-		return result;
-	};
-	const isNewRosters = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		characterById: Record<
-			string,
-			{
-				playerValues: {
-					equippedStats: Record<string, number>;
-					galacticPower: number;
-					gearLevel: number;
-					gearPieces: string[];
-					level: number;
-					relicTier: number;
-					stars: number;
-				};
-			}
-		>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			obj.length > 0 &&
-			Object.hasOwn(obj[0], "id") &&
-			Object.hasOwn(obj[0], "characterById")
-		) {
-			const characterById = obj[0].characterById;
-			const schemaResult30 = v.safeParse(CharacterByIdSchemaV30, characterById);
-			if (schemaResult30.success) {
-				result = true;
-			}
-		}
-		return result;
-	};
-	const newRosters = structuredClone(rosters);
+  const isOldRosters = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    characterById: Record<
+      string,
+      {
+        playerValues: {
+          baseStats: Record<string, number>;
+          equippedStats: Record<string, number>;
+          galacticPower: number;
+          gearLevel: number;
+          gearPieces: string[];
+          level: number;
+          relicTier: number;
+          stars: number;
+        };
+      }
+    >;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      obj.length > 0 &&
+      Object.hasOwn(obj[0], "id") &&
+      Object.hasOwn(obj[0], "characterById")
+    ) {
+      const characterById = obj[0].characterById;
+      const schemaResult26 = v.safeParse(CharacterByIdSchemaV26, characterById);
+      if (schemaResult26.success) {
+        result = true;
+      }
+    }
+    return result;
+  };
+  const isNewRosters = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    characterById: Record<
+      string,
+      {
+        playerValues: {
+          equippedStats: Record<string, number>;
+          galacticPower: number;
+          gearLevel: number;
+          gearPieces: string[];
+          level: number;
+          relicTier: number;
+          stars: number;
+        };
+      }
+    >;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      obj.length > 0 &&
+      Object.hasOwn(obj[0], "id") &&
+      Object.hasOwn(obj[0], "characterById")
+    ) {
+      const characterById = obj[0].characterById;
+      const schemaResult30 = v.safeParse(CharacterByIdSchemaV30, characterById);
+      if (schemaResult30.success) {
+        result = true;
+      }
+    }
+    return result;
+  };
+  const newRosters = structuredClone(rosters);
 
-	if (isOldRosters(newRosters) || isNewRosters(newRosters)) {
-		for (const roster of newRosters) {
-			for (const character of Object.values(roster.characterById)) {
-				const newPlayerValues = {
-					level: character.playerValues.level,
-					stars: character.playerValues.stars,
-					gearLevel: character.playerValues.gearLevel,
-					gearPieces: character.playerValues.gearPieces,
-					galacticPower: character.playerValues.galacticPower,
-					equippedStats: character.playerValues.equippedStats,
-					relicTier: character.playerValues.relicTier,
-				};
-				character.playerValues = newPlayerValues;
-			}
-		}
-	}
-	return newRosters;
+  if (isOldRosters(newRosters) || isNewRosters(newRosters)) {
+    for (const roster of newRosters) {
+      for (const character of Object.values(roster.characterById)) {
+        const newPlayerValues = {
+          level: character.playerValues.level,
+          stars: character.playerValues.stars,
+          gearLevel: character.playerValues.gearLevel,
+          gearPieces: character.playerValues.gearPieces,
+          galacticPower: character.playerValues.galacticPower,
+          equippedStats: character.playerValues.equippedStats,
+          relicTier: character.playerValues.relicTier,
+        };
+        character.playerValues = newPlayerValues;
+      }
+    }
+  }
+  return newRosters;
 }
 
-function upgradeCharacterTemplatesTo31(
-	templates: Array<RecordWithNestedEntities>,
-) {
-	const isTemplates = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		category: string;
-		selectedCharacters: Array<{
-			target: Record<string, unknown>;
-		}>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			(obj.length === 0 ||
-				(Object.hasOwn(obj[0], "id") && Object.hasOwn(obj[0], "category")))
-		) {
-			result = true;
-		}
-		return result;
-	};
+function upgradeCharacterTemplatesTo31(templates: Array<RecordWithNestedEntities>) {
+  const isTemplates = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    category: string;
+    selectedCharacters: Array<{
+      target: Record<string, unknown>;
+    }>;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      (obj.length === 0 || (Object.hasOwn(obj[0], "id") && Object.hasOwn(obj[0], "category")))
+    ) {
+      result = true;
+    }
+    return result;
+  };
 
-	const newTemplates = structuredClone(templates);
-	if (isTemplates(newTemplates)) {
-		for (const template of newTemplates) {
-			for (const character of template.selectedCharacters) {
-				const oldTarget = character.target;
-				const newTarget = {
-					id: character.target.id,
-					description: oldTarget.description,
-					minimumModDots: oldTarget.minimumModDots,
-					primaryStatRestrictions: oldTarget.primaryStatRestrictions,
-					setRestrictions: oldTarget.setRestrictions,
-					simulatedRelicLevel: 0,
-					simulatedStats: null,
-					targetStats: oldTarget.targetStats,
-					useOnlyFullSets: oldTarget.useOnlyFullSets,
-					Health: oldTarget.Health,
-					Protection: oldTarget.Protection,
-					Speed: oldTarget.Speed,
-					"Critical Damage %": oldTarget["Critical Damage %"],
-					"Potency %": oldTarget["Potency %"],
-					"Tenacity %": oldTarget["Tenacity %"],
-					"Physical Damage": oldTarget["Physical Damage"],
-					"Special Damage": oldTarget["Special Damage"],
-					"Critical Chance": oldTarget["Critical Chance"],
-					Armor: oldTarget.Armor,
-					Resistance: oldTarget.Resistance,
-					"Accuracy %": oldTarget["Accuracy %"],
-					"Critical Avoidance %": oldTarget["Critical Avoidance %"],
-				};
-				character.target = newTarget;
-			}
-		}
-	}
+  const newTemplates = structuredClone(templates);
+  if (isTemplates(newTemplates)) {
+    for (const template of newTemplates) {
+      for (const character of template.selectedCharacters) {
+        const oldTarget = character.target;
+        const newTarget = {
+          id: character.target.id,
+          description: oldTarget.description,
+          minimumModDots: oldTarget.minimumModDots,
+          primaryStatRestrictions: oldTarget.primaryStatRestrictions,
+          setRestrictions: oldTarget.setRestrictions,
+          simulatedRelicLevel: 0,
+          simulatedStats: null,
+          targetStats: oldTarget.targetStats,
+          useOnlyFullSets: oldTarget.useOnlyFullSets,
+          Health: oldTarget.Health,
+          Protection: oldTarget.Protection,
+          Speed: oldTarget.Speed,
+          "Critical Damage %": oldTarget["Critical Damage %"],
+          "Potency %": oldTarget["Potency %"],
+          "Tenacity %": oldTarget["Tenacity %"],
+          "Physical Damage": oldTarget["Physical Damage"],
+          "Special Damage": oldTarget["Special Damage"],
+          "Critical Chance": oldTarget["Critical Chance"],
+          Armor: oldTarget.Armor,
+          Resistance: oldTarget.Resistance,
+          "Accuracy %": oldTarget["Accuracy %"],
+          "Critical Avoidance %": oldTarget["Critical Avoidance %"],
+        };
+        character.target = newTarget;
+      }
+    }
+  }
 
-	return newTemplates;
+  return newTemplates;
 }
 
 function upgradeCompilationTo31(compilation: Record<string, unknown>) {
-	const isCompilation = (
-		obj: unknown,
-	): obj is {
-		flatCharacterModdings: Array<{
-			target: Record<string, unknown>;
-		}>;
-		selectedCharacters: Array<{
-			target: Record<string, unknown>;
-		}>;
-	} => {
-		let result = false;
-		if (
-			typeof obj === "object" &&
-			obj !== null &&
-			"flatCharacterModdings" in obj &&
-			"selectedCharacters" in obj
-		) {
-			const flatCharacterModdings = obj.flatCharacterModdings;
-			const selectedCharacters = obj.selectedCharacters;
-			if (
-				Array.isArray(selectedCharacters) &&
-				selectedCharacters.every(
-					(selectedCharacter) =>
-						typeof selectedCharacter === "object" &&
-						selectedCharacter !== null &&
-						"target" in selectedCharacter,
-				) &&
-				Array.isArray(flatCharacterModdings) &&
-				flatCharacterModdings.every(
-					(flatCharacterModding) =>
-						typeof flatCharacterModding === "object" &&
-						flatCharacterModding !== null &&
-						"target" in flatCharacterModding,
-				)
-			) {
-				result = true;
-			}
-		}
-		return result;
-	};
-	const newCompilation: Record<string, unknown> = structuredClone(compilation);
+  const isCompilation = (
+    obj: unknown,
+  ): obj is {
+    flatCharacterModdings: Array<{
+      target: Record<string, unknown>;
+    }>;
+    selectedCharacters: Array<{
+      target: Record<string, unknown>;
+    }>;
+  } => {
+    let result = false;
+    if (
+      typeof obj === "object" &&
+      obj !== null &&
+      "flatCharacterModdings" in obj &&
+      "selectedCharacters" in obj
+    ) {
+      const flatCharacterModdings = obj.flatCharacterModdings;
+      const selectedCharacters = obj.selectedCharacters;
+      if (
+        Array.isArray(selectedCharacters) &&
+        selectedCharacters.every(
+          (selectedCharacter) =>
+            typeof selectedCharacter === "object" &&
+            selectedCharacter !== null &&
+            "target" in selectedCharacter,
+        ) &&
+        Array.isArray(flatCharacterModdings) &&
+        flatCharacterModdings.every(
+          (flatCharacterModding) =>
+            typeof flatCharacterModding === "object" &&
+            flatCharacterModding !== null &&
+            "target" in flatCharacterModding,
+        )
+      ) {
+        result = true;
+      }
+    }
+    return result;
+  };
+  const newCompilation: Record<string, unknown> = structuredClone(compilation);
 
-	if (isCompilation(newCompilation)) {
-		newCompilation.selectedCharacters.forEach((selectedCharacter) => {
-			const oldTarget = selectedCharacter.target;
-			const newTarget = {
-				id: oldTarget.id,
-				description: oldTarget.description,
-				minimumModDots: oldTarget.minimumModDots,
-				primaryStatRestrictions: oldTarget.primaryStatRestrictions,
-				setRestrictions: oldTarget.setRestrictions,
-				simulatedRelicLevel: 0,
-				simulatedStats: null,
-				targetStats: oldTarget.targetStats,
-				useOnlyFullSets: oldTarget.useOnlyFullSets,
-				Health: oldTarget.Health,
-				Protection: oldTarget.Protection,
-				Speed: oldTarget.Speed,
-				"Critical Damage %": oldTarget["Critical Damage %"],
-				"Potency %": oldTarget["Potency %"],
-				"Tenacity %": oldTarget["Tenacity %"],
-				"Physical Damage": oldTarget["Physical Damage"],
-				"Special Damage": oldTarget["Special Damage"],
-				"Critical Chance": oldTarget["Critical Chance"],
-				Armor: oldTarget.Armor,
-				Resistance: oldTarget.Resistance,
-				"Accuracy %": oldTarget["Accuracy %"],
-				"Critical Avoidance %": oldTarget["Critical Avoidance %"],
-			};
-			selectedCharacter.target = newTarget;
-		});
-		newCompilation.flatCharacterModdings.forEach((flatCharacterModding) => {
-			const oldTarget = flatCharacterModding.target;
-			const newTarget = {
-				id: oldTarget.id,
-				description: oldTarget.description,
-				minimumModDots: oldTarget.minimumModDots,
-				primaryStatRestrictions: oldTarget.primaryStatRestrictions,
-				setRestrictions: oldTarget.setRestrictions,
-				simulatedRelicLevel: 0,
-				simulatedStats: null,
-				targetStats: oldTarget.targetStats,
-				useOnlyFullSets: oldTarget.useOnlyFullSets,
-				Health: oldTarget.Health,
-				Protection: oldTarget.Protection,
-				Speed: oldTarget.Speed,
-				"Critical Damage %": oldTarget["Critical Damage %"],
-				"Potency %": oldTarget["Potency %"],
-				"Tenacity %": oldTarget["Tenacity %"],
-				"Physical Damage": oldTarget["Physical Damage"],
-				"Special Damage": oldTarget["Special Damage"],
-				"Critical Chance": oldTarget["Critical Chance"],
-				Armor: oldTarget.Armor,
-				Resistance: oldTarget.Resistance,
-				"Accuracy %": oldTarget["Accuracy %"],
-				"Critical Avoidance %": oldTarget["Critical Avoidance %"],
-			};
-			flatCharacterModding.target = newTarget;
-		});
-	}
-	return newCompilation;
+  if (isCompilation(newCompilation)) {
+    newCompilation.selectedCharacters.forEach((selectedCharacter) => {
+      const oldTarget = selectedCharacter.target;
+      const newTarget = {
+        id: oldTarget.id,
+        description: oldTarget.description,
+        minimumModDots: oldTarget.minimumModDots,
+        primaryStatRestrictions: oldTarget.primaryStatRestrictions,
+        setRestrictions: oldTarget.setRestrictions,
+        simulatedRelicLevel: 0,
+        simulatedStats: null,
+        targetStats: oldTarget.targetStats,
+        useOnlyFullSets: oldTarget.useOnlyFullSets,
+        Health: oldTarget.Health,
+        Protection: oldTarget.Protection,
+        Speed: oldTarget.Speed,
+        "Critical Damage %": oldTarget["Critical Damage %"],
+        "Potency %": oldTarget["Potency %"],
+        "Tenacity %": oldTarget["Tenacity %"],
+        "Physical Damage": oldTarget["Physical Damage"],
+        "Special Damage": oldTarget["Special Damage"],
+        "Critical Chance": oldTarget["Critical Chance"],
+        Armor: oldTarget.Armor,
+        Resistance: oldTarget.Resistance,
+        "Accuracy %": oldTarget["Accuracy %"],
+        "Critical Avoidance %": oldTarget["Critical Avoidance %"],
+      };
+      selectedCharacter.target = newTarget;
+    });
+    newCompilation.flatCharacterModdings.forEach((flatCharacterModding) => {
+      const oldTarget = flatCharacterModding.target;
+      const newTarget = {
+        id: oldTarget.id,
+        description: oldTarget.description,
+        minimumModDots: oldTarget.minimumModDots,
+        primaryStatRestrictions: oldTarget.primaryStatRestrictions,
+        setRestrictions: oldTarget.setRestrictions,
+        simulatedRelicLevel: 0,
+        simulatedStats: null,
+        targetStats: oldTarget.targetStats,
+        useOnlyFullSets: oldTarget.useOnlyFullSets,
+        Health: oldTarget.Health,
+        Protection: oldTarget.Protection,
+        Speed: oldTarget.Speed,
+        "Critical Damage %": oldTarget["Critical Damage %"],
+        "Potency %": oldTarget["Potency %"],
+        "Tenacity %": oldTarget["Tenacity %"],
+        "Physical Damage": oldTarget["Physical Damage"],
+        "Special Damage": oldTarget["Special Damage"],
+        "Critical Chance": oldTarget["Critical Chance"],
+        Armor: oldTarget.Armor,
+        Resistance: oldTarget.Resistance,
+        "Accuracy %": oldTarget["Accuracy %"],
+        "Critical Avoidance %": oldTarget["Critical Avoidance %"],
+      };
+      flatCharacterModding.target = newTarget;
+    });
+  }
+  return newCompilation;
 }
 
 function upgradeRostersTo31(
-	rosters: Array<RecordWithNestedEntities>,
+  rosters: Array<RecordWithNestedEntities>,
 ): Array<RecordWithNestedEntities> {
-	const isRosters = (
-		obj: unknown,
-	): obj is Array<{
-		id: string;
-		characterById: Record<
-			string,
-			{
-				targets: Record<string, unknown>[];
-			}
-		>;
-	}> => {
-		let result = false;
-		if (
-			Array.isArray(obj) &&
-			obj.length > 0 &&
-			Object.hasOwn(obj[0], "id") &&
-			Object.hasOwn(obj[0], "characterById")
-		) {
-			const characterById = obj[0].characterById;
-			const schemaResult = v.safeParse(CharacterByIdSchemaV30, characterById);
-			if (schemaResult.success) {
-				result = true;
-			}
-		}
-		return result;
-	};
+  const isRosters = (
+    obj: unknown,
+  ): obj is Array<{
+    id: string;
+    characterById: Record<
+      string,
+      {
+        targets: Record<string, unknown>[];
+      }
+    >;
+  }> => {
+    let result = false;
+    if (
+      Array.isArray(obj) &&
+      obj.length > 0 &&
+      Object.hasOwn(obj[0], "id") &&
+      Object.hasOwn(obj[0], "characterById")
+    ) {
+      const characterById = obj[0].characterById;
+      const schemaResult = v.safeParse(CharacterByIdSchemaV30, characterById);
+      if (schemaResult.success) {
+        result = true;
+      }
+    }
+    return result;
+  };
 
-	const newRosters = structuredClone(rosters);
+  const newRosters = structuredClone(rosters);
 
-	if (isRosters(newRosters)) {
-		for (const roster of newRosters) {
-			for (const character of Object.values(roster.characterById)) {
-				for (const target of character.targets) {
-					const newTarget = {
-						id: target.id,
-						description: target.description,
-						minimumModDots: target.minimumModDots,
-						primaryStatRestrictions: target.primaryStatRestrictions,
-						setRestrictions: target.setRestrictions,
-						simulatedRelicLevel: 0,
-						simulatedStats: null,
-						targetStats: target.targetStats,
-						useOnlyFullSets: target.useOnlyFullSets,
-						Health: target.Health,
-						Protection: target.Protection,
-						Speed: target.Speed,
-						"Critical Damage %": target["Critical Damage %"],
-						"Potency %": target["Potency %"],
-						"Tenacity %": target["Tenacity %"],
-						"Physical Damage": target["Physical Damage"],
-						"Special Damage": target["Special Damage"],
-						"Critical Chance": target["Critical Chance"],
-						Armor: target.Armor,
-						Resistance: target.Resistance,
-						"Accuracy %": target["Accuracy %"],
-						"Critical Avoidance %": target["Critical Avoidance %"],
-					};
-					character.targets[character.targets.indexOf(target)] = newTarget;
-				}
-			}
-		}
-	}
-	return newRosters;
+  if (isRosters(newRosters)) {
+    for (const roster of newRosters) {
+      for (const character of Object.values(roster.characterById)) {
+        for (const target of character.targets) {
+          const newTarget = {
+            id: target.id,
+            description: target.description,
+            minimumModDots: target.minimumModDots,
+            primaryStatRestrictions: target.primaryStatRestrictions,
+            setRestrictions: target.setRestrictions,
+            simulatedRelicLevel: 0,
+            simulatedStats: null,
+            targetStats: target.targetStats,
+            useOnlyFullSets: target.useOnlyFullSets,
+            Health: target.Health,
+            Protection: target.Protection,
+            Speed: target.Speed,
+            "Critical Damage %": target["Critical Damage %"],
+            "Potency %": target["Potency %"],
+            "Tenacity %": target["Tenacity %"],
+            "Physical Damage": target["Physical Damage"],
+            "Special Damage": target["Special Damage"],
+            "Critical Chance": target["Critical Chance"],
+            Armor: target.Armor,
+            Resistance: target.Resistance,
+            "Accuracy %": target["Accuracy %"],
+            "Critical Avoidance %": target["Critical Avoidance %"],
+          };
+          character.targets[character.targets.indexOf(target)] = newTarget;
+        }
+      }
+    }
+  }
+  return newRosters;
 }
 
 function createStores(db: IDBDatabase, version: DBVersions) {
-	const storeNames = getStoreNamesForVersion(version);
-	for (const storeName of storeNames ?? []) {
-		if (!db.objectStoreNames.contains(storeName)) {
-			db.createObjectStore(storeName, {
-				keyPath: "id",
-				autoIncrement: false,
-			});
-		}
-	}
+  const storeNames = getStoreNamesForVersion(version);
+  for (const storeName of storeNames ?? []) {
+    if (!db.objectStoreNames.contains(storeName)) {
+      db.createObjectStore(storeName, {
+        keyPath: "id",
+        autoIncrement: false,
+      });
+    }
+  }
 }
 
 const hasFilterById = (
-	obj: object,
+  obj: object,
 ): obj is { filterById: Record<string, Partial<Filter> | undefined> } => {
-	return Object.hasOwn(obj, "filterById");
+  return Object.hasOwn(obj, "filterById");
 };
 
 async function upgradeTo18(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(
-			db,
-			transaction,
-			"CharactersManagement",
-			"filterSetup",
-			(oldfilterSetup) => {
-				return [
-					{
-						id: "filterSetup",
-						filterSetup: {
-							...oldfilterSetup[0],
-						},
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(db, transaction, "CharactersManagement", "filterSetup", (oldfilterSetup) => {
+      return [
+        {
+          id: "filterSetup",
+          filterSetup: {
+            ...oldfilterSetup[0],
+          },
+        },
+      ];
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: new Map(
-							Object.entries(oldCompilations[0]),
-						),
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: new Map(Object.entries(oldCompilations[0])),
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"DefaultCompilation",
-			"DefaultCompilation",
-			(oldDefaultCompilation) => {
-				return [
-					{
-						id: "defaultCompilation",
-						defaultCompilation: {
-							...oldDefaultCompilation[0],
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "DefaultCompilation",
+      "DefaultCompilation",
+      (oldDefaultCompilation) => {
+        return [
+          {
+            id: "defaultCompilation",
+            defaultCompilation: {
+              ...oldDefaultCompilation[0],
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"HotUtils",
-			"sessionIdByProfile",
-			(oldHotUtils) => {
-				return [
-					{
-						id: "sessionIdByProfile",
-						sessionIdByProfile: {
-							...oldHotUtils[0],
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(db, transaction, "HotUtils", "sessionIdByProfile", (oldHotUtils) => {
+      return [
+        {
+          id: "sessionIdByProfile",
+          sessionIdByProfile: {
+            ...oldHotUtils[0],
+          },
+        },
+      ];
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"IncrementalOptimization",
-			"indicesByProfile",
-			(oldIndices) => {
-				return [
-					{
-						id: "indicesByProfile",
-						indicesByProfile: {
-							...oldIndices[0],
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "IncrementalOptimization",
+      "indicesByProfile",
+      (oldIndices) => {
+        return [
+          {
+            id: "indicesByProfile",
+            indicesByProfile: {
+              ...oldIndices[0],
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"LockedStatus",
-			"lockedStatus",
-			(oldLockedStatus) => {
-				return [
-					{
-						id: "lockedStatus",
-						lockedStatusByCharacterIdByAllycode: {
-							...oldLockedStatus[0],
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(db, transaction, "LockedStatus", "lockedStatus", (oldLockedStatus) => {
+      return [
+        {
+          id: "lockedStatus",
+          lockedStatusByCharacterIdByAllycode: {
+            ...oldLockedStatus[0],
+          },
+        },
+      ];
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"OptimizationSettings",
-			"settingsByProfile",
-			(oldOptimizationSettings) => {
-				return [
-					{
-						id: "settingsByProfile",
-						settingsByProfile: {
-							...oldOptimizationSettings[0],
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "OptimizationSettings",
+      "settingsByProfile",
+      (oldOptimizationSettings) => {
+        return [
+          {
+            id: "settingsByProfile",
+            settingsByProfile: {
+              ...oldOptimizationSettings[0],
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"Profiles",
-			"profiles",
-			(oldProfiles) => {
-				return [
-					{
-						id: "profiles",
-						profiles: {
-							activeAllycode: oldProfiles[0].activeAllycode,
-							lastUpdatedByAllycode: oldProfiles[0].lastUpdatedByAllycode,
-							playernameByAllycode: oldProfiles[0].playernameByAllycode,
-							profileByAllycode: oldProfiles[0].profileByAllycode,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
+      return [
+        {
+          id: "profiles",
+          profiles: {
+            activeAllycode: oldProfiles[0].activeAllycode,
+            lastUpdatedByAllycode: oldProfiles[0].lastUpdatedByAllycode,
+            playernameByAllycode: oldProfiles[0].playernameByAllycode,
+            profileByAllycode: oldProfiles[0].profileByAllycode,
+          },
+        },
+      ];
+    });
 
-		await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
-			return [
-				{
-					id: "viewSetup",
-					byIdByCategory: oldViewSetup.reduce(
-						(acc: Record<string, unknown>, item) => {
-							acc[item.id] = Object.entries(item).reduce(
-								(acc2, [key, value]) => {
-									if (key !== "id" && value !== undefined && value !== null) {
-										if (hasFilterById(value)) {
-											for (const filter of Object.values(
-												(
-													value as {
-														filterById: Record<string, Partial<Filter>>;
-													}
-												).filterById,
-											)) {
-												upgradeFilterTo18(filter);
-											}
-										}
-										acc2[key] = value;
-									}
-									return acc2;
-								},
-								{} as Record<string, unknown>,
-							);
-							return acc;
-						},
-						{},
-					),
-				},
-			];
-		});
-	} catch (error) {
-		console.error("Error in upgradeTo18:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
+      return [
+        {
+          id: "viewSetup",
+          byIdByCategory: oldViewSetup.reduce((acc: Record<string, unknown>, item) => {
+            acc[item.id] = Object.entries(item).reduce(
+              (acc2, [key, value]) => {
+                if (key !== "id" && value !== undefined && value !== null) {
+                  if (hasFilterById(value)) {
+                    for (const filter of Object.values(
+                      (
+                        value as {
+                          filterById: Record<string, Partial<Filter>>;
+                        }
+                      ).filterById,
+                    )) {
+                      upgradeFilterTo18(filter);
+                    }
+                  }
+                  acc2[key] = value;
+                }
+                return acc2;
+              },
+              {} as Record<string, unknown>,
+            );
+            return acc;
+          }, {}),
+        },
+      ];
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo18:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(18, upgradeTo18);
 
 async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(
-			db,
-			transaction,
-			"CharactersManagement",
-			"filterSetup",
-			(oldCharactersManagement) => {
-				const newCharactersManagement: Record<string, unknown> = {};
-				for (const [key, value] of objectEntries(
-					oldCharactersManagement[0].filterSetup as Record<string, unknown>,
-				)) {
-					if (key !== "id") newCharactersManagement[key] = value;
-				}
-				return [
-					{
-						id: "filterSetup",
-						filterSetup: {
-							...newCharactersManagement,
-						},
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(
+      db,
+      transaction,
+      "CharactersManagement",
+      "filterSetup",
+      (oldCharactersManagement) => {
+        const newCharactersManagement: Record<string, unknown> = {};
+        for (const [key, value] of objectEntries(
+          oldCharactersManagement[0].filterSetup as Record<string, unknown>,
+        )) {
+          if (key !== "id") newCharactersManagement[key] = value;
+        }
+        return [
+          {
+            id: "filterSetup",
+            filterSetup: {
+              ...newCharactersManagement,
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				const newCompilations: Map<string, unknown> = new Map();
-				for (const [key, value] of oldCompilations[0]
-					.compilationByIdByAllycode as Map<string, unknown>) {
-					if (key !== "id") newCompilations.set(key, value);
-				}
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: newCompilations,
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        const newCompilations: Map<string, unknown> = new Map();
+        for (const [key, value] of oldCompilations[0].compilationByIdByAllycode as Map<
+          string,
+          unknown
+        >) {
+          if (key !== "id") newCompilations.set(key, value);
+        }
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: newCompilations,
+          },
+        ];
+      },
+    );
 
-		/*
+    /*
 		await itemUpgrade(
 			db,
 			transaction,
@@ -1322,821 +1202,698 @@ async function upgradeTo19(db: IDBDatabase, transaction: IDBTransaction) {
 		);
 		*/
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"HotUtils",
-			"sessionIdByProfile",
-			(oldHotUtils) => {
-				const newHotUtils: Record<string, unknown> = {};
-				for (const [allycode, sessionId] of objectEntries(
-					oldHotUtils[0].sessionIdByProfile as Record<string, unknown>,
-				)) {
-					if (allycode !== "id") newHotUtils[allycode] = sessionId;
-				}
-				return [
-					{
-						id: "sessionIdByProfile",
-						sessionIdByProfile: {
-							...newHotUtils,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(db, transaction, "HotUtils", "sessionIdByProfile", (oldHotUtils) => {
+      const newHotUtils: Record<string, unknown> = {};
+      for (const [allycode, sessionId] of objectEntries(
+        oldHotUtils[0].sessionIdByProfile as Record<string, unknown>,
+      )) {
+        if (allycode !== "id") newHotUtils[allycode] = sessionId;
+      }
+      return [
+        {
+          id: "sessionIdByProfile",
+          sessionIdByProfile: {
+            ...newHotUtils,
+          },
+        },
+      ];
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"IncrementalOptimization",
-			"indicesByProfile",
-			(oldIndices) => {
-				const newIndices: Record<string, number> = {};
-				for (const [allycode, index] of objectEntries(
-					oldIndices[0].indicesByProfile as Record<string, unknown>,
-				)) {
-					if (allycode !== "id") newIndices[allycode] = index as number;
-				}
-				return [
-					{
-						id: "indicesByProfile",
-						indicesByProfile: {
-							...newIndices,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "IncrementalOptimization",
+      "indicesByProfile",
+      (oldIndices) => {
+        const newIndices: Record<string, number> = {};
+        for (const [allycode, index] of objectEntries(
+          oldIndices[0].indicesByProfile as Record<string, unknown>,
+        )) {
+          if (allycode !== "id") newIndices[allycode] = index as number;
+        }
+        return [
+          {
+            id: "indicesByProfile",
+            indicesByProfile: {
+              ...newIndices,
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"LockedStatus",
-			"lockedStatus",
-			(oldLockedStatus) => {
-				const newLockedStatus: Record<string, unknown> = {};
-				for (const [allycode, status] of objectEntries(
-					oldLockedStatus[0].lockedStatusByCharacterIdByAllycode as Record<
-						string,
-						unknown
-					>,
-				)) {
-					if (allycode !== "id") newLockedStatus[allycode] = status;
-				}
-				return [
-					{
-						id: "lockedStatus",
-						lockedStatusByCharacterIdByAllycode: {
-							...newLockedStatus,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(db, transaction, "LockedStatus", "lockedStatus", (oldLockedStatus) => {
+      const newLockedStatus: Record<string, unknown> = {};
+      for (const [allycode, status] of objectEntries(
+        oldLockedStatus[0].lockedStatusByCharacterIdByAllycode as Record<string, unknown>,
+      )) {
+        if (allycode !== "id") newLockedStatus[allycode] = status;
+      }
+      return [
+        {
+          id: "lockedStatus",
+          lockedStatusByCharacterIdByAllycode: {
+            ...newLockedStatus,
+          },
+        },
+      ];
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"OptimizationSettings",
-			"settingsByProfile",
-			(oldOptimizationSettings) => {
-				const newSettings: Record<string, unknown> = {};
-				for (const [allycode, settings] of objectEntries(
-					oldOptimizationSettings[0].settingsByProfile as Record<
-						string,
-						unknown
-					>,
-				)) {
-					if (allycode !== "id") newSettings[allycode] = settings;
-				}
-				return [
-					{
-						id: "settingsByProfile",
-						settingsByProfile: {
-							...newSettings,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "OptimizationSettings",
+      "settingsByProfile",
+      (oldOptimizationSettings) => {
+        const newSettings: Record<string, unknown> = {};
+        for (const [allycode, settings] of objectEntries(
+          oldOptimizationSettings[0].settingsByProfile as Record<string, unknown>,
+        )) {
+          if (allycode !== "id") newSettings[allycode] = settings;
+        }
+        return [
+          {
+            id: "settingsByProfile",
+            settingsByProfile: {
+              ...newSettings,
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
-			if (
-				oldViewSetup.length > 0 &&
-				Object.hasOwn(oldViewSetup[0], "byIdByCategory") &&
-				typeof oldViewSetup[0].byIdByCategory === "object" &&
-				oldViewSetup[0].byIdByCategory !== null
-			) {
-				return [
-					{
-						id: "viewSetup",
-						byIdByCategory: objectEntries(
-							oldViewSetup[0].byIdByCategory,
-						).reduce((acc: Record<string, unknown>, item) => {
-							acc[item[0]] = Object.entries(item[1]).reduce(
-								(acc2, [key, value]) => {
-									if (key !== "id" && value !== undefined && value !== null) {
-										if (hasFilterById(value)) {
-											for (const [filterId, filter] of objectEntries(
-												value.filterById,
-											)) {
-												if (filter === undefined)
-													Reflect.deleteProperty(value.filterById, filterId);
-												else {
-													upgradeFilterTo18(filter);
-													upgradeFilterTo19(filter);
-												}
-											}
-										}
-										acc2[key] = value;
-									}
-									return acc2;
-								},
-								{} as Record<string, unknown>,
-							);
-							return acc;
-						}, {}),
-					},
-				];
-			}
+    await itemUpgrade(db, transaction, "ViewSetup", "", (oldViewSetup) => {
+      if (
+        oldViewSetup.length > 0 &&
+        Object.hasOwn(oldViewSetup[0], "byIdByCategory") &&
+        typeof oldViewSetup[0].byIdByCategory === "object" &&
+        oldViewSetup[0].byIdByCategory !== null
+      ) {
+        return [
+          {
+            id: "viewSetup",
+            byIdByCategory: objectEntries(oldViewSetup[0].byIdByCategory).reduce(
+              (acc: Record<string, unknown>, item) => {
+                acc[item[0]] = Object.entries(item[1]).reduce(
+                  (acc2, [key, value]) => {
+                    if (key !== "id" && value !== undefined && value !== null) {
+                      if (hasFilterById(value)) {
+                        for (const [filterId, filter] of objectEntries(value.filterById)) {
+                          if (filter === undefined)
+                            Reflect.deleteProperty(value.filterById, filterId);
+                          else {
+                            upgradeFilterTo18(filter);
+                            upgradeFilterTo19(filter);
+                          }
+                        }
+                      }
+                      acc2[key] = value;
+                    }
+                    return acc2;
+                  },
+                  {} as Record<string, unknown>,
+                );
+                return acc;
+              },
+              {},
+            ),
+          },
+        ];
+      }
 
-			return [
-				{
-					id: "viewSetup",
-					byIdByCategory: {},
-				},
-			];
-		});
-	} catch (error) {
-		console.error("Error in upgradeTo19:", error);
-		transaction.abort();
-	}
+      return [
+        {
+          id: "viewSetup",
+          byIdByCategory: {},
+        },
+      ];
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo19:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(19, upgradeTo19);
 
 async function upgradeTo20(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				const newCompilationsByAllycode: Map<
-					string,
-					Map<string, Record<string, unknown>>
-				> = new Map();
-				for (const [allycode, compilations] of oldCompilations[0]
-					.compilationByIdByAllycode as Map<
-					string,
-					Map<string, Record<string, unknown>>
-				>) {
-					const newCompilations: Map<
-						string,
-						Record<string, unknown>
-					> = new Map();
-					for (const [compilationId, compilation] of compilations) {
-						const newCompilation = upgradeCompilationTo20(compilation);
-						newCompilations.set(compilationId, newCompilation);
-					}
-					newCompilationsByAllycode.set(allycode, newCompilations);
-				}
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: newCompilationsByAllycode,
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        const newCompilationsByAllycode: Map<
+          string,
+          Map<string, Record<string, unknown>>
+        > = new Map();
+        for (const [allycode, compilations] of oldCompilations[0].compilationByIdByAllycode as Map<
+          string,
+          Map<string, Record<string, unknown>>
+        >) {
+          const newCompilations: Map<string, Record<string, unknown>> = new Map();
+          for (const [compilationId, compilation] of compilations) {
+            const newCompilation = upgradeCompilationTo20(compilation);
+            newCompilations.set(compilationId, newCompilation);
+          }
+          newCompilationsByAllycode.set(allycode, newCompilations);
+        }
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: newCompilationsByAllycode,
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"DefaultCompilation",
-			"defaultCompilation",
-			(oldDefaultCompilation) => {
-				const newDefaultCompilation = upgradeCompilationTo20(
-					oldDefaultCompilation[0].defaultCompilation as Record<
-						string,
-						unknown
-					>,
-				);
-				return [
-					{
-						id: "defaultCompilation",
-						defaultCompilation: {
-							...newDefaultCompilation,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "DefaultCompilation",
+      "defaultCompilation",
+      (oldDefaultCompilation) => {
+        const newDefaultCompilation = upgradeCompilationTo20(
+          oldDefaultCompilation[0].defaultCompilation as Record<string, unknown>,
+        );
+        return [
+          {
+            id: "defaultCompilation",
+            defaultCompilation: {
+              ...newDefaultCompilation,
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"LockedStatus",
-			"lockedStatus",
-			(oldLockedStatus) => {
-				const newLockedStatus = upgradeLockedStatusTo20(
-					oldLockedStatus[0].lockedStatusByCharacterIdByAllycode as Record<
-						string,
-						Record<string, boolean>
-					>,
-				);
-				return [
-					{
-						id: "lockedStatus",
-						lockedCharactersByAllycode: {
-							...newLockedStatus,
-						},
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo20:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(db, transaction, "LockedStatus", "lockedStatus", (oldLockedStatus) => {
+      const newLockedStatus = upgradeLockedStatusTo20(
+        oldLockedStatus[0].lockedStatusByCharacterIdByAllycode as Record<
+          string,
+          Record<string, boolean>
+        >,
+      );
+      return [
+        {
+          id: "lockedStatus",
+          lockedCharactersByAllycode: {
+            ...newLockedStatus,
+          },
+        },
+      ];
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo20:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(20, upgradeTo20);
 
 async function upgradeTo21(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(
-			db,
-			transaction,
-			"HotUtils",
-			"sessionIdByProfile",
-			(oldHotUtils) => {
-				const newHotUtils: Map<
-					string,
-					{ gimoSessionId: string; huSessionId: string }
-				> = new Map();
-				for (const [allycode, sessionId] of objectEntries(
-					oldHotUtils[0].sessionIdByProfile as Record<string, string>,
-				)) {
-					newHotUtils.set(allycode, {
-						gimoSessionId: sessionId,
-						huSessionId: "",
-					});
-				}
-				return [
-					{
-						id: "sessionIDsByProfile",
-						sessionIDsByProfile: newHotUtils,
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(db, transaction, "HotUtils", "sessionIdByProfile", (oldHotUtils) => {
+      const newHotUtils: Map<string, { gimoSessionId: string; huSessionId: string }> = new Map();
+      for (const [allycode, sessionId] of objectEntries(
+        oldHotUtils[0].sessionIdByProfile as Record<string, string>,
+      )) {
+        newHotUtils.set(allycode, {
+          gimoSessionId: sessionId,
+          huSessionId: "",
+        });
+      }
+      return [
+        {
+          id: "sessionIDsByProfile",
+          sessionIDsByProfile: newHotUtils,
+        },
+      ];
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"Profiles",
-			"profiles",
-			(oldProfiles) => {
-				const newProfiles = upgradeProfilesTo21(
-					oldProfiles[0].profiles as Record<string, unknown>,
-				);
-				return [
-					{
-						id: "profiles",
-						profiles: newProfiles,
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo21:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
+      const newProfiles = upgradeProfilesTo21(oldProfiles[0].profiles as Record<string, unknown>);
+      return [
+        {
+          id: "profiles",
+          profiles: newProfiles,
+        },
+      ];
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo21:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(21, upgradeTo21);
 
 async function upgradeTo22(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				const newCompilationsByAllycode: Map<
-					string,
-					Map<string, Record<string, unknown>>
-				> = new Map();
-				for (const [allycode, compilations] of oldCompilations[0]
-					.compilationByIdByAllycode as Map<
-					string,
-					Map<string, Record<string, unknown>>
-				>) {
-					const newCompilations: Map<
-						string,
-						Record<string, unknown>
-					> = new Map();
-					for (const [compilationId, compilation] of compilations) {
-						const newCompilation = upgradeCompilationTo22(compilation);
-						newCompilations.set(compilationId, newCompilation);
-					}
-					newCompilationsByAllycode.set(allycode, newCompilations);
-				}
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: newCompilationsByAllycode,
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        const newCompilationsByAllycode: Map<
+          string,
+          Map<string, Record<string, unknown>>
+        > = new Map();
+        for (const [allycode, compilations] of oldCompilations[0].compilationByIdByAllycode as Map<
+          string,
+          Map<string, Record<string, unknown>>
+        >) {
+          const newCompilations: Map<string, Record<string, unknown>> = new Map();
+          for (const [compilationId, compilation] of compilations) {
+            const newCompilation = upgradeCompilationTo22(compilation);
+            newCompilations.set(compilationId, newCompilation);
+          }
+          newCompilationsByAllycode.set(allycode, newCompilations);
+        }
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: newCompilationsByAllycode,
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"DefaultCompilation",
-			"defaultCompilation",
-			(oldDefaultCompilation) => {
-				const newDefaultCompilation = upgradeCompilationTo22(
-					oldDefaultCompilation[0].defaultCompilation as Record<
-						string,
-						unknown
-					>,
-				);
-				return [
-					{
-						id: "defaultCompilation",
-						defaultCompilation: {
-							...newDefaultCompilation,
-						},
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo22:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(
+      db,
+      transaction,
+      "DefaultCompilation",
+      "defaultCompilation",
+      (oldDefaultCompilation) => {
+        const newDefaultCompilation = upgradeCompilationTo22(
+          oldDefaultCompilation[0].defaultCompilation as Record<string, unknown>,
+        );
+        return [
+          {
+            id: "defaultCompilation",
+            defaultCompilation: {
+              ...newDefaultCompilation,
+            },
+          },
+        ];
+      },
+    );
+  } catch (error) {
+    console.error("Error in upgradeTo22:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(22, upgradeTo22);
 
 async function upgradeTo23(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(db, transaction, "Characters", "", (oldCharacters) => {
-			const newCharacters = upgradeCharactersTo23(oldCharacters);
-			return newCharacters;
-		});
+  try {
+    await itemUpgrade(db, transaction, "Characters", "", (oldCharacters) => {
+      const newCharacters = upgradeCharactersTo23(oldCharacters);
+      return newCharacters;
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"Profiles",
-			"profiles",
-			(oldProfiles) => {
-				const newProfiles = upgradeProfilesTo23(
-					oldProfiles[0].profiles as Record<string, unknown>,
-				);
-				return [
-					{
-						id: "profiles",
-						profiles: newProfiles,
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo23:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
+      const newProfiles = upgradeProfilesTo23(oldProfiles[0].profiles as Record<string, unknown>);
+      return [
+        {
+          id: "profiles",
+          profiles: newProfiles,
+        },
+      ];
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo23:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(23, upgradeTo23);
 
 async function upgradeTo24(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		createStores(db, 24);
-	} catch (error) {
-		console.error("Error in upgradeTo24:", error);
-		transaction.abort();
-	}
+  try {
+    createStores(db, 24);
+  } catch (error) {
+    console.error("Error in upgradeTo24:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(24, upgradeTo24);
 
 async function upgradeTo25(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		createStores(db, 25);
-	} catch (error) {
-		console.error("Error in upgradeTo25:", error);
-		transaction.abort();
-	}
+  try {
+    createStores(db, 25);
+  } catch (error) {
+    console.error("Error in upgradeTo25:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(25, upgradeTo25);
 
 async function upgradeTo26(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				const newCompilationsByAllycode: Map<
-					string,
-					Map<string, Record<string, unknown>>
-				> = new Map();
-				for (const [allycode, compilations] of oldCompilations[0]
-					.compilationByIdByAllycode as Map<
-					string,
-					Map<string, Record<string, unknown>>
-				>) {
-					const newCompilations: Map<
-						string,
-						Record<string, unknown>
-					> = new Map();
-					for (const [compilationId, compilation] of compilations) {
-						const newCompilation = upgradeCompilationTo26(compilation);
-						newCompilations.set(compilationId, newCompilation);
-					}
-					newCompilationsByAllycode.set(allycode, newCompilations);
-				}
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: newCompilationsByAllycode,
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        const newCompilationsByAllycode: Map<
+          string,
+          Map<string, Record<string, unknown>>
+        > = new Map();
+        for (const [allycode, compilations] of oldCompilations[0].compilationByIdByAllycode as Map<
+          string,
+          Map<string, Record<string, unknown>>
+        >) {
+          const newCompilations: Map<string, Record<string, unknown>> = new Map();
+          for (const [compilationId, compilation] of compilations) {
+            const newCompilation = upgradeCompilationTo26(compilation);
+            newCompilations.set(compilationId, newCompilation);
+          }
+          newCompilationsByAllycode.set(allycode, newCompilations);
+        }
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: newCompilationsByAllycode,
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"DefaultCompilation",
-			"defaultCompilation",
-			(oldDefaultCompilation) => {
-				const newDefaultCompilation = upgradeCompilationTo26(
-					oldDefaultCompilation[0].defaultCompilation as Record<
-						string,
-						unknown
-					>,
-				);
-				return [
-					{
-						id: "defaultCompilation",
-						defaultCompilation: {
-							...newDefaultCompilation,
-						},
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo26:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(
+      db,
+      transaction,
+      "DefaultCompilation",
+      "defaultCompilation",
+      (oldDefaultCompilation) => {
+        const newDefaultCompilation = upgradeCompilationTo26(
+          oldDefaultCompilation[0].defaultCompilation as Record<string, unknown>,
+        );
+        return [
+          {
+            id: "defaultCompilation",
+            defaultCompilation: {
+              ...newDefaultCompilation,
+            },
+          },
+        ];
+      },
+    );
+  } catch (error) {
+    console.error("Error in upgradeTo26:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(26, upgradeTo26);
 
 async function upgradeTo27(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		createStores(db, 27);
-		await multiStoreItemUpgrade(
-			db,
-			transaction,
-			["Profiles"],
-			"Mods",
-			(dataByStoreName) => {
-				const oldProfiles = dataByStoreName.get("Profiles") ?? [];
-				if (oldProfiles.length === 0) {
-					const modsEntries: Array<{
-						id: string;
-						modById: Map<string, GIMOFlatMod>;
-					}> = [];
-					return modsEntries;
-				}
-				const profilesEntry = oldProfiles[0];
-				if (!Object.hasOwn(profilesEntry, "profiles")) {
-					throw new Error("Profiles entry does not contain 'profiles' key");
-				}
-				if (
-					!Object.hasOwn(
-						profilesEntry.profiles as Record<string, unknown>,
-						"profileByAllycode",
-					)
-				) {
-					throw new Error(
-						"Profiles entry does not contain 'profileByAllycode' key",
-					);
-				}
-				const profileByAllycode = (
-					profilesEntry.profiles as Record<string, unknown>
-				).profileByAllycode as Record<string, unknown>;
-				const modsEntries: Array<{
-					id: string;
-					modById: Map<string, GIMOFlatMod>;
-				}> = [];
-				for (const [allycode, profile] of Object.entries(profileByAllycode)) {
-					modsEntries.push({
-						id: allycode,
-						modById: (profile as Record<string, unknown>).modById as Map<
-							string,
-							GIMOFlatMod
-						>,
-					});
-				}
-				return modsEntries;
-			},
-		);
-		await multiStoreItemUpgrade(
-			db,
-			transaction,
-			["Profiles"],
-			"Roster",
-			(dataByStoreName) => {
-				const oldProfiles = dataByStoreName.get("Profiles") ?? [];
-				if (oldProfiles.length === 0) {
-					const rosterEntries: Array<{
-						id: string;
-						characterById: Record<string, unknown>;
-					}> = [];
-					return rosterEntries;
-				}
-				const profilesEntry = oldProfiles[0];
-				if (!Object.hasOwn(profilesEntry, "profiles")) {
-					throw new Error("Profiles entry does not contain 'profiles' key");
-				}
-				if (
-					!Object.hasOwn(
-						profilesEntry.profiles as Record<string, unknown>,
-						"profileByAllycode",
-					)
-				) {
-					throw new Error(
-						"Profiles entry does not contain 'profileByAllycode' key",
-					);
-				}
-				const profileByAllycode = (
-					profilesEntry.profiles as Record<string, unknown>
-				).profileByAllycode as Record<string, unknown>;
-				const rosterEntries: Array<{
-					id: string;
-					characterById: Record<string, unknown>;
-				}> = [];
-				for (const [allycode, profile] of Object.entries(profileByAllycode)) {
-					rosterEntries.push({
-						id: allycode,
-						characterById: (profile as Record<string, unknown>)
-							.characterById as Record<string, unknown>,
-					});
-				}
-				return rosterEntries;
-			},
-		);
-		await itemUpgrade(
-			db,
-			transaction,
-			"Profiles",
-			"profiles",
-			(oldProfiles) => {
-				const newProfiles = upgradeProfilesTo27(
-					oldProfiles[0].profiles as Record<string, unknown>,
-				);
-				return [
-					{
-						id: "profiles",
-						profiles: newProfiles,
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo27:", error);
-		transaction.abort();
-	}
+  try {
+    createStores(db, 27);
+    await multiStoreItemUpgrade(db, transaction, ["Profiles"], "Mods", (dataByStoreName) => {
+      const oldProfiles = dataByStoreName.get("Profiles") ?? [];
+      if (oldProfiles.length === 0) {
+        const modsEntries: Array<{
+          id: string;
+          modById: Map<string, GIMOFlatMod>;
+        }> = [];
+        return modsEntries;
+      }
+      const profilesEntry = oldProfiles[0];
+      if (!Object.hasOwn(profilesEntry, "profiles")) {
+        throw new Error("Profiles entry does not contain 'profiles' key");
+      }
+      if (!Object.hasOwn(profilesEntry.profiles as Record<string, unknown>, "profileByAllycode")) {
+        throw new Error("Profiles entry does not contain 'profileByAllycode' key");
+      }
+      const profileByAllycode = (profilesEntry.profiles as Record<string, unknown>)
+        .profileByAllycode as Record<string, unknown>;
+      const modsEntries: Array<{
+        id: string;
+        modById: Map<string, GIMOFlatMod>;
+      }> = [];
+      for (const [allycode, profile] of Object.entries(profileByAllycode)) {
+        modsEntries.push({
+          id: allycode,
+          modById: (profile as Record<string, unknown>).modById as Map<string, GIMOFlatMod>,
+        });
+      }
+      return modsEntries;
+    });
+    await multiStoreItemUpgrade(db, transaction, ["Profiles"], "Roster", (dataByStoreName) => {
+      const oldProfiles = dataByStoreName.get("Profiles") ?? [];
+      if (oldProfiles.length === 0) {
+        const rosterEntries: Array<{
+          id: string;
+          characterById: Record<string, unknown>;
+        }> = [];
+        return rosterEntries;
+      }
+      const profilesEntry = oldProfiles[0];
+      if (!Object.hasOwn(profilesEntry, "profiles")) {
+        throw new Error("Profiles entry does not contain 'profiles' key");
+      }
+      if (!Object.hasOwn(profilesEntry.profiles as Record<string, unknown>, "profileByAllycode")) {
+        throw new Error("Profiles entry does not contain 'profileByAllycode' key");
+      }
+      const profileByAllycode = (profilesEntry.profiles as Record<string, unknown>)
+        .profileByAllycode as Record<string, unknown>;
+      const rosterEntries: Array<{
+        id: string;
+        characterById: Record<string, unknown>;
+      }> = [];
+      for (const [allycode, profile] of Object.entries(profileByAllycode)) {
+        rosterEntries.push({
+          id: allycode,
+          characterById: (profile as Record<string, unknown>).characterById as Record<
+            string,
+            unknown
+          >,
+        });
+      }
+      return rosterEntries;
+    });
+    await itemUpgrade(db, transaction, "Profiles", "profiles", (oldProfiles) => {
+      const newProfiles = upgradeProfilesTo27(oldProfiles[0].profiles as Record<string, unknown>);
+      return [
+        {
+          id: "profiles",
+          profiles: newProfiles,
+        },
+      ];
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo27:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(27, upgradeTo27);
 
 async function upgradeTo28(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(db, transaction, "Templates", "", (oldTemplates) => {
-			const newTemplates = upgradeCharacterTemplatesTo28(oldTemplates);
-			return newTemplates;
-		});
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				const newCompilationsByAllycode: Map<
-					string,
-					Map<string, Record<string, unknown>>
-				> = new Map();
-				for (const [allycode, compilations] of oldCompilations[0]
-					.compilationByIdByAllycode as Map<
-					string,
-					Map<string, Record<string, unknown>>
-				>) {
-					const newCompilations: Map<
-						string,
-						Record<string, unknown>
-					> = new Map();
-					for (const [compilationId, compilation] of compilations) {
-						const newCompilation = upgradeCompilationTo28(compilation);
-						newCompilations.set(compilationId, newCompilation);
-					}
-					newCompilationsByAllycode.set(allycode, newCompilations);
-				}
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: newCompilationsByAllycode,
-					},
-				];
-			},
-		);
+  try {
+    await itemUpgrade(db, transaction, "Templates", "", (oldTemplates) => {
+      const newTemplates = upgradeCharacterTemplatesTo28(oldTemplates);
+      return newTemplates;
+    });
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        const newCompilationsByAllycode: Map<
+          string,
+          Map<string, Record<string, unknown>>
+        > = new Map();
+        for (const [allycode, compilations] of oldCompilations[0].compilationByIdByAllycode as Map<
+          string,
+          Map<string, Record<string, unknown>>
+        >) {
+          const newCompilations: Map<string, Record<string, unknown>> = new Map();
+          for (const [compilationId, compilation] of compilations) {
+            const newCompilation = upgradeCompilationTo28(compilation);
+            newCompilations.set(compilationId, newCompilation);
+          }
+          newCompilationsByAllycode.set(allycode, newCompilations);
+        }
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: newCompilationsByAllycode,
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"DefaultCompilation",
-			"defaultCompilation",
-			(oldDefaultCompilation) => {
-				const newDefaultCompilation = upgradeCompilationTo28(
-					oldDefaultCompilation[0].defaultCompilation as Record<
-						string,
-						unknown
-					>,
-				);
-				return [
-					{
-						id: "defaultCompilation",
-						defaultCompilation: {
-							...newDefaultCompilation,
-						},
-					},
-				];
-			},
-		);
-	} catch (error) {
-		console.error("Error in upgradeTo28:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(
+      db,
+      transaction,
+      "DefaultCompilation",
+      "defaultCompilation",
+      (oldDefaultCompilation) => {
+        const newDefaultCompilation = upgradeCompilationTo28(
+          oldDefaultCompilation[0].defaultCompilation as Record<string, unknown>,
+        );
+        return [
+          {
+            id: "defaultCompilation",
+            defaultCompilation: {
+              ...newDefaultCompilation,
+            },
+          },
+        ];
+      },
+    );
+  } catch (error) {
+    console.error("Error in upgradeTo28:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(28, upgradeTo28);
 
 async function upgradeTo29(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
-			const newRosters = upgradeRostersTo29(oldRosters);
-			return newRosters;
-		});
-	} catch (error) {
-		console.error("Error in upgradeTo29:", error);
-		transaction.abort();
-	}
+  try {
+    await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
+      const newRosters = upgradeRostersTo29(oldRosters);
+      return newRosters;
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo29:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(29, upgradeTo29);
 
 async function upgradeTo30(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
-			const newRosters = upgradeRostersTo30(oldRosters);
-			return newRosters;
-		});
-	} catch (error) {
-		console.error("Error in upgradeTo30:", error);
-		transaction.abort();
-	}
+  try {
+    await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
+      const newRosters = upgradeRostersTo30(oldRosters);
+      return newRosters;
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo30:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(30, upgradeTo30);
 
 async function upgradeTo31(db: IDBDatabase, transaction: IDBTransaction) {
-	try {
-		await itemUpgrade(db, transaction, "Templates", "", (oldTemplates) => {
-			const newTemplates = upgradeCharacterTemplatesTo31(oldTemplates);
-			return newTemplates;
-		});
+  try {
+    await itemUpgrade(db, transaction, "Templates", "", (oldTemplates) => {
+      const newTemplates = upgradeCharacterTemplatesTo31(oldTemplates);
+      return newTemplates;
+    });
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"Compilations",
-			"compilationByIdByAllycode",
-			(oldCompilations) => {
-				const newCompilationsByAllycode: Map<
-					string,
-					Map<string, Record<string, unknown>>
-				> = new Map();
-				for (const [allycode, compilations] of oldCompilations[0]
-					.compilationByIdByAllycode as Map<
-					string,
-					Map<string, Record<string, unknown>>
-				>) {
-					const newCompilations: Map<
-						string,
-						Record<string, unknown>
-					> = new Map();
-					for (const [compilationId, compilation] of compilations) {
-						const newCompilation = upgradeCompilationTo31(compilation);
-						newCompilations.set(compilationId, newCompilation);
-					}
-					newCompilationsByAllycode.set(allycode, newCompilations);
-				}
-				return [
-					{
-						id: "compilationByIdByAllycode",
-						compilationByIdByAllycode: newCompilationsByAllycode,
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "Compilations",
+      "compilationByIdByAllycode",
+      (oldCompilations) => {
+        const newCompilationsByAllycode: Map<
+          string,
+          Map<string, Record<string, unknown>>
+        > = new Map();
+        for (const [allycode, compilations] of oldCompilations[0].compilationByIdByAllycode as Map<
+          string,
+          Map<string, Record<string, unknown>>
+        >) {
+          const newCompilations: Map<string, Record<string, unknown>> = new Map();
+          for (const [compilationId, compilation] of compilations) {
+            const newCompilation = upgradeCompilationTo31(compilation);
+            newCompilations.set(compilationId, newCompilation);
+          }
+          newCompilationsByAllycode.set(allycode, newCompilations);
+        }
+        return [
+          {
+            id: "compilationByIdByAllycode",
+            compilationByIdByAllycode: newCompilationsByAllycode,
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(
-			db,
-			transaction,
-			"DefaultCompilation",
-			"defaultCompilation",
-			(oldDefaultCompilation) => {
-				const newDefaultCompilation = upgradeCompilationTo31(
-					oldDefaultCompilation[0].defaultCompilation as Record<
-						string,
-						unknown
-					>,
-				);
-				return [
-					{
-						id: "defaultCompilation",
-						defaultCompilation: {
-							...newDefaultCompilation,
-						},
-					},
-				];
-			},
-		);
+    await itemUpgrade(
+      db,
+      transaction,
+      "DefaultCompilation",
+      "defaultCompilation",
+      (oldDefaultCompilation) => {
+        const newDefaultCompilation = upgradeCompilationTo31(
+          oldDefaultCompilation[0].defaultCompilation as Record<string, unknown>,
+        );
+        return [
+          {
+            id: "defaultCompilation",
+            defaultCompilation: {
+              ...newDefaultCompilation,
+            },
+          },
+        ];
+      },
+    );
 
-		await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
-			const newRosters = upgradeRostersTo31(oldRosters);
-			return newRosters;
-		});
-	} catch (error) {
-		console.error("Error in upgradeTo31:", error);
-		transaction.abort();
-	}
+    await itemUpgrade(db, transaction, "Roster", "", (oldRosters) => {
+      const newRosters = upgradeRostersTo31(oldRosters);
+      return newRosters;
+    });
+  } catch (error) {
+    console.error("Error in upgradeTo31:", error);
+    transaction.abort();
+  }
 }
 dbUpgrades.set(31, upgradeTo31);
 
 const persistOptions = configureSynced({
-	persist: {
-		plugin: observablePersistIndexedDB({
-			databaseName: "GIMO",
-			version: latestDBVersion,
-			tableNames: getStoreNamesForVersion(latestDBVersion),
-			onUpgradeNeeded: async (event) => {
-				const request = event.target as IDBOpenDBRequest;
-				const db = request.result as IDBDatabase;
-				const transaction = request.transaction;
-				if (event.oldVersion === 0) {
-					createStores(db, latestDBVersion);
-				}
-				if (transaction !== null) {
-					for (const [version, upgradeFunction] of dbUpgrades) {
-						if (event.oldVersion < version) {
-							await upgradeFunction(db, transaction);
-						}
-					}
-				}
-			},
-		}),
-	},
+  persist: {
+    plugin: observablePersistIndexedDB({
+      databaseName: "GIMO",
+      version: latestDBVersion,
+      tableNames: getStoreNamesForVersion(latestDBVersion),
+      onUpgradeNeeded: async (event) => {
+        const request = event.target as IDBOpenDBRequest;
+        const db = request.result as IDBDatabase;
+        const transaction = request.transaction;
+        if (event.oldVersion === 0) {
+          createStores(db, latestDBVersion);
+        }
+        if (transaction !== null) {
+          for (const [version, upgradeFunction] of dbUpgrades) {
+            if (event.oldVersion < version) {
+              await upgradeFunction(db, transaction);
+            }
+          }
+        }
+      },
+    }),
+  },
 });
 
-const testing =
-	typeof process !== "undefined" && process.env.NODE_ENV === "test";
+const testing = typeof process !== "undefined" && process.env.NODE_ENV === "test";
 
 const testOnly = testing
-	? {
-			createStores,
-			dbUpgrades,
-			dbVersions,
-		}
-	: undefined;
+  ? {
+      createStores,
+      dbUpgrades,
+      dbVersions,
+    }
+  : undefined;
 
 export {
-	type DBVersions,
-	latestDBVersion,
-	persistOptions,
-	upgradeFilterTo19,
-	upgradeCompilationTo20,
-	upgradeLockedStatusTo20,
-	upgradeProfilesTo21,
-	upgradeCompilationTo22,
-	upgradeProfilesTo23,
-	upgradeCompilationTo26,
-	upgradeProfilesTo27,
-	upgradeCharacterTemplatesTo28,
-	upgradeCompilationTo28,
-	upgradeRostersTo29,
-	upgradeRostersTo30,
-	upgradeCompilationTo31,
-	testOnly,
+  type DBVersions,
+  latestDBVersion,
+  persistOptions,
+  upgradeFilterTo19,
+  upgradeCompilationTo20,
+  upgradeLockedStatusTo20,
+  upgradeProfilesTo21,
+  upgradeCompilationTo22,
+  upgradeProfilesTo23,
+  upgradeCompilationTo26,
+  upgradeProfilesTo27,
+  upgradeCharacterTemplatesTo28,
+  upgradeCompilationTo28,
+  upgradeRostersTo29,
+  upgradeRostersTo30,
+  upgradeCompilationTo31,
+  testOnly,
 };

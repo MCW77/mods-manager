@@ -10,3 +10,4 @@ dist-ssr
 ,*.*
 *.npmrc
 .github/context-mode
+.vitest/

@@ -3,33 +3,28 @@ import { createPrimaryStat, type PrimaryStat } from "#/domain/PrimaryStat";
 import type { C3POPrimaryStatNames, C3POPrimaryStat } from "./C3POPrimaryStat";
 
 const c3PO2GIMOPrimaryStatNameMap: {
-	[key in C3POPrimaryStatNames]: GIMOPrimaryStatNames;
+  [key in C3POPrimaryStatNames]: GIMOPrimaryStatNames;
 } = {
-	5: "Speed",
-	16: "Critical Damage %",
-	17: "Potency %",
-	18: "Tenacity %",
-	48: "Offense %",
-	49: "Defense %",
-	52: "Accuracy %",
-	53: "Critical Chance %",
-	54: "Critical Avoidance %",
-	55: "Health %",
-	56: "Protection %",
+  5: "Speed",
+  16: "Critical Damage %",
+  17: "Potency %",
+  18: "Tenacity %",
+  48: "Offense %",
+  49: "Defense %",
+  52: "Accuracy %",
+  53: "Critical Chance %",
+  54: "Critical Avoidance %",
+  55: "Health %",
+  56: "Protection %",
 };
 
 const fromC3PO = (primary: C3POPrimaryStat): PrimaryStat => {
-	let statValue = "";
-	if (primary.stat.unitStatId === 5) {
-		statValue = String(
-			Math.trunc(Number(primary.stat.statValueDecimal) / 10000),
-		);
-	} else statValue = (Number(primary.stat.statValueDecimal) / 100).toFixed(2);
+  let statValue = "";
+  if (primary.stat.unitStatId === 5) {
+    statValue = String(Math.trunc(Number(primary.stat.statValueDecimal) / 10000));
+  } else statValue = (Number(primary.stat.statValueDecimal) / 100).toFixed(2);
 
-	return createPrimaryStat(
-		c3PO2GIMOPrimaryStatNameMap[primary.stat.unitStatId],
-		statValue,
-	);
+  return createPrimaryStat(c3PO2GIMOPrimaryStatNameMap[primary.stat.unitStatId], statValue);
 };
 
 export { fromC3PO };

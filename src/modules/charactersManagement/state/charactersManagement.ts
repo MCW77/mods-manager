@@ -1,10 +1,5 @@
 // utils
-import {
-	fromScaled,
-	mulScaled,
-	divScaled,
-	toScaled,
-} from "#/utils/scaledNumber";
+import { fromScaled, mulScaled, divScaled, toScaled } from "#/utils/scaledNumber";
 
 // state
 import { type ObservableObject, observable } from "@legendapp/state";
@@ -18,11 +13,11 @@ import { lockedStatus$ } from "#/modules/lockedStatus/state/lockedStatus";
 
 // domain
 import {
-	createCustomCharacterFilter,
-	createTextCharacterFilter,
-	type TextFilter,
-	type CharacterFilter,
-	type CustomFilter,
+  createCustomCharacterFilter,
+  createTextCharacterFilter,
+  type TextFilter,
+  type CharacterFilter,
+  type CustomFilter,
 } from "../domain/CharacterFilterById";
 import type { CharactersManagementObservable } from "../domain/CharactersManagementObservable";
 import { eraByCharacter, eras } from "../domain/Eras";
@@ -34,650 +29,586 @@ import type { Character } from "#/domain/Character";
 import { DamageType } from "#/domain/CharacterSettings";
 import type * as CharacterStatNames from "#/domain/CharacterStatNames";
 import {
-	createCharacterSummaryStat,
-	getDisplayType as getCSDisplayType,
-	type NonCalculatedCharacterSummaryStat,
+  createCharacterSummaryStat,
+  getDisplayType as getCSDisplayType,
+  type NonCalculatedCharacterSummaryStat,
 } from "#/domain/CharacterSummaryStat";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
-import {
-	type Stat,
-	display2CSGIMOStatNamesMap,
-	getDisplayType,
-	getStatValue,
-} from "#/domain/Stat";
+import { type Stat, display2CSGIMOStatNamesMap, getDisplayType, getStatValue } from "#/domain/Stat";
 
-const addCategoryFilter = (
-	customFilterById: Map<string, CustomFilter>,
-	category: string,
-) => {
-	const filterString = category.replace("Role--", "").replace("Faction--", "");
-	const categoryFilter = createCustomCharacterFilter(
-		category,
-		(character: Character) => {
-			return characters$.baseCharacterById[character.id].categories.includes(
-				filterString,
-			);
-		},
-	);
-	customFilterById.set(category, categoryFilter);
+const addCategoryFilter = (customFilterById: Map<string, CustomFilter>, category: string) => {
+  const filterString = category.replace("Role--", "").replace("Faction--", "");
+  const categoryFilter = createCustomCharacterFilter(category, (character: Character) => {
+    return characters$.baseCharacterById[character.id].categories.includes(filterString);
+  });
+  customFilterById.set(category, categoryFilter);
 };
 
-const addEraFilter = (
-	customFilterById: Map<string, CustomFilter>,
-	era: string,
-) => {
-	const filterString = era.replace("Era--", "");
-	const eraFilter = createCustomCharacterFilter(era, (character: Character) => {
-		if (eraByCharacter.get(character.id) === filterString) return true;
-		return false;
-	});
-	customFilterById.set(era, eraFilter);
+const addEraFilter = (customFilterById: Map<string, CustomFilter>, era: string) => {
+  const filterString = era.replace("Era--", "");
+  const eraFilter = createCustomCharacterFilter(era, (character: Character) => {
+    if (eraByCharacter.get(character.id) === filterString) return true;
+    return false;
+  });
+  customFilterById.set(era, eraFilter);
 };
 
 const getDefaultFilterSetup = () => {
-	const result = {
-		id: "filterSetup",
-		filterSetup: {
-			customFilterById: new Map<string, CustomFilter>([
-				[
-					"None",
-					{
-						id: "None",
-						type: "custom",
-						filter: "None",
-						filterPredicate: () => true,
-					},
-				],
-				[
-					"Has Stat Targets",
-					{
-						id: "Has Stat Targets",
-						type: "custom",
-						filter: "Has Stat Targets",
-						filterPredicate: (character: Character) => {
-							const selectedCharacters =
-								defaultCompilation$.data.selectedCharacters.peek();
-							const selectedCharacter = selectedCharacters.find(
-								(c) => c.id === character.id,
-							);
-							if (selectedCharacter === undefined) return false;
-							return selectedCharacter.target.targetStats.length > 0;
-						},
-					},
-				],
-				[
-					"Missing Mods",
-					{
-						id: "Missing Mods",
-						type: "custom",
-						filter: "Missing Mods",
-						filterPredicate: (character: Character) => {
-							const modAssignments =
-								defaultCompilation$.data.flatCharacterModdings.peek();
-							const modsAssignedToCharacter = modAssignments.find(
-								(ma) => ma.characterId === character.id,
-							);
-							if (modsAssignedToCharacter !== undefined)
-								return modsAssignedToCharacter.assignedMods.length < 6;
-							const modsEquippedOnCharacter = [
-								...mods$.activeModById.peek().values(),
-							].filter((mod) => mod.characterID === character.id);
-							return modsEquippedOnCharacter.length < 6;
-						},
-					},
-				],
-				[
-					"Needs Leveling",
-					{
-						id: "Needs Leveling",
-						type: "custom",
-						filter: "Needs Leveling",
-						filterPredicate: (character: Character) => {
-							const modAssignments =
-								defaultCompilation$.data.flatCharacterModdings.peek();
-							const modsAssignedToCharacter = modAssignments.find(
-								(ma) => ma.characterId === character.id,
-							);
-							if (modsAssignedToCharacter !== undefined) {
-								const modsAssignedToCharacter2 = {
-									...modsAssignedToCharacter,
-									assignedMods: modsAssignedToCharacter.assignedMods
-										.map((modId) => {
-											return mods$.activeModById.peek().get(modId);
-										})
-										.filter((mod) => mod !== undefined),
-								};
-								return modsAssignedToCharacter2.assignedMods.some(
-									(mod) => mod.level < 15,
-								);
-							}
-							const modsEquippedOnCharacter = [
-								...mods$.activeModById.peek().values(),
-							].filter((mod) => mod.characterID === character.id);
-							return modsEquippedOnCharacter.some((mod) => mod.level < 15);
-						},
-					},
-				],
-				[
-					"Locked",
-					{
-						id: "Locked",
-						type: "custom",
-						filter: "Locked",
-						filterPredicate: (character: Character) => {
-							return lockedStatus$.lockedCharactersForActivePlayer.has(
-								character.id,
-							);
-						},
-					},
-				],
-				[
-					"Unlocked",
-					{
-						id: "Unlocked",
-						type: "custom",
-						filter: "Unlocked",
-						filterPredicate: (character: Character) => {
-							return !lockedStatus$.lockedCharactersForActivePlayer.has(
-								character.id,
-							);
-						},
-					},
-				],
-				[
-					"Missing Zetas",
-					{
-						id: "Missing Zetas",
-						type: "custom",
-						filter: "Missing Zetas",
-						filterPredicate: (character: Character) => {
-							const baseCharacter =
-								characters$.baseCharacterById.peek()[character.id];
-							const possibleZetasCount = baseCharacter.zetas.length;
-							const actualZetasCount = character.zetas.length;
-							return actualZetasCount < possibleZetasCount;
-						},
-					},
-				],
-				[
-					"Missing Omicrons",
-					{
-						id: "Missing Omicrons",
-						type: "custom",
-						filter: "Missing Omicrons",
-						filterPredicate: (character: Character) => {
-							const baseCharacter =
-								characters$.baseCharacterById.peek()[character.id];
-							const possibleOmicronsCount = baseCharacter.omicrons.length;
-							const actualOmicronsCount = character.omis.length;
-							return actualOmicronsCount < possibleOmicronsCount;
-						},
-					},
-				],
-				[
-					"Missing GAC Omicrons",
-					{
-						id: "Missing GAC Omicrons",
-						type: "custom",
-						filter: "Missing GAC Omicrons",
-						filterPredicate: (character: Character) => {
-							const baseCharacter =
-								characters$.baseCharacterById.peek()[character.id];
-							const possibleOmicronsCount = baseCharacter.omicrons.filter(
-								(omicron) => omicron.mode === "gac",
-							).length;
-							const actualOmicronsCount = character.omis.filter(
-								(omicron) =>
-									baseCharacter.omicrons.find(
-										(omi) => omi.key === omicron.toUpperCase(),
-									)?.mode === "gac",
-							).length;
+  const result = {
+    id: "filterSetup",
+    filterSetup: {
+      customFilterById: new Map<string, CustomFilter>([
+        [
+          "None",
+          {
+            id: "None",
+            type: "custom",
+            filter: "None",
+            filterPredicate: () => true,
+          },
+        ],
+        [
+          "Has Stat Targets",
+          {
+            id: "Has Stat Targets",
+            type: "custom",
+            filter: "Has Stat Targets",
+            filterPredicate: (character: Character) => {
+              const selectedCharacters = defaultCompilation$.data.selectedCharacters.peek();
+              const selectedCharacter = selectedCharacters.find((c) => c.id === character.id);
+              if (selectedCharacter === undefined) return false;
+              return selectedCharacter.target.targetStats.length > 0;
+            },
+          },
+        ],
+        [
+          "Missing Mods",
+          {
+            id: "Missing Mods",
+            type: "custom",
+            filter: "Missing Mods",
+            filterPredicate: (character: Character) => {
+              const modAssignments = defaultCompilation$.data.flatCharacterModdings.peek();
+              const modsAssignedToCharacter = modAssignments.find(
+                (ma) => ma.characterId === character.id,
+              );
+              if (modsAssignedToCharacter !== undefined)
+                return modsAssignedToCharacter.assignedMods.length < 6;
+              const modsEquippedOnCharacter = [...mods$.activeModById.peek().values()].filter(
+                (mod) => mod.characterID === character.id,
+              );
+              return modsEquippedOnCharacter.length < 6;
+            },
+          },
+        ],
+        [
+          "Needs Leveling",
+          {
+            id: "Needs Leveling",
+            type: "custom",
+            filter: "Needs Leveling",
+            filterPredicate: (character: Character) => {
+              const modAssignments = defaultCompilation$.data.flatCharacterModdings.peek();
+              const modsAssignedToCharacter = modAssignments.find(
+                (ma) => ma.characterId === character.id,
+              );
+              if (modsAssignedToCharacter !== undefined) {
+                const modsAssignedToCharacter2 = {
+                  ...modsAssignedToCharacter,
+                  assignedMods: modsAssignedToCharacter.assignedMods
+                    .map((modId) => {
+                      return mods$.activeModById.peek().get(modId);
+                    })
+                    .filter((mod) => mod !== undefined),
+                };
+                return modsAssignedToCharacter2.assignedMods.some((mod) => mod.level < 15);
+              }
+              const modsEquippedOnCharacter = [...mods$.activeModById.peek().values()].filter(
+                (mod) => mod.characterID === character.id,
+              );
+              return modsEquippedOnCharacter.some((mod) => mod.level < 15);
+            },
+          },
+        ],
+        [
+          "Locked",
+          {
+            id: "Locked",
+            type: "custom",
+            filter: "Locked",
+            filterPredicate: (character: Character) => {
+              return lockedStatus$.lockedCharactersForActivePlayer.has(character.id);
+            },
+          },
+        ],
+        [
+          "Unlocked",
+          {
+            id: "Unlocked",
+            type: "custom",
+            filter: "Unlocked",
+            filterPredicate: (character: Character) => {
+              return !lockedStatus$.lockedCharactersForActivePlayer.has(character.id);
+            },
+          },
+        ],
+        [
+          "Missing Zetas",
+          {
+            id: "Missing Zetas",
+            type: "custom",
+            filter: "Missing Zetas",
+            filterPredicate: (character: Character) => {
+              const baseCharacter = characters$.baseCharacterById.peek()[character.id];
+              const possibleZetasCount = baseCharacter.zetas.length;
+              const actualZetasCount = character.zetas.length;
+              return actualZetasCount < possibleZetasCount;
+            },
+          },
+        ],
+        [
+          "Missing Omicrons",
+          {
+            id: "Missing Omicrons",
+            type: "custom",
+            filter: "Missing Omicrons",
+            filterPredicate: (character: Character) => {
+              const baseCharacter = characters$.baseCharacterById.peek()[character.id];
+              const possibleOmicronsCount = baseCharacter.omicrons.length;
+              const actualOmicronsCount = character.omis.length;
+              return actualOmicronsCount < possibleOmicronsCount;
+            },
+          },
+        ],
+        [
+          "Missing GAC Omicrons",
+          {
+            id: "Missing GAC Omicrons",
+            type: "custom",
+            filter: "Missing GAC Omicrons",
+            filterPredicate: (character: Character) => {
+              const baseCharacter = characters$.baseCharacterById.peek()[character.id];
+              const possibleOmicronsCount = baseCharacter.omicrons.filter(
+                (omicron) => omicron.mode === "gac",
+              ).length;
+              const actualOmicronsCount = character.omis.filter(
+                (omicron) =>
+                  baseCharacter.omicrons.find((omi) => omi.key === omicron.toUpperCase())?.mode ===
+                  "gac",
+              ).length;
 
-							return (
-								possibleOmicronsCount > 0 &&
-								actualOmicronsCount < possibleOmicronsCount
-							);
-						},
-					},
-				],
-				[
-					"Missing TW Omicrons",
-					{
-						id: "Missing TW Omicrons",
-						type: "custom",
-						filter: "Missing TW Omicrons",
-						filterPredicate: (character: Character) => {
-							const baseCharacter =
-								characters$.baseCharacterById.peek()[character.id];
-							const possibleOmicronsCount = baseCharacter.omicrons.filter(
-								(omicron) => omicron.mode === "tw",
-							).length;
-							const actualOmicronsCount = character.omis.filter(
-								(omicron) =>
-									baseCharacter.omicrons.find(
-										(omi) => omi.key === omicron.toUpperCase(),
-									)?.mode === "tw",
-							).length;
+              return possibleOmicronsCount > 0 && actualOmicronsCount < possibleOmicronsCount;
+            },
+          },
+        ],
+        [
+          "Missing TW Omicrons",
+          {
+            id: "Missing TW Omicrons",
+            type: "custom",
+            filter: "Missing TW Omicrons",
+            filterPredicate: (character: Character) => {
+              const baseCharacter = characters$.baseCharacterById.peek()[character.id];
+              const possibleOmicronsCount = baseCharacter.omicrons.filter(
+                (omicron) => omicron.mode === "tw",
+              ).length;
+              const actualOmicronsCount = character.omis.filter(
+                (omicron) =>
+                  baseCharacter.omicrons.find((omi) => omi.key === omicron.toUpperCase())?.mode ===
+                  "tw",
+              ).length;
 
-							return (
-								possibleOmicronsCount > 0 &&
-								actualOmicronsCount < possibleOmicronsCount
-							);
-						},
-					},
-				],
-				[
-					"Missing TB Omicrons",
-					{
-						id: "Missing TB Omicrons",
-						type: "custom",
-						filter: "Missing TB Omicrons",
-						filterPredicate: (character: Character) => {
-							const baseCharacter =
-								characters$.baseCharacterById.peek()[character.id];
-							const possibleOmicronsCount = baseCharacter.omicrons.filter(
-								(omicron) => omicron.mode === "tb",
-							).length;
-							const actualOmicronsCount = character.omis.filter(
-								(omicron) =>
-									baseCharacter.omicrons.find(
-										(omi) => omi.key === omicron.toUpperCase(),
-									)?.mode === "tb",
-							).length;
+              return possibleOmicronsCount > 0 && actualOmicronsCount < possibleOmicronsCount;
+            },
+          },
+        ],
+        [
+          "Missing TB Omicrons",
+          {
+            id: "Missing TB Omicrons",
+            type: "custom",
+            filter: "Missing TB Omicrons",
+            filterPredicate: (character: Character) => {
+              const baseCharacter = characters$.baseCharacterById.peek()[character.id];
+              const possibleOmicronsCount = baseCharacter.omicrons.filter(
+                (omicron) => omicron.mode === "tb",
+              ).length;
+              const actualOmicronsCount = character.omis.filter(
+                (omicron) =>
+                  baseCharacter.omicrons.find((omi) => omi.key === omicron.toUpperCase())?.mode ===
+                  "tb",
+              ).length;
 
-							return (
-								possibleOmicronsCount > 0 &&
-								actualOmicronsCount < possibleOmicronsCount
-							);
-						},
-					},
-				],
-				[
-					"Physical Damage",
-					{
-						id: "Physical Damage",
-						type: "custom",
-						filter: "Physical Damage",
-						filterPredicate: (character: Character) => {
-							const damageType = characterSettings[character.id]?.damageType;
-							return damageType === DamageType.physical;
-						},
-					},
-				],
-				[
-					"Special Damage",
-					{
-						id: "Special Damage",
-						type: "custom",
-						filter: "Special Damage",
-						filterPredicate: (character: Character) => {
-							const damageType = characterSettings[character.id]?.damageType;
-							return damageType === DamageType.special;
-						},
-					},
-				],
-				[
-					"Mixed Damage",
-					{
-						id: "Mixed Damage",
-						type: "custom",
-						filter: "Mixed Damage",
-						filterPredicate: (character: Character) => {
-							const damageType = characterSettings[character.id]?.damageType;
-							return damageType === DamageType.mixed;
-						},
-					},
-				],
-				[
-					"Naboo-All",
-					{
-						id: "Naboo-All",
-						type: "custom",
-						filter: "All",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "QUEENAMIDALA" ||
-								character.id === "MASTERQUIGON" ||
-								character.id === "PADAWANOBIWAN" ||
-								character.id === "MAUL" ||
-								character.id === "DARTHSIDIOUS" ||
-								character.id === "NUTEGUNRAY" ||
-								character.id === "JARJARBINKS" ||
-								character.id === "BOSSNASS" ||
-								character.id === "CAPTAINTARPALS" ||
-								character.id === "GUNGANPHALANX" ||
-								character.id === "BOOMADIER" ||
-								character.id === "KELLERANBEQ" ||
-								character.id === "KIADIMUNDI" ||
-								character.id === "MACEWINDU" ||
-								character.id === "SHAAKTI" ||
-								character.id === "GRANDMASTERYODA" ||
-								character.id === "LUMINARAUNDULI" ||
-								character.id === "KITFISTO" ||
-								character.id === "PLOKOON" ||
-								character.id === "QUIGONJINN" ||
-								character.id === "AAYLASECURA" ||
-								character.id === "B2SUPERBATTLEDROID" ||
-								character.id === "MAGNAGUARD" ||
-								character.id === "DROIDEKA" ||
-								character.id === "B1BATTLEDROIDV2" ||
-								character.id === "STAP" ||
-								character.id === "R2D2_LEGENDARY" ||
-								character.id === "JEDIKNIGHTGUARDIAN" ||
-								character.id === "EETHKOTH" ||
-								character.id === "JEDIKNIGHTCONSULAR"
-							);
-						},
-					},
-				],
-				[
-					"Naboo-QA",
-					{
-						id: "Naboo-QA",
-						type: "custom",
-						filter: "QA",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "QUEENAMIDALA" ||
-								character.id === "MASTERQUIGON" ||
-								character.id === "PADAWANOBIWAN"
-							);
-						},
-					},
-				],
-				[
-					"Naboo-Maul/Sidious/Nute",
-					{
-						id: "Naboo-Maul/Sidious/Nute",
-						type: "custom",
-						filter: "Maul/Sidious/Nute",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "MAUL" ||
-								character.id === "DARTHSIDIOUS" ||
-								character.id === "NUTEGUNRAY"
-							);
-						},
-					},
-				],
-				[
-					"Naboo-Gungans",
-					{
-						id: "Naboo-Gungans",
-						type: "custom",
-						filter: "Gungans",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "JARJARBINKS" ||
-								character.id === "BOSSNASS" ||
-								character.id === "CAPTAINTARPALS" ||
-								character.id === "GUNGANPHALANX" ||
-								character.id === "BOOMADIER"
-							);
-						},
-					},
-				],
-				[
-					"Naboo-KB",
-					{
-						id: "Naboo-KB",
-						type: "custom",
-						filter: "KB",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "KELLERANBEQ" ||
-								character.id === "KIADIMUNDI" ||
-								character.id === "MACEWINDU" ||
-								character.id === "SHAAKTI" ||
-								character.id === "GRANDMASTERYODA"
-							);
-						},
-					},
-				],
-				[
-					"Naboo-Lumi",
-					{
-						id: "Naboo-Lumi",
-						type: "custom",
-						filter: "Lumi",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "LUMINARAUNDULI" ||
-								character.id === "KITFISTO" ||
-								character.id === "PLOKOON" ||
-								character.id === "GRANDMASTERYODA" ||
-								character.id === "QUIGONJINN"
-							);
-						},
-					},
-				],
-				[
-					"Naboo-B2",
-					{
-						id: "Naboo-B2",
-						type: "custom",
-						filter: "B2",
-						filterPredicate: (character: Character) => {
-							return (
-								character.id === "B2SUPERBATTLEDROID" ||
-								character.id === "MAGNAGUARD" ||
-								character.id === "DROIDEKA" ||
-								character.id === "B1BATTLEDROIDV2" ||
-								character.id === "STAP"
-							);
-						},
-					},
-				],
-			]),
-			permanentFilterById: new Map<string, CustomFilter>([
-				[
-					"stars",
-					{
-						id: "stars",
-						type: "custom",
-						filter: "stars",
-						filterPredicate: (character: Character) => {
-							return (
-								charactersManagement$.filterSetup.starsRange.peek()[0] <=
-									character.playerValues.stars &&
-								character.playerValues.stars <=
-									charactersManagement$.filterSetup.starsRange.peek()[1]
-							);
-						},
-					},
-				],
-				[
-					"level",
-					{
-						id: "level",
-						type: "custom",
-						filter: "level",
-						filterPredicate: (character: Character) => {
-							return (
-								charactersManagement$.filterSetup.levelRange.peek()[0] <=
-									character.playerValues.level &&
-								character.playerValues.level <=
-									charactersManagement$.filterSetup.levelRange.peek()[1]
-							);
-						},
-					},
-				],
-				[
-					"gearLevel",
-					{
-						id: "gearLevel",
-						type: "custom",
-						filter: "gearLevel",
-						filterPredicate: (character: Character) => {
-							const minGear =
-								charactersManagement$.filterSetup.gearLevelRange.peek()[0];
-							const maxGear =
-								charactersManagement$.filterSetup.gearLevelRange.peek()[1];
+              return possibleOmicronsCount > 0 && actualOmicronsCount < possibleOmicronsCount;
+            },
+          },
+        ],
+        [
+          "Physical Damage",
+          {
+            id: "Physical Damage",
+            type: "custom",
+            filter: "Physical Damage",
+            filterPredicate: (character: Character) => {
+              const damageType = characterSettings[character.id]?.damageType;
+              return damageType === DamageType.physical;
+            },
+          },
+        ],
+        [
+          "Special Damage",
+          {
+            id: "Special Damage",
+            type: "custom",
+            filter: "Special Damage",
+            filterPredicate: (character: Character) => {
+              const damageType = characterSettings[character.id]?.damageType;
+              return damageType === DamageType.special;
+            },
+          },
+        ],
+        [
+          "Mixed Damage",
+          {
+            id: "Mixed Damage",
+            type: "custom",
+            filter: "Mixed Damage",
+            filterPredicate: (character: Character) => {
+              const damageType = characterSettings[character.id]?.damageType;
+              return damageType === DamageType.mixed;
+            },
+          },
+        ],
+        [
+          "Naboo-All",
+          {
+            id: "Naboo-All",
+            type: "custom",
+            filter: "All",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "QUEENAMIDALA" ||
+                character.id === "MASTERQUIGON" ||
+                character.id === "PADAWANOBIWAN" ||
+                character.id === "MAUL" ||
+                character.id === "DARTHSIDIOUS" ||
+                character.id === "NUTEGUNRAY" ||
+                character.id === "JARJARBINKS" ||
+                character.id === "BOSSNASS" ||
+                character.id === "CAPTAINTARPALS" ||
+                character.id === "GUNGANPHALANX" ||
+                character.id === "BOOMADIER" ||
+                character.id === "KELLERANBEQ" ||
+                character.id === "KIADIMUNDI" ||
+                character.id === "MACEWINDU" ||
+                character.id === "SHAAKTI" ||
+                character.id === "GRANDMASTERYODA" ||
+                character.id === "LUMINARAUNDULI" ||
+                character.id === "KITFISTO" ||
+                character.id === "PLOKOON" ||
+                character.id === "QUIGONJINN" ||
+                character.id === "AAYLASECURA" ||
+                character.id === "B2SUPERBATTLEDROID" ||
+                character.id === "MAGNAGUARD" ||
+                character.id === "DROIDEKA" ||
+                character.id === "B1BATTLEDROIDV2" ||
+                character.id === "STAP" ||
+                character.id === "R2D2_LEGENDARY" ||
+                character.id === "JEDIKNIGHTGUARDIAN" ||
+                character.id === "EETHKOTH" ||
+                character.id === "JEDIKNIGHTCONSULAR"
+              );
+            },
+          },
+        ],
+        [
+          "Naboo-QA",
+          {
+            id: "Naboo-QA",
+            type: "custom",
+            filter: "QA",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "QUEENAMIDALA" ||
+                character.id === "MASTERQUIGON" ||
+                character.id === "PADAWANOBIWAN"
+              );
+            },
+          },
+        ],
+        [
+          "Naboo-Maul/Sidious/Nute",
+          {
+            id: "Naboo-Maul/Sidious/Nute",
+            type: "custom",
+            filter: "Maul/Sidious/Nute",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "MAUL" ||
+                character.id === "DARTHSIDIOUS" ||
+                character.id === "NUTEGUNRAY"
+              );
+            },
+          },
+        ],
+        [
+          "Naboo-Gungans",
+          {
+            id: "Naboo-Gungans",
+            type: "custom",
+            filter: "Gungans",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "JARJARBINKS" ||
+                character.id === "BOSSNASS" ||
+                character.id === "CAPTAINTARPALS" ||
+                character.id === "GUNGANPHALANX" ||
+                character.id === "BOOMADIER"
+              );
+            },
+          },
+        ],
+        [
+          "Naboo-KB",
+          {
+            id: "Naboo-KB",
+            type: "custom",
+            filter: "KB",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "KELLERANBEQ" ||
+                character.id === "KIADIMUNDI" ||
+                character.id === "MACEWINDU" ||
+                character.id === "SHAAKTI" ||
+                character.id === "GRANDMASTERYODA"
+              );
+            },
+          },
+        ],
+        [
+          "Naboo-Lumi",
+          {
+            id: "Naboo-Lumi",
+            type: "custom",
+            filter: "Lumi",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "LUMINARAUNDULI" ||
+                character.id === "KITFISTO" ||
+                character.id === "PLOKOON" ||
+                character.id === "GRANDMASTERYODA" ||
+                character.id === "QUIGONJINN"
+              );
+            },
+          },
+        ],
+        [
+          "Naboo-B2",
+          {
+            id: "Naboo-B2",
+            type: "custom",
+            filter: "B2",
+            filterPredicate: (character: Character) => {
+              return (
+                character.id === "B2SUPERBATTLEDROID" ||
+                character.id === "MAGNAGUARD" ||
+                character.id === "DROIDEKA" ||
+                character.id === "B1BATTLEDROIDV2" ||
+                character.id === "STAP"
+              );
+            },
+          },
+        ],
+      ]),
+      permanentFilterById: new Map<string, CustomFilter>([
+        [
+          "stars",
+          {
+            id: "stars",
+            type: "custom",
+            filter: "stars",
+            filterPredicate: (character: Character) => {
+              return (
+                charactersManagement$.filterSetup.starsRange.peek()[0] <=
+                  character.playerValues.stars &&
+                character.playerValues.stars <=
+                  charactersManagement$.filterSetup.starsRange.peek()[1]
+              );
+            },
+          },
+        ],
+        [
+          "level",
+          {
+            id: "level",
+            type: "custom",
+            filter: "level",
+            filterPredicate: (character: Character) => {
+              return (
+                charactersManagement$.filterSetup.levelRange.peek()[0] <=
+                  character.playerValues.level &&
+                character.playerValues.level <=
+                  charactersManagement$.filterSetup.levelRange.peek()[1]
+              );
+            },
+          },
+        ],
+        [
+          "gearLevel",
+          {
+            id: "gearLevel",
+            type: "custom",
+            filter: "gearLevel",
+            filterPredicate: (character: Character) => {
+              const minGear = charactersManagement$.filterSetup.gearLevelRange.peek()[0];
+              const maxGear = charactersManagement$.filterSetup.gearLevelRange.peek()[1];
 
-							const minGearLevel = Math.min(minGear, 13);
-							const maxGearLevel = Math.min(maxGear, 13);
-							const minRelicLevel = minGear > 12 ? minGear - 13 : 0;
-							const maxRelicLevel = maxGear > 12 ? maxGear - 13 : 0;
+              const minGearLevel = Math.min(minGear, 13);
+              const maxGearLevel = Math.min(maxGear, 13);
+              const minRelicLevel = minGear > 12 ? minGear - 13 : 0;
+              const maxRelicLevel = maxGear > 12 ? maxGear - 13 : 0;
 
-							return (
-								minGearLevel <= character.playerValues.gearLevel &&
-								character.playerValues.gearLevel <= maxGearLevel &&
-								minRelicLevel <= character.playerValues.relicTier - 2 &&
-								character.playerValues.relicTier - 2 <= maxRelicLevel
-							);
-						},
-					},
-				],
-			]),
-			customFilterId: "None",
-			filtersById: new Map<string, CharacterFilter>(),
-			hideSelectedCharacters: true,
-			quickFilter: {
-				id: "quickFilter",
-				type: "text",
-				filter: "",
-			} as TextFilter,
-			gearLevelRange: [1, 23] as [number, number],
-			levelRange: [0, 85] as [number, number],
-			starsRange: [0, 7] as [number, number],
-		},
-	} as const;
-	for (const role of roles) {
-		addCategoryFilter(result.filterSetup.customFilterById, `Role--${role}`);
-	}
-	for (const era of eras) {
-		addEraFilter(result.filterSetup.customFilterById, `Era--${era}`);
-	}
-	for (const faction of factions) {
-		addCategoryFilter(
-			result.filterSetup.customFilterById,
-			`Faction--${faction}`,
-		);
-	}
-	return result;
+              return (
+                minGearLevel <= character.playerValues.gearLevel &&
+                character.playerValues.gearLevel <= maxGearLevel &&
+                minRelicLevel <= character.playerValues.relicTier - 2 &&
+                character.playerValues.relicTier - 2 <= maxRelicLevel
+              );
+            },
+          },
+        ],
+      ]),
+      customFilterId: "None",
+      filtersById: new Map<string, CharacterFilter>(),
+      hideSelectedCharacters: true,
+      quickFilter: {
+        id: "quickFilter",
+        type: "text",
+        filter: "",
+      } as TextFilter,
+      gearLevelRange: [1, 23] as [number, number],
+      levelRange: [0, 85] as [number, number],
+      starsRange: [0, 7] as [number, number],
+    },
+  } as const;
+  for (const role of roles) {
+    addCategoryFilter(result.filterSetup.customFilterById, `Role--${role}`);
+  }
+  for (const era of eras) {
+    addEraFilter(result.filterSetup.customFilterById, `Era--${era}`);
+  }
+  for (const faction of factions) {
+    addCategoryFilter(result.filterSetup.customFilterById, `Faction--${faction}`);
+  }
+  return result;
 };
 
 const charactersManagement$: ObservableObject<CharactersManagementObservable> =
-	observable<CharactersManagementObservable>({
-		persistedData: getDefaultFilterSetup(),
-		filterSetup: () => charactersManagement$.persistedData.filterSetup,
-		activeCustomFilter: () => {
-			const id = charactersManagement$.filterSetup.customFilterId.get();
-			const customFilterById =
-				charactersManagement$.filterSetup.customFilterById.get();
-			if (customFilterById.has(id) === false) return () => true;
-			return customFilterById.get(id)?.filterPredicate ?? (() => true);
-		},
-		addTextFilter: () => {
-			const newFilter = createTextCharacterFilter(
-				charactersManagement$.filterSetup.quickFilter.filter.peek(),
-			);
-			charactersManagement$.filterSetup.filtersById.set(
-				newFilter.id,
-				newFilter,
-			);
-		},
-		/**
-		 * Convert this stat to one or more with flat values, even if it had a percent-based value before
-		 * @param character
-		 * @returns {Array<Stat>}
-		 */
-		getFlatValuesForCharacter: (character: Character, stat: Stat) => {
-			const statPropertyNames =
-				display2CSGIMOStatNamesMap[getDisplayType(stat)];
+  observable<CharactersManagementObservable>({
+    persistedData: getDefaultFilterSetup(),
+    filterSetup: () => charactersManagement$.persistedData.filterSetup,
+    activeCustomFilter: () => {
+      const id = charactersManagement$.filterSetup.customFilterId.get();
+      const customFilterById = charactersManagement$.filterSetup.customFilterById.get();
+      if (customFilterById.has(id) === false) return () => true;
+      return customFilterById.get(id)?.filterPredicate ?? (() => true);
+    },
+    addTextFilter: () => {
+      const newFilter = createTextCharacterFilter(
+        charactersManagement$.filterSetup.quickFilter.filter.peek(),
+      );
+      charactersManagement$.filterSetup.filtersById.set(newFilter.id, newFilter);
+    },
+    /**
+     * Convert this stat to one or more with flat values, even if it had a percent-based value before
+     * @param character
+     * @returns {Array<Stat>}
+     */
+    getFlatValuesForCharacter: (character: Character, stat: Stat) => {
+      const statPropertyNames = display2CSGIMOStatNamesMap[getDisplayType(stat)];
 
-			return statPropertyNames.map((statName) => {
-				if (stat.isPercentVersion && character.playerValues?.equippedStats) {
-					return createCharacterSummaryStat(
-						statName,
-						`${fromScaled(
-							divScaled(
-								mulScaled(
-									stat.scaledValue,
-									toScaled(
-										character?.playerValues?.equippedStats[statName] ?? 0,
-									),
-								),
-								toScaled(100),
-							),
-						)}`,
-					);
-				}
-				if (!stat.isPercentVersion) {
-					return createCharacterSummaryStat(statName, stat.stringValue);
-				}
-				throw new Error(
-					`Stat is given as a percentage, but ${character.id} has no base stats`,
-				);
-			});
-		},
-		/**
-		 * Get the value of this stat for optimization
-		 *
-		 * @param character {Character}
-		 * @param target {OptimizationPlan}
-		 */
-		getOptimizationValue: (
-			character: Character,
-			target: OptimizationPlan,
-			stat: NonCalculatedCharacterSummaryStat,
-		) => {
-			// Optimization Plans don't have separate physical and special critical chances, since both are always affected
-			// equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit
-			// chance, ignore it altogether.
-			if (getCSDisplayType(stat) === "Special Critical Chance") {
-				return 0;
-			}
+      return statPropertyNames.map((statName) => {
+        if (stat.isPercentVersion && character.playerValues?.equippedStats) {
+          return createCharacterSummaryStat(
+            statName,
+            `${fromScaled(
+              divScaled(
+                mulScaled(
+                  stat.scaledValue,
+                  toScaled(character?.playerValues?.equippedStats[statName] ?? 0),
+                ),
+                toScaled(100),
+              ),
+            )}`,
+          );
+        }
+        if (!stat.isPercentVersion) {
+          return createCharacterSummaryStat(statName, stat.stringValue);
+        }
+        throw new Error(`Stat is given as a percentage, but ${character.id} has no base stats`);
+      });
+    },
+    /**
+     * Get the value of this stat for optimization
+     *
+     * @param character {Character}
+     * @param target {OptimizationPlan}
+     */
+    getOptimizationValue: (
+      character: Character,
+      target: OptimizationPlan,
+      stat: NonCalculatedCharacterSummaryStat,
+    ) => {
+      // Optimization Plans don't have separate physical and special critical chances, since both are always affected
+      // equally. If this is a physical crit chance stat, then use 'critChance' as the stat type. If it's special crit
+      // chance, ignore it altogether.
+      if (getCSDisplayType(stat) === "Special Critical Chance") {
+        return 0;
+      }
 
-			type OptStats =
-				| Readonly<CharacterStatNames.WithoutCC[]>
-				| Readonly<"Critical Chance"[]>;
+      type OptStats = Readonly<CharacterStatNames.WithoutCC[]> | Readonly<"Critical Chance"[]>;
 
-			const statTypes: OptStats =
-				"Physical Critical Chance" === getCSDisplayType(stat)
-					? ["Critical Chance"]
-					: (display2CSGIMOStatNamesMap[
-							getCSDisplayType(stat)
-						] as CharacterStatNames.WithoutCC[]);
+      const statTypes: OptStats =
+        "Physical Critical Chance" === getCSDisplayType(stat)
+          ? ["Critical Chance"]
+          : (display2CSGIMOStatNamesMap[getCSDisplayType(stat)] as CharacterStatNames.WithoutCC[]);
 
-			if (!statTypes) {
-				return 0;
-			}
+      if (!statTypes) {
+        return 0;
+      }
 
-			if (stat.isPercentVersion) {
-				return statTypes
-					.map(
-						(statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
-							target[statType] *
-							Math.floor(
-								(character.playerValues.equippedStats[
-									statType as CharacterStatNames.All
-								] *
-									getStatValue(stat)) /
-									100,
-							),
-					)
-					.reduce((a, b) => a + b, 0);
-			}
-			return statTypes
-				.map((statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
-					fromScaled(mulScaled(stat.scaledValue, toScaled(target[statType]))),
-				)
-				.reduce((a, b) => a + b, 0);
-		},
-	});
+      if (stat.isPercentVersion) {
+        return statTypes
+          .map(
+            (statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
+              target[statType] *
+              Math.floor(
+                (character.playerValues.equippedStats[statType as CharacterStatNames.All] *
+                  getStatValue(stat)) /
+                  100,
+              ),
+          )
+          .reduce((a, b) => a + b, 0);
+      }
+      return statTypes
+        .map((statType: CharacterStatNames.WithoutCC | "Critical Chance") =>
+          fromScaled(mulScaled(stat.scaledValue, toScaled(target[statType]))),
+        )
+        .reduce((a, b) => a + b, 0);
+    },
+  });
 
 const syncStatus$ = syncObservable(
-	charactersManagement$.persistedData,
-	persistOptions({
-		persist: {
-			name: "CharactersManagement",
-			indexedDB: {
-				itemID: "filterSetup",
-			},
-		},
-		initial: getDefaultFilterSetup(),
-	}),
+  charactersManagement$.persistedData,
+  persistOptions({
+    persist: {
+      name: "CharactersManagement",
+      indexedDB: {
+        itemID: "filterSetup",
+      },
+    },
+    initial: getDefaultFilterSetup(),
+  }),
 );
 
 export { charactersManagement$, syncStatus$ };

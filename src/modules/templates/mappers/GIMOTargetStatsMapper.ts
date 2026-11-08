@@ -7,17 +7,15 @@ import type { TargetStatsSchema as GIMOTargetStatsSchema } from "#/domain/schema
 
 type GIMOTargetStats = v.InferOutput<typeof GIMOTargetStatsSchema>;
 
-export const fromGIMOTargetStats = (
-	targetStats: GIMOTargetStats,
-): TargetStats => {
-	return targetStats.map((targetStat) => {
-		return createTargetStat(
-			targetStat.stat,
-			targetStat.type,
-			targetStat.minimum,
-			targetStat.maximum,
-			targetStat.relativeCharacterId,
-			targetStat.optimizeForTarget,
-		);
-	});
+export const fromGIMOTargetStats = (targetStats: GIMOTargetStats): TargetStats => {
+  return targetStats.map((targetStat) => {
+    return createTargetStat(
+      targetStat.stat,
+      targetStat.type,
+      targetStat.minimum,
+      targetStat.maximum,
+      targetStat.relativeCharacterId,
+      targetStat.optimizeForTarget,
+    );
+  });
 };

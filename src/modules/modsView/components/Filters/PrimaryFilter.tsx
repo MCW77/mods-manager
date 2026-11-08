@@ -10,8 +10,8 @@ const modsView$ = stateLoader$.modsView$;
 // domain
 import { getFilterSelectionStyles } from "../../domain/FilterSelectionStyles";
 import {
-	type PrimarySettingsPrimaries,
-	primarySettingsPrimaries,
+  type PrimarySettingsPrimaries,
+  primarySettingsPrimaries,
 } from "../../domain/ModsViewOptions";
 
 // components
@@ -20,47 +20,43 @@ import { Button } from "#ui/button";
 import { Label } from "#ui/label";
 
 function PrimaryButton({ primary }: { primary: PrimarySettingsPrimaries }) {
-	const primaryState = useValue(() => {
-		const activeFilter = modsView$.activeFilter.get();
-		return activeFilter.primary[primary];
-	});
-	const value = primaryState || 0;
-	const className = getFilterSelectionStyles(value);
+  const primaryState = useValue(() => {
+    const activeFilter = modsView$.activeFilter.get();
+    return activeFilter.primary[primary];
+  });
+  const value = primaryState || 0;
+  const className = getFilterSelectionStyles(value);
 
-	return (
-		<Button
-			className={className}
-			size="xs"
-			variant={"outline"}
-			onClick={() => modsView$.cycleState("primary", primary.toString())}
-		>
-			{primary}
-		</Button>
-	);
+  return (
+    <Button
+      className={className}
+      size="xs"
+      variant={"outline"}
+      onClick={() => modsView$.cycleState("primary", primary.toString())}
+    >
+      {primary}
+    </Button>
+  );
 }
 
 const PrimaryFilter = () => {
-	const [t] = useTranslation("explore-ui");
+  const [t] = useTranslation("explore-ui");
 
-	return (
-		<div className={"p-x-1 flex flex-col gap-2 items-center"}>
-			<Label className="p-r-2" htmlFor={"primary-filter1"}>
-				{t("filter.PrimaryHeadline")}
-			</Label>
-			<div id={"primary-filter1"} className="flex flex-row gap-2 flex-wrap">
-				{primarySettingsPrimaries.map((primary: PrimarySettingsPrimaries) => {
-					const inputName = `primary-filter-${primary}`;
+  return (
+    <div className={"p-x-1 flex flex-col gap-2 items-center"}>
+      <Label className="p-r-2" htmlFor={"primary-filter1"}>
+        {t("filter.PrimaryHeadline")}
+      </Label>
+      <div id={"primary-filter1"} className="flex flex-row gap-2 flex-wrap">
+        {primarySettingsPrimaries.map((primary: PrimarySettingsPrimaries) => {
+          const inputName = `primary-filter-${primary}`;
 
-					return (
-						<Memo key={inputName}>
-							{() => <PrimaryButton primary={primary} />}
-						</Memo>
-					);
-				})}
-			</div>
-			<SetAllButtonGroup filterKey="primary" />
-		</div>
-	);
+          return <Memo key={inputName}>{() => <PrimaryButton primary={primary} />}</Memo>;
+        })}
+      </div>
+      <SetAllButtonGroup filterKey="primary" />
+    </div>
+  );
 };
 
 PrimaryFilter.displayName = "PrimaryFilter";
