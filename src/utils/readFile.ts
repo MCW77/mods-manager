@@ -5,20 +5,20 @@
  * @param handleError Function Error => *
  */
 export const readFile = (
-	fileInput: Blob,
-	handleSuccess: (textInFile: string) => void,
-	handleError: (e: Error) => void,
+  fileInput: Blob,
+  handleSuccess: (textInFile: string) => void,
+  handleError: (e: Error) => void,
 ) => {
-	const reader = new FileReader();
+  const reader = new FileReader();
 
-	reader.onload = (event) => {
-		try {
-			const fileData: string = (event?.target?.result as string) ?? "";
-			handleSuccess(fileData);
-		} catch (e) {
-			handleError(e as Error);
-		}
-	};
+  reader.onload = (event) => {
+    try {
+      const fileData: string = (event?.target?.result as string) ?? "";
+      handleSuccess(fileData);
+    } catch (e) {
+      handleError(e as Error);
+    }
+  };
 
-	reader.readAsText(fileInput);
+  reader.readAsText(fileInput);
 };

@@ -10,22 +10,22 @@ import { SpeedCard } from "../components/SpeedCard";
 import { ScrollArea } from "#ui/scroll-area";
 
 function StatisticsView() {
-	return (
-		<ScrollArea>
-			<div className="flex flex-wrap gap-4 p-4 w-full items-start">
-				<SpeedCard />
-				<div className="flex flex-col gap-4">
-					<OffenseDefenseCard />
-					<ModQualityCard />
-				</div>
-				<ModsetsCard />
-				<ModSlots />
-				<Mods6DotBySlot />
-				<ModsToFarm />
-				<MissingModsOfSlots />
-			</div>
-		</ScrollArea>
-	);
+  return (
+    <ScrollArea>
+      <div className="flex flex-wrap gap-4 p-4 w-full items-start">
+        <SpeedCard />
+        <div className="flex flex-col gap-4">
+          <OffenseDefenseCard />
+          <ModQualityCard />
+        </div>
+        <ModsetsCard />
+        <ModSlots />
+        <Mods6DotBySlot />
+        <ModsToFarm />
+        <MissingModsOfSlots />
+      </div>
+    </ScrollArea>
+  );
 }
 
 export default StatisticsView;

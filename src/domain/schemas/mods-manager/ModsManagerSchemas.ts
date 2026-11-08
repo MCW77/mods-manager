@@ -3,472 +3,441 @@ import * as v from "valibot";
 
 // domain
 import {
-	CharacterTemplateByNameSchema,
-	CharacterTemplateByNameSchemaV26,
-	CharacterTemplateByNameSchemaV31,
-	CompilationSchemaV18,
-	CompilationSchemaV20,
-	CompilationSchemaV22,
-	CompilationSchemaV26,
-	CompilationSchemaV31,
-	CurrenciesSchemaV24,
-	DatacronsSchemaV24,
-	LockedStatusByCharacterIdSchemaV20,
-	LockedStatusByCharacterIdSchemaV18,
-	MaterialsSchemaV24,
-	ModsViewSetupsSchema,
-	ModsViewSetupsSchemaV19,
-	PersistedModsSchemaV27,
-	PersistedProfilesSchemaV18,
-	PersistedProfilesSchemaV21,
-	PersistedProfilesSchemaV23,
-	PersistedProfilesSchemaV27,
-	PersistedRosterSchemaV27,
-	PersistedRosterSchemaV31,
-	SettingsByProfileSchema,
-	HotutilsSchemaV18,
-	HotutilsSchemaV21,
-	StackRankSchemaV25,
-	PersistedRosterSchemaV30,
+  CharacterTemplateByNameSchema,
+  CharacterTemplateByNameSchemaV26,
+  CharacterTemplateByNameSchemaV31,
+  CompilationSchemaV18,
+  CompilationSchemaV20,
+  CompilationSchemaV22,
+  CompilationSchemaV26,
+  CompilationSchemaV31,
+  CurrenciesSchemaV24,
+  DatacronsSchemaV24,
+  LockedStatusByCharacterIdSchemaV20,
+  LockedStatusByCharacterIdSchemaV18,
+  MaterialsSchemaV24,
+  ModsViewSetupsSchema,
+  ModsViewSetupsSchemaV19,
+  PersistedModsSchemaV27,
+  PersistedProfilesSchemaV18,
+  PersistedProfilesSchemaV21,
+  PersistedProfilesSchemaV23,
+  PersistedProfilesSchemaV27,
+  PersistedRosterSchemaV27,
+  PersistedRosterSchemaV31,
+  SettingsByProfileSchema,
+  HotutilsSchemaV18,
+  HotutilsSchemaV21,
+  StackRankSchemaV25,
+  PersistedRosterSchemaV30,
 } from "./index";
 
 const ModsManagerBackupSchemaV16 = v.pipe(
-	v.object({
-		characterTemplates: CharacterTemplateByNameSchema,
-		lastRuns: v.array(v.any()),
-		profilesManagement: v.object({}),
-		version: v.string(),
-	}),
-	v.transform((input) => ({
-		characterTemplates: input.characterTemplates,
-		compilations: {},
-		defaultCompilation: {
-			category: "",
-			description: "",
-			flatCharacterModdings: [],
-			id: "DefaultCompilation",
-			isReoptimizationNeeded: true,
-			lastOptimized: null as Date | null,
-			optimizationConditions: null,
-			reoptimizationIndex: -1,
-			selectedCharacters: [],
-		},
-		incrementalOptimizationIndices: {},
-		lockedStatus: {},
-		modsViewSetups: {
-			AllMods: {},
-			Calibrate: {},
-			Level: {},
-			Reveal: {},
-			Slice5Dot: {},
-			Slice6Dot: {},
-			Slice6E: {},
-		},
-		profilesManagement: {
-			activeAllycode: "",
-			lastUpdatedByAllycode: {},
-			playernameByAllycode: {},
-			profileByAllycode: {},
-		},
-		sessionIds: {},
-		settings: {},
-		version: input.version,
-		client: "mods-manager",
-	})),
+  v.object({
+    characterTemplates: CharacterTemplateByNameSchema,
+    lastRuns: v.array(v.any()),
+    profilesManagement: v.object({}),
+    version: v.string(),
+  }),
+  v.transform((input) => ({
+    characterTemplates: input.characterTemplates,
+    compilations: {},
+    defaultCompilation: {
+      category: "",
+      description: "",
+      flatCharacterModdings: [],
+      id: "DefaultCompilation",
+      isReoptimizationNeeded: true,
+      lastOptimized: null as Date | null,
+      optimizationConditions: null,
+      reoptimizationIndex: -1,
+      selectedCharacters: [],
+    },
+    incrementalOptimizationIndices: {},
+    lockedStatus: {},
+    modsViewSetups: {
+      AllMods: {},
+      Calibrate: {},
+      Level: {},
+      Reveal: {},
+      Slice5Dot: {},
+      Slice6Dot: {},
+      Slice6E: {},
+    },
+    profilesManagement: {
+      activeAllycode: "",
+      lastUpdatedByAllycode: {},
+      playernameByAllycode: {},
+      profileByAllycode: {},
+    },
+    sessionIds: {},
+    settings: {},
+    version: input.version,
+    client: "mods-manager",
+  })),
 );
-type ModsManagerBackupSchemaV16Output = v.InferOutput<
-	typeof ModsManagerBackupSchemaV16
->;
+type ModsManagerBackupSchemaV16Output = v.InferOutput<typeof ModsManagerBackupSchemaV16>;
 
 const ModsManagerBackupSchemaV18 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.record(
-		v.string(),
-		v.record(v.string(), CompilationSchemaV18),
-	),
-	defaultCompilation: CompilationSchemaV18,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV18),
-	modsViewSetups: ModsViewSetupsSchema,
-	profilesManagement: PersistedProfilesSchemaV18,
-	sessionIds: HotutilsSchemaV18,
-	settings: SettingsByProfileSchema,
-	version: v.string(),
-	client: v.literal("mods-manager"),
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.record(v.string(), v.record(v.string(), CompilationSchemaV18)),
+  defaultCompilation: CompilationSchemaV18,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV18),
+  modsViewSetups: ModsViewSetupsSchema,
+  profilesManagement: PersistedProfilesSchemaV18,
+  sessionIds: HotutilsSchemaV18,
+  settings: SettingsByProfileSchema,
+  version: v.string(),
+  client: v.literal("mods-manager"),
 });
-type ModsManagerBackupSchemaV18Output = v.InferOutput<
-	typeof ModsManagerBackupSchemaV18
->;
+type ModsManagerBackupSchemaV18Output = v.InferOutput<typeof ModsManagerBackupSchemaV18>;
 
 const ModsManagerBackupDataSchemaV19 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV18)),
-	defaultCompilation: CompilationSchemaV18,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV18),
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV18,
-	sessionIds: HotutilsSchemaV18,
-	settings: SettingsByProfileSchema,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV18)),
+  defaultCompilation: CompilationSchemaV18,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV18),
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV18,
+  sessionIds: HotutilsSchemaV18,
+  settings: SettingsByProfileSchema,
 });
-type ModsManagerBackupDataSchemaV19Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV19
->;
+type ModsManagerBackupDataSchemaV19Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV19>;
 
 const ModsManagerBackupSchemaV19 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV19,
-	version: v.literal(19),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV19,
+  version: v.literal(19),
 });
 
 const ModsManagerBackupDataSchemaV20 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV20)),
-	defaultCompilation: CompilationSchemaV20,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV18,
-	sessionIds: HotutilsSchemaV18,
-	settings: SettingsByProfileSchema,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV20)),
+  defaultCompilation: CompilationSchemaV20,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV18,
+  sessionIds: HotutilsSchemaV18,
+  settings: SettingsByProfileSchema,
 });
-type ModsManagerBackupDataSchemaV20Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV20
->;
+type ModsManagerBackupDataSchemaV20Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV20>;
 
 const ModsManagerBackupSchemaV20 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV20,
-	version: v.literal(20),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV20,
+  version: v.literal(20),
 });
 
 const ModsManagerBackupDataSchemaV21 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV20)),
-	defaultCompilation: CompilationSchemaV20,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV21,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV20)),
+  defaultCompilation: CompilationSchemaV20,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV21,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
 });
-type ModsManagerBackupDataSchemaV21Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV21
->;
+type ModsManagerBackupDataSchemaV21Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV21>;
 
 const ModsManagerBackupSchemaV21 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV21,
-	version: v.literal(21),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV21,
+  version: v.literal(21),
 });
 
 const ModsManagerBackupDataSchemaV22 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
-	defaultCompilation: CompilationSchemaV22,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV21,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+  defaultCompilation: CompilationSchemaV22,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV21,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
 });
-type ModsManagerBackupDataSchemaV22Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV22
->;
+type ModsManagerBackupDataSchemaV22Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV22>;
 
 const ModsManagerBackupSchemaV22 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV22,
-	version: v.literal(22),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV22,
+  version: v.literal(22),
 });
 
 const ModsManagerBackupDataSchemaV23 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
-	defaultCompilation: CompilationSchemaV22,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV23,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+  defaultCompilation: CompilationSchemaV22,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV23,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
 });
-type ModsManagerBackupDataSchemaV23Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV23
->;
+type ModsManagerBackupDataSchemaV23Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV23>;
 
 const ModsManagerBackupSchemaV23 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV23,
-	version: v.literal(23),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV23,
+  version: v.literal(23),
 });
 
 const ModsManagerBackupDataSchemaV24 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV22,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV23,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV22,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV23,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
 });
 
 const ModsManagerBackupSchemaV24 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV24,
-	version: v.literal(24),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV24,
+  version: v.literal(24),
 });
-type ModsManagerBackupDataSchemaV24Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV24
->;
+type ModsManagerBackupDataSchemaV24Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV24>;
 
 const ModsManagerBackupDataSchemaV25 = v.object({
-	characterTemplates: CharacterTemplateByNameSchema,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV22,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV23,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
-	stackRank: StackRankSchemaV25,
+  characterTemplates: CharacterTemplateByNameSchema,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV22)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV22,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV23,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
+  stackRank: StackRankSchemaV25,
 });
 
 const ModsManagerBackupSchemaV25 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV25,
-	version: v.literal(25),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV25,
+  version: v.literal(25),
 });
-type ModsManagerBackupDataSchemaV25Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV25
->;
+type ModsManagerBackupDataSchemaV25Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV25>;
 
 const ModsManagerBackupDataSchemaV26 = v.object({
-	characterTemplates: CharacterTemplateByNameSchemaV26,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV26,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	profilesManagement: PersistedProfilesSchemaV23,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
-	stackRank: StackRankSchemaV25,
+  characterTemplates: CharacterTemplateByNameSchemaV26,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV26,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  profilesManagement: PersistedProfilesSchemaV23,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
+  stackRank: StackRankSchemaV25,
 });
-type ModsManagerBackupDataSchemaV26Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV26
->;
+type ModsManagerBackupDataSchemaV26Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV26>;
 
 const ModsManagerBackupSchemaV26 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV26,
-	version: v.literal(26),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV26,
+  version: v.literal(26),
 });
 
 const ModsManagerBackupDataSchemaV27 = v.object({
-	characterTemplates: CharacterTemplateByNameSchemaV26,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV26,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	mods: PersistedModsSchemaV27,
-	profilesManagement: PersistedProfilesSchemaV27,
-	roster: PersistedRosterSchemaV27,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
-	stackRank: StackRankSchemaV25,
+  characterTemplates: CharacterTemplateByNameSchemaV26,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV26,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  mods: PersistedModsSchemaV27,
+  profilesManagement: PersistedProfilesSchemaV27,
+  roster: PersistedRosterSchemaV27,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
+  stackRank: StackRankSchemaV25,
 });
-type ModsManagerBackupDataSchemaV27Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV27
->;
+type ModsManagerBackupDataSchemaV27Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV27>;
 
 const ModsManagerBackupSchemaV27 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV27,
-	version: v.literal(27),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV27,
+  version: v.literal(27),
 });
 
 const ModsManagerBackupDataSchemaV28 = v.object({
-	characterTemplates: CharacterTemplateByNameSchemaV26,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV26,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	mods: PersistedModsSchemaV27,
-	profilesManagement: PersistedProfilesSchemaV27,
-	roster: PersistedRosterSchemaV27,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
-	stackRank: StackRankSchemaV25,
+  characterTemplates: CharacterTemplateByNameSchemaV26,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV26,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  mods: PersistedModsSchemaV27,
+  profilesManagement: PersistedProfilesSchemaV27,
+  roster: PersistedRosterSchemaV27,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
+  stackRank: StackRankSchemaV25,
 });
-type ModsManagerBackupDataSchemaV28Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV28
->;
+type ModsManagerBackupDataSchemaV28Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV28>;
 
 const ModsManagerBackupSchemaV28 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV28,
-	version: v.literal(28),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV28,
+  version: v.literal(28),
 });
 
 const ModsManagerBackupDataSchemaV29 = ModsManagerBackupDataSchemaV28;
-type ModsManagerBackupDataSchemaV29Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV29
->;
+type ModsManagerBackupDataSchemaV29Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV29>;
 
 const ModsManagerBackupSchemaV29 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV29,
-	version: v.literal(29),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV29,
+  version: v.literal(29),
 });
 
 const ModsManagerBackupDataSchemaV30 = v.object({
-	characterTemplates: CharacterTemplateByNameSchemaV26,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV26,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	mods: PersistedModsSchemaV27,
-	profilesManagement: PersistedProfilesSchemaV27,
-	roster: PersistedRosterSchemaV30,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
-	stackRank: StackRankSchemaV25,
+  characterTemplates: CharacterTemplateByNameSchemaV26,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV26)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV26,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  mods: PersistedModsSchemaV27,
+  profilesManagement: PersistedProfilesSchemaV27,
+  roster: PersistedRosterSchemaV30,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
+  stackRank: StackRankSchemaV25,
 });
-type ModsManagerBackupDataSchemaV30Output = v.InferOutput<
-	typeof ModsManagerBackupDataSchemaV30
->;
+type ModsManagerBackupDataSchemaV30Output = v.InferOutput<typeof ModsManagerBackupDataSchemaV30>;
 
 const ModsManagerBackupSchemaV30 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV30,
-	version: v.literal(30),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV30,
+  version: v.literal(30),
 });
 
 const ModsManagerBackupDataSchemaV31 = v.object({
-	characterTemplates: CharacterTemplateByNameSchemaV31,
-	compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV31)),
-	currencies: CurrenciesSchemaV24,
-	datacrons: DatacronsSchemaV24,
-	defaultCompilation: CompilationSchemaV31,
-	incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
-	lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
-	materials: MaterialsSchemaV24,
-	modsViewSetups: ModsViewSetupsSchemaV19,
-	mods: PersistedModsSchemaV27,
-	profilesManagement: PersistedProfilesSchemaV27,
-	roster: PersistedRosterSchemaV31,
-	sessionIds: HotutilsSchemaV21,
-	settings: SettingsByProfileSchema,
-	stackRank: StackRankSchemaV25,
+  characterTemplates: CharacterTemplateByNameSchemaV31,
+  compilations: v.map(v.string(), v.map(v.string(), CompilationSchemaV31)),
+  currencies: CurrenciesSchemaV24,
+  datacrons: DatacronsSchemaV24,
+  defaultCompilation: CompilationSchemaV31,
+  incrementalOptimizationIndices: v.record(v.string(), v.nullable(v.number())),
+  lockedStatus: v.record(v.string(), LockedStatusByCharacterIdSchemaV20),
+  materials: MaterialsSchemaV24,
+  modsViewSetups: ModsViewSetupsSchemaV19,
+  mods: PersistedModsSchemaV27,
+  profilesManagement: PersistedProfilesSchemaV27,
+  roster: PersistedRosterSchemaV31,
+  sessionIds: HotutilsSchemaV21,
+  settings: SettingsByProfileSchema,
+  stackRank: StackRankSchemaV25,
 });
 
 const ModsManagerBackupSchemaV31 = v.object({
-	appVersion: v.string(),
-	backupType: v.literal("fullBackup"),
-	client: v.literal("mods-manager"),
-	data: ModsManagerBackupDataSchemaV31,
-	version: v.literal(31),
+  appVersion: v.string(),
+  backupType: v.literal("fullBackup"),
+  client: v.literal("mods-manager"),
+  data: ModsManagerBackupDataSchemaV31,
+  version: v.literal(31),
 });
 
 const LatestModsManagerBackupDataSchema = ModsManagerBackupDataSchemaV31;
 type LatestModsManagerBackupDataSchemaOutput = v.InferOutput<
-	typeof LatestModsManagerBackupDataSchema
+  typeof LatestModsManagerBackupDataSchema
 >;
 
 const LatestModsManagerBackupSchema = ModsManagerBackupSchemaV31;
 
 const ModsManagerSchema = v.object({
-	client: v.literal("mods-manager"),
+  client: v.literal("mods-manager"),
 });
 const modsManagerBackupSchemasByVersion = new Map<
-	number,
-	v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>
+  number,
+  v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>
 >([
-	[19, ModsManagerBackupSchemaV19],
-	[20, ModsManagerBackupSchemaV20],
-	[21, ModsManagerBackupSchemaV21],
-	[22, ModsManagerBackupSchemaV22],
-	[23, ModsManagerBackupSchemaV23],
-	[24, ModsManagerBackupSchemaV24],
-	[25, ModsManagerBackupSchemaV25],
-	[26, ModsManagerBackupSchemaV26],
-	[27, ModsManagerBackupSchemaV27],
-	[28, ModsManagerBackupSchemaV28],
-	[29, ModsManagerBackupSchemaV29],
-	[30, ModsManagerBackupSchemaV30],
-	[31, ModsManagerBackupSchemaV31],
+  [19, ModsManagerBackupSchemaV19],
+  [20, ModsManagerBackupSchemaV20],
+  [21, ModsManagerBackupSchemaV21],
+  [22, ModsManagerBackupSchemaV22],
+  [23, ModsManagerBackupSchemaV23],
+  [24, ModsManagerBackupSchemaV24],
+  [25, ModsManagerBackupSchemaV25],
+  [26, ModsManagerBackupSchemaV26],
+  [27, ModsManagerBackupSchemaV27],
+  [28, ModsManagerBackupSchemaV28],
+  [29, ModsManagerBackupSchemaV29],
+  [30, ModsManagerBackupSchemaV30],
+  [31, ModsManagerBackupSchemaV31],
 ]);
 
 export {
-	LatestModsManagerBackupSchema,
-	type LatestModsManagerBackupDataSchemaOutput,
-	ModsManagerBackupSchemaV16,
-	ModsManagerBackupSchemaV18,
-	modsManagerBackupSchemasByVersion,
-	type ModsManagerBackupSchemaV16Output,
-	type ModsManagerBackupSchemaV18Output,
-	type ModsManagerBackupDataSchemaV19Output,
-	type ModsManagerBackupDataSchemaV20Output,
-	type ModsManagerBackupDataSchemaV21Output,
-	type ModsManagerBackupDataSchemaV22Output,
-	type ModsManagerBackupDataSchemaV23Output,
-	type ModsManagerBackupDataSchemaV24Output,
-	type ModsManagerBackupDataSchemaV25Output,
-	type ModsManagerBackupDataSchemaV26Output,
-	type ModsManagerBackupDataSchemaV27Output,
-	type ModsManagerBackupDataSchemaV28Output,
-	type ModsManagerBackupDataSchemaV29Output,
-	type ModsManagerBackupDataSchemaV30Output,
-	ModsManagerSchema,
+  LatestModsManagerBackupSchema,
+  type LatestModsManagerBackupDataSchemaOutput,
+  ModsManagerBackupSchemaV16,
+  ModsManagerBackupSchemaV18,
+  modsManagerBackupSchemasByVersion,
+  type ModsManagerBackupSchemaV16Output,
+  type ModsManagerBackupSchemaV18Output,
+  type ModsManagerBackupDataSchemaV19Output,
+  type ModsManagerBackupDataSchemaV20Output,
+  type ModsManagerBackupDataSchemaV21Output,
+  type ModsManagerBackupDataSchemaV22Output,
+  type ModsManagerBackupDataSchemaV23Output,
+  type ModsManagerBackupDataSchemaV24Output,
+  type ModsManagerBackupDataSchemaV25Output,
+  type ModsManagerBackupDataSchemaV26Output,
+  type ModsManagerBackupDataSchemaV27Output,
+  type ModsManagerBackupDataSchemaV28Output,
+  type ModsManagerBackupDataSchemaV29Output,
+  type ModsManagerBackupDataSchemaV30Output,
+  ModsManagerSchema,
 };

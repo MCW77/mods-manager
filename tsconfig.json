@@ -1,26 +1,29 @@
 {
-	"compilerOptions": {
-		"lib": ["DOM", "ESNext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
-		"jsx": "react-jsx",
-		"rootDir": "./src",
-		"paths": {
-			"#/*": ["./src/*", "./dist/*", "./"],
-			"#lib/*": ["./src/lib/*"],
-			"#ui/*": ["./src/components/ui/*"]
-		},
-		"types": ["@legendapp/state/types/babel", "node"],
-		"noFallthroughCasesInSwitch": true,
-		"allowImportingTsExtensions": true,
-		"noErrorTruncation": true
-	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules/**/*", "dist/**/*"],
-	"typeAcquisition": {
-		"enable": false
-	}
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "rootDir": "./src",
+    "paths": {
+      "#/*": ["./src/*", "./dist/*", "./"],
+      "#lib/*": ["./src/lib/*"],
+      "#ui/*": ["./src/components/ui/*"]
+    },
+    "types": ["@legendapp/state/types/babel", "node"],
+    "noFallthroughCasesInSwitch": true,
+    "allowImportingTsExtensions": true,
+    "noErrorTruncation": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*", "dist/**/*"],
+  "typeAcquisition": {
+    "enable": false
+  }
 }

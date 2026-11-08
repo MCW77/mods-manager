@@ -28,71 +28,70 @@ import SaveTemplateModal from "#/modules/templates/components/SaveTemplateModal"
 import { Button } from "#ui/button";
 
 interface TemplatesActionsProps {
-	hasNoSelectedCharacters: boolean;
-	visibleCharacters: Character.Character[];
-	lastSelectedCharacterIndex: number;
+  hasNoSelectedCharacters: boolean;
+  visibleCharacters: Character.Character[];
+  lastSelectedCharacterIndex: number;
 }
 
 const TemplatesActions = ({
-	hasNoSelectedCharacters,
-	visibleCharacters,
-	lastSelectedCharacterIndex,
+  hasNoSelectedCharacters,
+  visibleCharacters,
+  lastSelectedCharacterIndex,
 }: TemplatesActionsProps) => {
-	const [t] = useTranslation("optimize-ui");
+  const [t] = useTranslation("optimize-ui");
 
-	return (
-		<div className={"flex gap-2"}>
-			<Button
-				size="sm"
-				onClick={() =>
-					dialog$.show({
-						content: <AddTemplateModal />,
-						contentStyle: "sm:max-w-[calc(100%-2rem)]",
-					})
-				}
-			>
-				<FontAwesomeIcon icon={faPlus} title={"Add template"} />
-			</Button>
-			<Button
-				size="sm"
-				onClick={async () => {
-					try {
-						isBusy$.set(true);
-						beginBatch();
-						if (hasNoSelectedCharacters) {
-							visibleCharacters.forEach((character, index) => {
-								defaultCompilation$.selectCharacter(
-									character.id,
-									Character.defaultTarget(characterSettings, character),
-									index + lastSelectedCharacterIndex,
-								);
-							});
-						}
-						endBatch();
-						const ranking = await stackRank$.fetch(
-							profilesManagement$.profiles.activeAllycode.get(),
-						);
-						defaultCompilation$.applyRanking(ranking);
-					} catch (error) {
-						if (error instanceof Error)
-							dialog$.showError({ error: error.message });
-					} finally {
-						isBusy$.set(false);
-					}
-				}}
-			>
-				{t("sidebar.templates.Auto")}
-			</Button>
-			<Button
-				size="sm"
-				disabled={hasNoSelectedCharacters}
-				onClick={() => dialog$.show({ content: <SaveTemplateModal /> })}
-			>
-				<FontAwesomeIcon icon={faSave} title={"Save"} />
-			</Button>
-			<HelpLink title="" section="optimizer" topic={2} showTitle={false} />
-		</div>
-	);
+  return (
+    <div className={"flex gap-2"}>
+      <Button
+        size="sm"
+        onClick={() =>
+          dialog$.show({
+            content: <AddTemplateModal />,
+            contentStyle: "sm:max-w-[calc(100%-2rem)]",
+          })
+        }
+      >
+        <FontAwesomeIcon icon={faPlus} title={"Add template"} />
+      </Button>
+      <Button
+        size="sm"
+        onClick={async () => {
+          try {
+            isBusy$.set(true);
+            beginBatch();
+            if (hasNoSelectedCharacters) {
+              visibleCharacters.forEach((character, index) => {
+                defaultCompilation$.selectCharacter(
+                  character.id,
+                  Character.defaultTarget(characterSettings, character),
+                  index + lastSelectedCharacterIndex,
+                );
+              });
+            }
+            endBatch();
+            const ranking = await stackRank$.fetch(
+              profilesManagement$.profiles.activeAllycode.get(),
+            );
+            defaultCompilation$.applyRanking(ranking);
+          } catch (error) {
+            if (error instanceof Error) dialog$.showError({ error: error.message });
+          } finally {
+            isBusy$.set(false);
+          }
+        }}
+      >
+        {t("sidebar.templates.Auto")}
+      </Button>
+      <Button
+        size="sm"
+        disabled={hasNoSelectedCharacters}
+        onClick={() => dialog$.show({ content: <SaveTemplateModal /> })}
+      >
+        <FontAwesomeIcon icon={faSave} title={"Save"} />
+      </Button>
+      <HelpLink title="" section="optimizer" topic={2} showTitle={false} />
+    </div>
+  );
 };
 
 TemplatesActions.displayName = "TemplatesActions";

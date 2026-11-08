@@ -1,24 +1,24 @@
 {
-	"header": {
-		"NavAbout": "Über",
-		"NavDatacrons": "Datacrons",
-		"NavHelp": "Hilfe",
-		"NavMods": "Mods",
-		"NavModCompilations": "Mod-Kompilationen",
-		"NavExploreMods": "Erkunde Mods",
-		"NavOptimizeMods": "Optimiere Mods",
-		"NavSettings": "Einstellungen",
-		"NavStatistics": "Statistiken",
-		"SubtitleFor": "für",
-		"ProfileAdderNewCode": "Neuer Bündniscode...",
-		"ProfileSelectionPlayer": "Spieler",
-		"ProfileSelectionAllycode": "Bündniscode",
-		"ProfileSelectionPlaceholder": "Bündniscode hier eingeben",
-		"Fetch": "Hole meine Mods",
-		"FetchHot": "Hole mit HotUtils"
-	},
-	"sidebar": {
-		"Toggle-show": "Seitenleiste anzeigen",
-		"Toggle-collapse": "Seitenleiste verbergen"
-	}
+  "header": {
+    "NavAbout": "Über",
+    "NavDatacrons": "Datacrons",
+    "NavHelp": "Hilfe",
+    "NavMods": "Mods",
+    "NavModCompilations": "Mod-Kompilationen",
+    "NavExploreMods": "Erkunde Mods",
+    "NavOptimizeMods": "Optimiere Mods",
+    "NavSettings": "Einstellungen",
+    "NavStatistics": "Statistiken",
+    "SubtitleFor": "für",
+    "ProfileAdderNewCode": "Neuer Bündniscode...",
+    "ProfileSelectionPlayer": "Spieler",
+    "ProfileSelectionAllycode": "Bündniscode",
+    "ProfileSelectionPlaceholder": "Bündniscode hier eingeben",
+    "Fetch": "Hole meine Mods",
+    "FetchHot": "Hole mit HotUtils"
+  },
+  "sidebar": {
+    "Toggle-show": "Seitenleiste anzeigen",
+    "Toggle-collapse": "Seitenleiste verbergen"
+  }
 }

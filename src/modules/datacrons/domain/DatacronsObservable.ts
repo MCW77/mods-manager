@@ -3,49 +3,37 @@ import type { Observable } from "@legendapp/state";
 
 // domain
 import type { DatacronFilter, DatacronSet } from "./DatacronFilter";
-import type {
-	Datacron,
-	DatacronById,
-	DatacronsPersistedData,
-	Affix,
-} from "./Datacrons";
+import type { Datacron, DatacronById, DatacronsPersistedData, Affix } from "./Datacrons";
 
-type AbilitiesDisplayMode =
-	| "Show Full Abilities"
-	| "Show Short Abilities"
-	| "Hide Abilities";
+type AbilitiesDisplayMode = "Show Full Abilities" | "Show Short Abilities" | "Hide Abilities";
 
 interface DatacronsObservable {
-	persistedData: DatacronsPersistedData;
-	datacronByIdByAllycode: () => Observable<DatacronsPersistedData>;
-	datacronByIdForActiveAllycode: () => Observable<DatacronById>;
-	filteredDatacronsIdsForActiveAllycode: () => string[];
-	availableDatacronSets: () => Map<number, DatacronSet>;
-	availableFocusedStates: () => { id: string; value: boolean }[];
-	availableAlignments: () => Affix[];
-	availableAlignmentAbilities: () => Affix[];
-	availableCharacterAbilities: () => Affix[];
-	availableCharacters: () => Affix[];
-	availableFactionAbilities: () => Affix[];
-	availableFactions: () => Affix[];
-	availableNames: () => { id: string; name: string }[];
-	availableNameModes: () => { id: string; value: boolean }[];
-	filter: DatacronFilter;
-	abilitiesDisplayMode: AbilitiesDisplayMode;
-	addProfile: (allycode: string) => void;
-	deleteProfile: (allycode: string) => void;
-	resetFilters: () => void;
-	reset: () => void;
-	updateActiveDatacrons: (datacrons: Datacron[]) => void;
+  persistedData: DatacronsPersistedData;
+  datacronByIdByAllycode: () => Observable<DatacronsPersistedData>;
+  datacronByIdForActiveAllycode: () => Observable<DatacronById>;
+  filteredDatacronsIdsForActiveAllycode: () => string[];
+  availableDatacronSets: () => Map<number, DatacronSet>;
+  availableFocusedStates: () => { id: string; value: boolean }[];
+  availableAlignments: () => Affix[];
+  availableAlignmentAbilities: () => Affix[];
+  availableCharacterAbilities: () => Affix[];
+  availableCharacters: () => Affix[];
+  availableFactionAbilities: () => Affix[];
+  availableFactions: () => Affix[];
+  availableNames: () => { id: string; name: string }[];
+  availableNameModes: () => { id: string; value: boolean }[];
+  filter: DatacronFilter;
+  abilitiesDisplayMode: AbilitiesDisplayMode;
+  addProfile: (allycode: string) => void;
+  deleteProfile: (allycode: string) => void;
+  resetFilters: () => void;
+  reset: () => void;
+  updateActiveDatacrons: (datacrons: Datacron[]) => void;
 }
 
 const getInitialDatacrons = (): DatacronsPersistedData => {
-	const datacrons: DatacronsPersistedData = {};
-	return datacrons;
+  const datacrons: DatacronsPersistedData = {};
+  return datacrons;
 };
 
-export {
-	type AbilitiesDisplayMode,
-	type DatacronsObservable,
-	getInitialDatacrons,
-};
+export { type AbilitiesDisplayMode, type DatacronsObservable, getInitialDatacrons };

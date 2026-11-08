@@ -5,11 +5,11 @@ import * as v from "valibot";
 import { GIMOFlatModSchema } from "./index";
 
 const PersistedModByIdForProfileByAllycodeSchema = v.record(
-	v.string(),
-	v.object({
-		id: v.string(),
-		modById: v.map(v.string(), GIMOFlatModSchema),
-	}),
+  v.string(),
+  v.object({
+    id: v.string(),
+    modById: v.map(v.string(), GIMOFlatModSchema),
+  }),
 );
 
 const PersistedModsSchemaV27 = PersistedModByIdForProfileByAllycodeSchema;

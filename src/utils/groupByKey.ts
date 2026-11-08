@@ -5,8 +5,8 @@
  * @param arr Array[T]
  * @param keyFunc T => *
  */
-export default function groupByKey<T>(arr: T[], keyFunc:(item: T) => string) {
-  return arr.reduce((obj: {[key: string]: T}, item) => {
+export default function groupByKey<T>(arr: T[], keyFunc: (item: T) => string) {
+  return arr.reduce((obj: { [key: string]: T }, item) => {
     obj[keyFunc(item)] = item;
     return obj;
   }, {});

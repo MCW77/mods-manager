@@ -3,11 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // styles
-import {
-	faFile,
-	faFileExport,
-	faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFile, faFileExport, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 // utils
 import { readFile } from "#/utils/readFile";
@@ -23,8 +19,8 @@ import { dialog$ } from "#/modules/dialog/state/dialog";
 
 // domain
 import type {
-	CharacterTemplate,
-	CharacterTemplates,
+  CharacterTemplate,
+  CharacterTemplates,
 } from "#/modules/templates/domain/CharacterTemplates";
 
 //components
@@ -35,173 +31,145 @@ import { FileInput } from "#/components/FileInput/FileInput";
 import { Button } from "#ui/button";
 
 interface TemplateItemProps {
-	item$: Observable<CharacterTemplate>;
-	selectedTemplates: CharacterTemplates;
-	setSelectedTemplates: React.Dispatch<
-		React.SetStateAction<CharacterTemplates>
-	>;
+  item$: Observable<CharacterTemplate>;
+  selectedTemplates: CharacterTemplates;
+  setSelectedTemplates: React.Dispatch<React.SetStateAction<CharacterTemplates>>;
 }
 
 function TemplateItem({
-	item$: template$,
-	selectedTemplates,
-	setSelectedTemplates,
+  item$: template$,
+  selectedTemplates,
+  setSelectedTemplates,
 }: TemplateItemProps) {
-	const template = useValue(template$);
-	const userTemplates = useValue(templates$.userTemplates);
+  const template = useValue(template$);
+  const userTemplates = useValue(templates$.userTemplates);
 
-	return (
-		<li
-			className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
-			data-template={template.id}
-			key={`template-${template.id}`}
-			onClick={(event) => {
-				event.stopPropagation();
-				const target = event.currentTarget as HTMLLIElement;
-				if (
-					target.dataset.template !== undefined &&
-					target.dataset.template !== null
-				) {
-					const templateName = target.dataset.template;
-					const selectedTemplate = selectedTemplates.find(
-						(template) => template.id === templateName,
-					);
-					const wasSelected = selectedTemplate !== undefined;
-					const template = userTemplates.find(
-						(template) => template.id === templateName,
-					);
-					target.classList.toggle("selected");
-					target.dataset.selected =
-						selectedTemplate === undefined ? "true" : "false";
-					if (wasSelected) {
-						setSelectedTemplates(
-							selectedTemplates.toSpliced(
-								selectedTemplates.indexOf(selectedTemplate),
-								1,
-							),
-						);
-					} else {
-						if (template !== undefined)
-							setSelectedTemplates([...selectedTemplates, template]);
-					}
-				}
-			}}
-			onKeyUp={(event) => {
-				if (event.code === "Enter") {
-					const target = event.currentTarget as HTMLLIElement;
-					if (
-						target.dataset.template !== undefined &&
-						target.dataset.template !== null
-					) {
-						const templateName = target.dataset.template;
-						const selectedTemplate = selectedTemplates.find(
-							(template) => template.id === templateName,
-						);
-						const wasSelected = selectedTemplate !== undefined;
-						const template = userTemplates.find(
-							(template) => template.id === templateName,
-						);
-						target.classList.toggle("selected");
-						target.dataset.selected =
-							selectedTemplate === undefined ? "true" : "false";
-						if (wasSelected) {
-							setSelectedTemplates(
-								selectedTemplates.toSpliced(
-									selectedTemplates.indexOf(selectedTemplate),
-									1,
-								),
-							);
-						} else {
-							if (template !== undefined)
-								setSelectedTemplates([...selectedTemplates, template]);
-						}
-					}
-				}
-			}}
-		>
-			<span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">
-				&nbsp;
-			</span>
-			{template.id}
-		</li>
-	);
+  return (
+    <li
+      className="group my-0.1rem mx-0 data-[selected=false]:bg-gradient-to-br data-[selected=true]:from-black/0.1 data-[selected=true]:to-white/0.2"
+      data-template={template.id}
+      key={`template-${template.id}`}
+      onClick={(event) => {
+        event.stopPropagation();
+        const target = event.currentTarget as HTMLLIElement;
+        if (target.dataset.template !== undefined && target.dataset.template !== null) {
+          const templateName = target.dataset.template;
+          const selectedTemplate = selectedTemplates.find(
+            (template) => template.id === templateName,
+          );
+          const wasSelected = selectedTemplate !== undefined;
+          const template = userTemplates.find((template) => template.id === templateName);
+          target.classList.toggle("selected");
+          target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
+          if (wasSelected) {
+            setSelectedTemplates(
+              selectedTemplates.toSpliced(selectedTemplates.indexOf(selectedTemplate), 1),
+            );
+          } else {
+            if (template !== undefined) setSelectedTemplates([...selectedTemplates, template]);
+          }
+        }
+      }}
+      onKeyUp={(event) => {
+        if (event.code === "Enter") {
+          const target = event.currentTarget as HTMLLIElement;
+          if (target.dataset.template !== undefined && target.dataset.template !== null) {
+            const templateName = target.dataset.template;
+            const selectedTemplate = selectedTemplates.find(
+              (template) => template.id === templateName,
+            );
+            const wasSelected = selectedTemplate !== undefined;
+            const template = userTemplates.find((template) => template.id === templateName);
+            target.classList.toggle("selected");
+            target.dataset.selected = selectedTemplate === undefined ? "true" : "false";
+            if (wasSelected) {
+              setSelectedTemplates(
+                selectedTemplates.toSpliced(selectedTemplates.indexOf(selectedTemplate), 1),
+              );
+            } else {
+              if (template !== undefined) setSelectedTemplates([...selectedTemplates, template]);
+            }
+          }
+        }
+      }}
+    >
+      <span className="group-[.selected]:border-l-yellow-300 group-[.selected]:border-l-solid group-[.selected]:border-l-4">
+        &nbsp;
+      </span>
+      {template.id}
+    </li>
+  );
 }
 
 const TemplatesManager = observer(
-	React.memo(() => {
-		const [selectedTemplates, setSelectedTemplates] = useState(
-			[] as CharacterTemplates,
-		);
-		const [t] = useTranslation("settings-ui");
+  React.memo(() => {
+    const [selectedTemplates, setSelectedTemplates] = useState([] as CharacterTemplates);
+    const [t] = useTranslation("settings-ui");
 
-		return (
-			<div>
-				<div className="flex gap-2 items-center">
-					<FileInput
-						label={"Import"}
-						className={"small"}
-						icon={faFile}
-						id={"templates-import"}
-						handler={(file) =>
-							readFile(
-								file,
-								(templatesString) => {
-									templates$.importTemplates(templatesString);
-									if (templates$.import.errorMessage.peek() !== "") {
-										dialog$.showError({
-											error: templates$.import.errorMessage.peek(),
-											reason: templates$.import.errorReason.peek(),
-											solution: templates$.import.errorSolution.peek(),
-										});
-									}
-								},
-								() => {},
-							)
-						}
-					/>
-					<Button
-						disabled={selectedTemplates.length === 0}
-						onClick={() => {
-							templates$.exportTemplates(selectedTemplates);
-						}}
-					>
-						<FontAwesomeIcon
-							className="m-r-2"
-							icon={faFileExport}
-							title={"Export"}
-						/>
-						Export
-					</Button>
-					<Button
-						type={"button"}
-						variant={"destructive"}
-						disabled={selectedTemplates.length === 0}
-						onClick={() => {
-							for (const template of selectedTemplates.values()) {
-								templates$.userTemplatesByName[template.id].delete();
-							}
-							setSelectedTemplates([]);
-						}}
-					>
-						<FontAwesomeIcon
-							className="m-r-2"
-							icon={faTrashCan}
-							title={`${t("optimizer.TemplateDelete")}`}
-						/>
-						{t("optimizer.templates.Delete")} {` ${selectedTemplates.length}`}
-					</Button>
-				</div>
-				<ul>
-					<For
-						each={templates$.userTemplates}
-						item={TemplateItem}
-						itemProps={{ selectedTemplates, setSelectedTemplates }}
-						optimized
-					/>
-				</ul>
-			</div>
-		);
-	}),
+    return (
+      <div>
+        <div className="flex gap-2 items-center">
+          <FileInput
+            label={"Import"}
+            className={"small"}
+            icon={faFile}
+            id={"templates-import"}
+            handler={(file) =>
+              readFile(
+                file,
+                (templatesString) => {
+                  templates$.importTemplates(templatesString);
+                  if (templates$.import.errorMessage.peek() !== "") {
+                    dialog$.showError({
+                      error: templates$.import.errorMessage.peek(),
+                      reason: templates$.import.errorReason.peek(),
+                      solution: templates$.import.errorSolution.peek(),
+                    });
+                  }
+                },
+                () => {},
+              )
+            }
+          />
+          <Button
+            disabled={selectedTemplates.length === 0}
+            onClick={() => {
+              templates$.exportTemplates(selectedTemplates);
+            }}
+          >
+            <FontAwesomeIcon className="m-r-2" icon={faFileExport} title={"Export"} />
+            Export
+          </Button>
+          <Button
+            type={"button"}
+            variant={"destructive"}
+            disabled={selectedTemplates.length === 0}
+            onClick={() => {
+              for (const template of selectedTemplates.values()) {
+                templates$.userTemplatesByName[template.id].delete();
+              }
+              setSelectedTemplates([]);
+            }}
+          >
+            <FontAwesomeIcon
+              className="m-r-2"
+              icon={faTrashCan}
+              title={`${t("optimizer.TemplateDelete")}`}
+            />
+            {t("optimizer.templates.Delete")} {` ${selectedTemplates.length}`}
+          </Button>
+        </div>
+        <ul>
+          <For
+            each={templates$.userTemplates}
+            item={TemplateItem}
+            itemProps={{ selectedTemplates, setSelectedTemplates }}
+            optimized
+          />
+        </ul>
+      </div>
+    );
+  }),
 );
 
 TemplatesManager.displayName = "TemplatesManager";

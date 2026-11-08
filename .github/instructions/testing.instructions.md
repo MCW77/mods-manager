@@ -15,6 +15,7 @@ Only testing the migration of data structures persisted in indexeddb or im-/expo
 indexeddb migration tests are in `tests/migrations/database-migrations.test.ts`
 
 There are 2 types of backups that can be imported/exported as JSON:
+
 - Full backups: include everything (settings, data, etc.)
 - Template backups: include only templates and related data
 

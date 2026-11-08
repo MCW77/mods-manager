@@ -1,7 +1,7 @@
 export type SessionIDsByProfile = Map<
-	string,
-	{
-		gimoSessionId: string;
-		huSessionId: string;
-	}
+  string,
+  {
+    gimoSessionId: string;
+    huSessionId: string;
+  }
 >;

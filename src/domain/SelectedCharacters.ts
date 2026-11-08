@@ -1,14 +1,11 @@
 // domain
 import type { CharacterNames } from "../constants/CharacterNames";
 
-import type {
-	OptimizationPlan,
-	ShortOptimizationPlanParam,
-} from "./OptimizationPlan";
+import type { OptimizationPlan, ShortOptimizationPlanParam } from "./OptimizationPlan";
 
 interface ShortSelectedCharacter {
-	id: CharacterNames;
-	target: ShortOptimizationPlanParam;
+  id: CharacterNames;
+  target: ShortOptimizationPlanParam;
 }
 
 /**
@@ -20,8 +17,8 @@ interface ShortSelectedCharacter {
  * ```
  */
 interface SelectedCharacter {
-	id: CharacterNames;
-	target: OptimizationPlan;
+  id: CharacterNames;
+  target: OptimizationPlan;
 }
 
 type SelectedCharacters = SelectedCharacter[];

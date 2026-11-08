@@ -55,10 +55,7 @@ export const review$: Observable<OptimizerView> = observable<OptimizerView>({
         const assignedMods = modding?.assignedMods ?? [];
         return assignedMods.some(
           (mod) =>
-            optimizationSettings$.shouldLevelMod(
-              mod,
-              selectedCharacter.target,
-            ) ||
+            optimizationSettings$.shouldLevelMod(mod, selectedCharacter.target) ||
             optimizationSettings$.shouldSliceMod(mod, selectedCharacter.target),
         );
       });
@@ -70,9 +67,7 @@ export const review$: Observable<OptimizerView> = observable<OptimizerView>({
           (modding) => modding.characterId === selectedCharacter.id,
         );
         const assignedMods = modding?.assignedMods ?? [];
-        return assignedMods.some(
-          (mod) => mod.characterID !== selectedCharacter.id,
-        );
+        return assignedMods.some((mod) => mod.characterID !== selectedCharacter.id);
       });
     }
     if (filter.tag !== "All") {
@@ -123,31 +118,20 @@ export const review$: Observable<OptimizerView> = observable<OptimizerView>({
   },
   modRemovalCost: () => {
     const removedMods = Array.from(review$.removedMods.get());
-    const modRemovalCost = removedMods.reduce(
-      (cost, mod) => cost + modRemovalCosts[mod.pips],
-      0,
-    );
+    const modRemovalCost = removedMods.reduce((cost, mod) => cost + modRemovalCosts[mod.pips], 0);
     return modRemovalCost;
   },
   oldCompilationValue: () => {
     const compilationModdings = review$.compilationModdings.get();
-    return compilationModdings.reduce(
-      (total, modding) => total + modding.previousScore,
-      0,
-    );
+    return compilationModdings.reduce((total, modding) => total + modding.previousScore, 0);
   },
   newCompilationValue: () => {
     const compilationModdings = review$.compilationModdings.get();
-    return compilationModdings.reduce(
-      (total, modding) => total + modding.currentScore,
-      0,
-    );
+    return compilationModdings.reduce((total, modding) => total + modding.currentScore, 0);
   },
   oldLoadoutOfCharacters: () => {
     const modsById = mods$.activeModById.get();
-    const equippedMods = modsById
-      .values()
-      .filter((mod) => mod.characterID !== "null");
+    const equippedMods = modsById.values().filter((mod) => mod.characterID !== "null");
     return collectByKey(equippedMods, (mod: Mod) => mod.characterID);
   },
   modListFilter: {
@@ -160,10 +144,7 @@ export const review$: Observable<OptimizerView> = observable<OptimizerView>({
   setSelectedCharacterIndex: (index: number) => {
     const charactersInCompilation = review$.charactersInCompilation.get();
     if (charactersInCompilation.length === 0) return;
-    const clampedIndex = Math.max(
-      0,
-      Math.min(charactersInCompilation.length - 1, index),
-    );
+    const clampedIndex = Math.max(0, Math.min(charactersInCompilation.length - 1, index));
     review$.selectedCharacterIndex.set(clampedIndex);
   },
   selectedCharacter: () => {
@@ -202,29 +183,26 @@ export const review$: Observable<OptimizerView> = observable<OptimizerView>({
       currentScore: 0,
       previousScore: 0,
     };
-    if (!modding)
-      throw new Error(`No modding found for character ${selectedCharacter}`);
+    if (!modding) throw new Error(`No modding found for character ${selectedCharacter}`);
     return modding;
   },
   compilationModdings: () => {
     const modAssignments = defaultCompilation$.data.flatCharacterModdings.get();
     const modsById = mods$.activeModById.get();
-    const characterModdings: CharacterModdings = modAssignments.map(
-      (modAssignment) => {
-        const characterModding: CharacterModding = {
-          characterId: modAssignment.characterId,
-          assignedMods: modAssignment.assignedMods
-            .map((modId: string) => modsById.get(modId))
-            .filter((mod) => !!mod),
-          missedGoals: modAssignment.missedGoals,
-          target: modAssignment.target,
-          messages: modAssignment.messages,
-          currentScore: modAssignment.currentScore,
-          previousScore: modAssignment.previousScore,
-        };
-        return characterModding;
-      },
-    );
+    const characterModdings: CharacterModdings = modAssignments.map((modAssignment) => {
+      const characterModding: CharacterModding = {
+        characterId: modAssignment.characterId,
+        assignedMods: modAssignment.assignedMods
+          .map((modId: string) => modsById.get(modId))
+          .filter((mod) => !!mod),
+        missedGoals: modAssignment.missedGoals,
+        target: modAssignment.target,
+        messages: modAssignment.messages,
+        currentScore: modAssignment.currentScore,
+        previousScore: modAssignment.previousScore,
+      };
+      return characterModding;
+    });
     return characterModdings;
   },
 });

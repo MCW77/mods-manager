@@ -6,7 +6,7 @@
  */
 
 // utils
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 
 // state
 import { modScores$ } from "#/modules/modScores/state/modScores";
@@ -14,192 +14,182 @@ import { modScores$ } from "#/modules/modScores/state/modScores";
 // domain
 import { fromHotUtils } from "#/domain/Mod";
 import {
-	createSecondaryStat,
-	downgradeSecondaryStat,
-	upgradeSecondaryStat,
+  createSecondaryStat,
+  downgradeSecondaryStat,
+  upgradeSecondaryStat,
 } from "#/domain/SecondaryStat";
 import { getStatValue } from "#/domain/Stat";
 
 describe("SecondaryStat Calculations", () => {
-	describe("upgrade()", () => {
-		it("should upgrade Critical Chance % correctly (factor: 1.045)", () => {
-			const stat = createSecondaryStat("test", "Critical Chance %", "1.5", 1);
-			const upgraded = upgradeSecondaryStat(stat);
+  describe("upgrade()", () => {
+    it("should upgrade Critical Chance % correctly (factor: 1.045)", () => {
+      const stat = createSecondaryStat("test", "Critical Chance %", "1.5", 1);
+      const upgraded = upgradeSecondaryStat(stat);
 
-			// 1.5 * 1.045 = 1.5675
-			expect(getStatValue(upgraded)).toBeCloseTo(1.5675, 6);
-		});
+      // 1.5 * 1.045 = 1.5675
+      expect(getStatValue(upgraded)).toBeCloseTo(1.5675, 6);
+    });
 
-		it("should upgrade Defense correctly (factor: 1.63)", () => {
-			const stat = createSecondaryStat("test", "Defense", "10", 2);
-			const upgraded = upgradeSecondaryStat(stat);
+    it("should upgrade Defense correctly (factor: 1.63)", () => {
+      const stat = createSecondaryStat("test", "Defense", "10", 2);
+      const upgraded = upgradeSecondaryStat(stat);
 
-			// 10 * 1.63 = 16.3
-			expect(getStatValue(upgraded)).toBeCloseTo(16.3, 6);
-		});
+      // 10 * 1.63 = 16.3
+      expect(getStatValue(upgraded)).toBeCloseTo(16.3, 6);
+    });
 
-		it("should upgrade Defense % correctly (factor: 2.34)", () => {
-			const stat = createSecondaryStat("test", "Defense %", "2", 3);
-			const upgraded = upgradeSecondaryStat(stat);
+    it("should upgrade Defense % correctly (factor: 2.34)", () => {
+      const stat = createSecondaryStat("test", "Defense %", "2", 3);
+      const upgraded = upgradeSecondaryStat(stat);
 
-			// 2 * 2.34 = 4.68
-			expect(getStatValue(upgraded)).toBeCloseTo(4.68, 6);
-		});
+      // 2 * 2.34 = 4.68
+      expect(getStatValue(upgraded)).toBeCloseTo(4.68, 6);
+    });
 
-		it("should upgrade Offense % correctly (factor: 3.02)", () => {
-			const stat = createSecondaryStat("test", "Offense %", "1", 1);
-			const upgraded = upgradeSecondaryStat(stat);
+    it("should upgrade Offense % correctly (factor: 3.02)", () => {
+      const stat = createSecondaryStat("test", "Offense %", "1", 1);
+      const upgraded = upgradeSecondaryStat(stat);
 
-			// 1 * 3.02 = 3.02
-			expect(getStatValue(upgraded)).toBeCloseTo(3.02, 6);
-		});
+      // 1 * 3.02 = 3.02
+      expect(getStatValue(upgraded)).toBeCloseTo(3.02, 6);
+    });
 
-		it("should upgrade Speed with special +1 handling", () => {
-			const stat = createSecondaryStat("test", "Speed", "5", 1);
-			const upgraded = upgradeSecondaryStat(stat);
+    it("should upgrade Speed with special +1 handling", () => {
+      const stat = createSecondaryStat("test", "Speed", "5", 1);
+      const upgraded = upgradeSecondaryStat(stat);
 
-			// 5 * 1 + 1 = 6
-			expect(getStatValue(upgraded)).toBe(6);
-		});
+      // 5 * 1 + 1 = 6
+      expect(getStatValue(upgraded)).toBe(6);
+    });
 
-		it("should upgrade decimal Speed values with special +1 handling", () => {
-			const stat = createSecondaryStat("test", "Speed", "5.5", 1);
-			const upgraded = upgradeSecondaryStat(stat);
+    it("should upgrade decimal Speed values with special +1 handling", () => {
+      const stat = createSecondaryStat("test", "Speed", "5.5", 1);
+      const upgraded = upgradeSecondaryStat(stat);
 
-			// 5.5 * 1 + 1 = 6.5
-			expect(getStatValue(upgraded)).toBe(6.5);
-		});
-	});
+      // 5.5 * 1 + 1 = 6.5
+      expect(getStatValue(upgraded)).toBe(6.5);
+    });
+  });
 
-	describe("downgrade()", () => {
-		it("should downgrade Critical Chance % correctly (factor: 1.045)", () => {
-			const stat = createSecondaryStat(
-				"test",
-				"Critical Chance %",
-				"1.5675",
-				1,
-			);
-			const downgraded = downgradeSecondaryStat(stat);
+  describe("downgrade()", () => {
+    it("should downgrade Critical Chance % correctly (factor: 1.045)", () => {
+      const stat = createSecondaryStat("test", "Critical Chance %", "1.5675", 1);
+      const downgraded = downgradeSecondaryStat(stat);
 
-			// 1.5675 / 1.045 ≈ 1.5
-			expect(getStatValue(downgraded)).toBeCloseTo(1.5, 6);
-		});
+      // 1.5675 / 1.045 ≈ 1.5
+      expect(getStatValue(downgraded)).toBeCloseTo(1.5, 6);
+    });
 
-		it("should downgrade Defense correctly (factor: 1.63)", () => {
-			const stat = createSecondaryStat("test", "Defense", "16.3", 2);
-			const downgraded = downgradeSecondaryStat(stat);
+    it("should downgrade Defense correctly (factor: 1.63)", () => {
+      const stat = createSecondaryStat("test", "Defense", "16.3", 2);
+      const downgraded = downgradeSecondaryStat(stat);
 
-			// 16.3 / 1.63 = 10
-			expect(getStatValue(downgraded)).toBeCloseTo(10, 6);
-		});
+      // 16.3 / 1.63 = 10
+      expect(getStatValue(downgraded)).toBeCloseTo(10, 6);
+    });
 
-		it("should downgrade Speed with special -1 handling", () => {
-			const stat = createSecondaryStat("test", "Speed", "6", 1);
-			const downgraded = downgradeSecondaryStat(stat);
+    it("should downgrade Speed with special -1 handling", () => {
+      const stat = createSecondaryStat("test", "Speed", "6", 1);
+      const downgraded = downgradeSecondaryStat(stat);
 
-			// 6 / 1 - 1 = 5
-			expect(getStatValue(downgraded)).toBe(5);
-		});
+      // 6 / 1 - 1 = 5
+      expect(getStatValue(downgraded)).toBe(5);
+    });
 
-		it("should downgrade decimal Speed values with special -1 handling", () => {
-			const stat = createSecondaryStat("test", "Speed", "6.5", 1);
-			const downgraded = downgradeSecondaryStat(stat);
+    it("should downgrade decimal Speed values with special -1 handling", () => {
+      const stat = createSecondaryStat("test", "Speed", "6.5", 1);
+      const downgraded = downgradeSecondaryStat(stat);
 
-			// 6.5 / 1 - 1 = 5.5
-			expect(getStatValue(downgraded)).toBe(5.5);
-		});
-	});
+      // 6.5 / 1 - 1 = 5.5
+      expect(getStatValue(downgraded)).toBe(5.5);
+    });
+  });
 
-	describe("round-trip upgrade/downgrade", () => {
-		it("should preserve original value through upgrade/downgrade cycle", () => {
-			const original = createSecondaryStat(
-				"test",
-				"Critical Chance %",
-				"1.5",
-				1,
-			);
-			const upgraded = upgradeSecondaryStat(original);
-			const downgraded = downgradeSecondaryStat(upgraded);
+  describe("round-trip upgrade/downgrade", () => {
+    it("should preserve original value through upgrade/downgrade cycle", () => {
+      const original = createSecondaryStat("test", "Critical Chance %", "1.5", 1);
+      const upgraded = upgradeSecondaryStat(original);
+      const downgraded = downgradeSecondaryStat(upgraded);
 
-			expect(getStatValue(downgraded)).toBeCloseTo(getStatValue(original), 6);
-		});
+      expect(getStatValue(downgraded)).toBeCloseTo(getStatValue(original), 6);
+    });
 
-		it("should preserve Speed value through upgrade/downgrade cycle", () => {
-			const original = createSecondaryStat("test", "Speed", "5", 1);
-			const upgraded = upgradeSecondaryStat(original);
-			const downgraded = downgradeSecondaryStat(upgraded);
+    it("should preserve Speed value through upgrade/downgrade cycle", () => {
+      const original = createSecondaryStat("test", "Speed", "5", 1);
+      const upgraded = upgradeSecondaryStat(original);
+      const downgraded = downgradeSecondaryStat(upgraded);
 
-			expect(getStatValue(downgraded)).toBe(getStatValue(original));
-		});
-	});
+      expect(getStatValue(downgraded)).toBe(getStatValue(original));
+    });
+  });
 });
 
 describe("Mod Scoring Calculations", () => {
-	describe("calculatePureSecondaries()", () => {
-		it("should calculate score for mod with multiple secondaries", () => {
-			const mod = fromHotUtils({
-				mod_uid: "test-mod",
-				slot: "Transmitter",
-				set: "Speedpercentadditive",
-				level: 15,
-				pips: 5,
-				primaryBonusType: "Offense %",
-				primaryBonusValue: "5.88",
-				secondaryType_1: "Speed",
-				secondaryValue_1: "14",
-				secondaryRoll_1: "3",
-				secondaryType_2: "Crit Chance %",
-				secondaryValue_2: "1.5",
-				secondaryRoll_2: "2",
-				secondaryType_3: "Offense",
-				secondaryValue_3: "45",
-				secondaryRoll_3: "1",
-				secondaryType_4: "Protection %",
-				secondaryValue_4: "2.5",
-				secondaryRoll_4: "1",
-				characterID: "null",
-				tier: 5,
-				reRolledCount: 0,
-			});
+  describe("calculatePureSecondaries()", () => {
+    it("should calculate score for mod with multiple secondaries", () => {
+      const mod = fromHotUtils({
+        mod_uid: "test-mod",
+        slot: "Transmitter",
+        set: "Speedpercentadditive",
+        level: 15,
+        pips: 5,
+        primaryBonusType: "Offense %",
+        primaryBonusValue: "5.88",
+        secondaryType_1: "Speed",
+        secondaryValue_1: "14",
+        secondaryRoll_1: "3",
+        secondaryType_2: "Crit Chance %",
+        secondaryValue_2: "1.5",
+        secondaryRoll_2: "2",
+        secondaryType_3: "Offense",
+        secondaryValue_3: "45",
+        secondaryRoll_3: "1",
+        secondaryType_4: "Protection %",
+        secondaryValue_4: "2.5",
+        secondaryRoll_4: "1",
+        characterID: "null",
+        tier: 5,
+        reRolledCount: 0,
+      });
 
-			const score = modScores$.getModScore(mod, "PureSecondaries").value;
+      const score = modScores$.getModScore(mod, "PureSecondaries").value;
 
-			// Verify calculation produces expected result
-			expect(score).toMatchSnapshot();
-		});
-	});
+      // Verify calculation produces expected result
+      expect(score).toMatchSnapshot();
+    });
+  });
 
-	describe("calculateGIMOOffenseScore()", () => {
-		it("should calculate GIMO offense score", () => {
-			const mod = fromHotUtils({
-				mod_uid: "test-mod",
-				slot: "Transmitter",
-				set: "Offense",
-				level: 15,
-				pips: 5,
-				primaryBonusType: "Offense %",
-				primaryBonusValue: "5.88",
-				secondaryType_1: "Speed",
-				secondaryValue_1: "20",
-				secondaryRoll_1: "5",
-				secondaryType_2: "Offense %",
-				secondaryValue_2: "2.5",
-				secondaryRoll_2: "3",
-				secondaryType_3: "Crit Chance %",
-				secondaryValue_3: "3.8",
-				secondaryRoll_3: "4",
-				secondaryType_4: "Protection %",
-				secondaryValue_4: "1.2",
-				secondaryRoll_4: "1",
-				characterID: "null",
-				tier: 5,
-				reRolledCount: 0,
-			});
+  describe("calculateGIMOOffenseScore()", () => {
+    it("should calculate GIMO offense score", () => {
+      const mod = fromHotUtils({
+        mod_uid: "test-mod",
+        slot: "Transmitter",
+        set: "Offense",
+        level: 15,
+        pips: 5,
+        primaryBonusType: "Offense %",
+        primaryBonusValue: "5.88",
+        secondaryType_1: "Speed",
+        secondaryValue_1: "20",
+        secondaryRoll_1: "5",
+        secondaryType_2: "Offense %",
+        secondaryValue_2: "2.5",
+        secondaryRoll_2: "3",
+        secondaryType_3: "Crit Chance %",
+        secondaryValue_3: "3.8",
+        secondaryRoll_3: "4",
+        secondaryType_4: "Protection %",
+        secondaryValue_4: "1.2",
+        secondaryRoll_4: "1",
+        characterID: "null",
+        tier: 5,
+        reRolledCount: 0,
+      });
 
-			const score = modScores$.getModScore(mod, "GIMOOffense").value;
+      const score = modScores$.getModScore(mod, "GIMOOffense").value;
 
-			// Verify calculation produces expected result
-			expect(score).toMatchSnapshot();
-		});
-	});
+      // Verify calculation produces expected result
+      expect(score).toMatchSnapshot();
+    });
+  });
 });

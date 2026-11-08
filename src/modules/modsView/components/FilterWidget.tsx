@@ -24,78 +24,70 @@ import SpeedFilter from "./Filters/SpeedFilter";
 
 import { Button } from "#/components/ui/button";
 import {
-	CollapsibleCard,
-	CollapsibleCardContent,
-	CollapsibleCardHeader,
-	CollapsibleCardTitle,
-	CollapsibleCardTrigger,
+  CollapsibleCard,
+  CollapsibleCardContent,
+  CollapsibleCardHeader,
+  CollapsibleCardTitle,
+  CollapsibleCardTrigger,
 } from "#/components/custom/CollapsibleCard";
 
 const FilterWidget = () => {
-	const [t] = useTranslation("explore-ui");
+  const [t] = useTranslation("explore-ui");
 
-	return (
-		<CollapsibleCard
-			defaultOpen={true}
-			className={
-				"flex flex-col justify-between items-center gap-2 w-[-webkit-fill-available]"
-			}
-		>
-			<CollapsibleCardHeader className={"w-full p-2"}>
-				<div className={"flex items-center justify-around w-full"}>
-					<CollapsibleCardTitle className={"w-[90%]"}>
-						Filter:
-					</CollapsibleCardTitle>
-					<CollapsibleCardTrigger
-						render={
-							<Button variant="ghost" size="sm" className="w-9 p-0">
-								<ChevronsUpDown className="h-4 w-4" />
-								<span className="sr-only">Toggle</span>
-							</Button>
-						}
-					/>
-				</div>
-				<div className={"flex justify-center gap-2"}>
-					<FilterManager />
-					<Button
-						size="xs"
-						type={"button"}
-						onClick={() => modsView$.resetActiveFilter()}
-					>
-						{t("filter.Reset")}
-					</Button>
-				</div>
-			</CollapsibleCardHeader>
-			<CollapsibleCardContent className={"w-auto"}>
-				<div className={"flex flex-col justify-between items-center gap-2"}>
-					<div
-						className={
-							"w-full grid grid-cols-[repeat(auto-fit,_minmax(min(6rem,_100%),_1fr))] gap-x-2 gap-y-4 justify-items-center"
-						}
-					>
-						<SlotFilter />
-						<SetFilter />
-						<div className="flex flex-col gap-4">
-							<LevelFilter />
-							<AssignedFilter />
-						</div>
-						<div className="flex flex-col gap-4">
-							<TierFilter />
-							<EquippedFilter />
-						</div>
-						<RarityFilter />
-						<CalibrationFilter />
-						<div className="flex flex-col gap-4 col-span-2">
-							<SpeedFilter />
-							<ScoreFilter />
-						</div>
-					</div>
-					<PrimaryFilter />
-					<SecondaryFilter />
-				</div>
-			</CollapsibleCardContent>
-		</CollapsibleCard>
-	);
+  return (
+    <CollapsibleCard
+      defaultOpen={true}
+      className={"flex flex-col justify-between items-center gap-2 w-[-webkit-fill-available]"}
+    >
+      <CollapsibleCardHeader className={"w-full p-2"}>
+        <div className={"flex items-center justify-around w-full"}>
+          <CollapsibleCardTitle className={"w-[90%]"}>Filter:</CollapsibleCardTitle>
+          <CollapsibleCardTrigger
+            render={
+              <Button variant="ghost" size="sm" className="w-9 p-0">
+                <ChevronsUpDown className="h-4 w-4" />
+                <span className="sr-only">Toggle</span>
+              </Button>
+            }
+          />
+        </div>
+        <div className={"flex justify-center gap-2"}>
+          <FilterManager />
+          <Button size="xs" type={"button"} onClick={() => modsView$.resetActiveFilter()}>
+            {t("filter.Reset")}
+          </Button>
+        </div>
+      </CollapsibleCardHeader>
+      <CollapsibleCardContent className={"w-auto"}>
+        <div className={"flex flex-col justify-between items-center gap-2"}>
+          <div
+            className={
+              "w-full grid grid-cols-[repeat(auto-fit,_minmax(min(6rem,_100%),_1fr))] gap-x-2 gap-y-4 justify-items-center"
+            }
+          >
+            <SlotFilter />
+            <SetFilter />
+            <div className="flex flex-col gap-4">
+              <LevelFilter />
+              <AssignedFilter />
+            </div>
+            <div className="flex flex-col gap-4">
+              <TierFilter />
+              <EquippedFilter />
+            </div>
+            <RarityFilter />
+            <CalibrationFilter />
+            <div className="flex flex-col gap-4 col-span-2">
+              <SpeedFilter />
+              <ScoreFilter />
+            </div>
+          </div>
+          <PrimaryFilter />
+          <SecondaryFilter />
+        </div>
+      </CollapsibleCardContent>
+    </CollapsibleCard>
+  );
 };
 
 FilterWidget.displayName = "FilterWidget";

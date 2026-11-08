@@ -1,8 +1,8 @@
 type ElementType<T extends ReadonlyArray<unknown>> =
-	T extends ReadonlyArray<infer ElementType> ? ElementType : never;
+  T extends ReadonlyArray<infer ElementType> ? ElementType : never;
 
 type Indexed<T> = {
-	[key in keyof T]: T[key];
+  [key in keyof T]: T[key];
 };
 
 /*

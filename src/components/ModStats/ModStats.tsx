@@ -16,85 +16,75 @@ import { modTierColors } from "#/domain/ModTierColors";
 import type { OptimizationPlan } from "#/domain/OptimizationPlan";
 import { type SecondaryStat, getRollsTier } from "#/domain/SecondaryStat";
 import {
-	getDisplayValueAndTypeString,
-	type DisplayStatNames,
-	type DisplayedStat,
+  getDisplayValueAndTypeString,
+  type DisplayStatNames,
+  type DisplayedStat,
 } from "#/domain/Stat";
 
 // components
 import ModScores from "../ModScores/ModScores";
 
-const translateStat = (
-	displayText: DisplayedStat,
-	t: TFunction<"domain", undefined>,
-) => {
-	const seperatorPos = displayText.indexOf(" ");
-	const statValue = displayText.substring(0, seperatorPos);
-	const statName: DisplayStatNames = displayText.substring(
-		seperatorPos + 1,
-	) as DisplayStatNames;
-	const translatedStatName = t(`stats.${statName}`);
-	const parts = [statValue, translatedStatName];
+const translateStat = (displayText: DisplayedStat, t: TFunction<"domain", undefined>) => {
+  const seperatorPos = displayText.indexOf(" ");
+  const statValue = displayText.substring(0, seperatorPos);
+  const statName: DisplayStatNames = displayText.substring(seperatorPos + 1) as DisplayStatNames;
+  const translatedStatName = t(`stats.${statName}`);
+  const parts = [statValue, translatedStatName];
 
-	return parts.join(" ");
+  return parts.join(" ");
 };
 
 type ComponentProps = {
-	mod: Mod;
-	assignedTarget?: OptimizationPlan;
+  mod: Mod;
+  assignedTarget?: OptimizationPlan;
 };
 
 const ModStats = memo(({ mod, assignedTarget }: ComponentProps) => {
-	const [t] = useTranslation("domain");
+  const [t] = useTranslation("domain");
 
-	const showStatElement = (stat: SecondaryStat, speedRemainder: string) => {
-		const displayStat = `${translateStat(getDisplayValueAndTypeString(stat), t)} ${speedRemainder}`;
-		return (
-			<li
-				key={stat.id}
-				className={`leading-[1.2em] ${modTierColors[getRollsTier(stat)]}`}
-			>
-				<span>({stat.rolls})</span> {displayStat}
-			</li>
-		);
-	};
+  const showStatElement = (stat: SecondaryStat, speedRemainder: string) => {
+    const displayStat = `${translateStat(getDisplayValueAndTypeString(stat), t)} ${speedRemainder}`;
+    return (
+      <li key={stat.id} className={`leading-[1.2em] ${modTierColors[getRollsTier(stat)]}`}>
+        <span>({stat.rolls})</span> {displayStat}
+      </li>
+    );
+  };
 
-	const statsDisplay =
-		mod.secondaryStats.length > 0
-			? mod.secondaryStats.map((stat) => {
-					let speedRemainder = "";
-					if (stat.type === "Speed" && mod.speedRemainder !== undefined) {
-						speedRemainder = ` R${mod.speedRemainder}`;
-					}
-					return showStatElement(stat, speedRemainder);
-				})
-			: [<li key={0}>None</li>];
+  const statsDisplay =
+    mod.secondaryStats.length > 0
+      ? mod.secondaryStats.map((stat) => {
+          let speedRemainder = "";
+          if (stat.type === "Speed" && mod.speedRemainder !== undefined) {
+            speedRemainder = ` R${mod.speedRemainder}`;
+          }
+          return showStatElement(stat, speedRemainder);
+        })
+      : [<li key={0}>None</li>];
 
-	return (
-		<div className="text-left">
-			<h4 className="uppercase">{t("Primary")}</h4>
-			<ul className="m-b-[0.5em]">
-				<li className={"leading-[1.2em]"}>
-					{translateStat(getDisplayValueAndTypeString(mod.primaryStat), t)}
-				</li>
-			</ul>
-			<div className="flex justify-between gap-2 w-fit">
-				<div>
-					<h4 className="uppercase">{t("Secondary_other")}</h4>
-					<ul className="m-b-[0.5em]">{statsDisplay}</ul>
-					{assignedTarget &&
-						optimizationSettings$.shouldLevelMod(mod, assignedTarget) && (
-							<h4 className={"text-mod-gold"}>Level mod to 15!</h4>
-						)}
-					{assignedTarget &&
-						optimizationSettings$.shouldSliceMod(mod, assignedTarget) && (
-							<h4 className={"text-mod-gold"}>Slice mod to 6E!</h4>
-						)}{" "}
-				</div>
-				<ModScores mod={mod} />
-			</div>
-		</div>
-	);
+  return (
+    <div className="text-left">
+      <h4 className="uppercase">{t("Primary")}</h4>
+      <ul className="m-b-[0.5em]">
+        <li className={"leading-[1.2em]"}>
+          {translateStat(getDisplayValueAndTypeString(mod.primaryStat), t)}
+        </li>
+      </ul>
+      <div className="flex justify-between gap-2 w-fit">
+        <div>
+          <h4 className="uppercase">{t("Secondary_other")}</h4>
+          <ul className="m-b-[0.5em]">{statsDisplay}</ul>
+          {assignedTarget && optimizationSettings$.shouldLevelMod(mod, assignedTarget) && (
+            <h4 className={"text-mod-gold"}>Level mod to 15!</h4>
+          )}
+          {assignedTarget && optimizationSettings$.shouldSliceMod(mod, assignedTarget) && (
+            <h4 className={"text-mod-gold"}>Slice mod to 6E!</h4>
+          )}{" "}
+        </div>
+        <ModScores mod={mod} />
+      </div>
+    </div>
+  );
 });
 
 ModStats.displayName = "ModStats";

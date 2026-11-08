@@ -4,13 +4,7 @@ import { useTranslation } from "react-i18next";
 
 // state
 import type { Observable } from "@legendapp/state";
-import {
-	For,
-	observer,
-	Show,
-	useValue,
-	useObservable,
-} from "@legendapp/state/react";
+import { For, observer, Show, useValue, useObservable } from "@legendapp/state/react";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const modsView$ = stateLoader$.modsView$;
@@ -25,59 +19,53 @@ import { Separator } from "#ui/separator";
 import { modScores$ } from "#/modules/modScores/state/modScores";
 
 interface ScoreItemProps {
-	id: string;
-	item$: Observable<SecondaryStat>;
+  id: string;
+  item$: Observable<SecondaryStat>;
 }
 
 function ScoreItem({ id, item$ }: ScoreItemProps) {
-	const scoreText = useValue(() => item$.score.valueAsString.get());
-	const scoreTierCSS = useValue(
-		() => modTierColors[getStatScoreTier(item$.score.get())],
-	);
+  const scoreText = useValue(() => item$.score.valueAsString.get());
+  const scoreTierCSS = useValue(() => modTierColors[getStatScoreTier(item$.score.get())]);
 
-	return (
-		<li key={id} className={`leading-[1.2em] ${scoreTierCSS}`}>
-			{scoreText}
-		</li>
-	);
+  return (
+    <li key={id} className={`leading-[1.2em] ${scoreTierCSS}`}>
+      {scoreText}
+    </li>
+  );
 }
 
 type ModScoresProps = {
-	mod: Mod;
+  mod: Mod;
 };
 
 const ModScores = observer(
-	memo(({ mod }: ModScoresProps) => {
-		const [t] = useTranslation("domain");
-		const scoreName = useValue(
-			modsView$.activeViewSetupInActiveCategory.modScore,
-		);
-		const modScore = useValue(() => modScores$.getModScore(mod, scoreName));
-		const secondariesCount$ = useObservable(
-			() => mod.secondaryStats.length > 0,
-		);
-		const secondaryStats$ = useObservable(() => mod.secondaryStats);
+  memo(({ mod }: ModScoresProps) => {
+    const [t] = useTranslation("domain");
+    const scoreName = useValue(modsView$.activeViewSetupInActiveCategory.modScore);
+    const modScore = useValue(() => modScores$.getModScore(mod, scoreName));
+    const secondariesCount$ = useObservable(() => mod.secondaryStats.length > 0);
+    const secondaryStats$ = useObservable(() => mod.secondaryStats);
 
-		return (
-			<div>
-				<h4 className="uppercase">{t("Score_other")}</h4>
-				<ul className="text-[#c5f5f5]">
-					<Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
-						<For each={secondaryStats$} item={ScoreItem} optimized />
-					</Show>
-					<Separator className={"m-y-1 border-foreground"} />
-					<Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
-						<li
-							key={"5"}
-							className={`${modTierColors[modScores$.getModScoreTier(modScore)]} leading-[1.2em]`}
-						>
-							{modScore.displayValue}
-						</li>
-					</Show>
-				</ul>
-			</div>
-		);
-	}),
+    return (
+      <div>
+        <h4 className="uppercase">{t("Score_other")}</h4>
+        <ul className="text-[#c5f5f5]">
+          <Show if={secondariesCount$} else={() => <li key={"0"}>None</li>}>
+            <For each={secondaryStats$} item={ScoreItem} optimized />
+          </Show>
+          <Separator className={"m-y-1 border-foreground"} />
+          <Show if={secondariesCount$} else={() => <li key={"5"}>None</li>}>
+            <li
+              key={"5"}
+              className={`${modTierColors[modScores$.getModScoreTier(modScore)]} leading-[1.2em]`}
+            >
+              {modScore.displayValue}
+            </li>
+          </Show>
+        </ul>
+      </div>
+    );
+  }),
 );
 
 ModScores.displayName = "ModScores";

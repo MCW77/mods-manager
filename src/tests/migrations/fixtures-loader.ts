@@ -7,21 +7,20 @@ const loaders = import.meta.glob("./fixtures/**/v*.ts");
  * @param category Subdirectory name under ./fixtures (e.g., 'backup', 'templates'). Defaults to 'backup'.
  */
 export async function loadFixture(
-	version: number,
-	category: "backup" | "db" | "templates" = "backup",
-	fixtureName = "defaultFixture",
+  version: number,
+  category: "backup" | "db" | "templates" = "backup",
+  fixtureName = "defaultFixture",
 ): Promise<Record<string, unknown>> {
-	const key = `./fixtures/${category}/v${version}.ts`;
-	const loader = loaders[key];
-	if (loader) {
-		const mod = (await loader()) as {
-			[fixtureName]?: Record<string, unknown>;
-		};
-		if (mod && fixtureName in mod)
-			return mod[fixtureName] as Record<string, unknown>;
-		throw new Error(`Fixture module '${key}' must export { ${fixtureName} }.`);
-	}
-	throw new Error(
-		`Didn't find fixture ${fixtureName} for version v${version} in '${category}'. Create tests/migrations/fixtures/${category}/v${version}.ts exporting { ${fixtureName} }.`,
-	);
+  const key = `./fixtures/${category}/v${version}.ts`;
+  const loader = loaders[key];
+  if (loader) {
+    const mod = (await loader()) as {
+      [fixtureName]?: Record<string, unknown>;
+    };
+    if (mod && fixtureName in mod) return mod[fixtureName] as Record<string, unknown>;
+    throw new Error(`Fixture module '${key}' must export { ${fixtureName} }.`);
+  }
+  throw new Error(
+    `Didn't find fixture ${fixtureName} for version v${version} in '${category}'. Create tests/migrations/fixtures/${category}/v${version}.ts exporting { ${fixtureName} }.`,
+  );
 }

@@ -24,67 +24,67 @@ import { OptimizerSettingsView } from "#/modules/settings/components/OptimizerSe
 import { ScrollArea } from "../../../components/ui/scroll-area";
 
 function Section({ sectionName }: { sectionName: SettingsSections }) {
-	const [t] = useTranslation("settings-ui");
-	const section = useValue(settings$.section);
+  const [t] = useTranslation("settings-ui");
+  const section = useValue(settings$.section);
 
-	return (
-		<div
-			className={`${sectionName} m-[0.2em] p-[0.4em] border-1 border-solid ${
-				sectionName === section ? "border-yellow-400" : "border-white"
-			} rounded-xl bg-transparent`}
-			onClick={() => settings$.section.set(sectionName)}
-			onKeyUp={(e) => {
-				if (e.key === "Enter") {
-					settings$.section.set(sectionName);
-				}
-			}}
-			role={"tab"}
-			tabIndex={0}
-			key={`settings-section-${sectionName}`}
-		>
-			{t(`${sectionName}.Title`)}
-		</div>
-	);
+  return (
+    <div
+      className={`${sectionName} m-[0.2em] p-[0.4em] border-1 border-solid ${
+        sectionName === section ? "border-yellow-400" : "border-white"
+      } rounded-xl bg-transparent`}
+      onClick={() => settings$.section.set(sectionName)}
+      onKeyUp={(e) => {
+        if (e.key === "Enter") {
+          settings$.section.set(sectionName);
+        }
+      }}
+      role={"tab"}
+      tabIndex={0}
+      key={`settings-section-${sectionName}`}
+    >
+      {t(`${sectionName}.Title`)}
+    </div>
+  );
 }
 
 function Topic() {
-	const section = useValue(settings$.section);
+  const section = useValue(settings$.section);
 
-	return match(section)
-		.with("general", () => <GeneralSettingsView />)
-		.with("optimizer", () => <OptimizerSettingsView />)
-		.otherwise(() => {
-			return <div id={`settings-${section}`} />;
-		});
+  return match(section)
+    .with("general", () => <GeneralSettingsView />)
+    .with("optimizer", () => <OptimizerSettingsView />)
+    .otherwise(() => {
+      return <div id={`settings-${section}`} />;
+    });
 }
 
 const SettingsView: React.FC = observer(() => {
-	const previousSection = useValue(ui$.previousSection);
+  const previousSection = useValue(ui$.previousSection);
 
-	return (
-		<div className={"Settings-page flex flex-col grow-1"} key={"settings"}>
-			<nav className="sections flex flex-wrap justify-evenly">
-				{previousSection !== "settings" && (
-					<div className="returnTo m-[0.2em] p-[0.4em]">
-						<FontAwesomeIcon
-							icon={faCircleLeft}
-							title={"Go back"}
-							onClick={() => {
-								ui$.goToPreviousSection();
-							}}
-						/>
-					</div>
-				)}
+  return (
+    <div className={"Settings-page flex flex-col grow-1"} key={"settings"}>
+      <nav className="sections flex flex-wrap justify-evenly">
+        {previousSection !== "settings" && (
+          <div className="returnTo m-[0.2em] p-[0.4em]">
+            <FontAwesomeIcon
+              icon={faCircleLeft}
+              title={"Go back"}
+              onClick={() => {
+                ui$.goToPreviousSection();
+              }}
+            />
+          </div>
+        )}
 
-				<Section sectionName={"general"} />
-				<Section sectionName={"explorer"} />
-				<Section sectionName={"optimizer"} />
-			</nav>
-			<ScrollArea>
-				<Topic />
-			</ScrollArea>
-		</div>
-	);
+        <Section sectionName={"general"} />
+        <Section sectionName={"explorer"} />
+        <Section sectionName={"optimizer"} />
+      </nav>
+      <ScrollArea>
+        <Topic />
+      </ScrollArea>
+    </div>
+  );
 });
 
 SettingsView.displayName = "SettingsView";

@@ -2,8 +2,8 @@ import type { Mod } from "#/domain/Mod";
 import type { PlayerValuesByCharacter } from "#/domain/PlayerValues";
 
 export interface FetchedGIMOProfile {
-	name: string;
-	mods: Mod[];
-	playerValues: PlayerValuesByCharacter;
-	updated: boolean;
+  name: string;
+  mods: Mod[];
+  playerValues: PlayerValuesByCharacter;
+  updated: boolean;
 }

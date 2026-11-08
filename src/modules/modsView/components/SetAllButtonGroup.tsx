@@ -12,75 +12,70 @@ import type { TriStateFilterKeys } from "../domain/ModsViewOptions";
 // components
 import { Button } from "#ui/button";
 import { Label } from "#ui/label";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "#ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "#ui/tooltip";
 
 type SetAllButtonGroupProps = {
-	filterKey: TriStateFilterKeys;
+  filterKey: TriStateFilterKeys;
 };
 
 const SetAllButtonGroup = ({ filterKey }: SetAllButtonGroupProps) => {
-	//	const [t] = useTranslation("explore-ui");
+  //	const [t] = useTranslation("explore-ui");
 
-	return (
-		<div className={"actions flex gap-1 justify-center items-center"}>
-			<Label>All: </Label>
-			<TooltipProvider>
-				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								size="xs"
-								className="h-3 p-0 aspect-square"
-								onClick={() => modsView$.massSetFilter(filterKey, 1)}
-							>
-								+
-							</Button>
-						}
-					/>
-					<TooltipContent>
-						<p>Set all to must be</p>
-					</TooltipContent>
-				</Tooltip>
-				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								size="xs"
-								className="h-3 p-0 aspect-square"
-								onClick={() => modsView$.massSetFilter(filterKey, 0)}
-							>
-								o
-							</Button>
-						}
-					/>
-					<TooltipContent>
-						<p>Set all to no filter</p>
-					</TooltipContent>
-				</Tooltip>
-				<Tooltip>
-					<TooltipTrigger
-						render={
-							<Button
-								size="xs"
-								className="h-3 p-0 aspect-square"
-								onClick={() => modsView$.massSetFilter(filterKey, -1)}
-							>
-								-
-							</Button>
-						}
-					/>
-					<TooltipContent>
-						<p>Set all to cannot be</p>
-					</TooltipContent>
-				</Tooltip>
-			</TooltipProvider>
-		</div>
-	);
+  return (
+    <div className={"actions flex gap-1 justify-center items-center"}>
+      <Label>All: </Label>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                size="xs"
+                className="h-3 p-0 aspect-square"
+                onClick={() => modsView$.massSetFilter(filterKey, 1)}
+              >
+                +
+              </Button>
+            }
+          />
+          <TooltipContent>
+            <p>Set all to must be</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                size="xs"
+                className="h-3 p-0 aspect-square"
+                onClick={() => modsView$.massSetFilter(filterKey, 0)}
+              >
+                o
+              </Button>
+            }
+          />
+          <TooltipContent>
+            <p>Set all to no filter</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Button
+                size="xs"
+                className="h-3 p-0 aspect-square"
+                onClick={() => modsView$.massSetFilter(filterKey, -1)}
+              >
+                -
+              </Button>
+            }
+          />
+          <TooltipContent>
+            <p>Set all to cannot be</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
+  );
 };
 
 SetAllButtonGroup.displayName = "SetAllButtonGroup";

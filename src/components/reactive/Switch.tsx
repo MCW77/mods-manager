@@ -11,35 +11,30 @@ import type { Switch as BaseUISwitch } from "@base-ui/react/switch";
 
 type ShadCNSwitchProps = ComponentProps<typeof ShadCNSwitch>;
 interface SwitchProps extends Omit<ShadCNSwitchProps, "checked"> {
-	$checked: Observable<boolean>;
-	$disabled?: Observable<boolean>;
+  $checked: Observable<boolean>;
+  $disabled?: Observable<boolean>;
 }
 
-function Switch({
-	$checked,
-	$disabled,
-	onCheckedChange,
-	...props
-}: SwitchProps) {
-	const checked = useValue($checked);
-	const disabled = useValue(() => ($disabled ? $disabled.get() : false));
+function Switch({ $checked, $disabled, onCheckedChange, ...props }: SwitchProps) {
+  const checked = useValue($checked);
+  const disabled = useValue(() => ($disabled ? $disabled.get() : false));
 
-	const handleCheckedChange = (
-		newChecked: boolean,
-		eventDetails: BaseUISwitch.Root.ChangeEventDetails,
-	) => {
-		$checked.set(newChecked);
-		onCheckedChange?.(newChecked, eventDetails);
-	};
+  const handleCheckedChange = (
+    newChecked: boolean,
+    eventDetails: BaseUISwitch.Root.ChangeEventDetails,
+  ) => {
+    $checked.set(newChecked);
+    onCheckedChange?.(newChecked, eventDetails);
+  };
 
-	return (
-		<ShadCNSwitch
-			{...props}
-			checked={checked}
-			disabled={disabled}
-			onCheckedChange={handleCheckedChange}
-		/>
-	);
+  return (
+    <ShadCNSwitch
+      {...props}
+      checked={checked}
+      disabled={disabled}
+      onCheckedChange={handleCheckedChange}
+    />
+  );
 }
 
 export { Switch };

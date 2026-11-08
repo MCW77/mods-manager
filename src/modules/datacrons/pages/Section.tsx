@@ -5,10 +5,10 @@ import { ui$ } from "#/modules/ui/state/ui";
 import { faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
 ui$.registerSection({
-	icon: faCreditCard,
-	isAlwaysVisible: false,
-	name: "datacrons",
-	titleKey: "header.NavDatacrons",
-	position: 4,
-	hasNullSuspenseFallback: false,
+  icon: faCreditCard,
+  isAlwaysVisible: false,
+  name: "datacrons",
+  titleKey: "header.NavDatacrons",
+  position: 4,
+  hasNullSuspenseFallback: false,
 });

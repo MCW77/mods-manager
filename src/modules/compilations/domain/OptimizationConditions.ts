@@ -4,9 +4,9 @@ import type { ProfileOptimizationSettings } from "#/modules/optimizationSettings
 type OptimizationConditions = ProfileOptimizationSettings | null;
 
 const createOptimizationConditions = (
-	globalSettings: ProfileOptimizationSettings,
+  globalSettings: ProfileOptimizationSettings,
 ): OptimizationConditions => {
-	return structuredClone(globalSettings);
+  return structuredClone(globalSettings);
 };
 
 export { type OptimizationConditions, createOptimizationConditions };

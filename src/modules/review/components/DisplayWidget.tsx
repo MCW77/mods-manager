@@ -26,55 +26,47 @@ import * as ModLoadout from "#/domain/ModLoadout";
 import * as OptimizationPlan from "#/domain/OptimizationPlan";
 
 import type {
-	CharacterModding,
-	CharacterModdings,
+  CharacterModding,
+  CharacterModdings,
 } from "#/modules/compilations/domain/CharacterModdings";
 import type { ModsByCharacterNames } from "#/modules/review/domain/ModsByCharacterNames";
 import * as ModListFilter from "#/modules/review/domain/ModListFilter";
 
 // components
 import { Label } from "#ui/label";
-import {
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "#ui/select";
+import { SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "#ui/select";
 import { Select as ReactiveSelect } from "#/components/reactive/Select";
 
 const showOptionsItems = [
-	{
-		label: "All assignments",
-		value: ModListFilter.showOptions.all,
-	},
-	{
-		label: "Changing characters",
-		value: ModListFilter.showOptions.change,
-	},
-	{
-		label: "Mod upgrades",
-		value: ModListFilter.showOptions.upgrades,
-	},
+  {
+    label: "All assignments",
+    value: ModListFilter.showOptions.all,
+  },
+  {
+    label: "Changing characters",
+    value: ModListFilter.showOptions.change,
+  },
+  {
+    label: "Mod upgrades",
+    value: ModListFilter.showOptions.upgrades,
+  },
 ];
 
 const DisplayWidget = () => {
-	const [t] = useTranslation("optimize-ui");
-	const modById = useValue(() => mods$.activeModById.get());
-	const baseCharacterById = useValue(characters$.baseCharacterById);
-	const filter = useValue(review$.modListFilter);
-	const flatCharacterModdings = useValue(
-		defaultCompilation$.data.flatCharacterModdings,
-	);
+  const [t] = useTranslation("optimize-ui");
+  const modById = useValue(() => mods$.activeModById.get());
+  const baseCharacterById = useValue(characters$.baseCharacterById);
+  const filter = useValue(review$.modListFilter);
+  const flatCharacterModdings = useValue(defaultCompilation$.data.flatCharacterModdings);
 
-	const getModAssignmentsByCurrentCharacter = (
-		modAssignments: CharacterModdings,
-	): CharacterModdings => {
-		const tempAssignments = modAssignments;
+  const getModAssignmentsByCurrentCharacter = (
+    modAssignments: CharacterModdings,
+  ): CharacterModdings => {
+    const tempAssignments = modAssignments;
 
-		// If we're only showing upgrades, then filter out any mod that isn't being upgraded
-		if (ModListFilter.showOptions.upgrades === filter.show) {
-			/*
+    // If we're only showing upgrades, then filter out any mod that isn't being upgraded
+    if (ModListFilter.showOptions.upgrades === filter.show) {
+      /*
       tempAssignments = modAssignments.map(({ id, target, assignedMods, missedGoals }) => ({
         id: id,
         target: target,
@@ -84,227 +76,207 @@ const DisplayWidget = () => {
       }));
 			*/
 
-			for (const assignment of tempAssignments) {
-				assignment.assignedMods = assignment.assignedMods.filter(
-					(mod) =>
-						optimizationSettings$.shouldLevelMod(mod, assignment.target) ||
-						optimizationSettings$.shouldSliceMod(mod, assignment.target),
-				);
-			}
-		}
-		// Filter out any mods that aren't moving
-		const mods = tempAssignments.map(({ characterId: id, assignedMods }) =>
-			assignedMods.filter((mod) => mod.characterID !== id),
-		);
+      for (const assignment of tempAssignments) {
+        assignment.assignedMods = assignment.assignedMods.filter(
+          (mod) =>
+            optimizationSettings$.shouldLevelMod(mod, assignment.target) ||
+            optimizationSettings$.shouldSliceMod(mod, assignment.target),
+        );
+      }
+    }
+    // Filter out any mods that aren't moving
+    const mods = tempAssignments.map(({ characterId: id, assignedMods }) =>
+      assignedMods.filter((mod) => mod.characterID !== id),
+    );
 
-		const modsByCharacterNames: ModsByCharacterNames = groupBy(
-			flatten(mods),
-			(mod: Mod) => mod.characterID,
-		);
+    const modsByCharacterNames: ModsByCharacterNames = groupBy(
+      flatten(mods),
+      (mod: Mod) => mod.characterID,
+    );
 
-		// Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
-		const result: CharacterModdings = Object.values(
-			mapValues<ModsByCharacterNames, CharacterModding>(
-				modsByCharacterNames,
-				(mods: Mod[], id: string): CharacterModding => ({
-					characterId: id as CharacterNames,
-					assignedMods: mods,
-					target: OptimizationPlan.createOptimizationPlan("xyz"),
-					missedGoals: [],
-					currentScore: 0,
-					previousScore: 0,
-				}),
-			),
-		);
+    // Then, turn that into the same format as modAssignments - an array of {id, assignedMods}
+    const result: CharacterModdings = Object.values(
+      mapValues<ModsByCharacterNames, CharacterModding>(
+        modsByCharacterNames,
+        (mods: Mod[], id: string): CharacterModding => ({
+          characterId: id as CharacterNames,
+          assignedMods: mods,
+          target: OptimizationPlan.createOptimizationPlan("xyz"),
+          missedGoals: [],
+          currentScore: 0,
+          previousScore: 0,
+        }),
+      ),
+    );
 
-		return result;
-	};
+    return result;
+  };
 
-	const modAssignments: CharacterModdings = flatCharacterModdings
-		.filter((x) => null !== x)
-		.map(({ characterId, target, assignedMods, missedGoals }) => ({
-			characterId,
-			target,
-			assignedMods: assignedMods
-				? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
-				: [],
-			missedGoals: missedGoals || [],
-		})) as CharacterModdings;
+  const modAssignments: CharacterModdings = flatCharacterModdings
+    .filter((x) => null !== x)
+    .map(({ characterId, target, assignedMods, missedGoals }) => ({
+      characterId,
+      target,
+      assignedMods: assignedMods
+        ? assignedMods.map((id) => modById.get(id)).filter((mod) => !!mod)
+        : [],
+      missedGoals: missedGoals || [],
+    })) as CharacterModdings;
 
-	let displayedMods: CharacterModdings;
-	let tags: string[];
-	switch (filter.view) {
-		case ModListFilter.viewOptions.list:
-			if (ModListFilter.showOptions.upgrades === filter.show) {
-				// If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
-				displayedMods = modAssignments
-					.map(
-						({
-							characterId,
-							target,
-							assignedMods,
-							currentScore,
-							previousScore,
-						}) => ({
-							characterId,
-							target,
-							assignedMods: assignedMods.filter(
-								(mod) =>
-									optimizationSettings$.shouldLevelMod(mod, target) ||
-									optimizationSettings$.shouldSliceMod(mod, target),
-							),
-							missedGoals: [],
-							currentScore,
-							previousScore,
-						}),
-					)
-					.filter(({ assignedMods }) => assignedMods.length > 0);
-			} else {
-				// If we're not showing upgrades, then only show mods that aren't already assigned to that character
-				displayedMods = modAssignments.map(
-					({
-						characterId,
-						target,
-						assignedMods,
-						currentScore,
-						previousScore,
-					}) => ({
-						characterId,
-						target,
-						assignedMods: assignedMods
-							.filter((mod) => mod.characterID !== characterId)
-							.sort(ModLoadout.slotSort),
-						missedGoals: [],
-						currentScore,
-						previousScore,
-					}),
-				);
-			}
+  let displayedMods: CharacterModdings;
+  let tags: string[];
+  switch (filter.view) {
+    case ModListFilter.viewOptions.list:
+      if (ModListFilter.showOptions.upgrades === filter.show) {
+        // If we're showing mods as a list and showing upgrades, show any upgraded mod, no matter if it's moving or not
+        displayedMods = modAssignments
+          .map(({ characterId, target, assignedMods, currentScore, previousScore }) => ({
+            characterId,
+            target,
+            assignedMods: assignedMods.filter(
+              (mod) =>
+                optimizationSettings$.shouldLevelMod(mod, target) ||
+                optimizationSettings$.shouldSliceMod(mod, target),
+            ),
+            missedGoals: [],
+            currentScore,
+            previousScore,
+          }))
+          .filter(({ assignedMods }) => assignedMods.length > 0);
+      } else {
+        // If we're not showing upgrades, then only show mods that aren't already assigned to that character
+        displayedMods = modAssignments.map(
+          ({ characterId, target, assignedMods, currentScore, previousScore }) => ({
+            characterId,
+            target,
+            assignedMods: assignedMods
+              .filter((mod) => mod.characterID !== characterId)
+              .sort(ModLoadout.slotSort),
+            missedGoals: [],
+            currentScore,
+            previousScore,
+          }),
+        );
+      }
 
-			if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
-				// collectByKey
-				const removedMods: ModsByCharacterNames = groupBy(
-					flatten(
-						displayedMods.map(({ characterId: id, assignedMods }) =>
-							assignedMods.filter((mod) => mod.characterID !== id),
-						),
-					),
-					(mod: Mod) => mod.characterID,
-				);
+      if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
+        // collectByKey
+        const removedMods: ModsByCharacterNames = groupBy(
+          flatten(
+            displayedMods.map(({ characterId: id, assignedMods }) =>
+              assignedMods.filter((mod) => mod.characterID !== id),
+            ),
+          ),
+          (mod: Mod) => mod.characterID,
+        );
 
-				tags = uniq(
-					flatten(
-						(Object.keys(removedMods) as CharacterNames[]).map((id) =>
-							id in baseCharacterById ? baseCharacterById[id].categories : [],
-						) as string[][],
-					),
-				);
-			} else {
-				tags = uniq(
-					flatten(
-						displayedMods.map(({ characterId: id }) =>
-							id in baseCharacterById ? baseCharacterById[id].categories : [],
-						),
-					),
-				);
-			}
-			break;
-		default:
-			// If we're displaying as sets, but sorting by current character, we need to rework the modAssignments
-			// so that they're organized by current character rather than assigned character
-			if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
-				displayedMods = getModAssignmentsByCurrentCharacter(modAssignments);
-			} else if (ModListFilter.showOptions.change === filter.show) {
-				// If we're only showing changes, then filter out any character that isn't changing
-				displayedMods = modAssignments.filter(
-					({ characterId: id, assignedMods }) =>
-						assignedMods.some((mod) => mod.characterID !== id),
-				);
-			} else if (ModListFilter.showOptions.upgrades === filter.show) {
-				// If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
-				displayedMods = modAssignments.filter(({ target, assignedMods }) =>
-					assignedMods.some(
-						(mod) =>
-							optimizationSettings$.shouldLevelMod(mod, target) ||
-							optimizationSettings$.shouldSliceMod(mod, target),
-					),
-				);
-			} else {
-				displayedMods = modAssignments;
-			}
+        tags = uniq(
+          flatten(
+            (Object.keys(removedMods) as CharacterNames[]).map((id) =>
+              id in baseCharacterById ? baseCharacterById[id].categories : [],
+            ) as string[][],
+          ),
+        );
+      } else {
+        tags = uniq(
+          flatten(
+            displayedMods.map(({ characterId: id }) =>
+              id in baseCharacterById ? baseCharacterById[id].categories : [],
+            ),
+          ),
+        );
+      }
+      break;
+    default:
+      // If we're displaying as sets, but sorting by current character, we need to rework the modAssignments
+      // so that they're organized by current character rather than assigned character
+      if (ModListFilter.sortOptions.currentCharacter === filter.sort) {
+        displayedMods = getModAssignmentsByCurrentCharacter(modAssignments);
+      } else if (ModListFilter.showOptions.change === filter.show) {
+        // If we're only showing changes, then filter out any character that isn't changing
+        displayedMods = modAssignments.filter(({ characterId: id, assignedMods }) =>
+          assignedMods.some((mod) => mod.characterID !== id),
+        );
+      } else if (ModListFilter.showOptions.upgrades === filter.show) {
+        // If we're only showing upgrades, then filter out any character that doesn't have at least one upgrade
+        displayedMods = modAssignments.filter(({ target, assignedMods }) =>
+          assignedMods.some(
+            (mod) =>
+              optimizationSettings$.shouldLevelMod(mod, target) ||
+              optimizationSettings$.shouldSliceMod(mod, target),
+          ),
+        );
+      } else {
+        displayedMods = modAssignments;
+      }
 
-			// Set up the available tags for the sidebar
-			tags = Array.from(
-				new Set(
-					flatten(
-						displayedMods.map(({ characterId: id }) =>
-							baseCharacterById[id] ? baseCharacterById[id].categories : [],
-						),
-					),
-				),
-			);
+      // Set up the available tags for the sidebar
+      tags = Array.from(
+        new Set(
+          flatten(
+            displayedMods.map(({ characterId: id }) =>
+              baseCharacterById[id] ? baseCharacterById[id].categories : [],
+            ),
+          ),
+        ),
+      );
 
-			// Filter out any characters that we're not going to display based on the selected tag
-			if (filter.tag !== "All") {
-				displayedMods = displayedMods.filter(({ characterId: id }) => {
-					const tags = baseCharacterById[id]
-						? baseCharacterById[id].categories
-						: [];
-					return tags.includes(filter.tag);
-				});
-			}
-	}
-	tags.sort();
+      // Filter out any characters that we're not going to display based on the selected tag
+      if (filter.tag !== "All") {
+        displayedMods = displayedMods.filter(({ characterId: id }) => {
+          const tags = baseCharacterById[id] ? baseCharacterById[id].categories : [];
+          return tags.includes(filter.tag);
+        });
+      }
+  }
+  tags.sort();
 
-	const global =
-		"grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
-	const labelCSS = "grid-col-[labels] grid-row-auto" as const;
-	const inputCSS = "grid-col-[controls] grid-row-auto" as const;
+  const global =
+    "grid gap-3 md:grid-cols-[[labels]auto_[controls]1fr] grid-auto-flow-row items-center justify-items-start" as const;
+  const labelCSS = "grid-col-[labels] grid-row-auto" as const;
+  const inputCSS = "grid-col-[controls] grid-row-auto" as const;
 
-	return (
-		<div className={global}>
-			<Label className={labelCSS} htmlFor={"show"}>
-				{t("review.display.showMe.Label")}
-			</Label>
-			<ReactiveSelect
-				items={showOptionsItems}
-				$value={review$.modListFilter.show}
-			>
-				<SelectTrigger className={inputCSS} id={"show"}>
-					<SelectValue />
-				</SelectTrigger>
-				<SelectContent className={"max-h-[50%]"} alignItemWithTrigger={false}>
-					<SelectGroup>
-						<SelectItem value={ModListFilter.showOptions.all}>
-							{t("review.display.showMe.Option1")}
-						</SelectItem>
-						<SelectItem value={ModListFilter.showOptions.change}>
-							{t("review.display.showMe.Option2")}
-						</SelectItem>
-						<SelectItem value={ModListFilter.showOptions.upgrades}>
-							{t("review.display.showMe.Option3")}
-						</SelectItem>
-					</SelectGroup>
-				</SelectContent>
-			</ReactiveSelect>
-			<Label htmlFor={"tag"}>{t("review.display.tag")}</Label>
-			<ReactiveSelect $value={review$.modListFilter.tag}>
-				<SelectTrigger className={inputCSS} id={"tag"}>
-					<SelectValue />
-				</SelectTrigger>
-				<SelectContent className={"max-h-[50%]"}>
-					<SelectGroup>
-						<SelectItem value={"All"}>{t("review.display.tagAll")}</SelectItem>
-						{tags.map((tag) => (
-							<SelectItem value={tag} key={tag}>
-								{tag}
-							</SelectItem>
-						))}
-					</SelectGroup>
-				</SelectContent>
-			</ReactiveSelect>
-		</div>
-	);
+  return (
+    <div className={global}>
+      <Label className={labelCSS} htmlFor={"show"}>
+        {t("review.display.showMe.Label")}
+      </Label>
+      <ReactiveSelect items={showOptionsItems} $value={review$.modListFilter.show}>
+        <SelectTrigger className={inputCSS} id={"show"}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className={"max-h-[50%]"} alignItemWithTrigger={false}>
+          <SelectGroup>
+            <SelectItem value={ModListFilter.showOptions.all}>
+              {t("review.display.showMe.Option1")}
+            </SelectItem>
+            <SelectItem value={ModListFilter.showOptions.change}>
+              {t("review.display.showMe.Option2")}
+            </SelectItem>
+            <SelectItem value={ModListFilter.showOptions.upgrades}>
+              {t("review.display.showMe.Option3")}
+            </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </ReactiveSelect>
+      <Label htmlFor={"tag"}>{t("review.display.tag")}</Label>
+      <ReactiveSelect $value={review$.modListFilter.tag}>
+        <SelectTrigger className={inputCSS} id={"tag"}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent className={"max-h-[50%]"}>
+          <SelectGroup>
+            <SelectItem value={"All"}>{t("review.display.tagAll")}</SelectItem>
+            {tags.map((tag) => (
+              <SelectItem value={tag} key={tag}>
+                {tag}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </ReactiveSelect>
+    </div>
+  );
 };
 
 DisplayWidget.displayName = "DisplayWidget";

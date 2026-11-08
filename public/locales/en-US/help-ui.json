@@ -1,223 +1,223 @@
 {
-	"profiles": {
-		"Title": "Profiles",
-		"topics": {
-			"1": "Adding profiles",
-			"2": "Deleting a profile",
-			"3": "Fetching your mods",
-			"4": "Fetching your mods as a HotUtils customer",
-			"5": "Importing unequipped mods using C-3PO bot"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Adding profiles",
-				"1": "To get started you just need to enter your allycode in the box in the header. The application will then fetch your profile's data and create a new profile for you.",
-				"2": "If you want to add another profile, open the profiles dropdown at the top and select \"New Allycode...\". Then enter the allycode for that profile and hit enter.",
-				"3": "If you added multiple profiles, you can switch between them by selecting the profile you want to use in the profiles dropdown at the top.",
-				"4": "You can also import profiles from a backup file. When you have at least one profile, you can open the settings. Go to the \"Basics\" section (default), where you can find the \"Backups & Reset\" settings. There you can import a backup file that contains one or more profiles. The data will be merged with your existing profiles."
-			},
-			"2": {
-				"Headline": "Deleting a profile",
-				"1": "To make mods-manager forget your profile, go to the \"Basics\" section in the settings and select the profile you want to delete in the \"Accounts\" widget. It lists all profiles with allycode and in-game name. Then click the \"Delete account <allycode>\" button. This will remove all data for that profile from mods-manager.",
-				"2": "After deletion of a profile you can always create it again by entering the allycode and fetching the profile's data (mods, characters,...) again, but anything you changed manually like compilations, targets will be lost unless you have a recent backup file that contains the profile."
-			},
-			"4": {
-				"Headline": "Fetching your mods as a HotUtils customer",
-				"1": "HotUtils is another tool for SWGoH that, if subscribed to, can directly log in to your game account.",
-				"2": "One of the advantages of this is that it can pull all of your mod data, including unequipped mods.",
-				"3": "Use at your own risk!",
-				"4": "HotUtils functionality breaks the terms of service for Star Wars: Galaxy of Heroes.",
-				"5": "You assume all risk in using this tool.",
-				"6": "Grandivory's Mods Optimizer is not associated with HotUtils.",
-				"7": "To use HotUtils with mods-manager, it needs your HotUtils Session ID. i put detailed instructions on how to get it on ",
-				"8": "After successfully adding your HotUtils Session ID, the fetch button will show a samall flame to indicate it now uses HotUtils"
-			},
-			"5": {
-				"Headline": "Importing unequipped mods using C-3PO bot",
-				"1": "You can import unequipped mods using the C-3PO bot on Discord. This is slightly more complicated than using HotUtils, but it's also free.",
-				"2": "Use the \"/allycode auth ea_connect\" command to connect the bot with the game. ",
-				"3": "After connecting the bot, you can use the command \"/inventory export\". The bot will then fetch the mod data and generate a file that you can import into mods-manager.",
-				"4": "You can find the import in the settings under \"Basics\" (default) in the \"Accounts\" section. There you can import the file that the C-3PO bot created."
-			}
-		}
-	},
-	"explorer": {
-		"Title": "Mod Explorer",
-		"topics": {
-			"1": "Overview",
-			"2": "View Options",
-			"3": "Grouping/Filtering/Sorting Setup",
-			"4": "Grouping",
-			"5": "Sorting"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Mod Explorer",
-				"1": "The \"Mods Explorer\" allows you to view all your mods. You have many options to group/filter/sort your viewed mods in the collapsible sidebar on the left",
-				"2": "The mods are displayed in the main area on the right. There is one view of mods, grouped/filtered/sorted according to your settings, for each stage in the lifecycle of a mod and a view for all mods (the default)."
-			},
-			"2": {
-				"Headline": "View Options",
-				"1": "there"
-			},
-			"3": {
-				"Headline": "Grouping/Filtering/Sorting Setup",
-				"1": "At the top you have a button to add a new grouping/filtering/sorting setup. You can have any number of setups and switch between them with the dropdown at the top. Each setup has its own grouping, filtering and sorting settings. The dropdown also let's you delete or rename existing setups",
-				"2": "Each mod lifecycle stage has its own list of grouping/filtering/sorting setups and comes with one default setup that will only show mods in that stage."
-			},
-			"4": {
-				"Headline": "Grouping",
-				"1": "You can only enable or disable grouping. With grouping enabled, the mods will be grouped by slot, modset and primary stat. With grouping disabled, all mods are in the same group. With grouping enabled (and some sorting) you can quickly compare all mods with the same characteristics.",
-				"2": "On the right you get the list of all groups. (Just one group if grouping is disabled). Each group can be collapsed or expanded by clicking it's header showing the slot, modset, primary stat and the number of mods in that group. There are also buttons to collapse/expand all groups"
-			},
-			"5": {
-				"Headline": "Sorting",
-				"1": "After grouping and filtering your mods they will be sorted according to your sorting settings. You can add any number of sorting criteria. The mods will be sorted by the first criteria, and if there are mods with the same value for that criteria, they will be sorted by the second criteria, and so on. Each sort can be ascending or descending."
-			}
-		}
-	},
-	"optimizer": {
-		"Title": "Mod Optimizer",
-		"topics": {
-			"1": "Global Settings",
-			"2": "Character Templates",
-			"3": "Stack Rank"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Global optimization settings",
-				"1": "The global settings apply to every character during an optimization. They always override any character-specific settings that you have set.",
-				"2": "Threshold to change mods",
-				"3": "As the optimizer is running, its normal behavior is to always recommend the absolute best mod set it can find, based on the target you have selected. If this number is above 0, then the optimizer will only recommend that you change mods on a character if the new recommended set is at least this much better than what the character previously had, or if the character's mods were moved to a character higher in your list and needed to be replaced.",
-				"4": "Lock all unselected characters",
-				"5": "If this box is checked, then no mods will be taken from characters that aren't in your selected list. If you have a number of unassigned mods, this can be a quick way to make use of them without triggering a major remod of your whole roster.",
-				"6": "Don't break mod sets",
-				"7": "If this box is checked, the optimizer will try to keep mod sets together, so you always get the maximum set bonuses. Sometimes it's not possible to do so, either because of other restrictions on a character's target or because you don't have enough mods left to make a full set. In these cases, the optimizer will still drop this restriction to try to recommend the best set."
-			},
-			"2": {
-				"Headline": "Character Templates",
-				"1": "Character Templates are a way to work with groups of ",
-				"2": "selected characters ",
-				"3": "and their ",
-				"4": "targets ",
-				"5": "independently of the rest of your data. They can be used to set up teams for a particular use and shared with your friends, guildmates, or on the Mods Optimizer discord server to quickly allow other people to copy your settings. Here is a quick description of the buttons to interact with character templates:",
-				"6": "Managing templates",
-				"7": "Save",
-				"8": "Save your current selected characters and their targets as a new template. You'll be asked to give your template a name, which you can then use to apply it or export it later.",
-				"9": "Export",
-				"10": "Export one or all of your templates to a file that can be shared with others.",
-				"11": "Load",
-				"12": "Load templates from a file into the optimizer. This won't apply the templates, but will instead add them to the list of known templates that you can work with.",
-				"13": "Delete",
-				"14": "Delete one of your templates from the optimizer. This only works on templates that you have created or loaded from a file. The default templates in the optimizer can't be deleted.",
-				"15": "Applying templates",
-				"16": "Append",
-				"17": "Add the characters from a template to the end of your selected characters.",
-				"18": "Replace",
-				"19": "Clear your selected characters and replace them with those from a template.",
-				"20": "Apply targets only",
-				"21": "Don't change which characters you have selected or their order, but for any that are in a template, change their targets to match."
-			},
-			"3": {
-				"Headline": "Stack Rank",
-				"1": "Set a dynamic order based on your current roster and selected use case. This is intended to be an easy starting point, and is by no means the final say in how your characters should be ordered or what targets should be chosen.",
-				"2": "Settings",
-				"3": "Use Case",
-				"4": "Select the game modes that you want to optimize for.",
-				"5": "Minimum Gear Level",
-				"6": "Only consider characters that are at least this gear level.",
-				"7": "Maximum List Length",
-				"8": "The maximum number of characters to include in the template. If you have more characters that meet the other criteria, they will be ignored.",
-				"9": "Omicron Boosts",
-				"10": "Select the game modes that will have characters with omicrons for that mode boosted."
-			}
-		}
-	},
-	"editor": {
-		"Title": "Optimizationplan-Editor",
-		"topics": {
-			"1": "Overview",
-			"2": "Mod Upgrades",
-			"3": "Weights",
-			"4": "Primaries",
-			"5": "Modsets",
-			"6": "Targetstats"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Overview",
-				"1": "The optimizationplan editor has 3 areas. top-left, top-right and bottom.",
-				"2": "In the top-left area you see the character the optimization plan is applied to.",
-				"3": "In the top-right area you can manage the optimization plan. You can add, delete, reset and select optimization plans, save changes made or cancel.",
-				"4": "In the bottom area you can edit the optimization plan. The settings are split in categories."
-			},
-			"2": {
-				"Headline": "Mods",
-				"1": "In this category you can just restrict if only 6-dot mods are allowed"
-			},
-			"3": {
-				"Headline": "Weights",
-				"1": "The modscore is the weighted sum of all stats of a mod. The weights are defined here. There are two modes: Basic and Advanced.",
-				"2": "Basic: Weights are normalized to fit the range of values for that stat. All weights are between -100 and 100. For example, giving speed and protection the same weight means that 1 speed will score the same as 200 protection (since you find 200x more protection on mods than you do speed).",
-				"3": "Advanced: Now there is no range for the weights and weights are multiplied with the stat directly. If two stats have the same weight one point of the first stat is worth the same as one point of the second stat. If you give speed and protection the same weight, the optimizer will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works."
-			},
-			"4": {
-				"Headline": "Primaries",
-				"1": "In this category you can select which primary stats are allowed for each variable mod slot. No selection for a slot allows any primary stat for that slot. If you select one or more primary stats, then only those selected will be allowed for that slot.",
-				"2": "The primary stat restrictions are ignored unless you enable the global optimizer setting \"Optimize with primary and set restrictions\""
-			},
-			"5": {
-				"Headline": "Sets",
-				"1": "In this category you can define if it is allowed to break modsets and the modsets allowed. If you select one or more modsets, then only those selected will be allowed.",
-				"2": "The modset restrictions are ignored unless you enable the global optimizer setting \"Optimize with primary and set restrictions\""
-			},
-			"6": {
-				"Headline": "Target Stats",
-				"1": "In this category you can define target stats. It starts empty except for the add target stat button. Each added target stat will show a card to edit that target stat.",
-				"2": "With a target stat you can define the range the selected stat has to fall in. This range can be set in comparison to the same stat on a selected character. If so the range can be absolute or relative.",
-				"3": "You can switch between \"Report Only\" and \"Optimize\" mode. In the default \"Optimize\" mode the optimizer will iterate all mod permutations and select the loadout matching the target stat restriction with the highest mod score. In \"Report Only\" mode the optimizer just selects the highest scoring loadout and reports if it satisfies the target stat restriction.",
-				"4": "Iterating all mod permutations in \"Optimize\" mode can be very time consuming. You can reduce the needed time by selecting a small range or by removing mods to look at with any of the other restrictions"
-			}
-		}
-	},
-	"general": {
-		"Title": "Basics",
-		"topics": {
-			"1": "Welcome",
-			"2": "Mod optimization basics",
-			"3": "Selecting Characters to optimize",
-			"4": "Picking a target",
-			"5": "Picking target values"
-		},
-		"topicById": {
-			"1": {
-				"Headline": "Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes™!",
-				"1": "This application will allow you to equip the optimum mod set on every character you have by assigning a value to each stat that a mod can confer. You'll give it a list of characters to optimize along with the stats that you're looking for, and it will determine the best mods to equip, one character at a time, until your list is exhausted.",
-				"2": "To get started, enter your ally code in the box in the header."
-			},
-			"2": {
-				"Headline": "How does this work?",
-				"1": "Welcome to my mods optimizer for Star Wars: Galaxy of Heroes!",
-				"2": "This application works on a simple principle:",
-				"3": "Every stat should have some set value for a character, and if we know all of those values, then we can calculate how much a given mod, or set of mods, is worth for that character. From there, the tool knows how to find the set of mods that give the highest possible overall value for each of your characters without you needing to look through the hundreds of mods in your inventory!"
-			},
-			"3": {
-				"Headline": "Selecting characters to optimize",
-				"1": "The mods optimizer will start out by considering all mods equipped on any character other than those that are \"Locked\". Then, it will go down the list of selected characters, one by one, choosing the best mods it can find for each character, based on the selected target. As it finishes each character, it removes those mods from its consideration set.",
-				"2": "Therefore, the character that you want to have your absolute best mods should always be first among your selected characters. Usually, this means that you want the character who needs the most speed to be first."
-			},
-			"4": {
-				"Headline": "Picking a target",
-				"1": "Every character in the game has targets. (A collection of predefined weights for all character stats and sometimes mod restrictions). The optimizer will pick the best value mods according to the given weights/restrictions. The targets have been named for their general purpose - 'hSTR Phase 1' or 'PvP' for example. Some characters have multiple different targets that you can select from.",
-				"2": "These targets, while directionally good for characters, are only a base suggestion!",
-				"3": "There are many reasons that you might want to pick different values than those listed by default in the optimizer: you might want to optimize for a different purpose (such as a phase 3 Sith Triumvirate Raid team, where speed can be detrimental), you might want to choose something different to optimize against, or you might simply have a better set of values that you want to employ.",
-				"4": "The easiest way to get started with the optimizer is to choose from the pre-programmed character templates. These are set up with sets of characters and targets that should fit various game modes. If there's no template to fit your exact needs, you can use one as a starting point or create one from scratch. For each individual character, if no target exists that matches what you want, you can select \"Custom\", or simply hit the \"Edit\" button to bring up the character edit modal."
-			},
-			"5": {
-				"Headline": "Picking target values",
-				"1": "Most characters will have the \"basic\" mode selected by default. In basic mode, you select a value for all stats that is between -100 and 100. These values are weights that are assigned to each stat to determine its impoact for that character. Setting two values as equal means that those stats are about equally important for that character. In basic mode, the optimizer will automatically adjust the weights to fit the range of values seen in-game for that stat. For example, giving speed and protection both a value of 100 means that 1 speed is about equivalent to 200 protection (since you find much more protection on mods than you do speed).",
-				"2": "If you want more fine-tuned control over the stat values, you can switch to \"advanced\" mode. In advanced mode, the values given are the value for each point of the listed stat. In advanced mode, if speed and protection are both given a value of 100, then the tool will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works."
-			}
-		}
-	}
+  "profiles": {
+    "Title": "Profiles",
+    "topics": {
+      "1": "Adding profiles",
+      "2": "Deleting a profile",
+      "3": "Fetching your mods",
+      "4": "Fetching your mods as a HotUtils customer",
+      "5": "Importing unequipped mods using C-3PO bot"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Adding profiles",
+        "1": "To get started you just need to enter your allycode in the box in the header. The application will then fetch your profile's data and create a new profile for you.",
+        "2": "If you want to add another profile, open the profiles dropdown at the top and select \"New Allycode...\". Then enter the allycode for that profile and hit enter.",
+        "3": "If you added multiple profiles, you can switch between them by selecting the profile you want to use in the profiles dropdown at the top.",
+        "4": "You can also import profiles from a backup file. When you have at least one profile, you can open the settings. Go to the \"Basics\" section (default), where you can find the \"Backups & Reset\" settings. There you can import a backup file that contains one or more profiles. The data will be merged with your existing profiles."
+      },
+      "2": {
+        "Headline": "Deleting a profile",
+        "1": "To make mods-manager forget your profile, go to the \"Basics\" section in the settings and select the profile you want to delete in the \"Accounts\" widget. It lists all profiles with allycode and in-game name. Then click the \"Delete account <allycode>\" button. This will remove all data for that profile from mods-manager.",
+        "2": "After deletion of a profile you can always create it again by entering the allycode and fetching the profile's data (mods, characters,...) again, but anything you changed manually like compilations, targets will be lost unless you have a recent backup file that contains the profile."
+      },
+      "4": {
+        "Headline": "Fetching your mods as a HotUtils customer",
+        "1": "HotUtils is another tool for SWGoH that, if subscribed to, can directly log in to your game account.",
+        "2": "One of the advantages of this is that it can pull all of your mod data, including unequipped mods.",
+        "3": "Use at your own risk!",
+        "4": "HotUtils functionality breaks the terms of service for Star Wars: Galaxy of Heroes.",
+        "5": "You assume all risk in using this tool.",
+        "6": "Grandivory's Mods Optimizer is not associated with HotUtils.",
+        "7": "To use HotUtils with mods-manager, it needs your HotUtils Session ID. i put detailed instructions on how to get it on ",
+        "8": "After successfully adding your HotUtils Session ID, the fetch button will show a samall flame to indicate it now uses HotUtils"
+      },
+      "5": {
+        "Headline": "Importing unequipped mods using C-3PO bot",
+        "1": "You can import unequipped mods using the C-3PO bot on Discord. This is slightly more complicated than using HotUtils, but it's also free.",
+        "2": "Use the \"/allycode auth ea_connect\" command to connect the bot with the game. ",
+        "3": "After connecting the bot, you can use the command \"/inventory export\". The bot will then fetch the mod data and generate a file that you can import into mods-manager.",
+        "4": "You can find the import in the settings under \"Basics\" (default) in the \"Accounts\" section. There you can import the file that the C-3PO bot created."
+      }
+    }
+  },
+  "explorer": {
+    "Title": "Mod Explorer",
+    "topics": {
+      "1": "Overview",
+      "2": "View Options",
+      "3": "Grouping/Filtering/Sorting Setup",
+      "4": "Grouping",
+      "5": "Sorting"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Mod Explorer",
+        "1": "The \"Mods Explorer\" allows you to view all your mods. You have many options to group/filter/sort your viewed mods in the collapsible sidebar on the left",
+        "2": "The mods are displayed in the main area on the right. There is one view of mods, grouped/filtered/sorted according to your settings, for each stage in the lifecycle of a mod and a view for all mods (the default)."
+      },
+      "2": {
+        "Headline": "View Options",
+        "1": "there"
+      },
+      "3": {
+        "Headline": "Grouping/Filtering/Sorting Setup",
+        "1": "At the top you have a button to add a new grouping/filtering/sorting setup. You can have any number of setups and switch between them with the dropdown at the top. Each setup has its own grouping, filtering and sorting settings. The dropdown also let's you delete or rename existing setups",
+        "2": "Each mod lifecycle stage has its own list of grouping/filtering/sorting setups and comes with one default setup that will only show mods in that stage."
+      },
+      "4": {
+        "Headline": "Grouping",
+        "1": "You can only enable or disable grouping. With grouping enabled, the mods will be grouped by slot, modset and primary stat. With grouping disabled, all mods are in the same group. With grouping enabled (and some sorting) you can quickly compare all mods with the same characteristics.",
+        "2": "On the right you get the list of all groups. (Just one group if grouping is disabled). Each group can be collapsed or expanded by clicking it's header showing the slot, modset, primary stat and the number of mods in that group. There are also buttons to collapse/expand all groups"
+      },
+      "5": {
+        "Headline": "Sorting",
+        "1": "After grouping and filtering your mods they will be sorted according to your sorting settings. You can add any number of sorting criteria. The mods will be sorted by the first criteria, and if there are mods with the same value for that criteria, they will be sorted by the second criteria, and so on. Each sort can be ascending or descending."
+      }
+    }
+  },
+  "optimizer": {
+    "Title": "Mod Optimizer",
+    "topics": {
+      "1": "Global Settings",
+      "2": "Character Templates",
+      "3": "Stack Rank"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Global optimization settings",
+        "1": "The global settings apply to every character during an optimization. They always override any character-specific settings that you have set.",
+        "2": "Threshold to change mods",
+        "3": "As the optimizer is running, its normal behavior is to always recommend the absolute best mod set it can find, based on the target you have selected. If this number is above 0, then the optimizer will only recommend that you change mods on a character if the new recommended set is at least this much better than what the character previously had, or if the character's mods were moved to a character higher in your list and needed to be replaced.",
+        "4": "Lock all unselected characters",
+        "5": "If this box is checked, then no mods will be taken from characters that aren't in your selected list. If you have a number of unassigned mods, this can be a quick way to make use of them without triggering a major remod of your whole roster.",
+        "6": "Don't break mod sets",
+        "7": "If this box is checked, the optimizer will try to keep mod sets together, so you always get the maximum set bonuses. Sometimes it's not possible to do so, either because of other restrictions on a character's target or because you don't have enough mods left to make a full set. In these cases, the optimizer will still drop this restriction to try to recommend the best set."
+      },
+      "2": {
+        "Headline": "Character Templates",
+        "1": "Character Templates are a way to work with groups of ",
+        "2": "selected characters ",
+        "3": "and their ",
+        "4": "targets ",
+        "5": "independently of the rest of your data. They can be used to set up teams for a particular use and shared with your friends, guildmates, or on the Mods Optimizer discord server to quickly allow other people to copy your settings. Here is a quick description of the buttons to interact with character templates:",
+        "6": "Managing templates",
+        "7": "Save",
+        "8": "Save your current selected characters and their targets as a new template. You'll be asked to give your template a name, which you can then use to apply it or export it later.",
+        "9": "Export",
+        "10": "Export one or all of your templates to a file that can be shared with others.",
+        "11": "Load",
+        "12": "Load templates from a file into the optimizer. This won't apply the templates, but will instead add them to the list of known templates that you can work with.",
+        "13": "Delete",
+        "14": "Delete one of your templates from the optimizer. This only works on templates that you have created or loaded from a file. The default templates in the optimizer can't be deleted.",
+        "15": "Applying templates",
+        "16": "Append",
+        "17": "Add the characters from a template to the end of your selected characters.",
+        "18": "Replace",
+        "19": "Clear your selected characters and replace them with those from a template.",
+        "20": "Apply targets only",
+        "21": "Don't change which characters you have selected or their order, but for any that are in a template, change their targets to match."
+      },
+      "3": {
+        "Headline": "Stack Rank",
+        "1": "Set a dynamic order based on your current roster and selected use case. This is intended to be an easy starting point, and is by no means the final say in how your characters should be ordered or what targets should be chosen.",
+        "2": "Settings",
+        "3": "Use Case",
+        "4": "Select the game modes that you want to optimize for.",
+        "5": "Minimum Gear Level",
+        "6": "Only consider characters that are at least this gear level.",
+        "7": "Maximum List Length",
+        "8": "The maximum number of characters to include in the template. If you have more characters that meet the other criteria, they will be ignored.",
+        "9": "Omicron Boosts",
+        "10": "Select the game modes that will have characters with omicrons for that mode boosted."
+      }
+    }
+  },
+  "editor": {
+    "Title": "Optimizationplan-Editor",
+    "topics": {
+      "1": "Overview",
+      "2": "Mod Upgrades",
+      "3": "Weights",
+      "4": "Primaries",
+      "5": "Modsets",
+      "6": "Targetstats"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Overview",
+        "1": "The optimizationplan editor has 3 areas. top-left, top-right and bottom.",
+        "2": "In the top-left area you see the character the optimization plan is applied to.",
+        "3": "In the top-right area you can manage the optimization plan. You can add, delete, reset and select optimization plans, save changes made or cancel.",
+        "4": "In the bottom area you can edit the optimization plan. The settings are split in categories."
+      },
+      "2": {
+        "Headline": "Mods",
+        "1": "In this category you can just restrict if only 6-dot mods are allowed"
+      },
+      "3": {
+        "Headline": "Weights",
+        "1": "The modscore is the weighted sum of all stats of a mod. The weights are defined here. There are two modes: Basic and Advanced.",
+        "2": "Basic: Weights are normalized to fit the range of values for that stat. All weights are between -100 and 100. For example, giving speed and protection the same weight means that 1 speed will score the same as 200 protection (since you find 200x more protection on mods than you do speed).",
+        "3": "Advanced: Now there is no range for the weights and weights are multiplied with the stat directly. If two stats have the same weight one point of the first stat is worth the same as one point of the second stat. If you give speed and protection the same weight, the optimizer will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works."
+      },
+      "4": {
+        "Headline": "Primaries",
+        "1": "In this category you can select which primary stats are allowed for each variable mod slot. No selection for a slot allows any primary stat for that slot. If you select one or more primary stats, then only those selected will be allowed for that slot.",
+        "2": "The primary stat restrictions are ignored unless you enable the global optimizer setting \"Optimize with primary and set restrictions\""
+      },
+      "5": {
+        "Headline": "Sets",
+        "1": "In this category you can define if it is allowed to break modsets and the modsets allowed. If you select one or more modsets, then only those selected will be allowed.",
+        "2": "The modset restrictions are ignored unless you enable the global optimizer setting \"Optimize with primary and set restrictions\""
+      },
+      "6": {
+        "Headline": "Target Stats",
+        "1": "In this category you can define target stats. It starts empty except for the add target stat button. Each added target stat will show a card to edit that target stat.",
+        "2": "With a target stat you can define the range the selected stat has to fall in. This range can be set in comparison to the same stat on a selected character. If so the range can be absolute or relative.",
+        "3": "You can switch between \"Report Only\" and \"Optimize\" mode. In the default \"Optimize\" mode the optimizer will iterate all mod permutations and select the loadout matching the target stat restriction with the highest mod score. In \"Report Only\" mode the optimizer just selects the highest scoring loadout and reports if it satisfies the target stat restriction.",
+        "4": "Iterating all mod permutations in \"Optimize\" mode can be very time consuming. You can reduce the needed time by selecting a small range or by removing mods to look at with any of the other restrictions"
+      }
+    }
+  },
+  "general": {
+    "Title": "Basics",
+    "topics": {
+      "1": "Welcome",
+      "2": "Mod optimization basics",
+      "3": "Selecting Characters to optimize",
+      "4": "Picking a target",
+      "5": "Picking target values"
+    },
+    "topicById": {
+      "1": {
+        "Headline": "Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes™!",
+        "1": "This application will allow you to equip the optimum mod set on every character you have by assigning a value to each stat that a mod can confer. You'll give it a list of characters to optimize along with the stats that you're looking for, and it will determine the best mods to equip, one character at a time, until your list is exhausted.",
+        "2": "To get started, enter your ally code in the box in the header."
+      },
+      "2": {
+        "Headline": "How does this work?",
+        "1": "Welcome to my mods optimizer for Star Wars: Galaxy of Heroes!",
+        "2": "This application works on a simple principle:",
+        "3": "Every stat should have some set value for a character, and if we know all of those values, then we can calculate how much a given mod, or set of mods, is worth for that character. From there, the tool knows how to find the set of mods that give the highest possible overall value for each of your characters without you needing to look through the hundreds of mods in your inventory!"
+      },
+      "3": {
+        "Headline": "Selecting characters to optimize",
+        "1": "The mods optimizer will start out by considering all mods equipped on any character other than those that are \"Locked\". Then, it will go down the list of selected characters, one by one, choosing the best mods it can find for each character, based on the selected target. As it finishes each character, it removes those mods from its consideration set.",
+        "2": "Therefore, the character that you want to have your absolute best mods should always be first among your selected characters. Usually, this means that you want the character who needs the most speed to be first."
+      },
+      "4": {
+        "Headline": "Picking a target",
+        "1": "Every character in the game has targets. (A collection of predefined weights for all character stats and sometimes mod restrictions). The optimizer will pick the best value mods according to the given weights/restrictions. The targets have been named for their general purpose - 'hSTR Phase 1' or 'PvP' for example. Some characters have multiple different targets that you can select from.",
+        "2": "These targets, while directionally good for characters, are only a base suggestion!",
+        "3": "There are many reasons that you might want to pick different values than those listed by default in the optimizer: you might want to optimize for a different purpose (such as a phase 3 Sith Triumvirate Raid team, where speed can be detrimental), you might want to choose something different to optimize against, or you might simply have a better set of values that you want to employ.",
+        "4": "The easiest way to get started with the optimizer is to choose from the pre-programmed character templates. These are set up with sets of characters and targets that should fit various game modes. If there's no template to fit your exact needs, you can use one as a starting point or create one from scratch. For each individual character, if no target exists that matches what you want, you can select \"Custom\", or simply hit the \"Edit\" button to bring up the character edit modal."
+      },
+      "5": {
+        "Headline": "Picking target values",
+        "1": "Most characters will have the \"basic\" mode selected by default. In basic mode, you select a value for all stats that is between -100 and 100. These values are weights that are assigned to each stat to determine its impoact for that character. Setting two values as equal means that those stats are about equally important for that character. In basic mode, the optimizer will automatically adjust the weights to fit the range of values seen in-game for that stat. For example, giving speed and protection both a value of 100 means that 1 speed is about equivalent to 200 protection (since you find much more protection on mods than you do speed).",
+        "2": "If you want more fine-tuned control over the stat values, you can switch to \"advanced\" mode. In advanced mode, the values given are the value for each point of the listed stat. In advanced mode, if speed and protection are both given a value of 100, then the tool will never select speed, because it can more easily give that character much more protection. I suggest sticking to basic mode until you have a strong sense for how the tool works."
+      }
+    }
+  }
 }

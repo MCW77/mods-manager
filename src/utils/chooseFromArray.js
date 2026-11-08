@@ -6,20 +6,17 @@
  * @return Array[Array[Integer]]
  */
 export default function chooseFromArray(input, choices) {
-	const combinations = [];
+  const combinations = [];
 
-	for (let i = 0; i <= input.length - choices; i++) {
-		if (1 >= choices) {
-			combinations.push([input[i]]);
-		} else {
-			for (const subResult of chooseFromArray(
-				input.slice(i + 1),
-				choices - 1,
-			)) {
-				combinations.push([input[i]].concat(subResult));
-			}
-		}
-	}
+  for (let i = 0; i <= input.length - choices; i++) {
+    if (1 >= choices) {
+      combinations.push([input[i]]);
+    } else {
+      for (const subResult of chooseFromArray(input.slice(i + 1), choices - 1)) {
+        combinations.push([input[i]].concat(subResult));
+      }
+    }
+  }
 
-	return combinations;
+  return combinations;
 }

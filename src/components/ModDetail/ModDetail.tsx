@@ -23,80 +23,70 @@ import { Card, CardContent } from "#ui/card";
 import { Label } from "#ui/label";
 
 type CharacterNameProps = {
-	character: Character.Character;
+  character: Character.Character;
 };
 
 function CharacterName({ character }: CharacterNameProps) {
-	const name = useValue(
-		() =>
-			characters$.baseCharacterById[character.id].name.get() || character.id,
-	);
+  const name = useValue(
+    () => characters$.baseCharacterById[character.id].name.get() || character.id,
+  );
 
-	return (
-		<h4
-			className={
-				"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"
-			}
-		>
-			{name}
-		</h4>
-	);
+  return (
+    <h4 className={"row-start-3 row-end-3 col-start-1 col-end-3 m-0 text-left font-normal text-sm"}>
+      {name}
+    </h4>
+  );
 }
 type ModDetailProps = {
-	assignedTarget?: OptimizationPlan.OptimizationPlan;
-	mod: Mod;
+  assignedTarget?: OptimizationPlan.OptimizationPlan;
+  mod: Mod;
 };
 
 const ModDetail = memo(({ assignedTarget, mod }: ModDetailProps) => {
-	const character = useValue(() => {
-		if (mod.characterID === "null") return null;
-		return roster$.activeCharacterById[mod.characterID].get() || null;
-	});
+  const character = useValue(() => {
+    if (mod.characterID === "null") return null;
+    return roster$.activeCharacterById[mod.characterID].get() || null;
+  });
 
-	return (
-		<Card key={mod.id} className="py-0">
-			<CardContent className={"p-2"}>
-				<div
-					className={
-						"relative inline-grid p-1 w-80 grid-cols-[5em_1fr] grid-rows-[1fr_auto_auto] gap-x-2 gap-y-1 items-start"
-					}
-				>
-					<Suspense
-						fallback={
-							<div className="col-span-3 row-span-3 h-40 w-full animate-pulse bg-muted/20" />
-						}
-					>
-						<ModImage mod={mod} />
-						{character && (
-							<CharacterAvatar
-								character={character}
-								displayBadges={false}
-								displayStars={false}
-							/>
-						)}
-						{character && <CharacterName character={character} />}
-						<div className="stats text-[0.9em] row-start-1 row-span-2 col-start-2 col-span-2">
-							<ModStats mod={mod} assignedTarget={assignedTarget} />
-						</div>
-						{mod.pips === 6 && (
-							<div
-								className={
-									" row-start-2 col-start-2 col-span-2 self-end m-b-1 flex gap-1 items-center"
-								}
-							>
-								<Label>Calibrations:</Label>
-								<span className={"text-sm"}>
-									{mod.reRolledCount}/{mod.tier + 1} at{" "}
-									{getModCalibrationPrice(mod)}
-								</span>
-							</div>
-						)}
-						<SellModButton mod={mod} />
-					</Suspense>
-				</div>
-			</CardContent>
-		</Card>
-	);
+  return (
+    <Card key={mod.id} className="py-0">
+      <CardContent className={"p-2"}>
+        <div
+          className={
+            "relative inline-grid p-1 w-80 grid-cols-[5em_1fr] grid-rows-[1fr_auto_auto] gap-x-2 gap-y-1 items-start"
+          }
+        >
+          <Suspense
+            fallback={
+              <div className="col-span-3 row-span-3 h-40 w-full animate-pulse bg-muted/20" />
+            }
+          >
+            <ModImage mod={mod} />
+            {character && (
+              <CharacterAvatar character={character} displayBadges={false} displayStars={false} />
+            )}
+            {character && <CharacterName character={character} />}
+            <div className="stats text-[0.9em] row-start-1 row-span-2 col-start-2 col-span-2">
+              <ModStats mod={mod} assignedTarget={assignedTarget} />
+            </div>
+            {mod.pips === 6 && (
+              <div
+                className={
+                  " row-start-2 col-start-2 col-span-2 self-end m-b-1 flex gap-1 items-center"
+                }
+              >
+                <Label>Calibrations:</Label>
+                <span className={"text-sm"}>
+                  {mod.reRolledCount}/{mod.tier + 1} at {getModCalibrationPrice(mod)}
+                </span>
+              </div>
+            )}
+            <SellModButton mod={mod} />
+          </Suspense>
+        </div>
+      </CardContent>
+    </Card>
+  );
 });
 
 ModDetail.displayName = "ModDetail";

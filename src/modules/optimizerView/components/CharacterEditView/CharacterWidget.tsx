@@ -22,8 +22,8 @@ import { LockedToggle } from "#/components/LockedToggle/LockedToggle";
 import CharacterAvatar from "#/components/CharacterAvatar/CharacterAvatar";
 
 type CharacterBlockProps = {
-	character: Character.Character;
-	className: string;
+  character: Character.Character;
+  className: string;
 };
 
 /**
@@ -32,73 +32,60 @@ type CharacterBlockProps = {
  * @param character Character
  * @param className String A class to apply to each character block
  */
-const CharacterWidget: React.FC<CharacterBlockProps> = observer(
-	({ character, className }) => {
-		const selectedCharacters = useValue(
-			defaultCompilation$.data.selectedCharacters,
-		);
-		const baseCharacterById = useValue(characters$.baseCharacterById);
+const CharacterWidget: React.FC<CharacterBlockProps> = observer(({ character, className }) => {
+  const selectedCharacters = useValue(defaultCompilation$.data.selectedCharacters);
+  const baseCharacterById = useValue(characters$.baseCharacterById);
 
-		const isLocked$ =
-			lockedStatus$.isCharacterLockedForActivePlayer[character.id];
-		const classAttr = `${className} relative w-32 m-0.5em text-center`;
+  const isLocked$ = lockedStatus$.isCharacterLockedForActivePlayer[character.id];
+  const classAttr = `${className} relative w-32 m-0.5em text-center`;
 
-		const isCharacterSelected = (characterID: CharacterNames) =>
-			selectedCharacters.some(
-				(selectedCharacter) => selectedCharacter.id === characterID,
-			);
+  const isCharacterSelected = (characterID: CharacterNames) =>
+    selectedCharacters.some((selectedCharacter) => selectedCharacter.id === characterID);
 
-		const isDraggable = isCharacterSelected(character.id) ? undefined : true;
+  const isDraggable = isCharacterSelected(character.id) ? undefined : true;
 
-		const dragStart = (character: Character.Character) => {
-			return (event: React.DragEvent<HTMLDivElement>) => {
-				event.dataTransfer.dropEffect = "copy";
-				event.dataTransfer.effectAllowed = "copy";
-				event.dataTransfer.setData("text/plain", character.id);
-				// We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
-				const options = {
-					effect: "add",
-				};
-				event.dataTransfer.setData("application/json", JSON.stringify(options));
-			};
-		};
+  const dragStart = (character: Character.Character) => {
+    return (event: React.DragEvent<HTMLDivElement>) => {
+      event.dataTransfer.dropEffect = "copy";
+      event.dataTransfer.effectAllowed = "copy";
+      event.dataTransfer.setData("text/plain", character.id);
+      // We shouldn't have to do this, but Safari is ignoring both 'dropEffect' and 'effectAllowed' on drop
+      const options = {
+        effect: "add",
+      };
+      event.dataTransfer.setData("application/json", JSON.stringify(options));
+    };
+  };
 
-		return (
-			<div className={classAttr} key={character.id}>
-				<LockedToggle
-					className={"absolute top-[0.2em] right-[0.2em]"}
-					$pressed={isLocked$}
-					onPressedChange={() =>
-						lockedStatus$.toggleCharacterForActivePlayer(character.id)
-					}
-				/>
-				<div
-					className={`${isDraggable ? "cursor-grab" : ""}`}
-					draggable={isDraggable}
-					onDragStart={
-						isCharacterSelected(character.id) ? undefined : dragStart(character)
-					}
-					onDoubleClick={() =>
-						defaultCompilation$.selectCharacter(
-							character.id,
-							Character.defaultTarget(characterSettings, character),
-							defaultCompilation$.data.selectedCharacters.peek().length - 1,
-						)
-					}
-					role={"option"}
-					tabIndex={0}
-				>
-					<CharacterAvatar character={character} />
-				</div>
-				<div className={"text-center"}>
-					{baseCharacterById[character.id]
-						? baseCharacterById[character.id].name
-						: character.id}
-				</div>
-			</div>
-		);
-	},
-);
+  return (
+    <div className={classAttr} key={character.id}>
+      <LockedToggle
+        className={"absolute top-[0.2em] right-[0.2em]"}
+        $pressed={isLocked$}
+        onPressedChange={() => lockedStatus$.toggleCharacterForActivePlayer(character.id)}
+      />
+      <div
+        className={`${isDraggable ? "cursor-grab" : ""}`}
+        draggable={isDraggable}
+        onDragStart={isCharacterSelected(character.id) ? undefined : dragStart(character)}
+        onDoubleClick={() =>
+          defaultCompilation$.selectCharacter(
+            character.id,
+            Character.defaultTarget(characterSettings, character),
+            defaultCompilation$.data.selectedCharacters.peek().length - 1,
+          )
+        }
+        role={"option"}
+        tabIndex={0}
+      >
+        <CharacterAvatar character={character} />
+      </div>
+      <div className={"text-center"}>
+        {baseCharacterById[character.id] ? baseCharacterById[character.id].name : character.id}
+      </div>
+    </div>
+  );
+});
 
 CharacterWidget.displayName = "CharacterWidget";
 

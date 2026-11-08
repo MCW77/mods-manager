@@ -5,39 +5,39 @@ import type { StackRankParameters } from "../domain/StackRankParameters";
 import type { CharacterNames } from "#/constants/CharacterNames";
 
 const API_URL =
-	import.meta.env.DEV && !import.meta.env.VITE_NoMock
-		? "http://localhost:3005/stackrankmock"
-		: "https://api.mods-optimizer.swgoh.grandivory.com/characterlist";
+  import.meta.env.DEV && !import.meta.env.VITE_NoMock
+    ? "http://localhost:3005/stackrankmock"
+    : "https://api.mods-optimizer.swgoh.grandivory.com/characterlist";
 
 const post = async (url = "", data = {}) => {
-	const requestInit: RequestInit = {
-		method: "POST",
-		headers: { Accept: "application/json", "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-		mode: "cors",
-	};
+  const requestInit: RequestInit = {
+    method: "POST",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+    mode: "cors",
+  };
 
-	const response = await fetch(url, requestInit);
-	if (response.ok) {
-		return response.json();
-	}
-	const errorText = await response.text();
-	return Promise.reject(new Error(errorText));
+  const response = await fetch(url, requestInit);
+  if (response.ok) {
+    return response.json();
+  }
+  const errorText = await response.text();
+  return Promise.reject(new Error(errorText));
 };
 
 export const fetchRankedCharacters = async (
-	allycode: string,
-	mode: string,
-	parameters: StackRankParameters,
+  allycode: string,
+  mode: string,
+  parameters: StackRankParameters,
 ): Promise<CharacterNames[]> => {
-	try {
-		const response = await post(API_URL, {
-			allyCode: allycode,
-			mode: mode,
-			parameters: parameters,
-		});
-		return response as CharacterNames[];
-	} catch (error) {
-		throw new Error("Failed post to fetch ranked characters", { cause: error });
-	}
+  try {
+    const response = await post(API_URL, {
+      allyCode: allycode,
+      mode: mode,
+      parameters: parameters,
+    });
+    return response as CharacterNames[];
+  } catch (error) {
+    throw new Error("Failed post to fetch ranked characters", { cause: error });
+  }
 };

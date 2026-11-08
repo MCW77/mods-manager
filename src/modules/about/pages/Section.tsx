@@ -5,10 +5,10 @@ import { ui$ } from "#/modules/ui/state/ui";
 import { faInfo } from "@fortawesome/free-solid-svg-icons";
 
 ui$.registerSection({
-	icon: faInfo,
-	isAlwaysVisible: true,
-	name: "about",
-	titleKey: "header.NavAbout",
-	position: 8,
-	hasNullSuspenseFallback: false,
+  icon: faInfo,
+  isAlwaysVisible: true,
+  name: "about",
+  titleKey: "header.NavAbout",
+  position: 8,
+  hasNullSuspenseFallback: false,
 });

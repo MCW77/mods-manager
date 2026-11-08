@@ -5,12 +5,7 @@ import { useTranslation } from "react-i18next";
 
 // state
 import { For, reactive, useValue } from "@legendapp/state/react";
-import {
-	beginBatch,
-	endBatch,
-	observable,
-	type Observable,
-} from "@legendapp/state";
+import { beginBatch, endBatch, observable, type Observable } from "@legendapp/state";
 import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
 
 const mods$ = stateLoader$.mods$;
@@ -24,11 +19,7 @@ import { getDisplayType } from "#/domain/Stat";
 
 // components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-	faAnglesDown,
-	faAnglesUp,
-	faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faAnglesDown, faAnglesUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 
 import ModDetail from "#/components/ModDetail/ModDetail";
@@ -41,196 +32,184 @@ import { Button } from "#ui/button";
 const ReactiveCollapsible = reactive(CollapsiblePrimitive.Root);
 
 type ModGroup = {
-	isOpen: boolean;
-	id: string;
-	mods: Mod[];
+  isOpen: boolean;
+  id: string;
+  mods: Mod[];
 };
 
 type ObservableModGroups = {
-	modGroups: ModGroup[];
-	closeAll: () => void;
-	openAll: () => void;
+  modGroups: ModGroup[];
+  closeAll: () => void;
+  openAll: () => void;
 };
 
 type ModGroupItemProps = {
-	item$: Observable<ModGroup>;
-	modGroupsElement: React.RefObject<HTMLDivElement | null>;
+  item$: Observable<ModGroup>;
+  modGroupsElement: React.RefObject<HTMLDivElement | null>;
 };
 
-function ModGroupItem({
-	item$: modGroup$,
-	modGroupsElement,
-}: ModGroupItemProps) {
-	const [tDomain] = useTranslation("domain");
-	return (
-		<ReactiveCollapsible
-			key={`modgroup-${modGroup$.id.peek()}`}
-			$open={modGroup$.isOpen}
-			onOpenChange={(isOpen) => {
-				modGroup$.isOpen.set(isOpen);
-			}}
-		>
-			<CollapsiblePrimitive.Trigger
-				nativeButton={false}
-				className="flex hover:cursor-pointer"
-				render={
-					<div>
-						<span className="basis-20%">
-							{tDomain(`slots.name.${modGroup$.mods.peek()[0].slot}`)}
-						</span>
-						<span className="basis-30%">
-							{tDomain(`stats.${modGroup$.mods.peek()[0].modset}`)}
-						</span>
-						<span className="basis-30%">
-							{tDomain(
-								`stats.${getDisplayType(modGroup$.mods.peek()[0].primaryStat)}`,
-							)}
-						</span>
-						<span className="basis-20%">
-							(
-							{tDomain("ModWithCount", {
-								count: modGroup$.mods.peek().length,
-							})}
-							)
-						</span>
-					</div>
-				}
-			/>
-			<CollapsiblePrimitive.Panel className="flex flex-row flex-wrap justify-evenly gap-4 p-y-2 text-center">
-				<For
-					each={modGroup$.mods}
-					item={({ item$ }) => (
-						<ModItem item$={item$} modGroupsElement={modGroupsElement} />
-					)}
-					optimized
-				/>
-			</CollapsiblePrimitive.Panel>
-		</ReactiveCollapsible>
-	);
+function ModGroupItem({ item$: modGroup$, modGroupsElement }: ModGroupItemProps) {
+  const [tDomain] = useTranslation("domain");
+  return (
+    <ReactiveCollapsible
+      key={`modgroup-${modGroup$.id.peek()}`}
+      $open={modGroup$.isOpen}
+      onOpenChange={(isOpen) => {
+        modGroup$.isOpen.set(isOpen);
+      }}
+    >
+      <CollapsiblePrimitive.Trigger
+        nativeButton={false}
+        className="flex hover:cursor-pointer"
+        render={
+          <div>
+            <span className="basis-20%">
+              {tDomain(`slots.name.${modGroup$.mods.peek()[0].slot}`)}
+            </span>
+            <span className="basis-30%">{tDomain(`stats.${modGroup$.mods.peek()[0].modset}`)}</span>
+            <span className="basis-30%">
+              {tDomain(`stats.${getDisplayType(modGroup$.mods.peek()[0].primaryStat)}`)}
+            </span>
+            <span className="basis-20%">
+              (
+              {tDomain("ModWithCount", {
+                count: modGroup$.mods.peek().length,
+              })}
+              )
+            </span>
+          </div>
+        }
+      />
+      <CollapsiblePrimitive.Panel className="flex flex-row flex-wrap justify-evenly gap-4 p-y-2 text-center">
+        <For
+          each={modGroup$.mods}
+          item={({ item$ }) => <ModItem item$={item$} modGroupsElement={modGroupsElement} />}
+          optimized
+        />
+      </CollapsiblePrimitive.Panel>
+    </ReactiveCollapsible>
+  );
 }
 
 type ModItemProps = {
-	item$: Observable<Mod>;
-	modGroupsElement: React.RefObject<HTMLDivElement | null>;
+  item$: Observable<Mod>;
+  modGroupsElement: React.RefObject<HTMLDivElement | null>;
 };
 
 function ModItem({ item$, modGroupsElement }: ModItemProps) {
-	const mod = useValue(item$);
-	return (
-		<RenderIfVisible
-			className={"w-[21em]"}
-			defaultHeight={243}
-			key={`RIV-${mod.id}`}
-			visibleOffset={486}
-			root={modGroupsElement}
-		>
-			<ModDetail mod={mod} />
-		</RenderIfVisible>
-	);
+  const mod = useValue(item$);
+  return (
+    <RenderIfVisible
+      className={"w-[21em]"}
+      defaultHeight={243}
+      key={`RIV-${mod.id}`}
+      visibleOffset={486}
+      root={modGroupsElement}
+    >
+      <ModDetail mod={mod} />
+    </RenderIfVisible>
+  );
 }
 
 function GroupedMods() {
-	const [t] = useTranslation("explore-ui");
-	const [tDomain] = useTranslation("domain");
+  const [t] = useTranslation("explore-ui");
+  const [tDomain] = useTranslation("domain");
 
-	const allModsCount = useValue(mods$.activeModById.size);
-	const transformedMods = useValue(modsView$.transformedMods);
-	const transformedModsCount = useValue(modsView$.transformedModsCount);
+  const allModsCount = useValue(mods$.activeModById.size);
+  const transformedMods = useValue(modsView$.transformedMods);
+  const transformedModsCount = useValue(modsView$.transformedModsCount);
 
-	const modGroupsElement = useRef<HTMLDivElement>(null);
+  const modGroupsElement = useRef<HTMLDivElement>(null);
 
-	const modGroups: ModGroup[] = [];
-	for (const modGroup of transformedMods) {
-		if (modGroup.length > 0) {
-			modGroups.push({
-				isOpen: true,
-				id: `${modGroup[0].slot}-${modGroup[0].modset}-${getDisplayType(modGroup[0].primaryStat)}`,
-				mods: modGroup,
-			});
-		}
-	}
+  const modGroups: ModGroup[] = [];
+  for (const modGroup of transformedMods) {
+    if (modGroup.length > 0) {
+      modGroups.push({
+        isOpen: true,
+        id: `${modGroup[0].slot}-${modGroup[0].modset}-${getDisplayType(modGroup[0].primaryStat)}`,
+        mods: modGroup,
+      });
+    }
+  }
 
-	const modGroups$ = observable<ObservableModGroups>({
-		modGroups: modGroups,
-		closeAll: () => {
-			beginBatch();
-			modGroups$.modGroups.forEach((group) => {
-				group.isOpen.set(false);
-			});
-			endBatch();
-		},
-		openAll: () => {
-			beginBatch();
-			modGroups$.modGroups.forEach((group) => {
-				group.isOpen.set(true);
-			});
-			endBatch();
-		},
-	});
+  const modGroups$ = observable<ObservableModGroups>({
+    modGroups: modGroups,
+    closeAll: () => {
+      beginBatch();
+      modGroups$.modGroups.forEach((group) => {
+        group.isOpen.set(false);
+      });
+      endBatch();
+    },
+    openAll: () => {
+      beginBatch();
+      modGroups$.modGroups.forEach((group) => {
+        group.isOpen.set(true);
+      });
+      endBatch();
+    },
+  });
 
-	return (
-		<div className="flex flex-col grow-1">
-			<div className="flex justify-between">
-				<div className="flex gap-2 p-l-2 items-center text-sm align-middle">
-					{t("ModsShown", {
-						actual: transformedModsCount,
-						max: allModsCount,
-					})}
-					&nbsp;
-					<Button
-						type={"button"}
-						size={"sm"}
-						variant={"destructive"}
-						onClick={() => {
-							dialog$.show({
-								content: <DeleteModsModal groupedMods={transformedMods} />,
-							});
-						}}
-					>
-						<FontAwesomeIcon icon={faTrashCan} title={t("DeleteButton")} />
-					</Button>
-				</div>
-				<div className="flex gap-2 justify-center items-center p-t-2 p-r-6">
-					<Button
-						size={"sm"}
-						onClick={() => {
-							modGroups$.openAll();
-						}}
-					>
-						<FontAwesomeIcon icon={faAnglesDown} title={t("Expand")} />
-					</Button>
-					<Button
-						size={"sm"}
-						onClick={() => {
-							modGroups$.closeAll();
-						}}
-					>
-						<FontAwesomeIcon icon={faAnglesUp} title={t("Collapse")} />
-					</Button>
-				</div>
-			</div>
-			<div className={"flex"}>
-				<span className="basis-20%">{tDomain("Slot")}: </span>
-				<span className="basis-30%">{tDomain("Set")}: </span>
-				<span className="basis-30%">{tDomain("Primary")}: </span>
-				<span className="basis-20%">{"#"}</span>
-			</div>
-			<div className="flex-1 min-h-0" ref={modGroupsElement}>
-				<ScrollArea className="h-full">
-					<For
-						each={modGroups$.modGroups}
-						item={({ item$: modGroup$ }) => (
-							<ModGroupItem
-								item$={modGroup$}
-								modGroupsElement={modGroupsElement}
-							/>
-						)}
-						optimized
-					/>
-				</ScrollArea>
-			</div>
-		</div>
-	);
+  return (
+    <div className="flex flex-col grow-1">
+      <div className="flex justify-between">
+        <div className="flex gap-2 p-l-2 items-center text-sm align-middle">
+          {t("ModsShown", {
+            actual: transformedModsCount,
+            max: allModsCount,
+          })}
+          &nbsp;
+          <Button
+            type={"button"}
+            size={"sm"}
+            variant={"destructive"}
+            onClick={() => {
+              dialog$.show({
+                content: <DeleteModsModal groupedMods={transformedMods} />,
+              });
+            }}
+          >
+            <FontAwesomeIcon icon={faTrashCan} title={t("DeleteButton")} />
+          </Button>
+        </div>
+        <div className="flex gap-2 justify-center items-center p-t-2 p-r-6">
+          <Button
+            size={"sm"}
+            onClick={() => {
+              modGroups$.openAll();
+            }}
+          >
+            <FontAwesomeIcon icon={faAnglesDown} title={t("Expand")} />
+          </Button>
+          <Button
+            size={"sm"}
+            onClick={() => {
+              modGroups$.closeAll();
+            }}
+          >
+            <FontAwesomeIcon icon={faAnglesUp} title={t("Collapse")} />
+          </Button>
+        </div>
+      </div>
+      <div className={"flex"}>
+        <span className="basis-20%">{tDomain("Slot")}: </span>
+        <span className="basis-30%">{tDomain("Set")}: </span>
+        <span className="basis-30%">{tDomain("Primary")}: </span>
+        <span className="basis-20%">{"#"}</span>
+      </div>
+      <div className="flex-1 min-h-0" ref={modGroupsElement}>
+        <ScrollArea className="h-full">
+          <For
+            each={modGroups$.modGroups}
+            item={({ item$: modGroup$ }) => (
+              <ModGroupItem item$={modGroup$} modGroupsElement={modGroupsElement} />
+            )}
+            optimized
+          />
+        </ScrollArea>
+      </div>
+    </div>
+  );
 }
 
 export default GroupedMods;

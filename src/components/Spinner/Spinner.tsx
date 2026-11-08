@@ -5,17 +5,17 @@ import * as React from "react";
 import "./Spinner.css";
 
 type ComponentProps = {
-	isVisible: boolean;
+  isVisible: boolean;
 };
 
-const Spinner = React.memo(({ isVisible = false }: ComponentProps) => {
-	if (isVisible === false) return null;
+const Spinner = React.memo(({ isVisible }: ComponentProps) => {
+  if (isVisible === false) return null;
 
-	return (
-		<div className={"overlay"}>
-			<div className={"spinner"} />
-		</div>
-	);
+  return (
+    <div className={"overlay"}>
+      <div className={"spinner"} />
+    </div>
+  );
 });
 
 Spinner.displayName = "Spinner";

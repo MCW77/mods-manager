@@ -15,22 +15,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TabsTrigger } from "#ui/tabs";
 
 interface PageTabProps {
-	section: SectionData;
+  section: SectionData;
 }
 
 function PageTab({ section }: PageTabProps) {
-	const [t] = useTranslation("global-ui");
+  const [t] = useTranslation("global-ui");
 
-	return (
-		<Show if={section.isAlwaysVisible || profilesManagement$.hasProfiles}>
-			<TabsTrigger value={section.name}>
-				<div className={"flex flex-gap-1 items-center"}>
-					<FontAwesomeIcon icon={section.icon} title={t(section.titleKey)} />
-					{t(section.titleKey)}
-				</div>
-			</TabsTrigger>
-		</Show>
-	);
+  return (
+    <Show if={section.isAlwaysVisible || profilesManagement$.hasProfiles}>
+      <TabsTrigger value={section.name}>
+        <div className={"flex flex-gap-1 items-center"}>
+          <FontAwesomeIcon icon={section.icon} title={t(section.titleKey)} />
+          {t(section.titleKey)}
+        </div>
+      </TabsTrigger>
+    </Show>
+  );
 }
 
 export { PageTab };

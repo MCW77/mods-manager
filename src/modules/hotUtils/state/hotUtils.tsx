@@ -14,8 +14,8 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
 import {
-	FetchedFullGIMOProfileResponseSchema,
-	type FetchedFullGIMOProfile,
+  FetchedFullGIMOProfileResponseSchema,
+  type FetchedFullGIMOProfile,
 } from "../domain/FetchedFullGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
 import * as HUPlayerValuesMapper from "../domain/HUPlayerValuesMapper";
@@ -25,295 +25,264 @@ import type { PlayerValuesByCharacter } from "#/domain/PlayerValues";
 import type { HUPlayerValues } from "../domain/HUPlayerValues";
 import type { HotutilsObservable } from "../domain/HotutilsObservable";
 
-const hotutilsv2baseurl =
-	"https://api.mods-optimizer.swgoh.grandivory.com/hotutils";
+const hotutilsv2baseurl = "https://api.mods-optimizer.swgoh.grandivory.com/hotutils";
 
 const initialPersistedData = {
-	id: "sessionIDsByProfile",
-	sessionIDsByProfile: new Map<
-		string,
-		{ gimoSessionId: string; huSessionId: string }
-	>(),
+  id: "sessionIDsByProfile",
+  sessionIDsByProfile: new Map<string, { gimoSessionId: string; huSessionId: string }>(),
 } as const;
 
 const post = async (url = "", data = {}, extras = {}) => {
-	const response = await fetch(
-		url,
-		Object.assign(
-			{
-				method: "POST",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-				mode: "cors",
-			},
-			extras,
-		) as RequestInit,
-	);
+  const response = await fetch(
+    url,
+    Object.assign(
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        mode: "cors",
+      },
+      extras,
+    ) as RequestInit,
+  );
 
-	if (response.ok) {
-		return response.json();
-	}
-	return response
-		.text()
-		.then((errorText) => Promise.reject(new Error(errorText)));
+  if (response.ok) {
+    return response.json();
+  }
+  return response.text().then((errorText) => Promise.reject(new Error(errorText)));
 };
 
-const hotutils$: ObservableObject<HotutilsObservable> =
-	observable<HotutilsObservable>({
-		persistedData: structuredClone(initialPersistedData),
-		isSubscribed: false,
-		activeSessionId: () => {
-			const allycode = profilesManagement$.profiles.activeAllycode.get();
-			const sessionId =
-				hotutils$.sessionIDsByProfile[allycode].gimoSessionId.get() || "";
-			return sessionId;
-		},
-		hasActiveSession: async () => {
-			if (hotutils$.activeSessionId.get() === "") return false;
-			return await when(hotutils$.checkSubscriptionStatus);
-		},
-		getGIMOSessionIdOfProfile: (allycode: string) => {
-			return hotutils$.sessionIDsByProfile[allycode].gimoSessionId.peek() || "";
-		},
-		getHUSessionIdOfProfile: (allycode: string) => {
-			return hotutils$.sessionIDsByProfile[allycode].huSessionId.peek() || "";
-		},
-		sessionIDsByProfile: () => {
-			return hotutils$.persistedData.sessionIDsByProfile;
-		},
-		addProfile: (allycode: string) => {
-			if (!hotutils$.sessionIDsByProfile.has(allycode)) {
-				hotutils$.sessionIDsByProfile.set(allycode, {
-					gimoSessionId: "",
-					huSessionId: "",
-				});
-			}
-		},
-		deleteProfile: (allycode: string) => {
-			hotutils$.sessionIDsByProfile.delete(allycode);
-		},
-		reset: () => {
-			syncStatus$.reset();
-		},
-		checkSubscriptionStatus: async (): Promise<boolean> => {
-			const activeAllycode = profilesManagement$.profiles.activeAllycode.peek();
-			if (activeAllycode === "") return false;
-			isBusy$.set(true);
-			try {
-				const response = await post(hotutilsv2baseurl, {
-					action: "checksubscription",
-					payload: {
-						allyCode: activeAllycode,
-					},
-				});
+const hotutils$: ObservableObject<HotutilsObservable> = observable<HotutilsObservable>({
+  persistedData: structuredClone(initialPersistedData),
+  isSubscribed: false,
+  activeSessionId: () => {
+    const allycode = profilesManagement$.profiles.activeAllycode.get();
+    const sessionId = hotutils$.sessionIDsByProfile[allycode].gimoSessionId.get() || "";
+    return sessionId;
+  },
+  hasActiveSession: async () => {
+    if (hotutils$.activeSessionId.get() === "") return false;
+    return await when(hotutils$.checkSubscriptionStatus);
+  },
+  getGIMOSessionIdOfProfile: (allycode: string) => {
+    return hotutils$.sessionIDsByProfile[allycode].gimoSessionId.peek() || "";
+  },
+  getHUSessionIdOfProfile: (allycode: string) => {
+    return hotutils$.sessionIDsByProfile[allycode].huSessionId.peek() || "";
+  },
+  sessionIDsByProfile: () => {
+    return hotutils$.persistedData.sessionIDsByProfile;
+  },
+  addProfile: (allycode: string) => {
+    if (!hotutils$.sessionIDsByProfile.has(allycode)) {
+      hotutils$.sessionIDsByProfile.set(allycode, {
+        gimoSessionId: "",
+        huSessionId: "",
+      });
+    }
+  },
+  deleteProfile: (allycode: string) => {
+    hotutils$.sessionIDsByProfile.delete(allycode);
+  },
+  reset: () => {
+    void syncStatus$.reset();
+  },
+  checkSubscriptionStatus: async (): Promise<boolean> => {
+    const activeAllycode = profilesManagement$.profiles.activeAllycode.peek();
+    if (activeAllycode === "") return false;
+    isBusy$.set(true);
+    try {
+      const response = await post(hotutilsv2baseurl, {
+        action: "checksubscription",
+        payload: {
+          allyCode: activeAllycode,
+        },
+      });
 
-				if (response.errorMessage) {
-					dialog$.showFlash(
-						"Allycode has no account on Hotutils",
-						"",
-						"",
-						undefined,
-						"info",
-					);
-					hotutils$.isSubscribed.set(false);
-					return false;
-				}
-				switch (response.access) {
-					case 0:
-						dialog$.showFlash(
-							"HotUtils reports no subscription",
-							"",
-							"",
-							undefined,
-							"warning",
-						);
-						hotutils$.isSubscribed.set(false);
-						return false;
-					case 1:
-						dialog$.showFlash(
-							"You are subscribed but not connected to HotUtils",
-							"",
-							"",
-							undefined,
-							"info",
-						);
-						hotutils$.isSubscribed.set(true);
-						return true;
-					case 2:
-						dialog$.showFlash(
-							"You are subscribed and connected to HotUtils",
-							"",
-							"",
-							undefined,
-							"info",
-						);
-						hotutils$.isSubscribed.set(true);
-						return true;
-					default:
-						dialog$.showFlash(
-							"Unknown response from HotUtils",
-							"",
-							"",
-							undefined,
-							"warning",
-						);
-				}
-			} catch {
-				(error: Error) => {
-					dialog$.showFlash(
-						"Error checking subscription status",
-						error.message,
-						"",
-						undefined,
-						"error",
-					);
-				};
-			} finally {
-				isBusy$.set(false);
-			}
-			hotutils$.isSubscribed.set(false);
-			return false;
-		},
-		createProfile: async (profile: ProfileCreationData) => {
-			isBusy$.set(true);
-			try {
-				const response = await post(hotutilsv2baseurl, {
-					action: "createprofile",
-					sessionId: hotutils$.activeSessionId.get(),
-					payload: profile,
-				});
+      if (response.errorMessage) {
+        dialog$.showFlash("Allycode has no account on Hotutils", "", "", undefined, "info");
+        hotutils$.isSubscribed.set(false);
+        return false;
+      }
+      switch (response.access) {
+        case 0:
+          dialog$.showFlash("HotUtils reports no subscription", "", "", undefined, "warning");
+          hotutils$.isSubscribed.set(false);
+          return false;
+        case 1:
+          dialog$.showFlash(
+            "You are subscribed but not connected to HotUtils",
+            "",
+            "",
+            undefined,
+            "info",
+          );
+          hotutils$.isSubscribed.set(true);
+          return true;
+        case 2:
+          dialog$.showFlash(
+            "You are subscribed and connected to HotUtils",
+            "",
+            "",
+            undefined,
+            "info",
+          );
+          hotutils$.isSubscribed.set(true);
+          return true;
+        default:
+          dialog$.showFlash("Unknown response from HotUtils", "", "", undefined, "warning");
+      }
+    } catch (error) {
+      if (Error.isError(error)) {
+        dialog$.showFlash(
+          "Error checking subscription status",
+          error.message,
+          "",
+          undefined,
+          "error",
+        );
+      }
+    } finally {
+      isBusy$.set(false);
+    }
+    hotutils$.isSubscribed.set(false);
+    return false;
+  },
+  createProfile: async (profile: ProfileCreationData) => {
+    isBusy$.set(true);
+    try {
+      const response = await post(hotutilsv2baseurl, {
+        action: "createprofile",
+        sessionId: hotutils$.activeSessionId.get(),
+        payload: profile,
+      });
 
-				if (response.errorMessage) {
-					dialog$.showError({ error: response.errorMessage });
-					return;
-				}
-				switch (response.responseCode) {
-					case 0:
-						dialog$.showError({ error: response.responseMessage });
-						break;
-					case 1:
-						dialog$.showFlash(
-							"Profile created successfully",
-							"Please login to HotUtils to manage your new profile",
-							"",
-							undefined,
-							"success",
-						);
-						break;
-					default:
-						dialog$.showError({ error: "Unknown response from HotUtils" });
-				}
-			} catch {
-				(error: Error) => {
-					dialog$.showError({ error: error.message });
-					return;
-				};
-			} finally {
-				isBusy$.set(false);
-			}
-		},
-		fetchProfile: async (allycode: string) => {
-			const API_URL =
-				import.meta.env.DEV && !import.meta.env.VITE_NoMock
-					? "http://localhost:3005/gimomock-profile"
-					: hotutilsv2baseurl;
+      if (response.errorMessage) {
+        dialog$.showError({ error: response.errorMessage });
+        return;
+      }
+      switch (response.responseCode) {
+        case 0:
+          dialog$.showError({ error: response.responseMessage });
+          break;
+        case 1:
+          dialog$.showFlash(
+            "Profile created successfully",
+            "Please login to HotUtils to manage your new profile",
+            "",
+            undefined,
+            "success",
+          );
+          break;
+        default:
+          dialog$.showError({ error: "Unknown response from HotUtils" });
+      }
+    } catch (error) {
+      if (Error.isError(error)) {
+        dialog$.showError({ error: error.message });
+        return;
+      }
+    } finally {
+      isBusy$.set(false);
+    }
+  },
+  fetchProfile: async (allycode: string) => {
+    const API_URL =
+      import.meta.env.DEV && !import.meta.env.VITE_NoMock
+        ? "http://localhost:3005/gimomock-profile"
+        : hotutilsv2baseurl;
 
-			const response = await post(API_URL, {
-				action: "getprofile",
-				sessionId: hotutils$.getGIMOSessionIdOfProfile(allycode),
-				payload: {
-					allyCode: allycode,
-				},
-			});
+    const response = await post(API_URL, {
+      action: "getprofile",
+      sessionId: hotutils$.getGIMOSessionIdOfProfile(allycode),
+      payload: {
+        allyCode: allycode,
+      },
+    });
 
-			if (response.errorMessage) {
-				throw new Error(response.errorMessage);
-			}
+    if (response.errorMessage) {
+      throw new Error(response.errorMessage);
+    }
 
-			const playerProfile: FetchedHUProfile = response.mods.profiles[0];
+    const playerProfile: FetchedHUProfile = response.mods.profiles[0];
 
-			// Convert mods to the serialized format recognized by the optimizer
-			const profileMods = playerProfile.mods.map(fromHotUtils);
+    // Convert mods to the serialized format recognized by the optimizer
+    const profileMods = playerProfile.mods.map(fromHotUtils);
 
-			// Convert each character to a PlayerValues object
-			const profileValues: PlayerValuesByCharacter =
-				playerProfile.characters.reduce(
-					(characters: PlayerValuesByCharacter, character: HUPlayerValues) => {
-						characters[character.baseId] =
-							HUPlayerValuesMapper.fromHU(character);
-						return characters;
-					},
-					{} as PlayerValuesByCharacter,
-				);
+    // Convert each character to a PlayerValues object
+    const profileValues: PlayerValuesByCharacter = playerProfile.characters.reduce(
+      (characters: PlayerValuesByCharacter, character: HUPlayerValues) => {
+        characters[character.baseId] = HUPlayerValuesMapper.fromHU(character);
+        return characters;
+      },
+      {} as PlayerValuesByCharacter,
+    );
 
-			return {
-				name: playerProfile.name,
-				mods: profileMods,
-				playerValues: profileValues,
-				updated: playerProfile.updated ?? false,
-			} as FetchedGIMOProfile;
-		},
-		fetchFullProfile: async (allycode: string) => {
-			const API_URL =
-				import.meta.env.DEV && !import.meta.env.VITE_NoMock
-					? "http://localhost:3005/gimomock-fullprofile"
-					: "https://api-test.mods-manager.pages.dev/huAll";
+    return {
+      name: playerProfile.name,
+      mods: profileMods,
+      playerValues: profileValues,
+      updated: playerProfile.updated ?? false,
+    } as FetchedGIMOProfile;
+  },
+  fetchFullProfile: async (allycode: string) => {
+    const API_URL =
+      import.meta.env.DEV && !import.meta.env.VITE_NoMock
+        ? "http://localhost:3005/gimomock-fullprofile"
+        : "https://api-test.mods-manager.pages.dev/huAll";
 
-			if (hotutils$.getHUSessionIdOfProfile(allycode) === "") {
-				return {} as FetchedFullGIMOProfile;
-			}
-			// Use Cloudflare Pages Function as proxy to set custom headers
-			const response = await post(
-				API_URL, // Your Cloudflare function endpoint
-				{
-					data: {
-						sessionId: hotutils$.getHUSessionIdOfProfile(allycode),
-					},
-				},
-			);
+    if (hotutils$.getHUSessionIdOfProfile(allycode) === "") {
+      return {} as FetchedFullGIMOProfile;
+    }
+    // Use Cloudflare Pages Function as proxy to set custom headers
+    const response = await post(
+      API_URL, // Your Cloudflare function endpoint
+      {
+        data: {
+          sessionId: hotutils$.getHUSessionIdOfProfile(allycode),
+        },
+      },
+    );
 
-			if (response.errorMessage) {
-				throw new Error(response.errorMessage);
-			}
+    if (response.errorMessage) {
+      throw new Error(response.errorMessage);
+    }
 
-			const parseResult = v.safeParse(
-				FetchedFullGIMOProfileResponseSchema,
-				response,
-			);
-			if (!parseResult.success) {
-				throw new Error("Failed to parse full profile from HotUtils");
-			}
+    const parseResult = v.safeParse(FetchedFullGIMOProfileResponseSchema, response);
+    if (!parseResult.success) {
+      throw new Error("Failed to parse full profile from HotUtils");
+    }
 
-			return parseResult.output.data as FetchedFullGIMOProfile;
-		},
-	});
+    return parseResult.output.data as FetchedFullGIMOProfile;
+  },
+});
 
 profilesManagement$.lastProfileAdded.onChange(({ value }) => {
-	hotutils$.addProfile(value);
+  hotutils$.addProfile(value);
 });
 
 profilesManagement$.lastProfileDeleted.onChange(({ value }) => {
-	if (value === "all") {
-		hotutils$.reset();
-		return;
-	}
-	hotutils$.deleteProfile(value);
+  if (value === "all") {
+    hotutils$.reset();
+    return;
+  }
+  hotutils$.deleteProfile(value);
 });
 
 const syncStatus$ = syncObservable(
-	hotutils$.persistedData,
-	persistOptions({
-		persist: {
-			name: "HotUtils",
-			indexedDB: {
-				itemID: "sessionIDsByProfile",
-			},
-		},
-		initial: initialPersistedData,
-	}),
+  hotutils$.persistedData,
+  persistOptions({
+    persist: {
+      name: "HotUtils",
+      indexedDB: {
+        itemID: "sessionIDsByProfile",
+      },
+    },
+    initial: initialPersistedData,
+  }),
 );
 
 export { hotutils$, syncStatus$ };
