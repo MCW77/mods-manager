@@ -1,6 +1,3 @@
-// react
-import { renderToString } from "react-dom/server.node";
-
 // state
 import { observable } from "@legendapp/state";
 import { syncObservable } from "@legendapp/state/sync";
@@ -36,8 +33,8 @@ const characters$ = observable<CharactersObservable>({
       } else {
         if (error instanceof BaseError) {
           console.error(error.error);
-          console.error(`Reason: ${renderToString(error.reason)}`);
-          console.error(`Solution: ${renderToString(error.solution)}`);
+          /*           console.error(`Reason: ${renderToString(error.reason)}`);
+          console.error(`Solution: ${renderToString(error.solution)}`); */
         } else {
           console.error("Unexpected error while fetching base characters:", error);
         }
