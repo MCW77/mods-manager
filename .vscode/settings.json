@@ -25,5 +25,8 @@
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }
