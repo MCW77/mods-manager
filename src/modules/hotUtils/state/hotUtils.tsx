@@ -1,5 +1,5 @@
 // utils
-import * as v from "valibot";
+// import * as v from "valibot";
 
 // state
 import { observable, type ObservableObject, when } from "@legendapp/state";
@@ -14,7 +14,7 @@ import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 // domain
 import type { FetchedGIMOProfile } from "../domain/FetchedGIMOProfile";
 import {
-  FetchedFullGIMOProfileResponseSchema,
+  //  FetchedFullGIMOProfileResponseSchema,
   type FetchedFullGIMOProfile,
 } from "../domain/FetchedFullGIMOProfile";
 import type { FetchedHUProfile } from "../domain/FetchedHUProfile";
@@ -228,7 +228,9 @@ const hotutils$: ObservableObject<HotutilsObservable> = observable<HotutilsObser
       updated: playerProfile.updated ?? false,
     } as FetchedGIMOProfile;
   },
-  fetchFullProfile: async (allycode: string) => {
+  fetchFullProfile: async (_allycode: string) => {
+    return {} as FetchedFullGIMOProfile; // Temporary return till HotUtils full profile endpoint is available
+    /*
     const API_URL =
       import.meta.env.DEV && !import.meta.env.VITE_NoMock
         ? "http://localhost:3005/gimomock-fullprofile"
@@ -257,6 +259,7 @@ const hotutils$: ObservableObject<HotutilsObservable> = observable<HotutilsObser
     }
 
     return parseResult.output.data as FetchedFullGIMOProfile;
+    */
   },
 });
 
