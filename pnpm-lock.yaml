@@ -298,8 +298,8 @@ importers:
         specifier: ^19.3.0
         version: 19.3.0(@types/react@19.3.0)
       '@unocss/preset-typography':
-        specifier: 66.12.0
-        version: 66.12.0
+        specifier: 66.13.0
+        version: 66.13.0
       '@unocss/preset-wind4':
         specifier: ^66.13.0
         version: 66.13.0
@@ -2517,9 +2517,6 @@ packages:
   '@unocss/core@66.11.0':
     resolution: {integrity: sha512-eDMgNWF0LnpNQJXiBEofsAbh2EusQjkVDefBC526U5vOqRwMmqNuYs32rvUwYxf4O/ryIEgFJQAvDv+JpwfSKg==}
 
-  '@unocss/core@66.12.0':
-    resolution: {integrity: sha512-kWPbF6ilPyrKm5+XNKsHtCZYY5BSHGeCPKb19bEQnvFknPyi57xfBpI/3GSj5zs8i0EMbQkJbT22BcgeJ4DAZw==}
-
   '@unocss/core@66.13.0':
     resolution: {integrity: sha512-RacGWqjZj8kEN5mtFFbEcaqtpvSkSBMrzqAIaIx0BAtkAA7GHUlw25fSXbx6jxuknnZk2Pe/s+B/dbBAgmD+Gg==}
 
@@ -2558,9 +2555,6 @@ packages:
   '@unocss/preset-tagify@66.13.0':
     resolution: {integrity: sha512-436sZ7JJYogZ2GGsFeHtL52lGmsakrI/eo1b1hc6pE0xhRjRxAEZJKQSCZMdINHqs0bO8+7e+KjlYZDMLuqugA==}
 
-  '@unocss/preset-typography@66.12.0':
-    resolution: {integrity: sha512-9tgCevnpxq7NxCNFCPufKIex0bVJLOgtsuKREP6sMJUPYxYjXJl4loFlJzQ9POFFdKFh+7015spZwJlShzI2NA==}
-
   '@unocss/preset-typography@66.13.0':
     resolution: {integrity: sha512-ub/uXi2xriOdhyaq9YE8Vx89h0+CL5vG7K79D+m2oGuKkohQHkYcVTb8TXjLJn43V3a6VSNKcTzVPnf3d+ruWQ==}
 
@@ -2598,9 +2592,6 @@ packages:
 
   '@unocss/rule-utils@66.11.0':
     resolution: {integrity: sha512-QW7B4whiR9x6m7FHEdsDuObFY9lbuoZunVoTvmZZDNSN/GNmdDNzMNmeCSLq1+QeEvz1ac5LnxRXdQzcrQ2MVg==}
-
-  '@unocss/rule-utils@66.12.0':
-    resolution: {integrity: sha512-pZq/FV/TPbM6I2GKttgdR37GtVCLdAceUBz+F1EgWfLu5MvvFiC6fU+BGypgAIRhJdF3bJINwc8t621vEcph0Q==}
 
   '@unocss/rule-utils@66.13.0':
     resolution: {integrity: sha512-X+yZtC0/Vx4DHtybNgeeGuGHrrdpyyrCOmzoIzzWfg7WcnF+xAJMa5KsA6KKyp8kybH1YK8EkFXrn+GonqK8KQ==}
@@ -6824,8 +6815,6 @@ snapshots:
 
   '@unocss/core@66.11.0': {}
 
-  '@unocss/core@66.12.0': {}
-
   '@unocss/core@66.13.0':
     dependencies:
       magic-string: 1.4.5
@@ -6898,11 +6887,6 @@ snapshots:
     dependencies:
       '@unocss/core': 66.13.0
 
-  '@unocss/preset-typography@66.12.0':
-    dependencies:
-      '@unocss/core': 66.12.0
-      '@unocss/rule-utils': 66.12.0
-
   '@unocss/preset-typography@66.13.0':
     dependencies:
       '@unocss/core': 66.13.0
@@ -6966,11 +6950,6 @@ snapshots:
     dependencies:
       '@unocss/core': 66.11.0
       magic-string: 1.4.3
-
-  '@unocss/rule-utils@66.12.0':
-    dependencies:
-      '@unocss/core': 66.12.0
-      magic-string: 1.4.5
 
   '@unocss/rule-utils@66.13.0':
     dependencies:
