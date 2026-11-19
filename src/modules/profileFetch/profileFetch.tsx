@@ -237,8 +237,10 @@ function updatePlayerData(
       }
       if (Object.hasOwn(characterById$.peek(), characterId)) {
         characterById$[characterId].playerValues.set(playerValues);
-        characterById$[characterId].omis.set(omis);
-        characterById$[characterId].zetas.set(zetas);
+        if (fullProfile?.units?.units) {
+          characterById$[characterId].omis.set(omis);
+          characterById$[characterId].zetas.set(zetas);
+        }
       } else {
         characterById$[characterId].set(
           Character.createCharacter(characterId, playerValues, [], omis, zetas),
