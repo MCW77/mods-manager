@@ -84,5 +84,5 @@
     "not dead",
     "not Safari < 18.4"
   ],
-  "packageManager": "pnpm@12.5.1"
+  "packageManager": "pnpm@12.21.0"
 }
