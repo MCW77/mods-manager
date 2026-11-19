@@ -5,7 +5,7 @@ const roles = [
   "Galactic Legend",
   "Healer",
   "Leader",
-  "[c][ffff33]Order 66 Raid[-][/c]",
+  "[c][ffff33]Droid Destruction Raid[-][/c]",
   "Support",
   "Tank",
 ] as const;
