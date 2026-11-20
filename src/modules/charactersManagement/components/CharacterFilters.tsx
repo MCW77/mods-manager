@@ -34,10 +34,13 @@ const factionFilterItems = factions.map((faction) => ({
   value: `Faction--${faction}`,
 }));
 
-const roleFilterItems = roles.map((role) => ({
-  label: role,
-  value: `Role--${role}`,
-}));
+const roleFilterItems = roles.map((role) => {
+  const label = role.replace(/\[c\]\[.*?\](.*?)\[-]\[\/c\]/, "$1"); // Remove color tags for display
+  return {
+    label: label,
+    value: `Role--${role}`,
+  };
+});
 
 const customCharacterFilterGroups = [
   {
