@@ -4,7 +4,7 @@ import { syncObservable } from "@legendapp/state/sync";
 import { persistOptions } from "#/utils/globalLegendPersistSettings";
 
 // api
-import { fetchCharacters } from "../api/fetchBaseCharacters";
+import { fetchBaseCharacters } from "../api/fetchBaseCharacters";
 
 // domain
 import type { BaseCharacterById } from "../domain/BaseCharacter";
@@ -20,7 +20,7 @@ const characters$ = observable<CharactersObservable>({
   baseCharacterById: {} as BaseCharacterById,
   fetchBaseCharacters: async () => {
     try {
-      const baseCharacterById = await fetchCharacters();
+      const baseCharacterById = await fetchBaseCharacters();
       characters$.baseCharacterById.set(baseCharacterById);
       return baseCharacterById;
     } catch (error) {

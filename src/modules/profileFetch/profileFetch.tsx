@@ -3,29 +3,61 @@ import cleanAllycode from "#/utils/cleanAllycode";
 import { objectEntries } from "#/utils/objectEntries";
 
 // state
-import { beginBatch, endBatch, when } from "@legendapp/state";
+import { beginBatch, endBatch, Observable, when } from "@legendapp/state";
 
-import { profilesManagement$ } from "#/modules/profilesManagement/state/profilesManagement";
-import { compilations$ } from "#/modules/compilations/state/compilations";
-import { characters$ } from "#/modules/characters/state/characters";
-import { currencies$ } from "../currencies/state/currencies";
-import { datacrons$ } from "#/modules/datacrons/state/datacrons";
-import { hotutils$ } from "#/modules/hotUtils/state/hotUtils";
-import { materials$ } from "#/modules/materials/state/materials";
-import { mods$ } from "#/modules/mods/state/mods";
-import { roster$ } from "#/modules/roster/state/roster";
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const characters$ = stateLoader$.characters$;
+const compilations$ = stateLoader$.compilations$;
+const currencies$ = stateLoader$.currencies$;
+const datacrons$ = stateLoader$.datacrons$;
+const defaultCompilation$ = stateLoader$.defaultCompilation$;
+const hotutils$ = stateLoader$.hotutils$;
+const materials$ = stateLoader$.materials$;
+const mods$ = stateLoader$.mods$;
+const profilesManagement$ = stateLoader$.profilesManagement$;
+const roster$ = stateLoader$.roster$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { isBusy$ } from "#/modules/busyIndication/state/isBusy";
 import { optimizerView$ } from "#/modules/optimizerView/state/optimizerView";
 
 // domain
+import { Compilation } from "#/modules/compilations/domain/Compilation";
 import type { FetchedFullGIMOProfile } from "#/modules/hotUtils/domain/FetchedFullGIMOProfile";
 import type { FetchedGIMOProfile } from "#/modules/hotUtils/domain/FetchedGIMOProfile";
 import type { ModById } from "#/modules/mods/domain/Mods";
 
 import * as Character from "#/domain/Character";
 import { cloneMod, type Mod } from "#/domain/Mod";
+import { characterSettings } from "../../constants/characterSettings";
+import { OptimizationPlan } from "../../domain/OptimizationPlan";
+
+function isValidCompilation(
+  compilation$: Observable<Compilation> | Observable<Compilation | undefined>,
+): compilation$ is Observable<Compilation> {
+  return compilation$.peek() !== undefined;
+}
+function updateTargetInCompilation(
+  compilation$: Observable<Compilation>,
+  characterId: string,
+  newTarget: OptimizationPlan,
+) {
+  const selectedCharacter$ = compilation$.selectedCharacters.find(
+    (sc) => sc.id.peek() === characterId,
+  );
+  if (selectedCharacter$ !== undefined) {
+    selectedCharacter$.target.set(newTarget);
+  }
+}
+function updateTarget(characterId: string, newTarget: OptimizationPlan) {
+  updateTargetInCompilation(defaultCompilation$.data, characterId, newTarget);
+  for (const [id] of compilations$.compilationByIdForActiveAllycode) {
+    const compilation$ = compilations$.compilationByIdForActiveAllycode[id];
+    if (isValidCompilation(compilation$)) {
+      updateTargetInCompilation(compilation$, characterId, newTarget);
+    }
+  }
+}
 
 /**
  * Collect all the information needed for the optimizer for a player
@@ -51,9 +83,26 @@ export async function refreshPlayerData(
   isBusy$.set(true);
   hotutils$.checkSubscriptionStatus();
 
-  // First, fetch character definitions from swgoh.gg
+  // First, fetch character definitions
   try {
     await when(characters$.fetchBaseCharacters());
+    const baseCharacterById = characters$.baseCharacterById.peek();
+    for (const [characterId, baseCharacter] of Object.entries(baseCharacterById)) {
+      if (baseCharacter !== undefined && baseCharacter.target !== null) {
+        const settingsOfCharacter = characterSettings[characterId];
+        if (settingsOfCharacter !== undefined) {
+          let huMetaTarget = settingsOfCharacter.targets.find(
+            (target) => target.id === baseCharacter.target?.id,
+          );
+          if (huMetaTarget === undefined) {
+            settingsOfCharacter.targets.push(baseCharacter.target);
+          } else {
+            huMetaTarget = baseCharacter.target;
+            updateTarget(characterId, huMetaTarget);
+          }
+        }
+      }
+    }
   } catch (_error) {
     if (_error instanceof Error) {
       const causes = [];

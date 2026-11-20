@@ -9,7 +9,7 @@ const API_URL =
     ? "http://localhost:3005/gimomock-characters"
     : "https://api.mods-optimizer.swgoh.grandivory.com/characters/";
 
-export async function fetchCharacters(): Promise<BaseCharacterById> {
+export async function fetchBaseCharacters(): Promise<BaseCharacterById> {
   try {
     const response = await fetch(API_URL);
     if (!response.ok) {
