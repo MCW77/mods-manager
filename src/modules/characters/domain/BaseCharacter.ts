@@ -3,6 +3,7 @@ import groupByKey from "#/utils/groupByKey";
 
 // domain
 import type { CharacterNames } from "#/constants/CharacterNames";
+import { createOptimizationPlan, OptimizationPlan } from "../../../domain/OptimizationPlan";
 
 type APIBaseCharacterAlignments = 0 | 1 | 2 | 3;
 type BaseCharacterAlignments = "noforce" | "neutral" | "light" | "dark";
@@ -24,6 +25,28 @@ interface APIBaseSkill {
   leader: boolean;
   mode: keyof typeof APIBaseOmicronMode;
 }
+interface APITarget {
+  name: string;
+  health: number;
+  protection: number;
+  speed: number;
+  critDmg: number;
+  potency: number;
+  tenacity: number;
+  physDmg: number;
+  specDmg: number;
+  critChance: number;
+  armor: number;
+  resistance: number;
+  accuracy: number;
+  critAvoid: number;
+  upgradeMods: boolean;
+  primaryStatRestrictions: {};
+  setRestrictions: {};
+  targetStats: [];
+  useOnlyFullSets: boolean;
+}
+
 interface APIBaseCharacter {
   affiliation: APIBaseCharacterCategory[];
   alignment: APIBaseCharacterAlignments;
@@ -41,6 +64,7 @@ interface APIBaseCharacter {
   role: APIBaseCharacterCategory[];
   shipSlot: number;
   species: APIBaseCharacterCategory[];
+  target: APITarget | null;
   zeta: APIBaseSkill[];
 }
 
@@ -56,6 +80,7 @@ export interface BaseCharacter {
   id: CharacterNames;
   name: string;
   omicrons: BaseSkill[];
+  target: OptimizationPlan | null;
   zetas: BaseSkill[];
 }
 
@@ -121,6 +146,31 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
             leader: skill.leader,
             mode: APIBaseOmicronMode[skill.mode],
           })),
+          target:
+            bc.target !== null
+              ? createOptimizationPlan(
+                  bc.target.name,
+                  "",
+                  bc.target.health,
+                  bc.target.protection,
+                  bc.target.speed,
+                  bc.target.critDmg,
+                  bc.target.potency,
+                  bc.target.tenacity,
+                  bc.target.physDmg,
+                  bc.target.specDmg,
+                  bc.target.critChance,
+                  bc.target.armor,
+                  bc.target.resistance,
+                  bc.target.accuracy,
+                  bc.target.critAvoid,
+                  5,
+                  bc.target.primaryStatRestrictions,
+                  bc.target.setRestrictions,
+                  bc.target.targetStats,
+                  bc.target.useOnlyFullSets,
+                )
+              : null,
           zetas: bc.zeta.map((skill) => ({
             display: skill.display,
             key: skill.key,
@@ -135,7 +185,7 @@ export function mapAPI2BaseCharacterById(baseCharacters: APIBaseCharacter[]) {
 
 export type BaseCharacterById = Record<CharacterNames, BaseCharacter>;
 
-export const defaultBaseCharacter = {
+export const defaultBaseCharacter: BaseCharacter = {
   alignment: "light",
   avatarUrl: "",
   categories: [],
@@ -144,5 +194,27 @@ export const defaultBaseCharacter = {
   id: "FINN",
   name: "",
   omicrons: [],
+  target: createOptimizationPlan(
+    "",
+    "",
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    5,
+    {},
+    {},
+    [],
+    true,
+  ),
   zetas: [],
-} as BaseCharacter;
+};
