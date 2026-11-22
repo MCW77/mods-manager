@@ -32,7 +32,8 @@
     },
     "hotutils": {
       "GIMOSessionIdPrompt": "Gib deine HU-Session-ID für GIMO ein",
-      "HUSessionIdPrompt": "Gib deine HU-Session-ID für HU ein"
+      "HUSessionIdPrompt": "Gib deine HU-Session-ID für HU ein",
+      "ObtainSessionId": "Session-ID abrufen"
     }
   },
   "optimizer": {

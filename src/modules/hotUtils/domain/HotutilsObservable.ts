@@ -25,6 +25,7 @@ interface HotutilsObservable {
   createProfile: (profile: ProfileCreationData) => Promise<void>;
   fetchProfile: (allycode: string) => Promise<FetchedGIMOProfile>;
   fetchFullProfile: (allycode: string) => Promise<FetchedFullGIMOProfile>;
+  openHotUtilsSignIn: () => Promise<string>;
 }
 
 export type { HotutilsObservable };

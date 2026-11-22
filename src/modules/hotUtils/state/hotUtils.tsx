@@ -24,6 +24,7 @@ import { fromHotUtils } from "#/domain/Mod";
 import type { PlayerValuesByCharacter } from "#/domain/PlayerValues";
 import type { HUPlayerValues } from "../domain/HUPlayerValues";
 import type { HotutilsObservable } from "../domain/HotutilsObservable";
+import { openHotUtilsSignIn } from "../domain/HotUtilsSignIn";
 
 const hotutilsv2baseurl = "https://api.mods-optimizer.swgoh.grandivory.com/hotutils";
 
@@ -260,6 +261,11 @@ const hotutils$: ObservableObject<HotutilsObservable> = observable<HotutilsObser
 
     return parseResult.output.data as FetchedFullGIMOProfile;
     */
+  },
+  openHotUtilsSignIn: async () => {
+    const sessionId = await openHotUtilsSignIn();
+    if (sessionId !== "") hotutils$.activeSessionId.set(sessionId);
+    return sessionId;
   },
 });
 

@@ -24,32 +24,43 @@ const HotutilsSettingsForm = () => {
   const namesByAllycode = useValue(profilesManagement$.profiles.playernameByAllycode);
 
   return (
-    <div className={containerCSS}>
-      <Label className={labelCSS}>{t("general.accounts.Profile")}</Label>
-      <div className={inputsContainerCSS}>
-        <div className="text-sm font-medium text-muted-foreground">Session IDs</div>
+    <div className="flex flex-col gap-4">
+      <div>
+        <button
+          onClick={async () => {
+            void hotutils$.openHotUtilsSignIn();
+          }}
+        >
+          {t("general.hotutils.ObtainSessionId")}
+        </button>
       </div>
-      {Object.entries(namesByAllycode).map(([allycode, name]) => (
-        <Fragment key={allycode}>
-          <Label className={labelCSS} htmlFor="player">
-            {`${allycode} - ${name}`}
-          </Label>
-          <div className={inputsContainerCSS}>
-            <Input
-              className={inputCSS}
-              placeholder={t("general.hotutils.GIMOSessionIdPrompt")}
-              type="text"
-              $value={hotutils$.sessionIDsByProfile[allycode].gimoSessionId}
-            />
-            <Input
-              className={inputCSS}
-              placeholder={t("general.hotutils.HUSessionIdPrompt")}
-              type="text"
-              $value={hotutils$.sessionIDsByProfile[allycode].huSessionId}
-            />
-          </div>
-        </Fragment>
-      ))}
+      <div className={containerCSS}>
+        <Label className={labelCSS}>{t("general.accounts.Profile")}</Label>
+        <div className={inputsContainerCSS}>
+          <div className="text-sm font-medium text-muted-foreground">Session IDs</div>
+        </div>
+        {Object.entries(namesByAllycode).map(([allycode, name]) => (
+          <Fragment key={allycode}>
+            <Label className={labelCSS} htmlFor="player">
+              {`${allycode} - ${name}`}
+            </Label>
+            <div className={inputsContainerCSS}>
+              <Input
+                className={inputCSS}
+                placeholder={t("general.hotutils.GIMOSessionIdPrompt")}
+                type="text"
+                $value={hotutils$.sessionIDsByProfile[allycode].gimoSessionId}
+              />
+              <Input
+                className={inputCSS}
+                placeholder={t("general.hotutils.HUSessionIdPrompt")}
+                type="text"
+                $value={hotutils$.sessionIDsByProfile[allycode].huSessionId}
+              />
+            </div>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 };
