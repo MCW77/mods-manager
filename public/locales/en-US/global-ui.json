@@ -17,6 +17,12 @@
     "Fetch": "Fetch my data",
     "FetchHot": "Fetch with HotUtils"
   },
+  "hotutils": {
+    "SessionIdNotObtainedTitle": "HotUtils session ID was not obtained. Starting to fetch data without one.",
+    "SessionIdNotObtainedDescription": "Either you closed the popup without signing in, or the popup was blocked by your browser. You can go to the hotutils settings to to retry this. If the popup was blocked, allow popups for this site first.",
+    "SessionIdObtained": "HotUtils session ID obtained successfully.",
+    "Settings": "HotUtils settings"
+  },
   "sidebar": {
     "Toggle-show": "show sidebar",
     "Toggle-collapse": "collapse sidebar"

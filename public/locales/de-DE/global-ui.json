@@ -17,6 +17,12 @@
     "Fetch": "Hole meine Mods",
     "FetchHot": "Hole mit HotUtils"
   },
+  "hotutils": {
+    "SessionIdNotObtainedTitle": "HotUtils-Sitzungs-ID wurde nicht erhalten. Daten werden ohne diese abgerufen.",
+    "SessionIdNotObtainedDescription": "Entweder haben Sie das Popup ohne Anmeldung geschlossen, oder das Popup wurde von Ihrem Browser blockiert. Sie können zu den HotUtils-Einstellungen gehen, um dies erneut zu versuchen. Wenn das Popup blockiert wurde, erlauben Sie zunächst Popups für diese Website.",
+    "SessionIdObtained": "HotUtils-Sitzungs-ID erfolgreich erhalten.",
+    "Settings": "HotUtils-Einstellungen"
+  },
   "sidebar": {
     "Toggle-show": "Seitenleiste anzeigen",
     "Toggle-collapse": "Seitenleiste verbergen"

@@ -51,7 +51,7 @@ function updateTargetInCompilation(
 }
 function updateTarget(characterId: string, newTarget: OptimizationPlan) {
   updateTargetInCompilation(defaultCompilation$.data, characterId, newTarget);
-  for (const [id] of compilations$.compilationByIdForActiveAllycode) {
+  for (const [id] of compilations$.compilationByIdForActiveAllycode.peek()) {
     const compilation$ = compilations$.compilationByIdForActiveAllycode[id];
     if (isValidCompilation(compilation$)) {
       updateTargetInCompilation(compilation$, characterId, newTarget);

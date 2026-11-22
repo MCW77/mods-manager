@@ -6,8 +6,16 @@ import { useTranslation } from "react-i18next";
 import formatAllycode from "#/utils/formatAllycode";
 
 // state
-import type { ObservableBoolean } from "@legendapp/state";
+import { when, type ObservableBoolean } from "@legendapp/state";
 import { useObservable } from "@legendapp/state/react";
+
+import { stateLoader$ } from "#/modules/stateLoader/stateLoader";
+const hotutils$ = stateLoader$.hotutils$;
+
+import { dialog$ } from "#/modules/dialog/state/dialog";
+import { settings$ } from "#/modules/settings/state/settings";
+
+// domain
 import { refreshPlayerData } from "#/modules/profileFetch/profileFetch";
 
 // components
@@ -28,7 +36,21 @@ const ProfileAdder = ({ isAddingProfile$ }: ComponentProps) => {
   });
 
   const fetch = async (allycode: string): Promise<void> => {
-    const result = await refreshPlayerData(allycode, true, null);
+    const sessionId = await when(hotutils$.openHotUtilsSignIn());
+    if (sessionId === "") {
+      dialog$.showFlash(
+        <>{t("hotutils.SessionIdNotObtainedTitle")}</>,
+        t("hotutils.SessionIdNotObtainedDescription"),
+        t("hotutils.Settings"),
+        () => {
+          settings$.section.set("general");
+        },
+        "warning",
+      );
+      isFetchFinished$.set(true);
+      return;
+    }
+    const result = await refreshPlayerData(allycode, true, sessionId === "" ? null : sessionId);
     isFetchFinished$.set(true);
     return result;
   };
