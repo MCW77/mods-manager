@@ -82,11 +82,8 @@ export function readHotUtilsSignIn(event: MessageEvent, expectedOrigin = hotUtil
 export async function openHotUtilsSignIn({ site = HOTUTILS_SITE, win = window } = {}) {
   const sessionId = defer<string>();
   const expectedOrigin = hotUtilsOrigin(site);
-  const popup = win.open(
-    hotUtilsSignInUrl(win.location.origin, site),
-    "hotutils-sign-in",
-    "popup,width=480,height=720",
-  );
+  const huSignInUrl = hotUtilsSignInUrl(win.location.origin, site);
+  const popup = win.open(huSignInUrl, "hotutils-sign-in", "popup,width=480,height=720");
   if (!popup) {
     sessionId.resolve("");
     return await sessionId.promise;
@@ -109,7 +106,11 @@ export async function openHotUtilsSignIn({ site = HOTUTILS_SITE, win = window } 
   let closedSeen = false;
   watcher = win.setInterval(() => {
     if (!popup.closed) return;
-    if (closedSeen) stop();
+    if (closedSeen) {
+      stop();
+
+      sessionId.resolve("");
+    }
     closedSeen = true;
   }, 1000);
   return await sessionId.promise;
