@@ -47,8 +47,6 @@ const ProfileAdder = ({ isAddingProfile$ }: ComponentProps) => {
         },
         "warning",
       );
-      isFetchFinished$.set(true);
-      return;
     }
     const result = await refreshPlayerData(allycode, true, sessionId === "" ? null : sessionId);
     isFetchFinished$.set(true);
