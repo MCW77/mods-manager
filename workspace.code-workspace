@@ -31,7 +31,7 @@
     "js/ts.referencesCodeLens.showOnAllFunctions": true,
     "js/ts.experimental.useTsgo": true,
     "js/ts.tsdk.path": "./node_modules/typescript/lib",
-    "git.enabled": true,
+    "git.enabled": false,
     "files.eol": "\n",
   },
 }
