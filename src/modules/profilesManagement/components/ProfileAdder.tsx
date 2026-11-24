@@ -14,6 +14,7 @@ const hotutils$ = stateLoader$.hotutils$;
 
 import { dialog$ } from "#/modules/dialog/state/dialog";
 import { settings$ } from "#/modules/settings/state/settings";
+import { ui$ } from "#/modules/ui/state/ui";
 
 // domain
 import { refreshPlayerData } from "#/modules/profileFetch/profileFetch";
@@ -44,6 +45,7 @@ const ProfileAdder = ({ isAddingProfile$ }: ComponentProps) => {
         t("hotutils.Settings"),
         () => {
           settings$.section.set("general");
+          ui$.currentSection.set("settings");
         },
         "warning",
       );
