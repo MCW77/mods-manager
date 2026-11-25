@@ -283,8 +283,8 @@ importers:
         version: 1.6.0
     devDependencies:
       '@iconify-json/logos':
-        specifier: ^1.2.20
-        version: 1.2.20
+        specifier: ^1.2.21
+        version: 1.2.21
       '@iconify-json/skill-icons':
         specifier: ^1.2.4
         version: 1.2.4
@@ -1012,8 +1012,8 @@ packages:
   '@iarna/toml@2.2.5':
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
-  '@iconify-json/logos@1.2.20':
-    resolution: {integrity: sha512-HDSte2/+sgGNn9i/eYMiIRDbdigWxZe6EFauQGtxfRG/4sUtUBFgLIdxotKQysKNsFJlLYDFzPILOs3mh9viRQ==}
+  '@iconify-json/logos@1.2.21':
+    resolution: {integrity: sha512-iGTg0qaVfEvrmz7Cml9zDlv8S5wSOjn9Jg4MoTml9o/GKpMDbeF/tgtbPfR7/0UhzMnBfmmiKeyG6hlR3KpaaA==}
 
   '@iconify-json/skill-icons@1.2.4':
     resolution: {integrity: sha512-S6iRKHGlGCb/zfx3Isv1TBe5PunbDE5FEwJcaXji60+yRZMrcFFtYEI1xivKqaGKXyVZ508yjGDItsehQdJmSg==}
@@ -5851,7 +5851,7 @@ snapshots:
 
   '@iarna/toml@2.2.5': {}
 
-  '@iconify-json/logos@1.2.20':
+  '@iconify-json/logos@1.2.21':
     dependencies:
       '@iconify/types': 2.0.0
 
